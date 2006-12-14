@@ -44,8 +44,20 @@ public class OBMolAtomDFSIter {
     this(openbabelJNI.new_OBMolAtomDFSIter__SWIG_2(OBMolAtomDFSIter.getCPtr(ai), ai), true);
   }
 
-  public OBAtom __deref__() {
-    long cPtr = openbabelJNI.OBMolAtomDFSIter___deref__(swigCPtr, this);
+  public boolean good() {
+    return openbabelJNI.OBMolAtomDFSIter_good(swigCPtr, this);
+  }
+
+  public OBMolAtomDFSIter inc() {
+    return new OBMolAtomDFSIter(openbabelJNI.OBMolAtomDFSIter_inc__SWIG_0(swigCPtr, this), false);
+  }
+
+  public OBMolAtomDFSIter inc(int arg0) {
+    return new OBMolAtomDFSIter(openbabelJNI.OBMolAtomDFSIter_inc__SWIG_1(swigCPtr, this, arg0), true);
+  }
+
+  public OBAtom deref() {
+    long cPtr = openbabelJNI.OBMolAtomDFSIter_deref(swigCPtr, this);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 

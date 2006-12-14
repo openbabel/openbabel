@@ -60584,7 +60584,35 @@ XS(_wrap_new_OBMolAtomDFSIter) {
 }
 
 
-XS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_0) {
+XS(_wrap_OBMolAtomDFSIter_good) {
+  {
+    OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolAtomDFSIter_good(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
+    result = (bool)((OpenBabel::OBMolAtomDFSIter const *)arg1)->operator bool();
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolAtomDFSIter_inc__SWIG_0) {
   {
     OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
     OpenBabel::OBMolAtomDFSIter *result = 0 ;
@@ -60594,11 +60622,11 @@ XS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_0) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBMolAtomDFSIter___plusplus__(self);");
+      SWIG_croak("Usage: OBMolAtomDFSIter_inc(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
     {
@@ -60615,7 +60643,7 @@ XS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_0) {
 }
 
 
-XS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_1) {
+XS(_wrap_OBMolAtomDFSIter_inc__SWIG_1) {
   {
     OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
     int arg2 ;
@@ -60628,16 +60656,16 @@ XS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_1) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBMolAtomDFSIter___plusplus__(self,int);");
+      SWIG_croak("Usage: OBMolAtomDFSIter_inc(self,int);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
     ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter___plusplus__" "', argument " "2"" of type '" "int""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_inc" "', argument " "2"" of type '" "int""'");
     } 
     arg2 = static_cast< int >(val2);
     result = (arg1)->operator ++(arg2);
@@ -60653,7 +60681,7 @@ XS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_1) {
 }
 
 
-XS(_wrap_OBMolAtomDFSIter___plusplus__) {
+XS(_wrap_OBMolAtomDFSIter_inc) {
   dXSARGS;
   
   {
@@ -60714,18 +60742,18 @@ XS(_wrap_OBMolAtomDFSIter___plusplus__) {
   dispatch:
     switch(_index) {
     case 1:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_0); return;
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomDFSIter_inc__SWIG_0); return;
     case 2:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_1); return;
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomDFSIter_inc__SWIG_1); return;
     }
   }
   
-  croak("No matching function for overloaded 'OBMolAtomDFSIter___plusplus__'");
+  croak("No matching function for overloaded 'OBMolAtomDFSIter_inc'");
   XSRETURN(0);
 }
 
 
-XS(_wrap_OBMolAtomDFSIter___deref__) {
+XS(_wrap_OBMolAtomDFSIter_deref) {
   {
     OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
     OpenBabel::OBAtom *result = 0 ;
@@ -60735,11 +60763,11 @@ XS(_wrap_OBMolAtomDFSIter___deref__) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBMolAtomDFSIter___deref__(self);");
+      SWIG_croak("Usage: OBMolAtomDFSIter_deref(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter___deref__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_deref" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
     result = (OpenBabel::OBAtom *)((OpenBabel::OBMolAtomDFSIter const *)arg1)->operator ->();
@@ -66615,7 +66643,35 @@ XS(_wrap_new_OBMolAtomBFSIter) {
 }
 
 
-XS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_0) {
+XS(_wrap_OBMolAtomBFSIter_good) {
+  {
+    OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolAtomBFSIter_good(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
+    result = (bool)((OpenBabel::OBMolAtomBFSIter const *)arg1)->operator bool();
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolAtomBFSIter_inc__SWIG_0) {
   {
     OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
     OpenBabel::OBMolAtomBFSIter *result = 0 ;
@@ -66625,11 +66681,11 @@ XS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_0) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBMolAtomBFSIter___plusplus__(self);");
+      SWIG_croak("Usage: OBMolAtomBFSIter_inc(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
     {
@@ -66646,7 +66702,7 @@ XS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_0) {
 }
 
 
-XS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_1) {
+XS(_wrap_OBMolAtomBFSIter_inc__SWIG_1) {
   {
     OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
     int arg2 ;
@@ -66659,16 +66715,16 @@ XS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_1) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBMolAtomBFSIter___plusplus__(self,int);");
+      SWIG_croak("Usage: OBMolAtomBFSIter_inc(self,int);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
     ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter___plusplus__" "', argument " "2"" of type '" "int""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_inc" "', argument " "2"" of type '" "int""'");
     } 
     arg2 = static_cast< int >(val2);
     result = (arg1)->operator ++(arg2);
@@ -66684,7 +66740,7 @@ XS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_1) {
 }
 
 
-XS(_wrap_OBMolAtomBFSIter___plusplus__) {
+XS(_wrap_OBMolAtomBFSIter_inc) {
   dXSARGS;
   
   {
@@ -66745,18 +66801,18 @@ XS(_wrap_OBMolAtomBFSIter___plusplus__) {
   dispatch:
     switch(_index) {
     case 1:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_0); return;
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomBFSIter_inc__SWIG_0); return;
     case 2:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_1); return;
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomBFSIter_inc__SWIG_1); return;
     }
   }
   
-  croak("No matching function for overloaded 'OBMolAtomBFSIter___plusplus__'");
+  croak("No matching function for overloaded 'OBMolAtomBFSIter_inc'");
   XSRETURN(0);
 }
 
 
-XS(_wrap_OBMolAtomBFSIter___deref__) {
+XS(_wrap_OBMolAtomBFSIter_deref) {
   {
     OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
     OpenBabel::OBAtom *result = 0 ;
@@ -66766,11 +66822,11 @@ XS(_wrap_OBMolAtomBFSIter___deref__) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBMolAtomBFSIter___deref__(self);");
+      SWIG_croak("Usage: OBMolAtomBFSIter_deref(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter___deref__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_deref" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
     result = (OpenBabel::OBAtom *)((OpenBabel::OBMolAtomBFSIter const *)arg1)->operator ->();
@@ -93494,37 +93550,6 @@ XS(_wrap_new_OBMolAngleIter__SWIG_1) {
 
 XS(_wrap_new_OBMolAngleIter__SWIG_2) {
   {
-    OpenBabel::OBMol *arg1 = 0 ;
-    OpenBabel::OBMolAngleIter *result = 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: new_OBMolAngleIter(mol);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__OBMol,  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-    }
-    if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-    result = (OpenBabel::OBMolAngleIter *)new OpenBabel::OBMolAngleIter(*arg1);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAngleIter, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_new_OBMolAngleIter__SWIG_3) {
-  {
     OpenBabel::OBMolAngleIter *arg1 = 0 ;
     OpenBabel::OBMolAngleIter *result = 0 ;
     void *argp1 ;
@@ -93596,7 +93621,7 @@ XS(_wrap_new_OBMolAngleIter) {
       int _v = 0;
       {
         void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolAngleIter, 0);
         _v = SWIG_CheckState(res);
       }
       if (!_v) goto check_3;
@@ -93610,27 +93635,6 @@ XS(_wrap_new_OBMolAngleIter) {
     }
   check_3:
     
-    if (items == 1) {
-      SWIG_TypeRank _ranki = 0;
-      SWIG_TypeRank _rankm = 0;
-      SWIG_TypeRank _pi = 1;
-      int _v = 0;
-      {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolAngleIter, 0);
-        _v = SWIG_CheckState(res);
-      }
-      if (!_v) goto check_4;
-      _ranki += _v*_pi;
-      _rankm += _pi;
-      _pi *= SWIG_MAXCASTRANK;
-      if (!_index || (_ranki < _rank)) {
-        _rank = _ranki; _index = 4;
-        if (_rank == _rankm) goto dispatch;
-      }
-    }
-  check_4:
-    
   dispatch:
     switch(_index) {
     case 1:
@@ -93639,8 +93643,6 @@ XS(_wrap_new_OBMolAngleIter) {
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolAngleIter__SWIG_1); return;
     case 3:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolAngleIter__SWIG_2); return;
-    case 4:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolAngleIter__SWIG_3); return;
     }
   }
   
@@ -93649,7 +93651,35 @@ XS(_wrap_new_OBMolAngleIter) {
 }
 
 
-XS(_wrap_OBMolAngleIter___plusplus__) {
+XS(_wrap_OBMolAngleIter_good) {
+  {
+    OpenBabel::OBMolAngleIter *arg1 = (OpenBabel::OBMolAngleIter *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolAngleIter_good(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAngleIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAngleIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolAngleIter * >(argp1);
+    result = (bool)((OpenBabel::OBMolAngleIter const *)arg1)->operator bool();
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolAngleIter_inc) {
   {
     OpenBabel::OBMolAngleIter *arg1 = (OpenBabel::OBMolAngleIter *) 0 ;
     int arg2 ;
@@ -93662,16 +93692,16 @@ XS(_wrap_OBMolAngleIter___plusplus__) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBMolAngleIter___plusplus__(self,int);");
+      SWIG_croak("Usage: OBMolAngleIter_inc(self,int);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAngleIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAngleIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAngleIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolAngleIter * >(argp1);
     ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAngleIter___plusplus__" "', argument " "2"" of type '" "int""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAngleIter_inc" "', argument " "2"" of type '" "int""'");
     } 
     arg2 = static_cast< int >(val2);
     result = (arg1)->operator ++(arg2);
@@ -93803,37 +93833,6 @@ XS(_wrap_new_OBMolTorsionIter__SWIG_1) {
 
 XS(_wrap_new_OBMolTorsionIter__SWIG_2) {
   {
-    OpenBabel::OBMol *arg1 = 0 ;
-    OpenBabel::OBMolTorsionIter *result = 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: new_OBMolTorsionIter(mol);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__OBMol,  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-    }
-    if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-    result = (OpenBabel::OBMolTorsionIter *)new OpenBabel::OBMolTorsionIter(*arg1);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolTorsionIter, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_new_OBMolTorsionIter__SWIG_3) {
-  {
     OpenBabel::OBMolTorsionIter *arg1 = 0 ;
     OpenBabel::OBMolTorsionIter *result = 0 ;
     void *argp1 ;
@@ -93905,7 +93904,7 @@ XS(_wrap_new_OBMolTorsionIter) {
       int _v = 0;
       {
         void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolTorsionIter, 0);
         _v = SWIG_CheckState(res);
       }
       if (!_v) goto check_3;
@@ -93919,27 +93918,6 @@ XS(_wrap_new_OBMolTorsionIter) {
     }
   check_3:
     
-    if (items == 1) {
-      SWIG_TypeRank _ranki = 0;
-      SWIG_TypeRank _rankm = 0;
-      SWIG_TypeRank _pi = 1;
-      int _v = 0;
-      {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolTorsionIter, 0);
-        _v = SWIG_CheckState(res);
-      }
-      if (!_v) goto check_4;
-      _ranki += _v*_pi;
-      _rankm += _pi;
-      _pi *= SWIG_MAXCASTRANK;
-      if (!_index || (_ranki < _rank)) {
-        _rank = _ranki; _index = 4;
-        if (_rank == _rankm) goto dispatch;
-      }
-    }
-  check_4:
-    
   dispatch:
     switch(_index) {
     case 1:
@@ -93948,8 +93926,6 @@ XS(_wrap_new_OBMolTorsionIter) {
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolTorsionIter__SWIG_1); return;
     case 3:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolTorsionIter__SWIG_2); return;
-    case 4:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolTorsionIter__SWIG_3); return;
     }
   }
   
@@ -93958,7 +93934,35 @@ XS(_wrap_new_OBMolTorsionIter) {
 }
 
 
-XS(_wrap_OBMolTorsionIter___plusplus__) {
+XS(_wrap_OBMolTorsionIter_good) {
+  {
+    OpenBabel::OBMolTorsionIter *arg1 = (OpenBabel::OBMolTorsionIter *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolTorsionIter_good(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolTorsionIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolTorsionIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolTorsionIter * >(argp1);
+    result = (bool)((OpenBabel::OBMolTorsionIter const *)arg1)->operator bool();
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolTorsionIter_inc) {
   {
     OpenBabel::OBMolTorsionIter *arg1 = (OpenBabel::OBMolTorsionIter *) 0 ;
     int arg2 ;
@@ -93971,16 +93975,16 @@ XS(_wrap_OBMolTorsionIter___plusplus__) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBMolTorsionIter___plusplus__(self,int);");
+      SWIG_croak("Usage: OBMolTorsionIter_inc(self,int);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolTorsionIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolTorsionIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolTorsionIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolTorsionIter * >(argp1);
     ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolTorsionIter___plusplus__" "', argument " "2"" of type '" "int""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolTorsionIter_inc" "', argument " "2"" of type '" "int""'");
     } 
     arg2 = static_cast< int >(val2);
     result = (arg1)->operator ++(arg2);
@@ -94112,37 +94116,6 @@ XS(_wrap_new_OBMolPairIter__SWIG_1) {
 
 XS(_wrap_new_OBMolPairIter__SWIG_2) {
   {
-    OpenBabel::OBMol *arg1 = 0 ;
-    OpenBabel::OBMolPairIter *result = 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: new_OBMolPairIter(mol);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__OBMol,  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-    }
-    if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-    result = (OpenBabel::OBMolPairIter *)new OpenBabel::OBMolPairIter(*arg1);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolPairIter, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_new_OBMolPairIter__SWIG_3) {
-  {
     OpenBabel::OBMolPairIter *arg1 = 0 ;
     OpenBabel::OBMolPairIter *result = 0 ;
     void *argp1 ;
@@ -94214,7 +94187,7 @@ XS(_wrap_new_OBMolPairIter) {
       int _v = 0;
       {
         void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolPairIter, 0);
         _v = SWIG_CheckState(res);
       }
       if (!_v) goto check_3;
@@ -94228,27 +94201,6 @@ XS(_wrap_new_OBMolPairIter) {
     }
   check_3:
     
-    if (items == 1) {
-      SWIG_TypeRank _ranki = 0;
-      SWIG_TypeRank _rankm = 0;
-      SWIG_TypeRank _pi = 1;
-      int _v = 0;
-      {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolPairIter, 0);
-        _v = SWIG_CheckState(res);
-      }
-      if (!_v) goto check_4;
-      _ranki += _v*_pi;
-      _rankm += _pi;
-      _pi *= SWIG_MAXCASTRANK;
-      if (!_index || (_ranki < _rank)) {
-        _rank = _ranki; _index = 4;
-        if (_rank == _rankm) goto dispatch;
-      }
-    }
-  check_4:
-    
   dispatch:
     switch(_index) {
     case 1:
@@ -94257,8 +94209,6 @@ XS(_wrap_new_OBMolPairIter) {
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolPairIter__SWIG_1); return;
     case 3:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolPairIter__SWIG_2); return;
-    case 4:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolPairIter__SWIG_3); return;
     }
   }
   
@@ -94267,7 +94217,35 @@ XS(_wrap_new_OBMolPairIter) {
 }
 
 
-XS(_wrap_OBMolPairIter___plusplus__) {
+XS(_wrap_OBMolPairIter_good) {
+  {
+    OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolPairIter_good(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolPairIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolPairIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolPairIter * >(argp1);
+    result = (bool)((OpenBabel::OBMolPairIter const *)arg1)->operator bool();
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolPairIter_inc) {
   {
     OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
     int arg2 ;
@@ -94280,16 +94258,16 @@ XS(_wrap_OBMolPairIter___plusplus__) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBMolPairIter___plusplus__(self,int);");
+      SWIG_croak("Usage: OBMolPairIter_inc(self,int);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolPairIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolPairIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolPairIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolPairIter * >(argp1);
     ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolPairIter___plusplus__" "', argument " "2"" of type '" "int""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolPairIter_inc" "', argument " "2"" of type '" "int""'");
     } 
     arg2 = static_cast< int >(val2);
     result = (arg1)->operator ++(arg2);
@@ -94305,7 +94283,7 @@ XS(_wrap_OBMolPairIter___plusplus__) {
 }
 
 
-XS(_wrap_OBMolPairIter___deref__) {
+XS(_wrap_OBMolPairIter_deref) {
   {
     OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
     std::pair<int,int > *result = 0 ;
@@ -94315,11 +94293,11 @@ XS(_wrap_OBMolPairIter___deref__) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBMolPairIter___deref__(self);");
+      SWIG_croak("Usage: OBMolPairIter_deref(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolPairIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolPairIter___deref__" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolPairIter_deref" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolPairIter * >(argp1);
     result = (std::pair<int,int > *)((OpenBabel::OBMolPairIter const *)arg1)->operator ->();
@@ -94440,37 +94418,6 @@ XS(_wrap_new_OBMolRingIter__SWIG_1) {
 
 XS(_wrap_new_OBMolRingIter__SWIG_2) {
   {
-    OpenBabel::OBMol *arg1 = 0 ;
-    OpenBabel::OBMolRingIter *result = 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: new_OBMolRingIter(mol);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__OBMol,  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-    }
-    if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-    result = (OpenBabel::OBMolRingIter *)new OpenBabel::OBMolRingIter(*arg1);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolRingIter, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_new_OBMolRingIter__SWIG_3) {
-  {
     OpenBabel::OBMolRingIter *arg1 = 0 ;
     OpenBabel::OBMolRingIter *result = 0 ;
     void *argp1 ;
@@ -94542,7 +94489,7 @@ XS(_wrap_new_OBMolRingIter) {
       int _v = 0;
       {
         void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolRingIter, 0);
         _v = SWIG_CheckState(res);
       }
       if (!_v) goto check_3;
@@ -94556,27 +94503,6 @@ XS(_wrap_new_OBMolRingIter) {
     }
   check_3:
     
-    if (items == 1) {
-      SWIG_TypeRank _ranki = 0;
-      SWIG_TypeRank _rankm = 0;
-      SWIG_TypeRank _pi = 1;
-      int _v = 0;
-      {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolRingIter, 0);
-        _v = SWIG_CheckState(res);
-      }
-      if (!_v) goto check_4;
-      _ranki += _v*_pi;
-      _rankm += _pi;
-      _pi *= SWIG_MAXCASTRANK;
-      if (!_index || (_ranki < _rank)) {
-        _rank = _ranki; _index = 4;
-        if (_rank == _rankm) goto dispatch;
-      }
-    }
-  check_4:
-    
   dispatch:
     switch(_index) {
     case 1:
@@ -94585,8 +94511,6 @@ XS(_wrap_new_OBMolRingIter) {
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolRingIter__SWIG_1); return;
     case 3:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolRingIter__SWIG_2); return;
-    case 4:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBMolRingIter__SWIG_3); return;
     }
   }
   
@@ -94595,7 +94519,35 @@ XS(_wrap_new_OBMolRingIter) {
 }
 
 
-XS(_wrap_OBMolRingIter___plusplus____SWIG_0) {
+XS(_wrap_OBMolRingIter_good) {
+  {
+    OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolRingIter_good(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
+    result = (bool)((OpenBabel::OBMolRingIter const *)arg1)->operator bool();
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolRingIter_inc__SWIG_0) {
   {
     OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
     OpenBabel::OBMolRingIter *result = 0 ;
@@ -94605,11 +94557,11 @@ XS(_wrap_OBMolRingIter___plusplus____SWIG_0) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBMolRingIter___plusplus__(self);");
+      SWIG_croak("Usage: OBMolRingIter_inc(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
     {
@@ -94626,7 +94578,7 @@ XS(_wrap_OBMolRingIter___plusplus____SWIG_0) {
 }
 
 
-XS(_wrap_OBMolRingIter___plusplus____SWIG_1) {
+XS(_wrap_OBMolRingIter_inc__SWIG_1) {
   {
     OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
     int arg2 ;
@@ -94639,16 +94591,16 @@ XS(_wrap_OBMolRingIter___plusplus____SWIG_1) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBMolRingIter___plusplus__(self,int);");
+      SWIG_croak("Usage: OBMolRingIter_inc(self,int);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
     ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolRingIter___plusplus__" "', argument " "2"" of type '" "int""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolRingIter_inc" "', argument " "2"" of type '" "int""'");
     } 
     arg2 = static_cast< int >(val2);
     result = (arg1)->operator ++(arg2);
@@ -94664,7 +94616,7 @@ XS(_wrap_OBMolRingIter___plusplus____SWIG_1) {
 }
 
 
-XS(_wrap_OBMolRingIter___plusplus__) {
+XS(_wrap_OBMolRingIter_inc) {
   dXSARGS;
   
   {
@@ -94725,18 +94677,18 @@ XS(_wrap_OBMolRingIter___plusplus__) {
   dispatch:
     switch(_index) {
     case 1:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolRingIter___plusplus____SWIG_0); return;
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolRingIter_inc__SWIG_0); return;
     case 2:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolRingIter___plusplus____SWIG_1); return;
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolRingIter_inc__SWIG_1); return;
     }
   }
   
-  croak("No matching function for overloaded 'OBMolRingIter___plusplus__'");
+  croak("No matching function for overloaded 'OBMolRingIter_inc'");
   XSRETURN(0);
 }
 
 
-XS(_wrap_OBMolRingIter___deref__) {
+XS(_wrap_OBMolRingIter_deref) {
   {
     OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
     OpenBabel::OBRing *result = 0 ;
@@ -94746,11 +94698,11 @@ XS(_wrap_OBMolRingIter___deref__) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBMolRingIter___deref__(self);");
+      SWIG_croak("Usage: OBMolRingIter_deref(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter___deref__" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_deref" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
     result = (OpenBabel::OBRing *)((OpenBabel::OBMolRingIter const *)arg1)->operator ->();
@@ -97264,8 +97216,9 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBMolAtomIter_BeginData", _wrap_OBMolAtomIter_BeginData},
 {"Chemistry::OpenBabelc::OBMolAtomIter_EndData", _wrap_OBMolAtomIter_EndData},
 {"Chemistry::OpenBabelc::new_OBMolAtomDFSIter", _wrap_new_OBMolAtomDFSIter},
-{"Chemistry::OpenBabelc::OBMolAtomDFSIter___plusplus__", _wrap_OBMolAtomDFSIter___plusplus__},
-{"Chemistry::OpenBabelc::OBMolAtomDFSIter___deref__", _wrap_OBMolAtomDFSIter___deref__},
+{"Chemistry::OpenBabelc::OBMolAtomDFSIter_good", _wrap_OBMolAtomDFSIter_good},
+{"Chemistry::OpenBabelc::OBMolAtomDFSIter_inc", _wrap_OBMolAtomDFSIter_inc},
+{"Chemistry::OpenBabelc::OBMolAtomDFSIter_deref", _wrap_OBMolAtomDFSIter_deref},
 {"Chemistry::OpenBabelc::OBMolAtomDFSIter___ref__", _wrap_OBMolAtomDFSIter___ref__},
 {"Chemistry::OpenBabelc::delete_OBMolAtomDFSIter", _wrap_delete_OBMolAtomDFSIter},
 {"Chemistry::OpenBabelc::OBMolAtomDFSIter_Visit_set", _wrap_OBMolAtomDFSIter_Visit_set},
@@ -97405,8 +97358,9 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBMolAtomDFSIter_BeginData", _wrap_OBMolAtomDFSIter_BeginData},
 {"Chemistry::OpenBabelc::OBMolAtomDFSIter_EndData", _wrap_OBMolAtomDFSIter_EndData},
 {"Chemistry::OpenBabelc::new_OBMolAtomBFSIter", _wrap_new_OBMolAtomBFSIter},
-{"Chemistry::OpenBabelc::OBMolAtomBFSIter___plusplus__", _wrap_OBMolAtomBFSIter___plusplus__},
-{"Chemistry::OpenBabelc::OBMolAtomBFSIter___deref__", _wrap_OBMolAtomBFSIter___deref__},
+{"Chemistry::OpenBabelc::OBMolAtomBFSIter_good", _wrap_OBMolAtomBFSIter_good},
+{"Chemistry::OpenBabelc::OBMolAtomBFSIter_inc", _wrap_OBMolAtomBFSIter_inc},
+{"Chemistry::OpenBabelc::OBMolAtomBFSIter_deref", _wrap_OBMolAtomBFSIter_deref},
 {"Chemistry::OpenBabelc::OBMolAtomBFSIter___ref__", _wrap_OBMolAtomBFSIter___ref__},
 {"Chemistry::OpenBabelc::delete_OBMolAtomBFSIter", _wrap_delete_OBMolAtomBFSIter},
 {"Chemistry::OpenBabelc::OBMolAtomBFSIter_Visit_set", _wrap_OBMolAtomBFSIter_Visit_set},
@@ -98025,21 +97979,25 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBResidueAtomIter_BeginData", _wrap_OBResidueAtomIter_BeginData},
 {"Chemistry::OpenBabelc::OBResidueAtomIter_EndData", _wrap_OBResidueAtomIter_EndData},
 {"Chemistry::OpenBabelc::new_OBMolAngleIter", _wrap_new_OBMolAngleIter},
-{"Chemistry::OpenBabelc::OBMolAngleIter___plusplus__", _wrap_OBMolAngleIter___plusplus__},
+{"Chemistry::OpenBabelc::OBMolAngleIter_good", _wrap_OBMolAngleIter_good},
+{"Chemistry::OpenBabelc::OBMolAngleIter_inc", _wrap_OBMolAngleIter_inc},
 {"Chemistry::OpenBabelc::OBMolAngleIter___ref__", _wrap_OBMolAngleIter___ref__},
 {"Chemistry::OpenBabelc::delete_OBMolAngleIter", _wrap_delete_OBMolAngleIter},
 {"Chemistry::OpenBabelc::new_OBMolTorsionIter", _wrap_new_OBMolTorsionIter},
-{"Chemistry::OpenBabelc::OBMolTorsionIter___plusplus__", _wrap_OBMolTorsionIter___plusplus__},
+{"Chemistry::OpenBabelc::OBMolTorsionIter_good", _wrap_OBMolTorsionIter_good},
+{"Chemistry::OpenBabelc::OBMolTorsionIter_inc", _wrap_OBMolTorsionIter_inc},
 {"Chemistry::OpenBabelc::OBMolTorsionIter___ref__", _wrap_OBMolTorsionIter___ref__},
 {"Chemistry::OpenBabelc::delete_OBMolTorsionIter", _wrap_delete_OBMolTorsionIter},
 {"Chemistry::OpenBabelc::new_OBMolPairIter", _wrap_new_OBMolPairIter},
-{"Chemistry::OpenBabelc::OBMolPairIter___plusplus__", _wrap_OBMolPairIter___plusplus__},
-{"Chemistry::OpenBabelc::OBMolPairIter___deref__", _wrap_OBMolPairIter___deref__},
+{"Chemistry::OpenBabelc::OBMolPairIter_good", _wrap_OBMolPairIter_good},
+{"Chemistry::OpenBabelc::OBMolPairIter_inc", _wrap_OBMolPairIter_inc},
+{"Chemistry::OpenBabelc::OBMolPairIter_deref", _wrap_OBMolPairIter_deref},
 {"Chemistry::OpenBabelc::OBMolPairIter___ref__", _wrap_OBMolPairIter___ref__},
 {"Chemistry::OpenBabelc::delete_OBMolPairIter", _wrap_delete_OBMolPairIter},
 {"Chemistry::OpenBabelc::new_OBMolRingIter", _wrap_new_OBMolRingIter},
-{"Chemistry::OpenBabelc::OBMolRingIter___plusplus__", _wrap_OBMolRingIter___plusplus__},
-{"Chemistry::OpenBabelc::OBMolRingIter___deref__", _wrap_OBMolRingIter___deref__},
+{"Chemistry::OpenBabelc::OBMolRingIter_good", _wrap_OBMolRingIter_good},
+{"Chemistry::OpenBabelc::OBMolRingIter_inc", _wrap_OBMolRingIter_inc},
+{"Chemistry::OpenBabelc::OBMolRingIter_deref", _wrap_OBMolRingIter_deref},
 {"Chemistry::OpenBabelc::OBMolRingIter___ref__", _wrap_OBMolRingIter___ref__},
 {"Chemistry::OpenBabelc::delete_OBMolRingIter", _wrap_delete_OBMolRingIter},
 {"Chemistry::OpenBabelc::OBMolRingIter__path_set", _wrap_OBMolRingIter__path_set},

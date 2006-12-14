@@ -23,6 +23,10 @@
 
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
+
+#include <openbabel/bitvec.h>
+#include <openbabel/chains.h>
+#include <openbabel/typer.h>
 %}
 
 %include "std_map.i"
@@ -49,14 +53,14 @@ namespace std {
 %include <openbabel/data.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
-%import <openbabel/math/matrix3x3.h>
+%include <openbabel/math/matrix3x3.h>
 %include <openbabel/generic.h>
 
 %include <openbabel/base.h>
 
-%import <openbabel/chains.h>
-%import <openbabel/bitvec.h>
-%import <openbabel/typer.h>
+%include <openbabel/chains.h>
+%include <openbabel/bitvec.h>
+%include <openbabel/typer.h>
 
 %include <openbabel/oberror.h>
 %include <openbabel/obconversion.h>

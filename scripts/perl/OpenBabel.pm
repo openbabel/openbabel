@@ -3295,9 +3295,6 @@ sub ACQUIRE {
 ############# Class : Chemistry::OpenBabel::OBMolAtomDFSIter ##############
 
 package Chemistry::OpenBabel::OBMolAtomDFSIter;
-use overload
-    "++" => sub { $_[0]->__plusplus__()},
-    "fallback" => 1;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
@@ -3308,8 +3305,9 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*__plusplus__ = *Chemistry::OpenBabelc::OBMolAtomDFSIter___plusplus__;
-*__deref__ = *Chemistry::OpenBabelc::OBMolAtomDFSIter___deref__;
+*good = *Chemistry::OpenBabelc::OBMolAtomDFSIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolAtomDFSIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolAtomDFSIter_deref;
 *__ref__ = *Chemistry::OpenBabelc::OBMolAtomDFSIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
@@ -3474,9 +3472,6 @@ sub ACQUIRE {
 ############# Class : Chemistry::OpenBabel::OBMolAtomBFSIter ##############
 
 package Chemistry::OpenBabel::OBMolAtomBFSIter;
-use overload
-    "++" => sub { $_[0]->__plusplus__()},
-    "fallback" => 1;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
@@ -3487,8 +3482,9 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*__plusplus__ = *Chemistry::OpenBabelc::OBMolAtomBFSIter___plusplus__;
-*__deref__ = *Chemistry::OpenBabelc::OBMolAtomBFSIter___deref__;
+*good = *Chemistry::OpenBabelc::OBMolAtomBFSIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolAtomBFSIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolAtomBFSIter_deref;
 *__ref__ = *Chemistry::OpenBabelc::OBMolAtomBFSIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
@@ -4307,9 +4303,6 @@ sub ACQUIRE {
 ############# Class : Chemistry::OpenBabel::OBMolAngleIter ##############
 
 package Chemistry::OpenBabel::OBMolAngleIter;
-use overload
-    "++" => sub { $_[0]->__plusplus__()},
-    "fallback" => 1;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
@@ -4320,7 +4313,8 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*__plusplus__ = *Chemistry::OpenBabelc::OBMolAngleIter___plusplus__;
+*good = *Chemistry::OpenBabelc::OBMolAngleIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolAngleIter_inc;
 *__ref__ = *Chemistry::OpenBabelc::OBMolAngleIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
@@ -4349,9 +4343,6 @@ sub ACQUIRE {
 ############# Class : Chemistry::OpenBabel::OBMolTorsionIter ##############
 
 package Chemistry::OpenBabel::OBMolTorsionIter;
-use overload
-    "++" => sub { $_[0]->__plusplus__()},
-    "fallback" => 1;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
@@ -4362,7 +4353,8 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*__plusplus__ = *Chemistry::OpenBabelc::OBMolTorsionIter___plusplus__;
+*good = *Chemistry::OpenBabelc::OBMolTorsionIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolTorsionIter_inc;
 *__ref__ = *Chemistry::OpenBabelc::OBMolTorsionIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
@@ -4391,9 +4383,6 @@ sub ACQUIRE {
 ############# Class : Chemistry::OpenBabel::OBMolPairIter ##############
 
 package Chemistry::OpenBabel::OBMolPairIter;
-use overload
-    "++" => sub { $_[0]->__plusplus__()},
-    "fallback" => 1;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
@@ -4404,8 +4393,9 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*__plusplus__ = *Chemistry::OpenBabelc::OBMolPairIter___plusplus__;
-*__deref__ = *Chemistry::OpenBabelc::OBMolPairIter___deref__;
+*good = *Chemistry::OpenBabelc::OBMolPairIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolPairIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolPairIter_deref;
 *__ref__ = *Chemistry::OpenBabelc::OBMolPairIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
@@ -4434,9 +4424,6 @@ sub ACQUIRE {
 ############# Class : Chemistry::OpenBabel::OBMolRingIter ##############
 
 package Chemistry::OpenBabel::OBMolRingIter;
-use overload
-    "++" => sub { $_[0]->__plusplus__()},
-    "fallback" => 1;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
@@ -4447,8 +4434,9 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*__plusplus__ = *Chemistry::OpenBabelc::OBMolRingIter___plusplus__;
-*__deref__ = *Chemistry::OpenBabelc::OBMolRingIter___deref__;
+*good = *Chemistry::OpenBabelc::OBMolRingIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolRingIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolRingIter_deref;
 *__ref__ = *Chemistry::OpenBabelc::OBMolRingIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');

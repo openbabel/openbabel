@@ -41,7 +41,15 @@ public class OBMolAngleIter {
   }
 
   public OBMolAngleIter(OBMolAngleIter ai) {
-    this(openbabelJNI.new_OBMolAngleIter__SWIG_3(OBMolAngleIter.getCPtr(ai), ai), true);
+    this(openbabelJNI.new_OBMolAngleIter__SWIG_2(OBMolAngleIter.getCPtr(ai), ai), true);
+  }
+
+  public boolean good() {
+    return openbabelJNI.OBMolAngleIter_good(swigCPtr, this);
+  }
+
+  public OBMolAngleIter inc(int arg0) {
+    return new OBMolAngleIter(openbabelJNI.OBMolAngleIter_inc(swigCPtr, this, arg0), true);
   }
 
   public vectorUnsignedInt __ref__() {

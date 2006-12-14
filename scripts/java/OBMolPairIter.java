@@ -41,11 +41,19 @@ public class OBMolPairIter {
   }
 
   public OBMolPairIter(OBMolPairIter ai) {
-    this(openbabelJNI.new_OBMolPairIter__SWIG_3(OBMolPairIter.getCPtr(ai), ai), true);
+    this(openbabelJNI.new_OBMolPairIter__SWIG_2(OBMolPairIter.getCPtr(ai), ai), true);
   }
 
-  public SWIGTYPE_p_std__pairTint_int_t __deref__() {
-    long cPtr = openbabelJNI.OBMolPairIter___deref__(swigCPtr, this);
+  public boolean good() {
+    return openbabelJNI.OBMolPairIter_good(swigCPtr, this);
+  }
+
+  public OBMolPairIter inc(int arg0) {
+    return new OBMolPairIter(openbabelJNI.OBMolPairIter_inc(swigCPtr, this, arg0), true);
+  }
+
+  public SWIGTYPE_p_std__pairTint_int_t deref() {
+    long cPtr = openbabelJNI.OBMolPairIter_deref(swigCPtr, this);
     return (cPtr == 0) ? null : new SWIGTYPE_p_std__pairTint_int_t(cPtr, false);
   }
 

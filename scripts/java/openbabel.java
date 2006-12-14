@@ -212,6 +212,10 @@ public class openbabel implements openbabelConstants {
     return openbabelJNI.CustomData15_get();
   }
 
+  public static double Tanimoto(OBBitVec arg0, OBBitVec arg1) {
+    return openbabelJNI.Tanimoto(OBBitVec.getCPtr(arg0), arg0, OBBitVec.getCPtr(arg1), arg1);
+  }
+
   public static void setObErrorLog(OBMessageHandler value) {
     openbabelJNI.obErrorLog_set(OBMessageHandler.getCPtr(value), value);
   }

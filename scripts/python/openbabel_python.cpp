@@ -63849,11 +63849,11 @@ SWIGINTERN PyObject *_OBMolAtomIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyO
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_OBMolAtomDFSIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAtomDFSIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *result = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAtomDFSIter",0,0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolAtomDFSIter",0,0)) SWIG_fail;
   result = (OpenBabel::OBMolAtomDFSIter *)new OpenBabel::OBMolAtomDFSIter();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -63862,7 +63862,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolAtomDFSIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAtomDFSIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
   OpenBabel::OBMolAtomDFSIter *result = 0 ;
@@ -63870,10 +63870,10 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomDFSIter__SWIG_1(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAtomDFSIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolAtomDFSIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolAtomDFSIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolAtomDFSIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   result = (OpenBabel::OBMolAtomDFSIter *)new OpenBabel::OBMolAtomDFSIter(arg1);
@@ -63884,7 +63884,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolAtomDFSIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAtomDFSIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = 0 ;
   OpenBabel::OBMolAtomDFSIter *result = 0 ;
@@ -63892,13 +63892,13 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomDFSIter__SWIG_2(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAtomDFSIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolAtomDFSIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolAtomDFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolAtomDFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolAtomDFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new__OBMolAtomDFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const &""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (OpenBabel::OBMolAtomDFSIter *)new OpenBabel::OBMolAtomDFSIter((OpenBabel::OBMolAtomDFSIter const &)*arg1);
@@ -63909,7 +63909,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolAtomDFSIter(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAtomDFSIter(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[2];
   int ii;
@@ -63920,7 +63920,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomDFSIter(PyObject *self, PyObject *args) 
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_OBMolAtomDFSIter__SWIG_0(self, args);
+    return _wrap_new__OBMolAtomDFSIter__SWIG_0(self, args);
   }
   if (argc == 1) {
     int _v;
@@ -63928,7 +63928,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomDFSIter(PyObject *self, PyObject *args) 
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolAtomDFSIter__SWIG_1(self, args);
+      return _wrap_new__OBMolAtomDFSIter__SWIG_1(self, args);
     }
   }
   if (argc == 1) {
@@ -63936,17 +63936,136 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomDFSIter(PyObject *self, PyObject *args) 
     int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolAtomDFSIter__SWIG_2(self, args);
+      return _wrap_new__OBMolAtomDFSIter__SWIG_2(self, args);
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBMolAtomDFSIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolAtomDFSIter()\n    OpenBabel::OBMolAtomDFSIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolAtomDFSIter(OpenBabel::OBMolAtomDFSIter const &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new__OBMolAtomDFSIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolAtomDFSIter()\n    OpenBabel::OBMolAtomDFSIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolAtomDFSIter(OpenBabel::OBMolAtomDFSIter const &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter___deref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_good(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_good",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
+  result = (bool)((OpenBabel::OBMolAtomDFSIter const *)arg1)->operator bool();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_inc__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
+  OpenBabel::OBMolAtomDFSIter *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_inc",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
+  {
+    OpenBabel::OBMolAtomDFSIter &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::OBMolAtomDFSIter *) &_result_ref;
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_inc__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
+  int arg2 ;
+  OpenBabel::OBMolAtomDFSIter result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_inc",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_inc" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (arg1)->operator ++(arg2);
+  resultobj = SWIG_NewPointerObj((new OpenBabel::OBMolAtomDFSIter(static_cast< const OpenBabel::OBMolAtomDFSIter& >(result))), SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_inc(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolAtomDFSIter_inc__SWIG_0(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap__OBMolAtomDFSIter_inc__SWIG_1(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_inc'.\n  Possible C/C++ prototypes are:\n    operator ++()\n    operator ++(int)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_deref(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -63954,10 +64073,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter___deref__(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter___deref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_deref",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter___deref__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_deref" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (OpenBabel::OBAtom *)((OpenBabel::OBMolAtomDFSIter const *)arg1)->operator ->();
@@ -63968,7 +64087,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -63976,10 +64095,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter___ref__(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter___ref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter___ref__",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   {
@@ -63993,17 +64112,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_OBMolAtomDFSIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_delete__OBMolAtomDFSIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"delete_OBMolAtomDFSIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"delete__OBMolAtomDFSIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBMolAtomDFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete__OBMolAtomDFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   delete arg1;
@@ -64015,7 +64134,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_Visit_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_Visit_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool arg2 ;
@@ -64026,15 +64145,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_Visit_set(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_Visit_set",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_Visit_set",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_Visit_set" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_Visit_set" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_Visit_set" "', argument " "2"" of type '" "bool""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_Visit_set" "', argument " "2"" of type '" "bool""'");
   } 
   arg2 = static_cast< bool >(val2);
   if (arg1) (*arg1)->Visit = arg2;
@@ -64046,7 +64165,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_Visit_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_Visit_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -64054,10 +64173,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_Visit_get(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_Visit_get",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_Visit_get",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_Visit_get" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_Visit_get" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool) ((*arg1)->Visit);
@@ -64068,17 +64187,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_Clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_Clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_Clear",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_Clear",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_Clear" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_Clear" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->Clear();
@@ -64089,7 +64208,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int arg2 ;
@@ -64100,15 +64219,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetIdx(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetIdx",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetIdx",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetIdx" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetIdx" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetIdx(arg2);
@@ -64119,7 +64238,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetHyb(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetHyb(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int arg2 ;
@@ -64130,15 +64249,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetHyb(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetHyb",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetHyb",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetHyb" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetHyb" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetHyb" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetHyb" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetHyb(arg2);
@@ -64149,7 +64268,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetAtomicNum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetAtomicNum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int arg2 ;
@@ -64160,15 +64279,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetAtomicNum(PyObject *SWIGUNUSEDPAR
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetAtomicNum",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetAtomicNum",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetAtomicNum" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetAtomicNum" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetAtomicNum(arg2);
@@ -64179,7 +64298,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetIsotope(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetIsotope(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int arg2 ;
@@ -64190,15 +64309,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetIsotope(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetIsotope",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetIsotope",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetIsotope" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetIsotope" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetIsotope" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetIsotope" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   (*arg1)->SetIsotope(arg2);
@@ -64209,7 +64328,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int arg2 ;
@@ -64220,15 +64339,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetImplicitValence(PyObject *SWIGUNU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetImplicitValence",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetImplicitValence",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetImplicitValence" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetImplicitValence" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetImplicitValence(arg2);
@@ -64239,17 +64358,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IncrementImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IncrementImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IncrementImplicitValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IncrementImplicitValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IncrementImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IncrementImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->IncrementImplicitValence();
@@ -64260,17 +64379,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DecrementImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_DecrementImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_DecrementImplicitValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_DecrementImplicitValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_DecrementImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_DecrementImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->DecrementImplicitValence();
@@ -64281,7 +64400,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetFormalCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetFormalCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int arg2 ;
@@ -64292,15 +64411,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetFormalCharge(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetFormalCharge",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetFormalCharge",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetFormalCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetFormalCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetFormalCharge" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetFormalCharge" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetFormalCharge(arg2);
@@ -64311,7 +64430,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetSpinMultiplicity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetSpinMultiplicity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   short arg2 ;
@@ -64322,15 +64441,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetSpinMultiplicity(PyObject *SWIGUN
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetSpinMultiplicity",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetSpinMultiplicity",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetSpinMultiplicity" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetSpinMultiplicity" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_short(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetSpinMultiplicity" "', argument " "2"" of type '" "short""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetSpinMultiplicity" "', argument " "2"" of type '" "short""'");
   } 
   arg2 = static_cast< short >(val2);
   (*arg1)->SetSpinMultiplicity(arg2);
@@ -64341,7 +64460,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetType__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetType__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -64353,15 +64472,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetType__SWIG_0(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetType",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetType",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_SetType" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_SetType" "', argument " "2"" of type '" "char *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
   (*arg1)->SetType(arg2);
@@ -64374,7 +64493,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetType__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetType__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::string *arg2 = 0 ;
@@ -64385,18 +64504,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetType__SWIG_1(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetType",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetType",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__string,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_SetType" "', argument " "2"" of type '" "std::string &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_SetType" "', argument " "2"" of type '" "std::string &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_SetType" "', argument " "2"" of type '" "std::string &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_SetType" "', argument " "2"" of type '" "std::string &""'"); 
   }
   arg2 = reinterpret_cast< std::string * >(argp2);
   (*arg1)->SetType(*arg2);
@@ -64407,7 +64526,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetType(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetType(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -64427,7 +64546,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetType(PyObject *self, PyObject *ar
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_SetType__SWIG_1(self, args);
+        return _wrap__OBMolAtomDFSIter_SetType__SWIG_1(self, args);
       }
     }
   }
@@ -64440,18 +64559,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetType(PyObject *self, PyObject *ar
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_SetType__SWIG_0(self, args);
+        return _wrap__OBMolAtomDFSIter_SetType__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomDFSIter_SetType'.\n  Possible C/C++ prototypes are:\n    SetType(char *)\n    SetType(std::string &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_SetType'.\n  Possible C/C++ prototypes are:\n    SetType(char *)\n    SetType(std::string &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetPartialCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetPartialCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double arg2 ;
@@ -64462,15 +64581,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetPartialCharge(PyObject *SWIGUNUSE
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetPartialCharge",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetPartialCharge",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetPartialCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetPartialCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetPartialCharge" "', argument " "2"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetPartialCharge" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
   (*arg1)->SetPartialCharge(arg2);
@@ -64481,7 +64600,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::vector3 *arg2 = 0 ;
@@ -64492,18 +64611,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector__SWIG_0(PyObject *SWIGUNUS
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetVector",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetVector",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
   (*arg1)->SetVector(*arg2);
@@ -64514,7 +64633,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double arg2 ;
@@ -64533,25 +64652,25 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector__SWIG_1(PyObject *SWIGUNUS
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetVector",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetVector",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetVector" "', argument " "2"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetVector" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBMolAtomDFSIter_SetVector" "', argument " "3"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "_OBMolAtomDFSIter_SetVector" "', argument " "3"" of type '" "double""'");
   } 
   arg3 = static_cast< double >(val3);
   ecode4 = SWIG_AsVal_double(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "OBMolAtomDFSIter_SetVector" "', argument " "4"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "_OBMolAtomDFSIter_SetVector" "', argument " "4"" of type '" "double""'");
   } 
   arg4 = static_cast< double >(val4);
   (*arg1)->SetVector(arg2,arg3,arg4);
@@ -64562,17 +64681,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetVector",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetVector",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->SetVector();
@@ -64583,7 +64702,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetVector(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[5];
   int ii;
@@ -64599,7 +64718,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector(PyObject *self, PyObject *
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBMolAtomDFSIter_SetVector__SWIG_2(self, args);
+      return _wrap__OBMolAtomDFSIter_SetVector__SWIG_2(self, args);
     }
   }
   if (argc == 2) {
@@ -64612,7 +64731,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector(PyObject *self, PyObject *
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_SetVector__SWIG_0(self, args);
+        return _wrap__OBMolAtomDFSIter_SetVector__SWIG_0(self, args);
       }
     }
   }
@@ -64637,7 +64756,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector(PyObject *self, PyObject *
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_OBMolAtomDFSIter_SetVector__SWIG_1(self, args);
+            return _wrap__OBMolAtomDFSIter_SetVector__SWIG_1(self, args);
           }
         }
       }
@@ -64645,12 +64764,12 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetVector(PyObject *self, PyObject *
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomDFSIter_SetVector'.\n  Possible C/C++ prototypes are:\n    SetVector(OpenBabel::vector3 &)\n    SetVector(double const,double const,double const)\n    SetVector()\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_SetVector'.\n  Possible C/C++ prototypes are:\n    SetVector(OpenBabel::vector3 &)\n    SetVector(double const,double const,double const)\n    SetVector()\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetCoordPtr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetCoordPtr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double **arg2 = (double **) 0 ;
@@ -64661,15 +64780,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetCoordPtr(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetCoordPtr",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetCoordPtr",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetCoordPtr" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetCoordPtr" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_double, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_SetCoordPtr" "', argument " "2"" of type '" "double **""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_SetCoordPtr" "', argument " "2"" of type '" "double **""'"); 
   }
   arg2 = reinterpret_cast< double ** >(argp2);
   (*arg1)->SetCoordPtr(arg2);
@@ -64680,7 +64799,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBResidue *arg2 = (OpenBabel::OBResidue *) 0 ;
@@ -64691,15 +64810,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetResidue(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetResidue",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetResidue",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBResidue, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_SetResidue" "', argument " "2"" of type '" "OpenBabel::OBResidue *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_SetResidue" "', argument " "2"" of type '" "OpenBabel::OBResidue *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBResidue * >(argp2);
   (*arg1)->SetResidue(arg2);
@@ -64710,7 +64829,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBMol *arg2 = (OpenBabel::OBMol *) 0 ;
@@ -64721,15 +64840,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetParent(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetParent",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetParent",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetParent" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetParent" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_SetParent" "', argument " "2"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_SetParent" "', argument " "2"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBMol * >(argp2);
   (*arg1)->SetParent(arg2);
@@ -64740,17 +64859,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetAromatic",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetAromatic",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->SetAromatic();
@@ -64761,17 +64880,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_UnsetAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_UnsetAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_UnsetAromatic",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_UnsetAromatic",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_UnsetAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_UnsetAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->UnsetAromatic();
@@ -64782,17 +64901,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetClockwiseStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetClockwiseStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetClockwiseStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetClockwiseStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetClockwiseStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetClockwiseStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->SetClockwiseStereo();
@@ -64803,17 +64922,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetAntiClockwiseStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetAntiClockwiseStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetAntiClockwiseStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetAntiClockwiseStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetAntiClockwiseStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetAntiClockwiseStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->SetAntiClockwiseStereo();
@@ -64824,17 +64943,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetPositiveStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetPositiveStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetPositiveStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetPositiveStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetPositiveStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetPositiveStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->SetPositiveStereo();
@@ -64845,17 +64964,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetNegativeStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetNegativeStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetNegativeStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetNegativeStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetNegativeStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetNegativeStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->SetNegativeStereo();
@@ -64866,17 +64985,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_UnsetStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_UnsetStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_UnsetStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_UnsetStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_UnsetStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_UnsetStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->UnsetStereo();
@@ -64887,17 +65006,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetInRing",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetInRing",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetInRing" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetInRing" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->SetInRing();
@@ -64908,17 +65027,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetChiral(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetChiral(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetChiral",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetChiral",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetChiral" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetChiral" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->SetChiral();
@@ -64929,17 +65048,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ClearCoordPtr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_ClearCoordPtr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_ClearCoordPtr",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_ClearCoordPtr",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_ClearCoordPtr" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_ClearCoordPtr" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->ClearCoordPtr();
@@ -64950,7 +65069,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetFormalCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetFormalCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int result;
@@ -64958,10 +65077,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetFormalCharge(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetFormalCharge",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetFormalCharge",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetFormalCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetFormalCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (int)(*arg1)->GetFormalCharge();
@@ -64972,7 +65091,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAtomicNum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetAtomicNum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -64980,10 +65099,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAtomicNum(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetAtomicNum",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetAtomicNum",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetAtomicNum();
@@ -64994,7 +65113,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetIsotope(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetIsotope(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned short result;
@@ -65002,10 +65121,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetIsotope(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetIsotope",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetIsotope",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetIsotope" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetIsotope" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned short)(*arg1)->GetIsotope();
@@ -65016,7 +65135,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetSpinMultiplicity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetSpinMultiplicity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int result;
@@ -65024,10 +65143,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetSpinMultiplicity(PyObject *SWIGUN
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetSpinMultiplicity",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetSpinMultiplicity",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetSpinMultiplicity" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetSpinMultiplicity" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (int)(*arg1)->GetSpinMultiplicity();
@@ -65038,7 +65157,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAtomicMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetAtomicMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -65046,10 +65165,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAtomicMass(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetAtomicMass",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetAtomicMass",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetAtomicMass" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetAtomicMass" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->GetAtomicMass();
@@ -65060,7 +65179,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetExactMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetExactMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -65068,10 +65187,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetExactMass(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetExactMass",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetExactMass",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetExactMass" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetExactMass" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->GetExactMass();
@@ -65082,7 +65201,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -65090,10 +65209,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetIdx(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetIdx",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetIdx",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetIdx();
@@ -65104,7 +65223,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetCoordinateIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetCoordinateIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -65112,10 +65231,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetCoordinateIdx(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetCoordinateIdx",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetCoordinateIdx",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetCoordinateIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetCoordinateIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetCoordinateIdx();
@@ -65126,7 +65245,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetCIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetCIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -65134,10 +65253,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetCIdx(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetCIdx",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetCIdx",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetCIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetCIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetCIdx();
@@ -65148,7 +65267,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -65156,10 +65275,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetValence(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetValence();
@@ -65170,7 +65289,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetHyb(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetHyb(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -65178,10 +65297,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetHyb(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetHyb",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetHyb",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetHyb" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetHyb" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetHyb();
@@ -65192,7 +65311,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -65200,10 +65319,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetImplicitValence(PyObject *SWIGUNU
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetImplicitValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetImplicitValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetImplicitValence();
@@ -65214,7 +65333,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetHvyValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetHvyValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -65222,10 +65341,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetHvyValence(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetHvyValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetHvyValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetHvyValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetHvyValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetHvyValence();
@@ -65236,7 +65355,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetHeteroValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetHeteroValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -65244,10 +65363,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetHeteroValence(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetHeteroValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetHeteroValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetHeteroValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetHeteroValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetHeteroValence();
@@ -65258,7 +65377,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   char *result = 0 ;
@@ -65266,10 +65385,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetType(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetType",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetType",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (char *)(*arg1)->GetType();
@@ -65280,7 +65399,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetX(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetX(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -65288,10 +65407,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetX(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetX",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetX",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetX" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetX" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->GetX();
@@ -65302,7 +65421,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_x(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_x(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -65310,10 +65429,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_x(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_x",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_x",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_x" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_x" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->x();
@@ -65324,7 +65443,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetY(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetY(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -65332,10 +65451,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetY(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetY",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetY",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetY" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetY" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->GetY();
@@ -65346,7 +65465,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_y(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_y(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -65354,10 +65473,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_y(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_y",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_y",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_y" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_y" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->y();
@@ -65368,7 +65487,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -65376,10 +65495,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetZ(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetZ",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetZ",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetZ" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetZ" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->GetZ();
@@ -65390,7 +65509,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_z(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_z(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -65398,10 +65517,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_z(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_z",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_z",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_z" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_z" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->z();
@@ -65412,7 +65531,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetCoordinate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetCoordinate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double *result = 0 ;
@@ -65420,10 +65539,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetCoordinate(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetCoordinate",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetCoordinate",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetCoordinate" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetCoordinate" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double *)(*arg1)->GetCoordinate();
@@ -65434,7 +65553,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -65442,10 +65561,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetVector(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetVector",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetVector",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   {
@@ -65459,7 +65578,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetPartialCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetPartialCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -65467,10 +65586,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetPartialCharge(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetPartialCharge",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetPartialCharge",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetPartialCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetPartialCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->GetPartialCharge();
@@ -65481,7 +65600,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBResidue *result = 0 ;
@@ -65489,10 +65608,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetResidue(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetResidue",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetResidue",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (OpenBabel::OBResidue *)(*arg1)->GetResidue();
@@ -65503,7 +65622,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBMol *result = 0 ;
@@ -65511,10 +65630,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetParent(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetParent",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetParent",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetParent" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetParent" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (OpenBabel::OBMol *)(*arg1)->GetParent();
@@ -65525,7 +65644,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetNewBondVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetNewBondVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::vector3 *arg2 = 0 ;
@@ -65541,23 +65660,23 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetNewBondVector(PyObject *SWIGUNUSE
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetNewBondVector",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetNewBondVector",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetNewBondVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetNewBondVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_GetNewBondVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_GetNewBondVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_GetNewBondVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_GetNewBondVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBMolAtomDFSIter_GetNewBondVector" "', argument " "3"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "_OBMolAtomDFSIter_GetNewBondVector" "', argument " "3"" of type '" "double""'");
   } 
   arg3 = static_cast< double >(val3);
   result = (bool)(*arg1)->GetNewBondVector(*arg2,arg3);
@@ -65568,7 +65687,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -65580,15 +65699,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetBond(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_GetBond" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_GetBond" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (OpenBabel::OBBond *)(*arg1)->GetBond(arg2);
@@ -65599,7 +65718,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetNextAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetNextAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -65607,10 +65726,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetNextAtom(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetNextAtom",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetNextAtom",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetNextAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetNextAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (OpenBabel::OBAtom *)(*arg1)->GetNextAtom();
@@ -65621,7 +65740,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BeginBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_BeginBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   SwigValueWrapper<std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator > result;
@@ -65629,10 +65748,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BeginBonds(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_BeginBonds",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_BeginBonds",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_BeginBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_BeginBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (*arg1)->BeginBonds();
@@ -65643,7 +65762,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_EndBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_EndBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   SwigValueWrapper<std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator > result;
@@ -65651,10 +65770,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_EndBonds(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_EndBonds",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_EndBonds",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_EndBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_EndBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (*arg1)->EndBonds();
@@ -65665,7 +65784,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BeginBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_BeginBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -65677,18 +65796,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BeginBond(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_BeginBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_BeginBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_BeginBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_BeginBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   result = (OpenBabel::OBBond *)(*arg1)->BeginBond(*arg2);
@@ -65699,7 +65818,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_NextBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_NextBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -65711,18 +65830,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_NextBond(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_NextBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_NextBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_NextBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_NextBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   result = (OpenBabel::OBBond *)(*arg1)->NextBond(*arg2);
@@ -65733,7 +65852,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BeginNbrAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_BeginNbrAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -65745,18 +65864,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BeginNbrAtom(PyObject *SWIGUNUSEDPAR
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_BeginNbrAtom",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_BeginNbrAtom",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_BeginNbrAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_BeginNbrAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_BeginNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_BeginNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_BeginNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_BeginNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   result = (OpenBabel::OBAtom *)(*arg1)->BeginNbrAtom(*arg2);
@@ -65767,7 +65886,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_NextNbrAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_NextNbrAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -65779,18 +65898,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_NextNbrAtom(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_NextNbrAtom",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_NextNbrAtom",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_NextNbrAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_NextNbrAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_NextNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_NextNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_NextNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_NextNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   result = (OpenBabel::OBAtom *)(*arg1)->NextNbrAtom(*arg2);
@@ -65801,7 +65920,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetDistance__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetDistance__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int arg2 ;
@@ -65813,15 +65932,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetDistance__SWIG_0(PyObject *SWIGUN
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetDistance",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetDistance",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetDistance" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetDistance" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_GetDistance" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_GetDistance" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   result = (double)(*arg1)->GetDistance(arg2);
@@ -65832,7 +65951,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetDistance__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetDistance__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -65844,15 +65963,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetDistance__SWIG_1(PyObject *SWIGUN
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetDistance",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetDistance",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetDistance" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetDistance" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_GetDistance" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_GetDistance" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (double)(*arg1)->GetDistance(arg2);
@@ -65863,7 +65982,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetDistance(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetDistance(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -65883,7 +66002,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetDistance(PyObject *self, PyObject
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_GetDistance__SWIG_1(self, args);
+        return _wrap__OBMolAtomDFSIter_GetDistance__SWIG_1(self, args);
       }
     }
   }
@@ -65898,18 +66017,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetDistance(PyObject *self, PyObject
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_GetDistance__SWIG_0(self, args);
+        return _wrap__OBMolAtomDFSIter_GetDistance__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomDFSIter_GetDistance'.\n  Possible C/C++ prototypes are:\n    GetDistance(int)\n    GetDistance(OpenBabel::OBAtom *)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_GetDistance'.\n  Possible C/C++ prototypes are:\n    GetDistance(int)\n    GetDistance(OpenBabel::OBAtom *)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAngle__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetAngle__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int arg2 ;
@@ -65925,20 +66044,20 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAngle__SWIG_0(PyObject *SWIGUNUSE
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetAngle",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetAngle",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_GetAngle" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_GetAngle" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBMolAtomDFSIter_GetAngle" "', argument " "3"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "_OBMolAtomDFSIter_GetAngle" "', argument " "3"" of type '" "int""'");
   } 
   arg3 = static_cast< int >(val3);
   result = (double)(*arg1)->GetAngle(arg2,arg3);
@@ -65949,7 +66068,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAngle__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetAngle__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -65965,20 +66084,20 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAngle__SWIG_1(PyObject *SWIGUNUSE
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetAngle",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetAngle",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_GetAngle" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_GetAngle" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBMolAtomDFSIter_GetAngle" "', argument " "3"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "_OBMolAtomDFSIter_GetAngle" "', argument " "3"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg3 = reinterpret_cast< OpenBabel::OBAtom * >(argp3);
   result = (double)(*arg1)->GetAngle(arg2,arg3);
@@ -65989,7 +66108,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAngle(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetAngle(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[4];
   int ii;
@@ -66013,7 +66132,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAngle(PyObject *self, PyObject *a
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_OBMolAtomDFSIter_GetAngle__SWIG_1(self, args);
+          return _wrap__OBMolAtomDFSIter_GetAngle__SWIG_1(self, args);
         }
       }
     }
@@ -66034,29 +66153,29 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetAngle(PyObject *self, PyObject *a
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_OBMolAtomDFSIter_GetAngle__SWIG_0(self, args);
+          return _wrap__OBMolAtomDFSIter_GetAngle__SWIG_0(self, args);
         }
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomDFSIter_GetAngle'.\n  Possible C/C++ prototypes are:\n    GetAngle(int,int)\n    GetAngle(OpenBabel::OBAtom *,OpenBabel::OBAtom *)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_GetAngle'.\n  Possible C/C++ prototypes are:\n    GetAngle(int,int)\n    GetAngle(OpenBabel::OBAtom *,OpenBabel::OBAtom *)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_NewResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_NewResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_NewResidue",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_NewResidue",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_NewResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_NewResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->NewResidue();
@@ -66067,17 +66186,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_DeleteResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_DeleteResidue",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_DeleteResidue",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_DeleteResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_DeleteResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->DeleteResidue();
@@ -66088,7 +66207,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_AddBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_AddBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBBond *arg2 = (OpenBabel::OBBond *) 0 ;
@@ -66099,15 +66218,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_AddBond(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_AddBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_AddBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_AddBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_AddBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_AddBond" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_AddBond" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBBond * >(argp2);
   (*arg1)->AddBond(arg2);
@@ -66118,7 +66237,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_InsertBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_InsertBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -66133,23 +66252,23 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_InsertBond(PyObject *SWIGUNUSEDPARM(
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_InsertBond",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_InsertBond",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_InsertBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_InsertBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_InsertBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_InsertBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_InsertBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_InsertBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBMolAtomDFSIter_InsertBond" "', argument " "3"" of type '" "OpenBabel::OBBond *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "_OBMolAtomDFSIter_InsertBond" "', argument " "3"" of type '" "OpenBabel::OBBond *""'"); 
   }
   arg3 = reinterpret_cast< OpenBabel::OBBond * >(argp3);
   (*arg1)->InsertBond(*arg2,arg3);
@@ -66160,7 +66279,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_DeleteBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBBond *arg2 = (OpenBabel::OBBond *) 0 ;
@@ -66172,15 +66291,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteBond(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_DeleteBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_DeleteBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_DeleteBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_DeleteBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_DeleteBond" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_DeleteBond" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBBond * >(argp2);
   result = (bool)(*arg1)->DeleteBond(arg2);
@@ -66191,17 +66310,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ClearBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_ClearBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_ClearBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_ClearBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_ClearBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_ClearBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->ClearBond();
@@ -66212,7 +66331,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_CountFreeOxygens(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_CountFreeOxygens(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -66220,10 +66339,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_CountFreeOxygens(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_CountFreeOxygens",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_CountFreeOxygens",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_CountFreeOxygens" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_CountFreeOxygens" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->CountFreeOxygens();
@@ -66234,7 +66353,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ImplicitHydrogenCount(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_ImplicitHydrogenCount(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -66242,10 +66361,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ImplicitHydrogenCount(PyObject *SWIG
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_ImplicitHydrogenCount",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_ImplicitHydrogenCount",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_ImplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_ImplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->ImplicitHydrogenCount();
@@ -66256,7 +66375,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool arg2 ;
@@ -66268,15 +66387,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_0(PyObje
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_ExplicitHydrogenCount",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_ExplicitHydrogenCount",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_ExplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_ExplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_ExplicitHydrogenCount" "', argument " "2"" of type '" "bool""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_ExplicitHydrogenCount" "', argument " "2"" of type '" "bool""'");
   } 
   arg2 = static_cast< bool >(val2);
   result = (unsigned int)(*arg1)->ExplicitHydrogenCount(arg2);
@@ -66287,7 +66406,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -66295,10 +66414,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_1(PyObje
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_ExplicitHydrogenCount",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_ExplicitHydrogenCount",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_ExplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_ExplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->ExplicitHydrogenCount();
@@ -66309,7 +66428,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ExplicitHydrogenCount(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_ExplicitHydrogenCount(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -66325,7 +66444,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ExplicitHydrogenCount(PyObject *self
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_1(self, args);
+      return _wrap__OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_1(self, args);
     }
   }
   if (argc == 2) {
@@ -66339,18 +66458,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ExplicitHydrogenCount(PyObject *self
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_0(self, args);
+        return _wrap__OBMolAtomDFSIter_ExplicitHydrogenCount__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomDFSIter_ExplicitHydrogenCount'.\n  Possible C/C++ prototypes are:\n    ExplicitHydrogenCount(bool)\n    ExplicitHydrogenCount()\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_ExplicitHydrogenCount'.\n  Possible C/C++ prototypes are:\n    ExplicitHydrogenCount(bool)\n    ExplicitHydrogenCount()\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_MemberOfRingCount(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_MemberOfRingCount(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -66358,10 +66477,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_MemberOfRingCount(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_MemberOfRingCount",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_MemberOfRingCount",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_MemberOfRingCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_MemberOfRingCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->MemberOfRingCount();
@@ -66372,7 +66491,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_MemberOfRingSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_MemberOfRingSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -66380,10 +66499,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_MemberOfRingSize(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_MemberOfRingSize",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_MemberOfRingSize",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_MemberOfRingSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_MemberOfRingSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->MemberOfRingSize();
@@ -66394,7 +66513,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_CountRingBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_CountRingBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -66402,10 +66521,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_CountRingBonds(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_CountRingBonds",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_CountRingBonds",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_CountRingBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_CountRingBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->CountRingBonds();
@@ -66416,7 +66535,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SmallestBondAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SmallestBondAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -66424,10 +66543,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SmallestBondAngle(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SmallestBondAngle",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SmallestBondAngle",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SmallestBondAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SmallestBondAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->SmallestBondAngle();
@@ -66438,7 +66557,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_AverageBondAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_AverageBondAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   double result;
@@ -66446,10 +66565,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_AverageBondAngle(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_AverageBondAngle",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_AverageBondAngle",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_AverageBondAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_AverageBondAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (double)(*arg1)->AverageBondAngle();
@@ -66460,7 +66579,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BOSum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_BOSum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -66468,10 +66587,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BOSum(PyObject *SWIGUNUSEDPARM(self)
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_BOSum",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_BOSum",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_BOSum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_BOSum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->BOSum();
@@ -66482,7 +66601,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_KBOSum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_KBOSum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -66490,10 +66609,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_KBOSum(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_KBOSum",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_KBOSum",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_KBOSum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_KBOSum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->KBOSum();
@@ -66504,7 +66623,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HtoMethyl(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HtoMethyl(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66512,10 +66631,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HtoMethyl(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HtoMethyl",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HtoMethyl",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HtoMethyl" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HtoMethyl" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HtoMethyl();
@@ -66526,7 +66645,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetHybAndGeom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetHybAndGeom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int arg2 ;
@@ -66538,15 +66657,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetHybAndGeom(PyObject *SWIGUNUSEDPA
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetHybAndGeom",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetHybAndGeom",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetHybAndGeom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetHybAndGeom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_SetHybAndGeom" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_SetHybAndGeom" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   result = (bool)(*arg1)->SetHybAndGeom(arg2);
@@ -66557,17 +66676,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ForceNoH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_ForceNoH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_ForceNoH",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_ForceNoH",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_ForceNoH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_ForceNoH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   (*arg1)->ForceNoH();
@@ -66578,7 +66697,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasNoHForced(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasNoHForced(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66586,10 +66705,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasNoHForced(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasNoHForced",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasNoHForced",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasNoHForced" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasNoHForced" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HasNoHForced();
@@ -66600,7 +66719,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66608,10 +66727,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasResidue(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasResidue",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasResidue",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HasResidue();
@@ -66622,7 +66741,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66630,10 +66749,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHydrogen(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsHydrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsHydrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsHydrogen();
@@ -66644,7 +66763,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsCarbon(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsCarbon(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66652,10 +66771,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsCarbon(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsCarbon",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsCarbon",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsCarbon" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsCarbon" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsCarbon();
@@ -66666,7 +66785,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNitrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsNitrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66674,10 +66793,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNitrogen(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsNitrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsNitrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsNitrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsNitrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsNitrogen();
@@ -66688,7 +66807,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66696,10 +66815,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsOxygen(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsOxygen();
@@ -66710,7 +66829,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsSulfur(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsSulfur(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66718,10 +66837,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsSulfur(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsSulfur",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsSulfur",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsSulfur" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsSulfur" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsSulfur();
@@ -66732,7 +66851,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsPhosphorus(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsPhosphorus(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66740,10 +66859,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsPhosphorus(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsPhosphorus",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsPhosphorus",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsPhosphorus" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsPhosphorus" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsPhosphorus();
@@ -66754,7 +66873,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66762,10 +66881,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAromatic(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsAromatic",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsAromatic",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsAromatic();
@@ -66776,7 +66895,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66784,10 +66903,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsInRing(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsInRing",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsInRing",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsInRing" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsInRing" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsInRing();
@@ -66798,7 +66917,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsInRingSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsInRingSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   int arg2 ;
@@ -66810,15 +66929,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsInRingSize(PyObject *SWIGUNUSEDPAR
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsInRingSize",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsInRingSize",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsInRingSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsInRingSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_IsInRingSize" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_IsInRingSize" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   result = (bool)(*arg1)->IsInRingSize(arg2);
@@ -66829,7 +66948,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHeteroatom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsHeteroatom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66837,10 +66956,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHeteroatom(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsHeteroatom",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsHeteroatom",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsHeteroatom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsHeteroatom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsHeteroatom();
@@ -66851,7 +66970,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNotCorH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsNotCorH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66859,10 +66978,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNotCorH(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsNotCorH",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsNotCorH",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsNotCorH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsNotCorH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsNotCorH();
@@ -66873,7 +66992,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsConnected(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsConnected(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -66885,15 +67004,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsConnected(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsConnected",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsConnected",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsConnected" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsConnected" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_IsConnected" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_IsConnected" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (bool)(*arg1)->IsConnected(arg2);
@@ -66904,7 +67023,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsOneThree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsOneThree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -66916,15 +67035,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsOneThree(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsOneThree",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsOneThree",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsOneThree" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsOneThree" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_IsOneThree" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_IsOneThree" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (bool)(*arg1)->IsOneThree(arg2);
@@ -66935,7 +67054,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsOneFour(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsOneFour(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -66947,15 +67066,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsOneFour(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsOneFour",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsOneFour",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsOneFour" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsOneFour" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_IsOneFour" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_IsOneFour" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (bool)(*arg1)->IsOneFour(arg2);
@@ -66966,7 +67085,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsCarboxylOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsCarboxylOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66974,10 +67093,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsCarboxylOxygen(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsCarboxylOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsCarboxylOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsCarboxylOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsCarboxylOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsCarboxylOxygen();
@@ -66988,7 +67107,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsPhosphateOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsPhosphateOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -66996,10 +67115,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsPhosphateOxygen(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsPhosphateOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsPhosphateOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsPhosphateOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsPhosphateOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsPhosphateOxygen();
@@ -67010,7 +67129,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsSulfateOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsSulfateOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67018,10 +67137,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsSulfateOxygen(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsSulfateOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsSulfateOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsSulfateOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsSulfateOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsSulfateOxygen();
@@ -67032,7 +67151,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNitroOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsNitroOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67040,10 +67159,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNitroOxygen(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsNitroOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsNitroOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsNitroOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsNitroOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsNitroOxygen();
@@ -67054,7 +67173,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAmideNitrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsAmideNitrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67062,10 +67181,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAmideNitrogen(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsAmideNitrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsAmideNitrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsAmideNitrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsAmideNitrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsAmideNitrogen();
@@ -67076,7 +67195,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsPolarHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsPolarHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67084,10 +67203,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsPolarHydrogen(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsPolarHydrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsPolarHydrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsPolarHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsPolarHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsPolarHydrogen();
@@ -67098,7 +67217,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNonPolarHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsNonPolarHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67106,10 +67225,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNonPolarHydrogen(PyObject *SWIGUNU
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsNonPolarHydrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsNonPolarHydrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsNonPolarHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsNonPolarHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsNonPolarHydrogen();
@@ -67120,7 +67239,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAromaticNOxide(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsAromaticNOxide(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67128,10 +67247,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAromaticNOxide(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsAromaticNOxide",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsAromaticNOxide",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsAromaticNOxide" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsAromaticNOxide" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsAromaticNOxide();
@@ -67142,7 +67261,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsChiral(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsChiral(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67150,10 +67269,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsChiral(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsChiral",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsChiral",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsChiral" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsChiral" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsChiral();
@@ -67164,7 +67283,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAxial(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsAxial(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67172,10 +67291,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAxial(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsAxial",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsAxial",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsAxial" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsAxial" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsAxial();
@@ -67186,7 +67305,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsClockwise(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsClockwise(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67194,10 +67313,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsClockwise(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsClockwise",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsClockwise",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsClockwise" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsClockwise" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsClockwise();
@@ -67208,7 +67327,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAntiClockwise(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsAntiClockwise(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67216,10 +67335,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsAntiClockwise(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsAntiClockwise",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsAntiClockwise",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsAntiClockwise" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsAntiClockwise" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsAntiClockwise();
@@ -67230,7 +67349,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsPositiveStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsPositiveStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67238,10 +67357,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsPositiveStereo(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsPositiveStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsPositiveStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsPositiveStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsPositiveStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsPositiveStereo();
@@ -67252,7 +67371,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNegativeStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsNegativeStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67260,10 +67379,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsNegativeStereo(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsNegativeStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsNegativeStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsNegativeStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsNegativeStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsNegativeStereo();
@@ -67274,7 +67393,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasChiralitySpecified(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasChiralitySpecified(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67282,10 +67401,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasChiralitySpecified(PyObject *SWIG
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasChiralitySpecified",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasChiralitySpecified",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasChiralitySpecified" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasChiralitySpecified" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HasChiralitySpecified();
@@ -67296,7 +67415,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasChiralVolume(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasChiralVolume(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67304,10 +67423,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasChiralVolume(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasChiralVolume",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasChiralVolume",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasChiralVolume" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasChiralVolume" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HasChiralVolume();
@@ -67318,7 +67437,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHbondAcceptor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsHbondAcceptor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67326,10 +67445,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHbondAcceptor(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsHbondAcceptor",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsHbondAcceptor",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsHbondAcceptor" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsHbondAcceptor" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsHbondAcceptor();
@@ -67340,7 +67459,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHbondDonor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsHbondDonor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67348,10 +67467,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHbondDonor(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsHbondDonor",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsHbondDonor",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsHbondDonor" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsHbondDonor" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsHbondDonor();
@@ -67362,7 +67481,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHbondDonorH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_IsHbondDonorH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67370,10 +67489,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_IsHbondDonorH(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_IsHbondDonorH",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_IsHbondDonorH",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_IsHbondDonorH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_IsHbondDonorH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->IsHbondDonorH();
@@ -67384,7 +67503,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool arg2 ;
@@ -67396,15 +67515,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_0(PyObject *
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasAlphaBetaUnsat",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasAlphaBetaUnsat",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasAlphaBetaUnsat" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasAlphaBetaUnsat" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_HasAlphaBetaUnsat" "', argument " "2"" of type '" "bool""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_HasAlphaBetaUnsat" "', argument " "2"" of type '" "bool""'");
   } 
   arg2 = static_cast< bool >(val2);
   result = (bool)(*arg1)->HasAlphaBetaUnsat(arg2);
@@ -67415,7 +67534,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67423,10 +67542,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_1(PyObject *
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasAlphaBetaUnsat",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasAlphaBetaUnsat",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasAlphaBetaUnsat" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasAlphaBetaUnsat" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HasAlphaBetaUnsat();
@@ -67437,7 +67556,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasAlphaBetaUnsat(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -67453,7 +67572,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat(PyObject *self, Py
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_1(self, args);
+      return _wrap__OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_1(self, args);
     }
   }
   if (argc == 2) {
@@ -67467,18 +67586,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat(PyObject *self, Py
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_0(self, args);
+        return _wrap__OBMolAtomDFSIter_HasAlphaBetaUnsat__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomDFSIter_HasAlphaBetaUnsat'.\n  Possible C/C++ prototypes are:\n    HasAlphaBetaUnsat(bool)\n    HasAlphaBetaUnsat()\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_HasAlphaBetaUnsat'.\n  Possible C/C++ prototypes are:\n    HasAlphaBetaUnsat(bool)\n    HasAlphaBetaUnsat()\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasBondOfOrder(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasBondOfOrder(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int arg2 ;
@@ -67490,15 +67609,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasBondOfOrder(PyObject *SWIGUNUSEDP
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasBondOfOrder",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasBondOfOrder",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasBondOfOrder" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasBondOfOrder" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_HasBondOfOrder" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_HasBondOfOrder" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   result = (bool)(*arg1)->HasBondOfOrder(arg2);
@@ -67509,7 +67628,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_CountBondsOfOrder(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_CountBondsOfOrder(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int arg2 ;
@@ -67521,15 +67640,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_CountBondsOfOrder(PyObject *SWIGUNUS
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_CountBondsOfOrder",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_CountBondsOfOrder",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_CountBondsOfOrder" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_CountBondsOfOrder" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_CountBondsOfOrder" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_CountBondsOfOrder" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   result = (int)(*arg1)->CountBondsOfOrder(arg2);
@@ -67540,7 +67659,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasNonSingleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasNonSingleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67548,10 +67667,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasNonSingleBond(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasNonSingleBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasNonSingleBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasNonSingleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasNonSingleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HasNonSingleBond();
@@ -67562,7 +67681,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasSingleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasSingleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67570,10 +67689,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasSingleBond(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasSingleBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasSingleBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasSingleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasSingleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HasSingleBond();
@@ -67584,7 +67703,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasDoubleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasDoubleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67592,10 +67711,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasDoubleBond(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasDoubleBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasDoubleBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasDoubleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasDoubleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HasDoubleBond();
@@ -67606,7 +67725,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasAromaticBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasAromaticBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   bool result;
@@ -67614,10 +67733,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasAromaticBond(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasAromaticBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasAromaticBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasAromaticBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasAromaticBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (bool)(*arg1)->HasAromaticBond();
@@ -67628,7 +67747,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_MatchesSMARTS(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_MatchesSMARTS(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -67641,15 +67760,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_MatchesSMARTS(PyObject *SWIGUNUSEDPA
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_MatchesSMARTS",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_MatchesSMARTS",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_MatchesSMARTS" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_MatchesSMARTS" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_MatchesSMARTS" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_MatchesSMARTS" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
   result = (bool)(*arg1)->MatchesSMARTS((char const *)arg2);
@@ -67662,7 +67781,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DoTransformations(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_DoTransformations(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > *arg2 = (std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > *) 0 ;
@@ -67674,15 +67793,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DoTransformations(PyObject *SWIGUNUS
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_DoTransformations",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_DoTransformations",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_DoTransformations" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_DoTransformations" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_DoTransformations" "', argument " "2"" of type '" "std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_DoTransformations" "', argument " "2"" of type '" "std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > const *""'"); 
   }
   arg2 = reinterpret_cast< std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > * >(argp2);
   result = (OpenBabel::OBBase *)(*arg1)->DoTransformations((std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > const *)arg2);
@@ -67693,7 +67812,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ClassDescription(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_ClassDescription(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   char *result = 0 ;
@@ -67701,10 +67820,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_ClassDescription(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_ClassDescription",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_ClassDescription",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_ClassDescription" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_ClassDescription" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (char *)(*arg1)->ClassDescription();
@@ -67715,7 +67834,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::string *arg2 = 0 ;
@@ -67726,20 +67845,20 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData__SWIG_0(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   {
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -67753,7 +67872,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -67766,15 +67885,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData__SWIG_1(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_HasData" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_HasData" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
   result = (bool)(*arg1)->HasData((char const *)arg2);
@@ -67787,7 +67906,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int arg2 ;
@@ -67799,15 +67918,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData__SWIG_2(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_HasData" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_HasData" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   result = (bool)(*arg1)->HasData(arg2);
@@ -67818,7 +67937,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_HasData(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -67839,7 +67958,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData(PyObject *self, PyObject *ar
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_HasData__SWIG_2(self, args);
+        return _wrap__OBMolAtomDFSIter_HasData__SWIG_2(self, args);
       }
     }
   }
@@ -67852,7 +67971,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData(PyObject *self, PyObject *ar
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_HasData__SWIG_0(self, args);
+        return _wrap__OBMolAtomDFSIter_HasData__SWIG_0(self, args);
       }
     }
   }
@@ -67865,18 +67984,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_HasData(PyObject *self, PyObject *ar
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_HasData__SWIG_1(self, args);
+        return _wrap__OBMolAtomDFSIter_HasData__SWIG_1(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomDFSIter_HasData'.\n  Possible C/C++ prototypes are:\n    HasData(std::string const &)\n    HasData(char const *)\n    HasData(unsigned int const)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_HasData'.\n  Possible C/C++ prototypes are:\n    HasData(std::string const &)\n    HasData(char const *)\n    HasData(unsigned int const)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_DeleteData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int arg2 ;
@@ -67887,15 +68006,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData__SWIG_0(PyObject *SWIGUNU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_DeleteData" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_DeleteData" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   (*arg1)->DeleteData(arg2);
@@ -67906,7 +68025,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_DeleteData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBGenericData *arg2 = (OpenBabel::OBGenericData *) 0 ;
@@ -67917,15 +68036,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData__SWIG_1(PyObject *SWIGUNU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_DeleteData" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_DeleteData" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBGenericData * >(argp2);
   (*arg1)->DeleteData(arg2);
@@ -67936,7 +68055,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_DeleteData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > *arg2 = 0 ;
@@ -67947,18 +68066,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData__SWIG_2(PyObject *SWIGUNU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_DeleteData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_DeleteData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_DeleteData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_DeleteData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > * >(argp2);
   (*arg1)->DeleteData(*arg2);
@@ -67969,7 +68088,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_DeleteData(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -67989,7 +68108,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData(PyObject *self, PyObject 
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBGenericData, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_DeleteData__SWIG_1(self, args);
+        return _wrap__OBMolAtomDFSIter_DeleteData__SWIG_1(self, args);
       }
     }
   }
@@ -68003,7 +68122,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData(PyObject *self, PyObject 
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_DeleteData__SWIG_2(self, args);
+        return _wrap__OBMolAtomDFSIter_DeleteData__SWIG_2(self, args);
       }
     }
   }
@@ -68018,18 +68137,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DeleteData(PyObject *self, PyObject 
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_DeleteData__SWIG_0(self, args);
+        return _wrap__OBMolAtomDFSIter_DeleteData__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomDFSIter_DeleteData'.\n  Possible C/C++ prototypes are:\n    DeleteData(unsigned int)\n    DeleteData(OpenBabel::OBGenericData *)\n    DeleteData(std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_DeleteData'.\n  Possible C/C++ prototypes are:\n    DeleteData(unsigned int)\n    DeleteData(OpenBabel::OBGenericData *)\n    DeleteData(std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_SetData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::OBGenericData *arg2 = (OpenBabel::OBGenericData *) 0 ;
@@ -68040,15 +68159,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_SetData(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_SetData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_SetData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_SetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_SetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_SetData" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_SetData" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBGenericData * >(argp2);
   (*arg1)->SetData(arg2);
@@ -68059,7 +68178,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DataSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_DataSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int result;
@@ -68067,10 +68186,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_DataSize(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_DataSize",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_DataSize",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_DataSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_DataSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (unsigned int)(*arg1)->DataSize();
@@ -68081,7 +68200,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   unsigned int arg2 ;
@@ -68093,15 +68212,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData__SWIG_0(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomDFSIter_GetData" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomDFSIter_GetData" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   result = (OpenBabel::OBGenericData *)(*arg1)->GetData(arg2);
@@ -68112,7 +68231,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::string *arg2 = 0 ;
@@ -68123,20 +68242,20 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData__SWIG_1(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   {
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomDFSIter_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomDFSIter_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -68150,7 +68269,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -68163,15 +68282,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData__SWIG_2(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomDFSIter_GetData" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomDFSIter_GetData" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
   result = (OpenBabel::OBGenericData *)(*arg1)->GetData((char const *)arg2);
@@ -68184,7 +68303,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetData__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > *result = 0 ;
@@ -68192,10 +68311,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData__SWIG_3(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_GetData",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetData",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   {
@@ -68209,7 +68328,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetData(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -68225,7 +68344,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData(PyObject *self, PyObject *ar
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBMolAtomDFSIter_GetData__SWIG_3(self, args);
+      return _wrap__OBMolAtomDFSIter_GetData__SWIG_3(self, args);
     }
   }
   if (argc == 2) {
@@ -68239,7 +68358,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData(PyObject *self, PyObject *ar
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_GetData__SWIG_0(self, args);
+        return _wrap__OBMolAtomDFSIter_GetData__SWIG_0(self, args);
       }
     }
   }
@@ -68252,7 +68371,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData(PyObject *self, PyObject *ar
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_GetData__SWIG_1(self, args);
+        return _wrap__OBMolAtomDFSIter_GetData__SWIG_1(self, args);
       }
     }
   }
@@ -68265,18 +68384,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_GetData(PyObject *self, PyObject *ar
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomDFSIter_GetData__SWIG_2(self, args);
+        return _wrap__OBMolAtomDFSIter_GetData__SWIG_2(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomDFSIter_GetData'.\n  Possible C/C++ prototypes are:\n    GetData(unsigned int const)\n    GetData(std::string const &)\n    GetData(char const *)\n    GetData()\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_GetData'.\n  Possible C/C++ prototypes are:\n    GetData(unsigned int const)\n    GetData(std::string const &)\n    GetData(char const *)\n    GetData()\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BeginData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_BeginData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   SwigValueWrapper<std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator > result;
@@ -68284,10 +68403,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_BeginData(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_BeginData",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_BeginData",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_BeginData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_BeginData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (*arg1)->BeginData();
@@ -68299,7 +68418,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_EndData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_EndData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   SwigValueWrapper<std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator > result;
@@ -68307,10 +68426,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomDFSIter_EndData(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomDFSIter_EndData",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_EndData",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter_EndData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_EndData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   result = (*arg1)->EndData();
@@ -68322,22 +68441,22 @@ fail:
 }
 
 
-SWIGINTERN PyObject *OBMolAtomDFSIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolAtomDFSIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *OBMolAtomDFSIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolAtomDFSIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_OBMolAtomBFSIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAtomBFSIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *result = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAtomBFSIter",0,0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolAtomBFSIter",0,0)) SWIG_fail;
   result = (OpenBabel::OBMolAtomBFSIter *)new OpenBabel::OBMolAtomBFSIter();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -68346,7 +68465,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolAtomBFSIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAtomBFSIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
   OpenBabel::OBMolAtomBFSIter *result = 0 ;
@@ -68354,10 +68473,10 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomBFSIter__SWIG_1(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAtomBFSIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolAtomBFSIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolAtomBFSIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolAtomBFSIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   result = (OpenBabel::OBMolAtomBFSIter *)new OpenBabel::OBMolAtomBFSIter(arg1);
@@ -68368,7 +68487,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolAtomBFSIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAtomBFSIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = 0 ;
   OpenBabel::OBMolAtomBFSIter *result = 0 ;
@@ -68376,13 +68495,13 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomBFSIter__SWIG_2(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAtomBFSIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolAtomBFSIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolAtomBFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolAtomBFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolAtomBFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new__OBMolAtomBFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const &""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (OpenBabel::OBMolAtomBFSIter *)new OpenBabel::OBMolAtomBFSIter((OpenBabel::OBMolAtomBFSIter const &)*arg1);
@@ -68393,7 +68512,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolAtomBFSIter(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAtomBFSIter(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[2];
   int ii;
@@ -68404,7 +68523,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomBFSIter(PyObject *self, PyObject *args) 
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_OBMolAtomBFSIter__SWIG_0(self, args);
+    return _wrap_new__OBMolAtomBFSIter__SWIG_0(self, args);
   }
   if (argc == 1) {
     int _v;
@@ -68412,7 +68531,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomBFSIter(PyObject *self, PyObject *args) 
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolAtomBFSIter__SWIG_1(self, args);
+      return _wrap_new__OBMolAtomBFSIter__SWIG_1(self, args);
     }
   }
   if (argc == 1) {
@@ -68420,17 +68539,136 @@ SWIGINTERN PyObject *_wrap_new_OBMolAtomBFSIter(PyObject *self, PyObject *args) 
     int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolAtomBFSIter__SWIG_2(self, args);
+      return _wrap_new__OBMolAtomBFSIter__SWIG_2(self, args);
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBMolAtomBFSIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolAtomBFSIter()\n    OpenBabel::OBMolAtomBFSIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolAtomBFSIter(OpenBabel::OBMolAtomBFSIter const &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new__OBMolAtomBFSIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolAtomBFSIter()\n    OpenBabel::OBMolAtomBFSIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolAtomBFSIter(OpenBabel::OBMolAtomBFSIter const &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter___deref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_good(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_good",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
+  result = (bool)((OpenBabel::OBMolAtomBFSIter const *)arg1)->operator bool();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_inc__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
+  OpenBabel::OBMolAtomBFSIter *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_inc",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
+  {
+    OpenBabel::OBMolAtomBFSIter &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::OBMolAtomBFSIter *) &_result_ref;
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_inc__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
+  int arg2 ;
+  OpenBabel::OBMolAtomBFSIter result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_inc",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_inc" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (arg1)->operator ++(arg2);
+  resultobj = SWIG_NewPointerObj((new OpenBabel::OBMolAtomBFSIter(static_cast< const OpenBabel::OBMolAtomBFSIter& >(result))), SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_inc(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolAtomBFSIter_inc__SWIG_0(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap__OBMolAtomBFSIter_inc__SWIG_1(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_inc'.\n  Possible C/C++ prototypes are:\n    operator ++()\n    operator ++(int)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_deref(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -68438,10 +68676,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter___deref__(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter___deref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_deref",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter___deref__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_deref" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (OpenBabel::OBAtom *)((OpenBabel::OBMolAtomBFSIter const *)arg1)->operator ->();
@@ -68452,7 +68690,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -68460,10 +68698,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter___ref__(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter___ref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter___ref__",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   {
@@ -68477,17 +68715,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_OBMolAtomBFSIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_delete__OBMolAtomBFSIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"delete_OBMolAtomBFSIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"delete__OBMolAtomBFSIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBMolAtomBFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete__OBMolAtomBFSIter" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   delete arg1;
@@ -68499,7 +68737,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_Visit_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_Visit_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool arg2 ;
@@ -68510,15 +68748,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_Visit_set(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_Visit_set",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_Visit_set",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_Visit_set" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_Visit_set" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_Visit_set" "', argument " "2"" of type '" "bool""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_Visit_set" "', argument " "2"" of type '" "bool""'");
   } 
   arg2 = static_cast< bool >(val2);
   if (arg1) (*arg1)->Visit = arg2;
@@ -68530,7 +68768,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_Visit_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_Visit_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -68538,10 +68776,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_Visit_get(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_Visit_get",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_Visit_get",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_Visit_get" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_Visit_get" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool) ((*arg1)->Visit);
@@ -68552,17 +68790,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_Clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_Clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_Clear",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_Clear",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_Clear" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_Clear" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->Clear();
@@ -68573,7 +68811,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int arg2 ;
@@ -68584,15 +68822,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetIdx(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetIdx",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetIdx",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetIdx" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetIdx" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetIdx(arg2);
@@ -68603,7 +68841,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetHyb(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetHyb(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int arg2 ;
@@ -68614,15 +68852,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetHyb(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetHyb",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetHyb",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetHyb" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetHyb" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetHyb" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetHyb" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetHyb(arg2);
@@ -68633,7 +68871,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetAtomicNum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetAtomicNum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int arg2 ;
@@ -68644,15 +68882,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetAtomicNum(PyObject *SWIGUNUSEDPAR
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetAtomicNum",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetAtomicNum",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetAtomicNum" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetAtomicNum" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetAtomicNum(arg2);
@@ -68663,7 +68901,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetIsotope(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetIsotope(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int arg2 ;
@@ -68674,15 +68912,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetIsotope(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetIsotope",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetIsotope",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetIsotope" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetIsotope" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetIsotope" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetIsotope" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   (*arg1)->SetIsotope(arg2);
@@ -68693,7 +68931,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int arg2 ;
@@ -68704,15 +68942,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetImplicitValence(PyObject *SWIGUNU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetImplicitValence",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetImplicitValence",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetImplicitValence" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetImplicitValence" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetImplicitValence(arg2);
@@ -68723,17 +68961,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IncrementImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IncrementImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IncrementImplicitValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IncrementImplicitValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IncrementImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IncrementImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->IncrementImplicitValence();
@@ -68744,17 +68982,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DecrementImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_DecrementImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_DecrementImplicitValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_DecrementImplicitValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_DecrementImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_DecrementImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->DecrementImplicitValence();
@@ -68765,7 +69003,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetFormalCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetFormalCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int arg2 ;
@@ -68776,15 +69014,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetFormalCharge(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetFormalCharge",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetFormalCharge",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetFormalCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetFormalCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetFormalCharge" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetFormalCharge" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetFormalCharge(arg2);
@@ -68795,7 +69033,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetSpinMultiplicity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetSpinMultiplicity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   short arg2 ;
@@ -68806,15 +69044,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetSpinMultiplicity(PyObject *SWIGUN
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetSpinMultiplicity",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetSpinMultiplicity",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetSpinMultiplicity" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetSpinMultiplicity" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_short(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetSpinMultiplicity" "', argument " "2"" of type '" "short""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetSpinMultiplicity" "', argument " "2"" of type '" "short""'");
   } 
   arg2 = static_cast< short >(val2);
   (*arg1)->SetSpinMultiplicity(arg2);
@@ -68825,7 +69063,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetType__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetType__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -68837,15 +69075,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetType__SWIG_0(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetType",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetType",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_SetType" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_SetType" "', argument " "2"" of type '" "char *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
   (*arg1)->SetType(arg2);
@@ -68858,7 +69096,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetType__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetType__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::string *arg2 = 0 ;
@@ -68869,18 +69107,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetType__SWIG_1(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetType",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetType",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__string,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_SetType" "', argument " "2"" of type '" "std::string &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_SetType" "', argument " "2"" of type '" "std::string &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_SetType" "', argument " "2"" of type '" "std::string &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_SetType" "', argument " "2"" of type '" "std::string &""'"); 
   }
   arg2 = reinterpret_cast< std::string * >(argp2);
   (*arg1)->SetType(*arg2);
@@ -68891,7 +69129,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetType(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetType(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -68911,7 +69149,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetType(PyObject *self, PyObject *ar
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_SetType__SWIG_1(self, args);
+        return _wrap__OBMolAtomBFSIter_SetType__SWIG_1(self, args);
       }
     }
   }
@@ -68924,18 +69162,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetType(PyObject *self, PyObject *ar
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_SetType__SWIG_0(self, args);
+        return _wrap__OBMolAtomBFSIter_SetType__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomBFSIter_SetType'.\n  Possible C/C++ prototypes are:\n    SetType(char *)\n    SetType(std::string &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_SetType'.\n  Possible C/C++ prototypes are:\n    SetType(char *)\n    SetType(std::string &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetPartialCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetPartialCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double arg2 ;
@@ -68946,15 +69184,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetPartialCharge(PyObject *SWIGUNUSE
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetPartialCharge",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetPartialCharge",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetPartialCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetPartialCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetPartialCharge" "', argument " "2"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetPartialCharge" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
   (*arg1)->SetPartialCharge(arg2);
@@ -68965,7 +69203,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::vector3 *arg2 = 0 ;
@@ -68976,18 +69214,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector__SWIG_0(PyObject *SWIGUNUS
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetVector",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetVector",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
   (*arg1)->SetVector(*arg2);
@@ -68998,7 +69236,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double arg2 ;
@@ -69017,25 +69255,25 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector__SWIG_1(PyObject *SWIGUNUS
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetVector",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetVector",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetVector" "', argument " "2"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetVector" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBMolAtomBFSIter_SetVector" "', argument " "3"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "_OBMolAtomBFSIter_SetVector" "', argument " "3"" of type '" "double""'");
   } 
   arg3 = static_cast< double >(val3);
   ecode4 = SWIG_AsVal_double(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "OBMolAtomBFSIter_SetVector" "', argument " "4"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "_OBMolAtomBFSIter_SetVector" "', argument " "4"" of type '" "double""'");
   } 
   arg4 = static_cast< double >(val4);
   (*arg1)->SetVector(arg2,arg3,arg4);
@@ -69046,17 +69284,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetVector",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetVector",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->SetVector();
@@ -69067,7 +69305,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetVector(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[5];
   int ii;
@@ -69083,7 +69321,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector(PyObject *self, PyObject *
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBMolAtomBFSIter_SetVector__SWIG_2(self, args);
+      return _wrap__OBMolAtomBFSIter_SetVector__SWIG_2(self, args);
     }
   }
   if (argc == 2) {
@@ -69096,7 +69334,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector(PyObject *self, PyObject *
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_SetVector__SWIG_0(self, args);
+        return _wrap__OBMolAtomBFSIter_SetVector__SWIG_0(self, args);
       }
     }
   }
@@ -69121,7 +69359,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector(PyObject *self, PyObject *
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_OBMolAtomBFSIter_SetVector__SWIG_1(self, args);
+            return _wrap__OBMolAtomBFSIter_SetVector__SWIG_1(self, args);
           }
         }
       }
@@ -69129,12 +69367,12 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetVector(PyObject *self, PyObject *
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomBFSIter_SetVector'.\n  Possible C/C++ prototypes are:\n    SetVector(OpenBabel::vector3 &)\n    SetVector(double const,double const,double const)\n    SetVector()\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_SetVector'.\n  Possible C/C++ prototypes are:\n    SetVector(OpenBabel::vector3 &)\n    SetVector(double const,double const,double const)\n    SetVector()\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetCoordPtr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetCoordPtr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double **arg2 = (double **) 0 ;
@@ -69145,15 +69383,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetCoordPtr(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetCoordPtr",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetCoordPtr",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetCoordPtr" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetCoordPtr" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_double, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_SetCoordPtr" "', argument " "2"" of type '" "double **""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_SetCoordPtr" "', argument " "2"" of type '" "double **""'"); 
   }
   arg2 = reinterpret_cast< double ** >(argp2);
   (*arg1)->SetCoordPtr(arg2);
@@ -69164,7 +69402,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBResidue *arg2 = (OpenBabel::OBResidue *) 0 ;
@@ -69175,15 +69413,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetResidue(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetResidue",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetResidue",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBResidue, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_SetResidue" "', argument " "2"" of type '" "OpenBabel::OBResidue *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_SetResidue" "', argument " "2"" of type '" "OpenBabel::OBResidue *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBResidue * >(argp2);
   (*arg1)->SetResidue(arg2);
@@ -69194,7 +69432,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBMol *arg2 = (OpenBabel::OBMol *) 0 ;
@@ -69205,15 +69443,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetParent(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetParent",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetParent",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetParent" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetParent" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_SetParent" "', argument " "2"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_SetParent" "', argument " "2"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBMol * >(argp2);
   (*arg1)->SetParent(arg2);
@@ -69224,17 +69462,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetAromatic",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetAromatic",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->SetAromatic();
@@ -69245,17 +69483,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_UnsetAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_UnsetAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_UnsetAromatic",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_UnsetAromatic",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_UnsetAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_UnsetAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->UnsetAromatic();
@@ -69266,17 +69504,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetClockwiseStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetClockwiseStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetClockwiseStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetClockwiseStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetClockwiseStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetClockwiseStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->SetClockwiseStereo();
@@ -69287,17 +69525,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetAntiClockwiseStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetAntiClockwiseStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetAntiClockwiseStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetAntiClockwiseStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetAntiClockwiseStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetAntiClockwiseStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->SetAntiClockwiseStereo();
@@ -69308,17 +69546,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetPositiveStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetPositiveStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetPositiveStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetPositiveStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetPositiveStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetPositiveStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->SetPositiveStereo();
@@ -69329,17 +69567,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetNegativeStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetNegativeStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetNegativeStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetNegativeStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetNegativeStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetNegativeStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->SetNegativeStereo();
@@ -69350,17 +69588,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_UnsetStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_UnsetStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_UnsetStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_UnsetStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_UnsetStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_UnsetStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->UnsetStereo();
@@ -69371,17 +69609,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetInRing",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetInRing",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetInRing" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetInRing" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->SetInRing();
@@ -69392,17 +69630,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetChiral(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetChiral(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetChiral",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetChiral",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetChiral" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetChiral" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->SetChiral();
@@ -69413,17 +69651,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ClearCoordPtr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_ClearCoordPtr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_ClearCoordPtr",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_ClearCoordPtr",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_ClearCoordPtr" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_ClearCoordPtr" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->ClearCoordPtr();
@@ -69434,7 +69672,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetFormalCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetFormalCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int result;
@@ -69442,10 +69680,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetFormalCharge(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetFormalCharge",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetFormalCharge",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetFormalCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetFormalCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (int)(*arg1)->GetFormalCharge();
@@ -69456,7 +69694,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAtomicNum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetAtomicNum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -69464,10 +69702,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAtomicNum(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetAtomicNum",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetAtomicNum",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetAtomicNum();
@@ -69478,7 +69716,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetIsotope(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetIsotope(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned short result;
@@ -69486,10 +69724,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetIsotope(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetIsotope",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetIsotope",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetIsotope" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetIsotope" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned short)(*arg1)->GetIsotope();
@@ -69500,7 +69738,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetSpinMultiplicity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetSpinMultiplicity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int result;
@@ -69508,10 +69746,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetSpinMultiplicity(PyObject *SWIGUN
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetSpinMultiplicity",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetSpinMultiplicity",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetSpinMultiplicity" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetSpinMultiplicity" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (int)(*arg1)->GetSpinMultiplicity();
@@ -69522,7 +69760,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAtomicMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetAtomicMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -69530,10 +69768,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAtomicMass(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetAtomicMass",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetAtomicMass",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetAtomicMass" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetAtomicMass" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->GetAtomicMass();
@@ -69544,7 +69782,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetExactMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetExactMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -69552,10 +69790,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetExactMass(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetExactMass",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetExactMass",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetExactMass" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetExactMass" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->GetExactMass();
@@ -69566,7 +69804,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -69574,10 +69812,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetIdx(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetIdx",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetIdx",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetIdx();
@@ -69588,7 +69826,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetCoordinateIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetCoordinateIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -69596,10 +69834,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetCoordinateIdx(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetCoordinateIdx",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetCoordinateIdx",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetCoordinateIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetCoordinateIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetCoordinateIdx();
@@ -69610,7 +69848,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetCIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetCIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -69618,10 +69856,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetCIdx(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetCIdx",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetCIdx",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetCIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetCIdx" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetCIdx();
@@ -69632,7 +69870,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -69640,10 +69878,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetValence(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetValence();
@@ -69654,7 +69892,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetHyb(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetHyb(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -69662,10 +69900,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetHyb(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetHyb",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetHyb",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetHyb" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetHyb" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetHyb();
@@ -69676,7 +69914,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetImplicitValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -69684,10 +69922,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetImplicitValence(PyObject *SWIGUNU
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetImplicitValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetImplicitValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetImplicitValence();
@@ -69698,7 +69936,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetHvyValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetHvyValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -69706,10 +69944,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetHvyValence(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetHvyValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetHvyValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetHvyValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetHvyValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetHvyValence();
@@ -69720,7 +69958,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetHeteroValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetHeteroValence(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -69728,10 +69966,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetHeteroValence(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetHeteroValence",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetHeteroValence",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetHeteroValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetHeteroValence" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->GetHeteroValence();
@@ -69742,7 +69980,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   char *result = 0 ;
@@ -69750,10 +69988,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetType(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetType",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetType",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetType" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (char *)(*arg1)->GetType();
@@ -69764,7 +70002,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetX(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetX(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -69772,10 +70010,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetX(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetX",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetX",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetX" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetX" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->GetX();
@@ -69786,7 +70024,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_x(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_x(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -69794,10 +70032,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_x(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_x",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_x",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_x" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_x" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->x();
@@ -69808,7 +70046,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetY(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetY(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -69816,10 +70054,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetY(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetY",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetY",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetY" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetY" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->GetY();
@@ -69830,7 +70068,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_y(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_y(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -69838,10 +70076,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_y(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_y",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_y",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_y" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_y" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->y();
@@ -69852,7 +70090,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -69860,10 +70098,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetZ(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetZ",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetZ",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetZ" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetZ" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->GetZ();
@@ -69874,7 +70112,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_z(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_z(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -69882,10 +70120,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_z(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_z",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_z",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_z" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_z" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->z();
@@ -69896,7 +70134,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetCoordinate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetCoordinate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double *result = 0 ;
@@ -69904,10 +70142,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetCoordinate(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetCoordinate",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetCoordinate",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetCoordinate" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetCoordinate" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double *)(*arg1)->GetCoordinate();
@@ -69918,7 +70156,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -69926,10 +70164,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetVector(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetVector",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetVector",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   {
@@ -69943,7 +70181,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetPartialCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetPartialCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -69951,10 +70189,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetPartialCharge(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetPartialCharge",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetPartialCharge",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetPartialCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetPartialCharge" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->GetPartialCharge();
@@ -69965,7 +70203,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBResidue *result = 0 ;
@@ -69973,10 +70211,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetResidue(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetResidue",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetResidue",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (OpenBabel::OBResidue *)(*arg1)->GetResidue();
@@ -69987,7 +70225,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBMol *result = 0 ;
@@ -69995,10 +70233,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetParent(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetParent",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetParent",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetParent" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetParent" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (OpenBabel::OBMol *)(*arg1)->GetParent();
@@ -70009,7 +70247,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetNewBondVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetNewBondVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::vector3 *arg2 = 0 ;
@@ -70025,23 +70263,23 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetNewBondVector(PyObject *SWIGUNUSE
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetNewBondVector",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetNewBondVector",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetNewBondVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetNewBondVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_GetNewBondVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_GetNewBondVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_GetNewBondVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_GetNewBondVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBMolAtomBFSIter_GetNewBondVector" "', argument " "3"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "_OBMolAtomBFSIter_GetNewBondVector" "', argument " "3"" of type '" "double""'");
   } 
   arg3 = static_cast< double >(val3);
   result = (bool)(*arg1)->GetNewBondVector(*arg2,arg3);
@@ -70052,7 +70290,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -70064,15 +70302,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetBond(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_GetBond" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_GetBond" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (OpenBabel::OBBond *)(*arg1)->GetBond(arg2);
@@ -70083,7 +70321,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetNextAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetNextAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -70091,10 +70329,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetNextAtom(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetNextAtom",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetNextAtom",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetNextAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetNextAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (OpenBabel::OBAtom *)(*arg1)->GetNextAtom();
@@ -70105,7 +70343,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BeginBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_BeginBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   SwigValueWrapper<std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator > result;
@@ -70113,10 +70351,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BeginBonds(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_BeginBonds",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_BeginBonds",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_BeginBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_BeginBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (*arg1)->BeginBonds();
@@ -70127,7 +70365,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_EndBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_EndBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   SwigValueWrapper<std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator > result;
@@ -70135,10 +70373,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_EndBonds(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_EndBonds",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_EndBonds",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_EndBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_EndBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (*arg1)->EndBonds();
@@ -70149,7 +70387,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BeginBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_BeginBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -70161,18 +70399,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BeginBond(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_BeginBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_BeginBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_BeginBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_BeginBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   result = (OpenBabel::OBBond *)(*arg1)->BeginBond(*arg2);
@@ -70183,7 +70421,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_NextBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_NextBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -70195,18 +70433,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_NextBond(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_NextBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_NextBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_NextBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_NextBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   result = (OpenBabel::OBBond *)(*arg1)->NextBond(*arg2);
@@ -70217,7 +70455,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BeginNbrAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_BeginNbrAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -70229,18 +70467,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BeginNbrAtom(PyObject *SWIGUNUSEDPAR
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_BeginNbrAtom",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_BeginNbrAtom",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_BeginNbrAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_BeginNbrAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_BeginNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_BeginNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_BeginNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_BeginNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   result = (OpenBabel::OBAtom *)(*arg1)->BeginNbrAtom(*arg2);
@@ -70251,7 +70489,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_NextNbrAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_NextNbrAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -70263,18 +70501,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_NextNbrAtom(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_NextNbrAtom",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_NextNbrAtom",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_NextNbrAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_NextNbrAtom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_NextNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_NextNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_NextNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_NextNbrAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   result = (OpenBabel::OBAtom *)(*arg1)->NextNbrAtom(*arg2);
@@ -70285,7 +70523,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetDistance__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetDistance__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int arg2 ;
@@ -70297,15 +70535,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetDistance__SWIG_0(PyObject *SWIGUN
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetDistance",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetDistance",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetDistance" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetDistance" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_GetDistance" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_GetDistance" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   result = (double)(*arg1)->GetDistance(arg2);
@@ -70316,7 +70554,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetDistance__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetDistance__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -70328,15 +70566,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetDistance__SWIG_1(PyObject *SWIGUN
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetDistance",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetDistance",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetDistance" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetDistance" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_GetDistance" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_GetDistance" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (double)(*arg1)->GetDistance(arg2);
@@ -70347,7 +70585,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetDistance(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetDistance(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -70367,7 +70605,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetDistance(PyObject *self, PyObject
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_GetDistance__SWIG_1(self, args);
+        return _wrap__OBMolAtomBFSIter_GetDistance__SWIG_1(self, args);
       }
     }
   }
@@ -70382,18 +70620,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetDistance(PyObject *self, PyObject
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_GetDistance__SWIG_0(self, args);
+        return _wrap__OBMolAtomBFSIter_GetDistance__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomBFSIter_GetDistance'.\n  Possible C/C++ prototypes are:\n    GetDistance(int)\n    GetDistance(OpenBabel::OBAtom *)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_GetDistance'.\n  Possible C/C++ prototypes are:\n    GetDistance(int)\n    GetDistance(OpenBabel::OBAtom *)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAngle__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetAngle__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int arg2 ;
@@ -70409,20 +70647,20 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAngle__SWIG_0(PyObject *SWIGUNUSE
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetAngle",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetAngle",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_GetAngle" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_GetAngle" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBMolAtomBFSIter_GetAngle" "', argument " "3"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "_OBMolAtomBFSIter_GetAngle" "', argument " "3"" of type '" "int""'");
   } 
   arg3 = static_cast< int >(val3);
   result = (double)(*arg1)->GetAngle(arg2,arg3);
@@ -70433,7 +70671,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAngle__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetAngle__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -70449,20 +70687,20 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAngle__SWIG_1(PyObject *SWIGUNUSE
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetAngle",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetAngle",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_GetAngle" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_GetAngle" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBMolAtomBFSIter_GetAngle" "', argument " "3"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "_OBMolAtomBFSIter_GetAngle" "', argument " "3"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg3 = reinterpret_cast< OpenBabel::OBAtom * >(argp3);
   result = (double)(*arg1)->GetAngle(arg2,arg3);
@@ -70473,7 +70711,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAngle(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetAngle(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[4];
   int ii;
@@ -70497,7 +70735,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAngle(PyObject *self, PyObject *a
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_OBMolAtomBFSIter_GetAngle__SWIG_1(self, args);
+          return _wrap__OBMolAtomBFSIter_GetAngle__SWIG_1(self, args);
         }
       }
     }
@@ -70518,29 +70756,29 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetAngle(PyObject *self, PyObject *a
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_OBMolAtomBFSIter_GetAngle__SWIG_0(self, args);
+          return _wrap__OBMolAtomBFSIter_GetAngle__SWIG_0(self, args);
         }
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomBFSIter_GetAngle'.\n  Possible C/C++ prototypes are:\n    GetAngle(int,int)\n    GetAngle(OpenBabel::OBAtom *,OpenBabel::OBAtom *)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_GetAngle'.\n  Possible C/C++ prototypes are:\n    GetAngle(int,int)\n    GetAngle(OpenBabel::OBAtom *,OpenBabel::OBAtom *)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_NewResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_NewResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_NewResidue",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_NewResidue",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_NewResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_NewResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->NewResidue();
@@ -70551,17 +70789,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_DeleteResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_DeleteResidue",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_DeleteResidue",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_DeleteResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_DeleteResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->DeleteResidue();
@@ -70572,7 +70810,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_AddBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_AddBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBBond *arg2 = (OpenBabel::OBBond *) 0 ;
@@ -70583,15 +70821,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_AddBond(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_AddBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_AddBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_AddBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_AddBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_AddBond" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_AddBond" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBBond * >(argp2);
   (*arg1)->AddBond(arg2);
@@ -70602,7 +70840,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_InsertBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_InsertBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator *arg2 = 0 ;
@@ -70617,23 +70855,23 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_InsertBond(PyObject *SWIGUNUSEDPARM(
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_InsertBond",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_InsertBond",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_InsertBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_InsertBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_InsertBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_InsertBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_InsertBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_InsertBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond *,std::allocator<OpenBabel::OBBond * > >::iterator * >(argp2);
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBMolAtomBFSIter_InsertBond" "', argument " "3"" of type '" "OpenBabel::OBBond *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "_OBMolAtomBFSIter_InsertBond" "', argument " "3"" of type '" "OpenBabel::OBBond *""'"); 
   }
   arg3 = reinterpret_cast< OpenBabel::OBBond * >(argp3);
   (*arg1)->InsertBond(*arg2,arg3);
@@ -70644,7 +70882,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_DeleteBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBBond *arg2 = (OpenBabel::OBBond *) 0 ;
@@ -70656,15 +70894,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteBond(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_DeleteBond",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_DeleteBond",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_DeleteBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_DeleteBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_DeleteBond" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_DeleteBond" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBBond * >(argp2);
   result = (bool)(*arg1)->DeleteBond(arg2);
@@ -70675,17 +70913,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ClearBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_ClearBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_ClearBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_ClearBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_ClearBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_ClearBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->ClearBond();
@@ -70696,7 +70934,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_CountFreeOxygens(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_CountFreeOxygens(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -70704,10 +70942,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_CountFreeOxygens(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_CountFreeOxygens",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_CountFreeOxygens",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_CountFreeOxygens" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_CountFreeOxygens" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->CountFreeOxygens();
@@ -70718,7 +70956,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ImplicitHydrogenCount(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_ImplicitHydrogenCount(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -70726,10 +70964,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ImplicitHydrogenCount(PyObject *SWIG
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_ImplicitHydrogenCount",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_ImplicitHydrogenCount",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_ImplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_ImplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->ImplicitHydrogenCount();
@@ -70740,7 +70978,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool arg2 ;
@@ -70752,15 +70990,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_0(PyObje
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_ExplicitHydrogenCount",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_ExplicitHydrogenCount",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_ExplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_ExplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_ExplicitHydrogenCount" "', argument " "2"" of type '" "bool""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_ExplicitHydrogenCount" "', argument " "2"" of type '" "bool""'");
   } 
   arg2 = static_cast< bool >(val2);
   result = (unsigned int)(*arg1)->ExplicitHydrogenCount(arg2);
@@ -70771,7 +71009,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -70779,10 +71017,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_1(PyObje
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_ExplicitHydrogenCount",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_ExplicitHydrogenCount",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_ExplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_ExplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->ExplicitHydrogenCount();
@@ -70793,7 +71031,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ExplicitHydrogenCount(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_ExplicitHydrogenCount(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -70809,7 +71047,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ExplicitHydrogenCount(PyObject *self
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_1(self, args);
+      return _wrap__OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_1(self, args);
     }
   }
   if (argc == 2) {
@@ -70823,18 +71061,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ExplicitHydrogenCount(PyObject *self
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_0(self, args);
+        return _wrap__OBMolAtomBFSIter_ExplicitHydrogenCount__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomBFSIter_ExplicitHydrogenCount'.\n  Possible C/C++ prototypes are:\n    ExplicitHydrogenCount(bool)\n    ExplicitHydrogenCount()\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_ExplicitHydrogenCount'.\n  Possible C/C++ prototypes are:\n    ExplicitHydrogenCount(bool)\n    ExplicitHydrogenCount()\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_MemberOfRingCount(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_MemberOfRingCount(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -70842,10 +71080,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_MemberOfRingCount(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_MemberOfRingCount",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_MemberOfRingCount",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_MemberOfRingCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_MemberOfRingCount" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->MemberOfRingCount();
@@ -70856,7 +71094,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_MemberOfRingSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_MemberOfRingSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -70864,10 +71102,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_MemberOfRingSize(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_MemberOfRingSize",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_MemberOfRingSize",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_MemberOfRingSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_MemberOfRingSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->MemberOfRingSize();
@@ -70878,7 +71116,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_CountRingBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_CountRingBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -70886,10 +71124,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_CountRingBonds(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_CountRingBonds",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_CountRingBonds",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_CountRingBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_CountRingBonds" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->CountRingBonds();
@@ -70900,7 +71138,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SmallestBondAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SmallestBondAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -70908,10 +71146,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SmallestBondAngle(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SmallestBondAngle",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SmallestBondAngle",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SmallestBondAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SmallestBondAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->SmallestBondAngle();
@@ -70922,7 +71160,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_AverageBondAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_AverageBondAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   double result;
@@ -70930,10 +71168,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_AverageBondAngle(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_AverageBondAngle",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_AverageBondAngle",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_AverageBondAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_AverageBondAngle" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (double)(*arg1)->AverageBondAngle();
@@ -70944,7 +71182,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BOSum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_BOSum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -70952,10 +71190,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BOSum(PyObject *SWIGUNUSEDPARM(self)
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_BOSum",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_BOSum",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_BOSum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_BOSum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->BOSum();
@@ -70966,7 +71204,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_KBOSum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_KBOSum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -70974,10 +71212,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_KBOSum(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_KBOSum",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_KBOSum",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_KBOSum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_KBOSum" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->KBOSum();
@@ -70988,7 +71226,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HtoMethyl(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HtoMethyl(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -70996,10 +71234,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HtoMethyl(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HtoMethyl",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HtoMethyl",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HtoMethyl" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HtoMethyl" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HtoMethyl();
@@ -71010,7 +71248,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetHybAndGeom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetHybAndGeom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int arg2 ;
@@ -71022,15 +71260,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetHybAndGeom(PyObject *SWIGUNUSEDPA
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetHybAndGeom",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetHybAndGeom",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetHybAndGeom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetHybAndGeom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_SetHybAndGeom" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_SetHybAndGeom" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   result = (bool)(*arg1)->SetHybAndGeom(arg2);
@@ -71041,17 +71279,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ForceNoH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_ForceNoH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_ForceNoH",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_ForceNoH",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_ForceNoH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_ForceNoH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   (*arg1)->ForceNoH();
@@ -71062,7 +71300,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasNoHForced(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasNoHForced(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71070,10 +71308,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasNoHForced(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasNoHForced",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasNoHForced",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasNoHForced" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasNoHForced" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HasNoHForced();
@@ -71084,7 +71322,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasResidue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71092,10 +71330,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasResidue(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasResidue",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasResidue",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasResidue" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HasResidue();
@@ -71106,7 +71344,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71114,10 +71352,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHydrogen(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsHydrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsHydrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsHydrogen();
@@ -71128,7 +71366,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsCarbon(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsCarbon(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71136,10 +71374,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsCarbon(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsCarbon",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsCarbon",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsCarbon" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsCarbon" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsCarbon();
@@ -71150,7 +71388,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNitrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsNitrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71158,10 +71396,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNitrogen(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsNitrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsNitrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsNitrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsNitrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsNitrogen();
@@ -71172,7 +71410,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71180,10 +71418,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsOxygen(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsOxygen();
@@ -71194,7 +71432,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsSulfur(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsSulfur(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71202,10 +71440,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsSulfur(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsSulfur",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsSulfur",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsSulfur" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsSulfur" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsSulfur();
@@ -71216,7 +71454,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsPhosphorus(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsPhosphorus(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71224,10 +71462,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsPhosphorus(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsPhosphorus",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsPhosphorus",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsPhosphorus" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsPhosphorus" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsPhosphorus();
@@ -71238,7 +71476,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71246,10 +71484,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAromatic(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsAromatic",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsAromatic",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsAromatic();
@@ -71260,7 +71498,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71268,10 +71506,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsInRing(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsInRing",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsInRing",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsInRing" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsInRing" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsInRing();
@@ -71282,7 +71520,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsInRingSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsInRingSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   int arg2 ;
@@ -71294,15 +71532,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsInRingSize(PyObject *SWIGUNUSEDPAR
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsInRingSize",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsInRingSize",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsInRingSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsInRingSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_IsInRingSize" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_IsInRingSize" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   result = (bool)(*arg1)->IsInRingSize(arg2);
@@ -71313,7 +71551,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHeteroatom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsHeteroatom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71321,10 +71559,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHeteroatom(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsHeteroatom",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsHeteroatom",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsHeteroatom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsHeteroatom" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsHeteroatom();
@@ -71335,7 +71573,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNotCorH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsNotCorH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71343,10 +71581,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNotCorH(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsNotCorH",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsNotCorH",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsNotCorH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsNotCorH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsNotCorH();
@@ -71357,7 +71595,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsConnected(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsConnected(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -71369,15 +71607,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsConnected(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsConnected",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsConnected",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsConnected" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsConnected" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_IsConnected" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_IsConnected" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (bool)(*arg1)->IsConnected(arg2);
@@ -71388,7 +71626,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsOneThree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsOneThree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -71400,15 +71638,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsOneThree(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsOneThree",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsOneThree",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsOneThree" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsOneThree" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_IsOneThree" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_IsOneThree" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (bool)(*arg1)->IsOneThree(arg2);
@@ -71419,7 +71657,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsOneFour(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsOneFour(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -71431,15 +71669,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsOneFour(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsOneFour",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsOneFour",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsOneFour" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsOneFour" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_IsOneFour" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_IsOneFour" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (bool)(*arg1)->IsOneFour(arg2);
@@ -71450,7 +71688,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsCarboxylOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsCarboxylOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71458,10 +71696,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsCarboxylOxygen(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsCarboxylOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsCarboxylOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsCarboxylOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsCarboxylOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsCarboxylOxygen();
@@ -71472,7 +71710,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsPhosphateOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsPhosphateOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71480,10 +71718,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsPhosphateOxygen(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsPhosphateOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsPhosphateOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsPhosphateOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsPhosphateOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsPhosphateOxygen();
@@ -71494,7 +71732,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsSulfateOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsSulfateOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71502,10 +71740,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsSulfateOxygen(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsSulfateOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsSulfateOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsSulfateOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsSulfateOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsSulfateOxygen();
@@ -71516,7 +71754,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNitroOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsNitroOxygen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71524,10 +71762,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNitroOxygen(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsNitroOxygen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsNitroOxygen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsNitroOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsNitroOxygen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsNitroOxygen();
@@ -71538,7 +71776,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAmideNitrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsAmideNitrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71546,10 +71784,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAmideNitrogen(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsAmideNitrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsAmideNitrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsAmideNitrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsAmideNitrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsAmideNitrogen();
@@ -71560,7 +71798,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsPolarHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsPolarHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71568,10 +71806,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsPolarHydrogen(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsPolarHydrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsPolarHydrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsPolarHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsPolarHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsPolarHydrogen();
@@ -71582,7 +71820,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNonPolarHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsNonPolarHydrogen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71590,10 +71828,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNonPolarHydrogen(PyObject *SWIGUNU
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsNonPolarHydrogen",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsNonPolarHydrogen",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsNonPolarHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsNonPolarHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsNonPolarHydrogen();
@@ -71604,7 +71842,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAromaticNOxide(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsAromaticNOxide(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71612,10 +71850,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAromaticNOxide(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsAromaticNOxide",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsAromaticNOxide",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsAromaticNOxide" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsAromaticNOxide" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsAromaticNOxide();
@@ -71626,7 +71864,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsChiral(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsChiral(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71634,10 +71872,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsChiral(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsChiral",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsChiral",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsChiral" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsChiral" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsChiral();
@@ -71648,7 +71886,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAxial(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsAxial(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71656,10 +71894,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAxial(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsAxial",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsAxial",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsAxial" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsAxial" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsAxial();
@@ -71670,7 +71908,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsClockwise(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsClockwise(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71678,10 +71916,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsClockwise(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsClockwise",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsClockwise",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsClockwise" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsClockwise" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsClockwise();
@@ -71692,7 +71930,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAntiClockwise(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsAntiClockwise(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71700,10 +71938,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsAntiClockwise(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsAntiClockwise",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsAntiClockwise",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsAntiClockwise" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsAntiClockwise" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsAntiClockwise();
@@ -71714,7 +71952,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsPositiveStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsPositiveStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71722,10 +71960,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsPositiveStereo(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsPositiveStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsPositiveStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsPositiveStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsPositiveStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsPositiveStereo();
@@ -71736,7 +71974,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNegativeStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsNegativeStereo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71744,10 +71982,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsNegativeStereo(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsNegativeStereo",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsNegativeStereo",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsNegativeStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsNegativeStereo" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsNegativeStereo();
@@ -71758,7 +71996,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasChiralitySpecified(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasChiralitySpecified(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71766,10 +72004,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasChiralitySpecified(PyObject *SWIG
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasChiralitySpecified",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasChiralitySpecified",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasChiralitySpecified" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasChiralitySpecified" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HasChiralitySpecified();
@@ -71780,7 +72018,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasChiralVolume(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasChiralVolume(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71788,10 +72026,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasChiralVolume(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasChiralVolume",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasChiralVolume",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasChiralVolume" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasChiralVolume" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HasChiralVolume();
@@ -71802,7 +72040,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHbondAcceptor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsHbondAcceptor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71810,10 +72048,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHbondAcceptor(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsHbondAcceptor",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsHbondAcceptor",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsHbondAcceptor" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsHbondAcceptor" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsHbondAcceptor();
@@ -71824,7 +72062,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHbondDonor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsHbondDonor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71832,10 +72070,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHbondDonor(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsHbondDonor",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsHbondDonor",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsHbondDonor" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsHbondDonor" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsHbondDonor();
@@ -71846,7 +72084,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHbondDonorH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_IsHbondDonorH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71854,10 +72092,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_IsHbondDonorH(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_IsHbondDonorH",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_IsHbondDonorH",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_IsHbondDonorH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_IsHbondDonorH" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->IsHbondDonorH();
@@ -71868,7 +72106,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool arg2 ;
@@ -71880,15 +72118,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_0(PyObject *
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasAlphaBetaUnsat",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasAlphaBetaUnsat",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasAlphaBetaUnsat" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasAlphaBetaUnsat" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_HasAlphaBetaUnsat" "', argument " "2"" of type '" "bool""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_HasAlphaBetaUnsat" "', argument " "2"" of type '" "bool""'");
   } 
   arg2 = static_cast< bool >(val2);
   result = (bool)(*arg1)->HasAlphaBetaUnsat(arg2);
@@ -71899,7 +72137,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -71907,10 +72145,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_1(PyObject *
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasAlphaBetaUnsat",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasAlphaBetaUnsat",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasAlphaBetaUnsat" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasAlphaBetaUnsat" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HasAlphaBetaUnsat();
@@ -71921,7 +72159,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasAlphaBetaUnsat(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -71937,7 +72175,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat(PyObject *self, Py
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_1(self, args);
+      return _wrap__OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_1(self, args);
     }
   }
   if (argc == 2) {
@@ -71951,18 +72189,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat(PyObject *self, Py
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_0(self, args);
+        return _wrap__OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomBFSIter_HasAlphaBetaUnsat'.\n  Possible C/C++ prototypes are:\n    HasAlphaBetaUnsat(bool)\n    HasAlphaBetaUnsat()\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_HasAlphaBetaUnsat'.\n  Possible C/C++ prototypes are:\n    HasAlphaBetaUnsat(bool)\n    HasAlphaBetaUnsat()\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasBondOfOrder(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasBondOfOrder(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int arg2 ;
@@ -71974,15 +72212,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasBondOfOrder(PyObject *SWIGUNUSEDP
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasBondOfOrder",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasBondOfOrder",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasBondOfOrder" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasBondOfOrder" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_HasBondOfOrder" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_HasBondOfOrder" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   result = (bool)(*arg1)->HasBondOfOrder(arg2);
@@ -71993,7 +72231,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_CountBondsOfOrder(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_CountBondsOfOrder(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int arg2 ;
@@ -72005,15 +72243,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_CountBondsOfOrder(PyObject *SWIGUNUS
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_CountBondsOfOrder",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_CountBondsOfOrder",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_CountBondsOfOrder" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_CountBondsOfOrder" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_CountBondsOfOrder" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_CountBondsOfOrder" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   result = (int)(*arg1)->CountBondsOfOrder(arg2);
@@ -72024,7 +72262,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasNonSingleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasNonSingleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -72032,10 +72270,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasNonSingleBond(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasNonSingleBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasNonSingleBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasNonSingleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasNonSingleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HasNonSingleBond();
@@ -72046,7 +72284,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasSingleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasSingleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -72054,10 +72292,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasSingleBond(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasSingleBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasSingleBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasSingleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasSingleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HasSingleBond();
@@ -72068,7 +72306,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasDoubleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasDoubleBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -72076,10 +72314,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasDoubleBond(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasDoubleBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasDoubleBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasDoubleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasDoubleBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HasDoubleBond();
@@ -72090,7 +72328,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasAromaticBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasAromaticBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   bool result;
@@ -72098,10 +72336,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasAromaticBond(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasAromaticBond",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasAromaticBond",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasAromaticBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasAromaticBond" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (bool)(*arg1)->HasAromaticBond();
@@ -72112,7 +72350,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_MatchesSMARTS(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_MatchesSMARTS(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -72125,15 +72363,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_MatchesSMARTS(PyObject *SWIGUNUSEDPA
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_MatchesSMARTS",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_MatchesSMARTS",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_MatchesSMARTS" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_MatchesSMARTS" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_MatchesSMARTS" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_MatchesSMARTS" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
   result = (bool)(*arg1)->MatchesSMARTS((char const *)arg2);
@@ -72146,7 +72384,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DoTransformations(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_DoTransformations(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > *arg2 = (std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > *) 0 ;
@@ -72158,15 +72396,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DoTransformations(PyObject *SWIGUNUS
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_DoTransformations",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_DoTransformations",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_DoTransformations" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_DoTransformations" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_DoTransformations" "', argument " "2"" of type '" "std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_DoTransformations" "', argument " "2"" of type '" "std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > const *""'"); 
   }
   arg2 = reinterpret_cast< std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > * >(argp2);
   result = (OpenBabel::OBBase *)(*arg1)->DoTransformations((std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > const *)arg2);
@@ -72177,7 +72415,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ClassDescription(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_ClassDescription(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   char *result = 0 ;
@@ -72185,10 +72423,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_ClassDescription(PyObject *SWIGUNUSE
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_ClassDescription",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_ClassDescription",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_ClassDescription" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_ClassDescription" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (char *)(*arg1)->ClassDescription();
@@ -72199,7 +72437,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::string *arg2 = 0 ;
@@ -72210,20 +72448,20 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData__SWIG_0(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   {
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -72237,7 +72475,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -72250,15 +72488,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData__SWIG_1(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_HasData" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_HasData" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
   result = (bool)(*arg1)->HasData((char const *)arg2);
@@ -72271,7 +72509,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int arg2 ;
@@ -72283,15 +72521,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData__SWIG_2(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_HasData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_HasData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_HasData" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_HasData" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   result = (bool)(*arg1)->HasData(arg2);
@@ -72302,7 +72540,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_HasData(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -72323,7 +72561,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData(PyObject *self, PyObject *ar
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_HasData__SWIG_2(self, args);
+        return _wrap__OBMolAtomBFSIter_HasData__SWIG_2(self, args);
       }
     }
   }
@@ -72336,7 +72574,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData(PyObject *self, PyObject *ar
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_HasData__SWIG_0(self, args);
+        return _wrap__OBMolAtomBFSIter_HasData__SWIG_0(self, args);
       }
     }
   }
@@ -72349,18 +72587,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_HasData(PyObject *self, PyObject *ar
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_HasData__SWIG_1(self, args);
+        return _wrap__OBMolAtomBFSIter_HasData__SWIG_1(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomBFSIter_HasData'.\n  Possible C/C++ prototypes are:\n    HasData(std::string const &)\n    HasData(char const *)\n    HasData(unsigned int const)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_HasData'.\n  Possible C/C++ prototypes are:\n    HasData(std::string const &)\n    HasData(char const *)\n    HasData(unsigned int const)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_DeleteData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int arg2 ;
@@ -72371,15 +72609,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData__SWIG_0(PyObject *SWIGUNU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_DeleteData" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_DeleteData" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   (*arg1)->DeleteData(arg2);
@@ -72390,7 +72628,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_DeleteData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBGenericData *arg2 = (OpenBabel::OBGenericData *) 0 ;
@@ -72401,15 +72639,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData__SWIG_1(PyObject *SWIGUNU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_DeleteData" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_DeleteData" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBGenericData * >(argp2);
   (*arg1)->DeleteData(arg2);
@@ -72420,7 +72658,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_DeleteData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > *arg2 = 0 ;
@@ -72431,18 +72669,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData__SWIG_2(PyObject *SWIGUNU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_DeleteData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_DeleteData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_DeleteData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_DeleteData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_DeleteData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &""'"); 
   }
   arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > * >(argp2);
   (*arg1)->DeleteData(*arg2);
@@ -72453,7 +72691,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_DeleteData(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -72473,7 +72711,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData(PyObject *self, PyObject 
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBGenericData, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_DeleteData__SWIG_1(self, args);
+        return _wrap__OBMolAtomBFSIter_DeleteData__SWIG_1(self, args);
       }
     }
   }
@@ -72487,7 +72725,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData(PyObject *self, PyObject 
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_DeleteData__SWIG_2(self, args);
+        return _wrap__OBMolAtomBFSIter_DeleteData__SWIG_2(self, args);
       }
     }
   }
@@ -72502,18 +72740,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DeleteData(PyObject *self, PyObject 
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_DeleteData__SWIG_0(self, args);
+        return _wrap__OBMolAtomBFSIter_DeleteData__SWIG_0(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomBFSIter_DeleteData'.\n  Possible C/C++ prototypes are:\n    DeleteData(unsigned int)\n    DeleteData(OpenBabel::OBGenericData *)\n    DeleteData(std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_DeleteData'.\n  Possible C/C++ prototypes are:\n    DeleteData(unsigned int)\n    DeleteData(OpenBabel::OBGenericData *)\n    DeleteData(std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_SetData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::OBGenericData *arg2 = (OpenBabel::OBGenericData *) 0 ;
@@ -72524,15 +72762,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_SetData(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_SetData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_SetData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_SetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_SetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_SetData" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_SetData" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBGenericData * >(argp2);
   (*arg1)->SetData(arg2);
@@ -72543,7 +72781,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DataSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_DataSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int result;
@@ -72551,10 +72789,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_DataSize(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_DataSize",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_DataSize",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_DataSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_DataSize" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (unsigned int)(*arg1)->DataSize();
@@ -72565,7 +72803,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   unsigned int arg2 ;
@@ -72577,15 +72815,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData__SWIG_0(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolAtomBFSIter_GetData" "', argument " "2"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAtomBFSIter_GetData" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
   result = (OpenBabel::OBGenericData *)(*arg1)->GetData(arg2);
@@ -72596,7 +72834,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::string *arg2 = 0 ;
@@ -72607,20 +72845,20 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData__SWIG_1(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   {
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolAtomBFSIter_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolAtomBFSIter_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -72634,7 +72872,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -72647,15 +72885,15 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData__SWIG_2(PyObject *SWIGUNUSED
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetData",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolAtomBFSIter_GetData" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolAtomBFSIter_GetData" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
   result = (OpenBabel::OBGenericData *)(*arg1)->GetData((char const *)arg2);
@@ -72668,7 +72906,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetData__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > *result = 0 ;
@@ -72676,10 +72914,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData__SWIG_3(PyObject *SWIGUNUSED
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_GetData",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetData",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   {
@@ -72693,7 +72931,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetData(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -72709,7 +72947,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData(PyObject *self, PyObject *ar
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBMolAtomBFSIter_GetData__SWIG_3(self, args);
+      return _wrap__OBMolAtomBFSIter_GetData__SWIG_3(self, args);
     }
   }
   if (argc == 2) {
@@ -72723,7 +72961,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData(PyObject *self, PyObject *ar
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_GetData__SWIG_0(self, args);
+        return _wrap__OBMolAtomBFSIter_GetData__SWIG_0(self, args);
       }
     }
   }
@@ -72736,7 +72974,7 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData(PyObject *self, PyObject *ar
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_GetData__SWIG_1(self, args);
+        return _wrap__OBMolAtomBFSIter_GetData__SWIG_1(self, args);
       }
     }
   }
@@ -72749,18 +72987,18 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_GetData(PyObject *self, PyObject *ar
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolAtomBFSIter_GetData__SWIG_2(self, args);
+        return _wrap__OBMolAtomBFSIter_GetData__SWIG_2(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolAtomBFSIter_GetData'.\n  Possible C/C++ prototypes are:\n    GetData(unsigned int const)\n    GetData(std::string const &)\n    GetData(char const *)\n    GetData()\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_GetData'.\n  Possible C/C++ prototypes are:\n    GetData(unsigned int const)\n    GetData(std::string const &)\n    GetData(char const *)\n    GetData()\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BeginData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_BeginData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   SwigValueWrapper<std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator > result;
@@ -72768,10 +73006,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_BeginData(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_BeginData",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_BeginData",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_BeginData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_BeginData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (*arg1)->BeginData();
@@ -72783,7 +73021,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_EndData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_EndData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   SwigValueWrapper<std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator > result;
@@ -72791,10 +73029,10 @@ SWIGINTERN PyObject *_wrap_OBMolAtomBFSIter_EndData(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAtomBFSIter_EndData",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_EndData",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter_EndData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_EndData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   result = (*arg1)->EndData();
@@ -72806,14 +73044,14 @@ fail:
 }
 
 
-SWIGINTERN PyObject *OBMolAtomBFSIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolAtomBFSIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *OBMolAtomBFSIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolAtomBFSIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
@@ -88727,11 +88965,11 @@ SWIGINTERN PyObject *_OBResidueAtomIter_swiginit(PyObject *SWIGUNUSEDPARM(self),
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_OBMolAngleIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAngleIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAngleIter *result = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAngleIter",0,0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolAngleIter",0,0)) SWIG_fail;
   result = (OpenBabel::OBMolAngleIter *)new OpenBabel::OBMolAngleIter();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAngleIter, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -88740,7 +88978,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolAngleIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAngleIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
   OpenBabel::OBMolAngleIter *result = 0 ;
@@ -88748,10 +88986,10 @@ SWIGINTERN PyObject *_wrap_new_OBMolAngleIter__SWIG_1(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAngleIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolAngleIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   result = (OpenBabel::OBMolAngleIter *)new OpenBabel::OBMolAngleIter(arg1);
@@ -88762,32 +89000,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolAngleIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBMol *arg1 = 0 ;
-  OpenBabel::OBMolAngleIter *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAngleIter",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMol,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  result = (OpenBabel::OBMolAngleIter *)new OpenBabel::OBMolAngleIter(*arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAngleIter, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_OBMolAngleIter__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAngleIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAngleIter *arg1 = 0 ;
   OpenBabel::OBMolAngleIter *result = 0 ;
@@ -88795,13 +89008,13 @@ SWIGINTERN PyObject *_wrap_new_OBMolAngleIter__SWIG_3(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolAngleIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolAngleIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMolAngleIter,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new__OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter const &""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAngleIter * >(argp1);
   result = (OpenBabel::OBMolAngleIter *)new OpenBabel::OBMolAngleIter((OpenBabel::OBMolAngleIter const &)*arg1);
@@ -88812,7 +89025,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolAngleIter(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolAngleIter(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[2];
   int ii;
@@ -88823,7 +89036,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolAngleIter(PyObject *self, PyObject *args) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_OBMolAngleIter__SWIG_0(self, args);
+    return _wrap_new__OBMolAngleIter__SWIG_0(self, args);
   }
   if (argc == 1) {
     int _v;
@@ -88831,16 +89044,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolAngleIter(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolAngleIter__SWIG_1(self, args);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_new_OBMolAngleIter__SWIG_2(self, args);
+      return _wrap_new__OBMolAngleIter__SWIG_1(self, args);
     }
   }
   if (argc == 1) {
@@ -88848,17 +89052,70 @@ SWIGINTERN PyObject *_wrap_new_OBMolAngleIter(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_OpenBabel__OBMolAngleIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolAngleIter__SWIG_3(self, args);
+      return _wrap_new__OBMolAngleIter__SWIG_2(self, args);
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBMolAngleIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolAngleIter()\n    OpenBabel::OBMolAngleIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolAngleIter(OpenBabel::OBMol &)\n    OpenBabel::OBMolAngleIter(OpenBabel::OBMolAngleIter const &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new__OBMolAngleIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolAngleIter()\n    OpenBabel::OBMolAngleIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolAngleIter(OpenBabel::OBMolAngleIter const &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolAngleIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAngleIter_good(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAngleIter *arg1 = (OpenBabel::OBMolAngleIter *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAngleIter_good",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAngleIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAngleIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAngleIter * >(argp1);
+  result = (bool)((OpenBabel::OBMolAngleIter const *)arg1)->operator bool();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAngleIter_inc(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAngleIter *arg1 = (OpenBabel::OBMolAngleIter *) 0 ;
+  int arg2 ;
+  OpenBabel::OBMolAngleIter result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAngleIter_inc",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAngleIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAngleIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAngleIter * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolAngleIter_inc" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (arg1)->operator ++(arg2);
+  resultobj = SWIG_NewPointerObj((new OpenBabel::OBMolAngleIter(static_cast< const OpenBabel::OBMolAngleIter& >(result))), SWIGTYPE_p_OpenBabel__OBMolAngleIter, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAngleIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAngleIter *arg1 = (OpenBabel::OBMolAngleIter *) 0 ;
   std::vector<unsigned int,std::allocator<unsigned int > > result;
@@ -88866,10 +89123,10 @@ SWIGINTERN PyObject *_wrap_OBMolAngleIter___ref__(PyObject *SWIGUNUSEDPARM(self)
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolAngleIter___ref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAngleIter___ref__",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAngleIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAngleIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAngleIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAngleIter * >(argp1);
   result = ((OpenBabel::OBMolAngleIter const *)arg1)->operator *();
@@ -88880,17 +89137,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_OBMolAngleIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_delete__OBMolAngleIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAngleIter *arg1 = (OpenBabel::OBMolAngleIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"delete_OBMolAngleIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"delete__OBMolAngleIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAngleIter, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete__OBMolAngleIter" "', argument " "1"" of type '" "OpenBabel::OBMolAngleIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolAngleIter * >(argp1);
   delete arg1;
@@ -88902,22 +89159,22 @@ fail:
 }
 
 
-SWIGINTERN PyObject *OBMolAngleIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolAngleIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBMolAngleIter, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *OBMolAngleIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolAngleIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolTorsionIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolTorsionIter *result = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolTorsionIter",0,0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolTorsionIter",0,0)) SWIG_fail;
   result = (OpenBabel::OBMolTorsionIter *)new OpenBabel::OBMolTorsionIter();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolTorsionIter, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -88926,7 +89183,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolTorsionIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
   OpenBabel::OBMolTorsionIter *result = 0 ;
@@ -88934,10 +89191,10 @@ SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter__SWIG_1(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolTorsionIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolTorsionIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   result = (OpenBabel::OBMolTorsionIter *)new OpenBabel::OBMolTorsionIter(arg1);
@@ -88948,32 +89205,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBMol *arg1 = 0 ;
-  OpenBabel::OBMolTorsionIter *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolTorsionIter",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMol,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  result = (OpenBabel::OBMolTorsionIter *)new OpenBabel::OBMolTorsionIter(*arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolTorsionIter, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolTorsionIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolTorsionIter *arg1 = 0 ;
   OpenBabel::OBMolTorsionIter *result = 0 ;
@@ -88981,13 +89213,13 @@ SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter__SWIG_3(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolTorsionIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolTorsionIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMolTorsionIter,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new__OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter const &""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolTorsionIter * >(argp1);
   result = (OpenBabel::OBMolTorsionIter *)new OpenBabel::OBMolTorsionIter((OpenBabel::OBMolTorsionIter const &)*arg1);
@@ -88998,7 +89230,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolTorsionIter(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[2];
   int ii;
@@ -89009,7 +89241,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter(PyObject *self, PyObject *args) 
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_OBMolTorsionIter__SWIG_0(self, args);
+    return _wrap_new__OBMolTorsionIter__SWIG_0(self, args);
   }
   if (argc == 1) {
     int _v;
@@ -89017,16 +89249,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter(PyObject *self, PyObject *args) 
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolTorsionIter__SWIG_1(self, args);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_new_OBMolTorsionIter__SWIG_2(self, args);
+      return _wrap_new__OBMolTorsionIter__SWIG_1(self, args);
     }
   }
   if (argc == 1) {
@@ -89034,17 +89257,70 @@ SWIGINTERN PyObject *_wrap_new_OBMolTorsionIter(PyObject *self, PyObject *args) 
     int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_OpenBabel__OBMolTorsionIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolTorsionIter__SWIG_3(self, args);
+      return _wrap_new__OBMolTorsionIter__SWIG_2(self, args);
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBMolTorsionIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolTorsionIter()\n    OpenBabel::OBMolTorsionIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolTorsionIter(OpenBabel::OBMol &)\n    OpenBabel::OBMolTorsionIter(OpenBabel::OBMolTorsionIter const &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new__OBMolTorsionIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolTorsionIter()\n    OpenBabel::OBMolTorsionIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolTorsionIter(OpenBabel::OBMolTorsionIter const &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolTorsionIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolTorsionIter_good(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolTorsionIter *arg1 = (OpenBabel::OBMolTorsionIter *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolTorsionIter_good",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolTorsionIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolTorsionIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolTorsionIter * >(argp1);
+  result = (bool)((OpenBabel::OBMolTorsionIter const *)arg1)->operator bool();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolTorsionIter_inc(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolTorsionIter *arg1 = (OpenBabel::OBMolTorsionIter *) 0 ;
+  int arg2 ;
+  OpenBabel::OBMolTorsionIter result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolTorsionIter_inc",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolTorsionIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolTorsionIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolTorsionIter * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolTorsionIter_inc" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (arg1)->operator ++(arg2);
+  resultobj = SWIG_NewPointerObj((new OpenBabel::OBMolTorsionIter(static_cast< const OpenBabel::OBMolTorsionIter& >(result))), SWIGTYPE_p_OpenBabel__OBMolTorsionIter, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolTorsionIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolTorsionIter *arg1 = (OpenBabel::OBMolTorsionIter *) 0 ;
   std::vector<unsigned int,std::allocator<unsigned int > > result;
@@ -89052,10 +89328,10 @@ SWIGINTERN PyObject *_wrap_OBMolTorsionIter___ref__(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolTorsionIter___ref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolTorsionIter___ref__",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolTorsionIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolTorsionIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolTorsionIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolTorsionIter * >(argp1);
   result = ((OpenBabel::OBMolTorsionIter const *)arg1)->operator *();
@@ -89066,17 +89342,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_OBMolTorsionIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_delete__OBMolTorsionIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolTorsionIter *arg1 = (OpenBabel::OBMolTorsionIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"delete_OBMolTorsionIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"delete__OBMolTorsionIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolTorsionIter, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete__OBMolTorsionIter" "', argument " "1"" of type '" "OpenBabel::OBMolTorsionIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolTorsionIter * >(argp1);
   delete arg1;
@@ -89088,22 +89364,22 @@ fail:
 }
 
 
-SWIGINTERN PyObject *OBMolTorsionIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolTorsionIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBMolTorsionIter, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *OBMolTorsionIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolTorsionIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_OBMolPairIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolPairIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolPairIter *result = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolPairIter",0,0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolPairIter",0,0)) SWIG_fail;
   result = (OpenBabel::OBMolPairIter *)new OpenBabel::OBMolPairIter();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolPairIter, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -89112,7 +89388,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolPairIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolPairIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
   OpenBabel::OBMolPairIter *result = 0 ;
@@ -89120,10 +89396,10 @@ SWIGINTERN PyObject *_wrap_new_OBMolPairIter__SWIG_1(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolPairIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolPairIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   result = (OpenBabel::OBMolPairIter *)new OpenBabel::OBMolPairIter(arg1);
@@ -89134,32 +89410,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolPairIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBMol *arg1 = 0 ;
-  OpenBabel::OBMolPairIter *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolPairIter",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMol,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  result = (OpenBabel::OBMolPairIter *)new OpenBabel::OBMolPairIter(*arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolPairIter, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_OBMolPairIter__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolPairIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolPairIter *arg1 = 0 ;
   OpenBabel::OBMolPairIter *result = 0 ;
@@ -89167,13 +89418,13 @@ SWIGINTERN PyObject *_wrap_new_OBMolPairIter__SWIG_3(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolPairIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolPairIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMolPairIter,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new__OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const &""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolPairIter * >(argp1);
   result = (OpenBabel::OBMolPairIter *)new OpenBabel::OBMolPairIter((OpenBabel::OBMolPairIter const &)*arg1);
@@ -89184,7 +89435,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolPairIter(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolPairIter(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[2];
   int ii;
@@ -89195,7 +89446,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolPairIter(PyObject *self, PyObject *args) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_OBMolPairIter__SWIG_0(self, args);
+    return _wrap_new__OBMolPairIter__SWIG_0(self, args);
   }
   if (argc == 1) {
     int _v;
@@ -89203,16 +89454,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolPairIter(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolPairIter__SWIG_1(self, args);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_new_OBMolPairIter__SWIG_2(self, args);
+      return _wrap_new__OBMolPairIter__SWIG_1(self, args);
     }
   }
   if (argc == 1) {
@@ -89220,17 +89462,70 @@ SWIGINTERN PyObject *_wrap_new_OBMolPairIter(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_OpenBabel__OBMolPairIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolPairIter__SWIG_3(self, args);
+      return _wrap_new__OBMolPairIter__SWIG_2(self, args);
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBMolPairIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolPairIter()\n    OpenBabel::OBMolPairIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolPairIter(OpenBabel::OBMol &)\n    OpenBabel::OBMolPairIter(OpenBabel::OBMolPairIter const &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new__OBMolPairIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolPairIter()\n    OpenBabel::OBMolPairIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolPairIter(OpenBabel::OBMolPairIter const &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolPairIter___deref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolPairIter_good(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolPairIter_good",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolPairIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolPairIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolPairIter * >(argp1);
+  result = (bool)((OpenBabel::OBMolPairIter const *)arg1)->operator bool();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolPairIter_inc(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
+  int arg2 ;
+  OpenBabel::OBMolPairIter result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolPairIter_inc",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolPairIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolPairIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolPairIter * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolPairIter_inc" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (arg1)->operator ++(arg2);
+  resultobj = SWIG_NewPointerObj((new OpenBabel::OBMolPairIter(static_cast< const OpenBabel::OBMolPairIter& >(result))), SWIGTYPE_p_OpenBabel__OBMolPairIter, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolPairIter_deref(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
   std::pair<int,int > *result = 0 ;
@@ -89238,10 +89533,10 @@ SWIGINTERN PyObject *_wrap_OBMolPairIter___deref__(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolPairIter___deref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolPairIter_deref",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolPairIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolPairIter___deref__" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolPairIter_deref" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolPairIter * >(argp1);
   result = (std::pair<int,int > *)((OpenBabel::OBMolPairIter const *)arg1)->operator ->();
@@ -89252,7 +89547,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolPairIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolPairIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
   std::pair<int,int > *result = 0 ;
@@ -89260,10 +89555,10 @@ SWIGINTERN PyObject *_wrap_OBMolPairIter___ref__(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolPairIter___ref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolPairIter___ref__",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolPairIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolPairIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolPairIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolPairIter * >(argp1);
   {
@@ -89277,17 +89572,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_OBMolPairIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_delete__OBMolPairIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"delete_OBMolPairIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"delete__OBMolPairIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolPairIter, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete__OBMolPairIter" "', argument " "1"" of type '" "OpenBabel::OBMolPairIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolPairIter * >(argp1);
   delete arg1;
@@ -89299,22 +89594,22 @@ fail:
 }
 
 
-SWIGINTERN PyObject *OBMolPairIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolPairIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBMolPairIter, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *OBMolPairIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolPairIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_OBMolRingIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolRingIter__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *result = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolRingIter",0,0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolRingIter",0,0)) SWIG_fail;
   result = (OpenBabel::OBMolRingIter *)new OpenBabel::OBMolRingIter();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolRingIter, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -89323,7 +89618,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolRingIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolRingIter__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
   OpenBabel::OBMolRingIter *result = 0 ;
@@ -89331,10 +89626,10 @@ SWIGINTERN PyObject *_wrap_new_OBMolRingIter__SWIG_1(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolRingIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolRingIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   result = (OpenBabel::OBMolRingIter *)new OpenBabel::OBMolRingIter(arg1);
@@ -89345,32 +89640,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolRingIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBMol *arg1 = 0 ;
-  OpenBabel::OBMolRingIter *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolRingIter",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMol,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMol &""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  result = (OpenBabel::OBMolRingIter *)new OpenBabel::OBMolRingIter(*arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolRingIter, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_OBMolRingIter__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolRingIter__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = 0 ;
   OpenBabel::OBMolRingIter *result = 0 ;
@@ -89378,13 +89648,13 @@ SWIGINTERN PyObject *_wrap_new_OBMolRingIter__SWIG_3(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBMolRingIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"new__OBMolRingIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__OBMolRingIter,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new__OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new__OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const &""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   result = (OpenBabel::OBMolRingIter *)new OpenBabel::OBMolRingIter((OpenBabel::OBMolRingIter const &)*arg1);
@@ -89395,7 +89665,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBMolRingIter(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new__OBMolRingIter(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[2];
   int ii;
@@ -89406,7 +89676,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolRingIter(PyObject *self, PyObject *args) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_OBMolRingIter__SWIG_0(self, args);
+    return _wrap_new__OBMolRingIter__SWIG_0(self, args);
   }
   if (argc == 1) {
     int _v;
@@ -89414,16 +89684,7 @@ SWIGINTERN PyObject *_wrap_new_OBMolRingIter(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolRingIter__SWIG_1(self, args);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_new_OBMolRingIter__SWIG_2(self, args);
+      return _wrap_new__OBMolRingIter__SWIG_1(self, args);
     }
   }
   if (argc == 1) {
@@ -89431,17 +89692,136 @@ SWIGINTERN PyObject *_wrap_new_OBMolRingIter(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_OpenBabel__OBMolRingIter, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBMolRingIter__SWIG_3(self, args);
+      return _wrap_new__OBMolRingIter__SWIG_2(self, args);
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBMolRingIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolRingIter()\n    OpenBabel::OBMolRingIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolRingIter(OpenBabel::OBMol &)\n    OpenBabel::OBMolRingIter(OpenBabel::OBMolRingIter const &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new__OBMolRingIter'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBMolRingIter()\n    OpenBabel::OBMolRingIter(OpenBabel::OBMol *)\n    OpenBabel::OBMolRingIter(OpenBabel::OBMolRingIter const &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter___deref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_good(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_good",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_good" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
+  result = (bool)((OpenBabel::OBMolRingIter const *)arg1)->operator bool();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolRingIter_inc__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
+  OpenBabel::OBMolRingIter *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_inc",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
+  {
+    OpenBabel::OBMolRingIter &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::OBMolRingIter *) &_result_ref;
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolRingIter_inc__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
+  int arg2 ;
+  OpenBabel::OBMolRingIter result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_inc",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolRingIter_inc" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (arg1)->operator ++(arg2);
+  resultobj = SWIG_NewPointerObj((new OpenBabel::OBMolRingIter(static_cast< const OpenBabel::OBMolRingIter& >(result))), SWIGTYPE_p_OpenBabel__OBMolRingIter, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolRingIter_inc(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolRingIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolRingIter_inc__SWIG_0(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolRingIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap__OBMolRingIter_inc__SWIG_1(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolRingIter_inc'.\n  Possible C/C++ prototypes are:\n    operator ++()\n    operator ++(int)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolRingIter_deref(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   OpenBabel::OBRing *result = 0 ;
@@ -89449,10 +89829,10 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter___deref__(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter___deref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_deref",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter___deref__" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_deref" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   result = (OpenBabel::OBRing *)((OpenBabel::OBMolRingIter const *)arg1)->operator ->();
@@ -89463,7 +89843,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter___ref__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   OpenBabel::OBRing *result = 0 ;
@@ -89471,10 +89851,10 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter___ref__(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter___ref__",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter___ref__",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter___ref__" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   {
@@ -89488,17 +89868,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_OBMolRingIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_delete__OBMolRingIter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"delete_OBMolRingIter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"delete__OBMolRingIter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete__OBMolRingIter" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   delete arg1;
@@ -89510,7 +89890,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter__path_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter__path_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   std::vector<int,std::allocator<int > > *arg2 = 0 ;
@@ -89520,20 +89900,20 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter__path_set(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter__path_set",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter__path_set",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter__path_set" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter__path_set" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   {
     std::vector<int,std::allocator<int > > *ptr = (std::vector<int,std::allocator<int > > *)0;
     res2 = swig::asptr(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolRingIter__path_set" "', argument " "2"" of type '" "std::vector<int,std::allocator<int > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolRingIter__path_set" "', argument " "2"" of type '" "std::vector<int,std::allocator<int > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter__path_set" "', argument " "2"" of type '" "std::vector<int,std::allocator<int > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter__path_set" "', argument " "2"" of type '" "std::vector<int,std::allocator<int > > const &""'"); 
     }
     arg2 = ptr;
   }
@@ -89548,7 +89928,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter__path_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter__path_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   std::vector<int,std::allocator<int > > *result = 0 ;
@@ -89556,10 +89936,10 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter__path_get(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter__path_get",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter__path_get",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter__path_get" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter__path_get" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   {
@@ -89573,7 +89953,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter__pathset_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter__pathset_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   OpenBabel::OBBitVec *arg2 = 0 ;
@@ -89584,18 +89964,18 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter__pathset_set(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter__pathset_set",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter__pathset_set",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter__pathset_set" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter__pathset_set" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__OBBitVec,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolRingIter__pathset_set" "', argument " "2"" of type '" "OpenBabel::OBBitVec const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolRingIter__pathset_set" "', argument " "2"" of type '" "OpenBabel::OBBitVec const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter__pathset_set" "', argument " "2"" of type '" "OpenBabel::OBBitVec const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter__pathset_set" "', argument " "2"" of type '" "OpenBabel::OBBitVec const &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBBitVec * >(argp2);
   if (arg1) (*arg1)->_pathset = *arg2;
@@ -89607,7 +89987,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter__pathset_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter__pathset_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   OpenBabel::OBBitVec *result = 0 ;
@@ -89615,10 +89995,10 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter__pathset_get(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter__pathset_get",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter__pathset_get",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter__pathset_get" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter__pathset_get" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   {
@@ -89632,7 +90012,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_findCenterAndNormal(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_findCenterAndNormal(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   OpenBabel::vector3 *arg2 = 0 ;
@@ -89652,34 +90032,34 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_findCenterAndNormal(PyObject *SWIGUNUSE
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter_findCenterAndNormal",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_findCenterAndNormal",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
   res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
   res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
   result = (bool)(*arg1)->findCenterAndNormal(*arg2,*arg3,*arg4);
@@ -89690,7 +90070,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_Size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_Size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   int result;
@@ -89698,10 +90078,10 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_Size(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter_Size",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_Size",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_Size" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_Size" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   result = (int)(*arg1)->Size();
@@ -89712,7 +90092,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_PathSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_PathSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   int result;
@@ -89720,10 +90100,10 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_PathSize(PyObject *SWIGUNUSEDPARM(self)
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter_PathSize",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_PathSize",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_PathSize" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_PathSize" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   result = (int)(*arg1)->PathSize();
@@ -89734,7 +90114,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_IsMember__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_IsMember__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -89746,15 +90126,15 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_IsMember__SWIG_0(PyObject *SWIGUNUSEDPA
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter_IsMember",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_IsMember",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_IsMember" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_IsMember" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolRingIter_IsMember" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolRingIter_IsMember" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
   result = (bool)(*arg1)->IsMember(arg2);
@@ -89765,7 +90145,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_IsMember__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_IsMember__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   OpenBabel::OBBond *arg2 = (OpenBabel::OBBond *) 0 ;
@@ -89777,15 +90157,15 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_IsMember__SWIG_1(PyObject *SWIGUNUSEDPA
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter_IsMember",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_IsMember",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_IsMember" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_IsMember" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolRingIter_IsMember" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolRingIter_IsMember" "', argument " "2"" of type '" "OpenBabel::OBBond *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBBond * >(argp2);
   result = (bool)(*arg1)->IsMember(arg2);
@@ -89796,7 +90176,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_IsMember(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_IsMember(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -89816,7 +90196,7 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_IsMember(PyObject *self, PyObject *args
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolRingIter_IsMember__SWIG_0(self, args);
+        return _wrap__OBMolRingIter_IsMember__SWIG_0(self, args);
       }
     }
   }
@@ -89830,18 +90210,18 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_IsMember(PyObject *self, PyObject *args
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBond, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBMolRingIter_IsMember__SWIG_1(self, args);
+        return _wrap__OBMolRingIter_IsMember__SWIG_1(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMolRingIter_IsMember'.\n  Possible C/C++ prototypes are:\n    IsMember(OpenBabel::OBAtom *)\n    IsMember(OpenBabel::OBBond *)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolRingIter_IsMember'.\n  Possible C/C++ prototypes are:\n    IsMember(OpenBabel::OBAtom *)\n    IsMember(OpenBabel::OBBond *)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   bool result;
@@ -89849,10 +90229,10 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_IsAromatic(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter_IsAromatic",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_IsAromatic",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   result = (bool)(*arg1)->IsAromatic();
@@ -89863,7 +90243,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_IsInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_IsInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   int arg2 ;
@@ -89875,15 +90255,15 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_IsInRing(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter_IsInRing",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_IsInRing",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_IsInRing" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_IsInRing" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMolRingIter_IsInRing" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "_OBMolRingIter_IsInRing" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   result = (bool)(*arg1)->IsInRing(arg2);
@@ -89894,7 +90274,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_SetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_SetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   OpenBabel::OBMol *arg2 = (OpenBabel::OBMol *) 0 ;
@@ -89905,15 +90285,15 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_SetParent(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter_SetParent",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_SetParent",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_SetParent" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_SetParent" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolRingIter_SetParent" "', argument " "2"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolRingIter_SetParent" "', argument " "2"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBMol * >(argp2);
   (*arg1)->SetParent(arg2);
@@ -89924,7 +90304,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMolRingIter_GetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolRingIter_GetParent(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
   OpenBabel::OBMol *result = 0 ;
@@ -89932,10 +90312,10 @@ SWIGINTERN PyObject *_wrap_OBMolRingIter_GetParent(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBMolRingIter_GetParent",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_GetParent",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_GetParent" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_GetParent" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   result = (OpenBabel::OBMol *)(*arg1)->GetParent();
@@ -89946,14 +90326,14 @@ fail:
 }
 
 
-SWIGINTERN PyObject *OBMolRingIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolRingIter_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBMolRingIter, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *OBMolRingIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_OBMolRingIter_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
@@ -91605,290 +91985,294 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"_OBMolAtomIter_EndData", _wrap__OBMolAtomIter_EndData, METH_VARARGS, NULL},
 	 { (char *)"_OBMolAtomIter_swigregister", _OBMolAtomIter_swigregister, METH_VARARGS, NULL},
 	 { (char *)"_OBMolAtomIter_swiginit", _OBMolAtomIter_swiginit, METH_VARARGS, NULL},
-	 { (char *)"new_OBMolAtomDFSIter", _wrap_new_OBMolAtomDFSIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter___deref__", _wrap_OBMolAtomDFSIter___deref__, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter___ref__", _wrap_OBMolAtomDFSIter___ref__, METH_VARARGS, NULL},
-	 { (char *)"delete_OBMolAtomDFSIter", _wrap_delete_OBMolAtomDFSIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_Visit_set", _wrap_OBMolAtomDFSIter_Visit_set, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_Visit_get", _wrap_OBMolAtomDFSIter_Visit_get, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_Clear", _wrap_OBMolAtomDFSIter_Clear, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetIdx", _wrap_OBMolAtomDFSIter_SetIdx, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetHyb", _wrap_OBMolAtomDFSIter_SetHyb, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetAtomicNum", _wrap_OBMolAtomDFSIter_SetAtomicNum, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetIsotope", _wrap_OBMolAtomDFSIter_SetIsotope, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetImplicitValence", _wrap_OBMolAtomDFSIter_SetImplicitValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IncrementImplicitValence", _wrap_OBMolAtomDFSIter_IncrementImplicitValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_DecrementImplicitValence", _wrap_OBMolAtomDFSIter_DecrementImplicitValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetFormalCharge", _wrap_OBMolAtomDFSIter_SetFormalCharge, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetSpinMultiplicity", _wrap_OBMolAtomDFSIter_SetSpinMultiplicity, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetType", _wrap_OBMolAtomDFSIter_SetType, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetPartialCharge", _wrap_OBMolAtomDFSIter_SetPartialCharge, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetVector", _wrap_OBMolAtomDFSIter_SetVector, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetCoordPtr", _wrap_OBMolAtomDFSIter_SetCoordPtr, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetResidue", _wrap_OBMolAtomDFSIter_SetResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetParent", _wrap_OBMolAtomDFSIter_SetParent, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetAromatic", _wrap_OBMolAtomDFSIter_SetAromatic, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_UnsetAromatic", _wrap_OBMolAtomDFSIter_UnsetAromatic, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetClockwiseStereo", _wrap_OBMolAtomDFSIter_SetClockwiseStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetAntiClockwiseStereo", _wrap_OBMolAtomDFSIter_SetAntiClockwiseStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetPositiveStereo", _wrap_OBMolAtomDFSIter_SetPositiveStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetNegativeStereo", _wrap_OBMolAtomDFSIter_SetNegativeStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_UnsetStereo", _wrap_OBMolAtomDFSIter_UnsetStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetInRing", _wrap_OBMolAtomDFSIter_SetInRing, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetChiral", _wrap_OBMolAtomDFSIter_SetChiral, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_ClearCoordPtr", _wrap_OBMolAtomDFSIter_ClearCoordPtr, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetFormalCharge", _wrap_OBMolAtomDFSIter_GetFormalCharge, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetAtomicNum", _wrap_OBMolAtomDFSIter_GetAtomicNum, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetIsotope", _wrap_OBMolAtomDFSIter_GetIsotope, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetSpinMultiplicity", _wrap_OBMolAtomDFSIter_GetSpinMultiplicity, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetAtomicMass", _wrap_OBMolAtomDFSIter_GetAtomicMass, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetExactMass", _wrap_OBMolAtomDFSIter_GetExactMass, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetIdx", _wrap_OBMolAtomDFSIter_GetIdx, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetCoordinateIdx", _wrap_OBMolAtomDFSIter_GetCoordinateIdx, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetCIdx", _wrap_OBMolAtomDFSIter_GetCIdx, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetValence", _wrap_OBMolAtomDFSIter_GetValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetHyb", _wrap_OBMolAtomDFSIter_GetHyb, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetImplicitValence", _wrap_OBMolAtomDFSIter_GetImplicitValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetHvyValence", _wrap_OBMolAtomDFSIter_GetHvyValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetHeteroValence", _wrap_OBMolAtomDFSIter_GetHeteroValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetType", _wrap_OBMolAtomDFSIter_GetType, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetX", _wrap_OBMolAtomDFSIter_GetX, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_x", _wrap_OBMolAtomDFSIter_x, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetY", _wrap_OBMolAtomDFSIter_GetY, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_y", _wrap_OBMolAtomDFSIter_y, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetZ", _wrap_OBMolAtomDFSIter_GetZ, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_z", _wrap_OBMolAtomDFSIter_z, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetCoordinate", _wrap_OBMolAtomDFSIter_GetCoordinate, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetVector", _wrap_OBMolAtomDFSIter_GetVector, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetPartialCharge", _wrap_OBMolAtomDFSIter_GetPartialCharge, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetResidue", _wrap_OBMolAtomDFSIter_GetResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetParent", _wrap_OBMolAtomDFSIter_GetParent, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetNewBondVector", _wrap_OBMolAtomDFSIter_GetNewBondVector, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetBond", _wrap_OBMolAtomDFSIter_GetBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetNextAtom", _wrap_OBMolAtomDFSIter_GetNextAtom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_BeginBonds", _wrap_OBMolAtomDFSIter_BeginBonds, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_EndBonds", _wrap_OBMolAtomDFSIter_EndBonds, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_BeginBond", _wrap_OBMolAtomDFSIter_BeginBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_NextBond", _wrap_OBMolAtomDFSIter_NextBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_BeginNbrAtom", _wrap_OBMolAtomDFSIter_BeginNbrAtom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_NextNbrAtom", _wrap_OBMolAtomDFSIter_NextNbrAtom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetDistance", _wrap_OBMolAtomDFSIter_GetDistance, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetAngle", _wrap_OBMolAtomDFSIter_GetAngle, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_NewResidue", _wrap_OBMolAtomDFSIter_NewResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_DeleteResidue", _wrap_OBMolAtomDFSIter_DeleteResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_AddBond", _wrap_OBMolAtomDFSIter_AddBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_InsertBond", _wrap_OBMolAtomDFSIter_InsertBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_DeleteBond", _wrap_OBMolAtomDFSIter_DeleteBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_ClearBond", _wrap_OBMolAtomDFSIter_ClearBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_CountFreeOxygens", _wrap_OBMolAtomDFSIter_CountFreeOxygens, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_ImplicitHydrogenCount", _wrap_OBMolAtomDFSIter_ImplicitHydrogenCount, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_ExplicitHydrogenCount", _wrap_OBMolAtomDFSIter_ExplicitHydrogenCount, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_MemberOfRingCount", _wrap_OBMolAtomDFSIter_MemberOfRingCount, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_MemberOfRingSize", _wrap_OBMolAtomDFSIter_MemberOfRingSize, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_CountRingBonds", _wrap_OBMolAtomDFSIter_CountRingBonds, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SmallestBondAngle", _wrap_OBMolAtomDFSIter_SmallestBondAngle, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_AverageBondAngle", _wrap_OBMolAtomDFSIter_AverageBondAngle, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_BOSum", _wrap_OBMolAtomDFSIter_BOSum, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_KBOSum", _wrap_OBMolAtomDFSIter_KBOSum, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HtoMethyl", _wrap_OBMolAtomDFSIter_HtoMethyl, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetHybAndGeom", _wrap_OBMolAtomDFSIter_SetHybAndGeom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_ForceNoH", _wrap_OBMolAtomDFSIter_ForceNoH, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasNoHForced", _wrap_OBMolAtomDFSIter_HasNoHForced, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasResidue", _wrap_OBMolAtomDFSIter_HasResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsHydrogen", _wrap_OBMolAtomDFSIter_IsHydrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsCarbon", _wrap_OBMolAtomDFSIter_IsCarbon, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsNitrogen", _wrap_OBMolAtomDFSIter_IsNitrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsOxygen", _wrap_OBMolAtomDFSIter_IsOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsSulfur", _wrap_OBMolAtomDFSIter_IsSulfur, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsPhosphorus", _wrap_OBMolAtomDFSIter_IsPhosphorus, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsAromatic", _wrap_OBMolAtomDFSIter_IsAromatic, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsInRing", _wrap_OBMolAtomDFSIter_IsInRing, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsInRingSize", _wrap_OBMolAtomDFSIter_IsInRingSize, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsHeteroatom", _wrap_OBMolAtomDFSIter_IsHeteroatom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsNotCorH", _wrap_OBMolAtomDFSIter_IsNotCorH, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsConnected", _wrap_OBMolAtomDFSIter_IsConnected, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsOneThree", _wrap_OBMolAtomDFSIter_IsOneThree, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsOneFour", _wrap_OBMolAtomDFSIter_IsOneFour, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsCarboxylOxygen", _wrap_OBMolAtomDFSIter_IsCarboxylOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsPhosphateOxygen", _wrap_OBMolAtomDFSIter_IsPhosphateOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsSulfateOxygen", _wrap_OBMolAtomDFSIter_IsSulfateOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsNitroOxygen", _wrap_OBMolAtomDFSIter_IsNitroOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsAmideNitrogen", _wrap_OBMolAtomDFSIter_IsAmideNitrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsPolarHydrogen", _wrap_OBMolAtomDFSIter_IsPolarHydrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsNonPolarHydrogen", _wrap_OBMolAtomDFSIter_IsNonPolarHydrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsAromaticNOxide", _wrap_OBMolAtomDFSIter_IsAromaticNOxide, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsChiral", _wrap_OBMolAtomDFSIter_IsChiral, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsAxial", _wrap_OBMolAtomDFSIter_IsAxial, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsClockwise", _wrap_OBMolAtomDFSIter_IsClockwise, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsAntiClockwise", _wrap_OBMolAtomDFSIter_IsAntiClockwise, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsPositiveStereo", _wrap_OBMolAtomDFSIter_IsPositiveStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsNegativeStereo", _wrap_OBMolAtomDFSIter_IsNegativeStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasChiralitySpecified", _wrap_OBMolAtomDFSIter_HasChiralitySpecified, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasChiralVolume", _wrap_OBMolAtomDFSIter_HasChiralVolume, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsHbondAcceptor", _wrap_OBMolAtomDFSIter_IsHbondAcceptor, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsHbondDonor", _wrap_OBMolAtomDFSIter_IsHbondDonor, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_IsHbondDonorH", _wrap_OBMolAtomDFSIter_IsHbondDonorH, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasAlphaBetaUnsat", _wrap_OBMolAtomDFSIter_HasAlphaBetaUnsat, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasBondOfOrder", _wrap_OBMolAtomDFSIter_HasBondOfOrder, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_CountBondsOfOrder", _wrap_OBMolAtomDFSIter_CountBondsOfOrder, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasNonSingleBond", _wrap_OBMolAtomDFSIter_HasNonSingleBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasSingleBond", _wrap_OBMolAtomDFSIter_HasSingleBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasDoubleBond", _wrap_OBMolAtomDFSIter_HasDoubleBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasAromaticBond", _wrap_OBMolAtomDFSIter_HasAromaticBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_MatchesSMARTS", _wrap_OBMolAtomDFSIter_MatchesSMARTS, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_DoTransformations", _wrap_OBMolAtomDFSIter_DoTransformations, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_ClassDescription", _wrap_OBMolAtomDFSIter_ClassDescription, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_HasData", _wrap_OBMolAtomDFSIter_HasData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_DeleteData", _wrap_OBMolAtomDFSIter_DeleteData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_SetData", _wrap_OBMolAtomDFSIter_SetData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_DataSize", _wrap_OBMolAtomDFSIter_DataSize, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_GetData", _wrap_OBMolAtomDFSIter_GetData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_BeginData", _wrap_OBMolAtomDFSIter_BeginData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_EndData", _wrap_OBMolAtomDFSIter_EndData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_swigregister", OBMolAtomDFSIter_swigregister, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomDFSIter_swiginit", OBMolAtomDFSIter_swiginit, METH_VARARGS, NULL},
-	 { (char *)"new_OBMolAtomBFSIter", _wrap_new_OBMolAtomBFSIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter___deref__", _wrap_OBMolAtomBFSIter___deref__, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter___ref__", _wrap_OBMolAtomBFSIter___ref__, METH_VARARGS, NULL},
-	 { (char *)"delete_OBMolAtomBFSIter", _wrap_delete_OBMolAtomBFSIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_Visit_set", _wrap_OBMolAtomBFSIter_Visit_set, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_Visit_get", _wrap_OBMolAtomBFSIter_Visit_get, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_Clear", _wrap_OBMolAtomBFSIter_Clear, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetIdx", _wrap_OBMolAtomBFSIter_SetIdx, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetHyb", _wrap_OBMolAtomBFSIter_SetHyb, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetAtomicNum", _wrap_OBMolAtomBFSIter_SetAtomicNum, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetIsotope", _wrap_OBMolAtomBFSIter_SetIsotope, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetImplicitValence", _wrap_OBMolAtomBFSIter_SetImplicitValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IncrementImplicitValence", _wrap_OBMolAtomBFSIter_IncrementImplicitValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_DecrementImplicitValence", _wrap_OBMolAtomBFSIter_DecrementImplicitValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetFormalCharge", _wrap_OBMolAtomBFSIter_SetFormalCharge, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetSpinMultiplicity", _wrap_OBMolAtomBFSIter_SetSpinMultiplicity, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetType", _wrap_OBMolAtomBFSIter_SetType, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetPartialCharge", _wrap_OBMolAtomBFSIter_SetPartialCharge, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetVector", _wrap_OBMolAtomBFSIter_SetVector, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetCoordPtr", _wrap_OBMolAtomBFSIter_SetCoordPtr, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetResidue", _wrap_OBMolAtomBFSIter_SetResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetParent", _wrap_OBMolAtomBFSIter_SetParent, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetAromatic", _wrap_OBMolAtomBFSIter_SetAromatic, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_UnsetAromatic", _wrap_OBMolAtomBFSIter_UnsetAromatic, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetClockwiseStereo", _wrap_OBMolAtomBFSIter_SetClockwiseStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetAntiClockwiseStereo", _wrap_OBMolAtomBFSIter_SetAntiClockwiseStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetPositiveStereo", _wrap_OBMolAtomBFSIter_SetPositiveStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetNegativeStereo", _wrap_OBMolAtomBFSIter_SetNegativeStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_UnsetStereo", _wrap_OBMolAtomBFSIter_UnsetStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetInRing", _wrap_OBMolAtomBFSIter_SetInRing, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetChiral", _wrap_OBMolAtomBFSIter_SetChiral, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_ClearCoordPtr", _wrap_OBMolAtomBFSIter_ClearCoordPtr, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetFormalCharge", _wrap_OBMolAtomBFSIter_GetFormalCharge, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetAtomicNum", _wrap_OBMolAtomBFSIter_GetAtomicNum, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetIsotope", _wrap_OBMolAtomBFSIter_GetIsotope, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetSpinMultiplicity", _wrap_OBMolAtomBFSIter_GetSpinMultiplicity, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetAtomicMass", _wrap_OBMolAtomBFSIter_GetAtomicMass, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetExactMass", _wrap_OBMolAtomBFSIter_GetExactMass, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetIdx", _wrap_OBMolAtomBFSIter_GetIdx, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetCoordinateIdx", _wrap_OBMolAtomBFSIter_GetCoordinateIdx, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetCIdx", _wrap_OBMolAtomBFSIter_GetCIdx, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetValence", _wrap_OBMolAtomBFSIter_GetValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetHyb", _wrap_OBMolAtomBFSIter_GetHyb, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetImplicitValence", _wrap_OBMolAtomBFSIter_GetImplicitValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetHvyValence", _wrap_OBMolAtomBFSIter_GetHvyValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetHeteroValence", _wrap_OBMolAtomBFSIter_GetHeteroValence, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetType", _wrap_OBMolAtomBFSIter_GetType, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetX", _wrap_OBMolAtomBFSIter_GetX, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_x", _wrap_OBMolAtomBFSIter_x, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetY", _wrap_OBMolAtomBFSIter_GetY, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_y", _wrap_OBMolAtomBFSIter_y, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetZ", _wrap_OBMolAtomBFSIter_GetZ, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_z", _wrap_OBMolAtomBFSIter_z, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetCoordinate", _wrap_OBMolAtomBFSIter_GetCoordinate, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetVector", _wrap_OBMolAtomBFSIter_GetVector, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetPartialCharge", _wrap_OBMolAtomBFSIter_GetPartialCharge, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetResidue", _wrap_OBMolAtomBFSIter_GetResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetParent", _wrap_OBMolAtomBFSIter_GetParent, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetNewBondVector", _wrap_OBMolAtomBFSIter_GetNewBondVector, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetBond", _wrap_OBMolAtomBFSIter_GetBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetNextAtom", _wrap_OBMolAtomBFSIter_GetNextAtom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_BeginBonds", _wrap_OBMolAtomBFSIter_BeginBonds, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_EndBonds", _wrap_OBMolAtomBFSIter_EndBonds, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_BeginBond", _wrap_OBMolAtomBFSIter_BeginBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_NextBond", _wrap_OBMolAtomBFSIter_NextBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_BeginNbrAtom", _wrap_OBMolAtomBFSIter_BeginNbrAtom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_NextNbrAtom", _wrap_OBMolAtomBFSIter_NextNbrAtom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetDistance", _wrap_OBMolAtomBFSIter_GetDistance, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetAngle", _wrap_OBMolAtomBFSIter_GetAngle, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_NewResidue", _wrap_OBMolAtomBFSIter_NewResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_DeleteResidue", _wrap_OBMolAtomBFSIter_DeleteResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_AddBond", _wrap_OBMolAtomBFSIter_AddBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_InsertBond", _wrap_OBMolAtomBFSIter_InsertBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_DeleteBond", _wrap_OBMolAtomBFSIter_DeleteBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_ClearBond", _wrap_OBMolAtomBFSIter_ClearBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_CountFreeOxygens", _wrap_OBMolAtomBFSIter_CountFreeOxygens, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_ImplicitHydrogenCount", _wrap_OBMolAtomBFSIter_ImplicitHydrogenCount, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_ExplicitHydrogenCount", _wrap_OBMolAtomBFSIter_ExplicitHydrogenCount, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_MemberOfRingCount", _wrap_OBMolAtomBFSIter_MemberOfRingCount, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_MemberOfRingSize", _wrap_OBMolAtomBFSIter_MemberOfRingSize, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_CountRingBonds", _wrap_OBMolAtomBFSIter_CountRingBonds, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SmallestBondAngle", _wrap_OBMolAtomBFSIter_SmallestBondAngle, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_AverageBondAngle", _wrap_OBMolAtomBFSIter_AverageBondAngle, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_BOSum", _wrap_OBMolAtomBFSIter_BOSum, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_KBOSum", _wrap_OBMolAtomBFSIter_KBOSum, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HtoMethyl", _wrap_OBMolAtomBFSIter_HtoMethyl, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetHybAndGeom", _wrap_OBMolAtomBFSIter_SetHybAndGeom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_ForceNoH", _wrap_OBMolAtomBFSIter_ForceNoH, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasNoHForced", _wrap_OBMolAtomBFSIter_HasNoHForced, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasResidue", _wrap_OBMolAtomBFSIter_HasResidue, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsHydrogen", _wrap_OBMolAtomBFSIter_IsHydrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsCarbon", _wrap_OBMolAtomBFSIter_IsCarbon, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsNitrogen", _wrap_OBMolAtomBFSIter_IsNitrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsOxygen", _wrap_OBMolAtomBFSIter_IsOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsSulfur", _wrap_OBMolAtomBFSIter_IsSulfur, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsPhosphorus", _wrap_OBMolAtomBFSIter_IsPhosphorus, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsAromatic", _wrap_OBMolAtomBFSIter_IsAromatic, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsInRing", _wrap_OBMolAtomBFSIter_IsInRing, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsInRingSize", _wrap_OBMolAtomBFSIter_IsInRingSize, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsHeteroatom", _wrap_OBMolAtomBFSIter_IsHeteroatom, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsNotCorH", _wrap_OBMolAtomBFSIter_IsNotCorH, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsConnected", _wrap_OBMolAtomBFSIter_IsConnected, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsOneThree", _wrap_OBMolAtomBFSIter_IsOneThree, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsOneFour", _wrap_OBMolAtomBFSIter_IsOneFour, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsCarboxylOxygen", _wrap_OBMolAtomBFSIter_IsCarboxylOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsPhosphateOxygen", _wrap_OBMolAtomBFSIter_IsPhosphateOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsSulfateOxygen", _wrap_OBMolAtomBFSIter_IsSulfateOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsNitroOxygen", _wrap_OBMolAtomBFSIter_IsNitroOxygen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsAmideNitrogen", _wrap_OBMolAtomBFSIter_IsAmideNitrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsPolarHydrogen", _wrap_OBMolAtomBFSIter_IsPolarHydrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsNonPolarHydrogen", _wrap_OBMolAtomBFSIter_IsNonPolarHydrogen, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsAromaticNOxide", _wrap_OBMolAtomBFSIter_IsAromaticNOxide, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsChiral", _wrap_OBMolAtomBFSIter_IsChiral, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsAxial", _wrap_OBMolAtomBFSIter_IsAxial, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsClockwise", _wrap_OBMolAtomBFSIter_IsClockwise, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsAntiClockwise", _wrap_OBMolAtomBFSIter_IsAntiClockwise, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsPositiveStereo", _wrap_OBMolAtomBFSIter_IsPositiveStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsNegativeStereo", _wrap_OBMolAtomBFSIter_IsNegativeStereo, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasChiralitySpecified", _wrap_OBMolAtomBFSIter_HasChiralitySpecified, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasChiralVolume", _wrap_OBMolAtomBFSIter_HasChiralVolume, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsHbondAcceptor", _wrap_OBMolAtomBFSIter_IsHbondAcceptor, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsHbondDonor", _wrap_OBMolAtomBFSIter_IsHbondDonor, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_IsHbondDonorH", _wrap_OBMolAtomBFSIter_IsHbondDonorH, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasAlphaBetaUnsat", _wrap_OBMolAtomBFSIter_HasAlphaBetaUnsat, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasBondOfOrder", _wrap_OBMolAtomBFSIter_HasBondOfOrder, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_CountBondsOfOrder", _wrap_OBMolAtomBFSIter_CountBondsOfOrder, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasNonSingleBond", _wrap_OBMolAtomBFSIter_HasNonSingleBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasSingleBond", _wrap_OBMolAtomBFSIter_HasSingleBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasDoubleBond", _wrap_OBMolAtomBFSIter_HasDoubleBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasAromaticBond", _wrap_OBMolAtomBFSIter_HasAromaticBond, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_MatchesSMARTS", _wrap_OBMolAtomBFSIter_MatchesSMARTS, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_DoTransformations", _wrap_OBMolAtomBFSIter_DoTransformations, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_ClassDescription", _wrap_OBMolAtomBFSIter_ClassDescription, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_HasData", _wrap_OBMolAtomBFSIter_HasData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_DeleteData", _wrap_OBMolAtomBFSIter_DeleteData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_SetData", _wrap_OBMolAtomBFSIter_SetData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_DataSize", _wrap_OBMolAtomBFSIter_DataSize, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_GetData", _wrap_OBMolAtomBFSIter_GetData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_BeginData", _wrap_OBMolAtomBFSIter_BeginData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_EndData", _wrap_OBMolAtomBFSIter_EndData, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_swigregister", OBMolAtomBFSIter_swigregister, METH_VARARGS, NULL},
-	 { (char *)"OBMolAtomBFSIter_swiginit", OBMolAtomBFSIter_swiginit, METH_VARARGS, NULL},
+	 { (char *)"new__OBMolAtomDFSIter", _wrap_new__OBMolAtomDFSIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_good", _wrap__OBMolAtomDFSIter_good, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_inc", _wrap__OBMolAtomDFSIter_inc, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_deref", _wrap__OBMolAtomDFSIter_deref, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter___ref__", _wrap__OBMolAtomDFSIter___ref__, METH_VARARGS, NULL},
+	 { (char *)"delete__OBMolAtomDFSIter", _wrap_delete__OBMolAtomDFSIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_Visit_set", _wrap__OBMolAtomDFSIter_Visit_set, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_Visit_get", _wrap__OBMolAtomDFSIter_Visit_get, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_Clear", _wrap__OBMolAtomDFSIter_Clear, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetIdx", _wrap__OBMolAtomDFSIter_SetIdx, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetHyb", _wrap__OBMolAtomDFSIter_SetHyb, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetAtomicNum", _wrap__OBMolAtomDFSIter_SetAtomicNum, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetIsotope", _wrap__OBMolAtomDFSIter_SetIsotope, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetImplicitValence", _wrap__OBMolAtomDFSIter_SetImplicitValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IncrementImplicitValence", _wrap__OBMolAtomDFSIter_IncrementImplicitValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_DecrementImplicitValence", _wrap__OBMolAtomDFSIter_DecrementImplicitValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetFormalCharge", _wrap__OBMolAtomDFSIter_SetFormalCharge, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetSpinMultiplicity", _wrap__OBMolAtomDFSIter_SetSpinMultiplicity, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetType", _wrap__OBMolAtomDFSIter_SetType, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetPartialCharge", _wrap__OBMolAtomDFSIter_SetPartialCharge, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetVector", _wrap__OBMolAtomDFSIter_SetVector, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetCoordPtr", _wrap__OBMolAtomDFSIter_SetCoordPtr, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetResidue", _wrap__OBMolAtomDFSIter_SetResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetParent", _wrap__OBMolAtomDFSIter_SetParent, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetAromatic", _wrap__OBMolAtomDFSIter_SetAromatic, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_UnsetAromatic", _wrap__OBMolAtomDFSIter_UnsetAromatic, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetClockwiseStereo", _wrap__OBMolAtomDFSIter_SetClockwiseStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetAntiClockwiseStereo", _wrap__OBMolAtomDFSIter_SetAntiClockwiseStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetPositiveStereo", _wrap__OBMolAtomDFSIter_SetPositiveStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetNegativeStereo", _wrap__OBMolAtomDFSIter_SetNegativeStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_UnsetStereo", _wrap__OBMolAtomDFSIter_UnsetStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetInRing", _wrap__OBMolAtomDFSIter_SetInRing, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetChiral", _wrap__OBMolAtomDFSIter_SetChiral, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_ClearCoordPtr", _wrap__OBMolAtomDFSIter_ClearCoordPtr, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetFormalCharge", _wrap__OBMolAtomDFSIter_GetFormalCharge, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetAtomicNum", _wrap__OBMolAtomDFSIter_GetAtomicNum, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetIsotope", _wrap__OBMolAtomDFSIter_GetIsotope, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetSpinMultiplicity", _wrap__OBMolAtomDFSIter_GetSpinMultiplicity, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetAtomicMass", _wrap__OBMolAtomDFSIter_GetAtomicMass, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetExactMass", _wrap__OBMolAtomDFSIter_GetExactMass, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetIdx", _wrap__OBMolAtomDFSIter_GetIdx, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetCoordinateIdx", _wrap__OBMolAtomDFSIter_GetCoordinateIdx, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetCIdx", _wrap__OBMolAtomDFSIter_GetCIdx, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetValence", _wrap__OBMolAtomDFSIter_GetValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetHyb", _wrap__OBMolAtomDFSIter_GetHyb, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetImplicitValence", _wrap__OBMolAtomDFSIter_GetImplicitValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetHvyValence", _wrap__OBMolAtomDFSIter_GetHvyValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetHeteroValence", _wrap__OBMolAtomDFSIter_GetHeteroValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetType", _wrap__OBMolAtomDFSIter_GetType, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetX", _wrap__OBMolAtomDFSIter_GetX, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_x", _wrap__OBMolAtomDFSIter_x, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetY", _wrap__OBMolAtomDFSIter_GetY, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_y", _wrap__OBMolAtomDFSIter_y, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetZ", _wrap__OBMolAtomDFSIter_GetZ, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_z", _wrap__OBMolAtomDFSIter_z, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetCoordinate", _wrap__OBMolAtomDFSIter_GetCoordinate, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetVector", _wrap__OBMolAtomDFSIter_GetVector, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetPartialCharge", _wrap__OBMolAtomDFSIter_GetPartialCharge, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetResidue", _wrap__OBMolAtomDFSIter_GetResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetParent", _wrap__OBMolAtomDFSIter_GetParent, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetNewBondVector", _wrap__OBMolAtomDFSIter_GetNewBondVector, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetBond", _wrap__OBMolAtomDFSIter_GetBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetNextAtom", _wrap__OBMolAtomDFSIter_GetNextAtom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_BeginBonds", _wrap__OBMolAtomDFSIter_BeginBonds, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_EndBonds", _wrap__OBMolAtomDFSIter_EndBonds, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_BeginBond", _wrap__OBMolAtomDFSIter_BeginBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_NextBond", _wrap__OBMolAtomDFSIter_NextBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_BeginNbrAtom", _wrap__OBMolAtomDFSIter_BeginNbrAtom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_NextNbrAtom", _wrap__OBMolAtomDFSIter_NextNbrAtom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetDistance", _wrap__OBMolAtomDFSIter_GetDistance, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetAngle", _wrap__OBMolAtomDFSIter_GetAngle, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_NewResidue", _wrap__OBMolAtomDFSIter_NewResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_DeleteResidue", _wrap__OBMolAtomDFSIter_DeleteResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_AddBond", _wrap__OBMolAtomDFSIter_AddBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_InsertBond", _wrap__OBMolAtomDFSIter_InsertBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_DeleteBond", _wrap__OBMolAtomDFSIter_DeleteBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_ClearBond", _wrap__OBMolAtomDFSIter_ClearBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_CountFreeOxygens", _wrap__OBMolAtomDFSIter_CountFreeOxygens, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_ImplicitHydrogenCount", _wrap__OBMolAtomDFSIter_ImplicitHydrogenCount, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_ExplicitHydrogenCount", _wrap__OBMolAtomDFSIter_ExplicitHydrogenCount, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_MemberOfRingCount", _wrap__OBMolAtomDFSIter_MemberOfRingCount, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_MemberOfRingSize", _wrap__OBMolAtomDFSIter_MemberOfRingSize, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_CountRingBonds", _wrap__OBMolAtomDFSIter_CountRingBonds, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SmallestBondAngle", _wrap__OBMolAtomDFSIter_SmallestBondAngle, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_AverageBondAngle", _wrap__OBMolAtomDFSIter_AverageBondAngle, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_BOSum", _wrap__OBMolAtomDFSIter_BOSum, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_KBOSum", _wrap__OBMolAtomDFSIter_KBOSum, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HtoMethyl", _wrap__OBMolAtomDFSIter_HtoMethyl, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetHybAndGeom", _wrap__OBMolAtomDFSIter_SetHybAndGeom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_ForceNoH", _wrap__OBMolAtomDFSIter_ForceNoH, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasNoHForced", _wrap__OBMolAtomDFSIter_HasNoHForced, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasResidue", _wrap__OBMolAtomDFSIter_HasResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsHydrogen", _wrap__OBMolAtomDFSIter_IsHydrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsCarbon", _wrap__OBMolAtomDFSIter_IsCarbon, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsNitrogen", _wrap__OBMolAtomDFSIter_IsNitrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsOxygen", _wrap__OBMolAtomDFSIter_IsOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsSulfur", _wrap__OBMolAtomDFSIter_IsSulfur, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsPhosphorus", _wrap__OBMolAtomDFSIter_IsPhosphorus, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsAromatic", _wrap__OBMolAtomDFSIter_IsAromatic, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsInRing", _wrap__OBMolAtomDFSIter_IsInRing, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsInRingSize", _wrap__OBMolAtomDFSIter_IsInRingSize, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsHeteroatom", _wrap__OBMolAtomDFSIter_IsHeteroatom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsNotCorH", _wrap__OBMolAtomDFSIter_IsNotCorH, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsConnected", _wrap__OBMolAtomDFSIter_IsConnected, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsOneThree", _wrap__OBMolAtomDFSIter_IsOneThree, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsOneFour", _wrap__OBMolAtomDFSIter_IsOneFour, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsCarboxylOxygen", _wrap__OBMolAtomDFSIter_IsCarboxylOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsPhosphateOxygen", _wrap__OBMolAtomDFSIter_IsPhosphateOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsSulfateOxygen", _wrap__OBMolAtomDFSIter_IsSulfateOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsNitroOxygen", _wrap__OBMolAtomDFSIter_IsNitroOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsAmideNitrogen", _wrap__OBMolAtomDFSIter_IsAmideNitrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsPolarHydrogen", _wrap__OBMolAtomDFSIter_IsPolarHydrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsNonPolarHydrogen", _wrap__OBMolAtomDFSIter_IsNonPolarHydrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsAromaticNOxide", _wrap__OBMolAtomDFSIter_IsAromaticNOxide, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsChiral", _wrap__OBMolAtomDFSIter_IsChiral, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsAxial", _wrap__OBMolAtomDFSIter_IsAxial, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsClockwise", _wrap__OBMolAtomDFSIter_IsClockwise, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsAntiClockwise", _wrap__OBMolAtomDFSIter_IsAntiClockwise, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsPositiveStereo", _wrap__OBMolAtomDFSIter_IsPositiveStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsNegativeStereo", _wrap__OBMolAtomDFSIter_IsNegativeStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasChiralitySpecified", _wrap__OBMolAtomDFSIter_HasChiralitySpecified, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasChiralVolume", _wrap__OBMolAtomDFSIter_HasChiralVolume, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsHbondAcceptor", _wrap__OBMolAtomDFSIter_IsHbondAcceptor, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsHbondDonor", _wrap__OBMolAtomDFSIter_IsHbondDonor, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_IsHbondDonorH", _wrap__OBMolAtomDFSIter_IsHbondDonorH, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasAlphaBetaUnsat", _wrap__OBMolAtomDFSIter_HasAlphaBetaUnsat, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasBondOfOrder", _wrap__OBMolAtomDFSIter_HasBondOfOrder, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_CountBondsOfOrder", _wrap__OBMolAtomDFSIter_CountBondsOfOrder, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasNonSingleBond", _wrap__OBMolAtomDFSIter_HasNonSingleBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasSingleBond", _wrap__OBMolAtomDFSIter_HasSingleBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasDoubleBond", _wrap__OBMolAtomDFSIter_HasDoubleBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasAromaticBond", _wrap__OBMolAtomDFSIter_HasAromaticBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_MatchesSMARTS", _wrap__OBMolAtomDFSIter_MatchesSMARTS, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_DoTransformations", _wrap__OBMolAtomDFSIter_DoTransformations, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_ClassDescription", _wrap__OBMolAtomDFSIter_ClassDescription, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_HasData", _wrap__OBMolAtomDFSIter_HasData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_DeleteData", _wrap__OBMolAtomDFSIter_DeleteData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_SetData", _wrap__OBMolAtomDFSIter_SetData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_DataSize", _wrap__OBMolAtomDFSIter_DataSize, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_GetData", _wrap__OBMolAtomDFSIter_GetData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_BeginData", _wrap__OBMolAtomDFSIter_BeginData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_EndData", _wrap__OBMolAtomDFSIter_EndData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_swigregister", _OBMolAtomDFSIter_swigregister, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomDFSIter_swiginit", _OBMolAtomDFSIter_swiginit, METH_VARARGS, NULL},
+	 { (char *)"new__OBMolAtomBFSIter", _wrap_new__OBMolAtomBFSIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_good", _wrap__OBMolAtomBFSIter_good, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_inc", _wrap__OBMolAtomBFSIter_inc, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_deref", _wrap__OBMolAtomBFSIter_deref, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter___ref__", _wrap__OBMolAtomBFSIter___ref__, METH_VARARGS, NULL},
+	 { (char *)"delete__OBMolAtomBFSIter", _wrap_delete__OBMolAtomBFSIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_Visit_set", _wrap__OBMolAtomBFSIter_Visit_set, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_Visit_get", _wrap__OBMolAtomBFSIter_Visit_get, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_Clear", _wrap__OBMolAtomBFSIter_Clear, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetIdx", _wrap__OBMolAtomBFSIter_SetIdx, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetHyb", _wrap__OBMolAtomBFSIter_SetHyb, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetAtomicNum", _wrap__OBMolAtomBFSIter_SetAtomicNum, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetIsotope", _wrap__OBMolAtomBFSIter_SetIsotope, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetImplicitValence", _wrap__OBMolAtomBFSIter_SetImplicitValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IncrementImplicitValence", _wrap__OBMolAtomBFSIter_IncrementImplicitValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_DecrementImplicitValence", _wrap__OBMolAtomBFSIter_DecrementImplicitValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetFormalCharge", _wrap__OBMolAtomBFSIter_SetFormalCharge, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetSpinMultiplicity", _wrap__OBMolAtomBFSIter_SetSpinMultiplicity, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetType", _wrap__OBMolAtomBFSIter_SetType, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetPartialCharge", _wrap__OBMolAtomBFSIter_SetPartialCharge, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetVector", _wrap__OBMolAtomBFSIter_SetVector, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetCoordPtr", _wrap__OBMolAtomBFSIter_SetCoordPtr, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetResidue", _wrap__OBMolAtomBFSIter_SetResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetParent", _wrap__OBMolAtomBFSIter_SetParent, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetAromatic", _wrap__OBMolAtomBFSIter_SetAromatic, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_UnsetAromatic", _wrap__OBMolAtomBFSIter_UnsetAromatic, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetClockwiseStereo", _wrap__OBMolAtomBFSIter_SetClockwiseStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetAntiClockwiseStereo", _wrap__OBMolAtomBFSIter_SetAntiClockwiseStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetPositiveStereo", _wrap__OBMolAtomBFSIter_SetPositiveStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetNegativeStereo", _wrap__OBMolAtomBFSIter_SetNegativeStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_UnsetStereo", _wrap__OBMolAtomBFSIter_UnsetStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetInRing", _wrap__OBMolAtomBFSIter_SetInRing, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetChiral", _wrap__OBMolAtomBFSIter_SetChiral, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_ClearCoordPtr", _wrap__OBMolAtomBFSIter_ClearCoordPtr, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetFormalCharge", _wrap__OBMolAtomBFSIter_GetFormalCharge, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetAtomicNum", _wrap__OBMolAtomBFSIter_GetAtomicNum, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetIsotope", _wrap__OBMolAtomBFSIter_GetIsotope, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetSpinMultiplicity", _wrap__OBMolAtomBFSIter_GetSpinMultiplicity, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetAtomicMass", _wrap__OBMolAtomBFSIter_GetAtomicMass, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetExactMass", _wrap__OBMolAtomBFSIter_GetExactMass, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetIdx", _wrap__OBMolAtomBFSIter_GetIdx, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetCoordinateIdx", _wrap__OBMolAtomBFSIter_GetCoordinateIdx, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetCIdx", _wrap__OBMolAtomBFSIter_GetCIdx, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetValence", _wrap__OBMolAtomBFSIter_GetValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetHyb", _wrap__OBMolAtomBFSIter_GetHyb, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetImplicitValence", _wrap__OBMolAtomBFSIter_GetImplicitValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetHvyValence", _wrap__OBMolAtomBFSIter_GetHvyValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetHeteroValence", _wrap__OBMolAtomBFSIter_GetHeteroValence, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetType", _wrap__OBMolAtomBFSIter_GetType, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetX", _wrap__OBMolAtomBFSIter_GetX, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_x", _wrap__OBMolAtomBFSIter_x, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetY", _wrap__OBMolAtomBFSIter_GetY, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_y", _wrap__OBMolAtomBFSIter_y, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetZ", _wrap__OBMolAtomBFSIter_GetZ, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_z", _wrap__OBMolAtomBFSIter_z, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetCoordinate", _wrap__OBMolAtomBFSIter_GetCoordinate, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetVector", _wrap__OBMolAtomBFSIter_GetVector, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetPartialCharge", _wrap__OBMolAtomBFSIter_GetPartialCharge, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetResidue", _wrap__OBMolAtomBFSIter_GetResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetParent", _wrap__OBMolAtomBFSIter_GetParent, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetNewBondVector", _wrap__OBMolAtomBFSIter_GetNewBondVector, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetBond", _wrap__OBMolAtomBFSIter_GetBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetNextAtom", _wrap__OBMolAtomBFSIter_GetNextAtom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_BeginBonds", _wrap__OBMolAtomBFSIter_BeginBonds, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_EndBonds", _wrap__OBMolAtomBFSIter_EndBonds, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_BeginBond", _wrap__OBMolAtomBFSIter_BeginBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_NextBond", _wrap__OBMolAtomBFSIter_NextBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_BeginNbrAtom", _wrap__OBMolAtomBFSIter_BeginNbrAtom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_NextNbrAtom", _wrap__OBMolAtomBFSIter_NextNbrAtom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetDistance", _wrap__OBMolAtomBFSIter_GetDistance, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetAngle", _wrap__OBMolAtomBFSIter_GetAngle, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_NewResidue", _wrap__OBMolAtomBFSIter_NewResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_DeleteResidue", _wrap__OBMolAtomBFSIter_DeleteResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_AddBond", _wrap__OBMolAtomBFSIter_AddBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_InsertBond", _wrap__OBMolAtomBFSIter_InsertBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_DeleteBond", _wrap__OBMolAtomBFSIter_DeleteBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_ClearBond", _wrap__OBMolAtomBFSIter_ClearBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_CountFreeOxygens", _wrap__OBMolAtomBFSIter_CountFreeOxygens, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_ImplicitHydrogenCount", _wrap__OBMolAtomBFSIter_ImplicitHydrogenCount, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_ExplicitHydrogenCount", _wrap__OBMolAtomBFSIter_ExplicitHydrogenCount, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_MemberOfRingCount", _wrap__OBMolAtomBFSIter_MemberOfRingCount, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_MemberOfRingSize", _wrap__OBMolAtomBFSIter_MemberOfRingSize, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_CountRingBonds", _wrap__OBMolAtomBFSIter_CountRingBonds, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SmallestBondAngle", _wrap__OBMolAtomBFSIter_SmallestBondAngle, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_AverageBondAngle", _wrap__OBMolAtomBFSIter_AverageBondAngle, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_BOSum", _wrap__OBMolAtomBFSIter_BOSum, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_KBOSum", _wrap__OBMolAtomBFSIter_KBOSum, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HtoMethyl", _wrap__OBMolAtomBFSIter_HtoMethyl, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetHybAndGeom", _wrap__OBMolAtomBFSIter_SetHybAndGeom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_ForceNoH", _wrap__OBMolAtomBFSIter_ForceNoH, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasNoHForced", _wrap__OBMolAtomBFSIter_HasNoHForced, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasResidue", _wrap__OBMolAtomBFSIter_HasResidue, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsHydrogen", _wrap__OBMolAtomBFSIter_IsHydrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsCarbon", _wrap__OBMolAtomBFSIter_IsCarbon, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsNitrogen", _wrap__OBMolAtomBFSIter_IsNitrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsOxygen", _wrap__OBMolAtomBFSIter_IsOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsSulfur", _wrap__OBMolAtomBFSIter_IsSulfur, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsPhosphorus", _wrap__OBMolAtomBFSIter_IsPhosphorus, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsAromatic", _wrap__OBMolAtomBFSIter_IsAromatic, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsInRing", _wrap__OBMolAtomBFSIter_IsInRing, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsInRingSize", _wrap__OBMolAtomBFSIter_IsInRingSize, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsHeteroatom", _wrap__OBMolAtomBFSIter_IsHeteroatom, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsNotCorH", _wrap__OBMolAtomBFSIter_IsNotCorH, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsConnected", _wrap__OBMolAtomBFSIter_IsConnected, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsOneThree", _wrap__OBMolAtomBFSIter_IsOneThree, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsOneFour", _wrap__OBMolAtomBFSIter_IsOneFour, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsCarboxylOxygen", _wrap__OBMolAtomBFSIter_IsCarboxylOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsPhosphateOxygen", _wrap__OBMolAtomBFSIter_IsPhosphateOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsSulfateOxygen", _wrap__OBMolAtomBFSIter_IsSulfateOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsNitroOxygen", _wrap__OBMolAtomBFSIter_IsNitroOxygen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsAmideNitrogen", _wrap__OBMolAtomBFSIter_IsAmideNitrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsPolarHydrogen", _wrap__OBMolAtomBFSIter_IsPolarHydrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsNonPolarHydrogen", _wrap__OBMolAtomBFSIter_IsNonPolarHydrogen, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsAromaticNOxide", _wrap__OBMolAtomBFSIter_IsAromaticNOxide, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsChiral", _wrap__OBMolAtomBFSIter_IsChiral, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsAxial", _wrap__OBMolAtomBFSIter_IsAxial, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsClockwise", _wrap__OBMolAtomBFSIter_IsClockwise, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsAntiClockwise", _wrap__OBMolAtomBFSIter_IsAntiClockwise, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsPositiveStereo", _wrap__OBMolAtomBFSIter_IsPositiveStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsNegativeStereo", _wrap__OBMolAtomBFSIter_IsNegativeStereo, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasChiralitySpecified", _wrap__OBMolAtomBFSIter_HasChiralitySpecified, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasChiralVolume", _wrap__OBMolAtomBFSIter_HasChiralVolume, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsHbondAcceptor", _wrap__OBMolAtomBFSIter_IsHbondAcceptor, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsHbondDonor", _wrap__OBMolAtomBFSIter_IsHbondDonor, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_IsHbondDonorH", _wrap__OBMolAtomBFSIter_IsHbondDonorH, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasAlphaBetaUnsat", _wrap__OBMolAtomBFSIter_HasAlphaBetaUnsat, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasBondOfOrder", _wrap__OBMolAtomBFSIter_HasBondOfOrder, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_CountBondsOfOrder", _wrap__OBMolAtomBFSIter_CountBondsOfOrder, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasNonSingleBond", _wrap__OBMolAtomBFSIter_HasNonSingleBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasSingleBond", _wrap__OBMolAtomBFSIter_HasSingleBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasDoubleBond", _wrap__OBMolAtomBFSIter_HasDoubleBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasAromaticBond", _wrap__OBMolAtomBFSIter_HasAromaticBond, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_MatchesSMARTS", _wrap__OBMolAtomBFSIter_MatchesSMARTS, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_DoTransformations", _wrap__OBMolAtomBFSIter_DoTransformations, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_ClassDescription", _wrap__OBMolAtomBFSIter_ClassDescription, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_HasData", _wrap__OBMolAtomBFSIter_HasData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_DeleteData", _wrap__OBMolAtomBFSIter_DeleteData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_SetData", _wrap__OBMolAtomBFSIter_SetData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_DataSize", _wrap__OBMolAtomBFSIter_DataSize, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_GetData", _wrap__OBMolAtomBFSIter_GetData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_BeginData", _wrap__OBMolAtomBFSIter_BeginData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_EndData", _wrap__OBMolAtomBFSIter_EndData, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_swigregister", _OBMolAtomBFSIter_swigregister, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAtomBFSIter_swiginit", _OBMolAtomBFSIter_swiginit, METH_VARARGS, NULL},
 	 { (char *)"new__OBMolBondIter", _wrap_new__OBMolBondIter, METH_VARARGS, NULL},
 	 { (char *)"_OBMolBondIter_good", _wrap__OBMolBondIter_good, METH_VARARGS, NULL},
 	 { (char *)"_OBMolBondIter_inc", _wrap__OBMolBondIter_inc, METH_VARARGS, NULL},
@@ -92378,40 +92762,48 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"_OBResidueAtomIter_EndData", _wrap__OBResidueAtomIter_EndData, METH_VARARGS, NULL},
 	 { (char *)"_OBResidueAtomIter_swigregister", _OBResidueAtomIter_swigregister, METH_VARARGS, NULL},
 	 { (char *)"_OBResidueAtomIter_swiginit", _OBResidueAtomIter_swiginit, METH_VARARGS, NULL},
-	 { (char *)"new_OBMolAngleIter", _wrap_new_OBMolAngleIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolAngleIter___ref__", _wrap_OBMolAngleIter___ref__, METH_VARARGS, NULL},
-	 { (char *)"delete_OBMolAngleIter", _wrap_delete_OBMolAngleIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolAngleIter_swigregister", OBMolAngleIter_swigregister, METH_VARARGS, NULL},
-	 { (char *)"OBMolAngleIter_swiginit", OBMolAngleIter_swiginit, METH_VARARGS, NULL},
-	 { (char *)"new_OBMolTorsionIter", _wrap_new_OBMolTorsionIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolTorsionIter___ref__", _wrap_OBMolTorsionIter___ref__, METH_VARARGS, NULL},
-	 { (char *)"delete_OBMolTorsionIter", _wrap_delete_OBMolTorsionIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolTorsionIter_swigregister", OBMolTorsionIter_swigregister, METH_VARARGS, NULL},
-	 { (char *)"OBMolTorsionIter_swiginit", OBMolTorsionIter_swiginit, METH_VARARGS, NULL},
-	 { (char *)"new_OBMolPairIter", _wrap_new_OBMolPairIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolPairIter___deref__", _wrap_OBMolPairIter___deref__, METH_VARARGS, NULL},
-	 { (char *)"OBMolPairIter___ref__", _wrap_OBMolPairIter___ref__, METH_VARARGS, NULL},
-	 { (char *)"delete_OBMolPairIter", _wrap_delete_OBMolPairIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolPairIter_swigregister", OBMolPairIter_swigregister, METH_VARARGS, NULL},
-	 { (char *)"OBMolPairIter_swiginit", OBMolPairIter_swiginit, METH_VARARGS, NULL},
-	 { (char *)"new_OBMolRingIter", _wrap_new_OBMolRingIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter___deref__", _wrap_OBMolRingIter___deref__, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter___ref__", _wrap_OBMolRingIter___ref__, METH_VARARGS, NULL},
-	 { (char *)"delete_OBMolRingIter", _wrap_delete_OBMolRingIter, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter__path_set", _wrap_OBMolRingIter__path_set, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter__path_get", _wrap_OBMolRingIter__path_get, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter__pathset_set", _wrap_OBMolRingIter__pathset_set, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter__pathset_get", _wrap_OBMolRingIter__pathset_get, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_findCenterAndNormal", _wrap_OBMolRingIter_findCenterAndNormal, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_Size", _wrap_OBMolRingIter_Size, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_PathSize", _wrap_OBMolRingIter_PathSize, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_IsMember", _wrap_OBMolRingIter_IsMember, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_IsAromatic", _wrap_OBMolRingIter_IsAromatic, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_IsInRing", _wrap_OBMolRingIter_IsInRing, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_SetParent", _wrap_OBMolRingIter_SetParent, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_GetParent", _wrap_OBMolRingIter_GetParent, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_swigregister", OBMolRingIter_swigregister, METH_VARARGS, NULL},
-	 { (char *)"OBMolRingIter_swiginit", OBMolRingIter_swiginit, METH_VARARGS, NULL},
+	 { (char *)"new__OBMolAngleIter", _wrap_new__OBMolAngleIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAngleIter_good", _wrap__OBMolAngleIter_good, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAngleIter_inc", _wrap__OBMolAngleIter_inc, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAngleIter___ref__", _wrap__OBMolAngleIter___ref__, METH_VARARGS, NULL},
+	 { (char *)"delete__OBMolAngleIter", _wrap_delete__OBMolAngleIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAngleIter_swigregister", _OBMolAngleIter_swigregister, METH_VARARGS, NULL},
+	 { (char *)"_OBMolAngleIter_swiginit", _OBMolAngleIter_swiginit, METH_VARARGS, NULL},
+	 { (char *)"new__OBMolTorsionIter", _wrap_new__OBMolTorsionIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolTorsionIter_good", _wrap__OBMolTorsionIter_good, METH_VARARGS, NULL},
+	 { (char *)"_OBMolTorsionIter_inc", _wrap__OBMolTorsionIter_inc, METH_VARARGS, NULL},
+	 { (char *)"_OBMolTorsionIter___ref__", _wrap__OBMolTorsionIter___ref__, METH_VARARGS, NULL},
+	 { (char *)"delete__OBMolTorsionIter", _wrap_delete__OBMolTorsionIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolTorsionIter_swigregister", _OBMolTorsionIter_swigregister, METH_VARARGS, NULL},
+	 { (char *)"_OBMolTorsionIter_swiginit", _OBMolTorsionIter_swiginit, METH_VARARGS, NULL},
+	 { (char *)"new__OBMolPairIter", _wrap_new__OBMolPairIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolPairIter_good", _wrap__OBMolPairIter_good, METH_VARARGS, NULL},
+	 { (char *)"_OBMolPairIter_inc", _wrap__OBMolPairIter_inc, METH_VARARGS, NULL},
+	 { (char *)"_OBMolPairIter_deref", _wrap__OBMolPairIter_deref, METH_VARARGS, NULL},
+	 { (char *)"_OBMolPairIter___ref__", _wrap__OBMolPairIter___ref__, METH_VARARGS, NULL},
+	 { (char *)"delete__OBMolPairIter", _wrap_delete__OBMolPairIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolPairIter_swigregister", _OBMolPairIter_swigregister, METH_VARARGS, NULL},
+	 { (char *)"_OBMolPairIter_swiginit", _OBMolPairIter_swiginit, METH_VARARGS, NULL},
+	 { (char *)"new__OBMolRingIter", _wrap_new__OBMolRingIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_good", _wrap__OBMolRingIter_good, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_inc", _wrap__OBMolRingIter_inc, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_deref", _wrap__OBMolRingIter_deref, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter___ref__", _wrap__OBMolRingIter___ref__, METH_VARARGS, NULL},
+	 { (char *)"delete__OBMolRingIter", _wrap_delete__OBMolRingIter, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter__path_set", _wrap__OBMolRingIter__path_set, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter__path_get", _wrap__OBMolRingIter__path_get, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter__pathset_set", _wrap__OBMolRingIter__pathset_set, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter__pathset_get", _wrap__OBMolRingIter__pathset_get, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_findCenterAndNormal", _wrap__OBMolRingIter_findCenterAndNormal, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_Size", _wrap__OBMolRingIter_Size, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_PathSize", _wrap__OBMolRingIter_PathSize, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_IsMember", _wrap__OBMolRingIter_IsMember, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_IsAromatic", _wrap__OBMolRingIter_IsAromatic, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_IsInRing", _wrap__OBMolRingIter_IsInRing, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_SetParent", _wrap__OBMolRingIter_SetParent, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_GetParent", _wrap__OBMolRingIter_GetParent, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_swigregister", _OBMolRingIter_swigregister, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_swiginit", _OBMolRingIter_swiginit, METH_VARARGS, NULL},
 	 { (char *)"new_doubleArray", _wrap_new_doubleArray, METH_VARARGS, NULL},
 	 { (char *)"delete_doubleArray", _wrap_delete_doubleArray, METH_VARARGS, NULL},
 	 { (char *)"doubleArray___getitem__", _wrap_doubleArray___getitem__, METH_VARARGS, NULL},

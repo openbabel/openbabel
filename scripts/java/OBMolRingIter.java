@@ -41,11 +41,23 @@ public class OBMolRingIter {
   }
 
   public OBMolRingIter(OBMolRingIter ri) {
-    this(openbabelJNI.new_OBMolRingIter__SWIG_3(OBMolRingIter.getCPtr(ri), ri), true);
+    this(openbabelJNI.new_OBMolRingIter__SWIG_2(OBMolRingIter.getCPtr(ri), ri), true);
   }
 
-  public OBRing __deref__() {
-    long cPtr = openbabelJNI.OBMolRingIter___deref__(swigCPtr, this);
+  public boolean good() {
+    return openbabelJNI.OBMolRingIter_good(swigCPtr, this);
+  }
+
+  public OBMolRingIter inc() {
+    return new OBMolRingIter(openbabelJNI.OBMolRingIter_inc__SWIG_0(swigCPtr, this), false);
+  }
+
+  public OBMolRingIter inc(int arg0) {
+    return new OBMolRingIter(openbabelJNI.OBMolRingIter_inc__SWIG_1(swigCPtr, this, arg0), true);
+  }
+
+  public OBRing deref() {
+    long cPtr = openbabelJNI.OBMolRingIter_deref(swigCPtr, this);
     return (cPtr == 0) ? null : new OBRing(cPtr, false);
   }
 

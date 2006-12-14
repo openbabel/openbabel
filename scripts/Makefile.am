@@ -43,10 +43,10 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include $<;
-	(cd java; \
-	  for file in SWIGTYPE_p_*; \
-		do tgt=$$(echo $${file} | sed -e "s/SWIGTYPE_p_//" | sed -e "s/std__//g" | sed -e "s/OpenBabel__//g" | sed -e "s/p_/p/g"); \
-		mv $$file $$tgt; done)
+#	(cd java; \
+#	  for file in SWIGTYPE_p_*; \
+#		do tgt=$$(echo $${file} | sed -e "s/SWIGTYPE_p_//" | sed -e "s/std__//g" | sed -e "s/OpenBabel__//g" | sed -e "s/p_/p/g"); \
+#		mv $$file $$tgt; done)
 
 if BUILD_RUBY
 BUILT_SOURCES += ruby/openbabel_ruby.cpp
