@@ -84,12 +84,16 @@ namespace std {
 # pointers, so that OBAtomIter(OBMol &) would be treated the same as
 # OBAtomIter(OBMol *).
 
-%ignore OBMolAtomIter(OBMol &);
-%ignore OBMolAtomDFSIter(OBMol &);
-%ignore OBMolAtomBFSIter(OBMol &);
-%ignore OBMolBondIter(OBMol &);
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);
+%ignore OBMolAngleIter(OBMol &);
+%ignore OBMolAtomIter(OBMol &);
+%ignore OBMolAtomBFSIter(OBMol &);
+%ignore OBMolAtomDFSIter(OBMol &);
+%ignore OBMolBondIter(OBMol &);
+%ignore OBMolPairIter(OBMol &);
+%ignore OBMolRingIter(OBMol &);
+%ignore OBMolTorsionIter(OBMol &);
 %ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
 
@@ -97,32 +101,58 @@ namespace std {
 # classes of the same name which provide Pythonic iterators
 # (see %pythoncode section below)
 
-%rename(_OBMolAtomIter) OpenBabel::OBMolAtomIter;
-%rename(_OBMolBondIter) OpenBabel::OBMolBondIter;
 %rename(_OBAtomAtomIter) OpenBabel::OBAtomAtomIter;
 %rename(_OBAtomBondIter) OpenBabel::OBAtomBondIter;
+%rename(_OBMolAngleIter) OpenBabel::OBMolAngleIter;
+%rename(_OBMolAtomIter) OpenBabel::OBMolAtomIter;
+%rename(_OBMolAtomBFSIter) OpenBabel::OBMolAtomBFSIter;
+%rename(_OBMolAtomDFSIter) OpenBabel::OBMolAtomDFSIter;
+%rename(_OBMolBondIter) OpenBabel::OBMolBondIter;
+%rename(_OBMolPairIter) OpenBabel::OBMolPairIter;
+%rename(_OBMolRingIter) OpenBabel::OBMolRingIter;
+%rename(_OBMolTorsionIter) OpenBabel::OBMolTorsionIter;
 %rename(_OBResidueIter) OpenBabel::OBResidueIter;
 %rename(_OBResidueAtomIter) OpenBabel::OBResidueAtomIter;
 
 # These methods are renamed to valid Python method names, as otherwise
 # they cannot be used from Python
 
-%rename(inc) OpenBabel::OBMolAtomIter::operator++;
-%rename(inc) OpenBabel::OBMolBondIter::operator++;
 %rename(inc) OpenBabel::OBAtomAtomIter::operator++;
 %rename(inc) OpenBabel::OBAtomBondIter::operator++;
+%rename(inc) OpenBabel::OBMolAngleIter::operator++;
+%rename(inc) OpenBabel::OBMolAtomIter::operator++;
+%rename(inc) OpenBabel::OBMolAtomBFSIter::operator++;
+%rename(inc) OpenBabel::OBMolAtomDFSIter::operator++;
+%rename(inc) OpenBabel::OBMolBondIter::operator++;
+%rename(inc) OpenBabel::OBMolPairIter::operator++;
+%rename(inc) OpenBabel::OBMolRingIter::operator++;
+%rename(inc) OpenBabel::OBMolTorsionIter::operator++;
 %rename(inc) OpenBabel::OBResidueIter::operator++;
 %rename(inc) OpenBabel::OBResidueAtomIter::operator++;
-%rename(good) OpenBabel::OBMolAtomIter::operator bool;
-%rename(good) OpenBabel::OBMolBondIter::operator bool;
+
 %rename(good) OpenBabel::OBAtomAtomIter::operator bool;
 %rename(good) OpenBabel::OBAtomBondIter::operator bool;
+%rename(good) OpenBabel::OBMolAngleIter::operator bool;
+%rename(good) OpenBabel::OBMolAtomIter::operator bool;
+%rename(good) OpenBabel::OBMolAtomBFSIter::operator bool;
+%rename(good) OpenBabel::OBMolAtomDFSIter::operator bool;
+%rename(good) OpenBabel::OBMolBondIter::operator bool;
+%rename(good) OpenBabel::OBMolPairIter::operator bool;
+%rename(good) OpenBabel::OBMolRingIter::operator bool;
+%rename(good) OpenBabel::OBMolTorsionIter::operator bool;
 %rename(good) OpenBabel::OBResidueIter::operator bool;
 %rename(good) OpenBabel::OBResidueAtomIter::operator bool;
-%rename(deref) OpenBabel::OBMolAtomIter::operator->;
-%rename(deref) OpenBabel::OBMolBondIter::operator->;
+
 %rename(deref) OpenBabel::OBAtomAtomIter::operator->;
 %rename(deref) OpenBabel::OBAtomBondIter::operator->;
+%rename(deref) OpenBabel::OBMolAngleIter::operator->;
+%rename(deref) OpenBabel::OBMolAtomIter::operator->;
+%rename(deref) OpenBabel::OBMolAtomBFSIter::operator->;
+%rename(deref) OpenBabel::OBMolAtomDFSIter::operator->;
+%rename(deref) OpenBabel::OBMolBondIter::operator->;
+%rename(deref) OpenBabel::OBMolPairIter::operator->;
+%rename(deref) OpenBabel::OBMolRingIter::operator->;
+%rename(deref) OpenBabel::OBMolTorsionIter::operator->;
 %rename(deref) OpenBabel::OBResidueIter::operator->;
 %rename(deref) OpenBabel::OBResidueAtomIter::operator->;
 
@@ -153,18 +183,36 @@ class OBIter(object):
         else:
             raise StopIteration
 
-class OBMolAtomIter(OBIter):
-    """Iterator over the atoms in a molecule."""
-    OBiterator = _OBMolAtomIter
-class OBMolBondIter(OBIter):
-    """Iterator over the bonds in a molecule."""
-    OBiterator = _OBMolBondIter
 class OBAtomAtomIter(OBIter):
     """Iterator over the atoms attached to an atom."""
     OBiterator = _OBAtomAtomIter
 class OBAtomBondIter(OBIter):
     """Iterator over the bonds attached to an atom."""
     OBiterator = _OBAtomBondIter
+class OBMolAngleIter(OBIter):
+    """Iterator over the angles in a molecule."""
+    OBiterator = _OBMolAngleIter
+class OBMolAtomIter(OBIter):
+    """Iterator over the atoms in a molecule."""
+    OBiterator = _OBMolAtomIter
+class OBMolAtomBFSIter(OBIter):
+    """Iterator over the atoms in a molecule in a breadth-first manner."""
+    OBiterator = _OBMolAtomBFSIter
+class OBMolAtomDFSIter(OBIter):
+    """Iterator over the atoms in a molecule in a depth-first manner."""
+    OBiterator = _OBMolAtomDFSIter
+class OBMolBondIter(OBIter):
+    """Iterator over the bonds in a molecule."""
+    OBiterator = _OBMolBondIter
+class OBMolPairIter(OBIter):
+    """Iterator over pairs of atoms in a molecule."""
+    OBiterator = _OBMolPairIter
+class OBMolRingIter(OBIter):
+    """Iterator over the rings in a molecule."""
+    OBiterator = _OBMolRingIter
+class OBMolTorsionIter(OBIter):
+    """Iterator over the torsion angles in a molecule."""
+    OBiterator = _OBMolTorsionIter
 class OBResidueIter(OBIter):
     """Iterator over the residues in a molecule."""
     OBiterator = _OBResidueIter

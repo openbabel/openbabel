@@ -1,3 +1,11 @@
+2006-12-13  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-[python,ruby,java,perl].i: Updated to include all
+	iterators in obiter.h. Note: there is a problem getting
+	OBMolPairIter to work even if std_pair.i is included and a template
+	<int, int> created (compile of openbabel_python.cpp fails in this case
+	so these additions have not been included). 
+
 2006-12-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/babel.cpp: Moved src/main.cpp here -- more consistent with
