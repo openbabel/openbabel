@@ -209,8 +209,6 @@ int main(int argc,char *argv[])
   if ( inFileStream1.good() && inFileStream1.peek() != EOF &&
        conv1.Read(&mol) )
     {
-      cerr << "still did a read!" << endl;
-
       if (mol.NumAtoms() > 0)
         {
           cout << " ** ERROR **  File 1 has more molecules! " << endl;
