@@ -1,3 +1,19 @@
+2006-12-14  Donald E. Curtis <dcurtis3@sourceforge.net>
+
+	* src/formats/gaussformat.cpp: Will export "model/basis,method" if keyword
+	translation is enable however is not tested accurate.
+	
+	* src/formats/ghemicalformat.cpp: Re-wrote and tested the GAMESS keyword
+	export.
+	
+	* src/formats/gamessformat.cpp: Modified keyword import operations.
+	Should now import the model,basis,method for keywords it knows about.
+	This method is all statically implemented.  We need a new way to do this
+	translation such as OBKeyword class.
+	
+	* src/babel.cpp: Added help information for the '-k' parameter which
+	attempts to translation keywords along with molecule information.
+
 2006-12-13  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/openbabel-[python,ruby,java,perl].i: Updated to include all

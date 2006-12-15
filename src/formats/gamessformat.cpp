@@ -17,6 +17,8 @@
 
 #include <openbabel/obmolecformat.h>
 
+#include <algorithm>
+
 using namespace std;
 namespace Gamess
 {
@@ -383,67 +385,138 @@ namespace OpenBabel
     }
     //    cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
 
-    // add our gamess set
-    mol.SetData(gmsset);
+    const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
 
-    // if we have basis set data we should set our global pair data
-    OBSetData *bset = (OBSetData *) gmsset->GetData("BASIS");
-    if(bset)
+    if(keywordsEnable)
     {
-      OBPairData *pd = NULL;
-      string value;
+      // add our gamess set
+      pmol->SetData(gmsset);
 
-      pd = (OBPairData *) bset->GetData("RUNTYPE");
-      if(pd)
+      // if we have basis set data we should set our global pair data
+      OBSetData *cset = (OBSetData *) gmsset->GetData("CONTRL");
+      OBSetData *bset = (OBSetData *) gmsset->GetData("BASIS");
+
+      string model = "b3lyp";
+      string basis;
+      string method;
+
+      if(cset)
       {
-        OBPairData *nd = new OBPairData();
-        nd->SetAttribute("runtype");
-        nd->SetValue(pd->GetValue());
-        pmol->SetData(nd);
-      }
+        OBPairData *pd = NULL;
 
-      pd = (OBPairData *) bset->GetData("DFTTYPE");
-      if(pd)
-      {
-        OBPairData *nd = new OBPairData();
-        nd->SetAttribute("dfttype");
-        nd->SetValue(pd->GetValue());
-        pmol->SetData(nd);
-      }
-
-      OBPairData *gbasis = (OBPairData *) gmsset->GetData("GBASIS");
-      OBPairData *ngauss = (OBPairData *) gmsset->GetData("NGAUSS");
-
-      value = "";
-      if(gbasis)
-      {
-        value = gbasis->GetValue();
-
-        if(ngauss)
+        pd = (OBPairData *) cset->GetData("SCFTYP");
+        if(pd)
         {
-          if(gbasis->GetValue() == "STO")
+          if(pd->GetValue() == "RHF")
           {
-            value.clear();
-            value += "sto-";
-            value += ngauss->GetValue();
-            value += "g";
-          }
-          else if(ngauss->GetValue() == "3" || ngauss->GetValue() == "6")
-          {
-            value.clear();
-            value = ngauss->GetValue();
-            value += "-";
-            value += gbasis->GetValue().substr(1);
-            value += "G";
+            model = "rhf";
           }
         }
 
-        OBPairData *basis = new OBPairData();
-        basis->SetAttribute("basis");
-        basis->SetValue(value);
-        pmol->SetData(basis);
+        pd = (OBPairData *) cset->GetData("DFTTYP");
+        if(pd)
+        {
+          if(pd->GetValue() == "BLYP")
+          {
+            model = "b3lyp";
+          }
+        }
+
+        pd = (OBPairData *) cset->GetData("MPLEVL");
+        if(pd)
+        {
+          if(pd->GetValue() == "2")
+            model = "mp2";
+        }
+
+        pd = (OBPairData *) cset->GetData("CCTYP");
+        if(pd)
+        {
+          if(pd->GetValue() == "CCSD(T)")
+            model = "ccsd(t)";
+        }
+
+        pd = (OBPairData *) cset->GetData("RUNTYP");
+        if(pd)
+        {
+          string value = pd->GetValue();
+          if(value == "GRADIENT" || value == "HESSIAN" || value == "OPTIMIZE" || value == "SADPOINT")
+          {
+            method = pd->GetValue();
+            transform(method.begin(), method.end(), method.begin(), ::tolower);
+          }
+        }
+
       }
+
+
+      if(bset)
+      {
+        OBPairData *gbasis = (OBPairData *) bset->GetData("GBASIS");
+        OBPairData *ngauss = (OBPairData *) bset->GetData("NGAUSS");
+
+        if(gbasis)
+        {
+          string value = gbasis->GetValue();
+
+          if( value == "am1" )
+          {
+            model = "am1";
+          }
+          else if( value == "pm3" )
+          {
+            model = "pm3";
+          }
+          else if(ngauss)
+          {
+            if(value == "STO")
+            {
+              basis.clear();
+              basis += "sto-";
+              basis += ngauss->GetValue();
+              basis += "g";
+            }
+            else if(ngauss->GetValue() == "3" || ngauss->GetValue() == "6")
+            {
+              basis.clear();
+              basis = ngauss->GetValue();
+              basis += "-";
+              basis += gbasis->GetValue().substr(1);
+              basis += "G(d)";
+            }
+          }
+        }
+      }
+      OBPairData *nd = NULL;
+      if(model != "")
+      {
+        nd = new OBPairData();
+        nd->SetAttribute("model");
+        nd->SetValue(model);
+        pmol->SetData(nd);
+      }
+      if(basis != "")
+      {
+        nd = new OBPairData();
+        nd->SetAttribute("basis");
+        nd->SetValue(basis);
+        pmol->SetData(nd);
+      }
+      if(method != "")
+      {
+        nd = new OBPairData();
+        nd->SetAttribute("method");
+        nd->SetValue(method);
+        pmol->SetData(nd);
+      }
+
+      /*
+      cout << "model: " << model << endl;
+      cout << "basis: " << basis << endl;
+      cout << "method: " << method << endl;
+      */
     }
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
@@ -536,13 +609,52 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
 
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+    const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
     const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
 
-    if (!keywords && !keywordFile)
-      ofs << " $CONTRL COORD=CART UNITS=ANGS $END" << endl;
-    if (keywords)
-      ofs << pConv->IsOption("k", OBConversion::OUTOPTIONS) << endl;
-    if (keywordFile)
+    string defaultKeywords = " $CONTRL COORD=CART UNITS=ANGS $END";
+
+    if(keywords)
+    {
+      defaultKeywords = keywords;
+    }
+
+    if (keywordsEnable)
+    {
+
+      OBSetData *gmsset = (OBSetData *)pmol->GetData("gamess");
+      if(gmsset)
+      {
+        std::vector<OBGenericData*>::iterator i,j;
+
+        for(i = gmsset->GetBegin(); i != gmsset->GetEnd(); i++)
+        {
+          OBSetData *cset = (OBSetData *)(*i);
+          if(cset)
+          {
+            ofs << " $" << cset->GetAttribute();
+            for(j = cset->GetBegin(); j != cset->GetEnd(); j++)
+            {
+              OBPairData *pd = (OBPairData *) (*j);
+              if(pd)
+              {
+                ofs << " " << pd->GetAttribute() << "=" << pd->GetValue();
+              }
+            }
+            ofs << " $END"<<endl;
+          }
+        }
+
+      }
+      else
+      {
+        ofs << "! Unable to translate keywords!" << endl;
+        ofs << "! Defining default control keywords." << endl;
+        ofs << defaultKeywords << endl;
+      }
+
+    }
+    else if (keywordFile)
     {
       ifstream kfstream(keywordFile);
       string keyBuffer;
@@ -552,8 +664,12 @@ namespace OpenBabel
           ofs << keyBuffer << endl;
       }
     }
+    else
+    {
+      ofs << defaultKeywords << endl;
+    }
 
-    ofs << " $DATA" << endl;
+    ofs << endl << " $DATA" << endl;
     ofs << mol.GetTitle() << endl;
     if (!mol.HasData(OBGenericDataType::SymmetryData))
       ofs << "C1" << endl;

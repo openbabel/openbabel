@@ -360,32 +360,32 @@ void DoOption(const char* p, OBConversion& Conv,
 	      OBConversion::Option_type typ, int& arg, int argc, char *argv[]) 
 {
   while(p && *p) //can have multiple single char options
+  {
+    char ch[2]="?";
+    *ch = *p++;
+    const char* txt=NULL;				
+    //Get the option text if needed
+    int nParams = Conv.GetOptionParams(ch, typ);
+    if(nParams)
     {
-      char ch[2]="?";
-      *ch = *p++;
-      const char* txt=NULL;				
-      //Get the option text if needed
-      int nParams = Conv.GetOptionParams(ch, typ);
-      if(nParams)
-	{
-	  if(*p)
-	    {
-	      txt = p; //use text immediately following the option letter
-	      p=NULL; //no more single char options
-	    }
-	  else if(arg<argc-1)
-	    {
-	      txt = argv[++arg]; //use text from next arg
-	      if(*txt=='-')
-		{
-		  //...unless it is another option
-		  cerr << "Option -" << ch << " takes a parameter" << endl;
-		  exit(0);
-		}
-	    }
-	}
-      Conv.AddOption(ch, typ, txt);
+      if(*p)
+      {
+        txt = p; //use text immediately following the option letter
+        p=NULL; //no more single char options
+      }
+      else if(arg<argc-1)
+      {
+        txt = argv[++arg]; //use text from next arg
+        if(*txt=='-')
+        {
+          //...unless it is another option
+          cerr << "Option -" << ch << " takes a parameter" << endl;
+          exit(0);
+        }
+      }
     }
+    Conv.AddOption(ch, typ, txt);
+  }
 }
 
 void usage()
@@ -423,6 +423,7 @@ void help()
   cout << "  -Hall Outputs details of all formats" <<endl; 
   cout << "  -V Outputs version number" <<endl; 
   cout << "  -F Outputs the available fingerprint types" <<endl; 
+  cout << "  -k Attempt to translate keywords" <<endl; 
   cout << "  -m Produces multiple output files, to allow:" <<endl;
   cout << "     Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
   cout << "       puts each molecule into new1.smi new2.smi etc" <<endl;
@@ -435,7 +436,7 @@ void help()
   
   OBFormat* pDefault = OBConversion::GetDefaultFormat();
   if(pDefault)
-    cout<<"For conversions of "<< pDefault->TargetClassDescription();// some more options probably for OBMol
+    cout << pDefault->TargetClassDescription();// some more options probably for OBMol
   
   OBFormat* pAPI= OBConversion::FindFormat("obapi");
   if(pAPI)

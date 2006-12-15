@@ -53,7 +53,6 @@ namespace OpenBabel
       /// The "API" interface functions
       virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
       virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-      bool PrintGamessSection(const char *section, OBMol *mol, ostream& ofs);
   };
   //***
 
@@ -190,27 +189,6 @@ namespace OpenBabel
 
   ////////////////////////////////////////////////////////////////
 
-  bool GhemicalFormat::PrintGamessSection(const char* section, OBMol* mol, ostream& ofs)
-  {
-    std::vector<OBGenericData*>::iterator i;
-
-    OBSetData *gset = (OBSetData *)mol->GetData("gamess");
-    if(!gset) return false;
-
-    OBSetData *cset = (OBSetData *)gset->GetData(section);
-    if(!cset) return false;
-
-    for(i = cset->GetBegin(); i != cset->GetEnd(); i++) {
-      if((*i)->GetDataType() == OBGenericDataType::PairData)
-      {
-        OBPairData *pd = (OBPairData*) (*i);
-        ofs << section << " " << pd->GetAttribute() << " " << pd->GetValue() << endl;
-      }
-    }
-
-    return true;
-  }
-
   bool GhemicalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -288,13 +266,29 @@ namespace OpenBabel
         << atom->GetPartialCharge() << '\n';
     }
 
-    // GAMESS Info
-    ofs << "!GAMESS" << endl;
+    OBSetData *gmsset = (OBSetData *)pmol->GetData("gamess");
+    if(gmsset)
+    {
+      ofs << "!GAMESS" << endl;
+      std::vector<OBGenericData*>::iterator i,j;
 
-    PrintGamessSection("CONTRL", pmol, ofs);
-    PrintGamessSection("SYSTEM", pmol, ofs);
-    PrintGamessSection("BASIS", pmol, ofs);
-    PrintGamessSection("GUESS", pmol, ofs);
+      for(i = gmsset->GetBegin(); i != gmsset->GetEnd(); i++)
+      {
+        OBSetData *cset = (OBSetData *)(*i);
+        if(cset)
+        {
+          string section = cset->GetAttribute();
+          for(j = cset->GetBegin(); j != cset->GetEnd(); j++)
+          {
+            OBPairData *pd = (OBPairData *) (*j);
+            if(pd)
+            {
+              ofs << section << " " << pd->GetAttribute() << " " << pd->GetValue() << endl;
+            }
+          }
+        }
+      }
+    }
 
     ofs << "!End\n";
 

@@ -120,22 +120,62 @@ namespace OpenBabel
 
     char buffer[BUFF_SIZE];
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+    const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
     const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    string defaultKeywords = "#Put Keywords Here, check Charge and Multiplicity.";
+
+    if(keywords)
+    {
+      defaultKeywords = keywords;
+    }
     
-    if (!keywords && !keywordFile)
-      ofs << "#Put Keywords Here, check Charge and Multiplicity\n";
-    if (keywords)
-      ofs << pConv->IsOption("k", OBConversion::OUTOPTIONS) << endl;
-    if (keywordFile)
+    if (keywordsEnable)
+    {
+      string model;
+      string basis;
+      string method;
+
+      OBPairData *pd = (OBPairData *) pmol->GetData("model");
+      if(pd)
+        model = pd->GetValue();
+
+      pd = (OBPairData *) pmol->GetData("basis");
+      if(pd)
+        basis = pd->GetValue();
+
+      pd = (OBPairData *) pmol->GetData("method");
+      if(pd)
+        method = pd->GetValue();
+
+      if(method == "optimize")
       {
-        ifstream kfstream(keywordFile);
-        string keyBuffer;
-        if (kfstream)
-          {
-            while (getline(kfstream, keyBuffer))
-                ofs << keyBuffer << endl;
-          }
+        method = "opt";
       }
+
+      if(model != "" && basis != "" && method != "")
+      {
+        ofs << model << "/" << basis << "," << method << endl;
+      }
+      else
+      {
+        ofs << "#Unable to translate keywords!" << endl;
+        ofs << defaultKeywords << endl;
+      }
+    }
+    else if (keywordFile)
+    {
+      ifstream kfstream(keywordFile);
+      string keyBuffer;
+      if (kfstream)
+      {
+        while (getline(kfstream, keyBuffer))
+          ofs << keyBuffer << endl;
+      }
+    }
+    else 
+    {
+      ofs << defaultKeywords << endl;
+    }
     ofs << endl; // blank line after keywords
     ofs << " " << mol.GetTitle() << endl << endl;
 
