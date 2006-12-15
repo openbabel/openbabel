@@ -4,7 +4,8 @@ table_DATA = \
 		aromatic.txt bondtyp.txt isotope.txt resdata.txt \
 		atomtyp.txt element.txt isotope-small.txt phmodel.txt \
 		patterns.txt torlib.txt types.txt \
-		SMARTS_InteLigand.txt
+		SMARTS_InteLigand.txt \
+		mm2.prm
 
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h \
