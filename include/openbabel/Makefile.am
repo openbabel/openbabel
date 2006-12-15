@@ -15,5 +15,5 @@ libopenbabelinclude_HEADERS = \
 		residue.h ring.h rotamer.h rotor.h typer.h 
 
 # Remove the configure-generated babelconfig.h
-# dist-hook:
-#	rm $(distdir)/babelconfig.h
+dist-hook:
+	rm $(distdir)/babelconfig.h
