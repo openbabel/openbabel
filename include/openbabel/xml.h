@@ -33,11 +33,14 @@ namespace OpenBabel
   class XMLBaseFormat;
 
   //******************************************************
-  //XMLConversion class
+  /** \class XMLConversion xml.h <openbabel/xml.h>
+      \brief A subclass for conversion of XML formats
 
-  /// An extended OBConversion class which includes a libxml2 reader for use with XML formats
-  /// Copies an OBConversion and then extends it with a XML parser. 
-  /// Instances made on the heap are deleted when the original OBConversion object is.
+      An extended OBConversion class which includes a libxml2 reader for use 
+      with XML formats. Copies an OBConversion and then extends it
+      with a XML parser. Instances made on the heap are deleted when
+      the original OBConversion object is.
+  **/
   class OBCOMMON XMLConversion : public OBConversion
     {
     public:
@@ -130,7 +133,8 @@ namespace OpenBabel
     };
 
   //*************************************************
-  /// Abstract class containing common functionality for XML formats.
+  /// \class XMLBaseFormat xml.h <openbabel/xml.h>
+  /// \brief Abstract class containing common functionality for XML formats.
   class OBCOMMON XMLBaseFormat : public OBFormat
     {
     protected:
@@ -193,7 +197,8 @@ namespace OpenBabel
     };
 
   //*************************************************
-  ///Abstract class containing common functionality for XML formats which represent molecules
+  /// \class XMLMoleculeFormat xml.h <openbabel/xml.h>
+  /// \brief Abstract class for XML formats which represent molecules
   class OBCOMMON XMLMoleculeFormat : public XMLBaseFormat
     {
     protected:

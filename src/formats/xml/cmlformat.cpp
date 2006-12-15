@@ -15,10 +15,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
+
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/kinetics.h>
-
-#include "xml.h"
+#include <openbabel/xml.h>
 
 #ifdef WIN32
 #pragma warning (disable : 4800)
@@ -81,7 +81,7 @@ Input options, e.g. -a2\n \
 
     virtual unsigned int Flags()
     {
-      return 0;
+      return READXML;
     };
 
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);

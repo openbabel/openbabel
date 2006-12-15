@@ -52,24 +52,7 @@ namespace OpenBabel {
   //*************************************************
 
   /// @brief Base class for file formats.
-
-  /// Two sets of Read and Write functions are specified for each format
-  /// to handle two different requirements.
-  /// The "Convert" interface is for use in file format conversion applications. The
-  /// user interface, a console, a GUI, or another program is kept unaware of the
-  /// details of the chemistry and does not need to \#include mol.h. It is then
-  /// necessary to manipulate only pointers to OBBase in OBConversion and the user
-  /// interface, with all the construction and deletion of OBMol etc objects being
-  /// done in the Format classes or the OB core. The convention  with "Covert"
-  /// interface functions is that chemical objects are made on the heap with new
-  /// in the ReadChemicalObject() functions and and deleted in WriteChemicalObject()
-  /// functions
-  /// 
-  /// The "API" interface is for programatic use of the OB routines in application
-  /// programs where mol.h is \#included. There is generally no creation or
-  /// destruction of objects in ReadMolecule() and WriteMolecule() and no restriction
-  /// on whether the pointers are to the heap or the stack.
-  /// 
+  // class introduction in obconversion.cpp
   class OBCONV OBFormat
     {
     public:
@@ -134,7 +117,7 @@ namespace OpenBabel {
    
       /// Currently, can be a bitwise OR of any of the following
       /// NOTREADABLE READONEONLY NOTWRITABLE WRITEONEONLY DEFAULTFORMAT
-      /// READBINARY WRITEBINARY
+      /// READBINARY WRITEBINARY READXML
       virtual unsigned int Flags() { return 0;}; 
 
       /// @brief Skip past first n objects in input stream (or current one with n=0)
@@ -171,8 +154,8 @@ namespace OpenBabel {
 	typedef FMapType::iterator Formatpos;
 
   //*************************************************
-
-  /// Class to convert from one format to another.
+  /// @brief Class to convert from one format to another.
+  // Class introduction in obconversion.cpp
   class OBCONV OBConversion
     {
       /// @nosubgrouping
@@ -414,6 +397,7 @@ namespace OpenBabel {
 #define NOTWRITABLE     0x10
 #define WRITEONEONLY    0x20
 #define WRITEBINARY     0x40
+#define READXML         0x80
 #define DEFAULTFORMAT   0x4000
 
 } //namespace OpenBabel

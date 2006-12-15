@@ -11,7 +11,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "xml.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/xml.h>
 #include <openbabel/reaction.h>
 
 #ifdef WIN32
@@ -53,7 +54,7 @@ N<prefix> add namespace prefix to elements\n \
 
   unsigned Flags()
   {
-    return 0;
+    return READXML;
   }
 	virtual bool ReadChemObject(OBConversion* pConv);
 	virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);

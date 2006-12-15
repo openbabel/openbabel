@@ -12,7 +12,8 @@ libopenbabelinclude_HEADERS = \
 		obconversion.h oberror.h obiter.h \
 		obmolecformat.h obutil.h \
 		parsmart.h patty.h phmodel.h rand.h reaction.h \
-		residue.h ring.h rotamer.h rotor.h typer.h 
+		residue.h ring.h rotamer.h rotor.h typer.h \
+		xml.h
 
 # Remove the configure-generated babelconfig.h
 dist-hook:

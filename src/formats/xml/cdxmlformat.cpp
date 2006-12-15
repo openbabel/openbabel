@@ -15,7 +15,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
-#include "xml.h"
+#include <openbabel/xml.h>
 
 #ifdef WIN32
 #pragma warning (disable : 4800)

@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
-#include "xml.h"
+#include <openbabel/xml.h>
 
 #ifdef WIN32
 #pragma warning (disable : 4800)
@@ -47,7 +47,7 @@ Minimal extraction of chemical structure information only.\n \
 
   virtual unsigned int Flags()
   {
-      return NOTWRITABLE;
+    return (READXML | NOTWRITABLE);
   };
 
 	virtual bool DoElement(const string& name);

@@ -12,8 +12,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
-
-#include "xml.h"
+#include <openbabel/xml.h>
 
 using namespace std;
 namespace OpenBabel
