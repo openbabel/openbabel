@@ -28,7 +28,7 @@ namespace OpenBabel
 
   OBERROR extern OBMessageHandler obErrorLog;
 
-  /*! \class OBBitVec
+  /*! \class OBBitVec bitvec.h <openbabel/bitvec.h>
     \brief Fast and efficient bitstring class
 
     The OBBitVec class is a fast and efficient bitstring class that is

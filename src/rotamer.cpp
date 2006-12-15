@@ -28,7 +28,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /** \class OBRotamerList
+  /** \class OBRotamerList rotamer.h <openbabel/rotamer.h>
 
       A high-level class for rotamer / conformer generation, intended mainly
       for use with the related class OBRotorList and the OBRotorRules database

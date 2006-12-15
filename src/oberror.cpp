@@ -72,7 +72,7 @@ namespace OpenBabel
   }
 
 
-  /** \class OBMessageHandler
+  /** \class OBMessageHandler oberror.h <openbabel/oberror.h>
 
   OBMessageHandler represents a configurable error system for Open Babel.
 

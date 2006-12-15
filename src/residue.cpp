@@ -38,7 +38,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-  /** \class OBResidue
+  /** \class OBResidue residue.h <openbabel/residue.h>
       \brief Residue information
  
       The residue information is drawn from PDB or MOL2 files (or similar), which

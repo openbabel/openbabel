@@ -39,7 +39,7 @@ namespace OpenBabel
   extern OBBondTyper      bondtyper;
 
 
-  /** \class OBMol
+  /** \class OBMol mol.h <openbabel/mol.h>
       \brief Molecule Class
  
       The most important class in Open Babel is OBMol, or the molecule class.

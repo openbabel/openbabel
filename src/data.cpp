@@ -46,7 +46,7 @@ namespace OpenBabel
   OBIsotopeTable   isotab;
   OBResidueData    resdat;
 
-  /** \class OBElementTable
+  /** \class OBElementTable data.h <openbabel/data.h>
       \brief Periodic Table of the Elements
  
       Translating element data is a common task given that many file
@@ -323,7 +323,7 @@ namespace OpenBabel
     return(0);
   }
 
-  /** \class OBIsotopeTable
+  /** \class OBIsotopeTable data.h <openbabel/data.h>
       \brief Table of atomic isotope masses
  
   */
@@ -383,7 +383,7 @@ namespace OpenBabel
     return 0.0;
   }
 
-  /** \class OBTypeTable
+  /** \class OBTypeTable data.h <openbabel/data.h>
       \brief Atom Type Translation Table
  
       Molecular file formats frequently store information about atoms in an

@@ -36,7 +36,7 @@ namespace OpenBabel
   OBAromaticTyper  aromtyper;
   OBAtomTyper      atomtyper;
 
-  /*! \class OBAtomTyper
+  /*! \class OBAtomTyper typer.h <openbabel/typer.h>
     \brief Assigns atom types, hybridization, implicit valence and formal charges
 
     The OBAtomTyper class is designed to read in a list of atom typing
@@ -261,7 +261,7 @@ namespace OpenBabel
     return;
   }
 
-  /*! \class OBAromaticTyper
+  /*! \class OBAromaticTyper typer.h <openbabel/typer.h>
     \brief Assigns aromatic typing to atoms and bonds
  
     The OBAromaticTyper class is designed to read in a list of 

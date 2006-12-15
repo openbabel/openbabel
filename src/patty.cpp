@@ -31,7 +31,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /*! \class patty
+  /*! \class patty patty.h <openbabel/patty.h>
     \brief Programmable Atom Typer
 
     Patty stands for programmable atom typer. The patty class was kindly

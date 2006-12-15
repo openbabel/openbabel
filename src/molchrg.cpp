@@ -25,7 +25,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-/*! \class OBGastChrg
+/*! \class OBGastChrg molchrg.h <openbabel/molchrg.h>
     \brief Assigns Gasteiger partial charges
 
 The OBGastChrg class is responsible for the assignment of partial

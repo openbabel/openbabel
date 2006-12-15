@@ -163,7 +163,7 @@ void OBPhModel::CorrectForPH(OBMol &mol)
 
 // Portions of this documentation adapted from the JOELib docs, written by
 // Joerg Wegner
-/** \class OBChemTsfm
+/** \class OBChemTsfm phmodel.h <openbabel/phmodel.h>
     \brief SMARTS based structural modification (chemical transformation)
  
     Transformation of chemical structures can be used for pH value correction

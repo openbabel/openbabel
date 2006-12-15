@@ -29,7 +29,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /*! \class OBSmartsPattern
+  /*! \class OBSmartsPattern parsmart.h <openbabel/parsmart.h>
 
   Substructure search is an incredibly useful tool in the context of a
   small molecule programming library. Having an efficient substructure

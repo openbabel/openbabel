@@ -35,7 +35,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /** \class OBAtom
+  /** \class OBAtom atom.h <openbabel/atom.h>
       \brief Atom class
  
       To understand the OBAtom class it is important to state a key

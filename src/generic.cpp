@@ -29,7 +29,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /** \class OBGenericData
+  /** \class OBGenericData generic.h <openbabel/generic.h>
 
       OBGenericData is an abstract base class which defines an interface for
       storage, retrieval, and indexing of arbitrary generic data.
@@ -839,8 +839,7 @@ namespace OpenBabel
   /*!
   **\brief Fills an array with the indices of the atoms in the angle (vertex first)
   **\param angles pointer to the pointer to an array of angles atom indices
-  **\param size the current number of rows in the array
-  **\return int The number of angles
+  **\return True if successful
   */
   bool OBAngleData::FillAngleArray(std::vector<std::vector<unsigned int> > &angles)
   {
@@ -865,6 +864,12 @@ namespace OpenBabel
     return(true);
   }
   
+  /*!
+  **\brief Fills an array with the indices of the atoms in the angle (vertex first)
+  **\param angles pointer to the pointer to an array of angles atom indices
+  **\param size the current number of rows in the array
+  **\return int The number of angles
+  */
   unsigned int OBAngleData::FillAngleArray(int **angles, unsigned int &size)
   {
     if(_angles.size() > size)

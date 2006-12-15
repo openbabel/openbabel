@@ -28,35 +28,35 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /** \class OBMolAtomIter
+  /** \class OBMolAtomIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all atoms in a molecule, without resorting
-  to atom indexes (which <strong>will</strong> change in the future), a 
-  variety of iterator methods are provided.
+      To facilitate iteration through all atoms in a molecule, without resorting
+      to atom indexes (which <strong>will</strong> change in the future), a 
+      variety of iterator methods are provided.
 
-  This has been made significantly easier by a series of macros in the 
-  obiter.h header file:
+      This has been made significantly easier by a series of macros in the 
+      obiter.h header file:
 
-  \code
-  \#define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; ++a )
-  \endcode
+      \code
+      \#define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; ++a )
+      \endcode
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  OBMol mol;
-  double exactMass = 0.0f;
-  FOR_ATOMS_OF_MOL(a, mol)
-  {
-  // The variable a behaves like OBAtom* when used with -> and * but
-  // but needs to be explicitly converted when appearing as a parameter
-  // in a function call - use &*a
+      OBMol mol;
+      double exactMass = 0.0f;
+      FOR_ATOMS_OF_MOL(a, mol)
+      {
+      // The variable a behaves like OBAtom* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*a
   
-  exactMass +=  a->GetExactMass();
-  }
-  \endcode
+      exactMass +=  a->GetExactMass();
+      }
+      \endcode
   **/
 
   OBMolAtomIter::OBMolAtomIter(OBMol *mol)
@@ -102,44 +102,44 @@ namespace OpenBabel
     return tmp;
   }
 
-  /** \class OBMolAtomDFSIter
+  /** \class OBMolAtomDFSIter obiter.h <openbabel/obiter.h>
 
-  \since version 2.1
+      \since version 2.1
 
-  To facilitate iteration through all atoms in a molecule, without resorting
-  to atom indexes (which <strong>will</strong> change in the future), a 
-  variety of iterator methods are provided.
+      To facilitate iteration through all atoms in a molecule, without resorting
+      to atom indexes (which <strong>will</strong> change in the future), a 
+      variety of iterator methods are provided.
 
-  This class provides a depth-first search ordering of atoms. When one
-  connected component is exhausted, the iterator will start at another until
-  all atoms are visited. No guarantee is made as to the ordering of
-  iteration through connected components.
+      This class provides a depth-first search ordering of atoms. When one
+      connected component is exhausted, the iterator will start at another until
+      all atoms are visited. No guarantee is made as to the ordering of
+      iteration through connected components.
 
-  The iterator maintains an internal stack and list of visited
-  atoms. As such it may not be appropriate for memory-constrained
-  situations when iterating through large molecules.
+      The iterator maintains an internal stack and list of visited
+      atoms. As such it may not be appropriate for memory-constrained
+      situations when iterating through large molecules.
 
-  Use of this iterator has been made significantly easier by a series
-  of macros in the obiter.h header file:
+      Use of this iterator has been made significantly easier by a series
+      of macros in the obiter.h header file:
 
-  \code
-  \#define FOR_DFS_OF_MOL(a,m)     for( OBMolAtomDFSIter     a(m); a; ++a )
-  \endcode
+      \code
+      \#define FOR_DFS_OF_MOL(a,m)     for( OBMolAtomDFSIter     a(m); a; ++a )
+      \endcode
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  OBMol mol;
-  FOR_DFS_OF_MOL(a, mol)
-  {
-  // The variable a behaves like OBAtom* when used with -> and * but
-  // but needs to be explicitly converted when appearing as a parameter
-  // in a function call - use &*a
+      OBMol mol;
+      FOR_DFS_OF_MOL(a, mol)
+      {
+      // The variable a behaves like OBAtom* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*a
 
-  }
-  \endcode
+      }
+      \endcode
   **/
 
   OBMolAtomDFSIter::OBMolAtomDFSIter(OBMol *mol):
@@ -236,44 +236,44 @@ namespace OpenBabel
     return tmp;
   }
 
-  /** \class OBMolAtomBFSIter
+  /** \class OBMolAtomBFSIter obiter.h <openbabel/obiter.h>
 
-  \since version 2.1
+      \since version 2.1
 
-  To facilitate iteration through all atoms in a molecule, without resorting
-  to atom indexes (which <strong>will</strong> change in the future), a 
-  variety of iterator methods are provided.
+      To facilitate iteration through all atoms in a molecule, without resorting
+      to atom indexes (which <strong>will</strong> change in the future), a 
+      variety of iterator methods are provided.
 
-  This class provides a breadth-first search ordering of atoms. When one
-  connected component is exhausted, the iterator will start at another until
-  all atoms are visited. No guarantee is made as to the ordering of
-  iteration through connected components.
+      This class provides a breadth-first search ordering of atoms. When one
+      connected component is exhausted, the iterator will start at another until
+      all atoms are visited. No guarantee is made as to the ordering of
+      iteration through connected components.
 
-  The iterator maintains an internal queue and list of visited
-  atoms. As such it may not be appropriate for memory-constrained
-  situations when iterating through large molecules.
+      The iterator maintains an internal queue and list of visited
+      atoms. As such it may not be appropriate for memory-constrained
+      situations when iterating through large molecules.
 
-  Use of this iterator has been made significantly easier by a series
-  of macros in the obiter.h header file:
+      Use of this iterator has been made significantly easier by a series
+      of macros in the obiter.h header file:
 
-  \code
-  \#define FOR_BFS_OF_MOL(a,m)     for( OBMolAtomBFSIter     a(m); a; ++a )
-  \endcode
+      \code
+      \#define FOR_BFS_OF_MOL(a,m)     for( OBMolAtomBFSIter     a(m); a; ++a )
+      \endcode
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  OBMol mol;
-  FOR_BFS_OF_MOL(a, mol)
-  {
-  // The variable a behaves like OBAtom* when used with -> and * but
-  // but needs to be explicitly converted when appearing as a parameter
-  // in a function call - use &*a
+      OBMol mol;
+      FOR_BFS_OF_MOL(a, mol)
+      {
+      // The variable a behaves like OBAtom* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*a
   
-  }
-  \endcode
+      }
+      \endcode
   **/
 
   OBMolAtomBFSIter::OBMolAtomBFSIter(OBMol *mol):
@@ -370,34 +370,34 @@ namespace OpenBabel
     return tmp;
   }
 
-  /** \class OBMolBondIter
+  /** \class OBMolBondIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all bonds in a molecule, without resorting
-  to bond indexes (which may change in the future), a variety of
-  iterators are provided.
+      To facilitate iteration through all bonds in a molecule, without resorting
+      to bond indexes (which may change in the future), a variety of
+      iterators are provided.
 
-  This has been made significantly easier by a series of macros in the 
-  obiter.h header file:
+      This has been made significantly easier by a series of macros in the 
+      obiter.h header file:
 
-  \code
-  \#define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; ++b )
-  \endcode
+      \code
+      \#define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; ++b )
+      \endcode
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  OBMol mol;
-  unsigned int bondOrderSum = 0;
-  FOR_BONDS_OF_MOL(b, mol)
-  {
-  // The variable b behaves like OBBond* when used with -> and * but
-  // but needs to be explicitly converted when appearing as a parameter
-  // in a function call - use &*b
-  bondOrderSum +=  b->GetBO();
-  }
-  \endcode
+      OBMol mol;
+      unsigned int bondOrderSum = 0;
+      FOR_BONDS_OF_MOL(b, mol)
+      {
+      // The variable b behaves like OBBond* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*b
+      bondOrderSum +=  b->GetBO();
+      }
+      \endcode
   **/
 
   OBMolBondIter::OBMolBondIter(OBMol *mol)
@@ -443,36 +443,36 @@ namespace OpenBabel
     return tmp;
   }
 
-  /** \class OBAtomAtomIter
+  /** \class OBAtomAtomIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all neighbors of an atom, without resorting
-  to bond indexes (which may change in the future), a variety of
-  iterator classes and methods are provided.
+      To facilitate iteration through all neighbors of an atom, without resorting
+      to bond indexes (which may change in the future), a variety of
+      iterator classes and methods are provided.
 
-  This has been made significantly easier by a series of macros in the 
-  obiter.h header file:
+      This has been made significantly easier by a series of macros in the 
+      obiter.h header file:
 
-  \code
-  \#define FOR_NBORS_OF_ATOM(a,p)     for( OBAtomAtomIter     a(p); a; ++a )
-  \endcode
+      \code
+      \#define FOR_NBORS_OF_ATOM(a,p)     for( OBAtomAtomIter     a(p); a; ++a )
+      \endcode
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  OBMol mol;
-  FOR_ATOMS_OF_MOL(a, mol)
-  {
-  // The variable a behaves like OBAtom* when used with -> and * but
-  // but needs to be explicitly converted when appearing as a parameter
-  // in a function call - use &*a
-  FOR_NBORS_OF_ATOM(b, &*a)
-  {
-  ...
-  }
-  }
-  \endcode
+      OBMol mol;
+      FOR_ATOMS_OF_MOL(a, mol)
+      {
+      // The variable a behaves like OBAtom* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*a
+      FOR_NBORS_OF_ATOM(b, &*a)
+      {
+      ...
+      }
+      }
+      \endcode
   **/
 
   OBAtomAtomIter::OBAtomAtomIter(OBAtom *atm)
@@ -518,35 +518,35 @@ namespace OpenBabel
     return tmp;
   }
 
-  /** \class OBAtomBondIter
+  /** \class OBAtomBondIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all bonds on an atom, without resorting
-  to bond indexes (which may change in the future) a variety of
-  iterator classes and methods are provided.
+      To facilitate iteration through all bonds on an atom, without resorting
+      to bond indexes (which may change in the future) a variety of
+      iterator classes and methods are provided.
 
-  This has been made significantly easier by a series of macros in the 
-  obiter.h header file:
+      This has been made significantly easier by a series of macros in the 
+      obiter.h header file:
 
-  \code
-  \#define FOR_BONDS_OF_ATOM(b,p)     for( OBAtomBondIter     b(p); b; ++b )
-  \endcode
+      \code
+      \#define FOR_BONDS_OF_ATOM(b,p)     for( OBAtomBondIter     b(p); b; ++b )
+      \endcode
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  OBAtom atom;
-  unsigned int tripleBondCount;
-  FOR_BONDS_OF_ATOM(b, atom)
-  {
-  // The variable b behaves like OBBond* when used with -> and * but
-  // but needs to be explicitly converted when appearing as a parameter
-  // in a function call - use &*b
-  if (b->GetBO() == 3)
-  tripleBondCount++;
-  }
-  \endcode
+      OBAtom atom;
+      unsigned int tripleBondCount;
+      FOR_BONDS_OF_ATOM(b, atom)
+      {
+      // The variable b behaves like OBBond* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*b
+      if (b->GetBO() == 3)
+      tripleBondCount++;
+      }
+      \endcode
   **/
 
   OBAtomBondIter::OBAtomBondIter(OBAtom *atm)
@@ -592,38 +592,38 @@ namespace OpenBabel
     return tmp;
   }
 
-  /** \class OBResidueIter
+  /** \class OBResidueIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all residues in a molecule, without resorting
-  to residue indexes (which may change in the future) a variety of
-  iterator classes and methods are provided.
+      To facilitate iteration through all residues in a molecule, without resorting
+      to residue indexes (which may change in the future) a variety of
+      iterator classes and methods are provided.
 
-  This has been made significantly easier by a series of macros in the 
-  obiter.h header file:
+      This has been made significantly easier by a series of macros in the 
+      obiter.h header file:
 
-  \code
-  \#define FOR_RESIDUES_OF_MOL(r,m)     for( OBResidueIter     r(m); r; ++r )
-  \endcode
+      \code
+      \#define FOR_RESIDUES_OF_MOL(r,m)     for( OBResidueIter     r(m); r; ++r )
+      \endcode
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  OBMol mol;
-  FOR_RESIDUES_OF_MOL(r, mol)
-  {
-  // The variable r behaves like OBResidue* when used with -> and * but
-  // but needs to be explicitly converted when appearing as a parameter
-  // in a function call - use &*r
+      OBMol mol;
+      FOR_RESIDUES_OF_MOL(r, mol)
+      {
+      // The variable r behaves like OBResidue* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*r
 
-  if (r->GetName() == resname && r->GetNum() == rnum) 
-  {
-  // got a match, let's go to work
-  ...
-  }
-  }
-  \endcode
+      if (r->GetName() == resname && r->GetNum() == rnum) 
+      {
+      // got a match, let's go to work
+      ...
+      }
+      }
+      \endcode
   **/
 
   OBResidueIter::OBResidueIter(OBMol *mol)
@@ -669,41 +669,41 @@ namespace OpenBabel
     return tmp;
   }
 
-  /** \class OBResidueAtomIter
+  /** \class OBResidueAtomIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all atoms in a residue, without resorting
-  to atom indexes (which may change in the future) a variety of
-  iterator classes and methods are provided.
+      To facilitate iteration through all atoms in a residue, without resorting
+      to atom indexes (which may change in the future) a variety of
+      iterator classes and methods are provided.
 
-  This has been made significantly easier by a series of macros in the 
-  obiter.h header file:
+      This has been made significantly easier by a series of macros in the 
+      obiter.h header file:
 
-  \code
-  \#define FOR_ATOMS_OF_RESIDUE(a,r)     for( OBResidueAtomIter     a(r); a; ++a )
-  \endcode
+      \code
+      \#define FOR_ATOMS_OF_RESIDUE(a,r)     for( OBResidueAtomIter     a(r); a; ++a )
+      \endcode
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  OBMol mol;
-  double residueMass = 0.0;
-  FOR_RESIDUES_OF_MOL(r, mol)
-  {
-  // The variable r behaves like OBResidue* when used with -> and * but
-  // but needs to be explicitly converted when appearing as a parameter
-  // in a function call - use &*r
+      OBMol mol;
+      double residueMass = 0.0;
+      FOR_RESIDUES_OF_MOL(r, mol)
+      {
+      // The variable r behaves like OBResidue* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*r
 
-  if (r->GetName() == resname && r->GetNum() == rnum) 
-  {
-  FOR_ATOMS_OF_RESIDUE(a, &*r)
-  {
-  residueMass += a->GetMass();
-  }
-  }
-  }
-  \endcode
+      if (r->GetName() == resname && r->GetNum() == rnum) 
+      {
+      FOR_ATOMS_OF_RESIDUE(a, &*r)
+      {
+      residueMass += a->GetMass();
+      }
+      }
+      }
+      \endcode
   **/
 
   OBResidueAtomIter::OBResidueAtomIter(OBResidue *res):
@@ -746,35 +746,37 @@ namespace OpenBabel
     return tmp;
   }
 
-  /** \class OBMolRingIter
+  /** \class OBMolRingIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all rings in a molecule, without resorting
-  to ring indexes (which may change in the future) a variety of
-  iterator classes and methods are provided. One word of warning is that
-  these iterator methods automatically call OBMol::FindSSSR() which may
-  involve a significant performance hit on large molecules.
+      \since version 2.1
 
-  Calling iterator classes has been made significantly easier by a series
-  of macros in the obiter.h header file:
+      To facilitate iteration through all rings in a molecule, without resorting
+      to ring indexes (which may change in the future) a variety of
+      iterator classes and methods are provided. One word of warning is that
+      these iterator methods automatically call OBMol::FindSSSR() which may
+      involve a significant performance hit on large molecules.
 
-  \code
-  \#define FOR_RINGS_OF_MOL(r,m)     for( OBMolRingIter     r(m); r; ++r )
-  \endcode
+      Calling iterator classes has been made significantly easier by a series
+      of macros in the obiter.h header file:
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      \code
+      \#define FOR_RINGS_OF_MOL(r,m)     for( OBMolRingIter     r(m); r; ++r )
+      \endcode
 
-  OBMol mol;
-  FOR_RINGS_OF_MOL(r, mol)
-  {
-  // The variable r behaves like OBRing* when used with -> and * but
-  // but needs to be explicitly converted when appearing as a parameter
-  // in a function call - use &*r
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  }
-  \endcode
+      OBMol mol;
+      FOR_RINGS_OF_MOL(r, mol)
+      {
+      // The variable r behaves like OBRing* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*r
+
+      }
+      \endcode
   **/
 
   OBMolRingIter::OBMolRingIter(OBMol *mol): _parent(mol)
@@ -831,40 +833,42 @@ namespace OpenBabel
     return tmp;
   }
 
-  /** \class OBMolAngleIter
+  /** \class OBMolAngleIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all angles in a molecule, without resorting
-  to atom indexes (which <strong>will</strong> change in the future), a 
-  variety of iterator methods are provided.
+      \since version 2.1
 
-  This has been made significantly easier by a series of macros in the 
-  obiter.h header file:
+      To facilitate iteration through all angles in a molecule, without resorting
+      to atom indexes (which <strong>will</strong> change in the future), a 
+      variety of iterator methods are provided.
 
-  \code
-  \#define FOR_ANGLES_OF_MOL(a,m)     for( OBMolAngleIter     a(m); a; a++ )
-  \endcode
+      This has been made significantly easier by a series of macros in the 
+      obiter.h header file:
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      \code
+      \#define FOR_ANGLES_OF_MOL(a,m)     for( OBMolAngleIter     a(m); a; a++ )
+      \endcode
 
-  OBMol mol;
-  OBAtom *a, *b, *c;
-  double ang;
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
+
+      OBMol mol;
+      OBAtom *a, *b, *c;
+      double ang;
   
-  FOR_ANGLES_OF_MOL(angle, mol)
-  {
-    // The variable a behaves like OBAngle* when used with -> and * but
-    // but needs to be explicitly converted when appearing as a parameter
-    // in a function call - use &*a
+      FOR_ANGLES_OF_MOL(angle, mol)
+      {
+      // The variable a behaves like OBAngle* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*a
     
-    b = _mol.GetAtom((*angle)[0] + 1);
-    a = _mol.GetAtom((*angle)[1] + 1);
-    c = _mol.GetAtom((*angle)[2] + 1);
-    ang = a->GetAngle(b->GetIdx(), c->GetIdx());
-  }
-  \endcode
+      b = _mol.GetAtom((*angle)[0] + 1);
+      a = _mol.GetAtom((*angle)[1] + 1);
+      c = _mol.GetAtom((*angle)[2] + 1);
+      ang = a->GetAngle(b->GetIdx(), c->GetIdx());
+      }
+      \endcode
   **/
 
   OBMolAngleIter::OBMolAngleIter(OBMol *mol)
@@ -921,41 +925,43 @@ namespace OpenBabel
     return *this;
   }
 
-  /** \class OBMolTorsionIter
+  /** \class OBMolTorsionIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all torsions in a molecule, without resorting
-  to atom indexes (which <strong>will</strong> change in the future), a 
-  variety of iterator methods are provided.
+      \since version 2.1
 
-  This has been made significantly easier by a series of macros in the 
-  obiter.h header file:
+      To facilitate iteration through all torsions in a molecule, without resorting
+      to atom indexes (which <strong>will</strong> change in the future), a 
+      variety of iterator methods are provided.
 
-  \code
-  \#define FOR_TORSIONS_OF_MOL(t,m)  for( OBMolTorsionIter   t(m); t; t++ )
-  \endcode
+      This has been made significantly easier by a series of macros in the 
+      obiter.h header file:
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      \code
+      \#define FOR_TORSIONS_OF_MOL(t,m)  for( OBMolTorsionIter   t(m); t; t++ )
+      \endcode
 
-  OBMol mol;
-  OBAtom *a, *b, *c, *d;
-  double tor;
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
+
+      OBMol mol;
+      OBAtom *a, *b, *c, *d;
+      double tor;
   
-  FOR_TORSIONS_OF_MOL(t, mol)
-  {
-    // The variable a behaves like OBAngle* when used with -> and * but
-    // but needs to be explicitly converted when appearing as a parameter
-    // in a function call - use &*t
+      FOR_TORSIONS_OF_MOL(t, mol)
+      {
+      // The variable a behaves like OBAngle* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*t
 
-    a = _mol.GetAtom((*t)[0] + 1); // indices in vector start from 0!!!
-    b = _mol.GetAtom((*t)[1] + 1);
-    c = _mol.GetAtom((*t)[2] + 1);
-    d = _mol.GetAtom((*t)[3] + 1);
-    tor = mol.GetTorsion(a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
-  }
-  \endcode
+      a = _mol.GetAtom((*t)[0] + 1); // indices in vector start from 0!!!
+      b = _mol.GetAtom((*t)[1] + 1);
+      c = _mol.GetAtom((*t)[2] + 1);
+      d = _mol.GetAtom((*t)[3] + 1);
+      tor = mol.GetTorsion(a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
+      }
+      \endcode
   **/
 
   OBMolTorsionIter::OBMolTorsionIter(OBMol *mol)
@@ -1012,39 +1018,42 @@ namespace OpenBabel
     return *this;
   }
 
-  /** \class OBMolPairIter
+  /** \class OBMolPairIter obiter.h <openbabel/obiter.h>
 
-  To facilitate iteration through all pairs of atoms in a molecule, without 
-  resorting to bond indexes (which may change in the future), a variety of
-  iterators are provided. A distance between atoms in a pair is 1-4 or more;
+      \since version 2.1.
 
-  This has been made significantly easier by a series of macros in the 
-  obiter.h header file:
+      To facilitate iteration through all pairs of atoms in a molecule, without 
+      resorting to bond indexes (which may change in the future), a variety of
+      iterators are provided. A distance between atoms in a pair is 1-4 Angstroms
+      or more (i.e., these are non-bonded interactions).
 
-  \code
-  \#define FOR_PAIRS_OF_MOL(p,m)     for( OBMolPairIter     p(m); p; p++ )
-  \endcode
+      This has been made significantly easier by a series of macros in the 
+      obiter.h header file:
 
-  Here is an example:
-  \code
-  #include "obiter.h"
-  #include "mol.h"
+      \code
+      \#define FOR_PAIRS_OF_MOL(p,m)     for( OBMolPairIter     p(m); p; p++ )
+      \endcode
 
-  OBMol mol;
-  OBAtom *a, *b;
-  double rab;
+      Here is an example:
+      \code
+      #include "obiter.h"
+      #include "mol.h"
 
-  FOR_PAIRS_OF_MOL(p, mol)
-  {
-    // The variable b behaves like OBBond* when used with -> and * but
-    // but needs to be explicitly converted when appearing as a parameter
-    // in a function call - use &*p
+      OBMol mol;
+      OBAtom *a, *b;
+      double rab;
 
-    a = mol.GetAtom(p->first);
-    b = mol.GetAtom(p->second);
-    rab = a->GetDistance(b);
-  }
-  \endcode
+      FOR_PAIRS_OF_MOL(p, mol)
+      {
+      // The variable b behaves like OBBond* when used with -> and * but
+      // but needs to be explicitly converted when appearing as a parameter
+      // in a function call - use &*p
+
+      a = mol.GetAtom(p->first);
+      b = mol.GetAtom(p->second);
+      rab = a->GetDistance(b);
+      }
+      \endcode
   **/
 
   OBMolPairIter::OBMolPairIter(OBMol *mol)
@@ -1058,25 +1067,25 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(a, mol) {
       FOR_ATOMS_OF_MOL(b, mol) {
         if (a->GetIdx() < b->GetIdx()) {
-	  not14 = false;
+          not14 = false;
 
-	  i = &*a;
-	  FOR_NBORS_OF_ATOM(nbr, i) {
-	    if (&*nbr == &*b)
-	      not14 = true;
+          i = &*a;
+          FOR_NBORS_OF_ATOM(nbr, i) {
+            if (&*nbr == &*b)
+              not14 = true;
 
-	    j = &*nbr;
-	    FOR_NBORS_OF_ATOM(nbr2, j)
-	      if (&*nbr2 == &*b)
-	        not14 = true;
-	  }
+            j = &*nbr;
+            FOR_NBORS_OF_ATOM(nbr2, j)
+              if (&*nbr2 == &*b)
+                not14 = true;
+          }
 
-	  if (!not14) {
+          if (!not14) {
             atoms.first = a->GetIdx();
-	    atoms.second = b->GetIdx();
-	    _vpair.push(atoms);
-	  }
-	} 
+            atoms.second = b->GetIdx();
+            _vpair.push(atoms);
+          }
+        } 
       }
     }
 
@@ -1094,25 +1103,25 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(a, mol) {
       FOR_ATOMS_OF_MOL(b, mol) {
         if (a->GetIdx() < b->GetIdx()) {
-	  not14 = false;
+          not14 = false;
 
-	  i = &*a;
-	  FOR_NBORS_OF_ATOM(nbr, i) {
-	    if (&*nbr == &*b)
-	      not14 = true;
+          i = &*a;
+          FOR_NBORS_OF_ATOM(nbr, i) {
+            if (&*nbr == &*b)
+              not14 = true;
 
-	    j = &*nbr;
-	    FOR_NBORS_OF_ATOM(nbr2, j)
-	      if (&*nbr2 == &*b)
-	        not14 = true;
-	  }
+            j = &*nbr;
+            FOR_NBORS_OF_ATOM(nbr2, j)
+              if (&*nbr2 == &*b)
+                not14 = true;
+          }
 
-	  if (!not14) {
+          if (!not14) {
             atoms.first = a->GetIdx();
-	    atoms.second = b->GetIdx();
-	    _vpair.push(atoms);
-	  }
-	} 
+            atoms.second = b->GetIdx();
+            _vpair.push(atoms);
+          }
+        } 
       }
     }
 
@@ -1129,10 +1138,10 @@ namespace OpenBabel
   OBMolPairIter& OBMolPairIter::operator=(const OBMolPairIter &ai)
   {
     if (this != &ai) {
-        _parent = ai._parent;
-        _ptr = ai._ptr;
-        _vpair = ai._vpair;
-      }
+      _parent = ai._parent;
+      _ptr = ai._ptr;
+      _vpair = ai._vpair;
+    }
     return *this;
   }
 

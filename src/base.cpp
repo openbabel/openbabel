@@ -150,7 +150,7 @@ namespace OpenBabel
 
   }
 
-  /*! \mainpage
+  /*! \mainpage v2.1 API Documentation
 
   \section intro Introduction and Key Modules
  

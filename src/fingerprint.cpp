@@ -337,7 +337,7 @@ namespace OpenBabel
   }
 
   /*!
-    \class OBFingerprint
+    \class OBFingerprint fingerprint.h <openbabel/fingerprint.h>
     These fingerprints are condensed representation of molecules (or other objects)
     as a list of boolean values (actually bits in a vector<unsigned>) with length 
     of a power of 2. The main motivation is for fast searching of data sources
@@ -443,7 +443,7 @@ namespace OpenBabel
     molecule for this option to work.
   */
 	
-  /*! \class FastSearch
+  /*! \class FastSearch fingerprint.h <openbabel/fingerprint.h>
     The FastSearch class searches an index to a datafile containing a list of molecules
     (or other objects) prepared by FastSearchIndexer.
 

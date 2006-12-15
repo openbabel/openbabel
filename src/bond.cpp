@@ -28,7 +28,7 @@ namespace OpenBabel
 
   extern OBAromaticTyper  aromtyper;
 
-  /** \class OBBond
+  /** \class OBBond bond.h <openbabel/bond.h>
       \brief Bond class
  
       The OBBond class is straightforward in its data access and

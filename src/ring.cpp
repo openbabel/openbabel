@@ -27,7 +27,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-/*! \class OBRing
+/*! \class OBRing ring.h <openbabel/ring.h>
     \brief Stores information on rings in a molecule from SSSR perception.
 
 Ring information beyond atom and bond membership is usually not

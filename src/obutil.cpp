@@ -30,7 +30,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /*! \class OBStopwatch
+  /*! \class OBStopwatch obutil.h <openbabel/obutil.h>
     \brief Stopwatch class used for timing length of execution
 
     The OBStopwatch class makes timing the execution of blocks of
