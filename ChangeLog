@@ -6,10 +6,17 @@
 	reflect <openbabel/header.h> syntax. Makes API documentation
 	consistent with usage.
 
-	* src/obconversion.cpp: Enable on-the-fly line ending translation
-	for input. Windows and Classic Mac files should now translate
-	without problems. XML-based formats seem flaky, I'll debug this
-	soon.
+	* src/obconversion.cpp, src/obconversion.h: Enable on-the-fly line
+	ending translation for input. Windows and Classic Mac files should
+	now translate without problems. Right now, XML files are excluded
+	through the new READXML flag.
+
+	* src/formats/xml: Update for READXML flag and move of xml.h
+	header.
+
+	* include/openbabel/xml.h: Move header for public use.
+
+	* src/formats/fastsearchformat.cpp: Add READBINARY flag.
 
 	* include/openbabel/Makefile.am, Makefile.in: Fix "make dist"
 	target to remove generated babelconfig.h header for snapshots and
@@ -17,6 +24,8 @@
 
 	* scripts/Makefile.am, scripts/Makefile.in: Make sure to clean
 	java targets.
+
+	* data/mm2.prm, data/Makefile.am, data/Makefile.in: MM2 parameters.
 
 2006-12-15 Chris Morley <ob@gaseq.co.uk>
 
