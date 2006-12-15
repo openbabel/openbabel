@@ -1,7 +1,7 @@
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data -I$(top_srcdir)/include
 # Make sure to install the inchi_api.h header
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
-# libopenbabelinclude_HEADERS = inchi_api.h obmolecformat.h chemdrawcdx.h
+libopenbabelinclude_HEADERS = inchi_api.h chemdrawcdx.h
 
 EXTRA_DIST = exampleformat.cpp
 SUBDIRS =

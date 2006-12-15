@@ -70,7 +70,7 @@ Read Options (when searching) e.g. -at0.7\n \
 ";
     };
 
-    virtual unsigned int Flags(){return READONEONLY | WRITEBINARY;};
+    virtual unsigned int Flags(){return READBINARY | READONEONLY | WRITEBINARY;};
 
   public:
     virtual bool ReadChemObject(OBConversion* pConv);
