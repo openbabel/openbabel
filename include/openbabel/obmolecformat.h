@@ -70,6 +70,7 @@ public:
 		OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
 		OBConversion::RegisterOptionParam("j", NULL, 0,OBConversion::GENOPTIONS);
 		OBConversion::RegisterOptionParam("C", NULL, 0,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("k", NULL, 0,OBConversion::GENOPTIONS);
 	};
 
 	//Static routines which can be called from elsewhere

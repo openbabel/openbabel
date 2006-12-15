@@ -1,3 +1,10 @@
+2006-12-15 Chris Morley <ob@gaseq.co.uk>
+
+	*tools/babel.cpp, src/obconversion.cpp, src/formats/obmoleculeformat.h:
+	Move -k option help info into OBConversion::Description, where it can
+	be used by other front-ends. (The info in help() is specific to the
+	command-line interface.) Register it as having no parameters.
+	
 2006-12-14  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/formats/gaussformat.cpp: Will export "model/basis,method" if keyword

@@ -423,7 +423,6 @@ void help()
   cout << "  -Hall Outputs details of all formats" <<endl; 
   cout << "  -V Outputs version number" <<endl; 
   cout << "  -F Outputs the available fingerprint types" <<endl; 
-  cout << "  -k Attempt to translate keywords" <<endl; 
   cout << "  -m Produces multiple output files, to allow:" <<endl;
   cout << "     Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
   cout << "       puts each molecule into new1.smi new2.smi etc" <<endl;
