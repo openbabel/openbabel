@@ -36,7 +36,9 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <map>
+
 #include <openbabel/obconversion.h>
+#include <openbabel/newlinebuf.h>
 
 #ifdef HAVE_LIBZ
 #include "zipstream.h"
@@ -72,7 +74,7 @@ namespace OpenBabel {
 
   //***************************************************
 
-  /** @class OBConversion
+  /** @class OBConversion obconversion.h <openbabel/obconversion.h>
       OBConversion maintains a list of the available formats, 
       provides information on them, and controls the conversion process.
 
@@ -440,6 +442,13 @@ namespace OpenBabel {
       }
 #endif
 
+    newlinebuf *filter;
+    if (!(pInFormat->Flags() & READBINARY))
+      {
+        filter = new newlinebuf(pInStream->rdbuf());
+        pInStream->rdbuf(filter);
+      }
+
     int count = Convert();
     pOutStream = pOrigOutStream;
     return count;
@@ -730,6 +739,13 @@ namespace OpenBabel {
     if(zIn.is_gzip())
       pInStream = &zIn;
 #endif
+    newlinebuf *filter;
+    if (!(pInFormat->Flags() & READBINARY))
+      {
+        filter = new newlinebuf(pInStream->rdbuf());
+        pInStream->rdbuf(filter);
+      }
+    
     return pInFormat->ReadMolecule(pOb, this);
   }
   //////////////////////////////////////////////////
