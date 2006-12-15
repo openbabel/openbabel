@@ -385,8 +385,9 @@ dist-hook:
 	find $(distdir) -name "*~" | xargs rm -rf
 	(cd $(distdir)/perl; $(MAKE) distclean)
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
-	(cd $(distdir)/python; rm -rf build; rm -rf *.pyc *.so)
+	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
 	(cd $(distdir)/ruby; $(MAKE) distclean)
+	(cd $(distdir)/java; rm -f *.so *.o *.class)
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@perl/openbabel_perl.cpp: openbabel-perl.i $(script_headers)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -perl5 -c++ -naturalvar -o $@ \

@@ -8,8 +8,9 @@ dist-hook:
 	find $(distdir) -name "*~" | xargs rm -rf
 	(cd $(distdir)/perl; $(MAKE) distclean)
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
-	(cd $(distdir)/python; rm -rf build; rm -rf *.pyc *.so)
+	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
 	(cd $(distdir)/ruby; $(MAKE) distclean)
+	(cd $(distdir)/java; rm -f *.so *.o *.class)
 
 # build the scripting language interfaces if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG
