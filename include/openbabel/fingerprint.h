@@ -58,7 +58,7 @@ public:
   static bool GetNextFPrt(std::string& id, OBFingerprint*& pFPrt);
 
   /// \return a pointer to a fingerprint (the default if ID is empty), or NULL if not available
-  static OBFingerprint* FindFingerprint(std::string& ID);
+  static OBFingerprint* FindFingerprint(const std::string& ID);
 
   /// \return the Tanimoto coefficient between two vectors (vector<unsigned int>& SeekPositions)
   static double Tanimoto(const std::vector<unsigned int>& vec1, const std::vector<unsigned int>& vec2);

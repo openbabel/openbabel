@@ -31,6 +31,7 @@
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="pybel.html#Atom">Atom</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pybel.html#Fingerprint">Fingerprint</a>
 </font></dt><dt><font face="helvetica, arial"><a href="pybel.html#Molecule">Molecule</a>
 </font></dt><dt><font face="helvetica, arial"><a href="pybel.html#Outputfile">Outputfile</a>
 </font></dt><dt><font face="helvetica, arial"><a href="pybel.html#Smarts">Smarts</a>
@@ -84,6 +85,42 @@ Data and other attributes defined here:<br>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Fingerprint">class <strong>Fingerprint</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;Molecular&nbsp;<a href="#Fingerprint">Fingerprint</a>.<br>
+&nbsp;<br>
+Required&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;obFingerprint&nbsp;--&nbsp;a&nbsp;vector&nbsp;calculated&nbsp;by&nbsp;OBFingerprint.FindFingerprint()<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;fp&nbsp;--&nbsp;the&nbsp;original&nbsp;obFingerprint<br>
+&nbsp;&nbsp;&nbsp;bits&nbsp;--&nbsp;a&nbsp;list&nbsp;of&nbsp;bits&nbsp;set&nbsp;in&nbsp;the&nbsp;<a href="#Fingerprint">Fingerprint</a><br>
+&nbsp;<br>
+Methods:<br>
+&nbsp;&nbsp;&nbsp;The&nbsp;"|"&nbsp;operator&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;calculate&nbsp;the&nbsp;Tanimoto&nbsp;coeff.&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;given&nbsp;two&nbsp;Fingerprints&nbsp;'a',&nbsp;and&nbsp;'b',&nbsp;the&nbsp;Tanimoto&nbsp;coefficient&nbsp;is&nbsp;given&nbsp;by:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tanimoto&nbsp;=&nbsp;a&nbsp;|&nbsp;b<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Fingerprint-__getattr__"><strong>__getattr__</strong></a>(self, attr)</dt></dl>
+
+<dl><dt><a name="Fingerprint-__init__"><strong>__init__</strong></a>(self, obFingerprint)</dt></dl>
+
+<dl><dt><a name="Fingerprint-__or__"><strong>__or__</strong></a>(self, other)</dt></dl>
+
+<dl><dt><a name="Fingerprint-__str__"><strong>__str__</strong></a>(self)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dictproxy object&gt;<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;attribute '__weakref__' of 'Fingerprint' objects&gt;<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;(if&nbsp;defined)</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="Molecule">class <strong>Molecule</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
@@ -100,7 +137,7 @@ Attributes:<br>
 (refer&nbsp;to&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;library&nbsp;documentation&nbsp;for&nbsp;more&nbsp;info).<br>
 &nbsp;<br>
 Methods:<br>
-&nbsp;&nbsp;&nbsp;<a href="#Molecule-write">write</a>()<br>
+&nbsp;&nbsp;&nbsp;<a href="#Molecule-write">write</a>(),&nbsp;<a href="#Molecule-calcfp">calcfp</a>()<br>
 &nbsp;&nbsp;<br>
 The&nbsp;original&nbsp;Open&nbsp;Babel&nbsp;molecule&nbsp;can&nbsp;be&nbsp;accessed&nbsp;using&nbsp;the&nbsp;attribute:<br>
 &nbsp;&nbsp;&nbsp;OBMol<br>&nbsp;</tt></td></tr>
@@ -120,6 +157,15 @@ This&nbsp;allows&nbsp;constructions&nbsp;such&nbsp;as&nbsp;the&nbsp;following:<b
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;atom</tt></dd></dl>
 
 <dl><dt><a name="Molecule-__str__"><strong>__str__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Molecule-calcfp"><strong>calcfp</strong></a>(self, fptype<font color="#909090">=''</font>)</dt><dd><tt>Calculate&nbsp;a&nbsp;molecular&nbsp;fingerprint.<br>
+&nbsp;<br>
+Optional&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;fptype&nbsp;--&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;fingerprint&nbsp;type.<br>
+&nbsp;<br>
+If&nbsp;fptype&nbsp;is&nbsp;not&nbsp;specified,&nbsp;the&nbsp;default&nbsp;Open&nbsp;Babel&nbsp;fingerprint<br>
+type&nbsp;is&nbsp;used.&nbsp;See&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;library&nbsp;documentation&nbsp;for&nbsp;more<br>
+details.</tt></dd></dl>
 
 <dl><dt><a name="Molecule-write"><strong>write</strong></a>(self, format<font color="#909090">='SMI'</font>, filename<font color="#909090">=None</font>, overwrite<font color="#909090">=False</font>)</dt><dd><tt>Write&nbsp;the&nbsp;molecule&nbsp;to&nbsp;a&nbsp;file&nbsp;or&nbsp;return&nbsp;a&nbsp;string.<br>
 &nbsp;<br>
@@ -160,8 +206,7 @@ Optional&nbsp;parameters:<br>
 &nbsp;&nbsp;&nbsp;overwrite&nbsp;(default&nbsp;is&nbsp;False)&nbsp;--&nbsp;if&nbsp;the&nbsp;output&nbsp;file&nbsp;already&nbsp;exists,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;it&nbsp;be&nbsp;overwritten?<br>
 Methods:<br>
-&nbsp;&nbsp;&nbsp;<a href="#Outputfile-write">write</a>(molecule)<br>
-&nbsp;&nbsp;&nbsp;<a href="#Outputfile-close">close</a>()<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;<a href="#Outputfile-write">write</a>(molecule)<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Outputfile-__init__"><strong>__init__</strong></a>(self, format, filename, overwrite<font color="#909090">=False</font>)</dt></dl>
@@ -221,7 +266,13 @@ Data and other attributes defined here:<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-readfile"><strong>readfile</strong></a>(format, filename)</dt><dd><tt>Iterate&nbsp;over&nbsp;the&nbsp;molecules&nbsp;in&nbsp;a&nbsp;file.<br>
+<td width="100%"><dl><dt><a name="-findbits"><strong>findbits</strong></a>(fp, bitsperint)</dt><dd><tt>Find&nbsp;which&nbsp;bits&nbsp;are&nbsp;set&nbsp;in&nbsp;a&nbsp;list/vector.<br>
+&nbsp;<br>
+This&nbsp;function&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#Fingerprint">Fingerprint</a>&nbsp;class.<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;<a href="#-findbits">findbits</a>([13,&nbsp;71],&nbsp;8)<br>
+[1,&nbsp;3,&nbsp;4,&nbsp;9,&nbsp;10,&nbsp;11,&nbsp;15]</tt></dd></dl>
+ <dl><dt><a name="-readfile"><strong>readfile</strong></a>(format, filename)</dt><dd><tt>Iterate&nbsp;over&nbsp;the&nbsp;molecules&nbsp;in&nbsp;a&nbsp;file.<br>
 &nbsp;<br>
 Required&nbsp;parameters:<br>
 &nbsp;&nbsp;&nbsp;format<br>

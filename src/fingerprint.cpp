@@ -65,7 +65,7 @@ namespace OpenBabel
     return true;
   }
 
-  OBFingerprint* OBFingerprint::FindFingerprint(string& ID)
+  OBFingerprint* OBFingerprint::FindFingerprint(const string& ID)
   {
     if(ID.empty())
       return _pDefault;

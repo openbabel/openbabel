@@ -1,3 +1,13 @@
+2006-12-13  Noel O'Boyle <baoilleach@gmail.com>
+
+	* fingerprint.cpp/.h: Changed the FindFingerprint method to accept
+	const string& instead of string&. This is necessary for access to this
+	function from Python.
+	
+	* scripts/python/pybel.py, testpybel.py, pybelapi.html: Added a method
+	to Molecule for calculating a molecular fingerprint, handled by a new
+	Fingerprint class.
+	
 2006-12-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure, Doxyfile: Bump to 2.1.0b4 for upcoming snapshot.

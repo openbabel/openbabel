@@ -2,6 +2,39 @@ import os
 import unittest
 import pybel
 
+class Test_fingerprint(unittest.TestCase):
+    """Test the Fingerprint class"""
+    def setUp(self):
+        self.mols = [pybel.readstring("smi", "CCCC"),
+                     pybel.readstring("smi", "CCCN")]
+
+    def testTanimoto(self):
+        """Test the calculation of the Tanimoto coefficient"""
+        fps = [x.calcfp() for x in self.mols]
+        self.assertEqual(fps[0] | fps[1], 1/3.)
+        fps = [x.calcfp("FP3") for x in self.mols]
+        self.assertEqual(fps[0] | fps[1], 0.)
+    
+    def teststringrepr(self):
+        """Test the string representation and corner cases."""
+        self.assertRaises(ValueError, self.mols[0].calcfp, "Nosuchname")
+        self.assertRaises(AttributeError, self.accesstest)
+        self.assertEqual(str(self.mols[0].calcfp()),
+                         '0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1073741824, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0')
+
+    def accesstest(self):
+        # Should raise AttributeError
+        return self.mols[0].calcfp().nosuchname
+
+    def testbits(self):
+        """Test whether the bits are set correctly."""
+        bits = [x.calcfp().bits for x in self.mols]
+        self.assertEqual(bits[0], [261, 385, 671])
+        bits = [set(x) for x in bits]
+        # Calculate the Tanimoto coefficient the old-fashioned way
+        tanimoto = len(bits[0] & bits[1]) / float(len(bits[0] | bits[1]))
+        self.assertEqual(tanimoto, 1/3.)
+
 class Test_readstring(unittest.TestCase):
     """Test the ability to read and write to a string"""
     def setUp(self):
@@ -154,7 +187,8 @@ class Test_cornercases(unittest.TestCase):
         self.assertEqual(atom.atomicnum, 0)
         
 if __name__=="__main__":
-    testgroups = [Test_readstring, Test_readfile, Test_cornercases, Test_atoms, Test_smarts]
+    testgroups = [Test_readstring, Test_readfile, Test_atoms,
+                  Test_smarts, Test_cornercases, Test_fingerprint]
     for testgroup in testgroups:
         print "\n=== %s ===" % testgroup.__doc__
         suite = unittest.makeSuite(testgroup)

@@ -92,7 +92,7 @@ class Outputfile(object):
         Required parameters:
            molecule
         """
-	if not self.filename:
+        if not self.filename:
             raise IOError, "Outputfile instance is closed."
 
         if self.total==0:
@@ -120,7 +120,7 @@ class Molecule(object):
     (refer to the Open Babel library documentation for more info).
     
     Methods:
-       write()
+       write(), calcfp()
       
     The original Open Babel molecule can be accessed using the attribute:
        OBMol
@@ -174,6 +174,23 @@ class Molecule(object):
         """
         for atom in self.atoms:
             yield atom
+    
+    def calcfp(self, fptype=""):
+        """Calculate a molecular fingerprint.
+        
+        Optional parameters:
+           fptype -- the name of the Open Babel fingerprint type.
+
+        If fptype is not specified, the default Open Babel fingerprint
+        type is used. See the Open Babel library documentation for more
+        details.
+        """
+        fp = ob.vectorUnsignedInt()
+        fingerprinter = ob.OBFingerprint.FindFingerprint(fptype)
+        if fingerprinter is None:
+            raise ValueError, "%s is not a recognised Open Babel Fingerprint type" % fptype
+        fingerprinter.GetFingerprint(self.OBMol, fp)
+        return Fingerprint(fp)
 
     def write(self, format="SMI", filename=None, overwrite=False):
         """Write the molecule to a file or return a string.
@@ -271,6 +288,54 @@ class Atom(object):
         Atom: 0 (0.0, 0.0, 0.0)
         """
         return "Atom: %d %s" % (self.atomicnum, self.coords.__str__())
+
+def findbits(fp, bitsperint):
+    """Find which bits are set in a list/vector.
+
+    This function is used by the Fingerprint class.
+
+    >>> findbits([13, 71], 8)
+    [1, 3, 4, 9, 10, 11, 15]
+    """
+    ans = []
+    start = 1
+    for x in fp:
+        i = start
+        while x > 0:
+            if x % 2:
+                ans.append(i)
+            x >>= 1
+            i += 1
+        start += bitsperint
+    return ans
+        
+class Fingerprint(object):
+    """A Molecular Fingerprint.
+    
+    Required parameters:
+       obFingerprint -- a vector calculated by OBFingerprint.FindFingerprint()
+
+    Attributes:
+       fp -- the original obFingerprint
+       bits -- a list of bits set in the Fingerprint
+
+    Methods:
+       The "|" operator can be used to calculate the Tanimoto coeff. For example,
+       given two Fingerprints 'a', and 'b', the Tanimoto coefficient is given by:
+          tanimoto = a | b
+    """
+    def __init__(self, obFingerprint):
+        self.fp = obFingerprint
+    def __or__(self, other):
+        return ob.OBFingerprint.Tanimoto(self.fp, other.fp)
+    def __getattr__(self, attr):
+        if attr == "bits":
+            # Create a bits attribute on-the-fly
+            return findbits(self.fp, ob.OBFingerprint.Getbitsperint())
+        else:
+            raise AttributeError, "Molecule has no attribute %s" % attr
+    def __str__(self):
+        return ", ".join([str(x) for x in self.fp])
 
 class Smarts(object):
     """A Smarts Pattern Matcher
