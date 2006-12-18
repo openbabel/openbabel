@@ -4,7 +4,8 @@ $CC = 'g++';
 $srcdir = '../../src';
 
 # check if we're compiling in the source directory
-$ldfrom = '$(OBJECT) -lopenbabel -lz';
+$ldfrom = "\$(OBJECT) -L$srcdir/.libs -lopenbabel -lz"
+    if (-r "$srcdir/.libs/libopenbabel.so") and (-s _) and (-B _);
 $ldfrom = "\$(OBJECT) $srcdir/.libs/libopenbabel.a -lz"
     if (-r "$srcdir/.libs/libopenbabel.a") and (-s _) and (-B _);
 

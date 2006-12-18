@@ -1,3 +1,9 @@
+2006-12-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/python/setup.py, scripts/perl/Makefile.PL: Updates from
+	Rathann Mierzejewski to check for src/.libs directories. Prevents
+	"chicken and egg" problem with what component is built first.
+
 2006-12-16  Noel O'Boyle <baoilleach@gmail.com>
 
 	* fingerprint.cpp/.h: Changed the FindFingerprint method to accept

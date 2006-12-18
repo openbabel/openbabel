@@ -31,6 +31,9 @@ def find_likely_directory():
 	sys.stderr.write("INFO: Looking for library and include files in ../../src\n")
         if os.path.isfile("../../src/atom.o"):
             return ["../../include"],["../../src"]
+        else:
+            if os.path.isfile("../../src/atom.lo"):
+                   return ["../../include"],["../../src/.libs"]
 
         for dirname in ["/usr/local","/usr"]:
             # Look for each of these directories in turn for the directory include/openbabel-2.0
