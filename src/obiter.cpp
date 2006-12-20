@@ -50,11 +50,11 @@ namespace OpenBabel
       double exactMass = 0.0f;
       FOR_ATOMS_OF_MOL(a, mol)
       {
-      // The variable a behaves like OBAtom* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*a
+         // The variable a behaves like OBAtom* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*a
   
-      exactMass +=  a->GetExactMass();
+         exactMass +=  a->GetExactMass();
       }
       \endcode
   **/
@@ -134,9 +134,9 @@ namespace OpenBabel
       OBMol mol;
       FOR_DFS_OF_MOL(a, mol)
       {
-      // The variable a behaves like OBAtom* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*a
+         // The variable a behaves like OBAtom* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*a
 
       }
       \endcode
@@ -268,9 +268,9 @@ namespace OpenBabel
       OBMol mol;
       FOR_BFS_OF_MOL(a, mol)
       {
-      // The variable a behaves like OBAtom* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*a
+         // The variable a behaves like OBAtom* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*a
   
       }
       \endcode
@@ -392,10 +392,10 @@ namespace OpenBabel
       unsigned int bondOrderSum = 0;
       FOR_BONDS_OF_MOL(b, mol)
       {
-      // The variable b behaves like OBBond* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*b
-      bondOrderSum +=  b->GetBO();
+         // The variable b behaves like OBBond* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*b
+         bondOrderSum +=  b->GetBO();
       }
       \endcode
   **/
@@ -464,13 +464,13 @@ namespace OpenBabel
       OBMol mol;
       FOR_ATOMS_OF_MOL(a, mol)
       {
-      // The variable a behaves like OBAtom* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*a
-      FOR_NBORS_OF_ATOM(b, &*a)
-      {
-      ...
-      }
+         // The variable a behaves like OBAtom* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*a
+         FOR_NBORS_OF_ATOM(b, &*a)
+         {
+            ...
+         }
       }
       \endcode
   **/
@@ -484,7 +484,7 @@ namespace OpenBabel
   OBAtomAtomIter::OBAtomAtomIter(OBAtom &atm)
   {
     _parent = &atm;
-    _ptr = _ptr->BeginNbrAtom(_i);
+    _ptr = _parent->BeginNbrAtom(_i);
   }
 
   OBAtomAtomIter::OBAtomAtomIter(const OBAtomAtomIter &ai)
@@ -540,11 +540,11 @@ namespace OpenBabel
       unsigned int tripleBondCount;
       FOR_BONDS_OF_ATOM(b, atom)
       {
-      // The variable b behaves like OBBond* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*b
-      if (b->GetBO() == 3)
-      tripleBondCount++;
+         // The variable b behaves like OBBond* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*b
+         if (b->GetBO() == 3)
+            tripleBondCount++;
       }
       \endcode
   **/
@@ -613,15 +613,15 @@ namespace OpenBabel
       OBMol mol;
       FOR_RESIDUES_OF_MOL(r, mol)
       {
-      // The variable r behaves like OBResidue* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*r
+         // The variable r behaves like OBResidue* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*r
 
-      if (r->GetName() == resname && r->GetNum() == rnum) 
-      {
-      // got a match, let's go to work
-      ...
-      }
+         if (r->GetName() == resname && r->GetNum() == rnum) 
+         {
+            // got a match, let's go to work
+            ...
+         }
       }
       \endcode
   **/
@@ -691,17 +691,17 @@ namespace OpenBabel
       double residueMass = 0.0;
       FOR_RESIDUES_OF_MOL(r, mol)
       {
-      // The variable r behaves like OBResidue* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*r
+         // The variable r behaves like OBResidue* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*r
 
-      if (r->GetName() == resname && r->GetNum() == rnum) 
-      {
-      FOR_ATOMS_OF_RESIDUE(a, &*r)
-      {
-      residueMass += a->GetMass();
-      }
-      }
+         if (r->GetName() == resname && r->GetNum() == rnum) 
+         {
+            FOR_ATOMS_OF_RESIDUE(a, &*r)
+            {
+               residueMass += a->GetMass();
+            }
+         }
       }
       \endcode
   **/
@@ -771,9 +771,9 @@ namespace OpenBabel
       OBMol mol;
       FOR_RINGS_OF_MOL(r, mol)
       {
-      // The variable r behaves like OBRing* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*r
+         // The variable r behaves like OBRing* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*r
 
       }
       \endcode
@@ -859,14 +859,14 @@ namespace OpenBabel
   
       FOR_ANGLES_OF_MOL(angle, mol)
       {
-      // The variable a behaves like OBAngle* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*a
+         // The variable a behaves like OBAngle* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*a
     
-      b = _mol.GetAtom((*angle)[0] + 1);
-      a = _mol.GetAtom((*angle)[1] + 1);
-      c = _mol.GetAtom((*angle)[2] + 1);
-      ang = a->GetAngle(b->GetIdx(), c->GetIdx());
+         b = _mol.GetAtom((*angle)[0] + 1);
+         a = _mol.GetAtom((*angle)[1] + 1);
+         c = _mol.GetAtom((*angle)[2] + 1);
+         ang = a->GetAngle(b->GetIdx(), c->GetIdx());
       }
       \endcode
   **/
@@ -913,7 +913,7 @@ namespace OpenBabel
     return *this;
   }
 
-  OBMolAngleIter OBMolAngleIter::operator++(int)
+  OBMolAngleIter& OBMolAngleIter::operator++()
   {
     _i++;
     
@@ -951,15 +951,15 @@ namespace OpenBabel
   
       FOR_TORSIONS_OF_MOL(t, mol)
       {
-      // The variable a behaves like OBAngle* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*t
+         // The variable a behaves like OBTorsion* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*t
 
-      a = _mol.GetAtom((*t)[0] + 1); // indices in vector start from 0!!!
-      b = _mol.GetAtom((*t)[1] + 1);
-      c = _mol.GetAtom((*t)[2] + 1);
-      d = _mol.GetAtom((*t)[3] + 1);
-      tor = mol.GetTorsion(a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
+         a = _mol.GetAtom((*t)[0] + 1); // indices in vector start from 0!!!
+         b = _mol.GetAtom((*t)[1] + 1);
+         c = _mol.GetAtom((*t)[2] + 1);
+         d = _mol.GetAtom((*t)[3] + 1);
+         tor = mol.GetTorsion(a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
       }
       \endcode
   **/
@@ -1006,7 +1006,7 @@ namespace OpenBabel
     return *this;
   }
 
-  OBMolTorsionIter OBMolTorsionIter::operator++(int)
+  OBMolTorsionIter& OBMolTorsionIter::operator++()
   {
     _i++;
     
@@ -1024,7 +1024,7 @@ namespace OpenBabel
 
       To facilitate iteration through all pairs of atoms in a molecule, without 
       resorting to bond indexes (which may change in the future), a variety of
-      iterators are provided. A distance between atoms in a pair is 1-4 Angstroms
+      iterators are provided. These pairs of atoms are separated by 4 atoms
       or more (i.e., these are non-bonded interactions).
 
       This has been made significantly easier by a series of macros in the 
@@ -1045,13 +1045,13 @@ namespace OpenBabel
 
       FOR_PAIRS_OF_MOL(p, mol)
       {
-      // The variable b behaves like OBBond* when used with -> and * but
-      // but needs to be explicitly converted when appearing as a parameter
-      // in a function call - use &*p
+         // The variable b behaves like OBBond* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*p
 
-      a = mol.GetAtom(p->first);
-      b = mol.GetAtom(p->second);
-      rab = a->GetDistance(b);
+         a = mol.GetAtom(p->first);
+         b = mol.GetAtom(p->second);
+         rab = a->GetDistance(b);
       }
       \endcode
   **/
@@ -1145,7 +1145,7 @@ namespace OpenBabel
     return *this;
   }
 
-  OBMolPairIter OBMolPairIter::operator++(int)
+  OBMolPairIter& OBMolPairIter::operator++()
   {
     _vpair.pop();
 
