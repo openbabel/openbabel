@@ -1,3 +1,12 @@
+2006-12-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obiter.cpp (OBAtomAtomIter): Fix bug reported by Zhiguo Liu,
+	with obvious typo.
+
+	* src/formats/pdbformat.cpp: Fix atom typing bug reported by
+	Zhiguo Liu. Fix problems with unknown elements (due to atom
+	parsing) from PR#1577238.
+
 2006-12-20  Noel O'Boyle <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPython/setup.py: Install data files (e.g.

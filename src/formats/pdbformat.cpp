@@ -128,8 +128,8 @@ namespace OpenBabel
 
     mol.EndModify();
 
-    mol.SetAtomTypesPerceived();
-    atomtyper.AssignImplicitValence(mol);
+    //    mol.SetAtomTypesPerceived();
+    //    atomtyper.AssignImplicitValence(mol);
 
     if (!mol.NumAtoms())
       return(false);
@@ -138,7 +138,7 @@ namespace OpenBabel
 
   ////////////////////////////////////////////////////////////////
   static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
-    /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,1x,i3)" */
+  /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,1x,i3)" */
   {
     string sbuf = &buffer[6];
     if (sbuf.size() < 48)
@@ -181,23 +181,15 @@ namespace OpenBabel
           resname = resname.substr(0,resname.size()-1);
       }
 
-    /* residue sequence number */
-
-    string resnum = sbuf.substr(16,4);
-
-    /* X, Y, Z */
-    string xstr = sbuf.substr(24,8);
-    string ystr = sbuf.substr(32,8);
-    string zstr = sbuf.substr(40,8);
-
     string type;
-
     if (EQn(buffer,"ATOM",4))
       {
         type = atmid.substr(0,2);
-        if (isdigit(type[0]))
-          type = atmid.substr(1,1);
-        else if (sbuf[6] == ' ' &&
+        if (isdigit(type[0])) {
+          // sometimes non-standard files have, e.g 11HH
+          if (!isdigit(type[1])) type = atmid.substr(1,1);
+          else type = atmid.substr(2,1); 
+        } else if (sbuf[6] == ' ' &&
                  strncasecmp(type.c_str(), "Zn", 2) != 0 &&
                  strncasecmp(type.c_str(), "Fe", 2) != 0)
           type = atmid.substr(0,1);     // one-character element
@@ -238,13 +230,19 @@ namespace OpenBabel
           }
         else
           {
-            if (isalpha(atmid[0]))
-              type = atmid.substr(0,2);
+            if (isalpha(atmid[0])) {
+              
+              if (atmid[2] == '\0' || atmid[2] == ' ') type = atmid.substr(0,2);
+              else if (atmid[0] == 'A') // alpha prefix
+                type = atmid.substr(1, atmid.size() - 1);
+              else type = atmid.substr(0,1);
+            }
             else if (atmid[0] == ' ')
               type = atmid.substr(1,1); // one char element
             else
               type = atmid.substr(1,2);
 
+            // Some cleanup steps
             if (atmid == resname)
               {
                 type = atmid;
@@ -254,7 +252,7 @@ namespace OpenBabel
             else
               if (resname == "ADR" || resname == "COA" || resname == "FAD" ||
                   resname == "GPG" || resname == "NAD" || resname == "NAL" ||
-                  resname == "NDP")
+                  resname == "NDP" || resname == "ABA")
                 {
                   if (type.size() > 1)
                     type = type.substr(0,1);
@@ -264,27 +262,37 @@ namespace OpenBabel
                 if (isdigit(type[0]))
                   {
                     type = type.substr(1,1);
-                    //type.erase(0,1);
-                    //if (type.size() > 1) type.erase(1,type.size()-1);
                   }
                 else
                   if (type.size() > 1 && isdigit(type[1]))
                     type = type.substr(0,1);
-            //type.erase(1,1);
                   else
-                    if (type.size() > 1 && isalpha(type[1]) && isupper(type[1]))
-                      type[1] = tolower(type[1]);
+                    if (type.size() > 1 && isalpha(type[1])) {
+                      if (type[0] == 'O' && type[1] == 'H')
+                        type = type.substr(0,1); // no "Oh" element (e.g. 1MBN)
+                      else if(isupper(type[1]))
+                      {
+                        type[1] = tolower(type[1]);
+                      }
+                    }
           }
         
       }
 
     OBAtom atom;
+    /* X, Y, Z */
+    string xstr = sbuf.substr(24,8);
+    string ystr = sbuf.substr(32,8);
+    string zstr = sbuf.substr(40,8);
     vector3 v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
     atom.SetVector(v);
 
+    // useful for debugging unknown atom types (e.g., PR#1577238)
+    cout << mol.NumAtoms() + 1 << " " << atmid << " type: " << type << endl;
     atom.SetAtomicNum(etab.GetAtomicNum(type.c_str()));
-    atom.SetType(type);
 
+    /* residue sequence number */
+    string resnum = sbuf.substr(16,4);
     int        rnum = atoi(resnum.c_str());
     OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
     if (res == NULL || res->GetName() != resname || static_cast<int>(res->GetNum())
@@ -298,16 +306,14 @@ namespace OpenBabel
 
         if (res == NULL)
           {
-            res = mol.NewResidue()
-              ;
+            res = mol.NewResidue();
             res->SetChainNum(chainNum);
             res->SetName(resname);
             res->SetNum(rnum);
           }
       }
 
-    if (!mol.AddAtom(atom)
-        )
+    if (!mol.AddAtom(atom))
       return(false);
     else
       {
@@ -653,15 +659,15 @@ namespace OpenBabel
         if (strlen(element_name) == 2)
           element_name[1] = toupper(element_name[1]);
         snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
-                het?"HETATM":"ATOM  ",
-                i,
-                type_name,
-                the_res,
-                res_num,
-                atom->GetX(),
-                atom->GetY(),
-                atom->GetZ(),
-                element_name);
+                 het?"HETATM":"ATOM  ",
+                 i,
+                 type_name,
+                 the_res,
+                 res_num,
+                 atom->GetX(),
+                 atom->GetY(),
+                 atom->GetZ(),
+                 element_name);
         ofs << buffer;
       }
 
