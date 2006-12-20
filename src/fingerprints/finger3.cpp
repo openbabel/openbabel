@@ -95,7 +95,7 @@ public:
 		if(datadir)
 		{
 		  file = datadir;
-		  file += "/";
+		  file += FILE_SEP_CHAR;
 		  file += filename;
 		}
 
@@ -104,9 +104,9 @@ public:
 		if(!(*ifsP))
 		{
 		  file = datadir;
-		  file += "/";
+		  file += FILE_SEP_CHAR;
 		  file += BABEL_VERSION;
-		  file += "/" + filename;
+		  file += FILE_SEP_CHAR + filename;
 		  ifs2.open(file.c_str());
 		  ifsP = &ifs2;
 		}

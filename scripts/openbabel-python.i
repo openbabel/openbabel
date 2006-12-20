@@ -1,5 +1,17 @@
 %module openbabel
 
+// For Windows, if not already set, set BABEL_DATADIR to
+//     $PYTHONDIR/Lib/site-packages/openbabel_data
+// (This is necessary for using FP3, for example)
+%pythoncode %{
+import os, sys
+if sys.platform=="win32":
+    if not os.environ.has_key('BABEL_DATADIR'):
+        os.environ['BABEL_DATADIR'] = os.path.join(sys.prefix, "Lib",
+                                                   "site-packages",
+                                                   "openbabel_data")
+%}
+
 %{
 // used to set import/export for Cygwin DLLs
 #ifdef WIN32

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from distutils.core import *
-import os, shutil
+import os, shutil, glob
 
 about = """The Open Babel package provides a Python wrapper
 to the Open Babel C++ chemistry library. Open Babel is a project
@@ -17,7 +17,7 @@ development.
 shutil.copy("../../scripts/python/pybel.py", ".")
 
 setup(name='openbabel-python',
-      version='1.0',
+      version='1.0b1',
       author='The Open Babel development team',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/wiki/Python',
@@ -26,7 +26,10 @@ setup(name='openbabel-python',
       # package_dir = {'': '../../scripts/python'},
       data_files=[('Lib/site-packages',
                    ['_openbabel.pyd', '../libinchi.dll',
-                    '../libxml2.dll', 'OpenBabelDLL.dll'])],
+                    '../libxml2.dll', 'OpenBabelDLL.dll']),
+                  ('Lib/site-packages/openbabel_data',
+                   glob.glob("../../data/*.txt"))
+                 ],
       description = 'openbabel: Python interface to the Open Babel chemistry library',
       classifiers=[
       'Development Status :: 5 - Production/Stable',
