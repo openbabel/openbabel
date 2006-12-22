@@ -36,6 +36,8 @@ namespace OpenBabel
   class OBBond;
   class OBResidue;
 
+  // more detailed descriptions and documentation in obiter.cpp
+
   //! \brief Iterate over all atoms in an OBMol
   class OBAPI OBMolAtomIter {
     std::vector<OBAtom*>::iterator _i;
@@ -213,7 +215,7 @@ namespace OpenBabel
 
     OBMolAngleIter& operator=(const OBMolAngleIter &ai);
     operator bool() const        { return _ptr.size() != 0; }
-    OBMolAngleIter  operator++(int);
+    OBMolAngleIter& operator++();
     //std::vector<unsigned int> operator->() const   { return _ptr;      }
     std::vector<unsigned int> operator*() const    { return _ptr;     }
   };
@@ -233,7 +235,7 @@ namespace OpenBabel
 
     OBMolTorsionIter& operator=(const OBMolTorsionIter &ai);
     operator bool() const        { return _ptr.size() != 0; }
-    OBMolTorsionIter  operator++(int);
+    OBMolTorsionIter& operator++();
     //std::vector<unsigned int> operator->() const   { return _ptr;      }
     std::vector<unsigned int> operator*() const    { return _ptr;     }
   };
@@ -252,7 +254,7 @@ namespace OpenBabel
 
     OBMolPairIter& operator=(const OBMolPairIter &ai);
     operator bool() const        { return _ptr != NULL; }
-    OBMolPairIter  operator++(int);
+    OBMolPairIter& operator++();
     std::pair<int, int>* operator->() const   { return _ptr;      }
     std::pair<int, int>& operator*() const    { return *_ptr;     }
   };
@@ -272,11 +274,11 @@ namespace OpenBabel
     OBMolRingIter(const OBMolRingIter &ri);
 
     OBMolRingIter& operator=(const OBMolRingIter &ri);
-    operator bool() const        { return _ptr != NULL; }
+    operator bool()      const { return _ptr != NULL; }
     OBMolRingIter& operator++();
     OBMolRingIter  operator++(int);
-    OBRing* operator->() const{ return _ptr; }
-    OBRing& operator*() const { return *_ptr;}
+    OBRing* operator->() const { return _ptr; }
+    OBRing& operator*()  const { return *_ptr;}
   };
 
 #define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; ++a )
@@ -288,9 +290,9 @@ namespace OpenBabel
 #define FOR_DFS_OF_MOL(a,m)       for( OBMolAtomDFSIter  a(m); a; ++a )
 #define FOR_BFS_OF_MOL(a,m)       for( OBMolAtomBFSIter  a(m); a; ++a )
 #define FOR_RINGS_OF_MOL(a,m)     for( OBMolRingIter     r(m); r; ++r )
-#define FOR_ANGLES_OF_MOL(a,m)    for( OBMolAngleIter    a(m); a; a++ )
-#define FOR_TORSIONS_OF_MOL(t,m)  for( OBMolTorsionIter  t(m); t; t++ )
-#define FOR_PAIRS_OF_MOL(p,m)     for( OBMolPairIter     p(m); p; p++ )
+#define FOR_ANGLES_OF_MOL(a,m)    for( OBMolAngleIter    a(m); a; ++a )
+#define FOR_TORSIONS_OF_MOL(t,m)  for( OBMolTorsionIter  t(m); t; ++t )
+#define FOR_PAIRS_OF_MOL(p,m)     for( OBMolPairIter     p(m); p; ++p )
 
 } // namespace OpenBabel
 #endif // OB_OBITER_H
