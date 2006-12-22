@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <set>
 #include <vector>
 #include <string>
+#include "openbabel/pluginiter.h"
 
 #ifndef OBFPRT
 #define OBFPRT
@@ -37,6 +38,9 @@ namespace OpenBabel
 class OBFPRT OBFingerprint
 {
 //see end of cpp file for detailed documentation
+
+MAKE_PLUGIN(OBFingerprint)
+
 public:
   /// Sets the nth bit
   void SetBit(std::vector<unsigned int>& vec, unsigned int n);	
@@ -54,11 +58,9 @@ public:
   enum FptFlag{FPT_UNIQUEBITS=1};
   virtual unsigned int Flags() { return 0;}; 
 
-  /// Obtain info on available fingerprints
-  static bool GetNextFPrt(std::string& id, OBFingerprint*& pFPrt);
-
-  /// \return a pointer to a fingerprint (the default if ID is empty), or NULL if not available
-  static OBFingerprint* FindFingerprint(const std::string& ID);
+  // Obtain info on available fingerprints
+  // Replaced by FOR_EACH(OBFingerprint)
+//  static bool GetNextFPrt(std::string& id, OBFingerprint*& pFPrt);
 
   /// \return the Tanimoto coefficient between two vectors (vector<unsigned int>& SeekPositions)
   static double Tanimoto(const std::vector<unsigned int>& vec1, const std::vector<unsigned int>& vec2);
@@ -94,36 +96,15 @@ private:
     }
   };
   
-  typedef std::map<std::string, OBFingerprint*> FPMapType;
-  typedef FPMapType::iterator Fptpos;
 
-protected:
-  ///This static function returns a reference to the FPtsMap
-  ///which, because it is a static local variable is constructed only once.
-  ///This fiddle is to avoid the "static initialization order fiasco"
-  ///See Marshall Cline's C++ FAQ Lite document, www.parashift.com/c++-faq-lite/". 
-  static FPMapType& FPtsMap()
-  {
-    static FPMapType* fptm = NULL;
-    if (!fptm)
-      fptm = new FPMapType;
-    return *fptm;
-  };
+public:
+/// \return a pointer to a fingerprint (the default if ID is empty), or NULL if not available
+///For backward compatibility; prefer FindType (in pluginiter.h) instead
+static OBFingerprint* FindFingerprint(const std::string& ID){ return Iter().FindType(ID);}
 
-  OBFingerprint(std::string ID, bool IsDefault=false)
-  {
-    FPtsMap()[ID] = this; //registers the derived fingerprint class
-    if(IsDefault || FPtsMap().empty())
-      _pDefault=this;
-  };
-  
 private:
-  static OBFingerprint* _pDefault;
   static const unsigned int bitsperint;// = 8 * sizeof(unsigned int);
 };
-
-
-
 
 //*************************************************************
 //Fast search routines
@@ -152,14 +133,22 @@ class OBFPRT FastSearch
 {
 //see end of cpp file for detailed documentation
 public:
+  /// \brief Loads an index from a file and returns the name of the datafile
+  std::string ReadIndexFile(std::string IndexFilename);
   std::string ReadIndex(std::istream* pIndexstream);
+
   virtual ~FastSearch(){};
 
   /// \brief Does substructure search and returns vector of the file positions of matches 
   bool    Find(OBBase* pOb, std::vector<unsigned int>& SeekPositions, unsigned int MaxCandidates);
 
+  /// \brief Similar to Find() but all bits of matching fingerprints have to be the same
+  /// \since version 2.1
+  bool    FindMatch(OBBase* pOb, std::vector<unsigned int>& SeekPositions,
+                            unsigned int MaxCandidates);
+
   /// \return A multimap containing objects whose Tanimoto coefficients with the target
-  ///	is greater than the value specified.
+  /// is greater than the value specified.
   bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
     double MinTani);
 

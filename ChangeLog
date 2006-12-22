@@ -1,3 +1,27 @@
+2006-12-22 Chris Morley <ob@gaseq.co.uk>
+
+	* include/openbabel/pluginiter.h, /fingerprint.h: Modify so that most
+	of code to implement plugin module behaviour is in pluginiter.h,
+	making it easy to give this behaviour in future to other classes.
+	Compatibility for OBFingerprint maintained except for iteration
+	through fingerprint types which is now in the style of obiter,
+	hopefully making it compatible with Python (binding not yet done).
+	
+	* formats/fastsearchformat.cpp: change implementation of F option
+	to new iteration style.
+	
+	* src/fingerprint.cpp, include/openbabel/fingerprint.h: remove 
+	the replaced static variable _pDefault and GetNxtFPrt().
+	Add FastSearch::ReadIndexFile() alterantive to avoid 
+	std::stream parameter which is no good for scripting.
+	Add FastSearch::FindMatch() which is simialr to Find() but requires
+	all bits of fingerprint to match.
+	
+	* src/OBConversion.cpp: added NO_NEWLINEBUF to avaoid compiling
+	newline buf which is currently incompatible with FastsearchFormat
+	and ONConversion::SkipObjects().
+	All types of line ending seem to work ok with VC++8 on Windows.
+
 2006-12-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obiter.cpp (OBAtomAtomIter): Fix bug reported by Zhiguo Liu,

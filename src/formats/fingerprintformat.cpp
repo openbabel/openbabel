@@ -60,13 +60,10 @@ Options e.g. -xfFP3 -xn128\n \
   bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     ostream &ofs = *pConv->GetOutStream();
-
-    OBFingerprint* pFP;
-    string id;
     if(pConv->IsOption("F"))
       {
-        while(OBFingerprint::GetNextFPrt(id, pFP))
-          ofs << id << " -- " << pFP->Description() << endl;
+        FOR_EACH(OBFingerprint, iter)
+          ofs << iter.ID() << " -- " << iter->Description() << endl;
         return true;
       }
 
@@ -84,7 +81,7 @@ Options e.g. -xfFP3 -xn128\n \
         fpid = fpid.substr(0,fpid.find('"'));
       }
 
-    pFP = OBFingerprint::FindFingerprint(fpid);
+    OBFingerprint* pFP = OBFingerprint::FindFingerprint(fpid);
     if(!pFP)
       {
         stringstream errorMsg;

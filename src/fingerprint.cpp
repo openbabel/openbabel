@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <algorithm>
 #include <iosfwd>
 #include <vector>
+#include <fstream>
 
 #include <openbabel/fingerprint.h>
 #include <openbabel/oberror.h>
@@ -30,7 +31,6 @@ using namespace std;
 namespace OpenBabel
 {
 
-  OBFingerprint* OBFingerprint::_pDefault; //static variable
   const unsigned int OBFingerprint::bitsperint = 8 * sizeof(unsigned int);
 
   void OBFingerprint::SetBit(vector<unsigned int>& vec, unsigned int n)
@@ -47,7 +47,7 @@ namespace OpenBabel
   }
 
   ////////////////////////////////////////
-  bool OBFingerprint::GetNextFPrt(std::string& id, OBFingerprint*& pFPrt)
+/*  bool OBFingerprint::GetNextFPrt(std::string& id, OBFingerprint*& pFPrt)
   {
     Fptpos iter;
     if(id.empty())
@@ -75,7 +75,7 @@ namespace OpenBabel
     else
       return iter->second;
   }
-
+*/
   double OBFingerprint::Tanimoto(const vector<unsigned int>& vec1, const vector<unsigned int>& vec2) 
   {
     //Independent of sizeof(unsigned int)
@@ -158,6 +158,47 @@ namespace OpenBabel
     return true;
   }
 
+////////////////////////////////////////////////////////////
+ bool FastSearch::FindMatch(OBBase* pOb, vector<unsigned int>& SeekPositions,
+                            unsigned int MaxCandidates)
+{
+//Similar to FastSearch::Find() except that successful candidates have all bits the same as the target
+  vector<unsigned int> vecwords;
+  _pFP->GetFingerprint(pOb,vecwords, _index.header.words * OBFingerprint::Getbitsperint());
+
+  vector<unsigned int>candidates; //indices of matches from fingerprint screen
+
+  unsigned int dataSize = _index.header.nEntries;
+  unsigned int words = _index.header.words;
+  unsigned int* nextp = &_index.fptdata[0]; // start of next FP in index
+  unsigned int* ppat0 = &vecwords[0];       // start of target FP
+  register unsigned int* p;                 // current position in index
+  register unsigned int* ppat;              // current position in target FP
+  unsigned int i; // need address of this, can't be register
+  for(i=0;i<dataSize; ++i) //speed critical section
+  {
+    p=nextp;
+    nextp += words;
+    ppat=ppat0;
+
+    while((*p++ == *ppat++ ) && (p<nextp));
+
+    if(p==nextp)
+    {
+      candidates.push_back(i);
+      if(candidates.size()>=MaxCandidates)
+        break;
+    }
+  }
+  
+  vector<unsigned int>::iterator itr;
+  for(itr=candidates.begin();itr!=candidates.end();++itr)
+    {
+      SeekPositions.push_back(_index.seekdata[*itr]);
+    }
+  return true;
+}
+
   /////////////////////////////////////////////////////////
   bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned int>& SeekposMap,
                                double MinTani)
@@ -230,6 +271,19 @@ namespace OpenBabel
       *(_index.header.datafilename) = '\0';
 
     return _index.header.datafilename; //will be empty on error
+  }
+
+  //////////////////////////////////////////////////////////
+  string FastSearch::ReadIndexFile(string IndexFilename)
+  {
+    ifstream ifs(IndexFilename.c_str(),ios::binary);
+    if(ifs)
+      return ReadIndex(&ifs);
+    else
+    {
+      string dum;
+      return dum;
+    }
   }
 
   //////////////////////////////////////////////////////////

@@ -34,6 +34,9 @@
 //Makes unix input files compatible with VC++6
 #define ALL_READS_BINARY
 
+//Do not use newlinebuf. (All varieties of line endings seem to be handled ok anyway)
+#define NO_NEWLINEBUF
+
 /* Export of functions and global variables from DLLs
 In the header files for the OB core, mol.h etc, exported classes and variables 
 have an OBAPI declaration specifiers.
