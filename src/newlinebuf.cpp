@@ -24,7 +24,7 @@ General Public License for more details.
 namespace OpenBabel
 {
   newlinebuf::newlinebuf(std::streambuf *sb) :
-    _internalBuf(sb), _returnChar(false), _chcount(0)
+    _internalBuf(sb), _returnChar(false)
   {
     setg(_buffer, _buffer, _buffer);
   }
@@ -41,7 +41,7 @@ namespace OpenBabel
             && ((ch = _internalBuf->sgetc()) != EOF) )
       {
         _internalBuf->sbumpc();
-        ++_chcount;
+
         switch (ch)
           {
           case 10:
@@ -65,12 +65,6 @@ namespace OpenBabel
 
     setg(_buffer, _buffer, ptr);
     return *_buffer;
-  }
-
-std::streampos newlinebuf::seekoff(std::streamoff off, 
-                                      std::ios_base::seekdir way, std::ios_base::openmode which)
-  {
-    return _chcount;
   }
 
 } // end namespace OpenBabel

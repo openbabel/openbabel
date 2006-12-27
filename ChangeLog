@@ -1,3 +1,7 @@
+2006-12-27 Chris Morley <ob@gaseq.co.uk>
+
+	* src/newlinebuf.cpp: Revert to as in rev 1652.
+
 2006-12-22 Chris Morley <ob@gaseq.co.uk>
 
 	* include/openbabel/pluginiter.h, /fingerprint.h: Modify so that most
