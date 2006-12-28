@@ -25,12 +25,67 @@ using namespace std;
 //! Global namespace for all Open Babel code
 namespace OpenBabel
 {
+
+  /** \class OBBase base.h <openbabel/base.h>
+ 
+  The various classes (Atom, Bond, Molecule) inherit from base classes--
+  OBBase is largely a placeholder class. It also allows adding, deleting, and
+  retrieving OBGenericData objects, which are ways to store arbitrary data
+  for any atom, bond, molecule, or residue.
+
+  For example, a graphics program may want to allow users to add labels to
+  individual atoms:
+
+  \code
+  if (!atom.HasData("UserLabel")) // stored textual data as an OBPairData
+  {
+     OBPairData *label = new OBPairData;
+     label->SetAttribute("UserLabel");
+     label->SetValue(userInput);
+
+     atom.SetData(label);
+  }
+  \endcode
+
+  This class is also important in the OBConversion class. Any derived class
+  of OBBase can be supported in reading or writing data. While most OBFormat
+  "translators" are designed around reading molecular data, the OBConversion
+  framework can support any base object. For example OBReaction supports 
+  reading and writing reaction files, OBGrid supports reading and writing 
+  2D or 3D "grids" of numeric data.
+
+  Therefore if you want to expand the range of input or output via the 
+  OBConversion and OBFormat classes, you will also need to make sure you define
+  an appropriate derived class from OBBase.
+  */
+
+  //! 
+  //! This method is called by OBConversion::Read() before reading data.
+  //! Derived classes should be sure to call OBBase::Clear() to remove
+  //! inherited generic data.
+  //! 
+  //! \return Whether the call was successful.
+  //! \since version 2.1.
+  bool OBBase::Clear()
+  {
+    if (!_vdata.empty()) //clean up generic data
+      {
+        OBDataIterator m;
+        for (m = _vdata.begin();m != _vdata.end();++m)
+          delete *m;
+        _vdata.clear();
+      }
+    
+    return(true);
+  }
+
   bool OBBase::HasData(const string &s)
+    //returns true if the generic attribute/value pair exists
   {
     if (_vdata.empty())
       return(false);
 
-    vector<OBGenericData*>::iterator i;
+    OBDataIterator i;
 
     for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetAttribute() == s)
@@ -40,18 +95,9 @@ namespace OpenBabel
   }
 
   bool OBBase::HasData(const char *s)
-    //returns true if the generic attribute/value pair exists
   {
-    if (_vdata.empty())
-      return(false);
-
-    vector<OBGenericData*>::iterator i;
-
-    for (i = _vdata.begin();i != _vdata.end();++i)
-      if ((*i)->GetAttribute() == s)
-        return(true);
-
-    return(false);
+    string temp(s);
+    return(HasData(temp));
   }
 
 
@@ -61,7 +107,7 @@ namespace OpenBabel
     if (_vdata.empty())
       return(false);
 
-    vector<OBGenericData*>::iterator i;
+    OBDataIterator i;
 
     for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetDataType() == dt)
@@ -70,10 +116,10 @@ namespace OpenBabel
     return(false);
   }
 
-  //! Returns the value given an attribute name
+  //! \return the value given an attribute name
   OBGenericData *OBBase::GetData(const string &s)
   {
-    vector<OBGenericData*>::iterator i;
+    OBDataIterator i;
 
     for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetAttribute() == s)
@@ -82,21 +128,16 @@ namespace OpenBabel
     return(NULL);
   }
 
-  //! Returns the value given an attribute name
+  //! \return the value given an attribute name
   OBGenericData *OBBase::GetData(const char *s)
   {
-    vector<OBGenericData*>::iterator i;
-
-    for (i = _vdata.begin();i != _vdata.end();++i)
-      if ((*i)->GetAttribute() == s)
-        return(*i);
-
-    return(NULL);
+    string temp(s);
+    return(GetData(temp));
   }
 
   OBGenericData *OBBase::GetData(const unsigned int dt)
   {
-    vector<OBGenericData*>::iterator i;
+    OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetDataType() == dt)
         return(*i);
@@ -106,7 +147,7 @@ namespace OpenBabel
   void OBBase::DeleteData(unsigned int dt)
   {
     vector<OBGenericData*> vdata;
-    vector<OBGenericData*>::iterator i;
+    OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetDataType() == dt)
         delete *i;
@@ -118,7 +159,7 @@ namespace OpenBabel
   void OBBase::DeleteData(vector<OBGenericData*> &vg)
   {
     vector<OBGenericData*> vdata;
-    vector<OBGenericData*>::iterator i,j;
+    OBDataIterator i,j;
 
     bool del;
     for (i = _vdata.begin();i != _vdata.end();++i)
@@ -140,7 +181,7 @@ namespace OpenBabel
 
   void OBBase::DeleteData(OBGenericData *gd)
   {
-    vector<OBGenericData*>::iterator i;
+    OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)
       if (*i == gd)
         {
@@ -152,8 +193,38 @@ namespace OpenBabel
 
   /*! \mainpage v2.1 API Documentation
 
-  \section intro Introduction and Key Modules
+  \section base Introduction
  
+  Open Babel is a full chemical software toolbox. In addition to converting
+  file formats, it offers a complete programming library for developing 
+  chemistry software. The library is written primarily in C++ and also offers
+  interfaces to other languages (e.g., Perl and Python) using essentially
+  the same API.
+
+  This documentation outlines the Open Babel programming interface, providing
+  information on all public classes, methods, and data. In particular, it 
+  attempts to provide as much (or as little) detail as needed. More information
+  can also be found on the <a href="http://openbabel.sourceforge.net/">
+  main website</a>.
+
+  - \ref intro "General Introduction" \n
+     ()
+  - \ref start "Getting Started" \n
+     ()
+  - \ref tutorial "Tutorials and Examples" \n
+     (using Open Babel in real life, combining classes and methods,
+     ...)
+  - \ref main "Main Classes" \n
+     (the most important, widely-used public classes)
+  - <a href="annotated.shtml" class="el">All Classes</a> \n
+     (all classes with brief descriptions)
+  - \ref changes "What's New in Version 2.1" \n
+     (changes since 2.0 releases)
+  - \ref other "Further Information" \n
+     (other resources, mailing lists, ...)
+
+  \page intro Introduction to Open Babel API
+
   Open Babel is a full chemical software toolbox. In addition to converting
   file formats, it offers a complete programming library for developing 
   chemistry software. The library is written primarily in C++ and also offers
@@ -192,14 +263,56 @@ namespace OpenBabel
   behind) and ideally any perception or transformations will occur when
   writing to some other format later.
 
-  \section other Other Resources
+  \page start Getting Started
+
+  \page tutorial Tutorials and Examples
+
+  \page main Main Classes
+
+  - OBMol
+  - OBAtom
+  - OBBond
+  - OBResidue
+  - OBConversion
+  - OBFormat
+
+  - matrix3x3
+  - vector3
+
+  - OBBitVec
+  - OBSmartsPattern - Parsing SMARTS patterns and matching against OBMol objects
+
+  - OBPairData
+  - OBUnitCell
+
+  - OBRing
+
+  - OBMessageHandler
+
+  \page changes What's New in Version 2.1
+
+  Throughout the API documentation, new classes and methods are
+  indicated with a disclaimer "<strong>Since:</strong> version 2.1."
+
+  In addition, this page gives a general list of additions to the library.
+
+  - OBForceField
+  - plugininter.h
+
+  \page other Further Information
 
   Open Babel is a community project. In addition to this API documentation,
   the website offers a variety of up-to-date and useful information for
   developing with the library.
 
-  For more resources, check out the <a href="http://openbabel.sourceforge.net/wiki/Develop">Developing with Open Babel</a> section,
-  particularly, further code examples in the various <a href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">developer tutorials</a>.
+  - <a href="http://openbabel.sourceforge.net/wiki/Develop">Developing with Open Babel</a>
+  - <a href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">developer tutorials</a>.
+
+  - SourceForge project page
+  -- Bug reporter
+  -- Feature requests
+
+  
 
   */
 

@@ -27,18 +27,18 @@ GNU General Public License for more details.
 
 #include <iostream>
 
+// Needed for the OBGenericData handling in this class
+// (can't just forward declare it.)
 #include <openbabel/generic.h>
 
 namespace OpenBabel
 {
 
-  class OBBase;
-
-  /** \brief Base Class
- 
-  The various classes (Atom, Bond, Molecule) inherit from base classes--
-  OBBase is just a placeholder class
-  */
+  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
+  typedef std::vector<OBGenericData*>::iterator OBDataIterator;
+  
+  //! Base Class
+  // introduction in base.cpp
   class OBAPI OBBase
     {
     public:
@@ -53,11 +53,20 @@ namespace OpenBabel
             }
         }
 
+      //! \brief Clear any and all data associated with this object
+      virtual bool Clear();
+
+      //! Perform a set of transformations specified by the user
+      //!
+      //! Typically these are program options to filter or modify an object
+      //! For example, see OBMol::DoTransformations() and OBMol::ClassDescription()
       virtual OBBase* DoTransformations(const std::map<std::string,std::string>* /*pOptions*/)
         {
           return this;
         } 
+
       //Base type does nothing
+      //! \return A list of descriptions of command-line options for DoTransformations()
       static const char* ClassDescription()
         {
           return "";
@@ -69,8 +78,7 @@ namespace OpenBabel
       bool                              HasData(const std::string &);
       //! \return whether the generic attribute/value pair exists
       bool                              HasData(const char *);
-      //! \return whether the generic attribute/value pair exists, for a given
-      //!  OBGenericDataType
+      //! \return whether the generic attribute/value pair exists, for a given OBGenericDataType
       bool                              HasData(const unsigned int type);
       //! Delete any data matching the given OBGenericDataType
       void                              DeleteData(unsigned int type);
@@ -81,8 +89,7 @@ namespace OpenBabel
       //! Adds a data object; does nothing if d==NULL
       void                              SetData(OBGenericData *d)
         {
-          if(d)
-            _vdata.push_back(d);
+          if(d) _vdata.push_back(d);
         }
       //! \return the number of OBGenericData items attached to this molecule.
       unsigned int                      DataSize() const 
@@ -90,22 +97,18 @@ namespace OpenBabel
       //! \return the first matching data for a given type from OBGenericDataType
       //!    or NULL if nothing matches
       OBGenericData                    *GetData(const unsigned int type);
-      //! \return any data matching the given attribute name 
-      //!     or NULL if nothing matches
+      //! \return any data matching the given attribute name or NULL if nothing matches
       OBGenericData                    *GetData(const std::string&);
-      //! \return any data matching the given attribute name 
-      //!     or NULL if nothing matches
+      //! \return any data matching the given attribute name or NULL if nothing matches
       OBGenericData                    *GetData(const char *);
       //! \return all data, suitable for iterating
       std::vector<OBGenericData*>      &GetData() { return(_vdata); }
-      std::vector<OBGenericData*>::iterator  BeginData()
-        {
-          return(_vdata.begin());
-        }
-      std::vector<OBGenericData*>::iterator  EndData()
-        {
-          return(_vdata.end());
-        }
+      //! \return An iterator pointing to the beginning of the data
+      OBDataIterator  BeginData()
+        { return(_vdata.begin());        }
+      //! \return An iterator pointing to the end of the data
+      OBDataIterator  EndData()
+        { return(_vdata.end());          }
       //@}
     protected:
       std::vector<OBGenericData*> _vdata; //!< Custom data
