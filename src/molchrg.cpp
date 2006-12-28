@@ -41,8 +41,8 @@ OBMol mol;
 mol.UnsetPartialChargesPerceived();
 FOR_ATOMS_IN_MOL(atom, mol)
 {
- cout << "atom number = " << atom->GetIdx();
- cout << " charge = " << atom->GetPartialCharge() << endl;
+   cout << "atom number = " << atom->GetIdx();
+   cout << " charge = " << atom->GetPartialCharge() << endl;
 }
 \endcode
 Formal charges are used as seed values of the initial charge of atoms,

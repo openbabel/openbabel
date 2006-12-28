@@ -38,33 +38,39 @@ OBMol member function OBMol::GetSSSR() stores the information it perceives in
 a vector<OBRing*> inside the molecule. Perception is only done once
 for a molecule unless the connection table is modified. The following
 code demonstrates how to extract the SSSR information:
+
 \code
 OBMol mol;
 
 vector<OBRing*> vr;
 vr = mol.GetSSSR();
 \endcode
+
 OBRings store the atom numbers of the atoms in each of the smallest
 set of smallest rings in both a vector<int> and an OBBitVec.
 An example of how to print out the atom numbers present in all SSSR
 rings is show below:
+
 \code
 vector<OBRing*>::iterator i;
 vector<int>::iterator j;
 vector<OBRing*> *rlist = (vector<OBRing*>*)mol.GetData("RingList");
 for (i = rlist->begin();i != rlist->end();++i)
 {
-for(j = (*i)->_path.begin();j != (*i)->_path.end();++j)
-    cout << *j << ` `;
-cout << endl;
+   for(j = (*i)->_path.begin();j != (*i)->_path.end();++j)
+      cout << *j << ` `;
+   cout << endl;
 }
 \endcode
+
 will produce something like the following output for benzene:
+
 \code
 1 2 3 4 5 6
 \endcode
+
 Ring information is automatically deleted from an OBMol when it goes
-out of scope or the Clear() member function is called.
+out of scope or the OBMol::Clear() member function is called.
 
 Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#findSmallestSetOfSmallestRings">blue-obelisk:findSmallestSetOfSmallestRings</a>.
  */

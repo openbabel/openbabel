@@ -45,13 +45,13 @@ namespace OpenBabel
     bv1 = bv1 & bv2;
     if (bv1.Empty()) //Empty() returns true if no bits are set on
     {
-    cout << "bv1 = " << bv1 << endl;
+       cout << "bv1 = " << bv1 << endl;
     }
 
     int bit;
     for (bit = bv1.NextBit(0);bit != bv1.EndBit();bit = bv1.NextBit(bit))
     {
-    cout << "the next bit turned on is " << bit << endl;
+       cout << "the next bit turned on is " << bit << endl;
     }
     \endcode
   */

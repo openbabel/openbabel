@@ -33,13 +33,15 @@ namespace OpenBabel
 
 class OBBase;
 
-//!\brief Used to store chemical reactions (i.e., reactants -> products)
-//!
-//! Reactants and products stored as pointers to molecules stored elsewhere,
-//! since the molecules may be involved in other reactions.
-//!
-//! For performing actual reaction transformations (i.e., deleting atoms,
-//! changing bonds, etc.) use the OBChemTsfm class.
+/** \class OBReaction reaction.h <openbabel/reaction.h>
+    \brief Used to store chemical reactions (i.e., reactants -> products)
+
+    Reactants and products stored as pointers to molecules stored elsewhere,
+    since the molecules may be involved in other reactions.
+
+    For performing actual reaction transformations (i.e., deleting atoms,
+    changing bonds, etc.) use the OBChemTsfm class.
+**/
 class OBAPI OBReaction : public OBBase
 {
 public:

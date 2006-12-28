@@ -30,7 +30,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /*! \class vector3
+  /*! \class vector3 vector3.h <openbabel/math/vector3.h>
     \brief Represents a vector in 3-dimensional real space.
 
     The vector3 class was designed to simplify operations with floating
@@ -257,16 +257,16 @@ namespace OpenBabel
     return(torsion);
   }
 
-  /*! This method constructs a unit vector orthogonal to *this.
-   * It requires that *this is normalizable; otherwise it just
-   * returns false. See CanBeNormalized.
+  /*! \brief Construct a unit vector orthogonal to *this.
+
+   It requires that *this is normalizable; otherwise it just
+   returns false. See CanBeNormalized()
 
    @param res reference by which to pass the result.
 
    @returns always true. (Return value kept for compatibility,
             as old versions of OpenBabel used to check for
             normalizability).
-
   */
   bool vector3::createOrthoVector(vector3 &res) const
   {

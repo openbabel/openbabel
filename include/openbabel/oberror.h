@@ -44,7 +44,8 @@ namespace OpenBabel
     obDebug      //!< for messages only useful for debugging purposes
   };
 
-  /** \brief Customizable error handling and logging -- store a message,
+  /** \class OBError oberror.h <openbabel/oberror.h>
+      \brief Customizable error handling and logging -- store a message,
       including the method yielding the error, causes, etc. **/
   class OBERROR OBError
     {
@@ -97,6 +98,7 @@ namespace OpenBabel
     };
 
   //! \brief Handle error messages, warnings, debugging information and the like
+  // More documentation in oberror.cpp
   class OBERROR OBMessageHandler
     {
     protected:

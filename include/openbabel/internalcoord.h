@@ -32,16 +32,19 @@ namespace OpenBabel
   
   class OBAtom;
   
-  //! \brief Used to transform from z-matrix to cartesian coordinates.
-  /** Used with InternalToCartesian() and CartensianToInternal() methods.
-      Does not perform any actions itself. You must create or free OBAtom
-      pointers yourself.
+  /** \class OBInternalCoord internalcoord.h <openbabel/internalcoord.h>
+      \brief Used to transform from z-matrix to cartesian coordinates.
+
+      Used with OpenBabel::InternalToCartesian and
+      OpenBabel::CartesianToInternal methods. Does not perform any actions
+      itself. You must create or free OBAtom pointers yourself.
 
       The z-matrix representation uses coordinates relative to up to three
       atoms, which need not be bonded in any fashion. A rough sketch of the
       a, b, and c atoms would be:
+
       \code
-          *
+          '*'
          /
         /
        a----b
@@ -49,9 +52,10 @@ namespace OpenBabel
           /
          c
       \endcode
+
       where the OBInternalCoord record reflects the '*' atom.
 
-      Warning: Does not detect if NULL pointers are used. You should be careful.
+      \warning Does not detect if NULL pointers are used. You should be careful.
    **/
   class OBAPI OBInternalCoord
   {

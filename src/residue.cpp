@@ -837,15 +837,7 @@ namespace OpenBabel
 
   void OBResidue::InsertAtom(OBAtom *atom)
   {
-    if (atom != NULL)
-      {
-        atom->SetResidue(this);
-
-        _atoms.push_back(atom);
-        _atomid.push_back("");
-        _hetatm.push_back(false);
-        _sernum.push_back(0);
-      }
+    AddAtom(atom);
   }
 
   void OBResidue::RemoveAtom(OBAtom *atom)
@@ -866,7 +858,7 @@ namespace OpenBabel
       }
   }
 
-  void OBResidue::Clear(void)
+  bool OBResidue::Clear(void)
   {
     for (unsigned int i = 0 ; i < _atoms.size() ; ++i)
       _atoms[i]->SetResidue(NULL);
@@ -882,6 +874,8 @@ namespace OpenBabel
     _atomid.clear();
     _hetatm.clear();
     _sernum.clear();
+    
+    return (OBBase::Clear());
   }
 
   void OBResidue::SetChain(char chain)
@@ -1191,134 +1185,6 @@ namespace OpenBabel
   {
     return ((int)_reskey == restype);
   }
-
-  /*Now in OBBase
-  // OBGenericData methods
-  bool OBResidue::HasData(string &s)
-  //returns true if the generic attribute/value pair exists
-  {
-  if (_vdata.empty())
-  return(false);
-
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(true);
-
-  return(false);
-  }
-
-  bool OBResidue::HasData(const char *s)
-  //returns true if the generic attribute/value pair exists
-  {
-  if (_vdata.empty())
-  return(false);
-
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(true);
-
-  return(false);
-  }
-
-  bool OBResidue::HasData(unsigned int dt)
-  //returns true if the generic attribute/value pair exists
-  {
-  if (_vdata.empty())
-  return(false);
-
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetDataType() == dt)
-  return(true);
-
-  return(false);
-  }
-
-  OBGenericData *OBResidue::GetData(string &s)
-  //returns the value given an attribute
-  {
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(*i);
-
-  return(NULL);
-  }
-
-  OBGenericData *OBResidue::GetData(const char *s)
-  //returns the value given an attribute
-  {
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(*i);
-
-  return(NULL);
-  }
-
-  OBGenericData *OBResidue::GetData(unsigned int dt)
-  {
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetDataType() == dt)
-  return(*i);
-  return(NULL);
-  }
-
-  void OBResidue::DeleteData(unsigned int dt)
-  {
-  vector<OBGenericData*> vdata;
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetDataType() == dt)
-  delete *i;
-  else
-  vdata.push_back(*i);
-  _vdata = vdata;
-  }
-
-  void OBResidue::DeleteData(vector<OBGenericData*> &vg)
-  {
-  vector<OBGenericData*> vdata;
-  vector<OBGenericData*>::iterator i,j;
-
-  bool del;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  {
-  del = false;
-  for (j = vg.begin();j != vg.end();++j)
-  if (*i == *j)
-  {
-  del = true;
-  break;
-  }
-  if (del)
-  delete *i;
-  else
-  vdata.push_back(*i);
-  }
-  _vdata = vdata;
-  }
-
-  void OBResidue::DeleteData(OBGenericData *gd)
-  {
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if (*i == gd)
-  {
-  delete *i;
-  _vdata.erase(i);
-  }
-
-  }
-  */
 
 } // end namespace OpenBabel
 

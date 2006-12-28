@@ -145,20 +145,30 @@ namespace OpenBabel
     static const unsigned int CustomData15 = 16399;
   } // end namespace
 
+  enum DataSource {
+    any,           //!< Undefined or unspecified (default) 
+    readInput,     //!< Read from an input file
+    userInput,     //!< Added by the user
+    perceived,     //!< Perceived by Open Babel library methods
+    external       //!< Added by an external program
+  };
+
   //! \brief Base class for generic data
   // class introduction in generic.cpp
   class OBAPI OBGenericData
   {
   protected:
-    std::string  _attr; //!< attribute tag (e.g., "UnitCell", "Comment" or "Author")
-    unsigned int _type; //!< attribute type -- declared for each subclass
+    std::string  _attr;  //!< attribute tag (e.g., "UnitCell", "Comment" or "Author")
+    unsigned int _type;  //!< attribute type -- declared for each subclass
+    DataSource   _source;//!< source of data for accounting
   public:
     OBGenericData(const std::string attr = "undefined",
-                  const unsigned int type =  OBGenericDataType::UndefinedData);
+                  const unsigned int type =  OBGenericDataType::UndefinedData,
+                  const DataSource source = any);
     //Use default copy constructor and assignment operators
     //OBGenericData(const OBGenericData&);
 		
-    /* Virtual constructors added see 
+    /* Virtual constructors added. see 
        http://www.parashift.com/c++-faq-lite/abcs.html#faq-22.5
        to allow copying given only a base class OBGenericData pointer.
        It may be necessary to cast the return pointer to the derived class
@@ -175,6 +185,8 @@ namespace OpenBabel
     //! Set the attribute (key), which can be used to retrieve this data
     void                      SetAttribute(const std::string &v)
     {        _attr = v;        }
+    //! Set the source of this data, which can be used to filter the data
+    void SetSource(const DataSource s) { _source = s; }
     //! \return The attribute (key), which can be used to retrieve this data
     virtual const std::string &GetAttribute()  const
     {        return(_attr);    }
@@ -185,6 +197,8 @@ namespace OpenBabel
     //! but should never be called
     virtual const std::string &GetValue()  const
     {			return _attr; }
+    virtual const DataSource GetSource() const
+    {     return _source; }
   };
 
   //! Used to store a comment string (can be multiple lines long)
@@ -274,7 +288,8 @@ namespace OpenBabel
   protected:
     ValueT _value; //!< The data for this key/value pair
   public:
-  OBPairTemplate(): ValueT() {};
+  OBPairTemplate():
+    OBGenericData("PairData", OBGenericDataType::PairData), ValueT() {};
     void SetValue(const ValueT t)             { _value = t;     }
     virtual const ValueT &GetValue() const    { return(_value); }
   };
@@ -834,6 +849,9 @@ namespace OpenBabel
     void SetData(std::map<int,OBAtom*> &sm) { _serialMap = sm;  }
       
   };
+
+  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
+  typedef std::vector<OBGenericData*>::iterator OBDataIterator;
 
 } //end namespace OpenBabel
 

@@ -325,7 +325,6 @@ namespace OpenBabel
 
   /** \class OBIsotopeTable data.h <openbabel/data.h>
       \brief Table of atomic isotope masses
- 
   */
 
   OBIsotopeTable::OBIsotopeTable()
@@ -406,9 +405,9 @@ namespace OpenBabel
       string src,dst;
       for (atom = mol.BeginAtom(i);atom;atom = mol.EndAtom(i))
       {
-      src = atom->GetType();
-      ttab.Translate(dst,src);
-      cout << "atom number " << atom->GetIdx() << "has mol2 type " << dst << endl;
+         src = atom->GetType();
+         ttab.Translate(dst,src);
+         cout << "atom number " << atom->GetIdx() << "has mol2 type " << dst << endl;
       }
       \endcode
  

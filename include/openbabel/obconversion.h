@@ -324,14 +324,14 @@ namespace OpenBabel {
       /// Part of "API" interface. 
       /// The input stream can be specified and the change is retained in the OBConversion instance
       /// \return false and pOb=NULL on error 
-      bool	Read(OBBase* pOb, std::istream* pin=NULL);
+      bool	Read(OBBase* pOb, std::istream* pin=NULL, bool clearFirst = true);
 
       /// @brief Reads an object of a class derived from OBBase into pOb from the supplied string
 	
       /// Part of "API" interface. 
       /// \return false and pOb=NULL on error
       /// This method is primarily intended for scripting languages without "stream" classes
-      bool	ReadString(OBBase* pOb, std::string input);
+      bool	ReadString(OBBase* pOb, std::string input, bool clearFirst = true);
 
       /// @brief Reads an object of a class derived from OBBase into pOb from the file specified
 	
@@ -340,7 +340,7 @@ namespace OpenBabel {
       /// OBConversion instance.
       /// \return false and pOb=NULL on error 
       /// This method is primarily intended for scripting languages without "stream" classes
-      bool	ReadFile(OBBase* pOb, std::string filePath);
+      bool	ReadFile(OBBase* pOb, std::string filePath, bool clearFirst = true);
 
       ///Replaces * in BaseName by InFile without extension and path
       static std::string BatchFileName(std::string& BaseName, std::string& InFile);

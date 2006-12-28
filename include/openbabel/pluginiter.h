@@ -23,6 +23,10 @@ General Public License for more details.
 
 namespace OpenBabel
 {
+
+  //! \class PluginIter pluginiter.h <openbabel/pluginiter.h>
+  //! \brief Template class used to simplify dynamic classes discovered at runtime
+  //! \see openbabel/plugininter.h plugininter.h
 template<typename T>
 class OBAPI PluginIter
 {
@@ -86,7 +90,9 @@ static BaseClass* FindDefaultType(){ return Iter().FindDefaultType();}\
 } //namespace
 #endif //OB_PLUGINITER_H
 
-/**
+/** \file pluginiter.h
+    \brief Simplify 'plugin' classes to be discovered and/or loaded at runtime.
+
 The code in this file makes it easy to make 'plugin' classes. These classes are
 derived from an abstract base class, like OBFingerprint. The derived classes 
 ('sub-types' like fingerprint2) usually have a single instance. Plugin classes 
@@ -94,13 +100,14 @@ are only discovered at runtime, so no existing code needs to be changed when
 adding a new derived class. In some builds the new code can be added or removed 
 by just moving a DLL or so file.
 
------------------------------------------------------------------------------
-<strong>Step-by-step Instructions for use with a fictitious base class, YourBaseClass.</strong>
+<h2>Step by step instructions</h2>
 
 1) In the header file for YourBaseClass.
-#include "pluginiter.h" and in the definition of YourBaseClass add the
-MAKE_PLUGIN macro and a pure virtual function Description().
+Make sure to include the plugininter.h header and 
+in the definition of YourBaseClass add the MAKE_PLUGIN macro 
+and a pure virtual function Description().
 \code
+#include <openbabel/pluginiter.h>
 class YourBaseClass
 {
   MAKE_PLUGIN(YourBaseClass)
@@ -153,8 +160,7 @@ FOR_EACH(YourBaseClass, iter)
 }
 \endcode
 
----------------------------------------------------------------------
-H<strong>How it works</strong>
+<h2>How it works</h2>
 
 MAKE_PLUGIN(YourBaseClass) inserts the following code into YourBaseClass:\code
 

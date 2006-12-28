@@ -56,48 +56,96 @@ namespace OpenBabel {
 
     OBResidue &operator=(const OBResidue &);
 
+    //! Add @p atom to this residue. Updates the atom via OBAtom::SetResidue()
     void    AddAtom(OBAtom *atom);
+    //! Add @p atom to this residue. Updates the atom via OBAtom::SetResidue()
     void    InsertAtom(OBAtom *atom);
+    //! Remove @p atom from this residue and update the atom.
     void    RemoveAtom(OBAtom *atom);
-    void    Clear(void);
+    //! Clear any and all data associated with this residue. Updates all atoms
+    //!  included in the residue, as well as calling OBBase::Clear() for any
+    //!  generic data.
+    //! \return Whether the call was successful.
+    bool    Clear();
 
+    //! \brief Set the name of this residue (e.g., "ALA"). Use 3-char PDB standard names.
+    //! http://www.rcsb.org/pdb/file_formats/pdb/pdbguide2.2/part_79.html
+    //! MODRES records for modified residues:
+    //! http://www.rcsb.org/pdb/file_formats/pdb/pdbguide2.2/part_36.html
     void    SetName(const std::string &resname);
+    //! Set the residue number (in the sequence)
     void    SetNum(const unsigned int resnum);
+    //! Set the chain ID for this residue
     void    SetChain(const char chain);
+    //! Set the chain number for this residue
     void    SetChainNum(const unsigned int chainnum);
+    //! Set the internal index of this residue in the parent OBMol.
+    //! Intended mostly for internal use
     void    SetIdx(const unsigned int idx);
 
+    //! Set the character code ID for an ATOM record for the supplied atom
+    //! This does nothing if the supplied atom is not found in the residue
     void    SetAtomID(OBAtom *atom, const std::string &id);
     void    SetHetAtom(OBAtom *atom, bool hetatm);
     //! Set the atomic serial number for a given atom (see OBSerialNums)
     void    SetSerialNum(OBAtom *atom, unsigned int sernum);
 
+    //! \return The residue name
     std::string    GetName(void)                  const;
+    //! \return The residue number (in the sequence)
     unsigned int   GetNum(void)                   const;
+    //! \return The number of atoms in this residue
     unsigned int   GetNumAtoms()                  const;
+    //! \return The ID of the chain which includes this residue
     char           GetChain(void)                 const;
+    //! \return The number of the chain which includes this residue
     unsigned int   GetChainNum(void)              const;
+    //! \return The internal index of this residue in the parent OBMol
     unsigned int   GetIdx(void)                   const;
+    //! \return The residue key (i.e., an entry in the OBResidueIndex namespace)
     unsigned int   GetResKey(void)                const;
 
+    //! \return a vector of all atoms in this residue
     std::vector<OBAtom*> GetAtoms(void)           const;
+    //! \return all bonds in this residue. @p exterior includes bonds to atoms 
+    //!  outside this residue (default is true)
     std::vector<OBBond*> GetBonds(bool exterior= true)const;
 
+    //! \return the atom ID (character code) for the supplied atom or ""
+    //!  if the atom is not found in this residue
     std::string    GetAtomID(OBAtom *atom)        const;
     //! \return the serial number of the supplied atom (uses OBSerialNums)
     unsigned       GetSerialNum(OBAtom *atom)     const;
 
+    //! \return Whether this residue has the supplied amino acid property
+    //!  defined from the OBAminoAcidProperty namespace
     bool           GetAminoAcidProperty(int)      const;
-    bool           GetAtomProperty(OBAtom *, int) const;
+    //! \return Whether atom @p a has the supplied residue atom property
+    //!  defined from the OBResidueAtomProperty namespace
+    bool           GetAtomProperty(OBAtom *a, int) const;
+    //! \return Whether this residue has the supplied property
+    //!  defined from the OBResidueProperty namespace
     bool           GetResidueProperty(int)        const;
 
+    //! \return If the given atom is a HETATM record
     bool           IsHetAtom(OBAtom *atom)        const;
+    //! \return If this residue matches the supplied @p restype
+    //! Set by SetResidueKeys()
     bool           IsResidueType(int)             const;
 
+    //! \name Iterator methods
+    //@{
+    //! \return An iterator to the beginning of the atom list in this residue
     OBAtomIterator BeginAtoms()   { return _atoms.begin(); }
+    //! \return An iterator to the end of the atom list in this residue
     OBAtomIterator EndAtoms()     { return _atoms.end();   }
+    //! Set the iterator @p i to the beginning of the atom list in this residue
+    //! \return The first atom (or NULL if none exist)
     OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);
+    //! Increment the iterator @p i
+    //! \return The next atom (or NULL if none exist)
     OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
+    //@}
 
   protected: // members
 
@@ -112,6 +160,7 @@ namespace OpenBabel {
     std::vector<std::string>  _atomid;//!< Residue atom text IDs
     std::vector<OBAtom*>      _atoms; //!< List of OBAtom in this residue
     std::vector<unsigned int> _sernum;//!< List of serial numbers
+    // Now in OBBase
     //    std::vector<OBGenericData*> _vdata; //!< Custom data
   }; // OBResidue
 
@@ -230,7 +279,7 @@ namespace OpenBabel {
     static const unsigned int SUGAR_PHOSPHATE  = 9;
   }
 
-  //! Residue names
+  //! Residue names (index into Residue[] array)
   namespace OBResidueIndex
   {
     static const unsigned int ALA   =  0;

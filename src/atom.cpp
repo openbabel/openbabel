@@ -39,18 +39,14 @@ namespace OpenBabel
       \brief Atom class
  
       To understand the OBAtom class it is important to state a key
-      decision on which the design was based. In OBabel the atom class
-      existed, but it was only a data container. All data access and
-      modification of atoms was done through the molecule. The result
-      was a molecule class that was very large and unwieldy. So the OBAtom
-      class was made smarter, and many of the atom-specific routines
-      were separated into the OBAtom thereby decentralizing and
-      shrinking the OBMol class. As a result the OBAtom class not only
+      decision on which the design was based. The OBAtom class not only
       holds data, but facilitates extraction of data perceived from both
-      the atom and the molecule.
+      the atom and the molecule. This prevents the OBMol class from
+      becoming overly large and complicated.
  
       A number of data extraction methods perform what is called
-      <a href="http://en.wikipedia.org/wiki/Lazy_evaluation">`Lazy Evaluation,'</a> which is essentially on-the-fly evaluation.
+      <a href="http://en.wikipedia.org/wiki/Lazy_evaluation">`Lazy Evaluation,'</a>
+      which is essentially on-the-fly evaluation.
       For example, when an atom is queried as to whether it is cyclic
       or what it's hybridization state is the information is perceived
       automatically. The perception of a particular trait is actually
@@ -65,11 +61,11 @@ namespace OpenBabel
       \code
       OBMol mol;
 
-      FOR_ATOMS_IN_MOL(atom, mol)
+      FOR_ATOMS_OF_MOL(atom, mol)
       {
-      cout << atom->GetIdx() << ` `;
-      cout << atom->GetAtomicNum() << ` `;
-      cout << atom->GetVector() << endl;
+         cout << atom->GetIdx() << ` `;
+         cout << atom->GetAtomicNum() << ` `;
+         cout << atom->GetVector() << endl;
       }
       \endcode
       A number of the property member functions indicate that atoms
@@ -86,7 +82,8 @@ namespace OpenBabel
       atom = mol.GetAtom(1);
       FOR_NBORS_OF_ATOM(nbr, atom)
       {
-      cout << "atom #" << atom->GetIdx() << " is attached to atom #" << nbr->GetIdx() << endl;
+         cout << "atom #" << atom->GetIdx() << " is attached to atom #"
+              << nbr->GetIdx() << endl;
       }
       \endcode
 
@@ -127,7 +124,7 @@ namespace OpenBabel
     */
   }
 
-  void OBAtom::Clear()
+  bool OBAtom::Clear()
   {
     _c = (double**)NULL;
     _cidx = 0;
@@ -144,7 +141,8 @@ namespace OpenBabel
     _vbond.clear();
     _vbond.reserve(4);
     _residue = (OBResidue*)NULL;
-    _vdata.clear();
+
+    return(OBBase::Clear());
   }
 
   OBAtom &OBAtom::operator=(OBAtom &src)
@@ -169,7 +167,7 @@ namespace OpenBabel
 
   bool OBAtom::IsConnected(OBAtom *a1)
   {
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     OBBond *bond;
 
     for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -183,7 +181,7 @@ namespace OpenBabel
   {
     OBAtom *atom1,*atom2;
     OBBond *bond1,*bond2;
-    vector<OBBond*>::iterator i,j;
+    OBBondIterator i,j;
     atom1 = this;
     atom2 = a1;
 
@@ -199,7 +197,7 @@ namespace OpenBabel
   {
     OBAtom *atom1,*atom2;
     OBBond *bond1,*bond2;
-    vector<OBBond*>::iterator i,j;
+    OBBondIterator i,j;
     atom1 = this;
     atom2 = a1;
 
@@ -215,7 +213,7 @@ namespace OpenBabel
   {
     double tor;
     OBAtom *a,*b,*c;
-    vector<OBBond*>::iterator i,j,k;
+    OBBondIterator i,j,k;
 
     for (a = BeginNbrAtom(i);a;a = NextNbrAtom(i))
       if (a->GetHyb() == 3 && a->IsInRing() && !(*i)->IsInRing())
@@ -231,11 +229,19 @@ namespace OpenBabel
     return(false);
   }
 
-
+  /**     This can be sketched as follows
+          \code
+              '*'
+                 \
+                  a=b
+          \endcode
+          where a and b are the 'apha' and 'beta' atoms, respectively and '*'
+          indicates the current atom.
+    **/
   bool OBAtom::HasAlphaBetaUnsat(bool includePandS)
   {
     OBAtom *a1,*a2;
-    vector<OBBond*>::iterator i,j;
+    OBBondIterator i,j;
 
     for (a1 = BeginNbrAtom(i);a1;a1 = NextNbrAtom(i))
       if (includePandS || (!a1->IsPhosphorus() && !a1->IsSulfur()))
@@ -249,7 +255,7 @@ namespace OpenBabel
   bool OBAtom::HasBondOfOrder(unsigned int order)
   {
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       if (bond->GetBO() == order)
         return(true);
@@ -261,7 +267,7 @@ namespace OpenBabel
   {
     int count = 0;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       if (bond->GetBO() == order)
         count++;
@@ -272,7 +278,7 @@ namespace OpenBabel
   bool OBAtom::HasNonSingleBond()
   {
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       if (bond->GetBO() != 1)
         return(true);
@@ -287,7 +293,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       {
         atom = bond->GetNbrAtom(this);
@@ -311,7 +317,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       {
         atom = bond->GetNbrAtom(this);
@@ -481,7 +487,7 @@ namespace OpenBabel
     unsigned int count=0;
 
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (bond = ((OBAtom*)this)->BeginBond(i); bond; bond = ((OBAtom*)this)->NextBond(i))
       if (!(bond->GetNbrAtom((OBAtom*)this)->IsHydrogen()))
         count++;
@@ -493,7 +499,7 @@ namespace OpenBabel
   {
     unsigned int count=0;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       if (bond->GetNbrAtom((OBAtom*)this)->IsHeteroatom())
         count++;
@@ -534,7 +540,7 @@ namespace OpenBabel
     OBAtom *nbratom,*atom;
     OBBond *abbond,*bond;
 
-    vector<OBBond*>::iterator i,j;
+    OBBondIterator i,j;
     atom = this;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       {
@@ -555,7 +561,7 @@ namespace OpenBabel
       return(false);
 
     OBAtom *atom;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
       if (atom->IsOxygen() && !(*i)->IsInRing() && (*i)->GetBO() == 2)
@@ -573,7 +579,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     atom = NULL;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -601,7 +607,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     atom = NULL;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -629,7 +635,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     atom = NULL;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -657,7 +663,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     atom = NULL;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -823,7 +829,7 @@ namespace OpenBabel
   {
     unsigned int count = 0;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     for (bond = ((OBAtom*)this)->BeginBond(i);
          bond;
@@ -841,7 +847,7 @@ namespace OpenBabel
     vector3 v1, v2;
     double degrees, minDegrees;
     //    vector<OBAtom*>::iterator i;
-    vector<OBBond*>::iterator j,k;
+    OBBondIterator j,k;
 
     minDegrees = 360.0;
 
@@ -866,7 +872,7 @@ namespace OpenBabel
     vector3 v1, v2;
     double degrees, avgDegrees;
     //    vector<OBAtom*>::iterator i;
-    vector<OBBond*>::iterator j,k;
+    OBBondIterator j,k;
     int n=0;
 
     avgDegrees = 0.0;
@@ -895,7 +901,7 @@ namespace OpenBabel
     unsigned int count = 0;
     OBAtom *atom;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       {
@@ -912,7 +918,7 @@ namespace OpenBabel
     unsigned int bo;
     unsigned int bosum=0;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       {
@@ -928,7 +934,7 @@ namespace OpenBabel
   {
     OBBond *bond;
     unsigned int bosum;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     bosum = GetImplicitValence();
 
@@ -970,7 +976,7 @@ namespace OpenBabel
     //This excludes D, T and H when _isotope exlicitly set to 1 rather than the default 0.
     int numH=0;
     OBAtom *atom;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (atom = ((OBAtom*)this)->BeginNbrAtom(i);atom;atom = ((OBAtom*)this)->NextNbrAtom(i))
       if (atom->IsHydrogen() && !(ExcludeIsotopes && atom->GetIsotope()!=0))
         numH++;
@@ -980,7 +986,7 @@ namespace OpenBabel
 
   bool OBAtom::DeleteBond(OBBond *bond)
   {
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (i = _vbond.begin();i != _vbond.end();++i)
       if ((OBBond*)bond == *i)
         {
@@ -1008,25 +1014,25 @@ namespace OpenBabel
     return false;
   }
 
-  OBBond *OBAtom::BeginBond(vector<OBBond*>::iterator &i)
+  OBBond *OBAtom::BeginBond(OBBondIterator &i)
   {
     i = _vbond.begin();
     return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
   }
 
-  OBBond *OBAtom::NextBond(vector<OBBond*>::iterator &i)
+  OBBond *OBAtom::NextBond(OBBondIterator &i)
   {
     i++;
     return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
   }
 
-  OBAtom *OBAtom::BeginNbrAtom(vector<OBBond*>::iterator &i)
+  OBAtom *OBAtom::BeginNbrAtom(OBBondIterator &i)
   {
     i = _vbond.begin();
     return((i != _vbond.end()) ? ((OBBond*) *i)->GetNbrAtom(this):NULL);
   }
 
-  OBAtom *OBAtom::NextNbrAtom(vector<OBBond*>::iterator &i)
+  OBAtom *OBAtom::NextNbrAtom(OBBondIterator &i)
   {
     i++;
     return((i != _vbond.end()) ?  ((OBBond*) *i)->GetNbrAtom(this):NULL);
@@ -1069,7 +1075,7 @@ namespace OpenBabel
     // ***experimental code***
 
     OBAtom *atom;
-    vector<OBBond*>::iterator i,j;
+    OBBondIterator i,j;
     v = VZero;
 
     if (GetValence() == 0)
@@ -1180,7 +1186,7 @@ namespace OpenBabel
       {
         vector3 vtmp,vsum;
         OBAtom *atom;
-        vector<OBBond*>::iterator i;
+        OBBondIterator i;
         for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
           {
             vtmp = GetVector() - atom->GetVector();
@@ -1216,7 +1222,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     atom  = BeginNbrAtom(i);
     bond = (OBBond *)*i;
     if (!atom)
@@ -1290,7 +1296,7 @@ namespace OpenBabel
 
     OBAtom *nbr;
     vector<OBAtom*> delatm;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
 
     for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
       if (nbr->IsHydrogen())
@@ -1750,7 +1756,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     OBBond *bond;
-    vector<OBBond*>::iterator i;
+    OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       {
         atom = bond->GetNbrAtom(this);

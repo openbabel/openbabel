@@ -61,16 +61,16 @@ namespace OpenBabel
       #include "obconversion.h"
       int main(int argc,char **argv)
       {
-      OBConversion conv(&cin,&cout);
-      if(conv.SetInAndOutFormats("SDF","MOL2"))
-      { 
-      OBMol mol;
-      if(conv.Read(&mol))
-      ...manipulate molecule 
+         OBConversion conv(&cin,&cout);
+         if(conv.SetInAndOutFormats("SDF","MOL2"))
+         { 
+            OBMol mol;
+            if(conv.Read(&mol))
+               ...manipulate molecule 
     
-      conv->Write(&mol);
-      }
-      return(1);
+            conv->Write(&mol);
+         }
+         return(1);
       }
       \endcode
  
@@ -93,11 +93,11 @@ namespace OpenBabel
       \endcode
       or
       \code
-      FOR_ATOMS_IN_MOL(atom, mol) // iterator access (see OBMolAtomIter)
+      FOR_ATOMS_OF_MOL(atom, mol) // iterator access (see OBMolAtomIter)
       \endcode
       or
       \code
-      FOR_BONDS_IN_MOL(bond, mol) // iterator access (see OBMolBondIter)
+      FOR_BONDS_OF_MOL(bond, mol) // iterator access (see OBMolBondIter)
       \endcode
       It is important to note that atom arrays currently begin at 1 and bond arrays
       begin at 0. Requesting atom 0 (\code
@@ -144,7 +144,7 @@ namespace OpenBabel
       double exactMass = 0.0f;
       FOR_ATOMS_OF_MOL(a, mol)
       {
-      exactMass +=  a->GetExactMass();
+         exactMass +=  a->GetExactMass();
       }
       \endcode
 
@@ -1334,19 +1334,12 @@ namespace OpenBabel
       delete [] *k;
     _vconf.clear();
 
-    if (!_vdata.empty()) //clean up generic data
-      {
-        vector<OBGenericData*>::iterator m;
-        for (m = _vdata.begin();m != _vdata.end();++m)
-          delete *m;
-        _vdata.clear();
-      }
-
     _c = (double*) NULL;
     _flags = 0;
     _mod = 0;
 
-    return(true);
+    // Clean up generic data via the base class
+    return(OBBase::Clear());
   }
 
   void OBMol::BeginModify()

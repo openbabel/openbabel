@@ -33,14 +33,16 @@ GNU General Public License for more details.
 	#define OBDLL
 #endif
 
-//! \brief Interface for dynamic libraries.
-//!
-//! This class defines an interface for finding and opening dynamic
-//! loadable libraries on different platforms (e.g., modular plugins)
-//! via different source code files.
-//! It has only what is needed for OpenBabel and is not intended to be 
-//! general purpose. Internally, it is used for dynamic loading and unloading
-//! OBFormat file translation modules.
+/** \class DLHandler dlhandler.h <openbabel/dlhandler.h>
+    \brief Interface for dynamic libraries.
+    
+    This class defines an interface for finding and opening dynamic
+    loadable libraries on different platforms (e.g., modular plugins)
+    via different source code files.
+    It has only what is needed for OpenBabel and is not intended to be 
+    general purpose. Internally, it is used for dynamic loading and unloading
+    OBFormat file translation modules.
+**/
 class OBCONV DLHandler
 {
 public:
@@ -71,13 +73,16 @@ public:
 	*/
 	static int findFiles (std::vector<std::string>& file_list,const std::string &filename);
 
-	/** Opens a dynamic library */
+	//! Open a dynamic library with path @p lib_name
 	static bool openLib(const std::string& lib_name);
 
-	//To select OB format files
+	//! \return The file extension pattern for Open Babel plugin modules (e.g. *.obf on Windows)
 	static const char* getFormatFilePattern();
 
+  //! \return The system directory separator (i.e. "\" on Windows, "/" on UNIX)
 	static char getSeparator();
+
+  //! Call the system routine to wait (sleep) this process for @p n seconds
 	static void Sleep(int n);
 
 };

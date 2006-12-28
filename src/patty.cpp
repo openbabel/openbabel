@@ -55,7 +55,7 @@ namespace OpenBabel
     vector<string> type;
     p.assign_types(mol,type);
     for (int i = 1;i <= mol.NumAtoms();++i)
-    cout << "atom number " << i << " was given a type " << type[i] << endl;
+       cout << "atom number " << i << " was given a type " << type[i] << endl;
     \endcode
     The array indices in the vector<string> into which the result values
     are placed match the corresponding atom numbers. Since atoms are

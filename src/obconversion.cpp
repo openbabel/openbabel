@@ -138,11 +138,11 @@ namespace OpenBabel {
       OBConversion conv(&cin,&cout);
       if(conv.SetInAndOutFormats("SMI","MOL"))
       {	
-      OBMol mol;
-      if(conv.Read(&mol))
-      ...manipulate molecule 
+         OBMol mol;
+         if(conv.Read(&mol))
+            // ...manipulate molecule 
 		
-      conv->Write(&mol);
+         conv->Write(&mol);
       }
       @endcode
 	
@@ -160,7 +160,7 @@ namespace OpenBabel {
       stringstream ss(SmilesString)
       OBConversion conv(&ss);
       if(conv.SetInFormat("smi") && conv.Read(&mol))
-      ...
+         // ...
       @endcode
 
       <b>To do a file conversion without manipulating the molecule.</b>
@@ -171,8 +171,8 @@ namespace OpenBabel {
       OBConversion conv(&is,&os);
       if(conv.SetInAndOutFormats("SMI","MOL"))
       {
-      conv.SetOptions("h"); //Optional; (h adds expicit hydrogens)
-      conv.Convert();
+         conv.SetOptions("h"); //Optional; (h adds expicit hydrogens)
+         conv.Convert();
       }
       @endcode
 
@@ -193,9 +193,9 @@ namespace OpenBabel {
       stringstream newstream;
       if(inFormat && outFormat)
       {
-      conv.SetInAndOutFormats(inFormat,outFormat);
-      conv.Convert(pIn,&newstream);
-      pIn=&newstream;
+         conv.SetInAndOutFormats(inFormat,outFormat);
+         conv.Convert(pIn,&newstream);
+         pIn=&newstream;
       }
       //else error; new features not available; fallback to original functionality 
 
@@ -359,7 +359,7 @@ namespace OpenBabel {
    *	OBConversion conv; // dummy to make sure static data is available
    *	while(OBConversion::GetNextFormat(pos,str,pFormat))
    *	{
-   *		use str and pFormat
+   *		// use str and pFormat
    *	}
    *@endcode
    *
@@ -750,7 +750,7 @@ namespace OpenBabel {
       return FormatsMIMEMap()[MIME];
   }
 
-  bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
+  bool	OBConversion::Read(OBBase* pOb, std::istream* pin, bool clearFirst)
   {
     if(pin) pInStream=pin;
 
@@ -771,6 +771,9 @@ namespace OpenBabel {
       }
 #endif
 
+    // we really need to do this, but requires including base.h -GH
+    //    if (clearFirst)
+    //      pOb->Clear();
     return pInFormat->ReadMolecule(pOb, this);
   }
   //////////////////////////////////////////////////
@@ -865,7 +868,7 @@ namespace OpenBabel {
   }
 
   ////////////////////////////////////////////
-  bool	OBConversion::ReadString(OBBase* pOb, std::string input)
+  bool	OBConversion::ReadString(OBBase* pOb, std::string input, bool clearFirst)
   {
     // if we have an old stream, free this first before creating a new one
     if (pInStream && NeedToFreeInStream) {
@@ -874,12 +877,12 @@ namespace OpenBabel {
 
     stringstream *pin = new stringstream(input);
     NeedToFreeInStream = true; // make sure we clean this up later
-    return Read(pOb, pin);
+    return Read(pOb, pin, clearFirst);
   }
 
 
   ////////////////////////////////////////////
-  bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
+  bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath, bool clearFirst)
   {
     if(!pInFormat) return false;
 
@@ -900,7 +903,7 @@ namespace OpenBabel {
         return false;
       }
 
-    return Read(pOb,ifs);
+    return Read(pOb,ifs, clearFirst);
   }
 
 

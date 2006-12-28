@@ -34,13 +34,15 @@ namespace OpenBabel {
 	#define OBCOMMON
 #endif
 
-//! \brief An OBFormat convenience subclass for conversion to/from OBMol data
-//!
-//! An OBFormat which converts to and/or from OBMol can derive from this class
-//! to save duplicating the ReadChemObject() and/or WriteChemObject() methods.
-//! Derive directly from OBFormat if the object converted is not OBMol or 
-//! if interaction with the framework is required during the execution 
-//! of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
+/** \class OBMoleculeFormat obmolecformat.h <openbabel/obmolecformat.h>
+    \brief An OBFormat convenience subclass for conversion to/from OBMol data
+
+    An OBFormat which converts to and/or from OBMol can derive from this class
+    to save duplicating the ReadChemObject() and/or WriteChemObject() methods.
+    Derive directly from OBFormat if the object converted is not OBMol or 
+    if interaction with the framework is required during the execution 
+    of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
+**/
 class OBCOMMON OBMoleculeFormat : public OBFormat
 {
 private:

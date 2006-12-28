@@ -47,17 +47,22 @@ namespace OpenBabel
       descriptors
       e.g., in QSAR, atom or bond labels, or other textual data.
 
+      New in Open Babel, version 2.1 is the template-based OBPairTemplate,
+      which can be used to store arbitrary data types. There are predefined
+      types OBPairInteger and OBPairFloatingPoint for storing integers and
+      floating-point values without converting to a string representation.
+
       Example code using OBGenericData
 
       @code
       if (mol.HasData(OBGenericDataType::UnitCell))
       {
-      uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
-      sprintf(buffer,
-      "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
-      uc->GetA(), uc->GetB(), uc->GetC(),
-      uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
-      ofs << buffer << endl;
+         uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+         sprintf(buffer,
+            "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
+            uc->GetA(), uc->GetB(), uc->GetC(),
+            uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
+         ofs << buffer << endl;
       }
 
       ...
@@ -65,11 +70,11 @@ namespace OpenBabel
       vector<OBGenericData*>::iterator k;
       vector<OBGenericData*> vdata = mol.GetData();
       for (k = vdata.begin();k != vdata.end();++k)
-      if ((*k)->GetDataType() == OBGenericDataType::PairData)
-      {
-      ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
-      ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
-      }
+         if ((*k)->GetDataType() == OBGenericDataType::PairData)
+         {
+            ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
+            ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
+         }
       @endcode
 
       Similar code also works for OBGenericData stored in an OBAtom or OBBond (or OBResidue).
@@ -77,22 +82,22 @@ namespace OpenBabel
       @code
       if (!atom.HasData("UserLabel")) // stored textual data as an OBPairData
       {
-      OBPairData *label = new OBPairData;
-      label->SetAttribute("UserLabel");
-      label->SetValue(userInput);
+         OBPairData *label = new OBPairData;
+         label->SetAttribute("UserLabel");
+         label->SetValue(userInput);
 
-      atom.SetData(label);
+         atom.SetData(label);
       }
 
       ...
 
       if (bond.HasData("DisplayType")) // e.g. in a visualization tool
       {
-      OBPairData *display = dynamic_cast<OBPairData *> bond.GetData("DisplayType");
-      if (display->GetValue() == "wireframe")
-      {
-      ... // display a wireframe view
-      }
+         OBPairData *display = dynamic_cast<OBPairData *> bond.GetData("DisplayType");
+         if (display->GetValue() == "wireframe")
+         {
+            ... // display a wireframe view
+         }
       }
       @endcode
 
@@ -124,8 +129,9 @@ namespace OpenBabel
   //member functions for OBGenericData class
   //
 
-  OBGenericData::OBGenericData(const std::string attr, const unsigned int type):
-    _attr(attr), _type(type)
+  OBGenericData::OBGenericData(const std::string attr, const unsigned int type,
+                               const DataSource  source):
+    _attr(attr), _type(type), _source(source)
   { }
 
   /* Use default copy constructor and assignment operators
@@ -281,7 +287,9 @@ namespace OpenBabel
     vector<vector3> v;
     v.reserve(3);
 
-    if (_v1.length() == 0 && _v2.length() == 0 && _v3.length() == 0)
+    if (IsNegligible(_v1.length(), 1.0, 1e-9) &&
+        IsNegligible(_v2.length(), 1.0, 1e-9) &&
+        IsNegligible(_v3.length(), 1.0, 1e-9))
       {
         vector3 temp;
         matrix3x3 m = GetOrthoMatrix();
@@ -307,7 +315,9 @@ namespace OpenBabel
   {
     matrix3x3 m;
 
-    if (_v1.length() == 0 && _v2.length() == 0 && _v3.length() == 0)
+    if (IsNegligible(_v1.length(), 1.0, 1e-9) &&
+        IsNegligible(_v2.length(), 1.0, 1e-9) &&
+        IsNegligible(_v3.length(), 1.0, 1e-9))
       {
         m = GetOrthoMatrix();
       }

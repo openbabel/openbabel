@@ -29,7 +29,7 @@ namespace OpenBabel
   //*** Stuff for random number generation ***
   //******************************************
 
-  //! Used for internal random number generation OBRandom (unless the system random generaor is used)
+  //! Used for internal random number generation OBRandom (unless the system random generator is used)
   typedef struct
   {
     unsigned int hi;
@@ -41,7 +41,8 @@ namespace OpenBabel
   OBAPI void DoubleAdd( DoubleType*,unsigned int);
   OBAPI unsigned int DoubleModulus( DoubleType*,unsigned int);
 
-  //! Random number generator
+  //! \class OBRandom rand.h <openbabel/rand.h>
+  //! \brief Random number generator
   class OBAPI OBRandom
   {
     DoubleType d;

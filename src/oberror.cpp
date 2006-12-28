@@ -109,7 +109,7 @@ namespace OpenBabel
 
   \code
   if (atomIndex < 1 || atomIndex > mol.NumAtoms() )
-  obErrorLog.ThrowError(__FUNCTION__, "Requested Atom Out of Range", obDebug);
+     obErrorLog.ThrowError(__FUNCTION__, "Requested Atom Out of Range", obDebug);
   \endcode
 
   or

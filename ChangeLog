@@ -1,10 +1,19 @@
+2006-12-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Doxyfile: Change format slightly for better API documentation.
+
+	* src/*, include/openbabel/*: Many API documentation updates.
+
+	* include/openbabel/base.h, src/base.cpp (OBBase::Clear): New method in base
+	class to improve OBConversion::Read() syntax.
+
 2006-12-27 Chris Morley <ob@gaseq.co.uk>
 
 	* src/newlinebuf.cpp: Revert to as in rev 1652.
 
 2006-12-22 Chris Morley <ob@gaseq.co.uk>
 
-	* include/openbabel/pluginiter.h, /fingerprint.h: Modify so that most
+	* include/openbabel/pluginiter.h, fingerprint.h: Modify so that most
 	of code to implement plugin module behaviour is in pluginiter.h,
 	making it easy to give this behaviour in future to other classes.
 	Compatibility for OBFingerprint maintained except for iteration
@@ -21,9 +30,9 @@
 	Add FastSearch::FindMatch() which is simialr to Find() but requires
 	all bits of fingerprint to match.
 	
-	* src/OBConversion.cpp: added NO_NEWLINEBUF to avaoid compiling
+	* src/obconversion.cpp: added NO_NEWLINEBUF to avaoid compiling
 	newline buf which is currently incompatible with FastsearchFormat
-	and ONConversion::SkipObjects().
+	and OBConversion::SkipObjects().
 	All types of line ending seem to work ok with VC++8 on Windows.
 
 2006-12-20  Geoffrey Hutchison  <babel@geoffhutchison.net>

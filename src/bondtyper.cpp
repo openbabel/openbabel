@@ -30,11 +30,12 @@ namespace OpenBabel
   //! Global OBBondTyper for perception of bond order assignment.
   OBBondTyper  bondtyper;
 
-  /*! \class OBBondTyper
+  /*! \class OBBondTyper bondtyper.h <openbabel/bondtyper.cpp>
     \brief Assigns bond types for file formats without bond information
 
     The OBBondTyper class is designed to read in a list of bond typing
-    rules and apply them to molecules.
+    rules and apply them to molecules. It is called from the 
+    OBMol::PerceiveBondOrders() method.
   */
   OBBondTyper::OBBondTyper()
   {

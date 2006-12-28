@@ -41,6 +41,10 @@ namespace OpenBabel
 
   //! OBNodeBase is declared for backwards-compatibility with 2.0 and earlier code
   typedef OBAtom OBNodeBase;
+  //! A standard iterator over a vector of bonds
+  typedef std::vector<OBBond*>::iterator OBBondIterator;
+  //! A standard iterator over a vector of atoms
+  typedef std::vector<OBAtom*>::iterator OBAtomIterator;
 
   //ATOM Property Macros (flags)
   //! Atom is in a 4-membered ring
@@ -93,6 +97,7 @@ namespace OpenBabel
       vector3                       _v;         //!< coordinate vector
       OBResidue                    *_residue;   //!< parent residue (if applicable)
 
+      //! \return All flags
       int  GetFlag() const    {  return(_flags);  }
       //! Sets the bitwise @p flag
       void SetFlag(int flag)  { _flags |= flag;   }
@@ -109,8 +114,9 @@ namespace OpenBabel
       virtual ~OBAtom();
       //! Assignment
       OBAtom &operator = (OBAtom &);
-      //! Clear all data
-      void Clear();
+      //! Clear all data. Calls OBBase::Clear() to handle any generic data.
+      //! \return True if successful.
+      bool Clear();
 
       //! \name Methods to set atomic information
       //@{
@@ -132,19 +138,27 @@ namespace OpenBabel
       void SetFormalCharge(int fcharge)   { _fcharge = fcharge; }
       //! Set the atomic spin to @p spin. See _spinmultiplicity
       void SetSpinMultiplicity(short spin){ _spinmultiplicity = spin; }
+      //! Set the atomic type symbol (see OBTypeTable and OBAtomTyper for more)
       void SetType(char *type);
+      //! Set the atomic type symbol (see OBTypeTable and OBAtomTyper for more)
       void SetType(std::string &type);
       //! Set the partial charge to @p pcharge
       void SetPartialCharge(double pcharge){ _pcharge = pcharge; }
+      //! Set the coordinate vector for this atom to @p v as a vector3
       void SetVector(vector3 &v);
+      //! Set the coordinate vector for this atom based on @p x @p y & @p z
       void SetVector(const double x,const double y,const double z);
       //! Set the position of this atom from a pointer-driven array of coordinates
       void SetCoordPtr(double **c)        { _c = c; _cidx = (GetIdx()-1)*3; }
       //! Set the position of this atom based on the internal pointer array (i.e. from SetCoordPtr() )
       void SetVector();
+      //! Attach an OBResidue @p res as containing this atom
       void SetResidue(OBResidue *res)     { _residue=res; }
+      //! Attach an OBMol @p ptr as the parent container for this atom
       void SetParent(OBMol *ptr)          { _parent=ptr; }
+      //! Mark atom as being aromatic
       void SetAromatic()                  { SetFlag(OB_AROMATIC_ATOM); }
+      //! Clear aromatic information from the atom
       void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
       //! Mark atom as having SMILES clockwise stereochemistry (i.e., "@@")
       void SetClockwiseStereo()           { SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM); }
@@ -173,7 +187,6 @@ namespace OpenBabel
 
       //! \name Methods to retrieve atomic information
       //@{
-      //int        GetStereo()        const { return((int)_stereo);}
       //! \return the formal charge for this atom
       int          GetFormalCharge()  const { return(_fcharge);    }
       //! \return the atomic number for this atom
@@ -214,42 +227,36 @@ namespace OpenBabel
 
       //! \return the x coordinate
       double      GetX()    {        return(x());    }
-      //! \return the x coordinate
-      double      x()
-        {
-          if (_c)
-            return((*_c)[_cidx]);
-          else
-            return _v.x();
-        }
       //! \return the y coordinate
       double      GetY()    {        return(y());    }
-      //! \return the y coordinate
-      double      y()
-        {
-          if (_c)
-            return((*_c)[_cidx+1]);
-          else
-            return _v.y();
-        }
       //! \return the z coordinate
       double      GetZ()    {        return(z());    }
+
+      // These methods check to see if there is a coordinate pointer
+      // or an internal vector (e.g., SetCoordPtr())
+      //! \return the x coordinate
+      double      x() {
+        if (_c)            return((*_c)[_cidx]);
+        else               return _v.x();
+      }
+      //! \return the y coordinate
+      double      y() {
+        if (_c)            return((*_c)[_cidx+1]);
+        else               return _v.y();
+      }
       //! \return the z coordinate
-      double      z()
-        {
-          if (_c)
-            return((*_c)[_cidx+2]);
-          else
-            return _v.z();
-        }
-      //! \return the coordinates as a double*
-      double     *GetCoordinate()
-        {
-          if (_c)
-            return(&(*_c)[_cidx]);
-          else
-            return NULL;
-        }
+      double      z() {
+        if (_c)            return((*_c)[_cidx+2]);
+        else               return _v.z();
+      }
+      //! \return the coordinates as a double* or NULL if none.
+      //!
+      //! See SetCoordPtr() for more. If no coordinate pointer is used
+      //! (e.g., only vector3), NULL will be returned.
+      double     *GetCoordinate(){
+        if (_c)          return(&(*_c)[_cidx]);
+        else             return NULL;
+      }
       //! \return the coordinates as a vector3 object
       vector3   &GetVector();
       //! \return the partial charge of this atom, calculating a Gasteiger charge if needed
@@ -265,22 +272,32 @@ namespace OpenBabel
       //! or NULL if the two atoms are not bonded
       OBBond    *GetBond(OBAtom *);
       //! \return a pointer to the "next" atom (by atom index) in the
-      //! parent OBMol, or NULL if no such atom exists.
+      //!    parent OBMol, or NULL if no such atom exists.
       //! \deprecated Use any of the other iterator methods. This
-      //! method will be removed in the future.
+      //!    method will be removed in the future.
       OBAtom    *GetNextAtom();
       //@}
 
       //! \name Iterator methods
       //@{
-      std::vector<OBBond*>::iterator BeginBonds()
+      //! \return An iterator to the beginning of the bonds to this atom
+      OBBondIterator BeginBonds()
         { return(_vbond.begin()); }
-      std::vector<OBBond*>::iterator EndBonds()
+      //! \return An iterator to the end of the bonds to this atom
+      OBBondIterator EndBonds()
         { return(_vbond.end());   }
-      OBBond *BeginBond(std::vector<OBBond*>::iterator &i);
-      OBBond *NextBond(std::vector<OBBond*>::iterator &i);
-      OBAtom *BeginNbrAtom(std::vector<OBBond*>::iterator &);
-      OBAtom *NextNbrAtom(std::vector<OBBond*>::iterator &);
+      //! Set the iterator @p i to the beginning of the bonds
+      //! \return The first bond to this atom (or NULL if none exist)
+      OBBond *BeginBond(OBBondIterator &i);
+      //! Increment the iterator @p i
+      //! \return The next bond to this atom (or NULL if none exist)
+      OBBond *NextBond(OBBondIterator &i);
+      //! Set the iterator @p i to the beginning of the bonds
+      //! \return The first neighboring atom (or NULL if none exist)
+      OBAtom *BeginNbrAtom(OBBondIterator &i);
+      //! Increment the iterator @p i
+      //! \return The next neighboring atom (or NULL if none exist)
+      OBAtom *NextNbrAtom(OBBondIterator &i);
       //@}
 
       //! \return the distance to the atom defined by OBMol::GetAtom()
@@ -294,29 +311,52 @@ namespace OpenBabel
 
       //! \name Addition of residue/bond info. for an atom
       //@{
+
+      //! If no residue has been set for this atom, create a new one
       void NewResidue()
         {
           if (!_residue)
             _residue = new OBResidue;
         }
-      void DeleteResidue()
-        {
-          if (_residue)
-            delete _residue;
+      //! Add (set) the residue for this atom
+      void AddResidue(OBResidue *res) { SetResidue(res); }
+      //! Delete any residue associated with this atom
+      void DeleteResidue(){
+        if (_residue) {
+          delete _residue;
+          _residue = NULL; // Make sure to clear that a residue existed
         }
-      void AddBond(OBBond *bond)
-        {
-          _vbond.push_back(bond);
-        }
-      void InsertBond(std::vector<OBBond*>::iterator &i, OBBond *bond)
+      }
+      //! Add a bond to the internal list. Does not update the bond.
+      void AddBond(OBBond *bond) { _vbond.push_back(bond); }
+      //! \brief Insert @p bond into the internal list at the position from @p i
+      //! Does not modify the bond
+      void InsertBond(OBBondIterator &i, OBBond *bond)
         {
           _vbond.insert(i, bond);
         }
-      bool DeleteBond(OBBond*);
+      //! Find @p bond and remove it from the internal list. Does not update the bond.
+      bool DeleteBond(OBBond* bond);
+      //! Clear all bonding information in this atom (does not delete them)
       void ClearBond() {_vbond.clear();}
       //@}
 
-      //! \name Requests for atomic property information
+      //! \name Builder utilities
+      //@{
+
+      //! \brief If this is a hydrogen atom, transform into a methyl group
+      //! \return success or failure
+      bool HtoMethyl();
+      //! Change the hybridization of this atom and modify the geometry accordingly
+      //! \return success or failure
+      bool SetHybAndGeom(int);
+      //! Mark that atom has no hydrogens attached
+      void ForceNoH() {SetFlag(OB_ATOM_HAS_NO_H);}
+      //! \return if atom has been marked as having no hydrogens attached
+      bool HasNoHForced() {return HasFlag(OB_ATOM_HAS_NO_H);}
+      //@}
+
+      //! \name Property information
       //@{
       //! \return The number of oxygen atoms connected that only have one heavy valence
       unsigned int  CountFreeOxygens()      const;
@@ -337,26 +377,8 @@ namespace OpenBabel
       //! \return The sum of the bond orders of the bonds to the atom (i.e. double bond = 2...)
       unsigned int  BOSum()                 const;
       //! \return The sum of the bond orders of bonds to the atom, considering only KDouble, KTriple bonds
+      //! \deprecated Use BOSum() instead
       unsigned int  KBOSum()                const;
-      //@}
-
-      //! \name Builder utilities
-      //@{
-      //! If this is a hydrogen atom, transform into a methyl group
-      //! \return success or failure
-      bool HtoMethyl();
-      //! Change the hybridization of this atom and modify the geometry accordingly
-      //! \return success or failure
-      bool SetHybAndGeom(int);
-      //! Mark that atom has no hydrogens attached
-      void ForceNoH() {SetFlag(OB_ATOM_HAS_NO_H);}
-      //! \return if atom has been marked as having
-      //!  no hydrogens attached
-      bool HasNoHForced() {return HasFlag(OB_ATOM_HAS_NO_H);}
-      //@}
-
-      //! \name Property information
-      //@{
       //! \return Is there any residue information?
       bool HasResidue()    { return(_residue != NULL);    }
       //! \return Is the atom hydrogen?
@@ -433,9 +455,15 @@ namespace OpenBabel
       bool IsHbondDonor();
       //! \return Is this a hydrogen atom attached to a hydrogen-bond donor?
       bool IsHbondDonorH();
+      //! \return Whether a neighboring atom (alpha) has an unsaturated bond
+      //!   to a third atom (beta).
+      //! \param includePandS Whether to include phosphorus and sulfur neighbors
+      //! in this determination (or to exclude them)
       bool HasAlphaBetaUnsat(bool includePandS=true);
-      bool HasBondOfOrder(unsigned int);
-      int  CountBondsOfOrder(unsigned int);
+      //! \return Whether this atom is connected to any bond with order == @p
+      bool HasBondOfOrder(unsigned int bo);
+      //! \return The count of bonds connected to this atom with order == @p bo
+      int  CountBondsOfOrder(unsigned int bo);
       //! \return Whether this atom is connected to any bond with order >1
       bool HasNonSingleBond();
       //! \return Does this atom have a single bond
@@ -449,9 +477,6 @@ namespace OpenBabel
       //@}
 
     }; // class OBAtom
-
-  //! A standard iterator over a vector of atoms
-  typedef std::vector<OBAtom*>::iterator OBAtomIterator;
 
 }// namespace OpenBabel
 

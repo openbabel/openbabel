@@ -27,7 +27,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /** \class matrix3x3
+  /** \class matrix3x3 matrix3x3.h <openbabel/math/matrix3x3.h>
       \brief Represents a real 3x3 matrix.
  
       Rotating points in space can be performed by a vector-matrix
@@ -49,7 +49,7 @@ namespace OpenBabel
   */
 
   /*! The axis of the rotation will be uniformly distributed on
-    the unit sphere, the angle will be uniformly distributed in
+    the unit sphere and the angle will be uniformly distributed in
     the interval 0..360 degrees. */
   void matrix3x3::randomRotation(OBRandom &rnd)
   {

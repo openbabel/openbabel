@@ -107,23 +107,23 @@ namespace OpenBabel
     OBForceField &operator = (OBForceField &);
     //! Get index for std::vector<OBFFParameter> ...
     int GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
-    //! Calculate angle between point d and plane a-b-c
+    //! Calculate angle between vector b-d and plane a-b-c
     double PointPlaneAngle(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d);
  
   public:
-    //! Returns the bond stretching energy
+    //! \return the bond stretching energy
     double E_Bond_Harmonic(double bondunit, double bond_cubic, double bond_quartic);
-    //! Returns the angle bending energy
+    //! \return the angle bending energy
     double E_Angle_Harmonic(double angleunit, double angle_cubic, double angle_quatric, double angle_pentic, double angle_sextic);
-    //! Returns the stretch-bend energy
+    //! \return the stretch-bend energy
     double E_StretchBend(double stretchbendunit);
-    //! Returns the torsional energy
+    //! \return the torsional energy
     double E_Torsion(double torsionunit);
-    //! Returns the out-of-plane bending energy
+    //! \return the out-of-plane bending energy
     double E_OutPlaneBend(double outplanebendunit);
-    //! Returns the Van der Waals energy (Buckingham potential)
+    //! \return the Van der Waals energy (Buckingham potential)
     double E_VDWBuckingham(double a_expterm, double b_expterm, double c_expterm);
-    //! Returns the Van der Waals energy (Buckingham potential)
+    //! \return the Van der Waals energy (Buckingham potential)
     double E_DipoleDipole(double dielectric);
   }; // class OBForceField
     
@@ -154,7 +154,7 @@ namespace OpenBabel
     virtual ~OBForceFieldMM2();
     //! Assignment
     OBForceFieldMM2 &operator = (OBForceFieldMM2 &);
-    //! Returns total energy
+    //! \return total energy
     double Energy();
     double E_Bond() { return E_Bond_Harmonic(bondunit, bond_cubic, bond_quartic); }
     double E_Angle() { return E_Angle_Harmonic(angleunit, 0.0f, 0.0f, 0.0f, angle_sextic); }

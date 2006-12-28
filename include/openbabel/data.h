@@ -35,14 +35,16 @@ namespace OpenBabel
   class OBMol;
   class OBBitVec;
 
-  //! \brief Base data table class, handles reading data files
-  //!
-  //! Base data table class--reads ASCII data files in various formats
-  //! -# Checks for the environment variable _envvar (defaults to "BABEL_DATADIR")
-  //!     - Tries the _subdir directory if defined (def. "data") and then the main directory
-  //! -# Checks for the directory _dir (def. determined by the build environment)
-  //!     - Tries the subdirectory corresponding to this version, then the main directory
-  //! -# Reverts to the compiled-in default data
+  /** \class OBGlobalDataBase data.h <openbabel/data.h>
+      \brief Base data table class, handles reading data files
+      
+      Base data table class--reads ASCII data files in various formats
+      -# Checks for the environment variable _envvar (defaults to "BABEL_DATADIR")
+      - Tries the _subdir directory if defined (def. "data") and then the main directory
+      -# Checks for the directory _dir (def. determined by the build environment)
+      - Tries the subdirectory corresponding to this version, then the main directory
+      -# Reverts to the compiled-in default data
+  **/
   class OBAPI OBGlobalDataBase
     {
     protected:
@@ -70,9 +72,12 @@ namespace OpenBabel
       virtual void ParseLine(const char*)          {}
     };
 
-  //! \brief Individual element data type
-  //!
-  //! Stores a variety of data about an individual element
+  /** \class OBElement data.h <openbabel/data.h>
+      \brief Individual element data type
+  
+      Stores a variety of data about an individual element.
+      Used mainly by OBElementTable.
+  **/
   class OBAPI OBElement
     {
       int _num;
@@ -83,6 +88,21 @@ namespace OpenBabel
       int _maxbonds;
     public:
       OBElement()    {}
+      /** Constructor
+          @param num     Atomic number
+          @param sym     Elemental symbol (maximum 3 characters)
+          @param rcov    Covalent radius (in Angstrom)
+          @param rvdw    van der Waals radius (in Angstrom)
+          @param maxbo   Maximum bonding valence
+          @param mass    Atomic mass (in amu)
+          @param elNeg   Electronegativity (in Pauling units)
+          @param ionize  Ionization potential (in eV)
+          @param elAffin Electron affinity (in eV)
+          @param red     RGB value for a suggest visualization color (0 .. 1)
+          @param green   RGB value for a suggest visualization color (0 .. 1)
+          @param blue    RGB value for a suggest visualization color (0 .. 1)
+          @param name Full IUPAC name
+      **/
       OBElement(int num, const char *sym, double rcov, double rvdw,
                 int maxbo, double mass, double elNeg, double ionize,
                 double elAffin, double red, double green, double blue,
@@ -233,8 +253,11 @@ namespace OpenBabel
       std::string GetToType();
     };
 
-  //! \brief Table of common biomolecule residues (for PDB or other files).
-  //!   Can assign atom types and bond orders for arbitrary residues
+  /** \class OBResidueData data.h <openbabel/data.h> 
+      \brief Table of common biomolecule residues (for PDB or other files).
+
+      Can assign atom types and bond orders for arbitrary residues
+  **/
   class OBAPI OBResidueData : public OBGlobalDataBase
     {
       int                                               _resnum;

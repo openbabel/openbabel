@@ -430,23 +430,27 @@ namespace OpenBabel
     \code
     class MyFpType : OBFingerprint 
     {
-    MyFpType(const char* id) : OBFingerprint(id){};
-    virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>& fp, int nbits) 
-    {
-    //Convert pOb to the required type, usually OBMol
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    fp.resize(required_number_of_words);
-    ... 
-    use SetBit(fp,n); to set the nth bit
+       MyFpType(const char* id) : OBFingerprint(id){};
 
-    if(nbits)
-    Fold(fp, nbits);
-    }
-    virtual const char* Description(){ return "Some descriptive text";}
-    ...
+       virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>& fp, int nbits) 
+       {
+          //Convert pOb to the required type, usually OBMol
+          OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+          fp.resize(required_number_of_words);
+          ... 
+          use SetBit(fp,n); to set the nth bit
+
+          if(nbits)
+             Fold(fp, nbits);
+       }
+       
+       virtual const char* Description(){ return "Some descriptive text";}
+       ...
     };
     \endcode
-    //Declare a global instance with the ID you will use in -f options to specify its use.
+    
+    Declare a global instance with the ID you will use in -f options to specify
+    its use.
     \code
     MyFpType theMyFpType("myfpID");
     \endcode
@@ -472,16 +476,15 @@ namespace OpenBabel
     OBFingerPrint* pFPrt=NULL;
     while(OBFingerprint::GetNextFPrt(id, pFPrt))
     {
-    cout << id << " -- " << pFPrt->Description() << endl;
+       cout << id << " -- " << pFPrt->Description() << endl;
     }
     \endcode
 
-
     Fingerprints are handled as vector<unsigned int> so that the number of bits
     in this vector and their order will be platform and compiler
-    dependent, because of size of int and endian differences. Use fingerprints
-    (and fastsearch indexes containing them) only for comparing with other 
-    fingerprints prepared on the same machine.
+    dependent, because of size of int types and endian differences.
+    Use fingerprints (and fastsearch indexes containing them) only 
+    for comparing with other fingerprints prepared on the same machine.
 
     The FingerprintFormat class is an output format which displays fingerprints
     as hexadecimal. When multiple molecules are supplied it will calculate the
@@ -548,11 +551,12 @@ namespace OpenBabel
     ifstream ifs(indexname,ios::binary);
     FastSearch fs;
     string datafilename = fs.ReadIndex(&ifs);
-    if(datafilename.empty()/endcode
-    return false;
+    if(datafilename.empty()
+       return false;
+
     ifstream datastream(datafilename);
     if(!datastream)
-    return false;
+       return false;
     \endcode
 
     <strong>To do a search for molecules which have all the substructure bits the
@@ -560,13 +564,12 @@ namespace OpenBabel
     \code
     vector<unsigned int>& SeekPositions;
     if(!fs.Find(patternMol, SeekPositions, MaxCandidates))
-	
-    for(itr=SeekPositions.begin();itr!=SeekPositions.end();++itr)
-    {
-    datastream.seekg(*itr);
-    ... read the candidate molecule
-    and subject to more rigorous test if necessary
-    }
+	    for(itr=SeekPositions.begin();itr!=SeekPositions.end();++itr)
+      {
+         datastream.seekg(*itr);
+         ... read the candidate molecule
+         and subject to more rigorous test if necessary
+      }
     \endcode
 
     <strong>To do a similarity search based on the Tanimoto coefficient</strong>
@@ -586,9 +589,9 @@ namespace OpenBabel
     multimap<double, unsigned int>::reverse_iterator itr;
     for(itr=SeekposMap.rbegin();itr!=SeekposMap.rend();++itr)
     {
-    datastream.seekg(itr->second);
-    ... read the candidate molecule
-    double tani = itr->first;
+       datastream.seekg(itr->second);
+       // ... read the candidate molecule
+       double tani = itr->first;
     }
     \endcode
 

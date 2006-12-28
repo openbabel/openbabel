@@ -30,7 +30,10 @@ class OBMol;
 class OBAtom;
 class OBBond;
 
-//! Internal class for OBRing search algorithms to create a search tree of OBAtom objects
+/** \class OBRTree ring.h <openbabel/ring.h> 
+    \brief Internal class for OBRing search algorithms to create a search tree
+     of OBAtom objects
+**/
 class OBAPI OBRTree
 {
   OBAtom  *_atom; //!< Atom represented by this node in the tree
@@ -90,7 +93,9 @@ public:
 OBAPI bool CompareRingSize(const OBRing *,const OBRing *);
 
 
-//! Internal class to facilitate OBMol::FindSSSR()
+/** \class OBRingSearch ring.h <openbabel/ring.h>
+    \brief Internal class to facilitate OBMol::FindSSSR()
+**/
 class OBAPI OBRingSearch
 {
     std::vector<OBBond*> _bonds;

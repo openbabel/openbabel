@@ -61,9 +61,9 @@ namespace OpenBabel
   vector<int>::iterator j;
   for (i = maplist.begin();i != maplist.end();++i)
   {
-  for (j = i->begin();j != i->end();++j)
-  cout << j << ' `;
-  cout << endl;
+     for (j = i->begin();j != i->end();++j)
+        cout << j << ' `;
+     cout << endl;
   }
   \endcode
   The preceding code reads in a molecule, initializes a smarts pattern

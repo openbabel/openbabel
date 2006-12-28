@@ -158,9 +158,11 @@ namespace OpenBabel
   //@}
 
   //! Comparison -- returns true if first parameter less than second
-  OBAPI bool OBCompareInt(const int &,const int &);
+  //! \return True if @p a < @p b, False otherwise.
+  OBAPI bool OBCompareInt(const int &a,const int &b);
   //! Comparison -- returns true if first parameter less than second
-  OBAPI bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
+  //! \return True if @p a < @p b, False otherwise.
+  OBAPI bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b);
   /*! "Safe" comparison for floats/doubles: returns fabs(a - b) < epsilon
    * This function really doesn't make any sense w.r.t. floating-point
    * representation, so you should never use it. It is provided only for
@@ -214,8 +216,8 @@ namespace OpenBabel
   {
     return( fabs(a - b) <= precision * std::min( a, b ) );
   }
-  /*! Tests whether its argument can be squared without triggering an overflow
-   * or underflow.
+  /*! \brief Tests whether its argument can be squared without triggering
+    an overflow or underflow.
    */
   OBAPI bool CanBeSquared(const double &);
 

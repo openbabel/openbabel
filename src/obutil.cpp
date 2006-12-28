@@ -59,7 +59,7 @@ namespace OpenBabel
     obErrorLog.ThrowError("", str, obInfo);
   }
 
-  // Comparison function (for sorting ints) returns a < b
+  // returns True if a < b, False otherwise.
   OBAPI bool OBCompareInt(const int &a,const int &b)
   {
     return(a<b);
@@ -71,20 +71,20 @@ namespace OpenBabel
     return(a<b);
   }
 
-  // Comparison for doubles: returns fabs(a - b) < epsilon
+  //! Comparison for doubles: returns fabs(a - b) < epsilon
   OBAPI bool IsNear(const double &a, const double &b, const double epsilon)
   {
     return (fabs(a - b) < epsilon);
   }
 
-  // Comparison for doubles: returns fabs(a) < epsilon
+  //! Comparison for doubles: returns fabs(a) < epsilon
   OBAPI bool IsNearZero(const double &a, const double epsilon)
   {
     return (fabs(a) < epsilon);
   }
 
-  // Tests whether its argument can be squared without triggering an overflow or
-  // underflow.
+  //! Tests whether its argument can be squared without triggering an overflow or
+  //! underflow.
   OBAPI bool CanBeSquared(const double &a)
   {
     if( a == 0 ) return true;
@@ -112,7 +112,7 @@ namespace OpenBabel
     return(dst);
   }
 
-  //! Return the geometric centroid to an array of coordinates in double* format
+  //! \return the geometric centroid to an array of coordinates in double* format
   //!  and center the coordinates to the origin. Operates on the first "size" 
   //!  coordinates in the array.
   OBAPI vector3 center_coords(double *c, unsigned int size)
