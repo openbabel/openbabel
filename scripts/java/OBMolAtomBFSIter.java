@@ -73,8 +73,8 @@ public class OBMolAtomBFSIter {
     return openbabelJNI.OBMolAtomBFSIter_Visit_get(swigCPtr, this);
   }
 
-  public void Clear() {
-    openbabelJNI.OBMolAtomBFSIter_Clear(swigCPtr, this);
+  public boolean Clear() {
+    return openbabelJNI.OBMolAtomBFSIter_Clear(swigCPtr, this);
   }
 
   public void SetIdx(int idx) {
@@ -253,20 +253,20 @@ public class OBMolAtomBFSIter {
     return openbabelJNI.OBMolAtomBFSIter_GetX(swigCPtr, this);
   }
 
-  public double x() {
-    return openbabelJNI.OBMolAtomBFSIter_x(swigCPtr, this);
-  }
-
   public double GetY() {
     return openbabelJNI.OBMolAtomBFSIter_GetY(swigCPtr, this);
   }
 
-  public double y() {
-    return openbabelJNI.OBMolAtomBFSIter_y(swigCPtr, this);
-  }
-
   public double GetZ() {
     return openbabelJNI.OBMolAtomBFSIter_GetZ(swigCPtr, this);
+  }
+
+  public double x() {
+    return openbabelJNI.OBMolAtomBFSIter_x(swigCPtr, this);
+  }
+
+  public double y() {
+    return openbabelJNI.OBMolAtomBFSIter_y(swigCPtr, this);
   }
 
   public double z() {
@@ -328,13 +328,13 @@ public class OBMolAtomBFSIter {
     return (cPtr == 0) ? null : new OBBond(cPtr, false);
   }
 
-  public OBAtom BeginNbrAtom(SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator arg0) {
-    long cPtr = openbabelJNI.OBMolAtomBFSIter_BeginNbrAtom(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator.getCPtr(arg0));
+  public OBAtom BeginNbrAtom(SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator i) {
+    long cPtr = openbabelJNI.OBMolAtomBFSIter_BeginNbrAtom(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator.getCPtr(i));
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
-  public OBAtom NextNbrAtom(SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator arg0) {
-    long cPtr = openbabelJNI.OBMolAtomBFSIter_NextNbrAtom(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator.getCPtr(arg0));
+  public OBAtom NextNbrAtom(SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator i) {
+    long cPtr = openbabelJNI.OBMolAtomBFSIter_NextNbrAtom(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator.getCPtr(i));
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
@@ -358,6 +358,10 @@ public class OBMolAtomBFSIter {
     openbabelJNI.OBMolAtomBFSIter_NewResidue(swigCPtr, this);
   }
 
+  public void AddResidue(OBResidue res) {
+    openbabelJNI.OBMolAtomBFSIter_AddResidue(swigCPtr, this, OBResidue.getCPtr(res), res);
+  }
+
   public void DeleteResidue() {
     openbabelJNI.OBMolAtomBFSIter_DeleteResidue(swigCPtr, this);
   }
@@ -370,12 +374,28 @@ public class OBMolAtomBFSIter {
     openbabelJNI.OBMolAtomBFSIter_InsertBond(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator.getCPtr(i), OBBond.getCPtr(bond), bond);
   }
 
-  public boolean DeleteBond(OBBond arg0) {
-    return openbabelJNI.OBMolAtomBFSIter_DeleteBond(swigCPtr, this, OBBond.getCPtr(arg0), arg0);
+  public boolean DeleteBond(OBBond bond) {
+    return openbabelJNI.OBMolAtomBFSIter_DeleteBond(swigCPtr, this, OBBond.getCPtr(bond), bond);
   }
 
   public void ClearBond() {
     openbabelJNI.OBMolAtomBFSIter_ClearBond(swigCPtr, this);
+  }
+
+  public boolean HtoMethyl() {
+    return openbabelJNI.OBMolAtomBFSIter_HtoMethyl(swigCPtr, this);
+  }
+
+  public boolean SetHybAndGeom(int arg0) {
+    return openbabelJNI.OBMolAtomBFSIter_SetHybAndGeom(swigCPtr, this, arg0);
+  }
+
+  public void ForceNoH() {
+    openbabelJNI.OBMolAtomBFSIter_ForceNoH(swigCPtr, this);
+  }
+
+  public boolean HasNoHForced() {
+    return openbabelJNI.OBMolAtomBFSIter_HasNoHForced(swigCPtr, this);
   }
 
   public long CountFreeOxygens() {
@@ -420,22 +440,6 @@ public class OBMolAtomBFSIter {
 
   public long KBOSum() {
     return openbabelJNI.OBMolAtomBFSIter_KBOSum(swigCPtr, this);
-  }
-
-  public boolean HtoMethyl() {
-    return openbabelJNI.OBMolAtomBFSIter_HtoMethyl(swigCPtr, this);
-  }
-
-  public boolean SetHybAndGeom(int arg0) {
-    return openbabelJNI.OBMolAtomBFSIter_SetHybAndGeom(swigCPtr, this, arg0);
-  }
-
-  public void ForceNoH() {
-    openbabelJNI.OBMolAtomBFSIter_ForceNoH(swigCPtr, this);
-  }
-
-  public boolean HasNoHForced() {
-    return openbabelJNI.OBMolAtomBFSIter_HasNoHForced(swigCPtr, this);
   }
 
   public boolean HasResidue() {
@@ -582,12 +586,12 @@ public class OBMolAtomBFSIter {
     return openbabelJNI.OBMolAtomBFSIter_HasAlphaBetaUnsat__SWIG_1(swigCPtr, this);
   }
 
-  public boolean HasBondOfOrder(long arg0) {
-    return openbabelJNI.OBMolAtomBFSIter_HasBondOfOrder(swigCPtr, this, arg0);
+  public boolean HasBondOfOrder(long bo) {
+    return openbabelJNI.OBMolAtomBFSIter_HasBondOfOrder(swigCPtr, this, bo);
   }
 
-  public int CountBondsOfOrder(long arg0) {
-    return openbabelJNI.OBMolAtomBFSIter_CountBondsOfOrder(swigCPtr, this, arg0);
+  public int CountBondsOfOrder(long bo) {
+    return openbabelJNI.OBMolAtomBFSIter_CountBondsOfOrder(swigCPtr, this, bo);
   }
 
   public boolean HasNonSingleBond() {

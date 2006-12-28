@@ -23,6 +23,7 @@ public interface openbabelConstants {
   public final static int NOTWRITABLE = openbabelJNI.NOTWRITABLE_get();
   public final static int WRITEONEONLY = openbabelJNI.WRITEONEONLY_get();
   public final static int WRITEBINARY = openbabelJNI.WRITEBINARY_get();
+  public final static int READXML = openbabelJNI.READXML_get();
   public final static int DEFAULTFORMAT = openbabelJNI.DEFAULTFORMAT_get();
   public final static int MAXSETNO = openbabelJNI.MAXSETNO_get();
   public final static int MAXELEM = openbabelJNI.MAXELEM_get();

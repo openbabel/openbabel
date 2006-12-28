@@ -32,12 +32,20 @@ public class FastSearch {
     swigCPtr = 0;
   }
 
+  public String ReadIndexFile(String IndexFilename) {
+    return openbabelJNI.FastSearch_ReadIndexFile(swigCPtr, this, IndexFilename);
+  }
+
   public String ReadIndex(SWIGTYPE_p_std__istream pIndexstream) {
     return openbabelJNI.FastSearch_ReadIndex(swigCPtr, this, SWIGTYPE_p_std__istream.getCPtr(pIndexstream));
   }
 
   public boolean Find(OBBase pOb, vectorUnsignedInt SeekPositions, long MaxCandidates) {
     return openbabelJNI.FastSearch_Find(swigCPtr, this, OBBase.getCPtr(pOb), pOb, vectorUnsignedInt.getCPtr(SeekPositions), SeekPositions, MaxCandidates);
+  }
+
+  public boolean FindMatch(OBBase pOb, vectorUnsignedInt SeekPositions, long MaxCandidates) {
+    return openbabelJNI.FastSearch_FindMatch(swigCPtr, this, OBBase.getCPtr(pOb), pOb, vectorUnsignedInt.getCPtr(SeekPositions), SeekPositions, MaxCandidates);
   }
 
   public boolean FindSimilar(OBBase pOb, SWIGTYPE_p_std__multimapTdouble_unsigned_int_t SeekposMap, double MinTani) {

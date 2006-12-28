@@ -48,8 +48,8 @@ public class OBMolPairIter {
     return openbabelJNI.OBMolPairIter_good(swigCPtr, this);
   }
 
-  public OBMolPairIter inc(int arg0) {
-    return new OBMolPairIter(openbabelJNI.OBMolPairIter_inc(swigCPtr, this, arg0), true);
+  public OBMolPairIter inc() {
+    return new OBMolPairIter(openbabelJNI.OBMolPairIter_inc(swigCPtr, this), false);
   }
 
   public SWIGTYPE_p_std__pairTint_int_t deref() {

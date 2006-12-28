@@ -32,16 +32,20 @@ public class OBGenericData {
     swigCPtr = 0;
   }
 
+  public OBGenericData(String attr, long type, DataSource source) {
+    this(openbabelJNI.new_OBGenericData__SWIG_0(attr, type, source.swigValue()), true);
+  }
+
   public OBGenericData(String attr, long type) {
-    this(openbabelJNI.new_OBGenericData__SWIG_0(attr, type), true);
+    this(openbabelJNI.new_OBGenericData__SWIG_1(attr, type), true);
   }
 
   public OBGenericData(String attr) {
-    this(openbabelJNI.new_OBGenericData__SWIG_1(attr), true);
+    this(openbabelJNI.new_OBGenericData__SWIG_2(attr), true);
   }
 
   public OBGenericData() {
-    this(openbabelJNI.new_OBGenericData__SWIG_2(), true);
+    this(openbabelJNI.new_OBGenericData__SWIG_3(), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
@@ -51,6 +55,10 @@ public class OBGenericData {
 
   public void SetAttribute(String v) {
     openbabelJNI.OBGenericData_SetAttribute(swigCPtr, this, v);
+  }
+
+  public void SetSource(DataSource s) {
+    openbabelJNI.OBGenericData_SetSource(swigCPtr, this, s.swigValue());
   }
 
   public String GetAttribute() {
@@ -63,6 +71,10 @@ public class OBGenericData {
 
   public String GetValue() {
     return openbabelJNI.OBGenericData_GetValue(swigCPtr, this);
+  }
+
+  public DataSource GetSource() {
+    return DataSource.swigToEnum(openbabelJNI.OBGenericData_GetSource(swigCPtr, this));
   }
 
 }

@@ -279,20 +279,32 @@ public class OBConversion {
     openbabelJNI.OBConversion_CloseOutFile(swigCPtr, this);
   }
 
+  public boolean Read(OBBase pOb, SWIGTYPE_p_std__istream pin, boolean clearFirst) {
+    return openbabelJNI.OBConversion_Read__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, SWIGTYPE_p_std__istream.getCPtr(pin), clearFirst);
+  }
+
   public boolean Read(OBBase pOb, SWIGTYPE_p_std__istream pin) {
-    return openbabelJNI.OBConversion_Read__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, SWIGTYPE_p_std__istream.getCPtr(pin));
+    return openbabelJNI.OBConversion_Read__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb, SWIGTYPE_p_std__istream.getCPtr(pin));
   }
 
   public boolean Read(OBBase pOb) {
-    return openbabelJNI.OBConversion_Read__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
+    return openbabelJNI.OBConversion_Read__SWIG_2(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
+  }
+
+  public boolean ReadString(OBBase pOb, String input, boolean clearFirst) {
+    return openbabelJNI.OBConversion_ReadString__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, input, clearFirst);
   }
 
   public boolean ReadString(OBBase pOb, String input) {
-    return openbabelJNI.OBConversion_ReadString(swigCPtr, this, OBBase.getCPtr(pOb), pOb, input);
+    return openbabelJNI.OBConversion_ReadString__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb, input);
+  }
+
+  public boolean ReadFile(OBBase pOb, String filePath, boolean clearFirst) {
+    return openbabelJNI.OBConversion_ReadFile__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, filePath, clearFirst);
   }
 
   public boolean ReadFile(OBBase pOb, String filePath) {
-    return openbabelJNI.OBConversion_ReadFile(swigCPtr, this, OBBase.getCPtr(pOb), pOb, filePath);
+    return openbabelJNI.OBConversion_ReadFile__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb, filePath);
   }
 
   public static String BatchFileName(SWIGTYPE_p_std__string BaseName, SWIGTYPE_p_std__string InFile) {

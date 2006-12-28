@@ -305,6 +305,10 @@ public class OBMolBondIter {
     return openbabelJNI.OBMolBondIter_IsDoubleBondGeometry(swigCPtr, this);
   }
 
+  public boolean Clear() {
+    return openbabelJNI.OBMolBondIter_Clear(swigCPtr, this);
+  }
+
   public OBBase DoTransformations(SWIGTYPE_p_std__mapTstd__string_std__string_t arg0) {
     long cPtr = openbabelJNI.OBMolBondIter_DoTransformations(swigCPtr, this, SWIGTYPE_p_std__mapTstd__string_std__string_t.getCPtr(arg0));
     return (cPtr == 0) ? null : new OBBase(cPtr, false);

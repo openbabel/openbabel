@@ -48,8 +48,8 @@ public class OBMolAngleIter {
     return openbabelJNI.OBMolAngleIter_good(swigCPtr, this);
   }
 
-  public OBMolAngleIter inc(int arg0) {
-    return new OBMolAngleIter(openbabelJNI.OBMolAngleIter_inc(swigCPtr, this, arg0), true);
+  public OBMolAngleIter inc() {
+    return new OBMolAngleIter(openbabelJNI.OBMolAngleIter_inc(swigCPtr, this), false);
   }
 
   public vectorUnsignedInt __ref__() {

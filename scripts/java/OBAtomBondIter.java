@@ -305,6 +305,10 @@ public class OBAtomBondIter {
     return openbabelJNI.OBAtomBondIter_IsDoubleBondGeometry(swigCPtr, this);
   }
 
+  public boolean Clear() {
+    return openbabelJNI.OBAtomBondIter_Clear(swigCPtr, this);
+  }
+
   public OBBase DoTransformations(SWIGTYPE_p_std__mapTstd__string_std__string_t arg0) {
     long cPtr = openbabelJNI.OBAtomBondIter_DoTransformations(swigCPtr, this, SWIGTYPE_p_std__mapTstd__string_std__string_t.getCPtr(arg0));
     return (cPtr == 0) ? null : new OBBase(cPtr, false);

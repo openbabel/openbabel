@@ -48,8 +48,8 @@ public class OBMolTorsionIter {
     return openbabelJNI.OBMolTorsionIter_good(swigCPtr, this);
   }
 
-  public OBMolTorsionIter inc(int arg0) {
-    return new OBMolTorsionIter(openbabelJNI.OBMolTorsionIter_inc(swigCPtr, this, arg0), true);
+  public OBMolTorsionIter inc() {
+    return new OBMolTorsionIter(openbabelJNI.OBMolTorsionIter_inc(swigCPtr, this), false);
   }
 
   public vectorUnsignedInt __ref__() {

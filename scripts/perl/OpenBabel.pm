@@ -10,7 +10,7 @@ require DynaLoader;
 package Chemistry::OpenBabelc;
 bootstrap Chemistry::OpenBabel;
 package Chemistry::OpenBabel;
-@EXPORT = qw( ); sub dl_load_flags { 0x01 }
+@EXPORT = qw( );
 
 # ---------- BASE METHODS -------------
 
@@ -1035,9 +1035,11 @@ sub DESTROY {
 }
 
 *SetAttribute = *Chemistry::OpenBabelc::OBGenericData_SetAttribute;
+*SetSource = *Chemistry::OpenBabelc::OBGenericData_SetSource;
 *GetAttribute = *Chemistry::OpenBabelc::OBGenericData_GetAttribute;
 *GetDataType = *Chemistry::OpenBabelc::OBGenericData_GetDataType;
 *GetValue = *Chemistry::OpenBabelc::OBGenericData_GetValue;
+*GetSource = *Chemistry::OpenBabelc::OBGenericData_GetSource;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -1772,6 +1774,7 @@ sub DESTROY {
     }
 }
 
+*Clear = *Chemistry::OpenBabelc::OBBase_Clear;
 *DoTransformations = *Chemistry::OpenBabelc::OBBase_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBBase_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBBase_HasData;
@@ -2292,10 +2295,10 @@ sub DESTROY {
 *GetHeteroValence = *Chemistry::OpenBabelc::OBAtom_GetHeteroValence;
 *GetType = *Chemistry::OpenBabelc::OBAtom_GetType;
 *GetX = *Chemistry::OpenBabelc::OBAtom_GetX;
-*x = *Chemistry::OpenBabelc::OBAtom_x;
 *GetY = *Chemistry::OpenBabelc::OBAtom_GetY;
-*y = *Chemistry::OpenBabelc::OBAtom_y;
 *GetZ = *Chemistry::OpenBabelc::OBAtom_GetZ;
+*x = *Chemistry::OpenBabelc::OBAtom_x;
+*y = *Chemistry::OpenBabelc::OBAtom_y;
 *z = *Chemistry::OpenBabelc::OBAtom_z;
 *GetCoordinate = *Chemistry::OpenBabelc::OBAtom_GetCoordinate;
 *GetVector = *Chemistry::OpenBabelc::OBAtom_GetVector;
@@ -2314,11 +2317,16 @@ sub DESTROY {
 *GetDistance = *Chemistry::OpenBabelc::OBAtom_GetDistance;
 *GetAngle = *Chemistry::OpenBabelc::OBAtom_GetAngle;
 *NewResidue = *Chemistry::OpenBabelc::OBAtom_NewResidue;
+*AddResidue = *Chemistry::OpenBabelc::OBAtom_AddResidue;
 *DeleteResidue = *Chemistry::OpenBabelc::OBAtom_DeleteResidue;
 *AddBond = *Chemistry::OpenBabelc::OBAtom_AddBond;
 *InsertBond = *Chemistry::OpenBabelc::OBAtom_InsertBond;
 *DeleteBond = *Chemistry::OpenBabelc::OBAtom_DeleteBond;
 *ClearBond = *Chemistry::OpenBabelc::OBAtom_ClearBond;
+*HtoMethyl = *Chemistry::OpenBabelc::OBAtom_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBAtom_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBAtom_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBAtom_HasNoHForced;
 *CountFreeOxygens = *Chemistry::OpenBabelc::OBAtom_CountFreeOxygens;
 *ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtom_ImplicitHydrogenCount;
 *ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtom_ExplicitHydrogenCount;
@@ -2329,10 +2337,6 @@ sub DESTROY {
 *AverageBondAngle = *Chemistry::OpenBabelc::OBAtom_AverageBondAngle;
 *BOSum = *Chemistry::OpenBabelc::OBAtom_BOSum;
 *KBOSum = *Chemistry::OpenBabelc::OBAtom_KBOSum;
-*HtoMethyl = *Chemistry::OpenBabelc::OBAtom_HtoMethyl;
-*SetHybAndGeom = *Chemistry::OpenBabelc::OBAtom_SetHybAndGeom;
-*ForceNoH = *Chemistry::OpenBabelc::OBAtom_ForceNoH;
-*HasNoHForced = *Chemistry::OpenBabelc::OBAtom_HasNoHForced;
 *HasResidue = *Chemistry::OpenBabelc::OBAtom_HasResidue;
 *IsHydrogen = *Chemistry::OpenBabelc::OBAtom_IsHydrogen;
 *IsCarbon = *Chemistry::OpenBabelc::OBAtom_IsCarbon;
@@ -2909,16 +2913,13 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
-*SetBit = *Chemistry::OpenBabelc::OBFingerprint_SetBit;
-*Fold = *Chemistry::OpenBabelc::OBFingerprint_Fold;
-*GetFingerprint = *Chemistry::OpenBabelc::OBFingerprint_GetFingerprint;
-*Description = *Chemistry::OpenBabelc::OBFingerprint_Description;
-*FPT_UNIQUEBITS = *Chemistry::OpenBabelc::OBFingerprint_FPT_UNIQUEBITS;
-*Flags = *Chemistry::OpenBabelc::OBFingerprint_Flags;
-*GetNextFPrt = *Chemistry::OpenBabelc::OBFingerprint_GetNextFPrt;
 *FindFingerprint = *Chemistry::OpenBabelc::OBFingerprint_FindFingerprint;
-*Tanimoto = *Chemistry::OpenBabelc::OBFingerprint_Tanimoto;
-*Getbitsperint = *Chemistry::OpenBabelc::OBFingerprint_Getbitsperint;
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBFingerprint(@_);
+    bless $self, $pkg if defined($self);
+}
+
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -3042,6 +3043,7 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
+*ReadIndexFile = *Chemistry::OpenBabelc::FastSearch_ReadIndexFile;
 *ReadIndex = *Chemistry::OpenBabelc::FastSearch_ReadIndex;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
@@ -3055,6 +3057,7 @@ sub DESTROY {
 }
 
 *Find = *Chemistry::OpenBabelc::FastSearch_Find;
+*FindMatch = *Chemistry::OpenBabelc::FastSearch_FindMatch;
 *FindSimilar = *Chemistry::OpenBabelc::FastSearch_FindSimilar;
 *GetFingerprint = *Chemistry::OpenBabelc::FastSearch_GetFingerprint;
 *GetIndexHeader = *Chemistry::OpenBabelc::FastSearch_GetIndexHeader;
@@ -3187,10 +3190,10 @@ sub DESTROY {
 *GetHeteroValence = *Chemistry::OpenBabelc::OBMolAtomIter_GetHeteroValence;
 *GetType = *Chemistry::OpenBabelc::OBMolAtomIter_GetType;
 *GetX = *Chemistry::OpenBabelc::OBMolAtomIter_GetX;
-*x = *Chemistry::OpenBabelc::OBMolAtomIter_x;
 *GetY = *Chemistry::OpenBabelc::OBMolAtomIter_GetY;
-*y = *Chemistry::OpenBabelc::OBMolAtomIter_y;
 *GetZ = *Chemistry::OpenBabelc::OBMolAtomIter_GetZ;
+*x = *Chemistry::OpenBabelc::OBMolAtomIter_x;
+*y = *Chemistry::OpenBabelc::OBMolAtomIter_y;
 *z = *Chemistry::OpenBabelc::OBMolAtomIter_z;
 *GetCoordinate = *Chemistry::OpenBabelc::OBMolAtomIter_GetCoordinate;
 *GetVector = *Chemistry::OpenBabelc::OBMolAtomIter_GetVector;
@@ -3209,11 +3212,16 @@ sub DESTROY {
 *GetDistance = *Chemistry::OpenBabelc::OBMolAtomIter_GetDistance;
 *GetAngle = *Chemistry::OpenBabelc::OBMolAtomIter_GetAngle;
 *NewResidue = *Chemistry::OpenBabelc::OBMolAtomIter_NewResidue;
+*AddResidue = *Chemistry::OpenBabelc::OBMolAtomIter_AddResidue;
 *DeleteResidue = *Chemistry::OpenBabelc::OBMolAtomIter_DeleteResidue;
 *AddBond = *Chemistry::OpenBabelc::OBMolAtomIter_AddBond;
 *InsertBond = *Chemistry::OpenBabelc::OBMolAtomIter_InsertBond;
 *DeleteBond = *Chemistry::OpenBabelc::OBMolAtomIter_DeleteBond;
 *ClearBond = *Chemistry::OpenBabelc::OBMolAtomIter_ClearBond;
+*HtoMethyl = *Chemistry::OpenBabelc::OBMolAtomIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBMolAtomIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBMolAtomIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBMolAtomIter_HasNoHForced;
 *CountFreeOxygens = *Chemistry::OpenBabelc::OBMolAtomIter_CountFreeOxygens;
 *ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomIter_ImplicitHydrogenCount;
 *ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomIter_ExplicitHydrogenCount;
@@ -3224,10 +3232,6 @@ sub DESTROY {
 *AverageBondAngle = *Chemistry::OpenBabelc::OBMolAtomIter_AverageBondAngle;
 *BOSum = *Chemistry::OpenBabelc::OBMolAtomIter_BOSum;
 *KBOSum = *Chemistry::OpenBabelc::OBMolAtomIter_KBOSum;
-*HtoMethyl = *Chemistry::OpenBabelc::OBMolAtomIter_HtoMethyl;
-*SetHybAndGeom = *Chemistry::OpenBabelc::OBMolAtomIter_SetHybAndGeom;
-*ForceNoH = *Chemistry::OpenBabelc::OBMolAtomIter_ForceNoH;
-*HasNoHForced = *Chemistry::OpenBabelc::OBMolAtomIter_HasNoHForced;
 *HasResidue = *Chemistry::OpenBabelc::OBMolAtomIter_HasResidue;
 *IsHydrogen = *Chemistry::OpenBabelc::OBMolAtomIter_IsHydrogen;
 *IsCarbon = *Chemistry::OpenBabelc::OBMolAtomIter_IsCarbon;
@@ -3364,10 +3368,10 @@ sub DESTROY {
 *GetHeteroValence = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetHeteroValence;
 *GetType = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetType;
 *GetX = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetX;
-*x = *Chemistry::OpenBabelc::OBMolAtomDFSIter_x;
 *GetY = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetY;
-*y = *Chemistry::OpenBabelc::OBMolAtomDFSIter_y;
 *GetZ = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetZ;
+*x = *Chemistry::OpenBabelc::OBMolAtomDFSIter_x;
+*y = *Chemistry::OpenBabelc::OBMolAtomDFSIter_y;
 *z = *Chemistry::OpenBabelc::OBMolAtomDFSIter_z;
 *GetCoordinate = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetCoordinate;
 *GetVector = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetVector;
@@ -3386,11 +3390,16 @@ sub DESTROY {
 *GetDistance = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetDistance;
 *GetAngle = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetAngle;
 *NewResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_NewResidue;
+*AddResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_AddResidue;
 *DeleteResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_DeleteResidue;
 *AddBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_AddBond;
 *InsertBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_InsertBond;
 *DeleteBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_DeleteBond;
 *ClearBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ClearBond;
+*HtoMethyl = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasNoHForced;
 *CountFreeOxygens = *Chemistry::OpenBabelc::OBMolAtomDFSIter_CountFreeOxygens;
 *ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ImplicitHydrogenCount;
 *ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ExplicitHydrogenCount;
@@ -3401,10 +3410,6 @@ sub DESTROY {
 *AverageBondAngle = *Chemistry::OpenBabelc::OBMolAtomDFSIter_AverageBondAngle;
 *BOSum = *Chemistry::OpenBabelc::OBMolAtomDFSIter_BOSum;
 *KBOSum = *Chemistry::OpenBabelc::OBMolAtomDFSIter_KBOSum;
-*HtoMethyl = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HtoMethyl;
-*SetHybAndGeom = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetHybAndGeom;
-*ForceNoH = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ForceNoH;
-*HasNoHForced = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasNoHForced;
 *HasResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasResidue;
 *IsHydrogen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsHydrogen;
 *IsCarbon = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsCarbon;
@@ -3541,10 +3546,10 @@ sub DESTROY {
 *GetHeteroValence = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetHeteroValence;
 *GetType = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetType;
 *GetX = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetX;
-*x = *Chemistry::OpenBabelc::OBMolAtomBFSIter_x;
 *GetY = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetY;
-*y = *Chemistry::OpenBabelc::OBMolAtomBFSIter_y;
 *GetZ = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetZ;
+*x = *Chemistry::OpenBabelc::OBMolAtomBFSIter_x;
+*y = *Chemistry::OpenBabelc::OBMolAtomBFSIter_y;
 *z = *Chemistry::OpenBabelc::OBMolAtomBFSIter_z;
 *GetCoordinate = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetCoordinate;
 *GetVector = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetVector;
@@ -3563,11 +3568,16 @@ sub DESTROY {
 *GetDistance = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetDistance;
 *GetAngle = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetAngle;
 *NewResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_NewResidue;
+*AddResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_AddResidue;
 *DeleteResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_DeleteResidue;
 *AddBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_AddBond;
 *InsertBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_InsertBond;
 *DeleteBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_DeleteBond;
 *ClearBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ClearBond;
+*HtoMethyl = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasNoHForced;
 *CountFreeOxygens = *Chemistry::OpenBabelc::OBMolAtomBFSIter_CountFreeOxygens;
 *ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ImplicitHydrogenCount;
 *ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ExplicitHydrogenCount;
@@ -3578,10 +3588,6 @@ sub DESTROY {
 *AverageBondAngle = *Chemistry::OpenBabelc::OBMolAtomBFSIter_AverageBondAngle;
 *BOSum = *Chemistry::OpenBabelc::OBMolAtomBFSIter_BOSum;
 *KBOSum = *Chemistry::OpenBabelc::OBMolAtomBFSIter_KBOSum;
-*HtoMethyl = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HtoMethyl;
-*SetHybAndGeom = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetHybAndGeom;
-*ForceNoH = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ForceNoH;
-*HasNoHForced = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasNoHForced;
 *HasResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasResidue;
 *IsHydrogen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsHydrogen;
 *IsCarbon = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsCarbon;
@@ -3733,6 +3739,7 @@ sub DESTROY {
 *IsWedge = *Chemistry::OpenBabelc::OBMolBondIter_IsWedge;
 *IsHash = *Chemistry::OpenBabelc::OBMolBondIter_IsHash;
 *IsDoubleBondGeometry = *Chemistry::OpenBabelc::OBMolBondIter_IsDoubleBondGeometry;
+*Clear = *Chemistry::OpenBabelc::OBMolBondIter_Clear;
 *DoTransformations = *Chemistry::OpenBabelc::OBMolBondIter_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBMolBondIter_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBMolBondIter_HasData;
@@ -3827,10 +3834,10 @@ sub DESTROY {
 *GetHeteroValence = *Chemistry::OpenBabelc::OBAtomAtomIter_GetHeteroValence;
 *GetType = *Chemistry::OpenBabelc::OBAtomAtomIter_GetType;
 *GetX = *Chemistry::OpenBabelc::OBAtomAtomIter_GetX;
-*x = *Chemistry::OpenBabelc::OBAtomAtomIter_x;
 *GetY = *Chemistry::OpenBabelc::OBAtomAtomIter_GetY;
-*y = *Chemistry::OpenBabelc::OBAtomAtomIter_y;
 *GetZ = *Chemistry::OpenBabelc::OBAtomAtomIter_GetZ;
+*x = *Chemistry::OpenBabelc::OBAtomAtomIter_x;
+*y = *Chemistry::OpenBabelc::OBAtomAtomIter_y;
 *z = *Chemistry::OpenBabelc::OBAtomAtomIter_z;
 *GetCoordinate = *Chemistry::OpenBabelc::OBAtomAtomIter_GetCoordinate;
 *GetVector = *Chemistry::OpenBabelc::OBAtomAtomIter_GetVector;
@@ -3849,11 +3856,16 @@ sub DESTROY {
 *GetDistance = *Chemistry::OpenBabelc::OBAtomAtomIter_GetDistance;
 *GetAngle = *Chemistry::OpenBabelc::OBAtomAtomIter_GetAngle;
 *NewResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_NewResidue;
+*AddResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_AddResidue;
 *DeleteResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_DeleteResidue;
 *AddBond = *Chemistry::OpenBabelc::OBAtomAtomIter_AddBond;
 *InsertBond = *Chemistry::OpenBabelc::OBAtomAtomIter_InsertBond;
 *DeleteBond = *Chemistry::OpenBabelc::OBAtomAtomIter_DeleteBond;
 *ClearBond = *Chemistry::OpenBabelc::OBAtomAtomIter_ClearBond;
+*HtoMethyl = *Chemistry::OpenBabelc::OBAtomAtomIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBAtomAtomIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBAtomAtomIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBAtomAtomIter_HasNoHForced;
 *CountFreeOxygens = *Chemistry::OpenBabelc::OBAtomAtomIter_CountFreeOxygens;
 *ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtomAtomIter_ImplicitHydrogenCount;
 *ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtomAtomIter_ExplicitHydrogenCount;
@@ -3864,10 +3876,6 @@ sub DESTROY {
 *AverageBondAngle = *Chemistry::OpenBabelc::OBAtomAtomIter_AverageBondAngle;
 *BOSum = *Chemistry::OpenBabelc::OBAtomAtomIter_BOSum;
 *KBOSum = *Chemistry::OpenBabelc::OBAtomAtomIter_KBOSum;
-*HtoMethyl = *Chemistry::OpenBabelc::OBAtomAtomIter_HtoMethyl;
-*SetHybAndGeom = *Chemistry::OpenBabelc::OBAtomAtomIter_SetHybAndGeom;
-*ForceNoH = *Chemistry::OpenBabelc::OBAtomAtomIter_ForceNoH;
-*HasNoHForced = *Chemistry::OpenBabelc::OBAtomAtomIter_HasNoHForced;
 *HasResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_HasResidue;
 *IsHydrogen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsHydrogen;
 *IsCarbon = *Chemistry::OpenBabelc::OBAtomAtomIter_IsCarbon;
@@ -4019,6 +4027,7 @@ sub DESTROY {
 *IsWedge = *Chemistry::OpenBabelc::OBAtomBondIter_IsWedge;
 *IsHash = *Chemistry::OpenBabelc::OBAtomBondIter_IsHash;
 *IsDoubleBondGeometry = *Chemistry::OpenBabelc::OBAtomBondIter_IsDoubleBondGeometry;
+*Clear = *Chemistry::OpenBabelc::OBAtomBondIter_Clear;
 *DoTransformations = *Chemistry::OpenBabelc::OBAtomBondIter_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBAtomBondIter_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBAtomBondIter_HasData;
@@ -4195,10 +4204,10 @@ sub DESTROY {
 *GetHeteroValence = *Chemistry::OpenBabelc::OBResidueAtomIter_GetHeteroValence;
 *GetType = *Chemistry::OpenBabelc::OBResidueAtomIter_GetType;
 *GetX = *Chemistry::OpenBabelc::OBResidueAtomIter_GetX;
-*x = *Chemistry::OpenBabelc::OBResidueAtomIter_x;
 *GetY = *Chemistry::OpenBabelc::OBResidueAtomIter_GetY;
-*y = *Chemistry::OpenBabelc::OBResidueAtomIter_y;
 *GetZ = *Chemistry::OpenBabelc::OBResidueAtomIter_GetZ;
+*x = *Chemistry::OpenBabelc::OBResidueAtomIter_x;
+*y = *Chemistry::OpenBabelc::OBResidueAtomIter_y;
 *z = *Chemistry::OpenBabelc::OBResidueAtomIter_z;
 *GetCoordinate = *Chemistry::OpenBabelc::OBResidueAtomIter_GetCoordinate;
 *GetVector = *Chemistry::OpenBabelc::OBResidueAtomIter_GetVector;
@@ -4217,11 +4226,16 @@ sub DESTROY {
 *GetDistance = *Chemistry::OpenBabelc::OBResidueAtomIter_GetDistance;
 *GetAngle = *Chemistry::OpenBabelc::OBResidueAtomIter_GetAngle;
 *NewResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_NewResidue;
+*AddResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_AddResidue;
 *DeleteResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_DeleteResidue;
 *AddBond = *Chemistry::OpenBabelc::OBResidueAtomIter_AddBond;
 *InsertBond = *Chemistry::OpenBabelc::OBResidueAtomIter_InsertBond;
 *DeleteBond = *Chemistry::OpenBabelc::OBResidueAtomIter_DeleteBond;
 *ClearBond = *Chemistry::OpenBabelc::OBResidueAtomIter_ClearBond;
+*HtoMethyl = *Chemistry::OpenBabelc::OBResidueAtomIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBResidueAtomIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBResidueAtomIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBResidueAtomIter_HasNoHForced;
 *CountFreeOxygens = *Chemistry::OpenBabelc::OBResidueAtomIter_CountFreeOxygens;
 *ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBResidueAtomIter_ImplicitHydrogenCount;
 *ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBResidueAtomIter_ExplicitHydrogenCount;
@@ -4232,10 +4246,6 @@ sub DESTROY {
 *AverageBondAngle = *Chemistry::OpenBabelc::OBResidueAtomIter_AverageBondAngle;
 *BOSum = *Chemistry::OpenBabelc::OBResidueAtomIter_BOSum;
 *KBOSum = *Chemistry::OpenBabelc::OBResidueAtomIter_KBOSum;
-*HtoMethyl = *Chemistry::OpenBabelc::OBResidueAtomIter_HtoMethyl;
-*SetHybAndGeom = *Chemistry::OpenBabelc::OBResidueAtomIter_SetHybAndGeom;
-*ForceNoH = *Chemistry::OpenBabelc::OBResidueAtomIter_ForceNoH;
-*HasNoHForced = *Chemistry::OpenBabelc::OBResidueAtomIter_HasNoHForced;
 *HasResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_HasResidue;
 *IsHydrogen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsHydrogen;
 *IsCarbon = *Chemistry::OpenBabelc::OBResidueAtomIter_IsCarbon;
@@ -4542,6 +4552,11 @@ bless $VZ, Chemistry::OpenBabel::vector3;
 *CustomData13 = *Chemistry::OpenBabelc::CustomData13;
 *CustomData14 = *Chemistry::OpenBabelc::CustomData14;
 *CustomData15 = *Chemistry::OpenBabelc::CustomData15;
+*any = *Chemistry::OpenBabelc::any;
+*readInput = *Chemistry::OpenBabelc::readInput;
+*userInput = *Chemistry::OpenBabelc::userInput;
+*perceived = *Chemistry::OpenBabelc::perceived;
+*external = *Chemistry::OpenBabelc::external;
 *output = *Chemistry::OpenBabelc::output;
 *input = *Chemistry::OpenBabelc::input;
 *calcvolume = *Chemistry::OpenBabelc::calcvolume;
@@ -4562,6 +4577,7 @@ bless $obErrorLog, Chemistry::OpenBabel::OBMessageHandler;
 *NOTWRITABLE = *Chemistry::OpenBabelc::NOTWRITABLE;
 *WRITEONEONLY = *Chemistry::OpenBabelc::WRITEONEONLY;
 *WRITEBINARY = *Chemistry::OpenBabelc::WRITEBINARY;
+*READXML = *Chemistry::OpenBabelc::READXML;
 *DEFAULTFORMAT = *Chemistry::OpenBabelc::DEFAULTFORMAT;
 *MAXSETNO = *Chemistry::OpenBabelc::MAXSETNO;
 *MAXELEM = *Chemistry::OpenBabelc::MAXELEM;

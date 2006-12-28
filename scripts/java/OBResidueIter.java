@@ -77,8 +77,8 @@ public class OBResidueIter {
     openbabelJNI.OBResidueIter_RemoveAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
   }
 
-  public void Clear() {
-    openbabelJNI.OBResidueIter_Clear(swigCPtr, this);
+  public boolean Clear() {
+    return openbabelJNI.OBResidueIter_Clear(swigCPtr, this);
   }
 
   public void SetName(String resname) {
@@ -165,8 +165,8 @@ public class OBResidueIter {
     return openbabelJNI.OBResidueIter_GetAminoAcidProperty(swigCPtr, this, arg0);
   }
 
-  public boolean GetAtomProperty(OBAtom arg0, int arg1) {
-    return openbabelJNI.OBResidueIter_GetAtomProperty(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, arg1);
+  public boolean GetAtomProperty(OBAtom a, int arg1) {
+    return openbabelJNI.OBResidueIter_GetAtomProperty(swigCPtr, this, OBAtom.getCPtr(a), a, arg1);
   }
 
   public boolean GetResidueProperty(int arg0) {

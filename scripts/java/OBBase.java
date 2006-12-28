@@ -32,6 +32,10 @@ public class OBBase {
     swigCPtr = 0;
   }
 
+  public boolean Clear() {
+    return openbabelJNI.OBBase_Clear(swigCPtr, this);
+  }
+
   public OBBase DoTransformations(SWIGTYPE_p_std__mapTstd__string_std__string_t arg0) {
     long cPtr = openbabelJNI.OBBase_DoTransformations(swigCPtr, this, SWIGTYPE_p_std__mapTstd__string_std__string_t.getCPtr(arg0));
     return (cPtr == 0) ? null : new OBBase(cPtr, false);

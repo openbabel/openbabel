@@ -52,8 +52,8 @@ public class OBResidue extends OBBase {
     openbabelJNI.OBResidue_RemoveAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
   }
 
-  public void Clear() {
-    openbabelJNI.OBResidue_Clear(swigCPtr, this);
+  public boolean Clear() {
+    return openbabelJNI.OBResidue_Clear(swigCPtr, this);
   }
 
   public void SetName(String resname) {
@@ -140,8 +140,8 @@ public class OBResidue extends OBBase {
     return openbabelJNI.OBResidue_GetAminoAcidProperty(swigCPtr, this, arg0);
   }
 
-  public boolean GetAtomProperty(OBAtom arg0, int arg1) {
-    return openbabelJNI.OBResidue_GetAtomProperty(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, arg1);
+  public boolean GetAtomProperty(OBAtom a, int arg1) {
+    return openbabelJNI.OBResidue_GetAtomProperty(swigCPtr, this, OBAtom.getCPtr(a), a, arg1);
   }
 
   public boolean GetResidueProperty(int arg0) {
