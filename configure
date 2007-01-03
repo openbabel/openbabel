@@ -23425,7 +23425,7 @@ echo "${ECHO_T}$scandirconst_cast" >&6; }
 ac_config_commands="$ac_config_commands include/openbabel/babelconfig.h"
 
 
-ac_config_files="$ac_config_files Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile src/fingerprints/Makefile src/formats/xml/Makefile src/formats/inchi/Makefile src/GUI/Makefile include/Makefile include/openbabel/Makefile include/openbabel/math/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile scripts/Makefile openbabel-2.0.pc"
+ac_config_files="$ac_config_files Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile src/fingerprints/Makefile src/formats/xml/Makefile src/formats/inchi/Makefile src/forcefields/Makefile src/GUI/Makefile include/Makefile include/openbabel/Makefile include/openbabel/math/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile scripts/Makefile openbabel-2.0.pc"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -24092,6 +24092,7 @@ do
     "src/fingerprints/Makefile") CONFIG_FILES="$CONFIG_FILES src/fingerprints/Makefile" ;;
     "src/formats/xml/Makefile") CONFIG_FILES="$CONFIG_FILES src/formats/xml/Makefile" ;;
     "src/formats/inchi/Makefile") CONFIG_FILES="$CONFIG_FILES src/formats/inchi/Makefile" ;;
+    "src/forcefields/Makefile") CONFIG_FILES="$CONFIG_FILES src/forcefields/Makefile" ;;
     "src/GUI/Makefile") CONFIG_FILES="$CONFIG_FILES src/GUI/Makefile" ;;
     "include/Makefile") CONFIG_FILES="$CONFIG_FILES include/Makefile" ;;
     "include/openbabel/Makefile") CONFIG_FILES="$CONFIG_FILES include/openbabel/Makefile" ;;

@@ -205,19 +205,18 @@ namespace OpenBabel
     OBMol     *_parent;
     std::vector<std::vector<unsigned int> > _vangle;
     std::vector<std::vector<unsigned int> >::iterator _i;
-    std::vector<unsigned int> _ptr;
+    std::vector<unsigned int> _angle;
   public:
 
-    OBMolAngleIter() :_parent(NULL), _ptr(0) { }
+    OBMolAngleIter() :_parent(NULL) { }
     OBMolAngleIter(OBMol *mol);
     OBMolAngleIter(OBMol &mol);
     OBMolAngleIter(const OBMolAngleIter &ai);
 
     OBMolAngleIter& operator=(const OBMolAngleIter &ai);
-    operator bool() const        { return _ptr.size() != 0; }
+    operator bool() const        { return (_i != _vangle.end()); }
     OBMolAngleIter& operator++();
-    //std::vector<unsigned int> operator->() const   { return _ptr;      }
-    std::vector<unsigned int> operator*() const    { return _ptr;     }
+    std::vector<unsigned int> operator*() const    { return _angle;     }
   };
 
   //! \brief Iterate over all torsions in an OBMol
@@ -225,38 +224,38 @@ namespace OpenBabel
     OBMol *_parent;
     std::vector<std::vector<unsigned int> > _vtorsion;
     std::vector<std::vector<unsigned int> >::iterator _i;
-    std::vector<unsigned int> _ptr;
+    std::vector<unsigned int> _torsion;
   public:
 
-    OBMolTorsionIter() :_parent(NULL), _ptr(0) { }
+    OBMolTorsionIter() :_parent(NULL) { }
     OBMolTorsionIter(OBMol *mol);
     OBMolTorsionIter(OBMol &mol);
     OBMolTorsionIter(const OBMolTorsionIter &ai);
 
     OBMolTorsionIter& operator=(const OBMolTorsionIter &ai);
-    operator bool() const        { return _ptr.size() != 0; }
+    operator bool() const        { return (_i != _vtorsion.end()); }
     OBMolTorsionIter& operator++();
-    //std::vector<unsigned int> operator->() const   { return _ptr;      }
-    std::vector<unsigned int> operator*() const    { return _ptr;     }
+    std::vector<unsigned int> operator*() const    { return _torsion;     }
   };
   
   //! \brief Iterate over all pairs of atoms (>1-4) in an OBMol
   class OBAPI OBMolPairIter {
     OBMol *_parent;
-    std::queue<std::pair<int, int> > _vpair;
-    std::pair<int, int> *_ptr;
+    std::vector<std::vector<unsigned int> > _vpair;
+    std::vector<std::vector<unsigned int> >::iterator _i;
+    std::vector<unsigned int> _pair;
+ 
   public:
 
-    OBMolPairIter() :_parent(NULL), _ptr(NULL) { }
+    OBMolPairIter() :_parent(NULL) { }
     OBMolPairIter(OBMol *mol);
     OBMolPairIter(OBMol &mol);
     OBMolPairIter(const OBMolPairIter &ai);
 
     OBMolPairIter& operator=(const OBMolPairIter &ai);
-    operator bool() const        { return _ptr != NULL; }
+    operator bool() const        { return (_i != _vpair.end()); }
     OBMolPairIter& operator++();
-    std::pair<int, int>* operator->() const   { return _ptr;      }
-    std::pair<int, int>& operator*() const    { return *_ptr;     }
+    std::vector<unsigned int> operator*() const    { return _pair;     }
   };
 
 

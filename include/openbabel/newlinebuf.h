@@ -43,7 +43,9 @@ namespace OpenBabel
   private:
     std::streambuf * const _internalBuf; //!< the internal streambuf to filter
     bool _returnChar;            //!< whether we've just seen a '\r' character
+    int _chcount;
     char _buffer[8192];
+    std::streampos seekoff(std::streamoff off, std::ios_base::seekdir way, std::ios_base::openmode which);
   };
 
   //! \brief A convenience istream wrapper which calls an internal newlinebuf

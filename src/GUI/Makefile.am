@@ -1,7 +1,7 @@
 EXTRA_DIST = OBGUI.h optswx.h selformats.h stdwx.h
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data \	
-				-I$(top_srcdir)/include
+INCLUDES = -I$(top_srcdir)/data -I$(top_srcdir)/include
+
 AM_CPPFLAGS =  @WX_CPPFLAGS@
 AM_CXXFLAGS =  @WX_CXXFLAGS@
 

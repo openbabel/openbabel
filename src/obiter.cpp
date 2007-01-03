@@ -878,8 +878,10 @@ namespace OpenBabel
     ad->FillAngleArray(_vangle);
     
     _parent = mol;
-    _i = _vangle.begin();
-    _ptr = *_i;
+    if (!_vangle.empty()) {
+      _i = _vangle.begin();
+      _angle = *_i;
+    }
   }
 
   OBMolAngleIter::OBMolAngleIter(OBMol &mol)
@@ -889,14 +891,16 @@ namespace OpenBabel
     ad->FillAngleArray(_vangle);
     
     _parent = &mol;
-    _i = _vangle.begin();
-    _ptr = *_i;
+    if (!_vangle.empty()) {
+      _i = _vangle.begin();
+      _angle = *_i;
+    }
   }
 
   OBMolAngleIter::OBMolAngleIter(const OBMolAngleIter &ai)
   {
     _parent = ai._parent;
-    _ptr = ai._ptr;
+    _angle = ai._angle;
     _vangle = ai._vangle;
     _i = ai._i;
   }
@@ -906,7 +910,7 @@ namespace OpenBabel
     if (this != &ai)
       {
         _parent = ai._parent;
-        _ptr = ai._ptr;
+        _angle = ai._angle;
         _vangle = ai._vangle;
         _i = ai._i;
       }
@@ -916,11 +920,9 @@ namespace OpenBabel
   OBMolAngleIter& OBMolAngleIter::operator++()
   {
     _i++;
-    
-    if (_i != _vangle.end()) {
-      _ptr = *_i;
-    } else
-      _ptr = (std::vector<unsigned int>) 0;
+
+    if (_i != _vangle.end())
+      _angle = *_i;
  
     return *this;
   }
@@ -969,10 +971,12 @@ namespace OpenBabel
     mol->FindTorsions();
     OBTorsionData *td = (OBTorsionData *) mol->GetData(OBGenericDataType::TorsionData);
     td->FillTorsionArray(_vtorsion);
-    
+
     _parent = mol;
-    _i = _vtorsion.begin();
-    _ptr = *_i;
+    if (!_vtorsion.empty()) {
+      _i = _vtorsion.begin();
+      _torsion = *_i;
+    }
   }
 
   OBMolTorsionIter::OBMolTorsionIter(OBMol &mol)
@@ -982,14 +986,16 @@ namespace OpenBabel
     td->FillTorsionArray(_vtorsion);
     
     _parent = &mol;
-    _i = _vtorsion.begin();
-    _ptr = *_i;
+    if (!_vtorsion.empty()) {
+      _i = _vtorsion.begin();
+      _torsion = *_i;
+    }
   }
 
   OBMolTorsionIter::OBMolTorsionIter(const OBMolTorsionIter &ai)
   {
     _parent = ai._parent;
-    _ptr = ai._ptr;
+    _torsion = ai._torsion;
     _vtorsion = ai._vtorsion;
     _i = ai._i;
   }
@@ -999,22 +1005,20 @@ namespace OpenBabel
     if (this != &ai)
       {
         _parent = ai._parent;
-        _ptr = ai._ptr;
+        _torsion = ai._torsion;
         _vtorsion = ai._vtorsion;
         _i = ai._i;
       }
-    return *this;
+      return *this;
   }
 
   OBMolTorsionIter& OBMolTorsionIter::operator++()
   {
     _i++;
     
-    if (_i != _vtorsion.end()) {
-      _ptr = *_i;
-    } else
-      _ptr = (std::vector<unsigned int>) 0;
- 
+    if (_i != _vtorsion.end())
+      _torsion = *_i;
+
     return *this;
   }
 
@@ -1058,7 +1062,7 @@ namespace OpenBabel
 
   OBMolPairIter::OBMolPairIter(OBMol *mol)
   {
-    std::pair<int, int> atoms;
+    std::vector<unsigned int> atoms;
     OBAtom *i, *j;
     bool not14;
     
@@ -1081,20 +1085,23 @@ namespace OpenBabel
           }
 
           if (!not14) {
-            atoms.first = a->GetIdx();
-            atoms.second = b->GetIdx();
-            _vpair.push(atoms);
-          }
-        } 
+	    atoms.clear();
+            atoms.push_back(a->GetIdx());
+	    atoms.push_back(b->GetIdx());
+	    _vpair.push_back(atoms);
+	  }
+	} 
       }
     }
 
-    _ptr = &_vpair.front();
+    _i = _vpair.begin();
+    if (!_vpair.empty())
+      _pair = *_i;
   }
 
   OBMolPairIter::OBMolPairIter(OBMol &mol)
   {
-    std::pair<int, int> atoms;
+    std::vector<unsigned int> atoms;
     OBAtom *i, *j;
     bool not14;
  
@@ -1117,42 +1124,45 @@ namespace OpenBabel
           }
 
           if (!not14) {
-            atoms.first = a->GetIdx();
-            atoms.second = b->GetIdx();
-            _vpair.push(atoms);
+	    atoms.clear();
+            atoms.push_back(a->GetIdx());
+	    atoms.push_back(b->GetIdx());
+	    _vpair.push_back(atoms);
           }
         } 
       }
     }
 
-    _ptr = &_vpair.front();
+    _i = _vpair.begin();
+    if (!_vpair.empty())
+      _pair = *_i;
   }
 
   OBMolPairIter::OBMolPairIter(const OBMolPairIter &ai)
   {
     _parent = ai._parent;
-    _ptr = ai._ptr;
+    _pair = ai._pair;
     _vpair = ai._vpair;
+    _i = ai._i;
   }
 
   OBMolPairIter& OBMolPairIter::operator=(const OBMolPairIter &ai)
   {
     if (this != &ai) {
       _parent = ai._parent;
-      _ptr = ai._ptr;
+      _pair = ai._pair;
       _vpair = ai._vpair;
+      _i = ai._i;
     }
     return *this;
   }
 
   OBMolPairIter& OBMolPairIter::operator++()
   {
-    _vpair.pop();
+    _i++;
 
-    if (!_vpair.empty()) {
-      _ptr = &_vpair.front();
-    } else
-      _ptr = NULL;
+    if (_i != _vpair.end())
+      _pair = *_i;
  
     return *this;
   }

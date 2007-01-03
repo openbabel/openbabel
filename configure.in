@@ -263,7 +263,8 @@ AC_CONFIG_COMMANDS([include/openbabel/babelconfig.h],
 AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
 		   src/formats/Makefile src/fingerprints/Makefile \
 		   src/formats/xml/Makefile src/formats/inchi/Makefile \
-       src/GUI/Makefile include/Makefile include/openbabel/Makefile \
+       src/forcefields/Makefile src/GUI/Makefile \
+       include/Makefile include/openbabel/Makefile \
        include/openbabel/math/Makefile \
 		   test/Makefile test/cmltest/Makefile tools/Makefile \
 		   doc/Makefile scripts/Makefile openbabel-2.0.pc)

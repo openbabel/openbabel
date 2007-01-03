@@ -108,7 +108,7 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	uninstall-recursive
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = math formats fingerprints GUI
+DIST_SUBDIRS = math formats fingerprints forcefields GUI
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
@@ -256,7 +256,7 @@ EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
 	dlhandler_win32.cpp
 
-SUBDIRS = math formats fingerprints $(am__append_1)
+SUBDIRS = math formats fingerprints forcefields $(am__append_1)
 INCLUDES = -I$(top_srcdir)/data/ -I$(top_srcdir)/include
 lib_LTLIBRARIES = libopenbabel.la
 @BUILD_SHARED_FALSE@dlhandler = 

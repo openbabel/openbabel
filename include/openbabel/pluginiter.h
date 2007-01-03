@@ -24,9 +24,9 @@ General Public License for more details.
 namespace OpenBabel
 {
 
-  //! \class PluginIter pluginiter.h <openbabel/pluginiter.h>
-  //! \brief Template class used to simplify dynamic classes discovered at runtime
-  //! \see openbabel/plugininter.h plugininter.h
+//! \class PluginIter pluginiter.h <openbabel/pluginiter.h>
+//! \brief Template class used to simplify dynamic classes discovered at runtime
+//! \see openbabel/plugininter.h plugininter.h
 template<typename T>
 class OBAPI PluginIter
 {
@@ -58,6 +58,8 @@ public:
   T* FindDefaultType() const { return _default; }
 
   std::string ID() const { return _itr->first; }
+  
+  std::string Description() const { return _itr->second->Description(); }
 
   void ToStart() { _itr = _map.begin(); }
   
@@ -91,7 +93,7 @@ static BaseClass* FindDefaultType(){ return Iter().FindDefaultType();}\
 #endif //OB_PLUGINITER_H
 
 /** \file pluginiter.h
-    \brief Simplify 'plugin' classes to be discovered and/or loaded at runtime.
+   \brief Simplify 'plugin' classes to be discovered and/or loaded at runtime.
 
 The code in this file makes it easy to make 'plugin' classes. These classes are
 derived from an abstract base class, like OBFingerprint. The derived classes 
@@ -100,14 +102,14 @@ are only discovered at runtime, so no existing code needs to be changed when
 adding a new derived class. In some builds the new code can be added or removed 
 by just moving a DLL or so file.
 
-<h2>Step by step instructions</h2>
+<h2>Step-by-Step Instructions</h2>
 
 1) In the header file for YourBaseClass.
 Make sure to include the plugininter.h header and 
 in the definition of YourBaseClass add the MAKE_PLUGIN macro 
 and a pure virtual function Description().
 \code
-#include <openbabel/pluginiter.h>
+#include <openbabel/plugininter.h>
 class YourBaseClass
 {
   MAKE_PLUGIN(YourBaseClass)

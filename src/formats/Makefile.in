@@ -14,7 +14,6 @@
 
 @SET_MAKE@
 
-
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
@@ -40,8 +39,7 @@ host_triplet = @host@
 @BUILD_XML_TRUE@am__append_1 = xml
 @BUILD_INCHI_TRUE@am__append_2 = inchi
 subdir = src/formats
-DIST_COMMON = $(libopenbabelinclude_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -56,8 +54,7 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(pkglibdir)" \
-	"$(DESTDIR)$(libopenbabelincludedir)"
+am__installdirs = "$(DESTDIR)$(pkglibdir)"
 pkglibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(noinst_LTLIBRARIES) $(pkglib_LTLIBRARIES)
 APIInterface_la_LIBADD =
@@ -575,8 +572,6 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	install-recursive installcheck-recursive installdirs-recursive \
 	pdf-recursive ps-recursive uninstall-info-recursive \
 	uninstall-recursive
-libopenbabelincludeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(libopenbabelinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = xml inchi
@@ -723,10 +718,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data -I$(top_srcdir)/include
-# Make sure to install the inchi_api.h header
-libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
-libopenbabelinclude_HEADERS = inchi_api.h chemdrawcdx.h
+INCLUDES = -I$(top_srcdir)/data -I$(top_srcdir)/include
 EXTRA_DIST = exampleformat.cpp
 SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
@@ -1193,23 +1185,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-libopenbabelincludeHEADERS: $(libopenbabelinclude_HEADERS)
-	@$(NORMAL_INSTALL)
-	test -z "$(libopenbabelincludedir)" || $(mkdir_p) "$(DESTDIR)$(libopenbabelincludedir)"
-	@list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(libopenbabelincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(libopenbabelincludedir)/$$f'"; \
-	  $(libopenbabelincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(libopenbabelincludedir)/$$f"; \
-	done
-
-uninstall-libopenbabelincludeHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(libopenbabelincludedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(libopenbabelincludedir)/$$f"; \
-	done
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
@@ -1388,10 +1363,10 @@ distdir: $(DISTFILES)
 check-am: all-am
 check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-recursive
-all-am: Makefile $(LTLIBRARIES) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(libopenbabelincludedir)"; do \
+	for dir in "$(DESTDIR)$(pkglibdir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -1442,7 +1417,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-libopenbabelincludeHEADERS
+install-data-am:
 
 install-exec-am: install-pkglibLTLIBRARIES
 
@@ -1470,8 +1445,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-libopenbabelincludeHEADERS \
-	uninstall-pkglibLTLIBRARIES
+uninstall-am: uninstall-info-am uninstall-pkglibLTLIBRARIES
 
 uninstall-info: uninstall-info-recursive
 
@@ -1483,15 +1457,13 @@ uninstall-info: uninstall-info-recursive
 	distclean-recursive distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-libopenbabelincludeHEADERS install-man \
-	install-pkglibLTLIBRARIES install-strip installcheck \
-	installcheck-am installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic maintainer-clean-recursive \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am uninstall-info-am \
-	uninstall-libopenbabelincludeHEADERS \
-	uninstall-pkglibLTLIBRARIES
+	install-info-am install-man install-pkglibLTLIBRARIES \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	maintainer-clean-recursive mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool mostlyclean-recursive \
+	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	uninstall-info-am uninstall-pkglibLTLIBRARIES
 
 @BUILD_PCH_TRUE@all.h.gch: all.h Makefile obmolecformat.h $(srcdir)/../babelconfig.h \
 @BUILD_PCH_TRUE@	$(srcdir)/../mol.h $(srcdir)/../obconversion.h $(srcdir)/../base.h \

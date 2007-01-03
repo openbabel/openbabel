@@ -2,7 +2,7 @@ EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
 	dlhandler_win32.cpp
 
-SUBDIRS = math formats fingerprints
+SUBDIRS = math formats fingerprints forcefields
 if BUILD_WXGUI
 SUBDIRS += GUI
 endif
@@ -35,8 +35,8 @@ if BUILD_SHARED
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 
 libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-			@LTLIBOBJS@ @LIBDL@
+			forcefields/libforcefields.la @LTLIBOBJS@ @LIBDL@
 else !BUILD_SHARED
 libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-			formats/libformats.la @LTLIBOBJS@
+			formats/libformats.la forcefields/libforcefields.la @LTLIBOBJS@
 endif
