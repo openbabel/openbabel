@@ -25,6 +25,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -48,14 +50,14 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/EHsc "
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\msvc&quot;;..;..\..\src;..\..\src\formats;..\..\data;..\..\src\formats\xml;..\..\src\gui;$(NOINHERIT)"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\msvc&quot;;..;..\..\src;..\..\src\formats;..\..\data;..\..\src\formats\xml;..\..\src\gui;..\..\include;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;wxUSE_NO_MANIFEST"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderThrough="babelconfig.h"
+				PrecompiledHeaderThrough="openbabel/babelconfig.h"
 				PrecompiledHeaderFile=".\debug\OpenBabelGUI.pch"
 				AssemblerListingLocation=".\debug\"
 				ObjectFile=".\debug\"
@@ -131,6 +133,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -232,15 +236,15 @@
 			Name="Header Files"
 			>
 			<File
-				RelativePath="..\babelconfig.h"
+				RelativePath="..\..\include\openbabel\babelconfig.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\dlhandler.h"
+				RelativePath="..\..\include\openbabel\dlhandler.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\obconversion.h"
+				RelativePath="..\..\include\openbabel\obconversion.h"
 				>
 			</File>
 			<File

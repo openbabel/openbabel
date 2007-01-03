@@ -41,7 +41,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..;../../src;&quot;$(PYTHON_INCLUDE)&quot;"
+				AdditionalIncludeDirectories="..\..\include;..;../../src;&quot;$(PYTHON_INCLUDE)&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;OBPYTHON_EXPORTS;USING_DYNAMIC_LIBS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -110,7 +110,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Running SWIG to generate openbabel-python_wrap.cpp"
-					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 					AdditionalDependencies="../OpenBabelDLL/OpenBabelDLL.lib"
 					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
 				/>

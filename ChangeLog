@@ -1,4 +1,8 @@
 2007-01-03 Chris Morley <ob@gaseq.co.uk>
+
+	Update Windows project files. But Python SWIG is not working.
+	
+2007-01-03 Chris Morley <ob@gaseq.co.uk>
 	
 	Moved libxml and inchi header files to /include.
 

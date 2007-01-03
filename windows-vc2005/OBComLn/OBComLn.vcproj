@@ -26,6 +26,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -45,7 +47,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\OBConversion,.."
+				AdditionalIncludeDirectories="..\..\include;..\OBConversion,.."
 				PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;USING_DYNAMIC_LIBS;HAVE_CONFIG_H"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -105,7 +107,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description=""
 				CommandLine=""
 			/>
 		</Configuration>
@@ -121,6 +122,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -139,7 +142,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\OBConversion,.."
+				AdditionalIncludeDirectories="..\..\include;..\OBConversion,.."
 				PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;USING_DYNAMIC_LIBS;HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -202,7 +205,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description=""
 				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
@@ -215,26 +217,8 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\..\src\main.cpp"
+				RelativePath="..\..\tools\babel.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -242,15 +226,15 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
-				RelativePath="..\babelconfig.h"
+				RelativePath="..\..\include\openbabel\babelconfig.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\dlhandler.h"
+				RelativePath="..\..\include\openbabel\dlhandler.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\obconversion.h"
+				RelativePath="..\..\include\openbabel\obconversion.h"
 				>
 			</File>
 		</Filter>

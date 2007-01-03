@@ -25,6 +25,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -48,14 +50,14 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/EHsc "
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\msvc&quot;;..;..\..\src;..\..\src\formats;..\..\data;..\..\src\formats\xml;..\..\src\gui;$(NOINHERIT)"
+				AdditionalIncludeDirectories="..\..\include;&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\msvc&quot;;..;..\..\src;..\..\src\formats;..\..\data;..\..\src\formats\xml;..\..\src\gui;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;wxUSE_NO_MANIFEST"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="babelconfig.h"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough="openbabel/babelconfig.h"
 				PrecompiledHeaderFile=".\debug\OpenBabelGUI.pch"
 				AssemblerListingLocation=".\debug\"
 				ObjectFile=".\debug\"
@@ -130,6 +132,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -155,7 +159,7 @@
 				AdditionalOptions="/EHsc "
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\msvc&quot;;..;..\..\src;..\..\src\formats;..\..\data;..\..\src\formats\xml;..\..\src\gui;.\..\..\include;$(NOINHERIT)"
+				AdditionalIncludeDirectories="&quot;..\..\include&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\msvc&quot;;..;..\..\src;..\..\src\formats;..\..\data;..\..\src\formats\xml;..\..\src\gui;.\..\..\include;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;__WXMSW__;_WINDOWS;NOPCH;wxUSE_NO_MANIFEST"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -232,163 +236,151 @@
 			Name="Header Files"
 			>
 			<File
-				RelativePath="..\..\src\atom.h"
+				RelativePath="..\..\include\openbabel\atom.h"
 				>
 			</File>
 			<File
-				RelativePath="..\babelconfig.h"
+				RelativePath="..\..\include\openbabel\babelconfig.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\base.h"
+				RelativePath="..\..\include\openbabel\base.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\bitvec.h"
+				RelativePath="..\..\include\openbabel\bitvec.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\bond.h"
+				RelativePath="..\..\include\openbabel\bond.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\bondtyper.h"
+				RelativePath="..\..\include\openbabel\bondtyper.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\chains.h"
+				RelativePath="..\..\include\openbabel\chains.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\chiral.h"
+				RelativePath="..\..\include\openbabel\chiral.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\crk.h"
+				RelativePath="..\..\include\openbabel\data.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\data.h"
+				RelativePath="..\..\include\openbabel\dlhandler.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\dlhandler.h"
+				RelativePath="..\..\include\openbabel\fingerprint.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\extable.h"
+				RelativePath="..\..\include\openbabel\forcefield.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\fingerprint.h"
+				RelativePath="..\..\include\openbabel\generic.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\generic.h"
+				RelativePath="..\..\include\openbabel\grid.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\grid.h"
+				RelativePath="..\..\include\openbabel\internalcoord.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\inchi_api.h"
+				RelativePath="..\..\include\openbabel\kinetics.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\kinetics.h"
+				RelativePath="..\..\include\openbabel\matrix.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\matrix.h"
+				RelativePath="..\..\include\openbabel\math\matrix3x3.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\math\matrix3x3.h"
+				RelativePath="..\..\include\openbabel\mol.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\mol.h"
+				RelativePath="..\..\include\openbabel\molchrg.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\molchrg.h"
+				RelativePath="..\..\include\openbabel\newlinebuf.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\obconversion.h"
+				RelativePath="..\..\include\openbabel\obconversion.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\oberror.h"
+				RelativePath="..\..\include\openbabel\oberror.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\obifstream.h"
+				RelativePath="..\..\include\openbabel\obiter.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\obiter.h"
+				RelativePath="..\..\include\openbabel\obmolecformat.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\obmolecformat.h"
+				RelativePath="..\..\include\openbabel\obutil.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\obutil.h"
+				RelativePath="..\..\include\openbabel\parsmart.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\parsmart.h"
+				RelativePath="..\..\include\openbabel\patty.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\patty.h"
+				RelativePath="..\..\include\openbabel\phmodel.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\phmodel.h"
+				RelativePath="..\..\include\openbabel\rand.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\ring.h"
+				RelativePath="..\..\include\openbabel\residue.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\rotamer.h"
+				RelativePath="..\..\include\openbabel\ring.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\rotor.h"
+				RelativePath="..\..\include\openbabel\rotamer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\smi.h"
+				RelativePath="..\..\include\openbabel\rotor.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\typer.h"
+				RelativePath="..\..\include\openbabel\typer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\types.h"
+				RelativePath="..\..\include\openbabel\math\vector3.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\math\vector3.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\xml\xml.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\zipstream.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\zipstreamimpl.h"
+				RelativePath="..\..\include\openbabel\xml.h"
 				>
 			</File>
 		</Filter>
@@ -756,10 +748,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\inchiformatREAD.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\formats\jaguarformat.cpp"
 				>
 				<FileConfiguration
@@ -1002,13 +990,6 @@
 			<File
 				RelativePath="..\..\src\formats\turbomoleformat.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\typer.cpp"
@@ -1104,7 +1085,23 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\forcefield.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\forcefield.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\formats\getinchi.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\formats\inchiformat.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\internalcoord.h"
 			>
 		</File>
 		<File
@@ -1120,31 +1117,22 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\newlinebuf.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\newlinebuf.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\GUI\OBGUI.cpp"
 			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				ExcludedFromBuild="true"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				ExcludedFromBuild="true"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-				/>
-			</FileConfiguration>
 		</File>
 		<File
 			RelativePath="..\..\src\GUI\OBGUI.h"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
-				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
@@ -1152,7 +1140,6 @@
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32"
-				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
@@ -1164,19 +1151,15 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\GUI\OBGUInew.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\GUI\OBGUInew.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\src\GUI\optswx.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\..\src\GUI\optswx.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\include\openbabel\pluginiter.h"
 			>
 		</File>
 		<File
@@ -1202,26 +1185,6 @@
 		<File
 			RelativePath="..\..\src\GUI\stdwx.h"
 			>
-		</File>
-		<File
-			RelativePath=".\struc.cpp"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				ExcludedFromBuild="true"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				ExcludedFromBuild="true"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-				/>
-			</FileConfiguration>
 		</File>
 		<File
 			RelativePath=".\struc.h"
