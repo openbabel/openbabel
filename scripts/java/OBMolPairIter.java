@@ -52,13 +52,8 @@ public class OBMolPairIter {
     return new OBMolPairIter(openbabelJNI.OBMolPairIter_inc(swigCPtr, this), false);
   }
 
-  public SWIGTYPE_p_std__pairTint_int_t deref() {
-    long cPtr = openbabelJNI.OBMolPairIter_deref(swigCPtr, this);
-    return (cPtr == 0) ? null : new SWIGTYPE_p_std__pairTint_int_t(cPtr, false);
-  }
-
-  public SWIGTYPE_p_std__pairTint_int_t __ref__() {
-    return new SWIGTYPE_p_std__pairTint_int_t(openbabelJNI.OBMolPairIter___ref__(swigCPtr, this), false);
+  public vectorUnsignedInt __ref__() {
+    return new vectorUnsignedInt(openbabelJNI.OBMolPairIter___ref__(swigCPtr, this), true);
   }
 
 }

@@ -2406,7 +2406,6 @@ class openbabelJNI {
   public final static native long new_OBMolPairIter__SWIG_2(long jarg1, OBMolPairIter jarg1_);
   public final static native boolean OBMolPairIter_good(long jarg1, OBMolPairIter jarg1_);
   public final static native long OBMolPairIter_inc(long jarg1, OBMolPairIter jarg1_);
-  public final static native long OBMolPairIter_deref(long jarg1, OBMolPairIter jarg1_);
   public final static native long OBMolPairIter___ref__(long jarg1, OBMolPairIter jarg1_);
   public final static native void delete_OBMolPairIter(long jarg1);
   public final static native long new_OBMolRingIter__SWIG_0();

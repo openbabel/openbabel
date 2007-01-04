@@ -3013,7 +3013,6 @@ class _OBMolPairIter(object):
         _openbabel._OBMolPairIter_swiginit(self,_openbabel.new__OBMolPairIter(*args))
     def good(*args): return _openbabel._OBMolPairIter_good(*args)
     def inc(*args): return _openbabel._OBMolPairIter_inc(*args)
-    def deref(*args): return _openbabel._OBMolPairIter_deref(*args)
     def __ref__(*args): return _openbabel._OBMolPairIter___ref__(*args)
     __swig_destroy__ = _openbabel.delete__OBMolPairIter
     __del__ = lambda self : None;

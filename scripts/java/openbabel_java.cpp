@@ -37628,35 +37628,17 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolPairIter_1inc(JNIEnv *jenv, jcla
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolPairIter_1deref(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
-  std::pair<int,int > *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBMolPairIter **)&jarg1; 
-  result = (std::pair<int,int > *)((OpenBabel::OBMolPairIter const *)arg1)->operator ->();
-  *(std::pair<int,int > **)&jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolPairIter_1_1_1ref_1_1(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBMolPairIter *arg1 = (OpenBabel::OBMolPairIter *) 0 ;
-  std::pair<int,int > *result = 0 ;
+  std::vector<unsigned int > result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(OpenBabel::OBMolPairIter **)&jarg1; 
-  {
-    std::pair<int,int > &_result_ref = ((OpenBabel::OBMolPairIter const *)arg1)->operator *();
-    result = (std::pair<int,int > *) &_result_ref;
-  }
-  *(std::pair<int,int > **)&jresult = result; 
+  result = ((OpenBabel::OBMolPairIter const *)arg1)->operator *();
+  *(std::vector<unsigned int > **)&jresult = new std::vector<unsigned int >((std::vector<unsigned int > &)result); 
   return jresult;
 }
 

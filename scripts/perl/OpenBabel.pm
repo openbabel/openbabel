@@ -4405,7 +4405,6 @@ sub new {
 
 *good = *Chemistry::OpenBabelc::OBMolPairIter_good;
 *inc = *Chemistry::OpenBabelc::OBMolPairIter_inc;
-*deref = *Chemistry::OpenBabelc::OBMolPairIter_deref;
 *__ref__ = *Chemistry::OpenBabelc::OBMolPairIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
