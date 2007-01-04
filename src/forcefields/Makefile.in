@@ -48,7 +48,7 @@ CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libforcefields_la_LIBADD =
-am_libforcefields_la_OBJECTS = forcefieldmm2.lo forcefieldtripos.lo
+am_libforcefields_la_OBJECTS = forcefieldmm2.lo forcefieldghemical.lo
 libforcefields_la_OBJECTS = $(am_libforcefields_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -209,8 +209,9 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 noinst_LTLIBRARIES = libforcefields.la
-libforcefields_la_SOURCES = forcefieldmm2.cpp forcefieldtripos.cpp
-AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/include
+libforcefields_la_SOURCES = forcefieldmm2.cpp forcefieldghemical.cpp
+AM_CPPFLAGS = -I$(top_srcdir)/include
+EXTRA_DIST = forcefieldmm2.h forcefieldghemical.h
 all: all-am
 
 .SUFFIXES:
@@ -224,9 +225,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/forcefields/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/forcefields/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  src/forcefields/Makefile
+	  $(AUTOMAKE) --gnu  src/forcefields/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -262,8 +263,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefieldghemical.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefieldmm2.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefieldtripos.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \

@@ -17,7 +17,8 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
-#include "forcefieldtripos.h"
+
+#include "forcefieldghemical.h"
 
 using namespace std;
 

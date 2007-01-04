@@ -1,3 +1,10 @@
+2007-01-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefieldghemical.cpp: Fix typo from file
+	renaming. (Can't use Tripos since that's a copyright.)
+
+	* Makefile.in: Regenerate all Makefiles to fix build problems.
+
 2007-01-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields: New code from Tim for MM2 and Ghemical force fields.
