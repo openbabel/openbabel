@@ -1,3 +1,8 @@
+2007-01-05 Chris Morley <ob@gaseq.co.uk>
+
+	* include/openbabel/fingerprint.h: Give OBFingerprint a virtual
+	destructor. Noel found this was why SWIG was failing.
+	
 2007-01-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefieldghemical.cpp: Fix typo from file

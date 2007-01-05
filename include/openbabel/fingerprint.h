@@ -42,6 +42,9 @@ class OBFPRT OBFingerprint
 MAKE_PLUGIN(OBFingerprint)
 
 public:
+
+  virtual ~OBFingerprint(){}
+
   /// Sets the nth bit
   void SetBit(std::vector<unsigned int>& vec, unsigned int n);	
 
