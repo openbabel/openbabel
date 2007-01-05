@@ -208,7 +208,7 @@ namespace OpenBabel
     vector<unsigned int> nbr_atms;
     vector<vector3> nbr_crds;
     bool use_central_atom = false,is2D=false;
-    double hbrad = etab.CorrectedBondRad(1,0);
+    //   double hbrad = etab.CorrectedBondRad(1,0);
            
     if (!mol.Has3D()) //give peudo Z coords if mol is 2D
       {
@@ -278,7 +278,7 @@ namespace OpenBabel
     nbr_crds.push_back(tmp_crd);
     }
     */
-    for(int j=0;j < nbr_crds.size();++j) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
+    for(unsigned int j=0;j < nbr_crds.size();++j) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
       {
         // are the coordinates zero to 6 or more significant figures
         if (nbr_crds[j].IsApprox(VZero, 1.0e-6) && use_central_atom==false)

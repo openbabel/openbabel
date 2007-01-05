@@ -561,7 +561,7 @@ char InChIFormat::CompareInchi(const char* Inchi1, const char* Inchi2)
   vector<string> layers1, layers2;
   tokenize(layers1,s1,"/\n");
   tokenize(layers2,s2,"/\n");
-  int i;
+  unsigned int i;
   if(layers1.size()<layers2.size())
     layers1.swap(layers2); //layers1 is the longest
   
@@ -803,4 +803,3 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 }
 
 }//namespace OpenBabel
-

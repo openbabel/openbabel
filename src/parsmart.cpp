@@ -2423,27 +2423,28 @@ namespace OpenBabel
     return 0;
   }
 
-  static BondExpr *NotBondExpr( BondExpr *expr )
-  {
-    register BondExpr *result;
-  
-    if( expr->type == BE_LEAF )
-      {
-        if( expr->leaf.prop == BL_CONST )
-          {
-            expr->leaf.value = !expr->leaf.value;
-            return expr;
-          }
-      }
-    else if( expr->type == BE_NOT )
-      {
-        result = expr->mon.arg;
-        expr->mon.arg = (BondExpr*)0;
-        FreeBondExpr(expr);
-        return result;
-      }
-    return BuildBondNot(expr);
-  }
+// This function isn't used anywhere
+//   static BondExpr *NotBondExpr( BondExpr *expr )
+//   {
+//     register BondExpr *result;
+//   
+//     if( expr->type == BE_LEAF )
+//       {
+//         if( expr->leaf.prop == BL_CONST )
+//           {
+//             expr->leaf.value = !expr->leaf.value;
+//             return expr;
+//           }
+//       }
+//     else if( expr->type == BE_NOT )
+//       {
+//         result = expr->mon.arg;
+//         expr->mon.arg = (BondExpr*)0;
+//         FreeBondExpr(expr);
+//         return result;
+//       }
+//     return BuildBondNot(expr);
+//   }
 
 
 // This function isn't used anywhere
@@ -3047,7 +3048,7 @@ namespace OpenBabel
         src = _pat->bond[bidx].src;
         dst = _pat->bond[bidx].dst;
       
-        if (_map[src] <= 0 || _map[src] > _mol->NumAtoms())
+        if (_map[src] <= 0 || _map[src] > (signed)_mol->NumAtoms())
           return;
       
         AtomExpr *aexpr = _pat->atom[dst].expr;

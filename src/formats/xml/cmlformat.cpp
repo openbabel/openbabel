@@ -940,7 +940,7 @@ Input options, e.g. -a2\n \
     static const xmlChar C_ATOM[]       = "atom";
     static const xmlChar C_BOND[]       = "bond";
     static const xmlChar C_ID[]         = "id";
-    static const xmlChar C_TITLE[]      = "title";
+    // static const xmlChar C_TITLE[]      = "title";
     static const xmlChar C_NAME[]       = "name";
     static const xmlChar C_ATOMPARITY[] = "atomParity";
     //	static const xmlChar C_BONDSTEREO[] = "bondStereo";
@@ -1489,7 +1489,7 @@ Input options, e.g. -a2\n \
   {
     static const xmlChar C_CRYSTAL[]  = "crystal";
     static const xmlChar C_SCALAR[] = "scalar";
-    static const xmlChar C_Z[] = "z";
+    // static const xmlChar C_Z[] = "z";
     static const xmlChar C_TITLE[] = "title";
     static const xmlChar C_UNITS[] = "units";
 
@@ -1539,7 +1539,7 @@ Input options, e.g. -a2\n \
 
   void CMLFormat::WriteProperties(OBMol& mol, bool& propertyListWritten)
   {
-    static const xmlChar C_DICTREF[]      = "dictRef";
+    // static const xmlChar C_DICTREF[]      = "dictRef";
     static const xmlChar C_PROPERTYLIST[] = "propertyList";
     static const xmlChar C_PROPERTY[]     = "property";
     static const xmlChar C_SCALAR[]       = "scalar";

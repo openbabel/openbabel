@@ -52,7 +52,7 @@ int main(int argc,char **argv)
   else
     {
       FileIn  = argv[1];
-      const char* p = strrchr(FileIn,'.');
+      //   const char* p = strrchr(FileIn,'.');
     }
 
   // Find Input filetype
@@ -97,7 +97,7 @@ int main(int argc,char **argv)
         
           if (cd){
             vector<unsigned int> x=cd->GetAtom4Refs(input);
-            int n=0;
+            size_t n=0;
             cout <<"Atom4refs:";
             for (n=0;n<x.size();++n)
               cout <<" "<<x[n];
@@ -141,7 +141,7 @@ int main(int argc,char **argv)
           else {
             cout << "Volume= "<< CalcSignedVolume(mol,atom) << endl;
             OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
-            int n;
+            size_t n;
             vector<unsigned int> refs=cd->GetAtom4Refs(output);
             cout<<"Atom refs=";
             for(n=0;n<refs.size();++n)cout<<" "<<refs[n];

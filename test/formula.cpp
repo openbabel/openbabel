@@ -89,7 +89,7 @@ int main(int argc,char *argv[])
   OBMol mol;
   OBConversion conv(&mifs, &cout);
   unsigned int currentTest = 0;
-  double mass;
+  // double mass;
 
   if(! conv.SetInAndOutFormats("SMI","SMI"))
     {
@@ -227,4 +227,3 @@ void GenerateFormulaReference()
 	cerr << " Molecular formula results written successfully" << endl;
   return;
 }
-

@@ -29,7 +29,7 @@ class PubChemFormat : public XMLMoleculeFormat
 public:
 	PubChemFormat() 
 	{
-		OBConversion::RegisterFormat("pc", this);
+    OBConversion::RegisterFormat("pc", this, "chemical/x-ncbi-asn1-xml");
 		XMLConversion::RegisterXMLFormat(this);
 	}
 	virtual const char* NamespaceURI()const{return "http://www.ncbi.nlm.nih.gov";}
@@ -44,6 +44,8 @@ Minimal extraction of chemical structure information only.\n \
   virtual const char* SpecificationURL()
   {return "ftp://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd";};
 
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-ncbi-asn1-xml"; };
 
   virtual unsigned int Flags()
   {

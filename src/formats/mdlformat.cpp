@@ -49,7 +49,7 @@ Write Options, e.g. -x3\n \
  m  write no properties\n \
 ";
     };
-// 2  output V2000 (default) or\n \
+/* 2  output V2000 (default) or\n \ */
 
     virtual const char* SpecificationURL()
     {return "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";};

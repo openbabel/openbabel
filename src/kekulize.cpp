@@ -277,7 +277,7 @@ namespace OpenBabel
     std::vector<OBBond*>::iterator b;
     OBAtom *nbr;
   
-    bool second_pass=false;
+    // bool second_pass=false;
     // for( i=1; i<= NumAtoms(); ++i) {
     //     if(currentState[i] == 1) { // the atom can make a double bond
     //       atom = GetAtom(i);

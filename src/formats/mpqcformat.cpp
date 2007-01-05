@@ -177,7 +177,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
+    //   unsigned int i;
     char buffer[BUFF_SIZE];
 
     ofs << "% " << mol.GetTitle() << "\n";

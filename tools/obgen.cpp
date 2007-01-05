@@ -102,7 +102,7 @@ int main(int argc,char **argv)
       
       mol.AddHydrogens(false, true);
 
-      OBAtom *atom, *nbr, *nbr2, *nbr3, *nbrs;
+      OBAtom *atom, *nbr, *nbr2, *nbr3/*, *nbrs*/;
       vector<OBNodeBase*>::iterator i;
       vector<OBEdgeBase*>::iterator j;
 
@@ -139,8 +139,8 @@ int main(int argc,char **argv)
  
           }
           if (nbr3) {
-            double bestangle, angle, bestscore, score;
-            int nbr_count;
+            // double bestangle, angle, bestscore, score;
+            // int nbr_count;
 
             coord->_c = mol.GetAtom(get_nbr(atom, mol, 3));
 	    coord->_tor = torang;
@@ -209,7 +209,7 @@ int main(int argc,char **argv)
 }
 
 int get_nbr (OBAtom* atom, OBMol &mol, int level) {
-  OBAtom *nbr,*nbr2,*nbr3;
+  OBAtom *nbr,*nbr2/*,*nbr3*/;
   vector<OBEdgeBase*>::iterator i;
   
   if (level == 2)
@@ -254,5 +254,3 @@ int get_nbr (OBAtom* atom, OBMol &mol, int level) {
   }
   return 0;
 }
-
-

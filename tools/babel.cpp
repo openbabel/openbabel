@@ -202,7 +202,7 @@ int main(int argc,char *argv[])
                     if(*nam != '\0')
                       {
                         string txt;
-                        unsigned int i;
+                        int i;
                         for(i=0; i<Conv.GetOptionParams(nam, OBConversion::GENOPTIONS)
                               && arg<argc-1 && argv[arg+1];++i) //removed  && *argv[arg+1]!='-'
                           {

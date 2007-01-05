@@ -184,7 +184,7 @@ namespace OpenBabel
       //! \return The index to the neighboring atom of @p ptr (i.e., the end if @p ptr is the start)
       /** \warning If @p ptr is not part of the bond, the beginning atom
           index will always be returned **/
-      int     GetNbrAtomIdx(OBAtom *ptr)
+      unsigned int     GetNbrAtomIdx(OBAtom *ptr)
         {
           return((ptr!=_bgn)?_bgn->GetIdx():_end->GetIdx());
         }

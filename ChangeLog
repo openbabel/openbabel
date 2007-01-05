@@ -1,3 +1,11 @@
+2007-01-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/*.cpp, include/openbabel/*.h: Compiler warning fixes from
+	Jean Brefort.
+
+	* include/openbabel/residue.h, include/openbabel/generic.h: Remove
+	static declarations for OBGenericDataType and residue properties.
+
 2007-01-05 Chris Morley <ob@gaseq.co.uk>
 
 	* include/openbabel/fingerprint.h: Give OBFingerprint a virtual

@@ -100,7 +100,7 @@ namespace OpenBabel
   {
     OBFFParameter *parameter;
     OBAtom *a, *b, *c, *d;
-    OBBond *bc;
+    //   OBBond *bc;
     double e, energy, tor, k, s, n, cosine;
  
     energy = 0.0f;
@@ -143,13 +143,13 @@ namespace OpenBabel
     return energy;
   }
 
-  //
+  /*
   //  a
   //   \
   //    b---d      plane = a-b-c
   //   /
   //  c
-  //
+  */
   double OBForceFieldTripos::E_OOP() 
   {
     OBAtom *a, *b, *c, *d;
@@ -246,12 +246,13 @@ namespace OpenBabel
   OBForceFieldTripos &OBForceFieldTripos::operator=(OBForceFieldTripos &src)
   {
     _mol = src._mol;
+    return *this;
   }
 
   bool OBForceFieldTripos::Setup(OBMol &mol)
   {
     _mol = mol;
-    SetTRPSTypes();
+    return SetTRPSTypes();
   }
  
   bool OBForceFieldTripos::ParseParamFile()
@@ -339,7 +340,9 @@ namespace OpenBabel
       ttab.Translate(atomtype, atom->GetType());
       std::cout << atomtype << std::endl;
       atom->SetType(atomtype);
-    }  
+    }
+    // this method should retrun something meaningfull
+    return 0;
   }
   
   double OBForceFieldTripos::Energy()

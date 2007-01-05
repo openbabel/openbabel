@@ -54,7 +54,7 @@ int int32lemem(char *data)
   value=(int)((unsigned char*)data)[0]+((int)((unsigned char*)data)[1]<<8)+
         ((int)((unsigned char*)data)[2]<<16)+((int)((unsigned char*)data)[3]<<24);
   intmino2=-1073741824;
-  if (INT_MIN!=0x80000000&&(value&0x80000000)) value=(intmino2*2)+(value&0x7fffffff);
+  if ((unsigned int) INT_MIN!=0x80000000&&(value&0x80000000)) value=(intmino2*2)+(value&0x7fffffff);
   return(value); }
 
 int int32le(int32 value)
@@ -359,17 +359,17 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   //Define some references so we can use the old parameter names
   istream &ifs = *pConv->GetInStream();
   OBMol &mol = *pmol;
-  const char* title = pConv->GetTitle();
+  //   const char* title = pConv->GetTitle();
 
   bool hetatom;
   char buffer[8],resname[4],atomname[5];
   char *str;
-  int i,j,m,q;
-  int resno,chainNum,link,linked,linktype,atoms,element,links,chain;
-  int samenames,reslen,charged;
+  unsigned int i,j/*,m,q*/;
+  unsigned int /*resno,chainNum,*/link,linked,linktype,atoms,element,links,chain;
+  int /*samenames,*/reslen,charged;
   unsigned int infosize,size;
   mobdata *mob;
-  struct mobatom *srcatom,*atom2,*resstart;
+  struct mobatom *srcatom,/**atom2,*/*resstart;
   struct atomid id;
   OBAtom *dstatom;
   OBResidue *res;
@@ -476,17 +476,17 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   ostream &ofs = *pConv->GetOutStream();
   OBMol &mol = *pmol;
 
-  bool hetatom;
-  char buffer[32],resname[4],atomname[5];
+  //  bool hetatom;
+  char buffer[32],/*resname[4],*/atomname[5];
   char double1[8]={0,0,0,0,0,0,-16,0x3f};
-  char *str;
-  int i,j,m,q,pos;
-  int resno,chainNum,link,linktype,atoms,element,links,chain;
-  int samenames,reslen,bondorder,flags;
-  unsigned int infosize,size;
-  mobdata *mob;
-  struct mobatom *atom2,*resstart;
-  struct atomid id;
+  //   char *str;
+  int i,j,/*m,q,*/pos;
+  int /*resno,chainNum,link,linktype,*/atoms,element,links/*,chain*/;
+  int /*samenames,reslen,*/bondorder,flags;
+  unsigned int /*infosize,*/size;
+  //   mobdata *mob;
+  //   struct mobatom *atom2,*resstart;
+  //   struct atomid id;
   OBAtom *srcatom,*linkedatom;
   OBResidue *res;
   OBBond *bond;

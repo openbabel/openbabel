@@ -34,7 +34,7 @@ namespace OpenBabel
     //Register this format type ID in the constructor
     ChemDrawBinaryFormat()
     {
-      OBConversion::RegisterFormat("cdx",this, "chemical-x-cdx");
+      OBConversion::RegisterFormat("cdx",this, "chemical/x-cdx");
     }
 
     virtual const char* Description() //required
@@ -109,7 +109,7 @@ namespace OpenBabel
     list<cdBond>::const_iterator bondsIter;
     cdBond prevBond;
     cdBond oneBond;
-    OBPairData *pd;
+    //    OBPairData *pd;
     int iInt=0, depth=1;
 
 
@@ -342,7 +342,7 @@ namespace OpenBabel
     /* For multi-molecule formats, leave the input stream at the start of the
        next molecule, ready for this routine to be called again. 
 
-       /* Return true if ok. Returning false means discard the OBMol and stop
+       Return true if ok. Returning false means discard the OBMol and stop
        converting, unless the -e option is set. With a multi-molecule inputstream
        this will skip the current molecule and continue with the next, if SkipObjects()
        has been defined. If it has not, and continuation after errors is still required,
@@ -566,7 +566,7 @@ namespace OpenBabel
     //	OBPairData *data = new OBPairData;   // To hold ChemDraw's indexnr
     INT32 x, y;
     int nodeType = 1;
-    char strNodeId[20];
+    //    char strNodeId[20];
 
     atom.SetAtomicNum(6);
     //	data->SetAttribute("nodeId");
@@ -897,4 +897,3 @@ namespace OpenBabel
   }
 
 } //namespace OpenBabel
-

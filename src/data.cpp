@@ -540,7 +540,7 @@ namespace OpenBabel
       return(false);
 
     if (_from >= 0 && _to >= 0 &&
-        _from < _table.size() && _to < _table.size())
+        _from < (signed)_table.size() && _to < (signed)_table.size())
       {
         vector<vector<string> >::iterator i;
         for (i = _table.begin();i != _table.end();++i)
@@ -566,7 +566,7 @@ namespace OpenBabel
       return("");
 
     if (_from >= 0 && _to >= 0 &&
-        _from < _table.size() && _to < _table.size())
+        _from < (signed)_table.size() && _to < (signed)_table.size())
       {
         vector<vector<string> >::iterator i;
         for (i = _table.begin();i != _table.end();++i)
@@ -586,7 +586,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (_from > 0 && _from < _table.size())
+    if (_from > 0 && _from < (signed)_table.size())
       return( _colnames[_from] );
     else
       return( _colnames[0] );
@@ -597,7 +597,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (_to > 0 && _to < _table.size())
+    if (_to > 0 && _to < (signed)_table.size())
       return( _colnames[_to] );
     else
       return( _colnames[0] );

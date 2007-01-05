@@ -148,7 +148,7 @@ int main(int argc,char **argv)
   OBMol mol; //NF
   vector< vector <int> > maplist;      // list of matched atoms
   vector< vector <int> >::iterator m;  // and its iterators
-  int tindex;
+  //   int tindex;
 
   // Set the angles
   for (;;)

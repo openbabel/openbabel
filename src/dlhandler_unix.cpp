@@ -140,7 +140,7 @@ int DLHandler::findFiles (std::vector<std::string>& file_list,const std::string 
       file_list.push_back(filename);
       return -1;
     }
-  int pos = filename.find_last_of("\\/");
+  size_t pos = filename.find_last_of("\\/");
   if(pos!=string::npos)
     return findFiles(file_list,filename.substr(pos+1), filename.substr(0,pos+1));
   else

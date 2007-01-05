@@ -2401,7 +2401,7 @@ namespace OpenBabel
         }
 
         //get connected atoms in order
-        OBAtom *nbr;
+        //   OBAtom *nbr;
         vector<int>::iterator j;
         vector<unsigned int> vnbor,vsmiles;
         FOR_NBORS_OF_ATOM(nbr,atom)
@@ -2411,10 +2411,11 @@ namespace OpenBabel
     
         for (j = _storder.begin();j != _storder.end();j++)
           {
-            for(int x=0;x<vnbor.size();x++)
+            for(unsigned int x=0;x<vnbor.size();x++)
             {
-                if(*j==vnbor[x])
-                    vsmiles.push_back(vnbor[x]);
+              // this cast is not ideal but what else?
+              if(static_cast<unsigned>(*j)==vnbor[x])
+                vsmiles.push_back(vnbor[x]);
             }
           }
         if(vsmiles.size()==3)

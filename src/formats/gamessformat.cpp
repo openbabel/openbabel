@@ -346,7 +346,7 @@ namespace OpenBabel
               gmsset->AddData(curset);
             }
 
-            for(int i=1; vs[i] != "$END" && i < vs.size(); i++) {
+            for(unsigned int i=1; vs[i] != "$END" && i < vs.size(); i++) {
               string::size_type loc = vs[i].find("=",0);
               if(loc != string::npos)
               {
@@ -605,7 +605,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
+    //   unsigned int i;
     char buffer[BUFF_SIZE];
 
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
@@ -681,7 +681,7 @@ namespace OpenBabel
       ofs << "Put symmetry info here" << endl << endl;
     }
 
-    OBAtom *atom;
+    //  OBAtom *atom;
     FOR_ATOMS_OF_MOL(atom, mol)
     {
       snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %8.5f  %8.5f  %8.5f ",

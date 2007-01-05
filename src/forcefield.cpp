@@ -31,22 +31,22 @@ namespace OpenBabel
   int OBForceField::GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)
   {
     if (!b)
-      for (int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (a == parameter[idx].a)
 	  return idx;
 
     if (!c)
-      for (int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b)) || ((a == parameter[idx].b) && (b == parameter[idx].a)))
 	  return idx;
 
     if (!d)
-      for (int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c)) || 
 	    ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a)))
 	  return idx;
  
-    for (int idx=0; idx < parameter.size(); idx++)
+    for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (d == parameter[idx].d)) || 
           ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && (d == parameter[idx].a)))
 	return idx;
@@ -59,28 +59,28 @@ namespace OpenBabel
     OBFFParameter *par;
 
     if (!b)
-      for (int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (a == parameter[idx].a) {
 	  par = &parameter[idx];
 	  return par;
 	}
 
     if (!c)
-      for (int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b)) || ((a == parameter[idx].b) && (b == parameter[idx].a))) {
 	  par = &parameter[idx];
 	  return par;
 	}
 
     if (!d)
-      for (int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c)) || 
 	    ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a))) {
 	  par = &parameter[idx];
 	  return par;
         }
 
-    for (int idx=0; idx < parameter.size(); idx++)
+    for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (d == parameter[idx].d)) || 
           ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && (d == parameter[idx].a))) {
 	par = &parameter[idx];
@@ -98,7 +98,7 @@ namespace OpenBabel
 
     if (b == NULL) {
       std::string _a(a);
-      for (int idx=0; idx < parameter.size(); idx++) 
+      for (unsigned int idx=0; idx < parameter.size(); idx++) 
         if (_a == parameter[idx]._a) {
 	  par = &parameter[idx];
 	  return par;
@@ -108,7 +108,7 @@ namespace OpenBabel
     if (c == NULL) {
       std::string _a(a);
       std::string _b(b);
-      for (int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b)) || ((_a == parameter[idx]._b) && (_b == parameter[idx]._a))) {
 	  par = &parameter[idx];
 	  return par;
@@ -119,7 +119,7 @@ namespace OpenBabel
       std::string _a(a);
       std::string _b(b);
       std::string _c(c);
-      for (int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c)) || 
 	    ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && (_c == parameter[idx]._a))) {
 	  par = &parameter[idx];
@@ -131,7 +131,7 @@ namespace OpenBabel
     std::string _b(b);
     std::string _c(c);
     std::string _d(d);
-    for (int idx=0; idx < parameter.size(); idx++)
+    for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c) && (_d == parameter[idx]._d)) || 
           ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && (_c == parameter[idx]._b) && (_d == parameter[idx]._a))) {
 	par = &parameter[idx];
@@ -146,7 +146,7 @@ namespace OpenBabel
   {
     double e_n1, e_n2;
     double h;
-    double fmax;
+    //   double fmax;
     vector3 vf;
     std::vector<vector3> old_xyz;
 

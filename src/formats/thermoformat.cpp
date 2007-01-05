@@ -66,7 +66,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
 	double DefaultMidT = 1500;
 	char ln[BUFF_SIZE];
-	int i;
+	unsigned int i;
 
 	//find line with 1 in col 80
 	do
@@ -121,7 +121,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 		}
 	}
 	double LoT, HiT, MidT=0;
-	int nc = sscanf(p,"%c%10lf%10lf10%lf",&phase, &LoT, &HiT, &MidT);
+	/* int nc = */sscanf(p,"%c%10lf%10lf10%lf",&phase, &LoT, &HiT, &MidT);
 	pND->SetPhase(phase);
 	pND->SetLoT(LoT);
 	pND->SetHiT(HiT);
@@ -160,7 +160,7 @@ bool ThermoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		return false;
 	}
 	ostream &ofs = *pConv->GetOutStream();
-	int i;
+	unsigned int i;
 
 	string formula = pmol->GetSpacedFormula();
 	vector<string> toks;
@@ -203,4 +203,3 @@ bool ThermoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 }
 
 }//OpenBabel namespace
-

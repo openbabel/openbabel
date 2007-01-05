@@ -189,7 +189,7 @@ namespace OpenBabel
     bool xml_true=false, pre_true=false, idx_true=false;
     ttab.SetFromType("INT");
     ttab.SetToType("SBN");
-    int layer[LAYER_DEPTH][LAYER_SIZE]={0}; // layer stores the frequencies of each atom type
+    int layer[LAYER_DEPTH][LAYER_SIZE]; // layer stores the frequencies of each atom type
     ClearLayer(layer);
     
 		if(pConv->IsOption("n")) // appending file name to molecule names

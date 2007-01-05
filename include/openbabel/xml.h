@@ -94,7 +94,7 @@ namespace OpenBabel
 
       void OutputToStream()
         {
-          int ret=xmlOutputBufferFlush(_buf);
+          xmlOutputBufferFlush(_buf);
         }
 
       static XMLBaseFormat* GetDefaultXMLClass() //TODO make dependent on object type
@@ -240,4 +240,4 @@ namespace OpenBabel
 
 //! \file
 //! \brief Declaration of XMLConversion, 
-//!  declaration and definition of XMLBaseFormat and XMLMoleculeFormat 
+//!  declaration and definition of XMLBaseFormat and XMLMoleculeFormat

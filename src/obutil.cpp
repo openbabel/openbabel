@@ -409,7 +409,7 @@ namespace OpenBabel
     double dst = 0.0, ang = 0.0, tor = 0.0;
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
-    int index;
+    unsigned int index;
 
     if (vic.empty())
       return;

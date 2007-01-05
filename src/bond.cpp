@@ -485,7 +485,7 @@ namespace OpenBabel
     uatoms.Resize(mol->NumAtoms()+1);
     ubonds.Resize(mol->NumAtoms()+1);
 
-    for (;uatoms.CountBits() < mol->NumAtoms();)
+    for (;static_cast<unsigned int>(uatoms.CountBits()) < mol->NumAtoms();)
       {
         if (curr.empty())
           for (atom = mol->BeginAtom(i);atom;atom = mol->NextAtom(i))

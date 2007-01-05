@@ -322,7 +322,7 @@ namespace OpenBabel
     for (i = 0;i < mol.NumAtoms();++i)
       {
         min = 10E10;
-        for (j = 0;j < (signed)mol.NumAtoms();++j)
+        for (j = 0;j < mol.NumAtoms();++j)
           if ((_atom[i])->GetAtomicNum() == (_atom[j])->GetAtomicNum() &&
               (_atom[i])->GetHyb()       == (_atom[j])->GetHyb())
             if (!bset[j])

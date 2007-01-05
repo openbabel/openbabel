@@ -39,7 +39,7 @@ int main(int argc,char **argv)
 
   char *FileIn = NULL;
   char *program_name = argv[0];
-  char *iext;
+  //   char *iext;
 
   OBConversion conv(&cin,&cout);
   OBFormat *pFormat = conv.FindFormat("smi"); // default format is SMILES

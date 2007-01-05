@@ -214,10 +214,9 @@ namespace OpenBabel {
 
   OBConversion::OBConversion(istream* is, ostream* os) : 
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
-    EndNumber(0), Count(-1), m_IsLast(true), MoreFilesToCome(false),
-    OneObjectOnly(false), pOb1(NULL),
-    pAuxConv(NULL), m_IsFirstInput(true), 
-    NeedToFreeInStream(false), NeedToFreeOutStream(false)
+    EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
+    MoreFilesToCome(false), OneObjectOnly(false),NeedToFreeInStream(false),
+    NeedToFreeOutStream(false), pOb1(NULL), pAuxConv(NULL)
   {
     pInStream=is;
     pOutStream=os;
@@ -569,7 +568,7 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////
   bool OBConversion::SetStartAndEnd()
   {
-    int TempStartNumber=0;
+    unsigned int TempStartNumber=0;
     const char* p = IsOption("f",GENOPTIONS);
     if(p)
       {

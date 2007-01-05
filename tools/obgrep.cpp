@@ -43,7 +43,7 @@ using namespace OpenBabel;
 int main(int argc,char **argv)
 {
   char c;
-  int ntimes=0; // number of times SMARTS matches in a molecule
+  unsigned int ntimes=0; // number of times SMARTS matches in a molecule
   unsigned int numMatching = 0; // number of matching molecules (for -c flag)
   bool pattern_matched=false, ntimes_matched=true;
   bool count=false, invert=false, full=false, name_only=false;

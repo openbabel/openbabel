@@ -58,7 +58,7 @@ namespace OpenBabel
   {
     string seq;
     OBMol* pmol;
-    OBResidue *res;
+    //   OBResidue *res;
 	
     pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol == NULL)
