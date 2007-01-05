@@ -38,7 +38,89 @@ using namespace std;
 
 namespace OpenBabel
 {
-  /** \class OBResidue residue.h <openbabel/residue.h>
+   ////////////////////////////////////////////////////////////////////////////////
+  // Global Variables
+  ////////////////////////////////////////////////////////////////////////////////
+
+  char Residue[MAXRES][4] = {
+    /*===============*/
+    /*  Amino Acids  */
+    /*===============*/
+
+    /* Ordered by Cumulative Frequency in Brookhaven *
+     * Protein Databank, December 1991               */
+
+    "ALA", /* 8.4% */     "GLY", /* 8.3% */
+    "LEU", /* 8.0% */     "SER", /* 7.5% */
+    "VAL", /* 7.1% */     "THR", /* 6.4% */
+    "LYS", /* 5.8% */     "ASP", /* 5.5% */
+    "ILE", /* 5.2% */     "ASN", /* 4.9% */
+    "GLU", /* 4.9% */     "PRO", /* 4.4% */
+    "ARG", /* 3.8% */     "PHE", /* 3.7% */
+    "GLN", /* 3.5% */     "TYR", /* 3.5% */
+    "HIS", /* 2.3% */     "CYS", /* 2.0% */
+    "MET", /* 1.8% */     "TRP", /* 1.4% */
+
+    "ASX", "GLX", "PCA", "HYP",
+
+    /*===================*/
+    /*  DNA Nucleotides  */
+    /*===================*/
+    "  A", "  C", "  G", "  T",
+
+    /*===================*/
+    /*  RNA Nucleotides  */
+    /*===================*/
+    "  U", " +U", "  I", "1MA",
+    "5MC", "OMC", "1MG", "2MG",
+    "M2G", "7MG", "OMG", " YG",
+    "H2U", "5MU", "PSU",
+
+    /*=================*/
+    /*  Miscellaneous  */
+    /*=================*/
+    "UNK", "ACE", "FOR", "HOH",
+    "DOD", "SO4", "PO4", "NAD",
+    "COA", "NAP", "NDP"
+  };
+
+  /* Avoid SGI Compiler Warnings! */
+  char ElemDesc[MAXELEM][4] = {
+    { ' ', 'N', ' ', ' ' },  /* 0*/
+    { ' ', 'C', 'A', ' ' },  /* 1*/
+    { ' ', 'C', ' ', ' ' },  /* 2*/
+    { ' ', 'O', ' ', ' ' },  /* 3*/   /* 0-3   Amino Acid Backbone    */
+    { ' ', 'C', '\'', ' ' }, /* 4*/
+    { ' ', 'O', 'T', ' ' },  /* 5*/
+    { ' ', 'S', ' ', ' ' },  /* 6*/
+    { ' ', 'P', ' ', ' ' },  /* 7*/   /* 4-7   Shapely Amino Backbone */
+    { ' ', 'O', '1', 'P' },  /* 8*/
+    { ' ', 'O', '2', 'P' },  /* 9*/
+    { ' ', 'O', '5', '*' },  /*10*/
+    { ' ', 'C', '5', '*' },  /*11*/
+    { ' ', 'C', '4', '*' },  /*12*/
+    { ' ', 'O', '4', '*' },  /*13*/
+    { ' ', 'C', '3', '*' },  /*14*/
+    { ' ', 'O', '3', '*' },  /*15*/
+    { ' ', 'C', '2', '*' },  /*16*/
+    { ' ', 'O', '2', '*' },  /*17*/
+    { ' ', 'C', '1', '*' },  /*18*/   /* 7-18  Nucleic Acid Backbone  */
+    { ' ', 'C', 'A', '2' },  /*19*/   /* 19    Shapely Special        */
+    { ' ', 'S', 'G', ' ' },  /*20*/   /* 20    Cysteine Sulphur       */
+    { ' ', 'N', '1', ' ' },  /*21*/
+    { ' ', 'N', '2', ' ' },  /*22*/
+    { ' ', 'N', '3', ' ' },  /*23*/
+    { ' ', 'N', '4', ' ' },  /*24*/
+    { ' ', 'N', '6', ' ' },  /*25*/
+    { ' ', 'O', '2', ' ' },  /*26*/
+    { ' ', 'O', '4', ' ' },  /*27*/
+    { ' ', 'O', '6', ' ' }   /*28*/   /* 21-28 Nucleic Acid H-Bonding */
+  };
+
+  unsigned int ResNo  = MINRES;
+  unsigned int ElemNo = MINELEM;
+
+ /** \class OBResidue residue.h <openbabel/residue.h>
       \brief Residue information
  
       The residue information is drawn from PDB or MOL2 files (or similar), which

@@ -52,97 +52,100 @@ namespace OpenBabel
   //! Macro definitions can be used to define what each data slot is used in your code.
   namespace OBGenericDataType
   {
-    //! Unknown data type (default)
-    static const unsigned int UndefinedData =      0;
+    enum
+    {
+      //! Unknown data type (default)
+      UndefinedData =      0,
 
-    //! Arbitrary key/value data, i.e., OBPairData
-    static const unsigned int PairData      =      1;
+      //! Arbitrary key/value data, i.e., OBPairData
+      PairData      =      1,
 
-    //! Energetics data (e.g., total energy, heat of formation, etc.)
-    static const unsigned int EnergyData    =      2;
+      //! Energetics data (e.g., total energy, heat of formation, etc.)
+      EnergyData    =      2,
 
-    //! Storing text comments (one per molecule, atom, bond, etc.) (for other data, e.g., author, keyword, ... use OBPairData)
-    static const unsigned int CommentData   =      3;
+      //! Storing text comments (one per molecule, atom, bond, etc.) (for other data, e.g., author, keyword, ... use OBPairData)
+      CommentData   =      3,
 
-    //! Arbitrary information about conformers, i.e., OBConformerData
-    static const unsigned int ConformerData =      4;
+      //! Arbitrary information about conformers, i.e., OBConformerData
+      ConformerData =      4,
 
-    //! Bond data external to OpenBabel, i.e., OBExternalBond, OBExternalBondData
-    static const unsigned int ExternalBondData =   5;
+      //! Bond data external to OpenBabel, i.e., OBExternalBond, OBExternalBondData
+      ExternalBondData =   5,
 
-    //! Information for generating & manipulating rotamers, i.e. OBRotamerList
-    static const unsigned int RotamerList =        6;
+      //! Information for generating & manipulating rotamers, i.e. OBRotamerList
+      RotamerList =        6,
 
-    //! Info. for storing bonds to atoms yet to be added, i.e. OBVirtualBond
-    static const unsigned int VirtualBondData =    7;
+      //! Info. for storing bonds to atoms yet to be added, i.e. OBVirtualBond
+      VirtualBondData =    7,
 
-    //! Information on rings in a molecule, i.e., OBRingData
-    static const unsigned int RingData =           8;
+      //! Information on rings in a molecule, i.e., OBRingData
+      RingData =           8,
 
-    //! Information about torsion/dihedral angles, i.e., OBTorsionData and OBTorsion
-    static const unsigned int TorsionData =        9;
+      //! Information about torsion/dihedral angles, i.e., OBTorsionData and OBTorsion
+      TorsionData =        9,
 
-    //! Bond angles in a molecule, i.e., OBAngle, OBAngleData
-    static const unsigned int AngleData =         10;
+      //! Bond angles in a molecule, i.e., OBAngle, OBAngleData
+      AngleData =         10,
 
-    //! Residue serial numbers
-    static const unsigned int SerialNums =        11;
+      //! Residue serial numbers
+      SerialNums =        11,
 
-    //! Crystallographic unit cell data, i.e., OBUnitCell
-    static const unsigned int UnitCell =          12;
+      //! Crystallographic unit cell data, i.e., OBUnitCell
+      UnitCell =          12,
 
-    //! Spin data, including NMR, atomic and molecular spin, etc.
-    static const unsigned int SpinData =          13;
+      //! Spin data, including NMR, atomic and molecular spin, etc.
+      SpinData =          13,
 
-    //! Arbitrary partial and total charges, dipole moments, etc.
-    static const unsigned int ChargeData =        14;
+      //! Arbitrary partial and total charges, dipole moments, etc.
+      ChargeData =        14,
 
-    //! Symmetry data -- point and space groups, transforms, etc. i.e., OBSymmetryData
-    static const unsigned int SymmetryData =      15;
+      //! Symmetry data -- point and space groups, transforms, etc. i.e., OBSymmetryData
+      SymmetryData =      15,
 
-    //! Arbitrary chiral information (atom, bond, molecule, etc.) i.e., OBChiralData
-    static const unsigned int ChiralData =        16;
+      //! Arbitrary chiral information (atom, bond, molecule, etc.) i.e., OBChiralData
+      ChiralData =        16,
 
-    //! Atomic and molecular occupation data
-    static const unsigned int OccupationData =    17;
+      //! Atomic and molecular occupation data
+      OccupationData =    17,
 
-    //! Density (cube) data and surfaces
-    static const unsigned int DensityData =       18;
+      //! Density (cube) data and surfaces
+       DensityData =       18,
 
-    //! Electronic levels, redox states, orbitals, etc.
-    static const unsigned int ElectronicData =    19;
+      //! Electronic levels, redox states, orbitals, etc.
+      ElectronicData =    19,
 
-    //! Vibrational modes, frequencies, etc.
-    static const unsigned int VibrationData =     20;
+      //! Vibrational modes, frequencies, etc.
+      VibrationData =     20,
 
-    //! Rotational energy information
-    static const unsigned int RotationData =      21;
+      //! Rotational energy information
+      RotationData =      21,
 
-    //! Nuclear transitions (e.g., decay, fission, fusion)
-    static const unsigned int NuclearData =       22;
+      //! Nuclear transitions (e.g., decay, fission, fusion)
+      NuclearData =       22,
 
-    //! Set Data (a set of OBGenericData)
-    static const unsigned int SetData =           23;
+      //! Set Data (a set of OBGenericData)
+      SetData =           23,
 
-    // space for up to 2^14 more entries...
+      // space for up to 2^14 more entries...
 
-    //! Custom (user-defined data)
-    static const unsigned int CustomData0 = 16384;
-    static const unsigned int CustomData1 = 16385;
-    static const unsigned int CustomData2 = 16386;
-    static const unsigned int CustomData3 = 16387;
-    static const unsigned int CustomData4 = 16388;
-    static const unsigned int CustomData5 = 16389;
-    static const unsigned int CustomData6 = 16390;
-    static const unsigned int CustomData7 = 16391;
-    static const unsigned int CustomData8 = 16392;
-    static const unsigned int CustomData9 = 16393;
-    static const unsigned int CustomData10 = 16394;
-    static const unsigned int CustomData11 = 16395;
-    static const unsigned int CustomData12 = 16396;
-    static const unsigned int CustomData13 = 16397;
-    static const unsigned int CustomData14 = 16398;
-    static const unsigned int CustomData15 = 16399;
+      //! Custom (user-defined data)
+      CustomData0 = 16384,
+      CustomData1 = 16385,
+      CustomData2 = 16386,
+      CustomData3 = 16387,
+      CustomData4 = 16388,
+      CustomData5 = 16389,
+      CustomData6 = 16390,
+      CustomData7 = 16391,
+      CustomData8 = 16392,
+      CustomData9 = 16393,
+      CustomData10 = 16394,
+      CustomData11 = 16395,
+      CustomData12 = 16396,
+      CustomData13 = 16397,
+      CustomData14 = 16398,
+      CustomData15 = 16399,
+    };
   } // end namespace
 
   enum DataSource {

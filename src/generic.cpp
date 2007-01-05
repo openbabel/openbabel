@@ -220,7 +220,7 @@ namespace OpenBabel
   OBUnitCell::OBUnitCell():
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
     _a(0.0), _b(0.0), _c(0.0), _alpha(0.0), _beta(0.0), _gamma(0.0),
-    _lattice(Undefined), _numericSpaceGroup( -1 )
+    _numericSpaceGroup( -1 ), _lattice(Undefined)
   {  }
 
   OBUnitCell::OBUnitCell(const OBUnitCell &src) :
@@ -230,8 +230,8 @@ namespace OpenBabel
     _offset(src._offset),
     _v1(src._v1), _v2(src._v2), _v3(src._v3),
     _spaceGroup(src._spaceGroup),
-    _lattice(src._lattice),
-    _numericSpaceGroup( -1 )
+    _numericSpaceGroup( -1 ),
+    _lattice(src._lattice)
   {  }
 
   OBUnitCell & OBUnitCell::operator=(const OBUnitCell &src)

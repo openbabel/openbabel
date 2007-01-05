@@ -245,198 +245,136 @@ namespace OpenBabel {
   //! Residue property definitions
   namespace OBAminoAcidProperty
   {
-    static const unsigned int ACIDIC      =  0;
-    static const unsigned int ACYCLIC     =  1;
-    static const unsigned int ALIPHATIC   =  2;
-    static const unsigned int AROMATIC    =  3;
-    static const unsigned int BASIC       =  4;
-    static const unsigned int BURIED      =  5;
-    static const unsigned int CHARGED     =  6;
-    static const unsigned int CYCLIC      =  7;
-    static const unsigned int HYDROPHOBIC =  8;
-    static const unsigned int LARGE       =  9;
-    static const unsigned int MEDIUM      = 10;
-    static const unsigned int NEGATIVE    = 11;
-    static const unsigned int NEUTRAL     = 12;
-    static const unsigned int POLAR       = 13;
-    static const unsigned int POSITIVE    = 14;
-    static const unsigned int SMALL       = 15;
-    static const unsigned int SURFACE     = 16;
+	enum
+    {
+      ACIDIC      =  0,
+      ACYCLIC     =  1,
+      ALIPHATIC   =  2,
+      AROMATIC    =  3,
+      BASIC       =  4,
+      BURIED      =  5,
+      CHARGED     =  6,
+      CYCLIC      =  7,
+      HYDROPHOBIC =  8,
+      LARGE       =  9,
+      MEDIUM      = 10,
+      NEGATIVE    = 11,
+      NEUTRAL     = 12,
+      POLAR       = 13,
+      POSITIVE    = 14,
+      SMALL       = 15,
+      SURFACE     = 16,
+    };
   }
 
   //! Residue atom properties
   namespace OBResidueAtomProperty
   {
-    static const unsigned int ALPHA_CARBON     = 0;
-    static const unsigned int AMINO_BACKBONE   = 1;
-    static const unsigned int BACKBONE         = 2;
-    static const unsigned int CYSTEINE_SULPHUR = 3;
-    static const unsigned int LIGAND           = 4;
-    static const unsigned int NUCLEIC_BACKBONE = 5;
-    static const unsigned int SHAPELY_BACKBONE = 6;
-    static const unsigned int SHAPELY_SPECIAL  = 7;
-    static const unsigned int SIDECHAIN        = 8;
-    static const unsigned int SUGAR_PHOSPHATE  = 9;
+    enum
+    {
+      ALPHA_CARBON     = 0,
+      AMINO_BACKBONE   = 1,
+      BACKBONE         = 2,
+      CYSTEINE_SULPHUR = 3,
+      LIGAND           = 4,
+      NUCLEIC_BACKBONE = 5,
+      SHAPELY_BACKBONE = 6,
+      SHAPELY_SPECIAL  = 7,
+      SIDECHAIN        = 8,
+      SUGAR_PHOSPHATE  = 9,
+    };
   }
 
   //! Residue names (index into Residue[] array)
   namespace OBResidueIndex
   {
-    static const unsigned int ALA   =  0;
-    static const unsigned int GLY   =  1;
-    static const unsigned int LEU   =  2;
-    static const unsigned int SER   =  3;
-    static const unsigned int VAL   =  4;
+    enum
+    {
+      ALA   =  0,
+      GLY   =  1,
+      LEU   =  2,
+      SER   =  3,
+      VAL   =  4,
 #ifndef SWIGPERL
-    static const unsigned int THR   =  5;
+      THR   =  5,
 #endif
-    static const unsigned int LYS   =  6;
-    static const unsigned int ASP   =  7;
-    static const unsigned int ILE   =  8;
-    static const unsigned int ASN   =  9;
-    static const unsigned int GLU   = 10;
-    static const unsigned int PRO   = 11;
-    static const unsigned int ARG   = 12;
-    static const unsigned int PHE   = 13;
-    static const unsigned int GLN   = 14;
-    static const unsigned int TYR   = 15;
-    static const unsigned int HIS   = 16;
-    static const unsigned int CYS   = 17;
-    static const unsigned int MET   = 18;
-    static const unsigned int TRP   = 19;
-    static const unsigned int ASX   = 20;
-    static const unsigned int GLX   = 21;
-    static const unsigned int PCA   = 22;
-    static const unsigned int HYP   = 23;
-    static const unsigned int A     = 24;
-    static const unsigned int C     = 25;
-    static const unsigned int G     = 26;
-    static const unsigned int T     = 27;
-    static const unsigned int U     = 28;
-    static const unsigned int UPLUS = 29;
-    static const unsigned int I     = 30;
-    static const unsigned int _1MA  = 31;
-    static const unsigned int _5MC  = 32;
-    static const unsigned int OMC   = 33;
-    static const unsigned int _1MG  = 34;
-    static const unsigned int _2MG  = 35;
-    static const unsigned int M2G   = 36;
-    static const unsigned int _7MG  = 37;
-    static const unsigned int OMG   = 38;
-    static const unsigned int YG    = 39;
-    static const unsigned int H2U   = 40;
-    static const unsigned int _5MU  = 41;
-    static const unsigned int PSU   = 42;
-    static const unsigned int UNK   = 43;
-    static const unsigned int ACE   = 44;
-    static const unsigned int FOR   = 45;
-    static const unsigned int HOH   = 46;
-    static const unsigned int DOD   = 47;
-    static const unsigned int SO4   = 48;
-    static const unsigned int PO4   = 49;
-    static const unsigned int NAD   = 50;
-    static const unsigned int COA   = 51;
-    static const unsigned int NAP   = 52;
-    static const unsigned int NDP   = 53;
+      LYS   =  6,
+      ASP   =  7,
+      ILE   =  8,
+      ASN   =  9,
+      GLU   = 10,
+      PRO   = 11,
+      ARG   = 12,
+      PHE   = 13,
+      GLN   = 14,
+      TYR   = 15,
+      HIS   = 16,
+      CYS   = 17,
+      MET   = 18,
+      TRP   = 19,
+      ASX   = 20,
+      GLX   = 21,
+      PCA   = 22,
+      HYP   = 23,
+      A     = 24,
+      C     = 25,
+      G     = 26,
+      T     = 27,
+      U     = 28,
+      UPLUS = 29,
+      I     = 30,
+      _1MA  = 31,
+      _5MC  = 32,
+      OMC   = 33,
+      _1MG  = 34,
+      _2MG  = 35,
+      M2G   = 36,
+      _7MG  = 37,
+      OMG   = 38,
+      YG    = 39,
+      H2U   = 40,
+      _5MU  = 41,
+      PSU   = 42,
+      UNK   = 43,
+      ACE   = 44,
+      FOR   = 45,
+      HOH   = 46,
+      DOD   = 47,
+      SO4   = 48,
+      PO4   = 49,
+      NAD   = 50,
+      COA   = 51,
+      NAP   = 52,
+      NDP   = 53,
+    };
   }
 
   //! Residue types.
   namespace OBResidueProperty
   {
-    static const unsigned int AMINO        = 0;
-    static const unsigned int AMINO_NUCLEO = 1;
-    static const unsigned int COENZYME     = 2;
-    static const unsigned int ION          = 3;
-    static const unsigned int NUCLEO       = 4;
-    static const unsigned int PROTEIN      = 5;
-    static const unsigned int PURINE       = 6;
-    static const unsigned int PYRIMIDINE   = 7;
-    static const unsigned int SOLVENT      = 8;
-    static const unsigned int WATER        = 9;
+    enum
+     {
+      AMINO        = 0,
+      AMINO_NUCLEO = 1,
+      COENZYME     = 2,
+      ION          = 3,
+      NUCLEO       = 4,
+      PROTEIN      = 5,
+      PURINE       = 6,
+      PYRIMIDINE   = 7,
+      SOLVENT      = 8,
+      WATER        = 9,
+    };
   }
 
   ////////////////////////////////////////////////////////////////////////////////
   // Global Variables
   ////////////////////////////////////////////////////////////////////////////////
 
-  static char Residue[MAXRES][4] = {
-    /*===============*/
-    /*  Amino Acids  */
-    /*===============*/
-
-    /* Ordered by Cumulative Frequency in Brookhaven *
-     * Protein Databank, December 1991               */
-
-    "ALA", /* 8.4% */     "GLY", /* 8.3% */
-    "LEU", /* 8.0% */     "SER", /* 7.5% */
-    "VAL", /* 7.1% */     "THR", /* 6.4% */
-    "LYS", /* 5.8% */     "ASP", /* 5.5% */
-    "ILE", /* 5.2% */     "ASN", /* 4.9% */
-    "GLU", /* 4.9% */     "PRO", /* 4.4% */
-    "ARG", /* 3.8% */     "PHE", /* 3.7% */
-    "GLN", /* 3.5% */     "TYR", /* 3.5% */
-    "HIS", /* 2.3% */     "CYS", /* 2.0% */
-    "MET", /* 1.8% */     "TRP", /* 1.4% */
-
-    "ASX", "GLX", "PCA", "HYP",
-
-    /*===================*/
-    /*  DNA Nucleotides  */
-    /*===================*/
-    "  A", "  C", "  G", "  T",
-
-    /*===================*/
-    /*  RNA Nucleotides  */
-    /*===================*/
-    "  U", " +U", "  I", "1MA",
-    "5MC", "OMC", "1MG", "2MG",
-    "M2G", "7MG", "OMG", " YG",
-    "H2U", "5MU", "PSU",
-
-    /*=================*/
-    /*  Miscellaneous  */
-    /*=================*/
-    "UNK", "ACE", "FOR", "HOH",
-    "DOD", "SO4", "PO4", "NAD",
-    "COA", "NAP", "NDP"
-  };
-
-  /* Avoid SGI Compiler Warnings! */
-  static char ElemDesc[MAXELEM][4] = {
-    { ' ', 'N', ' ', ' ' },  /* 0*/
-    { ' ', 'C', 'A', ' ' },  /* 1*/
-    { ' ', 'C', ' ', ' ' },  /* 2*/
-    { ' ', 'O', ' ', ' ' },  /* 3*/   /* 0-3   Amino Acid Backbone    */
-    { ' ', 'C', '\'', ' ' }, /* 4*/
-    { ' ', 'O', 'T', ' ' },  /* 5*/
-    { ' ', 'S', ' ', ' ' },  /* 6*/
-    { ' ', 'P', ' ', ' ' },  /* 7*/   /* 4-7   Shapely Amino Backbone */
-    { ' ', 'O', '1', 'P' },  /* 8*/
-    { ' ', 'O', '2', 'P' },  /* 9*/
-    { ' ', 'O', '5', '*' },  /*10*/
-    { ' ', 'C', '5', '*' },  /*11*/
-    { ' ', 'C', '4', '*' },  /*12*/
-    { ' ', 'O', '4', '*' },  /*13*/
-    { ' ', 'C', '3', '*' },  /*14*/
-    { ' ', 'O', '3', '*' },  /*15*/
-    { ' ', 'C', '2', '*' },  /*16*/
-    { ' ', 'O', '2', '*' },  /*17*/
-    { ' ', 'C', '1', '*' },  /*18*/   /* 7-18  Nucleic Acid Backbone  */
-    { ' ', 'C', 'A', '2' },  /*19*/   /* 19    Shapely Special        */
-    { ' ', 'S', 'G', ' ' },  /*20*/   /* 20    Cysteine Sulphur       */
-    { ' ', 'N', '1', ' ' },  /*21*/
-    { ' ', 'N', '2', ' ' },  /*22*/
-    { ' ', 'N', '3', ' ' },  /*23*/
-    { ' ', 'N', '4', ' ' },  /*24*/
-    { ' ', 'N', '6', ' ' },  /*25*/
-    { ' ', 'O', '2', ' ' },  /*26*/
-    { ' ', 'O', '4', ' ' },  /*27*/
-    { ' ', 'O', '6', ' ' }   /*28*/   /* 21-28 Nucleic Acid H-Bonding */
-  };
-
-  static unsigned int ResNo  = MINRES;
-  static unsigned int ElemNo = MINELEM;
-
+  extern char Residue[MAXRES][4];
+  extern char ElemDesc[MAXELEM][4];
+  extern unsigned int ResNo;
+  extern unsigned int ElemNo;
 } // end namespace OpenBabel
 
 #endif
