@@ -27,6 +27,10 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 
 #include <openbabel/babelconfig.h>
 
+#ifndef EXTERN
+#  define EXTERN extern
+#endif
+
 #include <vector>
 #include <string>
 
@@ -371,10 +375,10 @@ namespace OpenBabel {
   // Global Variables
   ////////////////////////////////////////////////////////////////////////////////
 
-  extern char Residue[MAXRES][4];
-  extern char ElemDesc[MAXELEM][4];
-  extern unsigned int ResNo;
-  extern unsigned int ElemNo;
+  EXTERN char Residue[MAXRES][4];
+  EXTERN char ElemDesc[MAXELEM][4];
+  EXTERN unsigned int ResNo;
+  EXTERN unsigned int ElemNo;
 } // end namespace OpenBabel
 
 #endif

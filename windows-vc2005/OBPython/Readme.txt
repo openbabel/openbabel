@@ -39,5 +39,8 @@ New notes:
  To create a binary installer for the Python extension:
   In the OBPython folder, run "python setup.py --bdist_wininst --bitmap=logo.bmp"
  To install, run the created "openbabel-python-1.0.win32.exe" in the dist subfolder.
- You can test by copying testpybel.py to a folder that doesn't contain "openbabel.py*", and running it (this ensures that it uses the globally installed Open Babel; you should also ensure that PYTHONPATH does not contain a folder with "openbabel.py*").
- You can uninstall using Add/Remove Programs. There is a log of the installation in $PYTHONDIR/openbabel-python-wininst.log.
+ You can test by copying testpybel.py to a folder that doesn't contain "openbabel.py*",
+ and running it (this ensures that it uses the globally installed Open Babel;
+ you should also ensure that PYTHONPATH does not contain a folder with "openbabel.py*").
+ You can uninstall using Add/Remove Programs. 
+ There is a log of the installation in $PYTHONDIR/openbabel-python-wininst.log.

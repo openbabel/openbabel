@@ -1,3 +1,10 @@
+2007-01-05 Chris Morley <ob@gaseq.co.uk>
+
+	* include/openbabel.residue.h: Added EXTERN macro for global 
+	variables for DLL builds. (Does nothing otherwise).
+	
+	* Updated OpenBabelDLL project file.
+	
 2007-01-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/*.cpp, include/openbabel/*.h: Compiler warning fixes from

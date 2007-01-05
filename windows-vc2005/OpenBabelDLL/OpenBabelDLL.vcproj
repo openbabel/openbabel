@@ -232,6 +232,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\forcefield.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\forcefields\forcefieldghemical.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\forcefields\forcefieldmm2.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\generic.cpp"
 				>
 			</File>
@@ -391,6 +403,14 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\forcefield.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\forcefields\forcefieldghemical.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\forcefields\forcefieldmm2.h"
 				>
 			</File>
 			<File

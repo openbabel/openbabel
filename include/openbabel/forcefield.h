@@ -88,13 +88,13 @@ namespace OpenBabel
   class OBAPI OBForceField
     {
 		
-    MAKE_PLUGIN(OBForceField)
+    MAKE_PLUGIN(OBForceField);
 
     public:
       virtual ~OBForceField() {}
       /// Required short description of the force field type.
       virtual std::string Description()=0;
-      /// Returns a pointer to a fingerprint (the default if ID is empty), or NULL if not available
+      /// Returns a pointer to a forcefield (the default if ID is empty), or NULL if not available
       static OBForceField* FindForceField(const std::string& ID){ return Iter().FindType(ID);}
       
       static OBForceField* FindForceField(const char *ID)

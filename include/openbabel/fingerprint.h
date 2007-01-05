@@ -39,7 +39,7 @@ class OBFPRT OBFingerprint
 {
 //see end of cpp file for detailed documentation
 
-MAKE_PLUGIN(OBFingerprint)
+MAKE_PLUGIN(OBFingerprint);
 
 public:
 
