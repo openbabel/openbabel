@@ -1,5 +1,5 @@
 bin_PROGRAMS = babel obchiral obgrep obrotate obfit obprop obxyz obgen \
-							obrotamer # obdoc
+						obmm obrotamer # obdoc
 
 # obdoc is intended to be used for generating file format documentation
 # and is not a general end-user program
@@ -18,6 +18,9 @@ obgen_LDADD = ../src/libopenbabel.la @LIBDL@
 
 obgrep_SOURCES = obgrep.cpp
 obgrep_LDADD = ../src/libopenbabel.la @LIBDL@
+
+obmm_SOURCES = obmm.cpp
+obmm_LDADD = ../src/libopenbabel.la @LIBDL@
 
 obprop_SOURCES = obprop.cpp
 obprop_LDADD = ../src/libopenbabel.la @LIBDL@
