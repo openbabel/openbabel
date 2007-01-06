@@ -42,7 +42,7 @@ noinst_PROGRAMS = aromatic$(EXEEXT) atom$(EXEEXT) bond$(EXEEXT) \
 	invalidsmarts$(EXEEXT) invalidsmiles$(EXEEXT) \
 	iterators$(EXEEXT) math$(EXEEXT) mol$(EXEEXT) residue$(EXEEXT) \
 	rings$(EXEEXT) smarts$(EXEEXT) smilesmatch$(EXEEXT) \
-	textbuffer$(EXEEXT) unitcell$(EXEEXT)
+	textbuffer$(EXEEXT) unitcell$(EXEEXT) mmff94validate$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
 subdir = test
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -141,6 +141,10 @@ am_unitcell_OBJECTS = unitcell.$(OBJEXT)
 unitcell_OBJECTS = $(am_unitcell_OBJECTS)
 unitcell_LDADD = $(LDADD)
 unitcell_DEPENDENCIES = ../src/libopenbabel.la
+am_mmff94validate_OBJECTS = mmff94validate.$(OBJEXT)
+mmff94validate_OBJECTS = $(am_mmff94validate_OBJECTS)
+mmff94validate_LDADD = $(LDADD)
+mmff94validate_DEPENDENCIES = ../src/libopenbabel.la
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -159,7 +163,7 @@ SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(iterators_SOURCES) $(math_SOURCES) $(mol_SOURCES) \
 	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
 	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(textbuffer_SOURCES) \
-	$(unitcell_SOURCES)
+	$(unitcell_SOURCES) $(mmff94validate_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(conversion_SOURCES) $(data_SOURCES) $(formalcharge_SOURCES) \
 	$(format_SOURCES) $(formula_SOURCES) $(internalcoord_SOURCES) \
@@ -167,7 +171,7 @@ DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(iterators_SOURCES) $(math_SOURCES) $(mol_SOURCES) \
 	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
 	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(textbuffer_SOURCES) \
-	$(unitcell_SOURCES)
+	$(unitcell_SOURCES) $(mmff94validate_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -358,6 +362,7 @@ smarts_SOURCES = smartstest.cpp
 smilesmatch_SOURCES = smilesmatch.cpp
 textbuffer_SOURCES = textbuffer.cpp
 unitcell_SOURCES = unitcell.cpp
+mmff94validate_SOURCES = mmff94validate.cpp
 all: all-recursive
 
 .SUFFIXES:
@@ -489,6 +494,10 @@ textbuffer$(EXEEXT): $(textbuffer_OBJECTS) $(textbuffer_DEPENDENCIES)
 unitcell$(EXEEXT): $(unitcell_OBJECTS) $(unitcell_DEPENDENCIES) 
 	@rm -f unitcell$(EXEEXT)
 	$(CXXLINK) $(unitcell_LDFLAGS) $(unitcell_OBJECTS) $(unitcell_LDADD) $(LIBS)
+mmff94validate$(EXEEXT): $(mmff94validate_OBJECTS) $(mmff94validate_DEPENDENCIES) 
+	@rm -f mmff94validate$(EXEEXT)
+	$(CXXLINK) $(mmff94validate_LDFLAGS) $(mmff94validate_OBJECTS) $(mmff94validate_LDADD) $(LIBS)
+
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -517,6 +526,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smilesmatch.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/textbuffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unitcell.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mmff94validate.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \

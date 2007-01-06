@@ -1,5 +1,5 @@
 /**********************************************************************
-forcefieldtripos.cpp - Tripos force field.
+forcefieldghemical.cpp - Ghemical force field.
  
 Copyright (C) 2006 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
  
@@ -17,14 +17,13 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
-
 #include "forcefieldghemical.h"
 
 using namespace std;
 
 namespace OpenBabel
 {
-  double OBForceFieldTripos::E_Bond()
+  double OBForceFieldGhemical::E_Bond()
   {
     OBFFParameter *parameter;
     OBAtom *a, *b;
@@ -39,10 +38,15 @@ namespace OpenBabel
 
       parameter = GetParameter(a->GetType(), b->GetType(), _ffbondparams);
       if (parameter == NULL) {
-        parameter = GetParameter("FFFF", b->GetType(), _ffbondparams);
+        parameter = GetParameter("FFFF", a->GetType(), _ffbondparams);
+
         if (parameter == NULL) {
-          obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters", obError);
-          exit(1);
+          parameter = GetParameter("FFFF", b->GetType(), _ffbondparams);
+
+	  if (parameter == NULL) {
+            obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters", obError);
+            exit(1);
+	  }
 	}
       }
 
@@ -53,12 +57,14 @@ namespace OpenBabel
       delta2 = delta * delta;
       e = 0.5f * force * delta2;
       energy += e;
+
+//      std::cout << a->GetType() << "-" << b->GetType() << "  l_ref=" << l_ref << "   l=" << l << "   e=" << e << std::endl;
     }
 
     return energy;
   }
   
-  double OBForceFieldTripos::E_Angle()
+  double OBForceFieldGhemical::E_Angle()
   {
     OBFFParameter *parameter;
     OBAtom *a, *b, *c;
@@ -96,11 +102,11 @@ namespace OpenBabel
     return energy;
   }
  
-  double OBForceFieldTripos::E_Torsion() 
+  double OBForceFieldGhemical::E_Torsion() 
   {
     OBFFParameter *parameter;
     OBAtom *a, *b, *c, *d;
-    //   OBBond *bc;
+    OBBond *bc;
     double e, energy, tor, k, s, n, cosine;
  
     energy = 0.0f;
@@ -127,16 +133,20 @@ namespace OpenBabel
       k = parameter->dpar1;
       s = parameter->dpar2;
       
+      bc = _mol.GetBond(b, c);
+      n = 4.0f - bc->GetBondOrder();
+/*
       if ((b->GetHyb() == 2) && (c->GetHyb() == 2))
         n = 2.0f;
       else if ((b->GetHyb() == 3) || (c->GetHyb() == 3))
         n = 3.0f;
       else 
         n = 1.0f;
-
+*/
       cosine = cos(DEG_TO_RAD * (n * tor));
-      //std::cout << "n=" << n << "   tor=" << tor << "  cosine=" << cosine << std::endl;
-      e = 0.5f * k * (1.0f + s * cosine);
+      e = 0.5f * k * (n + s * cosine);
+      //e = 0.5f * k * (1.0f + s * cosine);
+      //std::cout << "BO=" << bc->GetBondOrder()<< "   n=" << n << "   tor=" << tor << "  cosine=" << cosine << "   k=" << k << "   s=" << s << "   e=" << e << std::endl;
       energy += e;
     }
 
@@ -150,7 +160,7 @@ namespace OpenBabel
   //   /
   //  c
   */
-  double OBForceFieldTripos::E_OOP() 
+  double OBForceFieldGhemical::E_OOP() 
   {
     OBAtom *a, *b, *c, *d;
     double e, energy, force, angle, angle2;
@@ -195,7 +205,7 @@ namespace OpenBabel
     return energy;
   }
  
-  double OBForceFieldTripos::E_VDW()
+  double OBForceFieldGhemical::E_VDW()
   {
     OBFFParameter *parameter_a, *parameter_b;
     OBAtom *a, *b;
@@ -236,52 +246,51 @@ namespace OpenBabel
 
   //***********************************************
   //Make a global instance
-  OBForceFieldTripos theForceFieldTripos("Tripos",false);
+  OBForceFieldGhemical theForceFieldGhemical("Ghemical",false);
   //***********************************************
 
-  OBForceFieldTripos::~OBForceFieldTripos()
+  OBForceFieldGhemical::~OBForceFieldGhemical()
   {
   }
 
-  OBForceFieldTripos &OBForceFieldTripos::operator=(OBForceFieldTripos &src)
+  OBForceFieldGhemical &OBForceFieldGhemical::operator=(OBForceFieldGhemical &src)
   {
     _mol = src._mol;
     return *this;
   }
 
-  bool OBForceFieldTripos::Setup(OBMol &mol)
+  bool OBForceFieldGhemical::Setup(OBMol &mol)
   {
     _mol = mol;
     return SetTRPSTypes();
   }
  
-  bool OBForceFieldTripos::ParseParamFile()
+  bool OBForceFieldGhemical::ParseParamFile()
   {
     vector<string> vs;
     char buffer[80];
     
     OBFFParameter parameter;
-    
+
     // open data/ghemical.prm
-    string buffer2, subbuffer, subbuffer2;
+    string buffer2, subbuffer;
     ifstream ifs1, ifs2, *ifsP;
     buffer2 = BABEL_DATADIR;
     buffer2 += FILE_SEP_CHAR;
     subbuffer = buffer2;
     subbuffer += BABEL_VERSION;
     subbuffer += FILE_SEP_CHAR;
-
-    subbuffer2 = subbuffer + "ghemical.prm";
+    subbuffer += "ghemical.prm";
     buffer2 += "ghemical.prm";
 
-    ifs1.open(subbuffer2.c_str());
+    ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
     {
       ifs2.open(buffer2.c_str());
       ifsP = &ifs2;
     }
-    
+
     while (ifsP->getline(buffer, 80)) {
       tokenize(vs, buffer);
 
@@ -329,23 +338,75 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldTripos::SetTRPSTypes()
+  bool OBForceFieldGhemical::SetTRPSTypes()
   {
-    string atomtype;
-
-    ttab.SetFromType("INT");
-    ttab.SetToType("TRPS");
+    std::vector<std::vector<int> > _mlist; //!< match list for atom typing
+    std::vector<std::pair<OBSmartsPattern*,std::string> > _vexttyp; //!< external atom type rules
+    vector<vector<int> >::iterator j;
+    vector<pair<OBSmartsPattern*,string> >::iterator i;
+    OBSmartsPattern *sp;
+    vector<string> vs;
+    char buffer[80];
  
-    FOR_ATOMS_OF_MOL(atom, _mol) {
-      ttab.Translate(atomtype, atom->GetType());
-      std::cout << atomtype << std::endl;
-      atom->SetType(atomtype);
+    _mol.SetAtomTypesPerceived();
+    
+    // open data/ghemical.prm
+    string buffer2, subbuffer;
+    ifstream ifs1, ifs2, *ifsP;
+    buffer2 = BABEL_DATADIR;
+    buffer2 += FILE_SEP_CHAR;
+    subbuffer = buffer2;
+    subbuffer += BABEL_VERSION;
+    subbuffer += FILE_SEP_CHAR;
+    subbuffer += "ghemical.prm";
+    buffer2 += "ghemical.prm";
+
+    ifs1.open(subbuffer.c_str());
+    ifsP= &ifs1;
+    if (!(*ifsP))
+    {
+      ifs2.open(buffer2.c_str());
+      ifsP = &ifs2;
     }
-    // this method should retrun something meaningfull
-    return 0;
+
+    cout  << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
+    
+    while (ifsP->getline(buffer, 80)) {
+      if (EQn(buffer, "atom", 4)) {
+      	tokenize(vs, buffer);
+
+        sp = new OBSmartsPattern;
+        if (sp->Init(vs[1]))
+          _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
+        else {
+          delete sp;
+          sp = NULL;
+          obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
+          return false;
+        }
+        
+	for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
+          if (i->first->Match(_mol)) {
+            _mlist = i->first->GetMapList();
+            for (j = _mlist.begin();j != _mlist.end();++j) {
+              _mol.GetAtom((*j)[0])->SetType(i->second);
+	    }
+          }
+        }
+      }
+    }
+
+    cout << "IDX\tTYPE" << std::endl;
+    FOR_ATOMS_OF_MOL (a, _mol)
+      cout << a->GetIdx() << "\t" << a->GetType() << std::endl;
+ 
+    if (ifs1)
+      ifs1.close();
+    if (ifs2)
+      ifs2.close();
   }
   
-  double OBForceFieldTripos::Energy()
+  double OBForceFieldGhemical::Energy()
   {
     double energy;
     
@@ -360,5 +421,5 @@ namespace OpenBabel
 
 } // end namespace OpenBabel
 
-//! \file forcefieldtripos.cpp
-//! \brief Tripos force field
+//! \file forcefieldghemical.cpp
+//! \brief Ghemical force field

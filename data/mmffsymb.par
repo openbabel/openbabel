@@ -1,0 +1,160 @@
+*
+*  NEEDS EDITING!!!
+*
+*
+*                Copyright (c) Merck and Co., Inc., 1994
+*                         All Rights Reserved
+*
+*
+* SYMBOL           TYPE  DEFINITION
+*
+  [#6^3]            1  ALKYL CARBON, SP3
+  [#6^2]            2  VINYLIC CARBON, SP2
+  [c]              37  CARBON AS IN BENZENE, PYRROLE
+  [#6^2]a=*         2  
+  [#6^2]aa=*        2  
+*                      GENERIC SP2 CARBON
+  [#6r4]           20  CARBON IN 4-MEMBERED RINGS
+  [#6D3r4]         30  OLEFINIC CARBON IN 4-MEMBERED RINGS
+  [#6]=O               3  GENERAL CARBONYL CARBON
+*                      KETONE OR ALDEHYDE CARBONYL CARBON	
+*                      AMIDE CARBONYL CARBON
+*                      UREA CARBONYL CARBON
+*                      CARBOXYLIC ACID OR ESTER CARBONYL CARBON
+*                      CARBAMATE CARBONYL CARBON
+*                      C ARBONIC ACID OR ESTER CARBONYL CARBON
+*                      THIOESTER CARBONYL CARBON, DOUBLE BONDED TO O
+  [#6]=N            3  SP2 CARBON IN C=N
+*                      GUANIDINE CARBON, DOUBLY BONDED TO N
+  [#6]=S            3  THIOESTER CARBON, DOUBLY BONDED TO S
+*                      THIOAMIDE, CARBON, DOUBLY BONDED TO S
+*                      CARBON IN >C=SO2
+*                      CARBON IN >C=S=O (SULFINYL GROUP)
+*                      THIOCARBOXYLIC ACID OR ESTER CARBONYL CARBON
+  [$(C=P)]          3  CARBON DOUBLE BONDED TO PHOSPHOROUS
+  [#6^1]            4  ACETYLENIC CARBON						[#6^1]
+*                      ALLENIC CARBON
+  [#1][#6]          5  H  ATTACHED TO C
+  [#1][#14]         5  H ATTACHED TO SI
+  [#8]              6  ALCOHOL OR ETHER OXYGEN
+*                      ESTER OR CARBOXYLIC ACID -O-
+*                      ENOLIC OR PHENOLIC OXYGEN
+*                      DIVALENT OXYGEN
+*                      THIOESTER OR THIOACID -O-
+*                      DIVALENT NITRATE "ETHER" OXYGEN
+*                      DIVALENT NITRITE "ETHER" OXYGEN
+*                      DIVALENT OXYGEN ATTACHED TO SULFUR
+*                      DIVALENT OXYGEN ATTACHED TO SULFUR
+*                      DIVALENT OXYGEN ATTACHED TO SULFUR
+*                      DIVALENT OXYGEN ATTACHED TO SULFOXIDE SULFUR
+*                      GENERAL DIVALENT OX ATTACHED TO S
+*                      DIVALENT OXYGEN ATTACHED TO PHOSPHOROUS
+*                      DIVALENT OXYGEN ATTACHED TO PHOSPHOROUS
+*                      DIVALENT OXYGEN ATTACHED TO PHOSPHOROUS
+*                      DIVALENT OXYGEN ATTACHED TO PHOSPHOROUS
+*                      GENERAL DIVALENT O
+*  O([#1])C=O        6  OXYGEN IN COOH
+*  O=CO[#1]          7  OXYGEN IN COOH
+  O=[#6]             7  GENERAL C=O
+*                      CARBONYL OXYGEN, AMIDES
+*                      CARBONYL OXYGEN, ALDEHYDES AND KETONES
+*                      CARBONYL OXYGEN, CARBOXYLIC ACIDS AND ESTERS
+  [$(O=N)]          7  NITROSO OXYGEN
+  [$(O=S)]          7  O=S IN SULFOXIDES
+*                      O=S ON SULFUR DOUBLY BONDED TO, E.G., CARBON
+  [#7^3]            8  NITROGEN IN ALIPHATIC AMINES
+  [F]              11  FLUORINE	
+  [Cl]             12  CHLORINE	
+  [Br]             13  BROMINE
+  [I]              14  IODINE
+  [#16^3]          15  SULFUR IN THIOETHERS AND MERCAPTANS
+  [#16]=O          17  SULFUR IN SULFOXIDES
+  [#16D3]=N        17  SULFUR, TRICOORD, DOUBLY BONDED TO N
+  S(~[OD1])(~[OD1]) 18 SULFUR IN SULFONES 
+  S(O)(O)           18  SULFUR IN SULFONES 
+*                      SULFUR IN SULFONAMIDES
+*                      SULFONATE SULFUR
+*                      SULFATE SULFUR
+*                      SULFONE SULPHER DOUBLY BONDED TO CARBON
+*                      SULFUR IN NITROGEN ANALOG OF A SULFONE
+  [#1][#8]         21  GENERAL H ON OXYGEN
+*                      HYDROGEN IN ALCOHOLS
+*                      HYDROGEN IN HYDROXIDE ANION
+  [#1][#7^3]       23  H-N(SP3)
+*                      AMMONIA
+*                      H-N IN PYRROLE
+*                      H-N IN IN A N-OXIDE
+*                      H ON DICOORD, NEGATIVELY CHARGED NITROGEN
+*                      GENERAL H ON NITROGEN
+  [#1]OC=O         24  H-O IN CARBOXYLIC ACIDS
+  [#1]OP           24  HYDROGEN ON OXYGEN ATTACHED TO PHOSPHOROUS
+  [#8D1]*          35  ALKOXIDE OXYGEN, NEGATIVELY CHARGED
+  [#8D1][#6^2]     35  OXIDE OXYGEN ON SP2 CARBON, NEGATIVELY CHARGED
+  [OD1]~C~[OD1]    32  OXYGEN IN CARBOXYLATE ANION
+  [#1][#7^2]       28  GENERAL H ON SP2 NITROGEN
+  [#1]NC=O         28  AMIDE HYDROGEN
+  [#1]NC=S         28  THIOAMIDE HYDROGEN
+  [#1]NC=C         28  H-N IN ENAMINES
+  [#1]Ncc          28  H-N IN ENAMINES
+  [#1]NC=N         28  H-N IN H-N-C=N
+  [#1]Ncn          28  H-N IN H-N-C=N
+  [#1]NN=C         28  H-N IN H-N-N=C
+  [#1]NN=N         28  H-N IN H-N-N=N
+  [#1]NS~O         28  H-N IN SULFONAMIDE
+  [#1]NP=O         28  H-N IN PHOSPHONAMIDE
+  [#1]NC#*         28  HYDROGEN ON N ATTACHED TO TRIPLY BONDED CARBON
+  [#7+][#8-]       32  N-OXIDE OXYGEN
+  [OD1]~N~[OD1]    32  NITRO OXYGEN
+*                             NITRO-GROUP OXYGEN IN NITRATE
+*                             NITRATE ANION OXYGEN
+  [#8][#16]         32  SINGLE TERMINAL OXYGEN ON TETRACOORD SULFUR
+*                      TERMINAL O-S IN SULFONES AND SULFONAMIDES
+*                      TERMINAL O IN SULFONATES
+*                      TERMINAL O IN SO4(-3)
+*                      TERM O IN THIOSULFINATE ANION - FORMAL CHARGE=-0.5
+  [#8][#15]        32  TERMINAL O IN PHOSPHOXIDES
+*                      TERMINAL O IN PHOSPHINATES
+*                      TERMINAL OXYGEN IN PHOSPHONATES
+*                      TERMINAL OXYGEN IN PHOSPHATES AND PHOSPHODIESTERS
+*                      OXYGEN IN CLO4(-) ANION - FORMAL CHARGE=-0.25
+  [#1][nD3]        36  H ON QUATERNARY NITROGEN
+  [#1][ND4]        36  H ON IMIDAZOLIUM-TYPE NITROGEN
+*                      H ON PROTONATED PYRIDINE NITROGEN
+*                      H ON AMIDINIUM-TYPE NITROGEN
+  [#1]=[ND3]       36  H ON PROTONATED IMINE NITROGEN
+  [#1]NC(=N)N      36  H ON GUANIDINIUM-TYPE NITROGEN
+  [#1]N=C(N)N      36  H ON GUANIDINIUM-TYPE NITROGEN
+*                      H ON N5+, N5A+ OR N5B+
+  [#1]na=*         28 
+  [#1]naa=*        28  
+  [n]              38  NITROGEN, AS IN PYRIDINE
+  [nD3]            58  PYRIDINIUM-TYPE NITROGEN - FORMAL CHARGE=1
+  NC=C             40  NITROGEN ON N-C=C
+  Ncc              40  NITROGEN ON N-C=C
+  NC=N             40  NITROGEN IN N-C=N
+  Ncn              40  NITROGEN IN N-C=N
+  NC=P             40  NITROGEN IN N-C=P
+  NC#C             40  NITROGEN ATTACHED TO C-C TRIPLE BOND
+  N(~[OD1])(~[OD1])    45  NITRO GROUP NITROGEN
+*                                   NITRATE GROUP NITROGEN
+  [#7][#6]=O       10  NITROGEN IN AMIDES
+  [#7]C=S          10  NITROGEN IN N-C=S, THIOAMIDE]
+  [#7]N=C          10  NITROGEN IN N-N=C
+  [#7]nc           10  NITROGEN IN N-N=C
+  [#7]N=N          10  NITROGEN IN N-N=N
+  [#7]nn           10  NITROGEN IN N-N=N
+  C(~[OD1])(~[OD1])           41  CARBOXYLATE ANION CARBON
+  C(~[SD1])(~[SD1])           41  CARBON IN THIOCARBOXYLATE ANION
+  [#7^1]           42  NITROGEN, TRIPLE BONDED
+  NS(~O)(~O)       43  NITROGEN IN SULFONAMIDES
+  NS(~O)(~O)(~O)   43  NITROGEN IN SULFONAMIDES, THREE O'S ON S
+  NP(~O)(~O)       43  NITROGEN IN PHOSPHONAMIDES
+  NP(~O)(~O)(~O)   43  NITROGEN IN PHOSPHONAMIDES, THREE O'S ON P
+  NC#N             43  NITROGEN ATTACHED TO CYANO GROUP
+  C(=O)O[#1]        3  CARBOXYLATE ANION CARBON
+  N=C(N)(N)        56  GUANIDINIUM-TYPE NITROGEN - FORMAL CHARGE=1/3
+  NC(=N)(N)        56  GUANIDINIUM-TYPE NITROGEN - FORMAL CHARGE=1/3
+  C(=N)(N)(N)      57  GUANIDINIUM CARBON
+  C(N)(=[NX3])     57  C IN +N=C-N RESONANCE STRUCTURES
+  [ND2]S(~[OD1])(~[OD1])  62  DEPROTONATED SULFONAMIDE N-; FORMAL CHARGE=-1
+$

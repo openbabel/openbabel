@@ -1,3 +1,20 @@
+2007-01-06 Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields: Ghemical now uses SMARTS for atomtype setting.
+	
+	* src/forcefields: Added initial MMFF94 implementation. (uses new
+	OBFFCalculation class for better performance)
+
+	* tools/obgen.cpp: Now uses OBForceField::GenerateCoordinates().
+
+	* data/: Added SMARTS patterns to ghemical.prm for typing. Added
+	ghemical.prm to Makefile.*
+	Added parameters for MMFF94 (files for validating MMFF94 not included)
+	Data needs forcefield subfolder??
+
+	* test/obmmff94validate.cpp: Validate MFF94 using the validation
+	suite.
+	
 2007-01-05 Chris Morley <ob@gaseq.co.uk>
 
 	* include/openbabel.residue.h: Added EXTERN macro for global 

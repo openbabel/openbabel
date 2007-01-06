@@ -62,7 +62,7 @@ namespace OpenBabel
 						   // dpar2 = v2
 						   // dpar3 = v3
       std::vector<OBFFParameter> _ffoutplanebendparams; // a = atom b        a
-                                                        /* b = atom d         \*/
+                                                        // b = atom d         \
 							// dpar1 = force       b---d
 							//                    /
 							//                   c
@@ -124,3 +124,4 @@ namespace OpenBabel
 
 //! \file forcefieldmm2.h
 //! \brief MM2 force field
+

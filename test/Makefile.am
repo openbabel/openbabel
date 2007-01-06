@@ -4,7 +4,8 @@ noinst_PROGRAMS = aromatic atom bond \
 	conversion data format formula formalcharge \
 	internalcoord invalidsmarts invalidsmiles \
 	iterators math mol residue rings smarts \
-	smilesmatch textbuffer unitcell
+	smilesmatch textbuffer unitcell \
+	mmff94validate
 
 bin_PROGRAMS = roundtrip
 
@@ -48,3 +49,4 @@ smarts_SOURCES = smartstest.cpp
 smilesmatch_SOURCES = smilesmatch.cpp
 textbuffer_SOURCES = textbuffer.cpp
 unitcell_SOURCES = unitcell.cpp
+mmff94validate_SOURCES = mmff94validate.cpp

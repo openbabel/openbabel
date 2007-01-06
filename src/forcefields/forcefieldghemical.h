@@ -1,5 +1,5 @@
 /**********************************************************************
-forcefieldtripos.h - Tripos force field.
+forcefieldghemical.h - Ghemical force field.
  
 Copyright (C) 2006 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
  
@@ -28,7 +28,7 @@ namespace OpenBabel
 {
   // Class OBForceFieldMM2
   // class introduction in forcefield.cpp
-  class OBAPI OBForceFieldTripos: public OBForceField
+  class OBAPI OBForceFieldGhemical: public OBForceField
   {
     protected:
       //! \return Parses the parameter file
@@ -68,19 +68,21 @@ namespace OpenBabel
       //! Setup
       bool Setup(OBMol &mol);
       //! Constructor
-      OBForceFieldTripos(std::string ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+      OBForceFieldGhemical(std::string ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
         ParseParamFile();
       }
       
-      virtual std::string Description()
-	{ return "Tripos force field.";};
+      std::string Description()
+	{ return "Ghemical force field.";};
+      
+      std::string GetUnit() { return std::string("kJ/mol"); }
 
 
       //! Destructor
-      virtual ~OBForceFieldTripos();
+      virtual ~OBForceFieldGhemical();
       //! Assignment
-      OBForceFieldTripos &operator = (OBForceFieldTripos &);
+      OBForceFieldGhemical &operator = (OBForceFieldGhemical &);
       //! Returns total energy
       double Energy();
      //! Returns the bond stretching energy
@@ -93,10 +95,10 @@ namespace OpenBabel
       //! Returns energy due to Van der Waals interactions
       double E_VDW();
 
-  }; // class OBForceFieldTripos
+  }; // class OBForceFieldGhemical
 
 }// namespace OpenBabel
 
-//! \file forcefieldtripos.h
-//! \brief Tripos force field
+//! \file forcefieldGhemical.h
+//! \brief Ghemical force field
 

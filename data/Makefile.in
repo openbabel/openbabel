@@ -208,7 +208,11 @@ table_DATA = \
 		atomtyp.txt element.txt isotope-small.txt phmodel.txt \
 		patterns.txt torlib.txt types.txt \
 		SMARTS_InteLigand.txt \
-		mm2.prm
+		mm2.prm ghemical.prm \
+		mmffoop.par mmffarom.par mmffchg.par mmfftor.par mmffang.par \
+		mmffhdef.par mmffsup.par mmffsymb.par mmfpbci.par mmffdef.par \
+		mmffvdw.par mmffstbn.par mmffbndk mmffprop.par mmffbond.par
+
 
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h \

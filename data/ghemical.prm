@@ -2,6 +2,36 @@
 // The parameters int his file are taken from ghemical.
 //
 
+// atomtypes and typerules 09.05.2000 (based on Tripos 5.2 and MMFF94)
+// [SMARTS] [atomtype id number] [typerule] [description]
+//
+// must be sorted according to the ELEMENT and COMPLEXITY OF THE TYPERULE!!!
+
+atom [#1]        0100 (-*) "general hydrogen"
+atom [#6^3]      0600 (-*) "general sp3 carbon"
+atom [#6^2]      0601 (=*) "general sp2 carbon"
+atom [#6^1]      0602 (#*) "general sp carbon"
+atom [#6](=*)=*  0602 (=*,=*) "allenic sp carbon"
+atom [c]         0603 (~*,~*) "aromatic sp2 carbon"
+//atom [#6^3r3]  0604 ([-*?*-]) "sp3 carbon in a 3-membered ring"
+//atom [#6^3r4]  0605 ([-*?*?*-]) "sp3 carbon in a 4-membered ring"
+atom [#7^3]      0700 (-*) "general sp3 nitrogen"
+atom [#7^2]      0701 (=*) "general sp2 nitrogen"
+atom [#7^1]      0702 (#*) "general sp nitrogen"
+atom [n]         0703 (~*,~*) "aromatic sp2 nitrogen"
+atom [#7D4]      0704 (-*,-*,-*,-*) "ammonium nitrogen"
+atom [#7][#6]=O  0705 (-C(=O)) "amide nitrogen"
+atom [#8^3]      0800 (-*) "general sp3 oxygen"
+atom [#8^2]      0801 (=*) "general sp2 oxygen"
+atom [F]         0900 (-*) "general fluorine"
+atom [P^3]       0F00 (-*) "general sp3 phosphorus"
+atom [S^3]       1000 (-*) "general sp3 sulphur"
+atom [S^2]       1001 (=*) "general sp2 sulphur"
+atom [S]=O       1002 (=O) "sulfoxide sulphur"
+atom [S](=O)=O   1003 (=O,=O) "sulfone sulphur"
+atom [Cl]        1100 (-*) "general chlorine"
+atom [Br]        2300 (-*) "general bromine"
+atom [I]         3500 (-*) "general iodine"
 
 // bond stretching parameters 09.05.2000 (based on Tripos 5.2 and MMFF94)
 // [id #1] [id #2] [bondtype] [opt] [fc]
