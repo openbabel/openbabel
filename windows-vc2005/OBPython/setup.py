@@ -17,16 +17,18 @@ development.
 shutil.copy("../../scripts/python/pybel.py", ".")
 
 setup(name='openbabel-python',
-      version='1.0b1',
+      version='1.0',
       author='The Open Babel development team',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/wiki/Python',
       license='http://www.gnu.org/copyleft/gpl.html',
+      scripts=["openbabel_postinstall.py"],
       py_modules=['openbabel', 'pybel'],
       # package_dir = {'': '../../scripts/python'},
       data_files=[('Lib/site-packages',
                    ['_openbabel.pyd', '../libinchi.dll',
-                    '../libxml2.dll', 'OpenBabelDLL.dll']),
+                    '../libxml2.dll', 'OpenBabelDLL.dll',
+                    '../zlib1.dll']),
                   ('Lib/site-packages/openbabel_data',
                    glob.glob("../../data/*.txt"))
                  ],

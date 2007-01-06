@@ -1,5 +1,17 @@
 2007-01-06 Noel O'Boyle <baoilleach@gmail.com>
 
+	* windows-vc2005/OBPython/setup.py: Bumped up version number to 1.0.
+	Added a postinstall script that sets BABEL_DATADIR. Included
+	zlib1.dll.
+
+	* Added windows-vc2005/OBPython/openbabel_postinstall.py: A post
+	install script that sets the value of BABEL_DATADIR.
+
+	* windows-vc2005/OBPython/README.txt: Updated instructions on how to
+	run setup.py to create the distribution.
+
+2007-01-06 Noel O'Boyle <baoilleach@gmail.com>
+
 	* scripts/openbabel-[python,java,perl,ruby].i: Added ability to handle
 	the new pluginiter.h, and in particular, its use in
 	OBFingerprint.Iter. Also, regenerated all of the dependent files.

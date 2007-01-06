@@ -36,8 +36,11 @@ Original notes:
   add the OBPython folder to the PYTHONPATH environment variable.
 
 New notes:
- To create a binary installer for the Python extension:
-  In the OBPython folder, run "python setup.py --bdist_wininst --bitmap=logo.bmp"
+ To create a binary installer for the Python extension, do as follows...
+ In the OBPython folder, run
+     python setup.py bdist_wininst
+                     --install-script=openbabel_postinstall.py
+                     --bitmap=logo.bmp
  To install, run the created "openbabel-python-1.0.win32.exe" in the dist subfolder.
  You can test by copying testpybel.py to a folder that doesn't contain "openbabel.py*",
  and running it (this ensures that it uses the globally installed Open Babel;
