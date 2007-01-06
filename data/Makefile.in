@@ -210,7 +210,7 @@ table_DATA = \
 		SMARTS_InteLigand.txt \
 		mm2.prm ghemical.prm \
 		mmffoop.par mmffarom.par mmffchg.par mmfftor.par mmffang.par \
-		mmffhdef.par mmffsup.par mmffsymb.par mmfpbci.par mmffdef.par \
+		mmffhdef.par mmffsup.par mmffsymb.par mmffpbci.par mmffdef.par \
 		mmffvdw.par mmffstbn.par mmffbndk mmffprop.par mmffbond.par
 
 

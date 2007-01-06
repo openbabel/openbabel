@@ -108,23 +108,25 @@ namespace OpenBabel
     if (c == NULL) {
       std::string _a(a);
       std::string _b(b);
-      for (unsigned int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++) {
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b)) || ((_a == parameter[idx]._b) && (_b == parameter[idx]._a))) {
 	  par = &parameter[idx];
 	  return par;
 	}
+      }
       return NULL;
     }
     if (d == NULL) {
       std::string _a(a);
       std::string _b(b);
       std::string _c(c);
-      for (unsigned int idx=0; idx < parameter.size(); idx++)
+      for (unsigned int idx=0; idx < parameter.size(); idx++) {
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c)) || 
 	    ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && (_c == parameter[idx]._a))) {
 	  par = &parameter[idx];
 	  return par;
         }
+      }
       return NULL;
     }
     std::string _a(a);
@@ -141,6 +143,109 @@ namespace OpenBabel
     return NULL;
   }
 
+  int OBForceField::get_nbr (OBAtom* atom, int level) {
+    OBAtom *nbr,*nbr2;
+    vector<OBEdgeBase*>::iterator i;
+  
+    if (level == 2)
+      if (!get_nbr(atom, 1)) return 0;
+    if (level == 3)
+      if (!get_nbr(atom, 2)) return 0;
+  
+    // Find first neighboor
+    FOR_NBORS_OF_ATOM(tmp, atom) {
+      if (atom->GetIdx() > tmp->GetIdx()) {
+        if (level == 1)
+          return tmp->GetIdx();
+        else {
+          nbr = _mol.GetAtom(tmp->GetIdx());
+          break;
+	}
+      }
+    }
+    if (level == 1) return 0;
+  
+    // Find second neighboor
+    FOR_NBORS_OF_ATOM(tmp, nbr) {
+      if (atom->GetIdx() > tmp->GetIdx()) {
+        if (level == 2)
+          return tmp->GetIdx();
+        else {
+          nbr2 = _mol.GetAtom(tmp->GetIdx());
+          break;
+	}
+      }
+    }
+    if (level == 2) return 0;
+  
+    // Find thirth neighboor
+    FOR_NBORS_OF_ATOM(tmp, nbr2) {
+      if ((atom->GetIdx() > tmp->GetIdx()) && (nbr->GetIdx() != tmp->GetIdx()))
+        return tmp->GetIdx();
+    }
+    FOR_NBORS_OF_ATOM(tmp, nbr) {
+      if ((atom->GetIdx() > tmp->GetIdx()) && (atom->GetIdx() != tmp->GetIdx()) && (nbr2->GetIdx() != tmp->GetIdx()))
+        return tmp->GetIdx();
+    }
+    
+    return 0;
+  }
+
+  void OBForceField::GenerateCoordinates() 
+  {
+    //_mol.AddHydrogens(false, true);
+
+    OBAtom *atom, *nbr, *nbr2, *nbr3;
+    vector<OBNodeBase*>::iterator i;
+    vector<OBEdgeBase*>::iterator j;
+
+    vector<OBInternalCoord*> internals;
+    OBInternalCoord *coord;
+
+    coord = new OBInternalCoord();
+    internals.push_back(coord);
+      
+    int torang;
+    for (atom = _mol.BeginAtom(i);atom;atom = _mol.NextAtom(i)) {
+      coord = new OBInternalCoord();
+      nbr = _mol.GetAtom(get_nbr(atom, 1));
+      nbr2 = _mol.GetAtom(get_nbr(atom, 2));
+      nbr3 = _mol.GetAtom(get_nbr(atom, 3));
+        
+      if (nbr) {
+        coord->_a = _mol.GetAtom(get_nbr(atom, 1));
+        OBBond *bond;
+        if ( (bond = _mol.GetBond(atom, nbr)) ) {
+          coord->_dst = bond->GetEquibLength();
+        }
+      }
+
+      if (nbr2) {
+        coord->_b = _mol.GetAtom(get_nbr(atom, 2));
+        if (nbr->GetHyb() == 3)
+          coord->_ang = 109;
+        if (nbr->GetHyb() == 2)
+          coord->_ang = 120;
+        if (nbr->GetHyb() == 1)
+          coord->_ang = 180;
+      }
+  
+      if (nbr3) {
+        // double bestangle, angle, bestscore, score;
+        // int nbr_count;
+        coord->_c = _mol.GetAtom(get_nbr(atom, 3));
+        coord->_tor = torang;
+        torang +=60;
+      }
+            
+      internals.push_back(coord);
+    }
+    
+    InternalToCartesian(internals, _mol);
+   
+    // minimize the created structure
+    SteepestDescent(150);
+  }
 
   void OBForceField::SteepestDescent(int steps) 
   {
@@ -153,7 +258,8 @@ namespace OpenBabel
     h = 0.1f;
     old_xyz.resize(_mol.NumAtoms()+1);
 
-    e_n1 = Energy();
+    e_n1 = Energy(); // we call Energy instead of GetEnergy 
+                     // because coordinates change every step
 
     for (int i=0; i<steps; i++) {
       //fmax = GetFmax();
@@ -183,8 +289,83 @@ namespace OpenBabel
       }
  
     }
+
+    UnsetEnergyCalculated();
     std::cout << std::endl;
   }
+
+  void OBForceField::ConjugateGradients(int steps)
+  {
+    double e_n1, e_n2;
+    double h, g2g2, g1g1, g2g1;
+    bool firststep;
+    vector3 grad1, grad2, dir1, dir2;
+    std::vector<vector3> old_xyz;
+
+    h = 0.1f;
+    firststep = true;
+    old_xyz.resize(_mol.NumAtoms()+1);
+
+    e_n1 = Energy();
+
+    for (int i=0; i<steps; i++) {
+      if (firststep) {
+        FOR_ATOMS_OF_MOL (a, _mol) {
+  	  grad1 = NumericalDerivative(a->GetIdx());
+	  grad1 = grad1.normalize();
+	  grad1 = grad1 * h;
+	  old_xyz[a->GetIdx()] = a->GetVector();
+          a->SetVector(a->x() + grad1.x(), a->y() + grad1.y(), a->z() + grad1.z());
+          //sprintf(errbuf, "%svf=(%f, %f, %f)\n", errbuf, vf.x(), vf.y(), vf.z()); // DEBUG
+        }
+        e_n2 = Energy();
+
+        std::cout << "e_n1 e=" << e_n1 << "  e_n2=" << e_n2  << ", h=" << h << std::endl;
+        if (e_n2 >= e_n1) {
+	  h = 0.5f * h;
+          FOR_ATOMS_OF_MOL (a, _mol)
+            a->SetVector(old_xyz[a->GetIdx()].x(), old_xyz[a->GetIdx()].y(), old_xyz[a->GetIdx()].z());
+        }
+        if (e_n2 < e_n1) {
+          e_n1 = e_n2;
+	  h = 1.2f * h;
+	  firststep = false;
+	  dir1 = grad1;
+        }
+      } else {
+        FOR_ATOMS_OF_MOL (a, _mol) {
+ 	  grad2 = NumericalDerivative(a->GetIdx());
+	  grad2 = grad2.normalize();
+	  grad2 = grad2 * h;
+	  g2g2 = dot(grad2, grad2);
+	  g1g1 = dot(grad1, grad1);
+	  g2g1 = g2g2 / g1g1;
+	  dir2 = grad2 + g2g1 * dir1;
+	  old_xyz[a->GetIdx()] = a->GetVector();
+          a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
+	  //std::cout << "  dir2=" << dir2 << std::endl;
+          //sprintf(errbuf, "%svf=(%f, %f, %f)\n", errbuf, vf.x(), vf.y(), vf.z()); // DEBUG
+	  grad1 = grad2;
+	  dir1 = dir2;
+        }
+        e_n2 = Energy();
+
+        std::cout << "e_n1 e=" << e_n1 << "  e_n2=" << e_n2  << ", h=" << h << std::endl;
+        if (e_n2 >= e_n1) {
+	  h = 0.5f * h;
+          FOR_ATOMS_OF_MOL (a, _mol)
+            a->SetVector(old_xyz[a->GetIdx()].x(), old_xyz[a->GetIdx()].y(), old_xyz[a->GetIdx()].z());
+        }
+        if (e_n2 < e_n1) {
+          e_n1 = e_n2;
+	  h = 1.2f * h;
+        }
+      
+      }
+    }
+    UnsetEnergyCalculated();
+  }
+
   /* 
   double OBForceField::GetFmax(OBMol &mol)
   {
@@ -254,6 +435,7 @@ namespace OpenBabel
 
     grad.Set(dx, dy, dz);
 
+    UnsetEnergyCalculated();
     //char errbuf[3600]; // DEBUG
     //sprintf(errbuf, "grad=(%f, %f, %f)  e_orig=%f   e+delta=%f  e-delta=%f\n", dx, dy, dz, e_orig, e_plus_delta, e_minus_delta); // DEBUG
     //obErrorLog.ThrowError(__FUNCTION__, errbuf, obError); // DEBUG
