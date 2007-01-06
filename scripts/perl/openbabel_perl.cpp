@@ -1494,68 +1494,69 @@ SWIG_Perl_SetModule(swig_module_info *module) {
 #define SWIGTYPE_p_OpenBabel__OBUnitCell swig_types[65]
 #define SWIGTYPE_p_OpenBabel__OBVirtualBond swig_types[66]
 #define SWIGTYPE_p_OpenBabel__Pattern swig_types[67]
-#define SWIGTYPE_p_OpenBabel__Template swig_types[68]
-#define SWIGTYPE_p_OpenBabel__matrix3x3 swig_types[69]
-#define SWIGTYPE_p_OpenBabel__obLogBuf swig_types[70]
-#define SWIGTYPE_p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[71]
-#define SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[72]
-#define SWIGTYPE_p_OpenBabel__vector3 swig_types[73]
-#define SWIGTYPE_p_a_3__double swig_types[74]
-#define SWIGTYPE_p_a_4__char swig_types[75]
-#define SWIGTYPE_p_char swig_types[76]
-#define SWIGTYPE_p_double swig_types[77]
-#define SWIGTYPE_p_int swig_types[78]
-#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[79]
-#define SWIGTYPE_p_p_double swig_types[80]
-#define SWIGTYPE_p_p_int swig_types[81]
-#define SWIGTYPE_p_std__dequeTint_t swig_types[82]
-#define SWIGTYPE_p_std__ifstream swig_types[83]
-#define SWIGTYPE_p_std__istream swig_types[84]
-#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[85]
-#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[86]
-#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[87]
-#define SWIGTYPE_p_std__multimapTdouble_unsigned_int_t swig_types[88]
-#define SWIGTYPE_p_std__ostream swig_types[89]
-#define SWIGTYPE_p_std__out_of_range swig_types[90]
-#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[91]
-#define SWIGTYPE_p_std__streampos swig_types[92]
-#define SWIGTYPE_p_std__string swig_types[93]
-#define SWIGTYPE_p_std__type_info swig_types[94]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[95]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[96]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[97]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator swig_types[98]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[99]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[100]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[101]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[102]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[103]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[104]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[105]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[106]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[107]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[108]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[109]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[110]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[111]
-#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[112]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[113]
-#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[114]
-#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[115]
-#define SWIGTYPE_p_std__vectorTdouble_t swig_types[116]
-#define SWIGTYPE_p_std__vectorTint_t swig_types[117]
-#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[118]
-#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[119]
-#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[120]
-#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[121]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[122]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[123]
-#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[124]
-#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[125]
-#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[126]
-#define SWIGTYPE_p_unsigned_int swig_types[127]
-static swig_type_info *swig_types[129];
-static swig_module_info swig_module = {swig_types, 128, 0, 0, 0, 0};
+#define SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t swig_types[68]
+#define SWIGTYPE_p_OpenBabel__Template swig_types[69]
+#define SWIGTYPE_p_OpenBabel__matrix3x3 swig_types[70]
+#define SWIGTYPE_p_OpenBabel__obLogBuf swig_types[71]
+#define SWIGTYPE_p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[72]
+#define SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[73]
+#define SWIGTYPE_p_OpenBabel__vector3 swig_types[74]
+#define SWIGTYPE_p_a_3__double swig_types[75]
+#define SWIGTYPE_p_a_4__char swig_types[76]
+#define SWIGTYPE_p_char swig_types[77]
+#define SWIGTYPE_p_double swig_types[78]
+#define SWIGTYPE_p_int swig_types[79]
+#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[80]
+#define SWIGTYPE_p_p_double swig_types[81]
+#define SWIGTYPE_p_p_int swig_types[82]
+#define SWIGTYPE_p_std__dequeTint_t swig_types[83]
+#define SWIGTYPE_p_std__ifstream swig_types[84]
+#define SWIGTYPE_p_std__istream swig_types[85]
+#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[86]
+#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[87]
+#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[88]
+#define SWIGTYPE_p_std__multimapTdouble_unsigned_int_t swig_types[89]
+#define SWIGTYPE_p_std__ostream swig_types[90]
+#define SWIGTYPE_p_std__out_of_range swig_types[91]
+#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[92]
+#define SWIGTYPE_p_std__streampos swig_types[93]
+#define SWIGTYPE_p_std__string swig_types[94]
+#define SWIGTYPE_p_std__type_info swig_types[95]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[96]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[97]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[98]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator swig_types[99]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[100]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[101]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[102]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[103]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[104]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[105]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[106]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[107]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[108]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[109]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[110]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[111]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[112]
+#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[113]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[114]
+#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[115]
+#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[116]
+#define SWIGTYPE_p_std__vectorTdouble_t swig_types[117]
+#define SWIGTYPE_p_std__vectorTint_t swig_types[118]
+#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[119]
+#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[120]
+#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[121]
+#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[122]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[123]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[124]
+#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[125]
+#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[126]
+#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[127]
+#define SWIGTYPE_p_unsigned_int swig_types[128]
+static swig_type_info *swig_types[130];
+static swig_module_info swig_module = {swig_types, 129, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1613,7 +1614,7 @@ SWIGEXPORT void SWIG_init (CV *cv, CPerlObj *);
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/oberror.h>
-
+#include <openbabel/pluginiter.h>
 #include <openbabel/fingerprint.h>
 
 #include <openbabel/data.h>
@@ -25320,6 +25321,1174 @@ XS(_wrap_new_OBBase) {
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBBase, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
     XSRETURN(argvi);
   fail:
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_Register) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    OpenBabel::OBFingerprint *arg2 = (OpenBabel::OBFingerprint *) 0 ;
+    std::string arg3 ;
+    bool arg4 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    bool val4 ;
+    int ecode4 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 4) || (items > 4)) {
+      SWIG_croak("Usage: pluginiterFingerprint_Register(self,pType,ID,IsDefault);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_Register" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pluginiterFingerprint_Register" "', argument " "2"" of type '" "OpenBabel::OBFingerprint *""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp2);
+    {
+      std::string *ptr = (std::string *)0;
+      int res = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(2), &ptr);
+      if (!SWIG_IsOK(res) || !ptr) {
+        SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "pluginiterFingerprint_Register" "', argument " "3"" of type '" "std::string const""'"); 
+      }
+      arg3 = *ptr;
+      if (SWIG_IsNewObj(res)) delete ptr;
+    }
+    ecode4 = SWIG_AsVal_bool SWIG_PERL_CALL_ARGS_2(ST(3), &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "pluginiterFingerprint_Register" "', argument " "4"" of type '" "bool""'");
+    } 
+    arg4 = static_cast< bool >(val4);
+    (arg1)->Register(arg2,arg3,arg4);
+    
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_FindType) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    std::string *arg2 = 0 ;
+    OpenBabel::OBFingerprint *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 = SWIG_OLDOBJ ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: pluginiterFingerprint_FindType(self,ID);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_FindType" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    {
+      std::string *ptr = (std::string *)0;
+      res2 = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(1), &ptr);
+      if (!SWIG_IsOK(res2)) {
+        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pluginiterFingerprint_FindType" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      if (!ptr) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pluginiterFingerprint_FindType" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      arg2 = ptr;
+    }
+    result = (OpenBabel::OBFingerprint *)(arg1)->FindType((std::string const &)*arg2);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 | SWIG_SHADOW); argvi++ ;
+    
+    if (SWIG_IsNewObj(res2)) delete arg2;
+    XSRETURN(argvi);
+  fail:
+    
+    if (SWIG_IsNewObj(res2)) delete arg2;
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_FindDefaultType) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    OpenBabel::OBFingerprint *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_FindDefaultType(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_FindDefaultType" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    result = (OpenBabel::OBFingerprint *)((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->FindDefaultType();
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_ID) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    std::string result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_ID(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_ID" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    result = ((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->ID();
+    ST(argvi) = SWIG_From_std_string  SWIG_PERL_CALL_ARGS_1(static_cast< std::string >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_Description) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    std::string result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_Description(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_Description" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    result = ((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->Description();
+    ST(argvi) = SWIG_From_std_string  SWIG_PERL_CALL_ARGS_1(static_cast< std::string >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_ToStart) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_ToStart(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_ToStart" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    (arg1)->ToStart();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_inc) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_inc(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_inc" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    {
+      OpenBabel::PluginIter<OpenBabel::OBFingerprint > &_result_ref = (arg1)->operator ++();
+      result = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_good) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_good(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_good" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    result = (bool)((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->operator bool();
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_deref) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    OpenBabel::OBFingerprint *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_deref(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_deref" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    result = (OpenBabel::OBFingerprint *)((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->operator ->();
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint___ref__) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    OpenBabel::OBFingerprint *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint___ref__(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint___ref__" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    {
+      OpenBabel::OBFingerprint &_result_ref = ((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->operator *();
+      result = (OpenBabel::OBFingerprint *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_new_pluginiterFingerprint) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 0) || (items > 0)) {
+      SWIG_croak("Usage: new_pluginiterFingerprint();");
+    }
+    result = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *)new OpenBabel::PluginIter<OpenBabel::OBFingerprint >();
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    XSRETURN(argvi);
+  fail:
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_delete_pluginiterFingerprint) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: delete_pluginiterFingerprint(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_pluginiterFingerprint" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    delete arg1;
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_Iter) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_Iter(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_Iter" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    {
+      OpenBabel::PluginIter<OpenBabel::OBFingerprint > &_result_ref = (*arg1)->Iter();
+      result = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_SetBit) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    std::vector<unsigned int > *arg2 = 0 ;
+    unsigned int arg3 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    unsigned int val3 ;
+    int ecode3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: pluginiterFingerprint_SetBit(self,vec,n);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_SetBit" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pluginiterFingerprint_SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pluginiterFingerprint_SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+    ecode3 = SWIG_AsVal_unsigned_SS_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "pluginiterFingerprint_SetBit" "', argument " "3"" of type '" "unsigned int""'");
+    } 
+    arg3 = static_cast< unsigned int >(val3);
+    (*arg1)->SetBit(*arg2,arg3);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_Fold) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    std::vector<unsigned int > *arg2 = 0 ;
+    unsigned int arg3 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    unsigned int val3 ;
+    int ecode3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: pluginiterFingerprint_Fold(self,vec,nbits);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_Fold" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pluginiterFingerprint_Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pluginiterFingerprint_Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+    ecode3 = SWIG_AsVal_unsigned_SS_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "pluginiterFingerprint_Fold" "', argument " "3"" of type '" "unsigned int""'");
+    } 
+    arg3 = static_cast< unsigned int >(val3);
+    (*arg1)->Fold(*arg2,arg3);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_GetFingerprint__SWIG_0) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+    std::vector<unsigned int > *arg3 = 0 ;
+    int arg4 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    void *argp3 = 0 ;
+    int res3 = 0 ;
+    int val4 ;
+    int ecode4 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 4) || (items > 4)) {
+      SWIG_croak("Usage: pluginiterFingerprint_GetFingerprint(self,pOb,fp,nbits);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_GetFingerprint" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pluginiterFingerprint_GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "pluginiterFingerprint_GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pluginiterFingerprint_GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+    ecode4 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "pluginiterFingerprint_GetFingerprint" "', argument " "4"" of type '" "int""'");
+    } 
+    arg4 = static_cast< int >(val4);
+    result = (bool)(*arg1)->GetFingerprint(arg2,*arg3,arg4);
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_GetFingerprint__SWIG_1) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+    std::vector<unsigned int > *arg3 = 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    void *argp3 = 0 ;
+    int res3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: pluginiterFingerprint_GetFingerprint(self,pOb,fp);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_GetFingerprint" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pluginiterFingerprint_GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "pluginiterFingerprint_GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pluginiterFingerprint_GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+    result = (bool)(*arg1)->GetFingerprint(arg2,*arg3);
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_GetFingerprint) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 3) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(2), &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 4) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(2), &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_pluginiterFingerprint_GetFingerprint__SWIG_1); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_pluginiterFingerprint_GetFingerprint__SWIG_0); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'pluginiterFingerprint_GetFingerprint'");
+  XSRETURN(0);
+}
+
+
+XS(_wrap_pluginiterFingerprint_Flags) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    unsigned int result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_Flags(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_Flags" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    result = (unsigned int)(*arg1)->Flags();
+    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_Tanimoto__SWIG_0) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    std::vector<unsigned int > *arg2 = 0 ;
+    std::vector<unsigned int > *arg3 = 0 ;
+    double result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    std::vector<unsigned int > temp2 ;
+    std::vector<unsigned int > *v2 ;
+    std::vector<unsigned int > temp3 ;
+    std::vector<unsigned int > *v3 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: pluginiterFingerprint_Tanimoto(self,vec1,vec2);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_Tanimoto" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    {
+      if (SWIG_ConvertPtr(ST(1),(void **) &v2, 
+          SWIGTYPE_p_std__vectorTunsigned_int_t,1) != -1) {
+        arg2 = v2;
+      } else if (SvROK(ST(1))) {
+        AV *av = (AV *)SvRV(ST(1));
+        if (SvTYPE(av) != SVt_PVAV)
+        SWIG_croak("Type error in argument 2 of pluginiterFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+        SV **tv;
+        I32 len = av_len(av) + 1;
+        for (int i=0; i<len; i++) {
+          tv = av_fetch(av, i, 0);
+          if (SvIOK(*tv)) {
+            temp2.push_back((unsigned int)SvIVX(*tv));
+          } else {
+            SWIG_croak("Type error in argument 2 of "
+              "pluginiterFingerprint_Tanimoto. "
+              "Expected an array of ""unsigned int");
+          }
+        }
+        arg2 = &temp2;
+      } else {
+        SWIG_croak("Type error in argument 2 of pluginiterFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+      }
+    }
+    {
+      if (SWIG_ConvertPtr(ST(2),(void **) &v3, 
+          SWIGTYPE_p_std__vectorTunsigned_int_t,1) != -1) {
+        arg3 = v3;
+      } else if (SvROK(ST(2))) {
+        AV *av = (AV *)SvRV(ST(2));
+        if (SvTYPE(av) != SVt_PVAV)
+        SWIG_croak("Type error in argument 3 of pluginiterFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+        SV **tv;
+        I32 len = av_len(av) + 1;
+        for (int i=0; i<len; i++) {
+          tv = av_fetch(av, i, 0);
+          if (SvIOK(*tv)) {
+            temp3.push_back((unsigned int)SvIVX(*tv));
+          } else {
+            SWIG_croak("Type error in argument 3 of "
+              "pluginiterFingerprint_Tanimoto. "
+              "Expected an array of ""unsigned int");
+          }
+        }
+        arg3 = &temp3;
+      } else {
+        SWIG_croak("Type error in argument 3 of pluginiterFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+      }
+    }
+    result = (double)(*arg1)->Tanimoto((std::vector<unsigned int > const &)*arg2,(std::vector<unsigned int > const &)*arg3);
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_Tanimoto__SWIG_1) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    std::vector<unsigned int > *arg2 = 0 ;
+    unsigned int *arg3 = (unsigned int *) 0 ;
+    double result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    std::vector<unsigned int > temp2 ;
+    std::vector<unsigned int > *v2 ;
+    void *argp3 = 0 ;
+    int res3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: pluginiterFingerprint_Tanimoto(self,vec1,p2);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_Tanimoto" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    {
+      if (SWIG_ConvertPtr(ST(1),(void **) &v2, 
+          SWIGTYPE_p_std__vectorTunsigned_int_t,1) != -1) {
+        arg2 = v2;
+      } else if (SvROK(ST(1))) {
+        AV *av = (AV *)SvRV(ST(1));
+        if (SvTYPE(av) != SVt_PVAV)
+        SWIG_croak("Type error in argument 2 of pluginiterFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+        SV **tv;
+        I32 len = av_len(av) + 1;
+        for (int i=0; i<len; i++) {
+          tv = av_fetch(av, i, 0);
+          if (SvIOK(*tv)) {
+            temp2.push_back((unsigned int)SvIVX(*tv));
+          } else {
+            SWIG_croak("Type error in argument 2 of "
+              "pluginiterFingerprint_Tanimoto. "
+              "Expected an array of ""unsigned int");
+          }
+        }
+        arg2 = &temp2;
+      } else {
+        SWIG_croak("Type error in argument 2 of pluginiterFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+      }
+    }
+    res3 = SWIG_ConvertPtr(ST(2), &argp3,SWIGTYPE_p_unsigned_int, 0 |  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "pluginiterFingerprint_Tanimoto" "', argument " "3"" of type '" "unsigned int const *""'"); 
+    }
+    arg3 = reinterpret_cast< unsigned int * >(argp3);
+    result = (double)(*arg1)->Tanimoto((std::vector<unsigned int > const &)*arg2,(unsigned int const *)arg3);
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_Tanimoto) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 3) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          {
+            /* wrapped vector? */
+            std::vector<unsigned int >* v;
+            if (SWIG_ConvertPtr(ST(1),(void **) &v, 
+                SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1) {
+              _v = 1;
+            } else if (SvROK(ST(1))) {
+              /* native sequence? */
+              AV *av = (AV *)SvRV(ST(1));
+              if (SvTYPE(av) == SVt_PVAV) {
+                SV **tv;
+                I32 len = av_len(av) + 1;
+                if (len == 0) {
+                  /* an empty sequence can be of any type */
+                  _v = 1;
+                } else {
+                  /* check the first element only */
+                  tv = av_fetch(av, 0, 0);
+                  if (SvIOK(*tv))
+                  _v = 1;
+                  else
+                  _v = 0;
+                }
+              }
+            } else {
+              _v = 0;
+            }
+          }
+        }
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(2), &vptr, SWIGTYPE_p_unsigned_int, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 3) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          {
+            /* wrapped vector? */
+            std::vector<unsigned int >* v;
+            if (SWIG_ConvertPtr(ST(1),(void **) &v, 
+                SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1) {
+              _v = 1;
+            } else if (SvROK(ST(1))) {
+              /* native sequence? */
+              AV *av = (AV *)SvRV(ST(1));
+              if (SvTYPE(av) == SVt_PVAV) {
+                SV **tv;
+                I32 len = av_len(av) + 1;
+                if (len == 0) {
+                  /* an empty sequence can be of any type */
+                  _v = 1;
+                } else {
+                  /* check the first element only */
+                  tv = av_fetch(av, 0, 0);
+                  if (SvIOK(*tv))
+                  _v = 1;
+                  else
+                  _v = 0;
+                }
+              }
+            } else {
+              _v = 0;
+            }
+          }
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          {
+            /* wrapped vector? */
+            std::vector<unsigned int >* v;
+            if (SWIG_ConvertPtr(ST(2),(void **) &v, 
+                SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1) {
+              _v = 1;
+            } else if (SvROK(ST(2))) {
+              /* native sequence? */
+              AV *av = (AV *)SvRV(ST(2));
+              if (SvTYPE(av) == SVt_PVAV) {
+                SV **tv;
+                I32 len = av_len(av) + 1;
+                if (len == 0) {
+                  /* an empty sequence can be of any type */
+                  _v = 1;
+                } else {
+                  /* check the first element only */
+                  tv = av_fetch(av, 0, 0);
+                  if (SvIOK(*tv))
+                  _v = 1;
+                  else
+                  _v = 0;
+                }
+              }
+            } else {
+              _v = 0;
+            }
+          }
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_pluginiterFingerprint_Tanimoto__SWIG_1); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_pluginiterFingerprint_Tanimoto__SWIG_0); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'pluginiterFingerprint_Tanimoto'");
+  XSRETURN(0);
+}
+
+
+XS(_wrap_pluginiterFingerprint_Getbitsperint) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    unsigned int result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterFingerprint_Getbitsperint(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_Getbitsperint" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    result = (unsigned int)(*arg1)->Getbitsperint();
+    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_pluginiterFingerprint_FindFingerprint) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+    std::string *arg2 = 0 ;
+    OpenBabel::OBFingerprint *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 = SWIG_OLDOBJ ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: pluginiterFingerprint_FindFingerprint(self,ID);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_FindFingerprint" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+    {
+      std::string *ptr = (std::string *)0;
+      res2 = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(1), &ptr);
+      if (!SWIG_IsOK(res2)) {
+        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pluginiterFingerprint_FindFingerprint" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      if (!ptr) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pluginiterFingerprint_FindFingerprint" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      arg2 = ptr;
+    }
+    result = (OpenBabel::OBFingerprint *)(*arg1)->FindFingerprint((std::string const &)*arg2);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 | SWIG_SHADOW); argvi++ ;
+    
+    if (SWIG_IsNewObj(res2)) delete arg2;
+    XSRETURN(argvi);
+  fail:
+    
+    if (SWIG_IsNewObj(res2)) delete arg2;
     SWIG_croak_null();
   }
 }
@@ -52573,7 +53742,46 @@ XS(_wrap_SmartsLexReplace) {
 }
 
 
-XS(_wrap_OBFingerprint_FindFingerprint) {
+XS(_wrap_OBFingerprint_Iter) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 0) || (items > 0)) {
+      SWIG_croak("Usage: OBFingerprint_Iter();");
+    }
+    {
+      OpenBabel::PluginIter<OpenBabel::OBFingerprint > &_result_ref = OpenBabel::OBFingerprint::Iter();
+      result = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 | SWIG_SHADOW); argvi++ ;
+    XSRETURN(argvi);
+  fail:
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_FindDefaultType) {
+  {
+    OpenBabel::OBFingerprint *result = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 0) || (items > 0)) {
+      SWIG_croak("Usage: OBFingerprint_FindDefaultType();");
+    }
+    result = (OpenBabel::OBFingerprint *)OpenBabel::OBFingerprint::FindDefaultType();
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 | SWIG_SHADOW); argvi++ ;
+    XSRETURN(argvi);
+  fail:
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_FindType) {
   {
     std::string *arg1 = 0 ;
     OpenBabel::OBFingerprint *result = 0 ;
@@ -52582,43 +53790,25 @@ XS(_wrap_OBFingerprint_FindFingerprint) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBFingerprint_FindFingerprint(ID);");
+      SWIG_croak("Usage: OBFingerprint_FindType(ID);");
     }
     {
       std::string *ptr = (std::string *)0;
       res1 = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(0), &ptr);
       if (!SWIG_IsOK(res1)) {
-        SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFingerprint_FindFingerprint" "', argument " "1"" of type '" "std::string const &""'"); 
+        SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFingerprint_FindType" "', argument " "1"" of type '" "std::string const &""'"); 
       }
       if (!ptr) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBFingerprint_FindFingerprint" "', argument " "1"" of type '" "std::string const &""'"); 
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBFingerprint_FindType" "', argument " "1"" of type '" "std::string const &""'"); 
       }
       arg1 = ptr;
     }
-    result = (OpenBabel::OBFingerprint *)OpenBabel::OBFingerprint::FindFingerprint((std::string const &)*arg1);
+    result = (OpenBabel::OBFingerprint *)OpenBabel::OBFingerprint::FindType((std::string const &)*arg1);
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 | SWIG_SHADOW); argvi++ ;
     if (SWIG_IsNewObj(res1)) delete arg1;
     XSRETURN(argvi);
   fail:
     if (SWIG_IsNewObj(res1)) delete arg1;
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_new_OBFingerprint) {
-  {
-    OpenBabel::OBFingerprint *result = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 0) || (items > 0)) {
-      SWIG_croak("Usage: new_OBFingerprint();");
-    }
-    result = (OpenBabel::OBFingerprint *)new OpenBabel::OBFingerprint();
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
-    XSRETURN(argvi);
-  fail:
     SWIG_croak_null();
   }
 }
@@ -52647,6 +53837,736 @@ XS(_wrap_delete_OBFingerprint) {
     XSRETURN(argvi);
   fail:
     
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_SetBit) {
+  {
+    OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+    std::vector<unsigned int > *arg2 = 0 ;
+    unsigned int arg3 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    unsigned int val3 ;
+    int ecode3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: OBFingerprint_SetBit(self,vec,n);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFingerprint_SetBit" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBFingerprint_SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBFingerprint_SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+    ecode3 = SWIG_AsVal_unsigned_SS_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBFingerprint_SetBit" "', argument " "3"" of type '" "unsigned int""'");
+    } 
+    arg3 = static_cast< unsigned int >(val3);
+    (arg1)->SetBit(*arg2,arg3);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_Fold) {
+  {
+    OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+    std::vector<unsigned int > *arg2 = 0 ;
+    unsigned int arg3 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    unsigned int val3 ;
+    int ecode3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: OBFingerprint_Fold(self,vec,nbits);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFingerprint_Fold" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBFingerprint_Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBFingerprint_Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+    ecode3 = SWIG_AsVal_unsigned_SS_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBFingerprint_Fold" "', argument " "3"" of type '" "unsigned int""'");
+    } 
+    arg3 = static_cast< unsigned int >(val3);
+    (arg1)->Fold(*arg2,arg3);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_GetFingerprint__SWIG_0) {
+  {
+    OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+    OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+    std::vector<unsigned int > *arg3 = 0 ;
+    int arg4 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    void *argp3 = 0 ;
+    int res3 = 0 ;
+    int val4 ;
+    int ecode4 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 4) || (items > 4)) {
+      SWIG_croak("Usage: OBFingerprint_GetFingerprint(self,pOb,fp,nbits);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFingerprint_GetFingerprint" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBFingerprint_GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBFingerprint_GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBFingerprint_GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+    ecode4 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "OBFingerprint_GetFingerprint" "', argument " "4"" of type '" "int""'");
+    } 
+    arg4 = static_cast< int >(val4);
+    result = (bool)(arg1)->GetFingerprint(arg2,*arg3,arg4);
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_GetFingerprint__SWIG_1) {
+  {
+    OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+    OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+    std::vector<unsigned int > *arg3 = 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    void *argp3 = 0 ;
+    int res3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: OBFingerprint_GetFingerprint(self,pOb,fp);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFingerprint_GetFingerprint" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBFingerprint_GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBFingerprint_GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBFingerprint_GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+    }
+    arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+    result = (bool)(arg1)->GetFingerprint(arg2,*arg3);
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_GetFingerprint) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 3) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBFingerprint, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(2), &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 4) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBFingerprint, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(2), &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBFingerprint_GetFingerprint__SWIG_1); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBFingerprint_GetFingerprint__SWIG_0); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBFingerprint_GetFingerprint'");
+  XSRETURN(0);
+}
+
+
+XS(_wrap_OBFingerprint_Description) {
+  {
+    OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+    std::string result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBFingerprint_Description(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFingerprint_Description" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+    result = (arg1)->Description();
+    ST(argvi) = SWIG_From_std_string  SWIG_PERL_CALL_ARGS_1(static_cast< std::string >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_Flags) {
+  {
+    OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+    unsigned int result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBFingerprint_Flags(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFingerprint_Flags" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+    result = (unsigned int)(arg1)->Flags();
+    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_Tanimoto__SWIG_0) {
+  {
+    std::vector<unsigned int > *arg1 = 0 ;
+    std::vector<unsigned int > *arg2 = 0 ;
+    double result;
+    std::vector<unsigned int > temp1 ;
+    std::vector<unsigned int > *v1 ;
+    std::vector<unsigned int > temp2 ;
+    std::vector<unsigned int > *v2 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: OBFingerprint_Tanimoto(vec1,vec2);");
+    }
+    {
+      if (SWIG_ConvertPtr(ST(0),(void **) &v1, 
+          SWIGTYPE_p_std__vectorTunsigned_int_t,1) != -1) {
+        arg1 = v1;
+      } else if (SvROK(ST(0))) {
+        AV *av = (AV *)SvRV(ST(0));
+        if (SvTYPE(av) != SVt_PVAV)
+        SWIG_croak("Type error in argument 1 of OBFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+        SV **tv;
+        I32 len = av_len(av) + 1;
+        for (int i=0; i<len; i++) {
+          tv = av_fetch(av, i, 0);
+          if (SvIOK(*tv)) {
+            temp1.push_back((unsigned int)SvIVX(*tv));
+          } else {
+            SWIG_croak("Type error in argument 1 of "
+              "OBFingerprint_Tanimoto. "
+              "Expected an array of ""unsigned int");
+          }
+        }
+        arg1 = &temp1;
+      } else {
+        SWIG_croak("Type error in argument 1 of OBFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+      }
+    }
+    {
+      if (SWIG_ConvertPtr(ST(1),(void **) &v2, 
+          SWIGTYPE_p_std__vectorTunsigned_int_t,1) != -1) {
+        arg2 = v2;
+      } else if (SvROK(ST(1))) {
+        AV *av = (AV *)SvRV(ST(1));
+        if (SvTYPE(av) != SVt_PVAV)
+        SWIG_croak("Type error in argument 2 of OBFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+        SV **tv;
+        I32 len = av_len(av) + 1;
+        for (int i=0; i<len; i++) {
+          tv = av_fetch(av, i, 0);
+          if (SvIOK(*tv)) {
+            temp2.push_back((unsigned int)SvIVX(*tv));
+          } else {
+            SWIG_croak("Type error in argument 2 of "
+              "OBFingerprint_Tanimoto. "
+              "Expected an array of ""unsigned int");
+          }
+        }
+        arg2 = &temp2;
+      } else {
+        SWIG_croak("Type error in argument 2 of OBFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+      }
+    }
+    result = (double)OpenBabel::OBFingerprint::Tanimoto((std::vector<unsigned int > const &)*arg1,(std::vector<unsigned int > const &)*arg2);
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_Tanimoto__SWIG_1) {
+  {
+    std::vector<unsigned int > *arg1 = 0 ;
+    unsigned int *arg2 = (unsigned int *) 0 ;
+    double result;
+    std::vector<unsigned int > temp1 ;
+    std::vector<unsigned int > *v1 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: OBFingerprint_Tanimoto(vec1,p2);");
+    }
+    {
+      if (SWIG_ConvertPtr(ST(0),(void **) &v1, 
+          SWIGTYPE_p_std__vectorTunsigned_int_t,1) != -1) {
+        arg1 = v1;
+      } else if (SvROK(ST(0))) {
+        AV *av = (AV *)SvRV(ST(0));
+        if (SvTYPE(av) != SVt_PVAV)
+        SWIG_croak("Type error in argument 1 of OBFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+        SV **tv;
+        I32 len = av_len(av) + 1;
+        for (int i=0; i<len; i++) {
+          tv = av_fetch(av, i, 0);
+          if (SvIOK(*tv)) {
+            temp1.push_back((unsigned int)SvIVX(*tv));
+          } else {
+            SWIG_croak("Type error in argument 1 of "
+              "OBFingerprint_Tanimoto. "
+              "Expected an array of ""unsigned int");
+          }
+        }
+        arg1 = &temp1;
+      } else {
+        SWIG_croak("Type error in argument 1 of OBFingerprint_Tanimoto. "
+          "Expected an array of ""unsigned int");
+      }
+    }
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_unsigned_int, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBFingerprint_Tanimoto" "', argument " "2"" of type '" "unsigned int const *""'"); 
+    }
+    arg2 = reinterpret_cast< unsigned int * >(argp2);
+    result = (double)OpenBabel::OBFingerprint::Tanimoto((std::vector<unsigned int > const &)*arg1,(unsigned int const *)arg2);
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_Tanimoto) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        {
+          {
+            /* wrapped vector? */
+            std::vector<unsigned int >* v;
+            if (SWIG_ConvertPtr(ST(0),(void **) &v, 
+                SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1) {
+              _v = 1;
+            } else if (SvROK(ST(0))) {
+              /* native sequence? */
+              AV *av = (AV *)SvRV(ST(0));
+              if (SvTYPE(av) == SVt_PVAV) {
+                SV **tv;
+                I32 len = av_len(av) + 1;
+                if (len == 0) {
+                  /* an empty sequence can be of any type */
+                  _v = 1;
+                } else {
+                  /* check the first element only */
+                  tv = av_fetch(av, 0, 0);
+                  if (SvIOK(*tv))
+                  _v = 1;
+                  else
+                  _v = 0;
+                }
+              }
+            } else {
+              _v = 0;
+            }
+          }
+        }
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_unsigned_int, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        {
+          {
+            /* wrapped vector? */
+            std::vector<unsigned int >* v;
+            if (SWIG_ConvertPtr(ST(0),(void **) &v, 
+                SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1) {
+              _v = 1;
+            } else if (SvROK(ST(0))) {
+              /* native sequence? */
+              AV *av = (AV *)SvRV(ST(0));
+              if (SvTYPE(av) == SVt_PVAV) {
+                SV **tv;
+                I32 len = av_len(av) + 1;
+                if (len == 0) {
+                  /* an empty sequence can be of any type */
+                  _v = 1;
+                } else {
+                  /* check the first element only */
+                  tv = av_fetch(av, 0, 0);
+                  if (SvIOK(*tv))
+                  _v = 1;
+                  else
+                  _v = 0;
+                }
+              }
+            } else {
+              _v = 0;
+            }
+          }
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          {
+            /* wrapped vector? */
+            std::vector<unsigned int >* v;
+            if (SWIG_ConvertPtr(ST(1),(void **) &v, 
+                SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1) {
+              _v = 1;
+            } else if (SvROK(ST(1))) {
+              /* native sequence? */
+              AV *av = (AV *)SvRV(ST(1));
+              if (SvTYPE(av) == SVt_PVAV) {
+                SV **tv;
+                I32 len = av_len(av) + 1;
+                if (len == 0) {
+                  /* an empty sequence can be of any type */
+                  _v = 1;
+                } else {
+                  /* check the first element only */
+                  tv = av_fetch(av, 0, 0);
+                  if (SvIOK(*tv))
+                  _v = 1;
+                  else
+                  _v = 0;
+                }
+              }
+            } else {
+              _v = 0;
+            }
+          }
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBFingerprint_Tanimoto__SWIG_1); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBFingerprint_Tanimoto__SWIG_0); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBFingerprint_Tanimoto'");
+  XSRETURN(0);
+}
+
+
+XS(_wrap_OBFingerprint_Getbitsperint) {
+  {
+    unsigned int result;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 0) || (items > 0)) {
+      SWIG_croak("Usage: OBFingerprint_Getbitsperint();");
+    }
+    result = (unsigned int)OpenBabel::OBFingerprint::Getbitsperint();
+    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
+    XSRETURN(argvi);
+  fail:
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBFingerprint_FindFingerprint) {
+  {
+    std::string *arg1 = 0 ;
+    OpenBabel::OBFingerprint *result = 0 ;
+    int res1 = SWIG_OLDOBJ ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBFingerprint_FindFingerprint(ID);");
+    }
+    {
+      std::string *ptr = (std::string *)0;
+      res1 = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(0), &ptr);
+      if (!SWIG_IsOK(res1)) {
+        SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFingerprint_FindFingerprint" "', argument " "1"" of type '" "std::string const &""'"); 
+      }
+      if (!ptr) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBFingerprint_FindFingerprint" "', argument " "1"" of type '" "std::string const &""'"); 
+      }
+      arg1 = ptr;
+    }
+    result = (OpenBabel::OBFingerprint *)OpenBabel::OBFingerprint::FindFingerprint((std::string const &)*arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 | SWIG_SHADOW); argvi++ ;
+    if (SWIG_IsNewObj(res1)) delete arg1;
+    XSRETURN(argvi);
+  fail:
+    if (SWIG_IsNewObj(res1)) delete arg1;
     SWIG_croak_null();
   }
 }
@@ -95738,6 +97658,7 @@ static swig_type_info _swigt__p_OpenBabel__OBTypeTable = {"_p_OpenBabel__OBTypeT
 static swig_type_info _swigt__p_OpenBabel__OBUnitCell = {"_p_OpenBabel__OBUnitCell", "OpenBabel::OBUnitCell *", 0, 0, (void*)"Chemistry::OpenBabel::OBUnitCell", 0};
 static swig_type_info _swigt__p_OpenBabel__OBVirtualBond = {"_p_OpenBabel__OBVirtualBond", "OpenBabel::OBVirtualBond *", 0, 0, (void*)"Chemistry::OpenBabel::OBVirtualBond", 0};
 static swig_type_info _swigt__p_OpenBabel__Pattern = {"_p_OpenBabel__Pattern", "OpenBabel::Pattern *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t = {"_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t", "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *", 0, 0, (void*)"Chemistry::OpenBabel::pluginiterFingerprint", 0};
 static swig_type_info _swigt__p_OpenBabel__Template = {"_p_OpenBabel__Template", "OpenBabel::Template *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__matrix3x3 = {"_p_OpenBabel__matrix3x3", "OpenBabel::matrix3x3 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__obLogBuf = {"_p_OpenBabel__obLogBuf", "OpenBabel::obLogBuf *", 0, 0, (void*)"Chemistry::OpenBabel::obLogBuf", 0};
@@ -95868,6 +97789,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_OpenBabel__OBUnitCell,
   &_swigt__p_OpenBabel__OBVirtualBond,
   &_swigt__p_OpenBabel__Pattern,
+  &_swigt__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t,
   &_swigt__p_OpenBabel__Template,
   &_swigt__p_OpenBabel__matrix3x3,
   &_swigt__p_OpenBabel__obLogBuf,
@@ -95998,6 +97920,7 @@ static swig_cast_info _swigc__p_OpenBabel__OBTypeTable[] = {  {&_swigt__p_OpenBa
 static swig_cast_info _swigc__p_OpenBabel__OBUnitCell[] = {  {&_swigt__p_OpenBabel__OBUnitCell, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBVirtualBond[] = {  {&_swigt__p_OpenBabel__OBVirtualBond, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__Pattern[] = {  {&_swigt__p_OpenBabel__Pattern, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t[] = {  {&_swigt__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__Template[] = {  {&_swigt__p_OpenBabel__Template, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__matrix3x3[] = {  {&_swigt__p_OpenBabel__matrix3x3, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__obLogBuf[] = {  {&_swigt__p_OpenBabel__obLogBuf, 0, 0, 0},{0, 0, 0, 0}};
@@ -96128,6 +98051,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_OpenBabel__OBUnitCell,
   _swigc__p_OpenBabel__OBVirtualBond,
   _swigc__p_OpenBabel__Pattern,
+  _swigc__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t,
   _swigc__p_OpenBabel__Template,
   _swigc__p_OpenBabel__matrix3x3,
   _swigc__p_OpenBabel__obLogBuf,
@@ -96721,6 +98645,26 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBBase_BeginData", _wrap_OBBase_BeginData},
 {"Chemistry::OpenBabelc::OBBase_EndData", _wrap_OBBase_EndData},
 {"Chemistry::OpenBabelc::new_OBBase", _wrap_new_OBBase},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_Register", _wrap_pluginiterFingerprint_Register},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_FindType", _wrap_pluginiterFingerprint_FindType},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_FindDefaultType", _wrap_pluginiterFingerprint_FindDefaultType},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_ID", _wrap_pluginiterFingerprint_ID},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_Description", _wrap_pluginiterFingerprint_Description},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_ToStart", _wrap_pluginiterFingerprint_ToStart},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_inc", _wrap_pluginiterFingerprint_inc},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_good", _wrap_pluginiterFingerprint_good},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_deref", _wrap_pluginiterFingerprint_deref},
+{"Chemistry::OpenBabelc::pluginiterFingerprint___ref__", _wrap_pluginiterFingerprint___ref__},
+{"Chemistry::OpenBabelc::new_pluginiterFingerprint", _wrap_new_pluginiterFingerprint},
+{"Chemistry::OpenBabelc::delete_pluginiterFingerprint", _wrap_delete_pluginiterFingerprint},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_Iter", _wrap_pluginiterFingerprint_Iter},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_SetBit", _wrap_pluginiterFingerprint_SetBit},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_Fold", _wrap_pluginiterFingerprint_Fold},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_GetFingerprint", _wrap_pluginiterFingerprint_GetFingerprint},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_Flags", _wrap_pluginiterFingerprint_Flags},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_Tanimoto", _wrap_pluginiterFingerprint_Tanimoto},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_Getbitsperint", _wrap_pluginiterFingerprint_Getbitsperint},
+{"Chemistry::OpenBabelc::pluginiterFingerprint_FindFingerprint", _wrap_pluginiterFingerprint_FindFingerprint},
 {"Chemistry::OpenBabelc::new_OBError", _wrap_new_OBError},
 {"Chemistry::OpenBabelc::OBError_message", _wrap_OBError_message},
 {"Chemistry::OpenBabelc::OBError_GetMethod", _wrap_OBError_GetMethod},
@@ -97277,9 +99221,18 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::delete_OBSSMatch", _wrap_delete_OBSSMatch},
 {"Chemistry::OpenBabelc::OBSSMatch_Match", _wrap_OBSSMatch_Match},
 {"Chemistry::OpenBabelc::SmartsLexReplace", _wrap_SmartsLexReplace},
-{"Chemistry::OpenBabelc::OBFingerprint_FindFingerprint", _wrap_OBFingerprint_FindFingerprint},
-{"Chemistry::OpenBabelc::new_OBFingerprint", _wrap_new_OBFingerprint},
+{"Chemistry::OpenBabelc::OBFingerprint_Iter", _wrap_OBFingerprint_Iter},
+{"Chemistry::OpenBabelc::OBFingerprint_FindDefaultType", _wrap_OBFingerprint_FindDefaultType},
+{"Chemistry::OpenBabelc::OBFingerprint_FindType", _wrap_OBFingerprint_FindType},
 {"Chemistry::OpenBabelc::delete_OBFingerprint", _wrap_delete_OBFingerprint},
+{"Chemistry::OpenBabelc::OBFingerprint_SetBit", _wrap_OBFingerprint_SetBit},
+{"Chemistry::OpenBabelc::OBFingerprint_Fold", _wrap_OBFingerprint_Fold},
+{"Chemistry::OpenBabelc::OBFingerprint_GetFingerprint", _wrap_OBFingerprint_GetFingerprint},
+{"Chemistry::OpenBabelc::OBFingerprint_Description", _wrap_OBFingerprint_Description},
+{"Chemistry::OpenBabelc::OBFingerprint_Flags", _wrap_OBFingerprint_Flags},
+{"Chemistry::OpenBabelc::OBFingerprint_Tanimoto", _wrap_OBFingerprint_Tanimoto},
+{"Chemistry::OpenBabelc::OBFingerprint_Getbitsperint", _wrap_OBFingerprint_Getbitsperint},
+{"Chemistry::OpenBabelc::OBFingerprint_FindFingerprint", _wrap_OBFingerprint_FindFingerprint},
 {"Chemistry::OpenBabelc::FptIndexHeader_headerlength_set", _wrap_FptIndexHeader_headerlength_set},
 {"Chemistry::OpenBabelc::FptIndexHeader_headerlength_get", _wrap_FptIndexHeader_headerlength_get},
 {"Chemistry::OpenBabelc::FptIndexHeader_nEntries_set", _wrap_FptIndexHeader_nEntries_set},
@@ -98683,6 +100636,7 @@ XS(SWIG_init) {
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBChiralData, (void*) "Chemistry::OpenBabel::OBChiralData");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSerialNums, (void*) "Chemistry::OpenBabel::OBSerialNums");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBBase, (void*) "Chemistry::OpenBabel::OBBase");
+  SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, (void*) "Chemistry::OpenBabel::pluginiterFingerprint");
   /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "obError", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::obError)));
@@ -99109,6 +101063,11 @@ XS(SWIG_init) {
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRingSearch, (void*) "Chemistry::OpenBabel::OBRingSearch");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSmartsPattern, (void*) "Chemistry::OpenBabel::OBSmartsPattern");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSSMatch, (void*) "Chemistry::OpenBabel::OBSSMatch");
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OBFingerprint_FPT_UNIQUEBITS", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBFingerprint::FPT_UNIQUEBITS)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBFingerprint, (void*) "Chemistry::OpenBabel::OBFingerprint");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__FptIndexHeader, (void*) "Chemistry::OpenBabel::FptIndexHeader");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__FptIndex, (void*) "Chemistry::OpenBabel::FptIndex");

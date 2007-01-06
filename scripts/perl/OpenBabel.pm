@@ -10,7 +10,7 @@ require DynaLoader;
 package Chemistry::OpenBabelc;
 bootstrap Chemistry::OpenBabel;
 package Chemistry::OpenBabel;
-@EXPORT = qw( );
+@EXPORT = qw( ); sub dl_load_flags { 0x01 }
 
 # ---------- BASE METHODS -------------
 
@@ -1803,6 +1803,61 @@ sub ACQUIRE {
 }
 
 
+############# Class : Chemistry::OpenBabel::pluginiterFingerprint ##############
+
+package Chemistry::OpenBabel::pluginiterFingerprint;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*Register = *Chemistry::OpenBabelc::pluginiterFingerprint_Register;
+*FindType = *Chemistry::OpenBabelc::pluginiterFingerprint_FindType;
+*FindDefaultType = *Chemistry::OpenBabelc::pluginiterFingerprint_FindDefaultType;
+*ID = *Chemistry::OpenBabelc::pluginiterFingerprint_ID;
+*Description = *Chemistry::OpenBabelc::pluginiterFingerprint_Description;
+*ToStart = *Chemistry::OpenBabelc::pluginiterFingerprint_ToStart;
+*inc = *Chemistry::OpenBabelc::pluginiterFingerprint_inc;
+*good = *Chemistry::OpenBabelc::pluginiterFingerprint_good;
+*deref = *Chemistry::OpenBabelc::pluginiterFingerprint_deref;
+*__ref__ = *Chemistry::OpenBabelc::pluginiterFingerprint___ref__;
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_pluginiterFingerprint(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_pluginiterFingerprint($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Iter = *Chemistry::OpenBabelc::pluginiterFingerprint_Iter;
+*SetBit = *Chemistry::OpenBabelc::pluginiterFingerprint_SetBit;
+*Fold = *Chemistry::OpenBabelc::pluginiterFingerprint_Fold;
+*GetFingerprint = *Chemistry::OpenBabelc::pluginiterFingerprint_GetFingerprint;
+*Flags = *Chemistry::OpenBabelc::pluginiterFingerprint_Flags;
+*Tanimoto = *Chemistry::OpenBabelc::pluginiterFingerprint_Tanimoto;
+*Getbitsperint = *Chemistry::OpenBabelc::pluginiterFingerprint_Getbitsperint;
+*FindFingerprint = *Chemistry::OpenBabelc::pluginiterFingerprint_FindFingerprint;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : Chemistry::OpenBabel::OBError ##############
 
 package Chemistry::OpenBabel::OBError;
@@ -2913,13 +2968,9 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
-*FindFingerprint = *Chemistry::OpenBabelc::OBFingerprint_FindFingerprint;
-sub new {
-    my $pkg = shift;
-    my $self = Chemistry::OpenBabelc::new_OBFingerprint(@_);
-    bless $self, $pkg if defined($self);
-}
-
+*Iter = *Chemistry::OpenBabelc::OBFingerprint_Iter;
+*FindDefaultType = *Chemistry::OpenBabelc::OBFingerprint_FindDefaultType;
+*FindType = *Chemistry::OpenBabelc::OBFingerprint_FindType;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -2931,6 +2982,15 @@ sub DESTROY {
     }
 }
 
+*SetBit = *Chemistry::OpenBabelc::OBFingerprint_SetBit;
+*Fold = *Chemistry::OpenBabelc::OBFingerprint_Fold;
+*GetFingerprint = *Chemistry::OpenBabelc::OBFingerprint_GetFingerprint;
+*Description = *Chemistry::OpenBabelc::OBFingerprint_Description;
+*FPT_UNIQUEBITS = *Chemistry::OpenBabelc::OBFingerprint_FPT_UNIQUEBITS;
+*Flags = *Chemistry::OpenBabelc::OBFingerprint_Flags;
+*Tanimoto = *Chemistry::OpenBabelc::OBFingerprint_Tanimoto;
+*Getbitsperint = *Chemistry::OpenBabelc::OBFingerprint_Getbitsperint;
+*FindFingerprint = *Chemistry::OpenBabelc::OBFingerprint_FindFingerprint;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);

@@ -24,7 +24,7 @@
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/oberror.h>
-
+#include <openbabel/pluginiter.h>
 #include <openbabel/fingerprint.h>
 
 #include <openbabel/data.h>
@@ -49,6 +49,13 @@ namespace std {
 %template (vectorData)    vector<OpenBabel::OBGenericData*>;
 }
 
+
+
+// These methods are renamed to valid Python method names, as otherwise
+// they cannot be used from Python
+%rename(inc)   *::operator++;
+%rename(good)  *::operator bool;
+%rename(deref) *::operator->;
 %import <openbabel/babelconfig.h>
 
 %apply std::string &OUTPUT { std::string &to };
@@ -64,6 +71,9 @@ namespace std {
 %import <openbabel/chains.h>
 %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
+
+%include <openbabel/pluginiter.h>
+%template (pluginiterFingerprint) OpenBabel::PluginIter<OpenBabel::OBFingerprint>;
 
 %include <openbabel/oberror.h>
 %include <openbabel/obconversion.h>
@@ -97,46 +107,7 @@ namespace std {
 %ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
 
-# These methods are renamed to valid Python method names, as otherwise
-# they cannot be used from Python
 
-%rename(inc) OpenBabel::OBAtomAtomIter::operator++;
-%rename(inc) OpenBabel::OBAtomBondIter::operator++;
-%rename(inc) OpenBabel::OBMolAngleIter::operator++;
-%rename(inc) OpenBabel::OBMolAtomIter::operator++;
-%rename(inc) OpenBabel::OBMolAtomBFSIter::operator++;
-%rename(inc) OpenBabel::OBMolAtomDFSIter::operator++;
-%rename(inc) OpenBabel::OBMolBondIter::operator++;
-%rename(inc) OpenBabel::OBMolPairIter::operator++;
-%rename(inc) OpenBabel::OBMolRingIter::operator++;
-%rename(inc) OpenBabel::OBMolTorsionIter::operator++;
-%rename(inc) OpenBabel::OBResidueIter::operator++;
-%rename(inc) OpenBabel::OBResidueAtomIter::operator++;
-
-%rename(good) OpenBabel::OBAtomAtomIter::operator bool;
-%rename(good) OpenBabel::OBAtomBondIter::operator bool;
-%rename(good) OpenBabel::OBMolAngleIter::operator bool;
-%rename(good) OpenBabel::OBMolAtomIter::operator bool;
-%rename(good) OpenBabel::OBMolAtomBFSIter::operator bool;
-%rename(good) OpenBabel::OBMolAtomDFSIter::operator bool;
-%rename(good) OpenBabel::OBMolBondIter::operator bool;
-%rename(good) OpenBabel::OBMolPairIter::operator bool;
-%rename(good) OpenBabel::OBMolRingIter::operator bool;
-%rename(good) OpenBabel::OBMolTorsionIter::operator bool;
-%rename(good) OpenBabel::OBResidueIter::operator bool;
-%rename(good) OpenBabel::OBResidueAtomIter::operator bool;
-
-%rename(deref) OpenBabel::OBAtomAtomIter::operator->;
-%rename(deref) OpenBabel::OBAtomBondIter::operator->;
-%rename(deref) OpenBabel::OBMolAngleIter::operator->;
-%rename(deref) OpenBabel::OBMolAtomIter::operator->;
-%rename(deref) OpenBabel::OBMolAtomBFSIter::operator->;
-%rename(deref) OpenBabel::OBMolAtomDFSIter::operator->;
-%rename(deref) OpenBabel::OBMolBondIter::operator->;
-%rename(deref) OpenBabel::OBMolPairIter::operator->;
-%rename(deref) OpenBabel::OBMolRingIter::operator->;
-%rename(deref) OpenBabel::OBMolTorsionIter::operator->;
-%rename(deref) OpenBabel::OBResidueIter::operator->;
-%rename(deref) OpenBabel::OBResidueAtomIter::operator->;
+%ignore *::operator=;
 
 %include <openbabel/obiter.h>
