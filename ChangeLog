@@ -3,6 +3,12 @@
 	* src/mol.cpp: Moved all Destroy* calls to the end of Delete* functions so
 	that indexes are updated and other meta information.
 
+	* src/mol.cpp: NewBond was assigning indexes based on the size of the
+	_vbond vector but since the vector is incremented in chunks of 100 this
+	was producing incorrect index numbers.  Updated misc docs.  Also had a bug
+	in DeleteBond using the bond variable for more than one purpose (added
+	bondi for iterator usage).
+
 2007-01-07 Tim Vandermeersch <tim.vandermeersch@gmail.com>
 	
 	* src/math/vector3.cpp: Added Point2PlaneAngle(vector3 a, vector3 b,

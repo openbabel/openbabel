@@ -1473,9 +1473,10 @@ namespace OpenBabel
       }
   }
 
-  //! \brief Get a new atom to add to a molecule
+  //! \brief Instantiate a New Atom and add it to the molecule
   //!
-  //! Also checks bond_queue for any bonds that should be made to the new atom
+  //! Checks bond_queue for any bonds that should be made to the new atom
+  //! and updates atom indexes.
   OBAtom *OBMol::NewAtom()
   {
     //   BeginModify();
@@ -1530,17 +1531,20 @@ namespace OpenBabel
 
   OBResidue *OBMol::NewResidue()
   {
-    OBResidue *obresidue = new OBResidue;
+    OBResidue *obresidue = CreateResidue();
     obresidue->SetIdx(_residue.size());
     _residue.push_back(obresidue);
     return(obresidue);
   }
 
   //! \since version 2.1
+  //! \brief Instantiate a New Bond and add it to the molecule
+  //!
+  //! Sets the proper Bond index.
   OBBond *OBMol::NewBond()
   {
-    OBBond *pBond = new OBBond;
-    pBond->SetIdx(_vbond.size());
+    OBBond *pBond = CreateBond();
+    pBond->SetIdx(_nbonds++);
     _vbond.push_back(pBond);
     return(pBond);
   }
@@ -1658,7 +1662,7 @@ namespace OpenBabel
   {
     BeginModify();
 
-    OBResidue *obresidue = new OBResidue;
+    OBResidue *obresidue = CreateResidue();
     *obresidue = residue;
 
     obresidue->SetIdx(_residue.size());
@@ -2640,10 +2644,11 @@ namespace OpenBabel
   bool OBMol::DeleteResidue(OBResidue *residue)
   {
     unsigned short idx = residue->GetIdx();
+    _residue.erase(_residue.begin() + idx);
+
     for ( unsigned short i = idx ; i < _residue.size() ; i++ )
       _residue[i]->SetIdx(i-1);
 
-    _residue.erase(_residue.begin() + idx);
 
     DestroyResidue(residue);
 
@@ -2745,8 +2750,9 @@ namespace OpenBabel
 
     vector<OBBond*>::iterator i;
     int j;
-    for (bond = BeginBond(i),j=0;bond;bond = NextBond(i),++j)
-      bond->SetIdx(j);
+    OBBond *bondi;
+    for (bondi = BeginBond(i),j=0;bondi;bondi = NextBond(i),++j)
+      bondi->SetIdx(j);
 
     DestroyBond(bond);
 
