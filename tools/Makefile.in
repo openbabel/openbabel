@@ -38,8 +38,7 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = babel$(EXEEXT) obchiral$(EXEEXT) obgrep$(EXEEXT) \
 	obrotate$(EXEEXT) obfit$(EXEEXT) obprop$(EXEEXT) \
-	obxyz$(EXEEXT) obgen$(EXEEXT) obrotamer$(EXEEXT) \
-	obmm$(EXEEXT)
+	obxyz$(EXEEXT) obgen$(EXEEXT) obmm$(EXEEXT) obrotamer$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -68,15 +67,15 @@ obgen_DEPENDENCIES = ../src/libopenbabel.la
 am_obgrep_OBJECTS = obgrep.$(OBJEXT)
 obgrep_OBJECTS = $(am_obgrep_OBJECTS)
 obgrep_DEPENDENCIES = ../src/libopenbabel.la
+am_obmm_OBJECTS = obmm.$(OBJEXT)
+obmm_OBJECTS = $(am_obmm_OBJECTS)
+obmm_DEPENDENCIES = ../src/libopenbabel.la
 am_obprop_OBJECTS = obprop.$(OBJEXT)
 obprop_OBJECTS = $(am_obprop_OBJECTS)
 obprop_DEPENDENCIES = ../src/libopenbabel.la
 am_obrotamer_OBJECTS = obrotamer.$(OBJEXT)
 obrotamer_OBJECTS = $(am_obrotamer_OBJECTS)
 obrotamer_DEPENDENCIES = ../src/libopenbabel.la
-am_obmm_OBJECTS = obmm.$(OBJEXT)
-obmm_OBJECTS = $(am_obmm_OBJECTS)
-obmm_DEPENDENCIES = ../src/libopenbabel.la
 am_obrotate_OBJECTS = obrotate.$(OBJEXT)
 obrotate_OBJECTS = $(am_obrotate_OBJECTS)
 obrotate_DEPENDENCIES = ../src/libopenbabel.la
@@ -95,13 +94,13 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obfit_SOURCES) \
-	$(obgen_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) \
-	$(obrotamer_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES) \
-	$(obmm_SOURCES)
+	$(obgen_SOURCES) $(obgrep_SOURCES) $(obmm_SOURCES) \
+	$(obprop_SOURCES) $(obrotamer_SOURCES) $(obrotate_SOURCES) \
+	$(obxyz_SOURCES)
 DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obfit_SOURCES) \
-	$(obgen_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) \
-	$(obrotamer_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES) \
-	$(obmm_SOURCES)
+	$(obgen_SOURCES) $(obgrep_SOURCES) $(obmm_SOURCES) \
+	$(obprop_SOURCES) $(obrotamer_SOURCES) $(obrotate_SOURCES) \
+	$(obxyz_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -260,14 +259,14 @@ obgen_SOURCES = obgen.cpp
 obgen_LDADD = ../src/libopenbabel.la @LIBDL@
 obgrep_SOURCES = obgrep.cpp
 obgrep_LDADD = ../src/libopenbabel.la @LIBDL@
+obmm_SOURCES = obmm.cpp
+obmm_LDADD = ../src/libopenbabel.la @LIBDL@
 obprop_SOURCES = obprop.cpp
 obprop_LDADD = ../src/libopenbabel.la @LIBDL@
 obrotate_SOURCES = obrotate.cpp
 obrotate_LDADD = ../src/libopenbabel.la @LIBDL@
 obrotamer_SOURCES = obrotamer.cpp
 obrotamer_LDADD = ../src/libopenbabel.la @LIBDL@
-obmm_SOURCES = obmm.cpp
-obmm_LDADD = ../src/libopenbabel.la @LIBDL@
 obxyz_SOURCES = obxyz.cpp
 obxyz_LDADD = ../src/libopenbabel.la @LIBDL@
 
@@ -350,16 +349,16 @@ obgen$(EXEEXT): $(obgen_OBJECTS) $(obgen_DEPENDENCIES)
 obgrep$(EXEEXT): $(obgrep_OBJECTS) $(obgrep_DEPENDENCIES) 
 	@rm -f obgrep$(EXEEXT)
 	$(CXXLINK) $(obgrep_LDFLAGS) $(obgrep_OBJECTS) $(obgrep_LDADD) $(LIBS)
+obmm$(EXEEXT): $(obmm_OBJECTS) $(obmm_DEPENDENCIES) 
+	@rm -f obmm$(EXEEXT)
+	$(CXXLINK) $(obmm_LDFLAGS) $(obmm_OBJECTS) $(obmm_LDADD) $(LIBS)
 obprop$(EXEEXT): $(obprop_OBJECTS) $(obprop_DEPENDENCIES) 
 	@rm -f obprop$(EXEEXT)
 	$(CXXLINK) $(obprop_LDFLAGS) $(obprop_OBJECTS) $(obprop_LDADD) $(LIBS)
 obrotamer$(EXEEXT): $(obrotamer_OBJECTS) $(obrotamer_DEPENDENCIES) 
 	@rm -f obrotamer$(EXEEXT)
 	$(CXXLINK) $(obrotamer_LDFLAGS) $(obrotamer_OBJECTS) $(obrotamer_LDADD) $(LIBS)
-obmm$(EXEEXT): $(obmm_OBJECTS) $(obmm_DEPENDENCIES) 
-	@rm -f obmm$(EXEEXT)
-	$(CXXLINK) $(obmm_LDFLAGS) $(obmm_OBJECTS) $(obmm_LDADD) $(LIBS)
-obrotate$(EXEEXT): $(obmm_OBJECTS) $(obmm_DEPENDENCIES) 
+obrotate$(EXEEXT): $(obrotate_OBJECTS) $(obrotate_DEPENDENCIES) 
 	@rm -f obrotate$(EXEEXT)
 	$(CXXLINK) $(obrotate_LDFLAGS) $(obrotate_OBJECTS) $(obrotate_LDADD) $(LIBS)
 obxyz$(EXEEXT): $(obxyz_OBJECTS) $(obxyz_DEPENDENCIES) 
@@ -377,9 +376,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgrep.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obmm.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obprop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotamer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obmm.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obxyz.Po@am__quote@
 
