@@ -1,3 +1,8 @@
+2007-01-07  Donald E. Curtis <dcurtis3@sourceforge.net>
+
+	* src/mol.cpp: Moved all Destroy* calls to the end of Delete* functions so
+	that indexes are updated and other meta information.
+
 2007-01-07 Tim Vandermeersch <tim.vandermeersch@gmail.com>
 	
 	* src/math/vector3.cpp: Added Point2PlaneAngle(vector3 a, vector3 b,

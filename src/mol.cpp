@@ -1773,16 +1773,16 @@ namespace OpenBabel
     */
 
     //find bonds to delete
-    vector<OBBond*> vdb;
+    vector<OBBond*> delbonds;
     vector<OBBond*>::iterator j;
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       if (!atom->IsHydrogen())
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
           if (nbr->IsHydrogen())
-            vdb.push_back(*j);
+            delbonds.push_back(*j);
 
     IncrementMod();
-    for (j = vdb.begin();j != vdb.end();++j)
+    for (j = delbonds.begin();j != delbonds.end();++j)
       DeleteBond((OBBond *)*j); //delete bonds
     DecrementMod();
 
@@ -1799,12 +1799,6 @@ namespace OpenBabel
           va.push_back(atom);
         }
 
-    for (i = delatoms.begin();i != delatoms.end();++i)
-      {
-        DestroyAtom(*i);
-        _natoms--;
-      }
-
     _vatom.clear();
     for (i = va.begin();i != va.end();++i)
       _vatom.push_back((OBAtom*)*i);
@@ -1817,6 +1811,11 @@ namespace OpenBabel
     //reset all the indices to the atoms
     for (idx1=1,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx1)
       atom->SetIdx(idx1);
+
+    for (i = delatoms.begin();i != delatoms.end();++i)
+    {
+      DestroyAtom(*i);
+    }
 
     return(true);
   }
@@ -1872,14 +1871,15 @@ namespace OpenBabel
       }
 
     _vatom.erase(_vatom.begin()+(atom->GetIdx()-1));
-    DestroyAtom(atom);
     _natoms--;
 
     //reset all the indices to the atoms
     vector<OBAtom*>::iterator i;
-    for (idx=1,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx)
-      atom->SetIdx(idx);
+    OBAtom *atomi;
+    for (idx=1,atomi = BeginAtom(i);atomi;atomi = NextAtom(i),++idx)
+      atomi->SetIdx(idx);
 
+    DestroyAtom(atom);
     return(true);
   }
 
@@ -2622,15 +2622,16 @@ namespace OpenBabel
       DeleteBond((OBBond *)*j); //delete bonds
 
     _vatom.erase(_vatom.begin()+(atom->GetIdx()-1));
-    DestroyAtom(atom);
     _natoms--;
 
     //reset all the indices to the atoms
     int idx;
     vector<OBAtom*>::iterator i;
-    for (idx=1,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx)
-      atom->SetIdx(idx);
+    OBAtom *atomi;
+    for (idx=1,atomi = BeginAtom(i);atomi;atomi = NextAtom(i),++idx)
+      atomi->SetIdx(idx);
 
+    DestroyAtom(atom);
     EndModify();
 
     return(true);
@@ -2740,15 +2741,15 @@ namespace OpenBabel
     (bond->GetBeginAtom())->DeleteBond(bond);
     (bond->GetEndAtom())->DeleteBond(bond);
     _vbond.erase(_vbond.begin() + bond->GetIdx());
-
-    DestroyBond(bond);
+    _nbonds--;
 
     vector<OBBond*>::iterator i;
     int j;
     for (bond = BeginBond(i),j=0;bond;bond = NextBond(i),++j)
       bond->SetIdx(j);
 
-    _nbonds--;
+    DestroyBond(bond);
+
     EndModify();
     return(true);
   }
