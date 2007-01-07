@@ -66,6 +66,7 @@ sd		sdf		MDL Isis SDF			chemical/x-mdl-sdfile		1	1
 mdl		sdf		MDL Molfile			chemical/x-mdl-molfile		1	1
 mol		sdf		MDL Molfile			chemical/x-mdl-molfile		1	1
 mopcrt		mopaccart	MOPAC Cartesian			chemical/x-mopac-input		1	1
+mopin		mopacint	MOPAC Internal			chemical/x-mopac-input		1	1
 mopout		mopacout	MOPAC Output			none				1	0
 mmads		mmads		MMADS				none				1	1
 mpqc		mpqc		MPQC				none				1	0
@@ -115,7 +116,6 @@ mm2out		mm2out		MM2 Output			none				0	0
 mm3		mm3		MM3				none				0	0
 molin		molin		MOLIN				none				0	0
 miv		molinvent	MolInventor			none				0	0
-mopin		mopacint	MOPAC Internal			none				0	0
 cmod		pcmodel		PC Model			none				0	0
 msf		msf		MSI Quanta MSF			none				0	0
 schakal		schakal		Schakal				none				0	0

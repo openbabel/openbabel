@@ -28,7 +28,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-  int OBForceField::GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)
+  int OBForceField::GetParameterIdx(int a, int b, int c, int d, vector<OBFFParameter> &parameter)
   {
     if (!b)
       for (unsigned int idx=0; idx < parameter.size(); idx++)
@@ -54,7 +54,7 @@ namespace OpenBabel
     return -1;
   }
   
-  OBFFParameter* OBForceField::GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)
+  OBFFParameter* OBForceField::GetParameter(int a, int b, int c, int d, vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
 
@@ -90,14 +90,14 @@ namespace OpenBabel
     return NULL;
   }
   
-  OBFFParameter* OBForceField::GetParameter(const char* a, const char* b, const char* c, const char* d, std::vector<OBFFParameter> &parameter)
+  OBFFParameter* OBForceField::GetParameter(const char* a, const char* b, const char* c, const char* d, vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
     if (a == NULL)
       return NULL;
 
     if (b == NULL) {
-      std::string _a(a);
+      string _a(a);
       for (unsigned int idx=0; idx < parameter.size(); idx++) 
         if (_a == parameter[idx]._a) {
 	  par = &parameter[idx];
@@ -106,8 +106,8 @@ namespace OpenBabel
       return NULL;
     }
     if (c == NULL) {
-      std::string _a(a);
-      std::string _b(b);
+      string _a(a);
+      string _b(b);
       for (unsigned int idx=0; idx < parameter.size(); idx++) {
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b)) || ((_a == parameter[idx]._b) && (_b == parameter[idx]._a))) {
 	  par = &parameter[idx];
@@ -117,9 +117,9 @@ namespace OpenBabel
       return NULL;
     }
     if (d == NULL) {
-      std::string _a(a);
-      std::string _b(b);
-      std::string _c(c);
+      string _a(a);
+      string _b(b);
+      string _c(c);
       for (unsigned int idx=0; idx < parameter.size(); idx++) {
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c)) || 
 	    ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && (_c == parameter[idx]._a))) {
@@ -129,10 +129,10 @@ namespace OpenBabel
       }
       return NULL;
     }
-    std::string _a(a);
-    std::string _b(b);
-    std::string _c(c);
-    std::string _d(d);
+    string _a(a);
+    string _b(b);
+    string _c(c);
+    string _d(d);
     for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c) && (_d == parameter[idx]._d)) || 
           ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && (_c == parameter[idx]._b) && (_d == parameter[idx]._a))) {
@@ -142,7 +142,24 @@ namespace OpenBabel
 
     return NULL;
   }
+  
+  bool OBForceField::SetLogFile(ostream* pos)
+  {
+    if(pos)
+       logos = pos;
+    else
+       logos = &cout;
+    
+    return true;
+  }
+  
+  bool OBForceField::SetLogLevel(int level)
+  {
+    loglvl = level; 
 
+    return true;
+  }
+ 
   int OBForceField::get_nbr (OBAtom* atom, int level) {
     OBAtom *nbr,*nbr2;
     vector<OBEdgeBase*>::iterator i;
@@ -249,19 +266,26 @@ namespace OpenBabel
 
   void OBForceField::SteepestDescent(int steps) 
   {
-    double e_n1, e_n2;
-    double h;
+    double e_n1, e_n2, h;
+    char logbuf[100];
     //   double fmax;
     vector3 vf;
-    std::vector<vector3> old_xyz;
+    vector<vector3> old_xyz;
 
     h = 0.1f;
     old_xyz.resize(_mol.NumAtoms()+1);
 
     e_n1 = Energy(); // we call Energy instead of GetEnergy 
                      // because coordinates change every step
-
-    for (int i=0; i<steps; i++) {
+    
+    IF_OBFF_LOGLVL_LOW {
+      *logos << endl << "S T E E P E S T   D E S C E N T" << endl << endl;
+      *logos << "STEPS = " << steps << endl << endl;
+      *logos << "STEP n     E(n)       E(n-1)     STEPSIZE" << endl;
+      *logos << "-----------------------------------------" << endl;
+    }
+           //  XXXX    XXXXXXXX    XXXXXXXX    XXXXXXXX
+    for (int i=1; i<=steps; i++) {
       //fmax = GetFmax();
       
       FOR_ATOMS_OF_MOL (a, _mol) {
@@ -276,8 +300,12 @@ namespace OpenBabel
         //sprintf(errbuf, "%svf=(%f, %f, %f)\n", errbuf, vf.x(), vf.y(), vf.z()); // DEBUG
       }
       e_n2 = Energy();
-
-      std::cout << "e_n1 e=" << e_n1 << "  e_n2=" << e_n2  << ", h=" << h << std::endl;
+      
+      IF_OBFF_LOGLVL_LOW {
+        sprintf(logbuf, " %4d    %8.3f    %8.3f    %8.3f", i, e_n2, e_n1, h);
+        *logos << logbuf << endl;
+      }
+      
       if (e_n2 >= e_n1) {
 	h = 0.5f * h;
         FOR_ATOMS_OF_MOL (a, _mol)
@@ -291,7 +319,8 @@ namespace OpenBabel
     }
 
     UnsetEnergyCalculated();
-    std::cout << std::endl;
+    IF_OBFF_LOGLVL_LOW
+      *logos << endl;
   }
 
   void OBForceField::ConjugateGradients(int steps)
@@ -300,7 +329,7 @@ namespace OpenBabel
     double h, g2g2, g1g1, g2g1;
     bool firststep;
     vector3 grad1, grad2, dir1, dir2;
-    std::vector<vector3> old_xyz;
+    vector<vector3> old_xyz;
 
     h = 0.1f;
     firststep = true;
@@ -320,7 +349,7 @@ namespace OpenBabel
         }
         e_n2 = Energy();
 
-        std::cout << "e_n1 e=" << e_n1 << "  e_n2=" << e_n2  << ", h=" << h << std::endl;
+        cout << "e_n1 e=" << e_n1 << "  e_n2=" << e_n2  << ", h=" << h << endl;
         if (e_n2 >= e_n1) {
 	  h = 0.5f * h;
           FOR_ATOMS_OF_MOL (a, _mol)
@@ -343,14 +372,14 @@ namespace OpenBabel
 	  dir2 = grad2 + g2g1 * dir1;
 	  old_xyz[a->GetIdx()] = a->GetVector();
           a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
-	  //std::cout << "  dir2=" << dir2 << std::endl;
+	  //cout << "  dir2=" << dir2 << endl;
           //sprintf(errbuf, "%svf=(%f, %f, %f)\n", errbuf, vf.x(), vf.y(), vf.z()); // DEBUG
 	  grad1 = grad2;
 	  dir1 = dir2;
         }
         e_n2 = Energy();
 
-        std::cout << "e_n1 e=" << e_n1 << "  e_n2=" << e_n2  << ", h=" << h << std::endl;
+        cout << "e_n1 e=" << e_n1 << "  e_n2=" << e_n2  << ", h=" << h << endl;
         if (e_n2 >= e_n1) {
 	  h = 0.5f * h;
           FOR_ATOMS_OF_MOL (a, _mol)
@@ -370,7 +399,7 @@ namespace OpenBabel
   double OBForceField::GetFmax(OBMol &mol)
   {
     double fmax;
-    std::vector<vector3>::iterator v; 
+    vector<vector3>::iterator v; 
 
     for (v = forces.begin(); v != forces.end(); v++) {
       if (v->x() > fmax)
@@ -450,21 +479,6 @@ namespace OpenBabel
       atom = _mol.GetAtom(a->GetIdx());
       a->SetVector(atom->GetVector());
     }
-  }
-
-  double OBForceField::PointPlaneAngle(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d)
-  {
-    vector3 ab, bc, bd, normal;
-    double angle;
-
-    ab = a - b;
-    bc = b - c;
-    bd = b - d;
- 
-    normal = cross(ab, bc);
-    angle = 90.0f - vectorAngle(normal, bd);
-
-    return angle;
   }
 
 } // end namespace OpenBabel

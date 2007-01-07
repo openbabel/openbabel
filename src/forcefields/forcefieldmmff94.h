@@ -31,7 +31,7 @@ namespace OpenBabel
   {
     public:
       OBAtom *a, *b; // atoms of the bond
-      double kb, r0, e, rab, delta, delta2;
+      double kb, r0, e, rab, delta;
       int bt; // bondtype (BTIJ)
       
       double Result();
@@ -41,8 +41,58 @@ namespace OpenBabel
   {
     public:
       OBAtom *a, *b, *c; // atoms of the angle
-      double ka, theta0, e, thetaabc, delta, delta2;
+      double ka, theta0, e, theta, delta;
       int at; //angletype (ATIJK)
+      
+      double Result();
+  };
+  
+  class OBFFStrBndCalculationMMFF94 : public OBFFCalculation
+  {
+    public:
+      OBAtom *a, *b, *c; // atoms of the angle
+      double kbaABC, kbaCBA, e, theta0, theta, rab0, rbc0, rab, rbc, delta_theta, delta_rab, delta_rbc;
+      int sbt; //strbndtype (SBTIJK)
+      
+      double Result();
+  };
+
+  class OBFFTorsionCalculationMMFF94 : public OBFFCalculation
+  {
+    public:
+      OBAtom *a, *b, *c, *d; // atoms of the torsion
+      double v1, v2, v3, e, tor, cosine;
+      int tt; //torsiontype (TTIJKL)
+      
+      double Result();
+  };
+
+ class OBFFOOPCalculationMMFF94 : public OBFFCalculation
+  {
+    public:
+      OBAtom *a, *b, *c, *d; // atoms of the oop angle
+      double koop, e, angle;
+      
+      double Result();
+  };
+
+  class OBFFVDWCalculationMMFF94 : public OBFFCalculation
+  {
+    public:
+      OBAtom *a, *b; // atoms of the pair
+      double e, rab, epsilon, alpha_a, alpha_b, Na, Nb, Aa, Ab, Ga, Gb;
+      double R_AB, R_AB7, erep, eattr, escale;
+      int aDA, bDA; // hydrogen donor/acceptor (A=1, D=2, neither=0)
+
+      double Result();
+  };
+
+  class OBFFElectrostaticCalculationMMFF94 : public OBFFCalculation
+  {
+    public:
+      OBAtom *a, *b, *c; // atoms of the angle
+      double ka, theta0, e, thetaabc, delta, delta2;
+      int sbt; //strbndtype (SBTIJK)
       
       double Result();
   };
@@ -106,8 +156,13 @@ namespace OpenBabel
       std::vector<OBFFParameter> _ffchgparams;
       std::vector<OBFFParameter> _ffpbciparams;
 
-      std::vector<OBFFBondCalculationMMFF94> _bondcalculations;
-      std::vector<OBFFAngleCalculationMMFF94> _anglecalculations;
+      std::vector<OBFFBondCalculationMMFF94>          _bondcalculations;
+      std::vector<OBFFAngleCalculationMMFF94>         _anglecalculations;
+      std::vector<OBFFStrBndCalculationMMFF94>        _strbndcalculations;
+      std::vector<OBFFTorsionCalculationMMFF94>       _torsioncalculations;
+      std::vector<OBFFOOPCalculationMMFF94>           _oopcalculations;
+      std::vector<OBFFVDWCalculationMMFF94>           _vdwcalculations;
+      std::vector<OBFFElectrostaticCalculationMMFF94> _electostaticcalculations;
       
       // parameters from mmffprop.par
       std::vector<int> _sbmb; // single bond - multiple bond
@@ -117,7 +172,6 @@ namespace OpenBabel
     public:
       //! Setup
       bool Setup(OBMol &mol);
-      bool Setup(OBMol &mol, const char *logfile);
       //! Constructor
       OBForceFieldMMFF94(std::string ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
@@ -150,9 +204,6 @@ namespace OpenBabel
       double E_VDW();
       //! Returns the dipole-dipole interaction energy
       double E_Electrostatic();
-
-      std::ofstream logfs;
- 
 
   }; // class OBForceFieldMM2
 

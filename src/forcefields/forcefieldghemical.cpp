@@ -185,17 +185,20 @@ namespace OpenBabel
 	      d = (OBAtom*) &*nbr;
 	  }
 	  
-            angle = PointPlaneAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
+            //angle = PointPlaneAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
+            angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
 	    angle2 = angle * angle;
 	    e = 0.5f * force * angle2;
 	    energy +=e;
 
-            angle = PointPlaneAngle(d->GetVector(), b->GetVector(), c->GetVector(), a->GetVector());
+            //angle = PointPlaneAngle(d->GetVector(), b->GetVector(), c->GetVector(), a->GetVector());
+            angle = Point2PlaneAngle(a->GetVector(), d->GetVector(), b->GetVector(), c->GetVector());
 	    angle2 = angle * angle;
 	    e = 0.5f * force * angle2;
 	    energy +=e;
 
-            angle = PointPlaneAngle(a->GetVector(), b->GetVector(), d->GetVector(), c->GetVector());
+            //angle = PointPlaneAngle(a->GetVector(), b->GetVector(), d->GetVector(), c->GetVector());
+            angle = Point2PlaneAngle(c->GetVector(), a->GetVector(), b->GetVector(), d->GetVector());
 	    angle2 = angle * angle;
 	    e = 0.5f * force * angle2;
 	    energy +=e;

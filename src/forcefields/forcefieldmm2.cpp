@@ -311,7 +311,8 @@ namespace OpenBabel
 	  
 	  if (atoi(d->GetType()) == _ffoutplanebendparams[idx].b) {
 	    force = _ffoutplanebendparams[idx].dpar1;
-            angle = PointPlaneAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
+            angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
+            //angle = PointPlaneAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
 	    angle2 = angle * angle;
 	    e = outplanebendunit * force * angle2;
 	    energy +=e;
@@ -321,7 +322,8 @@ namespace OpenBabel
 	  if (atoi(a->GetType()) == _ffoutplanebendparams[idx].b) {
 	    // a <-> d
 	    force = _ffoutplanebendparams[idx].dpar1;
-            angle = PointPlaneAngle(d->GetVector(), b->GetVector(), c->GetVector(), a->GetVector());
+            angle = Point2PlaneAngle(a->GetVector(), d->GetVector(), b->GetVector(), c->GetVector());
+            //angle = PointPlaneAngle(d->GetVector(), b->GetVector(), c->GetVector(), a->GetVector());
 	    angle2 = angle * angle;
 	    e = outplanebendunit * force * angle2;
 	    energy +=e;
@@ -331,7 +333,8 @@ namespace OpenBabel
 	  if (atoi(c->GetType()) == _ffoutplanebendparams[idx].b) {
 	    // c <-> d
 	    force = _ffoutplanebendparams[idx].dpar1;
-            angle = PointPlaneAngle(a->GetVector(), b->GetVector(), d->GetVector(), c->GetVector());
+            angle = Point2PlaneAngle(c->GetVector(), a->GetVector(), b->GetVector(), d->GetVector());
+            //angle = PointPlaneAngle(a->GetVector(), b->GetVector(), d->GetVector(), c->GetVector());
 	    angle2 = angle * angle;
 	    e = outplanebendunit * force * angle2;
 	    energy +=e;

@@ -316,6 +316,22 @@ namespace OpenBabel
     vector3 v_normal = cross(c-b, d-b);
     return fabs( dot( v_normal, v_ba ) / v_normal.length() );
   }
+  
+  /* Calculate the angle between point a and the plane determined by b,c,d */
+  double Point2PlaneAngle(const vector3 a, const vector3 b, const vector3 c, const vector3 d)
+  {
+    vector3 ac, bc, cd, normal;
+    double angle;
+
+    ac = a - c;
+    bc = b - c;
+    cd = c - d;
+ 
+    normal = cross(bc, cd);
+    angle = 90.0f - vectorAngle(normal, ac);
+
+    return angle;
+  }
 
 } // namespace OpenBabel
 

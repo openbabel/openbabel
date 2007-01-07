@@ -326,6 +326,8 @@ namespace OpenBabel
 
   //! Calculate the distance of point a to the plane determined by b,c,d
   OBAPI double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d);
+  //! Calculate the angle between point a and the plane determined by b,c,d
+  OBAPI double Point2PlaneAngle(const vector3 a, const vector3 b, const vector3 c, const vector3 d);
 
   //  The global constant vector3 objects
   //! The zero vector: <0.0, 0.0, 0.0>

@@ -1,3 +1,18 @@
+2007-01-07 Tim Vandermeersch <tim.vandermeersch@gmail.com>
+	
+	* src/math/vector3.cpp: Added Point2PlaneAngle(vector3 a, vector3 b,
+	vector3 c, vector3 d) (moved from OBForceField)
+	
+	* src/forcefield.cpp: Added logging features
+
+	* src/forcefields/forcefieldmmff.cpp: All energy functions except
+	E_Electrostatic() now use a OBFFXXXCalculationYYY class. Runs much
+	faster.
+
+	* src/formats/mopacformat.cpp: Added MOPAC Internal format (mopin)
+	
+	* data/exttype.txt: Updated for MOPAC Internal format (mopin)
+
 2007-01-06 Noel O'Boyle <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPython/setup.py: Bumped up version number to 1.0.

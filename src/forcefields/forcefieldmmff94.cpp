@@ -27,16 +27,17 @@ namespace OpenBabel
 {
   double OBFFBondCalculationMMFF94::Result()
   {
-     vector3 vab;
+    double delta2;
+    vector3 vab;
      
-     vab = a->GetVector() - b->GetVector();
-     rab = vab.length();
-     delta = rab - r0;
-     delta2 = delta * delta;
+    vab = a->GetVector() - b->GetVector();
+    rab = vab.length();
+    delta = rab - r0;
+    delta2 = delta * delta;
  
-     e = 143.9325f * 0.5f * kb * delta2 * (1.0f - 2.0f * delta + 7/12 * 4.0f * delta2);
+    e = 143.9325f * 0.5f * kb * delta2 * (1.0f - 2.0f * delta + 7/12 * 4.0f * delta2);
 
-     return e;
+    return e;
   }
   
   double OBForceFieldMMFF94::E_Bond()
@@ -47,28 +48,35 @@ namespace OpenBabel
 
     energy = 0.0f;
 
-    logfs << std::endl << "B O N D   S T R E T C H I N G" << endl << endl;
-    logfs << "ATOM TYPES   FF    BOND       IDEAL       FORCE" << endl;
-    logfs << " I    J     CLASS  LENGTH     LENGTH     CONSTANT      DELTA      ENERGY" << endl;
-    logfs << "------------------------------------------------------------------------" << endl;
+    IF_OBFF_LOGLVL_HIGH {
+      *logos << std::endl << "B O N D   S T R E T C H I N G" << endl << endl;
+      *logos << "ATOM TYPES   FF    BOND       IDEAL       FORCE" << endl;
+      *logos << " I    J     CLASS  LENGTH     LENGTH     CONSTANT      DELTA      ENERGY" << endl;
+      *logos << "------------------------------------------------------------------------" << endl;
+    }
     
     for (i = _bondcalculations.begin(); i != _bondcalculations.end(); i++) {
 
       energy += (*i).Result();
       
-      sprintf(logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).e);
-      logfs  << logbuf << std::endl;
+      IF_OBFF_LOGLVL_HIGH {
+        sprintf(logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).e);
+        *logos  << logbuf << std::endl;
+      }
     }
     
-    logfs << endl << "     TOTAL BOND STRETCHING ENERGY = " << energy << endl << endl;
+    IF_OBFF_LOGLVL_MEDIUM
+      *logos << endl << "     TOTAL BOND STRETCHING ENERGY = " << energy << endl << endl;
     return energy;
   }
  
   double OBFFAngleCalculationMMFF94::Result()
   {
-    thetaabc = a->GetAngle(b->GetIdx(), c->GetIdx());
+    double delta2;
+
+    theta = a->GetAngle(b->GetIdx(), c->GetIdx());
     
-    delta = thetaabc - theta0;
+    delta = theta - theta0;
     delta2 = delta * delta;
     
     e = 0.043844f * 0.5f * ka * delta2 * (1.0f - 0.007f * delta);
@@ -84,107 +92,77 @@ namespace OpenBabel
  
     energy = 0.0f;
 
-    logfs << endl << "A N G L E   B E N D I N G" << endl << endl;
-    logfs << "ATOM TYPES        FF    VALENCE     IDEAL      FORCE" << endl;
-    logfs << " I    J    K     CLASS   ANGLE      ANGLE     CONSTANT      DELTA      ENERGY" << endl;
-    logfs << "-----------------------------------------------------------------------------" << endl;
+    IF_OBFF_LOGLVL_HIGH {
+      *logos << endl << "A N G L E   B E N D I N G" << endl << endl;
+      *logos << "ATOM TYPES        FF    VALENCE     IDEAL      FORCE" << endl;
+      *logos << " I    J    K     CLASS   ANGLE      ANGLE     CONSTANT      DELTA      ENERGY" << endl;
+      *logos << "-----------------------------------------------------------------------------" << endl;
+    }
     
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); i++) {
 
       energy += (*i).Result();
       
-      sprintf(logbuf, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), 
-              (*i).at, (*i).thetaabc, (*i).theta0, (*i).ka, (*i).delta, (*i).e);
-      logfs  << logbuf << endl;
+      IF_OBFF_LOGLVL_HIGH {
+        sprintf(logbuf, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), 
+                (*i).at, (*i).theta, (*i).theta0, (*i).ka, (*i).delta, (*i).e);
+        *logos  << logbuf << endl;
+      }
     }
  
-    logfs << endl << "     TOTAL ANGLE BENDING ENERGY = " << energy << endl << endl;
+    IF_OBFF_LOGLVL_MEDIUM
+      *logos << endl << "     TOTAL ANGLE BENDING ENERGY = " << energy << endl << endl;
     return energy;
   }
- 
+  
+  double OBFFStrBndCalculationMMFF94::Result()
+  {
+    vector3 vab, vbc;
+
+    vab = a->GetVector() - b->GetVector();
+    vbc = b->GetVector() - c->GetVector();
+    
+    theta = a->GetAngle(b->GetIdx(), c->GetIdx());
+    rab = vab.length();
+    rbc = vbc.length();
+    
+    delta_theta = theta - theta0;
+    delta_rab = rab - rab0;
+    delta_rbc = rbc - rbc0;
+
+    e = 2.51210f * (kbaABC * delta_rab + kbaCBA * delta_rbc) * delta_theta;
+
+    return e;
+  }
+  
   double OBForceFieldMMFF94::E_StrBnd() 
   {
-    OBFFParameter *parameter;
-    OBAtom *a, *b, *c;
-    OBBond *b1, *b2;
-    double e, energy, kbaIJK, kbaKJI, ang, ang_ref, lab, lbc, rab, rbc, delta_ang, delta_ab, delta_bc;
-    int bondtype1, bondtype2, angletype, strbndtype, rowa, rowb, rowc;
+    vector<OBFFStrBndCalculationMMFF94>::iterator i;
+    double energy;
     char logbuf[100];
 
     energy = 0.0f;
     
-    logfs << std::endl << "S T R E T C H   B E N D I N G" << std::endl << std::endl;
-    logfs << "ATOM TYPES        FF    VALENCE     DELTA        FORCE CONSTANT " << std::endl;
-    logfs << " I    J    K     CLASS   ANGLE      ANGLE        I J        J K      ENERGY" << std::endl;
-    logfs << "---------------------------------------------------------------------------" << std::endl;
+    IF_OBFF_LOGLVL_HIGH {
+      *logos  << std::endl << "S T R E T C H   B E N D I N G" << std::endl << std::endl;
+      *logos << "ATOM TYPES        FF    VALENCE     DELTA        FORCE CONSTANT " << std::endl;
+      *logos << " I    J    K     CLASS   ANGLE      ANGLE        I J        J K      ENERGY" << std::endl;
+      *logos << "---------------------------------------------------------------------------" << std::endl;
+    }
+    
+    for (i = _strbndcalculations.begin(); i != _strbndcalculations.end(); i++) {
 
-    FOR_ANGLES_OF_MOL(angle, _mol) {
-      b = _mol.GetAtom((*angle)[0] + 1);
-      a = _mol.GetAtom((*angle)[1] + 1);
-      c = _mol.GetAtom((*angle)[2] + 1);
-
-      if (HasLinSet(atoi(b->GetType())))
-        continue;
-
-      ang = a->GetAngle(b->GetIdx(), c->GetIdx());
-      b1 = _mol.GetBond(b->GetIdx(), a->GetIdx());
-      b2 = _mol.GetBond(b->GetIdx(), c->GetIdx());
-      lab = b1->GetLength();
-      lbc = b2->GetLength();
-      strbndtype = GetStrBndType(a, b, c);
-      bondtype1 = GetBondType(a, b);
-      bondtype2 = GetBondType(b, c);
-      angletype = GetAngleType(a, b, c);
+      energy += (*i).Result();
       
-      parameter = GetParameterMMFF94(strbndtype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffstrbndparams);
-      if (parameter == NULL) {
-        rowa = GetElementRow(a);
-        rowb = GetElementRow(b);
-        rowc = GetElementRow(c);
-        
-	parameter = GetParameter(rowa, rowb, rowc, 0, _ffdfsbparams);
-        if (parameter == NULL) {
-          obErrorLog.ThrowError(__FUNCTION__, "Could not find all stretch-bend parameters", obError);
-          exit(1);
-	}
-
-        if (rowa == parameter->a) {
-          kbaIJK = parameter->dpar1;
-          kbaKJI = parameter->dpar2;
-        } else {
-          kbaIJK = parameter->dpar2;
-          kbaKJI = parameter->dpar1;
-        }
-      } else {
-        if (atoi(a->GetType()) == parameter->a) {
-          kbaIJK = parameter->dpar1;
-          kbaKJI = parameter->dpar2;
-        } else {
-          kbaIJK = parameter->dpar2;
-          kbaKJI = parameter->dpar1;
-        }
+      IF_OBFF_LOGLVL_HIGH {
+        sprintf(logbuf, "%2d   %2d   %2d     %2d   %8.3f   %8.3f   %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), 
+                (*i).sbt, (*i).theta, (*i).delta_theta, (*i).kbaABC, (*i).kbaCBA, (*i).e);
+        *logos  << logbuf << endl;
       }
-
-      parameter = GetParameterMMFF94(angletype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffangleparams);
-      ang_ref = parameter->dpar2;
-      
-      parameter = GetParameterMMFF94(bondtype1, atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams);
-      rab = parameter->dpar2;
-      
-      parameter = GetParameterMMFF94(bondtype2, atoi(b->GetType()), atoi(c->GetType()), 0, 0, _ffbondparams);
-      rbc = parameter->dpar2;
-
-      delta_ang = ang - ang_ref;
-      delta_ab = lab - rab;
-      delta_bc = lbc - rbc;
-      e = 2.51210f * (kbaIJK * delta_ab + kbaKJI * delta_bc) * delta_ang;
-      energy += e;
-      
-      sprintf(logbuf, "%2d   %2d   %2d     %2d   %8.3f   %8.3f   %8.3f   %8.3f   %8.3f", atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), strbndtype, ang, delta_ang, kbaIJK, kbaKJI, e);
-      logfs << logbuf << std::endl;
     }
 	
-    logfs << std::endl << "     TOTAL STRETCH BENDING ENERGY = " << energy << std::endl << std::endl;
+    IF_OBFF_LOGLVL_MEDIUM
+      *logos << std::endl << "     TOTAL STRETCH BENDING ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
  
@@ -210,93 +188,57 @@ namespace OpenBabel
     return row;
   }
 
+  double OBFFTorsionCalculationMMFF94::Result()
+  {
+    double cosine, cosine2, cosine3;
+    double phi1, phi2, phi3;
+
+    tor = CalcTorsionAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
+
+    cosine = cos(DEG_TO_RAD * tor);
+    cosine2 = cos(DEG_TO_RAD * 2 * tor);
+    cosine3 = cos(DEG_TO_RAD * 3 * tor);
+      
+    phi1 = 1.0f + cosine;
+    phi2 = 1.0f - cosine2;
+    phi3 = 1.0f + cosine3;
+    
+    e = 0.5f * (v1 * phi1 + v2 * phi2 + v3 * phi3);
+ 
+    return e;
+  }
+  
   double OBForceFieldMMFF94::E_Torsion() 
   {
-    OBFFParameter *parameter;
-    OBAtom *a, *b, *c, *d;
-    double e, energy, tor, v1, v2, v3, cosine, cosine2, cosine3, phi1, phi2, phi3;
+    vector<OBFFTorsionCalculationMMFF94>::iterator i;
+    double energy;
     char logbuf[150];
-    int torsiontype;
-    bool found;
     
-    logfs << std::endl << "T O R S I O N A L" << std::endl << std::endl;
-    logfs << "ATOM TYPES             FF     TORSION       FORCE CONSTANT" << std::endl;
-    logfs << " I    J    K    L     CLASS    ANGLE         V1   V2   V3     ENERGY" << std::endl;
-    logfs << "--------------------------------------------------------------------" << std::endl;
-
     energy = 0.0f;
-
-    FOR_TORSIONS_OF_MOL(t, _mol) {
-      a = _mol.GetAtom((*t)[0] + 1);
-      b = _mol.GetAtom((*t)[1] + 1);
-      c = _mol.GetAtom((*t)[2] + 1);
-      d = _mol.GetAtom((*t)[3] + 1);
-      tor = _mol.GetTorsion(a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
-      torsiontype = GetTorsionType(a, b, c, d);
-      
-      parameter = GetParameterMMFF94(torsiontype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
-
-      found = false;
-      parameter = GetParameterMMFF94(torsiontype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
-      if (parameter == NULL) {
-        for (int idx=0; idx < _fftorsionparams.size(); idx++) {  // *-XX-XX-XX 
-          if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx].ipar5) &&
-	       (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
-              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx].ipar5) &&
-	       (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
-              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx].ipar5) &&
-	       (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].a)) ||
-              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx].ipar5) &&
-	       (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].a)))
-	  {
-            v1 = _fftorsionparams[idx].dpar1;
-            v2 = _fftorsionparams[idx].dpar2;
-            v3 = _fftorsionparams[idx].dpar3;
-	    found = true;  
-	  }
-        }
-
-        if (!found)
-	  for (int idx=0; idx < _fftorsionparams.size(); idx++) {  // *-XX-XX-*
-            if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
-	         (atoi(c->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)) ||
-                ((_fftorsionparams[idx].a == 0) && (atoi(c->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
-	         (atoi(b->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)))
-	    {
-              v1 = _fftorsionparams[idx].dpar1;
-              v2 = _fftorsionparams[idx].dpar2;
-              v3 = _fftorsionparams[idx].dpar3;
-	      found = true;  
-	    }
-          }
-
-	if (!found) {
-	  obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
-          exit(1);
-	}
-      } else {
-        v1 = parameter->dpar1;
-        v2 = parameter->dpar2;
-        v3 = parameter->dpar3;
-      }
-     
-      cosine = cos(DEG_TO_RAD * tor);
-      cosine2 = cos(DEG_TO_RAD * 2 * tor);
-      cosine3 = cos(DEG_TO_RAD * 3 * tor);
-      phi1 = 1.0f + cosine;
-      phi2 = 1.0f - cosine2;
-      phi3 = 1.0f + cosine3;
-      e = 0.5f * (v1 * phi1 + v2 * phi2 + v3 * phi3);
-      energy += e;
-      
-      sprintf(logbuf, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f", atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), torsiontype, tor, v1, v2, v3, e);
-      logfs << logbuf << std::endl;
+    
+    IF_OBFF_LOGLVL_HIGH {
+      *logos << std::endl << "T O R S I O N A L" << std::endl << std::endl;
+      *logos << "ATOM TYPES             FF     TORSION       FORCE CONSTANT" << std::endl;
+      *logos << " I    J    K    L     CLASS    ANGLE         V1   V2   V3     ENERGY" << std::endl;
+      *logos << "--------------------------------------------------------------------" << std::endl;
     }
 
-    logfs << std::endl << "     TOTAL TORSIONAL ENERGY = " << energy << std::endl << std::endl;
+    for (i = _torsioncalculations.begin(); i != _torsioncalculations.end(); i++) {
+
+      energy += (*i).Result();
+      
+      IF_OBFF_LOGLVL_HIGH {
+        sprintf(logbuf, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), atoi((*i).d->GetType()), 
+                (*i).tt, (*i).tor, (*i).v1, (*i).v2, (*i).v3, (*i).e);
+        *logos  << logbuf << endl;
+      }
+    }
+
+    IF_OBFF_LOGLVL_MEDIUM
+      *logos << std::endl << "     TOTAL TORSIONAL ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
-
+ 
   //
   //  a
   //   \
@@ -304,201 +246,101 @@ namespace OpenBabel
   //   /
   //  c
   //
+  double OBFFOOPCalculationMMFF94::Result()
+  {
+    double angle2;
+
+    angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
+    angle2 = angle * angle;
+    
+    e = 0.043844f * 0.5f * koop * angle2;
+
+    return e;
+  }
+
   double OBForceFieldMMFF94::E_OOP() 
   {
-    OBAtom *a, *b, *c, *d;
-    double e, energy, koop, angle, angle2;
+    vector<OBFFOOPCalculationMMFF94>::iterator i;
+    double energy;
     char logbuf[100];
-    bool found;
 
     energy = 0.0f;
     
-    logfs << std::endl << "O U T - O F - P L A N E   B E N D I N G" << std::endl << std::endl;
-    logfs << "ATOM TYPES             FF       OOP     FORCE " << std::endl;
-    logfs << " I    J    K    L     CLASS    ANGLE   CONSTANT     ENERGY" << std::endl;
-    logfs << "----------------------------------------------------------" << std::endl;
+    IF_OBFF_LOGLVL_HIGH {
+      *logos << std::endl << "O U T - O F - P L A N E   B E N D I N G" << std::endl << std::endl;
+      *logos << "ATOM TYPES             FF       OOP     FORCE " << std::endl;
+      *logos << " I    J    K    L     CLASS    ANGLE   CONSTANT     ENERGY" << std::endl;
+      *logos << "----------------------------------------------------------" << std::endl;
+    }
 
-    FOR_ATOMS_OF_MOL(atom, _mol) {
-      b = (OBAtom*) &*atom;
-
-      found = false;
-
-      for (int idx=0; idx < _ffoopparams.size(); idx++) {
-        if (atoi(b->GetType()) == _ffoopparams[idx].b) {
-          a = NULL;
-          c = NULL;
-          d = NULL;
-
-	  FOR_NBORS_OF_ATOM(nbr, b) {
-	    if (a ==NULL)
-	      a = (OBAtom*) &*nbr;
-	    else if (c == NULL)
-	      c = (OBAtom*) &*nbr;
-	    else
-	      d = (OBAtom*) &*nbr;
-	  }
-	  
-
-	  if (((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)))
-	  {
-	    found = true;
-            // A-B-CD  PLANE = ABC
-	    // C-B-AD
-	    koop = _ffoopparams[idx].dpar1;
-            angle = PointPlaneAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
-	    angle2 = angle * angle;
-	    e = 0.043844f * 0.5f * koop * angle2;
-	    energy +=e;
-            
-	    sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f", atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), angle, koop, e);
-            logfs << logbuf << std::endl;
-            
-	    // C-B-DA  PLANE BCD
-	    // D-B-CA
-            koop = _ffoopparams[idx].dpar1;
-            angle = PointPlaneAngle(d->GetVector(), b->GetVector(), c->GetVector(), a->GetVector());
-	    angle2 = angle * angle;
-	    e = 0.043844f * 0.5f * koop * angle2;
-	    energy +=e;
-	    
-	    sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f", atoi(a->GetType()), atoi(b->GetType()), atoi(d->GetType()), atoi(c->GetType()), angle, koop, e);
-            logfs << logbuf << std::endl;
-            
-	    // A-B-DC  PLANE ABD
-	    // D-B-AC
-            koop = _ffoopparams[idx].dpar1;
-            angle = PointPlaneAngle(a->GetVector(), b->GetVector(), d->GetVector(), c->GetVector());
-	    angle2 = angle * angle;
-	    e = 0.043844f * 0.5f * koop * angle2;
-	    energy +=e;
-	    
-	    sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f", atoi(c->GetType()), atoi(b->GetType()), atoi(d->GetType()), atoi(a->GetType()), angle, koop, e);
-            logfs << logbuf << std::endl;
-	  }
-
-	  if ((_ffoopparams[idx].a == 0) && (_ffoopparams[idx].c == 0) && (_ffoopparams[idx].d == 0) && !found) // *-XX-*-*
-	  {
-            koop = _ffoopparams[idx].dpar1;
-
-	    angle = PointPlaneAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
-	    angle2 = angle * angle;
-	    e = 0.043844f * 0.5f * koop * angle2;
-	    energy +=e;
-	    sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f", atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), angle, koop, e);
-            logfs << logbuf << std::endl;
-	    
-	    angle = PointPlaneAngle(c->GetVector(), b->GetVector(), d->GetVector(), a->GetVector());
-	    angle2 = angle * angle;
-	    e = 0.043844f * 0.5f * koop * angle2;
-	    energy +=e;
-	    sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f", atoi(c->GetType()), atoi(b->GetType()), atoi(d->GetType()), atoi(a->GetType()), angle, koop, e);
-            logfs << logbuf << std::endl;
-	
-            angle = PointPlaneAngle(a->GetVector(), b->GetVector(), d->GetVector(), c->GetVector());
-	    angle2 = angle * angle;
-	    e = 0.043844f * 0.5f * koop * angle2;
-	    energy +=e;
-	    sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f", atoi(a->GetType()), atoi(b->GetType()), atoi(d->GetType()), atoi(c->GetType()), angle, koop, e);
-            logfs << logbuf << std::endl;
-	  }
-        }
+    for (i = _oopcalculations.begin(); i != _oopcalculations.end(); i++) {
+      energy += (*i).Result();
+      
+      IF_OBFF_LOGLVL_HIGH {
+        sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), atoi((*i).d->GetType()), 
+                (*i).angle, (*i).koop, (*i).e);
+        *logos  << logbuf << endl;
       }
     }
 
-    logfs << std::endl << "     TOTAL OUT-OF-PLANE BENDING ENERGY = " << energy << std::endl << std::endl;
+    IF_OBFF_LOGLVL_HIGH
+     *logos << std::endl << "     TOTAL OUT-OF-PLANE BENDING ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
  
-  double OBForceFieldMMFF94::E_VDW()
+  double OBFFVDWCalculationMMFF94::Result()
   {
-    OBFFParameter *parameter_a, *parameter_b;
-    OBAtom *a, *b;
-    double e, energy, rab, epsilon, alpha_a, alpha_b, Na, Nb, Aa, Ab, Ga, Gb;
-    double R_AA, R_BB, R_AB, R_AB6, g_AB, g_AB2, erep, erep2, erep4, erep6, erep7, eattr;
-    double rab2, rab4, rab6, rab7, R_AB2, R_AB4, R_AB7, sqrt_a, sqrt_b, escale;
-    char logbuf[100];
+      double rab2, rab3, rab4, rab5, rab6, rab7;
+      double erep2, erep3, erep4, erep5, erep6, erep7;
 
-    logfs << std::endl << "V A N   D E R   W A A L S" << std::endl << std::endl;
-    logfs << "ATOM TYPES          " << std::endl;
-    logfs << " I    J        Rij       R*IJ    EPSILON    E_REP     E_ATTR    ENERGY" << std::endl;
-    logfs << "----------------------------------------------------------------------" << std::endl;
-    //            XX   XX     -000.000  -000.000  -000.000  -000.000  -000.000  -000.000
-
-    energy = 0.0f;
-
-    FOR_PAIRS_OF_MOL(p, _mol) {
-      a = _mol.GetAtom((*p)[0]);
-      b = _mol.GetAtom((*p)[1]);
       rab = a->GetDistance(b);
       rab2 = rab * rab;
       rab4 = rab2 * rab2;
       rab6 = rab4 * rab2;
       rab7 = rab6 * rab;
 
-      parameter_a = GetParameter(atoi(a->GetType()), 0, 0, 0, _ffvdwparams);
-      parameter_b = GetParameter(atoi(b->GetType()), 0, 0, 0, _ffvdwparams);
-      if ((parameter_a == NULL) || (parameter_b == NULL)) {
-        obErrorLog.ThrowError(__FUNCTION__, "Could not find all Van der Waals parameters", obError);
-        exit(1);
-      }
-      
-      alpha_a = parameter_a->dpar1;
-      Na = parameter_a->dpar2;
-      Aa = parameter_a->dpar3;
-      Ga = parameter_a->dpar4;
-      alpha_b = parameter_b->dpar1;
-      Nb = parameter_b->dpar2;
-      Ab = parameter_b->dpar3;
-      Gb = parameter_b->dpar4;
-      
-      R_AA = Aa * pow(alpha_a, 0.25f);
-      R_BB = Ab * pow(alpha_b, 0.25f);
-      
-      escale = 1.0f;
-      if (parameter_a->ipar1 == 1) { // hydrogen bond donor
-        R_AB = 0.5f * (R_AA + R_BB);
-	if (parameter_b->ipar1 == 2) { // hydrogen bond acceptor
-	  R_AB = 0.8f * R_AB;
-          escale = 0.5f;
-	}
-      } else if (parameter_b->ipar1 == 1) { // hydrogen bond donor
-        R_AB = 0.5f * (R_AA + R_BB);
-	if (parameter_a->ipar1 == 2) { // hydrogen bond acceptor
-	  R_AB = 0.8f * R_AB;
-          escale = 0.5f;
-	}
-      } else {
-        g_AB = (R_AA - R_BB) / ( R_AA + R_BB);
-        g_AB2 = g_AB * g_AB;
-        R_AB =  0.5f * (R_AA + R_BB) * (1.0f + 0.2f * (1.0f - exp(-12.0f * g_AB2)));
-      }
-      
-      R_AB2 = R_AB * R_AB;
-      R_AB4 = R_AB2 * R_AB2;
-      R_AB6 = R_AB4 * R_AB2;
-      R_AB7 = R_AB6 * R_AB;
-      sqrt_a = sqrt(alpha_a / Na);
-      sqrt_b = sqrt(alpha_b / Nb);
-      epsilon = (181.16f * Ga * Gb * alpha_a * alpha_b) / (sqrt_a + sqrt_b) * (1.0f / R_AB6);
-      erep = (1.07f * R_AB) / (rab + 0.07f * R_AB);
+      erep = (1.07f * R_AB) / (rab + 0.07f * R_AB); //***
       erep2 = erep * erep;
       erep4 = erep2 * erep2;
       erep6 = erep4 * erep2;
       erep7 = erep6 * erep;
-      eattr = (((1.12f * R_AB7) / (rab7 + 0.12f * R_AB7)) - 2.0f);
-      e = escale * epsilon * erep7 * eattr;
-      energy += e;
       
-      sprintf(logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f  %8.3f  %8.3f", atoi(a->GetType()), atoi(b->GetType()), rab, R_AB, epsilon, erep, eattr, e);
-      logfs << logbuf << std::endl;
+      eattr = (((1.12f * R_AB7) / (rab7 + 0.12f * R_AB7)) - 2.0f);
+      
+      e = escale * epsilon * erep7 * eattr;
+      
+      return e;
+  }
+
+  double OBForceFieldMMFF94::E_VDW()
+  {
+    vector<OBFFVDWCalculationMMFF94>::iterator i;
+    double energy;
+    char logbuf[100];
+
+    energy = 0.0f;
+    
+    IF_OBFF_LOGLVL_HIGH {
+      *logos << std::endl << "V A N   D E R   W A A L S" << std::endl << std::endl;
+      *logos << "ATOM TYPES          " << std::endl;
+      *logos << " I    J        Rij       R*IJ    EPSILON    E_REP     E_ATTR    ENERGY" << std::endl;
+      *logos << "----------------------------------------------------------------------" << std::endl;
+      //          XX   XX     -000.000  -000.000  -000.000  -000.000  -000.000  -000.000
+    }
+    
+    for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); i++) {
+      
+      energy += (*i).Result();
+      
+      IF_OBFF_LOGLVL_HIGH {
+        sprintf(logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f  %8.3f  %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
+	        (*i).rab, (*i).R_AB, (*i).epsilon, (*i).erep, (*i).eattr, (*i).e);
+        *logos  << logbuf << endl;
+      }
     }
 
-    logfs << std::endl << "     TOTAL VAN DER WAALS ENERGY = " << energy << std::endl << std::endl;
+    IF_OBFF_LOGLVL_MEDIUM
+      *logos << std::endl << "     TOTAL VAN DER WAALS ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
 
@@ -508,19 +350,21 @@ namespace OpenBabel
     double e, energy;
     char logbuf[100];
     
-    logfs << std::endl << "E L E C T R O S T A T I C   I N T E R A C T I O N S" << std::endl << std::endl;
-    logfs << "ATOM TYPES          " << std::endl;
-    logfs << " I    J        Rij       R*IJ    EPSILON    E_REP     E_ATTR    ENERGY" << std::endl;
-    logfs << "----------------------------------------------------------------------" << std::endl;
-    //            XX   XX     -000.000  -000.000  -000.000  -000.000  -000.000  -000.000
+    IF_OBFF_LOGLVL_HIGH {
+      *logos << std::endl << "E L E C T R O S T A T I C   I N T E R A C T I O N S" << std::endl << std::endl;
+      *logos << "ATOM TYPES          " << std::endl;
+      *logos << " I    J        Rij       R*IJ    EPSILON    E_REP     E_ATTR    ENERGY" << std::endl;
+      *logos << "----------------------------------------------------------------------" << std::endl;
+      //            XX   XX     -000.000  -000.000  -000.000  -000.000  -000.000  -000.000
+    }
 
     energy = 0.0f;
     
     FOR_PAIRS_OF_MOL(p, _mol) {
     }
 
-    logfs << std::endl << "     TOTAL VAN DER WAALS ENERGY = " << energy << std::endl << std::endl;
- 
+    IF_OBFF_LOGLVL_MEDIUM
+      *logos << std::endl << "     TOTAL VAN DER WAALS ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
 
@@ -534,8 +378,6 @@ namespace OpenBabel
 
   OBForceFieldMMFF94::~OBForceFieldMMFF94()
   {
-    if (logfs)
-      logfs.close();
   }
 
   OBForceFieldMMFF94 &OBForceFieldMMFF94::operator=(OBForceFieldMMFF94 &src)
@@ -545,25 +387,6 @@ namespace OpenBabel
 
   bool OBForceFieldMMFF94::Setup(OBMol &mol)
   {
-    if (logfs)
-      logfs.close();
-
-    UnsetEnergyCalculated();
-
-    _mol = mol;
-    SetMMFFTypes();
-    SetupCalculations();
-    //CalcCharges();
-  }
- 
-  bool OBForceFieldMMFF94::Setup(OBMol &mol, const char *logfile)
-  {
-    if (logfs)
-      logfs.close();
-
-    if (logfile)
-      logfs.open(logfile);
-
     UnsetEnergyCalculated();
 
     _mol = mol;
@@ -1142,7 +965,7 @@ namespace OpenBabel
  
     _mol.SetAtomTypesPerceived();
     
-    // open data/mm2.prm
+    // open data/mmffsymb.par
     string buffer2, subbuffer;
     ifstream ifs1, ifs2, *ifsP;
     buffer2 = BABEL_DATADIR;
@@ -1161,7 +984,8 @@ namespace OpenBabel
       ifsP = &ifs2;
     }
 
-    logfs << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
+    IF_OBFF_LOGLVL_MEDIUM
+      *logos << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
@@ -1189,17 +1013,18 @@ namespace OpenBabel
         }
     }
 
-    logfs << "IDX\tTYPE" << std::endl;
-    FOR_ATOMS_OF_MOL (a, _mol)
-      logfs << a->GetIdx() << "\t" << a->GetType() << std::endl;
-
- 
+    IF_OBFF_LOGLVL_MEDIUM {
+      *logos << "IDX\tTYPE" << std::endl;
+      FOR_ATOMS_OF_MOL (a, _mol)
+        *logos << a->GetIdx() << "\t" << a->GetType() << std::endl;
+    }
   }
   
   bool OBForceFieldMMFF94::SetupCalculations()
   {
     OBFFParameter *parameter;
-    OBAtom *a, *b, *c;
+    OBAtom *a, *b, *c, *d;
+    bool found;
 
     // 
     // Bond Calculations
@@ -1262,8 +1087,308 @@ namespace OpenBabel
       
       _anglecalculations.push_back(anglecalc);
     }
-	
+
+    //
+    // StrBnd Calculations
+    //
+    OBFFStrBndCalculationMMFF94 strbndcalc;
+    int strbndtype, bondtype1, bondtype2;
+
+    _strbndcalculations.clear();
+
+    FOR_ANGLES_OF_MOL(angle, _mol) {
+      b = _mol.GetAtom((*angle)[0] + 1);
+      a = _mol.GetAtom((*angle)[1] + 1);
+      c = _mol.GetAtom((*angle)[2] + 1);
+
+      if (HasLinSet(atoi(b->GetType())))
+        continue;
+
+      strbndtype = GetStrBndType(a, b, c);
+      bondtype1 = GetBondType(a, b);
+      bondtype2 = GetBondType(b, c);
+      angletype = GetAngleType(a, b, c);
+      
+      parameter = GetParameterMMFF94(strbndtype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffstrbndparams);
+      if (parameter == NULL) {
+        int rowa, rowb, rowc;
+
+        rowa = GetElementRow(a);
+        rowb = GetElementRow(b);
+        rowc = GetElementRow(c);
+        
+	parameter = GetParameter(rowa, rowb, rowc, 0, _ffdfsbparams);
+        if (parameter == NULL) {
+          obErrorLog.ThrowError(__FUNCTION__, "Could not find all stretch-bend parameters", obError);
+          exit(1);
+	}
+
+        if (rowa == parameter->a) {
+          strbndcalc.kbaABC = parameter->dpar1;
+          strbndcalc.kbaCBA = parameter->dpar2;
+        } else {
+          strbndcalc.kbaABC = parameter->dpar2;
+          strbndcalc.kbaCBA = parameter->dpar1;
+        }
+      } else {
+        if (atoi(a->GetType()) == parameter->a) {
+          strbndcalc.kbaABC = parameter->dpar1;
+          strbndcalc.kbaCBA = parameter->dpar2;
+        } else {
+          strbndcalc.kbaABC = parameter->dpar2;
+          strbndcalc.kbaCBA = parameter->dpar1;
+        }
+      }
+
+      parameter = GetParameterMMFF94(angletype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffangleparams);
+      strbndcalc.theta0 = parameter->dpar2;
+      
+      parameter = GetParameterMMFF94(bondtype1, atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams);
+      strbndcalc.rab0 = parameter->dpar2;
+      
+      parameter = GetParameterMMFF94(bondtype2, atoi(b->GetType()), atoi(c->GetType()), 0, 0, _ffbondparams);
+      strbndcalc.rbc0 = parameter->dpar2;
+
+      strbndcalc.a = a;
+      strbndcalc.b = b;
+      strbndcalc.c = c;
+      strbndcalc.sbt = strbndtype;
+
+      _strbndcalculations.push_back(strbndcalc);
+    }
+
+    //
+    // Torsion Calculations
+    //
+    OBFFTorsionCalculationMMFF94 torsioncalc;
+    int torsiontype;
+
+    _torsioncalculations.clear();
  
+    FOR_TORSIONS_OF_MOL(t, _mol) {
+      a = _mol.GetAtom((*t)[0] + 1);
+      b = _mol.GetAtom((*t)[1] + 1);
+      c = _mol.GetAtom((*t)[2] + 1);
+      d = _mol.GetAtom((*t)[3] + 1);
+      torsiontype = GetTorsionType(a, b, c, d);
+      
+      parameter = GetParameterMMFF94(torsiontype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
+
+      found = false;
+      parameter = GetParameterMMFF94(torsiontype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
+      if (parameter == NULL) {
+        for (int idx=0; idx < _fftorsionparams.size(); idx++) {  // *-XX-XX-XX 
+          if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx].ipar5) &&
+	       (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
+              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx].ipar5) &&
+	       (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
+              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx].ipar5) &&
+	       (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].a)) ||
+              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx].ipar5) &&
+	       (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].a)))
+	  {
+            torsioncalc.v1 = _fftorsionparams[idx].dpar1;
+            torsioncalc.v2 = _fftorsionparams[idx].dpar2;
+            torsioncalc.v3 = _fftorsionparams[idx].dpar3;
+	    found = true;  
+	  }
+        }
+
+        if (!found)
+	  for (int idx=0; idx < _fftorsionparams.size(); idx++) {  // *-XX-XX-*
+            if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
+	         (atoi(c->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)) ||
+                ((_fftorsionparams[idx].a == 0) && (atoi(c->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
+	         (atoi(b->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)))
+	    {
+              torsioncalc.v1 = _fftorsionparams[idx].dpar1;
+              torsioncalc.v2 = _fftorsionparams[idx].dpar2;
+              torsioncalc.v3 = _fftorsionparams[idx].dpar3;
+	      found = true;  
+	    }
+          }
+
+	if (!found) {
+	  obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
+          exit(1);
+	}
+      } else {
+        torsioncalc.v1 = parameter->dpar1;
+        torsioncalc.v2 = parameter->dpar2;
+        torsioncalc.v3 = parameter->dpar3;
+      }
+      
+      torsioncalc.a = a;
+      torsioncalc.b = b;
+      torsioncalc.c = c;
+      torsioncalc.d = d;
+      torsioncalc.tt = torsiontype;
+
+      _torsioncalculations.push_back(torsioncalc);
+    }
+
+    //
+    // Out-Of-Plane Calculations
+    //
+    OBFFOOPCalculationMMFF94 oopcalc;
+
+    _oopcalculations.clear();
+ 
+    FOR_ATOMS_OF_MOL(atom, _mol) {
+      b = (OBAtom*) &*atom;
+
+      found = false;
+
+      for (int idx=0; idx < _ffoopparams.size(); idx++) {
+        if (atoi(b->GetType()) == _ffoopparams[idx].b) {
+          a = NULL;
+          c = NULL;
+          d = NULL;
+
+	  FOR_NBORS_OF_ATOM(nbr, b) {
+	    if (a ==NULL)
+	      a = (OBAtom*) &*nbr;
+	    else if (c == NULL)
+	      c = (OBAtom*) &*nbr;
+	    else
+	      d = (OBAtom*) &*nbr;
+	  }
+	  
+
+	  if (((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
+	      ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
+	      ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
+	      ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
+	      ((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)) ||
+	      ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)))
+	  {
+	    found = true;
+
+	    oopcalc.koop = _ffoopparams[idx].dpar1;
+            
+	    // A-B-CD || C-B-AD  PLANE = ABC
+            oopcalc.a = a;
+            oopcalc.b = b;
+            oopcalc.c = c;
+            oopcalc.d = d;
+	    
+	    _oopcalculations.push_back(oopcalc);
+
+	    // C-B-DA || D-B-CA  PLANE BCD
+	    oopcalc.a = d;
+            oopcalc.d = a;
+	
+	    _oopcalculations.push_back(oopcalc);
+            
+	    // A-B-DC || D-B-AC  PLANE ABD
+	    oopcalc.a = a;
+	    oopcalc.c = d;
+            oopcalc.d = c;
+	    
+	    _oopcalculations.push_back(oopcalc);
+	  }
+
+	  if ((_ffoopparams[idx].a == 0) && (_ffoopparams[idx].c == 0) && (_ffoopparams[idx].d == 0) && !found) // *-XX-*-*
+	  {
+	    oopcalc.koop = _ffoopparams[idx].dpar1;
+	    
+	    // A-B-CD || C-B-AD  PLANE = ABC
+            oopcalc.a = a;
+            oopcalc.b = b;
+            oopcalc.c = c;
+            oopcalc.d = d;
+	    
+	    _oopcalculations.push_back(oopcalc);
+
+	    // C-B-DA || D-B-CA  PLANE BCD
+	    oopcalc.a = d;
+            oopcalc.d = a;
+	
+	    _oopcalculations.push_back(oopcalc);
+            
+	    // A-B-DC || D-B-AC  PLANE ABD
+	    oopcalc.a = a;
+	    oopcalc.c = d;
+            oopcalc.d = c;
+	    
+	    _oopcalculations.push_back(oopcalc);
+	  }
+        }
+      }
+    }
+
+    // 
+    // VDW Calculations
+    //
+    OBFFVDWCalculationMMFF94 vdwcalc;
+
+    _vdwcalculations.clear();
+ 
+    FOR_PAIRS_OF_MOL(p, _mol) {
+      a = _mol.GetAtom((*p)[0]);
+      b = _mol.GetAtom((*p)[1]);
+
+      OBFFParameter *parameter_a, *parameter_b;
+      parameter_a = GetParameter(atoi(a->GetType()), 0, 0, 0, _ffvdwparams);
+      parameter_b = GetParameter(atoi(b->GetType()), 0, 0, 0, _ffvdwparams);
+      if ((parameter_a == NULL) || (parameter_b == NULL)) {
+        obErrorLog.ThrowError(__FUNCTION__, "Could not find all Van der Waals parameters", obError);
+        exit(1);
+      }
+      
+      vdwcalc.a = a;
+      vdwcalc.alpha_a = parameter_a->dpar1;
+      vdwcalc.Na = parameter_a->dpar2;
+      vdwcalc.Aa = parameter_a->dpar3;
+      vdwcalc.Ga = parameter_a->dpar4;
+      vdwcalc.aDA = parameter_a->ipar1;
+      
+      vdwcalc.b = b;
+      vdwcalc.alpha_b = parameter_b->dpar1;
+      vdwcalc.Nb = parameter_b->dpar2;
+      vdwcalc.Ab = parameter_b->dpar3;
+      vdwcalc.Gb = parameter_b->dpar4;
+      vdwcalc.bDA = parameter_b->ipar1;
+      
+      //these calculations only need to be done once for each pair, 
+      //we do them now and save them for later use
+      double R_AA, R_BB, R_AB6, g_AB, g_AB2;
+      double R_AB2, R_AB4, R_AB7, sqrt_a, sqrt_b;
+ 
+      R_AA = vdwcalc.Aa * pow(vdwcalc.alpha_a, 0.25f);
+      R_BB = vdwcalc.Ab * pow(vdwcalc.alpha_b, 0.25f);
+      
+      vdwcalc.escale = 1.0f;
+      if (vdwcalc.aDA == 1) { // hydrogen bond donor
+        vdwcalc.R_AB = 0.5f * (R_AA + R_BB);
+	if (vdwcalc.bDA == 2) { // hydrogen bond acceptor
+	  vdwcalc.R_AB = 0.8f * vdwcalc.R_AB;
+          vdwcalc.escale = 0.5f;
+	}
+      } else if (vdwcalc.bDA == 1) { // hydrogen bond donor
+        vdwcalc.R_AB = 0.5f * (R_AA + R_BB);
+	if (vdwcalc.aDA == 2) { // hydrogen bond acceptor
+	  vdwcalc.R_AB = 0.8f * vdwcalc.R_AB;
+          vdwcalc.escale = 0.5f;
+	}
+      } else {
+        g_AB = (R_AA - R_BB) / ( R_AA + R_BB);
+        g_AB2 = g_AB * g_AB;
+        vdwcalc.R_AB =  0.5f * (R_AA + R_BB) * (1.0f + 0.2f * (1.0f - exp(-12.0f * g_AB2)));
+      }
+      
+      R_AB2 = vdwcalc.R_AB * vdwcalc.R_AB;
+      R_AB4 = R_AB2 * R_AB2;
+      R_AB6 = R_AB4 * R_AB2;
+      vdwcalc.R_AB7 = R_AB6 * vdwcalc.R_AB;
+
+      sqrt_a = sqrt(vdwcalc.alpha_a / vdwcalc.Na);
+      sqrt_b = sqrt(vdwcalc.alpha_b / vdwcalc.Nb);
+      vdwcalc.epsilon = (181.16f * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0f / R_AB6);
+ 
+      _vdwcalculations.push_back(vdwcalc);
+    }
+
   }
 
   bool OBForceFieldMMFF94::CalcCharges()
@@ -1283,7 +1408,7 @@ namespace OpenBabel
         else if (atom->IsSulfateOxygen())
             q0i = -0.500;
  
-      logfs << "fcharge = " << q0i << std::endl;
+      *logos << "fcharge = " << q0i << std::endl;
       //FOR_NBORS_OF_ATOM (nbr, a) {
       // q =  
       //}
@@ -1293,6 +1418,8 @@ namespace OpenBabel
   double OBForceFieldMMFF94::Energy()
   {
     double energy;
+
+    SetEnergyCalculated();
     
     energy = E_Bond();
     energy += E_Angle();
@@ -1323,6 +1450,7 @@ namespace OpenBabel
     }
 
     ifstream ifs, ifs2;
+    ofstream ofs;
 
     ifs.open("MMFF94_dative.mol2");
     if (!ifs) {
@@ -1336,6 +1464,14 @@ namespace OpenBabel
       exit(1);
     }
     
+    ofs.open("MMFF94_openbabel.log");
+    if (!ofs) {
+      obErrorLog.ThrowError(__FUNCTION__, "Coulg not open ./MMFF_openbabel.log", obError);
+      exit(1);
+    }
+    
+    SetLogFile(&ofs);
+   
     for (unsigned int c=1;; c++) {
       _mol.Clear();
       types.clear();
@@ -1347,7 +1483,7 @@ namespace OpenBabel
       UnsetEnergyCalculated();
       SetMMFFTypes();
       SetupCalculations();
- 
+      
       n = _mol.NumAtoms() / 4;
       molfound = false;
       atomfound = false;

@@ -31,6 +31,15 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  #define OBFF_LOGLVL_NONE	0 // no output
+  #define OBFF_LOGLVL_LOW	1 // SteepestDescent progress... (no output from Energy())
+  #define OBFF_LOGLVL_MEDIUM	2 // individual energy terms
+  #define OBFF_LOGLVL_HIGH	3 // individual calculations and parameters
+
+  #define IF_OBFF_LOGLVL_LOW    if(loglvl >= OBFF_LOGLVL_LOW)
+  #define IF_OBFF_LOGLVL_MEDIUM if(loglvl >= OBFF_LOGLVL_MEDIUM)
+  #define IF_OBFF_LOGLVL_HIGH   if(loglvl >= OBFF_LOGLVL_HIGH)
+
   class OBFFParameter {
     public:
       int         a, b, c, d; //! used to store integer atom types
@@ -196,8 +205,6 @@ namespace OpenBabel
  
       //! Get index for vector<OBFFParameter> ...
       int GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
-      //! Calculate angle between point d and plane a-b-c (used for out-of-plane-bending)
-      double PointPlaneAngle(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d);
       //! Calculate the potential energy function derivative numerically with repect 
       //! to the coordinates of atom with index a (this vector is the gradient)
       vector3 NumericalDerivative(int a);
@@ -205,6 +212,10 @@ namespace OpenBabel
       int get_nbr (OBAtom* atom, int level);
       
       OBMol _mol;
+
+      // ofstream for logfile
+      std::ostream* logos;
+      int loglvl;
 
     public:
       // see Energy()
@@ -227,7 +238,8 @@ namespace OpenBabel
       virtual double E_VDW() { return 0.0f; }
       virtual double E_Electrostatic() { return 0.0f; }
       virtual bool Setup(OBMol &mol) { return false; }
-      virtual bool Setup(OBMol &mol, const char *filename) { return false; }
+      bool SetLogFile(std::ostream *pos);
+      bool SetLogLevel(int level);
       virtual bool Validate() { return false; }
  
 
