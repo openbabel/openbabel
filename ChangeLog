@@ -1,3 +1,8 @@
+2007-01-08 Chris Morley <ob@gaseq.co.uk>
+
+	* include/openbabel/plugin.iter: correct documentation on 
+	the use of FOR_EACH to iterate over all objects.
+
 2007-01-07  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/mol.cpp: Moved all Destroy* calls to the end of Delete* functions so

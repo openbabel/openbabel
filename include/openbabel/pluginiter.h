@@ -158,9 +158,10 @@ For example to print out all the subtypes with their descriptions:
 \code
 FOR_EACH(YourBaseClass, iter)
 {
-   cout << iter.ID() << ' ' << iter.Description() << endl;
+   cout << iter.ID() << ' ' << iter->Description() << endl;
 }
 \endcode
+Note the . for the ID and the -> for the Description.
 
 <h2>How it works</h2>
 
