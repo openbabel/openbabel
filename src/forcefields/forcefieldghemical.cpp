@@ -407,6 +407,7 @@ namespace OpenBabel
       ifs1.close();
     if (ifs2)
       ifs2.close();
+    return true;
   }
   
   double OBForceFieldGhemical::Energy()

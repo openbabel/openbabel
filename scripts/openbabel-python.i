@@ -125,6 +125,7 @@ namespace std {
 %rename(_OBMolTorsionIter) OpenBabel::OBMolTorsionIter;
 %rename(_OBResidueIter) OpenBabel::OBResidueIter;
 %rename(_OBResidueAtomIter) OpenBabel::OBResidueAtomIter;
+%rename(_OBFingerprintIter) OpenBabel::PluginIter<OBFingerprint>;
 
 %ignore *::operator=;
 
@@ -156,8 +157,8 @@ class OBIter(object):
             raise StopIteration
 
 class OBFingerprintIter(OBIter):
-    """Iterator over the available fingerprints."""
-    OBiterator = OBFingerprint._Iter
+     """Iterator over the available fingerprints."""
+     OBiterator = _OBFingerprintIter
 OBFingerprint.Iter = OBFingerprintIter
 class OBAtomAtomIter(OBIter):
     """Iterator over the atoms attached to an atom."""

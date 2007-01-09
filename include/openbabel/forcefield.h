@@ -119,7 +119,7 @@ namespace OpenBabel
       double StoredEnergy;
       bool EnergyCalculated;
       void SetEnergyCalculated()   { EnergyCalculated = true; } 
-      bool UnsetEnergyCalculated() { EnergyCalculated = false; } 
+      void UnsetEnergyCalculated() { EnergyCalculated = false; } //was bool
       bool IsSetEnergyCalculated() { return EnergyCalculated; } 
 
       /// Returns a pointer to a forcefield (the default if ID is empty), or NULL if not available

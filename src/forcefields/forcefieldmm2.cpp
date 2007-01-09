@@ -503,12 +503,14 @@ namespace OpenBabel
   OBForceFieldMM2 &OBForceFieldMM2::operator=(OBForceFieldMM2 &src)
   {
     _mol = src._mol;
+    return src;
   }
 
   bool OBForceFieldMM2::Setup(OBMol &mol)
   {
     _mol = mol;
     SetMM2Types();
+    return true;
   }
  
   bool OBForceFieldMM2::ParseParamFile()
@@ -693,6 +695,7 @@ namespace OpenBabel
       ttab.Translate(atomtype, atom->GetType());
       atom->SetType(atomtype);
     }  
+    return true;
   }
   
   double OBForceFieldMM2::Energy()

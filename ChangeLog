@@ -1,3 +1,16 @@
+2007-01-09 Chris Morley <ob@gaseq.co.uk>
+
+	* scipts/openbabel-python.i: changes to OBFingerprintIter. Not tested
+	yet!
+	
+	* include/openbabel/plugin.iter: comment out PluginIter::Description()
+	and operator* which are causing problems with the Python build - 
+	I suspect because they are not used in the C++ code.
+	
+	* iclude/openbabel/forcefield.cpp: src/forcefields/forcefieldghemical.cpp,
+	 src/forcefields/forcefieldmm2.cpp: changes to several return values
+	to avoid compiler errors. 
+
 2007-01-08 Chris Morley <ob@gaseq.co.uk>
 
 	* include/openbabel/plugin.iter: correct documentation on 
