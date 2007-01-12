@@ -1,3 +1,9 @@
+2007-01-12  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-python.i: quick fix to allow the openbabel module
+	to be imported without errors. The OBFingerprintIter issue remains
+	unresolved.
+
 2007-01-09 Chris Morley <ob@gaseq.co.uk>
 
 	* scipts/openbabel-python.i: changes to OBFingerprintIter. Not tested

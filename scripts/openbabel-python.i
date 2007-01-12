@@ -156,10 +156,6 @@ class OBIter(object):
         else:
             raise StopIteration
 
-class OBFingerprintIter(OBIter):
-     """Iterator over the available fingerprints."""
-     OBiterator = _OBFingerprintIter
-OBFingerprint.Iter = OBFingerprintIter
 class OBAtomAtomIter(OBIter):
     """Iterator over the atoms attached to an atom."""
     OBiterator = _OBAtomAtomIter
