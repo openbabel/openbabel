@@ -1,3 +1,10 @@
+2007-01-13  Noel O'Boyle <baoilleach@gmail.com>
+	
+	* windows-vc2005/Distribution: Added files necessary for creating an
+	installer using NSIS, an open source software for creating Windows
+	installers. The current script needs to be edited to be able to pick
+	up the files from the OpenBabelGUI build.
+
 2007-01-12  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/openbabel-python.i: quick fix to allow the openbabel module
