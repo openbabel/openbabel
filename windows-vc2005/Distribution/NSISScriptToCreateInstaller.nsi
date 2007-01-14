@@ -453,15 +453,18 @@ FunctionEnd
 ;--------------------------------
 ;General
 
+  ;OpenBabel version
+  !define OBVersion 2.0.2
+
   ;Name and file
-  Name "OpenBabel 2.0.2"
-  OutFile "OpenBabel2.0.2 Windows Installer.exe"
+  Name "OpenBabel ${OBVERSION}"
+  OutFile "OpenBabel${OBVERSION} Windows Installer.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\OpenBabel"
+  InstallDir "$PROGRAMFILES\OpenBabel-${OBVERSION}"
   
   ;Get installation folder from registry if available
-  InstallDirRegKey HKCU "Software\OpenBabel" ""
+  InstallDirRegKey HKCU "Software\OpenBabel ${OBVERSION}" ""
 
 ;--------------------------------
 ;Variables
@@ -485,12 +488,12 @@ FunctionEnd
 ;Pages
 
   !insertmacro MUI_PAGE_WELCOME
-  !insertmacro MUI_PAGE_LICENSE "InstallFiles\License.txt"
+  !insertmacro MUI_PAGE_LICENSE "../../COPYING"
   !insertmacro MUI_PAGE_DIRECTORY
 
   ;Start Menu Folder Page Configuration
   !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
-  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\OpenBabel" 
+  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\OpenBabel ${OBVERSION}" 
   !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
   !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 
@@ -514,9 +517,14 @@ Section "Dummy Section" SecDummy
   
   ;ADD YOUR OWN FILES HERE...
   File /r InstallFiles\*.*
+  File /oname=License.txt ..\..\COPYING
+  File ..\zlib1.dll
+  File ..\libxml2.dll
+  File ..\iconv.dll
+  File ..\libinchi.dll
   
   ;Store installation folder
-  WriteRegStr HKCU "Software\OpenBabel" "" $INSTDIR
+  WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -596,6 +604,6 @@ Section "Uninstall"
     StrCmp $MUI_TEMP $SMPROGRAMS startMenuDeleteLoopDone startMenuDeleteLoop
   startMenuDeleteLoopDone:
 
-  DeleteRegKey /ifempty HKCU "Software\OpenBabel"
+  DeleteRegKey /ifempty HKCU "Software\OpenBabel ${OBVERSION}"
 
 SectionEnd

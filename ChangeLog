@@ -1,3 +1,12 @@
+2007-01-14  Noel O'Boyle <baoilleach@gmail.com>
+
+	* windows-vc2005/Distribution: Edited the installer script to make it
+	easier to set the version number. Also added explicit paths to some of
+	the DLLs in the SVN repository.
+
+	* COPYING: Removed the text after the terms and conditions. This is
+	the text describing how to apply the license.
+
 2007-01-13  Noel O'Boyle <baoilleach@gmail.com>
 	
 	* windows-vc2005/Distribution: Added files necessary for creating an
