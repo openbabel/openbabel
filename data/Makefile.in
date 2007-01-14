@@ -214,7 +214,6 @@ table_DATA = \
 		mmffvdw.par mmffstbn.par mmffbndk.par mmffprop.par mmffbond.par \
 		mmffdfsb.par
 
-
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h \
 		torlib.h types.h
@@ -235,9 +234,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  data/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  data/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  data/Makefile
+	  $(AUTOMAKE) --foreign  data/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
