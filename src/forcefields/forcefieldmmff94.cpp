@@ -344,6 +344,13 @@ namespace OpenBabel
     return energy;
   }
 
+  /// \todo Currently unimplemented but needs to be here for linking
+  double OBFFElectrostaticCalculationMMFF94::Result()
+  {
+    return 0.0f;
+  }
+
+  /// \todo Currently unimplemented but needs to be here for linking
   double OBForceFieldMMFF94::E_Electrostatic()
   {
     OBAtom *a, *b, *c, *d;
@@ -364,12 +371,12 @@ namespace OpenBabel
     }
 
     IF_OBFF_LOGLVL_MEDIUM
-      *logos << std::endl << "     TOTAL VAN DER WAALS ENERGY = " << energy << std::endl << std::endl;
+      *logos << std::endl << "     TOTAL ELECTROSTATIC ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
 
   //
-  // OBForceFieldMM2 member functions
+  // OBForceFieldMMFF member functions
   //
   //***********************************************
   //Make a global instance
