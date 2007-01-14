@@ -2,14 +2,15 @@
  * snprintf.c - a portable implementation of snprintf
  *
  * AUTHOR
- *   Mark Martinec <mark.martinec@ijs.si>, April 1999.
+ *   Mark Martinec <mark.martinec@ijs.si>, April 1999, June 2000
  *
- *   Copyright 1999, Mark Martinec. All rights reserved.
+ *   Copyright 1999,2000,2001,2002 Mark Martinec. All rights reserved.
  *
  * TERMS AND CONDITIONS
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the "Frontier Artistic License" which comes
- *   with this Kit.
+ *   This program is free software; it is dual licensed, the terms of
+ *   the "Frontier Artistic License" or the "GNU General Public
+ *   License" can be chosen at your discretion. The chosen license
+ *   then applies solely and in its entirety.
  *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty
