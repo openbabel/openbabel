@@ -27817,6 +27817,87 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Point2PlaneAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::vector3 arg1 ;
+  OpenBabel::vector3 arg2 ;
+  OpenBabel::vector3 arg3 ;
+  OpenBabel::vector3 arg4 ;
+  double result;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  void *argp4 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"Point2PlaneAngle",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_OpenBabel__vector3,  0  | 0);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Point2PlaneAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Point2PlaneAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const""'");
+    } else {
+      OpenBabel::vector3 * temp = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+      arg1 = *temp;
+      if (SWIG_IsNewObj(res1)) delete temp;
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Point2PlaneAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Point2PlaneAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const""'");
+    } else {
+      OpenBabel::vector3 * temp = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_OpenBabel__vector3,  0  | 0);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Point2PlaneAngle" "', argument " "3"" of type '" "OpenBabel::vector3 const""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Point2PlaneAngle" "', argument " "3"" of type '" "OpenBabel::vector3 const""'");
+    } else {
+      OpenBabel::vector3 * temp = reinterpret_cast< OpenBabel::vector3 * >(argp3);
+      arg3 = *temp;
+      if (SWIG_IsNewObj(res3)) delete temp;
+    }
+  }
+  {
+    res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_OpenBabel__vector3,  0  | 0);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Point2PlaneAngle" "', argument " "4"" of type '" "OpenBabel::vector3 const""'"); 
+    }  
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Point2PlaneAngle" "', argument " "4"" of type '" "OpenBabel::vector3 const""'");
+    } else {
+      OpenBabel::vector3 * temp = reinterpret_cast< OpenBabel::vector3 * >(argp4);
+      arg4 = *temp;
+      if (SWIG_IsNewObj(res4)) delete temp;
+    }
+  }
+  result = (double)OpenBabel::Point2PlaneAngle(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN int VZero_set(PyObject *) {
   SWIG_Error(SWIG_AttributeError,"Variable VZero is read-only.");
   return 1;
@@ -27898,566 +27979,6 @@ SWIGINTERN PyObject *_wrap_Trim(PyObject *SWIGUNUSEDPARM(self), PyObject *args) 
   return resultobj;
 fail:
   return NULL;
-}
-
-
-SWIGINTERN int UndefinedData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable UndefinedData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *UndefinedData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::UndefinedData));
-  return pyobj;
-}
-
-
-SWIGINTERN int PairData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable PairData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *PairData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::PairData));
-  return pyobj;
-}
-
-
-SWIGINTERN int EnergyData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable EnergyData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *EnergyData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::EnergyData));
-  return pyobj;
-}
-
-
-SWIGINTERN int CommentData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CommentData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CommentData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CommentData));
-  return pyobj;
-}
-
-
-SWIGINTERN int ConformerData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ConformerData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ConformerData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ConformerData));
-  return pyobj;
-}
-
-
-SWIGINTERN int ExternalBondData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ExternalBondData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ExternalBondData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ExternalBondData));
-  return pyobj;
-}
-
-
-SWIGINTERN int RotamerList_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable RotamerList is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *RotamerList_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::RotamerList));
-  return pyobj;
-}
-
-
-SWIGINTERN int VirtualBondData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable VirtualBondData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *VirtualBondData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::VirtualBondData));
-  return pyobj;
-}
-
-
-SWIGINTERN int RingData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable RingData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *RingData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::RingData));
-  return pyobj;
-}
-
-
-SWIGINTERN int TorsionData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable TorsionData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *TorsionData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::TorsionData));
-  return pyobj;
-}
-
-
-SWIGINTERN int AngleData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable AngleData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *AngleData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::AngleData));
-  return pyobj;
-}
-
-
-SWIGINTERN int SerialNums_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SerialNums is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SerialNums_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SerialNums));
-  return pyobj;
-}
-
-
-SWIGINTERN int UnitCell_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable UnitCell is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *UnitCell_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::UnitCell));
-  return pyobj;
-}
-
-
-SWIGINTERN int SpinData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SpinData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SpinData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SpinData));
-  return pyobj;
-}
-
-
-SWIGINTERN int ChargeData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ChargeData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ChargeData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ChargeData));
-  return pyobj;
-}
-
-
-SWIGINTERN int SymmetryData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SymmetryData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SymmetryData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SymmetryData));
-  return pyobj;
-}
-
-
-SWIGINTERN int ChiralData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ChiralData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ChiralData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ChiralData));
-  return pyobj;
-}
-
-
-SWIGINTERN int OccupationData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable OccupationData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *OccupationData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::OccupationData));
-  return pyobj;
-}
-
-
-SWIGINTERN int DensityData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable DensityData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *DensityData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::DensityData));
-  return pyobj;
-}
-
-
-SWIGINTERN int ElectronicData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ElectronicData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ElectronicData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ElectronicData));
-  return pyobj;
-}
-
-
-SWIGINTERN int VibrationData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable VibrationData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *VibrationData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::VibrationData));
-  return pyobj;
-}
-
-
-SWIGINTERN int RotationData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable RotationData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *RotationData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::RotationData));
-  return pyobj;
-}
-
-
-SWIGINTERN int NuclearData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable NuclearData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *NuclearData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::NuclearData));
-  return pyobj;
-}
-
-
-SWIGINTERN int SetData_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SetData is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SetData_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SetData));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData0_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData0 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData0_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData0));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData1_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData1 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData1_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData1));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData2_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData2 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData2_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData2));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData3_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData3 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData3_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData3));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData4_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData4 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData4_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData4));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData5_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData5 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData5_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData5));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData6_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData6 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData6_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData6));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData7_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData7 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData7_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData7));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData8_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData8 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData8_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData8));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData9_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData9 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData9_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData9));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData10_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData10 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData10_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData10));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData11_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData11 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData11_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData11));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData12_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData12 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData12_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData12));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData13_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData13 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData13_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData13));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData14_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData14 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData14_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData14));
-  return pyobj;
-}
-
-
-SWIGINTERN int CustomData15_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CustomData15 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CustomData15_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData15));
-  return pyobj;
 }
 
 
@@ -42245,1280 +41766,6 @@ SWIGINTERN PyObject *OBResidue_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN int ACIDIC_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ACIDIC is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ACIDIC_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::ACIDIC));
-  return pyobj;
-}
-
-
-SWIGINTERN int ACYCLIC_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ACYCLIC is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ACYCLIC_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::ACYCLIC));
-  return pyobj;
-}
-
-
-SWIGINTERN int ALIPHATIC_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ALIPHATIC is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ALIPHATIC_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::ALIPHATIC));
-  return pyobj;
-}
-
-
-SWIGINTERN int AROMATIC_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable AROMATIC is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *AROMATIC_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::AROMATIC));
-  return pyobj;
-}
-
-
-SWIGINTERN int BASIC_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable BASIC is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *BASIC_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::BASIC));
-  return pyobj;
-}
-
-
-SWIGINTERN int BURIED_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable BURIED is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *BURIED_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::BURIED));
-  return pyobj;
-}
-
-
-SWIGINTERN int CHARGED_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CHARGED is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CHARGED_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::CHARGED));
-  return pyobj;
-}
-
-
-SWIGINTERN int CYCLIC_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CYCLIC is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CYCLIC_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::CYCLIC));
-  return pyobj;
-}
-
-
-SWIGINTERN int HYDROPHOBIC_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable HYDROPHOBIC is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *HYDROPHOBIC_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::HYDROPHOBIC));
-  return pyobj;
-}
-
-
-SWIGINTERN int LARGE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable LARGE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *LARGE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::LARGE));
-  return pyobj;
-}
-
-
-SWIGINTERN int MEDIUM_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable MEDIUM is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *MEDIUM_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::MEDIUM));
-  return pyobj;
-}
-
-
-SWIGINTERN int NEGATIVE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable NEGATIVE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *NEGATIVE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::NEGATIVE));
-  return pyobj;
-}
-
-
-SWIGINTERN int NEUTRAL_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable NEUTRAL is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *NEUTRAL_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::NEUTRAL));
-  return pyobj;
-}
-
-
-SWIGINTERN int POLAR_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable POLAR is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *POLAR_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::POLAR));
-  return pyobj;
-}
-
-
-SWIGINTERN int POSITIVE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable POSITIVE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *POSITIVE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::POSITIVE));
-  return pyobj;
-}
-
-
-SWIGINTERN int SMALL_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SMALL is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SMALL_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::SMALL));
-  return pyobj;
-}
-
-
-SWIGINTERN int SURFACE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SURFACE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SURFACE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::SURFACE));
-  return pyobj;
-}
-
-
-SWIGINTERN int ALPHA_CARBON_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ALPHA_CARBON is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ALPHA_CARBON_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::ALPHA_CARBON));
-  return pyobj;
-}
-
-
-SWIGINTERN int AMINO_BACKBONE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable AMINO_BACKBONE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *AMINO_BACKBONE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::AMINO_BACKBONE));
-  return pyobj;
-}
-
-
-SWIGINTERN int BACKBONE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable BACKBONE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *BACKBONE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::BACKBONE));
-  return pyobj;
-}
-
-
-SWIGINTERN int CYSTEINE_SULPHUR_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CYSTEINE_SULPHUR is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CYSTEINE_SULPHUR_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::CYSTEINE_SULPHUR));
-  return pyobj;
-}
-
-
-SWIGINTERN int LIGAND_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable LIGAND is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *LIGAND_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::LIGAND));
-  return pyobj;
-}
-
-
-SWIGINTERN int NUCLEIC_BACKBONE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable NUCLEIC_BACKBONE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *NUCLEIC_BACKBONE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::NUCLEIC_BACKBONE));
-  return pyobj;
-}
-
-
-SWIGINTERN int SHAPELY_BACKBONE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SHAPELY_BACKBONE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SHAPELY_BACKBONE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SHAPELY_BACKBONE));
-  return pyobj;
-}
-
-
-SWIGINTERN int SHAPELY_SPECIAL_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SHAPELY_SPECIAL is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SHAPELY_SPECIAL_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SHAPELY_SPECIAL));
-  return pyobj;
-}
-
-
-SWIGINTERN int SIDECHAIN_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SIDECHAIN is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SIDECHAIN_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SIDECHAIN));
-  return pyobj;
-}
-
-
-SWIGINTERN int SUGAR_PHOSPHATE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SUGAR_PHOSPHATE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SUGAR_PHOSPHATE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SUGAR_PHOSPHATE));
-  return pyobj;
-}
-
-
-SWIGINTERN int ALA_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ALA is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ALA_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ALA));
-  return pyobj;
-}
-
-
-SWIGINTERN int GLY_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable GLY is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *GLY_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLY));
-  return pyobj;
-}
-
-
-SWIGINTERN int LEU_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable LEU is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *LEU_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::LEU));
-  return pyobj;
-}
-
-
-SWIGINTERN int SER_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SER is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SER_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::SER));
-  return pyobj;
-}
-
-
-SWIGINTERN int VAL_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable VAL is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *VAL_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::VAL));
-  return pyobj;
-}
-
-
-SWIGINTERN int THR_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable THR is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *THR_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::THR));
-  return pyobj;
-}
-
-
-SWIGINTERN int LYS_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable LYS is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *LYS_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::LYS));
-  return pyobj;
-}
-
-
-SWIGINTERN int ASP_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ASP is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ASP_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ASP));
-  return pyobj;
-}
-
-
-SWIGINTERN int ILE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ILE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ILE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ILE));
-  return pyobj;
-}
-
-
-SWIGINTERN int ASN_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ASN is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ASN_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ASN));
-  return pyobj;
-}
-
-
-SWIGINTERN int GLU_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable GLU is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *GLU_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLU));
-  return pyobj;
-}
-
-
-SWIGINTERN int PRO_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable PRO is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *PRO_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PRO));
-  return pyobj;
-}
-
-
-SWIGINTERN int ARG_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ARG is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ARG_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ARG));
-  return pyobj;
-}
-
-
-SWIGINTERN int PHE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable PHE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *PHE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PHE));
-  return pyobj;
-}
-
-
-SWIGINTERN int GLN_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable GLN is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *GLN_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLN));
-  return pyobj;
-}
-
-
-SWIGINTERN int TYR_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable TYR is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *TYR_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::TYR));
-  return pyobj;
-}
-
-
-SWIGINTERN int HIS_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable HIS is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *HIS_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::HIS));
-  return pyobj;
-}
-
-
-SWIGINTERN int CYS_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable CYS is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *CYS_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::CYS));
-  return pyobj;
-}
-
-
-SWIGINTERN int MET_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable MET is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *MET_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::MET));
-  return pyobj;
-}
-
-
-SWIGINTERN int TRP_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable TRP is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *TRP_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::TRP));
-  return pyobj;
-}
-
-
-SWIGINTERN int ASX_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ASX is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ASX_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ASX));
-  return pyobj;
-}
-
-
-SWIGINTERN int GLX_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable GLX is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *GLX_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLX));
-  return pyobj;
-}
-
-
-SWIGINTERN int PCA_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable PCA is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *PCA_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PCA));
-  return pyobj;
-}
-
-
-SWIGINTERN int HYP_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable HYP is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *HYP_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::HYP));
-  return pyobj;
-}
-
-
-SWIGINTERN int A_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable A is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *A_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::A));
-  return pyobj;
-}
-
-
-SWIGINTERN int C_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable C is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *C_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::C));
-  return pyobj;
-}
-
-
-SWIGINTERN int G_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable G is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *G_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::G));
-  return pyobj;
-}
-
-
-SWIGINTERN int T_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable T is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *T_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::T));
-  return pyobj;
-}
-
-
-SWIGINTERN int U_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable U is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *U_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::U));
-  return pyobj;
-}
-
-
-SWIGINTERN int UPLUS_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable UPLUS is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *UPLUS_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::UPLUS));
-  return pyobj;
-}
-
-
-SWIGINTERN int I_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable I is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *I_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::I));
-  return pyobj;
-}
-
-
-SWIGINTERN int _1MA_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable _1MA is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *_1MA_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_1MA));
-  return pyobj;
-}
-
-
-SWIGINTERN int _5MC_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable _5MC is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *_5MC_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_5MC));
-  return pyobj;
-}
-
-
-SWIGINTERN int OMC_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable OMC is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *OMC_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::OMC));
-  return pyobj;
-}
-
-
-SWIGINTERN int _1MG_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable _1MG is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *_1MG_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_1MG));
-  return pyobj;
-}
-
-
-SWIGINTERN int _2MG_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable _2MG is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *_2MG_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_2MG));
-  return pyobj;
-}
-
-
-SWIGINTERN int M2G_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable M2G is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *M2G_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::M2G));
-  return pyobj;
-}
-
-
-SWIGINTERN int _7MG_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable _7MG is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *_7MG_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_7MG));
-  return pyobj;
-}
-
-
-SWIGINTERN int OMG_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable OMG is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *OMG_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::OMG));
-  return pyobj;
-}
-
-
-SWIGINTERN int YG_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable YG is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *YG_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::YG));
-  return pyobj;
-}
-
-
-SWIGINTERN int H2U_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable H2U is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *H2U_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::H2U));
-  return pyobj;
-}
-
-
-SWIGINTERN int _5MU_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable _5MU is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *_5MU_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_5MU));
-  return pyobj;
-}
-
-
-SWIGINTERN int PSU_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable PSU is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *PSU_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PSU));
-  return pyobj;
-}
-
-
-SWIGINTERN int UNK_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable UNK is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *UNK_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::UNK));
-  return pyobj;
-}
-
-
-SWIGINTERN int ACE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ACE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ACE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ACE));
-  return pyobj;
-}
-
-
-SWIGINTERN int FOR_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable FOR is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *FOR_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::FOR));
-  return pyobj;
-}
-
-
-SWIGINTERN int HOH_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable HOH is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *HOH_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::HOH));
-  return pyobj;
-}
-
-
-SWIGINTERN int DOD_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable DOD is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *DOD_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::DOD));
-  return pyobj;
-}
-
-
-SWIGINTERN int SO4_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SO4 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SO4_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::SO4));
-  return pyobj;
-}
-
-
-SWIGINTERN int PO4_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable PO4 is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *PO4_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PO4));
-  return pyobj;
-}
-
-
-SWIGINTERN int NAD_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable NAD is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *NAD_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::NAD));
-  return pyobj;
-}
-
-
-SWIGINTERN int COA_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable COA is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *COA_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::COA));
-  return pyobj;
-}
-
-
-SWIGINTERN int NAP_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable NAP is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *NAP_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::NAP));
-  return pyobj;
-}
-
-
-SWIGINTERN int NDP_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable NDP is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *NDP_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::NDP));
-  return pyobj;
-}
-
-
-SWIGINTERN int AMINO_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable AMINO is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *AMINO_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::AMINO));
-  return pyobj;
-}
-
-
-SWIGINTERN int AMINO_NUCLEO_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable AMINO_NUCLEO is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *AMINO_NUCLEO_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::AMINO_NUCLEO));
-  return pyobj;
-}
-
-
-SWIGINTERN int COENZYME_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable COENZYME is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *COENZYME_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::COENZYME));
-  return pyobj;
-}
-
-
-SWIGINTERN int ION_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ION is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *ION_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::ION));
-  return pyobj;
-}
-
-
-SWIGINTERN int NUCLEO_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable NUCLEO is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *NUCLEO_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::NUCLEO));
-  return pyobj;
-}
-
-
-SWIGINTERN int PROTEIN_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable PROTEIN is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *PROTEIN_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::PROTEIN));
-  return pyobj;
-}
-
-
-SWIGINTERN int PURINE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable PURINE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *PURINE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::PURINE));
-  return pyobj;
-}
-
-
-SWIGINTERN int PYRIMIDINE_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable PYRIMIDINE is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *PYRIMIDINE_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::PYRIMIDINE));
-  return pyobj;
-}
-
-
-SWIGINTERN int SOLVENT_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SOLVENT is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *SOLVENT_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::SOLVENT));
-  return pyobj;
-}
-
-
-SWIGINTERN int WATER_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable WATER is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *WATER_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::WATER));
-  return pyobj;
-}
-
-
 SWIGINTERN int Residue_set(PyObject *_val) {
   {
     char (*inp)[4] = 0;
@@ -49129,7 +47376,7 @@ SWIGINTERN PyObject *_wrap_OBBond_GetNbrAtomIdx(PyObject *SWIGUNUSEDPARM(self), 
   PyObject *resultobj = 0;
   OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  int result;
+  unsigned int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -49148,8 +47395,8 @@ SWIGINTERN PyObject *_wrap_OBBond_GetNbrAtomIdx(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBond_GetNbrAtomIdx" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-  result = (int)(arg1)->GetNbrAtomIdx(arg2);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (unsigned int)(arg1)->GetNbrAtomIdx(arg2);
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return resultobj;
 fail:
   return NULL;
@@ -75771,7 +74018,7 @@ SWIGINTERN PyObject *_wrap__OBMolBondIter_GetNbrAtomIdx(PyObject *SWIGUNUSEDPARM
   PyObject *resultobj = 0;
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  int result;
+  unsigned int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -75790,8 +74037,8 @@ SWIGINTERN PyObject *_wrap__OBMolBondIter_GetNbrAtomIdx(PyObject *SWIGUNUSEDPARM
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolBondIter_GetNbrAtomIdx" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-  result = (int)(*arg1)->GetNbrAtomIdx(arg2);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (unsigned int)(*arg1)->GetNbrAtomIdx(arg2);
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return resultobj;
 fail:
   return NULL;
@@ -82801,7 +81048,7 @@ SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetNbrAtomIdx(PyObject *SWIGUNUSEDPAR
   PyObject *resultobj = 0;
   OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  int result;
+  unsigned int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -82820,8 +81067,8 @@ SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetNbrAtomIdx(PyObject *SWIGUNUSEDPAR
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBAtomBondIter_GetNbrAtomIdx" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-  result = (int)(*arg1)->GetNbrAtomIdx(arg2);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (unsigned int)(*arg1)->GetNbrAtomIdx(arg2);
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return resultobj;
 fail:
   return NULL;
@@ -92552,6 +90799,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"vectorAngle", _wrap_vectorAngle, METH_VARARGS, NULL},
 	 { (char *)"CalcTorsionAngle", _wrap_CalcTorsionAngle, METH_VARARGS, NULL},
 	 { (char *)"Point2Plane", _wrap_Point2Plane, METH_VARARGS, NULL},
+	 { (char *)"Point2PlaneAngle", _wrap_Point2PlaneAngle, METH_VARARGS, NULL},
 	 { (char *)"Trim", _wrap_Trim, METH_VARARGS, NULL},
 	 { (char *)"new_OBGenericData", _wrap_new_OBGenericData, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_Clone", _wrap_OBGenericData_Clone, METH_VARARGS, NULL},
@@ -95631,46 +93879,46 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_addvarlink(SWIG_globals(),(char*)"VX",VX_get, VX_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"VY",VY_get, VY_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"VZ",VZ_get, VZ_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"UndefinedData",UndefinedData_get, UndefinedData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"PairData",PairData_get, PairData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"EnergyData",EnergyData_get, EnergyData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CommentData",CommentData_get, CommentData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ConformerData",ConformerData_get, ConformerData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ExternalBondData",ExternalBondData_get, ExternalBondData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"RotamerList",RotamerList_get, RotamerList_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"VirtualBondData",VirtualBondData_get, VirtualBondData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"RingData",RingData_get, RingData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"TorsionData",TorsionData_get, TorsionData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"AngleData",AngleData_get, AngleData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SerialNums",SerialNums_get, SerialNums_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"UnitCell",UnitCell_get, UnitCell_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SpinData",SpinData_get, SpinData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ChargeData",ChargeData_get, ChargeData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SymmetryData",SymmetryData_get, SymmetryData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ChiralData",ChiralData_get, ChiralData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"OccupationData",OccupationData_get, OccupationData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"DensityData",DensityData_get, DensityData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ElectronicData",ElectronicData_get, ElectronicData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"VibrationData",VibrationData_get, VibrationData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"RotationData",RotationData_get, RotationData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"NuclearData",NuclearData_get, NuclearData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SetData",SetData_get, SetData_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData0",CustomData0_get, CustomData0_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData1",CustomData1_get, CustomData1_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData2",CustomData2_get, CustomData2_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData3",CustomData3_get, CustomData3_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData4",CustomData4_get, CustomData4_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData5",CustomData5_get, CustomData5_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData6",CustomData6_get, CustomData6_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData7",CustomData7_get, CustomData7_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData8",CustomData8_get, CustomData8_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData9",CustomData9_get, CustomData9_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData10",CustomData10_get, CustomData10_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData11",CustomData11_get, CustomData11_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData12",CustomData12_get, CustomData12_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData13",CustomData13_get, CustomData13_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData14",CustomData14_get, CustomData14_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CustomData15",CustomData15_get, CustomData15_set);
+  SWIG_Python_SetConstant(d, "UndefinedData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::UndefinedData)));
+  SWIG_Python_SetConstant(d, "PairData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::PairData)));
+  SWIG_Python_SetConstant(d, "EnergyData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::EnergyData)));
+  SWIG_Python_SetConstant(d, "CommentData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CommentData)));
+  SWIG_Python_SetConstant(d, "ConformerData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ConformerData)));
+  SWIG_Python_SetConstant(d, "ExternalBondData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ExternalBondData)));
+  SWIG_Python_SetConstant(d, "RotamerList",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::RotamerList)));
+  SWIG_Python_SetConstant(d, "VirtualBondData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::VirtualBondData)));
+  SWIG_Python_SetConstant(d, "RingData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::RingData)));
+  SWIG_Python_SetConstant(d, "TorsionData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::TorsionData)));
+  SWIG_Python_SetConstant(d, "AngleData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::AngleData)));
+  SWIG_Python_SetConstant(d, "SerialNums",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::SerialNums)));
+  SWIG_Python_SetConstant(d, "UnitCell",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::UnitCell)));
+  SWIG_Python_SetConstant(d, "SpinData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::SpinData)));
+  SWIG_Python_SetConstant(d, "ChargeData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ChargeData)));
+  SWIG_Python_SetConstant(d, "SymmetryData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::SymmetryData)));
+  SWIG_Python_SetConstant(d, "ChiralData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ChiralData)));
+  SWIG_Python_SetConstant(d, "OccupationData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::OccupationData)));
+  SWIG_Python_SetConstant(d, "DensityData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::DensityData)));
+  SWIG_Python_SetConstant(d, "ElectronicData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ElectronicData)));
+  SWIG_Python_SetConstant(d, "VibrationData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::VibrationData)));
+  SWIG_Python_SetConstant(d, "RotationData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::RotationData)));
+  SWIG_Python_SetConstant(d, "NuclearData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::NuclearData)));
+  SWIG_Python_SetConstant(d, "SetData",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::SetData)));
+  SWIG_Python_SetConstant(d, "CustomData0",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData0)));
+  SWIG_Python_SetConstant(d, "CustomData1",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData1)));
+  SWIG_Python_SetConstant(d, "CustomData2",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData2)));
+  SWIG_Python_SetConstant(d, "CustomData3",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData3)));
+  SWIG_Python_SetConstant(d, "CustomData4",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData4)));
+  SWIG_Python_SetConstant(d, "CustomData5",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData5)));
+  SWIG_Python_SetConstant(d, "CustomData6",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData6)));
+  SWIG_Python_SetConstant(d, "CustomData7",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData7)));
+  SWIG_Python_SetConstant(d, "CustomData8",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData8)));
+  SWIG_Python_SetConstant(d, "CustomData9",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData9)));
+  SWIG_Python_SetConstant(d, "CustomData10",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData10)));
+  SWIG_Python_SetConstant(d, "CustomData11",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData11)));
+  SWIG_Python_SetConstant(d, "CustomData12",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData12)));
+  SWIG_Python_SetConstant(d, "CustomData13",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData13)));
+  SWIG_Python_SetConstant(d, "CustomData14",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData14)));
+  SWIG_Python_SetConstant(d, "CustomData15",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData15)));
   SWIG_Python_SetConstant(d, "any",SWIG_From_int(static_cast< int >(OpenBabel::any)));
   SWIG_Python_SetConstant(d, "readInput",SWIG_From_int(static_cast< int >(OpenBabel::readInput)));
   SWIG_Python_SetConstant(d, "userInput",SWIG_From_int(static_cast< int >(OpenBabel::userInput)));
@@ -95730,97 +93978,97 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "AA_CYS",SWIG_From_int(static_cast< int >((1 << 18))));
   SWIG_Python_SetConstant(d, "AA_MET",SWIG_From_int(static_cast< int >((1 << 19))));
   SWIG_Python_SetConstant(d, "AA_TRP",SWIG_From_int(static_cast< int >((1 << 20))));
-  SWIG_addvarlink(SWIG_globals(),(char*)"ACIDIC",ACIDIC_get, ACIDIC_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ACYCLIC",ACYCLIC_get, ACYCLIC_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ALIPHATIC",ALIPHATIC_get, ALIPHATIC_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"AROMATIC",AROMATIC_get, AROMATIC_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"BASIC",BASIC_get, BASIC_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"BURIED",BURIED_get, BURIED_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CHARGED",CHARGED_get, CHARGED_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CYCLIC",CYCLIC_get, CYCLIC_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"HYDROPHOBIC",HYDROPHOBIC_get, HYDROPHOBIC_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"LARGE",LARGE_get, LARGE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"MEDIUM",MEDIUM_get, MEDIUM_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"NEGATIVE",NEGATIVE_get, NEGATIVE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"NEUTRAL",NEUTRAL_get, NEUTRAL_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"POLAR",POLAR_get, POLAR_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"POSITIVE",POSITIVE_get, POSITIVE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SMALL",SMALL_get, SMALL_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SURFACE",SURFACE_get, SURFACE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ALPHA_CARBON",ALPHA_CARBON_get, ALPHA_CARBON_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"AMINO_BACKBONE",AMINO_BACKBONE_get, AMINO_BACKBONE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"BACKBONE",BACKBONE_get, BACKBONE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CYSTEINE_SULPHUR",CYSTEINE_SULPHUR_get, CYSTEINE_SULPHUR_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"LIGAND",LIGAND_get, LIGAND_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"NUCLEIC_BACKBONE",NUCLEIC_BACKBONE_get, NUCLEIC_BACKBONE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SHAPELY_BACKBONE",SHAPELY_BACKBONE_get, SHAPELY_BACKBONE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SHAPELY_SPECIAL",SHAPELY_SPECIAL_get, SHAPELY_SPECIAL_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SIDECHAIN",SIDECHAIN_get, SIDECHAIN_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SUGAR_PHOSPHATE",SUGAR_PHOSPHATE_get, SUGAR_PHOSPHATE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ALA",ALA_get, ALA_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"GLY",GLY_get, GLY_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"LEU",LEU_get, LEU_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SER",SER_get, SER_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"VAL",VAL_get, VAL_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"THR",THR_get, THR_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"LYS",LYS_get, LYS_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ASP",ASP_get, ASP_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ILE",ILE_get, ILE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ASN",ASN_get, ASN_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"GLU",GLU_get, GLU_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"PRO",PRO_get, PRO_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ARG",ARG_get, ARG_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"PHE",PHE_get, PHE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"GLN",GLN_get, GLN_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"TYR",TYR_get, TYR_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"HIS",HIS_get, HIS_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"CYS",CYS_get, CYS_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"MET",MET_get, MET_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"TRP",TRP_get, TRP_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ASX",ASX_get, ASX_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"GLX",GLX_get, GLX_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"PCA",PCA_get, PCA_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"HYP",HYP_get, HYP_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"A",A_get, A_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"C",C_get, C_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"G",G_get, G_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"T",T_get, T_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"U",U_get, U_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"UPLUS",UPLUS_get, UPLUS_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"I",I_get, I_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"_1MA",_1MA_get, _1MA_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"_5MC",_5MC_get, _5MC_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"OMC",OMC_get, OMC_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"_1MG",_1MG_get, _1MG_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"_2MG",_2MG_get, _2MG_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"M2G",M2G_get, M2G_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"_7MG",_7MG_get, _7MG_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"OMG",OMG_get, OMG_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"YG",YG_get, YG_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"H2U",H2U_get, H2U_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"_5MU",_5MU_get, _5MU_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"PSU",PSU_get, PSU_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"UNK",UNK_get, UNK_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ACE",ACE_get, ACE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"FOR",FOR_get, FOR_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"HOH",HOH_get, HOH_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"DOD",DOD_get, DOD_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SO4",SO4_get, SO4_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"PO4",PO4_get, PO4_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"NAD",NAD_get, NAD_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"COA",COA_get, COA_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"NAP",NAP_get, NAP_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"NDP",NDP_get, NDP_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"AMINO",AMINO_get, AMINO_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"AMINO_NUCLEO",AMINO_NUCLEO_get, AMINO_NUCLEO_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"COENZYME",COENZYME_get, COENZYME_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ION",ION_get, ION_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"NUCLEO",NUCLEO_get, NUCLEO_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"PROTEIN",PROTEIN_get, PROTEIN_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"PURINE",PURINE_get, PURINE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"PYRIMIDINE",PYRIMIDINE_get, PYRIMIDINE_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SOLVENT",SOLVENT_get, SOLVENT_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"WATER",WATER_get, WATER_set);
+  SWIG_Python_SetConstant(d, "ACIDIC",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::ACIDIC)));
+  SWIG_Python_SetConstant(d, "ACYCLIC",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::ACYCLIC)));
+  SWIG_Python_SetConstant(d, "ALIPHATIC",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::ALIPHATIC)));
+  SWIG_Python_SetConstant(d, "AROMATIC",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::AROMATIC)));
+  SWIG_Python_SetConstant(d, "BASIC",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::BASIC)));
+  SWIG_Python_SetConstant(d, "BURIED",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::BURIED)));
+  SWIG_Python_SetConstant(d, "CHARGED",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::CHARGED)));
+  SWIG_Python_SetConstant(d, "CYCLIC",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::CYCLIC)));
+  SWIG_Python_SetConstant(d, "HYDROPHOBIC",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::HYDROPHOBIC)));
+  SWIG_Python_SetConstant(d, "LARGE",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::LARGE)));
+  SWIG_Python_SetConstant(d, "MEDIUM",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::MEDIUM)));
+  SWIG_Python_SetConstant(d, "NEGATIVE",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::NEGATIVE)));
+  SWIG_Python_SetConstant(d, "NEUTRAL",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::NEUTRAL)));
+  SWIG_Python_SetConstant(d, "POLAR",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::POLAR)));
+  SWIG_Python_SetConstant(d, "POSITIVE",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::POSITIVE)));
+  SWIG_Python_SetConstant(d, "SMALL",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::SMALL)));
+  SWIG_Python_SetConstant(d, "SURFACE",SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::SURFACE)));
+  SWIG_Python_SetConstant(d, "ALPHA_CARBON",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::ALPHA_CARBON)));
+  SWIG_Python_SetConstant(d, "AMINO_BACKBONE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::AMINO_BACKBONE)));
+  SWIG_Python_SetConstant(d, "BACKBONE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::BACKBONE)));
+  SWIG_Python_SetConstant(d, "CYSTEINE_SULPHUR",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::CYSTEINE_SULPHUR)));
+  SWIG_Python_SetConstant(d, "LIGAND",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::LIGAND)));
+  SWIG_Python_SetConstant(d, "NUCLEIC_BACKBONE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::NUCLEIC_BACKBONE)));
+  SWIG_Python_SetConstant(d, "SHAPELY_BACKBONE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::SHAPELY_BACKBONE)));
+  SWIG_Python_SetConstant(d, "SHAPELY_SPECIAL",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::SHAPELY_SPECIAL)));
+  SWIG_Python_SetConstant(d, "SIDECHAIN",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::SIDECHAIN)));
+  SWIG_Python_SetConstant(d, "SUGAR_PHOSPHATE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::SUGAR_PHOSPHATE)));
+  SWIG_Python_SetConstant(d, "ALA",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ALA)));
+  SWIG_Python_SetConstant(d, "GLY",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::GLY)));
+  SWIG_Python_SetConstant(d, "LEU",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::LEU)));
+  SWIG_Python_SetConstant(d, "SER",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::SER)));
+  SWIG_Python_SetConstant(d, "VAL",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::VAL)));
+  SWIG_Python_SetConstant(d, "THR",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::THR)));
+  SWIG_Python_SetConstant(d, "LYS",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::LYS)));
+  SWIG_Python_SetConstant(d, "ASP",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ASP)));
+  SWIG_Python_SetConstant(d, "ILE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ILE)));
+  SWIG_Python_SetConstant(d, "ASN",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ASN)));
+  SWIG_Python_SetConstant(d, "GLU",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::GLU)));
+  SWIG_Python_SetConstant(d, "PRO",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PRO)));
+  SWIG_Python_SetConstant(d, "ARG",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ARG)));
+  SWIG_Python_SetConstant(d, "PHE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PHE)));
+  SWIG_Python_SetConstant(d, "GLN",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::GLN)));
+  SWIG_Python_SetConstant(d, "TYR",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::TYR)));
+  SWIG_Python_SetConstant(d, "HIS",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::HIS)));
+  SWIG_Python_SetConstant(d, "CYS",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::CYS)));
+  SWIG_Python_SetConstant(d, "MET",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::MET)));
+  SWIG_Python_SetConstant(d, "TRP",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::TRP)));
+  SWIG_Python_SetConstant(d, "ASX",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ASX)));
+  SWIG_Python_SetConstant(d, "GLX",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::GLX)));
+  SWIG_Python_SetConstant(d, "PCA",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PCA)));
+  SWIG_Python_SetConstant(d, "HYP",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::HYP)));
+  SWIG_Python_SetConstant(d, "A",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::A)));
+  SWIG_Python_SetConstant(d, "C",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::C)));
+  SWIG_Python_SetConstant(d, "G",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::G)));
+  SWIG_Python_SetConstant(d, "T",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::T)));
+  SWIG_Python_SetConstant(d, "U",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::U)));
+  SWIG_Python_SetConstant(d, "UPLUS",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::UPLUS)));
+  SWIG_Python_SetConstant(d, "I",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::I)));
+  SWIG_Python_SetConstant(d, "_1MA",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_1MA)));
+  SWIG_Python_SetConstant(d, "_5MC",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_5MC)));
+  SWIG_Python_SetConstant(d, "OMC",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::OMC)));
+  SWIG_Python_SetConstant(d, "_1MG",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_1MG)));
+  SWIG_Python_SetConstant(d, "_2MG",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_2MG)));
+  SWIG_Python_SetConstant(d, "M2G",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::M2G)));
+  SWIG_Python_SetConstant(d, "_7MG",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_7MG)));
+  SWIG_Python_SetConstant(d, "OMG",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::OMG)));
+  SWIG_Python_SetConstant(d, "YG",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::YG)));
+  SWIG_Python_SetConstant(d, "H2U",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::H2U)));
+  SWIG_Python_SetConstant(d, "_5MU",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_5MU)));
+  SWIG_Python_SetConstant(d, "PSU",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PSU)));
+  SWIG_Python_SetConstant(d, "UNK",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::UNK)));
+  SWIG_Python_SetConstant(d, "ACE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ACE)));
+  SWIG_Python_SetConstant(d, "FOR",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::FOR)));
+  SWIG_Python_SetConstant(d, "HOH",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::HOH)));
+  SWIG_Python_SetConstant(d, "DOD",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::DOD)));
+  SWIG_Python_SetConstant(d, "SO4",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::SO4)));
+  SWIG_Python_SetConstant(d, "PO4",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PO4)));
+  SWIG_Python_SetConstant(d, "NAD",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::NAD)));
+  SWIG_Python_SetConstant(d, "COA",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::COA)));
+  SWIG_Python_SetConstant(d, "NAP",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::NAP)));
+  SWIG_Python_SetConstant(d, "NDP",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::NDP)));
+  SWIG_Python_SetConstant(d, "AMINO",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::AMINO)));
+  SWIG_Python_SetConstant(d, "AMINO_NUCLEO",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::AMINO_NUCLEO)));
+  SWIG_Python_SetConstant(d, "COENZYME",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::COENZYME)));
+  SWIG_Python_SetConstant(d, "ION",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::ION)));
+  SWIG_Python_SetConstant(d, "NUCLEO",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::NUCLEO)));
+  SWIG_Python_SetConstant(d, "PROTEIN",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::PROTEIN)));
+  SWIG_Python_SetConstant(d, "PURINE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::PURINE)));
+  SWIG_Python_SetConstant(d, "PYRIMIDINE",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::PYRIMIDINE)));
+  SWIG_Python_SetConstant(d, "SOLVENT",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::SOLVENT)));
+  SWIG_Python_SetConstant(d, "WATER",SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::WATER)));
   SWIG_addvarlink(SWIG_globals(),(char*)"Residue",Residue_get, Residue_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ElemDesc",ElemDesc_get, ElemDesc_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ResNo",ResNo_get, ResNo_set);

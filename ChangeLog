@@ -1,3 +1,15 @@
+2007-01-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/snprintf.c: Update with declaration of GPL license in
+	addition to Artistic. Checked with author:
+	http://www.ijs.si/software/snprintf/
+
+	* configure.in, configure, Makefiles: Bump version number to
+	2.1.0b5.
+
+	* src/forcefields/forcefieldmmff94.cpp: Added stub for
+	electrostatic calculation. Solves linking problems on Mac OS X.
+
 2007-01-14  Noel O'Boyle <baoilleach@gmail.com>
 
 	* windows-vc2005/Distribution: Edited the installer script to make it
@@ -25,17 +37,17 @@
 	* scipts/openbabel-python.i: changes to OBFingerprintIter. Not tested
 	yet!
 	
-	* include/openbabel/plugin.iter: comment out PluginIter::Description()
+	* include/openbabel/pluginiter.h: comment out PluginIter::Description()
 	and operator* which are causing problems with the Python build - 
 	I suspect because they are not used in the C++ code.
 	
-	* iclude/openbabel/forcefield.cpp: src/forcefields/forcefieldghemical.cpp,
+	* include/openbabel/forcefield.h: src/forcefields/forcefieldghemical.cpp,
 	 src/forcefields/forcefieldmm2.cpp: changes to several return values
 	to avoid compiler errors. 
 
 2007-01-08 Chris Morley <ob@gaseq.co.uk>
 
-	* include/openbabel/plugin.iter: correct documentation on 
+	* include/openbabel/pluginiter.h: correct documentation on 
 	the use of FOR_EACH to iterate over all objects.
 
 2007-01-07  Donald E. Curtis <dcurtis3@sourceforge.net>
