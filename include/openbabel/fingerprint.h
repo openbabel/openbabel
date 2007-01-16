@@ -24,7 +24,8 @@ GNU General Public License for more details.
 #include <set>
 #include <vector>
 #include <string>
-#include "openbabel/pluginiter.h"
+
+#include <openbabel/pluginiter.h>
 
 #ifndef OBFPRT
 #define OBFPRT

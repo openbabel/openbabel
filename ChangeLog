@@ -1,3 +1,9 @@
+2007-01-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/mol.h, src/*: Documentation updates.
+
+	* include/openbabel/Makefile.am: Make sure pluginiter.h is included.
+
 2007-01-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/snprintf.c: Update with declaration of GPL license in

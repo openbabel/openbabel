@@ -57,8 +57,9 @@ namespace OpenBabel
       For example:
       \code
       #include <iostream.h>
-      #include "mol.h"
-      #include "obconversion.h"
+
+      #include <openbabel/mol.h>
+      #include <openbabel/obconversion.h>
       int main(int argc,char **argv)
       {
          OBConversion conv(&cin,&cout);
@@ -124,7 +125,7 @@ namespace OpenBabel
       bonds to a given atom, etc.)
 
       \code
-      #include "obiter.h"
+      #include <openbabel/obiter.h>
       ...
       #define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; ++a )
       #define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; ++b )
@@ -137,8 +138,8 @@ namespace OpenBabel
 
       These convenience functions can be used like so:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       double exactMass = 0.0f;

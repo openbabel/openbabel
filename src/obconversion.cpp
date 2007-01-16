@@ -166,7 +166,7 @@ namespace OpenBabel {
       <b>To do a file conversion without manipulating the molecule.</b>
 
       @code
-      #include "obconversion.h" //mol.h is not needed
+      #include <openbabel/obconversion.h> //mol.h is not needed
       ...set up an istream is and an ostream os 
       OBConversion conv(&is,&os);
       if(conv.SetInAndOutFormats("SMI","MOL"))

@@ -60,7 +60,7 @@ namespace OpenBabel
   */
 
   //! 
-  //! This method is called by OBConversion::Read() before reading data.
+  //! This method can be called by OBConversion::Read() before reading data.
   //! Derived classes should be sure to call OBBase::Clear() to remove
   //! inherited generic data.
   //! 
@@ -198,22 +198,21 @@ namespace OpenBabel
   Open Babel is a full chemical software toolbox. In addition to converting
   file formats, it offers a complete programming library for developing 
   chemistry software. The library is written primarily in C++ and also offers
-  interfaces to other languages (e.g., Perl and Python) using essentially
-  the same API.
+  interfaces to other languages (e.g., Perl, Python, Ruby, and Java)
+  using essentially the same API.
 
   This documentation outlines the Open Babel programming interface, providing
-  information on all public classes, methods, and data. In particular, it 
-  attempts to provide as much (or as little) detail as needed. More information
+  information on all public classes, methods, and data. In particular, strives 
+  to provide as much (or as little) detail as needed. More information
   can also be found on the <a href="http://openbabel.sourceforge.net/">
-  main website</a>.
+  main website</a> and through the <a
+  href="mailto:openbabel-discuss@lists.sourceforge.net">openbabel-discuss</a>
+  mailing list.
 
   - \ref intro "General Introduction" \n
-     ()
+     (history, design, and rationale, ...)
   - \ref start "Getting Started" \n
-     ()
-  - \ref tutorial "Tutorials and Examples" \n
-     (using Open Babel in real life, combining classes and methods,
-     ...)
+     (where to begin, example code, using Open Babel in real life, ...)
   - \ref main "Main Classes" \n
      (the most important, widely-used public classes)
   - <a href="annotated.shtml" class="el">All Classes</a> \n
@@ -221,7 +220,7 @@ namespace OpenBabel
   - \ref changes "What's New in Version 2.1" \n
      (changes since 2.0 releases)
   - \ref other "Further Information" \n
-     (other resources, mailing lists, ...)
+     (other resources, tutorials, mailing lists, ...)
 
   \page intro Introduction to Open Babel API
 
@@ -265,29 +264,93 @@ namespace OpenBabel
 
   \page start Getting Started
 
-  \page tutorial Tutorials and Examples
+  Not surprisingly, the Open Babel library is a full chemical
+  toolbox. So to start out, the first example is to read in molecular
+  file data and uses the \link OpenBabel::OBMol OBMol\endlink, 
+  and \link OpenBabel::OBConversion OBConversion\endlink classes. The
+  \link OpenBabel::OBMol former\endlink is designed to store the basic
+  information in a molecule and to perceive information and chemical
+  properties. The \link OpenBabel::OBConversion latter\endlink is
+  designed to handle conversion of a variety of data (i.e., not just
+  molecules) and import and export.
+
+  This example program shows how to read in a molecule, check the
+  number of atoms, and write a SMILES string.
+  \code
+      #include <iostream.h>
+
+      // Include Open Babel classes for OBMol and OBConversion
+      #include <openbabel/mol.h>
+      #include <openbabel/obconversion.h>
+
+      int main(int argc,char **argv)
+      {
+         // Read from STDIN (cin) and Write to STDOUT (cout)
+         OBConversion conv(&cin,&cout);
+
+         // Try to set input format to MDL SD file
+         // and output to SMILES
+         if(conv.SetInAndOutFormats("SDF","SMI"))
+         { 
+            OBMol mol;
+            if(conv.Read(&mol))
+            {
+               //  ...manipulate molecule 
+               cerr << " Molecule has: " << mol.NumAtoms() 
+                    << " atoms." << endl;
+            }
+
+            // Write SMILES to the standard output
+            conv->Write(&mol);
+         }
+         return(1); // exit with success
+      }
+  \endcode
+
+  All of the \ref main "main classes", including OBMol and
+  OBConversion, include example code designed to facilitate using the
+  Open Babel code in real-world chemistry.
+
+  For a further list of example code, see the 
+  <a
+  href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">developer
+  tutorials</a>. This section includes examples in C++, Perl, Python,
+  and other porgramming languages.
+
+  Also, the <code>tools</code> directory of the Open Babel source
+  releases include a variety of programs which are intended to be more
+  advanced examples (although usually still under 300 lines of code).
+
+  Please e-mail the openbabel-discuss@lists.sourceforge.net mailing list
+  if you have more questions!
 
   \page main Main Classes
 
-  - OBMol
-  - OBAtom
-  - OBBond
-  - OBResidue
-  - OBConversion
-  - OBFormat
+  Chemical Storage and Manipulation:
+  - OBMol - Central molecule class, properties, ...
+  - OBAtom - Central atom class, properties, coordinates, ...
+  - OBBond - Bond connection between two OBAtom, properties, bond orders, ...
+  - OBResidue - Biomolecule residues (amino acids, nucleic acids)
+  - OBRing - Ring cycle perception, Smallest Set of Smallest Rings (SSSR)
 
-  - matrix3x3
-  - vector3
+  Import / Export:
+  - OBConversion - Conversion between file formats. Interface for import or export
+  - OBFormat - Parent class for file format types for any sort of data
 
-  - OBBitVec
-  - OBSmartsPattern - Parsing SMARTS patterns and matching against OBMol objects
+  Utility Classes:
+  - OBBitVec - Efficient bit vector (e.g., for marking visit to atoms)
+  - OBMessageHandler - Error and warning handling, filtering, and logging
+  - OBSmartsPattern - Parsing SMARTS chemical search patterns and matching against OBMol objects
 
-  - OBPairData
-  - OBUnitCell
+  Arbitrary Data:
+  - OBBase - General base class of OBAtom, OBMol, OBResidue, etc. for storing generic, arbitrary custom data
+  - OBGenericData - General base class for arbitrary data types
+  - OBPairData - Arbitrary text key/value data for all atoms, bonds, residues, or molecules
+  - OBUnitCell - Storage and manipulation of crystal structure / reciprocal unit cells
 
-  - OBRing
-
-  - OBMessageHandler
+  Math Utilities:
+  - matrix3x3 - Square 3x3 matrices for 3D transformations and rotations
+  - vector3 - 3D vector class for translations and planes
 
   \page changes What's New in Version 2.1
 
@@ -296,8 +359,10 @@ namespace OpenBabel
 
   In addition, this page gives a general list of additions to the library.
 
-  - OBForceField
-  - plugininter.h
+  - OBForceField - Generic interface to molecular mechanics force
+      fields, including MM2, MMFF94, and Ghemical (Tripos-like) methods.
+  - plugininter.h - Generic interface to "plugin" classes, including
+      force fields, and fingerprints.
 
   \page other Further Information
 
@@ -305,15 +370,20 @@ namespace OpenBabel
   the website offers a variety of up-to-date and useful information for
   developing with the library.
 
-  - <a href="http://openbabel.sourceforge.net/wiki/Develop">Developing with Open Babel</a>
-  - <a href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">developer tutorials</a>.
+  Open Babel homepage:
+  - <a href="http://openbabel.sourceforge.net/wiki/Develop">Developing with Open Babel</a>.
+  - <a href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">developer
+  tutorials</a>.
+  - <a href="http://openbabel.sourceforge.net/wiki/Contribute">Contributing
+  to the Open Babel project</a>.
 
-  - SourceForge project page
-  -- Bug reporter
-  -- Feature requests
-
+  SourceForge project pages:
+  - <a href="http://sourceforge.net/projects/openbabel/">Open Babel project page</a> 
+  - Bug reporter
+  - Feature requests
+  - File format requests
+  - Mailing lists and archives
   
-
   */
 
 } // namespace OpenBabel

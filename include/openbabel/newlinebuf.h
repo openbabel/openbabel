@@ -63,4 +63,4 @@ namespace OpenBabel
 #endif
 
 //! \file newlinebuf.h
-//! \brief Filter line endings -> '\n'
+//! \brief Translate line endings automatically (UNIX, Classic Mac, DOS)

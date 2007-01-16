@@ -25,7 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/data.h>
 #include <openbabel/mol.h>
 
-// data headers
+// data headers with default parameters
 #include "element.h"
 #include "types.h"
 #include "isotope.h"

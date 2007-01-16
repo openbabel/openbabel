@@ -43,8 +43,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       double exactMass = 0.0f;
@@ -128,8 +128,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       FOR_DFS_OF_MOL(a, mol)
@@ -262,8 +262,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       FOR_BFS_OF_MOL(a, mol)
@@ -385,8 +385,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       unsigned int bondOrderSum = 0;
@@ -458,8 +458,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       FOR_ATOMS_OF_MOL(a, mol)
@@ -533,8 +533,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBAtom atom;
       unsigned int tripleBondCount;
@@ -607,8 +607,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       FOR_RESIDUES_OF_MOL(r, mol)
@@ -684,8 +684,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       double residueMass = 0.0;
@@ -765,8 +765,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       FOR_RINGS_OF_MOL(r, mol)
@@ -850,8 +850,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       OBAtom *a, *b, *c;
@@ -944,8 +944,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       OBAtom *a, *b, *c, *d;
@@ -1040,8 +1040,8 @@ namespace OpenBabel
 
       Here is an example:
       \code
-      #include "obiter.h"
-      #include "mol.h"
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
 
       OBMol mol;
       OBAtom *a, *b;

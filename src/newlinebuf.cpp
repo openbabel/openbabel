@@ -76,4 +76,4 @@ std::streampos newlinebuf::seekoff(std::streamoff off,
 } // end namespace OpenBabel
 
 //! \file newlinebuf.cpp
-//! \brief Filter line endings -> '\n'
+//! \brief Translate line endings automatically (UNIX, Classic Mac, DOS)

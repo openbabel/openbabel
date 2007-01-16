@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/phmodel.h>
 
+// private data header with default parameters
 #include "phmodeldata.h"
 
 #ifdef WIN32

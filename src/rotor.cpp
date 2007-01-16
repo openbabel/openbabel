@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/rotor.h>
 
+// private data headers with default parameters
 #include "torlib.h"
 
 using namespace std;

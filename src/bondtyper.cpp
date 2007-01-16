@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/bondtyper.h>
 
+// data header with default parameters
 #include "bondtyp.h"
 
 using namespace std;

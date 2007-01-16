@@ -92,8 +92,8 @@ namespace OpenBabel
       unsigned short                _cidx;      //!< index into coordinate array
       unsigned short                _hyb;       //!< hybridization
       unsigned short                _flags;     //!< bitwise flags (e.g. aromaticity)
-      double                        _pcharge;  //!< partial charge
-      double                      **_c;        //!< coordinate array in double*
+      double                        _pcharge;   //!< partial charge
+      double                      **_c;         //!< coordinate array in double*
       vector3                       _v;         //!< coordinate vector
       OBResidue                    *_residue;   //!< parent residue (if applicable)
 

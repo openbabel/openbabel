@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/typer.h>
 
+// private data headers with default parameters
 #include "atomtyp.h"
 #include "aromatic.h"
 
@@ -248,7 +249,8 @@ namespace OpenBabel
     return;
   }
 
-
+  //! Currently sets OBMol::SetAromaticCorrected and returns.
+  //! \deprecated Currently unused for anything significant.
   void OBAtomTyper::CorrectAromaticNitrogens(OBMol &mol)
   {
     if (!_init)
