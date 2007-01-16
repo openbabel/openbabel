@@ -192,7 +192,7 @@ public class OBBond extends OBBase {
     return openbabelJNI.OBBond_GetLength(swigCPtr, this);
   }
 
-  public int GetNbrAtomIdx(OBAtom ptr) {
+  public long GetNbrAtomIdx(OBAtom ptr) {
     return openbabelJNI.OBBond_GetNbrAtomIdx(swigCPtr, this, OBAtom.getCPtr(ptr), ptr);
   }
 

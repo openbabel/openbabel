@@ -4159,6 +4159,54 @@ SWIGEXPORT jdouble JNICALL Java_openbabelJNI_Point2Plane(JNIEnv *jenv, jclass jc
 }
 
 
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_Point2PlaneAngle(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_) {
+  jdouble jresult = 0 ;
+  OpenBabel::vector3 arg1 ;
+  OpenBabel::vector3 arg2 ;
+  OpenBabel::vector3 arg3 ;
+  OpenBabel::vector3 arg4 ;
+  double result;
+  OpenBabel::vector3 const *argp1 ;
+  OpenBabel::vector3 const *argp2 ;
+  OpenBabel::vector3 const *argp3 ;
+  OpenBabel::vector3 const *argp4 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  (void)jarg3_;
+  (void)jarg4_;
+  argp1 = *(OpenBabel::vector3 **)&jarg1; 
+  if (!argp1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null OpenBabel::vector3 const");
+    return 0;
+  }
+  arg1 = *argp1; 
+  argp2 = *(OpenBabel::vector3 **)&jarg2; 
+  if (!argp2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null OpenBabel::vector3 const");
+    return 0;
+  }
+  arg2 = *argp2; 
+  argp3 = *(OpenBabel::vector3 **)&jarg3; 
+  if (!argp3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null OpenBabel::vector3 const");
+    return 0;
+  }
+  arg3 = *argp3; 
+  argp4 = *(OpenBabel::vector3 **)&jarg4; 
+  if (!argp4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null OpenBabel::vector3 const");
+    return 0;
+  }
+  arg4 = *argp4; 
+  result = (double)OpenBabel::Point2PlaneAngle(arg1,arg2,arg3,arg4);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_VZero_1get(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -4692,482 +4740,482 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_Trim(JNIEnv *jenv, jclass jcls, jlong
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_UndefinedData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_UndefinedData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::UndefinedData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::UndefinedData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_PairData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_PairData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::PairData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::PairData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_EnergyData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_EnergyData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::EnergyData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::EnergyData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CommentData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CommentData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CommentData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CommentData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ConformerData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ConformerData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::ConformerData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::ConformerData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ExternalBondData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ExternalBondData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::ExternalBondData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::ExternalBondData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_RotamerList_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_RotamerList_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::RotamerList;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::RotamerList;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_VirtualBondData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_VirtualBondData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::VirtualBondData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::VirtualBondData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_RingData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_RingData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::RingData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::RingData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_TorsionData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_TorsionData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::TorsionData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::TorsionData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_AngleData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_AngleData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::AngleData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::AngleData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SerialNums_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SerialNums_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::SerialNums;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::SerialNums;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_UnitCell_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_UnitCell_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::UnitCell;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::UnitCell;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SpinData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SpinData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::SpinData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::SpinData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ChargeData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ChargeData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::ChargeData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::ChargeData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SymmetryData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SymmetryData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::SymmetryData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::SymmetryData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ChiralData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ChiralData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::ChiralData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::ChiralData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OccupationData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_OccupationData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::OccupationData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::OccupationData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_DensityData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_DensityData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::DensityData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::DensityData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ElectronicData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ElectronicData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::ElectronicData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::ElectronicData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_VibrationData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_VibrationData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::VibrationData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::VibrationData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_RotationData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_RotationData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::RotationData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::RotationData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_NuclearData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_NuclearData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::NuclearData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::NuclearData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SetData_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SetData_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::SetData;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::SetData;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData0_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData0_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData0;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData0;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData1_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData1_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData1;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData1;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData2_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData2_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData2;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData2;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData3_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData3_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData3;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData3;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData4_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData4_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData4;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData4;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData5_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData5_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData5;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData5;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData6_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData6_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData6;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData6;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData7_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData7_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData7;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData7;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData8_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData8_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData8;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData8;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData9_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData9_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData9;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData9;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData10_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData10_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData10;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData10;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData11_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData11_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData11;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData11;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData12_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData12_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData12;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData12;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData13_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData13_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData13;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData13;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData14_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData14_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData14;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData14;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CustomData15_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CustomData15_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBGenericDataType::CustomData15;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBGenericDataType::CustomData15;
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -12094,1094 +12142,1094 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_AA_1TRP_1get(JNIEnv *jenv, jclass jcls
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ACIDIC_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ACIDIC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::ACIDIC;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::ACIDIC;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ACYCLIC_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ACYCLIC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::ACYCLIC;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::ACYCLIC;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ALIPHATIC_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ALIPHATIC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::ALIPHATIC;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::ALIPHATIC;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_AROMATIC_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_AROMATIC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::AROMATIC;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::AROMATIC;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_BASIC_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_BASIC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::BASIC;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::BASIC;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_BURIED_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_BURIED_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::BURIED;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::BURIED;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CHARGED_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CHARGED_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::CHARGED;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::CHARGED;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CYCLIC_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CYCLIC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::CYCLIC;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::CYCLIC;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_HYDROPHOBIC_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_HYDROPHOBIC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::HYDROPHOBIC;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::HYDROPHOBIC;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_LARGE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_LARGE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::LARGE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::LARGE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_MEDIUM_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_MEDIUM_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::MEDIUM;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::MEDIUM;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_NEGATIVE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_NEGATIVE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::NEGATIVE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::NEGATIVE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_NEUTRAL_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_NEUTRAL_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::NEUTRAL;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::NEUTRAL;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_POLAR_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_POLAR_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::POLAR;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::POLAR;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_POSITIVE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_POSITIVE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::POSITIVE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::POSITIVE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SMALL_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SMALL_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::SMALL;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::SMALL;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SURFACE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SURFACE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBAminoAcidProperty::SURFACE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBAminoAcidProperty::SURFACE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ALPHA_1CARBON_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ALPHA_1CARBON_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::ALPHA_CARBON;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::ALPHA_CARBON;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_AMINO_1BACKBONE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_AMINO_1BACKBONE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::AMINO_BACKBONE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::AMINO_BACKBONE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_BACKBONE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_BACKBONE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::BACKBONE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::BACKBONE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CYSTEINE_1SULPHUR_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CYSTEINE_1SULPHUR_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::CYSTEINE_SULPHUR;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::CYSTEINE_SULPHUR;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_LIGAND_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_LIGAND_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::LIGAND;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::LIGAND;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_NUCLEIC_1BACKBONE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_NUCLEIC_1BACKBONE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::NUCLEIC_BACKBONE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::NUCLEIC_BACKBONE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SHAPELY_1BACKBONE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SHAPELY_1BACKBONE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::SHAPELY_BACKBONE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::SHAPELY_BACKBONE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SHAPELY_1SPECIAL_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SHAPELY_1SPECIAL_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::SHAPELY_SPECIAL;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::SHAPELY_SPECIAL;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SIDECHAIN_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SIDECHAIN_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::SIDECHAIN;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::SIDECHAIN;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SUGAR_1PHOSPHATE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SUGAR_1PHOSPHATE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueAtomProperty::SUGAR_PHOSPHATE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueAtomProperty::SUGAR_PHOSPHATE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ALA_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ALA_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::ALA;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::ALA;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_GLY_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_GLY_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::GLY;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::GLY;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_LEU_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_LEU_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::LEU;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::LEU;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SER_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SER_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::SER;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::SER;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_VAL_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_VAL_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::VAL;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::VAL;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_THR_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_THR_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::THR;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::THR;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_LYS_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_LYS_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::LYS;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::LYS;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ASP_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ASP_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::ASP;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::ASP;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ILE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ILE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::ILE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::ILE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ASN_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ASN_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::ASN;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::ASN;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_GLU_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_GLU_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::GLU;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::GLU;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_PRO_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_PRO_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::PRO;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::PRO;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ARG_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ARG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::ARG;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::ARG;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_PHE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_PHE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::PHE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::PHE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_GLN_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_GLN_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::GLN;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::GLN;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_TYR_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_TYR_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::TYR;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::TYR;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_HIS_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_HIS_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::HIS;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::HIS;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_CYS_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_CYS_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::CYS;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::CYS;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_MET_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_MET_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::MET;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::MET;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_TRP_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_TRP_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::TRP;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::TRP;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ASX_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ASX_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::ASX;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::ASX;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_GLX_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_GLX_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::GLX;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::GLX;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_PCA_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_PCA_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::PCA;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::PCA;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_HYP_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_HYP_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::HYP;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::HYP;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_A_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_A_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::A;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::A;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_C_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_C_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::C;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::C;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_G_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_G_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::G;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::G;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_T_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_T_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::T;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::T;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_U_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_U_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::U;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::U;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_UPLUS_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_UPLUS_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::UPLUS;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::UPLUS;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_I_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_I_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::I;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::I;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI__11MA_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI__11MA_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_1MA;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::_1MA;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI__15MC_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI__15MC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_5MC;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::_5MC;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OMC_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_OMC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::OMC;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::OMC;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI__11MG_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI__11MG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_1MG;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::_1MG;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI__12MG_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI__12MG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_2MG;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::_2MG;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_M2G_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_M2G_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::M2G;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::M2G;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI__17MG_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI__17MG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_7MG;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::_7MG;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OMG_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_OMG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::OMG;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::OMG;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_YG_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_YG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::YG;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::YG;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_H2U_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_H2U_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::H2U;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::H2U;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI__15MU_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI__15MU_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_5MU;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::_5MU;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_PSU_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_PSU_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::PSU;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::PSU;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_UNK_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_UNK_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::UNK;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::UNK;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ACE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ACE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::ACE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::ACE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_FOR_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_FOR_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::FOR;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::FOR;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_HOH_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_HOH_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::HOH;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::HOH;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_DOD_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_DOD_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::DOD;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::DOD;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SO4_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SO4_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::SO4;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::SO4;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_PO4_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_PO4_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::PO4;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::PO4;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_NAD_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_NAD_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::NAD;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::NAD;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_COA_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_COA_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::COA;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::COA;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_NAP_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_NAP_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::NAP;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::NAP;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_NDP_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_NDP_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::NDP;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueIndex::NDP;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_AMINO_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_AMINO_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::AMINO;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::AMINO;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_AMINO_1NUCLEO_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_AMINO_1NUCLEO_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::AMINO_NUCLEO;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::AMINO_NUCLEO;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_COENZYME_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_COENZYME_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::COENZYME;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::COENZYME;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_ION_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_ION_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::ION;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::ION;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_NUCLEO_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_NUCLEO_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::NUCLEO;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::NUCLEO;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_PROTEIN_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_PROTEIN_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::PROTEIN;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::PROTEIN;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_PURINE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_PURINE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::PURINE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::PURINE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_PYRIMIDINE_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_PYRIMIDINE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::PYRIMIDINE;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::PYRIMIDINE;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_SOLVENT_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_SOLVENT_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::SOLVENT;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::SOLVENT;
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_WATER_1get(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  unsigned int result;
+SWIGEXPORT jint JNICALL Java_openbabelJNI_WATER_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
-  result = (unsigned int)(unsigned int)OpenBabel::OBResidueProperty::WATER;
-  jresult = (jlong)result; 
+  result = (int)OpenBabel::OBResidueProperty::WATER;
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -16172,11 +16220,11 @@ SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBBond_1GetLength(JNIEnv *jenv, jcl
 }
 
 
-SWIGEXPORT jint JNICALL Java_openbabelJNI_OBBond_1GetNbrAtomIdx(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  jint jresult = 0 ;
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBBond_1GetNbrAtomIdx(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
   OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  int result;
+  unsigned int result;
   
   (void)jenv;
   (void)jcls;
@@ -16184,8 +16232,8 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_OBBond_1GetNbrAtomIdx(JNIEnv *jenv, jc
   (void)jarg2_;
   arg1 = *(OpenBabel::OBBond **)&jarg1; 
   arg2 = *(OpenBabel::OBAtom **)&jarg2; 
-  result = (int)(arg1)->GetNbrAtomIdx(arg2);
-  jresult = (jint)result; 
+  result = (unsigned int)(arg1)->GetNbrAtomIdx(arg2);
+  jresult = (jlong)result; 
   return jresult;
 }
 
@@ -29843,11 +29891,11 @@ SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBMolBondIter_1GetLength(JNIEnv *je
 }
 
 
-SWIGEXPORT jint JNICALL Java_openbabelJNI_OBMolBondIter_1GetNbrAtomIdx(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  jint jresult = 0 ;
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1GetNbrAtomIdx(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  int result;
+  unsigned int result;
   
   (void)jenv;
   (void)jcls;
@@ -29855,8 +29903,8 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_OBMolBondIter_1GetNbrAtomIdx(JNIEnv *j
   (void)jarg2_;
   arg1 = *(OpenBabel::OBMolBondIter **)&jarg1; 
   arg2 = *(OpenBabel::OBAtom **)&jarg2; 
-  result = (int)(*arg1)->GetNbrAtomIdx(arg2);
-  jresult = (jint)result; 
+  result = (unsigned int)(*arg1)->GetNbrAtomIdx(arg2);
+  jresult = (jlong)result; 
   return jresult;
 }
 
@@ -33374,11 +33422,11 @@ SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBAtomBondIter_1GetLength(JNIEnv *j
 }
 
 
-SWIGEXPORT jint JNICALL Java_openbabelJNI_OBAtomBondIter_1GetNbrAtomIdx(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  jint jresult = 0 ;
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1GetNbrAtomIdx(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
   OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  int result;
+  unsigned int result;
   
   (void)jenv;
   (void)jcls;
@@ -33386,8 +33434,8 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_OBAtomBondIter_1GetNbrAtomIdx(JNIEnv *
   (void)jarg2_;
   arg1 = *(OpenBabel::OBAtomBondIter **)&jarg1; 
   arg2 = *(OpenBabel::OBAtom **)&jarg2; 
-  result = (int)(*arg1)->GetNbrAtomIdx(arg2);
-  jresult = (jint)result; 
+  result = (unsigned int)(*arg1)->GetNbrAtomIdx(arg2);
+  jresult = (jlong)result; 
   return jresult;
 }
 

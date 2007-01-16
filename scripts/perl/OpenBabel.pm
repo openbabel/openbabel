@@ -63,6 +63,7 @@ package Chemistry::OpenBabel;
 *vectorAngle = *Chemistry::OpenBabelc::vectorAngle;
 *CalcTorsionAngle = *Chemistry::OpenBabelc::CalcTorsionAngle;
 *Point2Plane = *Chemistry::OpenBabelc::Point2Plane;
+*Point2PlaneAngle = *Chemistry::OpenBabelc::Point2PlaneAngle;
 *Trim = *Chemistry::OpenBabelc::Trim;
 *tokenize = *Chemistry::OpenBabelc::tokenize;
 *ThrowError = *Chemistry::OpenBabelc::ThrowError;

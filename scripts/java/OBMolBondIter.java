@@ -221,7 +221,7 @@ public class OBMolBondIter {
     return openbabelJNI.OBMolBondIter_GetLength(swigCPtr, this);
   }
 
-  public int GetNbrAtomIdx(OBAtom ptr) {
+  public long GetNbrAtomIdx(OBAtom ptr) {
     return openbabelJNI.OBMolBondIter_GetNbrAtomIdx(swigCPtr, this, OBAtom.getCPtr(ptr), ptr);
   }
 

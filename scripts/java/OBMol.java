@@ -178,8 +178,8 @@ public class OBMol extends OBBase {
     return openbabelJNI.OBMol_NumRotors(swigCPtr, this);
   }
 
-  public OBAtom GetAtom(int arg0) {
-    long cPtr = openbabelJNI.OBMol_GetAtom(swigCPtr, this, arg0);
+  public OBAtom GetAtom(int idx) {
+    long cPtr = openbabelJNI.OBMol_GetAtom(swigCPtr, this, idx);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
@@ -188,13 +188,13 @@ public class OBMol extends OBBase {
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
-  public OBBond GetBond(int arg0) {
-    long cPtr = openbabelJNI.OBMol_GetBond__SWIG_0(swigCPtr, this, arg0);
+  public OBBond GetBond(int idx) {
+    long cPtr = openbabelJNI.OBMol_GetBond__SWIG_0(swigCPtr, this, idx);
     return (cPtr == 0) ? null : new OBBond(cPtr, false);
   }
 
-  public OBBond GetBond(int arg0, int arg1) {
-    long cPtr = openbabelJNI.OBMol_GetBond__SWIG_1(swigCPtr, this, arg0, arg1);
+  public OBBond GetBond(int a, int b) {
+    long cPtr = openbabelJNI.OBMol_GetBond__SWIG_1(swigCPtr, this, a, b);
     return (cPtr == 0) ? null : new OBBond(cPtr, false);
   }
 

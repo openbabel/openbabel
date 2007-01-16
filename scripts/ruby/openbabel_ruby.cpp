@@ -1609,82 +1609,83 @@ SWIG_Ruby_SetModule(swig_module_info *pointer)
 #define SWIGTYPE_p_OpenBabel__OBUnitCell swig_types[65]
 #define SWIGTYPE_p_OpenBabel__OBVirtualBond swig_types[66]
 #define SWIGTYPE_p_OpenBabel__Pattern swig_types[67]
-#define SWIGTYPE_p_OpenBabel__Template swig_types[68]
-#define SWIGTYPE_p_OpenBabel__matrix3x3 swig_types[69]
-#define SWIGTYPE_p_OpenBabel__obLogBuf swig_types[70]
-#define SWIGTYPE_p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[71]
-#define SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[72]
-#define SWIGTYPE_p_OpenBabel__vector3 swig_types[73]
-#define SWIGTYPE_p_a_3__double swig_types[74]
-#define SWIGTYPE_p_a_4__char swig_types[75]
-#define SWIGTYPE_p_char swig_types[76]
-#define SWIGTYPE_p_double swig_types[77]
-#define SWIGTYPE_p_int swig_types[78]
-#define SWIGTYPE_p_p_OpenBabel__OBAngleData swig_types[79]
-#define SWIGTYPE_p_p_OpenBabel__OBChiralData swig_types[80]
-#define SWIGTYPE_p_p_OpenBabel__OBCommentData swig_types[81]
-#define SWIGTYPE_p_p_OpenBabel__OBConformerData swig_types[82]
-#define SWIGTYPE_p_p_OpenBabel__OBExternalBondData swig_types[83]
-#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[84]
-#define SWIGTYPE_p_p_OpenBabel__OBGenericData swig_types[85]
-#define SWIGTYPE_p_p_OpenBabel__OBPairData swig_types[86]
-#define SWIGTYPE_p_p_OpenBabel__OBRingData swig_types[87]
-#define SWIGTYPE_p_p_OpenBabel__OBSerialNums swig_types[88]
-#define SWIGTYPE_p_p_OpenBabel__OBSetData swig_types[89]
-#define SWIGTYPE_p_p_OpenBabel__OBSymmetryData swig_types[90]
-#define SWIGTYPE_p_p_OpenBabel__OBTorsionData swig_types[91]
-#define SWIGTYPE_p_p_OpenBabel__OBUnitCell swig_types[92]
-#define SWIGTYPE_p_p_OpenBabel__OBVirtualBond swig_types[93]
-#define SWIGTYPE_p_p_double swig_types[94]
-#define SWIGTYPE_p_p_int swig_types[95]
-#define SWIGTYPE_p_std__dequeTint_t swig_types[96]
-#define SWIGTYPE_p_std__ifstream swig_types[97]
-#define SWIGTYPE_p_std__istream swig_types[98]
-#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[99]
-#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[100]
-#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[101]
-#define SWIGTYPE_p_std__multimapTdouble_unsigned_int_t swig_types[102]
-#define SWIGTYPE_p_std__ostream swig_types[103]
-#define SWIGTYPE_p_std__out_of_range swig_types[104]
-#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[105]
-#define SWIGTYPE_p_std__streampos swig_types[106]
-#define SWIGTYPE_p_std__string swig_types[107]
-#define SWIGTYPE_p_std__type_info swig_types[108]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[109]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[110]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[111]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator swig_types[112]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[113]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[114]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[115]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[116]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[117]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[118]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[119]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[120]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[121]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[122]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[123]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[124]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[125]
-#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[126]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[127]
-#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[128]
-#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[129]
-#define SWIGTYPE_p_std__vectorTdouble_t swig_types[130]
-#define SWIGTYPE_p_std__vectorTint_t swig_types[131]
-#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[132]
-#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[133]
-#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[134]
-#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[135]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[136]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[137]
-#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[138]
-#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[139]
-#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[140]
-#define SWIGTYPE_p_unsigned_int swig_types[141]
-static swig_type_info *swig_types[143];
-static swig_module_info swig_module = {swig_types, 142, 0, 0, 0, 0};
+#define SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t swig_types[68]
+#define SWIGTYPE_p_OpenBabel__Template swig_types[69]
+#define SWIGTYPE_p_OpenBabel__matrix3x3 swig_types[70]
+#define SWIGTYPE_p_OpenBabel__obLogBuf swig_types[71]
+#define SWIGTYPE_p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[72]
+#define SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[73]
+#define SWIGTYPE_p_OpenBabel__vector3 swig_types[74]
+#define SWIGTYPE_p_a_3__double swig_types[75]
+#define SWIGTYPE_p_a_4__char swig_types[76]
+#define SWIGTYPE_p_char swig_types[77]
+#define SWIGTYPE_p_double swig_types[78]
+#define SWIGTYPE_p_int swig_types[79]
+#define SWIGTYPE_p_p_OpenBabel__OBAngleData swig_types[80]
+#define SWIGTYPE_p_p_OpenBabel__OBChiralData swig_types[81]
+#define SWIGTYPE_p_p_OpenBabel__OBCommentData swig_types[82]
+#define SWIGTYPE_p_p_OpenBabel__OBConformerData swig_types[83]
+#define SWIGTYPE_p_p_OpenBabel__OBExternalBondData swig_types[84]
+#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[85]
+#define SWIGTYPE_p_p_OpenBabel__OBGenericData swig_types[86]
+#define SWIGTYPE_p_p_OpenBabel__OBPairData swig_types[87]
+#define SWIGTYPE_p_p_OpenBabel__OBRingData swig_types[88]
+#define SWIGTYPE_p_p_OpenBabel__OBSerialNums swig_types[89]
+#define SWIGTYPE_p_p_OpenBabel__OBSetData swig_types[90]
+#define SWIGTYPE_p_p_OpenBabel__OBSymmetryData swig_types[91]
+#define SWIGTYPE_p_p_OpenBabel__OBTorsionData swig_types[92]
+#define SWIGTYPE_p_p_OpenBabel__OBUnitCell swig_types[93]
+#define SWIGTYPE_p_p_OpenBabel__OBVirtualBond swig_types[94]
+#define SWIGTYPE_p_p_double swig_types[95]
+#define SWIGTYPE_p_p_int swig_types[96]
+#define SWIGTYPE_p_std__dequeTint_t swig_types[97]
+#define SWIGTYPE_p_std__ifstream swig_types[98]
+#define SWIGTYPE_p_std__istream swig_types[99]
+#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[100]
+#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[101]
+#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[102]
+#define SWIGTYPE_p_std__multimapTdouble_unsigned_int_t swig_types[103]
+#define SWIGTYPE_p_std__ostream swig_types[104]
+#define SWIGTYPE_p_std__out_of_range swig_types[105]
+#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[106]
+#define SWIGTYPE_p_std__streampos swig_types[107]
+#define SWIGTYPE_p_std__string swig_types[108]
+#define SWIGTYPE_p_std__type_info swig_types[109]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[110]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[111]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[112]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator swig_types[113]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[114]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[115]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[116]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[117]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[118]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[119]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[120]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[121]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[122]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[123]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[124]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[125]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[126]
+#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[127]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[128]
+#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[129]
+#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[130]
+#define SWIGTYPE_p_std__vectorTdouble_t swig_types[131]
+#define SWIGTYPE_p_std__vectorTint_t swig_types[132]
+#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[133]
+#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[134]
+#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[135]
+#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[136]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[137]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[138]
+#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[139]
+#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[140]
+#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[141]
+#define SWIGTYPE_p_unsigned_int swig_types[142]
+static swig_type_info *swig_types[144];
+static swig_module_info swig_module = {swig_types, 143, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1729,7 +1730,7 @@ static VALUE mOpenbabel;
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/oberror.h>
-
+#include <openbabel/pluginiter.h>
 #include <openbabel/fingerprint.h>
 
 #include <openbabel/data.h>
@@ -12236,6 +12237,78 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_Point2PlaneAngle(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::vector3 arg1 ;
+  OpenBabel::vector3 arg2 ;
+  OpenBabel::vector3 arg3 ;
+  OpenBabel::vector3 arg4 ;
+  double result;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  void *argp4 ;
+  int res4 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 4) || (argc > 4)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
+  }
+  {
+    res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::Point2PlaneAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::Point2PlaneAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const""'");
+    } else {
+      arg1 = *(reinterpret_cast< OpenBabel::vector3 * >(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::Point2PlaneAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::Point2PlaneAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const""'");
+    } else {
+      arg2 = *(reinterpret_cast< OpenBabel::vector3 * >(argp2));
+    }
+  }
+  {
+    res3 = SWIG_ConvertPtr(argv[2], &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::Point2PlaneAngle" "', argument " "3"" of type '" "OpenBabel::vector3 const""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::Point2PlaneAngle" "', argument " "3"" of type '" "OpenBabel::vector3 const""'");
+    } else {
+      arg3 = *(reinterpret_cast< OpenBabel::vector3 * >(argp3));
+    }
+  }
+  {
+    res4 = SWIG_ConvertPtr(argv[3], &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "OpenBabel::Point2PlaneAngle" "', argument " "4"" of type '" "OpenBabel::vector3 const""'"); 
+    }  
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::Point2PlaneAngle" "', argument " "4"" of type '" "OpenBabel::vector3 const""'");
+    } else {
+      arg4 = *(reinterpret_cast< OpenBabel::vector3 * >(argp4));
+    }
+  }
+  result = (double)OpenBabel::Point2PlaneAngle(arg1,arg2,arg3,arg4);
+  vresult = SWIG_From_double(static_cast< double >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 VZero_get(VALUE self) {
   VALUE _val;
   
@@ -12298,366 +12371,6 @@ _wrap_Trim(int argc, VALUE *argv, VALUE self) {
   return vresult;
 fail:
   return Qnil;
-}
-
-
-SWIGINTERN VALUE
-UndefinedData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::UndefinedData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-PairData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::PairData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-EnergyData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::EnergyData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CommentData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CommentData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ConformerData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ConformerData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ExternalBondData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ExternalBondData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-RotamerList_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::RotamerList));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-VirtualBondData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::VirtualBondData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-RingData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::RingData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-TorsionData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::TorsionData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-AngleData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::AngleData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SerialNums_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SerialNums));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-UnitCell_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::UnitCell));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SpinData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SpinData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ChargeData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ChargeData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SymmetryData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SymmetryData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ChiralData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ChiralData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-OccupationData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::OccupationData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-DensityData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::DensityData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ElectronicData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ElectronicData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-VibrationData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::VibrationData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-RotationData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::RotationData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-NuclearData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::NuclearData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SetData_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SetData));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData0_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData0));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData1_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData1));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData2_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData2));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData3_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData3));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData4_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData4));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData5_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData5));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData6_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData6));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData7_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData7));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData8_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData8));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData9_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData9));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData10_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData10));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData11_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData11));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData12_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData12));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData13_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData13));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData14_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData14));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CustomData15_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData15));
-  return _val;
 }
 
 
@@ -19525,6 +19238,914 @@ fail:
 }
 
 
+swig_class cPluginiterFingerprint;
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_Register(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  OpenBabel::OBFingerprint *arg2 = (OpenBabel::OBFingerprint *) 0 ;
+  std::string arg3 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Register" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Register" "', argument " "2"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp2);
+  {
+    std::string *ptr = (std::string *)0;
+    int res = SWIG_AsPtr_std_string(argv[1], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "Register" "', argument " "3"" of type '" "std::string const""'"); 
+    }
+    arg3 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Register" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  (arg1)->Register(arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_FindType(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  std::string *arg2 = 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindType" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindType" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FindType" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (OpenBabel::OBFingerprint *)(arg1)->FindType((std::string const &)*arg2);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_FindDefaultType(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindDefaultType" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  result = (OpenBabel::OBFingerprint *)((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->FindDefaultType();
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_ID(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  std::string result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ID" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  result = ((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->ID();
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_Description(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  std::string result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Description" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  result = ((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->Description();
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_ToStart(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ToStart" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  (arg1)->ToStart();
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_inc(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "operator ++" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_good(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "operator bool" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  result = (bool)((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->operator bool();
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_deref(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "operator ->" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  result = (OpenBabel::OBFingerprint *)((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->operator ->();
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint___ref__(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "operator *" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  {
+    OpenBabel::OBFingerprint &_result_ref = ((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->operator *();
+    result = (OpenBabel::OBFingerprint *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_allocate(VALUE self) {
+#else
+  SWIGINTERN VALUE
+  _wrap_pluginiterFingerprint_allocate(int argc, VALUE *argv, VALUE self) {
+#endif
+    
+    
+    VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+    rb_obj_call_init(vresult, argc, argv);
+#endif
+    return vresult;
+  }
+  
+
+SWIGINTERN VALUE
+_wrap_new_pluginiterFingerprint(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *)new OpenBabel::PluginIter<OpenBabel::OBFingerprint >();DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_OpenBabel_PluginIter_Sl_OpenBabel_OBFingerprint_Sg_(OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1) {
+    delete arg1;
+}
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_Iter(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Iter" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > &_result_ref = (*arg1)->Iter();
+    result = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_SetBit(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  unsigned int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetBit" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SetBit" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  (*arg1)->SetBit(*arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_Fold(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  unsigned int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Fold" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Fold" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  (*arg1)->Fold(*arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_GetFingerprint__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  int arg4 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetFingerprint" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "GetFingerprint" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  result = (bool)(*arg1)->GetFingerprint(arg2,*arg3,arg4);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_GetFingerprint__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetFingerprint" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+  result = (bool)(*arg1)->GetFingerprint(arg2,*arg3);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_pluginiterFingerprint_GetFingerprint(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[5];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 5) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_pluginiterFingerprint_GetFingerprint__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_pluginiterFingerprint_GetFingerprint__SWIG_0(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'pluginiterFingerprint_GetFingerprint'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_Flags(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Flags" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  result = (unsigned int)(*arg1)->Flags();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_Tanimoto__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::vector<unsigned int > temp2 ;
+  std::vector<unsigned int > temp3 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tanimoto" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  {
+    if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+      unsigned int size = RARRAY_LEN(argv[0]);
+      temp2 = std::vector<unsigned int >(size);
+      arg2 = &temp2;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(argv[0])[i];
+        if (FIXNUM_P(o))
+        temp2[i] = (unsigned int)(FIX2INT(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""unsigned int" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(argv[0], (void **) &arg2, SWIGTYPE_p_std__vectorTunsigned_int_t, 1);
+    }
+  }
+  {
+    if (rb_obj_is_kind_of(argv[1],rb_cArray)) {
+      unsigned int size = RARRAY_LEN(argv[1]);
+      temp3 = std::vector<unsigned int >(size);
+      arg3 = &temp3;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(argv[1])[i];
+        if (FIXNUM_P(o))
+        temp3[i] = (unsigned int)(FIX2INT(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""unsigned int" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(argv[1], (void **) &arg3, SWIGTYPE_p_std__vectorTunsigned_int_t, 1);
+    }
+  }
+  result = (double)(*arg1)->Tanimoto((std::vector<unsigned int > const &)*arg2,(std::vector<unsigned int > const &)*arg3);
+  vresult = SWIG_From_double(static_cast< double >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_Tanimoto__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  unsigned int *arg3 = (unsigned int *) 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::vector<unsigned int > temp2 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tanimoto" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  {
+    if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+      unsigned int size = RARRAY_LEN(argv[0]);
+      temp2 = std::vector<unsigned int >(size);
+      arg2 = &temp2;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(argv[0])[i];
+        if (FIXNUM_P(o))
+        temp2[i] = (unsigned int)(FIX2INT(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""unsigned int" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(argv[0], (void **) &arg2, SWIGTYPE_p_std__vectorTunsigned_int_t, 1);
+    }
+  }
+  res3 = SWIG_ConvertPtr(argv[1], &argp3,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Tanimoto" "', argument " "3"" of type '" "unsigned int const *""'"); 
+  }
+  arg3 = reinterpret_cast< unsigned int * >(argp3);
+  result = (double)(*arg1)->Tanimoto((std::vector<unsigned int > const &)*arg2,(unsigned int const *)arg3);
+  vresult = SWIG_From_double(static_cast< double >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_pluginiterFingerprint_Tanimoto(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[4];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 4) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        /* native sequence? */
+        if (rb_obj_is_kind_of(argv[1],rb_cArray)) {
+          unsigned int size = RARRAY_LEN(argv[1]);
+          if (size == 0) {
+            /* an empty sequence can be of any type */
+            _v = 1;
+          } else {
+            /* check the first element only */
+            VALUE o = RARRAY_PTR(argv[1])[0];
+            if (FIXNUM_P(o))
+            _v = 1;
+            else
+            _v = 0;
+          }
+        } else {
+          /* wrapped vector? */
+          std::vector<unsigned int >* v;
+          if (SWIG_ConvertPtr(argv[1],(void **) &v, 
+              SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1)
+          _v = 1;
+          else
+          _v = 0;
+        }
+      }
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_unsigned_int, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_pluginiterFingerprint_Tanimoto__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        /* native sequence? */
+        if (rb_obj_is_kind_of(argv[1],rb_cArray)) {
+          unsigned int size = RARRAY_LEN(argv[1]);
+          if (size == 0) {
+            /* an empty sequence can be of any type */
+            _v = 1;
+          } else {
+            /* check the first element only */
+            VALUE o = RARRAY_PTR(argv[1])[0];
+            if (FIXNUM_P(o))
+            _v = 1;
+            else
+            _v = 0;
+          }
+        } else {
+          /* wrapped vector? */
+          std::vector<unsigned int >* v;
+          if (SWIG_ConvertPtr(argv[1],(void **) &v, 
+              SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1)
+          _v = 1;
+          else
+          _v = 0;
+        }
+      }
+      if (_v) {
+        {
+          /* native sequence? */
+          if (rb_obj_is_kind_of(argv[2],rb_cArray)) {
+            unsigned int size = RARRAY_LEN(argv[2]);
+            if (size == 0) {
+              /* an empty sequence can be of any type */
+              _v = 1;
+            } else {
+              /* check the first element only */
+              VALUE o = RARRAY_PTR(argv[2])[0];
+              if (FIXNUM_P(o))
+              _v = 1;
+              else
+              _v = 0;
+            }
+          } else {
+            /* wrapped vector? */
+            std::vector<unsigned int >* v;
+            if (SWIG_ConvertPtr(argv[2],(void **) &v, 
+                SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1)
+            _v = 1;
+            else
+            _v = 0;
+          }
+        }
+        if (_v) {
+          return _wrap_pluginiterFingerprint_Tanimoto__SWIG_0(nargs, args, self);
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'pluginiterFingerprint_Tanimoto'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_Getbitsperint(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Getbitsperint" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  result = (unsigned int)(*arg1)->Getbitsperint();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_FindFingerprint(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  std::string *arg2 = 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindFingerprint" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindFingerprint" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FindFingerprint" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (OpenBabel::OBFingerprint *)(*arg1)->FindFingerprint((std::string const &)*arg2);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 swig_class cOBError;
 
 SWIGINTERN VALUE
@@ -25660,825 +26281,6 @@ fail:
 
 
 SWIGINTERN VALUE
-ACIDIC_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::ACIDIC));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ACYCLIC_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::ACYCLIC));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ALIPHATIC_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::ALIPHATIC));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-AROMATIC_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::AROMATIC));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-BASIC_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::BASIC));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-BURIED_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::BURIED));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CHARGED_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::CHARGED));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CYCLIC_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::CYCLIC));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-HYDROPHOBIC_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::HYDROPHOBIC));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-LARGE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::LARGE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-MEDIUM_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::MEDIUM));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-NEGATIVE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::NEGATIVE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-NEUTRAL_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::NEUTRAL));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-POLAR_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::POLAR));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-POSITIVE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::POSITIVE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SMALL_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::SMALL));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SURFACE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::SURFACE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ALPHA_CARBON_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::ALPHA_CARBON));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-AMINO_BACKBONE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::AMINO_BACKBONE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-BACKBONE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::BACKBONE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CYSTEINE_SULPHUR_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::CYSTEINE_SULPHUR));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-LIGAND_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::LIGAND));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-NUCLEIC_BACKBONE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::NUCLEIC_BACKBONE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SHAPELY_BACKBONE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SHAPELY_BACKBONE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SHAPELY_SPECIAL_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SHAPELY_SPECIAL));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SIDECHAIN_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SIDECHAIN));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SUGAR_PHOSPHATE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SUGAR_PHOSPHATE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ALA_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ALA));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-GLY_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLY));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-LEU_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::LEU));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SER_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::SER));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-VAL_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::VAL));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-THR_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::THR));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-LYS_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::LYS));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ASP_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ASP));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ILE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ILE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ASN_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ASN));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-GLU_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLU));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-PRO_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PRO));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ARG_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ARG));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-PHE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PHE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-GLN_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLN));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-TYR_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::TYR));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-HIS_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::HIS));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-CYS_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::CYS));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-MET_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::MET));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-TRP_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::TRP));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ASX_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ASX));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-GLX_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLX));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-PCA_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PCA));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-HYP_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::HYP));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-A_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::A));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-C_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::C));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-G_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::G));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-T_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::T));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-U_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::U));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-UPLUS_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::UPLUS));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-I_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::I));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-_1MA_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_1MA));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-_5MC_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_5MC));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-OMC_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::OMC));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-_1MG_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_1MG));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-_2MG_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_2MG));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-M2G_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::M2G));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-_7MG_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_7MG));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-OMG_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::OMG));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-YG_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::YG));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-H2U_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::H2U));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-_5MU_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_5MU));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-PSU_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PSU));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-UNK_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::UNK));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ACE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ACE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-FOR_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::FOR));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-HOH_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::HOH));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-DOD_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::DOD));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SO4_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::SO4));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-PO4_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PO4));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-NAD_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::NAD));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-COA_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::COA));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-NAP_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::NAP));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-NDP_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::NDP));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-AMINO_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::AMINO));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-AMINO_NUCLEO_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::AMINO_NUCLEO));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-COENZYME_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::COENZYME));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-ION_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::ION));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-NUCLEO_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::NUCLEO));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-PROTEIN_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::PROTEIN));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-PURINE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::PURINE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-PYRIMIDINE_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::PYRIMIDINE));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-SOLVENT_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::SOLVENT));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-WATER_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueProperty::WATER));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
 Residue_get(VALUE self) {
   VALUE _val;
   
@@ -32252,7 +32054,7 @@ SWIGINTERN VALUE
 _wrap_OBBond_GetNbrAtomIdx(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  int result;
+  unsigned int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -32272,8 +32074,8 @@ _wrap_OBBond_GetNbrAtomIdx(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetNbrAtomIdx" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-  result = (int)(arg1)->GetNbrAtomIdx(arg2);
-  vresult = SWIG_From_int(static_cast< int >(result));
+  result = (unsigned int)(arg1)->GetNbrAtomIdx(arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return vresult;
 fail:
   return Qnil;
@@ -41927,6 +41729,588 @@ fail:
 swig_class cOBFingerprint;
 
 SWIGINTERN VALUE
+_wrap_OBFingerprint_Iter(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  {
+    OpenBabel::PluginIter<OpenBabel::OBFingerprint > &_result_ref = OpenBabel::OBFingerprint::Iter();
+    result = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_FindDefaultType(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (OpenBabel::OBFingerprint *)OpenBabel::OBFingerprint::FindDefaultType();
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_FindType(int argc, VALUE *argv, VALUE self) {
+  std::string *arg1 = 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBFingerprint::FindType" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBFingerprint::FindType" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  result = (OpenBabel::OBFingerprint *)OpenBabel::OBFingerprint::FindType((std::string const &)*arg1);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_OpenBabel_OBFingerprint(OpenBabel::OBFingerprint *arg1) {
+    delete arg1;
+}
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_SetBit(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  unsigned int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetBit" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SetBit" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  (arg1)->SetBit(*arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Fold(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  unsigned int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Fold" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Fold" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  (arg1)->Fold(*arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_GetFingerprint__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  int arg4 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetFingerprint" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "GetFingerprint" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  result = (bool)(arg1)->GetFingerprint(arg2,*arg3,arg4);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_GetFingerprint__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetFingerprint" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+  result = (bool)(arg1)->GetFingerprint(arg2,*arg3);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_OBFingerprint_GetFingerprint(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[5];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 5) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBFingerprint, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_OBFingerprint_GetFingerprint__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBFingerprint, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_OBFingerprint_GetFingerprint__SWIG_0(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'OBFingerprint_GetFingerprint'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Description(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  std::string result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Description" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  result = (arg1)->Description();
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Flags(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Flags" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  result = (unsigned int)(arg1)->Flags();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Tanimoto__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  std::vector<unsigned int > *arg1 = 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  double result;
+  std::vector<unsigned int > temp1 ;
+  std::vector<unsigned int > temp2 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  {
+    if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+      unsigned int size = RARRAY_LEN(argv[0]);
+      temp1 = std::vector<unsigned int >(size);
+      arg1 = &temp1;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(argv[0])[i];
+        if (FIXNUM_P(o))
+        temp1[i] = (unsigned int)(FIX2INT(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""unsigned int" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(argv[0], (void **) &arg1, SWIGTYPE_p_std__vectorTunsigned_int_t, 1);
+    }
+  }
+  {
+    if (rb_obj_is_kind_of(argv[1],rb_cArray)) {
+      unsigned int size = RARRAY_LEN(argv[1]);
+      temp2 = std::vector<unsigned int >(size);
+      arg2 = &temp2;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(argv[1])[i];
+        if (FIXNUM_P(o))
+        temp2[i] = (unsigned int)(FIX2INT(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""unsigned int" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(argv[1], (void **) &arg2, SWIGTYPE_p_std__vectorTunsigned_int_t, 1);
+    }
+  }
+  result = (double)OpenBabel::OBFingerprint::Tanimoto((std::vector<unsigned int > const &)*arg1,(std::vector<unsigned int > const &)*arg2);
+  vresult = SWIG_From_double(static_cast< double >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Tanimoto__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  std::vector<unsigned int > *arg1 = 0 ;
+  unsigned int *arg2 = (unsigned int *) 0 ;
+  double result;
+  std::vector<unsigned int > temp1 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  {
+    if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+      unsigned int size = RARRAY_LEN(argv[0]);
+      temp1 = std::vector<unsigned int >(size);
+      arg1 = &temp1;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(argv[0])[i];
+        if (FIXNUM_P(o))
+        temp1[i] = (unsigned int)(FIX2INT(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""unsigned int" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(argv[0], (void **) &arg1, SWIGTYPE_p_std__vectorTunsigned_int_t, 1);
+    }
+  }
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBFingerprint::Tanimoto" "', argument " "2"" of type '" "unsigned int const *""'"); 
+  }
+  arg2 = reinterpret_cast< unsigned int * >(argp2);
+  result = (double)OpenBabel::OBFingerprint::Tanimoto((std::vector<unsigned int > const &)*arg1,(unsigned int const *)arg2);
+  vresult = SWIG_From_double(static_cast< double >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_OBFingerprint_Tanimoto(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[2];
+  int ii;
+  
+  argc = nargs;
+  if (argc > 2) SWIG_fail;
+  for (ii = 0; (ii < argc); ii++) {
+    argv[ii] = args[ii];
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      /* native sequence? */
+      if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+        unsigned int size = RARRAY_LEN(argv[0]);
+        if (size == 0) {
+          /* an empty sequence can be of any type */
+          _v = 1;
+        } else {
+          /* check the first element only */
+          VALUE o = RARRAY_PTR(argv[0])[0];
+          if (FIXNUM_P(o))
+          _v = 1;
+          else
+          _v = 0;
+        }
+      } else {
+        /* wrapped vector? */
+        std::vector<unsigned int >* v;
+        if (SWIG_ConvertPtr(argv[0],(void **) &v, 
+            SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1)
+        _v = 1;
+        else
+        _v = 0;
+      }
+    }
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_unsigned_int, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBFingerprint_Tanimoto__SWIG_1(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      /* native sequence? */
+      if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+        unsigned int size = RARRAY_LEN(argv[0]);
+        if (size == 0) {
+          /* an empty sequence can be of any type */
+          _v = 1;
+        } else {
+          /* check the first element only */
+          VALUE o = RARRAY_PTR(argv[0])[0];
+          if (FIXNUM_P(o))
+          _v = 1;
+          else
+          _v = 0;
+        }
+      } else {
+        /* wrapped vector? */
+        std::vector<unsigned int >* v;
+        if (SWIG_ConvertPtr(argv[0],(void **) &v, 
+            SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1)
+        _v = 1;
+        else
+        _v = 0;
+      }
+    }
+    if (_v) {
+      {
+        /* native sequence? */
+        if (rb_obj_is_kind_of(argv[1],rb_cArray)) {
+          unsigned int size = RARRAY_LEN(argv[1]);
+          if (size == 0) {
+            /* an empty sequence can be of any type */
+            _v = 1;
+          } else {
+            /* check the first element only */
+            VALUE o = RARRAY_PTR(argv[1])[0];
+            if (FIXNUM_P(o))
+            _v = 1;
+            else
+            _v = 0;
+          }
+        } else {
+          /* wrapped vector? */
+          std::vector<unsigned int >* v;
+          if (SWIG_ConvertPtr(argv[1],(void **) &v, 
+              SWIGTYPE_p_std__vectorTunsigned_int_t,0) != -1)
+          _v = 1;
+          else
+          _v = 0;
+        }
+      }
+      if (_v) {
+        return _wrap_OBFingerprint_Tanimoto__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'OBFingerprint_Tanimoto'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Getbitsperint(int argc, VALUE *argv, VALUE self) {
+  unsigned int result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (unsigned int)OpenBabel::OBFingerprint::Getbitsperint();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_OBFingerprint_FindFingerprint(int argc, VALUE *argv, VALUE self) {
   std::string *arg1 = 0 ;
   OpenBabel::OBFingerprint *result = 0 ;
@@ -41956,43 +42340,6 @@ fail:
   return Qnil;
 }
 
-
-#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
-SWIGINTERN VALUE
-_wrap_OBFingerprint_allocate(VALUE self) {
-#else
-  SWIGINTERN VALUE
-  _wrap_OBFingerprint_allocate(int argc, VALUE *argv, VALUE self) {
-#endif
-    
-    
-    VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_OpenBabel__OBFingerprint);
-#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
-    rb_obj_call_init(vresult, argc, argv);
-#endif
-    return vresult;
-  }
-  
-
-SWIGINTERN VALUE
-_wrap_new_OBFingerprint(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBFingerprint *result = 0 ;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  result = (OpenBabel::OBFingerprint *)new OpenBabel::OBFingerprint();DATA_PTR(self) = result;
-  
-  return self;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN void
-free_OpenBabel_OBFingerprint(OpenBabel::OBFingerprint *arg1) {
-    delete arg1;
-}
 
 swig_class cFptIndexHeader;
 
@@ -59072,7 +59419,7 @@ SWIGINTERN VALUE
 _wrap_OBMolBondIter_GetNbrAtomIdx(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  int result;
+  unsigned int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -59092,8 +59439,8 @@ _wrap_OBMolBondIter_GetNbrAtomIdx(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetNbrAtomIdx" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-  result = (int)(*arg1)->GetNbrAtomIdx(arg2);
-  vresult = SWIG_From_int(static_cast< int >(result));
+  result = (unsigned int)(*arg1)->GetNbrAtomIdx(arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return vresult;
 fail:
   return Qnil;
@@ -66354,7 +66701,7 @@ SWIGINTERN VALUE
 _wrap_OBAtomBondIter_GetNbrAtomIdx(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  int result;
+  unsigned int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -66374,8 +66721,8 @@ _wrap_OBAtomBondIter_GetNbrAtomIdx(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetNbrAtomIdx" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-  result = (int)(*arg1)->GetNbrAtomIdx(arg2);
-  vresult = SWIG_From_int(static_cast< int >(result));
+  result = (unsigned int)(*arg1)->GetNbrAtomIdx(arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return vresult;
 fail:
   return Qnil;
@@ -75918,6 +76265,7 @@ static swig_type_info _swigt__p_OpenBabel__OBTypeTable = {"_p_OpenBabel__OBTypeT
 static swig_type_info _swigt__p_OpenBabel__OBUnitCell = {"_p_OpenBabel__OBUnitCell", "OpenBabel::OBUnitCell *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBVirtualBond = {"_p_OpenBabel__OBVirtualBond", "OpenBabel::OBVirtualBond *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__Pattern = {"_p_OpenBabel__Pattern", "OpenBabel::Pattern *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t = {"_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t", "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__Template = {"_p_OpenBabel__Template", "OpenBabel::Template *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__matrix3x3 = {"_p_OpenBabel__matrix3x3", "OpenBabel::matrix3x3 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__obLogBuf = {"_p_OpenBabel__obLogBuf", "OpenBabel::obLogBuf *", 0, 0, (void*)0, 0};
@@ -76062,6 +76410,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_OpenBabel__OBUnitCell,
   &_swigt__p_OpenBabel__OBVirtualBond,
   &_swigt__p_OpenBabel__Pattern,
+  &_swigt__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t,
   &_swigt__p_OpenBabel__Template,
   &_swigt__p_OpenBabel__matrix3x3,
   &_swigt__p_OpenBabel__obLogBuf,
@@ -76206,6 +76555,7 @@ static swig_cast_info _swigc__p_OpenBabel__OBTypeTable[] = {  {&_swigt__p_OpenBa
 static swig_cast_info _swigc__p_OpenBabel__OBUnitCell[] = {  {&_swigt__p_OpenBabel__OBUnitCell, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBVirtualBond[] = {  {&_swigt__p_OpenBabel__OBVirtualBond, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__Pattern[] = {  {&_swigt__p_OpenBabel__Pattern, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t[] = {  {&_swigt__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__Template[] = {  {&_swigt__p_OpenBabel__Template, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__matrix3x3[] = {  {&_swigt__p_OpenBabel__matrix3x3, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__obLogBuf[] = {  {&_swigt__p_OpenBabel__obLogBuf, 0, 0, 0},{0, 0, 0, 0}};
@@ -76350,6 +76700,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_OpenBabel__OBUnitCell,
   _swigc__p_OpenBabel__OBVirtualBond,
   _swigc__p_OpenBabel__Pattern,
+  _swigc__p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t,
   _swigc__p_OpenBabel__Template,
   _swigc__p_OpenBabel__matrix3x3,
   _swigc__p_OpenBabel__obLogBuf,
@@ -77030,51 +77381,52 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_module_function(mOpenbabel, "vectorAngle", VALUEFUNC(_wrap_vectorAngle), -1);
   rb_define_module_function(mOpenbabel, "CalcTorsionAngle", VALUEFUNC(_wrap_CalcTorsionAngle), -1);
   rb_define_module_function(mOpenbabel, "Point2Plane", VALUEFUNC(_wrap_Point2Plane), -1);
+  rb_define_module_function(mOpenbabel, "Point2PlaneAngle", VALUEFUNC(_wrap_Point2PlaneAngle), -1);
   rb_define_singleton_method(mOpenbabel, "VZero", VALUEFUNC(VZero_get), 0);
   rb_define_singleton_method(mOpenbabel, "VX", VALUEFUNC(VX_get), 0);
   rb_define_singleton_method(mOpenbabel, "VY", VALUEFUNC(VY_get), 0);
   rb_define_singleton_method(mOpenbabel, "VZ", VALUEFUNC(VZ_get), 0);
   rb_define_module_function(mOpenbabel, "Trim", VALUEFUNC(_wrap_Trim), -1);
-  rb_define_singleton_method(mOpenbabel, "UndefinedData", VALUEFUNC(UndefinedData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "PairData", VALUEFUNC(PairData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "EnergyData", VALUEFUNC(EnergyData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CommentData", VALUEFUNC(CommentData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ConformerData", VALUEFUNC(ConformerData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ExternalBondData", VALUEFUNC(ExternalBondData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "RotamerList", VALUEFUNC(RotamerList_get), 0);
-  rb_define_singleton_method(mOpenbabel, "VirtualBondData", VALUEFUNC(VirtualBondData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "RingData", VALUEFUNC(RingData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "TorsionData", VALUEFUNC(TorsionData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "AngleData", VALUEFUNC(AngleData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SerialNums", VALUEFUNC(SerialNums_get), 0);
-  rb_define_singleton_method(mOpenbabel, "UnitCell", VALUEFUNC(UnitCell_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SpinData", VALUEFUNC(SpinData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ChargeData", VALUEFUNC(ChargeData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SymmetryData", VALUEFUNC(SymmetryData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ChiralData", VALUEFUNC(ChiralData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "OccupationData", VALUEFUNC(OccupationData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "DensityData", VALUEFUNC(DensityData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ElectronicData", VALUEFUNC(ElectronicData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "VibrationData", VALUEFUNC(VibrationData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "RotationData", VALUEFUNC(RotationData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "NuclearData", VALUEFUNC(NuclearData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SetData", VALUEFUNC(SetData_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData0", VALUEFUNC(CustomData0_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData1", VALUEFUNC(CustomData1_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData2", VALUEFUNC(CustomData2_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData3", VALUEFUNC(CustomData3_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData4", VALUEFUNC(CustomData4_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData5", VALUEFUNC(CustomData5_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData6", VALUEFUNC(CustomData6_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData7", VALUEFUNC(CustomData7_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData8", VALUEFUNC(CustomData8_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData9", VALUEFUNC(CustomData9_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData10", VALUEFUNC(CustomData10_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData11", VALUEFUNC(CustomData11_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData12", VALUEFUNC(CustomData12_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData13", VALUEFUNC(CustomData13_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData14", VALUEFUNC(CustomData14_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CustomData15", VALUEFUNC(CustomData15_get), 0);
+  rb_define_const(mOpenbabel, "UndefinedData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::UndefinedData)));
+  rb_define_const(mOpenbabel, "PairData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::PairData)));
+  rb_define_const(mOpenbabel, "EnergyData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::EnergyData)));
+  rb_define_const(mOpenbabel, "CommentData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CommentData)));
+  rb_define_const(mOpenbabel, "ConformerData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ConformerData)));
+  rb_define_const(mOpenbabel, "ExternalBondData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ExternalBondData)));
+  rb_define_const(mOpenbabel, "RotamerList", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::RotamerList)));
+  rb_define_const(mOpenbabel, "VirtualBondData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::VirtualBondData)));
+  rb_define_const(mOpenbabel, "RingData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::RingData)));
+  rb_define_const(mOpenbabel, "TorsionData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::TorsionData)));
+  rb_define_const(mOpenbabel, "AngleData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::AngleData)));
+  rb_define_const(mOpenbabel, "SerialNums", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::SerialNums)));
+  rb_define_const(mOpenbabel, "UnitCell", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::UnitCell)));
+  rb_define_const(mOpenbabel, "SpinData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::SpinData)));
+  rb_define_const(mOpenbabel, "ChargeData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ChargeData)));
+  rb_define_const(mOpenbabel, "SymmetryData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::SymmetryData)));
+  rb_define_const(mOpenbabel, "ChiralData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ChiralData)));
+  rb_define_const(mOpenbabel, "OccupationData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::OccupationData)));
+  rb_define_const(mOpenbabel, "DensityData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::DensityData)));
+  rb_define_const(mOpenbabel, "ElectronicData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::ElectronicData)));
+  rb_define_const(mOpenbabel, "VibrationData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::VibrationData)));
+  rb_define_const(mOpenbabel, "RotationData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::RotationData)));
+  rb_define_const(mOpenbabel, "NuclearData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::NuclearData)));
+  rb_define_const(mOpenbabel, "SetData", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::SetData)));
+  rb_define_const(mOpenbabel, "CustomData0", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData0)));
+  rb_define_const(mOpenbabel, "CustomData1", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData1)));
+  rb_define_const(mOpenbabel, "CustomData2", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData2)));
+  rb_define_const(mOpenbabel, "CustomData3", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData3)));
+  rb_define_const(mOpenbabel, "CustomData4", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData4)));
+  rb_define_const(mOpenbabel, "CustomData5", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData5)));
+  rb_define_const(mOpenbabel, "CustomData6", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData6)));
+  rb_define_const(mOpenbabel, "CustomData7", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData7)));
+  rb_define_const(mOpenbabel, "CustomData8", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData8)));
+  rb_define_const(mOpenbabel, "CustomData9", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData9)));
+  rb_define_const(mOpenbabel, "CustomData10", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData10)));
+  rb_define_const(mOpenbabel, "CustomData11", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData11)));
+  rb_define_const(mOpenbabel, "CustomData12", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData12)));
+  rb_define_const(mOpenbabel, "CustomData13", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData13)));
+  rb_define_const(mOpenbabel, "CustomData14", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData14)));
+  rb_define_const(mOpenbabel, "CustomData15", SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData15)));
   rb_define_const(mOpenbabel, "Any", SWIG_From_int(static_cast< int >(OpenBabel::any)));
   rb_define_const(mOpenbabel, "ReadInput", SWIG_From_int(static_cast< int >(OpenBabel::readInput)));
   rb_define_const(mOpenbabel, "UserInput", SWIG_From_int(static_cast< int >(OpenBabel::userInput)));
@@ -77362,6 +77714,32 @@ SWIGEXPORT void Init_openbabel(void) {
   cOBBase.mark = 0;
   cOBBase.destroy = (void (*)(void *)) free_OpenBabel_OBBase;
   cOBBase.trackObjects = 0;
+  
+  cPluginiterFingerprint.klass = rb_define_class_under(mOpenbabel, "PluginiterFingerprint", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, (void *) &cPluginiterFingerprint);
+  rb_define_alloc_func(cPluginiterFingerprint.klass, _wrap_pluginiterFingerprint_allocate);
+  rb_define_method(cPluginiterFingerprint.klass, "initialize", VALUEFUNC(_wrap_new_pluginiterFingerprint), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "Register", VALUEFUNC(_wrap_pluginiterFingerprint_Register), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "FindType", VALUEFUNC(_wrap_pluginiterFingerprint_FindType), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "FindDefaultType", VALUEFUNC(_wrap_pluginiterFingerprint_FindDefaultType), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "ID", VALUEFUNC(_wrap_pluginiterFingerprint_ID), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "Description", VALUEFUNC(_wrap_pluginiterFingerprint_Description), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "ToStart", VALUEFUNC(_wrap_pluginiterFingerprint_ToStart), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "inc", VALUEFUNC(_wrap_pluginiterFingerprint_inc), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "good", VALUEFUNC(_wrap_pluginiterFingerprint_good), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "deref", VALUEFUNC(_wrap_pluginiterFingerprint_deref), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "__ref__", VALUEFUNC(_wrap_pluginiterFingerprint___ref__), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "Iter", VALUEFUNC(_wrap_pluginiterFingerprint_Iter), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "SetBit", VALUEFUNC(_wrap_pluginiterFingerprint_SetBit), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "Fold", VALUEFUNC(_wrap_pluginiterFingerprint_Fold), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "GetFingerprint", VALUEFUNC(_wrap_pluginiterFingerprint_GetFingerprint), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "Flags", VALUEFUNC(_wrap_pluginiterFingerprint_Flags), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "Tanimoto", VALUEFUNC(_wrap_pluginiterFingerprint_Tanimoto), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "Getbitsperint", VALUEFUNC(_wrap_pluginiterFingerprint_Getbitsperint), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "FindFingerprint", VALUEFUNC(_wrap_pluginiterFingerprint_FindFingerprint), -1);
+  cPluginiterFingerprint.mark = 0;
+  cPluginiterFingerprint.destroy = (void (*)(void *)) free_OpenBabel_PluginIter_Sl_OpenBabel_OBFingerprint_Sg_;
+  cPluginiterFingerprint.trackObjects = 0;
   rb_define_const(mOpenbabel, "ObError", SWIG_From_int(static_cast< int >(OpenBabel::obError)));
   rb_define_const(mOpenbabel, "ObWarning", SWIG_From_int(static_cast< int >(OpenBabel::obWarning)));
   rb_define_const(mOpenbabel, "ObInfo", SWIG_From_int(static_cast< int >(OpenBabel::obInfo)));
@@ -77580,97 +77958,97 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_const(mOpenbabel, "AA_CYS", SWIG_From_int(static_cast< int >((1 << 18))));
   rb_define_const(mOpenbabel, "AA_MET", SWIG_From_int(static_cast< int >((1 << 19))));
   rb_define_const(mOpenbabel, "AA_TRP", SWIG_From_int(static_cast< int >((1 << 20))));
-  rb_define_singleton_method(mOpenbabel, "ACIDIC", VALUEFUNC(ACIDIC_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ACYCLIC", VALUEFUNC(ACYCLIC_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ALIPHATIC", VALUEFUNC(ALIPHATIC_get), 0);
-  rb_define_singleton_method(mOpenbabel, "AROMATIC", VALUEFUNC(AROMATIC_get), 0);
-  rb_define_singleton_method(mOpenbabel, "BASIC", VALUEFUNC(BASIC_get), 0);
-  rb_define_singleton_method(mOpenbabel, "BURIED", VALUEFUNC(BURIED_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CHARGED", VALUEFUNC(CHARGED_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CYCLIC", VALUEFUNC(CYCLIC_get), 0);
-  rb_define_singleton_method(mOpenbabel, "HYDROPHOBIC", VALUEFUNC(HYDROPHOBIC_get), 0);
-  rb_define_singleton_method(mOpenbabel, "LARGE", VALUEFUNC(LARGE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "MEDIUM", VALUEFUNC(MEDIUM_get), 0);
-  rb_define_singleton_method(mOpenbabel, "NEGATIVE", VALUEFUNC(NEGATIVE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "NEUTRAL", VALUEFUNC(NEUTRAL_get), 0);
-  rb_define_singleton_method(mOpenbabel, "POLAR", VALUEFUNC(POLAR_get), 0);
-  rb_define_singleton_method(mOpenbabel, "POSITIVE", VALUEFUNC(POSITIVE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SMALL", VALUEFUNC(SMALL_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SURFACE", VALUEFUNC(SURFACE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ALPHA_CARBON", VALUEFUNC(ALPHA_CARBON_get), 0);
-  rb_define_singleton_method(mOpenbabel, "AMINO_BACKBONE", VALUEFUNC(AMINO_BACKBONE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "BACKBONE", VALUEFUNC(BACKBONE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CYSTEINE_SULPHUR", VALUEFUNC(CYSTEINE_SULPHUR_get), 0);
-  rb_define_singleton_method(mOpenbabel, "LIGAND", VALUEFUNC(LIGAND_get), 0);
-  rb_define_singleton_method(mOpenbabel, "NUCLEIC_BACKBONE", VALUEFUNC(NUCLEIC_BACKBONE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SHAPELY_BACKBONE", VALUEFUNC(SHAPELY_BACKBONE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SHAPELY_SPECIAL", VALUEFUNC(SHAPELY_SPECIAL_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SIDECHAIN", VALUEFUNC(SIDECHAIN_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SUGAR_PHOSPHATE", VALUEFUNC(SUGAR_PHOSPHATE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ALA", VALUEFUNC(ALA_get), 0);
-  rb_define_singleton_method(mOpenbabel, "GLY", VALUEFUNC(GLY_get), 0);
-  rb_define_singleton_method(mOpenbabel, "LEU", VALUEFUNC(LEU_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SER", VALUEFUNC(SER_get), 0);
-  rb_define_singleton_method(mOpenbabel, "VAL", VALUEFUNC(VAL_get), 0);
-  rb_define_singleton_method(mOpenbabel, "THR", VALUEFUNC(THR_get), 0);
-  rb_define_singleton_method(mOpenbabel, "LYS", VALUEFUNC(LYS_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ASP", VALUEFUNC(ASP_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ILE", VALUEFUNC(ILE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ASN", VALUEFUNC(ASN_get), 0);
-  rb_define_singleton_method(mOpenbabel, "GLU", VALUEFUNC(GLU_get), 0);
-  rb_define_singleton_method(mOpenbabel, "PRO", VALUEFUNC(PRO_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ARG", VALUEFUNC(ARG_get), 0);
-  rb_define_singleton_method(mOpenbabel, "PHE", VALUEFUNC(PHE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "GLN", VALUEFUNC(GLN_get), 0);
-  rb_define_singleton_method(mOpenbabel, "TYR", VALUEFUNC(TYR_get), 0);
-  rb_define_singleton_method(mOpenbabel, "HIS", VALUEFUNC(HIS_get), 0);
-  rb_define_singleton_method(mOpenbabel, "CYS", VALUEFUNC(CYS_get), 0);
-  rb_define_singleton_method(mOpenbabel, "MET", VALUEFUNC(MET_get), 0);
-  rb_define_singleton_method(mOpenbabel, "TRP", VALUEFUNC(TRP_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ASX", VALUEFUNC(ASX_get), 0);
-  rb_define_singleton_method(mOpenbabel, "GLX", VALUEFUNC(GLX_get), 0);
-  rb_define_singleton_method(mOpenbabel, "PCA", VALUEFUNC(PCA_get), 0);
-  rb_define_singleton_method(mOpenbabel, "HYP", VALUEFUNC(HYP_get), 0);
-  rb_define_singleton_method(mOpenbabel, "A", VALUEFUNC(A_get), 0);
-  rb_define_singleton_method(mOpenbabel, "C", VALUEFUNC(C_get), 0);
-  rb_define_singleton_method(mOpenbabel, "G", VALUEFUNC(G_get), 0);
-  rb_define_singleton_method(mOpenbabel, "T", VALUEFUNC(T_get), 0);
-  rb_define_singleton_method(mOpenbabel, "U", VALUEFUNC(U_get), 0);
-  rb_define_singleton_method(mOpenbabel, "UPLUS", VALUEFUNC(UPLUS_get), 0);
-  rb_define_singleton_method(mOpenbabel, "I", VALUEFUNC(I_get), 0);
-  rb_define_singleton_method(mOpenbabel, "_1MA", VALUEFUNC(_1MA_get), 0);
-  rb_define_singleton_method(mOpenbabel, "_5MC", VALUEFUNC(_5MC_get), 0);
-  rb_define_singleton_method(mOpenbabel, "OMC", VALUEFUNC(OMC_get), 0);
-  rb_define_singleton_method(mOpenbabel, "_1MG", VALUEFUNC(_1MG_get), 0);
-  rb_define_singleton_method(mOpenbabel, "_2MG", VALUEFUNC(_2MG_get), 0);
-  rb_define_singleton_method(mOpenbabel, "M2G", VALUEFUNC(M2G_get), 0);
-  rb_define_singleton_method(mOpenbabel, "_7MG", VALUEFUNC(_7MG_get), 0);
-  rb_define_singleton_method(mOpenbabel, "OMG", VALUEFUNC(OMG_get), 0);
-  rb_define_singleton_method(mOpenbabel, "YG", VALUEFUNC(YG_get), 0);
-  rb_define_singleton_method(mOpenbabel, "H2U", VALUEFUNC(H2U_get), 0);
-  rb_define_singleton_method(mOpenbabel, "_5MU", VALUEFUNC(_5MU_get), 0);
-  rb_define_singleton_method(mOpenbabel, "PSU", VALUEFUNC(PSU_get), 0);
-  rb_define_singleton_method(mOpenbabel, "UNK", VALUEFUNC(UNK_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ACE", VALUEFUNC(ACE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "FOR", VALUEFUNC(FOR_get), 0);
-  rb_define_singleton_method(mOpenbabel, "HOH", VALUEFUNC(HOH_get), 0);
-  rb_define_singleton_method(mOpenbabel, "DOD", VALUEFUNC(DOD_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SO4", VALUEFUNC(SO4_get), 0);
-  rb_define_singleton_method(mOpenbabel, "PO4", VALUEFUNC(PO4_get), 0);
-  rb_define_singleton_method(mOpenbabel, "NAD", VALUEFUNC(NAD_get), 0);
-  rb_define_singleton_method(mOpenbabel, "COA", VALUEFUNC(COA_get), 0);
-  rb_define_singleton_method(mOpenbabel, "NAP", VALUEFUNC(NAP_get), 0);
-  rb_define_singleton_method(mOpenbabel, "NDP", VALUEFUNC(NDP_get), 0);
-  rb_define_singleton_method(mOpenbabel, "AMINO", VALUEFUNC(AMINO_get), 0);
-  rb_define_singleton_method(mOpenbabel, "AMINO_NUCLEO", VALUEFUNC(AMINO_NUCLEO_get), 0);
-  rb_define_singleton_method(mOpenbabel, "COENZYME", VALUEFUNC(COENZYME_get), 0);
-  rb_define_singleton_method(mOpenbabel, "ION", VALUEFUNC(ION_get), 0);
-  rb_define_singleton_method(mOpenbabel, "NUCLEO", VALUEFUNC(NUCLEO_get), 0);
-  rb_define_singleton_method(mOpenbabel, "PROTEIN", VALUEFUNC(PROTEIN_get), 0);
-  rb_define_singleton_method(mOpenbabel, "PURINE", VALUEFUNC(PURINE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "PYRIMIDINE", VALUEFUNC(PYRIMIDINE_get), 0);
-  rb_define_singleton_method(mOpenbabel, "SOLVENT", VALUEFUNC(SOLVENT_get), 0);
-  rb_define_singleton_method(mOpenbabel, "WATER", VALUEFUNC(WATER_get), 0);
+  rb_define_const(mOpenbabel, "ACIDIC", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::ACIDIC)));
+  rb_define_const(mOpenbabel, "ACYCLIC", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::ACYCLIC)));
+  rb_define_const(mOpenbabel, "ALIPHATIC", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::ALIPHATIC)));
+  rb_define_const(mOpenbabel, "AROMATIC", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::AROMATIC)));
+  rb_define_const(mOpenbabel, "BASIC", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::BASIC)));
+  rb_define_const(mOpenbabel, "BURIED", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::BURIED)));
+  rb_define_const(mOpenbabel, "CHARGED", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::CHARGED)));
+  rb_define_const(mOpenbabel, "CYCLIC", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::CYCLIC)));
+  rb_define_const(mOpenbabel, "HYDROPHOBIC", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::HYDROPHOBIC)));
+  rb_define_const(mOpenbabel, "LARGE", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::LARGE)));
+  rb_define_const(mOpenbabel, "MEDIUM", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::MEDIUM)));
+  rb_define_const(mOpenbabel, "NEGATIVE", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::NEGATIVE)));
+  rb_define_const(mOpenbabel, "NEUTRAL", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::NEUTRAL)));
+  rb_define_const(mOpenbabel, "POLAR", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::POLAR)));
+  rb_define_const(mOpenbabel, "POSITIVE", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::POSITIVE)));
+  rb_define_const(mOpenbabel, "SMALL", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::SMALL)));
+  rb_define_const(mOpenbabel, "SURFACE", SWIG_From_int(static_cast< int >(OpenBabel::OBAminoAcidProperty::SURFACE)));
+  rb_define_const(mOpenbabel, "ALPHA_CARBON", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::ALPHA_CARBON)));
+  rb_define_const(mOpenbabel, "AMINO_BACKBONE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::AMINO_BACKBONE)));
+  rb_define_const(mOpenbabel, "BACKBONE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::BACKBONE)));
+  rb_define_const(mOpenbabel, "CYSTEINE_SULPHUR", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::CYSTEINE_SULPHUR)));
+  rb_define_const(mOpenbabel, "LIGAND", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::LIGAND)));
+  rb_define_const(mOpenbabel, "NUCLEIC_BACKBONE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::NUCLEIC_BACKBONE)));
+  rb_define_const(mOpenbabel, "SHAPELY_BACKBONE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::SHAPELY_BACKBONE)));
+  rb_define_const(mOpenbabel, "SHAPELY_SPECIAL", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::SHAPELY_SPECIAL)));
+  rb_define_const(mOpenbabel, "SIDECHAIN", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::SIDECHAIN)));
+  rb_define_const(mOpenbabel, "SUGAR_PHOSPHATE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueAtomProperty::SUGAR_PHOSPHATE)));
+  rb_define_const(mOpenbabel, "ALA", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ALA)));
+  rb_define_const(mOpenbabel, "GLY", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::GLY)));
+  rb_define_const(mOpenbabel, "LEU", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::LEU)));
+  rb_define_const(mOpenbabel, "SER", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::SER)));
+  rb_define_const(mOpenbabel, "VAL", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::VAL)));
+  rb_define_const(mOpenbabel, "THR", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::THR)));
+  rb_define_const(mOpenbabel, "LYS", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::LYS)));
+  rb_define_const(mOpenbabel, "ASP", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ASP)));
+  rb_define_const(mOpenbabel, "ILE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ILE)));
+  rb_define_const(mOpenbabel, "ASN", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ASN)));
+  rb_define_const(mOpenbabel, "GLU", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::GLU)));
+  rb_define_const(mOpenbabel, "PRO", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PRO)));
+  rb_define_const(mOpenbabel, "ARG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ARG)));
+  rb_define_const(mOpenbabel, "PHE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PHE)));
+  rb_define_const(mOpenbabel, "GLN", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::GLN)));
+  rb_define_const(mOpenbabel, "TYR", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::TYR)));
+  rb_define_const(mOpenbabel, "HIS", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::HIS)));
+  rb_define_const(mOpenbabel, "CYS", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::CYS)));
+  rb_define_const(mOpenbabel, "MET", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::MET)));
+  rb_define_const(mOpenbabel, "TRP", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::TRP)));
+  rb_define_const(mOpenbabel, "ASX", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ASX)));
+  rb_define_const(mOpenbabel, "GLX", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::GLX)));
+  rb_define_const(mOpenbabel, "PCA", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PCA)));
+  rb_define_const(mOpenbabel, "HYP", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::HYP)));
+  rb_define_const(mOpenbabel, "A", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::A)));
+  rb_define_const(mOpenbabel, "C", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::C)));
+  rb_define_const(mOpenbabel, "G", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::G)));
+  rb_define_const(mOpenbabel, "T", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::T)));
+  rb_define_const(mOpenbabel, "U", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::U)));
+  rb_define_const(mOpenbabel, "UPLUS", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::UPLUS)));
+  rb_define_const(mOpenbabel, "I", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::I)));
+  rb_define_const(mOpenbabel, "_1MA", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_1MA)));
+  rb_define_const(mOpenbabel, "_5MC", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_5MC)));
+  rb_define_const(mOpenbabel, "OMC", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::OMC)));
+  rb_define_const(mOpenbabel, "_1MG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_1MG)));
+  rb_define_const(mOpenbabel, "_2MG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_2MG)));
+  rb_define_const(mOpenbabel, "M2G", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::M2G)));
+  rb_define_const(mOpenbabel, "_7MG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_7MG)));
+  rb_define_const(mOpenbabel, "OMG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::OMG)));
+  rb_define_const(mOpenbabel, "YG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::YG)));
+  rb_define_const(mOpenbabel, "H2U", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::H2U)));
+  rb_define_const(mOpenbabel, "_5MU", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_5MU)));
+  rb_define_const(mOpenbabel, "PSU", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PSU)));
+  rb_define_const(mOpenbabel, "UNK", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::UNK)));
+  rb_define_const(mOpenbabel, "ACE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ACE)));
+  rb_define_const(mOpenbabel, "FOR", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::FOR)));
+  rb_define_const(mOpenbabel, "HOH", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::HOH)));
+  rb_define_const(mOpenbabel, "DOD", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::DOD)));
+  rb_define_const(mOpenbabel, "SO4", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::SO4)));
+  rb_define_const(mOpenbabel, "PO4", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PO4)));
+  rb_define_const(mOpenbabel, "NAD", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::NAD)));
+  rb_define_const(mOpenbabel, "COA", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::COA)));
+  rb_define_const(mOpenbabel, "NAP", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::NAP)));
+  rb_define_const(mOpenbabel, "NDP", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::NDP)));
+  rb_define_const(mOpenbabel, "AMINO", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::AMINO)));
+  rb_define_const(mOpenbabel, "AMINO_NUCLEO", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::AMINO_NUCLEO)));
+  rb_define_const(mOpenbabel, "COENZYME", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::COENZYME)));
+  rb_define_const(mOpenbabel, "ION", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::ION)));
+  rb_define_const(mOpenbabel, "NUCLEO", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::NUCLEO)));
+  rb_define_const(mOpenbabel, "PROTEIN", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::PROTEIN)));
+  rb_define_const(mOpenbabel, "PURINE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::PURINE)));
+  rb_define_const(mOpenbabel, "PYRIMIDINE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::PYRIMIDINE)));
+  rb_define_const(mOpenbabel, "SOLVENT", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::SOLVENT)));
+  rb_define_const(mOpenbabel, "WATER", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueProperty::WATER)));
   rb_define_singleton_method(mOpenbabel, "Residue", VALUEFUNC(Residue_get), 0);
   rb_define_singleton_method(mOpenbabel, "Residue=", VALUEFUNC(Residue_set), 1);
   rb_define_singleton_method(mOpenbabel, "ElemDesc", VALUEFUNC(ElemDesc_get), 0);
@@ -78214,8 +78592,18 @@ SWIGEXPORT void Init_openbabel(void) {
   
   cOBFingerprint.klass = rb_define_class_under(mOpenbabel, "OBFingerprint", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBFingerprint, (void *) &cOBFingerprint);
-  rb_define_alloc_func(cOBFingerprint.klass, _wrap_OBFingerprint_allocate);
-  rb_define_method(cOBFingerprint.klass, "initialize", VALUEFUNC(_wrap_new_OBFingerprint), -1);
+  rb_undef_alloc_func(cOBFingerprint.klass);
+  rb_define_singleton_method(cOBFingerprint.klass, "Iter", VALUEFUNC(_wrap_OBFingerprint_Iter), -1);
+  rb_define_singleton_method(cOBFingerprint.klass, "FindDefaultType", VALUEFUNC(_wrap_OBFingerprint_FindDefaultType), -1);
+  rb_define_singleton_method(cOBFingerprint.klass, "FindType", VALUEFUNC(_wrap_OBFingerprint_FindType), -1);
+  rb_define_method(cOBFingerprint.klass, "SetBit", VALUEFUNC(_wrap_OBFingerprint_SetBit), -1);
+  rb_define_method(cOBFingerprint.klass, "Fold", VALUEFUNC(_wrap_OBFingerprint_Fold), -1);
+  rb_define_method(cOBFingerprint.klass, "GetFingerprint", VALUEFUNC(_wrap_OBFingerprint_GetFingerprint), -1);
+  rb_define_method(cOBFingerprint.klass, "Description", VALUEFUNC(_wrap_OBFingerprint_Description), -1);
+  rb_define_const(cOBFingerprint.klass, "FPT_UNIQUEBITS", SWIG_From_int(static_cast< int >(OpenBabel::OBFingerprint::FPT_UNIQUEBITS)));
+  rb_define_method(cOBFingerprint.klass, "Flags", VALUEFUNC(_wrap_OBFingerprint_Flags), -1);
+  rb_define_singleton_method(cOBFingerprint.klass, "Tanimoto", VALUEFUNC(_wrap_OBFingerprint_Tanimoto), -1);
+  rb_define_singleton_method(cOBFingerprint.klass, "Getbitsperint", VALUEFUNC(_wrap_OBFingerprint_Getbitsperint), -1);
   rb_define_singleton_method(cOBFingerprint.klass, "FindFingerprint", VALUEFUNC(_wrap_OBFingerprint_FindFingerprint), -1);
   cOBFingerprint.mark = 0;
   cOBFingerprint.destroy = (void (*)(void *)) free_OpenBabel_OBFingerprint;

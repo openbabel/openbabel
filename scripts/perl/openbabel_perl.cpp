@@ -2381,286 +2381,6 @@ SWIGCLASS_STATIC int _wrap_VZ_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
 }
 
 
-SWIGCLASS_STATIC int _wrap_UndefinedData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::UndefinedData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_PairData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::PairData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_EnergyData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::EnergyData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CommentData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CommentData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ConformerData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ConformerData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ExternalBondData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ExternalBondData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_RotamerList_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::RotamerList)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_VirtualBondData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::VirtualBondData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_RingData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::RingData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_TorsionData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::TorsionData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_AngleData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::AngleData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SerialNums_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SerialNums)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_UnitCell_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::UnitCell)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SpinData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SpinData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ChargeData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ChargeData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SymmetryData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SymmetryData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ChiralData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ChiralData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_OccupationData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::OccupationData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_DensityData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::DensityData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ElectronicData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::ElectronicData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_VibrationData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::VibrationData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_RotationData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::RotationData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_NuclearData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::NuclearData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SetData_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::SetData)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData0_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData0)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData1_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData1)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData2_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData2)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData3_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData3)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData4_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData4)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData5_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData5)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData6_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData6)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData7_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData7)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData8_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData8)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData9_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData9)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData10_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData10)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData11_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData11)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData12_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData12)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData13_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData13)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData14_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData14)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CustomData15_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBGenericDataType::CustomData15)))  ;
-  return 1;
-}
-
-
 SWIGCLASS_STATIC int _wrap_obErrorLog_set(pTHX_ SV* sv, MAGIC * SWIGUNUSEDPARM(mg)) {
   MAGIC_PPERL
   {
@@ -2683,636 +2403,6 @@ fail:
 SWIGCLASS_STATIC int _wrap_obErrorLog_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
   MAGIC_PPERL
   sv_setiv(SvRV(sv), PTR2IV(&OpenBabel::obErrorLog));
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ACIDIC_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::ACIDIC)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ACYCLIC_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::ACYCLIC)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ALIPHATIC_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::ALIPHATIC)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_AROMATIC_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::AROMATIC)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_BASIC_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::BASIC)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_BURIED_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::BURIED)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CHARGED_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::CHARGED)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CYCLIC_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::CYCLIC)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_HYDROPHOBIC_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::HYDROPHOBIC)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_LARGE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::LARGE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_MEDIUM_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::MEDIUM)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_NEGATIVE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::NEGATIVE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_NEUTRAL_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::NEUTRAL)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_POLAR_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::POLAR)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_POSITIVE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::POSITIVE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SMALL_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::SMALL)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SURFACE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBAminoAcidProperty::SURFACE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ALPHA_CARBON_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::ALPHA_CARBON)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_AMINO_BACKBONE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::AMINO_BACKBONE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_BACKBONE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::BACKBONE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CYSTEINE_SULPHUR_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::CYSTEINE_SULPHUR)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_LIGAND_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::LIGAND)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_NUCLEIC_BACKBONE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::NUCLEIC_BACKBONE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SHAPELY_BACKBONE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SHAPELY_BACKBONE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SHAPELY_SPECIAL_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SHAPELY_SPECIAL)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SIDECHAIN_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SIDECHAIN)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SUGAR_PHOSPHATE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueAtomProperty::SUGAR_PHOSPHATE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ALA_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ALA)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_GLY_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLY)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_LEU_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::LEU)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SER_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::SER)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_VAL_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::VAL)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_LYS_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::LYS)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ASP_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ASP)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ILE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ILE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ASN_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ASN)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_GLU_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLU)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_PRO_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PRO)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ARG_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ARG)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_PHE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PHE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_GLN_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLN)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_TYR_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::TYR)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_HIS_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::HIS)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_CYS_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::CYS)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_MET_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::MET)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_TRP_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::TRP)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ASX_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ASX)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_GLX_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::GLX)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_PCA_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PCA)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_HYP_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::HYP)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_A_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::A)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_C_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::C)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_G_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::G)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_T_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::T)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_U_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::U)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_UPLUS_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::UPLUS)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_I_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::I)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap__1MA_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_1MA)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap__5MC_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_5MC)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_OMC_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::OMC)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap__1MG_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_1MG)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap__2MG_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_2MG)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_M2G_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::M2G)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap__7MG_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_7MG)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_OMG_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::OMG)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_YG_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::YG)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_H2U_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::H2U)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap__5MU_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_5MU)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_PSU_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PSU)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_UNK_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::UNK)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ACE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::ACE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_FOR_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::FOR)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_HOH_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::HOH)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_DOD_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::DOD)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SO4_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::SO4)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_PO4_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::PO4)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_NAD_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::NAD)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_COA_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::COA)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_NAP_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::NAP)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_NDP_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueIndex::NDP)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_AMINO_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::AMINO)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_AMINO_NUCLEO_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::AMINO_NUCLEO)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_COENZYME_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::COENZYME)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_ION_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::ION)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_NUCLEO_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::NUCLEO)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_PROTEIN_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::PROTEIN)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_PURINE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::PURINE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_PYRIMIDINE_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::PYRIMIDINE)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_SOLVENT_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::SOLVENT)))  ;
-  return 1;
-}
-
-
-SWIGCLASS_STATIC int _wrap_WATER_get(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {
-  MAGIC_PPERL
-  sv_setsv(sv,SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(OpenBabel::OBResidueProperty::WATER)))  ;
   return 1;
 }
 
@@ -16308,6 +15398,80 @@ XS(_wrap_Point2Plane) {
       }
     }
     result = (double)OpenBabel::Point2Plane(arg1,arg2,arg3,arg4);
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    XSRETURN(argvi);
+  fail:
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Point2PlaneAngle) {
+  {
+    OpenBabel::vector3 arg1 ;
+    OpenBabel::vector3 arg2 ;
+    OpenBabel::vector3 arg3 ;
+    OpenBabel::vector3 arg4 ;
+    double result;
+    void *argp1 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    void *argp3 ;
+    int res3 = 0 ;
+    void *argp4 ;
+    int res4 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 4) || (items > 4)) {
+      SWIG_croak("Usage: Point2PlaneAngle(a,b,c,d);");
+    }
+    {
+      res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+      if (!SWIG_IsOK(res1)) {
+        SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Point2PlaneAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const""'"); 
+      }  
+      if (!argp1) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Point2PlaneAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const""'");
+      } else {
+        arg1 = *(reinterpret_cast< OpenBabel::vector3 * >(argp1));
+      }
+    }
+    {
+      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+      if (!SWIG_IsOK(res2)) {
+        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Point2PlaneAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const""'"); 
+      }  
+      if (!argp2) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Point2PlaneAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const""'");
+      } else {
+        arg2 = *(reinterpret_cast< OpenBabel::vector3 * >(argp2));
+      }
+    }
+    {
+      res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+      if (!SWIG_IsOK(res3)) {
+        SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Point2PlaneAngle" "', argument " "3"" of type '" "OpenBabel::vector3 const""'"); 
+      }  
+      if (!argp3) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Point2PlaneAngle" "', argument " "3"" of type '" "OpenBabel::vector3 const""'");
+      } else {
+        arg3 = *(reinterpret_cast< OpenBabel::vector3 * >(argp3));
+      }
+    }
+    {
+      res4 = SWIG_ConvertPtr(ST(3), &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
+      if (!SWIG_IsOK(res4)) {
+        SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Point2PlaneAngle" "', argument " "4"" of type '" "OpenBabel::vector3 const""'"); 
+      }  
+      if (!argp4) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Point2PlaneAngle" "', argument " "4"" of type '" "OpenBabel::vector3 const""'");
+      } else {
+        arg4 = *(reinterpret_cast< OpenBabel::vector3 * >(argp4));
+      }
+    }
+    result = (double)OpenBabel::Point2PlaneAngle(arg1,arg2,arg3,arg4);
     ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
     XSRETURN(argvi);
   fail:
@@ -41519,7 +40683,7 @@ XS(_wrap_OBBond_GetNbrAtomIdx) {
   {
     OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
     OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-    int result;
+    unsigned int result;
     void *argp1 = 0 ;
     int res1 = 0 ;
     void *argp2 = 0 ;
@@ -41540,8 +40704,8 @@ XS(_wrap_OBBond_GetNbrAtomIdx) {
       SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBond_GetNbrAtomIdx" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
     }
     arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-    result = (int)(arg1)->GetNbrAtomIdx(arg2);
-    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
+    result = (unsigned int)(arg1)->GetNbrAtomIdx(arg2);
+    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     
     XSRETURN(argvi);
@@ -43728,7 +42892,7 @@ XS(_wrap_OBMol_GetAtom) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBMol_GetAtom(self,int);");
+      SWIG_croak("Usage: OBMol_GetAtom(self,idx);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -43794,7 +42958,7 @@ XS(_wrap_OBMol_GetBond__SWIG_0) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBMol_GetBond(self,int);");
+      SWIG_croak("Usage: OBMol_GetBond(self,idx);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -43835,7 +42999,7 @@ XS(_wrap_OBMol_GetBond__SWIG_1) {
     dXSARGS;
     
     if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: OBMol_GetBond(self,int,int);");
+      SWIG_croak("Usage: OBMol_GetBond(self,a,b);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -76229,7 +75393,7 @@ XS(_wrap_OBMolBondIter_GetNbrAtomIdx) {
   {
     OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
     OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-    int result;
+    unsigned int result;
     void *argp1 = 0 ;
     int res1 = 0 ;
     void *argp2 = 0 ;
@@ -76250,8 +75414,8 @@ XS(_wrap_OBMolBondIter_GetNbrAtomIdx) {
       SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolBondIter_GetNbrAtomIdx" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
     }
     arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-    result = (int)(*arg1)->GetNbrAtomIdx(arg2);
-    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
+    result = (unsigned int)(*arg1)->GetNbrAtomIdx(arg2);
+    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     
     XSRETURN(argvi);
@@ -85477,7 +84641,7 @@ XS(_wrap_OBAtomBondIter_GetNbrAtomIdx) {
   {
     OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
     OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-    int result;
+    unsigned int result;
     void *argp1 = 0 ;
     int res1 = 0 ;
     void *argp2 = 0 ;
@@ -85498,8 +84662,8 @@ XS(_wrap_OBAtomBondIter_GetNbrAtomIdx) {
       SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBAtomBondIter_GetNbrAtomIdx" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
     }
     arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-    result = (int)(*arg1)->GetNbrAtomIdx(arg2);
-    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
+    result = (unsigned int)(*arg1)->GetNbrAtomIdx(arg2);
+    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     
     XSRETURN(argvi);
@@ -98128,137 +97292,7 @@ static swig_variable_info swig_variables[] = {
     { "Chemistry::OpenBabelc::VX", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_VX_get,&SWIGTYPE_p_OpenBabel__vector3 },
     { "Chemistry::OpenBabelc::VY", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_VY_get,&SWIGTYPE_p_OpenBabel__vector3 },
     { "Chemistry::OpenBabelc::VZ", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_VZ_get,&SWIGTYPE_p_OpenBabel__vector3 },
-    { "Chemistry::OpenBabelc::UndefinedData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_UndefinedData_get,0 },
-    { "Chemistry::OpenBabelc::PairData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_PairData_get,0 },
-    { "Chemistry::OpenBabelc::EnergyData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_EnergyData_get,0 },
-    { "Chemistry::OpenBabelc::CommentData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CommentData_get,0 },
-    { "Chemistry::OpenBabelc::ConformerData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ConformerData_get,0 },
-    { "Chemistry::OpenBabelc::ExternalBondData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ExternalBondData_get,0 },
-    { "Chemistry::OpenBabelc::RotamerList", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_RotamerList_get,0 },
-    { "Chemistry::OpenBabelc::VirtualBondData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_VirtualBondData_get,0 },
-    { "Chemistry::OpenBabelc::RingData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_RingData_get,0 },
-    { "Chemistry::OpenBabelc::TorsionData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_TorsionData_get,0 },
-    { "Chemistry::OpenBabelc::AngleData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_AngleData_get,0 },
-    { "Chemistry::OpenBabelc::SerialNums", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SerialNums_get,0 },
-    { "Chemistry::OpenBabelc::UnitCell", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_UnitCell_get,0 },
-    { "Chemistry::OpenBabelc::SpinData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SpinData_get,0 },
-    { "Chemistry::OpenBabelc::ChargeData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ChargeData_get,0 },
-    { "Chemistry::OpenBabelc::SymmetryData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SymmetryData_get,0 },
-    { "Chemistry::OpenBabelc::ChiralData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ChiralData_get,0 },
-    { "Chemistry::OpenBabelc::OccupationData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_OccupationData_get,0 },
-    { "Chemistry::OpenBabelc::DensityData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_DensityData_get,0 },
-    { "Chemistry::OpenBabelc::ElectronicData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ElectronicData_get,0 },
-    { "Chemistry::OpenBabelc::VibrationData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_VibrationData_get,0 },
-    { "Chemistry::OpenBabelc::RotationData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_RotationData_get,0 },
-    { "Chemistry::OpenBabelc::NuclearData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_NuclearData_get,0 },
-    { "Chemistry::OpenBabelc::SetData", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SetData_get,0 },
-    { "Chemistry::OpenBabelc::CustomData0", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData0_get,0 },
-    { "Chemistry::OpenBabelc::CustomData1", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData1_get,0 },
-    { "Chemistry::OpenBabelc::CustomData2", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData2_get,0 },
-    { "Chemistry::OpenBabelc::CustomData3", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData3_get,0 },
-    { "Chemistry::OpenBabelc::CustomData4", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData4_get,0 },
-    { "Chemistry::OpenBabelc::CustomData5", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData5_get,0 },
-    { "Chemistry::OpenBabelc::CustomData6", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData6_get,0 },
-    { "Chemistry::OpenBabelc::CustomData7", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData7_get,0 },
-    { "Chemistry::OpenBabelc::CustomData8", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData8_get,0 },
-    { "Chemistry::OpenBabelc::CustomData9", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData9_get,0 },
-    { "Chemistry::OpenBabelc::CustomData10", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData10_get,0 },
-    { "Chemistry::OpenBabelc::CustomData11", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData11_get,0 },
-    { "Chemistry::OpenBabelc::CustomData12", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData12_get,0 },
-    { "Chemistry::OpenBabelc::CustomData13", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData13_get,0 },
-    { "Chemistry::OpenBabelc::CustomData14", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData14_get,0 },
-    { "Chemistry::OpenBabelc::CustomData15", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CustomData15_get,0 },
     { "Chemistry::OpenBabelc::obErrorLog", MAGIC_CLASS _wrap_obErrorLog_set, MAGIC_CLASS _wrap_obErrorLog_get,&SWIGTYPE_p_OpenBabel__OBMessageHandler },
-    { "Chemistry::OpenBabelc::ACIDIC", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ACIDIC_get,0 },
-    { "Chemistry::OpenBabelc::ACYCLIC", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ACYCLIC_get,0 },
-    { "Chemistry::OpenBabelc::ALIPHATIC", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ALIPHATIC_get,0 },
-    { "Chemistry::OpenBabelc::AROMATIC", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_AROMATIC_get,0 },
-    { "Chemistry::OpenBabelc::BASIC", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_BASIC_get,0 },
-    { "Chemistry::OpenBabelc::BURIED", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_BURIED_get,0 },
-    { "Chemistry::OpenBabelc::CHARGED", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CHARGED_get,0 },
-    { "Chemistry::OpenBabelc::CYCLIC", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CYCLIC_get,0 },
-    { "Chemistry::OpenBabelc::HYDROPHOBIC", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_HYDROPHOBIC_get,0 },
-    { "Chemistry::OpenBabelc::LARGE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_LARGE_get,0 },
-    { "Chemistry::OpenBabelc::MEDIUM", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_MEDIUM_get,0 },
-    { "Chemistry::OpenBabelc::NEGATIVE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_NEGATIVE_get,0 },
-    { "Chemistry::OpenBabelc::NEUTRAL", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_NEUTRAL_get,0 },
-    { "Chemistry::OpenBabelc::POLAR", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_POLAR_get,0 },
-    { "Chemistry::OpenBabelc::POSITIVE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_POSITIVE_get,0 },
-    { "Chemistry::OpenBabelc::SMALL", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SMALL_get,0 },
-    { "Chemistry::OpenBabelc::SURFACE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SURFACE_get,0 },
-    { "Chemistry::OpenBabelc::ALPHA_CARBON", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ALPHA_CARBON_get,0 },
-    { "Chemistry::OpenBabelc::AMINO_BACKBONE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_AMINO_BACKBONE_get,0 },
-    { "Chemistry::OpenBabelc::BACKBONE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_BACKBONE_get,0 },
-    { "Chemistry::OpenBabelc::CYSTEINE_SULPHUR", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CYSTEINE_SULPHUR_get,0 },
-    { "Chemistry::OpenBabelc::LIGAND", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_LIGAND_get,0 },
-    { "Chemistry::OpenBabelc::NUCLEIC_BACKBONE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_NUCLEIC_BACKBONE_get,0 },
-    { "Chemistry::OpenBabelc::SHAPELY_BACKBONE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SHAPELY_BACKBONE_get,0 },
-    { "Chemistry::OpenBabelc::SHAPELY_SPECIAL", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SHAPELY_SPECIAL_get,0 },
-    { "Chemistry::OpenBabelc::SIDECHAIN", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SIDECHAIN_get,0 },
-    { "Chemistry::OpenBabelc::SUGAR_PHOSPHATE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SUGAR_PHOSPHATE_get,0 },
-    { "Chemistry::OpenBabelc::ALA", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ALA_get,0 },
-    { "Chemistry::OpenBabelc::GLY", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_GLY_get,0 },
-    { "Chemistry::OpenBabelc::LEU", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_LEU_get,0 },
-    { "Chemistry::OpenBabelc::SER", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SER_get,0 },
-    { "Chemistry::OpenBabelc::VAL", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_VAL_get,0 },
-    { "Chemistry::OpenBabelc::LYS", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_LYS_get,0 },
-    { "Chemistry::OpenBabelc::ASP", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ASP_get,0 },
-    { "Chemistry::OpenBabelc::ILE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ILE_get,0 },
-    { "Chemistry::OpenBabelc::ASN", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ASN_get,0 },
-    { "Chemistry::OpenBabelc::GLU", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_GLU_get,0 },
-    { "Chemistry::OpenBabelc::PRO", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_PRO_get,0 },
-    { "Chemistry::OpenBabelc::ARG", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ARG_get,0 },
-    { "Chemistry::OpenBabelc::PHE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_PHE_get,0 },
-    { "Chemistry::OpenBabelc::GLN", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_GLN_get,0 },
-    { "Chemistry::OpenBabelc::TYR", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_TYR_get,0 },
-    { "Chemistry::OpenBabelc::HIS", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_HIS_get,0 },
-    { "Chemistry::OpenBabelc::CYS", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_CYS_get,0 },
-    { "Chemistry::OpenBabelc::MET", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_MET_get,0 },
-    { "Chemistry::OpenBabelc::TRP", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_TRP_get,0 },
-    { "Chemistry::OpenBabelc::ASX", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ASX_get,0 },
-    { "Chemistry::OpenBabelc::GLX", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_GLX_get,0 },
-    { "Chemistry::OpenBabelc::PCA", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_PCA_get,0 },
-    { "Chemistry::OpenBabelc::HYP", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_HYP_get,0 },
-    { "Chemistry::OpenBabelc::A", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_A_get,0 },
-    { "Chemistry::OpenBabelc::C", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_C_get,0 },
-    { "Chemistry::OpenBabelc::G", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_G_get,0 },
-    { "Chemistry::OpenBabelc::T", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_T_get,0 },
-    { "Chemistry::OpenBabelc::U", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_U_get,0 },
-    { "Chemistry::OpenBabelc::UPLUS", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_UPLUS_get,0 },
-    { "Chemistry::OpenBabelc::I", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_I_get,0 },
-    { "Chemistry::OpenBabelc::_1MA", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap__1MA_get,0 },
-    { "Chemistry::OpenBabelc::_5MC", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap__5MC_get,0 },
-    { "Chemistry::OpenBabelc::OMC", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_OMC_get,0 },
-    { "Chemistry::OpenBabelc::_1MG", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap__1MG_get,0 },
-    { "Chemistry::OpenBabelc::_2MG", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap__2MG_get,0 },
-    { "Chemistry::OpenBabelc::M2G", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_M2G_get,0 },
-    { "Chemistry::OpenBabelc::_7MG", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap__7MG_get,0 },
-    { "Chemistry::OpenBabelc::OMG", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_OMG_get,0 },
-    { "Chemistry::OpenBabelc::YG", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_YG_get,0 },
-    { "Chemistry::OpenBabelc::H2U", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_H2U_get,0 },
-    { "Chemistry::OpenBabelc::_5MU", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap__5MU_get,0 },
-    { "Chemistry::OpenBabelc::PSU", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_PSU_get,0 },
-    { "Chemistry::OpenBabelc::UNK", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_UNK_get,0 },
-    { "Chemistry::OpenBabelc::ACE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ACE_get,0 },
-    { "Chemistry::OpenBabelc::FOR", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_FOR_get,0 },
-    { "Chemistry::OpenBabelc::HOH", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_HOH_get,0 },
-    { "Chemistry::OpenBabelc::DOD", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_DOD_get,0 },
-    { "Chemistry::OpenBabelc::SO4", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SO4_get,0 },
-    { "Chemistry::OpenBabelc::PO4", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_PO4_get,0 },
-    { "Chemistry::OpenBabelc::NAD", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_NAD_get,0 },
-    { "Chemistry::OpenBabelc::COA", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_COA_get,0 },
-    { "Chemistry::OpenBabelc::NAP", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_NAP_get,0 },
-    { "Chemistry::OpenBabelc::NDP", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_NDP_get,0 },
-    { "Chemistry::OpenBabelc::AMINO", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_AMINO_get,0 },
-    { "Chemistry::OpenBabelc::AMINO_NUCLEO", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_AMINO_NUCLEO_get,0 },
-    { "Chemistry::OpenBabelc::COENZYME", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_COENZYME_get,0 },
-    { "Chemistry::OpenBabelc::ION", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_ION_get,0 },
-    { "Chemistry::OpenBabelc::NUCLEO", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_NUCLEO_get,0 },
-    { "Chemistry::OpenBabelc::PROTEIN", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_PROTEIN_get,0 },
-    { "Chemistry::OpenBabelc::PURINE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_PURINE_get,0 },
-    { "Chemistry::OpenBabelc::PYRIMIDINE", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_PYRIMIDINE_get,0 },
-    { "Chemistry::OpenBabelc::SOLVENT", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_SOLVENT_get,0 },
-    { "Chemistry::OpenBabelc::WATER", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS _wrap_WATER_get,0 },
     { "Chemistry::OpenBabelc::Residue", MAGIC_CLASS _wrap_Residue_set, MAGIC_CLASS _wrap_Residue_get,&SWIGTYPE_p_a_4__char },
     { "Chemistry::OpenBabelc::ElemDesc", MAGIC_CLASS _wrap_ElemDesc_set, MAGIC_CLASS _wrap_ElemDesc_get,&SWIGTYPE_p_a_4__char },
     { "Chemistry::OpenBabelc::ResNo", MAGIC_CLASS _wrap_ResNo_set, MAGIC_CLASS _wrap_ResNo_get,0 },
@@ -98481,6 +97515,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::vectorAngle", _wrap_vectorAngle},
 {"Chemistry::OpenBabelc::CalcTorsionAngle", _wrap_CalcTorsionAngle},
 {"Chemistry::OpenBabelc::Point2Plane", _wrap_Point2Plane},
+{"Chemistry::OpenBabelc::Point2PlaneAngle", _wrap_Point2PlaneAngle},
 {"Chemistry::OpenBabelc::Trim", _wrap_Trim},
 {"Chemistry::OpenBabelc::new_OBGenericData", _wrap_new_OBGenericData},
 {"Chemistry::OpenBabelc::OBGenericData_Clone", _wrap_OBGenericData_Clone},
@@ -100539,6 +99574,206 @@ XS(SWIG_init) {
   } while(0) /*@SWIG@*/;
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__vector3, (void*) "Chemistry::OpenBabel::vector3");
   /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "UndefinedData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::UndefinedData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PairData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::PairData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "EnergyData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::EnergyData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CommentData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CommentData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ConformerData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::ConformerData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ExternalBondData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::ExternalBondData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "RotamerList", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::RotamerList)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "VirtualBondData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::VirtualBondData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "RingData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::RingData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "TorsionData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::TorsionData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "AngleData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::AngleData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SerialNums", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::SerialNums)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "UnitCell", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::UnitCell)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SpinData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::SpinData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ChargeData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::ChargeData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SymmetryData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::SymmetryData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ChiralData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::ChiralData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OccupationData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::OccupationData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "DensityData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::DensityData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ElectronicData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::ElectronicData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "VibrationData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::VibrationData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "RotationData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::RotationData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "NuclearData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::NuclearData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SetData", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::SetData)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData0", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData0)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData1", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData1)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData2", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData2)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData3", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData3)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData4", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData4)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData5", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData5)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData6", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData6)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData7", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData7)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData8", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData8)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData9", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData9)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData10", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData10)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData11", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData11)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData12", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData12)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData13", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData13)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData14", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData14)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CustomData15", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBGenericDataType::CustomData15)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "any", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::any)));
     SvREADONLY_on(sv);
@@ -100852,6 +100087,456 @@ XS(SWIG_init) {
   /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "AA_TRP", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >((1 << 20))));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ACIDIC", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::ACIDIC)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ACYCLIC", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::ACYCLIC)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ALIPHATIC", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::ALIPHATIC)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "AROMATIC", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::AROMATIC)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "BASIC", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::BASIC)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "BURIED", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::BURIED)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CHARGED", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::CHARGED)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CYCLIC", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::CYCLIC)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "HYDROPHOBIC", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::HYDROPHOBIC)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LARGE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::LARGE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "MEDIUM", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::MEDIUM)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "NEGATIVE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::NEGATIVE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "NEUTRAL", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::NEUTRAL)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "POLAR", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::POLAR)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "POSITIVE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::POSITIVE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SMALL", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::SMALL)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SURFACE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBAminoAcidProperty::SURFACE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ALPHA_CARBON", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::ALPHA_CARBON)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "AMINO_BACKBONE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::AMINO_BACKBONE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "BACKBONE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::BACKBONE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CYSTEINE_SULPHUR", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::CYSTEINE_SULPHUR)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LIGAND", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::LIGAND)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "NUCLEIC_BACKBONE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::NUCLEIC_BACKBONE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SHAPELY_BACKBONE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::SHAPELY_BACKBONE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SHAPELY_SPECIAL", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::SHAPELY_SPECIAL)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SIDECHAIN", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::SIDECHAIN)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SUGAR_PHOSPHATE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueAtomProperty::SUGAR_PHOSPHATE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ALA", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::ALA)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "GLY", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::GLY)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LEU", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::LEU)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SER", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::SER)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "VAL", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::VAL)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LYS", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::LYS)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ASP", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::ASP)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ILE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::ILE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ASN", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::ASN)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "GLU", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::GLU)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PRO", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::PRO)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ARG", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::ARG)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PHE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::PHE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "GLN", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::GLN)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "TYR", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::TYR)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "HIS", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::HIS)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "CYS", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::CYS)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "MET", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::MET)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "TRP", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::TRP)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ASX", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::ASX)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "GLX", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::GLX)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PCA", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::PCA)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "HYP", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::HYP)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "A", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::A)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "C", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::C)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "G", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::G)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "T", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::T)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "U", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::U)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "UPLUS", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::UPLUS)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "I", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::I)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "_1MA", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_1MA)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "_5MC", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_5MC)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OMC", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::OMC)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "_1MG", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_1MG)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "_2MG", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_2MG)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "M2G", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::M2G)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "_7MG", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_7MG)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OMG", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::OMG)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "YG", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::YG)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "H2U", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::H2U)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "_5MU", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_5MU)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PSU", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::PSU)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "UNK", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::UNK)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ACE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::ACE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "FOR", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::FOR)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "HOH", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::HOH)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "DOD", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::DOD)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SO4", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::SO4)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PO4", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::PO4)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "NAD", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::NAD)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "COA", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::COA)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "NAP", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::NAP)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "NDP", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::NDP)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "AMINO", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::AMINO)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "AMINO_NUCLEO", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::AMINO_NUCLEO)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "COENZYME", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::COENZYME)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "ION", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::ION)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "NUCLEO", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::NUCLEO)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PROTEIN", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::PROTEIN)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PURINE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::PURINE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PYRIMIDINE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::PYRIMIDINE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SOLVENT", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::SOLVENT)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "WATER", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueProperty::WATER)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBInternalCoord, (void*) "Chemistry::OpenBabel::OBInternalCoord");
