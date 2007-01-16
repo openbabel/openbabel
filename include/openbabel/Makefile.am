@@ -11,7 +11,8 @@ libopenbabelinclude_HEADERS = \
 		newlinebuf.h \
 		obconversion.h oberror.h obiter.h \
 		obmolecformat.h obutil.h \
-		parsmart.h patty.h phmodel.h rand.h reaction.h \
+		parsmart.h patty.h phmodel.h pluginiter.h \
+		rand.h reaction.h \
 		residue.h ring.h rotamer.h rotor.h typer.h \
 		xml.h
 
