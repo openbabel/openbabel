@@ -454,7 +454,7 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.0.2
+  !define OBVersion 2.1.x
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
@@ -516,12 +516,19 @@ Section "Dummy Section" SecDummy
   SetOutPath "$INSTDIR"
   
   ;ADD YOUR OWN FILES HERE...
-  File /r InstallFiles\*.*
+  File /r ExampleFiles\*.*
   File /oname=License.txt ..\..\COPYING
+  File /oname=OpenBabelGUI.exe ..\OpenBabelDLL\OBGUII.exe
+  File /oname=OpenBabelGUI.exe.manifest ..\OpenBabelDLL\OBGUII.exe.manifest
+  File ..\OpenBabelDLL\OpenBabelDLL.dll
+  File ..\OpenBabelDLL\OpenBabelDLL.lib
+  File ..\OpenBabelDLL\babel.exe
+  File ..\OpenBabelGUI\OpenBabelGUI.html
   File ..\zlib1.dll
   File ..\libxml2.dll
   File ..\iconv.dll
   File ..\libinchi.dll
+  File ..\..\data\SMARTS_InteLigand.txt
   
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
