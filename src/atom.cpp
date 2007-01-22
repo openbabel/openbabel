@@ -337,6 +337,15 @@ namespace OpenBabel
     return(_v);
   }
 
+  const vector3 &OBAtom::GetVector() const
+  {
+    if (!_c)
+      return(_v);
+
+    _v.Set((*_c)[_cidx],(*_c)[_cidx+1],(*_c)[_cidx+2]);
+    return(_v);
+  }
+
   void OBAtom::SetVector()
   {
     //    obAssert(_c);

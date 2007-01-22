@@ -165,8 +165,12 @@ namespace OpenBabel
       unsigned int     GetEndAtomIdx()    const { return(_end->GetIdx()); }
       //! \return The "beginning" atom for this bond
       OBAtom *GetBeginAtom()    { return(_bgn);    }
+      const OBAtom *GetBeginAtom() const 
+        { return(_bgn);    }
       //! \return The "end" atom for this bond
       OBAtom *GetEndAtom()      { return(_end);    }
+      const OBAtom *GetEndAtom() const
+        { return(_end);    }
       //! \return The neighboring atom to @p ptr (i.e., the end if @p ptr is the start)
       /** \warning If @p ptr is not part of the bond, the beginning atom
           will always be returned **/

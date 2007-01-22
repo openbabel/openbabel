@@ -106,7 +106,7 @@ namespace OpenBabel
       }
 
     //! \return the vector as a const double *
-    const double *AsArray()
+    const double *AsArray() const
     {
       return &_vx;
     }

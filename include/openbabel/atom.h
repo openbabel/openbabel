@@ -94,7 +94,7 @@ namespace OpenBabel
       unsigned short                _flags;     //!< bitwise flags (e.g. aromaticity)
       double                        _pcharge;   //!< partial charge
       double                      **_c;         //!< coordinate array in double*
-      vector3                       _v;         //!< coordinate vector
+      mutable vector3               _v;         //!< coordinate vector
       OBResidue                    *_residue;   //!< parent residue (if applicable)
 
       //! \return All flags
@@ -259,6 +259,7 @@ namespace OpenBabel
       }
       //! \return the coordinates as a vector3 object
       vector3   &GetVector();
+      const vector3   &GetVector() const;
       //! \return the partial charge of this atom, calculating a Gasteiger charge if needed
       double     GetPartialCharge();
       //! \return the residue which contains this atom, or NULL if none exists
