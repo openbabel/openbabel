@@ -79,11 +79,11 @@ int main(int argc,char **argv)
 
     cout << "command > ";
     cin.getline(commandline, 100);
-    
+
     //
     // commands with no parameters
     //
-    if (EQn(commandline, "quit", 4)) {
+    if (EQn(commandline, "quit", 4) || cin.eof()) {
        cout << "bye." << endl;
        exit(0);
     }
