@@ -30,7 +30,8 @@ class ChemDrawXMLFormat : public XMLMoleculeFormat
 public:
 	ChemDrawXMLFormat() 
 	{
-		OBConversion::RegisterFormat("cdxml", this);
+		OBConversion::RegisterFormat("cdxml", this, "chemical/x-cdxml");
+		XMLConversion::RegisterXMLFormat(this, false, "http://www.camsoft.com/xml/cdxml.dtd");
 		XMLConversion::RegisterXMLFormat(this);
 	}
 	virtual const char* NamespaceURI()const{return "http://www.cambridgesoft.com/xml/cdxml.dtd";}
@@ -42,13 +43,16 @@ Minimal extraction of chemical structure information only.\n \
 \n";
 };
 
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-cdxml"; };
+
   virtual const char* SpecificationURL()
   {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/";}
 
 
   virtual unsigned int Flags()
   {
-      return NOTWRITABLE;
+      return READXML | NOTWRITABLE;
   };
 
 	virtual bool DoElement(const string& name);
@@ -56,11 +60,16 @@ Minimal extraction of chemical structure information only.\n \
 
 	// EndTag is used so that the stream buffer is is filled with the XML from
 	// complete objects, as far as possible. 
-	virtual const char* EndTag(){ return "/fragment"; };
+	virtual const char* EndTag(){puts("end tag"); return "/fragment>"; };
+
+    //atoms and bonds might have no content, so EndElement is not always called
+    // that's why we need to ensure that atoms and bonds are really added.
+    void EnsureEndElement(void);
 
 private:
   OBAtom _tempAtom; //!< A temporary atom as the atom tag is read
   OBBond _tempBond; //!< A temporary bond as the bond tag is read
+  map<int, int>atoms; //! maps chemdraw atom id to openbabel idx.
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -71,54 +80,96 @@ ChemDrawXMLFormat theChemDrawXMLFormat;
 
 bool ChemDrawXMLFormat::DoElement(const string& name)
 {
-	if(name=="fragment") 
-	{
-		//This is the start of the molecule we are extracting and it will
-		//be put into the OBMol* _pmol declared in the parent class.
-		//initialise everything
+  string buf;
+  if(name=="fragment") 
+  {
+    //This is the start of the molecule we are extracting and it will
+    //be put into the OBMol* _pmol declared in the parent class.
+    //initialise everything
     _tempAtom.Clear();
     _tempBond.Clear();
+    atoms.clear();
 
     _pmol->SetDimension(2);
-		_pmol->BeginModify();
-	}
-	else if(name=="n")
-	{
+    _pmol->BeginModify();
+  }
+  else if(name=="n")
+  {
+    EnsureEndElement();
     _tempAtom.SetAtomicNum(6); // default is carbon
-    if (_pxmlConv->GetAttribute("Element"))
-      _tempAtom.SetAtomicNum(atoi(_pxmlConv->GetAttribute("Element")));
+     buf = _pxmlConv->GetAttribute("id");
+    if (buf.length())
+      _tempAtom.SetIdx(atoi(buf.c_str()));
+   buf = _pxmlConv->GetAttribute("Element");
+    if (buf.length())
+      _tempAtom.SetAtomicNum(atoi(buf.c_str()));
 
-    string coords = _pxmlConv->GetAttribute("p");
-	}
-	else if(name=="b")
-	{
+    buf = _pxmlConv->GetAttribute("p"); // coords
+    if (buf.length())
+    {
+      double x = 0., y = 0.;
+      sscanf(buf.c_str(), "%lf %lf", &x, &y);
+      _tempAtom.SetVector(x, y, 0.);
+    }
+  }
+  else if(name=="b")
+  {
+    EnsureEndElement();
+    _tempBond.SetBO(1); //default value
+    buf = _pxmlConv->GetAttribute("Order");
+    if (buf.length())
+      _tempBond.SetBO(atoi(buf.c_str()));
+    buf = _pxmlConv->GetAttribute("B");
+    if (buf.length())
+      _tempBond.SetBegin(_pmol->GetAtom(atoms[atoi(buf.c_str())]));
+    buf = _pxmlConv->GetAttribute("E");
+    if (buf.length())
+      _tempBond.SetEnd(_pmol->GetAtom(atoms[atoi(buf.c_str())]));
+  }
 
-    if (_pxmlConv->GetAttribute("Order"))
-      _tempBond.SetBO(atoi(_pxmlConv->GetAttribute("Order")));
-    _pxmlConv->GetAttribute("B");
-    _pxmlConv->GetAttribute("E");
-
-	}
-
-	return true;
+  return true;
 }
 
 bool ChemDrawXMLFormat::EndElement(const string& name)
 {
   unsigned int i;
-	if(name=="n")
-	{
-	}
-	else if(name=="b")
-	{
-	}
-	else if(name=="fragment") //this is the end of the molecule we are extracting
-	{
-		_pmol->EndModify();
-		return false;//means stop parsing
-	}
-	return true;
+  if(name=="n")
+  {
+    _pmol->AddAtom(_tempAtom);
+    atoms[_tempAtom.GetIdx()] = _pmol->NumAtoms();
+    _tempAtom.Clear();
+  }
+  else if(name=="b")
+  {
+    _pmol->AddBond(_tempBond);
+    _tempBond.Clear();
+    _tempBond.SetBO(0);
+  }
+  else if(name=="fragment") //this is the end of the molecule we are extracting
+  {
+    EnsureEndElement();
+    _pmol->EndModify();
+    atoms.clear();
+    return false;//means stop parsing
+  }
+  return true;
 }	
+
+void ChemDrawXMLFormat::EnsureEndElement(void)
+{
+  if (_tempAtom.GetAtomicNum() != 0)
+  {
+    _pmol->AddAtom(_tempAtom);
+    atoms[_tempAtom.GetIdx()] = _pmol->NumAtoms();
+    _tempAtom.Clear();
+  }
+  else if (_tempBond.GetBO() != 0)
+  {
+    _pmol->AddBond(_tempBond);
+    _tempBond.Clear();
+    _tempBond.SetBO(0);
+  }
+}
 
 
 }//namespace

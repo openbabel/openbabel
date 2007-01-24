@@ -263,9 +263,12 @@ namespace OpenBabel
   string XMLConversion::GetAttribute(const char* attrname)
   {
     string AttributeValue;
-    const xmlChar* pvalue  = xmlTextReaderGetAttribute(_reader, BAD_CAST attrname);
+    xmlChar* pvalue  = xmlTextReaderGetAttribute(_reader, BAD_CAST attrname);
     if(pvalue)
+    {
       AttributeValue = (const char*)pvalue;
+      xmlFree(pvalue);
+    }
     return AttributeValue;
   }
 

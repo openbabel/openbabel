@@ -6,11 +6,10 @@ if BUILD_SHARED
 
 pkglib_LTLIBRARIES = \
   cmlreactlformat.la cmlformat.la \
-	pubchem.la xmlformat.la
-# cdxmlformat.la
+	pubchem.la xmlformat.la cdxmlformat.la
 
-# cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
-# cdxmlformat_la_LDFLAGS = -module -avoid-version 
+cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
+cdxmlformat_la_LDFLAGS = -module -avoid-version 
 
 cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
 cmlformat_la_LDFLAGS = -module -avoid-version 

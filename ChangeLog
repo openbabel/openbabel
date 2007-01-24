@@ -1,3 +1,9 @@
+2007-01-24  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/xml/Makefile.am: add cdxmlformat.
+	* src/formats/xml/cdxmlformat.cpp: make it basically work.
+	* src/formats/xml/xml.cpp: fix a memory leak.
+
 2007-01-23  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* tools/obmm.cpp: Added check for cin.eof resolving bug 1639880.
