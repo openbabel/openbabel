@@ -39,7 +39,7 @@ public:
   {
       return " \
 ChemDraw CDXML format \n \
-Minimal extraction of chemical structure information only.\n \
+Minimal support of chemical structure information only.\n \
 \n";
 };
 
@@ -52,7 +52,7 @@ Minimal extraction of chemical structure information only.\n \
 
   virtual unsigned int Flags()
   {
-      return READXML | NOTWRITABLE;
+      return READXML;
   };
 
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
@@ -204,7 +204,8 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   static const xmlChar C_MOLECULE[]         = "fragment";
   static const xmlChar C_CDXML[]            = "CDXML";
-  static const xmlChar C_PAGE[]            = "page";
+  static const xmlChar C_BONDLENGTH[]       = "BondLength";
+  static const xmlChar C_PAGE[]             = "page";
   static const xmlChar C_ATOM[]             = "n";
   static const xmlChar C_BOND[]             = "b";
   static const xmlChar C_ID[]               = "id";
@@ -225,12 +226,22 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	return false;
   OBMol &mol = *pmol;
 
+  OBBond *pbond;
+  vector<OBBond*>::iterator j;
+  double scale;
   if(_pxmlConv->GetOutputIndex() == 1)
   {
     xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
     xmlTextWriterWriteDTD(writer(), BAD_CAST "CDXML", NULL, BAD_CAST "http://www.camsoft.com/xml/cdxml.dtd", NULL);
     xmlTextWriterStartElement(writer(), C_CDXML);
+    xmlTextWriterWriteFormatAttribute(writer(), C_BONDLENGTH , "30");
     xmlTextWriterStartElement(writer(), C_PAGE); // put everything on one page
+    // now guess the average bond size for the first molecule and scale to 30.
+    scale = 0.;
+    for (pbond = mol.BeginBond(j);pbond;pbond = mol.NextBond(j))
+      scale += pbond->GetLength();
+    scale /= mol.NumBonds();
+    scale = 30. / scale;
   }
 	
   xmlTextWriterStartElement(writer(), C_MOLECULE);
@@ -243,7 +254,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     xmlTextWriterStartElement(writer(), C_ATOM);
 
     xmlTextWriterWriteFormatAttribute(writer(), C_ID , "%d", patom->GetIdx());
-    xmlTextWriterWriteFormatAttribute(writer(), C_COORDS , "%f %f", patom->GetX(), patom->GetY());
+    xmlTextWriterWriteFormatAttribute(writer(), C_COORDS , "%f %f", patom->GetX() * scale, patom->GetY() * scale);
 	n = patom->GetAtomicNum();
     if (n != 6)
     {
@@ -252,8 +263,6 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     xmlTextWriterEndElement(writer());
   }
 
-  OBBond *pbond;
-  vector<OBBond*>::iterator j;
   for (pbond = mol.BeginBond(j);pbond;pbond = mol.NextBond(j))
   {
     xmlTextWriterStartElement(writer(), C_BOND);

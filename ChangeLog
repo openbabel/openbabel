@@ -1,5 +1,10 @@
 2007-01-25  Jean Brefort  <jean.brefort@normalesup.org>
 
+	* src/formats/xml/cdxmlformat.cpp: scale bond lentghs to 30 (using the
+	first molecule) and enable write support.
+
+2007-01-25  Jean Brefort  <jean.brefort@normalesup.org>
+
 	* src/formats/xml/cdxmlformat.cpp: add some stereochemistry and initial
 	write support (not enabled).
 
