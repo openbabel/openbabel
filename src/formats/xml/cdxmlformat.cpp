@@ -55,9 +55,10 @@ Minimal extraction of chemical structure information only.\n \
       return READXML | NOTWRITABLE;
   };
 
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 	virtual bool DoElement(const string& name);
 	virtual bool EndElement(const string& name);
-
+ 
 	// EndTag is used so that the stream buffer is is filled with the XML from
 	// complete objects, as far as possible. 
 	virtual const char* EndTag(){puts("end tag"); return "/fragment>"; };
@@ -68,8 +69,8 @@ Minimal extraction of chemical structure information only.\n \
 
 private:
   OBAtom _tempAtom; //!< A temporary atom as the atom tag is read
-  OBBond _tempBond; //!< A temporary bond as the bond tag is read
-  map<int, int>atoms; //! maps chemdraw atom id to openbabel idx.
+  int Begin, End, Order, Flag; // Data for current bond
+  map <int, int> atoms; // maps chemdraw atom id to openbabel idx.
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -87,7 +88,6 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
     //be put into the OBMol* _pmol declared in the parent class.
     //initialise everything
     _tempAtom.Clear();
-    _tempBond.Clear();
     atoms.clear();
 
     _pmol->SetDimension(2);
@@ -115,16 +115,47 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
   else if(name=="b")
   {
     EnsureEndElement();
-    _tempBond.SetBO(1); //default value
+	bool invert_ends = false;
+	Begin = End = Flag = 0;
     buf = _pxmlConv->GetAttribute("Order");
     if (buf.length())
-      _tempBond.SetBO(atoi(buf.c_str()));
+      Order = atoi(buf.c_str());
+    else
+      Order = 1; //default value
+    buf = _pxmlConv->GetAttribute("Display");
+    if (buf.length())
+    {
+	  if (buf == "WedgeEnd")
+      {
+        invert_ends = true;
+        Flag = OB_WEDGE_BOND;
+	  }
+      else if (buf == "WedgeBegin")
+        Flag = OB_WEDGE_BOND;
+      else if (buf == "WedgedHashBegin")
+      {
+        invert_ends = true;
+        Flag = OB_HASH_BOND;
+	  }
+      else if (buf == "Hash" || buf == "WedgedHashEnd")
+        Flag = OB_HASH_BOND;
+    }
     buf = _pxmlConv->GetAttribute("B");
     if (buf.length())
-      _tempBond.SetBegin(_pmol->GetAtom(atoms[atoi(buf.c_str())]));
+    {
+      if (invert_ends)
+        End = atoms[atoi(buf.c_str())];
+      else
+        Begin = atoms[atoi(buf.c_str())];
+    }
     buf = _pxmlConv->GetAttribute("E");
     if (buf.length())
-      _tempBond.SetEnd(_pmol->GetAtom(atoms[atoi(buf.c_str())]));
+    {
+      if (invert_ends)
+        Begin = atoms[atoi(buf.c_str())];
+      else
+        End = atoms[atoi(buf.c_str())];
+    }
   }
 
   return true;
@@ -141,9 +172,8 @@ bool ChemDrawXMLFormat::EndElement(const string& name)
   }
   else if(name=="b")
   {
-    _pmol->AddBond(_tempBond);
-    _tempBond.Clear();
-    _tempBond.SetBO(0);
+    _pmol->AddBond(Begin, End, Order, Flag);
+	Order = 0;
   }
   else if(name=="fragment") //this is the end of the molecule we are extracting
   {
@@ -163,13 +193,95 @@ void ChemDrawXMLFormat::EnsureEndElement(void)
     atoms[_tempAtom.GetIdx()] = _pmol->NumAtoms();
     _tempAtom.Clear();
   }
-  else if (_tempBond.GetBO() != 0)
+  else if (Order != 0)
   {
-    _pmol->AddBond(_tempBond);
-    _tempBond.Clear();
-    _tempBond.SetBO(0);
+    _pmol->AddBond(Begin, End, Order, Flag);
+	Order = 0;
   }
 }
 
+bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+{
+  static const xmlChar C_MOLECULE[]         = "fragment";
+  static const xmlChar C_CDXML[]            = "CDXML";
+  static const xmlChar C_PAGE[]            = "page";
+  static const xmlChar C_ATOM[]             = "n";
+  static const xmlChar C_BOND[]             = "b";
+  static const xmlChar C_ID[]               = "id";
+
+  static const xmlChar C_COORDS[]           = "p";
+  static const xmlChar C_ELEMENT[]          = "Element";
+  static const xmlChar C_ORDER[]            = "Order";
+  static const xmlChar C_BEGIN[]            = "B";
+  static const xmlChar C_END[]              = "E";
+  static const xmlChar C_DISPLAY[]          = "Display";
+
+  _pxmlConv = XMLConversion::GetDerived(pConv,false);
+  if(!_pxmlConv)
+    return false;
+
+  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+  if(pmol==NULL)
+	return false;
+  OBMol &mol = *pmol;
+
+  if(_pxmlConv->GetOutputIndex() == 1)
+  {
+    xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
+    xmlTextWriterWriteDTD(writer(), BAD_CAST "CDXML", NULL, BAD_CAST "http://www.camsoft.com/xml/cdxml.dtd", NULL);
+    xmlTextWriterStartElement(writer(), C_CDXML);
+    xmlTextWriterStartElement(writer(), C_PAGE); // put everything on one page
+  }
+	
+  xmlTextWriterStartElement(writer(), C_MOLECULE);
+
+  OBAtom *patom;
+  vector<OBAtom*>::iterator i;
+  int n;
+  for (patom = mol.BeginAtom(i);patom;patom = mol.NextAtom(i))
+  {
+    xmlTextWriterStartElement(writer(), C_ATOM);
+
+    xmlTextWriterWriteFormatAttribute(writer(), C_ID , "%d", patom->GetIdx());
+    xmlTextWriterWriteFormatAttribute(writer(), C_COORDS , "%f %f", patom->GetX(), patom->GetY());
+	n = patom->GetAtomicNum();
+    if (n != 6)
+    {
+      xmlTextWriterWriteFormatAttribute(writer(), C_ELEMENT , "%d", n);
+    }
+    xmlTextWriterEndElement(writer());
+  }
+
+  OBBond *pbond;
+  vector<OBBond*>::iterator j;
+  for (pbond = mol.BeginBond(j);pbond;pbond = mol.NextBond(j))
+  {
+    xmlTextWriterStartElement(writer(), C_BOND);
+	patom = pbond->GetBeginAtom();
+    xmlTextWriterWriteFormatAttribute(writer(), C_BEGIN , "%d", patom->GetIdx());
+	patom = pbond->GetEndAtom();
+    xmlTextWriterWriteFormatAttribute(writer(), C_END , "%d", patom->GetIdx());
+	n = pbond->GetBO();
+    if (n != 1)
+    {
+      xmlTextWriterWriteFormatAttribute(writer(), C_ORDER , "%d", n);
+    }
+    if (pbond->IsWedge())
+      xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgeBegin");
+    else if (pbond->IsHash())
+      xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgedHashEnd");
+    xmlTextWriterEndElement(writer());
+  }
+
+  xmlTextWriterEndElement(writer());//molecule
+
+  if(_pxmlConv->IsLast())
+  {
+    xmlTextWriterEndDocument(writer()); // page
+    xmlTextWriterEndDocument(writer()); //document
+    OutputToStream();
+  }
+  return true;
+}
 
 }//namespace
