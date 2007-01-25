@@ -284,6 +284,7 @@ namespace OpenBabel {
       void				SetOutputIndex(int indx);///< @brief Sets ouput index (maybe to control whether seen as first object)
       void				SetMoreFilesToCome();///<@brief Used with multiple input files. Off by default.
       void				SetOneObjectOnly(bool b=true);///<@brief Used with multiple input files. Off by default.
+      void        SetLast(bool b){SetOneObjectOnly(b);}///@brief.Synonym for SetOneObjectOnly()
       //@}
       /// @name Convenience functions
       //@{
