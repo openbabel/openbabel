@@ -1,3 +1,8 @@
+2007-01-26  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/xml/cdxmlformat.cpp: fixed issues in writing
+	multi-molecules files.
+
 2007-01-09 Chris Morley
 
 	*src/obconversion.cpp, include/openbabel/obconversion.h: Mitigate

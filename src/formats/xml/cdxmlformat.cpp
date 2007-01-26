@@ -71,6 +71,8 @@ private:
   OBAtom _tempAtom; //!< A temporary atom as the atom tag is read
   int Begin, End, Order, Flag; // Data for current bond
   map <int, int> atoms; // maps chemdraw atom id to openbabel idx.
+  int _offset; // used to ensure that atoms have different ids.
+  double _scale; // current scale
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -228,7 +230,6 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   OBBond *pbond;
   vector<OBBond*>::iterator j;
-  double scale;
   if(_pxmlConv->GetOutputIndex() == 1)
   {
     xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
@@ -237,11 +238,17 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     xmlTextWriterWriteFormatAttribute(writer(), C_BONDLENGTH , "30");
     xmlTextWriterStartElement(writer(), C_PAGE); // put everything on one page
     // now guess the average bond size for the first molecule and scale to 30.
-    scale = 0.;
-    for (pbond = mol.BeginBond(j);pbond;pbond = mol.NextBond(j))
-      scale += pbond->GetLength();
-    scale /= mol.NumBonds();
-    scale = 30. / scale;
+    _scale = 0.;
+    if (mol.NumBonds())
+    {
+      for (pbond = mol.BeginBond(j);pbond;pbond = mol.NextBond(j))
+        _scale += pbond->GetLength();
+      _scale /= mol.NumBonds();
+	}
+    else
+      _scale = 1.; // FIXME: what happens if the molecule has no bond?
+    _scale = 30. / _scale;
+    _offset = 0;
   }
 	
   xmlTextWriterStartElement(writer(), C_MOLECULE);
@@ -253,8 +260,8 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     xmlTextWriterStartElement(writer(), C_ATOM);
 
-    xmlTextWriterWriteFormatAttribute(writer(), C_ID , "%d", patom->GetIdx());
-    xmlTextWriterWriteFormatAttribute(writer(), C_COORDS , "%f %f", patom->GetX() * scale, patom->GetY() * scale);
+    xmlTextWriterWriteFormatAttribute(writer(), C_ID , "%d", patom->GetIdx() + _offset);
+    xmlTextWriterWriteFormatAttribute(writer(), C_COORDS , "%f %f", patom->GetX() * _scale, patom->GetY() * _scale);
 	n = patom->GetAtomicNum();
     if (n != 6)
     {
@@ -267,9 +274,9 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     xmlTextWriterStartElement(writer(), C_BOND);
 	patom = pbond->GetBeginAtom();
-    xmlTextWriterWriteFormatAttribute(writer(), C_BEGIN , "%d", patom->GetIdx());
+    xmlTextWriterWriteFormatAttribute(writer(), C_BEGIN , "%d", patom->GetIdx() + _offset);
 	patom = pbond->GetEndAtom();
-    xmlTextWriterWriteFormatAttribute(writer(), C_END , "%d", patom->GetIdx());
+    xmlTextWriterWriteFormatAttribute(writer(), C_END , "%d", patom->GetIdx() + _offset);
 	n = pbond->GetBO();
     if (n != 1)
     {
@@ -281,6 +288,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgedHashEnd");
     xmlTextWriterEndElement(writer());
   }
+  _offset += mol.NumAtoms ();
 
   xmlTextWriterEndElement(writer());//molecule
 
