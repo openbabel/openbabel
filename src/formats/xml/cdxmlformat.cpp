@@ -28,7 +28,7 @@ namespace OpenBabel
 class ChemDrawXMLFormat : public XMLMoleculeFormat
 {
 public:
-	ChemDrawXMLFormat() 
+	ChemDrawXMLFormat(): Order (-1)
 	{
 		OBConversion::RegisterFormat("cdxml", this, "chemical/x-cdxml");
 		XMLConversion::RegisterXMLFormat(this, false, "http://www.camsoft.com/xml/cdxml.dtd");
@@ -98,11 +98,21 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
   else if(name=="n")
   {
     EnsureEndElement();
+    buf = _pxmlConv->GetAttribute("Type");
+    if (buf.length())
+    {
+      if (buf != "Unspecified" && buf != "Element")
+      {
+        cerr << "CDXML Format: Node type \"" << buf <<
+                  "\" is not currently supported." << endl;
+        return false; // FIXME: use as many types as possible
+	  }
+    }
     _tempAtom.SetAtomicNum(6); // default is carbon
-     buf = _pxmlConv->GetAttribute("id");
+    buf = _pxmlConv->GetAttribute("id");
     if (buf.length())
       _tempAtom.SetIdx(atoi(buf.c_str()));
-   buf = _pxmlConv->GetAttribute("Element");
+    buf = _pxmlConv->GetAttribute("Element");
     if (buf.length())
       _tempAtom.SetAtomicNum(atoi(buf.c_str()));
 
@@ -113,6 +123,9 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
       sscanf(buf.c_str(), "%lf %lf", &x, &y);
       _tempAtom.SetVector(x, y, 0.);
     }
+    buf = _pxmlConv->GetAttribute("Charge");
+    if (buf.length())
+      _tempAtom.SetFormalCharge(atoi(buf.c_str()));
   }
   else if(name=="b")
   {
@@ -175,7 +188,7 @@ bool ChemDrawXMLFormat::EndElement(const string& name)
   else if(name=="b")
   {
     _pmol->AddBond(Begin, End, Order, Flag);
-	Order = 0;
+	Order = -1;
   }
   else if(name=="fragment") //this is the end of the molecule we are extracting
   {
@@ -195,10 +208,10 @@ void ChemDrawXMLFormat::EnsureEndElement(void)
     atoms[_tempAtom.GetIdx()] = _pmol->NumAtoms();
     _tempAtom.Clear();
   }
-  else if (Order != 0)
+  else if (Order >= 0)
   {
     _pmol->AddBond(Begin, End, Order, Flag);
-	Order = 0;
+	Order = -1;
   }
 }
 
@@ -212,6 +225,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   static const xmlChar C_BOND[]             = "b";
   static const xmlChar C_ID[]               = "id";
 
+  static const xmlChar C_CHARGE[]           = "Charge";
   static const xmlChar C_COORDS[]           = "p";
   static const xmlChar C_ELEMENT[]          = "Element";
   static const xmlChar C_ORDER[]            = "Order";
@@ -266,6 +280,11 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     if (n != 6)
     {
       xmlTextWriterWriteFormatAttribute(writer(), C_ELEMENT , "%d", n);
+    }
+    n = patom->GetFormalCharge();
+    if (n != 0)
+    {
+      xmlTextWriterWriteFormatAttribute(writer(), C_CHARGE , "%d", n);
     }
     xmlTextWriterEndElement(writer());
   }

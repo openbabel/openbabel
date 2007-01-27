@@ -1,3 +1,7 @@
+2007-01-27  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/chemdrawcdx.cpp: add support for formal charges.
+
 2007-01-26  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/xml/cdxmlformat.cpp: fixed issues in writing
