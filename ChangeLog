@@ -1,3 +1,16 @@
+2007-01-31  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/canon.h, src/canon.cpp: Add canonical
+	numbering code from Craig James. (Eventually needs integration
+	into other methods -- these duplicate since they support
+	fragments.)
+
+	* src/formats/cansmilesformat.*: Add CANSMI format for Canonical
+	SMILES output. Eventually needs better integration into current
+	SMI format rather than duplication.
+
+	* src/Makefile.* include/openbabel/Makefile.*: Add above files.
+
 2007-01-27  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/chemdrawcdx.cpp: add support for formal charges.
@@ -9,7 +22,7 @@
 
 2007-01-09 Chris Morley
 
-	*src/obconversion.cpp, include/openbabel/obconversion.h: Mitigate
+	* src/obconversion.cpp, include/openbabel/obconversion.h: Mitigate
 	some of the uncertainties in writing multi-molecule files.
 	pointed out by Jean Brefort, including bug 1644241.
 	Added SetLast as an alternative name for SetOneObjectedOnly.
@@ -31,6 +44,7 @@
 	* src/formats/xml/cdxmlformat.cpp: make it basically work.
 	* src/formats/xml/xml.cpp: fix a memory leak.
 
+>>>>>>> .r1736
 2007-01-23  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* tools/obmm.cpp: Added check for cin.eof resolving bug 1639880.

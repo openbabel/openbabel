@@ -65,8 +65,8 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 @BUILD_SHARED_TRUE@	fingerprints/libfingerprints.la \
 @BUILD_SHARED_TRUE@	forcefields/libforcefields.la @LTLIBOBJS@
 am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
-	bond.cpp bondtyper.cpp chains.cpp chiral.cpp data.cpp \
-	fingerprint.cpp forcefield.cpp generic.cpp grid.cpp \
+	bond.cpp bondtyper.cpp canon.cpp chains.cpp chiral.cpp \
+	data.cpp fingerprint.cpp forcefield.cpp generic.cpp grid.cpp \
 	kekulize.cpp matrix.cpp mol.cpp molchrg.cpp newlinebuf.cpp \
 	obconversion.cpp oberror.cpp obiter.cpp obutil.cpp \
 	parsmart.cpp patty.cpp phmodel.cpp rand.cpp residue.cpp \
@@ -74,12 +74,12 @@ am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	transform.cpp dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
-	bondtyper.lo chains.lo chiral.lo data.lo fingerprint.lo \
-	forcefield.lo generic.lo grid.lo kekulize.lo matrix.lo mol.lo \
-	molchrg.lo newlinebuf.lo obconversion.lo oberror.lo obiter.lo \
-	obutil.lo parsmart.lo patty.lo phmodel.lo rand.lo residue.lo \
-	ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo transform.lo \
-	$(am__objects_1)
+	bondtyper.lo canon.lo chains.lo chiral.lo data.lo \
+	fingerprint.lo forcefield.lo generic.lo grid.lo kekulize.lo \
+	matrix.lo mol.lo molchrg.lo newlinebuf.lo obconversion.lo \
+	oberror.lo obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo \
+	rand.lo residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo \
+	typer.lo transform.lo $(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -265,7 +265,8 @@ lib_LTLIBRARIES = libopenbabel.la
 @BUILD_SHARED_TRUE@dlhandler = dlhandler_unix.cpp
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
-		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
+		bondtyper.cpp canon.cpp \
+		chains.cpp chiral.cpp data.cpp \
 		fingerprint.cpp forcefield.cpp generic.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp newlinebuf.cpp \
@@ -377,6 +378,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bitvec.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bond.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bondtyper.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/canon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chains.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@

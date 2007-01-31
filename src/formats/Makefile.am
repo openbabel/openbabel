@@ -1,6 +1,6 @@
 INCLUDES = -I$(top_srcdir)/data -I$(top_srcdir)/include
 
-EXTRA_DIST = exampleformat.cpp
+EXTRA_DIST = exampleformat.cpp cansmilesformat.h
 SUBDIRS =
 
 if BUILD_XML
@@ -61,7 +61,8 @@ pkglib_LTLIBRARIES = \
 	APIInterface.la \
 	CSRformat.la PQSformat.la alchemyformat.la \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
-	cacaoformat.la cacheformat.la carformat.la cccformat.la \
+	cacaoformat.la cacheformat.la cansmilesformat.la \
+	carformat.la cccformat.la \
 	chem3dformat.la chemdrawctformat.la chemdrawcdxformat.la \
 	chemtoolformat.la cifformat.la \
 	copyformat.la crkformat.la cssrformat.la \
@@ -107,6 +108,9 @@ cacaoformat_la_LDFLAGS = -module -avoid-version
 
 cacheformat_la_SOURCES = cacheformat.cpp
 cacheformat_la_LDFLAGS = -module -avoid-version 
+
+cansmilesformat_la_SOURCES = cansmilesformat.cpp
+cansmilesformat_la_LDFLAGS = -module -avoid-version 
 
 carformat_la_SOURCES = carformat.cpp obmolecformat.cpp
 carformat_la_LDFLAGS = -module -avoid-version 

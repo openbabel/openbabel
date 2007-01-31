@@ -19,7 +19,8 @@ endif
 
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
-		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
+		bondtyper.cpp canon.cpp \
+		chains.cpp chiral.cpp data.cpp \
 		fingerprint.cpp forcefield.cpp generic.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp newlinebuf.cpp \
