@@ -1,3 +1,8 @@
+2007-02-01 Chris Morley
+
+	* windows-vc2005/Distribution: add some Windows DLLs for the 
+	installer.
+
 2007-01-31  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/canon.h, src/canon.cpp: Add canonical
@@ -20,7 +25,7 @@
 	* src/formats/xml/cdxmlformat.cpp: fixed issues in writing
 	multi-molecules files.
 
-2007-01-09 Chris Morley
+2007-01-26 Chris Morley
 
 	* src/obconversion.cpp, include/openbabel/obconversion.h: Mitigate
 	some of the uncertainties in writing multi-molecule files.
