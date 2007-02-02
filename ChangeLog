@@ -1,3 +1,8 @@
+2007-02-02 Chris Morley
+
+	* windows-vc2005/Distribution: remove the Windows DLLs added
+	yesterday.
+
 2007-02-01 Chris Morley
 
 	* windows-vc2005/Distribution: add some Windows DLLs for the 
