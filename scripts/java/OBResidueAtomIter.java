@@ -279,7 +279,7 @@ public class OBResidueAtomIter {
   }
 
   public vector3 GetVector() {
-    return new vector3(openbabelJNI.OBResidueAtomIter_GetVector(swigCPtr, this), false);
+    return new vector3(openbabelJNI.OBResidueAtomIter_GetVector__SWIG_0(swigCPtr, this), false);
   }
 
   public double GetPartialCharge() {

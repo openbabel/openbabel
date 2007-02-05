@@ -250,6 +250,10 @@ public class OBConversion {
     openbabelJNI.OBConversion_SetOneObjectOnly__SWIG_1(swigCPtr, this);
   }
 
+  public void SetLast(boolean b) {
+    openbabelJNI.OBConversion_SetLast(swigCPtr, this, b);
+  }
+
   public static OBFormat GetDefaultFormat() {
     long cPtr = openbabelJNI.OBConversion_GetDefaultFormat();
     return (cPtr == 0) ? null : new OBFormat(cPtr, false);

@@ -1097,7 +1097,7 @@ class pluginiterFingerprint(object):
         _openbabel.pluginiterFingerprint_swiginit(self,_openbabel.new_pluginiterFingerprint(*args))
     __swig_destroy__ = _openbabel.delete_pluginiterFingerprint
     __del__ = lambda self : None;
-    def _Iter(*args): return _openbabel.pluginiterFingerprint__Iter(*args)
+    def Iter(*args): return _openbabel.pluginiterFingerprint_Iter(*args)
     def SetBit(*args): return _openbabel.pluginiterFingerprint_SetBit(*args)
     def Fold(*args): return _openbabel.pluginiterFingerprint_Fold(*args)
     def GetFingerprint(*args): return _openbabel.pluginiterFingerprint_GetFingerprint(*args)
@@ -1249,6 +1249,7 @@ class OBConversion(object):
     def SetOutputIndex(*args): return _openbabel.OBConversion_SetOutputIndex(*args)
     def SetMoreFilesToCome(*args): return _openbabel.OBConversion_SetMoreFilesToCome(*args)
     def SetOneObjectOnly(*args): return _openbabel.OBConversion_SetOneObjectOnly(*args)
+    def SetLast(*args): return _openbabel.OBConversion_SetLast(*args)
     GetDefaultFormat = staticmethod(_openbabel.OBConversion_GetDefaultFormat)
     def Write(*args): return _openbabel.OBConversion_Write(*args)
     def WriteString(*args): return _openbabel.OBConversion_WriteString(*args)
@@ -1801,6 +1802,7 @@ class OBMol(OBBase):
     def AddHydrogens(*args): return _openbabel.OBMol_AddHydrogens(*args)
     def AddPolarHydrogens(*args): return _openbabel.OBMol_AddPolarHydrogens(*args)
     def StripSalts(*args): return _openbabel.OBMol_StripSalts(*args)
+    def Separate(*args): return _openbabel.OBMol_Separate(*args)
     def ConvertDativeBonds(*args): return _openbabel.OBMol_ConvertDativeBonds(*args)
     def CorrectForPH(*args): return _openbabel.OBMol_CorrectForPH(*args)
     def AssignSpinMultiplicity(*args): return _openbabel.OBMol_AssignSpinMultiplicity(*args)
@@ -1972,7 +1974,7 @@ class OBFingerprint(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     def __init__(self): raise AttributeError, "No constructor defined"
     __repr__ = _swig_repr
-    _Iter = staticmethod(_openbabel.OBFingerprint__Iter)
+    Iter = staticmethod(_openbabel.OBFingerprint_Iter)
     FindDefaultType = staticmethod(_openbabel.OBFingerprint_FindDefaultType)
     FindType = staticmethod(_openbabel.OBFingerprint_FindType)
     __swig_destroy__ = _openbabel.delete_OBFingerprint
@@ -1988,7 +1990,7 @@ class OBFingerprint(object):
     FindFingerprint = staticmethod(_openbabel.OBFingerprint_FindFingerprint)
 OBFingerprint_swigregister = _openbabel.OBFingerprint_swigregister
 OBFingerprint_swigregister(OBFingerprint)
-OBFingerprint__Iter = _openbabel.OBFingerprint__Iter
+OBFingerprint_Iter = _openbabel.OBFingerprint_Iter
 OBFingerprint_FindDefaultType = _openbabel.OBFingerprint_FindDefaultType
 OBFingerprint_FindType = _openbabel.OBFingerprint_FindType
 OBFingerprint_Tanimoto = _openbabel.OBFingerprint_Tanimoto

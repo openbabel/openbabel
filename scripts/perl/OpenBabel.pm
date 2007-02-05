@@ -2142,6 +2142,7 @@ sub DESTROY {
 *SetOutputIndex = *Chemistry::OpenBabelc::OBConversion_SetOutputIndex;
 *SetMoreFilesToCome = *Chemistry::OpenBabelc::OBConversion_SetMoreFilesToCome;
 *SetOneObjectOnly = *Chemistry::OpenBabelc::OBConversion_SetOneObjectOnly;
+*SetLast = *Chemistry::OpenBabelc::OBConversion_SetLast;
 *GetDefaultFormat = *Chemistry::OpenBabelc::OBConversion_GetDefaultFormat;
 *Write = *Chemistry::OpenBabelc::OBConversion_Write;
 *WriteString = *Chemistry::OpenBabelc::OBConversion_WriteString;
@@ -2661,6 +2662,7 @@ sub DESTROY {
 *AddHydrogens = *Chemistry::OpenBabelc::OBMol_AddHydrogens;
 *AddPolarHydrogens = *Chemistry::OpenBabelc::OBMol_AddPolarHydrogens;
 *StripSalts = *Chemistry::OpenBabelc::OBMol_StripSalts;
+*Separate = *Chemistry::OpenBabelc::OBMol_Separate;
 *ConvertDativeBonds = *Chemistry::OpenBabelc::OBMol_ConvertDativeBonds;
 *CorrectForPH = *Chemistry::OpenBabelc::OBMol_CorrectForPH;
 *AssignSpinMultiplicity = *Chemistry::OpenBabelc::OBMol_AssignSpinMultiplicity;

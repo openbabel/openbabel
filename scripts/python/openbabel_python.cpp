@@ -24307,22 +24307,30 @@ SWIGINTERN PyObject *_wrap_OBTypeTable_Translate__SWIG_1(PyObject *SWIGUNUSEDPAR
   bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  std::string temp2 ;
-  int res2 = SWIG_TMPOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
   int res3 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
   
-  arg2 = &temp2;
-  if(!PyArg_UnpackTuple(args,(char *)"OBTypeTable_Translate",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"OBTypeTable_Translate",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBTypeTable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBTypeTable_Translate" "', argument " "1"" of type '" "OpenBabel::OBTypeTable *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBTypeTable * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBTypeTable_Translate" "', argument " "2"" of type '" "std::string &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBTypeTable_Translate" "', argument " "2"" of type '" "std::string &""'"); 
+  }
+  arg2 = reinterpret_cast< std::string * >(argp2);
   {
     std::string *ptr = (std::string *)0;
-    res3 = SWIG_AsPtr_std_string(obj1, &ptr);
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
     if (!SWIG_IsOK(res3)) {
       SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBTypeTable_Translate" "', argument " "3"" of type '" "std::string const &""'"); 
     }
@@ -24333,12 +24341,6 @@ SWIGINTERN PyObject *_wrap_OBTypeTable_Translate__SWIG_1(PyObject *SWIGUNUSEDPAR
   }
   result = (bool)(arg1)->Translate(*arg2,(std::string const &)*arg3);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
-  if (SWIG_IsTmpObj(res2)) {
-    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_std_string((*arg2)));
-  } else {
-    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
-    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_std__string, new_flags));
-  }
   if (SWIG_IsNewObj(res3)) delete arg3;
   return resultobj;
 fail:
@@ -24404,20 +24406,25 @@ SWIGINTERN PyObject *_wrap_OBTypeTable_Translate(PyObject *self, PyObject *args)
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBTypeTable_Translate__SWIG_1(self, args);
+        return _wrap_OBTypeTable_Translate__SWIG_2(self, args);
       }
     }
   }
-  if (argc == 2) {
+  if (argc == 3) {
     int _v;
     void *vptr = 0;
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBTypeTable, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBTypeTable_Translate__SWIG_2(self, args);
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_OBTypeTable_Translate__SWIG_1(self, args);
+        }
       }
     }
   }
@@ -26140,10 +26147,10 @@ SWIGINTERN PyObject *_wrap_vector3_AsArray(PyObject *SWIGUNUSEDPARM(self), PyObj
   if(!PyArg_UnpackTuple(args,(char *)"vector3_AsArray",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_AsArray" "', argument " "1"" of type '" "OpenBabel::vector3 *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_AsArray" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
-  result = (double *)(arg1)->AsArray();
+  result = (double *)((OpenBabel::vector3 const *)arg1)->AsArray();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_double, 0 |  0 );
   return resultobj;
 fail:
@@ -35160,7 +35167,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_pluginiterFingerprint__Iter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_pluginiterFingerprint_Iter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
   OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
@@ -35168,10 +35175,10 @@ SWIGINTERN PyObject *_wrap_pluginiterFingerprint__Iter(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"pluginiterFingerprint__Iter",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"pluginiterFingerprint_Iter",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint__Iter" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterFingerprint_Iter" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
   {
@@ -39766,6 +39773,36 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_OBConversion_SetLast(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBConversion_SetLast",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBConversion, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBConversion_SetLast" "', argument " "1"" of type '" "OpenBabel::OBConversion *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBConversion * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBConversion_SetLast" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->SetLast(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_OBConversion_GetDefaultFormat(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBFormat *result = 0 ;
@@ -44121,7 +44158,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBAtom_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_OBAtom_GetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -44142,6 +44179,66 @@ SWIGINTERN PyObject *_wrap_OBAtom_GetVector(PyObject *SWIGUNUSEDPARM(self), PyOb
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBAtom_GetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::vector3 *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBAtom_GetVector",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetVector" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  {
+    OpenBabel::vector3 const &_result_ref = ((OpenBabel::OBAtom const *)arg1)->GetVector();
+    result = (OpenBabel::vector3 *) &_result_ref;
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBAtom_GetVector(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_OBAtom_GetVector__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_OBAtom_GetVector__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBAtom_GetVector'.\n  Possible C/C++ prototypes are:\n    GetVector()\n    GetVector()\n");
   return NULL;
 }
 
@@ -47231,7 +47328,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBBond_GetBeginAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_OBBond_GetBeginAtom__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -47253,7 +47350,64 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBBond_GetEndAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_OBBond_GetBeginAtom__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
+  OpenBabel::OBAtom *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBBond_GetBeginAtom",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_GetBeginAtom" "', argument " "1"" of type '" "OpenBabel::OBBond const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
+  result = (OpenBabel::OBAtom *)((OpenBabel::OBBond const *)arg1)->GetBeginAtom();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBBond_GetBeginAtom(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBBond, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_OBBond_GetBeginAtom__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBBond, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_OBBond_GetBeginAtom__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBBond_GetBeginAtom'.\n  Possible C/C++ prototypes are:\n    GetBeginAtom()\n    GetBeginAtom()\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBBond_GetEndAtom__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -47271,6 +47425,63 @@ SWIGINTERN PyObject *_wrap_OBBond_GetEndAtom(PyObject *SWIGUNUSEDPARM(self), PyO
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBBond_GetEndAtom__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
+  OpenBabel::OBAtom *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBBond_GetEndAtom",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_GetEndAtom" "', argument " "1"" of type '" "OpenBabel::OBBond const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
+  result = (OpenBabel::OBAtom *)((OpenBabel::OBBond const *)arg1)->GetEndAtom();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBBond_GetEndAtom(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBBond, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_OBBond_GetEndAtom__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBBond, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_OBBond_GetEndAtom__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBBond_GetEndAtom'.\n  Possible C/C++ prototypes are:\n    GetEndAtom()\n    GetEndAtom()\n");
   return NULL;
 }
 
@@ -51792,6 +52003,100 @@ SWIGINTERN PyObject *_wrap_OBMol_StripSalts(PyObject *SWIGUNUSEDPARM(self), PyOb
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBMol_Separate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+  int arg2 ;
+  std::vector<OpenBabel::OBMol,std::allocator<OpenBabel::OBMol > > result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBMol_Separate",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMol_Separate" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMol_Separate" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (arg1)->Separate(arg2);
+  resultobj = swig::from(static_cast< std::vector<OpenBabel::OBMol,std::allocator<OpenBabel::OBMol > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBMol_Separate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+  std::vector<OpenBabel::OBMol,std::allocator<OpenBabel::OBMol > > result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBMol_Separate",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMol_Separate" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
+  result = (arg1)->Separate();
+  resultobj = swig::from(static_cast< std::vector<OpenBabel::OBMol,std::allocator<OpenBabel::OBMol > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBMol_Separate(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_OBMol_Separate__SWIG_1(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_OBMol_Separate__SWIG_0(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMol_Separate'.\n  Possible C/C++ prototypes are:\n    Separate(int)\n    Separate()\n");
   return NULL;
 }
 
@@ -56953,11 +57258,11 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBFingerprint__Iter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_OBFingerprint_Iter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::PluginIter<OpenBabel::OBFingerprint > *result = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBFingerprint__Iter",0,0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"OBFingerprint_Iter",0,0)) SWIG_fail;
   {
     OpenBabel::PluginIter<OpenBabel::OBFingerprint > &_result_ref = OpenBabel::OBFingerprint::Iter();
     result = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) &_result_ref;
@@ -60585,7 +60890,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBMolAtomIter_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomIter_GetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomIter *arg1 = (OpenBabel::OBMolAtomIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -60606,6 +60911,66 @@ SWIGINTERN PyObject *_wrap__OBMolAtomIter_GetVector(PyObject *SWIGUNUSEDPARM(sel
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomIter_GetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAtomIter *arg1 = (OpenBabel::OBMolAtomIter *) 0 ;
+  OpenBabel::vector3 *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomIter_GetVector",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomIter_GetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomIter * >(argp1);
+  {
+    OpenBabel::vector3 const &_result_ref = (*arg1)->GetVector();
+    result = (OpenBabel::vector3 *) &_result_ref;
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomIter_GetVector(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolAtomIter_GetVector__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolAtomIter_GetVector__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomIter_GetVector'.\n  Possible C/C++ prototypes are:\n    GetVector()\n    GetVector()\n");
   return NULL;
 }
 
@@ -65219,7 +65584,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -65240,6 +65605,66 @@ SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetVector(PyObject *SWIGUNUSEDPARM(
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
+  OpenBabel::vector3 *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomDFSIter_GetVector",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomDFSIter_GetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
+  {
+    OpenBabel::vector3 const &_result_ref = (*arg1)->GetVector();
+    result = (OpenBabel::vector3 *) &_result_ref;
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomDFSIter_GetVector(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolAtomDFSIter_GetVector__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolAtomDFSIter_GetVector__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomDFSIter_GetVector'.\n  Possible C/C++ prototypes are:\n    GetVector()\n    GetVector()\n");
   return NULL;
 }
 
@@ -69853,7 +70278,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -69874,6 +70299,66 @@ SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetVector(PyObject *SWIGUNUSEDPARM(
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
+  OpenBabel::vector3 *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolAtomBFSIter_GetVector",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolAtomBFSIter_GetVector" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
+  {
+    OpenBabel::vector3 const &_result_ref = (*arg1)->GetVector();
+    result = (OpenBabel::vector3 *) &_result_ref;
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolAtomBFSIter_GetVector(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolAtomBFSIter_GetVector__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolAtomBFSIter_GetVector__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolAtomBFSIter_GetVector'.\n  Possible C/C++ prototypes are:\n    GetVector()\n    GetVector()\n");
   return NULL;
 }
 
@@ -73873,7 +74358,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBMolBondIter_GetBeginAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolBondIter_GetBeginAtom__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -73895,7 +74380,64 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBMolBondIter_GetEndAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBMolBondIter_GetBeginAtom__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
+  OpenBabel::OBAtom *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolBondIter_GetBeginAtom",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolBondIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolBondIter_GetBeginAtom" "', argument " "1"" of type '" "OpenBabel::OBMolBondIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolBondIter * >(argp1);
+  result = (OpenBabel::OBAtom *)(*arg1)->GetBeginAtom();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolBondIter_GetBeginAtom(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolBondIter_GetBeginAtom__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolBondIter_GetBeginAtom__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolBondIter_GetBeginAtom'.\n  Possible C/C++ prototypes are:\n    GetBeginAtom()\n    GetBeginAtom()\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolBondIter_GetEndAtom__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -73913,6 +74455,63 @@ SWIGINTERN PyObject *_wrap__OBMolBondIter_GetEndAtom(PyObject *SWIGUNUSEDPARM(se
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolBondIter_GetEndAtom__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
+  OpenBabel::OBAtom *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolBondIter_GetEndAtom",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolBondIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolBondIter_GetEndAtom" "', argument " "1"" of type '" "OpenBabel::OBMolBondIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolBondIter * >(argp1);
+  result = (OpenBabel::OBAtom *)(*arg1)->GetEndAtom();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolBondIter_GetEndAtom(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolBondIter_GetEndAtom__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBMolBondIter_GetEndAtom__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBMolBondIter_GetEndAtom'.\n  Possible C/C++ prototypes are:\n    GetEndAtom()\n    GetEndAtom()\n");
   return NULL;
 }
 
@@ -76883,7 +77482,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBAtomAtomIter_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBAtomAtomIter_GetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBAtomAtomIter *arg1 = (OpenBabel::OBAtomAtomIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -76904,6 +77503,66 @@ SWIGINTERN PyObject *_wrap__OBAtomAtomIter_GetVector(PyObject *SWIGUNUSEDPARM(se
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBAtomAtomIter_GetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtomAtomIter *arg1 = (OpenBabel::OBAtomAtomIter *) 0 ;
+  OpenBabel::vector3 *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBAtomAtomIter_GetVector",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtomAtomIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBAtomAtomIter_GetVector" "', argument " "1"" of type '" "OpenBabel::OBAtomAtomIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtomAtomIter * >(argp1);
+  {
+    OpenBabel::vector3 const &_result_ref = (*arg1)->GetVector();
+    result = (OpenBabel::vector3 *) &_result_ref;
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBAtomAtomIter_GetVector(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtomAtomIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBAtomAtomIter_GetVector__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtomAtomIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBAtomAtomIter_GetVector__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBAtomAtomIter_GetVector'.\n  Possible C/C++ prototypes are:\n    GetVector()\n    GetVector()\n");
   return NULL;
 }
 
@@ -80903,7 +81562,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetBeginAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetBeginAtom__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -80925,7 +81584,64 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetEndAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetBeginAtom__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
+  OpenBabel::OBAtom *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBAtomBondIter_GetBeginAtom",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBAtomBondIter_GetBeginAtom" "', argument " "1"" of type '" "OpenBabel::OBAtomBondIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtomBondIter * >(argp1);
+  result = (OpenBabel::OBAtom *)(*arg1)->GetBeginAtom();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetBeginAtom(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBAtomBondIter_GetBeginAtom__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBAtomBondIter_GetBeginAtom__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBAtomBondIter_GetBeginAtom'.\n  Possible C/C++ prototypes are:\n    GetBeginAtom()\n    GetBeginAtom()\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetEndAtom__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -80943,6 +81659,63 @@ SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetEndAtom(PyObject *SWIGUNUSEDPARM(s
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetEndAtom__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
+  OpenBabel::OBAtom *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBAtomBondIter_GetEndAtom",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBAtomBondIter_GetEndAtom" "', argument " "1"" of type '" "OpenBabel::OBAtomBondIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtomBondIter * >(argp1);
+  result = (OpenBabel::OBAtom *)(*arg1)->GetEndAtom();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBAtomBondIter_GetEndAtom(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBAtomBondIter_GetEndAtom__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBAtomBondIter_GetEndAtom__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBAtomBondIter_GetEndAtom'.\n  Possible C/C++ prototypes are:\n    GetEndAtom()\n    GetEndAtom()\n");
   return NULL;
 }
 
@@ -85870,7 +86643,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBResidueAtomIter_GetVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap__OBResidueAtomIter_GetVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBResidueAtomIter *arg1 = (OpenBabel::OBResidueAtomIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -85891,6 +86664,66 @@ SWIGINTERN PyObject *_wrap__OBResidueAtomIter_GetVector(PyObject *SWIGUNUSEDPARM
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBResidueAtomIter_GetVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBResidueAtomIter *arg1 = (OpenBabel::OBResidueAtomIter *) 0 ;
+  OpenBabel::vector3 *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBResidueAtomIter_GetVector",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBResidueAtomIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBResidueAtomIter_GetVector" "', argument " "1"" of type '" "OpenBabel::OBResidueAtomIter const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBResidueAtomIter * >(argp1);
+  {
+    OpenBabel::vector3 const &_result_ref = (*arg1)->GetVector();
+    result = (OpenBabel::vector3 *) &_result_ref;
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBResidueAtomIter_GetVector(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBResidueAtomIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBResidueAtomIter_GetVector__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBResidueAtomIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__OBResidueAtomIter_GetVector__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_OBResidueAtomIter_GetVector'.\n  Possible C/C++ prototypes are:\n    GetVector()\n    GetVector()\n");
   return NULL;
 }
 
@@ -91010,7 +91843,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"pluginiterFingerprint___ref__", _wrap_pluginiterFingerprint___ref__, METH_VARARGS, NULL},
 	 { (char *)"new_pluginiterFingerprint", _wrap_new_pluginiterFingerprint, METH_VARARGS, NULL},
 	 { (char *)"delete_pluginiterFingerprint", _wrap_delete_pluginiterFingerprint, METH_VARARGS, NULL},
-	 { (char *)"pluginiterFingerprint__Iter", _wrap_pluginiterFingerprint__Iter, METH_VARARGS, NULL},
+	 { (char *)"pluginiterFingerprint_Iter", _wrap_pluginiterFingerprint_Iter, METH_VARARGS, NULL},
 	 { (char *)"pluginiterFingerprint_SetBit", _wrap_pluginiterFingerprint_SetBit, METH_VARARGS, NULL},
 	 { (char *)"pluginiterFingerprint_Fold", _wrap_pluginiterFingerprint_Fold, METH_VARARGS, NULL},
 	 { (char *)"pluginiterFingerprint_GetFingerprint", _wrap_pluginiterFingerprint_GetFingerprint, METH_VARARGS, NULL},
@@ -91117,6 +91950,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBConversion_SetOutputIndex", _wrap_OBConversion_SetOutputIndex, METH_VARARGS, NULL},
 	 { (char *)"OBConversion_SetMoreFilesToCome", _wrap_OBConversion_SetMoreFilesToCome, METH_VARARGS, NULL},
 	 { (char *)"OBConversion_SetOneObjectOnly", _wrap_OBConversion_SetOneObjectOnly, METH_VARARGS, NULL},
+	 { (char *)"OBConversion_SetLast", _wrap_OBConversion_SetLast, METH_VARARGS, NULL},
 	 { (char *)"OBConversion_GetDefaultFormat", _wrap_OBConversion_GetDefaultFormat, METH_VARARGS, NULL},
 	 { (char *)"OBConversion_Write", _wrap_OBConversion_Write, METH_VARARGS, NULL},
 	 { (char *)"OBConversion_WriteString", _wrap_OBConversion_WriteString, METH_VARARGS, NULL},
@@ -91472,6 +92306,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBMol_AddHydrogens", _wrap_OBMol_AddHydrogens, METH_VARARGS, NULL},
 	 { (char *)"OBMol_AddPolarHydrogens", _wrap_OBMol_AddPolarHydrogens, METH_VARARGS, NULL},
 	 { (char *)"OBMol_StripSalts", _wrap_OBMol_StripSalts, METH_VARARGS, NULL},
+	 { (char *)"OBMol_Separate", _wrap_OBMol_Separate, METH_VARARGS, NULL},
 	 { (char *)"OBMol_ConvertDativeBonds", _wrap_OBMol_ConvertDativeBonds, METH_VARARGS, NULL},
 	 { (char *)"OBMol_CorrectForPH", _wrap_OBMol_CorrectForPH, METH_VARARGS, NULL},
 	 { (char *)"OBMol_AssignSpinMultiplicity", _wrap_OBMol_AssignSpinMultiplicity, METH_VARARGS, NULL},
@@ -91608,7 +92443,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBSSMatch_swigregister", OBSSMatch_swigregister, METH_VARARGS, NULL},
 	 { (char *)"OBSSMatch_swiginit", OBSSMatch_swiginit, METH_VARARGS, NULL},
 	 { (char *)"SmartsLexReplace", _wrap_SmartsLexReplace, METH_VARARGS, NULL},
-	 { (char *)"OBFingerprint__Iter", _wrap_OBFingerprint__Iter, METH_VARARGS, NULL},
+	 { (char *)"OBFingerprint_Iter", _wrap_OBFingerprint_Iter, METH_VARARGS, NULL},
 	 { (char *)"OBFingerprint_FindDefaultType", _wrap_OBFingerprint_FindDefaultType, METH_VARARGS, NULL},
 	 { (char *)"OBFingerprint_FindType", _wrap_OBFingerprint_FindType, METH_VARARGS, NULL},
 	 { (char *)"delete_OBFingerprint", _wrap_delete_OBFingerprint, METH_VARARGS, NULL},

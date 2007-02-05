@@ -279,7 +279,7 @@ public class OBMolAtomBFSIter {
   }
 
   public vector3 GetVector() {
-    return new vector3(openbabelJNI.OBMolAtomBFSIter_GetVector(swigCPtr, this), false);
+    return new vector3(openbabelJNI.OBMolAtomBFSIter_GetVector__SWIG_0(swigCPtr, this), false);
   }
 
   public double GetPartialCharge() {

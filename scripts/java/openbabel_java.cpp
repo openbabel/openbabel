@@ -3765,7 +3765,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_vector3_1AsArray(JNIEnv *jenv, jclass
   (void)jcls;
   (void)jarg1_;
   arg1 = *(OpenBabel::vector3 **)&jarg1; 
-  result = (double *)(arg1)->AsArray();
+  result = (double *)((OpenBabel::vector3 const *)arg1)->AsArray();
   *(double **)&jresult = result; 
   return jresult;
 }
@@ -10781,6 +10781,19 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBConversion_1SetOneObjectOnly_1_1SWIG
 }
 
 
+SWIGEXPORT void JNICALL Java_openbabelJNI_OBConversion_1SetLast(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+  bool arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBConversion **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetLast(arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBConversion_1GetDefaultFormat(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   OpenBabel::OBFormat *result = 0 ;
@@ -14257,7 +14270,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtom_1GetCoordinate(JNIEnv *jenv, j
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtom_1GetVector(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtom_1GetVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -16127,7 +16140,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBBond_1GetEndAtomIdx(JNIEnv *jenv, j
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBBond_1GetBeginAtom(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBBond_1GetBeginAtom_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -16142,7 +16155,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBBond_1GetBeginAtom(JNIEnv *jenv, jc
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBBond_1GetEndAtom(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBBond_1GetEndAtom_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -18511,6 +18524,38 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBMol_1StripSalts(JNIEnv *jenv, jc
   arg1 = *(OpenBabel::OBMol **)&jarg1; 
   result = (bool)(arg1)->StripSalts();
   jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMol_1Separate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jlong jresult = 0 ;
+  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+  int arg2 ;
+  std::vector<OpenBabel::OBMol > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBMol **)&jarg1; 
+  arg2 = (int)jarg2; 
+  result = (arg1)->Separate(arg2);
+  *(std::vector<OpenBabel::OBMol > **)&jresult = new std::vector<OpenBabel::OBMol >((std::vector<OpenBabel::OBMol > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMol_1Separate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+  std::vector<OpenBabel::OBMol > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBMol **)&jarg1; 
+  result = (arg1)->Separate();
+  *(std::vector<OpenBabel::OBMol > **)&jresult = new std::vector<OpenBabel::OBMol >((std::vector<OpenBabel::OBMol > &)result); 
   return jresult;
 }
 
@@ -23029,7 +23074,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomIter_1GetCoordinate(JNIEnv *
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomIter_1GetVector(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomIter_1GetVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBMolAtomIter *arg1 = (OpenBabel::OBMolAtomIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -25391,7 +25436,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomDFSIter_1GetCoordinate(JNIEn
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomDFSIter_1GetVector(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomDFSIter_1GetVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -27753,7 +27798,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomBFSIter_1GetCoordinate(JNIEn
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomBFSIter_1GetVector(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomBFSIter_1GetVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -29798,7 +29843,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1GetEndAtomIdx(JNIEnv *
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1GetBeginAtom(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1GetBeginAtom_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -29813,7 +29858,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1GetBeginAtom(JNIEnv *j
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1GetEndAtom(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1GetEndAtom_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -31284,7 +31329,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomAtomIter_1GetCoordinate(JNIEnv 
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomAtomIter_1GetVector(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomAtomIter_1GetVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBAtomAtomIter *arg1 = (OpenBabel::OBAtomAtomIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;
@@ -33329,7 +33374,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1GetEndAtomIdx(JNIEnv 
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1GetBeginAtom(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1GetBeginAtom_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -33344,7 +33389,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1GetBeginAtom(JNIEnv *
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1GetEndAtom(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1GetEndAtom_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
   OpenBabel::OBAtom *result = 0 ;
@@ -35678,7 +35723,7 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBResidueAtomIter_1GetCoordinate(JNIE
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBResidueAtomIter_1GetVector(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBResidueAtomIter_1GetVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBResidueAtomIter *arg1 = (OpenBabel::OBResidueAtomIter *) 0 ;
   OpenBabel::vector3 *result = 0 ;

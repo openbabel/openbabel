@@ -56,7 +56,6 @@ namespace std {
 %rename(deref) *::operator->;
 %import <openbabel/babelconfig.h>
 
-%apply std::string &OUTPUT { std::string &to };
 %include <openbabel/data.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>

@@ -58,7 +58,6 @@ namespace std {
 %rename(deref) *::operator->;
 %import <openbabel/babelconfig.h>
 
-%apply std::string &OUTPUT { std::string &to };
 %include <openbabel/data.h>
 %include <openbabel/rand.h>
 %include <openbabel/obutil.h>
@@ -85,7 +84,6 @@ namespace std {
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 
-%rename(_Iter) OpenBabel::OBFingerprint::Iter;
 %include <openbabel/fingerprint.h>
 
 # The following %ignores avoid warning messages due to shadowed classes.

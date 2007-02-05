@@ -194,12 +194,12 @@ public class OBMolBondIter {
   }
 
   public OBAtom GetBeginAtom() {
-    long cPtr = openbabelJNI.OBMolBondIter_GetBeginAtom(swigCPtr, this);
+    long cPtr = openbabelJNI.OBMolBondIter_GetBeginAtom__SWIG_0(swigCPtr, this);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
   public OBAtom GetEndAtom() {
-    long cPtr = openbabelJNI.OBMolBondIter_GetEndAtom(swigCPtr, this);
+    long cPtr = openbabelJNI.OBMolBondIter_GetEndAtom__SWIG_0(swigCPtr, this);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 

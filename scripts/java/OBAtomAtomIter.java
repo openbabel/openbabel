@@ -279,7 +279,7 @@ public class OBAtomAtomIter {
   }
 
   public vector3 GetVector() {
-    return new vector3(openbabelJNI.OBAtomAtomIter_GetVector(swigCPtr, this), false);
+    return new vector3(openbabelJNI.OBAtomAtomIter_GetVector__SWIG_0(swigCPtr, this), false);
   }
 
   public double GetPartialCharge() {

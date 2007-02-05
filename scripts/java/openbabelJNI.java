@@ -628,6 +628,7 @@ class openbabelJNI {
   public final static native void OBConversion_SetMoreFilesToCome(long jarg1, OBConversion jarg1_);
   public final static native void OBConversion_SetOneObjectOnly__SWIG_0(long jarg1, OBConversion jarg1_, boolean jarg2);
   public final static native void OBConversion_SetOneObjectOnly__SWIG_1(long jarg1, OBConversion jarg1_);
+  public final static native void OBConversion_SetLast(long jarg1, OBConversion jarg1_, boolean jarg2);
   public final static native long OBConversion_GetDefaultFormat();
   public final static native boolean OBConversion_Write__SWIG_0(long jarg1, OBConversion jarg1_, long jarg2, OBBase jarg2_, long jarg3);
   public final static native boolean OBConversion_Write__SWIG_1(long jarg1, OBConversion jarg1_, long jarg2, OBBase jarg2_);
@@ -880,7 +881,7 @@ class openbabelJNI {
   public final static native double OBAtom_y(long jarg1, OBAtom jarg1_);
   public final static native double OBAtom_z(long jarg1, OBAtom jarg1_);
   public final static native long OBAtom_GetCoordinate(long jarg1, OBAtom jarg1_);
-  public final static native long OBAtom_GetVector(long jarg1, OBAtom jarg1_);
+  public final static native long OBAtom_GetVector__SWIG_0(long jarg1, OBAtom jarg1_);
   public final static native double OBAtom_GetPartialCharge(long jarg1, OBAtom jarg1_);
   public final static native long OBAtom_GetResidue(long jarg1, OBAtom jarg1_);
   public final static native long OBAtom_GetParent(long jarg1, OBAtom jarg1_);
@@ -1006,8 +1007,8 @@ class openbabelJNI {
   public final static native long OBBond_GetFlags(long jarg1, OBBond jarg1_);
   public final static native long OBBond_GetBeginAtomIdx(long jarg1, OBBond jarg1_);
   public final static native long OBBond_GetEndAtomIdx(long jarg1, OBBond jarg1_);
-  public final static native long OBBond_GetBeginAtom(long jarg1, OBBond jarg1_);
-  public final static native long OBBond_GetEndAtom(long jarg1, OBBond jarg1_);
+  public final static native long OBBond_GetBeginAtom__SWIG_0(long jarg1, OBBond jarg1_);
+  public final static native long OBBond_GetEndAtom__SWIG_0(long jarg1, OBBond jarg1_);
   public final static native long OBBond_GetNbrAtom(long jarg1, OBBond jarg1_, long jarg2, OBAtom jarg2_);
   public final static native long OBBond_GetParent(long jarg1, OBBond jarg1_);
   public final static native double OBBond_GetEquibLength(long jarg1, OBBond jarg1_);
@@ -1165,6 +1166,8 @@ class openbabelJNI {
   public final static native boolean OBMol_AddHydrogens__SWIG_3(long jarg1, OBMol jarg1_, long jarg2, OBAtom jarg2_);
   public final static native boolean OBMol_AddPolarHydrogens(long jarg1, OBMol jarg1_);
   public final static native boolean OBMol_StripSalts(long jarg1, OBMol jarg1_);
+  public final static native long OBMol_Separate__SWIG_0(long jarg1, OBMol jarg1_, int jarg2);
+  public final static native long OBMol_Separate__SWIG_1(long jarg1, OBMol jarg1_);
   public final static native boolean OBMol_ConvertDativeBonds(long jarg1, OBMol jarg1_);
   public final static native boolean OBMol_CorrectForPH(long jarg1, OBMol jarg1_);
   public final static native boolean OBMol_AssignSpinMultiplicity(long jarg1, OBMol jarg1_);
@@ -1434,7 +1437,7 @@ class openbabelJNI {
   public final static native double OBMolAtomIter_y(long jarg1, OBMolAtomIter jarg1_);
   public final static native double OBMolAtomIter_z(long jarg1, OBMolAtomIter jarg1_);
   public final static native long OBMolAtomIter_GetCoordinate(long jarg1, OBMolAtomIter jarg1_);
-  public final static native long OBMolAtomIter_GetVector(long jarg1, OBMolAtomIter jarg1_);
+  public final static native long OBMolAtomIter_GetVector__SWIG_0(long jarg1, OBMolAtomIter jarg1_);
   public final static native double OBMolAtomIter_GetPartialCharge(long jarg1, OBMolAtomIter jarg1_);
   public final static native long OBMolAtomIter_GetResidue(long jarg1, OBMolAtomIter jarg1_);
   public final static native long OBMolAtomIter_GetParent(long jarg1, OBMolAtomIter jarg1_);
@@ -1590,7 +1593,7 @@ class openbabelJNI {
   public final static native double OBMolAtomDFSIter_y(long jarg1, OBMolAtomDFSIter jarg1_);
   public final static native double OBMolAtomDFSIter_z(long jarg1, OBMolAtomDFSIter jarg1_);
   public final static native long OBMolAtomDFSIter_GetCoordinate(long jarg1, OBMolAtomDFSIter jarg1_);
-  public final static native long OBMolAtomDFSIter_GetVector(long jarg1, OBMolAtomDFSIter jarg1_);
+  public final static native long OBMolAtomDFSIter_GetVector__SWIG_0(long jarg1, OBMolAtomDFSIter jarg1_);
   public final static native double OBMolAtomDFSIter_GetPartialCharge(long jarg1, OBMolAtomDFSIter jarg1_);
   public final static native long OBMolAtomDFSIter_GetResidue(long jarg1, OBMolAtomDFSIter jarg1_);
   public final static native long OBMolAtomDFSIter_GetParent(long jarg1, OBMolAtomDFSIter jarg1_);
@@ -1746,7 +1749,7 @@ class openbabelJNI {
   public final static native double OBMolAtomBFSIter_y(long jarg1, OBMolAtomBFSIter jarg1_);
   public final static native double OBMolAtomBFSIter_z(long jarg1, OBMolAtomBFSIter jarg1_);
   public final static native long OBMolAtomBFSIter_GetCoordinate(long jarg1, OBMolAtomBFSIter jarg1_);
-  public final static native long OBMolAtomBFSIter_GetVector(long jarg1, OBMolAtomBFSIter jarg1_);
+  public final static native long OBMolAtomBFSIter_GetVector__SWIG_0(long jarg1, OBMolAtomBFSIter jarg1_);
   public final static native double OBMolAtomBFSIter_GetPartialCharge(long jarg1, OBMolAtomBFSIter jarg1_);
   public final static native long OBMolAtomBFSIter_GetResidue(long jarg1, OBMolAtomBFSIter jarg1_);
   public final static native long OBMolAtomBFSIter_GetParent(long jarg1, OBMolAtomBFSIter jarg1_);
@@ -1881,8 +1884,8 @@ class openbabelJNI {
   public final static native long OBMolBondIter_GetFlags(long jarg1, OBMolBondIter jarg1_);
   public final static native long OBMolBondIter_GetBeginAtomIdx(long jarg1, OBMolBondIter jarg1_);
   public final static native long OBMolBondIter_GetEndAtomIdx(long jarg1, OBMolBondIter jarg1_);
-  public final static native long OBMolBondIter_GetBeginAtom(long jarg1, OBMolBondIter jarg1_);
-  public final static native long OBMolBondIter_GetEndAtom(long jarg1, OBMolBondIter jarg1_);
+  public final static native long OBMolBondIter_GetBeginAtom__SWIG_0(long jarg1, OBMolBondIter jarg1_);
+  public final static native long OBMolBondIter_GetEndAtom__SWIG_0(long jarg1, OBMolBondIter jarg1_);
   public final static native long OBMolBondIter_GetNbrAtom(long jarg1, OBMolBondIter jarg1_, long jarg2, OBAtom jarg2_);
   public final static native long OBMolBondIter_GetParent(long jarg1, OBMolBondIter jarg1_);
   public final static native double OBMolBondIter_GetEquibLength(long jarg1, OBMolBondIter jarg1_);
@@ -1983,7 +1986,7 @@ class openbabelJNI {
   public final static native double OBAtomAtomIter_y(long jarg1, OBAtomAtomIter jarg1_);
   public final static native double OBAtomAtomIter_z(long jarg1, OBAtomAtomIter jarg1_);
   public final static native long OBAtomAtomIter_GetCoordinate(long jarg1, OBAtomAtomIter jarg1_);
-  public final static native long OBAtomAtomIter_GetVector(long jarg1, OBAtomAtomIter jarg1_);
+  public final static native long OBAtomAtomIter_GetVector__SWIG_0(long jarg1, OBAtomAtomIter jarg1_);
   public final static native double OBAtomAtomIter_GetPartialCharge(long jarg1, OBAtomAtomIter jarg1_);
   public final static native long OBAtomAtomIter_GetResidue(long jarg1, OBAtomAtomIter jarg1_);
   public final static native long OBAtomAtomIter_GetParent(long jarg1, OBAtomAtomIter jarg1_);
@@ -2118,8 +2121,8 @@ class openbabelJNI {
   public final static native long OBAtomBondIter_GetFlags(long jarg1, OBAtomBondIter jarg1_);
   public final static native long OBAtomBondIter_GetBeginAtomIdx(long jarg1, OBAtomBondIter jarg1_);
   public final static native long OBAtomBondIter_GetEndAtomIdx(long jarg1, OBAtomBondIter jarg1_);
-  public final static native long OBAtomBondIter_GetBeginAtom(long jarg1, OBAtomBondIter jarg1_);
-  public final static native long OBAtomBondIter_GetEndAtom(long jarg1, OBAtomBondIter jarg1_);
+  public final static native long OBAtomBondIter_GetBeginAtom__SWIG_0(long jarg1, OBAtomBondIter jarg1_);
+  public final static native long OBAtomBondIter_GetEndAtom__SWIG_0(long jarg1, OBAtomBondIter jarg1_);
   public final static native long OBAtomBondIter_GetNbrAtom(long jarg1, OBAtomBondIter jarg1_, long jarg2, OBAtom jarg2_);
   public final static native long OBAtomBondIter_GetParent(long jarg1, OBAtomBondIter jarg1_);
   public final static native double OBAtomBondIter_GetEquibLength(long jarg1, OBAtomBondIter jarg1_);
@@ -2274,7 +2277,7 @@ class openbabelJNI {
   public final static native double OBResidueAtomIter_y(long jarg1, OBResidueAtomIter jarg1_);
   public final static native double OBResidueAtomIter_z(long jarg1, OBResidueAtomIter jarg1_);
   public final static native long OBResidueAtomIter_GetCoordinate(long jarg1, OBResidueAtomIter jarg1_);
-  public final static native long OBResidueAtomIter_GetVector(long jarg1, OBResidueAtomIter jarg1_);
+  public final static native long OBResidueAtomIter_GetVector__SWIG_0(long jarg1, OBResidueAtomIter jarg1_);
   public final static native double OBResidueAtomIter_GetPartialCharge(long jarg1, OBResidueAtomIter jarg1_);
   public final static native long OBResidueAtomIter_GetResidue(long jarg1, OBResidueAtomIter jarg1_);
   public final static native long OBResidueAtomIter_GetParent(long jarg1, OBResidueAtomIter jarg1_);

@@ -165,12 +165,12 @@ public class OBBond extends OBBase {
   }
 
   public OBAtom GetBeginAtom() {
-    long cPtr = openbabelJNI.OBBond_GetBeginAtom(swigCPtr, this);
+    long cPtr = openbabelJNI.OBBond_GetBeginAtom__SWIG_0(swigCPtr, this);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
   public OBAtom GetEndAtom() {
-    long cPtr = openbabelJNI.OBBond_GetEndAtom(swigCPtr, this);
+    long cPtr = openbabelJNI.OBBond_GetEndAtom__SWIG_0(swigCPtr, this);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
