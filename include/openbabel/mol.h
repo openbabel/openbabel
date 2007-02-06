@@ -351,8 +351,6 @@ namespace OpenBabel
     //! Deletes all atoms except for the largest contiguous fragment
     bool StripSalts();
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O 
-    std::vector<OBMol> Separate(int StartIndex=1);
-    //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O 
     bool ConvertDativeBonds();
 
     bool CorrectForPH();
