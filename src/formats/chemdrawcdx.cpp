@@ -21,8 +21,25 @@ GNU General Public License for more details.
 #include <fstream>
 #include <map>
 #include <list>
-
+#include <endian.h>
+#include <byteswap.h>
 //#define debug
+
+#if __BYTE_ORDER == __BIG_ENDIAN
+#    define READ_INT16(stream,data) \
+       (stream).read ((char*)&data, sizeof(data)); \
+	   data = bswap_16 (data);
+#    define READ_INT32(stream,data) \
+       (stream).read ((char*)&data, sizeof(data)); \
+	   data = bswap_32 (data);
+#else
+#  if __BYTE_ORDER == __LITTLE_ENDIAN
+#    define READ_INT16(stream,data) \
+       (stream).read ((char*)&data, sizeof(data));
+#    define READ_INT32(stream,data) \
+       (stream).read ((char*)&data, sizeof(data));
+#  endif
+#endif
 
 using namespace std;
 namespace OpenBabel
@@ -103,7 +120,6 @@ namespace OpenBabel
     UINT16 tag;
     UINT16 size;
     UINT32 id;
-    char u32[4];
     map<UINT32, int> atoms;
     list<cdBond> bonds;
     list<cdBond>::const_iterator bondsIter;
@@ -133,12 +149,10 @@ namespace OpenBabel
       }
     while(ifs.good())
       {
-        ifs.read((char *)&tag, sizeof(tag));
-        tag = (tag << 8) | (tag >> 8);
+        READ_INT16 (ifs, tag);
         if(tag & kCDXTag_Object)	// Object
           {
-            ifs.read(u32, sizeof(u32));
-            id = ((long) (u32[3] & 0xff) << 24) | ((long) (u32[2] & 0xff) << 16) | ((long) (u32[1] & 0xff) << 8) | ((long) (u32[0] & 0xff));
+  	       READ_INT32 (ifs, id);
 #ifdef debug
             printf("Object ID: %08X in root has type: %04X\n", id, tag);
 #endif
@@ -242,9 +256,8 @@ namespace OpenBabel
           }
         else	// Property
           {
-            ifs.read((char *)&size, sizeof(size));
-            size = (size << 8) | (size >> 8);
-            //			printf("Root Tag: %04X\tSize: %04X\n", tag, size);
+            READ_INT16 (ifs ,size);
+             //			printf("Root Tag: %04X\tSize: %04X\n", tag, size);
             switch(tag)
               {
               case kCDXProp_Name: pmol->SetTitle(getName(&ifs, size)); break;
@@ -358,8 +371,7 @@ namespace OpenBabel
     UINT32 skipsize;
 		
     //	buff = new char[size];
-    ifs->read((char *)&temp, 2);
-    temp = (temp << 8) | (temp >> 8);
+    READ_INT16 ((*ifs), temp);
     if(temp == 0)
       {
         buff = new char[size-1];
@@ -380,51 +392,37 @@ namespace OpenBabel
 
   int get2DPosition(istream *ifs, UINT32 size, INT32 &x, INT32 &y)
   {
-    char *pos;
-    //	INT32 x, y;
-	
     if(size != 8) {
       return -1; }
-	
-    pos = new char[size];
-    ifs->read(pos, size);
-    y = ((long) (pos[3] & 0xff) << 24) | ((long) (pos[2] & 0xff) << 16) | ((long) (pos[1] & 0xff) << 8) | ((long) (pos[0] & 0xff));
-    x = ((long) (pos[7] & 0xff) << 24) | ((long) (pos[6] & 0xff) << 16) | ((long) (pos[5] & 0xff) << 8) | ((long) (pos[4] & 0xff));
+
+    READ_INT32 (*ifs, y);
+    READ_INT32 (*ifs, x);
     
-    //	printf("2D coordinates - x: %d, y: %d\n", x, y);
-    delete pos;
+    // 	printf("2D coordinates - x: %d, y: %d\n", x, y);
     return 0;
   }
 
   UINT32 getBondStart(istream *ifs, UINT32 size)
   {
-    char *read;
     UINT32 atomID;
 	
     if(size != 4)
       return -1;
 	
-    read = new char[size];
-    ifs->read(read, size);
-    atomID = (UINT32)((read[3] & 0xff) << 24) | ((long) (read[2] & 0xff) << 16) | ((long) (read[1] & 0xff) << 8) | ((long) (read[0] & 0xff));
+    READ_INT32 (*ifs, atomID);
     //	printf("Bond starts at atom nr: %08X\n", atomID);
-    delete read;
     return atomID;
   }
 
   UINT32 getBondEnd(istream *ifs, UINT32 size)
   {
-    char *read;
     UINT32 atomID;
 	
     if(size != 4)
       return -1;
 	
-    read = new char[size];
-    ifs->read(read, size);
-    atomID = (UINT32)((read[3] & 0xff) << 24) | ((long) (read[2] & 0xff) << 16) | ((long) (read[1] & 0xff) << 8) | ((long) (read[0] & 0xff));
+    READ_INT32 (*ifs, atomID);
     //	printf("Bond ends at atom nr: %08X\n", atomID);
-    delete read;
     return atomID;
   }
 
@@ -435,8 +433,7 @@ namespace OpenBabel
     if(size != 2)
       return -1;
 	
-    ifs->read((char *)&order, size);
-    order = (order << 8) | (order >> 8);
+    READ_INT16 (*ifs, order);
     //	printf("Bond order is: %d\n", order);
     return (int) order;
   }
@@ -448,8 +445,7 @@ namespace OpenBabel
     if(size != 2)
       return -1;
 	
-    ifs->read((char *)&stereo, size);
-    stereo = (stereo << 8) | (stereo >> 8);
+    READ_INT16 (*ifs, stereo);
     //    printf("Bond stereo is: %d\n", stereo);
     return (int) stereo;
   }
@@ -461,8 +457,7 @@ namespace OpenBabel
     if(size != 2)
       return -1;
 	
-    ifs->read((char *)&nodeType, size);
-    nodeType = (nodeType << 8) | (nodeType >> 8);
+    READ_INT16 (*ifs, nodeType);
     //	printf("Node type is: %d\n", nodeType);
     return (int) nodeType;
   }
@@ -474,8 +469,7 @@ namespace OpenBabel
     if(size != 2)
       return -1;
 	
-    ifs->read((char *)&element, size);
-    element = (element << 8) | (element >> 8);
+    READ_INT16 (*ifs, element);
     atom.SetAtomicNum(element);
     //	printf("Atomic number: %d\n", element);
     return 0;
@@ -486,13 +480,20 @@ namespace OpenBabel
     int charge;
 	
     if(size == 4)		// Bug in ChemDraw 8.0, see http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/properties/Atom_Charge.htm
-      {}
+    {
+      READ_INT32 (*ifs, charge);
+    }
     else
-      if(size != 1)
-        return 0;
+      if(size == 1)
+      {
+        ifs->read((char *)&charge, size);
+#if __BYTE_ORDER == __BIG_ENDIAN
+		charge = charge >> 24;
+#endif
+      }
+    else
+      return 0;
 	
-    ifs->read((char *)&charge, size);
-    charge = charge >> 24;
     //	printf("Charge: %d\n",charge);
     return charge;
   }
@@ -504,8 +505,7 @@ namespace OpenBabel
     if(size != 2)
       return -1;
 	
-    ifs->read((char *)&hydrogens, size);
-    hydrogens = (hydrogens << 8) | (hydrogens >> 8);
+    READ_INT16 (*ifs, hydrogens);
     //	printf("Number of explicit hydrogens: %d\n", hydrogens);
     return 0;
   }
@@ -516,18 +516,15 @@ namespace OpenBabel
     UINT16 tag;
     UINT16 size;
     UINT32 id;
-    char u32[4];
     int depth = 1;
 
     while(ifs->good())
       {
-        ifs->read((char *)&tag, sizeof(tag));
-        tag = (tag << 8) | (tag >> 8);
+        READ_INT16 (*ifs, tag);
         if(tag & kCDXTag_Object)	// Object
           {
             depth++;
-            ifs->read(u32, sizeof(u32));
-            id = ((long) (u32[3] & 0xff) << 24) | ((long) (u32[2] & 0xff) << 16) | ((long) (u32[1] & 0xff) << 8) | ((long) (u32[0] & 0xff));
+            READ_INT32 (*ifs, id);
             //			printf("Object ID (in text-object %08X): %08X has type: %04X\n", textId, id, tag);
             printf("New object in text, type %04X\n", tag);
           }
@@ -538,8 +535,7 @@ namespace OpenBabel
           }
         else	// Property
           {
-            ifs->read((char *)&size, sizeof(size));
-            size = (size << 8) | (size >> 8);
+            READ_INT16 (*ifs, size);
             //			printf("Tag: %04X\tSize: %04X\n", tag, size);
             switch(tag)
               {
@@ -559,7 +555,6 @@ namespace OpenBabel
     UINT16 tag;
     UINT16 size;
     UINT32 id;
-    char u32[4];
     int depth = 1;
     OBAtom atom;
     OBAtom *atom2;
@@ -582,13 +577,11 @@ namespace OpenBabel
 		
     while(ifs->good())
       {
-        ifs->read((char *)&tag, sizeof(tag));
-        tag = (tag << 8) | (tag >> 8);
+        READ_INT16 (*ifs, tag);
         if(tag & kCDXTag_Object)	// Object
           {
             depth++;
-            ifs->read(u32, sizeof(u32));
-            id = ((long) (u32[3] & 0xff) << 24) | ((long) (u32[2] & 0xff) << 16) | ((long) (u32[1] & 0xff) << 8) | ((long) (u32[0] & 0xff));
+            READ_INT32 (*ifs, id);
 #ifdef debug
             printf("Object ID (in node %08X): %08X has type: %04X\n", nodeId, id, tag);
 #endif
@@ -627,8 +620,7 @@ namespace OpenBabel
           }
         else	// Property
           {
-            ifs->read((char *)&size, sizeof(size));
-            size = (size << 8) | (size >> 8);
+            READ_INT16 (*ifs, size);
 #ifdef debug
             printf("Node Tag: %04X\tSize: %04X\n", tag, size);
 #endif
@@ -636,7 +628,7 @@ namespace OpenBabel
               {
               case kCDXProp_Atom_NumHydrogens: getAtomHydrogens(ifs, size); break;
               case kCDXProp_2DPosition: get2DPosition(ifs, size, x, y); 
-                atom.SetVector((double) x / 500000.0, (double) y / -500000.0, (double) 0.0); break;
+                atom.SetVector((double) x / 500000., (double) y / -500000.0, (double) 0.0); break;
               case kCDXProp_Node_Element: getElement(ifs, size, atom); break;
               case kCDXProp_Atom_Charge: atom.SetFormalCharge(getCharge(ifs, size)); break;
               case kCDXProp_Node_Type: nodeType = getNodeType(ifs, size); break;
@@ -681,18 +673,15 @@ namespace OpenBabel
     UINT16 tag;
     UINT16 size;
     UINT32 id, bgnID, endID;
-    char u32[4];
     int depth = 1, order=1, stereo = 0;
 
     while(ifs->good())
       {
-        ifs->read((char *)&tag, sizeof(tag));
-        tag = (tag << 8) | (tag >> 8);
+        READ_INT16 (*ifs, tag);
         if(tag & kCDXTag_Object)	// Object
           {
             depth++;
-            ifs->read(u32, sizeof(u32));
-            id = ((long) (u32[3] & 0xff) << 24) | ((long) (u32[2] & 0xff) << 16) | ((long) (u32[1] & 0xff) << 8) | ((long) (u32[0] & 0xff));
+            READ_INT32 (*ifs, id);
 #ifdef debug
             printf("Object ID (in bond %08X): %08X has type: %04X\n", bondId, id, tag);
 #endif
@@ -713,8 +702,7 @@ namespace OpenBabel
           }
         else	// Property
           {
-            ifs->read((char *)&size, sizeof(size));
-            size = (size << 8) | (size >> 8);
+            READ_INT16 (*ifs, size);
 #ifdef debug
             printf("Bond Tag: %04X\tSize: %04X\n", tag, size);
 #endif
@@ -759,18 +747,15 @@ namespace OpenBabel
     UINT16 tag;
     UINT16 size;
     UINT32 id;
-    char u32[4];
     int depth = 1;
 
     while(ifs->good())
       {
-        ifs->read((char *)&tag, sizeof(tag));
-        tag = (tag << 8) | (tag >> 8);
+        READ_INT16 (*ifs, tag);
         if(tag & kCDXTag_Object)	// Object
           {
             depth++;
-            ifs->read(u32, sizeof(u32));
-            id = ((long) (u32[3] & 0xff) << 24) | ((long) (u32[2] & 0xff) << 16) | ((long) (u32[1] & 0xff) << 8) | ((long) (u32[0] & 0xff));
+            READ_INT32 (*ifs, id);
 #ifdef debug
             printf("Object ID (in generic %08X): %08X has type: %04X\n", objId, id, tag);
 #endif
@@ -796,8 +781,7 @@ namespace OpenBabel
           }
         else	// Property
           {
-            ifs->read((char *)&size, sizeof(size));
-            size = (size << 8) | (size >> 8);
+            READ_INT16 (*ifs, size);
 #ifdef debug
             printf("Generic Tag: %04X\tSize: %04X\n", tag, size);
 #endif
@@ -826,14 +810,12 @@ namespace OpenBabel
     atoms[fragmentId] = -1;
     while(ifs->good())
       {
-        ifs->read((char *)&tag, sizeof(tag));
-        tag = (tag << 8) | (tag >> 8);
+        READ_INT16 ((*ifs), tag);
         if(tag & kCDXTag_Object)	// Object
           {
             depth++;
-            ifs->read(u32, sizeof(u32));
-            id = ((long) (u32[3] & 0xff) << 24) | ((long) (u32[2] & 0xff) << 16) | ((long) (u32[1] & 0xff) << 8) | ((long) (u32[0] & 0xff));
-#ifdef debug
+            READ_INT32 (*ifs, id);
+# ifdef debug
             printf("Object ID (in fragment %08X): %08X has type: %04X\n", fragmentId, id, tag);
 #endif
             if(tag == kCDXObj_Fragment)
@@ -874,8 +856,7 @@ namespace OpenBabel
           }
         else	// Property
           {
-            ifs->read((char *)&size, sizeof(size));
-            size = (size << 8) | (size >> 8);
+            READ_INT16 ((*ifs), size);
             //			printf("Fragment Tag: %04X\tSize: %04X\n", tag, size);
             switch(tag)
               {

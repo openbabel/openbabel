@@ -1,3 +1,8 @@
+2007-02-07  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/chemdrawcdx.cpp: make it work on little-endian
+	machines.
+
 2007-02-02 Chris Morley
 
 	* include/openbabel/mol.h: Remove definition of Separate()
@@ -32,7 +37,7 @@
 
 2007-01-27  Jean Brefort  <jean.brefort@normalesup.org>
 
-	* src/formats/chemdrawcdx.cpp: add support for formal charges.
+	* src/formats/cdxmlformat.cpp: add support for formal charges.
 
 2007-01-26  Jean Brefort  <jean.brefort@normalesup.org>
 
@@ -63,7 +68,6 @@
 	* src/formats/xml/cdxmlformat.cpp: make it basically work.
 	* src/formats/xml/xml.cpp: fix a memory leak.
 
->>>>>>> .r1736
 2007-01-23  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* tools/obmm.cpp: Added check for cin.eof resolving bug 1639880.
