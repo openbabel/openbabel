@@ -1,3 +1,7 @@
+2007-02-08  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts: Regenerated bindings for scripting languages
+	
 2007-02-07  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/chemdrawcdx.cpp: make it work on little-endian

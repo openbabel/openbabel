@@ -18528,38 +18528,6 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBMol_1StripSalts(JNIEnv *jenv, jc
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMol_1Separate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jlong jresult = 0 ;
-  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  int arg2 ;
-  std::vector<OpenBabel::OBMol > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBMol **)&jarg1; 
-  arg2 = (int)jarg2; 
-  result = (arg1)->Separate(arg2);
-  *(std::vector<OpenBabel::OBMol > **)&jresult = new std::vector<OpenBabel::OBMol >((std::vector<OpenBabel::OBMol > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMol_1Separate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  std::vector<OpenBabel::OBMol > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBMol **)&jarg1; 
-  result = (arg1)->Separate();
-  *(std::vector<OpenBabel::OBMol > **)&jresult = new std::vector<OpenBabel::OBMol >((std::vector<OpenBabel::OBMol > &)result); 
-  return jresult;
-}
-
-
 SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBMol_1ConvertDativeBonds(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;

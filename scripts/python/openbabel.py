@@ -1802,7 +1802,6 @@ class OBMol(OBBase):
     def AddHydrogens(*args): return _openbabel.OBMol_AddHydrogens(*args)
     def AddPolarHydrogens(*args): return _openbabel.OBMol_AddPolarHydrogens(*args)
     def StripSalts(*args): return _openbabel.OBMol_StripSalts(*args)
-    def Separate(*args): return _openbabel.OBMol_Separate(*args)
     def ConvertDativeBonds(*args): return _openbabel.OBMol_ConvertDativeBonds(*args)
     def CorrectForPH(*args): return _openbabel.OBMol_CorrectForPH(*args)
     def AssignSpinMultiplicity(*args): return _openbabel.OBMol_AssignSpinMultiplicity(*args)

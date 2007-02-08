@@ -1166,8 +1166,6 @@ class openbabelJNI {
   public final static native boolean OBMol_AddHydrogens__SWIG_3(long jarg1, OBMol jarg1_, long jarg2, OBAtom jarg2_);
   public final static native boolean OBMol_AddPolarHydrogens(long jarg1, OBMol jarg1_);
   public final static native boolean OBMol_StripSalts(long jarg1, OBMol jarg1_);
-  public final static native long OBMol_Separate__SWIG_0(long jarg1, OBMol jarg1_, int jarg2);
-  public final static native long OBMol_Separate__SWIG_1(long jarg1, OBMol jarg1_);
   public final static native boolean OBMol_ConvertDativeBonds(long jarg1, OBMol jarg1_);
   public final static native boolean OBMol_CorrectForPH(long jarg1, OBMol jarg1_);
   public final static native boolean OBMol_AssignSpinMultiplicity(long jarg1, OBMol jarg1_);

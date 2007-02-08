@@ -2662,7 +2662,6 @@ sub DESTROY {
 *AddHydrogens = *Chemistry::OpenBabelc::OBMol_AddHydrogens;
 *AddPolarHydrogens = *Chemistry::OpenBabelc::OBMol_AddPolarHydrogens;
 *StripSalts = *Chemistry::OpenBabelc::OBMol_StripSalts;
-*Separate = *Chemistry::OpenBabelc::OBMol_Separate;
 *ConvertDativeBonds = *Chemistry::OpenBabelc::OBMol_ConvertDativeBonds;
 *CorrectForPH = *Chemistry::OpenBabelc::OBMol_CorrectForPH;
 *AssignSpinMultiplicity = *Chemistry::OpenBabelc::OBMol_AssignSpinMultiplicity;

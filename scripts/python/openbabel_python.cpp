@@ -52007,100 +52007,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBMol_Separate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  int arg2 ;
-  std::vector<OpenBabel::OBMol,std::allocator<OpenBabel::OBMol > > result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBMol_Separate",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMol_Separate" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBMol_Separate" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  result = (arg1)->Separate(arg2);
-  resultobj = swig::from(static_cast< std::vector<OpenBabel::OBMol,std::allocator<OpenBabel::OBMol > > >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_OBMol_Separate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  std::vector<OpenBabel::OBMol,std::allocator<OpenBabel::OBMol > > result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBMol_Separate",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMol_Separate" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  result = (arg1)->Separate();
-  resultobj = swig::from(static_cast< std::vector<OpenBabel::OBMol,std::allocator<OpenBabel::OBMol > > >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_OBMol_Separate(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[3];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 1) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_OBMol_Separate__SWIG_1(self, args);
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMol, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_int(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_OBMol_Separate__SWIG_0(self, args);
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'OBMol_Separate'.\n  Possible C/C++ prototypes are:\n    Separate(int)\n    Separate()\n");
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_OBMol_ConvertDativeBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
@@ -92306,7 +92212,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBMol_AddHydrogens", _wrap_OBMol_AddHydrogens, METH_VARARGS, NULL},
 	 { (char *)"OBMol_AddPolarHydrogens", _wrap_OBMol_AddPolarHydrogens, METH_VARARGS, NULL},
 	 { (char *)"OBMol_StripSalts", _wrap_OBMol_StripSalts, METH_VARARGS, NULL},
-	 { (char *)"OBMol_Separate", _wrap_OBMol_Separate, METH_VARARGS, NULL},
 	 { (char *)"OBMol_ConvertDativeBonds", _wrap_OBMol_ConvertDativeBonds, METH_VARARGS, NULL},
 	 { (char *)"OBMol_CorrectForPH", _wrap_OBMol_CorrectForPH, METH_VARARGS, NULL},
 	 { (char *)"OBMol_AssignSpinMultiplicity", _wrap_OBMol_AssignSpinMultiplicity, METH_VARARGS, NULL},
