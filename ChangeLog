@@ -1,3 +1,19 @@
+2007-02-11 Chris Morley
+
+	Replaced filter for line endings with a version which works
+	with fastsearch. Solves bug 1617324.
+	* include/openbabel/newlinebuf.h and src//newlinebuf.cpp:
+	replaced by include/openbabel/lineend.h
+	
+	* src/obconversion.cpp: code in Convert() and Read() replaced.
+	
+	Removed peek() in the Convert()loop. This was needed for 
+	some other mod, which has probably not yet been committed.
+	This is not causing any problems for me, but is rather
+	central to the conversion process.
+	
+	Added some documentation on GetOutputIndex. 
+
 2007-02-08  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts: Regenerated bindings for scripting languages

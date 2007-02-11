@@ -38,6 +38,8 @@ GNU General Public License for more details.
 #include <map>
 
 #include <openbabel/obconversion.h>
+#include "openbabel/lineend.h"
+
 #ifndef NO_NEWLINEBUF
   #include <openbabel/newlinebuf.h>
 #endif
@@ -55,6 +57,8 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
 using namespace std;
+//using namespace boost::iostreams;
+
 namespace OpenBabel {
 
   /** @class OBFormat obconversion.h <openbabel/obconversion.h>
@@ -278,7 +282,7 @@ namespace OpenBabel {
 
     pAuxConv       = NULL;
   }
-  ////////////////////////////////////////////////
+  ///////////////////////////////////////////////
 
   OBConversion::~OBConversion() 
   {
@@ -461,16 +465,26 @@ namespace OpenBabel {
       }
 #endif
 
-#ifndef NO_NEWLINEBUF
-    newlinebuf *filter;
-    if (!(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
-      {
-        filter = new newlinebuf(pInStream->rdbuf());
-        pInStream->rdbuf(filter);
-      }
-#endif
+    //The FilteringInputStreambuf delivers characters to the istream, pInStream,
+    //and receives characters this stream's original rdbuf. 
+    //It filters them, converting CRLF and CR line endings to LF.
+    //seek and tellg requests to the stream are passed through to the original
+    //rdbuf.
+    //streambuf objects cannot be member variables and so need to be made here.
+    //Because FilteringInputStreambuf has to be at this level to remain
+    //in scope during Convert(), it is always constructed, but is only used in
+    //with formats with non-binary and which are not XML (which should not be 
+    //sensitive to line endings anyway).
+    //
+    FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
+    streambuf* pOrigInBuf = pInStream->rdbuf();
+    if(!(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
+      streambuf* pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
+
     int count = Convert();
+
     pOutStream = pOrigOutStream;
+    pInStream->rdbuf(pOrigInBuf);
     return count;
   }
 
@@ -513,7 +527,7 @@ namespace OpenBabel {
     wInlen=0;
 
     //Input loop
-    while(ReadyToInput && pInStream->peek() != EOF && pInStream->good())
+    while(ReadyToInput && pInStream->good()) //Possible to omit? && pInStream->peek() != EOF 
       {
         if(pInStream==&cin)
           {
@@ -681,6 +695,9 @@ namespace OpenBabel {
     return true;
   }
   //////////////////////////////////////////////////////
+  ///Returns the number of objects which have been output or are currently being output.
+  ///The outputindex is incremented when an object for output is fetched by GetChemObject().
+  ///So the function will return 1 if called from WriteMolecule() during output of the first object.
   int OBConversion::GetOutputIndex() const
   {
     //The number of objects actually written already from this instance of OBConversion
@@ -761,18 +778,15 @@ namespace OpenBabel {
       pInStream = &zIn;
 #endif
 
-#ifndef NO_NEWLINEBUF
-    newlinebuf *filter;
-    if (!(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
-      {
-        filter = new newlinebuf(pInStream->rdbuf());
-        pInStream->rdbuf(filter);
-      }
-#endif
+    FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
+    streambuf* pOrigInBuf = pInStream->rdbuf();
+    if(!(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
+      streambuf* pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
 
     // we really need to do this, but requires including base.h -GH
     //    if (clearFirst)
     //      pOb->Clear();
+    pInStream->rdbuf(pOrigInBuf);
     return pInFormat->ReadMolecule(pOb, this);
   }
   //////////////////////////////////////////////////
@@ -1036,6 +1050,7 @@ namespace OpenBabel {
     bool CommonInFormat = pInFormat ? true:false; //whether set in calling routine
     ios_base::openmode omode = 
       pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
+    obErrorLog.ClearLog();
     try
       {
         ofstream ofs;
