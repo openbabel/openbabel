@@ -21,7 +21,17 @@
 	* src/generic.cpp, include/openbabel/generic.h: Change reference
 	of DataSource to DataOrigin, as suggested by Noel.
 
-	
+	* include/openbabel/bitvec.h: Fix bug (and documentation) with
+	FirstBit().
+
+	* include/openbabel/obutil.h: Fix GCC compile warning.
+
+	* test/cansmi.cpp: New test program for Canonical SMILES format.
+
+	* test/wrapper.sh, test/Makefile.am, test/Makefile.in: Use it.
+
+	* data/types.txt, data/types.h: Fix PR#1650239 with incorrect
+	Sybyl Mol2 atom types.
 
 2007-02-11 Chris Morley
 
