@@ -23,7 +23,7 @@ libopenbabel_la_SOURCES = \
 		chains.cpp chiral.cpp data.cpp \
 		fingerprint.cpp forcefield.cpp generic.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
-		molchrg.cpp newlinebuf.cpp \
+		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
 		obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \

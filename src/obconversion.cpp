@@ -40,10 +40,6 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include "openbabel/lineend.h"
 
-#ifndef NO_NEWLINEBUF
-  #include <openbabel/newlinebuf.h>
-#endif
-
 #ifdef HAVE_LIBZ
 #include "zipstream.h"
 #endif

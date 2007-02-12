@@ -71,7 +71,7 @@ namespace OpenBabel
     virtual std::streampos   seekoff(std::streamoff off, std::ios_base::seekdir way,
       std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
     {
-      streampos ret = mySource->pubseekoff(off, way, which);
+      std::streampos ret = mySource->pubseekoff(off, way, which);
 //      sync();
       return ret;
     };
@@ -79,7 +79,7 @@ namespace OpenBabel
     virtual std::streampos   seekpos(std::streampos sp, 
       std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
     {
-      streampos ret = mySource->pubseekpos(sp, which);
+      std::streampos ret = mySource->pubseekpos(sp, which);
 //      sync();
       return ret;
     };
@@ -130,7 +130,7 @@ namespace OpenBabel
       if ( result != EOF )
       {
         if( result < 0 || result > UCHAR_MAX ) 
-          cerr << "FilteringInputStreambuf error" << endl;
+          std::cerr << "FilteringInputStreambuf error" << std::endl;
         myBuffer = result ;
         setg( &myBuffer , &myBuffer , &myBuffer + 1 ) ;
       }
