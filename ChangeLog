@@ -1,5 +1,9 @@
 2007-02-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/formats/cansmilesformat.cpp
+	(OBMol2Cansmi::AddHydrogenToChiralCenters): Fix PR#1658317 with
+	chirality on last atom. Switched iterator to use obiter.h macros.
+
 	* configure.in, configure, src/config.h.in: Add big-endian,
 	little-endian check,	which defines WORDS_BIGENDIAN for
 	chemdrawcdx.cpp (and other binary formats in the future).
