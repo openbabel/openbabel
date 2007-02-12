@@ -45,7 +45,7 @@ int main(int argc,char *argv[])
     {
       cout << "Usage: aromatest <file>" << endl;
       cout << " Tests aromaticity perception -- all non-hydrogen atoms"
-	   << "   are expected to be aromatic." << endl;
+           << "   are expected to be aromatic." << endl;
       return(-1);
     }
 
@@ -71,7 +71,7 @@ int main(int argc,char *argv[])
   // Finally, we can do some work!
   OBMol mol;
   
-  unsigned int testCount = 1;
+  unsigned int testCount = 0;
 
   if (! conv.SetInAndOutFormats(pFormat, pFormat))
     {
@@ -87,42 +87,42 @@ int main(int argc,char *argv[])
       molCount++;
       
       FOR_ATOMS_OF_MOL(atom, mol)
-	{
-	  if (atom->IsHydrogen())
-	    continue;
+        {
+          if (atom->IsHydrogen())
+            continue;
 
-	  if (atom->IsAromatic())
-	    cout << "ok " << testCount++ << "\n";
-	  else
-	    {
-	      cout << "not ok " << testCount++ << " # atom isn't aromatic!\n";
-	      cout << "# atom idx " << atom->GetIdx()
-		   << " in molecule " << molCount << " "
-		   << mol.GetTitle() << "\n";
-	    }
-	}
+          if (atom->IsAromatic())
+            cout << "ok " << ++testCount << "\n";
+          else
+            {
+              cout << "not ok " << ++testCount << " # atom isn't aromatic!\n";
+              cout << "# atom idx " << atom->GetIdx()
+                   << " in molecule " << molCount << " "
+                   << mol.GetTitle() << "\n";
+            }
+        }
 
       FOR_BONDS_OF_MOL(bond, mol)
-	{
-	  if (bond->IsInRing() && !bond->IsAromatic())
-	    {
-	      cout << "not ok " << testCount++ << " # bond isn't aromatic!\n";
-	      cout << "# begin atom " << bond->GetBeginAtomIdx()
-		   << " end atom " << bond->GetEndAtomIdx()
-		   << " bond order " << bond->GetBO();
-	      cout << " in molecule " << molCount << " "
-		   << mol.GetTitle() << "\n";
-	    }
-	  else if (bond->IsInRing() && bond->IsAromatic())
-	    {
-	      cout << "ok " << testCount++ << "\n";
-	    }
-	}
+        {
+          if (bond->IsInRing() && !bond->IsAromatic())
+            {
+              cout << "not ok " << ++testCount << " # bond isn't aromatic!\n";
+              cout << "# begin atom " << bond->GetBeginAtomIdx()
+                   << " end atom " << bond->GetEndAtomIdx()
+                   << " bond order " << bond->GetBO();
+              cout << " in molecule " << molCount << " "
+                   << mol.GetTitle() << "\n";
+            }
+          else if (bond->IsInRing() && bond->IsAromatic())
+            {
+              cout << "ok " << ++testCount << "\n";
+            }
+        }
 	
     } // while reading molecules
     
   // output the number of tests run
-   cout << "1.." << testCount-1 << endl;
+  cout << "1.." << testCount << endl;
 
   return(0);
 }

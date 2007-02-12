@@ -1,6 +1,6 @@
 SUBDIRS = cmltest
 
-noinst_PROGRAMS = aromatic atom bond \
+noinst_PROGRAMS = aromatic atom bond cansmi \
 	conversion data format formula formalcharge \
 	internalcoord invalidsmarts invalidsmiles \
 	iterators math mol residue rings smarts \
@@ -32,6 +32,7 @@ roundtrip_SOURCES = roundtrip.cpp
 aromatic_SOURCES = aromatest.cpp
 atom_SOURCES = atom.cpp
 bond_SOURCES = bond.cpp
+cansmi_SOURCES = cansmi.cpp
 conversion_SOURCES = conversion.cpp
 data_SOURCES = data.cpp
 format_SOURCES = format.cpp
@@ -42,6 +43,7 @@ invalidsmiles_SOURCES = invalidsmiles.cpp
 invalidsmarts_SOURCES = invalidsmarts.cpp
 iterators_SOURCES = iterators.cpp
 math_SOURCES = math.cpp
+mmff94validate_SOURCES = mmff94validate.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
@@ -49,4 +51,3 @@ smarts_SOURCES = smartstest.cpp
 smilesmatch_SOURCES = smilesmatch.cpp
 textbuffer_SOURCES = textbuffer.cpp
 unitcell_SOURCES = unitcell.cpp
-mmff94validate_SOURCES = mmff94validate.cpp

@@ -2,7 +2,7 @@
 
 # Run "prove" on all Perl programs
 
-TESTS="aromatic.pl atom bond conversion data format"
+TESTS="aromatic.pl atom bond cansmi conversion data format"
 TESTS="${TESTS} formula formalcharge internalcoord"
 TESTS="${TESTS} iterators"
 TESTS="${TESTS} invalidsmarts invalidsmiles math"
