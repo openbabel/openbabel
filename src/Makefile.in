@@ -67,19 +67,19 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	bond.cpp bondtyper.cpp canon.cpp chains.cpp chiral.cpp \
 	data.cpp fingerprint.cpp forcefield.cpp generic.cpp grid.cpp \
-	kekulize.cpp matrix.cpp mol.cpp molchrg.cpp newlinebuf.cpp \
-	obconversion.cpp oberror.cpp obiter.cpp obutil.cpp \
-	parsmart.cpp patty.cpp phmodel.cpp rand.cpp residue.cpp \
-	ring.cpp rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
-	transform.cpp dlhandler_unix.cpp
+	kekulize.cpp matrix.cpp mol.cpp molchrg.cpp obconversion.cpp \
+	oberror.cpp obiter.cpp obutil.cpp parsmart.cpp patty.cpp \
+	phmodel.cpp rand.cpp residue.cpp ring.cpp rotor.cpp \
+	rotamer.cpp tokenst.cpp typer.cpp transform.cpp \
+	dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo canon.lo chains.lo chiral.lo data.lo \
 	fingerprint.lo forcefield.lo generic.lo grid.lo kekulize.lo \
-	matrix.lo mol.lo molchrg.lo newlinebuf.lo obconversion.lo \
-	oberror.lo obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo \
-	rand.lo residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo \
-	typer.lo transform.lo $(am__objects_1)
+	matrix.lo mol.lo molchrg.lo obconversion.lo oberror.lo \
+	obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo rand.lo \
+	residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo \
+	transform.lo $(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -269,7 +269,7 @@ libopenbabel_la_SOURCES = \
 		chains.cpp chiral.cpp data.cpp \
 		fingerprint.cpp forcefield.cpp generic.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
-		molchrg.cpp newlinebuf.cpp \
+		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
 		obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
@@ -391,7 +391,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrix.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/molchrg.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/newlinebuf.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obconversion.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/oberror.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obiter.Plo@am__quote@
