@@ -126,13 +126,17 @@ namespace OpenBabel
     }
     //! \brief Initialize the square root lookup table
     //! \param max The maximum square root stored in the lookup table (e.g., if you want the square root of 144, supply 12 for max)
-    //! \param incr The floating point resolution of the lookup table    
+    //! \param incr The floating point resolution of the lookup table
     void Init(double max,double incr)
     {
-      int i;
-      double r;
+      // parameters are potentially unneeded, but let's do this until we can 
+      // deprecate them
+      _max = max * max;
+      _incr = incr;
 
       //array size needs to be large enough to account for fp error
+      int i;
+      double r;
       _tbl = new double [static_cast<int>((_max/_incr)+10)];
       for (r = (_incr/2.0),i=0;r <= _max;r += _incr,++i)
         _tbl[i] = sqrt(r);

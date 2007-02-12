@@ -66,10 +66,11 @@ namespace OpenBabel
       void SetRangeOff(int, int);
       void Fold(int);
 
-      //! \return the index of the first bit that is set to true
+      //! \return the index of the first bit past @p index that is set to true
+      //! \param index the first bit to consider
       int FirstBit(int index = 0)
         {
-          return (BitIsSet(0) ? 0  : NextBit(0));
+          return (BitIsSet(index) ? 0  : NextBit(index));
         }
       int NextBit(int);
       //! \return the index of the last bit (for iterating)

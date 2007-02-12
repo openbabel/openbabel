@@ -130,7 +130,7 @@ namespace OpenBabel
   //
 
   OBGenericData::OBGenericData(const std::string attr, const unsigned int type,
-                               const DataSource  source):
+                               const DataOrigin  source):
     _attr(attr), _type(type), _source(source)
   { }
 

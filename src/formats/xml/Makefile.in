@@ -55,6 +55,13 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(pkglibdir)"
 pkglibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(pkglib_LTLIBRARIES)
+cdxmlformat_la_LIBADD =
+am__cdxmlformat_la_SOURCES_DIST = cdxmlformat.cpp xml.cpp \
+	../obmolecformat.cpp
+@BUILD_SHARED_TRUE@am_cdxmlformat_la_OBJECTS = cdxmlformat.lo xml.lo \
+@BUILD_SHARED_TRUE@	obmolecformat.lo
+cdxmlformat_la_OBJECTS = $(am_cdxmlformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_cdxmlformat_la_rpath = -rpath $(pkglibdir)
 cmlformat_la_LIBADD =
 am__cmlformat_la_SOURCES_DIST = cmlformat.cpp xml.cpp \
 	../obmolecformat.cpp
@@ -93,9 +100,11 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(cmlformat_la_SOURCES) $(cmlreactlformat_la_SOURCES) \
-	$(pubchem_la_SOURCES) $(xmlformat_la_SOURCES)
-DIST_SOURCES = $(am__cmlformat_la_SOURCES_DIST) \
+SOURCES = $(cdxmlformat_la_SOURCES) $(cmlformat_la_SOURCES) \
+	$(cmlreactlformat_la_SOURCES) $(pubchem_la_SOURCES) \
+	$(xmlformat_la_SOURCES)
+DIST_SOURCES = $(am__cdxmlformat_la_SOURCES_DIST) \
+	$(am__cmlformat_la_SOURCES_DIST) \
 	$(am__cmlreactlformat_la_SOURCES_DIST) \
 	$(am__pubchem_la_SOURCES_DIST) \
 	$(am__xmlformat_la_SOURCES_DIST)
@@ -249,12 +258,10 @@ AM_CPPFLAGS = @XML_CPPFLAGS@
 AM_LDFLAGS = @LIBS@ @XML_LIBS@
 @BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
 @BUILD_SHARED_TRUE@  cmlreactlformat.la cmlformat.la \
-@BUILD_SHARED_TRUE@	pubchem.la xmlformat.la
+@BUILD_SHARED_TRUE@	pubchem.la xmlformat.la cdxmlformat.la
 
-# cdxmlformat.la
-
-# cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
-# cdxmlformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
+@BUILD_SHARED_TRUE@cdxmlformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@cmlreactlformat_la_SOURCES = cmlreactlformat.cpp xml.cpp ../obmolecformat.cpp
@@ -323,6 +330,8 @@ clean-pkglibLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
+cdxmlformat.la: $(cdxmlformat_la_OBJECTS) $(cdxmlformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_cdxmlformat_la_rpath) $(cdxmlformat_la_LDFLAGS) $(cdxmlformat_la_OBJECTS) $(cdxmlformat_la_LIBADD) $(LIBS)
 cmlformat.la: $(cmlformat_la_OBJECTS) $(cmlformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_cmlformat_la_rpath) $(cmlformat_la_LDFLAGS) $(cmlformat_la_OBJECTS) $(cmlformat_la_LIBADD) $(LIBS)
 cmlreactlformat.la: $(cmlreactlformat_la_OBJECTS) $(cmlreactlformat_la_DEPENDENCIES) 
@@ -338,6 +347,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cdxmlformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmlformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmlreactlformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obmolecformat.Plo@am__quote@

@@ -148,13 +148,15 @@ namespace OpenBabel
     };
   } // end namespace
 
-  enum DataSource {
-    any,           //!< Undefined or unspecified (default) 
-    readInput,     //!< Read from an input file
-    userInput,     //!< Added by the user
-    perceived,     //!< Perceived by Open Babel library methods
-    external       //!< Added by an external program
+  enum DataOrigin {
+    any,                 //!< Undefined or unspecified (default) 
+    fileformatInput,     //!< Read from an input file
+    userInput,           //!< Added by the user
+    perceived,           //!< Perceived by Open Babel library methods
+    external             //!< Added by an external program
   };
+
+
 
   //! \brief Base class for generic data
   // class introduction in generic.cpp
@@ -163,11 +165,11 @@ namespace OpenBabel
   protected:
     std::string  _attr;  //!< attribute tag (e.g., "UnitCell", "Comment" or "Author")
     unsigned int _type;  //!< attribute type -- declared for each subclass
-    DataSource   _source;//!< source of data for accounting
+    DataOrigin   _source;//!< source of data for accounting
   public:
     OBGenericData(const std::string attr = "undefined",
                   const unsigned int type =  OBGenericDataType::UndefinedData,
-                  const DataSource source = any);
+                  const DataOrigin source = any);
     //Use default copy constructor and assignment operators
     //OBGenericData(const OBGenericData&);
 		
@@ -188,8 +190,8 @@ namespace OpenBabel
     //! Set the attribute (key), which can be used to retrieve this data
     void                      SetAttribute(const std::string &v)
     {        _attr = v;        }
-    //! Set the source of this data, which can be used to filter the data
-    void SetSource(const DataSource s) { _source = s; }
+    //! Set the origin of this data, which can be used to filter the data
+    void SetOrigin(const DataOrigin s) { _source = s; }
     //! \return The attribute (key), which can be used to retrieve this data
     virtual const std::string &GetAttribute()  const
     {        return(_attr);    }
@@ -200,10 +202,11 @@ namespace OpenBabel
     //! but should never be called
     virtual const std::string &GetValue()  const
     {			return _attr; }
-    virtual const DataSource GetSource() const
+    virtual const DataOrigin GetOrigin() const
     {     return _source; }
   };
 
+  //! \class OBCommentData generic.h <openbabel/generic.h>
   //! Used to store a comment string (can be multiple lines long)
  class OBAPI OBCommentData : public OBGenericData
   {
@@ -226,6 +229,7 @@ namespace OpenBabel
     {        return(_data);      }
   };
 
+  //! \class OBExternalBond generic.h <openbabel/generic.h>
   //! \brief Used to store information on an external bond 
   //! (e.g., SMILES fragments)
   class OBAPI OBExternalBond
@@ -247,6 +251,7 @@ namespace OpenBabel
     void SetBond(OBBond *bond) {        _bond = bond;    }
   };
 
+  //! \class OBExternalBondData generic.h <openbabel/generic.h>
   //! \brief Used to store information on external bonds (e.g., in SMILES fragments)
  class OBAPI OBExternalBondData : public OBGenericData
   {
@@ -265,7 +270,8 @@ namespace OpenBabel
       }
   };
 
-  //! \brief Used to store arbitrary attribute/value relationships.
+  //! \class OBPairData generic.h <openbabel/generic.h>
+  //! \brief Used to store arbitrary text attribute/value relationships.
   //!
   //! Ideal for arbitrary text descriptors for molecules, atoms, bonds, residues,
   //!  e.g. in QSAR.
@@ -283,6 +289,7 @@ namespace OpenBabel
     {      return(_value);    }
   };
 
+  //! \class OBPairTemplate generic.h <openbabel/generic.h>
   //! \brief Used to store arbitrary attribute/value relationsips of any type.
   // More detailed description in generic.cpp
   template <class ValueT>
@@ -297,11 +304,13 @@ namespace OpenBabel
     virtual const ValueT &GetValue() const    { return(_value); }
   };
 
+  //! Store arbitrary key/value integer data like OBPairData
   typedef OBPairTemplate<int>     OBPairInteger;
+  //! Store arbitrary key/value floating point data like OBPairData
   typedef OBPairTemplate<double>  OBPairFloatingPoint;
 
+  //! \class OBSetData generic.h <openbabel/generic.h>
   //! \brief Used to store arbitrary attribute/set relationships.
-  //!
   //! Should be used to store a set of OBGenericData based on an attribute.
  class OBAPI OBSetData : public OBGenericData
   {
@@ -382,6 +391,7 @@ namespace OpenBabel
 
   }; // OBSetData
 
+  //! \class OBVirtualBond generic.h <openbabel/generic.h>
   //! \brief Used to temporarily store bonds that reference
   //! an atom that has not yet been added to a molecule
  class OBAPI OBVirtualBond : public OBGenericData
@@ -401,6 +411,7 @@ namespace OpenBabel
     int GetStereo() {      return(_stereo); }
   };
 
+  //! \class OBRingData generic.h <openbabel/generic.h>
   //! Used to store the SSSR set (filled in by OBMol::GetSSSR())
  class OBAPI OBRingData : public OBGenericData
   {
@@ -435,6 +446,7 @@ namespace OpenBabel
     OBRing *NextRing(std::vector<OBRing*>::iterator &i);
   };
 
+  //! \class OBUnitCell generic.h <openbabel/generic.h>
   //! \brief Used for storing information about periodic boundary conditions
   //!   with conversion to/from translation vectors and
   //!  (a, b, c, alpha, beta, gamma)
@@ -459,7 +471,7 @@ namespace OpenBabel
     int _numericSpaceGroup;
     LatticeType _lattice;
   public:
-    //! public contructor
+    //! public constructor
     OBUnitCell();
     OBUnitCell(const OBUnitCell &);
     virtual OBGenericData* Clone(OBBase* /*parent*/) const
@@ -483,7 +495,7 @@ namespace OpenBabel
       _alpha = alpha; _beta = beta; _gamma = gamma; }
     void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
 
-    //! set the offset to the origin to @p v1
+    //! Set the offset to the origin to @p v1
     void SetOffset(const vector3 v1) { _offset = v1; }
 
     //! Set the space group symbol for this unit cell.
@@ -513,7 +525,10 @@ namespace OpenBabel
     double GetBeta() { return(_beta); }
     //! \return angle gamma
     double GetGamma(){ return(_gamma);}
+    //! \return any offset in the origin of the periodic boundaries
     vector3 GetOffset() { return(_offset); }
+
+    //! \return the text representation of the space group for this unit cell
     const std::string GetSpaceGroup() { return(_spaceGroup); }
 		
     //! \return lattice type (based on the @p spacegroup)
@@ -537,7 +552,11 @@ namespace OpenBabel
     double GetCellVolume();
   };
 
+  //! \class OBConformerData generic.h <openbabel/generic.h>
   //! \brief Used to hold data on conformers or geometry optimization steps
+  //!
+  //! Supplements the support for multiple coordinate sets in OBMol, e.g.,
+  //! OBMol::GetConformer()
  class OBAPI OBConformerData: public OBGenericData
   {
   protected:
@@ -582,6 +601,7 @@ namespace OpenBabel
 
   };
 
+  //! \class OBSymmetryData generic.h <openbabel/generic.h>
   //! \brief Used to hold the point-group and/or space-group symmetry
   //! \todo Add support for translation between symbol notations.
   //!        Add symmetry perception routines.
@@ -607,6 +627,7 @@ namespace OpenBabel
     std::string GetSpaceGroup() { return _spaceGroup; }
   };
 
+  //! \class OBTorsion generic.h <openbabel/generic.h>
   //! \brief Used to hold the torsion data for a single rotatable bond
   //! and all four atoms around it
   class OBAPI OBTorsion
@@ -616,12 +637,10 @@ namespace OpenBabel
 
   protected:
     std::pair<OBAtom*,OBAtom*> _bc;
-    //! double is angle in rads
+    //! double is angle in radians
     std::vector<triple<OBAtom*,OBAtom*,double> > _ads;
 
-  OBTorsion(): _bc(NULL, NULL)
-      {
-      }
+    OBTorsion(): _bc(NULL, NULL)      {      }
     //protected for use only by friend classes
     OBTorsion(OBAtom *, OBAtom *, OBAtom *, OBAtom *);
 
@@ -629,16 +648,12 @@ namespace OpenBabel
 
   public:
     OBTorsion(const OBTorsion &);
-    ~OBTorsion()
-      {}
+    ~OBTorsion()      {}
 
     OBTorsion& operator=(const OBTorsion &);
 
     void Clear();
-    bool Empty()
-    {
-      return(_bc.first == 0 && _bc.second == 0);
-    }
+    bool Empty()    {      return(_bc.first == 0 && _bc.second == 0);    }
 
     bool AddTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d);
     bool AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &atoms);
@@ -668,7 +683,9 @@ namespace OpenBabel
     bool IsProtonRotor();
   };
 
+  //! \class OBTorsionData generic.h <openbabel/generic.h>
   //! \brief Used to hold torsions as generic data for OBMol.
+  //! 
   //! Filled by OBMol::FindTorsions()
  class OBAPI OBTorsionData : public OBGenericData
   {
@@ -708,6 +725,7 @@ namespace OpenBabel
     bool FillTorsionArray(std::vector<std::vector<unsigned int> > &torsions);
   };
 
+  //! \class OBAngle generic.h <openbabel/generic.h>
   //! Used to hold the 3 atoms in an angle and the angle itself
   class OBAPI OBAngle
   {
@@ -760,7 +778,7 @@ namespace OpenBabel
 
   };
 
-
+  //! \class OBAngleData generic.h <openbabel/generic.h>
   //! \brief Used to hold all angles in a molecule as generic data for OBMol
  class OBAPI OBAngleData : public OBGenericData
   {
@@ -798,6 +816,7 @@ namespace OpenBabel
 
   enum atomreftype{output,input,calcvolume}; // sets which atom4ref is accessed
 
+  //! \class OBChiralData generic.h <openbabel/generic.h>
   //! \brief Used to hold chiral inforamtion about the atom as OBGenericData
  class OBAPI OBChiralData : public OBGenericData
   {
@@ -827,6 +846,7 @@ namespace OpenBabel
     unsigned int GetSize(atomreftype t) const;
   };
 
+  //! \class OBSerialNums generic.h <openbabel/generic.h>
   //! Defines a map between serial numbers (e.g., in a PDB file) and OBAtom objects inside a molecule
  class OBSerialNums : public OBGenericData
   {

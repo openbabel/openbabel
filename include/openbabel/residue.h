@@ -158,7 +158,7 @@ namespace OpenBabel {
     unsigned int              _aakey; //!< Amino Acid key ID -- see SetResidueKeys()
     unsigned int              _reskey;//!< Residue key ID -- see SetResidueKeys()
     unsigned int              _resnum;//!< Residue number (i.e., in file)
-    std::string               _resname;//!< Residue text name
+    std::string               _resname;//!<Residue text name
 
     std::vector<bool>         _hetatm;//!< Is a given atom a HETAM
     std::vector<std::string>  _atomid;//!< Residue atom text IDs

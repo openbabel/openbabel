@@ -66,18 +66,18 @@ namespace OpenBabel
     };
 
 #ifndef LowBit
-#define LowBit(set, bit)\
-  {register int m;\
-   if (set != 0)\
-   {\
-      bit = 31;\
-      if (set != 0x80000000) {\
-      if ((m = (set & 0x0000ffff))) {set = m; bit -= 16;}\
-      if ((m = (set & 0x00ff00ff))) {set = m; bit -= 8;}\
-      if ((m = (set & 0x0f0f0f0f))) {set = m; bit -= 4;}\
-      if ((m = (set & 0x33333333))) {set = m; bit -= 2;}\
-      if ((m = (set & 0x55555555))) {set = m; bit -= 1;}}}\
-   else bit = -1;}
+#define LowBit(set, bit)                                        \
+  {register int m;                                              \
+    if (set != 0)                                               \
+      {                                                         \
+        bit = 31;                                               \
+        if (set != 0x80000000) {                                \
+          if ((m = (set & 0x0000ffff))) {set = m; bit -= 16;}   \
+          if ((m = (set & 0x00ff00ff))) {set = m; bit -= 8;}    \
+          if ((m = (set & 0x0f0f0f0f))) {set = m; bit -= 4;}    \
+          if ((m = (set & 0x33333333))) {set = m; bit -= 2;}    \
+          if ((m = (set & 0x55555555))) {set = m; bit -= 1;}}}  \
+    else bit = -1;}
 #endif
 
   OBBitVec::OBBitVec(const OBBitVec &bv)
@@ -113,22 +113,22 @@ namespace OpenBabel
         int hibitp = hibit % SETWORD;
 
         if (hiword >= _size)
-	  Resize((hiword+1) * SETWORD);
+          Resize((hiword+1) * SETWORD);
 
         if (loword == hiword)
-	  {
+          {
             for ( i = lobitp ; i <= hibitp ; i++ )
-	      _set[loword] |= (1<<i);
-	  }
+              _set[loword] |= (1<<i);
+          }
         else
-	  {
+          {
             for ( i = lobitp ; i < SETWORD ; i++ )
-	      _set[loword] |= (1<<i);
+              _set[loword] |= (1<<i);
             for ( i = loword + 1 ; i < hiword ; i++ )
-	      _set[i] = 0xFFFFFFFF;
+              _set[i] = 0xFFFFFFFF;
             for ( i = 0 ; i <= hibitp ; i++ )
-	      _set[hiword] |= (1<<i);
-	  }
+              _set[hiword] |= (1<<i);
+          }
       }
   }
 
@@ -155,25 +155,25 @@ namespace OpenBabel
         int hibitp = hibit % SETWORD;
 
         if (hiword >= _size)
-	  {
+          {
             hiword = _size - 1;
             hibitp = SETWORD - 1;
-	  }
+          }
 
         if (loword == hiword)
-	  {
+          {
             for ( i = lobitp ; i <= hibitp ; i++ )
-	      _set[loword] &= (~(1<<i));
-	  }
+              _set[loword] &= (~(1<<i));
+          }
         else
-	  {
+          {
             for ( i = lobitp ; i < SETWORD ; i++ )
-	      _set[loword] &= (~(1<<i));
+              _set[loword] &= (~(1<<i));
             for ( i = loword + 1 ; i < hiword ; i++ )
-	      _set[i] = 0x00000000;
+              _set[i] = 0x00000000;
             for ( i = 0 ; i <= hibitp ; i++ )
-	      _set[hiword] &= (~(1<<i));
-	  }
+              _set[hiword] &= (~(1<<i));
+          }
       }
   }
 
@@ -192,24 +192,24 @@ namespace OpenBabel
       {
         s = (_set[wrdcnt]) & bitsoff[last - (wrdcnt*SETWORD)];
         if (s)
-	  {
+          {
             LowBit(s,bit);
             if (bit != -1)
-	      return(bit + (wrdcnt*SETWORD));
-	  }
+              return(bit + (wrdcnt*SETWORD));
+          }
       }
     wrdcnt++;
 
     while(wrdcnt < _size)
       {
         if (this->_set[wrdcnt] != 0)
-	  {
+          {
             s = this->_set[wrdcnt];
             LowBit(s, bit);
 
             if (bit != -1)
-	      return(bit+(wrdcnt*SETWORD));
-	  }
+              return(bit+(wrdcnt*SETWORD));
+          }
         wrdcnt++;
       }
 
@@ -264,9 +264,9 @@ namespace OpenBabel
     if (_size != bv._size)
       {
         if (_size < bv._size)
-	  Resize(bv._size*SETWORD);
+          Resize(bv._size*SETWORD);
         else
-	  bv.Resize(_size*SETWORD);
+          bv.Resize(_size*SETWORD);
       }
     for (int i = 0;i < _size;++i)
       _set[i] |= bv._set[i];
@@ -280,9 +280,9 @@ namespace OpenBabel
     if (_size != bv._size)
       {
         if (_size < bv._size)
-	  Resize(bv._size*SETWORD);
+          Resize(bv._size*SETWORD);
         else
-	  bv.Resize(_size*SETWORD);
+          bv.Resize(_size*SETWORD);
       }
     for (i = 0;i < _size;++i)
       _set[i] ^= bv._set[i];
@@ -346,7 +346,7 @@ namespace OpenBabel
     int i;
     for (i = 0;i < bv1._size;++i)
       if (bv1._set[i] != bv2._set[i])
-	return(false);
+        return(false);
 
     return(true);
   }
@@ -366,7 +366,7 @@ namespace OpenBabel
     int i;
     for (i = 0; i < bv1._size; ++i)
       if (bv1._set[i] != (bv1._set[i] & bv2._set[i]))
-	return(false);
+        return(false);
     return(true);
   }  
 
@@ -384,9 +384,9 @@ namespace OpenBabel
         endpos   = line.find_first_of(" \t\n",startpos);
 
         if (endpos < line.size() && startpos <= line.size())
-	  tokens.push_back(line.substr(startpos,endpos-startpos));
+          tokens.push_back(line.substr(startpos,endpos-startpos));
         else
-	  break;
+          break;
 
         startpos = endpos + 1;
       }
@@ -394,20 +394,20 @@ namespace OpenBabel
     for (unsigned int i = 0 ; i < tokens.size() ; i++ )
       {
         if ( tokens[i] == "[" )
-	  continue;
+          continue;
         else if ( tokens[i] == "]" )
-	  break;
+          break;
 
         int bit = atoi(tokens[i].c_str());
 
         if (bit >= 0)
-	  bv.SetBitOn(bit);
+          bv.SetBitOn(bit);
         else
-	  {
-	    stringstream errorMsg;
+          {
+            stringstream errorMsg;
             errorMsg << "Negative Bit: " << bit << endl;
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-	  }
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+          }
       }
 
     return is;
@@ -420,8 +420,8 @@ namespace OpenBabel
     int i,j;
     for (i = 0;i < bv._size;++i)
       for (j = 0;j < SETWORD;++j)
-	if (bv._set[i]>>(j%SETWORD)&1)
-	  os << (j+(i*SETWORD)) << ' ' << flush;
+        if (bv._set[i]>>(j%SETWORD)&1)
+          os << (j+(i*SETWORD)) << ' ' << flush;
 
     os << "]" << flush;
     return(os);
@@ -443,9 +443,9 @@ namespace OpenBabel
       {
         _set[i] |= _set[idx];
         if (i+1 < nwords)
-	  i++;
+          i++;
         else
-	  i = 0;
+          i = 0;
       }
     _set.resize(nwords);
     _size = nwords;
@@ -458,7 +458,7 @@ namespace OpenBabel
 
     for (i = v.begin();i != v.end();++i)
       if (*i > max)
-	max = *i;
+        max = *i;
 
     Resize(max/SETWORD);
     for (i = v.begin();i != v.end();++i)
@@ -479,9 +479,9 @@ namespace OpenBabel
         endpos   = line.find_first_of(" \t\n",startpos);
 
         if (endpos < line.size() && startpos <= line.size())
-	  tokens.push_back(line.substr(startpos,endpos-startpos));
+          tokens.push_back(line.substr(startpos,endpos-startpos));
         else
-	  break;
+          break;
 
         startpos = endpos + 1;
       }
@@ -489,20 +489,20 @@ namespace OpenBabel
     for (unsigned int i = 0 ; i < tokens.size() ; i++ )
       {
         if ( tokens[i] == "[" )
-	  continue;
+          continue;
         else if ( tokens[i] == "]" )
-	  break;
+          break;
 
         int bit = atoi(tokens[i].c_str());
 
         if (bit >= 0)
-	  SetBitOn(bit);
+          SetBitOn(bit);
         else
-	  {
-	    stringstream errorMsg;
+          {
+            stringstream errorMsg;
             errorMsg << "Negative Bit: " << bit << endl;
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-	  }
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+          }
       }
   }
 
@@ -535,7 +535,7 @@ namespace OpenBabel
     vector<int>::iterator i;
     for (i = _set.begin();i != _set.end();++i)
       if (*i)
-	return(false);
+        return(false);
 
     return(true);
   }
