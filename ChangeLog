@@ -1,8 +1,33 @@
+2007-02-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, src/config.h.in: Add big-endian,
+	little-endian check,	which defines WORDS_BIGENDIAN for
+	chemdrawcdx.cpp (and other binary formats in the future).
+
+	* src/formats/chemdrawcdx.cpp: Solve compilation problems with
+	previous change. (endian.h and byteswap.h are GNU and Linux
+	extensions.) Requires declaration of WORDS_BIGENDIAN in
+	babelconfig.h (as above for Unix).
+
+	* src/Makefile.am, include/openbabel/Makefile.am,
+	src/obconversion.cpp: Remove references to newline.[h, cpp].
+
+	* include/openbabel/lineend.h: Add std namespace declarations to
+	solve compilation problems with GCC.
+
+	* include/openbabel/ring.h, src/ring.cpp: Documentation updates,
+	added new constructor to simplify OBRingSearch::SaveUniqueRing().
+
+	* src/generic.cpp, include/openbabel/generic.h: Change reference
+	of DataSource to DataOrigin, as suggested by Noel.
+
+	
+
 2007-02-11 Chris Morley
 
 	Replaced filter for line endings with a version which works
 	with fastsearch. Solves bug 1617324.
-	* include/openbabel/newlinebuf.h and src//newlinebuf.cpp:
+	* include/openbabel/newlinebuf.h and src/newlinebuf.cpp:
 	replaced by include/openbabel/lineend.h
 	
 	* src/obconversion.cpp: code in Convert() and Read() replaced.

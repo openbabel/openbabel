@@ -210,6 +210,10 @@ extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #undef TIME_WITH_SYS_TIME
 
+/* Define to 1 if your processor stores words with the most significant byte
+   first (like Motorola and SPARC, unlike Intel and VAX). */
+#undef WORDS_BIGENDIAN
+
 /* Define to empty if `const' does not conform to ANSI C. */
 #undef const
 

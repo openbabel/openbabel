@@ -200,6 +200,8 @@ module=$oldmodule
 
 AM_CONDITIONAL(BUILD_PCH, test "$precompiled_headers" = "yes")
 
+AC_C_BIGENDIAN
+
 AC_LANG_CPLUSPLUS
 dnl Checks for libraries.
 AC_CHECK_LIB(m, asin, , exit)

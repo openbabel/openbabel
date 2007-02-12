@@ -21,11 +21,23 @@ GNU General Public License for more details.
 #include <fstream>
 #include <map>
 #include <list>
-#include <endian.h>
-#include <byteswap.h>
+
 //#define debug
 
-#if __BYTE_ORDER == __BIG_ENDIAN
+static inline unsigned short bswap_16(unsigned short x) {
+  return (x>>8) | (x<<8);
+}
+
+static inline unsigned int bswap_32(unsigned int x) {
+  return (bswap_16(x&0xffff)<<16) | (bswap_16(x>>16));
+}
+
+static inline unsigned long long bswap_64(unsigned long long x) {
+  return (((unsigned long long)bswap_32(x&0xffffffffull))<<32) | (bswap_32(x>>32));
+}
+
+// defined in babelconfig.h by autoconf (portable to Solaris, BSD, Linux)
+#ifdef WORDS_BIGENDIAN
 #    define READ_INT16(stream,data) \
        (stream).read ((char*)&data, sizeof(data)); \
 	   data = bswap_16 (data);
@@ -33,12 +45,10 @@ GNU General Public License for more details.
        (stream).read ((char*)&data, sizeof(data)); \
 	   data = bswap_32 (data);
 #else
-#  if __BYTE_ORDER == __LITTLE_ENDIAN
 #    define READ_INT16(stream,data) \
        (stream).read ((char*)&data, sizeof(data));
 #    define READ_INT32(stream,data) \
        (stream).read ((char*)&data, sizeof(data));
-#  endif
 #endif
 
 using namespace std;
