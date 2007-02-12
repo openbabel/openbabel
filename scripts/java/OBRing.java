@@ -48,20 +48,20 @@ public class OBRing {
     return new OBBitVec(openbabelJNI.OBRing__pathset_get(swigCPtr, this), false);
   }
 
-  public boolean findCenterAndNormal(vector3 center, vector3 norm1, vector3 norm2) {
-    return openbabelJNI.OBRing_findCenterAndNormal(swigCPtr, this, vector3.getCPtr(center), center, vector3.getCPtr(norm1), norm1, vector3.getCPtr(norm2), norm2);
-  }
-
   public OBRing() {
     this(openbabelJNI.new_OBRing__SWIG_0(), true);
   }
 
-  public OBRing(vectorInt arg0, int arg1) {
-    this(openbabelJNI.new_OBRing__SWIG_1(vectorInt.getCPtr(arg0), arg0, arg1), true);
+  public OBRing(vectorInt path, int size) {
+    this(openbabelJNI.new_OBRing__SWIG_1(vectorInt.getCPtr(path), path, size), true);
+  }
+
+  public OBRing(vectorInt path, OBBitVec set) {
+    this(openbabelJNI.new_OBRing__SWIG_2(vectorInt.getCPtr(path), path, OBBitVec.getCPtr(set), set), true);
   }
 
   public OBRing(OBRing src) {
-    this(openbabelJNI.new_OBRing__SWIG_2(OBRing.getCPtr(src), src), true);
+    this(openbabelJNI.new_OBRing__SWIG_3(OBRing.getCPtr(src), src), true);
   }
 
   public int Size() {
@@ -72,16 +72,16 @@ public class OBRing {
     return openbabelJNI.OBRing_PathSize(swigCPtr, this);
   }
 
+  public boolean IsAromatic() {
+    return openbabelJNI.OBRing_IsAromatic(swigCPtr, this);
+  }
+
   public boolean IsMember(OBAtom a) {
     return openbabelJNI.OBRing_IsMember__SWIG_0(swigCPtr, this, OBAtom.getCPtr(a), a);
   }
 
   public boolean IsMember(OBBond b) {
     return openbabelJNI.OBRing_IsMember__SWIG_1(swigCPtr, this, OBBond.getCPtr(b), b);
-  }
-
-  public boolean IsAromatic() {
-    return openbabelJNI.OBRing_IsAromatic(swigCPtr, this);
   }
 
   public boolean IsInRing(int i) {
@@ -95,6 +95,10 @@ public class OBRing {
   public OBMol GetParent() {
     long cPtr = openbabelJNI.OBRing_GetParent(swigCPtr, this);
     return (cPtr == 0) ? null : new OBMol(cPtr, false);
+  }
+
+  public boolean findCenterAndNormal(vector3 center, vector3 norm1, vector3 norm2) {
+    return openbabelJNI.OBRing_findCenterAndNormal(swigCPtr, this, vector3.getCPtr(center), center, vector3.getCPtr(norm1), norm1, vector3.getCPtr(norm2), norm2);
   }
 
 }

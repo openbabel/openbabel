@@ -15528,7 +15528,7 @@ XS(_wrap_new_OBGenericData__SWIG_0) {
   {
     std::string arg1 ;
     unsigned int arg2 ;
-    OpenBabel::DataSource arg3 ;
+    OpenBabel::DataOrigin arg3 ;
     OpenBabel::OBGenericData *result = 0 ;
     unsigned int val2 ;
     int ecode2 = 0 ;
@@ -15556,9 +15556,9 @@ XS(_wrap_new_OBGenericData__SWIG_0) {
     arg2 = static_cast< unsigned int >(val2);
     ecode3 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
     if (!SWIG_IsOK(ecode3)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_OBGenericData" "', argument " "3"" of type '" "OpenBabel::DataSource""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_OBGenericData" "', argument " "3"" of type '" "OpenBabel::DataOrigin""'");
     } 
-    arg3 = static_cast< OpenBabel::DataSource >(val3);
+    arg3 = static_cast< OpenBabel::DataOrigin >(val3);
     result = (OpenBabel::OBGenericData *)new OpenBabel::OBGenericData(arg1,arg2,arg3);
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBGenericData, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
     
@@ -15892,10 +15892,10 @@ XS(_wrap_OBGenericData_SetAttribute) {
 }
 
 
-XS(_wrap_OBGenericData_SetSource) {
+XS(_wrap_OBGenericData_SetOrigin) {
   {
     OpenBabel::OBGenericData *arg1 = (OpenBabel::OBGenericData *) 0 ;
-    OpenBabel::DataSource arg2 ;
+    OpenBabel::DataOrigin arg2 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
     int val2 ;
@@ -15904,19 +15904,19 @@ XS(_wrap_OBGenericData_SetSource) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBGenericData_SetSource(self,s);");
+      SWIG_croak("Usage: OBGenericData_SetOrigin(self,s);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBGenericData_SetSource" "', argument " "1"" of type '" "OpenBabel::OBGenericData *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBGenericData_SetOrigin" "', argument " "1"" of type '" "OpenBabel::OBGenericData *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBGenericData * >(argp1);
     ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBGenericData_SetSource" "', argument " "2"" of type '" "OpenBabel::DataSource""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBGenericData_SetOrigin" "', argument " "2"" of type '" "OpenBabel::DataOrigin""'");
     } 
-    arg2 = static_cast< OpenBabel::DataSource >(val2);
-    (arg1)->SetSource(arg2);
+    arg2 = static_cast< OpenBabel::DataOrigin >(val2);
+    (arg1)->SetOrigin(arg2);
     
     
     
@@ -16019,24 +16019,24 @@ XS(_wrap_OBGenericData_GetValue) {
 }
 
 
-XS(_wrap_OBGenericData_GetSource) {
+XS(_wrap_OBGenericData_GetOrigin) {
   {
     OpenBabel::OBGenericData *arg1 = (OpenBabel::OBGenericData *) 0 ;
-    OpenBabel::DataSource result;
+    OpenBabel::DataOrigin result;
     void *argp1 = 0 ;
     int res1 = 0 ;
     int argvi = 0;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBGenericData_GetSource(self);");
+      SWIG_croak("Usage: OBGenericData_GetOrigin(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBGenericData_GetSource" "', argument " "1"" of type '" "OpenBabel::OBGenericData const *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBGenericData_GetOrigin" "', argument " "1"" of type '" "OpenBabel::OBGenericData const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBGenericData * >(argp1);
-    result = (OpenBabel::DataSource)((OpenBabel::OBGenericData const *)arg1)->GetSource();
+    result = (OpenBabel::DataOrigin)((OpenBabel::OBGenericData const *)arg1)->GetOrigin();
     ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
     
     XSRETURN(argvi);
@@ -50176,140 +50176,6 @@ XS(_wrap_superimpose) {
 }
 
 
-XS(_wrap_new_OBRTree) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    OpenBabel::OBRTree *arg2 = (OpenBabel::OBRTree *) 0 ;
-    OpenBabel::OBRTree *result = 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: new_OBRTree(OpenBabel::OBAtom *,OpenBabel::OBRTree *);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBRTree" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_OBRTree" "', argument " "2"" of type '" "OpenBabel::OBRTree *""'"); 
-    }
-    arg2 = reinterpret_cast< OpenBabel::OBRTree * >(argp2);
-    result = (OpenBabel::OBRTree *)new OpenBabel::OBRTree(arg1,arg2);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBRTree, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_delete_OBRTree) {
-  {
-    OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: delete_OBRTree(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRTree, SWIG_POINTER_DISOWN |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBRTree" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
-    delete arg1;
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBRTree_GetAtomIdx) {
-  {
-    OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
-    int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBRTree_GetAtomIdx(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRTree_GetAtomIdx" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
-    result = (int)(arg1)->GetAtomIdx();
-    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBRTree_PathToRoot) {
-  {
-    OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
-    std::vector<OpenBabel::OBAtom * > *arg2 = 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBRTree_PathToRoot(self,std::vector<OpenBabel::OBAtom * > &);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRTree_PathToRoot" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t,  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRTree_PathToRoot" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom * > &""'"); 
-    }
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRTree_PathToRoot" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom * > &""'"); 
-    }
-    arg2 = reinterpret_cast< std::vector<OpenBabel::OBAtom * > * >(argp2);
-    (arg1)->PathToRoot(*arg2);
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBRing__path_set) {
   {
     OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
@@ -50473,73 +50339,6 @@ XS(_wrap_OBRing__pathset_get) {
 }
 
 
-XS(_wrap_OBRing_findCenterAndNormal) {
-  {
-    OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
-    OpenBabel::vector3 *arg2 = 0 ;
-    OpenBabel::vector3 *arg3 = 0 ;
-    OpenBabel::vector3 *arg4 = 0 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
-    void *argp3 = 0 ;
-    int res3 = 0 ;
-    void *argp4 = 0 ;
-    int res4 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 4) || (items > 4)) {
-      SWIG_croak("Usage: OBRing_findCenterAndNormal(self,center,norm1,norm2);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRing_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBRing_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
-    res4 = SWIG_ConvertPtr(ST(3), &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
-    if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "OBRing_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
-    result = (bool)(arg1)->findCenterAndNormal(*arg2,*arg3,*arg4);
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_new_OBRing__SWIG_0) {
   {
     OpenBabel::OBRing *result = 0 ;
@@ -50571,7 +50370,7 @@ XS(_wrap_new_OBRing__SWIG_1) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: new_OBRing(std::vector<int > &,int);");
+      SWIG_croak("Usage: new_OBRing(path,size);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_std__vectorTint_t,  0 );
     if (!SWIG_IsOK(res1)) {
@@ -50600,6 +50399,51 @@ XS(_wrap_new_OBRing__SWIG_1) {
 
 
 XS(_wrap_new_OBRing__SWIG_2) {
+  {
+    std::vector<int > *arg1 = 0 ;
+    OpenBabel::OBBitVec arg2 ;
+    OpenBabel::OBRing *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: new_OBRing(path,set);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_std__vectorTint_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBRing" "', argument " "1"" of type '" "std::vector<int > &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBRing" "', argument " "1"" of type '" "std::vector<int > &""'"); 
+    }
+    arg1 = reinterpret_cast< std::vector<int > * >(argp1);
+    {
+      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__OBBitVec,  0 );
+      if (!SWIG_IsOK(res2)) {
+        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_OBRing" "', argument " "2"" of type '" "OpenBabel::OBBitVec""'"); 
+      }  
+      if (!argp2) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBRing" "', argument " "2"" of type '" "OpenBabel::OBBitVec""'");
+      } else {
+        arg2 = *(reinterpret_cast< OpenBabel::OBBitVec * >(argp2));
+      }
+    }
+    result = (OpenBabel::OBRing *)new OpenBabel::OBRing(*arg1,arg2);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBRing, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_new_OBRing__SWIG_3) {
   {
     OpenBabel::OBRing *arg1 = 0 ;
     OpenBabel::OBRing *result = 0 ;
@@ -50680,10 +50524,9 @@ XS(_wrap_new_OBRing) {
       _rankm += _pi;
       _pi *= SWIG_MAXCASTRANK;
       {
-        {
-          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
-          _v = SWIG_CheckState(res);
-        }
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_OpenBabel__OBBitVec, 0);
+        _v = SWIG_CheckState(res);
       }
       if (!_v) goto check_3;
       _ranki += _v*_pi;
@@ -50696,13 +50539,46 @@ XS(_wrap_new_OBRing) {
     }
   check_3:
     
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_std__vectorTint_t, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_4;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_4;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 4;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_4:
+    
   dispatch:
     switch(_index) {
     case 1:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBRing__SWIG_0); return;
     case 2:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBRing__SWIG_2); return;
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBRing__SWIG_3); return;
     case 3:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBRing__SWIG_2); return;
+    case 4:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_new_OBRing__SWIG_1); return;
     }
   }
@@ -50759,6 +50635,34 @@ XS(_wrap_OBRing_PathSize) {
     arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
     result = (int)((OpenBabel::OBRing const *)arg1)->PathSize();
     ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBRing_IsAromatic) {
+  {
+    OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBRing_IsAromatic(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
+    result = (bool)(arg1)->IsAromatic();
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -50924,34 +50828,6 @@ XS(_wrap_OBRing_IsMember) {
 }
 
 
-XS(_wrap_OBRing_IsAromatic) {
-  {
-    OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBRing_IsAromatic(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-    result = (bool)(arg1)->IsAromatic();
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBRing_IsInRing) {
   {
     OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
@@ -51049,6 +50925,73 @@ XS(_wrap_OBRing_GetParent) {
     
     XSRETURN(argvi);
   fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBRing_findCenterAndNormal) {
+  {
+    OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    OpenBabel::vector3 *arg3 = 0 ;
+    OpenBabel::vector3 *arg4 = 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    void *argp3 = 0 ;
+    int res3 = 0 ;
+    void *argp4 = 0 ;
+    int res4 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 4) || (items > 4)) {
+      SWIG_croak("Usage: OBRing_findCenterAndNormal(self,center,norm1,norm2);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRing_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBRing_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
+    res4 = SWIG_ConvertPtr(ST(3), &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "OBRing_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
+    result = (bool)(arg1)->findCenterAndNormal(*arg2,*arg3,*arg4);
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
     
     SWIG_croak_null();
   }
@@ -51281,33 +51224,6 @@ XS(_wrap_OBRingSearch_AddRingFromClosure) {
 }
 
 
-XS(_wrap_OBRingSearch_WriteRings) {
-  {
-    OpenBabel::OBRingSearch *arg1 = (OpenBabel::OBRingSearch *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBRingSearch_WriteRings(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRingSearch, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRingSearch_WriteRings" "', argument " "1"" of type '" "OpenBabel::OBRingSearch *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBRingSearch * >(argp1);
-    (arg1)->WriteRings();
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBRingSearch_SaveUniqueRing) {
   {
     OpenBabel::OBRingSearch *arg1 = (OpenBabel::OBRingSearch *) 0 ;
@@ -51356,6 +51272,33 @@ XS(_wrap_OBRingSearch_SaveUniqueRing) {
   fail:
     
     
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBRingSearch_WriteRings) {
+  {
+    OpenBabel::OBRingSearch *arg1 = (OpenBabel::OBRingSearch *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBRingSearch_WriteRings(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRingSearch, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRingSearch_WriteRings" "', argument " "1"" of type '" "OpenBabel::OBRingSearch *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBRingSearch * >(argp1);
+    (arg1)->WriteRings();
+    
+    
+    XSRETURN(argvi);
+  fail:
     
     SWIG_croak_null();
   }
@@ -51412,6 +51355,140 @@ XS(_wrap_OBRingSearch_EndRings) {
     
     XSRETURN(argvi);
   fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_new_OBRTree) {
+  {
+    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+    OpenBabel::OBRTree *arg2 = (OpenBabel::OBRTree *) 0 ;
+    OpenBabel::OBRTree *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: new_OBRTree(OpenBabel::OBAtom *,OpenBabel::OBRTree *);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBRTree" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_OBRTree" "', argument " "2"" of type '" "OpenBabel::OBRTree *""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::OBRTree * >(argp2);
+    result = (OpenBabel::OBRTree *)new OpenBabel::OBRTree(arg1,arg2);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBRTree, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_delete_OBRTree) {
+  {
+    OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: delete_OBRTree(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRTree, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBRTree" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
+    delete arg1;
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBRTree_GetAtomIdx) {
+  {
+    OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
+    int result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBRTree_GetAtomIdx(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRTree_GetAtomIdx" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
+    result = (int)(arg1)->GetAtomIdx();
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBRTree_PathToRoot) {
+  {
+    OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
+    std::vector<OpenBabel::OBAtom * > *arg2 = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: OBRTree_PathToRoot(self,std::vector<OpenBabel::OBAtom * > &);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRTree_PathToRoot" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRTree_PathToRoot" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom * > &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRTree_PathToRoot" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom * > &""'"); 
+    }
+    arg2 = reinterpret_cast< std::vector<OpenBabel::OBAtom * > * >(argp2);
+    (arg1)->PathToRoot(*arg2);
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
     
     SWIG_croak_null();
   }
@@ -97417,73 +97494,6 @@ XS(_wrap_OBMolRingIter__pathset_get) {
 }
 
 
-XS(_wrap_OBMolRingIter_findCenterAndNormal) {
-  {
-    OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
-    OpenBabel::vector3 *arg2 = 0 ;
-    OpenBabel::vector3 *arg3 = 0 ;
-    OpenBabel::vector3 *arg4 = 0 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
-    void *argp3 = 0 ;
-    int res3 = 0 ;
-    void *argp4 = 0 ;
-    int res4 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 4) || (items > 4)) {
-      SWIG_croak("Usage: OBMolRingIter_findCenterAndNormal(self,center,norm1,norm2);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
-    res4 = SWIG_ConvertPtr(ST(3), &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
-    if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
-    result = (bool)(*arg1)->findCenterAndNormal(*arg2,*arg3,*arg4);
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBMolRingIter_Size) {
   {
     OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
@@ -97531,6 +97541,34 @@ XS(_wrap_OBMolRingIter_PathSize) {
     arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
     result = (int)(*arg1)->PathSize();
     ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolRingIter_IsAromatic) {
+  {
+    OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolRingIter_IsAromatic(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
+    result = (bool)(*arg1)->IsAromatic();
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -97696,34 +97734,6 @@ XS(_wrap_OBMolRingIter_IsMember) {
 }
 
 
-XS(_wrap_OBMolRingIter_IsAromatic) {
-  {
-    OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBMolRingIter_IsAromatic(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
-    result = (bool)(*arg1)->IsAromatic();
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBMolRingIter_IsInRing) {
   {
     OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
@@ -97821,6 +97831,73 @@ XS(_wrap_OBMolRingIter_GetParent) {
     
     XSRETURN(argvi);
   fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolRingIter_findCenterAndNormal) {
+  {
+    OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    OpenBabel::vector3 *arg3 = 0 ;
+    OpenBabel::vector3 *arg4 = 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    void *argp3 = 0 ;
+    int res3 = 0 ;
+    void *argp4 = 0 ;
+    int res4 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 4) || (items > 4)) {
+      SWIG_croak("Usage: OBMolRingIter_findCenterAndNormal(self,center,norm1,norm2);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
+    res4 = SWIG_ConvertPtr(ST(3), &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+    }
+    arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
+    result = (bool)(*arg1)->findCenterAndNormal(*arg2,*arg3,*arg4);
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
     
     SWIG_croak_null();
   }
@@ -98666,11 +98743,11 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBGenericData_Clone", _wrap_OBGenericData_Clone},
 {"Chemistry::OpenBabelc::delete_OBGenericData", _wrap_delete_OBGenericData},
 {"Chemistry::OpenBabelc::OBGenericData_SetAttribute", _wrap_OBGenericData_SetAttribute},
-{"Chemistry::OpenBabelc::OBGenericData_SetSource", _wrap_OBGenericData_SetSource},
+{"Chemistry::OpenBabelc::OBGenericData_SetOrigin", _wrap_OBGenericData_SetOrigin},
 {"Chemistry::OpenBabelc::OBGenericData_GetAttribute", _wrap_OBGenericData_GetAttribute},
 {"Chemistry::OpenBabelc::OBGenericData_GetDataType", _wrap_OBGenericData_GetDataType},
 {"Chemistry::OpenBabelc::OBGenericData_GetValue", _wrap_OBGenericData_GetValue},
-{"Chemistry::OpenBabelc::OBGenericData_GetSource", _wrap_OBGenericData_GetSource},
+{"Chemistry::OpenBabelc::OBGenericData_GetOrigin", _wrap_OBGenericData_GetOrigin},
 {"Chemistry::OpenBabelc::new_OBCommentData", _wrap_new_OBCommentData},
 {"Chemistry::OpenBabelc::OBCommentData_Clone", _wrap_OBCommentData_Clone},
 {"Chemistry::OpenBabelc::OBCommentData_SetData", _wrap_OBCommentData_SetData},
@@ -99350,23 +99427,19 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::ob_make_rmat", _wrap_ob_make_rmat},
 {"Chemistry::OpenBabelc::qtrfit", _wrap_qtrfit},
 {"Chemistry::OpenBabelc::superimpose", _wrap_superimpose},
-{"Chemistry::OpenBabelc::new_OBRTree", _wrap_new_OBRTree},
-{"Chemistry::OpenBabelc::delete_OBRTree", _wrap_delete_OBRTree},
-{"Chemistry::OpenBabelc::OBRTree_GetAtomIdx", _wrap_OBRTree_GetAtomIdx},
-{"Chemistry::OpenBabelc::OBRTree_PathToRoot", _wrap_OBRTree_PathToRoot},
 {"Chemistry::OpenBabelc::OBRing__path_set", _wrap_OBRing__path_set},
 {"Chemistry::OpenBabelc::OBRing__path_get", _wrap_OBRing__path_get},
 {"Chemistry::OpenBabelc::OBRing__pathset_set", _wrap_OBRing__pathset_set},
 {"Chemistry::OpenBabelc::OBRing__pathset_get", _wrap_OBRing__pathset_get},
-{"Chemistry::OpenBabelc::OBRing_findCenterAndNormal", _wrap_OBRing_findCenterAndNormal},
 {"Chemistry::OpenBabelc::new_OBRing", _wrap_new_OBRing},
 {"Chemistry::OpenBabelc::OBRing_Size", _wrap_OBRing_Size},
 {"Chemistry::OpenBabelc::OBRing_PathSize", _wrap_OBRing_PathSize},
-{"Chemistry::OpenBabelc::OBRing_IsMember", _wrap_OBRing_IsMember},
 {"Chemistry::OpenBabelc::OBRing_IsAromatic", _wrap_OBRing_IsAromatic},
+{"Chemistry::OpenBabelc::OBRing_IsMember", _wrap_OBRing_IsMember},
 {"Chemistry::OpenBabelc::OBRing_IsInRing", _wrap_OBRing_IsInRing},
 {"Chemistry::OpenBabelc::OBRing_SetParent", _wrap_OBRing_SetParent},
 {"Chemistry::OpenBabelc::OBRing_GetParent", _wrap_OBRing_GetParent},
+{"Chemistry::OpenBabelc::OBRing_findCenterAndNormal", _wrap_OBRing_findCenterAndNormal},
 {"Chemistry::OpenBabelc::delete_OBRing", _wrap_delete_OBRing},
 {"Chemistry::OpenBabelc::CompareRingSize", _wrap_CompareRingSize},
 {"Chemistry::OpenBabelc::new_OBRingSearch", _wrap_new_OBRingSearch},
@@ -99374,10 +99447,14 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBRingSearch_SortRings", _wrap_OBRingSearch_SortRings},
 {"Chemistry::OpenBabelc::OBRingSearch_RemoveRedundant", _wrap_OBRingSearch_RemoveRedundant},
 {"Chemistry::OpenBabelc::OBRingSearch_AddRingFromClosure", _wrap_OBRingSearch_AddRingFromClosure},
-{"Chemistry::OpenBabelc::OBRingSearch_WriteRings", _wrap_OBRingSearch_WriteRings},
 {"Chemistry::OpenBabelc::OBRingSearch_SaveUniqueRing", _wrap_OBRingSearch_SaveUniqueRing},
+{"Chemistry::OpenBabelc::OBRingSearch_WriteRings", _wrap_OBRingSearch_WriteRings},
 {"Chemistry::OpenBabelc::OBRingSearch_BeginRings", _wrap_OBRingSearch_BeginRings},
 {"Chemistry::OpenBabelc::OBRingSearch_EndRings", _wrap_OBRingSearch_EndRings},
+{"Chemistry::OpenBabelc::new_OBRTree", _wrap_new_OBRTree},
+{"Chemistry::OpenBabelc::delete_OBRTree", _wrap_delete_OBRTree},
+{"Chemistry::OpenBabelc::OBRTree_GetAtomIdx", _wrap_OBRTree_GetAtomIdx},
+{"Chemistry::OpenBabelc::OBRTree_PathToRoot", _wrap_OBRTree_PathToRoot},
 {"Chemistry::OpenBabelc::delete_OBSmartsPattern", _wrap_delete_OBSmartsPattern},
 {"Chemistry::OpenBabelc::new_OBSmartsPattern", _wrap_new_OBSmartsPattern},
 {"Chemistry::OpenBabelc::OBSmartsPattern_NumMatches", _wrap_OBSmartsPattern_NumMatches},
@@ -100385,14 +100462,14 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBMolRingIter__path_get", _wrap_OBMolRingIter__path_get},
 {"Chemistry::OpenBabelc::OBMolRingIter__pathset_set", _wrap_OBMolRingIter__pathset_set},
 {"Chemistry::OpenBabelc::OBMolRingIter__pathset_get", _wrap_OBMolRingIter__pathset_get},
-{"Chemistry::OpenBabelc::OBMolRingIter_findCenterAndNormal", _wrap_OBMolRingIter_findCenterAndNormal},
 {"Chemistry::OpenBabelc::OBMolRingIter_Size", _wrap_OBMolRingIter_Size},
 {"Chemistry::OpenBabelc::OBMolRingIter_PathSize", _wrap_OBMolRingIter_PathSize},
-{"Chemistry::OpenBabelc::OBMolRingIter_IsMember", _wrap_OBMolRingIter_IsMember},
 {"Chemistry::OpenBabelc::OBMolRingIter_IsAromatic", _wrap_OBMolRingIter_IsAromatic},
+{"Chemistry::OpenBabelc::OBMolRingIter_IsMember", _wrap_OBMolRingIter_IsMember},
 {"Chemistry::OpenBabelc::OBMolRingIter_IsInRing", _wrap_OBMolRingIter_IsInRing},
 {"Chemistry::OpenBabelc::OBMolRingIter_SetParent", _wrap_OBMolRingIter_SetParent},
 {"Chemistry::OpenBabelc::OBMolRingIter_GetParent", _wrap_OBMolRingIter_GetParent},
+{"Chemistry::OpenBabelc::OBMolRingIter_findCenterAndNormal", _wrap_OBMolRingIter_findCenterAndNormal},
 {0,0}
 };
 /* -----------------------------------------------------------------------------
@@ -100925,8 +101002,8 @@ XS(SWIG_init) {
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "readInput", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::readInput)));
+    SV *sv = get_sv((char*) SWIG_prefix "fileformatInput", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::fileformatInput)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
@@ -101889,9 +101966,9 @@ XS(SWIG_init) {
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(32768)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRTree, (void*) "Chemistry::OpenBabel::OBRTree");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRing, (void*) "Chemistry::OpenBabel::OBRing");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRingSearch, (void*) "Chemistry::OpenBabel::OBRingSearch");
+  SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRTree, (void*) "Chemistry::OpenBabel::OBRTree");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSmartsPattern, (void*) "Chemistry::OpenBabel::OBSmartsPattern");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSSMatch, (void*) "Chemistry::OpenBabel::OBSSMatch");
   /*@SWIG:%set_constant@*/ do {

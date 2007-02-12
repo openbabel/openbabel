@@ -7,12 +7,12 @@
  * ----------------------------------------------------------------------------- */
 
 
-public final class DataSource {
-  public final static DataSource any = new DataSource("any");
-  public final static DataSource readInput = new DataSource("readInput");
-  public final static DataSource userInput = new DataSource("userInput");
-  public final static DataSource perceived = new DataSource("perceived");
-  public final static DataSource external = new DataSource("external");
+public final class DataOrigin {
+  public final static DataOrigin any = new DataOrigin("any");
+  public final static DataOrigin fileformatInput = new DataOrigin("fileformatInput");
+  public final static DataOrigin userInput = new DataOrigin("userInput");
+  public final static DataOrigin perceived = new DataOrigin("perceived");
+  public final static DataOrigin external = new DataOrigin("external");
 
   public final int swigValue() {
     return swigValue;
@@ -22,33 +22,33 @@ public final class DataSource {
     return swigName;
   }
 
-  public static DataSource swigToEnum(int swigValue) {
+  public static DataOrigin swigToEnum(int swigValue) {
     if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
       return swigValues[swigValue];
     for (int i = 0; i < swigValues.length; i++)
       if (swigValues[i].swigValue == swigValue)
         return swigValues[i];
-    throw new IllegalArgumentException("No enum " + DataSource.class + " with value " + swigValue);
+    throw new IllegalArgumentException("No enum " + DataOrigin.class + " with value " + swigValue);
   }
 
-  private DataSource(String swigName) {
+  private DataOrigin(String swigName) {
     this.swigName = swigName;
     this.swigValue = swigNext++;
   }
 
-  private DataSource(String swigName, int swigValue) {
+  private DataOrigin(String swigName, int swigValue) {
     this.swigName = swigName;
     this.swigValue = swigValue;
     swigNext = swigValue+1;
   }
 
-  private DataSource(String swigName, DataSource swigEnum) {
+  private DataOrigin(String swigName, DataOrigin swigEnum) {
     this.swigName = swigName;
     this.swigValue = swigEnum.swigValue;
     swigNext = this.swigValue+1;
   }
 
-  private static DataSource[] swigValues = { any, readInput, userInput, perceived, external };
+  private static DataOrigin[] swigValues = { any, fileformatInput, userInput, perceived, external };
   private static int swigNext = 0;
   private final int swigValue;
   private final String swigName;

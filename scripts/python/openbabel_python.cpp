@@ -27993,7 +27993,7 @@ SWIGINTERN PyObject *_wrap_new_OBGenericData__SWIG_0(PyObject *SWIGUNUSEDPARM(se
   PyObject *resultobj = 0;
   std::string arg1 ;
   unsigned int arg2 ;
-  OpenBabel::DataSource arg3 ;
+  OpenBabel::DataOrigin arg3 ;
   OpenBabel::OBGenericData *result = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
@@ -28020,9 +28020,9 @@ SWIGINTERN PyObject *_wrap_new_OBGenericData__SWIG_0(PyObject *SWIGUNUSEDPARM(se
   arg2 = static_cast< unsigned int >(val2);
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_OBGenericData" "', argument " "3"" of type '" "OpenBabel::DataSource""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_OBGenericData" "', argument " "3"" of type '" "OpenBabel::DataOrigin""'");
   } 
-  arg3 = static_cast< OpenBabel::DataSource >(val3);
+  arg3 = static_cast< OpenBabel::DataOrigin >(val3);
   result = (OpenBabel::OBGenericData *)new OpenBabel::OBGenericData(arg1,arg2,arg3);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBGenericData, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -28158,7 +28158,7 @@ SWIGINTERN PyObject *_wrap_new_OBGenericData(PyObject *self, PyObject *args) {
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBGenericData'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBGenericData(std::string const,unsigned int const,OpenBabel::DataSource const)\n    OpenBabel::OBGenericData(std::string const,unsigned int const)\n    OpenBabel::OBGenericData(std::string const)\n    OpenBabel::OBGenericData()\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBGenericData'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBGenericData(std::string const,unsigned int const,OpenBabel::DataOrigin const)\n    OpenBabel::OBGenericData(std::string const,unsigned int const)\n    OpenBabel::OBGenericData(std::string const)\n    OpenBabel::OBGenericData()\n");
   return NULL;
 }
 
@@ -28253,10 +28253,10 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBGenericData_SetSource(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_OBGenericData_SetOrigin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBGenericData *arg1 = (OpenBabel::OBGenericData *) 0 ;
-  OpenBabel::DataSource arg2 ;
+  OpenBabel::DataOrigin arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
@@ -28264,18 +28264,18 @@ SWIGINTERN PyObject *_wrap_OBGenericData_SetSource(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBGenericData_SetSource",2,2,&obj0,&obj1)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"OBGenericData_SetOrigin",2,2,&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBGenericData_SetSource" "', argument " "1"" of type '" "OpenBabel::OBGenericData *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBGenericData_SetOrigin" "', argument " "1"" of type '" "OpenBabel::OBGenericData *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBGenericData * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBGenericData_SetSource" "', argument " "2"" of type '" "OpenBabel::DataSource""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBGenericData_SetOrigin" "', argument " "2"" of type '" "OpenBabel::DataOrigin""'");
   } 
-  arg2 = static_cast< OpenBabel::DataSource >(val2);
-  (arg1)->SetSource(arg2);
+  arg2 = static_cast< OpenBabel::DataOrigin >(val2);
+  (arg1)->SetOrigin(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -28355,21 +28355,21 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBGenericData_GetSource(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_OBGenericData_GetOrigin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBGenericData *arg1 = (OpenBabel::OBGenericData *) 0 ;
-  OpenBabel::DataSource result;
+  OpenBabel::DataOrigin result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if(!PyArg_UnpackTuple(args,(char *)"OBGenericData_GetSource",1,1,&obj0)) SWIG_fail;
+  if(!PyArg_UnpackTuple(args,(char *)"OBGenericData_GetOrigin",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBGenericData_GetSource" "', argument " "1"" of type '" "OpenBabel::OBGenericData const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBGenericData_GetOrigin" "', argument " "1"" of type '" "OpenBabel::OBGenericData const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBGenericData * >(argp1);
-  result = (OpenBabel::DataSource)((OpenBabel::OBGenericData const *)arg1)->GetSource();
+  result = (OpenBabel::DataOrigin)((OpenBabel::OBGenericData const *)arg1)->GetOrigin();
   resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:
@@ -54819,125 +54819,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_OBRTree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-  OpenBabel::OBRTree *arg2 = (OpenBabel::OBRTree *) 0 ;
-  OpenBabel::OBRTree *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBRTree",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBRTree" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_OBRTree" "', argument " "2"" of type '" "OpenBabel::OBRTree *""'"); 
-  }
-  arg2 = reinterpret_cast< OpenBabel::OBRTree * >(argp2);
-  result = (OpenBabel::OBRTree *)new OpenBabel::OBRTree(arg1,arg2);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBRTree, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_OBRTree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"delete_OBRTree",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRTree, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBRTree" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
-  delete arg1;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_OBRTree_GetAtomIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBRTree_GetAtomIdx",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRTree_GetAtomIdx" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
-  result = (int)(arg1)->GetAtomIdx();
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_OBRTree_PathToRoot(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
-  std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > > *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBRTree_PathToRoot",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRTree_PathToRoot" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRTree_PathToRoot" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > > &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRTree_PathToRoot" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > > &""'"); 
-  }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > > * >(argp2);
-  (arg1)->PathToRoot(*arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *OBRTree_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRTree, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *OBRTree_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
 SWIGINTERN PyObject *_wrap_OBRing__path_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
@@ -55060,64 +54941,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBRing_findCenterAndNormal(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
-  OpenBabel::vector3 *arg2 = 0 ;
-  OpenBabel::vector3 *arg3 = 0 ;
-  OpenBabel::vector3 *arg4 = 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBRing_findCenterAndNormal",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRing_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBRing_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "OBRing_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
-  result = (bool)(arg1)->findCenterAndNormal(*arg2,*arg3,*arg4);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_new_OBRing__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBRing *result = 0 ;
@@ -55167,6 +54990,48 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_OBRing__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
+  std::vector<int,std::allocator<int > > *arg1 = 0 ;
+  OpenBabel::OBBitVec arg2 ;
+  OpenBabel::OBRing *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBRing",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBRing" "', argument " "1"" of type '" "std::vector<int,std::allocator<int > > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBRing" "', argument " "1"" of type '" "std::vector<int,std::allocator<int > > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<int,std::allocator<int > > * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__OBBitVec,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_OBRing" "', argument " "2"" of type '" "OpenBabel::OBBitVec""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OBRing" "', argument " "2"" of type '" "OpenBabel::OBBitVec""'");
+    } else {
+      OpenBabel::OBBitVec * temp = reinterpret_cast< OpenBabel::OBBitVec * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  result = (OpenBabel::OBRing *)new OpenBabel::OBRing(*arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBRing, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_OBRing__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
   OpenBabel::OBRing *arg1 = 0 ;
   OpenBabel::OBRing *result = 0 ;
   void *argp1 = 0 ;
@@ -55208,7 +55073,20 @@ SWIGINTERN PyObject *_wrap_new_OBRing(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_OpenBabel__OBRing, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBRing__SWIG_2(self, args);
+      return _wrap_new_OBRing__SWIG_3(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_OpenBabel__OBBitVec, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_new_OBRing__SWIG_2(self, args);
+      }
     }
   }
   if (argc == 2) {
@@ -55228,7 +55106,7 @@ SWIGINTERN PyObject *_wrap_new_OBRing(PyObject *self, PyObject *args) {
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBRing'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBRing()\n    OpenBabel::OBRing(std::vector<int,std::allocator<int > > &,int)\n    OpenBabel::OBRing(OpenBabel::OBRing const &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBRing'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBRing()\n    OpenBabel::OBRing(std::vector<int,std::allocator<int > > &,int)\n    OpenBabel::OBRing(std::vector<int,std::allocator<int > > &,OpenBabel::OBBitVec)\n    OpenBabel::OBRing(OpenBabel::OBRing const &)\n");
   return NULL;
 }
 
@@ -55271,6 +55149,28 @@ SWIGINTERN PyObject *_wrap_OBRing_PathSize(PyObject *SWIGUNUSEDPARM(self), PyObj
   arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
   result = (int)((OpenBabel::OBRing const *)arg1)->PathSize();
   resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBRing_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBRing_IsAromatic",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
+  result = (bool)(arg1)->IsAromatic();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -55384,28 +55284,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBRing_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBRing_IsAromatic",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-  result = (bool)(arg1)->IsAromatic();
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_OBRing_IsInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
@@ -55483,6 +55361,64 @@ SWIGINTERN PyObject *_wrap_OBRing_GetParent(PyObject *SWIGUNUSEDPARM(self), PyOb
   arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
   result = (OpenBabel::OBMol *)(arg1)->GetParent();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBRing_findCenterAndNormal(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
+  OpenBabel::vector3 *arg2 = 0 ;
+  OpenBabel::vector3 *arg3 = 0 ;
+  OpenBabel::vector3 *arg4 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBRing_findCenterAndNormal",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRing_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBRing_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "OBRing_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
+  result = (bool)(arg1)->findCenterAndNormal(*arg2,*arg3,*arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -55681,27 +55617,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBRingSearch_WriteRings(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBRingSearch *arg1 = (OpenBabel::OBRingSearch *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBRingSearch_WriteRings",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRingSearch, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRingSearch_WriteRings" "', argument " "1"" of type '" "OpenBabel::OBRingSearch *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBRingSearch * >(argp1);
-  (arg1)->WriteRings();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_OBRingSearch_SaveUniqueRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBRingSearch *arg1 = (OpenBabel::OBRingSearch *) 0 ;
@@ -55742,6 +55657,27 @@ SWIGINTERN PyObject *_wrap_OBRingSearch_SaveUniqueRing(PyObject *SWIGUNUSEDPARM(
   arg3 = reinterpret_cast< std::deque<int > * >(argp3);
   result = (bool)(arg1)->SaveUniqueRing(*arg2,*arg3);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBRingSearch_WriteRings(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBRingSearch *arg1 = (OpenBabel::OBRingSearch *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBRingSearch_WriteRings",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRingSearch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRingSearch_WriteRings" "', argument " "1"" of type '" "OpenBabel::OBRingSearch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBRingSearch * >(argp1);
+  (arg1)->WriteRings();
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
@@ -55800,6 +55736,125 @@ SWIGINTERN PyObject *OBRingSearch_swigregister(PyObject *SWIGUNUSEDPARM(self), P
 }
 
 SWIGINTERN PyObject *OBRingSearch_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_OBRTree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBRTree *arg2 = (OpenBabel::OBRTree *) 0 ;
+  OpenBabel::OBRTree *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBRTree",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBRTree" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_OBRTree" "', argument " "2"" of type '" "OpenBabel::OBRTree *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBRTree * >(argp2);
+  result = (OpenBabel::OBRTree *)new OpenBabel::OBRTree(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBRTree, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_OBRTree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_OBRTree",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRTree, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBRTree" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
+  delete arg1;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBRTree_GetAtomIdx(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
+  int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBRTree_GetAtomIdx",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRTree_GetAtomIdx" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
+  result = (int)(arg1)->GetAtomIdx();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBRTree_PathToRoot(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBRTree *arg1 = (OpenBabel::OBRTree *) 0 ;
+  std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > > *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBRTree_PathToRoot",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBRTree, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRTree_PathToRoot" "', argument " "1"" of type '" "OpenBabel::OBRTree *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBRTree * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRTree_PathToRoot" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRTree_PathToRoot" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > > * >(argp2);
+  (arg1)->PathToRoot(*arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *OBRTree_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRTree, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *OBRTree_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
@@ -90542,64 +90597,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBMolRingIter_findCenterAndNormal(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
-  OpenBabel::vector3 *arg2 = 0 ;
-  OpenBabel::vector3 *arg3 = 0 ;
-  OpenBabel::vector3 *arg4 = 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_findCenterAndNormal",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
-  result = (bool)(*arg1)->findCenterAndNormal(*arg2,*arg3,*arg4);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap__OBMolRingIter_Size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
@@ -90638,6 +90635,28 @@ SWIGINTERN PyObject *_wrap__OBMolRingIter_PathSize(PyObject *SWIGUNUSEDPARM(self
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   result = (int)(*arg1)->PathSize();
   resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolRingIter_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_IsAromatic",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
+  result = (bool)(*arg1)->IsAromatic();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -90751,28 +90770,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap__OBMolRingIter_IsAromatic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_IsAromatic",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
-  result = (bool)(*arg1)->IsAromatic();
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap__OBMolRingIter_IsInRing(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
@@ -90850,6 +90847,64 @@ SWIGINTERN PyObject *_wrap__OBMolRingIter_GetParent(PyObject *SWIGUNUSEDPARM(sel
   arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
   result = (OpenBabel::OBMol *)(*arg1)->GetParent();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__OBMolRingIter_findCenterAndNormal(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBMolRingIter *arg1 = (OpenBabel::OBMolRingIter *) 0 ;
+  OpenBabel::vector3 *arg2 = 0 ;
+  OpenBabel::vector3 *arg3 = 0 ;
+  OpenBabel::vector3 *arg4 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"_OBMolRingIter_findCenterAndNormal",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBMolRingIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "1"" of type '" "OpenBabel::OBMolRingIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolRingIter * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_OBMolRingIter_findCenterAndNormal" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
+  result = (bool)(*arg1)->findCenterAndNormal(*arg2,*arg3,*arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -91544,11 +91599,11 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBGenericData_Clone", _wrap_OBGenericData_Clone, METH_VARARGS, NULL},
 	 { (char *)"delete_OBGenericData", _wrap_delete_OBGenericData, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_SetAttribute", _wrap_OBGenericData_SetAttribute, METH_VARARGS, NULL},
-	 { (char *)"OBGenericData_SetSource", _wrap_OBGenericData_SetSource, METH_VARARGS, NULL},
+	 { (char *)"OBGenericData_SetOrigin", _wrap_OBGenericData_SetOrigin, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_GetAttribute", _wrap_OBGenericData_GetAttribute, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_GetDataType", _wrap_OBGenericData_GetDataType, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_GetValue", _wrap_OBGenericData_GetValue, METH_VARARGS, NULL},
-	 { (char *)"OBGenericData_GetSource", _wrap_OBGenericData_GetSource, METH_VARARGS, NULL},
+	 { (char *)"OBGenericData_GetOrigin", _wrap_OBGenericData_GetOrigin, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_swigregister", OBGenericData_swigregister, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_swiginit", OBGenericData_swiginit, METH_VARARGS, NULL},
 	 { (char *)"new_OBCommentData", _wrap_new_OBCommentData, METH_VARARGS, NULL},
@@ -92286,25 +92341,19 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ob_make_rmat", _wrap_ob_make_rmat, METH_VARARGS, NULL},
 	 { (char *)"qtrfit", _wrap_qtrfit, METH_VARARGS, NULL},
 	 { (char *)"superimpose", _wrap_superimpose, METH_VARARGS, NULL},
-	 { (char *)"new_OBRTree", _wrap_new_OBRTree, METH_VARARGS, NULL},
-	 { (char *)"delete_OBRTree", _wrap_delete_OBRTree, METH_VARARGS, NULL},
-	 { (char *)"OBRTree_GetAtomIdx", _wrap_OBRTree_GetAtomIdx, METH_VARARGS, NULL},
-	 { (char *)"OBRTree_PathToRoot", _wrap_OBRTree_PathToRoot, METH_VARARGS, NULL},
-	 { (char *)"OBRTree_swigregister", OBRTree_swigregister, METH_VARARGS, NULL},
-	 { (char *)"OBRTree_swiginit", OBRTree_swiginit, METH_VARARGS, NULL},
 	 { (char *)"OBRing__path_set", _wrap_OBRing__path_set, METH_VARARGS, NULL},
 	 { (char *)"OBRing__path_get", _wrap_OBRing__path_get, METH_VARARGS, NULL},
 	 { (char *)"OBRing__pathset_set", _wrap_OBRing__pathset_set, METH_VARARGS, NULL},
 	 { (char *)"OBRing__pathset_get", _wrap_OBRing__pathset_get, METH_VARARGS, NULL},
-	 { (char *)"OBRing_findCenterAndNormal", _wrap_OBRing_findCenterAndNormal, METH_VARARGS, NULL},
 	 { (char *)"new_OBRing", _wrap_new_OBRing, METH_VARARGS, NULL},
 	 { (char *)"OBRing_Size", _wrap_OBRing_Size, METH_VARARGS, NULL},
 	 { (char *)"OBRing_PathSize", _wrap_OBRing_PathSize, METH_VARARGS, NULL},
-	 { (char *)"OBRing_IsMember", _wrap_OBRing_IsMember, METH_VARARGS, NULL},
 	 { (char *)"OBRing_IsAromatic", _wrap_OBRing_IsAromatic, METH_VARARGS, NULL},
+	 { (char *)"OBRing_IsMember", _wrap_OBRing_IsMember, METH_VARARGS, NULL},
 	 { (char *)"OBRing_IsInRing", _wrap_OBRing_IsInRing, METH_VARARGS, NULL},
 	 { (char *)"OBRing_SetParent", _wrap_OBRing_SetParent, METH_VARARGS, NULL},
 	 { (char *)"OBRing_GetParent", _wrap_OBRing_GetParent, METH_VARARGS, NULL},
+	 { (char *)"OBRing_findCenterAndNormal", _wrap_OBRing_findCenterAndNormal, METH_VARARGS, NULL},
 	 { (char *)"delete_OBRing", _wrap_delete_OBRing, METH_VARARGS, NULL},
 	 { (char *)"OBRing_swigregister", OBRing_swigregister, METH_VARARGS, NULL},
 	 { (char *)"OBRing_swiginit", OBRing_swiginit, METH_VARARGS, NULL},
@@ -92314,12 +92363,18 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBRingSearch_SortRings", _wrap_OBRingSearch_SortRings, METH_VARARGS, NULL},
 	 { (char *)"OBRingSearch_RemoveRedundant", _wrap_OBRingSearch_RemoveRedundant, METH_VARARGS, NULL},
 	 { (char *)"OBRingSearch_AddRingFromClosure", _wrap_OBRingSearch_AddRingFromClosure, METH_VARARGS, NULL},
-	 { (char *)"OBRingSearch_WriteRings", _wrap_OBRingSearch_WriteRings, METH_VARARGS, NULL},
 	 { (char *)"OBRingSearch_SaveUniqueRing", _wrap_OBRingSearch_SaveUniqueRing, METH_VARARGS, NULL},
+	 { (char *)"OBRingSearch_WriteRings", _wrap_OBRingSearch_WriteRings, METH_VARARGS, NULL},
 	 { (char *)"OBRingSearch_BeginRings", _wrap_OBRingSearch_BeginRings, METH_VARARGS, NULL},
 	 { (char *)"OBRingSearch_EndRings", _wrap_OBRingSearch_EndRings, METH_VARARGS, NULL},
 	 { (char *)"OBRingSearch_swigregister", OBRingSearch_swigregister, METH_VARARGS, NULL},
 	 { (char *)"OBRingSearch_swiginit", OBRingSearch_swiginit, METH_VARARGS, NULL},
+	 { (char *)"new_OBRTree", _wrap_new_OBRTree, METH_VARARGS, NULL},
+	 { (char *)"delete_OBRTree", _wrap_delete_OBRTree, METH_VARARGS, NULL},
+	 { (char *)"OBRTree_GetAtomIdx", _wrap_OBRTree_GetAtomIdx, METH_VARARGS, NULL},
+	 { (char *)"OBRTree_PathToRoot", _wrap_OBRTree_PathToRoot, METH_VARARGS, NULL},
+	 { (char *)"OBRTree_swigregister", OBRTree_swigregister, METH_VARARGS, NULL},
+	 { (char *)"OBRTree_swiginit", OBRTree_swiginit, METH_VARARGS, NULL},
 	 { (char *)"delete_OBSmartsPattern", _wrap_delete_OBSmartsPattern, METH_VARARGS, NULL},
 	 { (char *)"new_OBSmartsPattern", _wrap_new_OBSmartsPattern, METH_VARARGS, NULL},
 	 { (char *)"OBSmartsPattern_NumMatches", _wrap_OBSmartsPattern_NumMatches, METH_VARARGS, NULL},
@@ -93362,14 +93417,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"_OBMolRingIter__path_get", _wrap__OBMolRingIter__path_get, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter__pathset_set", _wrap__OBMolRingIter__pathset_set, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter__pathset_get", _wrap__OBMolRingIter__pathset_get, METH_VARARGS, NULL},
-	 { (char *)"_OBMolRingIter_findCenterAndNormal", _wrap__OBMolRingIter_findCenterAndNormal, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter_Size", _wrap__OBMolRingIter_Size, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter_PathSize", _wrap__OBMolRingIter_PathSize, METH_VARARGS, NULL},
-	 { (char *)"_OBMolRingIter_IsMember", _wrap__OBMolRingIter_IsMember, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter_IsAromatic", _wrap__OBMolRingIter_IsAromatic, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_IsMember", _wrap__OBMolRingIter_IsMember, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter_IsInRing", _wrap__OBMolRingIter_IsInRing, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter_SetParent", _wrap__OBMolRingIter_SetParent, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter_GetParent", _wrap__OBMolRingIter_GetParent, METH_VARARGS, NULL},
+	 { (char *)"_OBMolRingIter_findCenterAndNormal", _wrap__OBMolRingIter_findCenterAndNormal, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter_swigregister", _OBMolRingIter_swigregister, METH_VARARGS, NULL},
 	 { (char *)"_OBMolRingIter_swiginit", _OBMolRingIter_swiginit, METH_VARARGS, NULL},
 	 { (char *)"new_doubleArray", _wrap_new_doubleArray, METH_VARARGS, NULL},
@@ -94660,7 +94715,7 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "CustomData14",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData14)));
   SWIG_Python_SetConstant(d, "CustomData15",SWIG_From_int(static_cast< int >(OpenBabel::OBGenericDataType::CustomData15)));
   SWIG_Python_SetConstant(d, "any",SWIG_From_int(static_cast< int >(OpenBabel::any)));
-  SWIG_Python_SetConstant(d, "readInput",SWIG_From_int(static_cast< int >(OpenBabel::readInput)));
+  SWIG_Python_SetConstant(d, "fileformatInput",SWIG_From_int(static_cast< int >(OpenBabel::fileformatInput)));
   SWIG_Python_SetConstant(d, "userInput",SWIG_From_int(static_cast< int >(OpenBabel::userInput)));
   SWIG_Python_SetConstant(d, "perceived",SWIG_From_int(static_cast< int >(OpenBabel::perceived)));
   SWIG_Python_SetConstant(d, "external",SWIG_From_int(static_cast< int >(OpenBabel::external)));

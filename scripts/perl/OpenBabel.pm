@@ -1036,11 +1036,11 @@ sub DESTROY {
 }
 
 *SetAttribute = *Chemistry::OpenBabelc::OBGenericData_SetAttribute;
-*SetSource = *Chemistry::OpenBabelc::OBGenericData_SetSource;
+*SetOrigin = *Chemistry::OpenBabelc::OBGenericData_SetOrigin;
 *GetAttribute = *Chemistry::OpenBabelc::OBGenericData_GetAttribute;
 *GetDataType = *Chemistry::OpenBabelc::OBGenericData_GetDataType;
 *GetValue = *Chemistry::OpenBabelc::OBGenericData_GetValue;
-*GetSource = *Chemistry::OpenBabelc::OBGenericData_GetSource;
+*GetOrigin = *Chemistry::OpenBabelc::OBGenericData_GetOrigin;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -2738,45 +2738,6 @@ sub ACQUIRE {
 }
 
 
-############# Class : Chemistry::OpenBabel::OBRTree ##############
-
-package Chemistry::OpenBabel::OBRTree;
-use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
-@ISA = qw( Chemistry::OpenBabel );
-%OWNER = ();
-%ITERATORS = ();
-sub new {
-    my $pkg = shift;
-    my $self = Chemistry::OpenBabelc::new_OBRTree(@_);
-    bless $self, $pkg if defined($self);
-}
-
-sub DESTROY {
-    return unless $_[0]->isa('HASH');
-    my $self = tied(%{$_[0]});
-    return unless defined $self;
-    delete $ITERATORS{$self};
-    if (exists $OWNER{$self}) {
-        Chemistry::OpenBabelc::delete_OBRTree($self);
-        delete $OWNER{$self};
-    }
-}
-
-*GetAtomIdx = *Chemistry::OpenBabelc::OBRTree_GetAtomIdx;
-*PathToRoot = *Chemistry::OpenBabelc::OBRTree_PathToRoot;
-sub DISOWN {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    delete $OWNER{$ptr};
-}
-
-sub ACQUIRE {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    $OWNER{$ptr} = 1;
-}
-
-
 ############# Class : Chemistry::OpenBabel::OBRing ##############
 
 package Chemistry::OpenBabel::OBRing;
@@ -2788,7 +2749,6 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig__path_set = *Chemistry::OpenBabelc::OBRing__path_set;
 *swig__pathset_get = *Chemistry::OpenBabelc::OBRing__pathset_get;
 *swig__pathset_set = *Chemistry::OpenBabelc::OBRing__pathset_set;
-*findCenterAndNormal = *Chemistry::OpenBabelc::OBRing_findCenterAndNormal;
 sub new {
     my $pkg = shift;
     my $self = Chemistry::OpenBabelc::new_OBRing(@_);
@@ -2797,11 +2757,12 @@ sub new {
 
 *Size = *Chemistry::OpenBabelc::OBRing_Size;
 *PathSize = *Chemistry::OpenBabelc::OBRing_PathSize;
-*IsMember = *Chemistry::OpenBabelc::OBRing_IsMember;
 *IsAromatic = *Chemistry::OpenBabelc::OBRing_IsAromatic;
+*IsMember = *Chemistry::OpenBabelc::OBRing_IsMember;
 *IsInRing = *Chemistry::OpenBabelc::OBRing_IsInRing;
 *SetParent = *Chemistry::OpenBabelc::OBRing_SetParent;
 *GetParent = *Chemistry::OpenBabelc::OBRing_GetParent;
+*findCenterAndNormal = *Chemistry::OpenBabelc::OBRing_findCenterAndNormal;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -2853,10 +2814,49 @@ sub DESTROY {
 *SortRings = *Chemistry::OpenBabelc::OBRingSearch_SortRings;
 *RemoveRedundant = *Chemistry::OpenBabelc::OBRingSearch_RemoveRedundant;
 *AddRingFromClosure = *Chemistry::OpenBabelc::OBRingSearch_AddRingFromClosure;
-*WriteRings = *Chemistry::OpenBabelc::OBRingSearch_WriteRings;
 *SaveUniqueRing = *Chemistry::OpenBabelc::OBRingSearch_SaveUniqueRing;
+*WriteRings = *Chemistry::OpenBabelc::OBRingSearch_WriteRings;
 *BeginRings = *Chemistry::OpenBabelc::OBRingSearch_BeginRings;
 *EndRings = *Chemistry::OpenBabelc::OBRingSearch_EndRings;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBRTree ##############
+
+package Chemistry::OpenBabel::OBRTree;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBRTree(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBRTree($self);
+        delete $OWNER{$self};
+    }
+}
+
+*GetAtomIdx = *Chemistry::OpenBabelc::OBRTree_GetAtomIdx;
+*PathToRoot = *Chemistry::OpenBabelc::OBRTree_PathToRoot;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -4524,14 +4524,14 @@ sub DESTROY {
 *swig__path_set = *Chemistry::OpenBabelc::OBMolRingIter__path_set;
 *swig__pathset_get = *Chemistry::OpenBabelc::OBMolRingIter__pathset_get;
 *swig__pathset_set = *Chemistry::OpenBabelc::OBMolRingIter__pathset_set;
-*findCenterAndNormal = *Chemistry::OpenBabelc::OBMolRingIter_findCenterAndNormal;
 *Size = *Chemistry::OpenBabelc::OBMolRingIter_Size;
 *PathSize = *Chemistry::OpenBabelc::OBMolRingIter_PathSize;
-*IsMember = *Chemistry::OpenBabelc::OBMolRingIter_IsMember;
 *IsAromatic = *Chemistry::OpenBabelc::OBMolRingIter_IsAromatic;
+*IsMember = *Chemistry::OpenBabelc::OBMolRingIter_IsMember;
 *IsInRing = *Chemistry::OpenBabelc::OBMolRingIter_IsInRing;
 *SetParent = *Chemistry::OpenBabelc::OBMolRingIter_SetParent;
 *GetParent = *Chemistry::OpenBabelc::OBMolRingIter_GetParent;
+*findCenterAndNormal = *Chemistry::OpenBabelc::OBMolRingIter_findCenterAndNormal;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -4614,7 +4614,7 @@ bless $VZ, Chemistry::OpenBabel::vector3;
 *CustomData14 = *Chemistry::OpenBabelc::CustomData14;
 *CustomData15 = *Chemistry::OpenBabelc::CustomData15;
 *any = *Chemistry::OpenBabelc::any;
-*readInput = *Chemistry::OpenBabelc::readInput;
+*fileformatInput = *Chemistry::OpenBabelc::fileformatInput;
 *userInput = *Chemistry::OpenBabelc::userInput;
 *perceived = *Chemistry::OpenBabelc::perceived;
 *external = *Chemistry::OpenBabelc::external;

@@ -81,10 +81,6 @@ public class OBMolRingIter {
     return new OBBitVec(openbabelJNI.OBMolRingIter__pathset_get(swigCPtr, this), false);
   }
 
-  public boolean findCenterAndNormal(vector3 center, vector3 norm1, vector3 norm2) {
-    return openbabelJNI.OBMolRingIter_findCenterAndNormal(swigCPtr, this, vector3.getCPtr(center), center, vector3.getCPtr(norm1), norm1, vector3.getCPtr(norm2), norm2);
-  }
-
   public int Size() {
     return openbabelJNI.OBMolRingIter_Size(swigCPtr, this);
   }
@@ -93,16 +89,16 @@ public class OBMolRingIter {
     return openbabelJNI.OBMolRingIter_PathSize(swigCPtr, this);
   }
 
+  public boolean IsAromatic() {
+    return openbabelJNI.OBMolRingIter_IsAromatic(swigCPtr, this);
+  }
+
   public boolean IsMember(OBAtom a) {
     return openbabelJNI.OBMolRingIter_IsMember__SWIG_0(swigCPtr, this, OBAtom.getCPtr(a), a);
   }
 
   public boolean IsMember(OBBond b) {
     return openbabelJNI.OBMolRingIter_IsMember__SWIG_1(swigCPtr, this, OBBond.getCPtr(b), b);
-  }
-
-  public boolean IsAromatic() {
-    return openbabelJNI.OBMolRingIter_IsAromatic(swigCPtr, this);
   }
 
   public boolean IsInRing(int i) {
@@ -116,6 +112,10 @@ public class OBMolRingIter {
   public OBMol GetParent() {
     long cPtr = openbabelJNI.OBMolRingIter_GetParent(swigCPtr, this);
     return (cPtr == 0) ? null : new OBMol(cPtr, false);
+  }
+
+  public boolean findCenterAndNormal(vector3 center, vector3 norm1, vector3 norm2) {
+    return openbabelJNI.OBMolRingIter_findCenterAndNormal(swigCPtr, this, vector3.getCPtr(center), center, vector3.getCPtr(norm1), norm1, vector3.getCPtr(norm2), norm2);
   }
 
 }

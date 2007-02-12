@@ -48,12 +48,12 @@ public class OBRingSearch {
     openbabelJNI.OBRingSearch_AddRingFromClosure(swigCPtr, this, OBMol.getCPtr(arg0), arg0, OBBond.getCPtr(arg1), arg1);
   }
 
-  public void WriteRings() {
-    openbabelJNI.OBRingSearch_WriteRings(swigCPtr, this);
-  }
-
   public boolean SaveUniqueRing(SWIGTYPE_p_std__dequeTint_t arg0, SWIGTYPE_p_std__dequeTint_t arg1) {
     return openbabelJNI.OBRingSearch_SaveUniqueRing(swigCPtr, this, SWIGTYPE_p_std__dequeTint_t.getCPtr(arg0), SWIGTYPE_p_std__dequeTint_t.getCPtr(arg1));
+  }
+
+  public void WriteRings() {
+    openbabelJNI.OBRingSearch_WriteRings(swigCPtr, this);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator BeginRings() {

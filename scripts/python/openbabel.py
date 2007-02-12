@@ -750,7 +750,7 @@ CustomData13 = _openbabel.CustomData13
 CustomData14 = _openbabel.CustomData14
 CustomData15 = _openbabel.CustomData15
 any = _openbabel.any
-readInput = _openbabel.readInput
+fileformatInput = _openbabel.fileformatInput
 userInput = _openbabel.userInput
 perceived = _openbabel.perceived
 external = _openbabel.external
@@ -763,11 +763,11 @@ class OBGenericData(object):
     __swig_destroy__ = _openbabel.delete_OBGenericData
     __del__ = lambda self : None;
     def SetAttribute(*args): return _openbabel.OBGenericData_SetAttribute(*args)
-    def SetSource(*args): return _openbabel.OBGenericData_SetSource(*args)
+    def SetOrigin(*args): return _openbabel.OBGenericData_SetOrigin(*args)
     def GetAttribute(*args): return _openbabel.OBGenericData_GetAttribute(*args)
     def GetDataType(*args): return _openbabel.OBGenericData_GetDataType(*args)
     def GetValue(*args): return _openbabel.OBGenericData_GetValue(*args)
-    def GetSource(*args): return _openbabel.OBGenericData_GetSource(*args)
+    def GetOrigin(*args): return _openbabel.OBGenericData_GetOrigin(*args)
 OBGenericData_swigregister = _openbabel.OBGenericData_swigregister
 OBGenericData_swigregister(OBGenericData)
 __sub__ = _openbabel.__sub__
@@ -1877,39 +1877,27 @@ get_rmat = _openbabel.get_rmat
 ob_make_rmat = _openbabel.ob_make_rmat
 qtrfit = _openbabel.qtrfit
 superimpose = _openbabel.superimpose
-class OBRTree(object):
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        _openbabel.OBRTree_swiginit(self,_openbabel.new_OBRTree(*args))
-    __swig_destroy__ = _openbabel.delete_OBRTree
-    __del__ = lambda self : None;
-    def GetAtomIdx(*args): return _openbabel.OBRTree_GetAtomIdx(*args)
-    def PathToRoot(*args): return _openbabel.OBRTree_PathToRoot(*args)
-OBRTree_swigregister = _openbabel.OBRTree_swigregister
-OBRTree_swigregister(OBRTree)
-tokenize = _openbabel.tokenize
-ThrowError = _openbabel.ThrowError
-
 class OBRing(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     _path = _swig_property(_openbabel.OBRing__path_get, _openbabel.OBRing__path_set)
     _pathset = _swig_property(_openbabel.OBRing__pathset_get, _openbabel.OBRing__pathset_set)
-    def findCenterAndNormal(*args): return _openbabel.OBRing_findCenterAndNormal(*args)
     def __init__(self, *args): 
         _openbabel.OBRing_swiginit(self,_openbabel.new_OBRing(*args))
     def Size(*args): return _openbabel.OBRing_Size(*args)
     def PathSize(*args): return _openbabel.OBRing_PathSize(*args)
-    def IsMember(*args): return _openbabel.OBRing_IsMember(*args)
     def IsAromatic(*args): return _openbabel.OBRing_IsAromatic(*args)
+    def IsMember(*args): return _openbabel.OBRing_IsMember(*args)
     def IsInRing(*args): return _openbabel.OBRing_IsInRing(*args)
     def SetParent(*args): return _openbabel.OBRing_SetParent(*args)
     def GetParent(*args): return _openbabel.OBRing_GetParent(*args)
+    def findCenterAndNormal(*args): return _openbabel.OBRing_findCenterAndNormal(*args)
     __swig_destroy__ = _openbabel.delete_OBRing
     __del__ = lambda self : None;
 OBRing_swigregister = _openbabel.OBRing_swigregister
 OBRing_swigregister(OBRing)
+tokenize = _openbabel.tokenize
+ThrowError = _openbabel.ThrowError
 
 CompareRingSize = _openbabel.CompareRingSize
 class OBRingSearch(object):
@@ -1922,12 +1910,24 @@ class OBRingSearch(object):
     def SortRings(*args): return _openbabel.OBRingSearch_SortRings(*args)
     def RemoveRedundant(*args): return _openbabel.OBRingSearch_RemoveRedundant(*args)
     def AddRingFromClosure(*args): return _openbabel.OBRingSearch_AddRingFromClosure(*args)
-    def WriteRings(*args): return _openbabel.OBRingSearch_WriteRings(*args)
     def SaveUniqueRing(*args): return _openbabel.OBRingSearch_SaveUniqueRing(*args)
+    def WriteRings(*args): return _openbabel.OBRingSearch_WriteRings(*args)
     def BeginRings(*args): return _openbabel.OBRingSearch_BeginRings(*args)
     def EndRings(*args): return _openbabel.OBRingSearch_EndRings(*args)
 OBRingSearch_swigregister = _openbabel.OBRingSearch_swigregister
 OBRingSearch_swigregister(OBRingSearch)
+
+class OBRTree(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBRTree_swiginit(self,_openbabel.new_OBRTree(*args))
+    __swig_destroy__ = _openbabel.delete_OBRTree
+    __del__ = lambda self : None;
+    def GetAtomIdx(*args): return _openbabel.OBRTree_GetAtomIdx(*args)
+    def PathToRoot(*args): return _openbabel.OBRTree_PathToRoot(*args)
+OBRTree_swigregister = _openbabel.OBRTree_swigregister
+OBRTree_swigregister(OBRTree)
 
 class OBSmartsPattern(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
@@ -3075,14 +3075,14 @@ class _OBMolRingIter(object):
     __del__ = lambda self : None;
     _path = _swig_property(_openbabel._OBMolRingIter__path_get, _openbabel._OBMolRingIter__path_set)
     _pathset = _swig_property(_openbabel._OBMolRingIter__pathset_get, _openbabel._OBMolRingIter__pathset_set)
-    def findCenterAndNormal(*args): return _openbabel._OBMolRingIter_findCenterAndNormal(*args)
     def Size(*args): return _openbabel._OBMolRingIter_Size(*args)
     def PathSize(*args): return _openbabel._OBMolRingIter_PathSize(*args)
-    def IsMember(*args): return _openbabel._OBMolRingIter_IsMember(*args)
     def IsAromatic(*args): return _openbabel._OBMolRingIter_IsAromatic(*args)
+    def IsMember(*args): return _openbabel._OBMolRingIter_IsMember(*args)
     def IsInRing(*args): return _openbabel._OBMolRingIter_IsInRing(*args)
     def SetParent(*args): return _openbabel._OBMolRingIter_SetParent(*args)
     def GetParent(*args): return _openbabel._OBMolRingIter_GetParent(*args)
+    def findCenterAndNormal(*args): return _openbabel._OBMolRingIter_findCenterAndNormal(*args)
 _OBMolRingIter_swigregister = _openbabel._OBMolRingIter_swigregister
 _OBMolRingIter_swigregister(_OBMolRingIter)
 
