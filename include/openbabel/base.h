@@ -72,6 +72,17 @@ namespace OpenBabel
           return "";
         } 
 
+      //! \brief By default clears the object. Called from ReadMolecule of most format classes
+      template< class T >
+      T* CastAndClear(bool clear=true)
+        {
+          T* pOb = dynamic_cast<T*>(this);
+          if(pOb && clear)// Clear only if this is of target class
+            Clear();
+          return pOb;
+        };
+
+
       //! \name Generic data handling methods (via OBGenericData)
       //@{
       //! \return whether the generic attribute/value pair exists

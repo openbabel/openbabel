@@ -762,7 +762,7 @@ namespace OpenBabel {
       return FormatsMIMEMap()[MIME];
   }
 
-  bool	OBConversion::Read(OBBase* pOb, std::istream* pin, bool clearFirst)
+  bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
   {
     if(pin) pInStream=pin;
 
@@ -779,9 +779,6 @@ namespace OpenBabel {
     if(!(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
       streambuf* pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
 
-    // we really need to do this, but requires including base.h -GH
-    //    if (clearFirst)
-    //      pOb->Clear();
     pInStream->rdbuf(pOrigInBuf);
     return pInFormat->ReadMolecule(pOb, this);
   }
@@ -877,7 +874,7 @@ namespace OpenBabel {
   }
 
   ////////////////////////////////////////////
-  bool	OBConversion::ReadString(OBBase* pOb, std::string input, bool clearFirst)
+  bool	OBConversion::ReadString(OBBase* pOb, std::string input)
   {
     // if we have an old stream, free this first before creating a new one
     if (pInStream && NeedToFreeInStream) {
@@ -886,12 +883,12 @@ namespace OpenBabel {
 
     stringstream *pin = new stringstream(input);
     NeedToFreeInStream = true; // make sure we clean this up later
-    return Read(pOb, pin, clearFirst);
+    return Read(pOb, pin);
   }
 
 
   ////////////////////////////////////////////
-  bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath, bool clearFirst)
+  bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
   {
     if(!pInFormat) return false;
 
@@ -912,7 +909,7 @@ namespace OpenBabel {
         return false;
       }
 
-    return Read(pOb,ifs, clearFirst);
+    return Read(pOb,ifs);
   }
 
 

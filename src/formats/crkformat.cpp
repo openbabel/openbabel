@@ -69,7 +69,7 @@ namespace OpenBabel
   bool CRK2DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
 
@@ -168,7 +168,7 @@ namespace OpenBabel
   bool CRK3DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
 

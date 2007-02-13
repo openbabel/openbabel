@@ -66,7 +66,7 @@ namespace OpenBabel
   bool CHEM3D1Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
 
@@ -135,7 +135,7 @@ namespace OpenBabel
   bool CHEM3D2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
 

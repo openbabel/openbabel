@@ -63,7 +63,7 @@ UniChemFormat theUniChemFormat;
 bool UniChemFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
 
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
         return false;
 

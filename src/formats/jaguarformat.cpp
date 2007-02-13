@@ -91,7 +91,7 @@ namespace OpenBabel
   bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL) return false;
 
     //Define some references so we can use the old parameter names

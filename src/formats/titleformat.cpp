@@ -49,7 +49,7 @@ bool TitleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
 	// Reads titles separated by spaces, tabs or newlines,
 	// If option -at set titles can contain spaces.
-  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+  OBMol* pmol = pOb->CastAndClear<OBMol>();
 	string title;
 	istream& ifs = *pConv->GetInStream();
 	if(pConv->IsOption("t",OBConversion::INOPTIONS))

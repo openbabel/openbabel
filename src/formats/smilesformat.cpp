@@ -194,7 +194,7 @@ namespace OpenBabel
   /////////////////////////////////////////////////////////////////
   bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();

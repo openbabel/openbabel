@@ -352,7 +352,7 @@ YOBFormat theYOBFormat;
    IF options CONTAINS 'f' (COMMAND LINE -af), ATOM NAMES WILL STAY FIXED (I.E. LEAVING THE SPACE IN THE FIRST COLUMN) */
 bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 { 
-  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+  OBMol* pmol = pOb->CastAndClear<OBMol>();
   if(pmol==NULL)
       return false;
 

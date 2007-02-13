@@ -17,6 +17,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/obiter.h>
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -30,11 +31,13 @@ namespace OpenBabel
 
   std::map<std::string, OBMol*> OBMoleculeFormat::IMols;
   OBMol* OBMoleculeFormat::_jmol;
+  std::vector<OBMol> OBMoleculeFormat::MolArray;
+  bool OBMoleculeFormat::StoredMolsReady=false;
 
   bool OBMoleculeFormat::ReadChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
   {
     std::istream &ifs = *pConv->GetInStream();
-    if (ifs.peek() == EOF || !ifs.good())
+    if (!ifs.good()) //Possible to omit? ifs.peek() == EOF || 
       return false;
 
     OBMol* pmol = new OBMol;
@@ -49,24 +52,73 @@ namespace OpenBabel
     if(pConv->IsOption("C",OBConversion::GENOPTIONS))
       return DeferMolOutput(pmol, pConv, pFormat);
 
-    bool ret=pFormat->ReadMolecule(pmol,pConv);
-
-    OBMol* ptmol = NULL; 
-    if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK))) //Do transformation and return molecule
+    bool ret;
+    if(pConv->IsOption("separate",OBConversion::GENOPTIONS))
+    {
+      //On first call, separate molecule and put fragments in MolArray.
+      //On subsequent calls, remove a fragment from MolArray and send it for writing
+      //Done this way so that each fragment can be written to its own file (with -m option)
+      if(!StoredMolsReady)
       {
-        ptmol = static_cast<OBMol*>(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
-        if(ptmol && pConv->IsOption("j",OBConversion::GENOPTIONS))
-          {
-            //With j option, accumulate all mols in to one stored in this class
-            if(pConv->IsFirstInput())
-              _jmol = new OBMol;
-            *_jmol += *ptmol;
-            delete ptmol;
-            return true;
-          }
+        ret = pFormat->ReadMolecule(pmol,pConv); 
+        if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK)))
+          MolArray = pmol->Separate(); //use un-transformed molecule
+        //Add an appropriate title to each fragment
+        for(int i=0;i<MolArray.size();++i)
+        {
+          stringstream ss;
+          ss << pmol->GetTitle() << '#' << i+1;
+          MolArray[i].SetTitle(ss.str());
+        }
+        reverse(MolArray.begin(),MolArray.end());
+        StoredMolsReady = true;
       }
+
+      if(MolArray.empty()) //normal end of fragments
+        ret =false;
+      else
+      {
+        // Copying is needed because the OBMol passed to AddChemObject will be deleted.
+        // The OBMol in the vector is deleted here.
+        OBMol* pMolCopy = new OBMol( MolArray.back());
+        MolArray.pop_back();
+        ret = pConv->AddChemObject(
+            pMolCopy->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
+      }
+      if(!ret)
+        StoredMolsReady = false;
+
+      delete pmol;
+      return ret;
+    }
+
+    ret=pFormat->ReadMolecule(pmol,pConv); 
+
+    OBMol* ptmol = NULL;
+    //Molecule is valid if it has some atoms 
+    //or the format allows zero-atom molecules and it has a title
+    if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK && *pmol->GetTitle())))
+    {
+      ptmol = static_cast<OBMol*>(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
+      if(ptmol && (pConv->IsOption("j",OBConversion::GENOPTIONS) 
+                || pConv->IsOption("join",OBConversion::GENOPTIONS)))
+      {
+        //With j option, accumulate all mols in one stored in this class
+        if(pConv->IsFirstInput())
+          _jmol = new OBMol;
+        pConv->AddChemObject(_jmol);
+        //will be discarded in WriteChemObjectImpl until the last input mol. This complication
+        //is needed to allow joined molecules to be from different files. pOb1 in AddChem Object
+        //is zeroed at the end of a file and _jmol is in danger of not being output.
+        *_jmol += *ptmol;
+        delete ptmol;
+        return true;
+      }
+    }
     else
       delete pmol;
+
+    // Normal operation - send molecule to be written
     ret = ret && pConv->AddChemObject(ptmol); //success of both writing and reading
     return ret;
   }
@@ -75,13 +127,18 @@ namespace OpenBabel
   {
     if(pConv->IsOption("C",OBConversion::GENOPTIONS))
       return OutputDeferredMols(pConv);
-    if(pConv->IsOption("j",OBConversion::GENOPTIONS))
+    if(pConv->IsOption("j",OBConversion::GENOPTIONS)
+        || pConv->IsOption("join",OBConversion::GENOPTIONS))
       {
+        //arrives here at the end of a file
+        if(!pConv->IsLast())
+          return true;
         bool ret=pFormat->WriteMolecule(_jmol,pConv);
         pConv->SetOutputIndex(1);
         delete _jmol;
         return ret;
       }
+
 
     //Retrieve the target OBMol
     OBBase* pOb = pConv->GetChemObject();
@@ -106,7 +163,7 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__,
                               auditMsg,
                               obAuditMsg);
-
+        
         ret=pFormat->WriteMolecule(pmol,pConv);
       }
     delete pOb; //move so that non-OBMol objects are deleted 9March2006

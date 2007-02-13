@@ -59,7 +59,7 @@ namespace OpenBabel
   bool MOPACFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
 
@@ -189,7 +189,7 @@ namespace OpenBabel
   bool MOPACCARTFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
 
@@ -238,7 +238,7 @@ namespace OpenBabel
 
   bool MOPACCARTFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
 
@@ -298,7 +298,7 @@ namespace OpenBabel
   /////////////////////////////////////////////////////////////////
   bool MOPACINTFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
         return false;
 

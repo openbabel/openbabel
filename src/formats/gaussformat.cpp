@@ -205,7 +205,7 @@ namespace OpenBabel
   // the openbabel-discuss@lists.sourceforge.net mailing list and/or post a bug
   bool GaussianOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
 

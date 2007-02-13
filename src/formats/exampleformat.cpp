@@ -28,8 +28,8 @@ The conversion framework can handle other types of object, provided
 they are derived from OBBase. OBReaction is currently the only
 alternative to OBMol and is used in rxnformat.cpp.
 
-For XML formats extra, support for the parsing is provided, see pubchem.cpp
-as an example.  
+For XML formats, extra support for the parsing is provided, see pubchem.cpp
+as an example.
 */ 
 
 #include <openbabel/babelconfig.h>
@@ -61,7 +61,7 @@ public:
 			 The parameter is always text and needs to be parsed to extract a number.
 		   
 		   Options can apply when writing - 4th parameter is OBConversion::OUTOPTIONS
-		   or can be omitted as shown.	A single letter output option is preceeded 
+		   or can be omitted as shown. A single letter output option is preceeded 
 		   by -x on the command line.
 		   Or options can apply to the input format - the 4th parameter is 
 		   OBConversion::INOPTIONS. They are then  preceeded by -a on the command line.
@@ -116,7 +116,8 @@ public:
 
   /* Flags() can return be any of the following combined by | 
 	   or be omitted if none apply
-     NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY */
+     NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY  DEFAULTFORMAT
+     READBINARY  WRITEBINARY  READXML  ZEROATOMSOK*/
   virtual unsigned int Flags()
   {
       return READONEONLY;
@@ -150,7 +151,7 @@ XXXFormat theXXXFormat;
 
 bool XXXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
-  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+  OBMol* pmol = pOb->CastAndClear<OBMol>();
   if(pmol==NULL)
       return false;
 
@@ -207,7 +208,7 @@ bool XXXFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		levels = atoi(p);
 
 	// To find out whether this is the first molecule to be output...
-	if(pConv->GetOutputIndex()==0)
+	if(pConv->GetOutputIndex()==1)
 		ofs << "The contents of this file were derived from " << pConv->GetInFilename() << endl;
 	// ... or the last
 	if(!pConv->IsLast())

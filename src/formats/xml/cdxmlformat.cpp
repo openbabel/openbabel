@@ -237,7 +237,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(!_pxmlConv)
     return false;
 
-  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+  OBMol* pmol = pOb->CastAndClear<OBMol>();
   if(pmol==NULL)
 	return false;
   OBMol &mol = *pmol;

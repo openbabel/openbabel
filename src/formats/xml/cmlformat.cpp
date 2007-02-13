@@ -81,7 +81,7 @@ Input options, e.g. -a2\n \
 
     virtual unsigned int Flags()
     {
-      return READXML;
+      return READXML | ZEROATOMSOK;
     };
 
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
@@ -332,6 +332,11 @@ Input options, e.g. -a2\n \
             arr[i].push_back(nameAndvalue);
           }
       }
+
+    //The end element event would not be called for <element/>, so call it explicitly.
+    if(xmlTextReaderIsEmptyElement(reader())==1)
+      return EndElement(name);
+
     return true;
   }
 
