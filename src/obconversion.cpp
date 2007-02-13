@@ -992,7 +992,28 @@ namespace OpenBabel {
     return ofname;		
   }
   ////////////////////////////////////////////////////
+  bool OBConversion::CheckForUnintendedBatch(const string& infile, const string& outfile)
+  {
+    //If infile == outfile issue error message and return false
+    //If name without the extensions are the same issue warning and return true;
+    //Otherwise return true
+    bool ret=true;
+    string inname1, inname2;
+    string::size_type pos;
+    pos = infile.rfind('.');
+    if(pos != string::npos)
+      inname1 = infile.substr(0,pos);
+    pos = outfile.rfind('.');
+    if(pos != string::npos)
+      inname2 = infile.substr(0,pos);
+    if(inname1==inname2) 
+      obErrorLog.ThrowError(__FUNCTION__,
+"This was a batch operation. For splitting, use non-empty base name for the output files", obWarning);
 
+    if(infile==outfile)
+      return false;
+    return true;
+  }
   /**
      Makes input and output streams, and carries out normal,
      batch, aggregation, and splitting conversion.
@@ -1010,7 +1031,8 @@ namespace OpenBabel {
      Done if FileList contains a single file name and OutputFileName
      contains a * . Each chemical object in the input file is converted
      and sent to a separate file whose name is OutputFileName with the
-     * replaced by 1, 2, 3, etc.
+     * replaced by 1, 2, 3, etc.  OutputFileName must have at least one
+     character other than the * before the extension.
      For example, if OutputFileName is NEW*.smi then the output files are
      NEW1.smi, NEW2.smi, etc.
 
@@ -1116,7 +1138,7 @@ namespace OpenBabel {
           pIs = NULL;
         else
           {
-            if(FileList.size()>1)
+            if(FileList.size()>1 || OutputFileName.substr(0,2)=="*.")
               {
                 //multiple input files
                 vector<string>::iterator itr, tempitr;
@@ -1133,6 +1155,13 @@ namespace OpenBabel {
                       {
                         //Batch conversion
                         string batchfile = BatchFileName(OutputFileName,*itr);
+                        
+                        //With inputs like babel test.xxx -oyyy -m
+                        //the user may have wanted to do a splitting operation
+                        //Issue a message and abort if xxx==yyy which would overwrite input file
+                        if(FileList.size()==1 && !CheckForUnintendedBatch(batchfile, InFilename))
+                          return Count;
+
                         if(ofs.is_open()) ofs.close();
                         ofs.open(batchfile.c_str(), omode);
                         if(!ofs) 

@@ -1,3 +1,14 @@
+2007-02-13 Chris Morley
+
+	* include/openbabel/obconversion.h, src/obconversion.cpp:
+	Corrected bug 1657817 - wrong name for batch conversion
+	of one file - which was due to misinterpretation as 
+	splitting operation. Solution requires that the base name
+	for output files splitting is not empty - not a big constraint.
+	Added extra warning messages and checks in 
+	CheckForUnintendedBatch(). Made this function and 
+	BatchFileName() and IncrementedFileName() protected.
+	
 2007-02-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/cansmilesformat.cpp

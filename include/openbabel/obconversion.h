@@ -343,10 +343,15 @@ namespace OpenBabel {
       /// This method is primarily intended for scripting languages without "stream" classes
       bool	ReadFile(OBBase* pOb, std::string filePath, bool clearFirst = true);
 
+protected:
       ///Replaces * in BaseName by InFile without extension and path
       static std::string BatchFileName(std::string& BaseName, std::string& InFile);
       ///Replaces * in BaseName by Count
       static std::string IncrementedFileName(std::string& BaseName, const int Count);
+      ///Checks for misunderstandings when using the -m option
+      static bool OBConversion::CheckForUnintendedBatch
+        (const std::string& infile, const std::string& outfile);
+
       //@}
 
     protected:
@@ -388,6 +393,7 @@ namespace OpenBabel {
       size_t rInlen; ///<length in the input stream of the object being read
 	
       OBConversion* pAuxConv;///<Way to extend OBConversion
+
     };
 
   ///For OBFormat::Flags()
