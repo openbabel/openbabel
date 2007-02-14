@@ -1,3 +1,9 @@
+2007-02-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/obmolecformat.cpp: Comment out sections of
+	ReadChemObjectImpl -- looks like code from Chris invoking
+	OBMol::Separate().
+
 2007-02-13 Chris Morley
 
 	Clear OBMol objects by default at start of ReadMolecule.

@@ -31,8 +31,8 @@ namespace OpenBabel
 
   std::map<std::string, OBMol*> OBMoleculeFormat::IMols;
   OBMol* OBMoleculeFormat::_jmol;
-  std::vector<OBMol> OBMoleculeFormat::MolArray;
-  bool OBMoleculeFormat::StoredMolsReady=false;
+  //  std::vector<OBMol> OBMoleculeFormat::MolArray;
+  //  bool OBMoleculeFormat::StoredMolsReady=false;
 
   bool OBMoleculeFormat::ReadChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
   {
@@ -53,44 +53,44 @@ namespace OpenBabel
       return DeferMolOutput(pmol, pConv, pFormat);
 
     bool ret;
-    if(pConv->IsOption("separate",OBConversion::GENOPTIONS))
-    {
-      //On first call, separate molecule and put fragments in MolArray.
-      //On subsequent calls, remove a fragment from MolArray and send it for writing
-      //Done this way so that each fragment can be written to its own file (with -m option)
-      if(!StoredMolsReady)
-      {
-        ret = pFormat->ReadMolecule(pmol,pConv); 
-        if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK)))
-          MolArray = pmol->Separate(); //use un-transformed molecule
-        //Add an appropriate title to each fragment
-        for(int i=0;i<MolArray.size();++i)
-        {
-          stringstream ss;
-          ss << pmol->GetTitle() << '#' << i+1;
-          MolArray[i].SetTitle(ss.str());
-        }
-        reverse(MolArray.begin(),MolArray.end());
-        StoredMolsReady = true;
-      }
+//     if(pConv->IsOption("separate",OBConversion::GENOPTIONS))
+//     {
+//       //On first call, separate molecule and put fragments in MolArray.
+//       //On subsequent calls, remove a fragment from MolArray and send it for writing
+//       //Done this way so that each fragment can be written to its own file (with -m option)
+//       if(!StoredMolsReady)
+//       {
+//         ret = pFormat->ReadMolecule(pmol,pConv); 
+//         if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK)))
+//           MolArray = pmol->Separate(); //use un-transformed molecule
+//         //Add an appropriate title to each fragment
+//         for(int i=0;i<MolArray.size();++i)
+//         {
+//           stringstream ss;
+//           ss << pmol->GetTitle() << '#' << i+1;
+//           MolArray[i].SetTitle(ss.str());
+//         }
+//         reverse(MolArray.begin(),MolArray.end());
+//         StoredMolsReady = true;
+//       }
 
-      if(MolArray.empty()) //normal end of fragments
-        ret =false;
-      else
-      {
-        // Copying is needed because the OBMol passed to AddChemObject will be deleted.
-        // The OBMol in the vector is deleted here.
-        OBMol* pMolCopy = new OBMol( MolArray.back());
-        MolArray.pop_back();
-        ret = pConv->AddChemObject(
-            pMolCopy->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
-      }
-      if(!ret)
-        StoredMolsReady = false;
+//       if(MolArray.empty()) //normal end of fragments
+//         ret =false;
+//       else
+//       {
+//         // Copying is needed because the OBMol passed to AddChemObject will be deleted.
+//         // The OBMol in the vector is deleted here.
+//         OBMol* pMolCopy = new OBMol( MolArray.back());
+//         MolArray.pop_back();
+//         ret = pConv->AddChemObject(
+//             pMolCopy->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
+//       }
+//       if(!ret)
+//         StoredMolsReady = false;
 
-      delete pmol;
-      return ret;
-    }
+//       delete pmol;
+//       return ret;
+//     }
 
     ret=pFormat->ReadMolecule(pmol,pConv); 
 
