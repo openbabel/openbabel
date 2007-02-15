@@ -1,3 +1,26 @@
+2007-02-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/obconversion.h: Removed OBConversion:: before
+	CheckForUnintendedBatch(...); to fix compilation error.
+
+	* src/forcefield.cpp: Added/Updated LineSearch, SteepestDescent,
+	ConjugateGradients. Also added the same functions as Validate... to
+	test the implementation for x^2 + 2 y^2.
+	Added bool is14(OBAtom *a, OBAtom *b). Should move to atom.cpp??
+	Started working on DistanceGeometry (needs more sophisticated matrix
+	operations than OB currently supports).
+
+	* src/forcefields/forcefieldghemical.cpp: Now uses
+	OBFFXXXCalculationYYY to improve performance. All energy functions have
+	analytical derivatives. Small corrections to the energy expressions to
+	match energies produced by ghemical, added 14-scaling for non bonded 
+	energy terms. Different bondtypes in ghemical.prm are no longer
+	ignored. Added ValidateGradients().
+
+	* src/forcefield/forcefieldmmff94.cpp: Continue work on MMFF94 to
+	comply with the validation suite.
+	Added ValidateGradients().
+	
 2007-02-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/obmolecformat.cpp: Comment out sections of

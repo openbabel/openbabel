@@ -31,11 +31,32 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  // log levels
   #define OBFF_LOGLVL_NONE	0 // no output
   #define OBFF_LOGLVL_LOW	1 // SteepestDescent progress... (no output from Energy())
   #define OBFF_LOGLVL_MEDIUM	2 // individual energy terms
   #define OBFF_LOGLVL_HIGH	3 // individual calculations and parameters
+  
+  // mode arguments for SteepestDescent, ConjugateGradients, ...
+  #define OBFF_NUMERICAL_GRADIENT       0x00000001 // use numerical gradients
+  #define OBFF_ANALYTICAL_GRADIENT	0x00000010 // use analytical gradients
 
+  // inline if statements for logging, example:
+  //
+  // SetLogLevel(OBFF_LOGLVL_MEDIUM);
+  //
+  // IF_OBFF_LOGLVL_HIGH {
+  //   *logos << "this text will NOT be logged..." << endl
+  // }
+  //
+  // IF_OBFF_LOGLVL_LOW {
+  //   *logos << "this text will be logged..." << endl
+  // }
+  //
+  // IF_OBFF_LOGLVL_MEDIUM {
+  //   *logos << "this text will also be logged..." << endl
+  // }
+  //
   #define IF_OBFF_LOGLVL_LOW    if(loglvl >= OBFF_LOGLVL_LOW)
   #define IF_OBFF_LOGLVL_MEDIUM if(loglvl >= OBFF_LOGLVL_MEDIUM)
   #define IF_OBFF_LOGLVL_HIGH   if(loglvl >= OBFF_LOGLVL_HIGH)
@@ -102,7 +123,10 @@ namespace OpenBabel
       {
       }
 
-      virtual double Result() { return 0.0f; }
+      virtual double GetEnergy() { return 0.0f; }
+      virtual vector3 GetGradient(OBAtom *atom) { return vector3(0.0f, 0.0f, 0.0f); }
+
+      double energy;
   };
 
   // Class OBForceField
@@ -208,14 +232,18 @@ namespace OpenBabel
       //! Calculate the potential energy function derivative numerically with repect 
       //! to the coordinates of atom with index a (this vector is the gradient)
       vector3 NumericalDerivative(int a);
+      virtual vector3 GetGradient(OBAtom *a) { return vector3(0.0f, 0.0f, 0.0f); }
 
       int get_nbr (OBAtom* atom, int level);
+      bool is14(OBAtom *a, OBAtom *b);
       
       OBMol _mol;
 
       // ofstream for logfile
       std::ostream* logos;
       int loglvl;
+
+      std::vector<vector3> _forces;
 
     public:
       // see Energy()
@@ -241,12 +269,26 @@ namespace OpenBabel
       bool SetLogFile(std::ostream *pos);
       bool SetLogLevel(int level);
       virtual bool Validate() { return false; }
+      virtual bool ValidateGradients() { return false; }
  
 
       //! Update coordinates after steepest descent, ...
       void UpdateCoordinates(OBMol &mol);
+      //! Get forces for the current coordinates
+      virtual std::vector<vector3> GetForces() 
+      {
+      }
+      //! Generate coordinates for the molecule.
+      void DistanceGeometry();
       //! Generate coordinates for the molecule.
       void GenerateCoordinates();
+      
+      vector3 ValidateLineSearch(OBAtom *atom, vector3 &direction);
+      void ValidateSteepestDescent(int steps);
+      void ValidateConjugateGradients(int steps);
+      
+      //! Perform a linesearch starting at atom in direction direction
+      vector3 LineSearch(OBAtom *atom, vector3 &direction);
       //! Perform steepest descent optimalization
       void SteepestDescent(int steps);
       //! Perform conjugate gradients optimalization

@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
+#include <openbabel/math/matrix3x3.h>
 
 using namespace std;
 
@@ -160,6 +161,15 @@ namespace OpenBabel
     return true;
   }
  
+  bool is14(OBAtom *a, OBAtom *b)
+  {
+    FOR_NBORS_OF_ATOM (nbr, a)
+      FOR_NBORS_OF_ATOM (nbr2, &*nbr)
+        FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
+	  if (b == &*nbr3)
+	    return true;
+  }
+
   int OBForceField::get_nbr (OBAtom* atom, int level) {
     OBAtom *nbr,*nbr2;
     vector<OBEdgeBase*>::iterator i;
@@ -261,19 +271,524 @@ namespace OpenBabel
     InternalToCartesian(internals, _mol);
    
     // minimize the created structure
-    SteepestDescent(150);
+    //SteepestDescent(300);
+  }
+
+  void OBForceField::DistanceGeometry() 
+  {
+    int N = _mol.NumAtoms();
+    int i = 0;
+    int j = 0;
+    double matrix[N][N], G[N][N];
+    bool is15;
+    
+    IF_OBFF_LOGLVL_LOW {
+      *logos << endl << "D I S T A N C E   G E O M E T R Y" << endl << endl;
+    }
+ 
+    // Calculate initial distance matrix
+    //
+    // - diagonal elements are 0.0
+    // - when atoms i and j form a bond, the bond length is used for
+    //   upper and lower limit
+    // - when atoms i and j are in a 1-3 relationship, the distance
+    //   is calculated using the cosine rule: (upper limit = lower limit)
+    //      
+    //          b_         ab: bond length
+    //         /  \_       bc: bond length
+    //        /A    \_     ac = sqrt(ab^2 + bc^2 - 2*ab*bc*cos(A))
+    //       a--------c
+    //
+    // - when atoms i anf j are in a 1-4 relationship, the lower distance
+    //   limit is calculated using a torsional angle of 0.0. The upper limit 
+    //   is calculated using a torsion angle of 180.0.
+    //
+    //      a       d      ab, bc, cd: bond lengths
+    //       \ B C /       
+    //        b---c        ad = bc + ab*cos(180-B) + cd*cos(180-C)
+    //
+    //      a
+    //       \ B           delta_x = bc + ab*cos(180-B) + cd*cos(180-C)
+    //        b---c        delta_y = ab*sin(180-B) + cd*sin(180-C)
+    //           C \
+    //              d      ad = sqrt(delta_x^2 + delta_y^2)
+    //
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      i = a->GetIdx() - 1;
+      FOR_ATOMS_OF_MOL (b, _mol) {
+        j = b->GetIdx() - 1;
+
+	if (&*a == &*b) {
+	  matrix[i][j] = 0.0f; // diagonal
+	  continue;
+	}
+        // Find relationship
+	is15 = true;
+	FOR_NBORS_OF_ATOM (nbr1, _mol.GetAtom(a->GetIdx())) { // 1-2
+	  if (&*nbr1 == &*b) {
+	    matrix[i][j] = 1.3f;
+	    break;
+	  }
+	  FOR_NBORS_OF_ATOM (nbr2, _mol.GetAtom(nbr1->GetIdx())) { // 1-3
+	    if (&*nbr2 == &*b) {
+	      matrix[i][j] = sqrt(1.3f*1.3f + 1.3f*1.3f - 2.0f * cos(DEG_TO_RAD*120.0f) * 1.3f*1.3f );
+	      is15 = false;
+	      break;
+	    }
+            FOR_NBORS_OF_ATOM (nbr3, &*nbr2) { // 1-4
+	      if (&*nbr3 == &*b) {
+	        is15 = false;
+	        if (i > j) // minimum distance (torsion angle = 0)
+	          matrix[i][j] = 1.3f + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f));
+		else {// maximum distance (torsion angle = 180)
+		  double delta_x, delta_y;
+		  delta_x = 1.3f + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f));
+		  delta_y = 1.3f*sin(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*sin(DEG_TO_RAD*(180.0f-120.0f));
+		  matrix[i][j] = sqrt(delta_x*delta_x + delta_y*delta_y);
+		}
+	        break;
+	      }
+              if (i > j && is15) {// minimum distance (sum vdw radii)
+	        matrix[i][j] = 1.4f + 1.4f;
+              } else if (is15) // maximum distance (torsion angle = 180)
+	        matrix[i][j] = 99.0f;
+	    }
+	  }
+	}
+      }
+    }
+   
+    // output initial distance matrix
+    IF_OBFF_LOGLVL_LOW {
+      char logbuf[100];
+
+      *logos << "INITIAL DISTANCE MATRIX" << endl << endl;
+      for (i=0; i<N; i++) {
+        *logos << "[";
+        for (j=0; j<N; j++) {
+          sprintf(logbuf, " %8.4f ", matrix[i][j]);
+	  *logos << logbuf;
+        }
+        *logos << "]" << endl;
+      }
+      *logos << endl;
+    }
+
+    // Triangle smoothing
+    //FOR_ANGLES_OF_MOL(angle, _mol) {
+    int a, b, c;
+    bool self_consistent = false;
+    while (!self_consistent) {
+      self_consistent = true;
+
+      FOR_ATOMS_OF_MOL (_a, _mol) {
+        a = _a->GetIdx() - 1;
+        FOR_ATOMS_OF_MOL (_b, _mol) {
+          if (&*_b == &*_a)
+            continue;
+          b = _b->GetIdx() - 1;
+          FOR_ATOMS_OF_MOL (_c, _mol) {
+            if ((&*_c == &*_b) || (&*_c == &*_a))
+              continue;
+            c = _c->GetIdx() - 1;
+      
+            double u_ab, u_bc, u_ac; // upper limits
+            double l_ab, l_bc, l_ac; // lower limits
+      
+            // get the upper and lower limits for ab, bc and ac
+            if (b > a) {
+              u_ab = matrix[a][b];
+	      l_ab = matrix[b][a];
+            } else {
+              u_ab = matrix[b][a];
+              l_ab = matrix[a][b];
+            }
+            if (c > b) {
+              u_bc = matrix[b][c];
+              l_bc = matrix[c][b];
+            } else {
+              u_bc = matrix[c][b];
+	      l_bc = matrix[b][c];
+            }
+            if (c > a) {
+              u_ac = matrix[a][c];
+              l_ac = matrix[c][a];
+           } else {
+              u_ac = matrix[c][a];
+              l_ac = matrix[a][c];
+            }
+
+            if (u_ac > (u_ab + u_bc)) { // u_ac <= u_ab + u_bc
+              u_ac = u_ab + u_bc;
+	      self_consistent = false;
+	    }
+
+            if (l_ac < (l_ab - u_bc)) {// l_ac >= l_ab - u_bc
+              l_ac = l_ab - u_bc;
+      	      self_consistent = false;
+	    }
+
+            // store smoothed l_ac and u_ac
+            if (c > a) {
+              matrix[a][c] = u_ac;
+              matrix[c][a] = l_ac;
+            } else {
+              matrix[c][a] = u_ac;
+	      matrix[a][c] = l_ac;
+            }
+          }
+        }
+      }
+    }
+
+    // output result of triangle smoothing
+    IF_OBFF_LOGLVL_LOW {
+      char logbuf[100];
+
+      *logos << "TRIANGLE SMOOTHING" << endl << endl;
+      for (i=0; i<N; i++) {
+        *logos << "[";
+        for (j=0; j<N; j++) {
+          sprintf(logbuf, " %8.4f ", matrix[i][j]);
+	  *logos << logbuf;
+        }
+        *logos << "]" << endl;
+      }
+      *logos << endl;
+    }
+    
+    // Generate random distance matrix between lower and upper limits
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      i = a->GetIdx() - 1;
+      FOR_ATOMS_OF_MOL (b, _mol) {
+        j = b->GetIdx() - 1;
+
+	if (&*a == &*b) {
+	  matrix[i][j] = 0.0f; // diagonal
+	  continue;
+	}
+       
+        srand(time(NULL));
+	double rand_ab, u_ab, l_ab;
+        if (j > i) {
+          u_ab = matrix[i][j];
+          l_ab = matrix[j][i];
+          rand_ab = l_ab + (u_ab - l_ab) * rand()/RAND_MAX;
+	  matrix[i][j] = rand_ab;
+	  matrix[j][i] = rand_ab;
+        } else {
+          u_ab = matrix[j][i];
+          l_ab = matrix[i][j];
+          rand_ab = l_ab + (u_ab - l_ab) * rand()/RAND_MAX;
+	  matrix[i][j] = rand_ab;
+	  matrix[j][i] = rand_ab;
+        }
+      }
+    }
+ 
+    // output result of triangle smoothing
+    IF_OBFF_LOGLVL_LOW {
+      char logbuf[100];
+
+      *logos << "RANDOM DISTANCE MATRIX BETWEEN LIMITS" << endl << endl;
+      for (i=0; i<N; i++) {
+        *logos << "[";
+        for (j=0; j<N; j++) {
+          sprintf(logbuf, " %8.4f ", matrix[i][j]);
+	  *logos << logbuf;
+        }
+        *logos << "]" << endl;
+      }
+      *logos << endl;
+    }
+
+    // Generate metric matrix
+    // (origin = first atom )
+    for (i=0; i<N; i++) {
+      for (j=0; j<N; j++) {
+        G[i][j] = 0.5f * (matrix[0][i]*matrix[0][i] + matrix[0][j]*matrix[0][j] - matrix[i][j]*matrix[i][j]);
+      }
+    }
+    
+    // output metric matrix
+    IF_OBFF_LOGLVL_LOW {
+      char logbuf[100];
+
+      *logos << "METRIC MATRIX" << endl << endl;
+      for (i=0; i<N; i++) {
+        *logos << "[";
+        for (j=0; j<N; j++) {
+          sprintf(logbuf, " %8.4f ", G[i][j]);
+	  *logos << logbuf;
+        }
+        *logos << "]" << endl;
+      }
+      *logos << endl;
+    }
+
+    // Calculate eigenvalues and eigenvectors
+    double eigenvalues[N];
+    double eigenvectors[N][N];
+    matrix3x3::jacobi(N, (double *) &G, (double *) &eigenvalues, (double *) &eigenvectors);
+    
+    // output eigenvalues and eigenvectors
+    IF_OBFF_LOGLVL_LOW {
+      char logbuf[100];
+
+      *logos << "EIGENVALUES OF METRIC MATRIX" << endl << endl;
+      for (i=0; i<N; i++) {
+        *logos << eigenvalues[i] << " ";
+      }
+      *logos << endl << endl;
+
+      *logos << "EIGENVECTORS OF METRIC MATRIX" << endl << endl;
+      for (i=0; i<N; i++) {
+        *logos << "[";
+        for (j=0; j<N; j++) {
+          sprintf(logbuf, " %8.4f ", eigenvectors[i][j]);
+	  *logos << logbuf;
+        }
+        *logos << "]" << endl;
+      }
+      *logos << endl;
+    }
+
+    // Assign coordinates
+    double xa, ya, za;
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      i = a->GetIdx() - 1;
+      
+      if (eigenvectors[i][N-1] > 0)
+        xa = sqrt(eigenvalues[N-1] * eigenvectors[i][N-1]);
+      else
+        xa = -sqrt(eigenvalues[N-1] * -eigenvectors[i][N-1]);
+
+      if (eigenvectors[i][N-2] > 0)
+        ya = sqrt(eigenvalues[N-2] * eigenvectors[i][N-2]);
+      else
+        ya = -sqrt(eigenvalues[N-2] * -eigenvectors[i][N-2]);
+
+      if (eigenvectors[i][N-3] > 0)
+        za = sqrt(eigenvalues[N-3] * eigenvectors[i][N-3]);
+      else
+        za = -sqrt(eigenvalues[N-3] * -eigenvectors[i][N-3]);
+
+      a->SetVector(xa, ya, za);
+    }
+
+  }
+  
+  // LineSearch 
+  //
+  // atom: coordinates of atom at iteration k (x_k)
+  // direction: search direction ( d = -grad(x_0) )
+  //
+  // ALGORITHM:
+  // 
+  // step = 1
+  // for (i = 1 to 100) {                max steps = 100
+  //   e_k = energy(x_k)                 energy of current iteration
+  //   x_k = x_k + step * d              update coordinates
+  //   e_k+1 = energy(x_k+1)             energy of next iteration
+  //   
+  //   if (e_k+1 < e_k)
+  //     step = step * 1.2               increase step size
+  //   if (e_k+1 > e_k) {
+  //     x_k = x_k - step * d            reset coordinates to previous iteration
+  //     step = step * 0.5               reduce step size
+  //   }
+  //   if (e_k+1 == e_k)
+  //     end                             convergence criteria reached, stop
+  // }
+  vector3 OBForceField::LineSearch(OBAtom *atom, vector3 &direction)
+  {
+    double e_n1, e_n2, step;
+    vector3 old_xyz, orig_xyz, xyz_k, dir(0.0f, 0.0f, 0.0f);
+
+    step = 0.2f;
+    direction.normalize();
+    orig_xyz = atom->GetVector();
+    
+    e_n1 = Energy(); // calculate e_k
+    
+    for (int i=0; i<100; i++) {
+      old_xyz = atom->GetVector();
+      
+      xyz_k = atom->GetVector() + direction*step;
+      atom->SetVector(xyz_k);  // update coordinates
+    
+      e_n2 = Energy(); // calculate e_k+1
+      
+      if (e_n2 == e_n1) // convergence criteria
+        break;
+
+      if (e_n2 > e_n1) { // decrease stepsize
+	step *= 0.5f;
+        atom->SetVector(old_xyz);
+      }
+      if (e_n2 < e_n1) {  // increase stepsize
+        e_n1 = e_n2;
+	step *= 1.2f;
+	if (step > 1.0f)
+	  step = 1.0f;
+      }
+      
+    }
+
+    dir = atom->GetVector() - orig_xyz;
+    atom->SetVector(orig_xyz);     
+    return dir;    
+  }
+  
+  vector3 OBForceField::ValidateLineSearch(OBAtom *atom, vector3 &direction)
+  {
+    double e_n1, e_n2, step;
+    vector3 old_xyz, orig_xyz, xyz_k, dir(0.0f, 0.0f, 0.0f);
+
+    step = 0.2f;
+    direction.normalize();
+    orig_xyz = atom->GetVector();
+    
+    e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y()); // e_k
+    
+    for (int i=0; i<100; i++) {
+      old_xyz = atom->GetVector();
+      
+      xyz_k = atom->GetVector() + direction*step;
+      atom->SetVector(xyz_k);  // update coordinates
+    
+      e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y()); // e_k+1
+      
+      if (e_n2 == e_n1) // convergence criteria
+        break;
+
+      if (e_n2 > e_n1) { // decrease stepsize
+	step *= 0.5f;
+        atom->SetVector(old_xyz);
+      }
+      if (e_n2 < e_n1) {  // increase stepsize
+        e_n1 = e_n2;
+	step *= 1.2f;
+	if (step > 1.0f)
+	  step = 1.0f;
+      }
+      
+    }
+
+    dir = atom->GetVector() - orig_xyz;
+    atom->SetVector(orig_xyz);     
+    return dir;    
+  }
+ 
+  // used to validate the SteepestDescent implementation using a simple function.
+  //
+  // f(x,y) = x^2 + 2y^2
+  // minimum: (0, 0)
+  // df/dx = 2x
+  // df/dy = 4y
+  //
+  void OBForceField::ValidateSteepestDescent(int steps) 
+  {
+    OBAtom *atom = new OBAtom;
+    vector3 grad;
+    double e_n1, e_n2;
+    char logbuf[100];
+    
+    atom->SetVector(9.0f, 9.0f, 0.0f);
+    e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
+    
+    cout << endl << "V A L I D A T E   S T E E P E S T   D E S C E N T" << endl << endl;
+    cout << "STEPS = " << steps << endl << endl;
+    cout << "STEP n     E(n)       E(n-1)    " << endl;
+    cout << "--------------------------------" << endl;
+    
+    for (int i=1; i<=steps; i++) {
+      grad.Set(-2*atom->x(), -4*atom->y(), 0.0f);
+      grad = ValidateLineSearch(&*atom, grad);
+      atom->SetVector(atom->x() + grad.x(), atom->y() + grad.y(), 0.0f);
+      e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
+      
+      sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
+      cout << logbuf << endl;
+
+      if (fabs(e_n1 - e_n2) < 0.0000001f) {
+        cout << "    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+        break;
+      }
+
+      e_n1 = e_n2;
+    }
+
+    UnsetEnergyCalculated();
+    IF_OBFF_LOGLVL_LOW
+      *logos << endl;
+  }
+
+  void OBForceField::ValidateConjugateGradients(int steps)
+  {
+    OBAtom *atom = new OBAtom;
+    vector3 grad1, grad2, dir1, dir2;
+    double e_n1, e_n2;
+    double g2g2, g1g1, g2g1;
+    bool firststep;
+    char logbuf[100];
+
+    firststep = true;
+    atom->SetVector(9.0f, 9.0f, 0.0f);
+    e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
+ 
+    cout << endl << "V A L I D A T E   C O N J U G A T E   G R A D I E N T" << endl << endl;
+    cout << "STEPS = " << steps << endl << endl;
+    cout << "STEP n     E(n)       E(n-1)    " << endl;
+    cout << "--------------------------------" << endl;
+ 
+    for (int i=1; i<=steps; i++) {
+      if (firststep) {
+        grad1.Set(-2*atom->x(), -4*atom->y(), 0.0f);
+	dir1 = grad1;
+	dir1 = ValidateLineSearch(&*atom, dir1);
+        atom->SetVector(atom->x() + dir1.x(), atom->y() + dir1.y(), atom->z() + dir1.z());
+        e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
+      
+        sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
+        cout << logbuf << endl;
+        
+	e_n1 = e_n2;
+	dir1 = grad1;
+	firststep = false;
+      } else {
+        grad2.Set(-2*atom->x(), -4*atom->y(), 0.0f);
+	g2g2 = dot(grad2, grad2);
+	g1g1 = dot(grad1, grad1);
+	g2g1 = g2g2 / g1g1;
+	dir2 = grad2 + g2g1 * dir1;
+	dir2 = ValidateLineSearch(&*atom, dir2);
+        atom->SetVector(atom->x() + dir2.x(), atom->y() + dir2.y(), atom->z() + dir2.z());
+	grad1 = grad2;
+	dir1 = dir2;
+        e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
+	  
+        sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
+        cout << logbuf << endl;
+        
+	if (fabs(e_n1 - e_n2) < 0.0000001f) {
+          cout << "    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+          break;
+        }
+
+	//grad1 = grad2;
+	//dir1 = dir2;
+	e_n1 = e_n2;
+      }
+    }
+    UnsetEnergyCalculated();
   }
 
   void OBForceField::SteepestDescent(int steps) 
   {
-    double e_n1, e_n2, h;
+    double e_n1, e_n2;
     char logbuf[100];
-    //   double fmax;
-    vector3 vf;
-    vector<vector3> old_xyz;
-
-    h = 0.1f;
-    old_xyz.resize(_mol.NumAtoms()+1);
+    vector3 grad;
 
     e_n1 = Energy(); // we call Energy instead of GetEnergy 
                      // because coordinates change every step
@@ -281,41 +796,31 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW {
       *logos << endl << "S T E E P E S T   D E S C E N T" << endl << endl;
       *logos << "STEPS = " << steps << endl << endl;
-      *logos << "STEP n     E(n)       E(n-1)     STEPSIZE" << endl;
-      *logos << "-----------------------------------------" << endl;
+      *logos << "STEP n     E(n)       E(n-1)    " << endl;
+      *logos << "--------------------------------" << endl;
     }
-           //  XXXX    XXXXXXXX    XXXXXXXX    XXXXXXXX
+    
     for (int i=1; i<=steps; i++) {
-      //fmax = GetFmax();
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        //vf = forces[a->GetIdx()];
-	vf = NumericalDerivative(a->GetIdx());
-        //forces[a->GetIdx()].Set(0.0f, 0.0f, 0.0f);
-	//vf = vf / fmax * h;
-	vf = vf.normalize();
-	vf = vf * h;
-	old_xyz[a->GetIdx()] = a->GetVector();
-        a->SetVector(a->x() + vf.x(), a->y() + vf.y(), a->z() + vf.z());
-        //sprintf(errbuf, "%svf=(%f, %f, %f)\n", errbuf, vf.x(), vf.y(), vf.z()); // DEBUG
+	//grad = NumericalDerivative(a->GetIdx());
+	grad = GetGradient(&*a);
+	grad = LineSearch(&*a, grad);
+        a->SetVector(a->x() + grad.x(), a->y() + grad.y(), a->z() + grad.z());
       }
       e_n2 = Energy();
       
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, " %4d    %8.3f    %8.3f    %8.3f", i, e_n2, e_n1, h);
+        sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
         *logos << logbuf << endl;
       }
-      
-      if (e_n2 >= e_n1) {
-	h = 0.5f * h;
-        FOR_ATOMS_OF_MOL (a, _mol)
-          a->SetVector(old_xyz[a->GetIdx()].x(), old_xyz[a->GetIdx()].y(), old_xyz[a->GetIdx()].z());
+
+      if (fabs(e_n1 - e_n2) < 0.0000001f) {
+        *logos << "    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+        break;
       }
-      if (e_n2 < e_n1) {
-        e_n1 = e_n2;
-	h = 1.2f * h;
-      }
- 
+
+      e_n1 = e_n2;
     }
 
     UnsetEnergyCalculated();
@@ -326,144 +831,129 @@ namespace OpenBabel
   void OBForceField::ConjugateGradients(int steps)
   {
     double e_n1, e_n2;
-    double h, g2g2, g1g1, g2g1;
+    double g2g2, g1g1, g2g1;
     bool firststep;
-    vector3 grad1, grad2, dir1, dir2;
+    vector<vector3> grad1, dir1;
+    vector3 grad2, dir2;
     vector<vector3> old_xyz;
+    char logbuf[100];
 
-    h = 0.1f;
     firststep = true;
-    old_xyz.resize(_mol.NumAtoms()+1);
 
     e_n1 = Energy();
+    
+    IF_OBFF_LOGLVL_LOW {
+      *logos << endl << "C O N J U G A T E   G R A D I E N T" << endl << endl;
+      *logos << "STEPS = " << steps << endl << endl;
+      *logos << "STEP n     E(n)       E(n-1)    " << endl;
+      *logos << "--------------------------------" << endl;
+    }
+    
+    grad1.resize(_mol.NumAtoms() + 1);
+    dir1.resize(_mol.NumAtoms() + 1);
 
     for (int i=0; i<steps; i++) {
       if (firststep) {
         FOR_ATOMS_OF_MOL (a, _mol) {
-  	  grad1 = NumericalDerivative(a->GetIdx());
-	  grad1 = grad1.normalize();
-	  grad1 = grad1 * h;
-	  old_xyz[a->GetIdx()] = a->GetVector();
-          a->SetVector(a->x() + grad1.x(), a->y() + grad1.y(), a->z() + grad1.z());
-          //sprintf(errbuf, "%svf=(%f, %f, %f)\n", errbuf, vf.x(), vf.y(), vf.z()); // DEBUG
+  	  //grad1 = NumericalDerivative(a->GetIdx());
+	  grad2 = GetGradient(&*a);
+	  dir2 = grad2;
+	  dir2 = LineSearch(&*a, dir2);
+          a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
+	  grad1[a->GetIdx()] = grad2;
+	  dir1[a->GetIdx()] = grad2;
         }
         e_n2 = Energy();
-
-        cout << "e_n1 e=" << e_n1 << "  e_n2=" << e_n2  << ", h=" << h << endl;
-        if (e_n2 >= e_n1) {
-	  h = 0.5f * h;
-          FOR_ATOMS_OF_MOL (a, _mol)
-            a->SetVector(old_xyz[a->GetIdx()].x(), old_xyz[a->GetIdx()].y(), old_xyz[a->GetIdx()].z());
+      
+        IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
+          *logos << logbuf << endl;
         }
-        if (e_n2 < e_n1) {
-          e_n1 = e_n2;
-	  h = 1.2f * h;
-	  firststep = false;
-	  dir1 = grad1;
-        }
+	
+	firststep = false;
+	e_n1 = e_n2;
       } else {
         FOR_ATOMS_OF_MOL (a, _mol) {
- 	  grad2 = NumericalDerivative(a->GetIdx());
-	  grad2 = grad2.normalize();
-	  grad2 = grad2 * h;
+ 	  //grad2 = NumericalDerivative(a->GetIdx());
+	  grad2 = GetGradient(&*a);
 	  g2g2 = dot(grad2, grad2);
-	  g1g1 = dot(grad1, grad1);
+	  g1g1 = dot(grad1[a->GetIdx()], grad1[a->GetIdx()]);
 	  g2g1 = g2g2 / g1g1;
-	  dir2 = grad2 + g2g1 * dir1;
-	  old_xyz[a->GetIdx()] = a->GetVector();
+	  dir2 = grad2 + g2g1 * dir1[a->GetIdx()];
+	  dir2 = LineSearch(&*a, dir2);
           a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
-	  //cout << "  dir2=" << dir2 << endl;
-          //sprintf(errbuf, "%svf=(%f, %f, %f)\n", errbuf, vf.x(), vf.y(), vf.z()); // DEBUG
-	  grad1 = grad2;
-	  dir1 = dir2;
+	  
+	  grad1[a->GetIdx()] = grad2;
+	  dir1[a->GetIdx()] = dir2;
+	  e_n1 = e_n2;
         }
         e_n2 = Energy();
+	
+	IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
+          *logos << logbuf << endl;
+        }
+ 
+	if (fabs(e_n1 - e_n2) < 0.0000001f) {
+          cout << "    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+          break;
+        }
 
-        cout << "e_n1 e=" << e_n1 << "  e_n2=" << e_n2  << ", h=" << h << endl;
-        if (e_n2 >= e_n1) {
-	  h = 0.5f * h;
-          FOR_ATOMS_OF_MOL (a, _mol)
-            a->SetVector(old_xyz[a->GetIdx()].x(), old_xyz[a->GetIdx()].y(), old_xyz[a->GetIdx()].z());
-        }
-        if (e_n2 < e_n1) {
-          e_n1 = e_n2;
-	  h = 1.2f * h;
-        }
-      
+	e_n1 = e_n2;
       }
     }
     UnsetEnergyCalculated();
   }
 
-  /* 
-  double OBForceField::GetFmax(OBMol &mol)
-  {
-    double fmax;
-    vector<vector3>::iterator v; 
-
-    for (v = forces.begin(); v != forces.end(); v++) {
-      if (v->x() > fmax)
-        fmax = v->x();
-      if (v->y() > fmax)
-        fmax = v->y();
-      if (v->z() > fmax)
-        fmax = v->z();
-    }
-
-    if (fmax < 0)
-      fmax = -fmax;
-    
-    return fmax;
-  }
-*/
   vector3 OBForceField::NumericalDerivative(int a)
   {
     OBAtom *atom;
     vector3 va, grad;
     double e_orig, e_plus_delta, e_minus_delta, delta, dx, dy, dz;
 
-    delta = 0.01f;
+    delta = 0.000001f;
 
     atom = _mol.GetAtom(a);
     va = atom->GetVector();
 
     e_orig = Energy();
+    
     atom->SetVector(va.x() + delta, va.y(), va.z());
     e_plus_delta = Energy();
     atom->SetVector(va.x() - delta, va.y(), va.z());
     e_minus_delta = Energy();
 
-    dx = (e_minus_delta + e_plus_delta) / 2;
+    //dx = (e_plus_delta - e_minus_delta);
+    dx = (e_plus_delta - e_orig);
+    //cout << "x_" << a << "    " << e_plus_delta << " - " << e_minus_delta << "  (orig=" << e_orig << ")" <<endl;
 
-    if (e_plus_delta > e_minus_delta)
-      dx = -dx;
-
-    //e_orig = Energy();
     atom->SetVector(va.x(), va.y() + delta, va.z());
     e_plus_delta = Energy();
     atom->SetVector(va.x(), va.y() - delta, va.z());
     e_minus_delta = Energy();
 
-    dy = (e_minus_delta + e_plus_delta) / 2;
+    //dy = (e_plus_delta - e_minus_delta);
+    dy = (e_plus_delta - e_orig);
+    //cout << "y_" << a << "    " << e_plus_delta << " - " << e_minus_delta << "  (orig=" << e_orig << ")" << endl;
     
-    if (e_plus_delta > e_minus_delta)
-      dy = -dy;
-
-    //e_orig = Energy();
     atom->SetVector(va.x(), va.y(), va.z() + delta);
     e_plus_delta = Energy();
     atom->SetVector(va.x(), va.y(), va.z() - delta);
     e_minus_delta = Energy();
 
-    dz = (e_minus_delta + e_plus_delta) / 2;
-
-    if (e_plus_delta > e_minus_delta)
-      dz = -dz;
+    //dz = (e_plus_delta - e_minus_delta);
+    dz = (e_plus_delta - e_orig);
+    //cout << "z_" << a << "    " << e_plus_delta << " - " << e_minus_delta << "  (orig=" << e_orig << ")" << endl;
 
     atom->SetVector(va.x(), va.y(), va.z());
 
-    grad.Set(dx, dy, dz);
+    dx *= 1.0f / delta;
+    dy *= 1.0f / delta;
+    dz *= 1.0f / delta;
+    grad.Set(-dx, -dy, -dz);
 
+    //cout << "NumericalDerivative(" << a << ")" << endl;
+    //cout << "grad: " << grad << endl;
     UnsetEnergyCalculated();
     //char errbuf[3600]; // DEBUG
     //sprintf(errbuf, "grad=(%f, %f, %f)  e_orig=%f   e+delta=%f  e-delta=%f\n", dx, dy, dz, e_orig, e_plus_delta, e_minus_delta); // DEBUG

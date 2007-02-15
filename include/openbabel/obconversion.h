@@ -349,8 +349,7 @@ protected:
       ///Replaces * in BaseName by Count
       static std::string IncrementedFileName(std::string& BaseName, const int Count);
       ///Checks for misunderstandings when using the -m option
-      static bool OBConversion::CheckForUnintendedBatch
-        (const std::string& infile, const std::string& outfile);
+      static bool CheckForUnintendedBatch(const std::string& infile, const std::string& outfile);
 
       //@}
 
