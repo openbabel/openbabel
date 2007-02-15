@@ -31,70 +31,72 @@ namespace OpenBabel
   {
     public:
       OBAtom *a, *b; // atoms of the bond
-      double kb, r0, e, rab, delta;
+      double kb, r0, rab, delta;
       int bt; // bondtype (BTIJ)
       
-      double Result();
+      double GetEnergy();
+      vector3 GetGradient(OBAtom *atom);
   };
   
   class OBFFAngleCalculationMMFF94 : public OBFFCalculation
   {
     public:
       OBAtom *a, *b, *c; // atoms of the angle
-      double ka, theta0, e, theta, delta;
+      double ka, theta0, theta, delta;
       int at; //angletype (ATIJK)
       
-      double Result();
+      double GetEnergy();
+      vector3 GetGradient(OBAtom *atom);
   };
   
   class OBFFStrBndCalculationMMFF94 : public OBFFCalculation
   {
     public:
       OBAtom *a, *b, *c; // atoms of the angle
-      double kbaABC, kbaCBA, e, theta0, theta, rab0, rbc0, rab, rbc, delta_theta, delta_rab, delta_rbc;
+      double kbaABC, kbaCBA, theta0, theta, rab0, rbc0, rab, rbc, delta_theta, delta_rab, delta_rbc;
       int sbt; //strbndtype (SBTIJK)
       
-      double Result();
+      double GetEnergy();
   };
 
   class OBFFTorsionCalculationMMFF94 : public OBFFCalculation
   {
     public:
       OBAtom *a, *b, *c, *d; // atoms of the torsion
-      double v1, v2, v3, e, tor, cosine;
+      double v1, v2, v3, tor, cosine;
       int tt; //torsiontype (TTIJKL)
       
-      double Result();
+      double GetEnergy();
   };
 
  class OBFFOOPCalculationMMFF94 : public OBFFCalculation
   {
     public:
       OBAtom *a, *b, *c, *d; // atoms of the oop angle
-      double koop, e, angle;
+      double koop, angle;
       
-      double Result();
+      double GetEnergy();
   };
 
   class OBFFVDWCalculationMMFF94 : public OBFFCalculation
   {
     public:
       OBAtom *a, *b; // atoms of the pair
-      double e, rab, epsilon, alpha_a, alpha_b, Na, Nb, Aa, Ab, Ga, Gb;
+      double rab, epsilon, alpha_a, alpha_b, Na, Nb, Aa, Ab, Ga, Gb;
       double R_AB, R_AB7, erep, eattr, escale;
       int aDA, bDA; // hydrogen donor/acceptor (A=1, D=2, neither=0)
 
-      double Result();
+      double GetEnergy();
   };
 
   class OBFFElectrostaticCalculationMMFF94 : public OBFFCalculation
   {
     public:
       OBAtom *a, *b, *c; // atoms of the angle
-      double ka, theta0, e, thetaabc, delta, delta2;
+      double ka, theta0, thetaabc, delta, delta2;
       int sbt; //strbndtype (SBTIJK)
       
-      double Result();
+      double GetEnergy();
   };
 
   // Class OBForceFieldMMFF94
@@ -142,6 +144,7 @@ namespace OpenBabel
       
       
       bool Validate();
+      bool ValidateGradients();
       OBFFParameter* GetParameterMMFF94(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
 
       
@@ -182,6 +185,7 @@ namespace OpenBabel
 	{ return "Merck Molecular Force Field. (94)";};
 
       std::string GetUnit() { return std::string("kcal/mol"); }
+      std::vector<vector3> GetForces();
 
 
       //! Destructor
