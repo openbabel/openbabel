@@ -1605,7 +1605,7 @@ namespace OpenBabel
 
     if (!format_in || !conv.SetInFormat(format_in)) {
       obErrorLog.ThrowError(__FUNCTION__, "Could not set mol2 input format", obError);
-      exit (-1);
+      return false;
     }
 
     ifstream ifs, ifs2;
@@ -1614,19 +1614,19 @@ namespace OpenBabel
     ifs.open("MMFF94_dative.mol2");
     if (!ifs) {
       obErrorLog.ThrowError(__FUNCTION__, "Could not open ./MMFF94_dative.mol2", obError);
-      exit (-1);
+      return false;
     }
  
     ifs2.open("MMFF94_opti.log");
     if (!ifs2) {
       obErrorLog.ThrowError(__FUNCTION__, "Coulg not open ./MMFF_opti.log", obError);
-      exit(1);
+      return false;
     }
     
     ofs.open("MMFF94_openbabel.log");
     if (!ofs) {
       obErrorLog.ThrowError(__FUNCTION__, "Coulg not open ./MMFF_openbabel.log", obError);
-      exit(1);
+      return false;
     }
     
     SetLogFile(&ofs);

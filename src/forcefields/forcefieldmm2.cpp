@@ -50,7 +50,7 @@ namespace OpenBabel
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams);
       if (parameter == NULL) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters", obError);
-        exit(1);
+        return 0.0;
       }
 
       l_ref = parameter->dpar1;
@@ -103,7 +103,7 @@ namespace OpenBabel
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffangleparams);
       if (parameter == NULL) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all angle parameters", obError);
-        exit(1);
+        return 0.0;
       }
       
       ang_ref = parameter->dpar1;
@@ -167,7 +167,7 @@ namespace OpenBabel
       parameter = GetParameter(atoi(b->GetType()), 0, 0, 0, _ffstretchbendparams);
       if (parameter == NULL) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all stretch-bend parameters", obError);
-        exit(1);
+        return 0.0;
       }
       force = parameter->dpar1;
       
@@ -223,7 +223,7 @@ namespace OpenBabel
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
       if (parameter == NULL) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
-        exit(1);
+        return 0.0;
       }
       
       v1 = parameter->dpar1;

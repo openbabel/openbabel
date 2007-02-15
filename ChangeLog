@@ -1,3 +1,14 @@
+2007-02-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefieldmm2.cpp,
+	src/forcefields/forcefieldmmff94.cpp: Remove exit() calls in favor
+	of error messages and default return values. Fixes PR#1650132.
+
+	* src/forcefields/forcefieldghemical.cpp: Add default
+	electrostatic function (return 0.0) to fix compilation error.
+
+	* tools/obmm.cpp: Add cg command for conjugate gradients.
+
 2007-02-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/obconversion.h: Removed OBConversion:: before

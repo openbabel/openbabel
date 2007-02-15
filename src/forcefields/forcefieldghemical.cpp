@@ -78,7 +78,7 @@ namespace OpenBabel
 
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%s %s    %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
-	    (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
+                (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
         *logos  << logbuf << endl;
       }
     }
@@ -172,7 +172,7 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%s %s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
-	        (*i).c->GetType(), (*i).theta, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
+                (*i).c->GetType(), (*i).theta, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
         *logos  << logbuf << endl;
       }
     }
@@ -261,12 +261,12 @@ namespace OpenBabel
     gradd = f * (bcabbc / (rabbc*rbccd) - (bcbccd*dot(abbc,bccd)) / (rabbc*rbccd3)) / sqrt(abbc_bccd2);
 
     gradb = f * ( -(cdbccd*dot(abbc,bccd)) / (rabbc*rbccd3) + 
-                    (cdabbc - acbccd) / (rabbc*rbccd) + 
-		    (acabbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
+                  (cdabbc - acbccd) / (rabbc*rbccd) + 
+                  (acabbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
     
     gradc = f * (  (bdbccd*dot(abbc,bccd)) / (rabbc*rbccd3) + 
-                    (abbccd - bdabbc) / (rabbc*rbccd) +
-		   -(ababbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
+                   (abbccd - bdabbc) / (rabbc*rbccd) +
+                   -(ababbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
     
     if (atom->GetIdx() == a->GetIdx()) 
       return grada;
@@ -300,7 +300,7 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%s %s %s %s    %6.3f    %5.0f   %8.3f   %1.0f   %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
-	        (*i).c->GetType(), (*i).d->GetType(), (*i).V, (*i).s, (*i).tor, (*i).n, (*i).energy);
+                (*i).c->GetType(), (*i).d->GetType(), (*i).V, (*i).s, (*i).tor, (*i).n, (*i).energy);
         *logos << logbuf << endl;
       }
     }
@@ -326,9 +326,9 @@ namespace OpenBabel
     // 1-4 scaling
     FOR_NBORS_OF_ATOM (nbr, a)
       FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-        FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-	  if (b == &*nbr3)
-            energy = 0.5f * energy;
+      FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
+      if (b == &*nbr3)
+        energy = 0.5f * energy;
 
     return energy;
   }
@@ -355,9 +355,9 @@ namespace OpenBabel
     // 1-4 scaling
     FOR_NBORS_OF_ATOM (nbr, a)
       FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-        FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-	  if (b == &*nbr3)
-            gradient = 0.5f * gradient;
+      FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
+      if (b == &*nbr3)
+        gradient = 0.5f * gradient;
 
     if (atom == a)
       return -gradient;
@@ -388,7 +388,7 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f  %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
-	        (*i).rab, (*i).kab, (*i).sigma, (*i).energy);
+                (*i).rab, (*i).kab, (*i).sigma, (*i).energy);
         *logos  << logbuf << endl;
       }
     }
@@ -398,6 +398,10 @@ namespace OpenBabel
     return energy;
   }
 
+  double OBFFElectrostaticCalculationGhemical::GetEnergy()
+  {
+    return 0.0f;
+  }
 
   //***********************************************
   //Make a global instance
@@ -457,16 +461,16 @@ namespace OpenBabel
         if (parameter == NULL) {
           parameter = GetParameterGhemical(bondtype, "FFFF", b->GetType(), NULL, NULL, _ffbondparams);
 
-	  if (parameter == NULL) {
+          if (parameter == NULL) {
             //obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters ", obError);
             //return false;
             bondcalc.kb = 500.0f;
             bondcalc.r0 = 1.100f;
 
             _bondcalculations.push_back(bondcalc);
-	    continue;
-	  }
-	}
+            continue;
+          }
+        }
       }
       bondcalc.kb = parameter->dpar2;
       bondcalc.r0 = parameter->dpar1;
@@ -493,18 +497,18 @@ namespace OpenBabel
       parameter = GetParameter(a->GetType(), b->GetType(), c->GetType(), _ffangleparams);
       if (parameter == NULL) {
         parameter = GetParameter("FFFF", b->GetType(), c->GetType(), _ffangleparams);
-	if (parameter == NULL) {
+        if (parameter == NULL) {
           parameter = GetParameter("FFFF", b->GetType(), "FFFF", _ffangleparams);
-	  if (parameter == NULL) {
+          if (parameter == NULL) {
             anglecalc.ka   = 0.020f;
             anglecalc.theta0 = 120.0f;
             
-	    _anglecalculations.push_back(anglecalc);
+            _anglecalculations.push_back(anglecalc);
             continue;
             //obErrorLog.ThrowError(__FUNCTION__, "Could not find all angle parameters", obError);
             //return false;
-	  }
-	}
+          }
+        }
       }
       anglecalc.ka   = parameter->dpar2;
       anglecalc.theta0 = parameter->dpar1;
@@ -540,44 +544,44 @@ namespace OpenBabel
         if (parameter == NULL) {
           parameter = GetParameterGhemical(torsiontype, a->GetType(), b->GetType(), c->GetType(), "FFFF", _fftorsionparams);
           if (parameter == NULL) {
-	    parameter = GetParameterGhemical(torsiontype, "FFFF", b->GetType(), c->GetType(), "FFFF", _fftorsionparams);
+            parameter = GetParameterGhemical(torsiontype, "FFFF", b->GetType(), c->GetType(), "FFFF", _fftorsionparams);
             if (parameter == NULL) {
               torsioncalc.V = 0.0f;
               torsioncalc.s = 1.0f;
               torsioncalc.n = 1.0f;
               
-	      torsioncalc.k1 = 0;
+              torsioncalc.k1 = 0;
               torsioncalc.k2 = 0;
               torsioncalc.k3 = 0;
               int_s = (int) (torsioncalc.s * torsioncalc.n);
               switch (int_s) {
-                case +3:
-                  torsioncalc.k3 = +torsioncalc.V;
-                  break;
-                case +2:
-                  torsioncalc.k2 = -torsioncalc.V;
-	          break;
-                case +1:
-                  torsioncalc.k1 = +torsioncalc.V;
-                  break;
-                case -1:
-                  torsioncalc.k1 = -torsioncalc.V;
-                  break;
-                case -2:
-                  torsioncalc.k2 = +torsioncalc.V;
-                  break;
-                case -3:
-                  torsioncalc.k3 = -torsioncalc.V;
-                  break;
+              case +3:
+                torsioncalc.k3 = +torsioncalc.V;
+                break;
+              case +2:
+                torsioncalc.k2 = -torsioncalc.V;
+                break;
+              case +1:
+                torsioncalc.k1 = +torsioncalc.V;
+                break;
+              case -1:
+                torsioncalc.k1 = -torsioncalc.V;
+                break;
+              case -2:
+                torsioncalc.k2 = +torsioncalc.V;
+                break;
+              case -3:
+                torsioncalc.k3 = -torsioncalc.V;
+                break;
               }
 
               _torsioncalculations.push_back(torsioncalc);
-	      continue;
+              continue;
               //obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
-	      //return false;
-	    }
-	  }
-	}
+              //return false;
+            }
+          }
+        }
       }
       torsioncalc.V = parameter->dpar1;
       torsioncalc.s = parameter->dpar2;
@@ -588,24 +592,24 @@ namespace OpenBabel
       torsioncalc.k3 = 0;
       int_s = (int) (torsioncalc.s * torsioncalc.n);
       switch (int_s) {
-        case +3:
-          torsioncalc.k3 = +torsioncalc.V;
-          break;
-        case +2:
-          torsioncalc.k2 = -torsioncalc.V;
-          break;
-        case +1:
-          torsioncalc.k1 = +torsioncalc.V;
-          break;
-        case -1:
-          torsioncalc.k1 = -torsioncalc.V;
-          break;
-        case -2:
-          torsioncalc.k2 = +torsioncalc.V;
-          break;
-        case -3:
-          torsioncalc.k3 = -torsioncalc.V;
-          break;
+      case +3:
+        torsioncalc.k3 = +torsioncalc.V;
+        break;
+      case +2:
+        torsioncalc.k2 = -torsioncalc.V;
+        break;
+      case +1:
+        torsioncalc.k1 = +torsioncalc.V;
+        break;
+      case -1:
+        torsioncalc.k1 = -torsioncalc.V;
+        break;
+      case -2:
+        torsioncalc.k2 = +torsioncalc.V;
+        break;
+      case -3:
+        torsioncalc.k3 = -torsioncalc.V;
+        break;
       }
       
       _torsioncalculations.push_back(torsioncalc);     
@@ -668,10 +672,10 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
 
     while (ifsP->getline(buffer, 80)) {
       tokenize(vs, buffer);
@@ -682,14 +686,14 @@ namespace OpenBabel
         parameter._b = vs[2];
         parameter.dpar1 = atof(vs[4].c_str()); // length
         parameter.dpar2 = atof(vs[5].c_str()); // force cte
-	if (EQn(vs[3].c_str(), "S", 1))
-	  parameter.ipar5 = 1;
-	if (EQn(vs[3].c_str(), "D", 1))
-	  parameter.ipar5 = 2;
-	if (EQn(vs[3].c_str(), "T", 1))
-	  parameter.ipar5 = 3;
-	if (EQn(vs[3].c_str(), "C", 1))
-	  parameter.ipar5 = 5;
+        if (EQn(vs[3].c_str(), "S", 1))
+          parameter.ipar5 = 1;
+        if (EQn(vs[3].c_str(), "D", 1))
+          parameter.ipar5 = 2;
+        if (EQn(vs[3].c_str(), "T", 1))
+          parameter.ipar5 = 3;
+        if (EQn(vs[3].c_str(), "C", 1))
+          parameter.ipar5 = 5;
         _ffbondparams.push_back(parameter);
       }
       if (EQn(buffer, "angle", 5)) {
@@ -709,21 +713,21 @@ namespace OpenBabel
         parameter._d = vs[4];
         parameter.dpar1 = atof(vs[6].c_str()); // force cte
         parameter.dpar3 = atof(vs[8].c_str()); // n
-	if (EQn(vs[7].c_str(), "+", 1))
-	  parameter.dpar2 = +1; // s
-	if (EQn(vs[7].c_str(), "-", 1))
-	  parameter.dpar2 = -1; // s
-	if (EQn(vs[5].c_str(), "?S?", 3))
-	  parameter.ipar5 = 1;
-	if (EQn(vs[5].c_str(), "?D?", 3))
-	  parameter.ipar5 = 2;
-	if (EQn(vs[5].c_str(), "?T?", 3))
-	  parameter.ipar5 = 3;
-	if (EQn(vs[5].c_str(), "?C?", 3)) {
-	  parameter.ipar5 = 1;
+        if (EQn(vs[7].c_str(), "+", 1))
+          parameter.dpar2 = +1; // s
+        if (EQn(vs[7].c_str(), "-", 1))
+          parameter.dpar2 = -1; // s
+        if (EQn(vs[5].c_str(), "?S?", 3))
+          parameter.ipar5 = 1;
+        if (EQn(vs[5].c_str(), "?D?", 3))
+          parameter.ipar5 = 2;
+        if (EQn(vs[5].c_str(), "?T?", 3))
+          parameter.ipar5 = 3;
+        if (EQn(vs[5].c_str(), "?C?", 3)) {
+          parameter.ipar5 = 1;
           _fftorsionparams.push_back(parameter);
-	  parameter.ipar5 = 2;
-	}
+          parameter.ipar5 = 2;
+        }
         _fftorsionparams.push_back(parameter);
       }
       if (EQn(buffer, "vdw", 3)) {
@@ -769,10 +773,10 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
 
     *logos  << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
     
@@ -790,12 +794,12 @@ namespace OpenBabel
           return false;
         }
         
-	for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
+        for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
           if (i->first->Match(_mol)) {
             _mlist = i->first->GetMapList();
             for (j = _mlist.begin();j != _mlist.end();++j) {
               _mol.GetAtom((*j)[0])->SetType(i->second);
-	    }
+            }
           }
         }
       }
@@ -825,7 +829,7 @@ namespace OpenBabel
   }
   
   OBFFParameter* OBForceFieldGhemical::GetParameterGhemical(int type, const char* a, const char* b, const char* c, const char* d, 
-      vector<OBFFParameter> &parameter)
+                                                            vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
     if (a == NULL)
@@ -835,9 +839,9 @@ namespace OpenBabel
       string _a(a);
       for (unsigned int idx=0; idx < parameter.size(); idx++) 
         if ((_a == parameter[idx]._a) && (type == parameter[idx].ipar5)) {
-	  par = &parameter[idx];
-	  return par;
-	}
+          par = &parameter[idx];
+          return par;
+        }
       return NULL;
     }
     if (c == NULL) {
@@ -845,10 +849,10 @@ namespace OpenBabel
       string _b(b);
       for (unsigned int idx=0; idx < parameter.size(); idx++) {
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b)) && (type == parameter[idx].ipar5) || 
-	    ((_a == parameter[idx]._b) && (_b == parameter[idx]._a)) && (type == parameter[idx].ipar5)) {
-	  par = &parameter[idx];
-	  return par;
-	}
+            ((_a == parameter[idx]._b) && (_b == parameter[idx]._a)) && (type == parameter[idx].ipar5)) {
+          par = &parameter[idx];
+          return par;
+        }
       }
       return NULL;
     }
@@ -858,9 +862,9 @@ namespace OpenBabel
       string _c(c);
       for (unsigned int idx=0; idx < parameter.size(); idx++) {
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c)) && (type == parameter[idx].ipar5)|| 
-	    ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && (_c == parameter[idx]._a)) && (type == parameter[idx].ipar5)) {
-	  par = &parameter[idx];
-	  return par;
+            ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && (_c == parameter[idx]._a)) && (type == parameter[idx].ipar5)) {
+          par = &parameter[idx];
+          return par;
         }
       }
       return NULL;
@@ -871,11 +875,11 @@ namespace OpenBabel
     string _d(d);
     for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c) && 
-                                        (_d == parameter[idx]._d)) && (type == parameter[idx].ipar5) || 
+           (_d == parameter[idx]._d)) && (type == parameter[idx].ipar5) || 
           ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && (_c == parameter[idx]._b) && 
-	                                (_d == parameter[idx]._a)) && (type == parameter[idx].ipar5)) {
-	par = &parameter[idx];
-	return par;
+           (_d == parameter[idx]._a)) && (type == parameter[idx].ipar5)) {
+        par = &parameter[idx];
+        return par;
       }
 
     return NULL;
@@ -939,7 +943,7 @@ namespace OpenBabel
     cout << "                                                                                        " << endl;
     cout << "ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERRROR (%)   " << endl;
     cout << "----------------------------------------------------------------------------------------" << endl;
-     //     "  XX     (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
+    //     "  XX     (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
    
     FOR_ATOMS_OF_MOL (a, _mol) {
       anagrad.Set(0,0,0);
@@ -949,25 +953,25 @@ namespace OpenBabel
       for (i = _bondcalculations.begin(); i != _bondcalculations.end(); i++) {
         if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
           anagrad += i->GetGradient(&*a);
-	}
+        }
       }
       
       for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); i2++) {
         if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
           anagrad += i2->GetGradient(&*a);
-	}
+        }
       }
       
       for (i3 = _torsioncalculations.begin(); i3 != _torsioncalculations.end(); i3++) {
         if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || ((*i3).c->GetIdx() == a->GetIdx()) || ((*i3).d->GetIdx() == a->GetIdx())) {
           anagrad += i3->GetGradient(&*a);
-	}
+        }
       }
       
       for (i4 = _vdwcalculations.begin(); i4 != _vdwcalculations.end(); i4++) {
         if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx())) {
           anagrad += i4->GetGradient(&*a);
-	}
+        }
       }
  
       errx = fabs((numgrad.x() - anagrad.x()) / numgrad.x()) * 100;
@@ -982,8 +986,8 @@ namespace OpenBabel
         errz = 0.0f;
 
       sprintf(logbuf, "  %2d     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
-                                                                                                                    anagrad.x(), anagrad.y(), anagrad.z(),
-														    errx, erry, errz);
+              anagrad.x(), anagrad.y(), anagrad.z(),
+              errx, erry, errz);
       cout << logbuf << endl;
     }
   }
