@@ -258,6 +258,7 @@ int main(int argc,char **argv)
       continue;
     }
 
+    // steepest descent
     if (EQn(commandline, "sd", 2)) {
       if (vs.size() < 2) {
         cout << "no <n> steps specified." << endl;
@@ -265,6 +266,19 @@ int main(int argc,char **argv)
       }
 
       pFF->SteepestDescent(atoi(vs[1].c_str()));
+      pFF->UpdateCoordinates(mol);
+
+      continue;
+    }
+
+        // steepest descent
+    if (EQn(commandline, "cg", 2)) {
+      if (vs.size() < 2) {
+        cout << "no <n> steps specified." << endl;
+        continue;
+      }
+
+      pFF->ConjugateGradients(atoi(vs[1].c_str()));
       pFF->UpdateCoordinates(mol);
 
       continue;
