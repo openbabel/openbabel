@@ -1,3 +1,23 @@
+2007-02-15 Chris Morley
+
+	Sorry that incomplete code keeps escaping. I'll put up Separate
+	code now, although the performance for 0D stereochemistry (sigh)
+	needs sorting out. Fulfills Feature Request 1581542
+	* include/openbabel/obiter.h, src/formats/obiter.cpp: Extend
+	OBMolAtomDFSIter operator* to return NULL to indicate end of a fragment.
+	Add parameter to constructor allow the iteration to start at any atom.
+	
+	* include/openbabel/mol.h, src/formats/mol.cpp: Add API function
+	OBMol::Separate() to return disconnected fragments in OBMol vector.
+	
+	* include/openbabel/obmolecformat.h, src/formats/obmolecformat.cpp:
+	Code for applying Separate() in conversion process.
+	Also, add ReadNameIndex() for indexing names in multiobject files.
+	Requires further testing.
+	
+	* src/formats/transform.cpp: Added options --separate and 
+	renamed -j as --join. (-j still works)
+
 2007-02-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefieldmm2.cpp,

@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #define OB_MOLECULEFORMAT_H
 
 #ifdef _WIN32
-	#include <hash_map>
+  #include <hash_map>
 #endif
 
 #include <openbabel/mol.h>
@@ -31,7 +31,7 @@ namespace OpenBabel {
 // This macro is used in DLL builds. If it has not
 // been set in babelconfig.h, define it as nothing.
 #ifndef OBCOMMON
-	#define OBCOMMON
+  #define OBCOMMON
 #endif
 
 /** \class OBMoleculeFormat obmolecformat.h <openbabel/obmolecformat.h>
@@ -46,65 +46,69 @@ namespace OpenBabel {
 class OBCOMMON OBMoleculeFormat : public OBFormat
 {
 private:
-	static std::map<std::string, OBMol*> IMols;
-	static OBMol* _jmol; //Accumulates molecules with the -j option
+  static std::map<std::string, OBMol*> IMols;
+  static OBMol* _jmol; //Accumulates molecules with the -j option
+  static std::vector<OBMol> MolArray; //Used in --separate option
+  static bool StoredMolsReady; //Used in --separate option
 
 public:
 
-	OBMoleculeFormat()
-	{
-		OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
-		OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
-		OBConversion::RegisterOptionParam("title", this, 1,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("addtotitle", this, 1,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("property", this, 2, OBConversion::GENOPTIONS);
-		//The follow are OBMol options, which should not be in OBConversion.
-		//But here isn't entirely appropriate either, since could have
-		//OBMol formats loaded but none of them derived from this class.
-		//However, this possibility is remote.
-		OBConversion::RegisterOptionParam("s", NULL, 1,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("v", NULL, 1,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("h", NULL, 0,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("d", NULL, 0,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("b", NULL, 0,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("c", NULL, 0,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("p", NULL, 0,OBConversion::GENOPTIONS); 
-		OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("j", NULL, 0,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("C", NULL, 0,OBConversion::GENOPTIONS);
-		OBConversion::RegisterOptionParam("k", NULL, 0,OBConversion::GENOPTIONS);
-	};
+  OBMoleculeFormat()
+  {
+    OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
+    OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
+    OBConversion::RegisterOptionParam("title", this, 1,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("addtotitle", this, 1,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("property", this, 2, OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("C",        this, 0,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("j",        this, 0,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("join",     this, 0,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("separate", this, 0,OBConversion::GENOPTIONS);
+    //The follow are OBMol options, which should not be in OBConversion.
+    //But here isn't entirely appropriate either, since could have
+    //OBMol formats loaded but none of them derived from this class.
+    //However, this possibility is remote.
+    OBConversion::RegisterOptionParam("s", NULL, 1,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("v", NULL, 1,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("h", NULL, 0,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("d", NULL, 0,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("b", NULL, 0,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("c", NULL, 0,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("p", NULL, 0,OBConversion::GENOPTIONS); 
+    OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("k", NULL, 0,OBConversion::GENOPTIONS);
+  };
 
-	//Static routines which can be called from elsewhere
-	static bool ReadChemObjectImpl(OBConversion* pConv, OBFormat*);
-	static bool WriteChemObjectImpl(OBConversion* pConv, OBFormat*);
+  //Static routines which can be called from elsewhere
+  static bool ReadChemObjectImpl(OBConversion* pConv, OBFormat*);
+  static bool WriteChemObjectImpl(OBConversion* pConv, OBFormat*);
 
-	/// The "Convert" interface functions
-	virtual bool ReadChemObject(OBConversion* pConv)
-	{ return ReadChemObjectImpl(pConv, this);}
-		
-	virtual bool WriteChemObject(OBConversion* pConv)
-	{ return WriteChemObjectImpl(pConv, this);}
-	
-	/// Routines to handle the -C option for combining data from several OBMols
-	static bool   DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF);
-	static bool   OutputDeferredMols(OBConversion* pConv);
-	static bool   DeleteDeferredMols();
-	static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
-	
+  /// The "Convert" interface functions
+  virtual bool ReadChemObject(OBConversion* pConv)
+  { return ReadChemObjectImpl(pConv, this);}
+    
+  virtual bool WriteChemObject(OBConversion* pConv)
+  { return WriteChemObjectImpl(pConv, this);}
+  
+  /// Routines to handle the -C option for combining data from several OBMols
+  static bool   DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF);
+  static bool   OutputDeferredMols(OBConversion* pConv);
+  static bool   DeleteDeferredMols();
+  static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
+  
 #ifdef _WIN32
-	typedef stdext::hash_map<std::string, unsigned> NameIndexType;
+  typedef stdext::hash_map<std::string, unsigned> NameIndexType;
 #else
-	typedef std::map<std::string, unsigned> NameIndexType;
+  typedef std::map<std::string, unsigned> NameIndexType;
 #endif
 
-	static bool   ReadNameIndex(NameIndexType& index, const std::string& datafilename,
-									OBFormat* pInFormat);
+  static bool   ReadNameIndex(NameIndexType& index, const std::string& datafilename,
+                  OBFormat* pInFormat);
 
-	const std::type_info& GetType()
-	{
-		return typeid(OBMol*);
-	}
+  const std::type_info& GetType()
+  {
+    return typeid(OBMol*);
+  }
 //////////////////////////////////////////////////////////////
 
 };

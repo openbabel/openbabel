@@ -67,8 +67,8 @@ namespace OpenBabel
   public:
 
     OBMolAtomDFSIter() : _parent(NULL), _ptr(NULL) { }
-    OBMolAtomDFSIter(OBMol *mol);
-    OBMolAtomDFSIter(OBMol &mol);
+    OBMolAtomDFSIter(OBMol *mol, int StartIndex=1);
+    OBMolAtomDFSIter(OBMol &mol, int StartIndex=1);
     OBMolAtomDFSIter(const OBMolAtomDFSIter &ai);
 
     OBMolAtomDFSIter& operator=(const OBMolAtomDFSIter &ai);
@@ -77,6 +77,14 @@ namespace OpenBabel
     OBMolAtomDFSIter  operator++(int);
     OBAtom* operator->() const   { return _ptr;      }
     OBAtom& operator*() const    { return *_ptr;     }
+    /// \return NULL if at the last atom in a fragment, else the next atom
+    OBAtom* next()
+    { 
+      if(_stack.empty())
+        return NULL; //end of a disconnected fragment
+      else
+        return _stack.top(); //the next atom
+    }
   };
 
   //! \brief Iterate over all atoms in an OBMol in a breadth-first search (BFS)

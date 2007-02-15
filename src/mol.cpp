@@ -3729,6 +3729,38 @@ namespace OpenBabel
     return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
   }
 
+  vector<OBMol> OBMol::Separate(int StartIndex)
+  {
+    vector<OBMol> result;
+    OBMolAtomDFSIter iter(this, StartIndex);
+    while(iter) //for each disconnected fragment
+    {
+      OBMol newmol;
+      map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
+      do //for each atom in fragment
+      {
+        OBAtom* pnext = &*iter;
+        newmol.AddAtom(*pnext); //each subsequent atom with its bond
+        AtomMap[pnext] = newmol.GetAtom(newmol.NumAtoms());
+      }while((iter++).next());
+
+      FOR_BONDS_OF_MOL(b, this)
+      {
+        map<OBAtom*, OBAtom*>::iterator pos;
+        pos = AtomMap.find(b->GetBeginAtom());
+        if(pos!=AtomMap.end())
+          //if bond belongs to current fragment make a similar one in new molecule
+          newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
+                b->GetBO(), b->GetFlags());
+      }
+
+      //Remap
+      result.push_back(newmol);
+    }
+    return result;
+  }
+
+
 } // end namespace OpenBabel
 
 //! \file mol.cpp
