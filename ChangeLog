@@ -1,3 +1,7 @@
+2007-02-16  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/obmolecformat.cpp: make it compile again (gcc-4.1.2).
+
 2007-02-15 Chris Morley
 
 	Sorry that incomplete code keeps escaping. I'll put up Separate

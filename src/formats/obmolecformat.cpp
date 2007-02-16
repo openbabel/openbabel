@@ -68,7 +68,8 @@ namespace OpenBabel
        {
          stringstream ss;
          ss << pmol->GetTitle() << '#' << i+1;
-         MolArray[i].SetTitle(ss.str());
+         string title = ss.str();
+         MolArray[i].SetTitle(title);
        }
        reverse(MolArray.begin(),MolArray.end());
        StoredMolsReady = true;
