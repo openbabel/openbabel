@@ -1,3 +1,7 @@
+2007-02-17  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/chemdrawcdx.cpp: don't center molecules.
+
 2007-02-16  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/obmolecformat.cpp: make it compile again (gcc-4.1.2).

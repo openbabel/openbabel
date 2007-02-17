@@ -360,7 +360,6 @@ namespace OpenBabel
     pmol->SetDimension(2);
 
     pmol->EndModify();
-    pmol->Center();
 
     /* For multi-molecule formats, leave the input stream at the start of the
        next molecule, ready for this routine to be called again. 
