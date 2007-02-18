@@ -1869,7 +1869,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL (a, _mol) {
       anagrad.Set(0,0,0);
 
-      numgrad = NumericalDerivative(a->GetIdx());
+      numgrad = NumericalDerivative(&*a);
 
       for (i = _bondcalculations.begin(); i != _bondcalculations.end(); i++) {
         if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
