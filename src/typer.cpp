@@ -409,16 +409,12 @@ namespace OpenBabel
 
     ExcludeSmallRing(mol); //remove 3 membered rings from consideration
 
-    //loop over root atoms and look for 5-6 membered aromatic rings
+    //loop over root atoms and look for aromatic rings
     _visit.clear();
     _visit.resize(mol.NumAtoms()+1);
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       if (_root[atom->GetIdx()])
-        CheckAromaticity(atom,6);
-
-    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      if (_root[atom->GetIdx()])
-        CheckAromaticity(atom,20);
+        CheckAromaticity(atom,14);
 
     //for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     //	  if (atom->IsAromatic())

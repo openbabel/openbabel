@@ -1,3 +1,14 @@
+2007-02-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/typer.cpp: Fix PR#1594657 -- long recursion for large
+	multi-ring systems like fullerenes. This started by two calls to
+	CheckAromaticity, including one allowing recursion depth of
+	20. Discussion with Henry Rzepa suggested 14 as a reasonable
+	cutoff.
+
+	* src/forcefields/forcefieldmmff94.cpp: Fix compilation problem
+	with call to NumericalDerivative.
+
 2007-02-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.h: Some doxygen comments updated.
