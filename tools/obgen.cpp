@@ -1,6 +1,6 @@
 /**********************************************************************
 obgen.cpp - test program for SMILES 3D coordinate generation
-          - using internal coordinates
+          - using systematic rotor search
 
 Copyright (C) 2006 Tim Vandermeersch
 Some portions Copyright (C) 2006 Geoffrey R. Hutchison
@@ -36,8 +36,7 @@ using namespace OpenBabel;
 // PROTOTYPES /////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
-//! \brief  Generate rough 3D coordinates for SMILES (or other 0D files)
-//          based on bonding network, rings, atom types, etc.
+//! \brief  Generate rough 3D coordinates for SMILES (or other 0D files).
 //
 int main(int argc,char **argv)
 {
@@ -87,34 +86,28 @@ int main(int argc,char **argv)
         break;
       
 
-      FOR_EACH(OBForceField, iter) {
-        cout << iter.ID() << ' ' << iter.Description() << endl;
-      }
-
-      OBForceField* pFF = OBForceField::FindForceField("MMFF94");
+      OBForceField* pFF = OBForceField::FindForceField("Ghemical");
 
       mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
-	
-      //pFF->Setup(mol, "mmff.log");
-      pFF->Setup(mol);
-      pFF->GenerateCoordinates();
+      
+      pFF->SetLogFile(&cerr);
+      pFF->SetLogLevel(OBFF_LOGLVL_LOW);
+      
+      if (!pFF->Setup(mol)) {
+        cerr << "ERROR: could not setup force field." << endl;
+      }
+      
+      pFF->SystematicRotorSearch();
       pFF->UpdateCoordinates(mol);
 
-      cout << "    bond stretching            = " << pFF->E_Bond() << " " << pFF->GetUnit() << endl;
-      cout << "    angle bending              = " << pFF->E_Angle() << " " << pFF->GetUnit() << endl;
-      cout << "    stretch-bending            = " << pFF->E_StrBnd() << " " << pFF->GetUnit() << endl;
-      cout << "    torsional terms            = " << pFF->E_Torsion() << " " << pFF->GetUnit() << endl;
-      cout << "    out-of-plane bending       = " << pFF->E_OOP() << " " << pFF->GetUnit()  << endl;
-      cout << "    Van der Waals interactions = " << pFF->E_VDW() << " " << pFF->GetUnit() << endl;
-      cout << "    Dipole-dipole interactions = " << pFF->E_Electrostatic() << pFF->GetUnit() << endl;
-	
+      pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
       cout << endl << "Total Energy = " << pFF->GetEnergy() << " " << pFF->GetUnit() << endl << endl;
-	
-      char FileOut[32];
-      sprintf(FileOut, "%s_obgen.pdb", basename.c_str());
-      ofs.open(FileOut);
-      conv.Write(&mol, &ofs);
-      ofs.close();
+
+      //char FileOut[32];
+      //sprintf(FileOut, "%s_obgen.pdb", basename.c_str());
+      //ofs.open(FileOut);
+      //conv.Write(&mol, &ofs);
+      //ofs.close();
       conv.Write(&mol, &cout);
   } // end for loop
 

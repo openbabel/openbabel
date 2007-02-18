@@ -87,6 +87,33 @@ int main(int argc,char **argv)
        cout << "bye." << endl;
        exit(0);
     }
+    
+    if (EQn(commandline, "help", 4) || cin.eof()) {
+      cout << endl;
+      cout << "commands:            description:" << endl;
+      cout << "load <filename>      load a molecule from filename" << endl;
+      cout << "save <filename>      save currently loaded molecule to filename" << endl;
+      cout << "ff <forcefield>      select the force field" << endl;
+      cout << "forcefields          print the available forcefields" << endl;
+      cout << endl;
+      cout << "energy               calculate the energy" << endl;
+      cout << "ebond                calculate the bond stretching energy" << endl;
+      cout << "eangle               calculate the angle bending energy" << endl;
+      cout << "estrbnd              calculate the stretch-bending enregy" << endl;
+      cout << "eoop                 calculate the out-of-plane bending energy" << endl;
+      cout << "etorsion             calculate the torsional energy" << endl;
+      cout << "evdw                 calculate the Van der Waals energy" << endl;
+      cout << "eeq                  calculate the electrostatic energy" << endl;
+      cout << endl;
+      cout << "sd <n>               steepest descent energy minimization for n steps" << endl;
+      cout << "cg <n>               conjugate gradients energy minimization for n steps	todo" << endl;
+      cout << "" << endl;
+      cout << "addH                 add hydrogens (for smiles, ...)" << endl;
+      cout << endl;
+      cout << "quit                 quit" << endl;
+      cout << endl;
+      continue;
+    }
 
     if (EQn(commandline, "energy", 6)) {
       if (mol.Empty()) {
@@ -265,20 +292,20 @@ int main(int argc,char **argv)
         continue;
       }
 
-      pFF->SteepestDescent(atoi(vs[1].c_str()));
+      pFF->SteepestDescent(atoi(vs[1].c_str()), OBFF_ANALYTICAL_GRADIENT);
       pFF->UpdateCoordinates(mol);
 
       continue;
     }
 
-        // steepest descent
+    // conjugate gradients
     if (EQn(commandline, "cg", 2)) {
       if (vs.size() < 2) {
         cout << "no <n> steps specified." << endl;
         continue;
       }
 
-      pFF->ConjugateGradients(atoi(vs[1].c_str()));
+      pFF->ConjugateGradients(atoi(vs[1].c_str()), OBFF_ANALYTICAL_GRADIENT);
       pFF->UpdateCoordinates(mol);
 
       continue;

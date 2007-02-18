@@ -72,61 +72,73 @@ namespace OpenBabel
   class OBFFElectrostaticCalculationGhemical : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b, *c; // atoms of the angle
-      double ka, theta0, thetaabc, delta, delta2;
-      int sbt; //strbndtype (SBTIJK)
+      OBAtom *a, *b; // atoms of the pair
+      double qq, rab;
       
       double GetEnergy();
+      vector3 GetGradient(OBAtom *atom);
   };
 
 
-  // Class OBForceFieldMM2
-  // class introduction in forcefield.cpp
+  // Class OBForceFieldGhemical
+  // class introduction in forcefieldghemical.cpp
   class OBAPI OBForceFieldGhemical: public OBForceField
   {
     protected:
-      //! \return Parses the parameter file
+      //!  Parses the parameter file
       bool ParseParamFile();
-      //! \return Sets atomtypes to Ghemical in _mol
+      //!  Sets atomtypes to Ghemical types in _mol
       bool SetGhemicalTypes();
+      //!  Sets partial charges to Ghemical charges in _mol
+      bool SetGhemicalCharges();
       //! fill OBFFXXXCalculation vectors
       bool SetupCalculations();
-      
-      OBFFParameter* GetParameterGhemical(int type, const char* a, const char* b, const char* c, const char* d, 
-          std::vector<OBFFParameter> &parameter);
+      //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
+      OBFFParameter* GetParameterGhemical(int type, const char* a, const char* b, const char* c, const char* d, std::vector<OBFFParameter> &parameter);
 
+      
+      // OBFFParameter vectors to contain the parameters
       std::vector<OBFFParameter> _ffbondparams; 
       std::vector<OBFFParameter> _ffangleparams; 
       std::vector<OBFFParameter> _fftorsionparams; 
       std::vector<OBFFParameter> _ffvdwparams;
+      std::vector<OBFFParameter> _ffchargeparams;
 
-      std::vector<vector3> forces;
-
+      // OBFFXXXCalculationYYY vectors to contain the calculations
       std::vector<OBFFBondCalculationGhemical>          _bondcalculations;
       std::vector<OBFFAngleCalculationGhemical>         _anglecalculations;
       std::vector<OBFFTorsionCalculationGhemical>       _torsioncalculations;
       std::vector<OBFFVDWCalculationGhemical>           _vdwcalculations;
-      std::vector<OBFFElectrostaticCalculationGhemical> _electostaticcalculations;
+      std::vector<OBFFElectrostaticCalculationGhemical> _electrostaticcalculations;
 
     public:
-      //! Setup
-      bool Setup(OBMol &mol);
       //! Constructor
       OBForceFieldGhemical(std::string ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
         ParseParamFile();
       }
       
-      std::string Description()
-	{ return "Ghemical force field.";};
-      
-      std::string GetUnit() { return std::string("kcal/mol"); }
-
-
       //! Destructor
       virtual ~OBForceFieldGhemical();
+      
       //! Assignment
       OBForceFieldGhemical &operator = (OBForceFieldGhemical &);
+      
+      //! Get the description for this force field
+      std::string Description() 
+      { 
+        return "Ghemical force field.";
+      }
+      
+      //! Get the unit in wich the energy is expressed
+      std::string GetUnit() 
+      { 
+        return std::string("kJ/mol"); 
+      }
+
+      //! Setup
+      bool Setup(OBMol &mol);
+      
       //! Returns total energy
       double Energy();
      //! Returns the bond stretching energy
@@ -137,8 +149,12 @@ namespace OpenBabel
       double E_Torsion();
       //! Returns energy due to Van der Waals interactions
       double E_VDW();
-
-      vector3 GetGradient(OBAtom *a);
+      //! Returns energy due to electrostatic interactions
+      double E_Electrostatic();
+      
+      //! Returns the negative gradient (force) on atom a
+      vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY);
+      //! Compare and print the numerical and analytical gradients
       bool ValidateGradients();
 
   }; // class OBForceFieldGhemical

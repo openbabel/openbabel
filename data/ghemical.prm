@@ -21,8 +21,8 @@ atom [#7^1]      0702 (#*) "general sp nitrogen"
 atom [n]         0703 (~*,~*) "aromatic sp2 nitrogen"
 atom [#7D4]      0704 (-*,-*,-*,-*) "ammonium nitrogen"
 atom [#7][#6]=O  0705 (-C(=O)) "amide nitrogen"
-atom [#8^3]      0800 (-*) "general sp3 oxygen"
-atom [#8^2]      0801 (=*) "general sp2 oxygen"
+atom [#8]        0800 (-*) "general sp3 oxygen"
+atom [#8]=*      0801 (=*) "general sp2 oxygen"
 atom [F]         0900 (-*) "general fluorine"
 atom [P^3]       0F00 (-*) "general sp3 phosphorus"
 atom [#16]       1000 (-*) "general sp3 sulphur"
@@ -443,5 +443,33 @@ vdw	1100 1.75 0.314
 vdw	2300 1.85 0.434
 vdw	3500 1.98 0.623
 
-vdw	FFFF 1.50 0.042
+// atomic charge parameters 09.05.2000 (based on Tripos 5.2 and MMFF94)
+// [id #1] [id #2] [delta]
+//
+// THE NUMERICAL VALUES HERE ARE NOT PROPERLY CHECKED!!!
+//
+// sign of [delta] is inverted if order of atoms is switched...
+// sign of [delta] is inverted if order of atoms is switched...
+// sign of [delta] is inverted if order of atoms is switched...
+
+charge  0601 0100 S +0.100
+charge  0602 0100 S +0.200
+charge  0603 0100 S +0.100
+charge  0604 0100 S +0.050
+charge  0700 0100 S +0.100
+charge  0701 0100 S +0.200
+charge  0702 0100 S +0.250
+charge  0703 0100 S +0.250
+charge  0704 0100 S +0.200
+charge  0705 0100 S +0.150
+charge  0800 0100 S +0.250
+charge  0801 0601 D +0.100
+charge  0900 0100 S +0.500
+charge  0900 0600 S +0.125
+charge  1002 0801 D +0.200
+charge  1003 0801 D +0.200
+charge  1100 0600 S +0.150
+charge  2300 0600 S +0.175
+charge  3500 0600 S +0.200
+
 

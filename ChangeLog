@@ -1,3 +1,39 @@
+2007-02-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h: Some doxygen comments updated.
+
+	* src/forcefield.cpp: Added SystematicRotorSearch(), uses RotamerList
+	class to rotate all torsions, select the best conformation (lowest
+	energy) and minimize it (1000 steps).
+
+	SteepestDescent(int steps, int method) and 
+	ConjugateGradients(int steps, int method): 
+	the "int method" argument is added, can be set to
+	OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS.
+
+	Added ValidateGradientError(vector3 &numgrad, vector3 &anagrad):
+	calculate the difference in % between the analytical and numerical
+	gradient.
+
+	NumericalDerivative(OBAtom *atom, int terms) and
+	GetGradient(OBAtom *a, int terms):
+	the added argument terms can be set to OBFF_ENERGY (total gradient,
+	default), OBFF_EBOND (gradient for bond stretching), ... (Mainly used
+	for ValidateGradients
+
+	* src/forcefields/forcefieldghemical.cpp: All analytical gradients are
+	now correct (errors can still be minimized by limiting the number of
+	devisions etc...) ValidateGradients also compares gradients for
+	individual energy terms. 
+	
+	Electrostatic term implemented.
+
+	* data/ghemical.prm: Added charge parameters.
+
+	* tools/obgen.cpp: Changed to SystematicRotorSearch().
+	
+	* tools/obmm.cpp: Added help command.
+
 2007-02-17  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/chemdrawcdx.cpp: don't center molecules.
