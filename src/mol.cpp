@@ -1767,6 +1767,8 @@ namespace OpenBabel
       if (atom->IsHydrogen())
         delatoms.push_back(atom);
 
+    UnsetHydrogensAdded();
+
     if (delatoms.empty())
       return(true);
 
@@ -1845,6 +1847,8 @@ namespace OpenBabel
       DeleteHydrogen((OBAtom*)*i);
     DecrementMod();
 
+    UnsetHydrogensAdded();
+
     return(true);
   }
 
@@ -1883,6 +1887,8 @@ namespace OpenBabel
     OBAtom *atomi;
     for (idx=1,atomi = BeginAtom(i);atomi;atomi = NextAtom(i),++idx)
       atomi->SetIdx(idx);
+    
+    UnsetHydrogensAdded();
 
     DestroyAtom(atom);
     return(true);

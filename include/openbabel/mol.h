@@ -310,6 +310,7 @@ namespace OpenBabel
     void   UnsetAromaticPerceived()  { _flags &= (~(OB_AROMATIC_MOL));   }
     void   UnsetPartialChargesPerceived(){ _flags &= (~(OB_PCHARGE_MOL));}
     void   UnsetImplicitValencePerceived(){_flags &= (~(OB_IMPVAL_MOL)); }
+    void   UnsetHydrogensAdded()       { UnsetFlag(OB_H_ADDED_MOL);     }
     void   UnsetFlag(int flag)       { _flags &= (~(flag));              }
 
     //! \name Molecule modification methods
