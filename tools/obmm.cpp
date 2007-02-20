@@ -17,7 +17,7 @@ evdw                 calculate the Van der Waals energy				"
 eeq                  calculate the electrostatic energy				"
 
 sd <n>               steepest descent energy minimization for n steps
-cg <n>               conjugate gradients energy minimization for n steps	todo
+cg <n>               conjugate gradients energy minimization for n steps
 
 addH                 add hydrogens (for smiles, ...)				done
 
@@ -62,11 +62,13 @@ using namespace OpenBabel;
 //
 int main(int argc,char **argv)
 {
-  OBForceField* pFF = OBForceField::FindForceField("MMFF94");
+  OBForceField* pFF = OBForceField::FindForceField("Ghemical");
   OBMol mol;
   char commandline[100];
   vector<string> vs;
 
+  pFF->SetLogFile(&cout);
+  pFF->SetLogLevel(OBFF_LOGLVL_LOW);
   mol.Clear();
 
   cout << endl;
@@ -84,8 +86,8 @@ int main(int argc,char **argv)
     // commands with no parameters
     //
     if (EQn(commandline, "quit", 4) || cin.eof()) {
-       cout << "bye." << endl;
-       exit(0);
+      cout << "bye." << endl;
+      exit(0);
     }
     
     if (EQn(commandline, "help", 4) || cin.eof()) {
@@ -106,9 +108,9 @@ int main(int argc,char **argv)
       cout << "eeq                  calculate the electrostatic energy" << endl;
       cout << endl;
       cout << "sd <n>               steepest descent energy minimization for n steps" << endl;
-      cout << "cg <n>               conjugate gradients energy minimization for n steps	todo" << endl;
+      cout << "cg <n>               conjugate gradients energy minimization for n steps" << endl;
       cout << "" << endl;
-      cout << "addH                 add hydrogens (for smiles, ...)" << endl;
+      cout << "addH                 add hydrogens" << endl;
       cout << endl;
       cout << "quit                 quit" << endl;
       cout << endl;
@@ -118,7 +120,7 @@ int main(int argc,char **argv)
     if (EQn(commandline, "energy", 6)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
-	continue;
+        continue;
       }
       cout << endl << "  total energy = " << pFF->Energy() << " " << pFF->GetUnit() << endl << endl;
       continue;
@@ -127,7 +129,7 @@ int main(int argc,char **argv)
     if (EQn(commandline, "ebond", 5)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
-	continue;
+        continue;
       }
       cout << endl << "  bond stretching energy = " << pFF->E_Bond() << " " << pFF->GetUnit() << endl << endl;
       continue;
@@ -136,7 +138,7 @@ int main(int argc,char **argv)
     if (EQn(commandline, "eangle", 6)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
-	continue;
+        continue;
       }
       cout << endl << "  angle bending energy = " << pFF->E_Angle() << " " << pFF->GetUnit() << endl << endl;
       continue;
@@ -145,7 +147,7 @@ int main(int argc,char **argv)
     if (EQn(commandline, "estrbnd", 7)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
-	continue;
+        continue;
       }
       cout << endl << "  stretch-bending energy = " << pFF->E_StrBnd() << " " << pFF->GetUnit() << endl << endl;
       continue;
@@ -154,7 +156,7 @@ int main(int argc,char **argv)
     if (EQn(commandline, "eoop", 4)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
-	continue;
+        continue;
       }
       cout << endl << "  out-of-plane bending energy = " << pFF->E_OOP() << " " << pFF->GetUnit() << endl << endl;
       continue;
@@ -163,7 +165,7 @@ int main(int argc,char **argv)
     if (EQn(commandline, "etorsion", 8)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
-	continue;
+        continue;
       }
       cout << endl << "  torsional energy = " << pFF->E_Torsion() << " " << pFF->GetUnit() << endl << endl;
       continue;
@@ -172,7 +174,7 @@ int main(int argc,char **argv)
     if (EQn(commandline, "evdw", 4)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
-	continue;
+        continue;
       }
       cout << endl << "  Van der Waals energy = " << pFF->E_VDW() << " " << pFF->GetUnit() << endl << endl;
       continue;
@@ -181,7 +183,7 @@ int main(int argc,char **argv)
     if (EQn(commandline, "eeq", 3)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
-	continue;
+        continue;
       }
       cout << endl << "  electrostatic energy = " << pFF->E_Electrostatic() << " " << pFF->GetUnit() << endl << endl;
       continue;
@@ -215,7 +217,7 @@ int main(int argc,char **argv)
    
       if (!format_in || !conv.SetInFormat(format_in)) {
         cout << "could not detect format." << endl;
-	continue;
+        continue;
       }
        
       ifs.open(vs[1].c_str());
@@ -262,7 +264,7 @@ int main(int argc,char **argv)
    
       if (!format_out || !conv.SetOutFormat(format_out)) {
         cout << "could not detect format." << endl;
-	continue;
+        continue;
       }
        
       ofs.open(vs[1].c_str());

@@ -38,8 +38,8 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = babel$(EXEEXT) obchiral$(EXEEXT) obgrep$(EXEEXT) \
 	obrotate$(EXEEXT) obfit$(EXEEXT) obprop$(EXEEXT) \
-	obxyz$(EXEEXT) obgen$(EXEEXT) obmm$(EXEEXT) obrotamer$(EXEEXT) \
-	obenergy$(EXEEXT) obminimize$(EXEEXT)
+	obxyz$(EXEEXT) obgen$(EXEEXT) obenergy$(EXEEXT) \
+	obminimize$(EXEEXT) obmm$(EXEEXT) obrotamer$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -59,6 +59,9 @@ babel_DEPENDENCIES = ../src/libopenbabel.la
 am_obchiral_OBJECTS = obchiral.$(OBJEXT)
 obchiral_OBJECTS = $(am_obchiral_OBJECTS)
 obchiral_DEPENDENCIES = ../src/libopenbabel.la
+am_obenergy_OBJECTS = obenergy.$(OBJEXT)
+obenergy_OBJECTS = $(am_obenergy_OBJECTS)
+obenergy_DEPENDENCIES = ../src/libopenbabel.la
 am_obfit_OBJECTS = obfit.$(OBJEXT)
 obfit_OBJECTS = $(am_obfit_OBJECTS)
 obfit_DEPENDENCIES = ../src/libopenbabel.la
@@ -68,15 +71,12 @@ obgen_DEPENDENCIES = ../src/libopenbabel.la
 am_obgrep_OBJECTS = obgrep.$(OBJEXT)
 obgrep_OBJECTS = $(am_obgrep_OBJECTS)
 obgrep_DEPENDENCIES = ../src/libopenbabel.la
-am_obmm_OBJECTS = obmm.$(OBJEXT)
-obmm_OBJECTS = $(am_obmm_OBJECTS)
-obmm_DEPENDENCIES = ../src/libopenbabel.la
-am_obenergy_OBJECTS = obenergy.$(OBJEXT)
-obenergy_OBJECTS = $(am_obenergy_OBJECTS)
-obenergy_DEPENDENCIES = ../src/libopenbabel.la
 am_obminimize_OBJECTS = obminimize.$(OBJEXT)
 obminimize_OBJECTS = $(am_obminimize_OBJECTS)
 obminimize_DEPENDENCIES = ../src/libopenbabel.la
+am_obmm_OBJECTS = obmm.$(OBJEXT)
+obmm_OBJECTS = $(am_obmm_OBJECTS)
+obmm_DEPENDENCIES = ../src/libopenbabel.la
 am_obprop_OBJECTS = obprop.$(OBJEXT)
 obprop_OBJECTS = $(am_obprop_OBJECTS)
 obprop_DEPENDENCIES = ../src/libopenbabel.la
@@ -100,14 +100,15 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obfit_SOURCES) \
-	$(obgen_SOURCES) $(obgrep_SOURCES) $(obmm_SOURCES) \
+SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obenergy_SOURCES) \
+	$(obfit_SOURCES) $(obgen_SOURCES) $(obgrep_SOURCES) \
+	$(obminimize_SOURCES) $(obmm_SOURCES) $(obprop_SOURCES) \
+	$(obrotamer_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES)
+DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) \
+	$(obenergy_SOURCES) $(obfit_SOURCES) $(obgen_SOURCES) \
+	$(obgrep_SOURCES) $(obminimize_SOURCES) $(obmm_SOURCES) \
 	$(obprop_SOURCES) $(obrotamer_SOURCES) $(obrotate_SOURCES) \
-	$(obxyz_SOURCES) $(obenergy_SOURCES) $(obminimize_SOURCES)
-DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obfit_SOURCES) \
-	$(obgen_SOURCES) $(obgrep_SOURCES) $(obmm_SOURCES) \
-	$(obprop_SOURCES) $(obrotamer_SOURCES) $(obrotate_SOURCES) \
-	$(obxyz_SOURCES) $(obenergy_SOURCES) $(obminimize_SOURCES)
+	$(obxyz_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -351,6 +352,9 @@ babel$(EXEEXT): $(babel_OBJECTS) $(babel_DEPENDENCIES)
 obchiral$(EXEEXT): $(obchiral_OBJECTS) $(obchiral_DEPENDENCIES) 
 	@rm -f obchiral$(EXEEXT)
 	$(CXXLINK) $(obchiral_LDFLAGS) $(obchiral_OBJECTS) $(obchiral_LDADD) $(LIBS)
+obenergy$(EXEEXT): $(obenergy_OBJECTS) $(obenergy_DEPENDENCIES) 
+	@rm -f obenergy$(EXEEXT)
+	$(CXXLINK) $(obenergy_LDFLAGS) $(obenergy_OBJECTS) $(obenergy_LDADD) $(LIBS)
 obfit$(EXEEXT): $(obfit_OBJECTS) $(obfit_DEPENDENCIES) 
 	@rm -f obfit$(EXEEXT)
 	$(CXXLINK) $(obfit_LDFLAGS) $(obfit_OBJECTS) $(obfit_LDADD) $(LIBS)
@@ -360,15 +364,12 @@ obgen$(EXEEXT): $(obgen_OBJECTS) $(obgen_DEPENDENCIES)
 obgrep$(EXEEXT): $(obgrep_OBJECTS) $(obgrep_DEPENDENCIES) 
 	@rm -f obgrep$(EXEEXT)
 	$(CXXLINK) $(obgrep_LDFLAGS) $(obgrep_OBJECTS) $(obgrep_LDADD) $(LIBS)
-obmm$(EXEEXT): $(obmm_OBJECTS) $(obmm_DEPENDENCIES) 
-	@rm -f obmm$(EXEEXT)
-	$(CXXLINK) $(obmm_LDFLAGS) $(obmm_OBJECTS) $(obmm_LDADD) $(LIBS)
-obenergy$(EXEEXT): $(obenergy_OBJECTS) $(obenergy_DEPENDENCIES) 
-	@rm -f obenergy$(EXEEXT)
-	$(CXXLINK) $(obenergy_LDFLAGS) $(obenergy_OBJECTS) $(obenergy_LDADD) $(LIBS)
 obminimize$(EXEEXT): $(obminimize_OBJECTS) $(obminimize_DEPENDENCIES) 
 	@rm -f obminimize$(EXEEXT)
 	$(CXXLINK) $(obminimize_LDFLAGS) $(obminimize_OBJECTS) $(obminimize_LDADD) $(LIBS)
+obmm$(EXEEXT): $(obmm_OBJECTS) $(obmm_DEPENDENCIES) 
+	@rm -f obmm$(EXEEXT)
+	$(CXXLINK) $(obmm_LDFLAGS) $(obmm_OBJECTS) $(obmm_LDADD) $(LIBS)
 obprop$(EXEEXT): $(obprop_OBJECTS) $(obprop_DEPENDENCIES) 
 	@rm -f obprop$(EXEEXT)
 	$(CXXLINK) $(obprop_LDFLAGS) $(obprop_OBJECTS) $(obprop_LDADD) $(LIBS)
@@ -390,12 +391,12 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/babel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obchiral.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obenergy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgrep.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obmm.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obenergy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obminimize.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obmm.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obprop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotamer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotate.Po@am__quote@
