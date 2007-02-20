@@ -53,34 +53,25 @@ namespace OpenBabel
 
   #define KCAL_TO_KJ	4.1868
 
-  // inline if statements for logging, example:
-  //
-  // SetLogLevel(OBFF_LOGLVL_MEDIUM);
-  //
-  // IF_OBFF_LOGLVL_HIGH {
-  //   *logos << "this text will NOT be logged..." << endl
-  // }
-  //
-  // IF_OBFF_LOGLVL_LOW {
-  //   *logos << "this text will be logged..." << endl
-  // }
-  //
-  // IF_OBFF_LOGLVL_MEDIUM {
-  //   *logos << "this text will also be logged..." << endl
-  // }
-  //
+  // inline if statements for logging.
   #define IF_OBFF_LOGLVL_LOW    if(loglvl >= OBFF_LOGLVL_LOW)
   #define IF_OBFF_LOGLVL_MEDIUM if(loglvl >= OBFF_LOGLVL_MEDIUM)
   #define IF_OBFF_LOGLVL_HIGH   if(loglvl >= OBFF_LOGLVL_HIGH)
-
+  
+  // Class OBFFParameter
   class OBFFParameter {
     public:
-      int         a, b, c, d; //! used to store integer atom types
-      std::string _a, _b, _c, _d; //! used to store ascii atom types
+      //! Used to store integer atom types
+      int         a, b, c, d;
+      //! used to store string atom types
+      std::string _a, _b, _c, _d; 
 
+      //! Used to store integer type parameters (bondtypes, multiplicity, ...)
       int       ipar1, ipar2, ipar3, ipar4, ipar5;
+      //! Used to store double type parameters (force constants, bond lengths, angles, ...)
       double    dpar1, dpar2, dpar3, dpar4, dpar5;
 
+      //! Assignment 
       OBFFParameter& operator=(const OBFFParameter &ai) {
         if (this != &ai) {
           a = ai.a;
@@ -106,6 +97,7 @@ namespace OpenBabel
 	return *this;
       }
 
+      //! Reset the atom types and set all parameters to zero
       void clear () {
         a = 0;
 	b = 0;
@@ -124,20 +116,26 @@ namespace OpenBabel
       }
   };
   
+  // Class OBFFCalculation
+  // class introduction in forcefieldYYYY.cpp
   class OBFFCalculation
   {
     public:
+      //! Constructor
       OBFFCalculation() 
       {
       }
-      
+      //! Destructor
       ~OBFFCalculation()
       {
       }
-
+      
+      //! \return Energy for this OBFFCalculation
       virtual double GetEnergy() { return 0.0f; }
+      //! \return Gradient for this OBFFCalculation with respect to coordinates of atom
       virtual vector3 GetGradient(OBAtom *atom) { return vector3(0.0f, 0.0f, 0.0f); }
 
+      //! Used to store the energy for this OBFFCalculation
       double energy;
   };
 
@@ -147,67 +145,49 @@ namespace OpenBabel
     {
   
     MAKE_PLUGIN(OBForceField)
-
-    public:
-      /// short description of the force field type.
-      virtual std::string Description()=0;
-      /// see Energy()
-      double StoredEnergy;
-      bool EnergyCalculated;
-      void SetEnergyCalculated()   { EnergyCalculated = true; } 
-      void UnsetEnergyCalculated() { EnergyCalculated = false; } //was bool
-      bool IsSetEnergyCalculated() { return EnergyCalculated; } 
-
-      /// Returns a pointer to a forcefield (the default if ID is empty), or NULL if not available
-      static OBForceField* FindForceField(const std::string& ID){ return Iter().FindType(ID);}
-      
-      static OBForceField* FindForceField(const char *ID)
-      {
-        std::string ffname(ID);
-	return FindForceField(ffname);
-      }
-
+  
     protected:
-      /// Get the correct OBFFParameter from a OBFFParameter vector.
-      ///
-      ///  vector<OBFFParameter> parameters;
-      ///  
-      ///      this vector is filled with entries (as OBFFParameter) from 
-      ///      a parameter file.
-      ///
-      ///  GetParameter(a, 0, 0, 0, parameters); 
-      ///  
-      ///      returns the first OBFFParameter from vector<OBFFParameter> 
-      ///      parameters where: pa = a (pa = parameter.a)
-      ///
-      ///      use: vdw parameters, ...
-      ///
-      ///  GetParameter(a, b, 0, 0, parameters);
-      ///
-      ///      returns the first OBFFParameter from vector<OBFFParameter> 
-      ///      parameters where: pa = a & pb = b      (ab)
-      ///                    or: pa = b & pb = a      (ba)
-      ///      
-      ///      use: bond parameters, vdw parameters (pairs), ...
-      ///
-      ///  GetParameter(a, b, c, 0, parameters);
-      ///
-      ///      returns the first OBFFParameter from vector<OBFFParameter> 
-      ///      parameters where: pa = a & pb = b & pc = c     (abc)
-      ///                    or: pa = c & pb = b & pc = a     (cba)
-      ///
-      ///      use: angle parameters, ...
-      ///
-      ///  GetParameter(a, b, c, d, parameters);
-      ///
-      ///      returns the first OBFFParameter from vector<OBFFParameter> 
-      ///      parameters where: pa = a & pb = b & pc = c & pd = d    (abcd)
-      ///                    or: pa = d & pb = b & pc = c & pd = a    (dbca)
-      ///                    or: pa = a & pb = c & pc = b & pd = d    (acbd)
-      ///                    or: pa = d & pb = c & pc = b & pd = a    (dcba)
-      ///
-      ///      use: torsion parameters, ...
-      ///
+      /*! 
+        Get the correct OBFFParameter from a OBFFParameter vector.
+      
+        vector<OBFFParameter> parameters;
+        
+            this vector is filled with entries (as OBFFParameter) from 
+            a parameter file.
+      
+        GetParameter(a, 0, 0, 0, parameters); 
+        
+            returns the first OBFFParameter from vector<OBFFParameter> 
+            parameters where: pa = a (pa = parameter.a)
+      
+            use: vdw parameters, ...
+      
+        GetParameter(a, b, 0, 0, parameters);
+      
+            returns the first OBFFParameter from vector<OBFFParameter> 
+            parameters where: pa = a & pb = b      (ab)
+                          or: pa = b & pb = a      (ba)
+            
+            use: bond parameters, vdw parameters (pairs), ...
+      
+        GetParameter(a, b, c, 0, parameters);
+      
+            returns the first OBFFParameter from vector<OBFFParameter> 
+            parameters where: pa = a & pb = b & pc = c     (abc)
+                          or: pa = c & pb = b & pc = a     (cba)
+      
+            use: angle parameters, ...
+      
+        GetParameter(a, b, c, d, parameters);
+      
+            returns the first OBFFParameter from vector<OBFFParameter> 
+            parameters where: pa = a & pb = b & pc = c & pd = d    (abcd)
+                          or: pa = d & pb = b & pc = c & pd = a    (dbca)
+                          or: pa = a & pb = c & pc = b & pd = d    (acbd)
+                          or: pa = d & pb = c & pc = b & pd = a    (dcba)
+      
+            use: torsion parameters, ...
+      */
       OBFFParameter* GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
       OBFFParameter* GetParameter(const char* a, const char* b, const char* c, const char* d, std::vector<OBFFParameter> &parameter);
       
@@ -218,39 +198,21 @@ namespace OpenBabel
       OBFFParameter* GetParameter(const char* a, std::vector<OBFFParameter> &parameter)
       { return GetParameter(a, NULL, NULL, NULL, parameter); }
 
-      //! Calculate the energy ('only' called from GetEnergy, programs 
-      //! should use GetEnergy(). This way, the Energy is not computed twice
-      //! when the coordinates are unchanged. GetEnergy() evaluates the 
-      //! value of 'bool EnergyCalculated' 
-      //!   
-      //!     true: return stored energy
-      //!     false: call Energy, set EnergyCalculated = true and 
-      //!            return newly calculated
-      //!
-      //! Each functions wich changes the coordinates of the atoms should 
-      //! set EnergyCalculated to false. (SteepestDescent(), ...)
-      //!
-      //! If a function frequently changes coordinates it may be better
-      //! to use Energy() instead of using:
-      //!     
-      //!     UnsetEnergyCalculated();
-      //!     energy = GetEnergy();
-      //!
-      //! for each change in coordinates.
-      virtual double Energy() { return 0.0f; }
- 
       //! Get index for vector<OBFFParameter> ...
       int GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
+           
       //! Calculate the potential energy function derivative numerically with repect to the coordinates of atom with index a (this vector is the gradient)
       /*!
-        \param a  provides coordinates
-	\param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
-	\return the negative gradient of atom a
-      */
+       * \param a  provides coordinates
+       * \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
+       * \return the negative gradient of atom a
+       */
       vector3 NumericalDerivative(OBAtom *a, int terms = OBFF_ENERGY);
       //! Calculate the potential energy function derivative analyticaly with repect to the coordinates of atom with index a (this vector is the gradient)
       /*!
-        If the currently selected forcefield doesn't have analytical gradients, we can still call this function wich will return the result of NumericalDerivative()
+        If the currently selected forcefield doesn't have analytical gradients, 
+	we can still call this function which will return the result of 
+	NumericalDerivative()
         \param a  provides coordinates
 	\param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
 	\return the negative gradient of atom a
@@ -270,19 +232,33 @@ namespace OpenBabel
       int loglvl;
 
     public:
-      // see Energy()
-      double GetEnergy()
+      //! short description of the force field type.
+      virtual std::string Description()=0;
+      //! \return A pointer to a forcefield (the default if ID is empty), or NULL if not available
+      static OBForceField* FindForceField(const std::string& ID)
+      { 
+        return Iter().FindType(ID);
+      } 
+      static OBForceField* FindForceField(const char *ID)
       {
-        if (!IsSetEnergyCalculated()) { 
-	  StoredEnergy = Energy();
-	  SetEnergyCalculated();
-	}
-
-	return StoredEnergy;
+        std::string ffname(ID);
+	return FindForceField(ffname);
       }
-     
-      //! \return The unit (kcal/mol, kJ/mol, ...) in wich the energy is expressed as std::string
+      //! \return The unit (kcal/mol, kJ/mol, ...) in which the energy is expressed as std::string
       virtual std::string GetUnit() { return std::string("au"); }
+       //! Setup the forcefield for mol (assigns atom types, charges, etc. \return True if succesfull
+      virtual bool Setup(OBMol &mol) { return false; }
+      //! Update coordinates after steepest descent, conjugate gradient
+      void UpdateCoordinates(OBMol &mol);
+ 
+      /////////////////////////////////////////////////////////////////////////
+      // Energy Evaluation                                                   //
+      /////////////////////////////////////////////////////////////////////////
+      
+      //! \name Methods for structure generation
+      //@{
+      //! \return Total energy
+      virtual double Energy() { return 0.0f; }
       //! \return Bond stretching energy
       virtual double E_Bond() { return 0.0f; }
       //! \return Angle bending energy
@@ -297,30 +273,55 @@ namespace OpenBabel
       virtual double E_VDW() { return 0.0f; }
       //! \return Electrostatic energy
       virtual double E_Electrostatic() { return 0.0f; }
-      //! Setup the forcefield for mol (assigns atom types, charges, etc. \return True if succesfull
-      virtual bool Setup(OBMol &mol) { return false; }
+      //@}
+     
+      /////////////////////////////////////////////////////////////////////////
+      // Logging                                                             //
+      /////////////////////////////////////////////////////////////////////////
+      
+      //! \name Methods for logging
+      //@{
       //! Set the stream for logging (can also be &cout for logging to screen)
       bool SetLogFile(std::ostream *pos);
-      //! Set the log level (OBFF_LOGLVL_NONE, OBFF_LOGLVL_LOW, OBFF_LOGLVL_MEDIUM, OBFF_LOGLVL_HIGH)
+      /*!
+        Set the log level (OBFF_LOGLVL_NONE, OBFF_LOGLVL_LOW, OBFF_LOGLVL_MEDIUM, OBFF_LOGLVL_HIGH)
+
+        Inline if statements for logging are available: 
+	
+        \code
+          #define IF_OBFF_LOGLVL_LOW    if(loglvl >= OBFF_LOGLVL_LOW)
+          #define IF_OBFF_LOGLVL_MEDIUM if(loglvl >= OBFF_LOGLVL_MEDIUM)
+          #define IF_OBFF_LOGLVL_HIGH   if(loglvl >= OBFF_LOGLVL_HIGH)
+	\endcode
+
+	example:
+        \code
+        SetLogLevel(OBFF_LOGLVL_MEDIUM);
+  
+        IF_OBFF_LOGLVL_HIGH {
+          *logos << "this text will NOT be logged..." << endl
+        }
+   
+        IF_OBFF_LOGLVL_LOW {
+          *logos << "this text will be logged..." << endl
+        }
+  
+        IF_OBFF_LOGLVL_MEDIUM {
+          *logos << "this text will also be logged..." << endl
+        }
+	\endcode
+      */
       bool SetLogLevel(int level);
       //! \return log level
       int GetLogLevel() { return loglvl; }
-      //! Validate the force field implementation (debugging)
-      virtual bool Validate() { return false; }
-      //! Validate the analytical gradients by comparing them to numerical ones. This function has to
-      //! be implemented force field specific. (debugging)
-      virtual bool ValidateGradients() { return false; }
-      //! Calculate the error of the analytical gradient (debugging)
-      //! error = fabs(numgrad - anagrad) / anagrad * 100%
-      vector3 ValidateGradientError(vector3 &numgrad, vector3 &anagrad);
- 
-
-      //! Update coordinates after steepest descent, ...
-      void UpdateCoordinates(OBMol &mol);
-      //! Get forces for the current coordinates
-      virtual std::vector<vector3> GetForces() 
-      {
-      }
+      //@}
+     
+      /////////////////////////////////////////////////////////////////////////
+      // Structure Generation                                                //
+      /////////////////////////////////////////////////////////////////////////
+      
+      //! \name Methods for structure generation
+      //@{
       //! Generate coordinates for the molecule (distance geometry).
       void DistanceGeometry();
       //! Generate coordinates for the molecule (knowledge based, energy minimization).
@@ -328,32 +329,83 @@ namespace OpenBabel
       //! Generate coordinates for the molecule (systematicaly rotating torsions).
       void SystematicRotorSearch();
       
+      /////////////////////////////////////////////////////////////////////////
+      // Energy Minimization                                                 //
+      /////////////////////////////////////////////////////////////////////////
+      
+      //! \name Methods for energy minimization
+      //@{
+      /*! Perform a linesearch starting at atom in direction direction
+          \param atom start coordinates
+          \param direction the search direction
+	  \return vector which starts at atom and stops at the minimum (the length is the ideal stepsize)
+      */
+      vector3 LineSearch(OBAtom *atom, vector3 &direction);
+      /*! Perform steepest descent optimalization for steps steps or until convergence criteria is reached.
+	  \param steps the number of steps 
+          \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+      */
+      void SteepestDescent(int steps, int method = OBFF_ANALYTICAL_GRADIENT);
+      /*! Perform conjugate gradient optimalization for steps steps or until convergence criteria is reached.
+	  \param steps the number of steps 
+          \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+      */
+      void ConjugateGradients(int steps, int method = OBFF_ANALYTICAL_GRADIENT);
+      //@}
+      
+      /////////////////////////////////////////////////////////////////////////
+      // Validation                                                          //
+      /////////////////////////////////////////////////////////////////////////
+      
+      //! \name Methods for forcefield validation
+      //@{
       vector3 ValidateLineSearch(OBAtom *atom, vector3 &direction);
       void ValidateSteepestDescent(int steps);
       void ValidateConjugateGradients(int steps);
+      //! Validate the force field implementation (debugging)
+      virtual bool Validate() { return false; }
+      /*! 
+        Validate the analytical gradients by comparing them to numerical ones. This function has to
+	be implemented force field specific. (debugging)
+      */
+      virtual bool ValidateGradients() { return false; }
+      /*! 
+        Calculate the error of the analytical gradient (debugging)
+        \return error = fabs(numgrad - anagrad) / anagrad * 100%
+      */
+      vector3 ValidateGradientError(vector3 &numgrad, vector3 &anagrad);
+      //@}
+     
+      /////////////////////////////////////////////////////////////////////////
+      // Vector Analysis                                                     //
+      /////////////////////////////////////////////////////////////////////////
       
-      //! Perform a linesearch starting at atom in direction direction
-      /*!
-	\param atom start coordinates
-        \param direction the search direction
-	\return vector wich starts at atom and stops at the minimum (the length is the ideal stepsize)
-      */
-      vector3 LineSearch(OBAtom *atom, vector3 &direction);
-      //! Perform steepest descent optimalization
-      /*!
-        Perform steepest descent optimalization for steps steps or until convergence criteria is reached.
-	\param steps the number of steps 
-        \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
-      */
-      void SteepestDescent(int steps, int method = OBFF_ANALYTICAL_GRADIENT);
-      //! Perform conjugate gradients optimalization
-      /*!
-        Perform conjugate gradient optimalization for steps steps or until convergence criteria is reached.
-	\param steps the number of steps 
-        \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
-      */
-      void ConjugateGradients(int steps, int method = OBFF_ANALYTICAL_GRADIENT);
- 
+      //! \name Methods for vector analysis (used by OBFFXXXXCalculationYYYY)
+      //@{
+      /*! Calculate the derivative of a vector length. The vector is given by a - b, 
+       * the length of this vector rab = sqrt(ab.x^2 + ab.y^2 + ab.z^2).
+       * \param a atom a (coordinates), will be changed to -drab/da
+       * \param b atom b (coordinates), will be changed to -drab/db
+       * \return The distance between a and b (bondlength for bond stretching, separation for vdw, electrostatic)
+       */
+      static double VectorLengthDerivative(vector3 &a, vector3 &b);
+      /*! Calculate the derivative of a angle a-b-c. The angle is given by dot(ab,cb)/rab*rcb.
+       * \param a atom a (coordinates), will be changed to -dtheta/da
+       * \param b atom b (coordinates), will be changed to -dtheta/db
+       * \param c atom c (coordinates), will be changed to -dtheta/dc
+       * \return The angle between a-b-c
+       */
+      static double VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c);
+      /*! Calculate the derivative of a torsion angle a-b-c-d. The torsion angle is given by dot(corss(ab,bc),cross(bc,cd)/rabbc*rbccd.
+       * \param a atom a (coordinates), will be changed to -dtheta/da
+       * \param b atom b (coordinates), will be changed to -dtheta/db
+       * \param c atom c (coordinates), will be changed to -dtheta/dc
+       * \param d atom d (coordinates), will be changed to -dtheta/dd
+       * \return The tosion angle for a-b-c-d
+       */
+      static double VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
+      //@}
+
    }; // class OBForceField
 
 }// namespace OpenBabel

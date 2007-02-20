@@ -57,6 +57,7 @@ namespace OpenBabel
       int sbt; //strbndtype (SBTIJK)
       
       double GetEnergy();
+      vector3 GetGradient(OBAtom *atom);
   };
 
   class OBFFTorsionCalculationMMFF94 : public OBFFCalculation
@@ -67,6 +68,7 @@ namespace OpenBabel
       int tt; //torsiontype (TTIJKL)
       
       double GetEnergy();
+      vector3 GetGradient(OBAtom *atom);
   };
 
  class OBFFOOPCalculationMMFF94 : public OBFFCalculation
@@ -117,14 +119,14 @@ namespace OpenBabel
       bool ParseParamVDW();
       bool ParseParamCharge();
       bool ParseParamPbci();
-      //! \return Sets atomtypes to MM2 in _mol
+      //! \return Sets atomtypes to MMFF94 in _mol
       bool SetMMFFTypes();
       //! fill OBFFXXXCalculation vectors
       bool SetupCalculations();
-      bool CalcCharges();
+      //!  Sets charges to MMFF94 charges in _mol
+      bool SetMMFF94Charges();
       //! \return The row of the element atom in the periodic table
       int GetElementRow(OBAtom *atom);
-      
       //! \return The bond type (BTIJ)
       int GetBondType(OBAtom* a, OBAtom* b);
       //! \return The angle type (ATIJK)
@@ -141,13 +143,12 @@ namespace OpenBabel
       bool HasAromSet(int atomtype);
       //! \return true if atomtype has lin set in mmffprop.par
       bool HasLinSet(int atomtype);
-      
-      
-      bool Validate();
-      bool ValidateGradients();
+      //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
       OBFFParameter* GetParameterMMFF94(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
-
+      //! Returns the negative gradient (force) on atom a
+      vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY);
       
+      // OBFFParameter vectors to contain the parameters
       std::vector<OBFFParameter> _ffbondparams;
       std::vector<OBFFParameter> _ffbndkparams;
       std::vector<OBFFParameter> _ffangleparams;
@@ -159,13 +160,14 @@ namespace OpenBabel
       std::vector<OBFFParameter> _ffchgparams;
       std::vector<OBFFParameter> _ffpbciparams;
 
+      // OBFFXXXCalculationYYY vectors to contain the calculations
       std::vector<OBFFBondCalculationMMFF94>          _bondcalculations;
       std::vector<OBFFAngleCalculationMMFF94>         _anglecalculations;
       std::vector<OBFFStrBndCalculationMMFF94>        _strbndcalculations;
       std::vector<OBFFTorsionCalculationMMFF94>       _torsioncalculations;
       std::vector<OBFFOOPCalculationMMFF94>           _oopcalculations;
       std::vector<OBFFVDWCalculationMMFF94>           _vdwcalculations;
-      std::vector<OBFFElectrostaticCalculationMMFF94> _electostaticcalculations;
+      std::vector<OBFFElectrostaticCalculationMMFF94> _electrostaticcalculations;
       
       // parameters from mmffprop.par
       std::vector<int> _sbmb; // single bond - multiple bond
@@ -173,28 +175,35 @@ namespace OpenBabel
       std::vector<int> _lin; // lineair
 
     public:
-      //! Setup
-      bool Setup(OBMol &mol);
       //! Constructor
       OBForceFieldMMFF94(std::string ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
         ParseParamFile();
       }
       
-      std::string Description()
-	{ return "Merck Molecular Force Field. (94)";};
-
-      std::string GetUnit() { return std::string("kcal/mol"); }
-      std::vector<vector3> GetForces();
-
-
       //! Destructor
       virtual ~OBForceFieldMMFF94();
+      
       //! Assignment
       OBForceFieldMMFF94 &operator = (OBForceFieldMMFF94 &);
+
+      //! Get the description for this force field
+      std::string Description()
+      { 
+        return "Merck Molecular Force Field. (94)";
+      }
+
+      //! Get the unit in wich the energy is expressed
+      std::string GetUnit() 
+      { 
+        return std::string("kcal/mol"); 
+      }
+      //! Setup
+      bool Setup(OBMol &mol);
+ 
       //! Returns total energy
       double Energy();
-     //! Returns the bond stretching energy
+      //! Returns the bond stretching energy
       double E_Bond();
       //! Returns the angle bending energy
       double E_Angle();
@@ -208,7 +217,13 @@ namespace OpenBabel
       double E_VDW();
       //! Returns the dipole-dipole interaction energy
       double E_Electrostatic();
-
+      
+      
+      //! Validate MMFF94 using validation suite
+      bool Validate();
+      //! Compare and print the numerical and analytical gradients
+      bool ValidateGradients();
+ 
   }; // class OBForceFieldMM2
 
 }// namespace OpenBabel

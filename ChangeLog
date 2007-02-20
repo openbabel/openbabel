@@ -1,3 +1,23 @@
+2007-02-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: Added vector analysis methods 
+	VectorLengthDerivative(), VectorAngleDerivative(), 
+	VectorTorsionDerivative()
+
+	Removed SetEnergyCalculated and related methods for the moment.
+
+	* src/forcefields/forcefieldghemical.cpp: Updated to use the vector
+	analysis methods.
+	
+	* src/forcefields/forcefieldmmff94.cpp: Updated to use the vector
+	analysis methods.
+
+	* tools/obgen.cpp: Added -ff option.
+
+	* tools/obenergy.cpp: Added. Calculate the energy of a molecule.
+	
+	* tools/obminimize.cpp: Added. Minimize the energy of a molecule.
+
 2007-02-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/typer.cpp: Fix PR#1594657 -- long recursion for large
@@ -9,7 +29,7 @@
 	* src/forcefields/forcefieldmmff94.cpp: Fix compilation problem
 	with call to NumericalDerivative.
 
-2007-02-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2007-02-17  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.h: Some doxygen comments updated.
 

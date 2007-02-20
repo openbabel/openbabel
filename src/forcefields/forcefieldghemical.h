@@ -79,7 +79,6 @@ namespace OpenBabel
       vector3 GetGradient(OBAtom *atom);
   };
 
-
   // Class OBForceFieldGhemical
   // class introduction in forcefieldghemical.cpp
   class OBAPI OBForceFieldGhemical: public OBForceField
@@ -95,7 +94,8 @@ namespace OpenBabel
       bool SetupCalculations();
       //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
       OBFFParameter* GetParameterGhemical(int type, const char* a, const char* b, const char* c, const char* d, std::vector<OBFFParameter> &parameter);
-
+      //! Returns the negative gradient (force) on atom a
+      vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY);
       
       // OBFFParameter vectors to contain the parameters
       std::vector<OBFFParameter> _ffbondparams; 
@@ -152,8 +152,6 @@ namespace OpenBabel
       //! Returns energy due to electrostatic interactions
       double E_Electrostatic();
       
-      //! Returns the negative gradient (force) on atom a
-      vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY);
       //! Compare and print the numerical and analytical gradients
       bool ValidateGradients();
 
@@ -161,6 +159,6 @@ namespace OpenBabel
 
 }// namespace OpenBabel
 
-//! \file forcefieldGhemical.h
+//! \file forcefieldghemical.h
 //! \brief Ghemical force field
 

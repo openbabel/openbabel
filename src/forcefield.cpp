@@ -33,7 +33,33 @@ namespace OpenBabel
 {
   /** \class OBForceField forcefield.h <openbabel/forcefield.h>
 
-      Text here...
+      development status:
+        - src/forcefield.cpp
+	  - LineSearch(): works, but better algoritmh would be better for performance
+	  - SteepestDescent(): finished
+	  - ConjugateGradients(): finished
+	  - GenerateCoordinates(): 
+	  - SystematicRotorSearch(): not all combinations are tested but works
+	  - DistanceGeometry(): needs matrix operations
+	- src/forcefields/forcefieldghemical.cpp
+	  - Atom typing: finished
+	  - Charges: finished
+	  - Energy terms: finished
+	  - Analytical gradients: finished
+	  - Validation: todo
+	- src/forcefields/forcefieldmmff94.cpp
+	  - Atom typing: needs work
+	  - Charges: 0%
+	  - Energy terms:
+	    - Bond: finished
+	    - Angle: finished
+	    - StrBnd: finished
+	    - Torsion: finished
+	    - OOP: no gradient
+	    - VDW: no gradient
+	    - Electrostatic: needs charges, charges need correct atom types
+	  - Validation: in progress... 
+
 
       Here is an example:
 
@@ -360,7 +386,7 @@ namespace OpenBabel
     
     IF_OBFF_LOGLVL_LOW {
       *logos << endl << "S Y S T E M A T I C   R O T O R   S E A R C H" << endl << endl;
-      *logos << "  NUMBER OF ROTATABLE BONDS:: " << rl.Size() << endl;
+      *logos << "  NUMBER OF ROTATABLE BONDS: " << rl.Size() << endl;
     }
  
     int rotorKey[rl.Size() + 1]; // indexed from 1
@@ -846,10 +872,10 @@ namespace OpenBabel
     atom->SetVector(9.0f, 9.0f, 0.0f);
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
     
-    cout << endl << "V A L I D A T E   S T E E P E S T   D E S C E N T" << endl << endl;
-    cout << "STEPS = " << steps << endl << endl;
-    cout << "STEP n     E(n)       E(n-1)    " << endl;
-    cout << "--------------------------------" << endl;
+    *logos << endl << "V A L I D A T E   S T E E P E S T   D E S C E N T" << endl << endl;
+    *logos << "STEPS = " << steps << endl << endl;
+    *logos << "STEP n     E(n)       E(n-1)    " << endl;
+    *logos << "--------------------------------" << endl;
     
     for (int i = 1; i <= steps; i++) {
       grad.Set(-2*atom->x(), -4*atom->y(), 0.0f);
@@ -858,17 +884,16 @@ namespace OpenBabel
       e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
       
       sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
-      cout << logbuf << endl;
+      *logos << logbuf << endl;
 
       if (fabs(e_n1 - e_n2) < 0.0000001f) {
-        cout << "    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+        *logos << "    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)" << endl;
         break;
       }
 
       e_n1 = e_n2;
     }
 
-    UnsetEnergyCalculated();
     IF_OBFF_LOGLVL_LOW
       *logos << endl;
   }
@@ -886,10 +911,10 @@ namespace OpenBabel
     atom->SetVector(9.0f, 9.0f, 0.0f);
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
  
-    cout << endl << "V A L I D A T E   C O N J U G A T E   G R A D I E N T" << endl << endl;
-    cout << "STEPS = " << steps << endl << endl;
-    cout << "STEP n     E(n)       E(n-1)    " << endl;
-    cout << "--------------------------------" << endl;
+    *logos << endl << "V A L I D A T E   C O N J U G A T E   G R A D I E N T" << endl << endl;
+    *logos << "STEPS = " << steps << endl << endl;
+    *logos << "STEP n     E(n)       E(n-1)    " << endl;
+    *logos << "--------------------------------" << endl;
  
     for (int i = 1; i <= steps; i++) {
       if (firststep) {
@@ -900,7 +925,7 @@ namespace OpenBabel
         e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
       
         sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
-        cout << logbuf << endl;
+        *logos << logbuf << endl;
         
 	e_n1 = e_n2;
 	dir1 = grad1;
@@ -918,17 +943,16 @@ namespace OpenBabel
         e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
 	  
         sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
-        cout << logbuf << endl;
+        *logos << logbuf << endl;
         
 	if (fabs(e_n1 - e_n2) < 0.0000001f) {
-          cout << "    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+          *logos << "    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)" << endl;
           break;
         }
 
 	e_n1 = e_n2;
       }
     }
-    UnsetEnergyCalculated();
   }
 
   void OBForceField::SteepestDescent(int steps, int method) 
@@ -972,7 +996,6 @@ namespace OpenBabel
       e_n1 = e_n2;
     }
 
-    UnsetEnergyCalculated();
     IF_OBFF_LOGLVL_LOW
       *logos << endl;
   }
@@ -987,6 +1010,7 @@ namespace OpenBabel
     vector<vector3> old_xyz;
     char logbuf[100];
 
+    ValidateGradients();
     firststep = true;
 
     e_n1 = Energy();
@@ -1055,7 +1079,6 @@ namespace OpenBabel
 	e_n1 = e_n2;
       }
     }
-    UnsetEnergyCalculated();
   }
 
   vector3 OBForceField::NumericalDerivative(OBAtom *atom, int terms)
@@ -1166,7 +1189,6 @@ namespace OpenBabel
     atom->SetVector(va.x(), va.y(), va.z());
 
     grad.Set(-dx, -dy, -dz);
-    UnsetEnergyCalculated();
     return (grad);
   }
 
@@ -1205,6 +1227,123 @@ namespace OpenBabel
 
     return vector3(errx, erry, errz);
   }
+  
+  double OBForceField::VectorLengthDerivative(vector3 &a, vector3 &b)
+  {
+    vector3 vab, drab;
+    double rab;
+    
+    vab = a - b;
+    rab = vab.length();
+    drab = vab / rab;
+
+    a = -drab; // -drab/da
+    b =  drab; // -drab/db
+
+    return rab;
+  }
+  
+  double OBForceField::VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c)
+  {
+    vector3 vab, vcb;
+    double theta, rab, rab2, rcb, rcb2, abcb, abcb2;
+     
+    vab = a - b;
+    vcb = c - b;
+    rab = vab.length();
+    rcb = vcb.length();
+    rab2 = rab * rab;
+    rcb2 = rcb * rcb;
+    
+    abcb = dot(vab, vcb) / (rab * rcb);
+    abcb2 = 1.0f - abcb * abcb;
+    theta = acos(abcb) * RAD_TO_DEG;
+    
+    if (IsNearZero(abcb2)) {
+      a = VZero;
+      b = VZero;
+      c = VZero;
+      return 0.0f;
+    }
+
+    a = (vcb * rab * rcb - (vab / rab) * dot(vab, vcb) * rcb) / (sqrt(abcb2) * rab2 * rcb2);
+    c = -((vcb / rcb) * dot(vab, vcb) * rab - vab * rab * rcb) / (sqrt(abcb2) * rab2 * rcb2);
+    b = -a - c;
+
+    a *= (1.0f / DEG_TO_RAD);
+    b *= (1.0f / DEG_TO_RAD);
+    c *= (1.0f / DEG_TO_RAD);
+
+    return theta;
+  }
+ 
+  double OBForceField::VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
+  {
+    vector3 vab, vbc, vcd, vac, vbd, grada, gradb, gradc, gradd;
+    vector3 abbc, bccd, bcabbc, bcbccd, cdabbc, cdbccd, acabbc, acbccd, ababbc, abbccd, bdabbc, bdbccd;
+    double tor, rab, rbc, rcd, rabbc, rbccd, rabbc2, rbccd2, rabbc3, rbccd3, abbc_bccd, abbc_bccd2;
+
+    vab = a - b;
+    vbc = b - c;
+    vcd = c - d;
+    vac = a - c;
+    vbd = b - d;
+    abbc = cross(vab, vbc);
+    bccd = cross(vbc, vcd);
+    
+    tor = RAD_TO_DEG * acos(dot(abbc, bccd) / (abbc.length() * bccd.length()));
+    if (dot(abbc, bccd) > 0.0f)
+      tor = -tor;
+ 
+    bcabbc = cross(vbc, abbc);
+    bcbccd = cross(vbc, bccd);
+    cdabbc = cross(vcd, abbc);
+    cdbccd = cross(vcd, bccd);
+    acabbc = cross(vac, abbc);
+    acbccd = cross(vac, bccd);
+    ababbc = cross(vab, abbc);
+    abbccd = cross(vab, bccd);
+    bdabbc = cross(vbd, abbc);
+    bdbccd = cross(vbd, bccd);
+    rabbc = abbc.length();
+    rbccd = bccd.length();
+    rabbc2 = rabbc * rabbc;
+    rbccd2 = rbccd * rbccd;
+    rabbc3 = rabbc2 * rabbc;
+    rbccd3 = rbccd2 * rbccd;
+    abbc_bccd = dot(abbc, bccd) / (rabbc * rbccd);
+    abbc_bccd2 = 1.0f - abbc_bccd * abbc_bccd;
+    
+    a = (bcbccd / (rabbc*rbccd) - (bcabbc*dot(abbc,bccd)) / (rabbc3*rbccd)) / sqrt(abbc_bccd2);
+    d = (bcabbc / (rabbc*rbccd) - (bcbccd*dot(abbc,bccd)) / (rabbc*rbccd3)) / sqrt(abbc_bccd2);
+
+    b = ( -(cdbccd*dot(abbc,bccd)) / (rabbc*rbccd3) + 
+                  (cdabbc - acbccd) / (rabbc*rbccd) + 
+                  (acabbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
+    
+    c = (  (bdbccd*dot(abbc,bccd)) / (rabbc*rbccd3) + 
+                  (abbccd - bdabbc) / (rabbc*rbccd) +
+                  -(ababbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
+    
+    if (dot(abbc, bccd) > 0.0f) {
+      a = -a;
+      b = -b;
+      c = -c;
+      d = -d;
+    }
+    
+    if (isnan(a.x()) || isnan(a.y()) || isnan(a.z()))
+      a = VZero;
+    if (isnan(b.x()) || isnan(b.y()) || isnan(b.z()))
+      b = VZero;
+    if (isnan(c.x()) || isnan(c.y()) || isnan(c.z()))
+      c = VZero;
+    if (isnan(d.x()) || isnan(d.y()) || isnan(d.z()))
+      d = VZero;
+    
+    return tor;  
+  }
+ 
 } // end namespace OpenBabel
 
 

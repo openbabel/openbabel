@@ -120,7 +120,7 @@ int main(int argc,char **argv)
         cout << "no molecule loaded." << endl;
 	continue;
       }
-      cout << endl << "  total energy = " << pFF->GetEnergy() << " " << pFF->GetUnit() << endl << endl;
+      cout << endl << "  total energy = " << pFF->Energy() << " " << pFF->GetUnit() << endl << endl;
       continue;
     }
 

@@ -1,9 +1,7 @@
 /**********************************************************************
-obgen.cpp - test program for SMILES 3D coordinate generation
-          - using systematic rotor search
+obenergy.cpp - calculate the energy for a molecule
 
 Copyright (C) 2006 Tim Vandermeersch
-Some portions Copyright (C) 2006 Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -33,11 +31,6 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-// PROTOTYPES /////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-//! \brief  Generate rough 3D coordinates for SMILES (or other 0D files).
-//
 int main(int argc,char **argv)
 {
   char *program_name= argv[0];
@@ -45,7 +38,7 @@ int main(int argc,char **argv)
   string basename, filename = "", option, option2, ff = "";
 
   if (argc < 2) {
-    cout << "Usage: obgen <filename> [options]" << endl;
+    cout << "Usage: obenergy <filename> [options]" << endl;
     cout << endl;
     cout << "options:      description:" << endl;
     cout << endl;
@@ -73,10 +66,9 @@ int main(int argc,char **argv)
   // Find Input filetype
   OBConversion conv;
   OBFormat *format_in = conv.FormatFromExt(filename.c_str());
-  OBFormat *format_out = conv.FindFormat("pdb");
     
-  if (!format_in || !format_out || !conv.SetInAndOutFormats(format_in, format_out)) {
-    cerr << program_name << ": cannot read input/output format!" << endl;
+  if (!format_in || !conv.SetInFormat(format_in)) {
+    cerr << program_name << ": cannot read input format!" << endl;
     exit (-1);
   }
 
@@ -105,29 +97,17 @@ int main(int argc,char **argv)
         exit (-1);
       }
  
-      mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
-      
-      pFF->SetLogFile(&cerr);
-      pFF->SetLogLevel(OBFF_LOGLVL_LOW);
+      pFF->SetLogFile(&cout);
+      pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
       
       if (!pFF->Setup(mol)) {
         cerr << program_name << ": could not setup force field." << endl;
         exit (-1);
       }
       
-      pFF->SystematicRotorSearch();
-      pFF->UpdateCoordinates(mol);
-      pFF->ValidateGradients();
+      pFF->Energy();
+      //cout << endl << " Energy = " << pFF->Energy() << " " << pFF->GetUnit() << endl << endl;
 
-      pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
-      cout << endl << "Total Energy = " << pFF->Energy() << " " << pFF->GetUnit() << endl << endl;
-
-      //char FileOut[32];
-      //sprintf(FileOut, "%s_obgen.pdb", basename.c_str());
-      //ofs.open(FileOut);
-      //conv.Write(&mol, &ofs);
-      //ofs.close();
-      conv.Write(&mol, &cout);
   } // end for loop
 
   return(1);

@@ -493,7 +493,7 @@ namespace OpenBabel
   //
   //***********************************************
   //Make a global instance
-  OBForceFieldMM2 theForceFieldMM2("MM2",true);
+  OBForceFieldMM2 theForceFieldMM2("MM2", false);
   //***********************************************
 
   OBForceFieldMM2::~OBForceFieldMM2()

@@ -1,28 +1,6 @@
 /*********************************************************************
 forcefieldmmff94.cpp - Merck Molecular Force Field.
 
-Etot = Ebond + Eangle + Estrbnd + Etorsion + Eoop +
-       Evdw + Eelectrostatic
-
-
-Bond stretching
----------------
-
-Ebond = 143.9325f * 0.5f * kb * (rab - r0)^2 * (1.0f - 2.0f * (rab - r0) + 7/12 * 4.0f * (rab - r0)^2);
-
-    kb          = force constant
-    r0          = ideal bond length
-    rab         = bond length
-    143.9325f   = energy conversion factor
-    -2.0f       = cubic term (cs)
-    7/12 * 4.0f = qurtic term (7/12 * cs^2)
-
-dEbond/da = 143.9325f * kb * (rab - r0) * (1.0f - 2.0f * (rab - r0) + 7/12 * 8.0f * (rab - r0)) * (-vab / rab);
-dEbond/db = 143.9325f * kb * (rab - r0) * (1.0f - 2.0f * (rab - r0) + 7/12 * 8.0f * (rab - r0)) * (vab / rab);
-
-
-
-
 Copyright (C) 2006 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
  
 This file is part of the Open Babel project.
@@ -64,23 +42,26 @@ namespace OpenBabel
   
   vector3 OBFFBondCalculationMMFF94::GetGradient(OBAtom *atom) 
   {
-    vector3 vab, gradient;
+    vector3 da, db, gradient;
+    double dE;
 
-    cout << "GetGradient(" << atom->GetIdx() << ")" << endl;
-    
     if ((atom != a) && (atom != b))
-      return  vector3(0,0,0);
+      return  VZero;
      
-    vab = a->GetVector() - b->GetVector();
-    rab = vab.length();
+    da = a->GetVector();
+    db = b->GetVector();
+    rab = OBForceField::VectorLengthDerivative(da, db);
     delta = rab - r0;
  
-    gradient = 143.9325f * kb * delta * (1.0f - 2.0f * delta + 7/12 * 8.0f * delta) * (vab / rab);
+    dE = 143.9325f * kb * delta * (1.0f - 2.0f * delta + 7/12 * 8.0f * delta);
 
-    if (atom == a)
-      return -gradient;
-    else 
+    if (atom == a) {
+      gradient = dE * da; // - dE/drab * drab/da
       return gradient;
+    } else {
+      gradient = dE * db; // - dE/drab * drab/db
+      return gradient;
+    }
   }
 
   double OBForceFieldMMFF94::E_Bond()
@@ -102,11 +83,9 @@ namespace OpenBabel
 
       energy += i->GetEnergy();
 
-     // i->GetGradients()
-
-      
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
+        sprintf(logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
+	    (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
         *logos  << logbuf << std::endl;
       }
     }
@@ -132,60 +111,31 @@ namespace OpenBabel
   
   vector3 OBFFAngleCalculationMMFF94::GetGradient(OBAtom *atom) 
   {
-    vector3 vab, vbc, grada, gradb, gradc;
-    double f, rab, rab2, rbc, rbc2, abbc, abbc2;
-
+    vector3 da, db, dc, gradient;
+    double dE;
 
     if ((atom->GetIdx() != a->GetIdx()) && (atom->GetIdx() != b->GetIdx()) && (atom->GetIdx() != c->GetIdx()))
-      return  vector3(0,0,0);
-     
-    vab = a->GetVector() - b->GetVector();
-    vbc = b->GetVector() - c->GetVector();
-    rab = vab.length();
-    rbc = vbc.length();
-    rab2 = rab * rab;
-    rbc2 = rbc * rbc;
+      return VZero;
     
-    theta = a->GetAngle(b->GetIdx(), c->GetIdx());
+    da = a->GetVector();
+    db = b->GetVector();
+    dc = c->GetVector();
+    theta = OBForceField::VectorAngleDerivative(da, db, dc);
     delta = theta - theta0;
-    abbc = dot(vab, vbc) / (rab * rbc);
-    abbc2 = 1.0f - abbc * abbc;
+ 
+    dE = 0.043844f * ka * delta * (1.0f - 1.5f * 0.007f * delta);
 
-    f = 0.043844f * ka * delta * (1.0f - 1.5f * 0.007f * delta);
-    grada = -f * (vbc * rab * rbc - (vab / rab) * dot(vab, vbc) * rbc) / (sqrt(abbc2) * rab2 * rbc2);
-    gradc = -f * ((vbc / rbc) * dot(vab, vbc) * rab - vab * rab * rbc) / (sqrt(abbc2) * rab2 * rbc2);
-    gradb = -grada - gradc;
-    
-    cout << endl;
-    cout << "Angle::GetGradient(" << atom->GetIdx() << ")" << endl;
-    cout << "angle: " <<  a->GetIdx() << "-" << b->GetIdx() << "-" << c->GetIdx() << endl;
-    cout << "vab: " << vab << endl;
-    cout << "vbc: " << vbc << endl;
-    cout << "rab: " << rab << endl;
-    cout << "rbc: " << rbc << endl;
-    cout << "theta: " << theta << endl;
-    cout << "theta0: " << theta0 << endl;
-    cout << "delta: " << delta << endl;
-    cout << "ka: " << ka << endl;
-    cout << "abbc: " << abbc << endl;
-    cout << "f: " << f << endl;
-    cout << "grada: " << grada << endl;
-    cout << "gradb: " << gradb << endl;
-    cout << "gradc: " << gradc << endl;
-
-
-    if (atom->GetIdx() == a->GetIdx()) {
-      cout << "return grada" << endl;
-      return grada;
-    }else if (atom->GetIdx() == c->GetIdx()) {
-      cout << "return gradc" << endl;
-      return gradc;
-    }else {
-      cout << "return gradb" << endl;
-      return gradb;
+    if (atom == a) {
+      gradient = dE * da; // - dE/drab * drab/da
+      return gradient;
+    } else if (atom == b) {
+      gradient = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
+      return gradient;
+    } else {
+      gradient = dE * dc; // - dE/drab * drab/dc
+      return gradient;
     }
   }
-
  
   double OBForceFieldMMFF94::E_Angle()
   {
@@ -238,6 +188,39 @@ namespace OpenBabel
     return energy;
   }
   
+  vector3 OBFFStrBndCalculationMMFF94::GetGradient(OBAtom *atom) 
+  {
+    vector3 da, db, dc, gradient;
+    vector3 rab_da, rab_db, rbc_db, rbc_dc, theta_da, theta_db, theta_dc;
+    double dE;
+
+    if ((atom->GetIdx() != a->GetIdx()) && (atom->GetIdx() != b->GetIdx()) && (atom->GetIdx() != c->GetIdx()))
+      return VZero;
+    
+    rab_da = theta_da = a->GetVector();
+    rab_db = rbc_db = theta_db = b->GetVector();
+    rbc_dc = theta_dc = c->GetVector();
+    
+    rab = OBForceField::VectorLengthDerivative(rab_da, rab_db);
+    rbc = OBForceField::VectorLengthDerivative(rbc_db, rbc_dc);
+    theta = OBForceField::VectorAngleDerivative(theta_da, theta_db, theta_dc);
+    delta_rab = rab - rab0;
+    delta_rbc = rbc - rbc0;
+    delta_theta = theta - theta0;
+
+    da = 2.51210f * (kbaABC * rab_da * delta_theta + theta_da * (kbaABC * delta_rab + kbaCBA * delta_rbc));
+    dc = 2.51210f * (kbaCBA * rbc_dc * delta_theta + theta_dc * (kbaABC * delta_rab + kbaCBA * delta_rbc));
+    db = -da - dc;
+
+    if (atom == a) {
+      return da;
+    } else if (atom == b) {
+      return db;
+    } else {
+      return dc;
+    }
+  }
+ 
   double OBForceFieldMMFF94::E_StrBnd() 
   {
     vector<OBFFStrBndCalculationMMFF94>::iterator i;
@@ -265,7 +248,7 @@ namespace OpenBabel
     }
 	
     IF_OBFF_LOGLVL_MEDIUM
-      *logos << std::endl << "     TOTAL STRETCH BENDING ENERGY = " << energy << std::endl << std::endl;
+      *logos << endl << "     TOTAL STRETCH BENDING ENERGY = " << energy << endl << endl;
     return energy;
   }
  
@@ -311,6 +294,43 @@ namespace OpenBabel
     return energy;
   }
   
+  vector3 OBFFTorsionCalculationMMFF94::GetGradient(OBAtom *atom) 
+  {
+    vector3 da, db, dc, dd, gradient;
+    double dE, sine, sine2, sine3;
+
+    if ((atom->GetIdx() != a->GetIdx()) && (atom->GetIdx() != b->GetIdx()) && (atom->GetIdx() != c->GetIdx()) &&  (atom->GetIdx() != d->GetIdx()))
+      return  VZero;
+    
+    da = a->GetVector();
+    db = b->GetVector();
+    dc = c->GetVector();
+    dd = d->GetVector();
+    tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
+ 
+    sine = sin(DEG_TO_RAD * (tor));
+    sine2 = sin(DEG_TO_RAD * (2.0f * tor));
+    sine3 = sin(DEG_TO_RAD * (3.0f * tor));
+    dE = -0.5f * (v1 * sine - 2.0f * v2 * sine2 + 3.0f * v3 * sine3);
+    
+    //if (IsNearZero(dE))
+    //  return VZero;
+
+    if (atom == a) {
+      gradient = dE * da; // - dE/drab * drab/da
+      return gradient;
+    } else if (atom == b) {
+      gradient = dE * db; // - dE/drab * drab/db
+      return gradient;
+    } else if (atom == c) {
+      gradient = dE * dc; // - dE/drab * drab/dc
+      return gradient;
+    } else {
+      gradient = dE * dd; // - dE/drab * drab/dd
+      return gradient;
+    }
+  }
+ 
   double OBForceFieldMMFF94::E_Torsion() 
   {
     vector<OBFFTorsionCalculationMMFF94>::iterator i;
@@ -331,8 +351,8 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), atoi((*i).d->GetType()), 
-                (*i).tt, (*i).tor, (*i).v1, (*i).v2, (*i).v3, (*i).energy);
+        sprintf(logbuf, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f",  atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
+	    atoi((*i).c->GetType()), atoi((*i).d->GetType()), (*i).tt, (*i).tor, (*i).v1, (*i).v2, (*i).v3, (*i).energy);
         *logos  << logbuf << endl;
       }
     }
@@ -414,7 +434,7 @@ namespace OpenBabel
       
       return energy;
   }
-
+  
   double OBForceFieldMMFF94::E_VDW()
   {
     vector<OBFFVDWCalculationMMFF94>::iterator i;
@@ -477,7 +497,7 @@ namespace OpenBabel
       *logos << std::endl << "     TOTAL ELECTROSTATIC ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
-
+/*
   vector<vector3> OBForceFieldMMFF94::GetForces()
   {
     vector<OBFFBondCalculationMMFF94>::iterator i;
@@ -505,13 +525,13 @@ namespace OpenBabel
 
     return forces; 
   }
-
+*/
   //
   // OBForceFieldMMFF member functions
   //
   //***********************************************
   //Make a global instance
-  OBForceFieldMMFF94 theForceFieldMMFF94("MMFF94",true);
+  OBForceFieldMMFF94 theForceFieldMMFF94("MMFF94", false);
   //***********************************************
 
   OBForceFieldMMFF94::~OBForceFieldMMFF94()
@@ -525,14 +545,12 @@ namespace OpenBabel
 
   bool OBForceFieldMMFF94::Setup(OBMol &mol)
   {
-    UnsetEnergyCalculated();
-
     _mol = mol;
     SetMMFFTypes();
     if (!SetupCalculations())
       return false;
 
-    //CalcCharges();
+    //SetMMFF94Charges();
     
     return true;
   }
@@ -1116,10 +1134,74 @@ namespace OpenBabel
 
     cout << "kekulize..." << endl;
     _mol.Kekulize();
+    _mol.UnsetAromaticPerceived();
+    
+    cout << endl << "R I N G S" << endl << endl;
+    //      "XX   XX     XX     XX
+    
+    OBAtom *ringatom;
+    OBBond *ringbond;
+    vector<OBRing*> vr;
+    vr = _mol.GetSSSR();
+    
+    vector<OBRing*>::iterator ri;
+    vector<int>::iterator rj;
+    int n, index, ringsize, first_rj, prev_rj, pi_electrons;
+    for (ri = vr.begin();ri != vr.end();ri++) {
+      ringsize = (*ri)->Size();
+      cout << "RING: ";
+      
+      n = 1;
+      pi_electrons = 0;
+      for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) {
+        index = *rj;
+        ringatom = _mol.GetAtom(index);
+	//cout << index << ": " << ringatom << endl; 
+        // is the bond to the previous ring atom double?
+        if (n > 1) {
+	  ringbond = _mol.GetBond(prev_rj, *rj);
+	  if (ringbond->GetBO() == 2) {
+	    pi_electrons += 2;
+	    cout << "=" << *rj;
+	    prev_rj = *rj;
+	    n++;
+	    continue;
+	  }
+	  prev_rj = *rj;
+	} else {
+	  cout << *rj;
+	  prev_rj = *rj;
+	  n++;
+	  continue;
+	}
+	// does the current ring atom have a exocyclic bond?
+	FOR_NBORS_OF_ATOM (nbr, ringatom) {
+	  if ((*ri)->IsInRing(nbr->GetIdx()))
+	    continue;
+	  ringbond = _mol.GetBond(nbr->GetIdx(), *rj);
+	  if (ringbond->GetBO() == 2) {
+	    pi_electrons++;
+	    cout << "(=*)";
+	  }
+	}
+	cout << "-" << *rj;
+	n++;
+      }
+      if ((*ri)->Size() == pi_electrons)
+        cout << "  AROMATIC!" << endl;
+      else
+        cout << endl;
+    }
 
-     FOR_BONDS_OF_MOL (bond, _mol)
-      if (bond->IsDouble())
-        cout << bond->GetBeginAtom()->GetIdx() << "=" << bond->GetEndAtom()->GetIdx() << endl;
+    cout << endl << "B O N D S" << endl << endl;
+    cout << " I    J     BO     AR" << endl;
+    cout << "---------------------" << endl;
+    //      "XX   XX     XX     XX
+    
+    FOR_BONDS_OF_MOL (bond, _mol) {
+      sprintf(buffer, "%2d   %2d     %d     %d", bond->GetBeginAtom()->GetIdx(), bond->GetEndAtom()->GetIdx(), bond->GetBO(), bond->IsAromatic());
+      cout  << buffer << endl;
+    }
     
     // open data/mmffsymb.par
     string buffer2, subbuffer;
@@ -1548,7 +1630,7 @@ namespace OpenBabel
     return true;
   }
 
-  bool OBForceFieldMMFF94::CalcCharges()
+  bool OBForceFieldMMFF94::SetMMFF94Charges()
   {
     OBFFParameter *parameter_a, *parameter_b, *parameter_ab;
     OBAtom *a;
@@ -1576,8 +1658,6 @@ namespace OpenBabel
   {
     double energy;
 
-    SetEnergyCalculated();
-    
     //energy = E_Bond();
     energy += E_Angle();
     //energy += E_StrBnd();
@@ -1642,7 +1722,6 @@ namespace OpenBabel
       if (_mol.Empty())
         break;
       
-      UnsetEnergyCalculated();
       SetMMFFTypes();
       
       n = _mol.NumAtoms() / 4;
@@ -1753,12 +1832,14 @@ namespace OpenBabel
 
       if (failed) {
         cout << "Could not succesfully assign atom types" << endl;
-        return false;
+        //return false;
+	continue;
       }
 
       if (!SetupCalculations()) {
         cout << "Could not setup calculations (missing parameters...)" << endl;
-        return false;
+        //return false;
+	continue;
       }
 
       // the calculated bond length has an error compared to the one listed in the validation suite logfile. 
@@ -1849,12 +1930,60 @@ namespace OpenBabel
       ifs2.close();
   }
   
-  bool OBForceFieldMMFF94::ValidateGradients ()
+  vector3 OBForceFieldMMFF94::GetGradient(OBAtom *a, int terms)
   {
     vector<OBFFBondCalculationMMFF94>::iterator i;
     vector<OBFFAngleCalculationMMFF94>::iterator i2;
-    vector3 numgrad, anagrad;
-    double errx, erry, errz;
+    vector<OBFFStrBndCalculationMMFF94>::iterator i3;
+    vector<OBFFTorsionCalculationMMFF94>::iterator i4;
+    vector<OBFFOOPCalculationMMFF94>::iterator i5;
+    vector<OBFFVDWCalculationMMFF94>::iterator i6;
+    vector<OBFFElectrostaticCalculationMMFF94>::iterator i7;
+
+    vector3 grad(0.0f, 0.0f, 0.0f);
+    
+    if ((terms & OBFF_ENERGY) || (terms & OBFF_EBOND))
+      for (i = _bondcalculations.begin(); i != _bondcalculations.end(); i++)
+        if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx()))
+          grad += i->GetGradient(&*a);
+
+    if ((terms & OBFF_ENERGY) || (terms & OBFF_EANGLE))
+      for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); i2++)
+        if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx()))
+          grad += i2->GetGradient(&*a);
+    
+    if ((terms & OBFF_ENERGY) || (terms & OBFF_ESTRBND))
+      for (i3 = _strbndcalculations.begin(); i3 != _strbndcalculations.end(); i3++)
+        if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || ((*i3).c->GetIdx() == a->GetIdx()))
+          grad += i3->GetGradient(&*a);
+      
+    if ((terms & OBFF_ENERGY) || (terms & OBFF_ETORSION))
+      for (i4 = _torsioncalculations.begin(); i4 != _torsioncalculations.end(); i4++)
+        if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx()) || ((*i4).c->GetIdx() == a->GetIdx()) || ((*i4).d->GetIdx() == a->GetIdx()))
+          grad += i4->GetGradient(&*a);
+    
+    if ((terms & OBFF_ENERGY) || (terms & OBFF_EOOP))
+      for (i5 = _oopcalculations.begin(); i5 != _oopcalculations.end(); i5++)
+        if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx()) || ((*i5).c->GetIdx() == a->GetIdx()) || ((*i5).d->GetIdx() == a->GetIdx()))
+          grad += i5->GetGradient(&*a);
+      
+    if ((terms & OBFF_ENERGY) || (terms & OBFF_EVDW))
+      for (i6 = _vdwcalculations.begin(); i6 != _vdwcalculations.end(); i6++)
+        if (((*i6).a->GetIdx() == a->GetIdx()) || ((*i6).b->GetIdx() == a->GetIdx()))
+          grad += i6->GetGradient(&*a);
+    
+    if ((terms & OBFF_ENERGY) || (terms & OBFF_EELECTROSTATIC))
+      for (i7 = _electrostaticcalculations.begin(); i7 != _electrostaticcalculations.end(); i7++)
+        if (((*i7).a->GetIdx() == a->GetIdx()) || ((*i7).b->GetIdx() == a->GetIdx()))
+          grad += i7->GetGradient(&*a);
+
+    return grad;
+  }
+
+
+  bool OBForceFieldMMFF94::ValidateGradients ()
+  {
+    vector3 numgrad, anagrad, err;
     char logbuf[150];
     
     cout << "----------------------------------------------------------------------------------------" << endl;
@@ -1864,42 +1993,82 @@ namespace OpenBabel
     cout << "                                                                                        " << endl;
     cout << "ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERRROR (%)   " << endl;
     cout << "----------------------------------------------------------------------------------------" << endl;
-     //     "  XX     (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
+    //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
    
     FOR_ATOMS_OF_MOL (a, _mol) {
-      anagrad.Set(0,0,0);
 
-      numgrad = NumericalDerivative(&*a);
+      // OBFF_ENERGY
+      numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
+      anagrad = GetGradient(&*a, OBFF_ENERGY);
+      err = ValidateGradientError(numgrad, anagrad);
 
-      for (i = _bondcalculations.begin(); i != _bondcalculations.end(); i++) {
-        if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
-          //anagrad += i->GetGradient(&*a);
-	}
-      }
-
-      for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); i2++) {
-        if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
-          anagrad += i2->GetGradient(&*a);
-	  cout << "anagrad: " << anagrad << endl;
-	}
-      }
-      
-      cout << "anagrad final: " << anagrad << endl;
-      numgrad = numgrad.normalize();
-      anagrad = anagrad.normalize();
-      cout << "anagrad final (normalized): " << anagrad << endl;
-
-      errx = fabs((numgrad.x() - anagrad.x()) / numgrad.x()) * 100;
-      erry = fabs((numgrad.y() - anagrad.y()) / numgrad.y()) * 100;
-      errz = fabs((numgrad.z() - anagrad.z()) / numgrad.z()) * 100;
-      
-      cout << "anagrad final (normalized): " << anagrad << endl;
-      sprintf(logbuf, "  %2d     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
-                                                                                                                    anagrad.x(), anagrad.y(), anagrad.z(),
-														    errx, erry, errz);
+      sprintf(logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
+              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       cout << logbuf << endl;
-      cout << "anagrad final (normalized): " << anagrad << endl;
-    } 
+
+      // OBFF_EBOND
+      numgrad = NumericalDerivative(&*a, OBFF_EBOND);
+      anagrad = GetGradient(&*a, OBFF_EBOND);
+      err = ValidateGradientError(numgrad, anagrad);
+
+      sprintf(logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+      cout << logbuf << endl;
+      
+      // OBFF_EANGLE
+      numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
+      anagrad = GetGradient(&*a, OBFF_EANGLE);
+      err = ValidateGradientError(numgrad, anagrad);
+
+      sprintf(logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+      cout << logbuf << endl;
+      
+      // OBFF_ESTRBND
+      numgrad = NumericalDerivative(&*a, OBFF_ESTRBND);
+      anagrad = GetGradient(&*a, OBFF_ESTRBND);
+      err = ValidateGradientError(numgrad, anagrad);
+
+      sprintf(logbuf, "    strbnd  (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+      cout << logbuf << endl;
+
+      // OBFF_ETORSION
+      numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
+      anagrad = GetGradient(&*a, OBFF_ETORSION);
+      err = ValidateGradientError(numgrad, anagrad);
+
+      sprintf(logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+      cout << logbuf << endl;
+      
+      // OBFF_EOOP
+      numgrad = NumericalDerivative(&*a, OBFF_EOOP);
+      anagrad = GetGradient(&*a, OBFF_EOOP);
+      err = ValidateGradientError(numgrad, anagrad);
+
+      sprintf(logbuf, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+      cout << logbuf << endl;
+
+      // OBFF_EVDW
+      numgrad = NumericalDerivative(&*a, OBFF_EVDW);
+      anagrad = GetGradient(&*a, OBFF_EVDW);
+      err = ValidateGradientError(numgrad, anagrad);
+
+      sprintf(logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+      cout << logbuf << endl;
+
+      // OBFF_EELECTROSTATIC
+      numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
+      anagrad = GetGradient(&*a, OBFF_EELECTROSTATIC);
+      err = ValidateGradientError(numgrad, anagrad);
+
+      sprintf(logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+      cout << logbuf << endl;
+    }
   }
 
   int OBForceFieldMMFF94::GetBondType(OBAtom* a, OBAtom* b)
