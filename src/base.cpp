@@ -337,10 +337,14 @@ namespace OpenBabel
   - OBConversion - Conversion between file formats. Interface for import or export
   - OBFormat - Parent class for file format types for any sort of data
 
+  Chemical Utilities:
+  - OBFingerprint - Generating molecular fingerprints for databases and similarity searches
+  - OBSmartsPattern - Parsing SMARTS chemical search patterns and matching against OBMol objects
+  - OBForceField - Molecular mechanics force fields for energy evaluation, conformational searching, coordinate generation, etc.
+
   Utility Classes:
   - OBBitVec - Efficient bit vector (e.g., for marking visit to atoms)
   - OBMessageHandler - Error and warning handling, filtering, and logging
-  - OBSmartsPattern - Parsing SMARTS chemical search patterns and matching against OBMol objects
 
   Arbitrary Data:
   - OBBase - General base class of OBAtom, OBMol, OBResidue, etc. for storing generic, arbitrary custom data
@@ -355,14 +359,37 @@ namespace OpenBabel
   \page changes What's New in Version 2.1
 
   Throughout the API documentation, new classes and methods are
-  indicated with a disclaimer "<strong>Since:</strong> version 2.1."
+  indicated with a disclaimer "Since: version 2.1." Documentation, in
+  general should be more thorough and complete.
+
+  One major change is that the library uses the same header #include paths
+  as external code. This documentation attempts to uniformly use the correct
+  style, e.g.:
+  #include <openbabel/mol.h>
+
+  Another major change was to increase the indexing of atoms and
+  bonds. Previously only 2^16 atoms or bonds were possible.
+
+  The OBNodeBase, OBEdgeBase, and OBGraphBase classes were
+  deprecated. Typedef declarations provide backwards compatibilty by
+  mapping to OBAtom, OBBond, and OBMol, respectively.
 
   In addition, this page gives a general list of additions to the library.
 
   - OBForceField - Generic interface to molecular mechanics force
-      fields, including MM2, MMFF94, and Ghemical (Tripos-like) methods.
-  - plugininter.h - Generic interface to "plugin" classes, including
+      fields, including Ghemical (Tripos-like) methods, and ultimately
+      others such as MM2, MMFF94, etc.
+  - pluginiter.h - Generic interface to "plugin" classes, including
       force fields, and fingerprints.
+  - vector3 - General cleanup.
+  - math3x3 - General cleanup.
+  - OBMol - Copy and assignment now copy associated OBGenericData objects.
+  - OBResidueData - Now available for public use, rather than left as private
+      to PDB format.
+  - OBSetData - 
+  - OBUnitCell - 
+  - LineEndingExtractor - New class to correct DOS and Classic Mac line endings
+     to UNIX-style '\n' characters.
 
   \page other Further Information
 
@@ -379,10 +406,10 @@ namespace OpenBabel
 
   SourceForge project pages:
   - <a href="http://sourceforge.net/projects/openbabel/">Open Babel project page</a> 
-  - Bug reporter
-  - Feature requests
-  - File format requests
-  - Mailing lists and archives
+  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428740">Bug reporter</a>
+  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428743">Feature requests</a>
+  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=447448">File format requests</a>
+  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428743">Mailing lists and archives</a>
   
   */
 
