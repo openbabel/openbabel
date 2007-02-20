@@ -86,8 +86,9 @@ int main(int argc,char *argv[])
       
       cerr << " Number of rotatable bonds: " << rl.Size() << endl;
 
-      rotorKey = new int[rl.Size() + 1]; // indexed from 1
-      rotorKey[0] = 0;
+      // indexed from 1, rotorKey[0] = 0
+      std::vector<int> rotorKey(rl.Size() + 1, 0);
+
       // each entry represents the configuration of a rotor
       // e.g. indexes into OBRotor::GetResolution()
       //       (the different angles to sample from the OBRotorRules database)
@@ -107,8 +108,6 @@ int main(int argc,char *argv[])
       // Change the molecule conformation -- from 0 .. rotamers.NumRotamers()
       mol.SetConformer(0);
       conv.Write(&mol);
-
-      delete [] rotorKey;
     } // while reading molecules
   
   return(0);

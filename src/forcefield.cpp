@@ -34,23 +34,23 @@ namespace OpenBabel
   /** \class OBForceField forcefield.h <openbabel/forcefield.h>
 
       development status:
-        - src/forcefield.cpp
-	  - LineSearch(): works, but better algoritmh would be better for performance
-	  - SteepestDescent(): finished
-	  - ConjugateGradients(): finished
-	  - GenerateCoordinates(): 
-	  - SystematicRotorSearch(): not all combinations are tested but works
-	  - DistanceGeometry(): needs matrix operations
-	- src/forcefields/forcefieldghemical.cpp
-	  - Atom typing: finished
-	  - Charges: finished
-	  - Energy terms: finished
-	  - Analytical gradients: finished
-	  - Validation: todo
-	- src/forcefields/forcefieldmmff94.cpp
-	  - Atom typing: needs work
-	  - Charges: 0%
-	  - Energy terms:
+      - src/forcefield.cpp
+      - LineSearch(): works, but better algoritmh would be better for performance
+      - SteepestDescent(): finished
+      - ConjugateGradients(): finished
+      - GenerateCoordinates(): 
+      - SystematicRotorSearch(): not all combinations are tested but works
+      - DistanceGeometry(): needs matrix operations
+      - src/forcefields/forcefieldghemical.cpp
+      - Atom typing: finished
+      - Charges: finished
+      - Energy terms: finished
+      - Analytical gradients: finished
+      - Validation: todo
+      - src/forcefields/forcefieldmmff94.cpp
+      - Atom typing: needs work
+      - Charges: 0%
+      - Energy terms:
 	    - Bond: finished
 	    - Angle: finished
 	    - StrBnd: finished
@@ -58,7 +58,7 @@ namespace OpenBabel
 	    - OOP: no gradient
 	    - VDW: no gradient
 	    - Electrostatic: needs charges, charges need correct atom types
-	  - Validation: in progress... 
+      - Validation: in progress... 
 
 
       Here is an example:
@@ -74,7 +74,7 @@ namespace OpenBabel
       pFF->SetLogFile(&cerr);
       pFF->SetLogLevel(OBFF_LOGLVL_LOW);
       if (!pFF->Setup(mol)) {
-        cerr << "ERROR: could not setup force field." << endl;
+      cerr << "ERROR: could not setup force field." << endl;
       }
       
       pFF->ValidateGradients();
@@ -87,23 +87,23 @@ namespace OpenBabel
     if (!b)
       for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (a == parameter[idx].a)
-	  return idx;
+          return idx;
 
     if (!c)
       for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b)) || ((a == parameter[idx].b) && (b == parameter[idx].a)))
-	  return idx;
+          return idx;
 
     if (!d)
       for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c)) || 
-	    ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a)))
-	  return idx;
+            ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a)))
+          return idx;
  
     for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (d == parameter[idx].d)) || 
           ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && (d == parameter[idx].a)))
-	return idx;
+        return idx;
 
     return -1;
   }
@@ -115,30 +115,30 @@ namespace OpenBabel
     if (!b)
       for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (a == parameter[idx].a) {
-	  par = &parameter[idx];
-	  return par;
-	}
+          par = &parameter[idx];
+          return par;
+        }
 
     if (!c)
       for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b)) || ((a == parameter[idx].b) && (b == parameter[idx].a))) {
-	  par = &parameter[idx];
-	  return par;
-	}
+          par = &parameter[idx];
+          return par;
+        }
 
     if (!d)
       for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c)) || 
-	    ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a))) {
-	  par = &parameter[idx];
-	  return par;
+            ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a))) {
+          par = &parameter[idx];
+          return par;
         }
 
     for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (d == parameter[idx].d)) || 
           ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && (d == parameter[idx].a))) {
-	par = &parameter[idx];
-	return par;
+        par = &parameter[idx];
+        return par;
       }
 
     return NULL;
@@ -154,9 +154,9 @@ namespace OpenBabel
       string _a(a);
       for (unsigned int idx=0; idx < parameter.size(); idx++) 
         if (_a == parameter[idx]._a) {
-	  par = &parameter[idx];
-	  return par;
-	}
+          par = &parameter[idx];
+          return par;
+        }
       return NULL;
     }
     if (c == NULL) {
@@ -164,9 +164,9 @@ namespace OpenBabel
       string _b(b);
       for (unsigned int idx=0; idx < parameter.size(); idx++) {
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b)) || ((_a == parameter[idx]._b) && (_b == parameter[idx]._a))) {
-	  par = &parameter[idx];
-	  return par;
-	}
+          par = &parameter[idx];
+          return par;
+        }
       }
       return NULL;
     }
@@ -176,9 +176,9 @@ namespace OpenBabel
       string _c(c);
       for (unsigned int idx=0; idx < parameter.size(); idx++) {
         if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c)) || 
-	    ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && (_c == parameter[idx]._a))) {
-	  par = &parameter[idx];
-	  return par;
+            ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && (_c == parameter[idx]._a))) {
+          par = &parameter[idx];
+          return par;
         }
       }
       return NULL;
@@ -190,8 +190,8 @@ namespace OpenBabel
     for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c) && (_d == parameter[idx]._d)) || 
           ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && (_c == parameter[idx]._b) && (_d == parameter[idx]._a))) {
-	par = &parameter[idx];
-	return par;
+        par = &parameter[idx];
+        return par;
       }
 
     return NULL;
@@ -200,9 +200,9 @@ namespace OpenBabel
   bool OBForceField::SetLogFile(ostream* pos)
   {
     if(pos)
-       logos = pos;
+      logos = pos;
     else
-       logos = &cout;
+      logos = &cout;
     
     return true;
   }
@@ -218,9 +218,9 @@ namespace OpenBabel
   {
     FOR_NBORS_OF_ATOM (nbr, a)
       FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-        FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-	  if (b == &*nbr3)
-	    return true;
+      FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
+      if (b == &*nbr3)
+        return true;
   }
 
   int OBForceField::get_nbr (OBAtom* atom, int level) {
@@ -240,7 +240,7 @@ namespace OpenBabel
         else {
           nbr = _mol.GetAtom(tmp->GetIdx());
           break;
-	}
+        }
       }
     }
     if (level == 1) return 0;
@@ -253,7 +253,7 @@ namespace OpenBabel
         else {
           nbr2 = _mol.GetAtom(tmp->GetIdx());
           break;
-	}
+        }
       }
     }
     if (level == 2) return 0;
@@ -398,10 +398,7 @@ namespace OpenBabel
       return;
     }
 
-    int rotorKey[rl.Size() + 1]; // indexed from 1
-    // set all rotorKey's to 0
-    for (int i = 0; i <= rl.Size(); i++)
-      rotorKey[i] = 0;
+    std::vector<int> rotorKey(rl.Size() + 1, 0); // indexed from 1
 
     OBRotorIterator ri;
     OBRotor *rotor = rl.BeginRotor(ri);
@@ -422,7 +419,7 @@ namespace OpenBabel
     
     // Calculate energy for all conformers
     char logbuf[100];
-    double energies[_mol.NumConformers()];
+    std::vector<double> energies(_mol.NumConformers(), 0.0);
     int old_loglvl;
     for (int i = 0; i < _mol.NumConformers(); i++) {
       _mol.SetConformer(i); // select conformer
@@ -439,7 +436,7 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_LOW {
         sprintf(logbuf, "   %3d      %8.3f", (i + 1), energies[i]);
-	*logos << logbuf << endl;
+        *logos << logbuf << endl;
       }
     }
 
@@ -504,43 +501,43 @@ namespace OpenBabel
       FOR_ATOMS_OF_MOL (b, _mol) {
         j = b->GetIdx() - 1;
 
-	if (&*a == &*b) {
-	  matrix[i][j] = 0.0f; // diagonal
-	  continue;
-	}
+        if (&*a == &*b) {
+          matrix[i][j] = 0.0f; // diagonal
+          continue;
+        }
         // Find relationship
-	is15 = true;
-	FOR_NBORS_OF_ATOM (nbr1, _mol.GetAtom(a->GetIdx())) { // 1-2
-	  if (&*nbr1 == &*b) {
-	    matrix[i][j] = 1.3f;
-	    break;
-	  }
-	  FOR_NBORS_OF_ATOM (nbr2, _mol.GetAtom(nbr1->GetIdx())) { // 1-3
-	    if (&*nbr2 == &*b) {
-	      matrix[i][j] = sqrt(1.3f*1.3f + 1.3f*1.3f - 2.0f * cos(DEG_TO_RAD*120.0f) * 1.3f*1.3f );
-	      is15 = false;
-	      break;
-	    }
+        is15 = true;
+        FOR_NBORS_OF_ATOM (nbr1, _mol.GetAtom(a->GetIdx())) { // 1-2
+          if (&*nbr1 == &*b) {
+            matrix[i][j] = 1.3f;
+            break;
+          }
+          FOR_NBORS_OF_ATOM (nbr2, _mol.GetAtom(nbr1->GetIdx())) { // 1-3
+            if (&*nbr2 == &*b) {
+              matrix[i][j] = sqrt(1.3f*1.3f + 1.3f*1.3f - 2.0f * cos(DEG_TO_RAD*120.0f) * 1.3f*1.3f );
+              is15 = false;
+              break;
+            }
             FOR_NBORS_OF_ATOM (nbr3, &*nbr2) { // 1-4
-	      if (&*nbr3 == &*b) {
-	        is15 = false;
-	        if (i > j) // minimum distance (torsion angle = 0)
-	          matrix[i][j] = 1.3f + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f));
-		else {// maximum distance (torsion angle = 180)
-		  double delta_x, delta_y;
-		  delta_x = 1.3f + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f));
-		  delta_y = 1.3f*sin(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*sin(DEG_TO_RAD*(180.0f-120.0f));
-		  matrix[i][j] = sqrt(delta_x*delta_x + delta_y*delta_y);
-		}
-	        break;
-	      }
+              if (&*nbr3 == &*b) {
+                is15 = false;
+                if (i > j) // minimum distance (torsion angle = 0)
+                  matrix[i][j] = 1.3f + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f));
+                else {// maximum distance (torsion angle = 180)
+                  double delta_x, delta_y;
+                  delta_x = 1.3f + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f));
+                  delta_y = 1.3f*sin(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*sin(DEG_TO_RAD*(180.0f-120.0f));
+                  matrix[i][j] = sqrt(delta_x*delta_x + delta_y*delta_y);
+                }
+                break;
+              }
               if (i > j && is15) {// minimum distance (sum vdw radii)
-	        matrix[i][j] = 1.4f + 1.4f;
+                matrix[i][j] = 1.4f + 1.4f;
               } else if (is15) // maximum distance (torsion angle = 180)
-	        matrix[i][j] = 99.0f;
-	    }
-	  }
-	}
+                matrix[i][j] = 99.0f;
+            }
+          }
+        }
       }
     }
    
@@ -553,7 +550,7 @@ namespace OpenBabel
         *logos << "[";
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", matrix[i][j]);
-	  *logos << logbuf;
+          *logos << logbuf;
         }
         *logos << "]" << endl;
       }
@@ -584,7 +581,7 @@ namespace OpenBabel
             // get the upper and lower limits for ab, bc and ac
             if (b > a) {
               u_ab = matrix[a][b];
-	      l_ab = matrix[b][a];
+              l_ab = matrix[b][a];
             } else {
               u_ab = matrix[b][a];
               l_ab = matrix[a][b];
@@ -594,25 +591,25 @@ namespace OpenBabel
               l_bc = matrix[c][b];
             } else {
               u_bc = matrix[c][b];
-	      l_bc = matrix[b][c];
+              l_bc = matrix[b][c];
             }
             if (c > a) {
               u_ac = matrix[a][c];
               l_ac = matrix[c][a];
-           } else {
+            } else {
               u_ac = matrix[c][a];
               l_ac = matrix[a][c];
             }
 
             if (u_ac > (u_ab + u_bc)) { // u_ac <= u_ab + u_bc
               u_ac = u_ab + u_bc;
-	      self_consistent = false;
-	    }
+              self_consistent = false;
+            }
 
             if (l_ac < (l_ab - u_bc)) {// l_ac >= l_ab - u_bc
               l_ac = l_ab - u_bc;
       	      self_consistent = false;
-	    }
+            }
 
             // store smoothed l_ac and u_ac
             if (c > a) {
@@ -620,7 +617,7 @@ namespace OpenBabel
               matrix[c][a] = l_ac;
             } else {
               matrix[c][a] = u_ac;
-	      matrix[a][c] = l_ac;
+              matrix[a][c] = l_ac;
             }
           }
         }
@@ -636,7 +633,7 @@ namespace OpenBabel
         *logos << "[";
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", matrix[i][j]);
-	  *logos << logbuf;
+          *logos << logbuf;
         }
         *logos << "]" << endl;
       }
@@ -649,25 +646,25 @@ namespace OpenBabel
       FOR_ATOMS_OF_MOL (b, _mol) {
         j = b->GetIdx() - 1;
 
-	if (&*a == &*b) {
-	  matrix[i][j] = 0.0f; // diagonal
-	  continue;
-	}
+        if (&*a == &*b) {
+          matrix[i][j] = 0.0f; // diagonal
+          continue;
+        }
        
         srand(time(NULL));
-	double rand_ab, u_ab, l_ab;
+        double rand_ab, u_ab, l_ab;
         if (j > i) {
           u_ab = matrix[i][j];
           l_ab = matrix[j][i];
           rand_ab = l_ab + (u_ab - l_ab) * rand()/RAND_MAX;
-	  matrix[i][j] = rand_ab;
-	  matrix[j][i] = rand_ab;
+          matrix[i][j] = rand_ab;
+          matrix[j][i] = rand_ab;
         } else {
           u_ab = matrix[j][i];
           l_ab = matrix[i][j];
           rand_ab = l_ab + (u_ab - l_ab) * rand()/RAND_MAX;
-	  matrix[i][j] = rand_ab;
-	  matrix[j][i] = rand_ab;
+          matrix[i][j] = rand_ab;
+          matrix[j][i] = rand_ab;
         }
       }
     }
@@ -681,7 +678,7 @@ namespace OpenBabel
         *logos << "[";
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", matrix[i][j]);
-	  *logos << logbuf;
+          *logos << logbuf;
         }
         *logos << "]" << endl;
       }
@@ -705,7 +702,7 @@ namespace OpenBabel
         *logos << "[";
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", G[i][j]);
-	  *logos << logbuf;
+          *logos << logbuf;
         }
         *logos << "]" << endl;
       }
@@ -732,7 +729,7 @@ namespace OpenBabel
         *logos << "[";
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", eigenvectors[i][j]);
-	  *logos << logbuf;
+          *logos << logbuf;
         }
         *logos << "]" << endl;
       }
@@ -809,14 +806,14 @@ namespace OpenBabel
         break;
 
       if (e_n2 > e_n1) { // decrease stepsize
-	step *= 0.5f;
+        step *= 0.5f;
         atom->SetVector(old_xyz);
       }
       if (e_n2 < e_n1) {  // increase stepsize
         e_n1 = e_n2;
-	step *= 1.2f;
-	if (step > 1.0f)
-	  step = 1.0f;
+        step *= 1.2f;
+        if (step > 1.0f)
+          step = 1.0f;
       }
       
     }
@@ -849,14 +846,14 @@ namespace OpenBabel
         break;
 
       if (e_n2 > e_n1) { // decrease stepsize
-	step *= 0.5f;
+        step *= 0.5f;
         atom->SetVector(old_xyz);
       }
       if (e_n2 < e_n1) {  // increase stepsize
         e_n1 = e_n2;
-	step *= 1.2f;
-	if (step > 1.0f)
-	  step = 1.0f;
+        step *= 1.2f;
+        if (step > 1.0f)
+          step = 1.0f;
       }
       
     }
@@ -930,38 +927,38 @@ namespace OpenBabel
     for (int i = 1; i <= steps; i++) {
       if (firststep) {
         grad1.Set(-2*atom->x(), -4*atom->y(), 0.0f);
-	dir1 = grad1;
-	dir1 = ValidateLineSearch(&*atom, dir1);
+        dir1 = grad1;
+        dir1 = ValidateLineSearch(&*atom, dir1);
         atom->SetVector(atom->x() + dir1.x(), atom->y() + dir1.y(), atom->z() + dir1.z());
         e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
       
         sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
         *logos << logbuf << endl;
         
-	e_n1 = e_n2;
-	dir1 = grad1;
-	firststep = false;
+        e_n1 = e_n2;
+        dir1 = grad1;
+        firststep = false;
       } else {
         grad2.Set(-2*atom->x(), -4*atom->y(), 0.0f);
-	g2g2 = dot(grad2, grad2);
-	g1g1 = dot(grad1, grad1);
-	g2g1 = g2g2 / g1g1;
-	dir2 = grad2 + g2g1 * dir1;
-	dir2 = ValidateLineSearch(&*atom, dir2);
+        g2g2 = dot(grad2, grad2);
+        g1g1 = dot(grad1, grad1);
+        g2g1 = g2g2 / g1g1;
+        dir2 = grad2 + g2g1 * dir1;
+        dir2 = ValidateLineSearch(&*atom, dir2);
         atom->SetVector(atom->x() + dir2.x(), atom->y() + dir2.y(), atom->z() + dir2.z());
-	grad1 = grad2;
-	dir1 = dir2;
+        grad1 = grad2;
+        dir1 = dir2;
         e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
 	  
         sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
         *logos << logbuf << endl;
         
-	if (fabs(e_n1 - e_n2) < 0.0000001f) {
+        if (fabs(e_n1 - e_n2) < 0.0000001f) {
           *logos << "    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)" << endl;
           break;
         }
 
-	e_n1 = e_n2;
+        e_n1 = e_n2;
       }
     }
   }
@@ -986,10 +983,10 @@ namespace OpenBabel
       
       FOR_ATOMS_OF_MOL (a, _mol) {
         if (method & OBFF_ANALYTICAL_GRADIENT)
-	  grad = GetGradient(&*a);
-	else
-	  grad = NumericalDerivative(&*a);
-	grad = LineSearch(&*a, grad);
+          grad = GetGradient(&*a);
+        else
+          grad = NumericalDerivative(&*a);
+        grad = LineSearch(&*a, grad);
         a->SetVector(a->x() + grad.x(), a->y() + grad.y(), a->z() + grad.z());
       }
       e_n2 = Energy();
@@ -1040,14 +1037,14 @@ namespace OpenBabel
       if (firststep) {
         FOR_ATOMS_OF_MOL (a, _mol) {
           if (method & OBFF_ANALYTICAL_GRADIENT)
-	    grad2 = GetGradient(&*a);
-	  else
-  	    grad2 = NumericalDerivative(&*a);
-	  dir2 = grad2;
-	  dir2 = LineSearch(&*a, dir2);
+            grad2 = GetGradient(&*a);
+          else
+            grad2 = NumericalDerivative(&*a);
+          dir2 = grad2;
+          dir2 = LineSearch(&*a, dir2);
           a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
-	  grad1[a->GetIdx()] = grad2;
-	  dir1[a->GetIdx()] = grad2;
+          grad1[a->GetIdx()] = grad2;
+          dir1[a->GetIdx()] = grad2;
         }
         e_n2 = Energy();
       
@@ -1056,38 +1053,38 @@ namespace OpenBabel
           *logos << logbuf << endl;
         }
 	
-	firststep = false;
-	e_n1 = e_n2;
+        firststep = false;
+        e_n1 = e_n2;
       } else {
         FOR_ATOMS_OF_MOL (a, _mol) {
           if (method & OBFF_ANALYTICAL_GRADIENT)
-	    grad2 = GetGradient(&*a);
-	  else
- 	    grad2 = NumericalDerivative(&*a);
-	  g2g2 = dot(grad2, grad2);
-	  g1g1 = dot(grad1[a->GetIdx()], grad1[a->GetIdx()]);
-	  g2g1 = g2g2 / g1g1;
-	  dir2 = grad2 + g2g1 * dir1[a->GetIdx()];
-	  dir2 = LineSearch(&*a, dir2);
+            grad2 = GetGradient(&*a);
+          else
+            grad2 = NumericalDerivative(&*a);
+          g2g2 = dot(grad2, grad2);
+          g1g1 = dot(grad1[a->GetIdx()], grad1[a->GetIdx()]);
+          g2g1 = g2g2 / g1g1;
+          dir2 = grad2 + g2g1 * dir1[a->GetIdx()];
+          dir2 = LineSearch(&*a, dir2);
           a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
 	  
-	  grad1[a->GetIdx()] = grad2;
-	  dir1[a->GetIdx()] = dir2;
-	  e_n1 = e_n2;
+          grad1[a->GetIdx()] = grad2;
+          dir1[a->GetIdx()] = dir2;
+          e_n1 = e_n2;
         }
         e_n2 = Energy();
 	
-	IF_OBFF_LOGLVL_LOW {
+        IF_OBFF_LOGLVL_LOW {
           sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
           *logos << logbuf << endl;
         }
  
-	if (fabs(e_n1 - e_n2) < 0.0000001f) {
+        if (fabs(e_n1 - e_n2) < 0.0000001f) {
           *logos << "    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)" << endl;
           break;
         }
 
-	e_n1 = e_n2;
+        e_n1 = e_n2;
       }
     }
   }
@@ -1209,9 +1206,9 @@ namespace OpenBabel
     
     mol.SetConformer(current_conformer); // after SystematicRotorSearch we want
                                          // to make sure the lowest energy conformer
-  				         // is selected when a program calls UpdateCoordinates.
-	 				 // Otherwise the program would have to find out by itself
-					 // which conformer was picked and minimized
+    // is selected when a program calls UpdateCoordinates.
+    // Otherwise the program would have to find out by itself
+    // which conformer was picked and minimized
     return current_conformer;
   }
 
@@ -1331,12 +1328,12 @@ namespace OpenBabel
     d = (bcabbc / (rabbc*rbccd) - (bcbccd*dot(abbc,bccd)) / (rabbc*rbccd3)) / sqrt(abbc_bccd2);
 
     b = ( -(cdbccd*dot(abbc,bccd)) / (rabbc*rbccd3) + 
-                  (cdabbc - acbccd) / (rabbc*rbccd) + 
-                  (acabbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
+          (cdabbc - acbccd) / (rabbc*rbccd) + 
+          (acabbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
     
     c = (  (bdbccd*dot(abbc,bccd)) / (rabbc*rbccd3) + 
-                  (abbccd - bdabbc) / (rabbc*rbccd) +
-                  -(ababbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
+           (abbccd - bdabbc) / (rabbc*rbccd) +
+           -(ababbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
     
     if (dot(abbc, bccd) > 0.0f) {
       a = -a;
