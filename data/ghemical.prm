@@ -8,23 +8,23 @@
 // must be sorted according to the ELEMENT and COMPLEXITY OF THE TYPERULE!!!
 
 atom [#1]        0100 (-*) "general hydrogen"
-atom [#6^3]      0600 (-*) "general sp3 carbon"
-atom [#6^2]      0601 (=*) "general sp2 carbon"
-atom [#6^1]      0602 (#*) "general sp carbon"
+atom [#6]        0600 (-*) "general sp3 carbon"
+atom [#6]=*      0601 (=*) "general sp2 carbon"
+atom [#6]#*      0602 (#*) "general sp carbon"
 atom [#6](=*)=*  0602 (=*,=*) "allenic sp carbon"
 atom [c]         0603 (~*,~*) "aromatic sp2 carbon"
 //atom [#6^3r3]  0604 ([-*?*-]) "sp3 carbon in a 3-membered ring"
 //atom [#6^3r4]  0605 ([-*?*?*-]) "sp3 carbon in a 4-membered ring"
-atom [#7^3]      0700 (-*) "general sp3 nitrogen"
-atom [#7^2]      0701 (=*) "general sp2 nitrogen"
-atom [#7^1]      0702 (#*) "general sp nitrogen"
+atom [#7]        0700 (-*) "general sp3 nitrogen"
+atom [#7]=*      0701 (=*) "general sp2 nitrogen"
+atom [#7]#*      0702 (#*) "general sp nitrogen"
 atom [n]         0703 (~*,~*) "aromatic sp2 nitrogen"
 atom [#7D4]      0704 (-*,-*,-*,-*) "ammonium nitrogen"
 atom [#7][#6]=O  0705 (-C(=O)) "amide nitrogen"
 atom [#8]        0800 (-*) "general sp3 oxygen"
 atom [#8]=*      0801 (=*) "general sp2 oxygen"
 atom [F]         0900 (-*) "general fluorine"
-atom [P^3]       0F00 (-*) "general sp3 phosphorus"
+atom [P]       0F00 (-*) "general sp3 phosphorus"
 atom [#16]       1000 (-*) "general sp3 sulphur"
 atom [#16]=*     1001 (=*) "general sp2 sulphur"
 atom [#16]=[#8]  1002 (=O) "sulfoxide sulphur"
@@ -442,6 +442,7 @@ vdw	1003 1.80 0.314
 vdw	1100 1.75 0.314
 vdw	2300 1.85 0.434
 vdw	3500 1.98 0.623
+vdw	FFFF 1.50 0.042
 
 // atomic charge parameters 09.05.2000 (based on Tripos 5.2 and MMFF94)
 // [id #1] [id #2] [delta]
