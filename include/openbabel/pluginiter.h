@@ -37,6 +37,9 @@ private:
   T* _default;
 
 public:
+  //! Register a specific plugin module of a given type
+  //! Not intended for direct use
+  //! \see openbabel/plugininter.h plugininter.h
   void Register(T* pType, const std::string ID, bool IsDefault)
   {
     _map[ID] = pType;
@@ -44,6 +47,8 @@ public:
       _default=pType;
   }
 
+  //! Find a plugin with a given ID code
+  //! \return the plugin instance or NULL if the ID code does not exist
   T* FindType(const std::string& ID)
   {
     if(ID.empty())
@@ -55,22 +60,35 @@ public:
       return _itr->second;
   }
 
+  //! \return The default plugin for a given plugin type
   T* FindDefaultType() const { return _default; }
 
+  //! \return The ID code for this plugin
   std::string ID() const { return _itr->first; }
   
+  //! \return The brief text description for this plugin
   std::string Description() const { return _itr->second->Description(); }
 
+  //! \name Iterator methods
+  //@{
+
+  //! Set the iterator to the beginning of the list of plugins
   void ToStart() { _itr = _map.begin(); }
   
+  //! Increment the iterator to the next plugin in the list
+  //! \return This plugin iterator
   PluginIter& operator++()
   {
     ++_itr;
     return *this;
   }
+  //! \return Whether the iterator is valid (i.e., it is not at the end)
   operator bool() const { return _itr != _map.end(); }
+  //! \return The plugin associated with the current state of the iterator
   T* operator->() const   { return _itr->second;  }
+  //! \return The plugin associated with the current state of the iterator
   T& operator*() const    { return *(_itr->second); }
+  //@}
 };
 
 //Macro to iterate over all sub-types

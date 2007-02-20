@@ -21,6 +21,11 @@
 
 	* src/base.cpp: Documentation updates.
 
+	* src/canon.cpp, src/forcefield.cpp: Likewise.
+
+	* include/openbabel/ring.h, generic.h, pluginiter.h, canon.h,
+	forcefield.h, lineend.h: Likewise.
+
 2007-02-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: UpdateCoordinates now 'knows' about conformers

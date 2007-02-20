@@ -22,12 +22,14 @@ GNU General Public License for more details.
 */
 
 // Return vector is indexed from zero, corresponds to "atom->GetIdx()-1"
-
-using namespace std;
-using namespace OpenBabel;
+namespace OpenBabel {
 
 void CanonicalLabels(OBMol *pmol,
                      OBBitVec &frag_atoms,
-                     vector<unsigned int> &symmetry_classes,
-                     vector<unsigned int> &canonical_labels);
+                     std::vector<unsigned int> &symmetry_classes,
+                     std::vector<unsigned int> &canonical_labels);
 
+} // namespace OpenBabel
+
+//! \file canon.h
+//! \brief Canonical numbering of SMILES, molecules and fragments

@@ -32,6 +32,7 @@ using namespace std;
 namespace OpenBabel
 {
   /** \class OBForceField forcefield.h <openbabel/forcefield.h>
+      \brief Base class for molecular mechanics force fields
 
       development status:
       - src/forcefield.cpp
@@ -41,12 +42,14 @@ namespace OpenBabel
       - GenerateCoordinates(): 
       - SystematicRotorSearch(): not all combinations are tested but works
       - DistanceGeometry(): needs matrix operations
+
       - src/forcefields/forcefieldghemical.cpp
       - Atom typing: finished
       - Charges: finished
       - Energy terms: finished
       - Analytical gradients: finished
-      - Validation: todo
+      - Validation: in progress...
+
       - src/forcefields/forcefieldmmff94.cpp
       - Atom typing: needs work
       - Charges: 0%

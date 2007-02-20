@@ -362,10 +362,10 @@ namespace OpenBabel
   indicated with a disclaimer "Since: version 2.1." Documentation, in
   general should be more thorough and complete.
 
-  One major change is that the library uses the same header #include paths
-  as external code. This documentation attempts to uniformly use the correct
-  style, e.g.:
-  #include <openbabel/mol.h>
+  One major change is that the library uses the same header <code>\#include</code>
+  paths as external code. This documentation attempts to uniformly use the
+  correct style, e.g.:
+  <code>\#include \<openbabel/mol.h\></code>
 
   Another major change was to increase the indexing of atoms and
   bonds. Previously only 2^16 atoms or bonds were possible.
@@ -382,14 +382,13 @@ namespace OpenBabel
   - pluginiter.h - Generic interface to "plugin" classes, including
       force fields, and fingerprints.
   - vector3 - General cleanup.
-  - math3x3 - General cleanup.
+  - matrix3x3 - General cleanup.
   - OBMol - Copy and assignment now copy associated OBGenericData objects.
   - OBResidueData - Now available for public use, rather than left as private
       to PDB format.
-  - OBSetData - 
-  - OBUnitCell - 
+  - OBSetData - Hierarchical sets of generic data.
   - LineEndingExtractor - New class to correct DOS and Classic Mac line endings
-     to UNIX-style '\n' characters.
+     to UNIX-style newline characters.
 
   \page other Further Information
 
@@ -398,11 +397,11 @@ namespace OpenBabel
   developing with the library.
 
   Open Babel homepage:
-  - <a href="http://openbabel.sourceforge.net/wiki/Develop">Developing with Open Babel</a>.
-  - <a href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">developer
-  tutorials</a>.
+  - <a href="http://openbabel.sourceforge.net/wiki/Develop">Developing with Open Babel</a>
+  - <a href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">Developer
+  tutorials</a>
   - <a href="http://openbabel.sourceforge.net/wiki/Contribute">Contributing
-  to the Open Babel project</a>.
+  to the Open Babel project</a>
 
   SourceForge project pages:
   - <a href="http://sourceforge.net/projects/openbabel/">Open Babel project page</a> 

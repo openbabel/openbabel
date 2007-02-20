@@ -1188,4 +1188,7 @@ void CanonicalLabels(OBMol *pmol,
   // Deal with cis/trans double bonds.
   FixCisTransBonds(pmol, frag_atoms, symmetry_classes, canonical_labels);
 
-}
+} // namespace OpenBabel
+
+//! \file canon.cpp
+//! \brief Canonical numbering of SMILES, molecules and fragments

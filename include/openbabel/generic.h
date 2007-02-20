@@ -207,7 +207,7 @@ namespace OpenBabel
   };
 
   //! \class OBCommentData generic.h <openbabel/generic.h>
-  //! Used to store a comment string (can be multiple lines long)
+  //! \brief Used to store a comment string (can be multiple lines long)
  class OBAPI OBCommentData : public OBGenericData
   {
   protected:
@@ -412,7 +412,7 @@ namespace OpenBabel
   };
 
   //! \class OBRingData generic.h <openbabel/generic.h>
-  //! Used to store the SSSR set (filled in by OBMol::GetSSSR())
+  //! \brief Used to store the SSSR set (filled in by OBMol::GetSSSR())
  class OBAPI OBRingData : public OBGenericData
   {
   protected:
@@ -726,7 +726,7 @@ namespace OpenBabel
   };
 
   //! \class OBAngle generic.h <openbabel/generic.h>
-  //! Used to hold the 3 atoms in an angle and the angle itself
+  //! \brief Used to hold the 3 atoms in an angle and the angle itself
   class OBAPI OBAngle
   {
     friend class OBMol;
@@ -847,7 +847,7 @@ namespace OpenBabel
   };
 
   //! \class OBSerialNums generic.h <openbabel/generic.h>
-  //! Defines a map between serial numbers (e.g., in a PDB file) and OBAtom objects inside a molecule
+  //! \brief Defines a map between serial numbers (e.g., in a PDB file) and OBAtom objects inside a molecule
  class OBSerialNums : public OBGenericData
   {
   protected:

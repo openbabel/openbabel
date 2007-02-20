@@ -26,31 +26,34 @@ General Public License for more details.
 #define OBCONV
 #endif
 
-/*
-Based on an article by James Kanze, "Filtering Streambufs"
-http://kanze.james.neuf.fr/articles/fltrsbf1.html
-
-A FilteringInputStreambuf delivers characters on request to an istream
-or a destination rdbuf(). It receives them from a source rdbuf.
-In doing the transfer it filters them in a way decided by the class
-specified in template parameter Extractor.
-
-seekg and tellg requests from the stream are passed through to source rdbuf.
-This allows return to a position in the input data that was previously noted.
-This is adequate to allow OpenBabel's fastsearch indexing, but may 
-not be good enough for some other applications that use random access.
-
-A class LineEndingExtractor converts DOS and MAC line endings to the
-UNIX line ending.
-
-This filtering process is potentially extendable, with a chain of
-FilteringInputStreambufs each carrying out its filtering task.
-For instance a decompression streambuf could feed a LineEnding filter,
-which in tern was read by an input stream.
-*/
 namespace OpenBabel
 {
 
+/*! \class FilteringInputStreambuf lineend.h <openbabel/lineend.h>
+  \brief Delivers characters from an istream or streambuf from a source
+  while filtering
+
+  Based on an article by James Kanze, "Filtering Streambufs"
+  http://kanze.james.neuf.fr/articles/fltrsbf1.html
+  
+  A FilteringInputStreambuf delivers characters on request to an istream
+  or a destination rdbuf(). It receives them from a source rdbuf.
+  In doing the transfer it filters them in a way decided by the class
+  specified in template parameter Extractor.
+  
+  seekg and tellg requests from the stream are passed through to source rdbuf.
+  This allows return to a position in the input data that was previously noted.
+  This is adequate to allow OpenBabel's fastsearch indexing, but may 
+  not be good enough for some other applications that use random access.
+  
+  A class LineEndingExtractor converts DOS and MAC line endings to the
+  UNIX line ending.
+  
+  This filtering process is potentially extendable, with a chain of
+  FilteringInputStreambufs each carrying out its filtering task.
+  For instance a decompression streambuf could feed a LineEnding filter,
+  which in tern was read by an input stream.
+*/
   template< class Extractor >
   class FilteringInputStreambuf : public std::streambuf
   {
@@ -158,7 +161,8 @@ namespace OpenBabel
   }
 
 //*********************************************
-  /// Replaces CRLF (DOS) and CR (MAC) line endings by LF (POSIX)
+/// \class LineEndingExtractor lineend.h <openbabel/lineend.h>
+  /// \brief Replaces CRLF (DOS) and CR (Mac OS 9) line endings by LF (POSIX)
 class OBCONV LineEndingExtractor
 {
 public:
