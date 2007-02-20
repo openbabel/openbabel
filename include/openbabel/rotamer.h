@@ -87,6 +87,8 @@ namespace OpenBabel
     //! Add a rotamer to the list based on @p key as a configuration of the individual rotor bonds
     void AddRotamer(int *key);
     //! Add a rotamer to the list based on @p key as a configuration of the individual rotor bonds
+    void AddRotamer(std::vector<int> key);
+    //! Add a rotamer to the list based on @p key as a configuration of the individual rotor bonds
     void AddRotamer(unsigned char *key);
     //! Add @p nconf rotamers based on @p as an array of configurations much like AddRotamer()
     void AddRotamers(unsigned char *arr,int nconf);

@@ -52,7 +52,9 @@ rl.Setup(mol);
 // How many rotatable bonds are there?
 cerr << " Number of rotors: " << rl.Size() << endl;
 
-rotorKey = new int[rl.Size() + 1]; // indexed from 1, rotorKey[0] = 0
+// indexed from 1, rotorKey[0] = 0
+std::vector<int> rotorKey(rl.Size() + 1, 0);
+
 // each entry represents the configuration of a rotor
 // e.g. indexes into OBRotor::GetResolution() -- the different angles
 //   to sample for a rotamer search
@@ -76,7 +78,6 @@ conv.Write(&mol);
 
 mol.SetConformer(1); // rotorKey 0, 2, ...
 
-delete [] rotorKey;
 \endcode
 
   **/
@@ -304,6 +305,29 @@ void OBRotamerList::AddRotamer(int *arr)
 {
     unsigned int i;
     double angle,res=255.0f/360.0f;
+
+    unsigned char *rot = new unsigned char [_vrotor.size()+1];
+    rot[0] = (unsigned char)arr[0];
+
+    for (i = 0;i < _vrotor.size();++i)
+    {
+        angle = _vres[i][arr[i+1]];
+        while (angle < 0.0f)
+            angle += 360.0f;
+        while (angle > 360.0f)
+            angle -= 360.0f;
+        rot[i+1] = (unsigned char)rint(angle*res);
+    }
+    _vrotamer.push_back(rot);
+}
+
+  void OBRotamerList::AddRotamer(std::vector<int> arr)
+  {
+    unsigned int i;
+    double angle,res=255.0f/360.0f;
+    
+    if (arr.size() != (_vrotor.size() + 1))
+      return; // wrong size key
 
     unsigned char *rot = new unsigned char [_vrotor.size()+1];
     rot[0] = (unsigned char)arr[0];

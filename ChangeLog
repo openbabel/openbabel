@@ -10,6 +10,17 @@
 
 	* Doxyfile: Bump version number to 2.1.0b6 for new snapshot.
 
+	* configure.in, configure: Bump to 2.1.0b6 for new snapshot.
+
+	* src/forcefield.cpp, tools/obrotamer.cpp: Update to use
+	std::vector instead of arrays.
+
+	* src/rotamer.h, src/rotamer.cpp: Update documentation to use
+	std::vector. Fixes compile problems on Windows.
+	AddRotamer(std::vector) New method for above.
+
+	* src/base.cpp: Documentation updates.
+
 2007-02-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: UpdateCoordinates now 'knows' about conformers
@@ -1021,7 +1032,7 @@
 
 	* src/formats/gamessformat.cpp: More improvements on reading generic
 	computational meta data.  (added runtyp / dfttype / basis).  Also modified
-	the location of gamess extra information.  Gamess now stores it's
+	the location of gamess extra information.  GAMESS now stores it's
 	information in an OBSetData with attribute "gamess" which is part of the
 	molecule.
 
@@ -1069,7 +1080,7 @@
 
 2006-10-20 Chris Morley <ob@gaseq.co.uk>
 
-	*  src/formats.xml/xml.cpp (ReadChemObject): added extra error
+	* src/formats.xml/xml.cpp (ReadChemObject): added extra error
 	message and convert the rest to use obErrorLog.
 	
 	* src/formats/mdlformat.cpp: modify description to work around
@@ -1206,7 +1217,7 @@
 	Removed extension labelled "is this safe" and added support for
 	* and [*] as wildcard elements. arom = false was also needed.
 	
-	src/kekulize.cpp(getorden): Treat Te (atNo=52) the same as Se.
+	* src/kekulize.cpp(getorden): Treat Te (atNo=52) the same as Se.
 	Allows c1cc[te]c1 to be interpreted as better rubbish.
 
 2006-08-02 Chris Morley <ob@gaseq.co.uk>
@@ -2219,7 +2230,7 @@
 	* src/formats/thermoformat.cpp: Added SetDimension(0). Initialise
 	MidT. Added tdd extension.
 	
-	* src/.mol.h: Comments on OBMol copy ctor and assignment saying
+	* src/mol.h: Comments on OBMol copy ctor and assignment saying
 	that OBGenericData is copied and on operator+= that it is not.
 
 	* src/base.h, kinetics.h: Mods consequent on OBGenericData changes 
@@ -2317,15 +2328,15 @@
 		
 2006-03-10 Chris Morley <ob@gaseq.co.uk>
 	
-	* /src/formats/smilesformat.cpp: make a default format so that
+	* src/formats/smilesformat.cpp: make a default format so that
 	the default object is OBMol even when MOLformat (the other default
 	format) is not present.
 	
-	* /src/formats/smilesformat.cpp(ParseRingBond): prevented crash
+	* src/formats/smilesformat.cpp(ParseRingBond): prevented crash
 	and give error message when parse failure (e.g. a line starting
 	with a number) - common and of long standing.
 	
-	* /src/formats/obmolecformat.cpp(ReadChemObjImpl): another delete
+	* src/formats/obmolecformat.cpp(ReadChemObjImpl): another delete
 	for OBMol object when ReadMolecule returns false;    
 	
 2006-03-09 Chris Morley <ob@gaseq.co.uk>
@@ -2372,13 +2383,13 @@
 	Reversed the memory leak related change of 2006-03-02 (see devel
 	forum discussion).
 	
-	* /src/formats/xml/xml.cpp(ReadXML):Add continue shortcut for nodes
+	* src/formats/xml/xml.cpp(ReadXML):Add continue shortcut for nodes
 	that are not elements. (SetUpWriter): remove extra writer creation.
 	
-	* /src/dhandler_win32.cpp(findFiles): Rewritten, now handles * and *.*
+	* src/dhandler_win32.cpp(findFiles): Rewritten, now handles * and *.*
 	Was getting confused by . and .. directories.
 	
-	* /src/mol.h Remove unnecessary #include "reaction.h"
+	* src/mol.h Remove unnecessary #include "reaction.h"
 	
 	Added /src/GUI for OpenbabelGUI source files. Put here because
 	it is now potentially cross-platform.
