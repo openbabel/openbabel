@@ -252,7 +252,7 @@ namespace OpenBabel
        //! Setup the forcefield for mol (assigns atom types, charges, etc. \return True if succesfull
       virtual bool Setup(OBMol &mol) { return false; }
       //! Update coordinates after steepest descent, conjugate gradient
-      void UpdateCoordinates(OBMol &mol);
+      int UpdateCoordinates(OBMol &mol);
  
       /////////////////////////////////////////////////////////////////////////
       // Energy Evaluation                                                   //

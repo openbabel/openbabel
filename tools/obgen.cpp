@@ -116,11 +116,12 @@ int main(int argc,char **argv)
       }
       
       pFF->SystematicRotorSearch();
-      pFF->UpdateCoordinates(mol);
-      pFF->ValidateGradients();
 
+      pFF->UpdateCoordinates(mol);
+      //pFF->ValidateGradients();
       pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
-      cout << endl << "Total Energy = " << pFF->Energy() << " " << pFF->GetUnit() << endl << endl;
+      pFF->Energy();
+      
 
       //char FileOut[32];
       //sprintf(FileOut, "%s_obgen.pdb", basename.c_str());

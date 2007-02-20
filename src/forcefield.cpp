@@ -388,7 +388,16 @@ namespace OpenBabel
       *logos << endl << "S Y S T E M A T I C   R O T O R   S E A R C H" << endl << endl;
       *logos << "  NUMBER OF ROTATABLE BONDS: " << rl.Size() << endl;
     }
+
+    if (!rl.Size()) { // only one conformer
+      IF_OBFF_LOGLVL_LOW
+        *logos << "  GENERATED ONLY ONE CONFORMER" << endl << endl;
  
+      ConjugateGradients(2500); // final energy minimizatin for best conformation
+      
+      return;
+    }
+
     int rotorKey[rl.Size() + 1]; // indexed from 1
     // set all rotorKey's to 0
     for (int i = 0; i <= rl.Size(); i++)
@@ -1194,15 +1203,16 @@ namespace OpenBabel
     return (grad);
   }
 
-  void OBForceField::UpdateCoordinates(OBMol &mol)
-  {
+  int OBForceField::UpdateCoordinates(OBMol &mol)
+  { 
     mol = _mol;
-
+    
     mol.SetConformer(current_conformer); // after SystematicRotorSearch we want
                                          // to make sure the lowest energy conformer
-					 // is selected when a program calls UpdateCoordinates.
-					 // Otherwise the program would have to find out by itself
+  				         // is selected when a program calls UpdateCoordinates.
+	 				 // Otherwise the program would have to find out by itself
 					 // which conformer was picked and minimized
+    return current_conformer;
   }
 
   vector3 OBForceField::ValidateGradientError(vector3 &numgrad, vector3 &anagrad)

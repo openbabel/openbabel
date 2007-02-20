@@ -54,15 +54,11 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-// PROTOTYPES /////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-//! \brief  Generate rough 3D coordinates for SMILES (or other 0D files)
-//          based on bonding network, rings, atom types, etc.
-//
 int main(int argc,char **argv)
 {
   OBForceField* pFF = OBForceField::FindForceField("Ghemical");
+  pFF->SetLogFile(&cout);
+  pFF->SetLogLevel(OBFF_LOGLVL_LOW);
   OBMol mol;
   char commandline[100];
   vector<string> vs;
@@ -204,6 +200,23 @@ int main(int argc,char **argv)
     //
     tokenize(vs, commandline);
     
+    // select forcefield
+    if (EQn(commandline, "ff", 2)) {
+      if (vs.size() < 2) {
+        cout << "no <forcefield> specified." << endl;
+        continue;
+      }
+      
+      pFF = OBForceField::FindForceField(vs[1]);
+
+      if (!mol.Empty())
+        if (!pFF->Setup(mol))
+          cout << "error while initializing the force field (" << vs[1] << ") for this molecule." <<endl;
+
+      continue;
+    }
+
+   
     // load <filename>
     if (EQn(commandline, "load", 4)) {
       if (vs.size() < 2) {
