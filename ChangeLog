@@ -1,3 +1,10 @@
+2007-02-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: UpdateCoordinated now 'knows' about conformers
+	and selects the correct one before returning.
+
+	* tools/obminimize.cpp: Implemented (was copy of obmm).
+
 2007-02-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Added vector analysis methods 

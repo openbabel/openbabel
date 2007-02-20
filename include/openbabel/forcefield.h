@@ -231,6 +231,9 @@ namespace OpenBabel
       std::ostream* logos;
       int loglvl;
 
+      // used to hold i for current conformer (needed by UpdateCoordinates)
+      int current_conformer;
+
     public:
       //! short description of the force field type.
       virtual std::string Description()=0;

@@ -445,6 +445,8 @@ namespace OpenBabel
       *logos << endl << "  CONFORMER " << (best_conformer + 1) << " HAS THE LOWEST ENERGY" << endl << endl;
    
     _mol.SetConformer(best_conformer);
+    current_conformer = best_conformer;
+
     ConjugateGradients(2500); // final energy minimizatin for best conformation
   }
 
@@ -1194,12 +1196,13 @@ namespace OpenBabel
 
   void OBForceField::UpdateCoordinates(OBMol &mol)
   {
-    OBAtom *atom;
+    mol = _mol;
 
-    FOR_ATOMS_OF_MOL (a, mol) {
-      atom = _mol.GetAtom(a->GetIdx());
-      a->SetVector(atom->GetVector());
-    }
+    mol.SetConformer(current_conformer); // after SystematicRotorSearch we want
+                                         // to make sure the lowest energy conformer
+					 // is selected when a program calls UpdateCoordinates.
+					 // Otherwise the program would have to find out by itself
+					 // which conformer was picked and minimized
   }
 
   vector3 OBForceField::ValidateGradientError(vector3 &numgrad, vector3 &anagrad)

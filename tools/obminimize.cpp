@@ -42,12 +42,15 @@ int main(int argc,char **argv)
 {
   char *program_name= argv[0];
   int c;
+  int steps = 2500;
   string basename, filename = "", option, option2, ff = "";
 
   if (argc < 2) {
     cout << "Usage: obgen <filename> [options]" << endl;
     cout << endl;
     cout << "options:      description:" << endl;
+    cout << endl;
+    cout << "  -n          specify the maximum numer of steps" << endl;
     cout << endl;
     cout << "  -ff         select a forcefield" << endl;
     cout << endl;
@@ -67,6 +70,8 @@ int main(int argc,char **argv)
       option = argv[i];
       if ((option == "-ff") && (argc > (i+1)))
         ff = argv[i+1];
+      if ((option == "-n") && (argc > (i+1)))
+        steps = atoi(argv[i+1]);
     }
   }
 
@@ -105,9 +110,7 @@ int main(int argc,char **argv)
         exit (-1);
       }
  
-      mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
-      
-      pFF->SetLogFile(&cerr);
+      pFF->SetLogFile(&cout);
       pFF->SetLogLevel(OBFF_LOGLVL_LOW);
       
       if (!pFF->Setup(mol)) {
@@ -115,12 +118,8 @@ int main(int argc,char **argv)
         exit (-1);
       }
       
-      pFF->SystematicRotorSearch();
+      pFF->ConjugateGradients(steps);
       pFF->UpdateCoordinates(mol);
-      pFF->ValidateGradients();
-
-      pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
-      cout << endl << "Total Energy = " << pFF->Energy() << " " << pFF->GetUnit() << endl << endl;
 
       //char FileOut[32];
       //sprintf(FileOut, "%s_obgen.pdb", basename.c_str());
