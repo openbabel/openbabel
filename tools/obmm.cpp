@@ -59,13 +59,12 @@ int main(int argc,char **argv)
   OBForceField* pFF = OBForceField::FindForceField("Ghemical");
   pFF->SetLogFile(&cout);
   pFF->SetLogLevel(OBFF_LOGLVL_LOW);
+
   OBMol mol;
+  mol.Clear();
+
   char commandline[100];
   vector<string> vs;
-
-  pFF->SetLogFile(&cout);
-  pFF->SetLogLevel(OBFF_LOGLVL_LOW);
-  mol.Clear();
 
   cout << endl;
   cout << "openbabel                            " << endl;
