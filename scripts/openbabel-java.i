@@ -59,9 +59,9 @@ namespace std {
 
 %include <openbabel/base.h>
 
-%import <openbabel/chains.h>
-%import <openbabel/bitvec.h>
-%import <openbabel/typer.h>
+%include <openbabel/chains.h>
+%include <openbabel/bitvec.h>
+%include <openbabel/typer.h>
 
 %include <openbabel/pluginiter.h>
 %template (pluginiterFingerprint) OpenBabel::PluginIter<OpenBabel::OBFingerprint>;

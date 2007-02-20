@@ -53,6 +53,10 @@ public interface openbabelConstants {
   public final static int CustomData14 = openbabelJNI.CustomData14_get();
   public final static int CustomData15 = openbabelJNI.CustomData15_get();
 
+  public final static int MaxMonoAtom = openbabelJNI.MaxMonoAtom_get();
+  public final static int MaxMonoBond = openbabelJNI.MaxMonoBond_get();
+  public final static int SETWORD = openbabelJNI.SETWORD_get();
+  public final static int STARTWORDS = openbabelJNI.STARTWORDS_get();
   public final static int NOTREADABLE = openbabelJNI.NOTREADABLE_get();
   public final static int READONEONLY = openbabelJNI.READONEONLY_get();
   public final static int READBINARY = openbabelJNI.READBINARY_get();

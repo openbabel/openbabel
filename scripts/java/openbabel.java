@@ -56,6 +56,10 @@ public class openbabel implements openbabelConstants {
     return new SWIGTYPE_p_std__string(openbabelJNI.Trim(SWIGTYPE_p_std__string.getCPtr(txt)), false);
   }
 
+  public static double Tanimoto(OBBitVec arg0, OBBitVec arg1) {
+    return openbabelJNI.Tanimoto(OBBitVec.getCPtr(arg0), arg0, OBBitVec.getCPtr(arg1), arg1);
+  }
+
   public static void setObErrorLog(OBMessageHandler value) {
     openbabelJNI.obErrorLog_set(OBMessageHandler.getCPtr(value), value);
   }
