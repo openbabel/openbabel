@@ -44,14 +44,6 @@ public class OBMolTorsionIter {
     this(openbabelJNI.new_OBMolTorsionIter__SWIG_2(OBMolTorsionIter.getCPtr(ai), ai), true);
   }
 
-  public boolean good() {
-    return openbabelJNI.OBMolTorsionIter_good(swigCPtr, this);
-  }
-
-  public OBMolTorsionIter inc() {
-    return new OBMolTorsionIter(openbabelJNI.OBMolTorsionIter_inc(swigCPtr, this), false);
-  }
-
   public vectorUnsignedInt __ref__() {
     return new vectorUnsignedInt(openbabelJNI.OBMolTorsionIter___ref__(swigCPtr, this), true);
   }

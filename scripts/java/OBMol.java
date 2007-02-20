@@ -397,6 +397,10 @@ public class OBMol extends OBBase {
     openbabelJNI.OBMol_UnsetImplicitValencePerceived(swigCPtr, this);
   }
 
+  public void UnsetHydrogensAdded() {
+    openbabelJNI.OBMol_UnsetHydrogensAdded(swigCPtr, this);
+  }
+
   public void UnsetFlag(int flag) {
     openbabelJNI.OBMol_UnsetFlag(swigCPtr, this, flag);
   }
@@ -500,6 +504,14 @@ public class OBMol extends OBBase {
 
   public boolean StripSalts() {
     return openbabelJNI.OBMol_StripSalts(swigCPtr, this);
+  }
+
+  public vectorMol Separate(int StartIndex) {
+    return new vectorMol(openbabelJNI.OBMol_Separate__SWIG_0(swigCPtr, this, StartIndex), true);
+  }
+
+  public vectorMol Separate() {
+    return new vectorMol(openbabelJNI.OBMol_Separate__SWIG_1(swigCPtr, this), true);
   }
 
   public boolean ConvertDativeBonds() {

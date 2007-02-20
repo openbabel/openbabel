@@ -44,20 +44,8 @@ public class OBResidueIter {
     this(openbabelJNI.new_OBResidueIter__SWIG_2(OBResidueIter.getCPtr(ri), ri), true);
   }
 
-  public boolean good() {
-    return openbabelJNI.OBResidueIter_good(swigCPtr, this);
-  }
-
-  public OBResidueIter inc() {
-    return new OBResidueIter(openbabelJNI.OBResidueIter_inc__SWIG_0(swigCPtr, this), false);
-  }
-
-  public OBResidueIter inc(int arg0) {
-    return new OBResidueIter(openbabelJNI.OBResidueIter_inc__SWIG_1(swigCPtr, this, arg0), true);
-  }
-
-  public OBResidue deref() {
-    long cPtr = openbabelJNI.OBResidueIter_deref(swigCPtr, this);
+  public OBResidue __deref__() {
+    long cPtr = openbabelJNI.OBResidueIter___deref__(swigCPtr, this);
     return (cPtr == 0) ? null : new OBResidue(cPtr, false);
   }
 

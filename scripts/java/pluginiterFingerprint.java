@@ -58,16 +58,8 @@ public class pluginiterFingerprint {
     openbabelJNI.pluginiterFingerprint_ToStart(swigCPtr, this);
   }
 
-  public pluginiterFingerprint inc() {
-    return new pluginiterFingerprint(openbabelJNI.pluginiterFingerprint_inc(swigCPtr, this), false);
-  }
-
-  public boolean good() {
-    return openbabelJNI.pluginiterFingerprint_good(swigCPtr, this);
-  }
-
-  public OBFingerprint deref() {
-    long cPtr = openbabelJNI.pluginiterFingerprint_deref(swigCPtr, this);
+  public OBFingerprint __deref__() {
+    long cPtr = openbabelJNI.pluginiterFingerprint___deref__(swigCPtr, this);
     return (cPtr == 0) ? null : new OBFingerprint(cPtr, false);
   }
 

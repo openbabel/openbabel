@@ -36,33 +36,30 @@ public class OBMolAtomDFSIter {
     this(openbabelJNI.new_OBMolAtomDFSIter__SWIG_0(), true);
   }
 
+  public OBMolAtomDFSIter(OBMol mol, int StartIndex) {
+    this(openbabelJNI.new_OBMolAtomDFSIter__SWIG_1(OBMol.getCPtr(mol), mol, StartIndex), true);
+  }
+
   public OBMolAtomDFSIter(OBMol mol) {
-    this(openbabelJNI.new_OBMolAtomDFSIter__SWIG_1(OBMol.getCPtr(mol), mol), true);
+    this(openbabelJNI.new_OBMolAtomDFSIter__SWIG_2(OBMol.getCPtr(mol), mol), true);
   }
 
   public OBMolAtomDFSIter(OBMolAtomDFSIter ai) {
-    this(openbabelJNI.new_OBMolAtomDFSIter__SWIG_2(OBMolAtomDFSIter.getCPtr(ai), ai), true);
+    this(openbabelJNI.new_OBMolAtomDFSIter__SWIG_4(OBMolAtomDFSIter.getCPtr(ai), ai), true);
   }
 
-  public boolean good() {
-    return openbabelJNI.OBMolAtomDFSIter_good(swigCPtr, this);
-  }
-
-  public OBMolAtomDFSIter inc() {
-    return new OBMolAtomDFSIter(openbabelJNI.OBMolAtomDFSIter_inc__SWIG_0(swigCPtr, this), false);
-  }
-
-  public OBMolAtomDFSIter inc(int arg0) {
-    return new OBMolAtomDFSIter(openbabelJNI.OBMolAtomDFSIter_inc__SWIG_1(swigCPtr, this, arg0), true);
-  }
-
-  public OBAtom deref() {
-    long cPtr = openbabelJNI.OBMolAtomDFSIter_deref(swigCPtr, this);
+  public OBAtom __deref__() {
+    long cPtr = openbabelJNI.OBMolAtomDFSIter___deref__(swigCPtr, this);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
   public OBAtom __ref__() {
     return new OBAtom(openbabelJNI.OBMolAtomDFSIter___ref__(swigCPtr, this), false);
+  }
+
+  public OBAtom next() {
+    long cPtr = openbabelJNI.OBMolAtomDFSIter_next(swigCPtr, this);
+    return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
   public void setVisit(boolean value) {

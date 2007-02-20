@@ -21,6 +21,8 @@
 #include <openbabel/pluginiter.h>
 #include <openbabel/fingerprint.h>
 
+#include <openbabel/forcefield.h>
+
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 
@@ -47,13 +49,6 @@ namespace std {
 %template (vectorData)    vector<OpenBabel::OBGenericData*>;
 }
 
-
-
-// These methods are renamed to valid Python method names, as otherwise
-// they cannot be used from Python
-%rename(inc)   *::operator++;
-%rename(good)  *::operator bool;
-%rename(deref) *::operator->;
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
@@ -70,6 +65,7 @@ namespace std {
 
 %include <openbabel/pluginiter.h>
 %template (pluginiterFingerprint) OpenBabel::PluginIter<OpenBabel::OBFingerprint>;
+%template (pluginiterForceField) OpenBabel::PluginIter<OpenBabel::OBForceField>;
 
 %include <openbabel/oberror.h>
 %include <openbabel/obconversion.h>
@@ -80,6 +76,8 @@ namespace std {
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/fingerprint.h>
+
+%include <openbabel/forcefield.h>
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)

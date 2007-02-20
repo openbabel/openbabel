@@ -1859,6 +1859,84 @@ sub ACQUIRE {
 }
 
 
+############# Class : Chemistry::OpenBabel::pluginiterForceField ##############
+
+package Chemistry::OpenBabel::pluginiterForceField;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*Register = *Chemistry::OpenBabelc::pluginiterForceField_Register;
+*FindType = *Chemistry::OpenBabelc::pluginiterForceField_FindType;
+*FindDefaultType = *Chemistry::OpenBabelc::pluginiterForceField_FindDefaultType;
+*ID = *Chemistry::OpenBabelc::pluginiterForceField_ID;
+*Description = *Chemistry::OpenBabelc::pluginiterForceField_Description;
+*ToStart = *Chemistry::OpenBabelc::pluginiterForceField_ToStart;
+*inc = *Chemistry::OpenBabelc::pluginiterForceField_inc;
+*good = *Chemistry::OpenBabelc::pluginiterForceField_good;
+*deref = *Chemistry::OpenBabelc::pluginiterForceField_deref;
+*__ref__ = *Chemistry::OpenBabelc::pluginiterForceField___ref__;
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_pluginiterForceField(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_pluginiterForceField($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Iter = *Chemistry::OpenBabelc::pluginiterForceField_Iter;
+*FindForceField = *Chemistry::OpenBabelc::pluginiterForceField_FindForceField;
+*GetUnit = *Chemistry::OpenBabelc::pluginiterForceField_GetUnit;
+*Setup = *Chemistry::OpenBabelc::pluginiterForceField_Setup;
+*UpdateCoordinates = *Chemistry::OpenBabelc::pluginiterForceField_UpdateCoordinates;
+*Energy = *Chemistry::OpenBabelc::pluginiterForceField_Energy;
+*E_Bond = *Chemistry::OpenBabelc::pluginiterForceField_E_Bond;
+*E_Angle = *Chemistry::OpenBabelc::pluginiterForceField_E_Angle;
+*E_StrBnd = *Chemistry::OpenBabelc::pluginiterForceField_E_StrBnd;
+*E_Torsion = *Chemistry::OpenBabelc::pluginiterForceField_E_Torsion;
+*E_OOP = *Chemistry::OpenBabelc::pluginiterForceField_E_OOP;
+*E_VDW = *Chemistry::OpenBabelc::pluginiterForceField_E_VDW;
+*E_Electrostatic = *Chemistry::OpenBabelc::pluginiterForceField_E_Electrostatic;
+*SetLogFile = *Chemistry::OpenBabelc::pluginiterForceField_SetLogFile;
+*SetLogLevel = *Chemistry::OpenBabelc::pluginiterForceField_SetLogLevel;
+*GetLogLevel = *Chemistry::OpenBabelc::pluginiterForceField_GetLogLevel;
+*DistanceGeometry = *Chemistry::OpenBabelc::pluginiterForceField_DistanceGeometry;
+*GenerateCoordinates = *Chemistry::OpenBabelc::pluginiterForceField_GenerateCoordinates;
+*SystematicRotorSearch = *Chemistry::OpenBabelc::pluginiterForceField_SystematicRotorSearch;
+*LineSearch = *Chemistry::OpenBabelc::pluginiterForceField_LineSearch;
+*SteepestDescent = *Chemistry::OpenBabelc::pluginiterForceField_SteepestDescent;
+*ConjugateGradients = *Chemistry::OpenBabelc::pluginiterForceField_ConjugateGradients;
+*ValidateLineSearch = *Chemistry::OpenBabelc::pluginiterForceField_ValidateLineSearch;
+*ValidateSteepestDescent = *Chemistry::OpenBabelc::pluginiterForceField_ValidateSteepestDescent;
+*ValidateConjugateGradients = *Chemistry::OpenBabelc::pluginiterForceField_ValidateConjugateGradients;
+*Validate = *Chemistry::OpenBabelc::pluginiterForceField_Validate;
+*ValidateGradients = *Chemistry::OpenBabelc::pluginiterForceField_ValidateGradients;
+*ValidateGradientError = *Chemistry::OpenBabelc::pluginiterForceField_ValidateGradientError;
+*VectorLengthDerivative = *Chemistry::OpenBabelc::pluginiterForceField_VectorLengthDerivative;
+*VectorAngleDerivative = *Chemistry::OpenBabelc::pluginiterForceField_VectorAngleDerivative;
+*VectorTorsionDerivative = *Chemistry::OpenBabelc::pluginiterForceField_VectorTorsionDerivative;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : Chemistry::OpenBabel::OBError ##############
 
 package Chemistry::OpenBabel::OBError;
@@ -2151,8 +2229,6 @@ sub DESTROY {
 *Read = *Chemistry::OpenBabelc::OBConversion_Read;
 *ReadString = *Chemistry::OpenBabelc::OBConversion_ReadString;
 *ReadFile = *Chemistry::OpenBabelc::OBConversion_ReadFile;
-*BatchFileName = *Chemistry::OpenBabelc::OBConversion_BatchFileName;
-*IncrementedFileName = *Chemistry::OpenBabelc::OBConversion_IncrementedFileName;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -2645,6 +2721,7 @@ sub DESTROY {
 *UnsetAromaticPerceived = *Chemistry::OpenBabelc::OBMol_UnsetAromaticPerceived;
 *UnsetPartialChargesPerceived = *Chemistry::OpenBabelc::OBMol_UnsetPartialChargesPerceived;
 *UnsetImplicitValencePerceived = *Chemistry::OpenBabelc::OBMol_UnsetImplicitValencePerceived;
+*UnsetHydrogensAdded = *Chemistry::OpenBabelc::OBMol_UnsetHydrogensAdded;
 *UnsetFlag = *Chemistry::OpenBabelc::OBMol_UnsetFlag;
 *DoTransformations = *Chemistry::OpenBabelc::OBMol_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBMol_ClassDescription;
@@ -2662,6 +2739,7 @@ sub DESTROY {
 *AddHydrogens = *Chemistry::OpenBabelc::OBMol_AddHydrogens;
 *AddPolarHydrogens = *Chemistry::OpenBabelc::OBMol_AddPolarHydrogens;
 *StripSalts = *Chemistry::OpenBabelc::OBMol_StripSalts;
+*Separate = *Chemistry::OpenBabelc::OBMol_Separate;
 *ConvertDativeBonds = *Chemistry::OpenBabelc::OBMol_ConvertDativeBonds;
 *CorrectForPH = *Chemistry::OpenBabelc::OBMol_CorrectForPH;
 *AssignSpinMultiplicity = *Chemistry::OpenBabelc::OBMol_AssignSpinMultiplicity;
@@ -3180,6 +3258,186 @@ sub ACQUIRE {
 }
 
 
+############# Class : Chemistry::OpenBabel::OBFFParameter ##############
+
+package Chemistry::OpenBabel::OBFFParameter;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*swig_a_get = *Chemistry::OpenBabelc::OBFFParameter_a_get;
+*swig_a_set = *Chemistry::OpenBabelc::OBFFParameter_a_set;
+*swig_b_get = *Chemistry::OpenBabelc::OBFFParameter_b_get;
+*swig_b_set = *Chemistry::OpenBabelc::OBFFParameter_b_set;
+*swig_c_get = *Chemistry::OpenBabelc::OBFFParameter_c_get;
+*swig_c_set = *Chemistry::OpenBabelc::OBFFParameter_c_set;
+*swig_d_get = *Chemistry::OpenBabelc::OBFFParameter_d_get;
+*swig_d_set = *Chemistry::OpenBabelc::OBFFParameter_d_set;
+*swig__a_get = *Chemistry::OpenBabelc::OBFFParameter__a_get;
+*swig__a_set = *Chemistry::OpenBabelc::OBFFParameter__a_set;
+*swig__b_get = *Chemistry::OpenBabelc::OBFFParameter__b_get;
+*swig__b_set = *Chemistry::OpenBabelc::OBFFParameter__b_set;
+*swig__c_get = *Chemistry::OpenBabelc::OBFFParameter__c_get;
+*swig__c_set = *Chemistry::OpenBabelc::OBFFParameter__c_set;
+*swig__d_get = *Chemistry::OpenBabelc::OBFFParameter__d_get;
+*swig__d_set = *Chemistry::OpenBabelc::OBFFParameter__d_set;
+*swig_ipar1_get = *Chemistry::OpenBabelc::OBFFParameter_ipar1_get;
+*swig_ipar1_set = *Chemistry::OpenBabelc::OBFFParameter_ipar1_set;
+*swig_ipar2_get = *Chemistry::OpenBabelc::OBFFParameter_ipar2_get;
+*swig_ipar2_set = *Chemistry::OpenBabelc::OBFFParameter_ipar2_set;
+*swig_ipar3_get = *Chemistry::OpenBabelc::OBFFParameter_ipar3_get;
+*swig_ipar3_set = *Chemistry::OpenBabelc::OBFFParameter_ipar3_set;
+*swig_ipar4_get = *Chemistry::OpenBabelc::OBFFParameter_ipar4_get;
+*swig_ipar4_set = *Chemistry::OpenBabelc::OBFFParameter_ipar4_set;
+*swig_ipar5_get = *Chemistry::OpenBabelc::OBFFParameter_ipar5_get;
+*swig_ipar5_set = *Chemistry::OpenBabelc::OBFFParameter_ipar5_set;
+*swig_dpar1_get = *Chemistry::OpenBabelc::OBFFParameter_dpar1_get;
+*swig_dpar1_set = *Chemistry::OpenBabelc::OBFFParameter_dpar1_set;
+*swig_dpar2_get = *Chemistry::OpenBabelc::OBFFParameter_dpar2_get;
+*swig_dpar2_set = *Chemistry::OpenBabelc::OBFFParameter_dpar2_set;
+*swig_dpar3_get = *Chemistry::OpenBabelc::OBFFParameter_dpar3_get;
+*swig_dpar3_set = *Chemistry::OpenBabelc::OBFFParameter_dpar3_set;
+*swig_dpar4_get = *Chemistry::OpenBabelc::OBFFParameter_dpar4_get;
+*swig_dpar4_set = *Chemistry::OpenBabelc::OBFFParameter_dpar4_set;
+*swig_dpar5_get = *Chemistry::OpenBabelc::OBFFParameter_dpar5_get;
+*swig_dpar5_set = *Chemistry::OpenBabelc::OBFFParameter_dpar5_set;
+*clear = *Chemistry::OpenBabelc::OBFFParameter_clear;
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBFFParameter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBFFParameter($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBFFCalculation ##############
+
+package Chemistry::OpenBabel::OBFFCalculation;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBFFCalculation(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBFFCalculation($self);
+        delete $OWNER{$self};
+    }
+}
+
+*GetEnergy = *Chemistry::OpenBabelc::OBFFCalculation_GetEnergy;
+*GetGradient = *Chemistry::OpenBabelc::OBFFCalculation_GetGradient;
+*swig_energy_get = *Chemistry::OpenBabelc::OBFFCalculation_energy_get;
+*swig_energy_set = *Chemistry::OpenBabelc::OBFFCalculation_energy_set;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBForceField ##############
+
+package Chemistry::OpenBabel::OBForceField;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*Iter = *Chemistry::OpenBabelc::OBForceField_Iter;
+*FindDefaultType = *Chemistry::OpenBabelc::OBForceField_FindDefaultType;
+*FindType = *Chemistry::OpenBabelc::OBForceField_FindType;
+*Description = *Chemistry::OpenBabelc::OBForceField_Description;
+*FindForceField = *Chemistry::OpenBabelc::OBForceField_FindForceField;
+*GetUnit = *Chemistry::OpenBabelc::OBForceField_GetUnit;
+*Setup = *Chemistry::OpenBabelc::OBForceField_Setup;
+*UpdateCoordinates = *Chemistry::OpenBabelc::OBForceField_UpdateCoordinates;
+*Energy = *Chemistry::OpenBabelc::OBForceField_Energy;
+*E_Bond = *Chemistry::OpenBabelc::OBForceField_E_Bond;
+*E_Angle = *Chemistry::OpenBabelc::OBForceField_E_Angle;
+*E_StrBnd = *Chemistry::OpenBabelc::OBForceField_E_StrBnd;
+*E_Torsion = *Chemistry::OpenBabelc::OBForceField_E_Torsion;
+*E_OOP = *Chemistry::OpenBabelc::OBForceField_E_OOP;
+*E_VDW = *Chemistry::OpenBabelc::OBForceField_E_VDW;
+*E_Electrostatic = *Chemistry::OpenBabelc::OBForceField_E_Electrostatic;
+*SetLogFile = *Chemistry::OpenBabelc::OBForceField_SetLogFile;
+*SetLogLevel = *Chemistry::OpenBabelc::OBForceField_SetLogLevel;
+*GetLogLevel = *Chemistry::OpenBabelc::OBForceField_GetLogLevel;
+*DistanceGeometry = *Chemistry::OpenBabelc::OBForceField_DistanceGeometry;
+*GenerateCoordinates = *Chemistry::OpenBabelc::OBForceField_GenerateCoordinates;
+*SystematicRotorSearch = *Chemistry::OpenBabelc::OBForceField_SystematicRotorSearch;
+*LineSearch = *Chemistry::OpenBabelc::OBForceField_LineSearch;
+*SteepestDescent = *Chemistry::OpenBabelc::OBForceField_SteepestDescent;
+*ConjugateGradients = *Chemistry::OpenBabelc::OBForceField_ConjugateGradients;
+*ValidateLineSearch = *Chemistry::OpenBabelc::OBForceField_ValidateLineSearch;
+*ValidateSteepestDescent = *Chemistry::OpenBabelc::OBForceField_ValidateSteepestDescent;
+*ValidateConjugateGradients = *Chemistry::OpenBabelc::OBForceField_ValidateConjugateGradients;
+*Validate = *Chemistry::OpenBabelc::OBForceField_Validate;
+*ValidateGradients = *Chemistry::OpenBabelc::OBForceField_ValidateGradients;
+*ValidateGradientError = *Chemistry::OpenBabelc::OBForceField_ValidateGradientError;
+*VectorLengthDerivative = *Chemistry::OpenBabelc::OBForceField_VectorLengthDerivative;
+*VectorAngleDerivative = *Chemistry::OpenBabelc::OBForceField_VectorAngleDerivative;
+*VectorTorsionDerivative = *Chemistry::OpenBabelc::OBForceField_VectorTorsionDerivative;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBForceField($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : Chemistry::OpenBabel::OBMolAtomIter ##############
 
 package Chemistry::OpenBabel::OBMolAtomIter;
@@ -3375,6 +3633,7 @@ sub new {
 *inc = *Chemistry::OpenBabelc::OBMolAtomDFSIter_inc;
 *deref = *Chemistry::OpenBabelc::OBMolAtomDFSIter_deref;
 *__ref__ = *Chemistry::OpenBabelc::OBMolAtomDFSIter___ref__;
+*next = *Chemistry::OpenBabelc::OBMolAtomDFSIter_next;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4822,4 +5081,19 @@ tie %__resdat_hash,"Chemistry::OpenBabel::OBResidueData", $Chemistry::OpenBabelc
 $resdat= \%__resdat_hash;
 bless $resdat, Chemistry::OpenBabel::OBResidueData;
 *BUFF_SIZE = *Chemistry::OpenBabelc::BUFF_SIZE;
+*OBFF_LOGLVL_NONE = *Chemistry::OpenBabelc::OBFF_LOGLVL_NONE;
+*OBFF_LOGLVL_LOW = *Chemistry::OpenBabelc::OBFF_LOGLVL_LOW;
+*OBFF_LOGLVL_MEDIUM = *Chemistry::OpenBabelc::OBFF_LOGLVL_MEDIUM;
+*OBFF_LOGLVL_HIGH = *Chemistry::OpenBabelc::OBFF_LOGLVL_HIGH;
+*OBFF_ENERGY = *Chemistry::OpenBabelc::OBFF_ENERGY;
+*OBFF_EBOND = *Chemistry::OpenBabelc::OBFF_EBOND;
+*OBFF_EANGLE = *Chemistry::OpenBabelc::OBFF_EANGLE;
+*OBFF_ESTRBND = *Chemistry::OpenBabelc::OBFF_ESTRBND;
+*OBFF_ETORSION = *Chemistry::OpenBabelc::OBFF_ETORSION;
+*OBFF_EOOP = *Chemistry::OpenBabelc::OBFF_EOOP;
+*OBFF_EVDW = *Chemistry::OpenBabelc::OBFF_EVDW;
+*OBFF_EELECTROSTATIC = *Chemistry::OpenBabelc::OBFF_EELECTROSTATIC;
+*OBFF_NUMERICAL_GRADIENT = *Chemistry::OpenBabelc::OBFF_NUMERICAL_GRADIENT;
+*OBFF_ANALYTICAL_GRADIENT = *Chemistry::OpenBabelc::OBFF_ANALYTICAL_GRADIENT;
+*KCAL_TO_KJ = *Chemistry::OpenBabelc::KCAL_TO_KJ;
 1;

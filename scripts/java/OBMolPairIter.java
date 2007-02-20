@@ -44,14 +44,6 @@ public class OBMolPairIter {
     this(openbabelJNI.new_OBMolPairIter__SWIG_2(OBMolPairIter.getCPtr(ai), ai), true);
   }
 
-  public boolean good() {
-    return openbabelJNI.OBMolPairIter_good(swigCPtr, this);
-  }
-
-  public OBMolPairIter inc() {
-    return new OBMolPairIter(openbabelJNI.OBMolPairIter_inc(swigCPtr, this), false);
-  }
-
   public vectorUnsignedInt __ref__() {
     return new vectorUnsignedInt(openbabelJNI.OBMolPairIter___ref__(swigCPtr, this), true);
   }

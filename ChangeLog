@@ -1,6 +1,18 @@
+2007-02-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/*.i, scripts/*: Add access to OBForceField classes and methods.
+
+	* tools/obprop.cpp: Remove "test" methods, introduced sometime
+	since the last release.
+
+	* tools/obmm.cpp: Make sure to set the OBForceField log to prevent
+	crashes (e.g., PR#1664279).
+
+	* Doxyfile: Bump version number to 2.1.0b6 for new snapshot.
+
 2007-02-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
-	* src/forcefield.cpp: UpdateCoordinated now 'knows' about conformers
+	* src/forcefield.cpp: UpdateCoordinates now 'knows' about conformers
 	and selects the correct one before returning.
 
 	* tools/obminimize.cpp: Implemented (was copy of obmm).

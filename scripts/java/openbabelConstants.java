@@ -222,4 +222,19 @@ public interface openbabelConstants {
   public final static int OB_TSPIN_MOL = openbabelJNI.OB_TSPIN_MOL_get();
   public final static int OB_CURRENT_CONFORMER = openbabelJNI.OB_CURRENT_CONFORMER_get();
   public final static int BUFF_SIZE = openbabelJNI.BUFF_SIZE_get();
+  public final static int OBFF_LOGLVL_NONE = openbabelJNI.OBFF_LOGLVL_NONE_get();
+  public final static int OBFF_LOGLVL_LOW = openbabelJNI.OBFF_LOGLVL_LOW_get();
+  public final static int OBFF_LOGLVL_MEDIUM = openbabelJNI.OBFF_LOGLVL_MEDIUM_get();
+  public final static int OBFF_LOGLVL_HIGH = openbabelJNI.OBFF_LOGLVL_HIGH_get();
+  public final static int OBFF_ENERGY = openbabelJNI.OBFF_ENERGY_get();
+  public final static int OBFF_EBOND = openbabelJNI.OBFF_EBOND_get();
+  public final static int OBFF_EANGLE = openbabelJNI.OBFF_EANGLE_get();
+  public final static int OBFF_ESTRBND = openbabelJNI.OBFF_ESTRBND_get();
+  public final static int OBFF_ETORSION = openbabelJNI.OBFF_ETORSION_get();
+  public final static int OBFF_EOOP = openbabelJNI.OBFF_EOOP_get();
+  public final static int OBFF_EVDW = openbabelJNI.OBFF_EVDW_get();
+  public final static int OBFF_EELECTROSTATIC = openbabelJNI.OBFF_EELECTROSTATIC_get();
+  public final static int OBFF_NUMERICAL_GRADIENT = openbabelJNI.OBFF_NUMERICAL_GRADIENT_get();
+  public final static int OBFF_ANALYTICAL_GRADIENT = openbabelJNI.OBFF_ANALYTICAL_GRADIENT_get();
+  public final static double KCAL_TO_KJ = openbabelJNI.KCAL_TO_KJ_get();
 }
