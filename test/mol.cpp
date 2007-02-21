@@ -55,7 +55,7 @@ int main(int argc,char *argv[])
   cout << "# Unit tests for OBMol \n";
 
   // the number of tests for "prove"
-  cout << "1..8\n";
+  cout << "1..9\n";
 
   cout << "ok 1\n"; // for loading tests
 
@@ -124,6 +124,32 @@ int main(int argc,char *argv[])
   else
     cout << "not ok 8\n";
   //  testMol3D.Center();
+  
+  // test AddHydrogens
+  OBMol testMolH;
+  testMolH.BeginModify();
+  OBAtom *testAtom = testMolH.NewAtom();
+  testAtom->SetVector(0.5f, 0.5f, 0.5f);
+  testAtom->SetAtomicNum(6);
+  testMolH.EndModify();
+  testMolH.AddHydrogens();
+  if (testMolH.NumAtoms() == 5) {
+    cout << "ok 9" << endl;;
+  } else {
+    cout << "not ok 9" << endl;;
+  }
+  
+   // test AddHydrogens
+  OBMol testMolH2;
+  OBAtom *testAtom2 = testMolH2.NewAtom();
+  testAtom2->SetVector(0.5f, 0.5f, 0.5f);
+  testAtom2->SetAtomicNum(6);
+  testMolH2.AddHydrogens();
+  if (testMolH2.NumAtoms() == 5) {
+    cout << "ok 10" << endl;;
+  } else {
+    cout << "not ok 10" << endl;;
+  }
   
   return(0);
 }
