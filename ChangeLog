@@ -1,5 +1,10 @@
 2007-02-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/mol.cpp (NewBond): Fix PR#1665649. Make sure to set the
+	parent of a newly-created bond.
+
+	* test/mol.cpp: Add test for above.
+
 	* src/formats/Makefile.am, src/formats/Makefile.in: Fix linking
 	problems on Linux discovered by Craig.
 

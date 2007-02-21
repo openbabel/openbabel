@@ -1541,10 +1541,11 @@ namespace OpenBabel
   //! \since version 2.1
   //! \brief Instantiate a New Bond and add it to the molecule
   //!
-  //! Sets the proper Bond index.
+  //! Sets the proper Bond index and insures this molecule is set as the parent.
   OBBond *OBMol::NewBond()
   {
     OBBond *pBond = CreateBond();
+    pBond->SetParent(this);
     pBond->SetIdx(_nbonds++);
     _vbond.push_back(pBond);
     return(pBond);
@@ -2719,8 +2720,8 @@ namespace OpenBabel
           }
         else
           {
-            if (insertpos >= static_cast<int>(bgn->GetValence())
-                ) bgn->AddBond(bond);
+            if (insertpos >= static_cast<int>(bgn->GetValence()))
+              bgn->AddBond(bond);
             else //need to insert the bond for the connectivity order to be preserved
               {    //otherwise stereochemistry gets screwed up
                 vector<OBBond*>::iterator bi;

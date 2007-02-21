@@ -54,9 +54,6 @@ int main(int argc,char *argv[])
 
   cout << "# Unit tests for OBMol \n";
 
-  // the number of tests for "prove"
-  cout << "1..9\n";
-
   cout << "ok 1\n"; // for loading tests
 
   OBMol emptyMol, testMol1;
@@ -123,8 +120,27 @@ int main(int argc,char *argv[])
     cout << "ok 8\n";
   else
     cout << "not ok 8\n";
-  //  testMol3D.Center();
+  testMol3D.Center();
   
+  // test bond insertion (PR#1665649)
+  OBMol doubleBondMol;
+  OBAtom *a1, *a2, *a3;
+  OBBond *b;
+  doubleBondMol.BeginModify();
+  a1 = doubleBondMol.NewAtom();
+  a1->SetVector(0.0, 0.0, 0.0);
+  a1->SetAtomicNum(6);
+  a2 = doubleBondMol.NewAtom();
+  a2->SetVector(1.6, 0.0, 0.0);
+  a2->SetAtomicNum(6);
+  b = doubleBondMol.NewBond();
+  b->SetBegin(a1);
+  b->SetEnd(a2);
+  a1->AddBond(b);
+  a2->AddBond(b);
+  doubleBondMol.EndModify();
+  cout << "ok 9" << endl;
+
   // test AddHydrogens
   OBMol testMolH;
   testMolH.BeginModify();
@@ -134,22 +150,26 @@ int main(int argc,char *argv[])
   testMolH.EndModify();
   testMolH.AddHydrogens();
   if (testMolH.NumAtoms() == 5) {
-    cout << "ok 9" << endl;;
+    cout << "ok 10" << endl;
   } else {
-    cout << "not ok 9" << endl;;
+    cout << "not ok 10" << endl;
   }
-  
-   // test AddHydrogens
+
+  // test AddHydrogens (pr #1665519)
   OBMol testMolH2;
   OBAtom *testAtom2 = testMolH2.NewAtom();
   testAtom2->SetVector(0.5f, 0.5f, 0.5f);
   testAtom2->SetAtomicNum(6);
   testMolH2.AddHydrogens();
   if (testMolH2.NumAtoms() == 5) {
-    cout << "ok 10" << endl;;
+    cout << "ok 11" << endl;
   } else {
-    cout << "not ok 10" << endl;;
+    cout << "not ok 11" << endl;
   }
   
+  // the total number of tests for "prove"
+  // update when you add more tests!
+  cout << "1..11\n";
+
   return(0);
 }
