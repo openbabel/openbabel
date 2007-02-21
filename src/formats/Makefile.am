@@ -87,7 +87,7 @@ pkglib_LTLIBRARIES = \
 APIInterface_la_SOURCES = APIInterface.cpp
 APIInterface_la_LDFLAGS = -module -avoid-version
 
-CSRformat_la_SOURCES = CSRformat.cpp
+CSRformat_la_SOURCES = CSRformat.cpp obmolecformat.cpp
 CSRformat_la_LDFLAGS = -module -avoid-version
 
 PQSformat_la_SOURCES = PQSformat.cpp obmolecformat.cpp
@@ -111,10 +111,10 @@ boxformat_la_LDFLAGS = -module -avoid-version
 cacaoformat_la_SOURCES = cacaoformat.cpp obmolecformat.cpp
 cacaoformat_la_LDFLAGS = -module -avoid-version 
 
-cacheformat_la_SOURCES = cacheformat.cpp
+cacheformat_la_SOURCES = cacheformat.cpp obmolecformat.cpp
 cacheformat_la_LDFLAGS = -module -avoid-version 
 
-cansmilesformat_la_SOURCES = cansmilesformat.cpp
+cansmilesformat_la_SOURCES = cansmilesformat.cpp obmolecformat.cpp
 cansmilesformat_la_LDFLAGS = -module -avoid-version 
 
 carformat_la_SOURCES = carformat.cpp obmolecformat.cpp
@@ -132,19 +132,19 @@ chemdrawctformat_la_LDFLAGS = -module -avoid-version
 chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp obmolecformat.cpp
 chemdrawcdxformat_la_LDFLAGS = -module -avoid-version 
 
-chemtoolformat_la_SOURCES = chemtoolformat.cpp
+chemtoolformat_la_SOURCES = chemtoolformat.cpp obmolecformat.cpp
 chemtoolformat_la_LDFLAGS = -module -avoid-version 
 
 cifformat_la_SOURCES = cifformat.cpp obmolecformat.cpp
 cifformat_la_LDFLAGS = -module -avoid-version 
 
-copyformat_la_SOURCES = copyformat.cpp
+copyformat_la_SOURCES = copyformat.cpp 
 copyformat_la_LDFLAGS = -module -avoid-version 
 
 crkformat_la_SOURCES = crkformat.cpp obmolecformat.cpp
 crkformat_la_LDFLAGS = -module -avoid-version 
 
-cssrformat_la_SOURCES = cssrformat.cpp
+cssrformat_la_SOURCES = cssrformat.cpp obmolecformat.cpp
 cssrformat_la_LDFLAGS = -module -avoid-version 
 
 dmolformat_la_SOURCES = dmolformat.cpp obmolecformat.cpp
@@ -159,7 +159,7 @@ fastaformat_la_LDFLAGS = -module -avoid-version
 featformat_la_SOURCES = featformat.cpp obmolecformat.cpp
 featformat_la_LDFLAGS = -module -avoid-version 
 
-fhformat_la_SOURCES = fhformat.cpp
+fhformat_la_SOURCES = fhformat.cpp obmolecformat.cpp
 fhformat_la_LDFLAGS = -module -avoid-version
 
 fingerprintformat_la_SOURCES = fingerprintformat.cpp obmolecformat.cpp
@@ -177,7 +177,7 @@ gaussformat_la_LDFLAGS = -module -avoid-version
 ghemicalformat_la_SOURCES = ghemicalformat.cpp obmolecformat.cpp
 ghemicalformat_la_LDFLAGS = -module -avoid-version 
 
-gromos96format_la_SOURCES = gromos96format.cpp
+gromos96format_la_SOURCES = gromos96format.cpp obmolecformat.cpp
 gromos96format_la_LDFLAGS = -module -avoid-version 
 
 hinformat_la_SOURCES = hinformat.cpp obmolecformat.cpp
@@ -224,13 +224,13 @@ pcmodelformat_la_LDFLAGS = -module -avoid-version
 pdbformat_la_SOURCES = pdbformat.cpp obmolecformat.cpp
 pdbformat_la_LDFLAGS = -module -avoid-version 
 
-povrayformat_la_SOURCES = povrayformat.cpp
+povrayformat_la_SOURCES = povrayformat.cpp obmolecformat.cpp
 povrayformat_la_LDFLAGS = -module -avoid-version 
 
 qchemformat_la_SOURCES = qchemformat.cpp obmolecformat.cpp
 qchemformat_la_LDFLAGS = -module -avoid-version 
 
-reportformat_la_SOURCES = reportformat.cpp
+reportformat_la_SOURCES = reportformat.cpp obmolecformat.cpp
 reportformat_la_LDFLAGS = -module -avoid-version 
 
 rxnformat_la_SOURCES = rxnformat.cpp
@@ -245,7 +245,7 @@ smilesformat_la_LDFLAGS = -module -avoid-version
 thermoformat_la_SOURCES = thermoformat.cpp obmolecformat.cpp
 thermoformat_la_LDFLAGS = -module -avoid-version 
 
-tinkerformat_la_SOURCES = tinkerformat.cpp
+tinkerformat_la_SOURCES = tinkerformat.cpp obmolecformat.cpp
 tinkerformat_la_LDFLAGS = -module -avoid-version 
 
 titleformat_la_SOURCES = titleformat.cpp obmolecformat.cpp
@@ -260,7 +260,7 @@ unichemformat_la_LDFLAGS = -module -avoid-version
 viewmolformat_la_SOURCES = viewmolformat.cpp obmolecformat.cpp
 viewmolformat_la_LDFLAGS = -module -avoid-version 
 
-xedformat_la_SOURCES = xedformat.cpp
+xedformat_la_SOURCES = xedformat.cpp obmolecformat.cpp
 xedformat_la_LDFLAGS = -module -avoid-version 
 
 xyzformat_la_SOURCES = xyzformat.cpp obmolecformat.cpp
@@ -269,7 +269,7 @@ xyzformat_la_LDFLAGS = -module -avoid-version
 yasaraformat_la_SOURCES = yasaraformat.cpp obmolecformat.cpp
 yasaraformat_la_LDFLAGS = -module -avoid-version 
 
-zindoformat_la_SOURCES = zindoformat.cpp
+zindoformat_la_SOURCES = zindoformat.cpp obmolecformat.cpp
 zindoformat_la_LDFLAGS = -module -avoid-version 
 
 endif
