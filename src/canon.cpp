@@ -56,10 +56,10 @@ GNU General Public License for more details.
 #include <openbabel/canon.h>
 
 using namespace std;
-using namespace OpenBabel;
+
+namespace OpenBabel {
 
 #define DEBUG 0
-
 
 /***************************************************************************
 * FUNCTION: print_vector_pairs
@@ -1047,11 +1047,6 @@ static void FixCisTransBonds(OBMol *pmol,
   // got the up/down right on all of them.  The final step is to 
   // remove any Up/Down marks on bonds that we determined weren't 
   // really up or down.
-  //
-  // NOTE: This is dangerous due to a bug in OpenBabel: The OB_TORUP/DOWN_FLAGS
-  // are used for both cis/trans double bonds, and for tetrahedral chirality.
-  // If there's a double bond adjacent to a tetrahedral center, will this
-  // mess it up?
 
   FOR_BONDS_OF_MOL(bi, pmol) {
     OBBond *b = &(*bi);
@@ -1187,6 +1182,8 @@ void CanonicalLabels(OBMol *pmol,
 
   // Deal with cis/trans double bonds.
   FixCisTransBonds(pmol, frag_atoms, symmetry_classes, canonical_labels);
+
+}
 
 } // namespace OpenBabel
 

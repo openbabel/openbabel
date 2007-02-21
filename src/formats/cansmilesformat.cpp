@@ -1,5 +1,5 @@
 /**********************************************************************
-Some portions Copyright (C) 2005-2006 by Craig A. James, eMolecules Inc.
+Copyright (C) 2005-2006 by Craig A. James, eMolecules Inc.
 Some portions Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
@@ -23,39 +23,16 @@ GNU General Public License for more details.
  * 
  ****************************************************************************/
 
-/*----------------------------------------------------------------------
- * PLEASE READ THIS
- *
- * I originally intended to make this a standard file-format plugin using
- * the new OpenBabel 2.x dynamic linking system.  However, it proved to 
- * be too difficult to debug the code and get the thing to work, so 
- * this is a "fallback" to static linking.  The macro OPENBABEL_FORMAT
- * is used to zap all of the OpenBabel 2.x stuff and revert to an 
- * ordinary function call to generate the canonical SMILES.  If, in 
- * the future, we figure out how to work with the OpenBabel plug-in
- * system, the code is all here (but untested).  -- CJ.
- ----------------------------------------------------------------------*/
-
 #define DEBUG 0
-
-#define OPENBABEL_FORMAT 1
-
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 
-#if OPENBABEL_FORMAT
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
-#endif
 
 #include <openbabel/canon.h>
-
-#if OPENBABEL_FORMAT
-#else
-#include "cansmilesformat.h"
-#endif
 
 using namespace std;
 
@@ -179,9 +156,8 @@ class OBMol2Cansmi
   std::vector<bool> _aromNH;
   OBBitVec _uatoms,_ubonds;
   std::vector<OBBondClosureInfo> _vopen;
-#if OPENBABEL_FORMAT
+
   OBConversion* _pconv;
-#endif
 
 public:
   OBMol2Cansmi()
@@ -189,11 +165,7 @@ public:
   }
   ~OBMol2Cansmi() {}
 
-#if OPENBABEL_FORMAT
   void         Init(OBConversion* pconv=NULL);
-#else
-  void         Init();
-#endif
 
   void         AssignCisTrans(OBMol*);
   void         AddHydrogenToChiralCenters(OBMol &mol, OBBitVec &frag_atoms);
@@ -243,20 +215,15 @@ public:
 *       Initializes the OBMol2Cansmi writer object.
 ***************************************************************************/
 
-#if OPENBABEL_FORMAT
 void OBMol2Cansmi::Init(OBConversion* pconv)
-#else
-void OBMol2Cansmi::Init()
-#endif
 {
   _atmorder.clear();
   _aromNH.clear();
   _uatoms.Clear();
   _ubonds.Clear();
   _vopen.clear();
-#if OPENBABEL_FORMAT
+
   _pconv = pconv;
-#endif
 }
 
 
@@ -467,13 +434,11 @@ bool OBMol2Cansmi::GetSmilesElement(OBCanSmiNode *node,
     bracketElement = true;
 
 
-#if OPENBABEL_FORMAT
   if (atom->GetSpinMultiplicity()) {
     //For radicals output bracket form anyway unless r option specified
     if(!(_pconv && _pconv->IsOption ("r")))
       bracketElement = true;
   }
-#endif
 
   if (!bracketElement) {
 
@@ -483,11 +448,9 @@ bool OBMol2Cansmi::GetSmilesElement(OBCanSmiNode *node,
       if (atom->IsAromatic())
         symbol[0] = tolower(symbol[0]);
 
-#if OPENBABEL_FORMAT
       //Radical centres lc if r option set
       if(atom->GetSpinMultiplicity() && _pconv && _pconv->IsOption ("r"))
         symbol[0] = tolower(symbol[0]);
-#endif
     }
 
     // Atomic number zero - either '*' or an external atom
@@ -1473,7 +1436,6 @@ void CreateCansmiString(OBMol &mol, char *buffer, OBBitVec &frag_atoms, bool iso
 * CLASS: CANSMIFormat 
 ----------------------------------------------------------------------*/
 
-#if OPENBABEL_FORMAT
 
 
 class CANSMIFormat : public OBMoleculeFormat
@@ -1585,7 +1547,6 @@ bool CANSMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
   return true;
 }
 
-#endif  // OPENBABEL_FORMAT
 
 
 
