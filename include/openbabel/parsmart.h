@@ -36,36 +36,37 @@ namespace OpenBabel
 
 #ifndef SWIG
 
-//! \brief A SMARTS parser internal atomic expression
-typedef union _AtomExpr {
+  //! \union _AtomExpr parsmart.h <openbabel/parsmart.h>
+  //! \brief An internal (SMARTS parser) atomic expression
+  typedef union _AtomExpr {
     int type;
     struct
     {
-        int type;
-        int prop;
-        int value;
+      int type;
+      int prop;
+      int value;
     }
-    leaf;
+      leaf;
     struct
     {
-        int type;
-        void *recur;
+      int type;
+      void *recur;
     }
-    recur;
+      recur;
     struct
     {
-        int type;
-        union _AtomExpr *arg;
+      int type;
+      union _AtomExpr *arg;
     }
-    mon;
+      mon;
     struct
     {
-        int type;
-        union _AtomExpr *lft;
-        union _AtomExpr *rgt;
+      int type;
+      union _AtomExpr *lft;
+      union _AtomExpr *rgt;
     }
-    bin;
-} AtomExpr;
+      bin;
+  } AtomExpr;
 
 #define BE_LEAF      0x01
 #define BE_ANDHI     0x02
@@ -86,112 +87,116 @@ typedef union _AtomExpr {
 #define BT_DOWNUNSPEC 0x08
 #define BT_RING       0x09
 
-//! \brief A SMARTS parser internal bond expression
-typedef union _BondExpr {
+  //! \union _BondExpr parsmart.h <openbabel/parsmart.h>
+  //! \brief An internal (SMARTS parser) bond expression
+  typedef union _BondExpr {
     int type;
     struct
     {
-        int type;
-        int prop;
-        int value;
+      int type;
+      int prop;
+      int value;
     }
-    leaf;
+      leaf;
     struct
     {
-        int type;
-        union _BondExpr *arg;
+      int type;
+      union _BondExpr *arg;
     }
-    mon;
+      mon;
     struct
     {
-        int type;
-        union _BondExpr *lft;
-        union _BondExpr *rgt;
+      int type;
+      union _BondExpr *lft;
+      union _BondExpr *rgt;
     }
-    bin;
-} BondExpr;
+      bin;
+  } BondExpr;
 
-//! \brief A SMARTS parser internal bond specification
-typedef struct
-{
+  //! \struct BondSpec parsmart.h <openbabel/parsmart.h>
+  //! \brief An internal (SMARTS parser) bond specification
+  typedef struct
+  {
     BondExpr *expr;
     int src,dst;
     int visit;
     bool grow;
-}
-BondSpec;
+  }
+  BondSpec;
 
-//! \brief A SMARTS parser internal bond specification
-typedef struct
-{
+  //! \struct AtomSpec parsmart.h <openbabel/parsmart.h>
+  //! \brief An internal (SMARTS parser) atom specification
+  typedef struct
+  {
     AtomExpr *expr;
     int visit;
     int part;
     int chiral_flag;
     int vb;
-}
-AtomSpec;
+  }
+  AtomSpec;
 
-//! \brief A SMARTS parser internal pattern
-typedef struct
-{
+  //! \struct Pattern parsmart.h <openbabel/parsmart.h>
+  //! \brief A SMARTS parser internal pattern
+  typedef struct
+  {
     int aalloc,acount;
     int balloc,bcount;
     bool ischiral;
     AtomSpec *atom;
     BondSpec *bond;
     int parts;
-}
-Pattern;
+  }
+  Pattern;
 #else
-// for SWIG, just forward declare that we have some Pattern struct
-// (but this is private and not wrapped for scripting languages)
-struct Pattern;
+  // for SWIG, just forward declare that we have some Pattern struct
+  // (but this is private and not wrapped for scripting languages)
+  struct Pattern;
 #endif
 
-// class introduction in parsmart.cpp
-//! \brief SMARTS (SMiles ARbitrary Target Specification) substructure searching
-class OBAPI OBSmartsPattern
-{
-protected:
+  // class introduction in parsmart.cpp
+  //! \brief SMARTS (SMiles ARbitrary Target Specification) substructure searching
+  class OBAPI OBSmartsPattern
+  {
+  protected:
     std::vector<bool>          		_growbond;
     std::vector<std::vector<int> >	_mlist;
     Pattern				*_pat;
     std::string				_str;
 
-public:
+  public:
     OBSmartsPattern()
-    {
+      {
         _pat=NULL;
-    }
+      }
     virtual ~OBSmartsPattern();
 
     OBSmartsPattern(const OBSmartsPattern& cp)
-    {
+      {
         _pat = NULL;
         *this = cp;
-    }
+      }
     OBSmartsPattern& operator=(const OBSmartsPattern& cp)
-    {
+      {
         if (_pat)
-            delete [] _pat;
+          delete [] _pat;
         _pat = NULL;
         std::string s = cp._str;
         Init(s);
         return (*this);
-    }
+      }
 
     unsigned int NumMatches() const
     {
-        return (unsigned int)_mlist.size();
+      return (unsigned int)_mlist.size();
     }
     unsigned int NumAtoms()   const
     {
-        return _pat ? _pat->acount : 0;
+      return _pat ? _pat->acount : 0;
     }
     unsigned int NumBonds()   const
     {
-        return _pat ? _pat->bcount : 0;
+      return _pat ? _pat->bcount : 0;
     }
 
     int          GetAtomicNum(int);
@@ -199,23 +204,23 @@ public:
     int          GetCharge(int);
     const std::string &GetSMARTS() const
     {
-        return _str;
+      return _str;
     }
     std::string  &GetSMARTS()
-    {
+      {
         return _str;
-    }
+      }
     int          GetVectorBinding(int idx) const
     {
-        return(_pat->atom[idx].vb);
+      return(_pat->atom[idx].vb);
     }
     bool         Empty()                   const
     {
-        return(_pat == NULL);
+      return(_pat == NULL);
     }
     bool         IsValid()                 const
     {
-        return(_pat != NULL);
+      return(_pat != NULL);
     }
     bool         Init(const char*);
     bool         Init(const std::string&);
@@ -226,37 +231,38 @@ public:
     bool RestrictedMatch(OBMol &mol, OBBitVec &bv, bool single=false);
 
     std::vector<std::vector<int> > &GetMapList()
-    {
+      {
         return(_mlist);
-    }
+      }
     std::vector<std::vector<int> > &GetUMapList();
     std::vector<std::vector<int> >::iterator BeginMList()
-    {
+      {
         return(_mlist.begin());
-    }
+      }
     std::vector<std::vector<int> >::iterator EndMList()
-    {
+      {
         return(_mlist.end());
-    }
-};
+      }
+  };
 
-//! Performs fast, exhaustive matching used to find just a single match in match() using recursion and explicit stack handling.
-class OBAPI OBSSMatch //used for fast exhaustive matching
-{
-protected:
+  //! \class OBSSMatch parsmart.h <openbabel/parsmart.h>
+  //! \brief Internal class: performs fast, exhaustive matching used to find just a single match in match() using recursion and explicit stack handling.
+  class OBAPI OBSSMatch
+  {
+  protected:
     bool        *_uatoms;
     OBMol       *_mol;
     Pattern     *_pat;
     std::vector<int>  _map;
 
-public:
+  public:
     OBSSMatch(OBMol&,Pattern*);
     ~OBSSMatch();
     void Match(std::vector<std::vector<int> > &v, int bidx=-1);
-};
+  };
 
-OBAPI void SmartsLexReplace(std::string &,
-                      std::vector<std::pair<std::string,std::string> > &);
+  OBAPI void SmartsLexReplace(std::string &,
+                              std::vector<std::pair<std::string,std::string> > &);
 
 } // end namespace OpenBabel
 

@@ -33,6 +33,7 @@ namespace OpenBabel
   //! Implementation and documentation in chains.cpp
   typedef struct Template Template;
 
+  //! \class OBChainsParser chains.h <openbabel/chains.h>
   //! \brief Perceives peptide or nucleotide chains and residues in an OBMol
   //
   //! Perceive peptide or nucleotide chains and residues from atom connectivity.

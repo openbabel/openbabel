@@ -112,7 +112,8 @@ private:
 
 //*************************************************************
 //Fast search routines
-///Header for fastsearch index file
+/// \struct FptIndexHeader fingerprint.h <openbabel/fingerprint.h>
+/// \brief Header for fastsearch index file
 struct OBFPRT FptIndexHeader
 {
   unsigned int headerlength;///<offset to data: sizeof(FptIndexHeader)
@@ -121,7 +122,9 @@ struct OBFPRT FptIndexHeader
   char fpid[16];            ///<ID of the fingerprint type
   char datafilename[256];   ///<the data that this is an index to
 };
-/// Structure of fastsearch index files
+
+/// \struct FptIndex fingerprint.h <openbabel/fingerprint.h>
+/// \brief Structure of fastsearch index files
 struct OBFPRT FptIndex
 {
   FptIndexHeader header;
@@ -132,6 +135,7 @@ struct OBFPRT FptIndex
   OBFingerprint* CheckFP();
 };
 
+/// \class FastSearch fingerprint.h <openbabel/fingerprint.h>
 /// \brief Class to search fingerprint index files
 class OBFPRT FastSearch
 {
@@ -173,6 +177,7 @@ private:
 };
 
 //**********************************************
+/// \class FastSearchIndexer fingerprint.h <openbabel/fingerprint.h>
 /// \brief Class to prepare fingerprint index files See FastSearch class for details
 class OBFPRT FastSearchIndexer
 {

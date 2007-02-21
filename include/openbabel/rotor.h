@@ -30,6 +30,7 @@ namespace OpenBabel
 #define SQUARE(x) ((x)*(x))
 #endif
 
+  //! \class OBRotorRule rotor.h <openbabel/rotor.h>
   //! \brief A rule for torsional conformer searching, defined by a SMARTS pattern
   //!
   //! Rules define a SMARTS pattern to match and a set of 4 reference atoms
@@ -52,6 +53,7 @@ namespace OpenBabel
       _sp->Init(buffer);
       memcpy(_ref,ref,sizeof(int)*4);
     }
+
     ~OBRotorRule()
       {
         if (_sp)
@@ -79,7 +81,9 @@ namespace OpenBabel
     OBSmartsPattern *GetSmartsPattern() {  return(_sp);         }
   };
 
+  //! \class OBRotorRules rotor.h <openbabel/rotor.h>
   //! \brief Database of default hybridization torsional rules and SMARTS-defined OBRotorRule objects
+  //! 
   //! Use to automatically evaluate potentially rotatable bonds to generate
   //! lists of dihedral angles to consider.
   //! e.g., rotamer/conformer energy calculations
@@ -113,7 +117,8 @@ namespace OpenBabel
     void Quiet()                           { _quiet=true;      }
   };
 
-  //! A single rotatable OBBond as part of rotamer searching
+  //! \class OBRotor rotor.h <openbabel/rotor.h>
+  //! \brief A single rotatable OBBond as part of rotamer searching
   class OBAPI OBRotor
   {
     int _idx,_ref[4];
@@ -163,6 +168,7 @@ namespace OpenBabel
     }
     void    SetDihedralAtoms(int ref[4]);
     void    SetRotAtoms(std::vector<int>&);
+
     inline void SetToAngle(double *c,double setang)
     {
       double dx,dy,dz,sn,cs,t,ang,mag;
@@ -179,6 +185,7 @@ namespace OpenBabel
       mag = sqrt(SQUARE(dx) + SQUARE(dy) + SQUARE(dz));
       Set(c,sn,cs,t,1.0/mag);
     }
+
     void    SetRotor(double *,int,int prev=-1);
     void    Set(double*,int);
     void    Precompute(double*);
@@ -250,7 +257,8 @@ namespace OpenBabel
   //! A standard iterator over a vector of rotors
   typedef std::vector<OBRotor*>::iterator OBRotorIterator;
 
-  //! Given an OBMol, set up a list of possibly rotatable torsions, 
+  //! \class OBRotorList
+  //! \brief Given an OBMol, set up a list of possibly rotatable torsions, 
   class OBAPI OBRotorList
   {
     bool _quiet;                    //!< Control debugging output

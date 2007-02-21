@@ -52,30 +52,34 @@ namespace OpenBabel
   class OBAPI OBStopwatch
   {
 #if HAVE_CLOCK_T
-    clock_t start, stop;
+    clock_t start; //!< the start of timing
+    clock_t stop;  //!< the current time
 #else
-
-    timeval start;
-    timeval stop;
+    timeval start; //!< the start of timing
+    timeval stop;  //!< the current time
 #endif
 
   public:
 #if HAVE_CLOCK_T
 
+    //! Mark the start of "stopwatch" timing
     void  Start()
     {
       start= clock();
     }
+    //! \return The time since calling OBStopwatch::Start() in seconds.
     double Lap()
     {
       stop= clock();
       return((stop - start) / CLOCKS_PER_SEC);
     }
 #else
+    //! Mark the start of "stopwatch" timing
     void Start()
     {
       gettimeofday(&start, NULL);
     }
+    //! \return The time since calling OBStopwatch::Start() in seconds.
     double Lap()
     {
       gettimeofday(&stop, NULL);
@@ -83,6 +87,8 @@ namespace OpenBabel
              + (stop.tv_usec - start.tv_usec)/1000000.0);
     }
 #endif
+
+    //! \return The time since calling OBStopwatch::Start() in seconds.
     double Elapsed()
     {
       return(Lap());
@@ -90,7 +96,8 @@ namespace OpenBabel
   };
 
 
-  //! sqrt lookup table - given a distance squared returns distance
+  //! \class OBSqrtTbl obutil.h <openbabel/obutil.h>
+  //! \brief Square Root lookup table - given a distance squared returns distance
   class OBAPI OBSqrtTbl
   {
     double _max,_incr,*_tbl;
@@ -104,9 +111,9 @@ namespace OpenBabel
     //! \param incr The floating point resolution of the lookup table
   OBSqrtTbl(const double max, const double incr):
     _max(max*max), _incr(incr), _tbl(NULL)
-    {
-      Init(max,incr);
-    }
+      {
+        Init(max,incr);
+      }
     ~OBSqrtTbl()
       {
         if (_tbl)
@@ -157,6 +164,8 @@ namespace OpenBabel
   OBAPI void ToUpper(char*);
   OBAPI void ToLower(std::string&);
   OBAPI void ToLower(char *);
+  OBAPI void InvertCase(std::string&, int);
+  OBAPI void InvertCase(char *);
   //! "Clean" the supplied atom type
   OBAPI void CleanAtomType(char*);
   //@}
@@ -202,11 +211,11 @@ namespace OpenBabel
    * \note To check
    * if x is zero, use
    * @code
-     IsNegligible( x, 1.0)
+   IsNegligible( x, 1.0)
    * @endcode
    * instead of
    * @code
-     IsApprox( x, 0.0 )
+   IsApprox( x, 0.0 )
    * @endcode
    */
   OBAPI inline bool IsApprox(const double & a, const double & b,
@@ -222,13 +231,14 @@ namespace OpenBabel
   }
   /*! \brief Tests whether its argument can be squared without triggering
     an overflow or underflow.
-   */
+  */
   OBAPI bool CanBeSquared(const double &);
 
 #endif
   // (end part to be skipped by SWIG)
 
   //******************triple template*************************
+  //! \class triple obutil.h <openbabel/obutil.h>
   //! \brief A 3-element templated, based on the design of the STL pair<>
   template <class T1, class T2, class T3>
     struct triple
@@ -264,6 +274,7 @@ namespace OpenBabel
     };
 
   //**************quad template********************
+  //! \class quad obutil.h <openbabel/obutil.h>
   //! \brief A 4-element templated, based on the design of the STL pair<>
   template <class T1, class T2, class T3, class T4>
     struct quad

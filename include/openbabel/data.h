@@ -87,6 +87,7 @@ namespace OpenBabel
       double _red, _green, _blue;
       int _maxbonds;
     public:
+      //! \deprecated Not used. Instead, initialize element properties
       OBElement()    {}
       /** Constructor
           @param num     Atomic number

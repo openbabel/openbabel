@@ -28,24 +28,29 @@ class GasteigerState;
 // class introduction in molchrg.cpp
 class OBAPI OBGastChrg
 {
-    std::vector <GasteigerState*> _gsv;
+  std::vector <GasteigerState*> _gsv; //!< vector of internal GasteigerState (for each atom)
+
     void InitialPartialCharges(OBMol &);
     bool GasteigerSigmaChi(OBAtom *,double &,double &,double &);
+
 public:
-    OBGastChrg()
-    {}
+    OBGastChrg()    {}
     ~OBGastChrg();
+
+    //! Assign partial charges to this OBMol, setting each OBAtom partial charge
     bool AssignPartialCharges(OBMol &);
+    //! Resize the internal GasteigerState vector to match the size of the molecule
     void GSVResize(int);
 };
 
-//! Helper class for OBGastChrg which stores the Gasteiger states of a given atom
+//! \class GasteigerState molchrg.h <openbabel/molchrg.h>
+//! \brief Helper class for OBGastChrg which stores the Gasteiger states of a given atom
 class OBAPI GasteigerState
 {
 public:
     GasteigerState();
-    ~GasteigerState()
-    {}
+    ~GasteigerState() {}
+
     void SetValues(double _a,double _b,double _c,double _q)
     {
         a = _a;
@@ -54,6 +59,7 @@ public:
         denom=a+b+c;
         q = _q;
     }
+
     double a, b, c;
     double denom;
     double chi;

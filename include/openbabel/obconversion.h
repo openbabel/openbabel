@@ -143,6 +143,7 @@ namespace OpenBabel {
     };
 
   //*************************************************
+  /// @struct CharPtrLess obconversion.h <openbabel/obconversion.h>
   /// @brief Case insensitive string comparison for FormatsMap key.
 	struct CharPtrLess : public std::binary_function<const char*,const char*, bool>
 	{

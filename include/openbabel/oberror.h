@@ -181,6 +181,7 @@ namespace OpenBabel
 
   OBERROR extern OBMessageHandler obErrorLog;
 
+  //! \class obLogBuf oberror.h <openbabel/oberror.h>
   //! \brief A minimal streambuf derivative to wrap calls to cerr into calls to OBMessageHandler as needed
   /** This class is used for internal use, via OBMessageHandler::StartErrorWrap()
       To use this class, use the global OBMessageHandler object @p obErrorLog:

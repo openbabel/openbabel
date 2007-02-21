@@ -29,7 +29,8 @@ namespace OpenBabel
   //*** Stuff for random number generation ***
   //******************************************
 
-  //! Used for internal random number generation OBRandom (unless the system random generator is used)
+  //! \struct DoubleType rand.h <openbabel/rand.h>
+  //! \brief Used for internal random number generation OBRandom (unless the system random generator is used)
   typedef struct
   {
     unsigned int hi;

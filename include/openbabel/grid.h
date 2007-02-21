@@ -33,7 +33,8 @@ namespace OpenBabel
   // Forward declaration
   class OBMol;
 
-  //! A base grid class 
+  //! \class OBGrid grid.h <openbabel/grid.h>
+  //! \brief A base grid class 
  class OBAPI OBGrid: public OBBase
   {
   protected: 
@@ -76,7 +77,9 @@ namespace OpenBabel
     }
   };
 
+  //! \class OBFloatGrid grid.h <openbabel/grid.h>
   //! \brief Handle floating-point 3D grids (e.g., charge density around an OBMol)
+  //!
   //! Supports input/output and base functionality for simple 3D discrete grids
   //! of some function -- typically around a molecule
  class OBAPI OBFloatGrid: public OBGrid
@@ -166,6 +169,7 @@ namespace OpenBabel
 #define OBLipoGrid 0x02 /* lipophilicity? */
 #endif //OBLipoGrid
 
+  //! \class OBProxGrid grid.h <openbabel/grid.h>
   //! \brief A grid for determining the proximity of a given point to atoms in an OBMol
   //! \deprecated May be removed in the future, since docking is not a key feature
  class OBAPI OBProxGrid: public OBGrid
@@ -207,6 +211,7 @@ namespace OpenBabel
   // scoring function used: PLP = Piecewise Linear Potential or ChemScore algorithm
   typedef enum { Undefined = -1, PLP, ChemScore } score_t;
 
+  //! \class OBScoreGrid grid.h <openbabel/grid.h>
   //! \brief A base class for scoring docking interactions between multiple molecules
   //! \deprecated Will disappear in future versions. Use your own code.
   class OBAPI OBScoreGrid

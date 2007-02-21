@@ -385,6 +385,32 @@ namespace OpenBabel
         *c = tolower(*c);
   }
 
+  //! Shift the supplied string: lowercase to upper, and upper to lower
+  //! \param s - The string to switch case
+  //! \param start - The position to start inverting case
+  OBAPI void InvertCase(std::string &s, unsigned int start)
+  {
+    if (s.empty() || start >= s.size())
+      return;
+    unsigned int i;
+    for (i = start; i < s.size();++i)
+      if (isalpha(s[i]) && !isdigit(s[i])) {
+        if (isupper(s[i])) s[i] = tolower(s[i]);
+        else s[i] = toupper(s[i]);
+      }
+  }
+
+  //! Shift the supplied char*: lowercase to upper, and upper to lower
+  OBAPI void InvertCase(char *cptr)
+  {
+    char *c;
+    for (c = cptr;*c != '\0';++c)
+      if (isalpha(*c) && !isdigit(*c)) {
+        if (isupper(*c)) *c = tolower(*c);
+        else *c = toupper(*c);
+      }
+  }
+
   //! "Clean" the supplied atom type, shifting the first character to uppercase,
   //! the second character (if it's a letter) to lowercase, and terminating with a NULL
   //! to strip off any trailing characters

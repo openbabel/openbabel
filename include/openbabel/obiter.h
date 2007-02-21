@@ -51,10 +51,15 @@ namespace OpenBabel
     OBMolAtomIter(const OBMolAtomIter &ai);
 
     OBMolAtomIter& operator=(const OBMolAtomIter &ai);
+    //! \return Whether the iterator can still advance (i.e., visit more atoms)
     operator bool() const        { return _ptr != NULL; }
+    //! Preincrement iterator -- advance to next atom and return
     OBMolAtomIter& operator++();
+    //! Postincrement iterator -- return the current atom and advance
     OBMolAtomIter  operator++(int);
+    //! \return a pointer to the current atom
     OBAtom* operator->() const   { return _ptr;      }
+    //! \return a reference to the current atom
     OBAtom& operator*() const    { return *_ptr;     }
   };
 
@@ -72,10 +77,15 @@ namespace OpenBabel
     OBMolAtomDFSIter(const OBMolAtomDFSIter &ai);
 
     OBMolAtomDFSIter& operator=(const OBMolAtomDFSIter &ai);
+    //! \return Whether the iterator can still advance (i.e., visit more atoms)
     operator bool() const        { return _ptr != NULL; }
+    //! Preincrement -- advance to the next atom in the DFS list and return
     OBMolAtomDFSIter& operator++();
+    //! Postincrement -- return the current atom and advance to the next atom
     OBMolAtomDFSIter  operator++(int);
+    //! \return a pointer to the current atom
     OBAtom* operator->() const   { return _ptr;      }
+    //! \return a reference to the current atom
     OBAtom& operator*() const    { return *_ptr;     }
     /// \return NULL if at the last atom in a fragment, else the next atom
     OBAtom* next()
@@ -101,10 +111,15 @@ namespace OpenBabel
     OBMolAtomBFSIter(const OBMolAtomBFSIter &ai);
 
     OBMolAtomBFSIter& operator=(const OBMolAtomBFSIter &ai);
+    //! \return Whether the iterator can still advance (i.e., visit more atoms)
     operator bool() const        { return _ptr != NULL; }
+    //! Preincrement -- advance to the next atom in the BFS list and return
     OBMolAtomBFSIter& operator++();
+    //! Postincrement -- return the current atom and advance to the next atom
     OBMolAtomBFSIter  operator++(int);
+    //! \return a pointer to the current atom
     OBAtom* operator->() const   { return _ptr;      }
+    //! \return a reference to the current atom
     OBAtom& operator*() const    { return *_ptr;     }
   };
 
@@ -121,10 +136,15 @@ namespace OpenBabel
     OBMolBondIter(const OBMolBondIter &bi);
 
     OBMolBondIter& operator=(const OBMolBondIter &bi);
+    //! \return Whether the iterator can still advance (i.e., visit more bonds)
     operator bool() const        { return _ptr != NULL; }
+    //! Preincrement -- advance to the next bond and return
     OBMolBondIter& operator++();
+    //! Postincrement -- return the current bond and advance to the next 
     OBMolBondIter  operator++(int);
+    //! \return a pointer to the current bond
     OBBond* operator->() const   { return _ptr;      }
+    //! \return a reference to the current bond
     OBBond& operator*() const    { return *_ptr;     }
   };
 
@@ -141,11 +161,16 @@ namespace OpenBabel
     OBAtomAtomIter(const OBAtomAtomIter &ai);
 
     OBAtomAtomIter& operator=(const OBAtomAtomIter &ai);
+     //! \return Whether the iterator can still advance (i.e., visit more neighbors)
     operator bool() const        { return _ptr != NULL; }
+    //! Preincrement -- advance to the next neighbor and return
     OBAtomAtomIter& operator++();
+    //! Postincrement -- return the current neighbor and advance to the next 
     OBAtomAtomIter  operator++(int);
-    OBAtom* operator->() const   { return _ptr; }
-    OBAtom& operator*() const    { return *_ptr;}
+    //! \return a pointer to the current atom
+    OBAtom* operator->() const   { return _ptr;      }
+    //! \return a reference to the current atom
+    OBAtom& operator*() const    { return *_ptr;     }
   };
 
   //! \brief Iterate over all bonds on an OBAtom
@@ -161,10 +186,15 @@ namespace OpenBabel
     OBAtomBondIter(const OBAtomBondIter &bi);
 
     OBAtomBondIter& operator=(const OBAtomBondIter &bi);
+    //! \return Whether the iterator can still advance (i.e., visit more bonds)
     operator bool() const        { return _ptr != NULL; }
+    //! Preincrement -- advance to the next bond and return
     OBAtomBondIter& operator++();
+    //! Postincrement -- return the current state and advance to the next bond
     OBAtomBondIter  operator++(int);
+    //! \return a pointer to the current bond
     OBBond* operator->() const   { return _ptr; }
+    //! \return a reference to the current bond
     OBBond& operator*() const    { return *_ptr;}
   };
 
@@ -181,10 +211,15 @@ namespace OpenBabel
     OBResidueIter(const OBResidueIter &ri);
 
     OBResidueIter& operator=(const OBResidueIter &ri);
+    //! \return Whether the iterator can still advance (i.e., visit more residues)
     operator bool() const        { return _ptr != NULL; }
+    //! Preincrement -- advance to the next residue and return
     OBResidueIter& operator++();
+    //! Postincrement -- return the current state and advance to the next residue
     OBResidueIter  operator++(int);
+    //! \return a pointer to the current residue
     OBResidue* operator->() const{ return _ptr; }
+    //! \return a reference to the current residue
     OBResidue& operator*() const { return *_ptr;}
   };
 
@@ -201,10 +236,15 @@ namespace OpenBabel
     OBResidueAtomIter(const OBResidueAtomIter &ri);
 
     OBResidueAtomIter &operator = (const OBResidueAtomIter &ri);
+    //! \return Whether the iterator can still advance (i.e., visit more atoms in this residue)
     operator bool() const        { return _ptr != NULL; }
+    //! Preincrement -- advance to the next atom (if any) and return
     OBResidueAtomIter& operator++ ();
+    //! Postincrement -- return the current state and advance to the next atom (if any)
     OBResidueAtomIter  operator++ (int);
+    //! \return a pointer to the current atom
     OBAtom *operator->() const   { return _ptr; }
+    //! \return a reference to the current atom
     OBAtom &operator*() const    { return *_ptr;}
   };
   
@@ -222,8 +262,12 @@ namespace OpenBabel
     OBMolAngleIter(const OBMolAngleIter &ai);
 
     OBMolAngleIter& operator=(const OBMolAngleIter &ai);
+    //! \return Whether the iterator can still advance (i.e., visit more angles)
     operator bool() const        { return (_i != _vangle.end()); }
+    //! Preincrement -- advance to the next angle and return
     OBMolAngleIter& operator++();
+    //! \return A vector of three atom indexes specifying the angle
+    //! \see OBAtom::GetIdx()
     std::vector<unsigned int> operator*() const    { return _angle;     }
   };
 
@@ -241,8 +285,12 @@ namespace OpenBabel
     OBMolTorsionIter(const OBMolTorsionIter &ai);
 
     OBMolTorsionIter& operator=(const OBMolTorsionIter &ai);
+    //! \return Whether the iterator can still advance (i.e., visit more torsions)
     operator bool() const        { return (_i != _vtorsion.end()); }
+    //! Preincrement -- advance to the next torsion and return
     OBMolTorsionIter& operator++();
+    //! \return A vector of four atom indexes specifying the torsion
+    //! \see OBAtom::GetIdx()
     std::vector<unsigned int> operator*() const    { return _torsion;     }
   };
   
@@ -261,13 +309,17 @@ namespace OpenBabel
     OBMolPairIter(const OBMolPairIter &ai);
 
     OBMolPairIter& operator=(const OBMolPairIter &ai);
+    //! \return Whether the iterator can still advance (i.e., visit more 1-4 atom pairs)
     operator bool() const        { return (_i != _vpair.end()); }
+    //! Preincrement -- advance to the next 1-4 atom pair and return
     OBMolPairIter& operator++();
+    //! \return A vector of two atom indexes specifying the 1-4 atom pair
+    //! \see OBAtom::GetIdx()
     std::vector<unsigned int> operator*() const    { return _pair;     }
   };
 
 
-  //! \brief Iterate over all residues in an OBMol
+  //! \brief Iterate over all rings in an OBMol
   class OBAPI OBMolRingIter {
     std::vector<OBRing*>::iterator _i;
     OBRing *_ptr;
@@ -281,10 +333,15 @@ namespace OpenBabel
     OBMolRingIter(const OBMolRingIter &ri);
 
     OBMolRingIter& operator=(const OBMolRingIter &ri);
+    //! \return Whether the iterator can advance (i.e., there are more rings)
     operator bool()      const { return _ptr != NULL; }
+    //! Preincrement -- advance to the next ring (if any) and return
     OBMolRingIter& operator++();
+    //! Postincrement -- return the current state and advance to the next ring
     OBMolRingIter  operator++(int);
+    //! \return A pointer to the current ring (if any)
     OBRing* operator->() const { return _ptr; }
+    //! \return A reference to the current ring (if any)
     OBRing& operator*()  const { return *_ptr;}
   };
 

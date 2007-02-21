@@ -24,7 +24,8 @@ namespace OpenBabel
 const unsigned RateData = 55555;
 const unsigned ThermoData = 55556;
 
-/// Class to hold rate constant data for OBReaction
+/// \class OBRateData kinetics.h <openbabel/kinetics.h>
+/// \brief Holds rate constant data for OBReaction
 class OBRateData : public OBGenericData
 {
 protected:
@@ -109,7 +110,8 @@ public:
 };
 
 //******************************************************************************
-/// Class to hold Thermodynamic data in old style NASA polynomial form for OBMol
+/// \class OBNasaThermoData kinetics.h <openbabel/kinetics.h>
+/// \brief Thermodynamic data in old style NASA polynomial form for OBMol
 class OBNasaThermoData : public OBGenericData
 {
 protected:
@@ -133,7 +135,7 @@ public:
       Coeffs[n] = val;
   }
   double GetLoT() const {return LoT;}
-    double GetMidT() const {return MidT;}
+  double GetMidT() const {return MidT;}
   double GetHiT() const {return HiT;}
   void SetLoT(double val){LoT=val;}
   void SetMidT(double val){MidT=val;}
