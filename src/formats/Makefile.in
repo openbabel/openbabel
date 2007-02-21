@@ -725,7 +725,7 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 INCLUDES = -I$(top_srcdir)/data -I$(top_srcdir)/include
-EXTRA_DIST = exampleformat.cpp cansmilesformat.h
+EXTRA_DIST = exampleformat.cpp 
 SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
 @BUILD_PCH_TRUE@PCHFLAGS = -Winvalid-pch -x c++-header $(CPPFLAGS) $(INCLUDES)
@@ -1477,9 +1477,14 @@ uninstall-info: uninstall-info-recursive
 	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
 	uninstall-info-am uninstall-pkglibLTLIBRARIES
 
-@BUILD_PCH_TRUE@all.h.gch: all.h Makefile obmolecformat.h $(srcdir)/../babelconfig.h \
-@BUILD_PCH_TRUE@	$(srcdir)/../mol.h $(srcdir)/../obconversion.h $(srcdir)/../base.h \
-@BUILD_PCH_TRUE@	$(srcdir)/../generic.h $(srcdir)/../oberror.h
+@BUILD_PCH_TRUE@all.h.gch: all.h Makefile \
+@BUILD_PCH_TRUE@	$(srcdir)/../../include/openbabel/babelconfig.h \
+@BUILD_PCH_TRUE@  $(srcdir)/../../include/openbabel/base.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../../include/openbabel/generic.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../../include/openbabel/mol.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../../include/openbabel/oberror.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../../include/openbabel/obconversion.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../../include/openbabel/obmolecformat.h
 @BUILD_PCH_TRUE@	rm -f $@
 @BUILD_PCH_TRUE@	$(CXX) $(PCHFLAGS) $<
 @BUILD_PCH_TRUE@clean-local:

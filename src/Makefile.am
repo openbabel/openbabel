@@ -41,3 +41,20 @@ else !BUILD_SHARED
 libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 			formats/libformats.la forcefields/libforcefields.la @LTLIBOBJS@
 endif
+
+if BUILD_PCH
+BUILT_SOURCES = all.h.gch
+
+PCHFLAGS=-Winvalid-pch -x c++-header $(CPPFLAGS) $(INCLUDES)
+all.h.gch: all.h Makefile \
+	$(srcdir)/../include/openbabel/babelconfig.h \
+  $(srcdir)/../include/openbabel/base.h \
+	$(srcdir)/../include/openbabel/generic.h \
+	$(srcdir)/../include/openbabel/mol.h \
+	$(srcdir)/../include/openbabel/oberror.h
+	rm -f $@
+	$(CXX) $(PCHFLAGS) $<
+AM_CXXFLAGS= -include $(top_srcdir)/src/all.h
+clean-local:
+	-rm -f all.h.gch
+endif

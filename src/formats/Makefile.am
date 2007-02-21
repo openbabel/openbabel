@@ -1,6 +1,6 @@
 INCLUDES = -I$(top_srcdir)/data -I$(top_srcdir)/include
 
-EXTRA_DIST = exampleformat.cpp cansmilesformat.h
+EXTRA_DIST = exampleformat.cpp 
 SUBDIRS =
 
 if BUILD_XML
@@ -14,9 +14,14 @@ endif
 if BUILD_PCH
 BUILT_SOURCES = all.h.gch
 PCHFLAGS=-Winvalid-pch -x c++-header $(CPPFLAGS) $(INCLUDES)
-all.h.gch: all.h Makefile obmolecformat.h $(srcdir)/../babelconfig.h \
-	$(srcdir)/../mol.h $(srcdir)/../obconversion.h $(srcdir)/../base.h \
-	$(srcdir)/../generic.h $(srcdir)/../oberror.h
+all.h.gch: all.h Makefile \
+	$(srcdir)/../../include/openbabel/babelconfig.h \
+  $(srcdir)/../../include/openbabel/base.h \
+	$(srcdir)/../../include/openbabel/generic.h \
+	$(srcdir)/../../include/openbabel/mol.h \
+	$(srcdir)/../../include/openbabel/oberror.h \
+	$(srcdir)/../../include/openbabel/obconversion.h \
+	$(srcdir)/../../include/openbabel/obmolecformat.h
 	rm -f $@
 	$(CXX) $(PCHFLAGS) $<
 AM_CXXFLAGS= -include $(top_srcdir)/src/formats/all.h

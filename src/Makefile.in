@@ -284,7 +284,10 @@ libopenbabel_la_LDFLAGS = -version-info 3:0:1 -no-undefined
 @BUILD_SHARED_TRUE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 @BUILD_SHARED_TRUE@			forcefields/libforcefields.la @LTLIBOBJS@ @LIBDL@
 
-all: config.h
+@BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
+@BUILD_PCH_TRUE@PCHFLAGS = -Winvalid-pch -x c++-header $(CPPFLAGS) $(INCLUDES)
+@BUILD_PCH_TRUE@AM_CXXFLAGS = -include $(top_srcdir)/src/all.h
+all: $(BUILT_SOURCES) config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
@@ -634,14 +637,16 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-check: check-recursive
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-recursive
 all-am: Makefile $(LTLIBRARIES) config.h
 installdirs: installdirs-recursive
 installdirs-am:
 	for dir in "$(DESTDIR)$(libdir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: install-recursive
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -665,9 +670,11 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+@BUILD_PCH_FALSE@clean-local:
 clean: clean-recursive
 
-clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
+clean-am: clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
 	mostlyclean-am
 
 distclean: distclean-recursive
@@ -720,7 +727,7 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
 	clean clean-generic clean-libLTLIBRARIES clean-libtool \
-	clean-recursive ctags ctags-recursive distclean \
+	clean-local clean-recursive ctags ctags-recursive distclean \
 	distclean-compile distclean-generic distclean-hdr \
 	distclean-libtool distclean-recursive distclean-tags distdir \
 	dvi dvi-am html html-am info info-am install install-am \
@@ -734,6 +741,16 @@ uninstall-info: uninstall-info-recursive
 	tags tags-recursive uninstall uninstall-am uninstall-info-am \
 	uninstall-libLTLIBRARIES
 
+@BUILD_PCH_TRUE@all.h.gch: all.h Makefile \
+@BUILD_PCH_TRUE@	$(srcdir)/../include/openbabel/babelconfig.h \
+@BUILD_PCH_TRUE@  $(srcdir)/../include/openbabel/base.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../include/openbabel/generic.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../include/openbabel/mol.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../include/openbabel/oberror.h
+@BUILD_PCH_TRUE@	rm -f $@
+@BUILD_PCH_TRUE@	$(CXX) $(PCHFLAGS) $<
+@BUILD_PCH_TRUE@clean-local:
+@BUILD_PCH_TRUE@	-rm -f all.h.gch
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

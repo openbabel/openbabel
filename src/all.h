@@ -1,7 +1,7 @@
 /**********************************************************************
 all.h - Target for Precompiled Header Support (includes most common headers)
  
-Copyright (C) 2005-2006 by Geoffrey R. Hutchison
+Copyright (C) 2005-2007 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -19,7 +19,7 @@ GNU General Public License for more details.
 #ifndef OB_ALL_H
 #define OB_ALL_H
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 // Common STL headers
 #include <vector>
@@ -27,10 +27,10 @@ GNU General Public License for more details.
 #include <sstream>
 #include <iosfwd>
 
-#include "base.h"
-#include "generic.h"
-#include "mol.h"
-#include "oberror.h"
+#include <openbabel/base.h>
+#include <openbabel/generic.h>
+#include <openbabel/mol.h>
+#include <openbabel/oberror.h>
 
 #endif OB_ALL_H
 
