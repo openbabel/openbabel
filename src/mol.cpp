@@ -1486,7 +1486,6 @@ namespace OpenBabel
     obatom->SetIdx(_natoms+1);
     obatom->SetParent(this);
 
-
 #define OBAtomIncrement 100
 
     if (_vatom.empty() || _natoms+1 >= (signed)_vatom.size())
@@ -1547,6 +1546,7 @@ namespace OpenBabel
     OBBond *pBond = CreateBond();
     pBond->SetParent(this);
     pBond->SetIdx(_nbonds++);
+    pBond->SetParent(this);
     _vbond.push_back(pBond);
     return(pBond);
   }
@@ -2663,7 +2663,7 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBMol::AddBond(int first,int second,int order,int stereo,int insertpos)
+  bool OBMol::AddBond(int first,int second,int order,int flags,int insertpos)
   {
     if (first == second)
       return(false);
@@ -2689,7 +2689,7 @@ namespace OpenBabel
             obErrorLog.ThrowError(__FUNCTION__, "Unable to add bond - invalid atom index", obDebug);
             return(false);
           }
-        bond->Set(_nbonds,bgn,end,order,stereo);
+        bond->Set(_nbonds,bgn,end,order,flags);
         bond->SetParent(this);
 
         //set aromatic flags if it has the appropriate order
@@ -2733,7 +2733,7 @@ namespace OpenBabel
           }
       }
     else //at least one atom doesn't exist yet - add to bond_q
-      SetData(new OBVirtualBond(first,second,order,stereo));
+      SetData(new OBVirtualBond(first,second,order,flags));
 
     //    EndModify();
     return(true);
