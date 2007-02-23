@@ -36,6 +36,10 @@ namespace OpenBabel
 #define OBFF_LOGLVL_LOW	1     //!< SteepestDescent progress... (no output from Energy())
 #define OBFF_LOGLVL_MEDIUM	2 //!< individual energy terms
 #define OBFF_LOGLVL_HIGH	3   //!< individual calculations and parameters
+
+#ifndef isnan
+#define static inline isnan(double x) { return x != x; }
+#endif
  
   // terms
 #define OBFF_ENERGY		(1 << 0)   //!< all terms
@@ -223,7 +227,9 @@ namespace OpenBabel
     { 
       return -NumericalDerivative(a, terms); 
     }
-
+    //! \return true if atom a and b are in the same ring
+    bool IsInSameRing(OBAtom* a, OBAtom* b);
+ 
     int get_nbr (OBAtom* atom, int level);
     bool is14(OBAtom *a, OBAtom *b);
       
@@ -231,6 +237,7 @@ namespace OpenBabel
 
     // ofstream for logfile
     std::ostream* logos;
+    char logbuf[200];
     int loglvl;
 
     // used to hold i for current conformer (needed by UpdateCoordinates)
@@ -255,6 +262,23 @@ namespace OpenBabel
     virtual bool Setup(OBMol &mol) { return false; }
     //! Update coordinates after steepest descent, conjugate gradient
     int UpdateCoordinates(OBMol &mol);
+    //! Print msg to the logfile
+    void OBFFLog(std::string msg)
+    {
+      if (!logos)
+        return;
+      
+      *logos << msg;
+    }
+    void OBFFLog(const char *msg)
+    {
+      if (!logos)
+        return;
+      
+      *logos << msg;
+    }
+
+
  
     /////////////////////////////////////////////////////////////////////////
     // Energy Evaluation                                                   //

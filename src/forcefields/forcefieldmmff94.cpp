@@ -68,7 +68,6 @@ namespace OpenBabel
   {
     vector<OBFFBondCalculationMMFF94>::iterator i;
     double energy;
-    char logbuf[100];
 
     energy = 0.0f;
 
@@ -141,7 +140,6 @@ namespace OpenBabel
   {
     vector<OBFFAngleCalculationMMFF94>::iterator i;
     double energy;
-    char logbuf[100];
  
     energy = 0.0f;
 
@@ -225,7 +223,6 @@ namespace OpenBabel
   {
     vector<OBFFStrBndCalculationMMFF94>::iterator i;
     double energy;
-    char logbuf[100];
 
     energy = 0.0f;
     
@@ -335,7 +332,6 @@ namespace OpenBabel
   {
     vector<OBFFTorsionCalculationMMFF94>::iterator i;
     double energy;
-    char logbuf[150];
     
     energy = 0.0f;
     
@@ -385,7 +381,6 @@ namespace OpenBabel
   {
     vector<OBFFOOPCalculationMMFF94>::iterator i;
     double energy;
-    char logbuf[100];
 
     energy = 0.0f;
     
@@ -439,7 +434,6 @@ namespace OpenBabel
   {
     vector<OBFFVDWCalculationMMFF94>::iterator i;
     double energy;
-    char logbuf[100];
 
     energy = 0.0f;
     
@@ -478,7 +472,6 @@ namespace OpenBabel
   {
     OBAtom *a, *b, *c, *d;
     double e, energy;
-    char logbuf[100];
     
     IF_OBFF_LOGLVL_HIGH {
       *logos << std::endl << "E L E C T R O S T A T I C   I N T E R A C T I O N S" << std::endl << std::endl;
@@ -1984,7 +1977,6 @@ namespace OpenBabel
   bool OBForceFieldMMFF94::ValidateGradients ()
   {
     vector3 numgrad, anagrad, err;
-    char logbuf[150];
     
     cout << "----------------------------------------------------------------------------------------" << endl;
     cout << "                                                                                        " << endl;
@@ -2271,6 +2263,7 @@ namespace OpenBabel
   // used for bond typing
   // note: when two atoms are in the same ring, but one of them
   // is also in another ring, we return false
+  /*
   bool OBForceFieldMMFF94::IsInSameRing(OBAtom* a, OBAtom* b)
   {
     int a_in, b_in, a_in_cur, b_in_cur;
@@ -2310,7 +2303,7 @@ namespace OpenBabel
 
     return false;
   }
-  
+  */
   bool OBForceFieldMMFF94::HasLinSet(int atomtype)
   {
     vector<int>::iterator i;

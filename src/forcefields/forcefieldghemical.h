@@ -63,7 +63,8 @@ namespace OpenBabel
   {
     public:
       OBAtom *a, *b; // atoms of the pair
-      double ka, Ra, kb, Rb, kab, rab, sigma, sigma6, sigma12;
+      double ka, Ra, kb, Rb, kab, rab;
+      bool is14, samering;
 
       double GetEnergy();
       vector3 GetGradient(OBAtom *atom);

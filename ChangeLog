@@ -1,3 +1,24 @@
+2007-02-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+	
+	* data/ghemical.prm: Final update. All molecules from the validation
+	ste are given correct atom types and charges.
+
+	* src/forcefields/forcefieldghemical.cpp: Calculated energies comply
+	with those from ghemical except for 1,4-scaling. Ring atoms are not
+	always scaled in ghemical, not sure why.
+
+	* src/forcefield.cpp: Added OBFFLog, fixes PR#1664279. (tested, but
+	needs to replace all "*logos << ..." lines)
+	Moved IsInSameRing from OBForceFieldMMFF94 to OBForceField.
+	Test molecule from PR#1665765 minimizes correctly, but added cutoff
+	accuracy to make sure.
+
+	* tools/obmm.cpp: Added commands for DelHydrogens, GenerateCoordinates,
+	SystematicRotorSearch and NumConformers.
+
+	* include/openbabel/forcefield.cpp: Added a definition for isnan.
+	(should be replaced with a better method in the math class??)
+
 2007-02-22  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/mol.cpp: Added SetParent call to NewBond function.  Should resolve

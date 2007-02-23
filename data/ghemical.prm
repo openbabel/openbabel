@@ -7,6 +7,7 @@
 //
 // must be sorted according to the ELEMENT and COMPLEXITY OF THE TYPERULE!!!
 
+atom [*]         FFFF
 atom [#1]        0100 (-*) "general hydrogen"
 atom [#6]        0600 (-*) "general sp3 carbon"
 atom [#6]=*      0601 (=*) "general sp2 carbon"
@@ -15,24 +16,23 @@ atom [#6](=*)=*  0602 (=*,=*) "allenic sp carbon"
 atom [c]         0603 (~*,~*) "aromatic sp2 carbon"
 //atom [#6^3r3]  0604 ([-*?*-]) "sp3 carbon in a 3-membered ring"
 //atom [#6^3r4]  0605 ([-*?*?*-]) "sp3 carbon in a 4-membered ring"
-atom [#7]        0700 (-*) "general sp3 nitrogen"
-atom [#7]=*      0701 (=*) "general sp2 nitrogen"
-atom [#7]#*      0702 (#*) "general sp nitrogen"
+atom [N]         0700 (-*) "general sp3 nitrogen"
+atom [N]=*       0701 (=*) "general sp2 nitrogen"
+atom [N]#*       0702 (#*) "general sp nitrogen"
 atom [n]         0703 (~*,~*) "aromatic sp2 nitrogen"
-atom [#7D4]      0704 (-*,-*,-*,-*) "ammonium nitrogen"
-atom [#7][#6]=O  0705 (-C(=O)) "amide nitrogen"
-atom [#8]        0800 (-*) "general sp3 oxygen"
-atom [#8]=*      0801 (=*) "general sp2 oxygen"
-atom [F]         0900 (-*) "general fluorine"
-atom [P]       0F00 (-*) "general sp3 phosphorus"
-atom [#16]       1000 (-*) "general sp3 sulphur"
-atom [#16]=*     1001 (=*) "general sp2 sulphur"
-atom [#16]=[#8]  1002 (=O) "sulfoxide sulphur"
-atom [#16](=O)=O 1003 (=O,=O) "sulfone sulphur"
-atom [Cl]        1100 (-*) "general chlorine"
-atom [Br]        2300 (-*) "general bromine"
-atom [I]         3500 (-*) "general iodine"
-atom [s]         FFFF
+atom [ND4]       0704 (-*,-*,-*,-*) "ammonium nitrogen"
+atom [#7][C]=O   0705 (-C(=O)) "amide nitrogen"
+atom [O]         0800 (-*) "general sp3 oxygen"
+atom [O]=*       0801 (=*) "general sp2 oxygen"
+atom [F]*        0900 (-*) "general fluorine"
+atom [P]         0F00 (-*) "general sp3 phosphorus"
+atom [S]         1000 (-*) "general sp3 sulphur"
+atom [S]=*       1001 (=*) "general sp2 sulphur"
+atom [S]=[#8]    1002 (=O) "sulfoxide sulphur"
+atom [S](=O)=O   1003 (=O,=O) "sulfone sulphur"
+atom [Cl]*       1100 (-*) "general chlorine"
+atom [Br]*       2300 (-*) "general bromine"
+atom [I]*        3500 (-*) "general iodine"
 
 // bond stretching parameters 09.05.2000 (based on Tripos 5.2 and MMFF94)
 // [id #1] [id #2] [bondtype] [opt] [fc]

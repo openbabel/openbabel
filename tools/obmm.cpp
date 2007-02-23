@@ -19,7 +19,13 @@ eeq                  calculate the electrostatic energy				"
 sd <n>               steepest descent energy minimization for n steps
 cg <n>               conjugate gradients energy minimization for n steps
 
-addH                 add hydrogens (for smiles, ...)				done
+addH                 add hydrogens 						done
+delH                 delete hydrogens						done
+
+gen                  generate/minimize a (random) structure
+rs                   rotate around all rotatable bonds				todo
+nconf                print the number of conformers				todo
+conf <n>             select conformer n						todo
 
 quit                 quit							done
 
@@ -106,12 +112,19 @@ int main(int argc,char **argv)
       cout << "cg <n>               conjugate gradients energy minimization for n steps" << endl;
       cout << "" << endl;
       cout << "addH                 add hydrogens" << endl;
+      cout << "delH                 delete hydrogens" << endl;
+      cout << endl;
+      cout << "gen                  generate/minimize a (random) structure" << endl;
+      cout << "rs                   rotate around all rotatable bonds" << endl;
+      cout << "nconf                print the number of conformers" << endl;
+      cout << "conf <n>             select conformer n" << endl;
       cout << endl;
       cout << "quit                 quit" << endl;
       cout << endl;
       continue;
     }
 
+    // calculate the energy
     if (EQn(commandline, "energy", 6)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
@@ -190,6 +203,42 @@ int main(int argc,char **argv)
       mol.AddHydrogens(false, true);
       num2 = mol.NumAtoms();
       cout << (num2 - num1) << " hydrogens added." << endl;
+      
+      if (!pFF->Setup(mol)) {
+        cout << "error while initializing the force field for this molecule." <<endl;
+        continue;
+      }
+      continue;
+    }
+    
+    if (EQn(commandline, "delH", 4)) {
+      int num1, num2;
+      num1 = mol.NumAtoms();
+      mol.DeleteHydrogens();
+      num2 = mol.NumAtoms();
+      cout << (num1 - num2) << " hydrogens deleted." << endl;
+      
+      if (!pFF->Setup(mol)) {
+        cout << "error while initializing the force field for this molecule." <<endl;
+        continue;
+      }
+      continue;
+    }
+    
+    if (EQn(commandline, "gen", 3)) {
+      pFF->GenerateCoordinates();
+      pFF->UpdateCoordinates(mol);
+      continue;
+    }
+    
+    if (EQn(commandline, "rs", 2)) {
+      pFF->SystematicRotorSearch();
+      pFF->UpdateCoordinates(mol);
+      continue;
+    }
+    
+    if (EQn(commandline, "nconf", 5)) {
+      cout << endl << "  number of conformers = " << mol.NumConformers() << endl << endl;
       continue;
     }
 

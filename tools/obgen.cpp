@@ -114,7 +114,8 @@ int main(int argc,char **argv)
         cerr << program_name << ": could not setup force field." << endl;
         exit (-1);
       }
-      
+     
+      pFF->GenerateCoordinates();
       pFF->SystematicRotorSearch();
 
       pFF->UpdateCoordinates(mol);

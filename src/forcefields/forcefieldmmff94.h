@@ -136,7 +136,7 @@ namespace OpenBabel
       //! \return The torsion type (TTIJKL)
       int GetTorsionType(OBAtom* a, OBAtom* b, OBAtom *c, OBAtom *d);
       //! \return true if atom a and b are in the same ring
-      bool IsInSameRing(OBAtom* a, OBAtom* b);
+      //bool IsInSameRing(OBAtom* a, OBAtom* b);
       //! \return true if atomtype has sbmb set in mmffprop.par
       bool HasSbmbSet(int atomtype);
       //! \return true if atomtype has arom set in mmffprop.par

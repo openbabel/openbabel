@@ -33,7 +33,7 @@ namespace OpenBabel
     delta = rab - r0;
     delta2 = delta * delta;
 
-    energy = KCAL_TO_KJ * kb * delta2;
+    energy = kb * delta2;
 
     return energy;
   }
@@ -51,7 +51,7 @@ namespace OpenBabel
     rab = OBForceField::VectorLengthDerivative(da, db);
     delta = rab - r0;
  
-    dE = KCAL_TO_KJ * 2.0f * kb * delta;
+    dE = 2.0f * kb * delta;
 
     if (atom == a) {
       gradient = dE * da; // - dE/drab * drab/da
@@ -66,15 +66,14 @@ namespace OpenBabel
   {
     vector<OBFFBondCalculationGhemical>::iterator i;
     double energy;
-    char logbuf[150];
     
     energy = 0.0f;
     
     IF_OBFF_LOGLVL_HIGH {
-      *logos << endl << "B O N D   S T R E T C H I N G" << endl << endl;
-      *logos << "ATOM TYPES  BOND    BOND       IDEAL       FORCE" << endl;
-      *logos << " I    J     TYPE   LENGTH     LENGTH     CONSTANT      DELTA      ENERGY" << endl;
-      *logos << "------------------------------------------------------------------------" << endl;
+      OBFFLog("\nB O N D   S T R E T C H I N G\n\n");
+      OBFFLog("ATOM TYPES  BOND    BOND       IDEAL       FORCE\n");
+      OBFFLog(" I    J     TYPE   LENGTH     LENGTH     CONSTANT      DELTA      ENERGY\n");
+      OBFFLog("------------------------------------------------------------------------\n");
     }
  
     for (i = _bondcalculations.begin(); i != _bondcalculations.end(); i++) {
@@ -82,14 +81,16 @@ namespace OpenBabel
       energy += i->GetEnergy();
 
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s    %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
+        sprintf(logbuf, "%s %s    %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
-        *logos  << logbuf << endl;
+        OBFFLog(logbuf);
       }
     }
     
-    IF_OBFF_LOGLVL_MEDIUM
-      *logos << "     TOTAL BOND STRETCHING ENERGY = " << energy << GetUnit() << endl;
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(logbuf, "     TOTAL BOND STRETCHING ENERGY = %8.3f %s\n",  energy, GetUnit().c_str());
+      OBFFLog(logbuf);
+    }
     return energy;
   }
   
@@ -99,15 +100,15 @@ namespace OpenBabel
 
     theta = a->GetAngle(b->GetIdx(), c->GetIdx());
 
-    if (theta > 170) {
-      delta2 = 1.0f + cos(theta);
+    if (theta0 > 170) {
+      delta = 1.0f + cos(theta * DEG_TO_RAD);
 
-      energy = KCAL_TO_KJ * ka * delta2;
+      energy = ka * delta * RAD_TO_DEG * RAD_TO_DEG;
     } else {
       delta = theta - theta0;
       delta2 = delta * delta;
     
-      energy = KCAL_TO_KJ * ka * delta2;
+      energy = ka * delta2;
     }
      
     return energy;
@@ -127,7 +128,19 @@ namespace OpenBabel
     theta = OBForceField::VectorAngleDerivative(da, db, dc);
     delta = theta - theta0;
  
-    dE = KCAL_TO_KJ * 2.0f * ka * delta;
+    if (theta0 > 170) {
+      if (atom == a) {
+        gradient = ka * da;
+        return gradient;
+      } else if (atom == b) {
+        gradient = ka * db;
+        return gradient;
+      } else {
+        gradient = ka * dc;
+        return gradient;
+      }
+    } else
+      dE = 2.0f * ka * delta;
 
     if (atom == a) {
       gradient = dE * da; // - dE/drab * drab/da
@@ -145,7 +158,6 @@ namespace OpenBabel
   {
     vector<OBFFAngleCalculationGhemical>::iterator i;
     double energy;
-    char logbuf[150];
     
     energy = 0.0f;
     
@@ -163,12 +175,14 @@ namespace OpenBabel
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%s %s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).c->GetType(), (*i).theta, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
-        *logos  << logbuf << endl;
+        OBFFLog(logbuf);
       }
     }
  
-    IF_OBFF_LOGLVL_MEDIUM
-      *logos << "     TOTAL ANGLE BENDING ENERGY = " << energy << GetUnit() << endl;
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s", energy, GetUnit().c_str());
+      OBFFLog(logbuf);
+    }
     return energy;
   }
   
@@ -178,7 +192,6 @@ namespace OpenBabel
     double phi1, phi2, phi3;
     vector3 vab, vbc, vcd, abbc, bccd;
 
-    //tor = CalcTorsionAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
     vab = a->GetVector() - b->GetVector();
     vbc = b->GetVector() - c->GetVector();
     vcd = c->GetVector() - d->GetVector();
@@ -188,16 +201,23 @@ namespace OpenBabel
     if (dot(abbc, bccd) > 0.0f)
       tor = -tor;
     
-    cosine = cos(DEG_TO_RAD * (n * tor));
-    energy = KCAL_TO_KJ * V * (1 + s * cosine);
-    
+    cosine = cos(DEG_TO_RAD * tor);
+    cosine2 = cos(2.0f * DEG_TO_RAD * tor);
+    cosine3 = cos(3.0f * DEG_TO_RAD * tor);
+
+    phi1 = 1.0f + cosine;
+    phi2 = 1.0f - cosine2;
+    phi3 = 1.0f + cosine3;
+
+    energy = k1 * phi1 + k2 * phi2 + k3 * phi3;
+
     return energy;
   }
   
   vector3 OBFFTorsionCalculationGhemical::GetGradient(OBAtom *atom) 
   {
     vector3 da, db, dc, dd, gradient;
-    double dE, sine;
+    double dE, sine, sine2, sine3;
 
     if ((atom->GetIdx() != a->GetIdx()) && (atom->GetIdx() != b->GetIdx()) && (atom->GetIdx() != c->GetIdx()) &&  (atom->GetIdx() != d->GetIdx()))
       return  VZero;
@@ -208,12 +228,11 @@ namespace OpenBabel
     dd = d->GetVector();
     tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
  
-    sine = sin(DEG_TO_RAD * (n * tor));
-    dE = - KCAL_TO_KJ * V * s * n * sine;
+    sine = sin(DEG_TO_RAD * tor);
+    sine2 = sin(2.0f * DEG_TO_RAD * tor);
+    sine3 = sin(3.0f * DEG_TO_RAD * tor);
+    dE = -k1 * sine + k2 * 2.0f * sine2 - k3 * 3.0f * sine3;
     
-    //if (IsNearZero(dE))
-    //  return VZero;
-
     if (atom == a) {
       gradient = dE * da; // - dE/drab * drab/da
       return gradient;
@@ -233,7 +252,6 @@ namespace OpenBabel
   {
     vector<OBFFTorsionCalculationGhemical>::iterator i;
     double energy;
-    char logbuf[150];
  
     energy = 0.0f;
 
@@ -262,16 +280,23 @@ namespace OpenBabel
 
   double OBFFVDWCalculationGhemical::GetEnergy()
   {
-    double sigma2, sigma4;
+    double term6, term12;
 
     rab = a->GetDistance(b);
+    
+    term12 = rab / ka;
+    term6 = rab / kb;
 
-    sigma = rab / (Ra + Rb);
-    sigma2 = sigma * sigma;
-    sigma4 = sigma2 * sigma2;
-    sigma6 = sigma4 * sigma2;
-    sigma12 = sigma6 * sigma6;
-    energy = KCAL_TO_KJ * kab * ((1.0f / sigma12) - (2.0f / sigma6));
+    term12 = term12 * term12 * term12; // ^3
+    term12 = term12 * term12; // ^6
+    term12 = term12 * term12; // ^12
+    term6 = term6 * term6 * term6; // ^3
+    term6 = term6 * term6; // ^6
+ 
+    energy = (1.0f / term12) - (1.0f / term6);
+
+    if (is14 && samering)
+      energy *= 2.0f;
 
     return energy;
   }
@@ -279,7 +304,7 @@ namespace OpenBabel
   vector3 OBFFVDWCalculationGhemical::GetGradient(OBAtom *atom) 
   {
     vector3 da, db, gradient;
-    double dE, sigma2, sigma4;
+    double dE, term6, term7, term12, term13;
 
     if ((atom != a) && (atom != b))
       return  VZero;
@@ -288,14 +313,25 @@ namespace OpenBabel
     db = b->GetVector();
     rab = OBForceField::VectorLengthDerivative(da, db);
     
-    sigma = rab / (Ra + Rb);
-    sigma2 = sigma * sigma;
-    sigma4 = sigma2 * sigma2;
-    sigma6 = sigma4 * sigma2;
-    sigma12 = sigma6 * sigma6;
- 
-    dE = KCAL_TO_KJ * 12.0f * (kab / rab) * ((1.0f / sigma6) - (1.0f / sigma12));
+    term12 = rab / ka;
+    term6 = rab / kb;
+    term13 = term12;
+    term7 = term6;
+
+    term12 = term12 * term12 * term12; // ^3
+    term12 = term12 * term12; // ^6
+    term12 = term12 * term12; // ^12
+    term13 = term13 * term12; // ^13
+    term6 = term6 * term6 * term6; // ^3
+    term6 = term6 * term6; // ^6
+    term7 = term7 * term6; // ^7
+
+    dE = - (12.0f / ka) * (1.0f / term13) + (6.0f / kb) * (1.0f / term7);
     
+    if (is14 && samering)
+      dE *= 2.0f;
+
+  
     if (atom == a) {
       gradient = dE * da; // - dE/drab * drab/da
       return gradient;
@@ -310,15 +346,14 @@ namespace OpenBabel
   {
     vector<OBFFVDWCalculationGhemical>::iterator i;
     double energy;
-    char logbuf[150];
  
     energy = 0.0f;
     
     IF_OBFF_LOGLVL_HIGH {
       *logos << endl << "V A N   D E R   W A A L S" << endl << endl;
       *logos << "ATOM TYPES          " << endl;
-      *logos << " I    J        Rij       kij      SIGMA     ENERGY" << endl;
-      *logos << "---------------------------------------------------" << endl;
+      *logos << " I    J        Rij       kij       ENERGY" << endl;
+      *logos << "-----------------------------------------" << endl;
       //          XX   XX     -000.000  -000.000  -000.000  -000.000
     }
     
@@ -327,8 +362,8 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f  %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
-                (*i).rab, (*i).kab, (*i).sigma, (*i).energy);
+        sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
+                (*i).rab, (*i).kab, (*i).energy);
         *logos  << logbuf << endl;
       }
     }
@@ -345,7 +380,7 @@ namespace OpenBabel
     vab = a->GetVector() - b->GetVector();
     rab = vab.length();
 
-    energy = KCAL_TO_KJ * qq / rab;
+    energy = qq / rab;
 
     return energy;
   }
@@ -363,7 +398,7 @@ namespace OpenBabel
     rab = OBForceField::VectorLengthDerivative(da, db);
     rab2 = rab * rab;
     
-    dE = - (KCAL_TO_KJ * qq) / rab2;
+    dE = -qq / rab2;
     
     if (atom == a) {
       gradient = dE * da; // - dE/drab * drab/da
@@ -378,7 +413,6 @@ namespace OpenBabel
   {
     vector<OBFFElectrostaticCalculationGhemical>::iterator i;
     double energy;
-    char logbuf[150];
  
     energy = 0.0f;
     
@@ -479,7 +513,7 @@ namespace OpenBabel
           if (parameter == NULL) {
             //obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters ", obError);
             //return false;
-            bondcalc.kb = 500.0f;
+            bondcalc.kb = KCAL_TO_KJ * 500.0f;
             bondcalc.r0 = 1.100f;
 
             _bondcalculations.push_back(bondcalc);
@@ -487,7 +521,7 @@ namespace OpenBabel
           }
         }
       }
-      bondcalc.kb = parameter->dpar2;
+      bondcalc.kb = KCAL_TO_KJ * parameter->dpar2;
       bondcalc.r0 = parameter->dpar1;
 
       _bondcalculations.push_back(bondcalc);
@@ -513,19 +547,24 @@ namespace OpenBabel
       if (parameter == NULL) {
         parameter = GetParameter("FFFF", b->GetType(), c->GetType(), _ffangleparams);
         if (parameter == NULL) {
-          parameter = GetParameter("FFFF", b->GetType(), "FFFF", _ffangleparams);
+          parameter = GetParameter(a->GetType(), b->GetType(), "FFFF", _ffangleparams);
           if (parameter == NULL) {
-            anglecalc.ka   = 0.020f;
-            anglecalc.theta0 = 120.0f;
+            parameter = GetParameter("FFFF", b->GetType(), "FFFF", _ffangleparams);
+            if (parameter == NULL) {
+              anglecalc.ka = KCAL_TO_KJ * 0.020f;
+              anglecalc.theta0 = 120.0f;
             
-            _anglecalculations.push_back(anglecalc);
-            continue;
-            //obErrorLog.ThrowError(__FUNCTION__, "Could not find all angle parameters", obError);
-            //return false;
-          }
+              _anglecalculations.push_back(anglecalc);
+            
+	      IF_OBFF_LOGLVL_LOW
+                *logos  << "COULD NOT FIND PARAMETERS FOR ANGLE " << a->GetType() << "-" << b->GetType() << "-" << c->GetType() << ", USING DEFAULT PARAMETERS" << endl;
+
+              continue;
+            }
+	  }
         }
       }
-      anglecalc.ka   = parameter->dpar2;
+      anglecalc.ka = KCAL_TO_KJ * parameter->dpar2;
       anglecalc.theta0 = parameter->dpar1;
       
       _anglecalculations.push_back(anglecalc);
@@ -536,6 +575,7 @@ namespace OpenBabel
     //
     OBFFTorsionCalculationGhemical torsioncalc;
     int torsiontype;
+    int s;
 
     _torsioncalculations.clear();
  
@@ -546,6 +586,8 @@ namespace OpenBabel
       d = _mol.GetAtom((*t)[3] + 1);
       OBBond *bc = _mol.GetBond(b, c);
       torsiontype = bc->GetBondOrder(); 
+      if (bc->IsAromatic())
+        torsiontype = 5;
       
       torsioncalc.a = a;
       torsioncalc.b = b;
@@ -564,6 +606,10 @@ namespace OpenBabel
               torsioncalc.V = 0.0f;
               torsioncalc.s = 1.0f;
               torsioncalc.n = 1.0f;
+              
+	      torsioncalc.k1 = 0.0f;
+	      torsioncalc.k2 = 0.0f;
+	      torsioncalc.k3 = 0.0f;
               _torsioncalculations.push_back(torsioncalc);
               continue;
               //obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
@@ -572,9 +618,44 @@ namespace OpenBabel
           }
         }
       }
-      torsioncalc.V = parameter->dpar1;
+      torsioncalc.V = KCAL_TO_KJ * parameter->dpar1;
       torsioncalc.s = parameter->dpar2;
       torsioncalc.n = parameter->dpar3;
+
+      s = (int) (torsioncalc.s * torsioncalc.n);
+      switch(s) {
+        case +3:
+          torsioncalc.k1 = 0.0f;
+          torsioncalc.k2 = 0.0f;
+	  torsioncalc.k3 = torsioncalc.V;
+	  break;
+        case +2:
+          torsioncalc.k1 = 0.0f;
+	  torsioncalc.k2 = -torsioncalc.V;
+          torsioncalc.k3 = 0.0f;
+	  break;
+        case +1:
+	  torsioncalc.k1 = torsioncalc.V;
+          torsioncalc.k2 = 0.0f;
+          torsioncalc.k3 = 0.0f;
+	  break;
+        case -1:
+	  torsioncalc.k1 = -torsioncalc.V;
+          torsioncalc.k2 = 0.0f;
+          torsioncalc.k3 = 0.0f;
+	  break;
+        case -2:
+          torsioncalc.k1 = 0.0f;
+	  torsioncalc.k2 = torsioncalc.V;
+          torsioncalc.k3 = 0.0f;
+	  break;
+        case -3:
+          torsioncalc.k1 = 0.0f;
+          torsioncalc.k2 = 0.0f;
+	  torsioncalc.k3 = -torsioncalc.V;
+	  break;
+      }
+
       _torsioncalculations.push_back(torsioncalc);     
     }
     
@@ -613,15 +694,30 @@ namespace OpenBabel
      
       //this calculations only need to be done once for each pair, 
       //we do them now and save them for later use
-      vdwcalc.kab = sqrt(vdwcalc.ka * vdwcalc.kb);
+      vdwcalc.kab = KCAL_TO_KJ * sqrt(vdwcalc.ka * vdwcalc.kb);
       
       // 1-4 scaling
+      vdwcalc.is14 = false;
       FOR_NBORS_OF_ATOM (nbr, a)
         FOR_NBORS_OF_ATOM (nbr2, &*nbr)
           FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-            if (b == &*nbr3)
+            if (b == &*nbr3) {
+              vdwcalc.is14 = true;
               vdwcalc.kab *= 0.5f;
+            }
+      
+      // not sure why this is needed, but validation showed it works...
+      if (a->IsInRingSize(6) && b->IsInRingSize(6) && IsInSameRing(a, b))
+        vdwcalc.samering = true;
+      else if ((a->IsInRingSize(5) || a->IsInRingSize(4)) && (b->IsInRingSize(5) || b->IsInRingSize(4)))
+        vdwcalc.samering = true;
+      else
+        vdwcalc.samering = false;
 
+
+      vdwcalc.ka = (vdwcalc.Ra + vdwcalc.Rb) * pow(1.0f * vdwcalc.kab , 1.0f / 12.0f);
+      vdwcalc.kb = (vdwcalc.Ra + vdwcalc.Rb) * pow(2.0f * vdwcalc.kab , 1.0f / 6.0f);
+      
       _vdwcalculations.push_back(vdwcalc);
     }
     
@@ -636,7 +732,7 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
       
-      elecalc.qq = 332.17f * a->GetPartialCharge() * b->GetPartialCharge();
+      elecalc.qq = KCAL_TO_KJ * 332.17f * a->GetPartialCharge() * b->GetPartialCharge();
       
       if (elecalc.qq) {
         elecalc.a = &*a;
@@ -728,11 +824,8 @@ namespace OpenBabel
           parameter.ipar5 = 2;
         if (EQn(vs[5].c_str(), "?T?", 3))
           parameter.ipar5 = 3;
-        if (EQn(vs[5].c_str(), "?C?", 3)) {
-          parameter.ipar5 = 1;
-          _fftorsionparams.push_back(parameter);
-          parameter.ipar5 = 2;
-        }
+        if (EQn(vs[5].c_str(), "?C?", 3))
+          parameter.ipar5 = 5;
         _fftorsionparams.push_back(parameter);
       }
       if (EQn(buffer, "vdw", 3)) {
@@ -793,10 +886,7 @@ namespace OpenBabel
         ifs2.open(buffer2.c_str());
         ifsP = &ifs2;
       }
-
-    IF_OBFF_LOGLVL_LOW 
-      *logos  << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
-    
+   
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "atom", 4)) {
       	tokenize(vs, buffer);
@@ -823,13 +913,29 @@ namespace OpenBabel
     }
 
     SetGhemicalCharges();
-
+ 
     IF_OBFF_LOGLVL_LOW {
-      *logos << "IDX\tTYPE\tCHARGE" << std::endl;
+      *logos  << endl << "A T O M   T Y P E S" << endl << endl;
+      *logos << "IDX\tTYPE" << endl;
+      
       FOR_ATOMS_OF_MOL (a, _mol)
-        *logos << a->GetIdx() << "\t" << a->GetType() << "\t" << a->GetPartialCharge() << std::endl;
-    }
+        *logos << a->GetIdx() << "\t" << a->GetType() << endl;
 
+      *logos  << endl << "C H A R G E S" << endl << endl;
+      *logos << "IDX\tCHARGE" << endl;
+      
+      FOR_ATOMS_OF_MOL (a, _mol)
+        *logos << a->GetIdx() << "\t" << a->GetPartialCharge() << endl;
+ 
+    }
+    
+    // DEBUG (validation)
+    //FOR_ATOMS_OF_MOL (a, _mol)
+    //  if (atoi(a->GetType()) != 0)
+    //    cout << "ATOMTYPE " << atoi(a->GetType()) << endl;
+    //  else
+    //    cout << "ATOMTYPE " << a->GetType() << endl;
+ 
     if (ifs1)
       ifs1.close();
     if (ifs2)
@@ -860,11 +966,11 @@ namespace OpenBabel
 
       for (unsigned int idx=0; idx < _ffchargeparams.size(); idx++) {
         if (((_a == _ffchargeparams[idx]._a) && (_b == _ffchargeparams[idx]._b)) && (bondtype == _ffchargeparams[idx].ipar5)) {
-          a->SetPartialCharge( - _ffchargeparams[idx].dpar1);
-	  b->SetPartialCharge( + _ffchargeparams[idx].dpar1);
+          a->SetPartialCharge(a->GetPartialCharge() - _ffchargeparams[idx].dpar1);
+	  b->SetPartialCharge(b->GetPartialCharge() + _ffchargeparams[idx].dpar1);
 	} else if (((_a == _ffchargeparams[idx]._b) && (_b == _ffchargeparams[idx]._a)) && (bondtype == _ffchargeparams[idx].ipar5)) {
-          a->SetPartialCharge( + _ffchargeparams[idx].dpar1);
-	  b->SetPartialCharge( - _ffchargeparams[idx].dpar1);
+          a->SetPartialCharge(a->GetPartialCharge() + _ffchargeparams[idx].dpar1);
+	  b->SetPartialCharge(b->GetPartialCharge() - _ffchargeparams[idx].dpar1);
 	}
       }
     }
@@ -883,7 +989,8 @@ namespace OpenBabel
     energy += E_Electrostatic();
 
     IF_OBFF_LOGLVL_HIGH {
-      *logos << endl << "TOTAL ENERGY = " << energy << GetUnit() << endl << endl;
+      sprintf(logbuf, "\nTOTAL ENERGY = %8.3f %s", energy, GetUnit().c_str());
+      OBFFLog(logbuf);
     }
 
     return energy;
@@ -934,7 +1041,8 @@ namespace OpenBabel
     string _b(b);
     string _c(c);
     string _d(d);
-    for (unsigned int idx=0; idx < parameter.size(); idx++)
+
+    for (unsigned int idx=0; idx < parameter.size(); idx++) {
       if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c) && 
            (_d == parameter[idx]._d)) && (type == parameter[idx].ipar5) || 
           ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && (_c == parameter[idx]._b) && 
@@ -942,6 +1050,7 @@ namespace OpenBabel
         par = &parameter[idx];
         return par;
       }
+    }
 
     return NULL;
   }
@@ -988,15 +1097,10 @@ namespace OpenBabel
   bool OBForceFieldGhemical::ValidateGradients ()
   {
     vector3 numgrad, anagrad, err;
-    char logbuf[150];
     
-    *logos << "----------------------------------------------------------------------------------------" << endl;
-    *logos << "                                                                                        " << endl;
-    *logos << "  VALIDATE GRADIENTS : " << _mol.GetTitle() << endl;
-    *logos << "                                                                                        " << endl;
-    *logos << "                                                                                        " << endl;
-    *logos << "ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERRROR (%)   " << endl;
-    *logos << "----------------------------------------------------------------------------------------" << endl;
+    OBFFLog("\nV A L I D A T E   G R A D I E N T S\n\n");
+    OBFFLog("ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERRROR (%)   \n");
+    OBFFLog("----------------------------------------------------------------------------------------\n");
     //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
    
     FOR_ATOMS_OF_MOL (a, _mol) {
@@ -1006,54 +1110,55 @@ namespace OpenBabel
       anagrad = GetGradient(&*a, OBFF_ENERGY);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      *logos << logbuf << endl;
+      OBFFLog(logbuf);
 
       // OBFF_EBOND
       numgrad = NumericalDerivative(&*a, OBFF_EBOND);
       anagrad = GetGradient(&*a, OBFF_EBOND);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       *logos << logbuf << endl;
+      OBFFLog(logbuf);
       
       // OBFF_EANGLE
       numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
       anagrad = GetGradient(&*a, OBFF_EANGLE);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      *logos << logbuf << endl;
+      OBFFLog(logbuf);
 
       // OBFF_ETORSION
       numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
       anagrad = GetGradient(&*a, OBFF_ETORSION);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      *logos << logbuf << endl;
+      OBFFLog(logbuf);
 
       // OBFF_EVDW
       numgrad = NumericalDerivative(&*a, OBFF_EVDW);
       anagrad = GetGradient(&*a, OBFF_EVDW);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      *logos << logbuf << endl;
+      OBFFLog(logbuf);
 
       // OBFF_EELECTROSTATIC
       numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
       anagrad = GetGradient(&*a, OBFF_EELECTROSTATIC);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      *logos << logbuf << endl;
+      OBFFLog(logbuf);
     }
   }
 

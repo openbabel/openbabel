@@ -49,6 +49,7 @@ namespace OpenBabel
       - Energy terms: finished
       - Analytical gradients: finished
       - Validation: in progress...
+        1,4-scaling still needs some work
 
       - src/forcefields/forcefieldmmff94.cpp
       - Atom typing: needs work
@@ -276,8 +277,6 @@ namespace OpenBabel
 
   void OBForceField::GenerateCoordinates() 
   {
-    //_mol.AddHydrogens(false, true);
-
     OBAtom *atom, *nbr, *nbr2, *nbr3;
     vector<OBNodeBase*>::iterator i;
     vector<OBEdgeBase*>::iterator j;
@@ -327,59 +326,11 @@ namespace OpenBabel
     InternalToCartesian(internals, _mol);
    
     // minimize the created structure
-    //SteepestDescent(300);
+    ConjugateGradients(2500);
   }
   
   void OBForceField::SystematicRotorSearch() 
   {
-    OBAtom *atom, *nbr, *nbr2, *nbr3;
-    vector<OBNodeBase*>::iterator i;
-    vector<OBEdgeBase*>::iterator j;
-    
-    /* we need to set the bond lengths, angles (and a torsion) */
-    vector<OBInternalCoord*> internals;
-    OBInternalCoord *coord;
-
-    coord = new OBInternalCoord();
-    internals.push_back(coord);
-      
-    int torang;
-    for (atom = _mol.BeginAtom(i);atom;atom = _mol.NextAtom(i)) {
-      coord = new OBInternalCoord();
-      nbr = _mol.GetAtom(get_nbr(atom, 1));
-      nbr2 = _mol.GetAtom(get_nbr(atom, 2));
-      nbr3 = _mol.GetAtom(get_nbr(atom, 3));
-        
-      if (nbr) {
-        coord->_a = _mol.GetAtom(get_nbr(atom, 1));
-        OBBond *bond;
-        if ( (bond = _mol.GetBond(atom, nbr)) ) {
-          coord->_dst = bond->GetEquibLength();
-        }
-      }
-
-      if (nbr2) {
-        coord->_b = _mol.GetAtom(get_nbr(atom, 2));
-        if (nbr->GetHyb() == 3)
-          coord->_ang = 109;
-        if (nbr->GetHyb() == 2)
-          coord->_ang = 120;
-        if (nbr->GetHyb() == 1)
-          coord->_ang = 180;
-      }
-  
-      if (nbr3) {
-        coord->_c = _mol.GetAtom(get_nbr(atom, 3));
-        coord->_tor = torang;
-        torang +=60;
-      }
-            
-      internals.push_back(coord);
-    }
-    
-    InternalToCartesian(internals, _mol);
-    /* Bond distances, angles are now set */
-    
     OBRotorList rl;
     OBRotamerList rotamers;
 
@@ -423,18 +374,9 @@ namespace OpenBabel
     // Calculate energy for all conformers
     char logbuf[100];
     std::vector<double> energies(_mol.NumConformers(), 0.0);
-    int old_loglvl;
     for (int i = 0; i < _mol.NumConformers(); i++) {
       _mol.SetConformer(i); // select conformer
 
-      old_loglvl = GetLogLevel();
-      SetLogLevel(OBFF_LOGLVL_NONE); // dissable logging, we don't want log messages from cg to interfere
-
-      // TAKES TOO LONG!! TODO: check if this step improves the final outcome
-      //ConjugateGradients(100, OBFF_ANALYTICAL_GRADIENT); // small minimization before calculating energy
-      
-      SetLogLevel(old_loglvl); // restore log level
-      
       energies[i] = Energy(); // calculate and store energy
       
       IF_OBFF_LOGLVL_LOW {
@@ -455,8 +397,6 @@ namespace OpenBabel
    
     _mol.SetConformer(best_conformer);
     current_conformer = best_conformer;
-
-    ConjugateGradients(2500); // final energy minimizatin for best conformation
   }
 
 
@@ -823,6 +763,11 @@ namespace OpenBabel
 
     dir = atom->GetVector() - orig_xyz;
     atom->SetVector(orig_xyz);     
+
+    // cutoff accuracy
+    if (dir.length() < 1e-8)
+      return VZero;
+
     return dir;    
   }
   
@@ -1355,6 +1300,32 @@ namespace OpenBabel
       d = VZero;
     
     return tor;  
+  }
+  
+  bool OBForceField::IsInSameRing(OBAtom* a, OBAtom* b)
+  {
+    bool a_in, b_in;
+    vector<OBRing*> vr;
+    vr = _mol.GetSSSR();
+    
+    vector<OBRing*>::iterator i;
+    vector<int>::iterator j;
+    
+    for (i = vr.begin();i != vr.end();i++) {
+      a_in = false;
+      b_in = false;
+      for(j = (*i)->_path.begin();j != (*i)->_path.end();j++) {
+        if (*j == a->GetIdx())
+          a_in = true;
+        if (*j == b->GetIdx())
+          b_in = true;
+      }
+      
+      if (a_in && b_in)
+        return true;
+    }
+
+    return false;
   }
  
 } // end namespace OpenBabel
