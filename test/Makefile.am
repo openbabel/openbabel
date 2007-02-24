@@ -5,7 +5,7 @@ noinst_PROGRAMS = aromatic atom bond cansmi \
 	internalcoord invalidsmarts invalidsmiles \
 	iterators math mol residue rings smarts \
 	smilesmatch unitcell \
-	mmff94validate
+	mmff94validate addhydrogens
 
 bin_PROGRAMS = roundtrip
 
@@ -44,6 +44,7 @@ invalidsmarts_SOURCES = invalidsmarts.cpp
 iterators_SOURCES = iterators.cpp
 math_SOURCES = math.cpp
 mmff94validate_SOURCES = mmff94validate.cpp
+addhydrogens_SOURCES = addhydrogens.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
