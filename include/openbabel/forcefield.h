@@ -243,7 +243,7 @@ namespace OpenBabel
     // used to hold i for current conformer (needed by UpdateCoordinates)
     int current_conformer;
 
-    // used for conjugate gradients (Initialize and TakeNSteps)
+    // used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     double _econv, _e_n1;
     int _method, _cstep, _nsteps;
     std::vector<vector3> _grad1, _dir1;
@@ -289,7 +289,7 @@ namespace OpenBabel
     // Energy Evaluation                                                   //
     /////////////////////////////////////////////////////////////////////////
       
-    //! \name Methods for structure generation
+    //! \name Methods for energy evaluation
     //@{
     //! \return Total energy
     virtual double Energy() { return 0.0f; }
@@ -377,17 +377,53 @@ namespace OpenBabel
     vector3 LineSearch(OBAtom *atom, vector3 &direction);
     /*! Perform steepest descent optimalization for steps steps or until convergence criteria is reached.
       \param steps the number of steps 
+      \param econv energy convergence criteria (defualt is 1e-6)
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
     */
-    void SteepestDescent(int steps, int method = OBFF_ANALYTICAL_GRADIENT);
+    void SteepestDescent(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    /*! Initialize steepest descent optimalization, to be used in combination with SteepestDescentTakeNSteps().
+      
+      example:
+      \code
+      // pFF is a pointer to a OBForceField class 
+      pFF->SteepestDescentInitialize(100, 1e-5f);
+      while (pFF->SteepestDescentTakeNSteps(5)) {
+        // do some updating in your program (redraw structure, ...)
+      }
+      \endcode
+      
+      If you don't need any updating in your program, SteepestDescent() is recommended.
+
+      \param steps the number of steps
+      \param econv energy convergence criteria (defualt is 1e-6)
+      \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+    */
+    void SteepestDescentInitialize(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    /*! Take n steps in a steepestdescent optimalization that was previously initialized with SteepestDescentInitialize().
+      \param n the number of steps to take
+      \return false if convergence or the number of steps given by SteepestDescentInitialize() has been reached 
+    */
+    bool SteepestDescentTakeNSteps(int n);
     /*! Perform conjugate gradient optimalization for steps steps or until convergence criteria is reached.
       \param steps the number of steps 
       \param econv energy convergence criteria (defualt is 1e-6)
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
     */
     void ConjugateGradients(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
-    /*! Initialize conjugate gradient optimalization, to be used in combination with ConjugateGradientsTakeNSteps().
-      \param steps the number of steps (total steps, ConjugateGradientsTakeNSteps() will decrease this is zero or convergence has been reached)
+    /*! Initialize conjugate gradient optimalization and take the first step, to be used in combination with ConjugateGradientsTakeNSteps().
+      
+      example:
+      \code
+      // pFF is a pointer to a OBForceField class 
+      pFF->ConjugateGradientsInitialize(100, 1e-5f);
+      while (pFF->ConjugateGradientsTakeNSteps(5)) {
+        // do some updating in your program (redraw structure, ...)
+      }
+      \endcode
+      
+      If you don't need any updating in your program, ConjugateGradients() is recommended.
+
+      \param steps the number of steps
       \param econv energy convergence criteria (defualt is 1e-6)
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
     */

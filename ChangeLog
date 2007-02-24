@@ -3,6 +3,7 @@
 	* src/forcefield.cpp: Added ConjugateGradientsInitialize() and
 	ConjugateGradientsTakeNSteps(). ConjugateGradients() still exists and
 	uses these two new function.
+	Idem for SteepestDescent.
 
 2007-02-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 	

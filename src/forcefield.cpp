@@ -875,7 +875,7 @@ namespace OpenBabel
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
  
     IF_OBFF_LOGLVL_LOW {
-      OBFFLog("\nV A L I D A T E   C O N J U G A T E   G R A D I E N T\n\n");
+      OBFFLog("\nV A L I D A T E   C O N J U G A T E   G R A D I E N T S\n\n");
       sprintf(logbuf, "STEPS = %d\n\n",  steps);
       OBFFLog(logbuf);
       OBFFLog("STEP n     E(n)       E(n-1)    \n");
@@ -925,15 +925,14 @@ namespace OpenBabel
       }
     }
   }
-
-  void OBForceField::SteepestDescent(int steps, int method) 
+  
+  void OBForceField::SteepestDescentInitialize(int steps, double econv, int method) 
   {
-    double e_n1, e_n2;
-    char logbuf[100];
-    vector3 grad;
+    _nsteps = steps;
+    _econv = econv;
+    _method = method;
 
-    e_n1 = Energy(); // we call Energy instead of GetEnergy 
-                     // because coordinates change every step
+    _e_n1 = Energy();
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nS T E E P E S T   D E S C E N T\n\n");
@@ -942,11 +941,18 @@ namespace OpenBabel
       OBFFLog("STEP n     E(n)       E(n-1)    \n");
       OBFFLog("--------------------------------\n");
     }
+  }
+ 
+  bool OBForceField::SteepestDescentTakeNSteps(int n) 
+  {
+    double e_n2;
+    vector3 grad;
 
-    for (int i = 1; i <= steps; i++) {
+    for (int i = 1; i <= n; i++) {
+      _cstep++;
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        if (method & OBFF_ANALYTICAL_GRADIENT)
+        if (_method & OBFF_ANALYTICAL_GRADIENT)
           grad = GetGradient(&*a);
         else
           grad = NumericalDerivative(&*a);
@@ -956,21 +962,29 @@ namespace OpenBabel
       e_n2 = Energy();
       
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+        sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, _e_n1);
         OBFFLog(logbuf);
       }
 
-      if (fabs(e_n1 - e_n2) < 0.0000001f) {
+      if (fabs(_e_n1 - e_n2) < _econv) {
         IF_OBFF_LOGLVL_LOW
-          OBFFLog("    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)\n");
-        break;
+          OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
+        return false;
       }
+      
+      if (_nsteps == _cstep)
+        return false;
 
-      e_n1 = e_n2;
+      _e_n1 = e_n2;
     }
 
-    IF_OBFF_LOGLVL_LOW
-      OBFFLog("\n");
+    return true;  // no convergence reached
+  }
+ 
+  void OBForceField::SteepestDescent(int steps, double econv, int method) 
+  {
+    SteepestDescentInitialize(steps, econv, method);
+    SteepestDescentTakeNSteps(steps);
   }
   
   void OBForceField::ConjugateGradientsInitialize(int steps, double econv, int method)
@@ -978,6 +992,7 @@ namespace OpenBabel
     double e_n2;
     vector3 grad2, dir2;
 
+    _cstep = 1;
     _nsteps = steps;
     _econv = econv;
     _method = method;
@@ -987,7 +1002,7 @@ namespace OpenBabel
     _e_n1 = Energy();
     
     IF_OBFF_LOGLVL_LOW {
-      OBFFLog("\nC O N J U G A T E   G R A D I E N T\n\n");
+      OBFFLog("\nC O N J U G A T E   G R A D I E N T S\n\n");
       sprintf(logbuf, "STEPS = %d\n\n",  steps);
       OBFFLog(logbuf);
       OBFFLog("STEP n     E(n)       E(n-1)    \n");
@@ -1013,7 +1028,7 @@ namespace OpenBabel
     e_n2 = Energy();
       
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, " %4d    %8.3f    %8.3f\n", 1, e_n2, _e_n1);
+      sprintf(logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
       OBFFLog(logbuf);
     }
  
@@ -1028,6 +1043,8 @@ namespace OpenBabel
     
     if (_grad1.size() != (_mol.NumAtoms()+1))
       return false;
+
+    e_n2 = 0.0f;
     
     for (int i = 1; i <= n; i++) {
       _cstep++;
@@ -1047,7 +1064,8 @@ namespace OpenBabel
 	  
         _grad1[a->GetIdx()] = grad2;
         _dir1[a->GetIdx()] = dir2;
-        _e_n1 = e_n2;
+	if (e_n2)
+          _e_n1 = e_n2;
       }
       e_n2 = Energy();
 	
