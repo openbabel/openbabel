@@ -1545,9 +1545,21 @@ namespace OpenBabel
   {
     OBBond *pBond = CreateBond();
     pBond->SetParent(this);
-    pBond->SetIdx(_nbonds++);
-    pBond->SetParent(this);
-    _vbond.push_back(pBond);
+    pBond->SetIdx(_nbonds+1);
+
+#define OBBondIncrement 100
+        if (_vbond.empty() || _nbonds+1 >= (signed)_vbond.size())
+          {
+            _vbond.resize(_nbonds+OBBondIncrement);
+            vector<OBBond*>::iterator i;
+            for (i = _vbond.begin(),i+=(_nbonds+1);i != _vbond.end();++i)
+              *i = (OBBond*)NULL;
+          }
+#undef  OBBondIncrement
+
+    _vbond[_nbonds] = (OBBond*)pBond;
+    _nbonds++;
+
     return(pBond);
   }
 

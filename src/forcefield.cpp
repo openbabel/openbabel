@@ -339,13 +339,14 @@ namespace OpenBabel
     rotamers.Setup(_mol, rl);
     
     IF_OBFF_LOGLVL_LOW {
-      *logos << endl << "S Y S T E M A T I C   R O T O R   S E A R C H" << endl << endl;
-      *logos << "  NUMBER OF ROTATABLE BONDS: " << rl.Size() << endl;
+      OBFFLog("\nS Y S T E M A T I C   R O T O R   S E A R C H\n\n");
+      sprintf(logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
+      OBFFLog(logbuf);
     }
 
     if (!rl.Size()) { // only one conformer
       IF_OBFF_LOGLVL_LOW
-        *logos << "  GENERATED ONLY ONE CONFORMER" << endl << endl;
+        OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
  
       ConjugateGradients(2500); // final energy minimizatin for best conformation
       
@@ -366,9 +367,10 @@ namespace OpenBabel
     rotamers.ExpandConformerList(_mol, _mol.GetConformers());
       
     IF_OBFF_LOGLVL_LOW {
-      *logos << "  GENERATED " << _mol.NumConformers() << " CONFORMERS" << endl << endl;
-      *logos << "CONFORMER     ENERGY" << endl;
-      *logos << "--------------------" << endl;
+      sprintf(logbuf, "  GENERATED %d CONFORMERS\n\n", _mol.NumConformers());
+      OBFFLog(logbuf);
+      OBFFLog("CONFORMER     ENERGY\n");
+      OBFFLog("--------------------\n");
     }
     
     // Calculate energy for all conformers
@@ -380,8 +382,8 @@ namespace OpenBabel
       energies[i] = Energy(); // calculate and store energy
       
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, "   %3d      %8.3f", (i + 1), energies[i]);
-        *logos << logbuf << endl;
+        sprintf(logbuf, "   %3d      %8.3f\n", (i + 1), energies[i]);
+        OBFFLog(logbuf);
       }
     }
 
@@ -392,9 +394,11 @@ namespace OpenBabel
         best_conformer = i;
     }
   
-    IF_OBFF_LOGLVL_LOW
-      *logos << endl << "  CONFORMER " << (best_conformer + 1) << " HAS THE LOWEST ENERGY" << endl << endl;
-   
+    IF_OBFF_LOGLVL_LOW {
+      sprintf(logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
+      OBFFLog(logbuf);
+    }
+
     _mol.SetConformer(best_conformer);
     current_conformer = best_conformer;
   }
@@ -408,9 +412,8 @@ namespace OpenBabel
     double matrix[N][N], G[N][N];
     bool is15;
     
-    IF_OBFF_LOGLVL_LOW {
-      *logos << endl << "D I S T A N C E   G E O M E T R Y" << endl << endl;
-    }
+    IF_OBFF_LOGLVL_LOW
+      OBFFLog("\nD I S T A N C E   G E O M E T R Y\n\n");
  
     // Calculate initial distance matrix
     //
@@ -486,18 +489,17 @@ namespace OpenBabel
    
     // output initial distance matrix
     IF_OBFF_LOGLVL_LOW {
-      char logbuf[100];
 
-      *logos << "INITIAL DISTANCE MATRIX" << endl << endl;
+      OBFFLog("INITIAL DISTANCE MATRIX\n\n");
       for (i=0; i<N; i++) {
-        *logos << "[";
+        OBFFLog("[");
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", matrix[i][j]);
-          *logos << logbuf;
+          OBFFLog(logbuf);
         }
-        *logos << "]" << endl;
+        OBFFLog("]\n");
       }
-      *logos << endl;
+      OBFFLog("\n");
     }
 
     // Triangle smoothing
@@ -569,18 +571,17 @@ namespace OpenBabel
 
     // output result of triangle smoothing
     IF_OBFF_LOGLVL_LOW {
-      char logbuf[100];
 
-      *logos << "TRIANGLE SMOOTHING" << endl << endl;
+      OBFFLog("TRIANGLE SMOOTHING\n\n");
       for (i=0; i<N; i++) {
-        *logos << "[";
+        OBFFLog("[");
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", matrix[i][j]);
-          *logos << logbuf;
+          OBFFLog(logbuf);
         }
-        *logos << "]" << endl;
+        OBFFLog("]\n");
       }
-      *logos << endl;
+      OBFFLog("\n");
     }
     
     // Generate random distance matrix between lower and upper limits
@@ -616,16 +617,16 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW {
       char logbuf[100];
 
-      *logos << "RANDOM DISTANCE MATRIX BETWEEN LIMITS" << endl << endl;
+      OBFFLog("RANDOM DISTANCE MATRIX BETWEEN LIMITS\n\n");
       for (i=0; i<N; i++) {
-        *logos << "[";
+        OBFFLog("[");
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", matrix[i][j]);
-          *logos << logbuf;
+          OBFFLog(logbuf);
         }
-        *logos << "]" << endl;
+        OBFFLog("]\n");
       }
-      *logos << endl;
+      OBFFLog("\n");
     }
 
     // Generate metric matrix
@@ -640,16 +641,16 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW {
       char logbuf[100];
 
-      *logos << "METRIC MATRIX" << endl << endl;
+      OBFFLog("METRIC MATRIX\n\n");
       for (i=0; i<N; i++) {
-        *logos << "[";
+        OBFFLog("[");
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", G[i][j]);
-          *logos << logbuf;
+          OBFFLog(logbuf);
         }
-        *logos << "]" << endl;
+        OBFFLog("]\n");
       }
-      *logos << endl;
+      OBFFLog("\n");
     }
 
     // Calculate eigenvalues and eigenvectors
@@ -659,24 +660,24 @@ namespace OpenBabel
     
     // output eigenvalues and eigenvectors
     IF_OBFF_LOGLVL_LOW {
-      char logbuf[100];
 
-      *logos << "EIGENVALUES OF METRIC MATRIX" << endl << endl;
+      OBFFLog("EIGENVALUES OF METRIC MATRIX\n\n");
       for (i=0; i<N; i++) {
-        *logos << eigenvalues[i] << " ";
+        sprintf(logbuf, "%8.4f ", eigenvalues[i]);
+        OBFFLog(logbuf);
       }
-      *logos << endl << endl;
+      OBFFLog("\n");
 
-      *logos << "EIGENVECTORS OF METRIC MATRIX" << endl << endl;
+      OBFFLog("EIGENVECTORS OF METRIC MATRIX\n\n");
       for (i=0; i<N; i++) {
-        *logos << "[";
+        OBFFLog("[");
         for (j=0; j<N; j++) {
           sprintf(logbuf, " %8.4f ", eigenvectors[i][j]);
-          *logos << logbuf;
+          OBFFLog(logbuf);
         }
-        *logos << "]" << endl;
+        OBFFLog("]\n");
       }
-      *logos << endl;
+      OBFFLog("\n");
     }
 
     // Assign coordinates
@@ -828,22 +829,28 @@ namespace OpenBabel
     atom->SetVector(9.0f, 9.0f, 0.0f);
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
     
-    *logos << endl << "V A L I D A T E   S T E E P E S T   D E S C E N T" << endl << endl;
-    *logos << "STEPS = " << steps << endl << endl;
-    *logos << "STEP n     E(n)       E(n-1)    " << endl;
-    *logos << "--------------------------------" << endl;
-    
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nV A L I D A T E   S T E E P E S T   D E S C E N T\n\n");
+      sprintf(logbuf, "STEPS = %d\n\n",  steps);
+      OBFFLog(logbuf);
+      OBFFLog("STEP n     E(n)       E(n-1)    \n");
+      OBFFLog("--------------------------------\n");
+    }
+
     for (int i = 1; i <= steps; i++) {
       grad.Set(-2*atom->x(), -4*atom->y(), 0.0f);
       grad = ValidateLineSearch(&*atom, grad);
       atom->SetVector(atom->x() + grad.x(), atom->y() + grad.y(), 0.0f);
       e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
       
-      sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
-      *logos << logbuf << endl;
+      IF_OBFF_LOGLVL_LOW {
+        sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+        OBFFLog(logbuf);
+      }
 
       if (fabs(e_n1 - e_n2) < 0.0000001f) {
-        *logos << "    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+        IF_OBFF_LOGLVL_LOW
+          OBFFLog("    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)\n");
         break;
       }
 
@@ -851,7 +858,7 @@ namespace OpenBabel
     }
 
     IF_OBFF_LOGLVL_LOW
-      *logos << endl;
+      OBFFLog("\n");
   }
 
   void OBForceField::ValidateConjugateGradients(int steps)
@@ -867,10 +874,13 @@ namespace OpenBabel
     atom->SetVector(9.0f, 9.0f, 0.0f);
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
  
-    *logos << endl << "V A L I D A T E   C O N J U G A T E   G R A D I E N T" << endl << endl;
-    *logos << "STEPS = " << steps << endl << endl;
-    *logos << "STEP n     E(n)       E(n-1)    " << endl;
-    *logos << "--------------------------------" << endl;
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nV A L I D A T E   C O N J U G A T E   G R A D I E N T\n\n");
+      sprintf(logbuf, "STEPS = %d\n\n",  steps);
+      OBFFLog(logbuf);
+      OBFFLog("STEP n     E(n)       E(n-1)    \n");
+      OBFFLog("--------------------------------\n");
+    }
  
     for (int i = 1; i <= steps; i++) {
       if (firststep) {
@@ -880,8 +890,10 @@ namespace OpenBabel
         atom->SetVector(atom->x() + dir1.x(), atom->y() + dir1.y(), atom->z() + dir1.z());
         e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
       
-        sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
-        *logos << logbuf << endl;
+        IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+          OBFFLog(logbuf);
+	}
         
         e_n1 = e_n2;
         dir1 = grad1;
@@ -898,11 +910,14 @@ namespace OpenBabel
         dir1 = dir2;
         e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
 	  
-        sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
-        *logos << logbuf << endl;
+        IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+          OBFFLog(logbuf);
+	}
         
         if (fabs(e_n1 - e_n2) < 0.0000001f) {
-          *logos << "    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+          IF_OBFF_LOGLVL_LOW
+             OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)\n");
           break;
         }
 
@@ -921,12 +936,13 @@ namespace OpenBabel
                      // because coordinates change every step
     
     IF_OBFF_LOGLVL_LOW {
-      *logos << endl << "S T E E P E S T   D E S C E N T" << endl << endl;
-      *logos << "STEPS = " << steps << endl << endl;
-      *logos << "STEP n     E(n)       E(n-1)    " << endl;
-      *logos << "--------------------------------" << endl;
+      OBFFLog("\nS T E E P E S T   D E S C E N T\n\n");
+      sprintf(logbuf, "STEPS = %d\n\n",  steps);
+      OBFFLog(logbuf);
+      OBFFLog("STEP n     E(n)       E(n-1)    \n");
+      OBFFLog("--------------------------------\n");
     }
-    
+
     for (int i = 1; i <= steps; i++) {
       
       FOR_ATOMS_OF_MOL (a, _mol) {
@@ -940,12 +956,13 @@ namespace OpenBabel
       e_n2 = Energy();
       
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
-        *logos << logbuf << endl;
+        sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+        OBFFLog(logbuf);
       }
 
       if (fabs(e_n1 - e_n2) < 0.0000001f) {
-        *logos << "    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+        IF_OBFF_LOGLVL_LOW
+          OBFFLog("    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)\n");
         break;
       }
 
@@ -953,7 +970,7 @@ namespace OpenBabel
     }
 
     IF_OBFF_LOGLVL_LOW
-      *logos << endl;
+      OBFFLog("\n");
   }
 
   void OBForceField::ConjugateGradients(int steps, int method)
@@ -972,12 +989,13 @@ namespace OpenBabel
     e_n1 = Energy();
     
     IF_OBFF_LOGLVL_LOW {
-      *logos << endl << "C O N J U G A T E   G R A D I E N T" << endl << endl;
-      *logos << "STEPS = " << steps << endl << endl;
-      *logos << "STEP n     E(n)       E(n-1)    " << endl;
-      *logos << "--------------------------------" << endl;
+      OBFFLog("\nC O N J U G A T E   G R A D I E N T\n\n");
+      sprintf(logbuf, "STEPS = %d\n\n",  steps);
+      OBFFLog(logbuf);
+      OBFFLog("STEP n     E(n)       E(n-1)    \n");
+      OBFFLog("--------------------------------\n");
     }
-    
+ 
     grad1.resize(_mol.NumAtoms() + 1);
     dir1.resize(_mol.NumAtoms() + 1);
 
@@ -996,11 +1014,11 @@ namespace OpenBabel
         }
         e_n2 = Energy();
       
-        IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
-          *logos << logbuf << endl;
-        }
-	
+	IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+          OBFFLog(logbuf);
+	}
+ 
         firststep = false;
         e_n1 = e_n2;
       } else {
@@ -1022,13 +1040,15 @@ namespace OpenBabel
         }
         e_n2 = Energy();
 	
-        IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, " %4d    %8.3f    %8.3f", i, e_n2, e_n1);
-          *logos << logbuf << endl;
-        }
+	IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+          OBFFLog(logbuf);
+	}
  
+
         if (fabs(e_n1 - e_n2) < 0.0000001f) {
-          *logos << "    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)" << endl;
+          IF_OBFF_LOGLVL_LOW
+            OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)\n");
           break;
         }
 
@@ -1148,16 +1168,36 @@ namespace OpenBabel
     return (grad);
   }
 
-  int OBForceField::UpdateCoordinates(OBMol &mol)
+  bool OBForceField::UpdateCoordinates(OBMol &mol)
   { 
-    mol = _mol;
+    OBAtom *atom;
+
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
     
-    mol.SetConformer(current_conformer); // after SystematicRotorSearch we want
-                                         // to make sure the lowest energy conformer
-    // is selected when a program calls UpdateCoordinates.
-    // Otherwise the program would have to find out by itself
-    // which conformer was picked and minimized
-    return current_conformer;
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      atom = mol.GetAtom(a->GetIdx());
+      atom->SetVector(a->GetVector());
+    }
+
+    //Copy conformer information
+    if (_mol.NumConformers() > 1) {
+      int k,l;
+      vector<double*> conf;
+      double* xyz = NULL;
+      for (k=0 ; k<_mol.NumConformers() ; ++k) {
+        xyz = new double [3*_mol.NumAtoms()];
+        for (l=0 ; l<(int) (3*_mol.NumAtoms()) ; ++l)
+          xyz[l] = _mol.GetConformer(k)[l];
+        conf.push_back(xyz);
+      }
+      mol.SetConformers(conf);
+      mol.SetConformer(current_conformer);
+    }
+    
+    //mol = _mol;
+    //mol.SetConformer(current_conformer);
+    return true;
   }
 
   vector3 OBForceField::ValidateGradientError(vector3 &numgrad, vector3 &anagrad)

@@ -1,3 +1,19 @@
+2007-02-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+	
+	* src/mol.cpp: changes OBMol::NewBond, fixes PR#1666785. AddBond() was
+	resizing the _vbond vector and NewBond() used push_back to add items.
+	This created a gap bewteen the bonds added by NewBond() and AddBond().
+	The FOR_BONDS_OF_MOL iterator expects all bonds to be at the begin of
+	the vector. Note: this also fixes the initial problem with the
+	OBAngleData and OBTorsionData.
+
+	* test/addhydrogens.cpp: added/deleted... (was used for debugging)
+
+	* src/forcefield.cpp: changes "*logos << ..." to OBFFLog(...)
+
+	* src/forcefields/forcefieldghemical.cpp: changes "*logos << ..." to 
+	OBFFLog(...)
+
 2007-02-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 	
 	* data/ghemical.prm: Final update. All molecules from the validation

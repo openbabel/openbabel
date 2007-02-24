@@ -261,7 +261,7 @@ namespace OpenBabel
     //! Setup the forcefield for mol (assigns atom types, charges, etc. \return True if succesfull
     virtual bool Setup(OBMol &mol) { return false; }
     //! Update coordinates after steepest descent, conjugate gradient
-    int UpdateCoordinates(OBMol &mol);
+    bool UpdateCoordinates(OBMol &mol);
     //! Print msg to the logfile
     void OBFFLog(std::string msg)
     {

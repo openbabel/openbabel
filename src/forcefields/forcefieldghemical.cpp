@@ -162,10 +162,10 @@ namespace OpenBabel
     energy = 0.0f;
     
     IF_OBFF_LOGLVL_HIGH {
-      *logos << endl << "A N G L E   B E N D I N G" << endl << endl;
-      *logos << "ATOM TYPES       VALENCE     IDEAL      FORCE" << endl;
-      *logos << " I    J    K      ANGLE      ANGLE     CONSTANT      DELTA      ENERGY" << endl;
-      *logos << "-----------------------------------------------------------------------------" << endl;
+      OBFFLog("\nA N G L E   B E N D I N G\n\n");
+      OBFFLog("ATOM TYPES       VALENCE     IDEAL      FORCE\n");
+      OBFFLog(" I    J    K      ANGLE      ANGLE     CONSTANT      DELTA      ENERGY\n");
+      OBFFLog("-----------------------------------------------------------------------------\n");
     }
     
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); i++) {
@@ -173,14 +173,14 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
+        sprintf(logbuf, "%s %s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).c->GetType(), (*i).theta, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
         OBFFLog(logbuf);
       }
     }
  
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s", energy, GetUnit().c_str());
+      sprintf(logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
       OBFFLog(logbuf);
     }
     return energy;
@@ -256,10 +256,10 @@ namespace OpenBabel
     energy = 0.0f;
 
     IF_OBFF_LOGLVL_HIGH {
-      *logos << endl << "T O R S I O N A L" << endl << endl;
-      *logos << "----ATOM TYPES-----    FORCE              TORSION" << endl;
-      *logos << " I    J    K    L     CONSTANT     s       ANGLE    n    ENERGY" << endl;
-      *logos << "----------------------------------------------------------------" << endl;
+      OBFFLog("\nT O R S I O N A L\n\n");
+      OBFFLog("----ATOM TYPES-----    FORCE              TORSION\n");
+      OBFFLog(" I    J    K    L     CONSTANT     s       ANGLE    n    ENERGY\n");
+      OBFFLog("----------------------------------------------------------------\n");
     }
     
     for (i = _torsioncalculations.begin(); i != _torsioncalculations.end(); i++) {
@@ -267,14 +267,17 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s %s %s    %6.3f    %5.0f   %8.3f   %1.0f   %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
+        sprintf(logbuf, "%s %s %s %s    %6.3f    %5.0f   %8.3f   %1.0f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).c->GetType(), (*i).d->GetType(), (*i).V, (*i).s, (*i).tor, (*i).n, (*i).energy);
-        *logos << logbuf << endl;
+        OBFFLog(logbuf);
       }
     }
 
-    IF_OBFF_LOGLVL_MEDIUM
-      *logos <<  "     TOTAL TORSIONAL ENERGY = " << energy << GetUnit() << endl;
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(logbuf, "     TOTAL TORSIONAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(logbuf);
+    }
+
     return energy;
   }
 
@@ -350,10 +353,10 @@ namespace OpenBabel
     energy = 0.0f;
     
     IF_OBFF_LOGLVL_HIGH {
-      *logos << endl << "V A N   D E R   W A A L S" << endl << endl;
-      *logos << "ATOM TYPES          " << endl;
-      *logos << " I    J        Rij       kij       ENERGY" << endl;
-      *logos << "-----------------------------------------" << endl;
+      OBFFLog("\nV A N   D E R   W A A L S\n\n");
+      OBFFLog("ATOM TYPES\n");
+      OBFFLog(" I    J        Rij       kij       ENERGY\n");
+      OBFFLog("-----------------------------------------\n");
       //          XX   XX     -000.000  -000.000  -000.000  -000.000
     }
     
@@ -362,14 +365,17 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
+        sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).rab, (*i).kab, (*i).energy);
-        *logos  << logbuf << endl;
+        OBFFLog(logbuf);
       }
     }
 
-    IF_OBFF_LOGLVL_MEDIUM
-      *logos  << "     TOTAL VAN DER WAALS ENERGY = " << energy << GetUnit() << endl;
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(logbuf, "     TOTAL VAN DER WAALS ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(logbuf);
+    }
+
     return energy;
   }
 
@@ -417,10 +423,10 @@ namespace OpenBabel
     energy = 0.0f;
     
     IF_OBFF_LOGLVL_HIGH {
-      *logos << std::endl << "E L E C T R O S T A T I C   I N T E R A C T I O N S" << std::endl << std::endl;
-      *logos << "ATOM TYPES          " << std::endl;
-      *logos << " I    J           Rij   332.17*QiQj  ENERGY" << std::endl;
-      *logos << "-------------------------------------------" << std::endl;
+      OBFFLog("\nE L E C T R O S T A T I C   I N T E R A C T I O N S\n\n");
+      OBFFLog("ATOM TYPES\n");
+      OBFFLog(" I    J           Rij   332.17*QiQj  ENERGY\n");
+      OBFFLog("-------------------------------------------\n");
       //            XX   XX     -000.000  -000.000  -000.000  
     }
 
@@ -429,14 +435,17 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f", (*i).a->GetType(), (*i).b->GetType(), 
+        sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).rab, (*i).qq, (*i).energy);
-        *logos  << logbuf << endl;
+        OBFFLog(logbuf);
       }
     }
 
-    IF_OBFF_LOGLVL_MEDIUM
-      *logos << "     TOTAL ELECTROSTATIC ENERGY = " << energy << GetUnit() << endl;
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(logbuf, "     TOTAL ELECTROSTATIC ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(logbuf);
+    }
+
     return energy;
   }
 
@@ -469,9 +478,39 @@ namespace OpenBabel
 
   bool OBForceFieldGhemical::Setup(OBMol &mol)
   {
+    // DEBUG: CHECK TO SEE IF FOR_BONDS_OF_MOL matches NumBonds
+    int debug_nb;
+    debug_nb = mol.NumBonds();
+    FOR_BONDS_OF_MOL (debug_b, mol)
+      debug_nb--;
+    if (debug_nb) {
+      cout << endl << endl << endl << " E R R O R (1): numbonds does not match FOR_BONDS_OF_MOL  " << debug_nb << endl;
+      cout << " mol.NumBonds: " << mol.NumBonds() << endl;
+      cout << " FOR_BONDS_OF_MOL: " << mol.NumBonds() - debug_nb << endl;
+      cout << endl << endl << endl;
+    }
+    // END DEBUG
+
+
+
+    cout << "BEFORE _mol = mol: numbonds: _mol=" << _mol.NumBonds() << " mol=" << mol.NumBonds() << endl;
+    FOR_BONDS_OF_MOL (a, mol)
+      cout <<  "MOL idx=" << a->GetIdx() << "  type=" << a->GetBeginAtom()->GetIdx() << "-" << a->GetEndAtom()->GetIdx() << endl; 
+    FOR_BONDS_OF_MOL (a, _mol)
+      cout <<  "_MOL idx=" << a->GetIdx() << "  type=" << a->GetBeginAtom()->GetIdx() << "-" << a->GetEndAtom()->GetIdx() << endl; 
+
     _mol = mol;
-    SetGhemicalTypes();
     
+    cout << "AFTER _mol = mol: numbonds: _mol=" << _mol.NumBonds() << " mol=" << mol.NumBonds() << endl;
+    FOR_BONDS_OF_MOL (a, mol)
+      cout <<  "MOL idx=" << a->GetIdx() << "  type=" << a->GetBeginAtom()->GetIdx() << "-" << a->GetEndAtom()->GetIdx() << endl; 
+    FOR_BONDS_OF_MOL (a, _mol)
+      cout <<  "_MOL idx=" << a->GetIdx() << "  type=" << a->GetBeginAtom()->GetIdx() << "-" << a->GetEndAtom()->GetIdx() << endl; 
+
+
+    SetGhemicalTypes();
+
+
     if (!SetupCalculations())
       return false;
     
@@ -556,8 +595,10 @@ namespace OpenBabel
             
               _anglecalculations.push_back(anglecalc);
             
-	      IF_OBFF_LOGLVL_LOW
-                *logos  << "COULD NOT FIND PARAMETERS FOR ANGLE " << a->GetType() << "-" << b->GetType() << "-" << c->GetType() << ", USING DEFAULT PARAMETERS" << endl;
+	      IF_OBFF_LOGLVL_LOW {
+	        sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR ANGLE %s-%s-%s, USING DEFAULT PARAMETERS", a->GetType(), b->GetType(), c->GetType());
+		OBFFLog(logbuf);
+              }
 
               continue;
             }
@@ -915,18 +956,21 @@ namespace OpenBabel
     SetGhemicalCharges();
  
     IF_OBFF_LOGLVL_LOW {
-      *logos  << endl << "A T O M   T Y P E S" << endl << endl;
-      *logos << "IDX\tTYPE" << endl;
+      OBFFLog("\nA T O M   T Y P E S\n\n");
+      OBFFLog("IDX\tTYPE\n");
       
-      FOR_ATOMS_OF_MOL (a, _mol)
-        *logos << a->GetIdx() << "\t" << a->GetType() << endl;
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        sprintf(logbuf, "%d\t%s\n", a->GetIdx(), a->GetType());
+	OBFFLog(logbuf);
+      }
 
-      *logos  << endl << "C H A R G E S" << endl << endl;
-      *logos << "IDX\tCHARGE" << endl;
+      OBFFLog("\nC H A R G E S\n\n");
+      OBFFLog("IDX\tCHARGE\n");
       
-      FOR_ATOMS_OF_MOL (a, _mol)
-        *logos << a->GetIdx() << "\t" << a->GetPartialCharge() << endl;
- 
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
+	OBFFLog(logbuf);
+      }
     }
     
     // DEBUG (validation)
@@ -1121,7 +1165,6 @@ namespace OpenBabel
 
       sprintf(logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      *logos << logbuf << endl;
       OBFFLog(logbuf);
       
       // OBFF_EANGLE
