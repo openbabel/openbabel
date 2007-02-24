@@ -972,21 +972,19 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("\n");
   }
-
-  void OBForceField::ConjugateGradients(int steps, int method)
+  
+  void OBForceField::ConjugateGradientsInitialize(int steps, double econv, int method)
   {
-    double e_n1, e_n2;
-    double g2g2, g1g1, g2g1;
-    bool firststep;
-    vector<vector3> grad1, dir1;
+    double e_n2;
     vector3 grad2, dir2;
-    vector<vector3> old_xyz;
-    char logbuf[100];
+
+    _nsteps = steps;
+    _econv = econv;
+    _method = method;
 
     ValidateGradients();
-    firststep = true;
 
-    e_n1 = Energy();
+    _e_n1 = Energy();
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nC O N J U G A T E   G R A D I E N T\n\n");
@@ -995,68 +993,90 @@ namespace OpenBabel
       OBFFLog("STEP n     E(n)       E(n-1)    \n");
       OBFFLog("--------------------------------\n");
     }
- 
-    grad1.resize(_mol.NumAtoms() + 1);
-    dir1.resize(_mol.NumAtoms() + 1);
 
-    for (int i = 1; i <= steps; i++) {
-      if (firststep) {
-        FOR_ATOMS_OF_MOL (a, _mol) {
-          if (method & OBFF_ANALYTICAL_GRADIENT)
-            grad2 = GetGradient(&*a);
-          else
-            grad2 = NumericalDerivative(&*a);
-          dir2 = grad2;
-          dir2 = LineSearch(&*a, dir2);
-          a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
-          grad1[a->GetIdx()] = grad2;
-          dir1[a->GetIdx()] = grad2;
-        }
-        e_n2 = Energy();
-      
-	IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
-          OBFFLog(logbuf);
-	}
- 
-        firststep = false;
-        e_n1 = e_n2;
-      } else {
-        FOR_ATOMS_OF_MOL (a, _mol) {
-          if (method & OBFF_ANALYTICAL_GRADIENT)
-            grad2 = GetGradient(&*a);
-          else
-            grad2 = NumericalDerivative(&*a);
-          g2g2 = dot(grad2, grad2);
-          g1g1 = dot(grad1[a->GetIdx()], grad1[a->GetIdx()]);
-          g2g1 = g2g2 / g1g1;
-          dir2 = grad2 + g2g1 * dir1[a->GetIdx()];
-          dir2 = LineSearch(&*a, dir2);
-          a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
-	  
-          grad1[a->GetIdx()] = grad2;
-          dir1[a->GetIdx()] = dir2;
-          e_n1 = e_n2;
-        }
-        e_n2 = Energy();
-	
-	IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
-          OBFFLog(logbuf);
-	}
- 
+    _grad1.resize(_mol.NumAtoms() + 1);
+    _dir1.resize(_mol.NumAtoms() + 1);
 
-        if (fabs(e_n1 - e_n2) < 0.0000001f) {
-          IF_OBFF_LOGLVL_LOW
-            OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)\n");
-          break;
-        }
-
-        e_n1 = e_n2;
-      }
+    // Take the first step (same as steepest descent because there is no 
+    // gradient from the previous step.
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      if (_method & OBFF_ANALYTICAL_GRADIENT)
+        grad2 = GetGradient(&*a);
+      else
+        grad2 = NumericalDerivative(&*a);
+      dir2 = grad2;
+      dir2 = LineSearch(&*a, dir2);
+      a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
+      _grad1[a->GetIdx()] = grad2;
+      _dir1[a->GetIdx()] = grad2;
     }
+    e_n2 = Energy();
+      
+    IF_OBFF_LOGLVL_LOW {
+      sprintf(logbuf, " %4d    %8.3f    %8.3f\n", 1, e_n2, _e_n1);
+      OBFFLog(logbuf);
+    }
+ 
+    _e_n1 = e_n2;
   }
+  
+  bool OBForceField::ConjugateGradientsTakeNSteps(int n)
+  {
+    double e_n2;
+    double g2g2, g1g1, g2g1;
+    vector3 grad2, dir2;
+    
+    if (_grad1.size() != (_mol.NumAtoms()+1))
+      return false;
+    
+    for (int i = 1; i <= n; i++) {
+      _cstep++;
+      
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        if (_method & OBFF_ANALYTICAL_GRADIENT)
+          grad2 = GetGradient(&*a);
+        else
+          grad2 = NumericalDerivative(&*a);
+        
+	g2g2 = dot(grad2, grad2);
+        g1g1 = dot(_grad1[a->GetIdx()], _grad1[a->GetIdx()]);
+        g2g1 = g2g2 / g1g1;
+        dir2 = grad2 + g2g1 * _dir1[a->GetIdx()];
+        dir2 = LineSearch(&*a, dir2);
+        a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
+	  
+        _grad1[a->GetIdx()] = grad2;
+        _dir1[a->GetIdx()] = dir2;
+        _e_n1 = e_n2;
+      }
+      e_n2 = Energy();
+	
+      IF_OBFF_LOGLVL_LOW {
+        sprintf(logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+        OBFFLog(logbuf);
+      }
+ 
+      if (fabs(_e_n1 - e_n2) < _econv) { 
+        IF_OBFF_LOGLVL_LOW
+          OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED\n");
+        return false;
+      }
 
+      if (_nsteps == _cstep)
+        return false;
+
+      _e_n1 = e_n2;
+    }
+
+    return true; // no convergence reached
+  }
+ 
+  void OBForceField::ConjugateGradients(int steps, double econv, int method)
+  {
+    ConjugateGradientsInitialize(steps, econv, method);
+    ConjugateGradientsTakeNSteps(steps);
+  }
+  
   vector3 OBForceField::NumericalDerivative(OBAtom *atom, int terms)
   {
     vector3 va, grad;

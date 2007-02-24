@@ -478,38 +478,9 @@ namespace OpenBabel
 
   bool OBForceFieldGhemical::Setup(OBMol &mol)
   {
-    // DEBUG: CHECK TO SEE IF FOR_BONDS_OF_MOL matches NumBonds
-    int debug_nb;
-    debug_nb = mol.NumBonds();
-    FOR_BONDS_OF_MOL (debug_b, mol)
-      debug_nb--;
-    if (debug_nb) {
-      cout << endl << endl << endl << " E R R O R (1): numbonds does not match FOR_BONDS_OF_MOL  " << debug_nb << endl;
-      cout << " mol.NumBonds: " << mol.NumBonds() << endl;
-      cout << " FOR_BONDS_OF_MOL: " << mol.NumBonds() - debug_nb << endl;
-      cout << endl << endl << endl;
-    }
-    // END DEBUG
-
-
-
-    cout << "BEFORE _mol = mol: numbonds: _mol=" << _mol.NumBonds() << " mol=" << mol.NumBonds() << endl;
-    FOR_BONDS_OF_MOL (a, mol)
-      cout <<  "MOL idx=" << a->GetIdx() << "  type=" << a->GetBeginAtom()->GetIdx() << "-" << a->GetEndAtom()->GetIdx() << endl; 
-    FOR_BONDS_OF_MOL (a, _mol)
-      cout <<  "_MOL idx=" << a->GetIdx() << "  type=" << a->GetBeginAtom()->GetIdx() << "-" << a->GetEndAtom()->GetIdx() << endl; 
-
     _mol = mol;
     
-    cout << "AFTER _mol = mol: numbonds: _mol=" << _mol.NumBonds() << " mol=" << mol.NumBonds() << endl;
-    FOR_BONDS_OF_MOL (a, mol)
-      cout <<  "MOL idx=" << a->GetIdx() << "  type=" << a->GetBeginAtom()->GetIdx() << "-" << a->GetEndAtom()->GetIdx() << endl; 
-    FOR_BONDS_OF_MOL (a, _mol)
-      cout <<  "_MOL idx=" << a->GetIdx() << "  type=" << a->GetBeginAtom()->GetIdx() << "-" << a->GetEndAtom()->GetIdx() << endl; 
-
-
     SetGhemicalTypes();
-
 
     if (!SetupCalculations())
       return false;
@@ -523,6 +494,9 @@ namespace OpenBabel
     OBAtom *a, *b, *c, *d;
     bool found;
     
+    IF_OBFF_LOGLVL_LOW
+      OBFFLog("\nS E T T I N G   U P   C A L C U L A T I O N S\n\n");
+ 
     // 
     // Bond Calculations
     //
@@ -545,17 +519,19 @@ namespace OpenBabel
       parameter = GetParameterGhemical(bondtype, a->GetType(), b->GetType(), NULL, NULL,  _ffbondparams);
       if (parameter == NULL) {
         parameter = GetParameterGhemical(bondtype, "FFFF", a->GetType(), NULL, NULL, _ffbondparams);
-
         if (parameter == NULL) {
           parameter = GetParameterGhemical(bondtype, "FFFF", b->GetType(), NULL, NULL, _ffbondparams);
-
           if (parameter == NULL) {
-            //obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters ", obError);
-            //return false;
             bondcalc.kb = KCAL_TO_KJ * 500.0f;
             bondcalc.r0 = 1.100f;
 
             _bondcalculations.push_back(bondcalc);
+
+            IF_OBFF_LOGLVL_LOW {
+	        sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR BOND %s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType());
+		OBFFLog(logbuf);
+            }
+
             continue;
           }
         }
@@ -596,7 +572,7 @@ namespace OpenBabel
               _anglecalculations.push_back(anglecalc);
             
 	      IF_OBFF_LOGLVL_LOW {
-	        sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR ANGLE %s-%s-%s, USING DEFAULT PARAMETERS", a->GetType(), b->GetType(), c->GetType());
+	        sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR ANGLE %s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType());
 		OBFFLog(logbuf);
               }
 
@@ -652,9 +628,13 @@ namespace OpenBabel
 	      torsioncalc.k2 = 0.0f;
 	      torsioncalc.k3 = 0.0f;
               _torsioncalculations.push_back(torsioncalc);
+
+	      IF_OBFF_LOGLVL_LOW {
+	        sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR TORSION %s-%s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType(), d->GetType());
+		OBFFLog(logbuf);
+              }
+
               continue;
-              //obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
-              //return false;
             }
           }
         }
@@ -716,6 +696,11 @@ namespace OpenBabel
       if (parameter_a == NULL) { // no vdw parameter -> use hydrogen
         vdwcalc.Ra = 1.5f;
         vdwcalc.ka = 0.042f;
+	
+	IF_OBFF_LOGLVL_LOW {
+	  sprintf(logbuf, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", a->GetType());
+	  OBFFLog(logbuf);
+        }
       } else {
         vdwcalc.Ra = parameter_a->dpar1;
         vdwcalc.ka = parameter_a->dpar2;
@@ -725,6 +710,11 @@ namespace OpenBabel
       if (parameter_b == NULL) { // no vdw parameter -> use hydrogen
         vdwcalc.Rb = 1.5f;
         vdwcalc.kb = 0.042;;
+        
+	IF_OBFF_LOGLVL_LOW {
+	  sprintf(logbuf, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", b->GetType());
+	  OBFFLog(logbuf);
+        }
       } else {
         vdwcalc.Rb = parameter_b->dpar1;
         vdwcalc.kb = parameter_b->dpar2;
@@ -1033,7 +1023,7 @@ namespace OpenBabel
     energy += E_Electrostatic();
 
     IF_OBFF_LOGLVL_HIGH {
-      sprintf(logbuf, "\nTOTAL ENERGY = %8.3f %s", energy, GetUnit().c_str());
+      sprintf(logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
       OBFFLog(logbuf);
     }
 

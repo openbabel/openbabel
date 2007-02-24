@@ -243,6 +243,11 @@ namespace OpenBabel
     // used to hold i for current conformer (needed by UpdateCoordinates)
     int current_conformer;
 
+    // used for conjugate gradients (Initialize and TakeNSteps)
+    double _econv, _e_n1;
+    int _method, _cstep, _nsteps;
+    std::vector<vector3> _grad1, _dir1;
+
   public:
     //! short description of the force field type.
     virtual std::string Description()=0;
@@ -377,9 +382,21 @@ namespace OpenBabel
     void SteepestDescent(int steps, int method = OBFF_ANALYTICAL_GRADIENT);
     /*! Perform conjugate gradient optimalization for steps steps or until convergence criteria is reached.
       \param steps the number of steps 
+      \param econv energy convergence criteria (defualt is 1e-6)
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
     */
-    void ConjugateGradients(int steps, int method = OBFF_ANALYTICAL_GRADIENT);
+    void ConjugateGradients(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    /*! Initialize conjugate gradient optimalization, to be used in combination with ConjugateGradientsTakeNSteps().
+      \param steps the number of steps (total steps, ConjugateGradientsTakeNSteps() will decrease this is zero or convergence has been reached)
+      \param econv energy convergence criteria (defualt is 1e-6)
+      \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+    */
+    void ConjugateGradientsInitialize(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    /*! Take n steps in a conjugate gradient optimalization that was previously initialized with ConjugateGradientsInitialize().
+      \param n the number of steps to take
+      \return false if convergence or the number of steps given by ConjugateGradientsInitialize() has been reached 
+    */
+    bool ConjugateGradientsTakeNSteps(int n);
     //@}
       
     /////////////////////////////////////////////////////////////////////////
