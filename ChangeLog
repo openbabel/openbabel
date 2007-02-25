@@ -1,3 +1,11 @@
+2007-02-25  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h: comment out Description() (comply
+	with new pluginiter).
+
+	* obmm, obenergy, obminimize, obgen: comment out the use of
+	Description().
+
 2007-02-25 Chris Morley
 
 	* windows-vc2005/OpenBabelDLL: Updated OpenBabelDLL.vcproj.

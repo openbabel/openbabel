@@ -250,7 +250,7 @@ namespace OpenBabel
 
   public:
     //! short description of the force field type.
-    virtual std::string Description()=0;
+    //virtual std::string Description()=0;
     //! \return A pointer to a forcefield (the default if ID is empty), or NULL if not available
     static OBForceField* FindForceField(const std::string& ID)
     { 

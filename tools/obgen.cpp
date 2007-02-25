@@ -52,7 +52,8 @@ int main(int argc,char **argv)
     cout << "  -ff         select a forcefield" << endl;
     cout << endl;
     FOR_EACH(OBForceField, iter) {
-      cout << "              " << iter.ID() << " - " << iter.Description() << endl;
+      //cout << "              " << iter.ID() << " - " << iter.Description() << endl;
+      cout << "              " << iter.ID() << endl;
     }
     exit(-1);
   } else {
