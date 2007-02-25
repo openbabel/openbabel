@@ -2765,7 +2765,7 @@ namespace OpenBabel
 
     (bond->GetBeginAtom())->DeleteBond(bond);
     (bond->GetEndAtom())->DeleteBond(bond);
-    _vbond.erase(_vbond.begin() + bond->GetIdx());
+    _vbond.erase(_vbond.begin() + bond->GetIdx() - 1); // bond index starts at 1!!!
     _nbonds--;
 
     vector<OBBond*>::iterator i;

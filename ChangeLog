@@ -1,5 +1,13 @@
 2007-02-25  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/mol.cpp: OBMol::DeleteBond()
+	_vbond.erase(_vbond.begin() + bond->GetIdx());
+	Since _vbond indices start at 0 and bond->Getdidx() indices start at
+	1, the line is replaced by:
+	_vbond.erase(_vbond.begin() + bond->GetIdx() - 1);
+
+2007-02-25  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/forcefield.h: comment out Description() (comply
 	with new pluginiter).
 
