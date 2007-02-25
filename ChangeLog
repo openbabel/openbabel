@@ -1,3 +1,8 @@
+2007-02-25  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/ring.cpp: Added a check in FindRings to make sure the depth is
+	not larger than the number of atoms we have. (see mailing list)
+
 2007-02-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Added ConjugateGradientsInitialize() and

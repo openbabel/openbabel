@@ -384,8 +384,9 @@ namespace OpenBabel
             {
               path[depth] = bond->GetIdx();
               bvisit.SetBitOn(bond->GetIdx());
-              FindRings(mol,path,avisit,bvisit,bond->GetNbrAtomIdx(atom),
-                        depth+1);
+	      if ((depth+1) < mol.NumAtoms())
+                FindRings(mol,path,avisit,bvisit,bond->GetNbrAtomIdx(atom),
+                          depth+1);
             }
       }
   }
