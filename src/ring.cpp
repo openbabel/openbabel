@@ -359,6 +359,14 @@ namespace OpenBabel
     OBBond *bond;
     vector<OBBond*>::iterator k;
 
+    // return if all atoms are visited
+    int nvisit = 0;
+    FOR_ATOMS_OF_MOL (a, mol)
+      if (avisit.BitIsOn(a->GetIdx()))
+        nvisit++;
+    if (nvisit == mol.NumAtoms())
+      return;
+      
     if (avisit[natom])
       {
         int j = depth-1;
@@ -384,9 +392,8 @@ namespace OpenBabel
             {
               path[depth] = bond->GetIdx();
               bvisit.SetBitOn(bond->GetIdx());
-	      if ((depth+1) < mol.NumAtoms())
-                FindRings(mol,path,avisit,bvisit,bond->GetNbrAtomIdx(atom),
-                          depth+1);
+              FindRings(mol,path,avisit,bvisit,bond->GetNbrAtomIdx(atom),
+                        depth+1);
             }
       }
   }
