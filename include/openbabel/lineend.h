@@ -2,7 +2,7 @@
 lineend.h - Stream buffer for filtering line endings, converting \r or \r\n -> \n
  
  Copyright (C) 1998 by James Kanze
- Copyright (C) 2005-2006 by Chris Morley
+ Copyright (C) 2007 by Chris Morley
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>

@@ -234,14 +234,38 @@
 			<File
 				RelativePath="..\..\src\forcefield.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\forcefields\forcefieldghemical.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\forcefields\forcefieldmm2.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\generic.cpp"
@@ -435,6 +459,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\kinetics.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\gb\lineend.h"
 				>
 			</File>
 			<File

@@ -26,6 +26,13 @@ const unsigned ThermoData = 55556;
 
 /// \class OBRateData kinetics.h <openbabel/kinetics.h>
 /// \brief Holds rate constant data for OBReaction
+/**The data is in a form used by CHEMKIN, at least the original
+   free versions developed by Sandia Labs. Cantera is a GPL chemical
+   kinetics program with similar capabilities.
+   Used by chemkin format and cml reaction format
+**/
+
+   
 class OBRateData : public OBGenericData
 {
 protected:
@@ -112,6 +119,18 @@ public:
 //******************************************************************************
 /// \class OBNasaThermoData kinetics.h <openbabel/kinetics.h>
 /// \brief Thermodynamic data in old style NASA polynomial form for OBMol
+/**This is a venerable data format used to describe specific heats, enthalpies
+   and entropies, particularly in the gas phase and at high temperatures.
+   There is a standard datafile with fixed format (for punched cards!) which 
+   can be read and written to this OBMol extension using the thermo format. It
+   is also used in chemkin format and in cmlreact format
+   For a brief description of the meaning of the coefficients see
+   http://www.me.berkeley.edu/gri_mech/data/nasa_plnm.html
+   The first 7 coefficients are for the high temperature range MidT to HiT;
+   and the second 7 are for the low temperature range LoT to MidT
+   Note that there is a more modern NASA polynomial with more terms, which 
+   is not supported here.
+**/
 class OBNasaThermoData : public OBGenericData
 {
 protected:
