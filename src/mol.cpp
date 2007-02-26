@@ -1545,7 +1545,7 @@ namespace OpenBabel
   {
     OBBond *pBond = CreateBond();
     pBond->SetParent(this);
-    pBond->SetIdx(_nbonds+1);
+    pBond->SetIdx(_nbonds);
 
 #define OBBondIncrement 100
         if (_vbond.empty() || _nbonds+1 >= (signed)_vbond.size())
@@ -2765,7 +2765,7 @@ namespace OpenBabel
 
     (bond->GetBeginAtom())->DeleteBond(bond);
     (bond->GetEndAtom())->DeleteBond(bond);
-    _vbond.erase(_vbond.begin() + bond->GetIdx() - 1); // bond index starts at 1!!!
+    _vbond.erase(_vbond.begin() + bond->GetIdx()); // bond index starts at 0!!!
     _nbonds--;
 
     vector<OBBond*>::iterator i;
