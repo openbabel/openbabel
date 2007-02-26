@@ -359,13 +359,8 @@ namespace OpenBabel
     OBBond *bond;
     vector<OBBond*>::iterator k;
 
-    // return if all atoms are visited
-    int nvisit = 0;
-    FOR_ATOMS_OF_MOL (a, mol)
-      if (avisit.BitIsOn(a->GetIdx()))
-        nvisit++;
-    if (nvisit == mol.NumAtoms())
-      return;
+    // don't return if all atoms are visited
+    // (For example, some atoms are in multiple rings!) -GRH
       
     if (avisit[natom])
       {
