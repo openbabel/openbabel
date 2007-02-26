@@ -1087,12 +1087,10 @@ class pluginiterFingerprint(object):
     def FindType(*args): return _openbabel.pluginiterFingerprint_FindType(*args)
     def FindDefaultType(*args): return _openbabel.pluginiterFingerprint_FindDefaultType(*args)
     def ID(*args): return _openbabel.pluginiterFingerprint_ID(*args)
-    def Description(*args): return _openbabel.pluginiterFingerprint_Description(*args)
     def ToStart(*args): return _openbabel.pluginiterFingerprint_ToStart(*args)
     def inc(*args): return _openbabel.pluginiterFingerprint_inc(*args)
     def good(*args): return _openbabel.pluginiterFingerprint_good(*args)
     def deref(*args): return _openbabel.pluginiterFingerprint_deref(*args)
-    def __ref__(*args): return _openbabel.pluginiterFingerprint___ref__(*args)
     def __init__(self, *args): 
         _openbabel.pluginiterFingerprint_swiginit(self,_openbabel.new_pluginiterFingerprint(*args))
     __swig_destroy__ = _openbabel.delete_pluginiterFingerprint
@@ -1101,6 +1099,7 @@ class pluginiterFingerprint(object):
     def SetBit(*args): return _openbabel.pluginiterFingerprint_SetBit(*args)
     def Fold(*args): return _openbabel.pluginiterFingerprint_Fold(*args)
     def GetFingerprint(*args): return _openbabel.pluginiterFingerprint_GetFingerprint(*args)
+    def Description(*args): return _openbabel.pluginiterFingerprint_Description(*args)
     def Flags(*args): return _openbabel.pluginiterFingerprint_Flags(*args)
     def Tanimoto(*args): return _openbabel.pluginiterFingerprint_Tanimoto(*args)
     def Getbitsperint(*args): return _openbabel.pluginiterFingerprint_Getbitsperint(*args)
@@ -1115,12 +1114,10 @@ class pluginiterForceField(object):
     def FindType(*args): return _openbabel.pluginiterForceField_FindType(*args)
     def FindDefaultType(*args): return _openbabel.pluginiterForceField_FindDefaultType(*args)
     def ID(*args): return _openbabel.pluginiterForceField_ID(*args)
-    def Description(*args): return _openbabel.pluginiterForceField_Description(*args)
     def ToStart(*args): return _openbabel.pluginiterForceField_ToStart(*args)
     def inc(*args): return _openbabel.pluginiterForceField_inc(*args)
     def good(*args): return _openbabel.pluginiterForceField_good(*args)
     def deref(*args): return _openbabel.pluginiterForceField_deref(*args)
-    def __ref__(*args): return _openbabel.pluginiterForceField___ref__(*args)
     def __init__(self, *args): 
         _openbabel.pluginiterForceField_swiginit(self,_openbabel.new_pluginiterForceField(*args))
     __swig_destroy__ = _openbabel.delete_pluginiterForceField
@@ -1130,6 +1127,7 @@ class pluginiterForceField(object):
     def GetUnit(*args): return _openbabel.pluginiterForceField_GetUnit(*args)
     def Setup(*args): return _openbabel.pluginiterForceField_Setup(*args)
     def UpdateCoordinates(*args): return _openbabel.pluginiterForceField_UpdateCoordinates(*args)
+    def OBFFLog(*args): return _openbabel.pluginiterForceField_OBFFLog(*args)
     def Energy(*args): return _openbabel.pluginiterForceField_Energy(*args)
     def E_Bond(*args): return _openbabel.pluginiterForceField_E_Bond(*args)
     def E_Angle(*args): return _openbabel.pluginiterForceField_E_Angle(*args)
@@ -1146,7 +1144,11 @@ class pluginiterForceField(object):
     def SystematicRotorSearch(*args): return _openbabel.pluginiterForceField_SystematicRotorSearch(*args)
     def LineSearch(*args): return _openbabel.pluginiterForceField_LineSearch(*args)
     def SteepestDescent(*args): return _openbabel.pluginiterForceField_SteepestDescent(*args)
+    def SteepestDescentInitialize(*args): return _openbabel.pluginiterForceField_SteepestDescentInitialize(*args)
+    def SteepestDescentTakeNSteps(*args): return _openbabel.pluginiterForceField_SteepestDescentTakeNSteps(*args)
     def ConjugateGradients(*args): return _openbabel.pluginiterForceField_ConjugateGradients(*args)
+    def ConjugateGradientsInitialize(*args): return _openbabel.pluginiterForceField_ConjugateGradientsInitialize(*args)
+    def ConjugateGradientsTakeNSteps(*args): return _openbabel.pluginiterForceField_ConjugateGradientsTakeNSteps(*args)
     def ValidateLineSearch(*args): return _openbabel.pluginiterForceField_ValidateLineSearch(*args)
     def ValidateSteepestDescent(*args): return _openbabel.pluginiterForceField_ValidateSteepestDescent(*args)
     def ValidateConjugateGradients(*args): return _openbabel.pluginiterForceField_ValidateConjugateGradients(*args)
@@ -1764,15 +1766,15 @@ class OBMol(OBBase):
     def DestroyBond(*args): return _openbabel.OBMol_DestroyBond(*args)
     def DestroyResidue(*args): return _openbabel.OBMol_DestroyResidue(*args)
     def AddAtom(*args): return _openbabel.OBMol_AddAtom(*args)
+    def InsertAtom(*args): return _openbabel.OBMol_InsertAtom(*args)
     def AddBond(*args): return _openbabel.OBMol_AddBond(*args)
     def AddResidue(*args): return _openbabel.OBMol_AddResidue(*args)
-    def InsertAtom(*args): return _openbabel.OBMol_InsertAtom(*args)
-    def DeleteAtom(*args): return _openbabel.OBMol_DeleteAtom(*args)
-    def DeleteBond(*args): return _openbabel.OBMol_DeleteBond(*args)
-    def DeleteResidue(*args): return _openbabel.OBMol_DeleteResidue(*args)
     def NewAtom(*args): return _openbabel.OBMol_NewAtom(*args)
     def NewBond(*args): return _openbabel.OBMol_NewBond(*args)
     def NewResidue(*args): return _openbabel.OBMol_NewResidue(*args)
+    def DeleteAtom(*args): return _openbabel.OBMol_DeleteAtom(*args)
+    def DeleteBond(*args): return _openbabel.OBMol_DeleteBond(*args)
+    def DeleteResidue(*args): return _openbabel.OBMol_DeleteResidue(*args)
     def BeginModify(*args): return _openbabel.OBMol_BeginModify(*args)
     def EndModify(*args): return _openbabel.OBMol_EndModify(*args)
     def GetMod(*args): return _openbabel.OBMol_GetMod(*args)
@@ -1844,9 +1846,9 @@ class OBMol(OBBase):
     def Kekulize(*args): return _openbabel.OBMol_Kekulize(*args)
     def PerceiveKekuleBonds(*args): return _openbabel.OBMol_PerceiveKekuleBonds(*args)
     def NewPerceiveKekuleBonds(*args): return _openbabel.OBMol_NewPerceiveKekuleBonds(*args)
-    def DeleteHydrogen(*args): return _openbabel.OBMol_DeleteHydrogen(*args)
     def DeleteHydrogens(*args): return _openbabel.OBMol_DeleteHydrogens(*args)
     def DeleteNonPolarHydrogens(*args): return _openbabel.OBMol_DeleteNonPolarHydrogens(*args)
+    def DeleteHydrogen(*args): return _openbabel.OBMol_DeleteHydrogen(*args)
     def AddHydrogens(*args): return _openbabel.OBMol_AddHydrogens(*args)
     def AddPolarHydrogens(*args): return _openbabel.OBMol_AddPolarHydrogens(*args)
     def StripSalts(*args): return _openbabel.OBMol_StripSalts(*args)
@@ -1985,24 +1987,24 @@ class OBSmartsPattern(object):
     __del__ = lambda self : None;
     def __init__(self, *args): 
         _openbabel.OBSmartsPattern_swiginit(self,_openbabel.new_OBSmartsPattern(*args))
-    def NumMatches(*args): return _openbabel.OBSmartsPattern_NumMatches(*args)
-    def NumAtoms(*args): return _openbabel.OBSmartsPattern_NumAtoms(*args)
-    def NumBonds(*args): return _openbabel.OBSmartsPattern_NumBonds(*args)
-    def GetAtomicNum(*args): return _openbabel.OBSmartsPattern_GetAtomicNum(*args)
-    def GetBond(*args): return _openbabel.OBSmartsPattern_GetBond(*args)
-    def GetCharge(*args): return _openbabel.OBSmartsPattern_GetCharge(*args)
+    def Init(*args): return _openbabel.OBSmartsPattern_Init(*args)
     def GetSMARTS(*args): return _openbabel.OBSmartsPattern_GetSMARTS(*args)
-    def GetVectorBinding(*args): return _openbabel.OBSmartsPattern_GetVectorBinding(*args)
     def Empty(*args): return _openbabel.OBSmartsPattern_Empty(*args)
     def IsValid(*args): return _openbabel.OBSmartsPattern_IsValid(*args)
-    def Init(*args): return _openbabel.OBSmartsPattern_Init(*args)
-    def WriteMapList(*args): return _openbabel.OBSmartsPattern_WriteMapList(*args)
+    def NumAtoms(*args): return _openbabel.OBSmartsPattern_NumAtoms(*args)
+    def NumBonds(*args): return _openbabel.OBSmartsPattern_NumBonds(*args)
+    def GetBond(*args): return _openbabel.OBSmartsPattern_GetBond(*args)
+    def GetAtomicNum(*args): return _openbabel.OBSmartsPattern_GetAtomicNum(*args)
+    def GetCharge(*args): return _openbabel.OBSmartsPattern_GetCharge(*args)
+    def GetVectorBinding(*args): return _openbabel.OBSmartsPattern_GetVectorBinding(*args)
     def Match(*args): return _openbabel.OBSmartsPattern_Match(*args)
     def RestrictedMatch(*args): return _openbabel.OBSmartsPattern_RestrictedMatch(*args)
+    def NumMatches(*args): return _openbabel.OBSmartsPattern_NumMatches(*args)
     def GetMapList(*args): return _openbabel.OBSmartsPattern_GetMapList(*args)
-    def GetUMapList(*args): return _openbabel.OBSmartsPattern_GetUMapList(*args)
     def BeginMList(*args): return _openbabel.OBSmartsPattern_BeginMList(*args)
     def EndMList(*args): return _openbabel.OBSmartsPattern_EndMList(*args)
+    def GetUMapList(*args): return _openbabel.OBSmartsPattern_GetUMapList(*args)
+    def WriteMapList(*args): return _openbabel.OBSmartsPattern_WriteMapList(*args)
 OBSmartsPattern_swigregister = _openbabel.OBSmartsPattern_swigregister
 OBSmartsPattern_swigregister(OBSmartsPattern)
 
@@ -2162,16 +2164,17 @@ OBFFCalculation_swigregister(OBFFCalculation)
 
 class OBForceField(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    def __init__(self): raise AttributeError, "No constructor defined"
     __repr__ = _swig_repr
-    Iter = staticmethod(_openbabel.OBForceField_Iter)
-    FindDefaultType = staticmethod(_openbabel.OBForceField_FindDefaultType)
-    FindType = staticmethod(_openbabel.OBForceField_FindType)
-    def Description(*args): return _openbabel.OBForceField_Description(*args)
-    FindForceField = staticmethod(_openbabel.OBForceField_FindForceField)
+    def __init__(self, *args): 
+        _openbabel.OBForceField_swiginit(self,_openbabel.new_OBForceField(*args))
+    def Iter(*args): return _openbabel.OBForceField_Iter(*args)
+    def FindDefaultType(*args): return _openbabel.OBForceField_FindDefaultType(*args)
+    def FindType(*args): return _openbabel.OBForceField_FindType(*args)
+    def FindForceField(*args): return _openbabel.OBForceField_FindForceField(*args)
     def GetUnit(*args): return _openbabel.OBForceField_GetUnit(*args)
     def Setup(*args): return _openbabel.OBForceField_Setup(*args)
     def UpdateCoordinates(*args): return _openbabel.OBForceField_UpdateCoordinates(*args)
+    def OBFFLog(*args): return _openbabel.OBForceField_OBFFLog(*args)
     def Energy(*args): return _openbabel.OBForceField_Energy(*args)
     def E_Bond(*args): return _openbabel.OBForceField_E_Bond(*args)
     def E_Angle(*args): return _openbabel.OBForceField_E_Angle(*args)
@@ -2188,27 +2191,24 @@ class OBForceField(object):
     def SystematicRotorSearch(*args): return _openbabel.OBForceField_SystematicRotorSearch(*args)
     def LineSearch(*args): return _openbabel.OBForceField_LineSearch(*args)
     def SteepestDescent(*args): return _openbabel.OBForceField_SteepestDescent(*args)
+    def SteepestDescentInitialize(*args): return _openbabel.OBForceField_SteepestDescentInitialize(*args)
+    def SteepestDescentTakeNSteps(*args): return _openbabel.OBForceField_SteepestDescentTakeNSteps(*args)
     def ConjugateGradients(*args): return _openbabel.OBForceField_ConjugateGradients(*args)
+    def ConjugateGradientsInitialize(*args): return _openbabel.OBForceField_ConjugateGradientsInitialize(*args)
+    def ConjugateGradientsTakeNSteps(*args): return _openbabel.OBForceField_ConjugateGradientsTakeNSteps(*args)
     def ValidateLineSearch(*args): return _openbabel.OBForceField_ValidateLineSearch(*args)
     def ValidateSteepestDescent(*args): return _openbabel.OBForceField_ValidateSteepestDescent(*args)
     def ValidateConjugateGradients(*args): return _openbabel.OBForceField_ValidateConjugateGradients(*args)
     def Validate(*args): return _openbabel.OBForceField_Validate(*args)
     def ValidateGradients(*args): return _openbabel.OBForceField_ValidateGradients(*args)
     def ValidateGradientError(*args): return _openbabel.OBForceField_ValidateGradientError(*args)
-    VectorLengthDerivative = staticmethod(_openbabel.OBForceField_VectorLengthDerivative)
-    VectorAngleDerivative = staticmethod(_openbabel.OBForceField_VectorAngleDerivative)
-    VectorTorsionDerivative = staticmethod(_openbabel.OBForceField_VectorTorsionDerivative)
+    def VectorLengthDerivative(*args): return _openbabel.OBForceField_VectorLengthDerivative(*args)
+    def VectorAngleDerivative(*args): return _openbabel.OBForceField_VectorAngleDerivative(*args)
+    def VectorTorsionDerivative(*args): return _openbabel.OBForceField_VectorTorsionDerivative(*args)
     __swig_destroy__ = _openbabel.delete_OBForceField
     __del__ = lambda self : None;
 OBForceField_swigregister = _openbabel.OBForceField_swigregister
 OBForceField_swigregister(OBForceField)
-OBForceField_Iter = _openbabel.OBForceField_Iter
-OBForceField_FindDefaultType = _openbabel.OBForceField_FindDefaultType
-OBForceField_FindType = _openbabel.OBForceField_FindType
-OBForceField_FindForceField = _openbabel.OBForceField_FindForceField
-OBForceField_VectorLengthDerivative = _openbabel.OBForceField_VectorLengthDerivative
-OBForceField_VectorAngleDerivative = _openbabel.OBForceField_VectorAngleDerivative
-OBForceField_VectorTorsionDerivative = _openbabel.OBForceField_VectorTorsionDerivative
 
 class _OBMolAtomIter(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
@@ -3303,18 +3303,16 @@ class OBResidueAtomIter(OBIter):
 
 class doubleArray(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    def __init__(self): raise AttributeError, "No constructor defined"
     __repr__ = _swig_repr
-    def __init__(self, *args): 
-        _openbabel.doubleArray_swiginit(self,_openbabel.new_doubleArray(*args))
     __swig_destroy__ = _openbabel.delete_doubleArray
     __del__ = lambda self : None;
     def __getitem__(*args): return _openbabel.doubleArray___getitem__(*args)
     def __setitem__(*args): return _openbabel.doubleArray___setitem__(*args)
     def cast(*args): return _openbabel.doubleArray_cast(*args)
-    frompointer = staticmethod(_openbabel.doubleArray_frompointer)
+    def frompointer(*args): return _openbabel.doubleArray_frompointer(*args)
 doubleArray_swigregister = _openbabel.doubleArray_swigregister
 doubleArray_swigregister(doubleArray)
-doubleArray_frompointer = _openbabel.doubleArray_frompointer
 
 def double_array(mylist):
     """Create a C array of doubles from a list."""

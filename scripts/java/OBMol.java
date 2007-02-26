@@ -75,16 +75,20 @@ public class OBMol extends OBBase {
     return openbabelJNI.OBMol_AddAtom(swigCPtr, this, OBAtom.getCPtr(arg0), arg0);
   }
 
-  public boolean AddBond(int arg0, int arg1, int arg2, int flags, int insertpos) {
-    return openbabelJNI.OBMol_AddBond__SWIG_0(swigCPtr, this, arg0, arg1, arg2, flags, insertpos);
+  public boolean InsertAtom(OBAtom arg0) {
+    return openbabelJNI.OBMol_InsertAtom(swigCPtr, this, OBAtom.getCPtr(arg0), arg0);
   }
 
-  public boolean AddBond(int arg0, int arg1, int arg2, int flags) {
-    return openbabelJNI.OBMol_AddBond__SWIG_1(swigCPtr, this, arg0, arg1, arg2, flags);
+  public boolean AddBond(int beginIdx, int endIdx, int order, int flags, int insertpos) {
+    return openbabelJNI.OBMol_AddBond__SWIG_0(swigCPtr, this, beginIdx, endIdx, order, flags, insertpos);
   }
 
-  public boolean AddBond(int arg0, int arg1, int arg2) {
-    return openbabelJNI.OBMol_AddBond__SWIG_2(swigCPtr, this, arg0, arg1, arg2);
+  public boolean AddBond(int beginIdx, int endIdx, int order, int flags) {
+    return openbabelJNI.OBMol_AddBond__SWIG_1(swigCPtr, this, beginIdx, endIdx, order, flags);
+  }
+
+  public boolean AddBond(int beginIdx, int endIdx, int order) {
+    return openbabelJNI.OBMol_AddBond__SWIG_2(swigCPtr, this, beginIdx, endIdx, order);
   }
 
   public boolean AddBond(OBBond arg0) {
@@ -93,22 +97,6 @@ public class OBMol extends OBBase {
 
   public boolean AddResidue(OBResidue arg0) {
     return openbabelJNI.OBMol_AddResidue(swigCPtr, this, OBResidue.getCPtr(arg0), arg0);
-  }
-
-  public boolean InsertAtom(OBAtom arg0) {
-    return openbabelJNI.OBMol_InsertAtom(swigCPtr, this, OBAtom.getCPtr(arg0), arg0);
-  }
-
-  public boolean DeleteAtom(OBAtom arg0) {
-    return openbabelJNI.OBMol_DeleteAtom(swigCPtr, this, OBAtom.getCPtr(arg0), arg0);
-  }
-
-  public boolean DeleteBond(OBBond arg0) {
-    return openbabelJNI.OBMol_DeleteBond(swigCPtr, this, OBBond.getCPtr(arg0), arg0);
-  }
-
-  public boolean DeleteResidue(OBResidue arg0) {
-    return openbabelJNI.OBMol_DeleteResidue(swigCPtr, this, OBResidue.getCPtr(arg0), arg0);
   }
 
   public OBAtom NewAtom() {
@@ -124,6 +112,18 @@ public class OBMol extends OBBase {
   public OBResidue NewResidue() {
     long cPtr = openbabelJNI.OBMol_NewResidue(swigCPtr, this);
     return (cPtr == 0) ? null : new OBResidue(cPtr, false);
+  }
+
+  public boolean DeleteAtom(OBAtom arg0) {
+    return openbabelJNI.OBMol_DeleteAtom(swigCPtr, this, OBAtom.getCPtr(arg0), arg0);
+  }
+
+  public boolean DeleteBond(OBBond arg0) {
+    return openbabelJNI.OBMol_DeleteBond(swigCPtr, this, OBBond.getCPtr(arg0), arg0);
+  }
+
+  public boolean DeleteResidue(OBResidue arg0) {
+    return openbabelJNI.OBMol_DeleteResidue(swigCPtr, this, OBResidue.getCPtr(arg0), arg0);
   }
 
   public void BeginModify() {
@@ -466,10 +466,6 @@ public class OBMol extends OBBase {
     openbabelJNI.OBMol_NewPerceiveKekuleBonds(swigCPtr, this);
   }
 
-  public boolean DeleteHydrogen(OBAtom arg0) {
-    return openbabelJNI.OBMol_DeleteHydrogen(swigCPtr, this, OBAtom.getCPtr(arg0), arg0);
-  }
-
   public boolean DeleteHydrogens() {
     return openbabelJNI.OBMol_DeleteHydrogens__SWIG_0(swigCPtr, this);
   }
@@ -480,6 +476,10 @@ public class OBMol extends OBBase {
 
   public boolean DeleteNonPolarHydrogens() {
     return openbabelJNI.OBMol_DeleteNonPolarHydrogens(swigCPtr, this);
+  }
+
+  public boolean DeleteHydrogen(OBAtom arg0) {
+    return openbabelJNI.OBMol_DeleteHydrogen(swigCPtr, this, OBAtom.getCPtr(arg0), arg0);
   }
 
   public boolean AddHydrogens(boolean polaronly, boolean correctForPH) {
@@ -546,16 +546,16 @@ public class OBMol extends OBBase {
     openbabelJNI.OBMol_FindChiralCenters(swigCPtr, this);
   }
 
-  public void FindChildren(vectorInt arg0, int arg1, int arg2) {
-    openbabelJNI.OBMol_FindChildren__SWIG_0(swigCPtr, this, vectorInt.getCPtr(arg0), arg0, arg1, arg2);
+  public void FindChildren(vectorInt children, int bgnIdx, int endIdx) {
+    openbabelJNI.OBMol_FindChildren__SWIG_0(swigCPtr, this, vectorInt.getCPtr(children), children, bgnIdx, endIdx);
   }
 
-  public void FindChildren(SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t arg0, OBAtom arg1, OBAtom arg2) {
-    openbabelJNI.OBMol_FindChildren__SWIG_1(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t.getCPtr(arg0), OBAtom.getCPtr(arg1), arg1, OBAtom.getCPtr(arg2), arg2);
+  public void FindChildren(SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t children, OBAtom bgn, OBAtom end) {
+    openbabelJNI.OBMol_FindChildren__SWIG_1(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t.getCPtr(children), OBAtom.getCPtr(bgn), bgn, OBAtom.getCPtr(end), end);
   }
 
-  public void FindLargestFragment(OBBitVec arg0) {
-    openbabelJNI.OBMol_FindLargestFragment(swigCPtr, this, OBBitVec.getCPtr(arg0), arg0);
+  public void FindLargestFragment(OBBitVec frag) {
+    openbabelJNI.OBMol_FindLargestFragment(swigCPtr, this, OBBitVec.getCPtr(frag), frag);
   }
 
   public void ContigFragList(vvInt arg0) {
@@ -690,12 +690,12 @@ public class OBMol extends OBBase {
     openbabelJNI.OBMol_SetConformer(swigCPtr, this, i);
   }
 
-  public void CopyConformer(SWIGTYPE_p_double arg0, int arg1) {
-    openbabelJNI.OBMol_CopyConformer(swigCPtr, this, SWIGTYPE_p_double.getCPtr(arg0), arg1);
+  public void CopyConformer(SWIGTYPE_p_double c, int nconf) {
+    openbabelJNI.OBMol_CopyConformer(swigCPtr, this, SWIGTYPE_p_double.getCPtr(c), nconf);
   }
 
-  public void DeleteConformer(int arg0) {
-    openbabelJNI.OBMol_DeleteConformer(swigCPtr, this, arg0);
+  public void DeleteConformer(int nconf) {
+    openbabelJNI.OBMol_DeleteConformer(swigCPtr, this, nconf);
   }
 
   public SWIGTYPE_p_double GetConformer(int i) {

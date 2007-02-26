@@ -19387,30 +19387,6 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_pluginiterFingerprint_Description(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
-  std::string result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Description" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
-  result = ((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->Description();
-  vresult = SWIG_From_std_string(static_cast< std::string >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
 _wrap_pluginiterFingerprint_ToStart(int argc, VALUE *argv, VALUE self) {
   OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
   void *argp1 = 0 ;
@@ -19499,33 +19475,6 @@ _wrap_pluginiterFingerprint_deref(int argc, VALUE *argv, VALUE self) {
   }
   arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
   result = (OpenBabel::OBFingerprint *)((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->operator ->();
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_pluginiterFingerprint___ref__(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
-  OpenBabel::OBFingerprint *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "operator *" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
-  {
-    OpenBabel::OBFingerprint &_result_ref = ((OpenBabel::PluginIter<OpenBabel::OBFingerprint > const *)arg1)->operator *();
-    result = (OpenBabel::OBFingerprint *) &_result_ref;
-  }
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
   return vresult;
 fail:
@@ -19829,6 +19778,30 @@ SWIGINTERN VALUE _wrap_pluginiterFingerprint_GetFingerprint(int nargs, VALUE *ar
   
 fail:
   rb_raise(rb_eArgError, "No matching function for overloaded 'pluginiterFingerprint_GetFingerprint'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterFingerprint_Description(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBFingerprint > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBFingerprint > *) 0 ;
+  std::string result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBFingerprint_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Description" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBFingerprint > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBFingerprint > * >(argp1);
+  result = (*arg1)->Description();
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
+fail:
   return Qnil;
 }
 
@@ -20295,30 +20268,6 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_pluginiterForceField_Description(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-  std::string result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Description" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
-  result = ((OpenBabel::PluginIter<OpenBabel::OBForceField > const *)arg1)->Description();
-  vresult = SWIG_From_std_string(static_cast< std::string >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
 _wrap_pluginiterForceField_ToStart(int argc, VALUE *argv, VALUE self) {
   OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
   void *argp1 = 0 ;
@@ -20407,33 +20356,6 @@ _wrap_pluginiterForceField_deref(int argc, VALUE *argv, VALUE self) {
   }
   arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
   result = (OpenBabel::OBForceField *)((OpenBabel::PluginIter<OpenBabel::OBForceField > const *)arg1)->operator ->();
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_pluginiterForceField___ref__(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-  OpenBabel::OBForceField *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "operator *" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
-  {
-    OpenBabel::OBForceField &_result_ref = ((OpenBabel::PluginIter<OpenBabel::OBForceField > const *)arg1)->operator *();
-    result = (OpenBabel::OBForceField *) &_result_ref;
-  }
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
   return vresult;
 fail:
@@ -20686,10 +20608,12 @@ SWIGINTERN VALUE
 _wrap_pluginiterForceField_UpdateCoordinates(int argc, VALUE *argv, VALUE self) {
   OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
   OpenBabel::OBMol *arg2 = 0 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -20707,9 +20631,117 @@ _wrap_pluginiterForceField_UpdateCoordinates(int argc, VALUE *argv, VALUE self) 
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "UpdateCoordinates" "', argument " "2"" of type '" "OpenBabel::OBMol &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBMol * >(argp2);
-  (*arg1)->UpdateCoordinates(*arg2);
+  result = (bool)(*arg1)->UpdateCoordinates(*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_OBFFLog__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  std::string arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFFLog" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    int res = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "OBFFLog" "', argument " "2"" of type '" "std::string""'"); 
+    }
+    arg2 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  (*arg1)->OBFFLog(arg2);
   return Qnil;
 fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_OBFFLog__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFFLog" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBFFLog" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  (*arg1)->OBFFLog((char const *)arg2);
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return Qnil;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_pluginiterForceField_OBFFLog(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[3];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 3) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_pluginiterForceField_OBFFLog__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_pluginiterForceField_OBFFLog__SWIG_1(nargs, args, self);
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'pluginiterForceField_OBFFLog'");
   return Qnil;
 }
 
@@ -21104,12 +21136,57 @@ SWIGINTERN VALUE
 _wrap_pluginiterForceField_SteepestDescent__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
   int arg2 ;
-  int arg3 ;
+  double arg3 ;
+  int arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
-  int val3 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescent" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescent" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescent" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "SteepestDescent" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  (*arg1)->SteepestDescent(arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_SteepestDescent__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
   int ecode3 = 0 ;
   
   if ((argc < 2) || (argc > 2)) {
@@ -21125,11 +21202,11 @@ _wrap_pluginiterForceField_SteepestDescent__SWIG_0(int argc, VALUE *argv, VALUE 
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescent" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(argv[1], &val3);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescent" "', argument " "3"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescent" "', argument " "3"" of type '" "double""'");
   } 
-  arg3 = static_cast< int >(val3);
+  arg3 = static_cast< double >(val3);
   (*arg1)->SteepestDescent(arg2,arg3);
   return Qnil;
 fail:
@@ -21138,7 +21215,7 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_pluginiterForceField_SteepestDescent__SWIG_1(int argc, VALUE *argv, VALUE self) {
+_wrap_pluginiterForceField_SteepestDescent__SWIG_2(int argc, VALUE *argv, VALUE self) {
   OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
   int arg2 ;
   void *argp1 = 0 ;
@@ -21168,12 +21245,12 @@ fail:
 
 SWIGINTERN VALUE _wrap_pluginiterForceField_SteepestDescent(int nargs, VALUE *args, VALUE self) {
   int argc;
-  VALUE argv[4];
+  VALUE argv[5];
   int ii;
   
   argc = nargs + 1;
   argv[0] = self;
-  if (argc > 4) SWIG_fail;
+  if (argc > 5) SWIG_fail;
   for (ii = 1; (ii < argc); ii++) {
     argv[ii] = args[ii-1];
   }
@@ -21188,7 +21265,7 @@ SWIGINTERN VALUE _wrap_pluginiterForceField_SteepestDescent(int nargs, VALUE *ar
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_pluginiterForceField_SteepestDescent__SWIG_1(nargs, args, self);
+        return _wrap_pluginiterForceField_SteepestDescent__SWIG_2(nargs, args, self);
       }
     }
   }
@@ -21204,11 +21281,38 @@ SWIGINTERN VALUE _wrap_pluginiterForceField_SteepestDescent(int nargs, VALUE *ar
       }
       if (_v) {
         {
-          int res = SWIG_AsVal_int(argv[2], NULL);
+          int res = SWIG_AsVal_double(argv[2], NULL);
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_pluginiterForceField_SteepestDescent__SWIG_0(nargs, args, self);
+          return _wrap_pluginiterForceField_SteepestDescent__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_pluginiterForceField_SteepestDescent__SWIG_0(nargs, args, self);
+          }
         }
       }
     }
@@ -21221,15 +21325,284 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_pluginiterForceField_ConjugateGradients__SWIG_0(int argc, VALUE *argv, VALUE self) {
+_wrap_pluginiterForceField_SteepestDescentInitialize__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
   int arg2 ;
-  int arg3 ;
+  double arg3 ;
+  int arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
-  int val3 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescentInitialize" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescentInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescentInitialize" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "SteepestDescentInitialize" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  (*arg1)->SteepestDescentInitialize(arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_SteepestDescentInitialize__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescentInitialize" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescentInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescentInitialize" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  (*arg1)->SteepestDescentInitialize(arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_SteepestDescentInitialize__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescentInitialize" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescentInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (*arg1)->SteepestDescentInitialize(arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_pluginiterForceField_SteepestDescentInitialize(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[5];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 5) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_pluginiterForceField_SteepestDescentInitialize__SWIG_2(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_pluginiterForceField_SteepestDescentInitialize__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_pluginiterForceField_SteepestDescentInitialize__SWIG_0(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'pluginiterForceField_SteepestDescentInitialize'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_SteepestDescentTakeNSteps(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescentTakeNSteps" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescentTakeNSteps" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (bool)(*arg1)->SteepestDescentTakeNSteps(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_ConjugateGradients__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  int arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradients" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradients" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradients" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ConjugateGradients" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  (*arg1)->ConjugateGradients(arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_ConjugateGradients__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
   int ecode3 = 0 ;
   
   if ((argc < 2) || (argc > 2)) {
@@ -21245,11 +21618,11 @@ _wrap_pluginiterForceField_ConjugateGradients__SWIG_0(int argc, VALUE *argv, VAL
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradients" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(argv[1], &val3);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradients" "', argument " "3"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradients" "', argument " "3"" of type '" "double""'");
   } 
-  arg3 = static_cast< int >(val3);
+  arg3 = static_cast< double >(val3);
   (*arg1)->ConjugateGradients(arg2,arg3);
   return Qnil;
 fail:
@@ -21258,7 +21631,7 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_pluginiterForceField_ConjugateGradients__SWIG_1(int argc, VALUE *argv, VALUE self) {
+_wrap_pluginiterForceField_ConjugateGradients__SWIG_2(int argc, VALUE *argv, VALUE self) {
   OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
   int arg2 ;
   void *argp1 = 0 ;
@@ -21288,12 +21661,12 @@ fail:
 
 SWIGINTERN VALUE _wrap_pluginiterForceField_ConjugateGradients(int nargs, VALUE *args, VALUE self) {
   int argc;
-  VALUE argv[4];
+  VALUE argv[5];
   int ii;
   
   argc = nargs + 1;
   argv[0] = self;
-  if (argc > 4) SWIG_fail;
+  if (argc > 5) SWIG_fail;
   for (ii = 1; (ii < argc); ii++) {
     argv[ii] = args[ii-1];
   }
@@ -21308,7 +21681,7 @@ SWIGINTERN VALUE _wrap_pluginiterForceField_ConjugateGradients(int nargs, VALUE 
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_pluginiterForceField_ConjugateGradients__SWIG_1(nargs, args, self);
+        return _wrap_pluginiterForceField_ConjugateGradients__SWIG_2(nargs, args, self);
       }
     }
   }
@@ -21324,11 +21697,38 @@ SWIGINTERN VALUE _wrap_pluginiterForceField_ConjugateGradients(int nargs, VALUE 
       }
       if (_v) {
         {
-          int res = SWIG_AsVal_int(argv[2], NULL);
+          int res = SWIG_AsVal_double(argv[2], NULL);
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_pluginiterForceField_ConjugateGradients__SWIG_0(nargs, args, self);
+          return _wrap_pluginiterForceField_ConjugateGradients__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_pluginiterForceField_ConjugateGradients__SWIG_0(nargs, args, self);
+          }
         }
       }
     }
@@ -21336,6 +21736,230 @@ SWIGINTERN VALUE _wrap_pluginiterForceField_ConjugateGradients(int nargs, VALUE 
   
 fail:
   rb_raise(rb_eArgError, "No matching function for overloaded 'pluginiterForceField_ConjugateGradients'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_ConjugateGradientsInitialize__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  int arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradientsInitialize" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradientsInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradientsInitialize" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ConjugateGradientsInitialize" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  (*arg1)->ConjugateGradientsInitialize(arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_ConjugateGradientsInitialize__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradientsInitialize" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradientsInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradientsInitialize" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  (*arg1)->ConjugateGradientsInitialize(arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_ConjugateGradientsInitialize__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradientsInitialize" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradientsInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (*arg1)->ConjugateGradientsInitialize(arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_pluginiterForceField_ConjugateGradientsInitialize(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[5];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 5) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_pluginiterForceField_ConjugateGradientsInitialize__SWIG_2(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_pluginiterForceField_ConjugateGradientsInitialize__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_pluginiterForceField_ConjugateGradientsInitialize__SWIG_0(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'pluginiterForceField_ConjugateGradientsInitialize'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_ConjugateGradientsTakeNSteps(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  int arg2 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradientsTakeNSteps" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradientsTakeNSteps" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (bool)(*arg1)->ConjugateGradientsTakeNSteps(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
   return Qnil;
 }
 
@@ -34286,6 +34910,41 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_OBMol_InsertAtom(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+  OpenBabel::OBAtom *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "InsertAtom" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__OBAtom,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "InsertAtom" "', argument " "2"" of type '" "OpenBabel::OBAtom &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "InsertAtom" "', argument " "2"" of type '" "OpenBabel::OBAtom &""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  result = (bool)(arg1)->InsertAtom(*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_OBMol_AddBond__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
   int arg2 ;
@@ -34655,34 +35314,71 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_OBMol_InsertAtom(int argc, VALUE *argv, VALUE self) {
+_wrap_OBMol_NewAtom(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  OpenBabel::OBAtom *arg2 = 0 ;
-  bool result;
+  OpenBabel::OBAtom *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
   VALUE vresult = Qnil;
   
-  if ((argc < 1) || (argc > 1)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
   }
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "InsertAtom" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NewAtom" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__OBAtom,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "InsertAtom" "', argument " "2"" of type '" "OpenBabel::OBAtom &""'"); 
+  result = (OpenBabel::OBAtom *)(arg1)->NewAtom();
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBMol_NewBond(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+  OpenBabel::OBBond *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
   }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "InsertAtom" "', argument " "2"" of type '" "OpenBabel::OBAtom &""'"); 
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NewBond" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
   }
-  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-  result = (bool)(arg1)->InsertAtom(*arg2);
-  vresult = SWIG_From_bool(static_cast< bool >(result));
+  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
+  result = (OpenBabel::OBBond *)(arg1)->NewBond();
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBMol_NewResidue(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+  OpenBabel::OBResidue *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NewResidue" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
+  result = (OpenBabel::OBResidue *)(arg1)->NewResidue();
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBResidue, 0 |  0 );
   return vresult;
 fail:
   return Qnil;
@@ -34779,78 +35475,6 @@ _wrap_OBMol_DeleteResidue(int argc, VALUE *argv, VALUE self) {
   arg2 = reinterpret_cast< OpenBabel::OBResidue * >(argp2);
   result = (bool)(arg1)->DeleteResidue(arg2);
   vresult = SWIG_From_bool(static_cast< bool >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBMol_NewAtom(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  OpenBabel::OBAtom *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NewAtom" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  result = (OpenBabel::OBAtom *)(arg1)->NewAtom();
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBMol_NewBond(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  OpenBabel::OBBond *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NewBond" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  result = (OpenBabel::OBBond *)(arg1)->NewBond();
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBMol_NewResidue(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  OpenBabel::OBResidue *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NewResidue" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  result = (OpenBabel::OBResidue *)(arg1)->NewResidue();
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBResidue, 0 |  0 );
   return vresult;
 fail:
   return Qnil;
@@ -37559,38 +38183,6 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_OBMol_DeleteHydrogen(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 1) || (argc > 1)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteHydrogen" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
-  }
-  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-  result = (bool)(arg1)->DeleteHydrogen(arg2);
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
 _wrap_OBMol_DeleteHydrogens__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
   bool result;
@@ -37704,6 +38296,38 @@ _wrap_OBMol_DeleteNonPolarHydrogens(int argc, VALUE *argv, VALUE self) {
   }
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   result = (bool)(arg1)->DeleteNonPolarHydrogens();
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBMol_DeleteHydrogen(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteHydrogen" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteHydrogen" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  result = (bool)(arg1)->DeleteHydrogen(arg2);
   vresult = SWIG_From_bool(static_cast< bool >(result));
   return vresult;
 fail:
@@ -39754,7 +40378,7 @@ fail:
 SWIGINTERN VALUE
 _wrap_OBMol_BeginAtom(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  std::vector<OpenBabel::OBAtom * >::iterator *arg2 = 0 ;
+  OpenBabel::OBAtomIterator *arg2 = 0 ;
   OpenBabel::OBAtom *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -39772,12 +40396,12 @@ _wrap_OBMol_BeginAtom(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BeginAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BeginAtom" "', argument " "2"" of type '" "OpenBabel::OBAtomIterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BeginAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BeginAtom" "', argument " "2"" of type '" "OpenBabel::OBAtomIterator &""'"); 
   }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBAtom * >::iterator * >(argp2);
+  arg2 = reinterpret_cast< OpenBabel::OBAtomIterator * >(argp2);
   result = (OpenBabel::OBAtom *)(arg1)->BeginAtom(*arg2);
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   return vresult;
@@ -39789,7 +40413,7 @@ fail:
 SWIGINTERN VALUE
 _wrap_OBMol_NextAtom(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  std::vector<OpenBabel::OBAtom * >::iterator *arg2 = 0 ;
+  OpenBabel::OBAtomIterator *arg2 = 0 ;
   OpenBabel::OBAtom *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -39807,12 +40431,12 @@ _wrap_OBMol_NextAtom(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "NextAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "NextAtom" "', argument " "2"" of type '" "OpenBabel::OBAtomIterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "NextAtom" "', argument " "2"" of type '" "std::vector<OpenBabel::OBAtom * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "NextAtom" "', argument " "2"" of type '" "OpenBabel::OBAtomIterator &""'"); 
   }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBAtom * >::iterator * >(argp2);
+  arg2 = reinterpret_cast< OpenBabel::OBAtomIterator * >(argp2);
   result = (OpenBabel::OBAtom *)(arg1)->NextAtom(*arg2);
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
   return vresult;
@@ -39824,7 +40448,7 @@ fail:
 SWIGINTERN VALUE
 _wrap_OBMol_BeginBond(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  std::vector<OpenBabel::OBBond * >::iterator *arg2 = 0 ;
+  OpenBabel::OBBondIterator *arg2 = 0 ;
   OpenBabel::OBBond *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -39842,12 +40466,12 @@ _wrap_OBMol_BeginBond(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BeginBond" "', argument " "2"" of type '" "OpenBabel::OBBondIterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BeginBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BeginBond" "', argument " "2"" of type '" "OpenBabel::OBBondIterator &""'"); 
   }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond * >::iterator * >(argp2);
+  arg2 = reinterpret_cast< OpenBabel::OBBondIterator * >(argp2);
   result = (OpenBabel::OBBond *)(arg1)->BeginBond(*arg2);
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
   return vresult;
@@ -39859,7 +40483,7 @@ fail:
 SWIGINTERN VALUE
 _wrap_OBMol_NextBond(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  std::vector<OpenBabel::OBBond * >::iterator *arg2 = 0 ;
+  OpenBabel::OBBondIterator *arg2 = 0 ;
   OpenBabel::OBBond *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -39877,12 +40501,12 @@ _wrap_OBMol_NextBond(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "NextBond" "', argument " "2"" of type '" "OpenBabel::OBBondIterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "NextBond" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "NextBond" "', argument " "2"" of type '" "OpenBabel::OBBondIterator &""'"); 
   }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBBond * >::iterator * >(argp2);
+  arg2 = reinterpret_cast< OpenBabel::OBBondIterator * >(argp2);
   result = (OpenBabel::OBBond *)(arg1)->NextBond(*arg2);
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
   return vresult;
@@ -39894,7 +40518,7 @@ fail:
 SWIGINTERN VALUE
 _wrap_OBMol_BeginResidue(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  std::vector<OpenBabel::OBResidue * >::iterator *arg2 = 0 ;
+  OpenBabel::OBResidueIterator *arg2 = 0 ;
   OpenBabel::OBResidue *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -39912,12 +40536,12 @@ _wrap_OBMol_BeginResidue(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BeginResidue" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BeginResidue" "', argument " "2"" of type '" "OpenBabel::OBResidueIterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BeginResidue" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BeginResidue" "', argument " "2"" of type '" "OpenBabel::OBResidueIterator &""'"); 
   }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBResidue * >::iterator * >(argp2);
+  arg2 = reinterpret_cast< OpenBabel::OBResidueIterator * >(argp2);
   result = (OpenBabel::OBResidue *)(arg1)->BeginResidue(*arg2);
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBResidue, 0 |  0 );
   return vresult;
@@ -39929,7 +40553,7 @@ fail:
 SWIGINTERN VALUE
 _wrap_OBMol_NextResidue(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-  std::vector<OpenBabel::OBResidue * >::iterator *arg2 = 0 ;
+  OpenBabel::OBResidueIterator *arg2 = 0 ;
   OpenBabel::OBResidue *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -39947,12 +40571,12 @@ _wrap_OBMol_NextResidue(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "NextResidue" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "NextResidue" "', argument " "2"" of type '" "OpenBabel::OBResidueIterator &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "NextResidue" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue * >::iterator &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "NextResidue" "', argument " "2"" of type '" "OpenBabel::OBResidueIterator &""'"); 
   }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBResidue * >::iterator * >(argp2);
+  arg2 = reinterpret_cast< OpenBabel::OBResidueIterator * >(argp2);
   result = (OpenBabel::OBResidue *)(arg1)->NextResidue(*arg2);
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBResidue, 0 |  0 );
   return vresult;
@@ -42049,374 +42673,6 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_OBSmartsPattern_NumMatches(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  unsigned int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NumMatches" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  result = (unsigned int)((OpenBabel::OBSmartsPattern const *)arg1)->NumMatches();
-  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_NumAtoms(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  unsigned int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NumAtoms" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  result = (unsigned int)((OpenBabel::OBSmartsPattern const *)arg1)->NumAtoms();
-  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_NumBonds(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  unsigned int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NumBonds" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  result = (unsigned int)((OpenBabel::OBSmartsPattern const *)arg1)->NumBonds();
-  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_GetAtomicNum(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  int arg2 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 1) || (argc > 1)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  ecode2 = SWIG_AsVal_int(argv[0], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetAtomicNum" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  result = (int)(arg1)->GetAtomicNum(arg2);
-  vresult = SWIG_From_int(static_cast< int >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_GetBond(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  int *arg2 = 0 ;
-  int *arg3 = 0 ;
-  int *arg4 = 0 ;
-  int arg5 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
-  int val5 ;
-  int ecode5 = 0 ;
-  
-  if ((argc < 4) || (argc > 4)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetBond" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_int,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetBond" "', argument " "2"" of type '" "int &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetBond" "', argument " "2"" of type '" "int &""'"); 
-  }
-  arg2 = reinterpret_cast< int * >(argp2);
-  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "GetBond" "', argument " "3"" of type '" "int &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetBond" "', argument " "3"" of type '" "int &""'"); 
-  }
-  arg3 = reinterpret_cast< int * >(argp3);
-  res4 = SWIG_ConvertPtr(argv[2], &argp4, SWIGTYPE_p_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "GetBond" "', argument " "4"" of type '" "int &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetBond" "', argument " "4"" of type '" "int &""'"); 
-  }
-  arg4 = reinterpret_cast< int * >(argp4);
-  ecode5 = SWIG_AsVal_int(argv[3], &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "GetBond" "', argument " "5"" of type '" "int""'");
-  } 
-  arg5 = static_cast< int >(val5);
-  (arg1)->GetBond(*arg2,*arg3,*arg4,arg5);
-  return Qnil;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_GetCharge(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  int arg2 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 1) || (argc > 1)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetCharge" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  ecode2 = SWIG_AsVal_int(argv[0], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetCharge" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  result = (int)(arg1)->GetCharge(arg2);
-  vresult = SWIG_From_int(static_cast< int >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_GetSMARTS__SWIG_0(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  std::string *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetSMARTS" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  {
-    std::string const &_result_ref = ((OpenBabel::OBSmartsPattern const *)arg1)->GetSMARTS();
-    result = (std::string *) &_result_ref;
-  }
-  vresult = SWIG_From_std_string(static_cast< std::string >(*result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_GetSMARTS__SWIG_1(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  std::string *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetSMARTS" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  {
-    std::string &_result_ref = (arg1)->GetSMARTS();
-    result = (std::string *) &_result_ref;
-  }
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__string, 0 |  0 );
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE _wrap_OBSmartsPattern_GetSMARTS(int nargs, VALUE *args, VALUE self) {
-  int argc;
-  VALUE argv[2];
-  int ii;
-  
-  argc = nargs + 1;
-  argv[0] = self;
-  if (argc > 2) SWIG_fail;
-  for (ii = 1; (ii < argc); ii++) {
-    argv[ii] = args[ii-1];
-  }
-  if (argc == 1) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_OBSmartsPattern_GetSMARTS__SWIG_1(nargs, args, self);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_OBSmartsPattern_GetSMARTS__SWIG_0(nargs, args, self);
-    }
-  }
-  
-fail:
-  rb_raise(rb_eArgError, "No matching function for overloaded 'OBSmartsPattern_GetSMARTS'");
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_GetVectorBinding(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  int arg2 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 1) || (argc > 1)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetVectorBinding" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  ecode2 = SWIG_AsVal_int(argv[0], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetVectorBinding" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  result = (int)((OpenBabel::OBSmartsPattern const *)arg1)->GetVectorBinding(arg2);
-  vresult = SWIG_From_int(static_cast< int >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_Empty(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Empty" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  result = (bool)((OpenBabel::OBSmartsPattern const *)arg1)->Empty();
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_IsValid(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IsValid" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  result = (bool)((OpenBabel::OBSmartsPattern const *)arg1)->IsValid();
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
 _wrap_OBSmartsPattern_Init__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -42535,32 +42791,344 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_OBSmartsPattern_WriteMapList(int argc, VALUE *argv, VALUE self) {
+_wrap_OBSmartsPattern_GetSMARTS__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  std::ostream *arg2 = 0 ;
+  std::string *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetSMARTS" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  {
+    std::string const &_result_ref = ((OpenBabel::OBSmartsPattern const *)arg1)->GetSMARTS();
+    result = (std::string *) &_result_ref;
+  }
+  vresult = SWIG_From_std_string(static_cast< std::string >(*result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_GetSMARTS__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  std::string *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetSMARTS" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  {
+    std::string &_result_ref = (arg1)->GetSMARTS();
+    result = (std::string *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__string, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_OBSmartsPattern_GetSMARTS(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[2];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 2) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_OBSmartsPattern_GetSMARTS__SWIG_1(nargs, args, self);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_OBSmartsPattern_GetSMARTS__SWIG_0(nargs, args, self);
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'OBSmartsPattern_GetSMARTS'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_Empty(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Empty" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  result = (bool)((OpenBabel::OBSmartsPattern const *)arg1)->Empty();
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_IsValid(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IsValid" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  result = (bool)((OpenBabel::OBSmartsPattern const *)arg1)->IsValid();
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_NumAtoms(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NumAtoms" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  result = (unsigned int)((OpenBabel::OBSmartsPattern const *)arg1)->NumAtoms();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_NumBonds(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NumBonds" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  result = (unsigned int)((OpenBabel::OBSmartsPattern const *)arg1)->NumBonds();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_GetBond(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  int *arg2 = 0 ;
+  int *arg3 = 0 ;
+  int *arg4 = 0 ;
+  int arg5 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  
+  if ((argc < 4) || (argc > 4)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetBond" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_int,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetBond" "', argument " "2"" of type '" "int &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetBond" "', argument " "2"" of type '" "int &""'"); 
+  }
+  arg2 = reinterpret_cast< int * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_int,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "GetBond" "', argument " "3"" of type '" "int &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetBond" "', argument " "3"" of type '" "int &""'"); 
+  }
+  arg3 = reinterpret_cast< int * >(argp3);
+  res4 = SWIG_ConvertPtr(argv[2], &argp4, SWIGTYPE_p_int,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "GetBond" "', argument " "4"" of type '" "int &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetBond" "', argument " "4"" of type '" "int &""'"); 
+  }
+  arg4 = reinterpret_cast< int * >(argp4);
+  ecode5 = SWIG_AsVal_int(argv[3], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "GetBond" "', argument " "5"" of type '" "int""'");
+  } 
+  arg5 = static_cast< int >(val5);
+  (arg1)->GetBond(*arg2,*arg3,*arg4,arg5);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_GetAtomicNum(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  int arg2 ;
+  int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
   }
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WriteMapList" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__ostream,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WriteMapList" "', argument " "2"" of type '" "std::ostream &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WriteMapList" "', argument " "2"" of type '" "std::ostream &""'"); 
-  }
-  arg2 = reinterpret_cast< std::ostream * >(argp2);
-  (arg1)->WriteMapList(*arg2);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetAtomicNum" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (int)(arg1)->GetAtomicNum(arg2);
+  vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
+fail:
   return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_GetCharge(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  int arg2 ;
+  int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetCharge" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetCharge" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (int)(arg1)->GetCharge(arg2);
+  vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_GetVectorBinding(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  int arg2 ;
+  int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetVectorBinding" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetVectorBinding" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (int)((OpenBabel::OBSmartsPattern const *)arg1)->GetVectorBinding(arg2);
+  vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -43003,6 +43571,30 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_OBSmartsPattern_NumMatches(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "NumMatches" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  result = (unsigned int)((OpenBabel::OBSmartsPattern const *)arg1)->NumMatches();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_OBSmartsPattern_GetMapList(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
   std::vector<std::vector<int > > *result = 0 ;
@@ -43020,33 +43612,6 @@ _wrap_OBSmartsPattern_GetMapList(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
   {
     std::vector<std::vector<int > > &_result_ref = (arg1)->GetMapList();
-    result = (std::vector<std::vector<int > > *) &_result_ref;
-  }
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTstd__vectorTint_t_t, 0 |  0 );
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBSmartsPattern_GetUMapList(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
-  std::vector<std::vector<int > > *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetUMapList" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
-  {
-    std::vector<std::vector<int > > &_result_ref = (arg1)->GetUMapList();
     result = (std::vector<std::vector<int > > *) &_result_ref;
   }
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTstd__vectorTint_t_t, 0 |  0 );
@@ -43099,6 +43664,65 @@ _wrap_OBSmartsPattern_EndMList(int argc, VALUE *argv, VALUE self) {
   result = (arg1)->EndMList();
   vresult = SWIG_NewPointerObj((new std::vector<std::vector<int > >::iterator(static_cast< const std::vector<std::vector<int > >::iterator& >(result))), SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator, SWIG_POINTER_OWN |  0 );
   return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_GetUMapList(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  std::vector<std::vector<int > > *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetUMapList" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  {
+    std::vector<std::vector<int > > &_result_ref = (arg1)->GetUMapList();
+    result = (std::vector<std::vector<int > > *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTstd__vectorTint_t_t, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBSmartsPattern_WriteMapList(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBSmartsPattern *arg1 = (OpenBabel::OBSmartsPattern *) 0 ;
+  std::ostream *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBSmartsPattern, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WriteMapList" "', argument " "1"" of type '" "OpenBabel::OBSmartsPattern *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSmartsPattern * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__ostream,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WriteMapList" "', argument " "2"" of type '" "std::ostream &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WriteMapList" "', argument " "2"" of type '" "std::ostream &""'"); 
+  }
+  arg2 = reinterpret_cast< std::ostream * >(argp2);
+  (arg1)->WriteMapList(*arg2);
+  return Qnil;
 fail:
   return Qnil;
 }
@@ -46538,15 +47162,137 @@ fail:
 swig_class cOBForceField;
 
 SWIGINTERN VALUE
+_wrap_new_OBForceField__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  std::string arg1 ;
+  bool arg2 ;
+  OpenBabel::OBForceField *result = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    int res = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "OpenBabel::OBForceField" "', argument " "1"" of type '" "std::string""'"); 
+    }
+    arg1 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  ecode2 = SWIG_AsVal_bool(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OpenBabel::OBForceField" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  result = (OpenBabel::OBForceField *)new OpenBabel::OBForceField(arg1,arg2);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+SWIGINTERN VALUE
+_wrap_OBForceField_allocate(VALUE self) {
+#else
+  SWIGINTERN VALUE
+  _wrap_OBForceField_allocate(int argc, VALUE *argv, VALUE self) {
+#endif
+    
+    
+    VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_OpenBabel__OBForceField);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+    rb_obj_call_init(vresult, argc, argv);
+#endif
+    return vresult;
+  }
+  
+
+SWIGINTERN VALUE
+_wrap_new_OBForceField__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  std::string arg1 ;
+  OpenBabel::OBForceField *result = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    int res = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "OpenBabel::OBForceField" "', argument " "1"" of type '" "std::string""'"); 
+    }
+    arg1 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  result = (OpenBabel::OBForceField *)new OpenBabel::OBForceField(arg1);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_new_OBForceField(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[2];
+  int ii;
+  
+  argc = nargs;
+  if (argc > 2) SWIG_fail;
+  for (ii = 0; (ii < argc); ii++) {
+    argv[ii] = args[ii];
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_OBForceField__SWIG_1(nargs, args, self);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_bool(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_new_OBForceField__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'new_OBForceField'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_OBForceField_Iter(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
   OpenBabel::PluginIter<OpenBabel::OBForceField > *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   VALUE vresult = Qnil;
   
   if ((argc < 0) || (argc > 0)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
   }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Iter" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
   {
-    OpenBabel::PluginIter<OpenBabel::OBForceField > &_result_ref = OpenBabel::OBForceField::Iter();
+    OpenBabel::PluginIter<OpenBabel::OBForceField > &_result_ref = (arg1)->Iter();
     result = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) &_result_ref;
   }
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
@@ -46558,55 +47304,8 @@ fail:
 
 SWIGINTERN VALUE
 _wrap_OBForceField_FindDefaultType(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBForceField *result = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  result = (OpenBabel::OBForceField *)OpenBabel::OBForceField::FindDefaultType();
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBForceField_FindType(int argc, VALUE *argv, VALUE self) {
-  std::string *arg1 = 0 ;
-  OpenBabel::OBForceField *result = 0 ;
-  int res1 = SWIG_OLDOBJ ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 1) || (argc > 1)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
-  }
-  {
-    std::string *ptr = (std::string *)0;
-    res1 = SWIG_AsPtr_std_string(argv[0], &ptr);
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBForceField::FindType" "', argument " "1"" of type '" "std::string const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::FindType" "', argument " "1"" of type '" "std::string const &""'"); 
-    }
-    arg1 = ptr;
-  }
-  result = (OpenBabel::OBForceField *)OpenBabel::OBForceField::FindType((std::string const &)*arg1);
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-  if (SWIG_IsNewObj(res1)) delete arg1;
-  return vresult;
-fail:
-  if (SWIG_IsNewObj(res1)) delete arg1;
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBForceField_Description(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-  std::string result;
+  OpenBabel::OBForceField *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   VALUE vresult = Qnil;
@@ -46616,99 +47315,165 @@ _wrap_OBForceField_Description(int argc, VALUE *argv, VALUE self) {
   }
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Description" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindDefaultType" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
-  result = (arg1)->Description();
-  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  result = (OpenBabel::OBForceField *)(arg1)->FindDefaultType();
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
   return vresult;
 fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_FindType(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  std::string *arg2 = 0 ;
+  OpenBabel::OBForceField *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindType" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindType" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FindType" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (OpenBabel::OBForceField *)(arg1)->FindType((std::string const &)*arg2);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return Qnil;
 }
 
 
 SWIGINTERN VALUE
 _wrap_OBForceField_FindForceField__SWIG_0(int argc, VALUE *argv, VALUE self) {
-  std::string *arg1 = 0 ;
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  std::string *arg2 = 0 ;
   OpenBabel::OBForceField *result = 0 ;
-  int res1 = SWIG_OLDOBJ ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
   VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
   }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindForceField" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
   {
     std::string *ptr = (std::string *)0;
-    res1 = SWIG_AsPtr_std_string(argv[0], &ptr);
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBForceField::FindForceField" "', argument " "1"" of type '" "std::string const &""'"); 
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindForceField" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::FindForceField" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FindForceField" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg1 = ptr;
+    arg2 = ptr;
   }
-  result = (OpenBabel::OBForceField *)OpenBabel::OBForceField::FindForceField((std::string const &)*arg1);
+  result = (OpenBabel::OBForceField *)(arg1)->FindForceField((std::string const &)*arg2);
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return vresult;
 fail:
-  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return Qnil;
 }
 
 
 SWIGINTERN VALUE
 _wrap_OBForceField_FindForceField__SWIG_1(int argc, VALUE *argv, VALUE self) {
-  char *arg1 = (char *) 0 ;
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  char *arg2 = (char *) 0 ;
   OpenBabel::OBForceField *result = 0 ;
-  int res1 ;
-  char *buf1 = 0 ;
-  int alloc1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
   VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
   }
-  res1 = SWIG_AsCharPtrAndSize(argv[0], &buf1, NULL, &alloc1);
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBForceField::FindForceField" "', argument " "1"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindForceField" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
   }
-  arg1 = reinterpret_cast< char * >(buf1);
-  result = (OpenBabel::OBForceField *)OpenBabel::OBForceField::FindForceField((char const *)arg1);
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindForceField" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  result = (OpenBabel::OBForceField *)(arg1)->FindForceField((char const *)arg2);
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return vresult;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return Qnil;
 }
 
 
 SWIGINTERN VALUE _wrap_OBForceField_FindForceField(int nargs, VALUE *args, VALUE self) {
   int argc;
-  VALUE argv[1];
+  VALUE argv[3];
   int ii;
   
-  argc = nargs;
-  if (argc > 1) SWIG_fail;
-  for (ii = 0; (ii < argc); ii++) {
-    argv[ii] = args[ii];
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 3) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
   }
-  if (argc == 1) {
+  if (argc == 2) {
     int _v;
-    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBForceField_FindForceField__SWIG_0(nargs, args, self);
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBForceField_FindForceField__SWIG_0(nargs, args, self);
+      }
     }
   }
-  if (argc == 1) {
+  if (argc == 2) {
     int _v;
-    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_OBForceField_FindForceField__SWIG_1(nargs, args, self);
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBForceField_FindForceField__SWIG_1(nargs, args, self);
+      }
     }
   }
   
@@ -46781,10 +47546,12 @@ SWIGINTERN VALUE
 _wrap_OBForceField_UpdateCoordinates(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
   OpenBabel::OBMol *arg2 = 0 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -46802,9 +47569,117 @@ _wrap_OBForceField_UpdateCoordinates(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "UpdateCoordinates" "', argument " "2"" of type '" "OpenBabel::OBMol &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBMol * >(argp2);
-  (arg1)->UpdateCoordinates(*arg2);
+  result = (bool)(arg1)->UpdateCoordinates(*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_OBFFLog__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  std::string arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFFLog" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    int res = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "OBFFLog" "', argument " "2"" of type '" "std::string""'"); 
+    }
+    arg2 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  (arg1)->OBFFLog(arg2);
   return Qnil;
 fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_OBFFLog__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBFFLog" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBFFLog" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  (arg1)->OBFFLog((char const *)arg2);
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return Qnil;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_OBForceField_OBFFLog(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[3];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 3) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBForceField_OBFFLog__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBForceField_OBFFLog__SWIG_1(nargs, args, self);
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'OBForceField_OBFFLog'");
   return Qnil;
 }
 
@@ -47199,12 +48074,57 @@ SWIGINTERN VALUE
 _wrap_OBForceField_SteepestDescent__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
   int arg2 ;
-  int arg3 ;
+  double arg3 ;
+  int arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
-  int val3 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescent" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescent" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescent" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "SteepestDescent" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  (arg1)->SteepestDescent(arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_SteepestDescent__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
   int ecode3 = 0 ;
   
   if ((argc < 2) || (argc > 2)) {
@@ -47220,11 +48140,11 @@ _wrap_OBForceField_SteepestDescent__SWIG_0(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescent" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(argv[1], &val3);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescent" "', argument " "3"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescent" "', argument " "3"" of type '" "double""'");
   } 
-  arg3 = static_cast< int >(val3);
+  arg3 = static_cast< double >(val3);
   (arg1)->SteepestDescent(arg2,arg3);
   return Qnil;
 fail:
@@ -47233,7 +48153,7 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_OBForceField_SteepestDescent__SWIG_1(int argc, VALUE *argv, VALUE self) {
+_wrap_OBForceField_SteepestDescent__SWIG_2(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
   int arg2 ;
   void *argp1 = 0 ;
@@ -47263,12 +48183,12 @@ fail:
 
 SWIGINTERN VALUE _wrap_OBForceField_SteepestDescent(int nargs, VALUE *args, VALUE self) {
   int argc;
-  VALUE argv[4];
+  VALUE argv[5];
   int ii;
   
   argc = nargs + 1;
   argv[0] = self;
-  if (argc > 4) SWIG_fail;
+  if (argc > 5) SWIG_fail;
   for (ii = 1; (ii < argc); ii++) {
     argv[ii] = args[ii-1];
   }
@@ -47283,7 +48203,7 @@ SWIGINTERN VALUE _wrap_OBForceField_SteepestDescent(int nargs, VALUE *args, VALU
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBForceField_SteepestDescent__SWIG_1(nargs, args, self);
+        return _wrap_OBForceField_SteepestDescent__SWIG_2(nargs, args, self);
       }
     }
   }
@@ -47299,11 +48219,38 @@ SWIGINTERN VALUE _wrap_OBForceField_SteepestDescent(int nargs, VALUE *args, VALU
       }
       if (_v) {
         {
-          int res = SWIG_AsVal_int(argv[2], NULL);
+          int res = SWIG_AsVal_double(argv[2], NULL);
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_OBForceField_SteepestDescent__SWIG_0(nargs, args, self);
+          return _wrap_OBForceField_SteepestDescent__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_OBForceField_SteepestDescent__SWIG_0(nargs, args, self);
+          }
         }
       }
     }
@@ -47316,15 +48263,284 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_OBForceField_ConjugateGradients__SWIG_0(int argc, VALUE *argv, VALUE self) {
+_wrap_OBForceField_SteepestDescentInitialize__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
   int arg2 ;
-  int arg3 ;
+  double arg3 ;
+  int arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
-  int val3 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescentInitialize" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescentInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescentInitialize" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "SteepestDescentInitialize" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  (arg1)->SteepestDescentInitialize(arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_SteepestDescentInitialize__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescentInitialize" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescentInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SteepestDescentInitialize" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  (arg1)->SteepestDescentInitialize(arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_SteepestDescentInitialize__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescentInitialize" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescentInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->SteepestDescentInitialize(arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_OBForceField_SteepestDescentInitialize(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[5];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 5) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_OBForceField_SteepestDescentInitialize__SWIG_2(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_OBForceField_SteepestDescentInitialize__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_OBForceField_SteepestDescentInitialize__SWIG_0(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'OBForceField_SteepestDescentInitialize'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_SteepestDescentTakeNSteps(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SteepestDescentTakeNSteps" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SteepestDescentTakeNSteps" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (bool)(arg1)->SteepestDescentTakeNSteps(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_ConjugateGradients__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  int arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradients" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradients" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradients" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ConjugateGradients" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  (arg1)->ConjugateGradients(arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_ConjugateGradients__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
   int ecode3 = 0 ;
   
   if ((argc < 2) || (argc > 2)) {
@@ -47340,11 +48556,11 @@ _wrap_OBForceField_ConjugateGradients__SWIG_0(int argc, VALUE *argv, VALUE self)
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradients" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(argv[1], &val3);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradients" "', argument " "3"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradients" "', argument " "3"" of type '" "double""'");
   } 
-  arg3 = static_cast< int >(val3);
+  arg3 = static_cast< double >(val3);
   (arg1)->ConjugateGradients(arg2,arg3);
   return Qnil;
 fail:
@@ -47353,7 +48569,7 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_OBForceField_ConjugateGradients__SWIG_1(int argc, VALUE *argv, VALUE self) {
+_wrap_OBForceField_ConjugateGradients__SWIG_2(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
   int arg2 ;
   void *argp1 = 0 ;
@@ -47383,12 +48599,12 @@ fail:
 
 SWIGINTERN VALUE _wrap_OBForceField_ConjugateGradients(int nargs, VALUE *args, VALUE self) {
   int argc;
-  VALUE argv[4];
+  VALUE argv[5];
   int ii;
   
   argc = nargs + 1;
   argv[0] = self;
-  if (argc > 4) SWIG_fail;
+  if (argc > 5) SWIG_fail;
   for (ii = 1; (ii < argc); ii++) {
     argv[ii] = args[ii-1];
   }
@@ -47403,7 +48619,7 @@ SWIGINTERN VALUE _wrap_OBForceField_ConjugateGradients(int nargs, VALUE *args, V
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_OBForceField_ConjugateGradients__SWIG_1(nargs, args, self);
+        return _wrap_OBForceField_ConjugateGradients__SWIG_2(nargs, args, self);
       }
     }
   }
@@ -47419,11 +48635,38 @@ SWIGINTERN VALUE _wrap_OBForceField_ConjugateGradients(int nargs, VALUE *args, V
       }
       if (_v) {
         {
-          int res = SWIG_AsVal_int(argv[2], NULL);
+          int res = SWIG_AsVal_double(argv[2], NULL);
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_OBForceField_ConjugateGradients__SWIG_0(nargs, args, self);
+          return _wrap_OBForceField_ConjugateGradients__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_OBForceField_ConjugateGradients__SWIG_0(nargs, args, self);
+          }
         }
       }
     }
@@ -47431,6 +48674,230 @@ SWIGINTERN VALUE _wrap_OBForceField_ConjugateGradients(int nargs, VALUE *args, V
   
 fail:
   rb_raise(rb_eArgError, "No matching function for overloaded 'OBForceField_ConjugateGradients'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_ConjugateGradientsInitialize__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  int arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradientsInitialize" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradientsInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradientsInitialize" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ConjugateGradientsInitialize" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  (arg1)->ConjugateGradientsInitialize(arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_ConjugateGradientsInitialize__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradientsInitialize" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradientsInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ConjugateGradientsInitialize" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  (arg1)->ConjugateGradientsInitialize(arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_ConjugateGradientsInitialize__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradientsInitialize" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradientsInitialize" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->ConjugateGradientsInitialize(arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_OBForceField_ConjugateGradientsInitialize(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[5];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 5) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_OBForceField_ConjugateGradientsInitialize__SWIG_2(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_OBForceField_ConjugateGradientsInitialize__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBForceField, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_OBForceField_ConjugateGradientsInitialize__SWIG_0(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'OBForceField_ConjugateGradientsInitialize'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_ConjugateGradientsTakeNSteps(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  int arg2 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConjugateGradientsTakeNSteps" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConjugateGradientsTakeNSteps" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (bool)(arg1)->ConjugateGradientsTakeNSteps(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
   return Qnil;
 }
 
@@ -47632,45 +49099,7 @@ fail:
 
 SWIGINTERN VALUE
 _wrap_OBForceField_VectorLengthDerivative(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::vector3 *arg1 = 0 ;
-  OpenBabel::vector3 *arg2 = 0 ;
-  double result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 2) || (argc > 2)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBForceField::VectorLengthDerivative" "', argument " "1"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::VectorLengthDerivative" "', argument " "1"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBForceField::VectorLengthDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::VectorLengthDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  result = (double)OpenBabel::OBForceField::VectorLengthDerivative(*arg1,*arg2);
-  vresult = SWIG_From_double(static_cast< double >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBForceField_VectorAngleDerivative(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::vector3 *arg1 = 0 ;
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
   OpenBabel::vector3 *arg2 = 0 ;
   OpenBabel::vector3 *arg3 = 0 ;
   double result;
@@ -47682,34 +49111,31 @@ _wrap_OBForceField_VectorAngleDerivative(int argc, VALUE *argv, VALUE self) {
   int res3 = 0 ;
   VALUE vresult = Qnil;
   
-  if ((argc < 3) || (argc > 3)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
   }
-  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBForceField::VectorAngleDerivative" "', argument " "1"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VectorLengthDerivative" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
   }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::VectorAngleDerivative" "', argument " "1"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBForceField::VectorAngleDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VectorLengthDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::VectorAngleDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VectorLengthDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  res3 = SWIG_ConvertPtr(argv[2], &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::OBForceField::VectorAngleDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "VectorLengthDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::VectorAngleDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VectorLengthDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
-  result = (double)OpenBabel::OBForceField::VectorAngleDerivative(*arg1,*arg2,*arg3);
+  result = (double)(arg1)->VectorLengthDerivative(*arg2,*arg3);
   vresult = SWIG_From_double(static_cast< double >(result));
   return vresult;
 fail:
@@ -47718,8 +49144,8 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_OBForceField_VectorTorsionDerivative(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::vector3 *arg1 = 0 ;
+_wrap_OBForceField_VectorAngleDerivative(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
   OpenBabel::vector3 *arg2 = 0 ;
   OpenBabel::vector3 *arg3 = 0 ;
   OpenBabel::vector3 *arg4 = 0 ;
@@ -47734,42 +49160,107 @@ _wrap_OBForceField_VectorTorsionDerivative(int argc, VALUE *argv, VALUE self) {
   int res4 = 0 ;
   VALUE vresult = Qnil;
   
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VectorAngleDerivative" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VectorAngleDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VectorAngleDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "VectorAngleDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VectorAngleDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
+  res4 = SWIG_ConvertPtr(argv[2], &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "VectorAngleDerivative" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VectorAngleDerivative" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
+  result = (double)(arg1)->VectorAngleDerivative(*arg2,*arg3,*arg4);
+  vresult = SWIG_From_double(static_cast< double >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_VectorTorsionDerivative(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  OpenBabel::vector3 *arg2 = 0 ;
+  OpenBabel::vector3 *arg3 = 0 ;
+  OpenBabel::vector3 *arg4 = 0 ;
+  OpenBabel::vector3 *arg5 = 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  VALUE vresult = Qnil;
+  
   if ((argc < 4) || (argc > 4)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
   }
-  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBForceField::VectorTorsionDerivative" "', argument " "1"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VectorTorsionDerivative" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
   }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::VectorTorsionDerivative" "', argument " "1"" of type '" "OpenBabel::vector3 &""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBForceField::VectorTorsionDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VectorTorsionDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::VectorTorsionDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VectorTorsionDerivative" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  res3 = SWIG_ConvertPtr(argv[2], &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::OBForceField::VectorTorsionDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "VectorTorsionDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::VectorTorsionDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VectorTorsionDerivative" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
-  res4 = SWIG_ConvertPtr(argv[3], &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  res4 = SWIG_ConvertPtr(argv[2], &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "OpenBabel::OBForceField::VectorTorsionDerivative" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "VectorTorsionDerivative" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
   }
   if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBForceField::VectorTorsionDerivative" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VectorTorsionDerivative" "', argument " "4"" of type '" "OpenBabel::vector3 &""'"); 
   }
   arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
-  result = (double)OpenBabel::OBForceField::VectorTorsionDerivative(*arg1,*arg2,*arg3,*arg4);
+  res5 = SWIG_ConvertPtr(argv[3], &argp5, SWIGTYPE_p_OpenBabel__vector3,  0 );
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "VectorTorsionDerivative" "', argument " "5"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  if (!argp5) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VectorTorsionDerivative" "', argument " "5"" of type '" "OpenBabel::vector3 &""'"); 
+  }
+  arg5 = reinterpret_cast< OpenBabel::vector3 * >(argp5);
+  result = (double)(arg1)->VectorTorsionDerivative(*arg2,*arg3,*arg4,*arg5);
   vresult = SWIG_From_double(static_cast< double >(result));
   return vresult;
 fail:
@@ -81059,7 +82550,7 @@ static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_p_t__iterat
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_t = {"_p_std__vectorTOpenBabel__OBInternalCoord_p_t", "std::vector<OpenBabel::OBInternalCoord * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator = {"_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator", "std::vector<OpenBabel::OBInternalCoord * >::iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBMol_t = {"_p_std__vectorTOpenBabel__OBMol_t", "std::vector<OpenBabel::OBMol > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorTOpenBabel__OBResidue_p_t__iterator = {"_p_std__vectorTOpenBabel__OBResidue_p_t__iterator", "std::vector<OpenBabel::OBResidue * >::iterator *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorTOpenBabel__OBResidue_p_t__iterator = {"_p_std__vectorTOpenBabel__OBResidue_p_t__iterator", "std::vector<OpenBabel::OBResidue * >::iterator *|OpenBabel::OBResidueIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBResidue_t = {"_p_std__vectorTOpenBabel__OBResidue_t", "std::vector<OpenBabel::OBResidue > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBRing_p_t = {"_p_std__vectorTOpenBabel__OBRing_p_t", "std::vector<OpenBabel::OBRing * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBRing_p_t__iterator = {"_p_std__vectorTOpenBabel__OBRing_p_t__iterator", "std::vector<OpenBabel::OBRing * >::iterator *", 0, 0, (void*)0, 0};
@@ -82476,16 +83967,15 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cPluginiterFingerprint.klass, "FindType", VALUEFUNC(_wrap_pluginiterFingerprint_FindType), -1);
   rb_define_method(cPluginiterFingerprint.klass, "FindDefaultType", VALUEFUNC(_wrap_pluginiterFingerprint_FindDefaultType), -1);
   rb_define_method(cPluginiterFingerprint.klass, "ID", VALUEFUNC(_wrap_pluginiterFingerprint_ID), -1);
-  rb_define_method(cPluginiterFingerprint.klass, "Description", VALUEFUNC(_wrap_pluginiterFingerprint_Description), -1);
   rb_define_method(cPluginiterFingerprint.klass, "ToStart", VALUEFUNC(_wrap_pluginiterFingerprint_ToStart), -1);
   rb_define_method(cPluginiterFingerprint.klass, "inc", VALUEFUNC(_wrap_pluginiterFingerprint_inc), -1);
   rb_define_method(cPluginiterFingerprint.klass, "good", VALUEFUNC(_wrap_pluginiterFingerprint_good), -1);
   rb_define_method(cPluginiterFingerprint.klass, "deref", VALUEFUNC(_wrap_pluginiterFingerprint_deref), -1);
-  rb_define_method(cPluginiterFingerprint.klass, "__ref__", VALUEFUNC(_wrap_pluginiterFingerprint___ref__), -1);
   rb_define_method(cPluginiterFingerprint.klass, "Iter", VALUEFUNC(_wrap_pluginiterFingerprint_Iter), -1);
   rb_define_method(cPluginiterFingerprint.klass, "SetBit", VALUEFUNC(_wrap_pluginiterFingerprint_SetBit), -1);
   rb_define_method(cPluginiterFingerprint.klass, "Fold", VALUEFUNC(_wrap_pluginiterFingerprint_Fold), -1);
   rb_define_method(cPluginiterFingerprint.klass, "GetFingerprint", VALUEFUNC(_wrap_pluginiterFingerprint_GetFingerprint), -1);
+  rb_define_method(cPluginiterFingerprint.klass, "Description", VALUEFUNC(_wrap_pluginiterFingerprint_Description), -1);
   rb_define_method(cPluginiterFingerprint.klass, "Flags", VALUEFUNC(_wrap_pluginiterFingerprint_Flags), -1);
   rb_define_method(cPluginiterFingerprint.klass, "Tanimoto", VALUEFUNC(_wrap_pluginiterFingerprint_Tanimoto), -1);
   rb_define_method(cPluginiterFingerprint.klass, "Getbitsperint", VALUEFUNC(_wrap_pluginiterFingerprint_Getbitsperint), -1);
@@ -82502,17 +83992,16 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cPluginiterForceField.klass, "FindType", VALUEFUNC(_wrap_pluginiterForceField_FindType), -1);
   rb_define_method(cPluginiterForceField.klass, "FindDefaultType", VALUEFUNC(_wrap_pluginiterForceField_FindDefaultType), -1);
   rb_define_method(cPluginiterForceField.klass, "ID", VALUEFUNC(_wrap_pluginiterForceField_ID), -1);
-  rb_define_method(cPluginiterForceField.klass, "Description", VALUEFUNC(_wrap_pluginiterForceField_Description), -1);
   rb_define_method(cPluginiterForceField.klass, "ToStart", VALUEFUNC(_wrap_pluginiterForceField_ToStart), -1);
   rb_define_method(cPluginiterForceField.klass, "inc", VALUEFUNC(_wrap_pluginiterForceField_inc), -1);
   rb_define_method(cPluginiterForceField.klass, "good", VALUEFUNC(_wrap_pluginiterForceField_good), -1);
   rb_define_method(cPluginiterForceField.klass, "deref", VALUEFUNC(_wrap_pluginiterForceField_deref), -1);
-  rb_define_method(cPluginiterForceField.klass, "__ref__", VALUEFUNC(_wrap_pluginiterForceField___ref__), -1);
   rb_define_method(cPluginiterForceField.klass, "Iter", VALUEFUNC(_wrap_pluginiterForceField_Iter), -1);
   rb_define_method(cPluginiterForceField.klass, "FindForceField", VALUEFUNC(_wrap_pluginiterForceField_FindForceField), -1);
   rb_define_method(cPluginiterForceField.klass, "GetUnit", VALUEFUNC(_wrap_pluginiterForceField_GetUnit), -1);
   rb_define_method(cPluginiterForceField.klass, "Setup", VALUEFUNC(_wrap_pluginiterForceField_Setup), -1);
   rb_define_method(cPluginiterForceField.klass, "UpdateCoordinates", VALUEFUNC(_wrap_pluginiterForceField_UpdateCoordinates), -1);
+  rb_define_method(cPluginiterForceField.klass, "OBFFLog", VALUEFUNC(_wrap_pluginiterForceField_OBFFLog), -1);
   rb_define_method(cPluginiterForceField.klass, "Energy", VALUEFUNC(_wrap_pluginiterForceField_Energy), -1);
   rb_define_method(cPluginiterForceField.klass, "E_Bond", VALUEFUNC(_wrap_pluginiterForceField_E_Bond), -1);
   rb_define_method(cPluginiterForceField.klass, "E_Angle", VALUEFUNC(_wrap_pluginiterForceField_E_Angle), -1);
@@ -82529,7 +84018,11 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cPluginiterForceField.klass, "SystematicRotorSearch", VALUEFUNC(_wrap_pluginiterForceField_SystematicRotorSearch), -1);
   rb_define_method(cPluginiterForceField.klass, "LineSearch", VALUEFUNC(_wrap_pluginiterForceField_LineSearch), -1);
   rb_define_method(cPluginiterForceField.klass, "SteepestDescent", VALUEFUNC(_wrap_pluginiterForceField_SteepestDescent), -1);
+  rb_define_method(cPluginiterForceField.klass, "SteepestDescentInitialize", VALUEFUNC(_wrap_pluginiterForceField_SteepestDescentInitialize), -1);
+  rb_define_method(cPluginiterForceField.klass, "SteepestDescentTakeNSteps", VALUEFUNC(_wrap_pluginiterForceField_SteepestDescentTakeNSteps), -1);
   rb_define_method(cPluginiterForceField.klass, "ConjugateGradients", VALUEFUNC(_wrap_pluginiterForceField_ConjugateGradients), -1);
+  rb_define_method(cPluginiterForceField.klass, "ConjugateGradientsInitialize", VALUEFUNC(_wrap_pluginiterForceField_ConjugateGradientsInitialize), -1);
+  rb_define_method(cPluginiterForceField.klass, "ConjugateGradientsTakeNSteps", VALUEFUNC(_wrap_pluginiterForceField_ConjugateGradientsTakeNSteps), -1);
   rb_define_method(cPluginiterForceField.klass, "ValidateLineSearch", VALUEFUNC(_wrap_pluginiterForceField_ValidateLineSearch), -1);
   rb_define_method(cPluginiterForceField.klass, "ValidateSteepestDescent", VALUEFUNC(_wrap_pluginiterForceField_ValidateSteepestDescent), -1);
   rb_define_method(cPluginiterForceField.klass, "ValidateConjugateGradients", VALUEFUNC(_wrap_pluginiterForceField_ValidateConjugateGradients), -1);
@@ -83133,15 +84626,15 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cOBMol.klass, "DestroyBond", VALUEFUNC(_wrap_OBMol_DestroyBond), -1);
   rb_define_method(cOBMol.klass, "DestroyResidue", VALUEFUNC(_wrap_OBMol_DestroyResidue), -1);
   rb_define_method(cOBMol.klass, "AddAtom", VALUEFUNC(_wrap_OBMol_AddAtom), -1);
+  rb_define_method(cOBMol.klass, "InsertAtom", VALUEFUNC(_wrap_OBMol_InsertAtom), -1);
   rb_define_method(cOBMol.klass, "AddBond", VALUEFUNC(_wrap_OBMol_AddBond), -1);
   rb_define_method(cOBMol.klass, "AddResidue", VALUEFUNC(_wrap_OBMol_AddResidue), -1);
-  rb_define_method(cOBMol.klass, "InsertAtom", VALUEFUNC(_wrap_OBMol_InsertAtom), -1);
-  rb_define_method(cOBMol.klass, "DeleteAtom", VALUEFUNC(_wrap_OBMol_DeleteAtom), -1);
-  rb_define_method(cOBMol.klass, "DeleteBond", VALUEFUNC(_wrap_OBMol_DeleteBond), -1);
-  rb_define_method(cOBMol.klass, "DeleteResidue", VALUEFUNC(_wrap_OBMol_DeleteResidue), -1);
   rb_define_method(cOBMol.klass, "NewAtom", VALUEFUNC(_wrap_OBMol_NewAtom), -1);
   rb_define_method(cOBMol.klass, "NewBond", VALUEFUNC(_wrap_OBMol_NewBond), -1);
   rb_define_method(cOBMol.klass, "NewResidue", VALUEFUNC(_wrap_OBMol_NewResidue), -1);
+  rb_define_method(cOBMol.klass, "DeleteAtom", VALUEFUNC(_wrap_OBMol_DeleteAtom), -1);
+  rb_define_method(cOBMol.klass, "DeleteBond", VALUEFUNC(_wrap_OBMol_DeleteBond), -1);
+  rb_define_method(cOBMol.klass, "DeleteResidue", VALUEFUNC(_wrap_OBMol_DeleteResidue), -1);
   rb_define_method(cOBMol.klass, "BeginModify", VALUEFUNC(_wrap_OBMol_BeginModify), -1);
   rb_define_method(cOBMol.klass, "EndModify", VALUEFUNC(_wrap_OBMol_EndModify), -1);
   rb_define_method(cOBMol.klass, "GetMod", VALUEFUNC(_wrap_OBMol_GetMod), -1);
@@ -83213,9 +84706,9 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cOBMol.klass, "Kekulize", VALUEFUNC(_wrap_OBMol_Kekulize), -1);
   rb_define_method(cOBMol.klass, "PerceiveKekuleBonds", VALUEFUNC(_wrap_OBMol_PerceiveKekuleBonds), -1);
   rb_define_method(cOBMol.klass, "NewPerceiveKekuleBonds", VALUEFUNC(_wrap_OBMol_NewPerceiveKekuleBonds), -1);
-  rb_define_method(cOBMol.klass, "DeleteHydrogen", VALUEFUNC(_wrap_OBMol_DeleteHydrogen), -1);
   rb_define_method(cOBMol.klass, "DeleteHydrogens", VALUEFUNC(_wrap_OBMol_DeleteHydrogens), -1);
   rb_define_method(cOBMol.klass, "DeleteNonPolarHydrogens", VALUEFUNC(_wrap_OBMol_DeleteNonPolarHydrogens), -1);
+  rb_define_method(cOBMol.klass, "DeleteHydrogen", VALUEFUNC(_wrap_OBMol_DeleteHydrogen), -1);
   rb_define_method(cOBMol.klass, "AddHydrogens", VALUEFUNC(_wrap_OBMol_AddHydrogens), -1);
   rb_define_method(cOBMol.klass, "AddPolarHydrogens", VALUEFUNC(_wrap_OBMol_AddPolarHydrogens), -1);
   rb_define_method(cOBMol.klass, "StripSalts", VALUEFUNC(_wrap_OBMol_StripSalts), -1);
@@ -83361,24 +84854,24 @@ SWIGEXPORT void Init_openbabel(void) {
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSmartsPattern, (void *) &cOBSmartsPattern);
   rb_define_alloc_func(cOBSmartsPattern.klass, _wrap_OBSmartsPattern_allocate);
   rb_define_method(cOBSmartsPattern.klass, "initialize", VALUEFUNC(_wrap_new_OBSmartsPattern), -1);
-  rb_define_method(cOBSmartsPattern.klass, "NumMatches", VALUEFUNC(_wrap_OBSmartsPattern_NumMatches), -1);
-  rb_define_method(cOBSmartsPattern.klass, "NumAtoms", VALUEFUNC(_wrap_OBSmartsPattern_NumAtoms), -1);
-  rb_define_method(cOBSmartsPattern.klass, "NumBonds", VALUEFUNC(_wrap_OBSmartsPattern_NumBonds), -1);
-  rb_define_method(cOBSmartsPattern.klass, "GetAtomicNum", VALUEFUNC(_wrap_OBSmartsPattern_GetAtomicNum), -1);
-  rb_define_method(cOBSmartsPattern.klass, "GetBond", VALUEFUNC(_wrap_OBSmartsPattern_GetBond), -1);
-  rb_define_method(cOBSmartsPattern.klass, "GetCharge", VALUEFUNC(_wrap_OBSmartsPattern_GetCharge), -1);
+  rb_define_method(cOBSmartsPattern.klass, "Init", VALUEFUNC(_wrap_OBSmartsPattern_Init), -1);
   rb_define_method(cOBSmartsPattern.klass, "GetSMARTS", VALUEFUNC(_wrap_OBSmartsPattern_GetSMARTS), -1);
-  rb_define_method(cOBSmartsPattern.klass, "GetVectorBinding", VALUEFUNC(_wrap_OBSmartsPattern_GetVectorBinding), -1);
   rb_define_method(cOBSmartsPattern.klass, "Empty", VALUEFUNC(_wrap_OBSmartsPattern_Empty), -1);
   rb_define_method(cOBSmartsPattern.klass, "IsValid", VALUEFUNC(_wrap_OBSmartsPattern_IsValid), -1);
-  rb_define_method(cOBSmartsPattern.klass, "Init", VALUEFUNC(_wrap_OBSmartsPattern_Init), -1);
-  rb_define_method(cOBSmartsPattern.klass, "WriteMapList", VALUEFUNC(_wrap_OBSmartsPattern_WriteMapList), -1);
+  rb_define_method(cOBSmartsPattern.klass, "NumAtoms", VALUEFUNC(_wrap_OBSmartsPattern_NumAtoms), -1);
+  rb_define_method(cOBSmartsPattern.klass, "NumBonds", VALUEFUNC(_wrap_OBSmartsPattern_NumBonds), -1);
+  rb_define_method(cOBSmartsPattern.klass, "GetBond", VALUEFUNC(_wrap_OBSmartsPattern_GetBond), -1);
+  rb_define_method(cOBSmartsPattern.klass, "GetAtomicNum", VALUEFUNC(_wrap_OBSmartsPattern_GetAtomicNum), -1);
+  rb_define_method(cOBSmartsPattern.klass, "GetCharge", VALUEFUNC(_wrap_OBSmartsPattern_GetCharge), -1);
+  rb_define_method(cOBSmartsPattern.klass, "GetVectorBinding", VALUEFUNC(_wrap_OBSmartsPattern_GetVectorBinding), -1);
   rb_define_method(cOBSmartsPattern.klass, "Match", VALUEFUNC(_wrap_OBSmartsPattern_Match), -1);
   rb_define_method(cOBSmartsPattern.klass, "RestrictedMatch", VALUEFUNC(_wrap_OBSmartsPattern_RestrictedMatch), -1);
+  rb_define_method(cOBSmartsPattern.klass, "NumMatches", VALUEFUNC(_wrap_OBSmartsPattern_NumMatches), -1);
   rb_define_method(cOBSmartsPattern.klass, "GetMapList", VALUEFUNC(_wrap_OBSmartsPattern_GetMapList), -1);
-  rb_define_method(cOBSmartsPattern.klass, "GetUMapList", VALUEFUNC(_wrap_OBSmartsPattern_GetUMapList), -1);
   rb_define_method(cOBSmartsPattern.klass, "BeginMList", VALUEFUNC(_wrap_OBSmartsPattern_BeginMList), -1);
   rb_define_method(cOBSmartsPattern.klass, "EndMList", VALUEFUNC(_wrap_OBSmartsPattern_EndMList), -1);
+  rb_define_method(cOBSmartsPattern.klass, "GetUMapList", VALUEFUNC(_wrap_OBSmartsPattern_GetUMapList), -1);
+  rb_define_method(cOBSmartsPattern.klass, "WriteMapList", VALUEFUNC(_wrap_OBSmartsPattern_WriteMapList), -1);
   cOBSmartsPattern.mark = 0;
   cOBSmartsPattern.destroy = (void (*)(void *)) free_OpenBabel_OBSmartsPattern;
   cOBSmartsPattern.trackObjects = 0;
@@ -83544,15 +85037,16 @@ SWIGEXPORT void Init_openbabel(void) {
   
   cOBForceField.klass = rb_define_class_under(mOpenbabel, "OBForceField", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBForceField, (void *) &cOBForceField);
-  rb_undef_alloc_func(cOBForceField.klass);
-  rb_define_singleton_method(cOBForceField.klass, "Iter", VALUEFUNC(_wrap_OBForceField_Iter), -1);
-  rb_define_singleton_method(cOBForceField.klass, "FindDefaultType", VALUEFUNC(_wrap_OBForceField_FindDefaultType), -1);
-  rb_define_singleton_method(cOBForceField.klass, "FindType", VALUEFUNC(_wrap_OBForceField_FindType), -1);
-  rb_define_method(cOBForceField.klass, "Description", VALUEFUNC(_wrap_OBForceField_Description), -1);
-  rb_define_singleton_method(cOBForceField.klass, "FindForceField", VALUEFUNC(_wrap_OBForceField_FindForceField), -1);
+  rb_define_alloc_func(cOBForceField.klass, _wrap_OBForceField_allocate);
+  rb_define_method(cOBForceField.klass, "initialize", VALUEFUNC(_wrap_new_OBForceField), -1);
+  rb_define_method(cOBForceField.klass, "Iter", VALUEFUNC(_wrap_OBForceField_Iter), -1);
+  rb_define_method(cOBForceField.klass, "FindDefaultType", VALUEFUNC(_wrap_OBForceField_FindDefaultType), -1);
+  rb_define_method(cOBForceField.klass, "FindType", VALUEFUNC(_wrap_OBForceField_FindType), -1);
+  rb_define_method(cOBForceField.klass, "FindForceField", VALUEFUNC(_wrap_OBForceField_FindForceField), -1);
   rb_define_method(cOBForceField.klass, "GetUnit", VALUEFUNC(_wrap_OBForceField_GetUnit), -1);
   rb_define_method(cOBForceField.klass, "Setup", VALUEFUNC(_wrap_OBForceField_Setup), -1);
   rb_define_method(cOBForceField.klass, "UpdateCoordinates", VALUEFUNC(_wrap_OBForceField_UpdateCoordinates), -1);
+  rb_define_method(cOBForceField.klass, "OBFFLog", VALUEFUNC(_wrap_OBForceField_OBFFLog), -1);
   rb_define_method(cOBForceField.klass, "Energy", VALUEFUNC(_wrap_OBForceField_Energy), -1);
   rb_define_method(cOBForceField.klass, "E_Bond", VALUEFUNC(_wrap_OBForceField_E_Bond), -1);
   rb_define_method(cOBForceField.klass, "E_Angle", VALUEFUNC(_wrap_OBForceField_E_Angle), -1);
@@ -83569,16 +85063,20 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cOBForceField.klass, "SystematicRotorSearch", VALUEFUNC(_wrap_OBForceField_SystematicRotorSearch), -1);
   rb_define_method(cOBForceField.klass, "LineSearch", VALUEFUNC(_wrap_OBForceField_LineSearch), -1);
   rb_define_method(cOBForceField.klass, "SteepestDescent", VALUEFUNC(_wrap_OBForceField_SteepestDescent), -1);
+  rb_define_method(cOBForceField.klass, "SteepestDescentInitialize", VALUEFUNC(_wrap_OBForceField_SteepestDescentInitialize), -1);
+  rb_define_method(cOBForceField.klass, "SteepestDescentTakeNSteps", VALUEFUNC(_wrap_OBForceField_SteepestDescentTakeNSteps), -1);
   rb_define_method(cOBForceField.klass, "ConjugateGradients", VALUEFUNC(_wrap_OBForceField_ConjugateGradients), -1);
+  rb_define_method(cOBForceField.klass, "ConjugateGradientsInitialize", VALUEFUNC(_wrap_OBForceField_ConjugateGradientsInitialize), -1);
+  rb_define_method(cOBForceField.klass, "ConjugateGradientsTakeNSteps", VALUEFUNC(_wrap_OBForceField_ConjugateGradientsTakeNSteps), -1);
   rb_define_method(cOBForceField.klass, "ValidateLineSearch", VALUEFUNC(_wrap_OBForceField_ValidateLineSearch), -1);
   rb_define_method(cOBForceField.klass, "ValidateSteepestDescent", VALUEFUNC(_wrap_OBForceField_ValidateSteepestDescent), -1);
   rb_define_method(cOBForceField.klass, "ValidateConjugateGradients", VALUEFUNC(_wrap_OBForceField_ValidateConjugateGradients), -1);
   rb_define_method(cOBForceField.klass, "Validate", VALUEFUNC(_wrap_OBForceField_Validate), -1);
   rb_define_method(cOBForceField.klass, "ValidateGradients", VALUEFUNC(_wrap_OBForceField_ValidateGradients), -1);
   rb_define_method(cOBForceField.klass, "ValidateGradientError", VALUEFUNC(_wrap_OBForceField_ValidateGradientError), -1);
-  rb_define_singleton_method(cOBForceField.klass, "VectorLengthDerivative", VALUEFUNC(_wrap_OBForceField_VectorLengthDerivative), -1);
-  rb_define_singleton_method(cOBForceField.klass, "VectorAngleDerivative", VALUEFUNC(_wrap_OBForceField_VectorAngleDerivative), -1);
-  rb_define_singleton_method(cOBForceField.klass, "VectorTorsionDerivative", VALUEFUNC(_wrap_OBForceField_VectorTorsionDerivative), -1);
+  rb_define_method(cOBForceField.klass, "VectorLengthDerivative", VALUEFUNC(_wrap_OBForceField_VectorLengthDerivative), -1);
+  rb_define_method(cOBForceField.klass, "VectorAngleDerivative", VALUEFUNC(_wrap_OBForceField_VectorAngleDerivative), -1);
+  rb_define_method(cOBForceField.klass, "VectorTorsionDerivative", VALUEFUNC(_wrap_OBForceField_VectorTorsionDerivative), -1);
   cOBForceField.mark = 0;
   cOBForceField.destroy = (void (*)(void *)) free_OpenBabel_OBForceField;
   cOBForceField.trackObjects = 0;

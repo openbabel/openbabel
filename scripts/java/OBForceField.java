@@ -32,26 +32,30 @@ public class OBForceField {
     swigCPtr = 0;
   }
 
-  public static pluginiterForceField Iter() {
-    return new pluginiterForceField(openbabelJNI.OBForceField_Iter(), false);
+  public OBForceField(String ID, boolean IsDefault) {
+    this(openbabelJNI.new_OBForceField__SWIG_0(ID, IsDefault), true);
   }
 
-  public static OBForceField FindDefaultType() {
-    long cPtr = openbabelJNI.OBForceField_FindDefaultType();
+  public OBForceField(String ID) {
+    this(openbabelJNI.new_OBForceField__SWIG_1(ID), true);
+  }
+
+  public pluginiterForceField Iter() {
+    return new pluginiterForceField(openbabelJNI.OBForceField_Iter(swigCPtr, this), false);
+  }
+
+  public OBForceField FindDefaultType() {
+    long cPtr = openbabelJNI.OBForceField_FindDefaultType(swigCPtr, this);
     return (cPtr == 0) ? null : new OBForceField(cPtr, false);
   }
 
-  public static OBForceField FindType(String ID) {
-    long cPtr = openbabelJNI.OBForceField_FindType(ID);
+  public OBForceField FindType(String ID) {
+    long cPtr = openbabelJNI.OBForceField_FindType(swigCPtr, this, ID);
     return (cPtr == 0) ? null : new OBForceField(cPtr, false);
   }
 
-  public String Description() {
-    return openbabelJNI.OBForceField_Description(swigCPtr, this);
-  }
-
-  public static OBForceField FindForceField(String ID) {
-    long cPtr = openbabelJNI.OBForceField_FindForceField__SWIG_0(ID);
+  public OBForceField FindForceField(String ID) {
+    long cPtr = openbabelJNI.OBForceField_FindForceField__SWIG_0(swigCPtr, this, ID);
     return (cPtr == 0) ? null : new OBForceField(cPtr, false);
   }
 
@@ -63,8 +67,12 @@ public class OBForceField {
     return openbabelJNI.OBForceField_Setup(swigCPtr, this, OBMol.getCPtr(mol), mol);
   }
 
-  public void UpdateCoordinates(OBMol mol) {
-    openbabelJNI.OBForceField_UpdateCoordinates(swigCPtr, this, OBMol.getCPtr(mol), mol);
+  public boolean UpdateCoordinates(OBMol mol) {
+    return openbabelJNI.OBForceField_UpdateCoordinates(swigCPtr, this, OBMol.getCPtr(mol), mol);
+  }
+
+  public void OBFFLog(String msg) {
+    openbabelJNI.OBForceField_OBFFLog__SWIG_0(swigCPtr, this, msg);
   }
 
   public double Energy() {
@@ -127,20 +135,60 @@ public class OBForceField {
     return new vector3(openbabelJNI.OBForceField_LineSearch(swigCPtr, this, OBAtom.getCPtr(atom), atom, vector3.getCPtr(direction), direction), true);
   }
 
-  public void SteepestDescent(int steps, int method) {
-    openbabelJNI.OBForceField_SteepestDescent__SWIG_0(swigCPtr, this, steps, method);
+  public void SteepestDescent(int steps, double econv, int method) {
+    openbabelJNI.OBForceField_SteepestDescent__SWIG_0(swigCPtr, this, steps, econv, method);
+  }
+
+  public void SteepestDescent(int steps, double econv) {
+    openbabelJNI.OBForceField_SteepestDescent__SWIG_1(swigCPtr, this, steps, econv);
   }
 
   public void SteepestDescent(int steps) {
-    openbabelJNI.OBForceField_SteepestDescent__SWIG_1(swigCPtr, this, steps);
+    openbabelJNI.OBForceField_SteepestDescent__SWIG_2(swigCPtr, this, steps);
   }
 
-  public void ConjugateGradients(int steps, int method) {
-    openbabelJNI.OBForceField_ConjugateGradients__SWIG_0(swigCPtr, this, steps, method);
+  public void SteepestDescentInitialize(int steps, double econv, int method) {
+    openbabelJNI.OBForceField_SteepestDescentInitialize__SWIG_0(swigCPtr, this, steps, econv, method);
+  }
+
+  public void SteepestDescentInitialize(int steps, double econv) {
+    openbabelJNI.OBForceField_SteepestDescentInitialize__SWIG_1(swigCPtr, this, steps, econv);
+  }
+
+  public void SteepestDescentInitialize(int steps) {
+    openbabelJNI.OBForceField_SteepestDescentInitialize__SWIG_2(swigCPtr, this, steps);
+  }
+
+  public boolean SteepestDescentTakeNSteps(int n) {
+    return openbabelJNI.OBForceField_SteepestDescentTakeNSteps(swigCPtr, this, n);
+  }
+
+  public void ConjugateGradients(int steps, double econv, int method) {
+    openbabelJNI.OBForceField_ConjugateGradients__SWIG_0(swigCPtr, this, steps, econv, method);
+  }
+
+  public void ConjugateGradients(int steps, double econv) {
+    openbabelJNI.OBForceField_ConjugateGradients__SWIG_1(swigCPtr, this, steps, econv);
   }
 
   public void ConjugateGradients(int steps) {
-    openbabelJNI.OBForceField_ConjugateGradients__SWIG_1(swigCPtr, this, steps);
+    openbabelJNI.OBForceField_ConjugateGradients__SWIG_2(swigCPtr, this, steps);
+  }
+
+  public void ConjugateGradientsInitialize(int steps, double econv, int method) {
+    openbabelJNI.OBForceField_ConjugateGradientsInitialize__SWIG_0(swigCPtr, this, steps, econv, method);
+  }
+
+  public void ConjugateGradientsInitialize(int steps, double econv) {
+    openbabelJNI.OBForceField_ConjugateGradientsInitialize__SWIG_1(swigCPtr, this, steps, econv);
+  }
+
+  public void ConjugateGradientsInitialize(int steps) {
+    openbabelJNI.OBForceField_ConjugateGradientsInitialize__SWIG_2(swigCPtr, this, steps);
+  }
+
+  public boolean ConjugateGradientsTakeNSteps(int n) {
+    return openbabelJNI.OBForceField_ConjugateGradientsTakeNSteps(swigCPtr, this, n);
   }
 
   public vector3 ValidateLineSearch(OBAtom atom, vector3 direction) {
@@ -167,16 +215,16 @@ public class OBForceField {
     return new vector3(openbabelJNI.OBForceField_ValidateGradientError(swigCPtr, this, vector3.getCPtr(numgrad), numgrad, vector3.getCPtr(anagrad), anagrad), true);
   }
 
-  public static double VectorLengthDerivative(vector3 a, vector3 b) {
-    return openbabelJNI.OBForceField_VectorLengthDerivative(vector3.getCPtr(a), a, vector3.getCPtr(b), b);
+  public double VectorLengthDerivative(vector3 a, vector3 b) {
+    return openbabelJNI.OBForceField_VectorLengthDerivative(swigCPtr, this, vector3.getCPtr(a), a, vector3.getCPtr(b), b);
   }
 
-  public static double VectorAngleDerivative(vector3 a, vector3 b, vector3 c) {
-    return openbabelJNI.OBForceField_VectorAngleDerivative(vector3.getCPtr(a), a, vector3.getCPtr(b), b, vector3.getCPtr(c), c);
+  public double VectorAngleDerivative(vector3 a, vector3 b, vector3 c) {
+    return openbabelJNI.OBForceField_VectorAngleDerivative(swigCPtr, this, vector3.getCPtr(a), a, vector3.getCPtr(b), b, vector3.getCPtr(c), c);
   }
 
-  public static double VectorTorsionDerivative(vector3 a, vector3 b, vector3 c, vector3 d) {
-    return openbabelJNI.OBForceField_VectorTorsionDerivative(vector3.getCPtr(a), a, vector3.getCPtr(b), b, vector3.getCPtr(c), c, vector3.getCPtr(d), d);
+  public double VectorTorsionDerivative(vector3 a, vector3 b, vector3 c, vector3 d) {
+    return openbabelJNI.OBForceField_VectorTorsionDerivative(swigCPtr, this, vector3.getCPtr(a), a, vector3.getCPtr(b), b, vector3.getCPtr(c), c, vector3.getCPtr(d), d);
   }
 
 }

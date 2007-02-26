@@ -68,8 +68,8 @@ public class OBAromaticTyper extends OBGlobalDataBase {
     openbabelJNI.OBAromaticTyper_CheckAromaticity(swigCPtr, this, OBAtom.getCPtr(root), root, searchDepth);
   }
 
-  public boolean TraverseCycle(OBAtom arg0, OBAtom arg1, OBBond arg2, SWIGTYPE_p_std__pairTint_int_t arg3, int arg4) {
-    return openbabelJNI.OBAromaticTyper_TraverseCycle(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, OBAtom.getCPtr(arg1), arg1, OBBond.getCPtr(arg2), arg2, SWIGTYPE_p_std__pairTint_int_t.getCPtr(arg3), arg4);
+  public boolean TraverseCycle(OBAtom root, OBAtom atom, OBBond prev, SWIGTYPE_p_std__pairTint_int_t er, int depth) {
+    return openbabelJNI.OBAromaticTyper_TraverseCycle(swigCPtr, this, OBAtom.getCPtr(root), root, OBAtom.getCPtr(atom), atom, OBBond.getCPtr(prev), prev, SWIGTYPE_p_std__pairTint_int_t.getCPtr(er), depth);
   }
 
 }

@@ -50,10 +50,6 @@ public class pluginiterForceField {
     return openbabelJNI.pluginiterForceField_ID(swigCPtr, this);
   }
 
-  public String Description() {
-    return openbabelJNI.pluginiterForceField_Description(swigCPtr, this);
-  }
-
   public void ToStart() {
     openbabelJNI.pluginiterForceField_ToStart(swigCPtr, this);
   }
@@ -61,10 +57,6 @@ public class pluginiterForceField {
   public OBForceField __deref__() {
     long cPtr = openbabelJNI.pluginiterForceField___deref__(swigCPtr, this);
     return (cPtr == 0) ? null : new OBForceField(cPtr, false);
-  }
-
-  public OBForceField __ref__() {
-    return new OBForceField(openbabelJNI.pluginiterForceField___ref__(swigCPtr, this), false);
   }
 
   public pluginiterForceField() {
@@ -88,8 +80,12 @@ public class pluginiterForceField {
     return openbabelJNI.pluginiterForceField_Setup(swigCPtr, this, OBMol.getCPtr(mol), mol);
   }
 
-  public void UpdateCoordinates(OBMol mol) {
-    openbabelJNI.pluginiterForceField_UpdateCoordinates(swigCPtr, this, OBMol.getCPtr(mol), mol);
+  public boolean UpdateCoordinates(OBMol mol) {
+    return openbabelJNI.pluginiterForceField_UpdateCoordinates(swigCPtr, this, OBMol.getCPtr(mol), mol);
+  }
+
+  public void OBFFLog(String msg) {
+    openbabelJNI.pluginiterForceField_OBFFLog__SWIG_0(swigCPtr, this, msg);
   }
 
   public double Energy() {
@@ -152,20 +148,60 @@ public class pluginiterForceField {
     return new vector3(openbabelJNI.pluginiterForceField_LineSearch(swigCPtr, this, OBAtom.getCPtr(atom), atom, vector3.getCPtr(direction), direction), true);
   }
 
-  public void SteepestDescent(int steps, int method) {
-    openbabelJNI.pluginiterForceField_SteepestDescent__SWIG_0(swigCPtr, this, steps, method);
+  public void SteepestDescent(int steps, double econv, int method) {
+    openbabelJNI.pluginiterForceField_SteepestDescent__SWIG_0(swigCPtr, this, steps, econv, method);
+  }
+
+  public void SteepestDescent(int steps, double econv) {
+    openbabelJNI.pluginiterForceField_SteepestDescent__SWIG_1(swigCPtr, this, steps, econv);
   }
 
   public void SteepestDescent(int steps) {
-    openbabelJNI.pluginiterForceField_SteepestDescent__SWIG_1(swigCPtr, this, steps);
+    openbabelJNI.pluginiterForceField_SteepestDescent__SWIG_2(swigCPtr, this, steps);
   }
 
-  public void ConjugateGradients(int steps, int method) {
-    openbabelJNI.pluginiterForceField_ConjugateGradients__SWIG_0(swigCPtr, this, steps, method);
+  public void SteepestDescentInitialize(int steps, double econv, int method) {
+    openbabelJNI.pluginiterForceField_SteepestDescentInitialize__SWIG_0(swigCPtr, this, steps, econv, method);
+  }
+
+  public void SteepestDescentInitialize(int steps, double econv) {
+    openbabelJNI.pluginiterForceField_SteepestDescentInitialize__SWIG_1(swigCPtr, this, steps, econv);
+  }
+
+  public void SteepestDescentInitialize(int steps) {
+    openbabelJNI.pluginiterForceField_SteepestDescentInitialize__SWIG_2(swigCPtr, this, steps);
+  }
+
+  public boolean SteepestDescentTakeNSteps(int n) {
+    return openbabelJNI.pluginiterForceField_SteepestDescentTakeNSteps(swigCPtr, this, n);
+  }
+
+  public void ConjugateGradients(int steps, double econv, int method) {
+    openbabelJNI.pluginiterForceField_ConjugateGradients__SWIG_0(swigCPtr, this, steps, econv, method);
+  }
+
+  public void ConjugateGradients(int steps, double econv) {
+    openbabelJNI.pluginiterForceField_ConjugateGradients__SWIG_1(swigCPtr, this, steps, econv);
   }
 
   public void ConjugateGradients(int steps) {
-    openbabelJNI.pluginiterForceField_ConjugateGradients__SWIG_1(swigCPtr, this, steps);
+    openbabelJNI.pluginiterForceField_ConjugateGradients__SWIG_2(swigCPtr, this, steps);
+  }
+
+  public void ConjugateGradientsInitialize(int steps, double econv, int method) {
+    openbabelJNI.pluginiterForceField_ConjugateGradientsInitialize__SWIG_0(swigCPtr, this, steps, econv, method);
+  }
+
+  public void ConjugateGradientsInitialize(int steps, double econv) {
+    openbabelJNI.pluginiterForceField_ConjugateGradientsInitialize__SWIG_1(swigCPtr, this, steps, econv);
+  }
+
+  public void ConjugateGradientsInitialize(int steps) {
+    openbabelJNI.pluginiterForceField_ConjugateGradientsInitialize__SWIG_2(swigCPtr, this, steps);
+  }
+
+  public boolean ConjugateGradientsTakeNSteps(int n) {
+    return openbabelJNI.pluginiterForceField_ConjugateGradientsTakeNSteps(swigCPtr, this, n);
   }
 
   public vector3 ValidateLineSearch(OBAtom atom, vector3 direction) {

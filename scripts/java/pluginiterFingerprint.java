@@ -50,10 +50,6 @@ public class pluginiterFingerprint {
     return openbabelJNI.pluginiterFingerprint_ID(swigCPtr, this);
   }
 
-  public String Description() {
-    return openbabelJNI.pluginiterFingerprint_Description(swigCPtr, this);
-  }
-
   public void ToStart() {
     openbabelJNI.pluginiterFingerprint_ToStart(swigCPtr, this);
   }
@@ -61,10 +57,6 @@ public class pluginiterFingerprint {
   public OBFingerprint __deref__() {
     long cPtr = openbabelJNI.pluginiterFingerprint___deref__(swigCPtr, this);
     return (cPtr == 0) ? null : new OBFingerprint(cPtr, false);
-  }
-
-  public OBFingerprint __ref__() {
-    return new OBFingerprint(openbabelJNI.pluginiterFingerprint___ref__(swigCPtr, this), false);
   }
 
   public pluginiterFingerprint() {
@@ -89,6 +81,10 @@ public class pluginiterFingerprint {
 
   public boolean GetFingerprint(OBBase pOb, vectorUnsignedInt fp) {
     return openbabelJNI.pluginiterFingerprint_GetFingerprint__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb, vectorUnsignedInt.getCPtr(fp), fp);
+  }
+
+  public String Description() {
+    return openbabelJNI.pluginiterFingerprint_Description(swigCPtr, this);
   }
 
   public long Flags() {

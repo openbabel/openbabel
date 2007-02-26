@@ -40,36 +40,12 @@ public class OBSmartsPattern {
     this(openbabelJNI.new_OBSmartsPattern__SWIG_1(OBSmartsPattern.getCPtr(cp), cp), true);
   }
 
-  public long NumMatches() {
-    return openbabelJNI.OBSmartsPattern_NumMatches(swigCPtr, this);
-  }
-
-  public long NumAtoms() {
-    return openbabelJNI.OBSmartsPattern_NumAtoms(swigCPtr, this);
-  }
-
-  public long NumBonds() {
-    return openbabelJNI.OBSmartsPattern_NumBonds(swigCPtr, this);
-  }
-
-  public int GetAtomicNum(int arg0) {
-    return openbabelJNI.OBSmartsPattern_GetAtomicNum(swigCPtr, this, arg0);
-  }
-
-  public void GetBond(SWIGTYPE_p_int arg0, SWIGTYPE_p_int arg1, SWIGTYPE_p_int arg2, int arg3) {
-    openbabelJNI.OBSmartsPattern_GetBond(swigCPtr, this, SWIGTYPE_p_int.getCPtr(arg0), SWIGTYPE_p_int.getCPtr(arg1), SWIGTYPE_p_int.getCPtr(arg2), arg3);
-  }
-
-  public int GetCharge(int arg0) {
-    return openbabelJNI.OBSmartsPattern_GetCharge(swigCPtr, this, arg0);
+  public boolean Init(String pattern) {
+    return openbabelJNI.OBSmartsPattern_Init__SWIG_0(swigCPtr, this, pattern);
   }
 
   public String GetSMARTS() {
     return openbabelJNI.OBSmartsPattern_GetSMARTS__SWIG_0(swigCPtr, this);
-  }
-
-  public int GetVectorBinding(int idx) {
-    return openbabelJNI.OBSmartsPattern_GetVectorBinding(swigCPtr, this, idx);
   }
 
   public boolean Empty() {
@@ -80,12 +56,28 @@ public class OBSmartsPattern {
     return openbabelJNI.OBSmartsPattern_IsValid(swigCPtr, this);
   }
 
-  public boolean Init(String arg0) {
-    return openbabelJNI.OBSmartsPattern_Init__SWIG_0(swigCPtr, this, arg0);
+  public long NumAtoms() {
+    return openbabelJNI.OBSmartsPattern_NumAtoms(swigCPtr, this);
   }
 
-  public void WriteMapList(SWIGTYPE_p_std__ostream arg0) {
-    openbabelJNI.OBSmartsPattern_WriteMapList(swigCPtr, this, SWIGTYPE_p_std__ostream.getCPtr(arg0));
+  public long NumBonds() {
+    return openbabelJNI.OBSmartsPattern_NumBonds(swigCPtr, this);
+  }
+
+  public void GetBond(SWIGTYPE_p_int src, SWIGTYPE_p_int dst, SWIGTYPE_p_int ord, int idx) {
+    openbabelJNI.OBSmartsPattern_GetBond(swigCPtr, this, SWIGTYPE_p_int.getCPtr(src), SWIGTYPE_p_int.getCPtr(dst), SWIGTYPE_p_int.getCPtr(ord), idx);
+  }
+
+  public int GetAtomicNum(int idx) {
+    return openbabelJNI.OBSmartsPattern_GetAtomicNum(swigCPtr, this, idx);
+  }
+
+  public int GetCharge(int idx) {
+    return openbabelJNI.OBSmartsPattern_GetCharge(swigCPtr, this, idx);
+  }
+
+  public int GetVectorBinding(int idx) {
+    return openbabelJNI.OBSmartsPattern_GetVectorBinding(swigCPtr, this, idx);
   }
 
   public boolean Match(OBMol mol, boolean single) {
@@ -112,12 +104,12 @@ public class OBSmartsPattern {
     return openbabelJNI.OBSmartsPattern_RestrictedMatch__SWIG_3(swigCPtr, this, OBMol.getCPtr(mol), mol, OBBitVec.getCPtr(bv), bv);
   }
 
-  public vvInt GetMapList() {
-    return new vvInt(openbabelJNI.OBSmartsPattern_GetMapList(swigCPtr, this), false);
+  public long NumMatches() {
+    return openbabelJNI.OBSmartsPattern_NumMatches(swigCPtr, this);
   }
 
-  public vvInt GetUMapList() {
-    return new vvInt(openbabelJNI.OBSmartsPattern_GetUMapList(swigCPtr, this), false);
+  public vvInt GetMapList() {
+    return new vvInt(openbabelJNI.OBSmartsPattern_GetMapList(swigCPtr, this), false);
   }
 
   public SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator BeginMList() {
@@ -126,6 +118,14 @@ public class OBSmartsPattern {
 
   public SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator EndMList() {
     return new SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator(openbabelJNI.OBSmartsPattern_EndMList(swigCPtr, this), true);
+  }
+
+  public vvInt GetUMapList() {
+    return new vvInt(openbabelJNI.OBSmartsPattern_GetUMapList(swigCPtr, this), false);
+  }
+
+  public void WriteMapList(SWIGTYPE_p_std__ostream arg0) {
+    openbabelJNI.OBSmartsPattern_WriteMapList(swigCPtr, this, SWIGTYPE_p_std__ostream.getCPtr(arg0));
   }
 
 }
