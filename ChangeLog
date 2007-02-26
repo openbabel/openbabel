@@ -16,6 +16,12 @@
 	
 	* src/mol.cpp(Separate): Copy dimension to each fragment.
 	
+2007-02-26  Donald E. Curtis <dcurtis3@sourceforge.net>
+
+	* src/mol.cpp: OBMol::AddBond() / OBMol::DeleteBond() 
+	Bond indexing starts at one.  Had to undo the change made by Tim and
+	correct the fix on 2007-01-07 as a result of the bulk resizing.
+
 2007-02-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/ring.cpp (FindRings): Don't return early if all atoms are
