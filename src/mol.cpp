@@ -366,9 +366,6 @@ namespace OpenBabel
     sort(cfl.begin(),cfl.end(),SortVVInt);
   }
   
-  /*!
-  **\brief Fills the OBGeneric OBAngleData with angles from the mol
-  */
   void OBMol::FindAngles()
   {
     //if already has data return
@@ -411,9 +408,6 @@ namespace OpenBabel
     return;
   }
 
-  /*!
-  **\brief Fills the OBGeneric OBTorsionData with torsions from the mol
-  */
   void OBMol::FindTorsions()
   {
     //if already has data return
@@ -1622,51 +1616,7 @@ namespace OpenBabel
   bool OBMol::InsertAtom(OBAtom &atom)
   {
     BeginModify();
-
-    OBAtom *obatom = CreateAtom();
-    *obatom = atom;
-    obatom->SetIdx(_natoms+1);
-    obatom->SetParent(this);
-
-
-#define OBAtomIncrement 100
-
-    if (_vatom.empty() || _natoms+1 >= (signed)_vatom.size())
-      {
-        _vatom.resize(_natoms+OBAtomIncrement);
-        vector<OBAtom*>::iterator j;
-        for (j = _vatom.begin(),j+=(_natoms+1);j != _vatom.end();++j)
-          *j = (OBAtom*)NULL;
-      }
-#undef OBAtomIncrement
-
-    _vatom[_natoms] = (OBAtom*)obatom;
-    _natoms++;
-
-    if (HasData(OBGenericDataType::VirtualBondData))
-      {
-        /*add bonds that have been queued*/
-        OBVirtualBond *vb;
-        vector<OBGenericData*> verase;
-        vector<OBGenericData*>::iterator i;
-        for (i = BeginData();i != EndData();++i)
-          if ((*i)->GetDataType() == OBGenericDataType::VirtualBondData)
-            {
-              vb = (OBVirtualBond*)*i;
-              if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms)
-                continue;
-              if (obatom->GetIdx() == static_cast<unsigned int>(vb->GetBgn())
-                  || obatom->GetIdx() == static_cast<unsigned int>(vb->GetEnd()))
-                {
-                  AddBond(vb->GetBgn(),vb->GetEnd(),vb->GetOrder());
-                  verase.push_back(*i);
-                }
-            }
-
-        if (!verase.empty())
-          DeleteData(verase);
-      }
-
+    AddAtom(atom);
     EndModify();
 
     return(true);
@@ -1869,6 +1819,9 @@ namespace OpenBabel
   bool OBMol::DeleteHydrogen(OBAtom *atom)
     //deletes the hydrogen atom passed to the function
   {
+    if (!atom->IsHydrogen())
+      return false;
+
     //find bonds to delete
     OBAtom *nbr;
     vector<OBBond*> vdb;
@@ -1929,6 +1882,12 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__,
                             "Ran OpenBabel::AddHydrogens -- polar only", obAuditMsg);
 
+    // Make sure we have conformers (PR#1665519)
+    if (_vconf.size() == 0) {
+      BeginModify();
+      EndModify();
+    }
+    
     //count up number of hydrogens to add
     OBAtom *atom,*h;
     int hcount,count=0;
@@ -3658,6 +3617,12 @@ namespace OpenBabel
 
   }
 
+  void OBMol::SetConformer(int i)
+  {  
+    if (i >= 0 && i < _vconf.size())
+      _c = _vconf[i];
+  }
+
   void OBMol::CopyConformer(double *c,int idx)
   {
     //    obAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
@@ -3724,27 +3689,27 @@ namespace OpenBabel
     return true;
   }
 
-  OBAtom *OBMol::BeginAtom(vector<OBAtom*>::iterator &i)
+  OBAtom *OBMol::BeginAtom(OBAtomIterator &i)
   {
     i = _vatom.begin();
     return((i == _vatom.end()) ? (OBAtom*)NULL : (OBAtom*)*i);
   }
 
-  OBAtom *OBMol::NextAtom(vector<OBAtom*>::iterator &i)
+  OBAtom *OBMol::NextAtom(OBAtomIterator &i)
   {
-    i++;
+    ++i;
     return((i == _vatom.end()) ? (OBAtom*)NULL : (OBAtom*)*i);
   }
 
-  OBBond *OBMol::BeginBond(vector<OBBond*>::iterator &i)
+  OBBond *OBMol::BeginBond(OBBondIterator &i)
   {
     i = _vbond.begin();
     return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
   }
 
-  OBBond *OBMol::NextBond(vector<OBBond*>::iterator &i)
+  OBBond *OBMol::NextBond(OBBondIterator &i)
   {
-    i++;
+    ++i;
     return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
   }
 
