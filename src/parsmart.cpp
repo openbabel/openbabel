@@ -44,6 +44,9 @@ namespace OpenBabel
   Roger Sayle donated a SMARTS parser which became the basis for SMARTS
   matching in Open Babel.
 
+  For more information on the SMARTS support in Open Babel, see the wiki page:
+  http://openbabel.sourceforge.net/wiki/SMARTS
+
   The SMARTS matcher, or OBSmartsPattern, is a separate object which can
   match patterns in the OBMol class. The following code demonstrates how
   to use the OBSmartsPattern class:
@@ -66,7 +69,8 @@ namespace OpenBabel
      cout << endl;
   }
   \endcode
-  The preceding code reads in a molecule, initializes a smarts pattern
+
+  The preceding code reads in a molecule, initializes a SMARTS pattern
   of two single-bonded carbons, and locates all instances of the
   pattern in the molecule. Note that calling the Match() function
   does not return the results of the substructure match. The results
@@ -81,6 +85,7 @@ namespace OpenBabel
   matches of the pattern will be returned. A unique match is defined as
   one which does not cover the identical atoms that a previous match
   has covered.
+
   */
 
   std::vector<std::pair<Pattern*,std::vector<bool> > > RSCACHE; //recursive smarts cache

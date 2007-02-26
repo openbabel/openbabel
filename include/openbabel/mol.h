@@ -153,23 +153,66 @@ namespace OpenBabel
         _vatom.reserve(natoms);
     }
     
+    //! Create a new OBAtom pointer. Does no bookkeeping
+    //! \deprecated Use NewAtom instead, which ensures internal connections
     virtual OBAtom *CreateAtom(void);
+    //! Create a new OBBond pointer. Does no bookkeeping
+    //! \deprecated Use NewBond instead, which ensures internal connections
     virtual OBBond *CreateBond(void);
+    //! Create a new OBResidue pointer. Does no bookkeeping
+    //! \deprecated Use NewResidue instead, which ensures internal connections
     virtual OBResidue *CreateResidue(void);
+    //! Free an OBAtom pointer if defined. Does no bookkeeping
+    //! \see DeleteAtom which ensures internal connections
     virtual void DestroyAtom(OBAtom*);
+    //! Free an OBBond pointer if defined. Does no bookkeeping
+    //! \see DeleteBond which ensures internal connections
     virtual void DestroyBond(OBBond*);
+    //! Free an OBResidue pointer if defined. Does no bookkeeping
+    //! \see DeleteResidue which ensures internal connections
     virtual void DestroyResidue(OBResidue*);
+
+    //! Add the specified atom to this molecule
+    //! \return Whether the method was successful
     bool AddAtom(OBAtom&);
-    bool AddBond(int,int,int,int flags=0,int insertpos=-1);
-    bool AddBond(OBBond&);
-    bool AddResidue(OBResidue&);
+    //! Add a new atom to this molecule (like AddAtom)
+    //! Calls BeginModify() before insertion and EndModify() after insertion
     bool InsertAtom(OBAtom &);
+    //! Add a new bond to the molecule with the specified parameters
+    //! \param beginIdx  the atom index of the "start" atom
+    //! \param endIdx    the atom index of the "end" atom
+    //! \param order     the bond order (see OBBond::GetBO())
+    //! \param flags     any bond flags such as stereochemistry (default = none)
+    //! \param insertpos the position index to insert the bond (default = none)
+    //! \return Whether the new bond creation was successful
+    bool AddBond(int beginIdx, int endIdx, int order, 
+                 int flags=0,int insertpos=-1);
+    //! Add the specified residue to this molecule and update connections
+    //! \return Whether the method was successful
+    bool AddBond(OBBond&);
+    //! Add the specified residue to this molecule and update connections
+    //! \return Whether the method was successful
+    bool AddResidue(OBResidue&);
+
+    //! Create a new OBAtom in this molecule and ensure connections.
+    //! (e.g. OBAtom::GetParent()
+    virtual OBAtom    *NewAtom();
+    //! Create a new OBBond in this molecule and ensure connections.
+    //! (e.g. OBBond::GetParent()
+    virtual OBBond    *NewBond();
+    //! Create a new OBResidue in this molecule and ensure connections.
+    virtual OBResidue *NewResidue();
+    //! Deletes an atom from this molecule and all appropriate bonds.
+    //! Updates the molecule and atom and bond indexes accordingly.
+    //! \warning Does not update any residues which may contain this atom
+    //! \return Whether deletion was successful
     bool DeleteAtom(OBAtom*);
+    //! Deletes an bond from this molecule and updates accordingly
+    //! \return Whether deletion was successful
     bool DeleteBond(OBBond*);
+    //! Deletes a residue from this molecule and updates accordingly.
+    //! \return Whether deletion was successful
     bool DeleteResidue(OBResidue*);
-    OBAtom    *NewAtom();
-    OBBond    *NewBond();
-    OBResidue *NewResidue();
     //@}
 
     //! \name Molecule modification methods
@@ -264,7 +307,9 @@ namespace OpenBabel
 
     //! \name Data modification methods
     //@{
+    //! Set the title of this molecule to @p title
     void   SetTitle(const char *title);
+    //! Set the title of this molecule to @p title
     void   SetTitle(std::string &title);
     //! Set the stochiometric formula for this molecule
     void   SetFormula(std::string molFormula);
@@ -272,8 +317,13 @@ namespace OpenBabel
     void   SetEnergy(double energy) { _energy = energy; }
     //! Set the dimension of this molecule (i.e., 0, 1 , 2, 3)
     void   SetDimension(unsigned short int d) { _dimension = d; }
+    //! Set the total charge of this molecule to @p charge
     void   SetTotalCharge(int charge);
+    //! Set the total spin multiplicity of this molecule to @p spin
+    //! (i.e., 0 = singlet (default), 1 = doublet, 2 = triplet, etc.)
     void   SetTotalSpinMultiplicity(unsigned int spin);
+    //! Set the internal coordinates to @p int_coord
+    //! (Does not call InternalToCartesian to update the 3D cartesian coordinates)
     void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord)
     { _internals = int_coord; }
     //! Set the flag for determining automatic formal charges with pH (default=true)
@@ -297,10 +347,15 @@ namespace OpenBabel
     void   SetChiralityPerceived()   { SetFlag(OB_CHIRALITY_MOL);   }
     //! Mark that partial charges have been assigned
     void   SetPartialChargesPerceived(){ SetFlag(OB_PCHARGE_MOL);   }
+    //! Mark that hybridization of all atoms has been assigned
     void   SetHybridizationPerceived() { SetFlag(OB_HYBRID_MOL);    }
+    //! Mark that the implicit hydrogen valence of all atoms has been assigned
     void   SetImplicitValencePerceived(){ SetFlag(OB_IMPVAL_MOL);   }
+    //! Mark that Kekule forms have been assigned by Kekulize()
     void   SetKekulePerceived()      { SetFlag(OB_KEKULE_MOL);      }
+    //! Mark that ring closure bonds have been assigned by graph traversal
     void   SetClosureBondsPerceived(){ SetFlag(OB_CLOSURE_MOL);     }
+    //! Mark that explicit hydrogen atoms have been added
     void   SetHydrogensAdded()       { SetFlag(OB_H_ADDED_MOL);     }
     void   SetCorrectedForPH()       { SetFlag(OB_PH_CORRECTED_MOL);}
     void   SetAromaticCorrected()    { SetFlag(OB_AROM_CORRECTED_MOL);}
@@ -315,8 +370,9 @@ namespace OpenBabel
 
     //! \name Molecule modification methods
     //@{
-    // Description in transform.cpp
+    // Description in transform.cpp (command-line transformations to this molecule)
     virtual OBBase*    DoTransformations(const std::map<std::string,std::string>* pOptions);
+    // Ditto (documentation on transformation options)
     static const char* ClassDescription();
     //! Clear all information from a molecule
     bool Clear();
@@ -330,23 +386,42 @@ namespace OpenBabel
     void Translate(const vector3 &v);
     //! Translates one conformer in the molecule by the supplied vector
     void Translate(const vector3 &v, int conf);
+    //! Rotate all conformers using the supplied matrix @p u (a 3x3 array of double)
     void Rotate(const double u[3][3]);
+    //! Rotate all conformers using the supplied matrix @p m (a linear 3x3 row-major array of double)
     void Rotate(const double m[9]);
+    //! Rotate a specific conformer @p nconf using the supplied rotation matrix @p m
     void Rotate(const double m[9],int nconf);
     //! Translate to the center of all coordinates (for this conformer)
     void Center();
     //! Transform to standard Kekule bond structure (presumably from an aromatic form)
+    
     bool Kekulize();
     bool PerceiveKekuleBonds();
 
     void NewPerceiveKekuleBonds();
 
-    bool DeleteHydrogen(OBAtom*);
+    //! Delete all hydrogens from the molecule
+    //! \return Success
     bool DeleteHydrogens();
+    //! Delete all hydrogens from the supplied atom
+    //! \return Success
     bool DeleteHydrogens(OBAtom*);
+    //! Delete all hydrogen atoms connected to a non-polar atom
+    //! \see OBAtom::IsNonPolarHydrogen
     bool DeleteNonPolarHydrogens();
+    //! Delete the supplied atom if it is a hydrogen
+    //! (Helper function for DeleteHydrogens)
+    bool DeleteHydrogen(OBAtom*);
+    //! Add hydrogens to the entire molecule to fill out implicit valence spots
+    //! \param polaronly    Whether to add hydrogens only to polar atoms
+    //! (i.e., not to C atoms)
+    //! \param correctForPH Whether to call CorrectForPH() first
+    //! \return Whether any hydrogens were added
     bool AddHydrogens(bool polaronly=false,bool correctForPH=true);
+    //! Add hydrogens only to the supplied atom to fill out implicit valence
     bool AddHydrogens(OBAtom*);
+    //! Add only polar hydrogens (i.e., attached to polar atoms, not C)
     bool AddPolarHydrogens();
 
     //! Deletes all atoms except for the largest contiguous fragment
@@ -356,8 +431,12 @@ namespace OpenBabel
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O 
     bool ConvertDativeBonds();
 
+    //! Correct for pH by applying the OBPhModel transformations
     bool CorrectForPH();
+    // docs in mol.cpp
     bool AssignSpinMultiplicity();
+    //! \return the center of the supplied conformer @p nconf
+    //! \see Center() to actually center all conformers at the origin
     vector3 Center(int nconf);
     //! Set the torsion defined by these atoms, rotating bonded neighbors
     void SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double);
@@ -367,11 +446,19 @@ namespace OpenBabel
     //@{
     //! Find Smallest Set of Smallest Rings (see OBRing class for more details)
     void FindSSSR();
+    //! Find all ring atoms and bonds. Does not need to call FindSSSR().
     void FindRingAtomsAndBonds();
+    //! Find all chiral atom centers. See OBAtom::IsChiral() for more details
     void FindChiralCenters();
-    void FindChildren(std::vector<int> &,int,int);
-    void FindChildren(std::vector<OBAtom*>&,OBAtom*,OBAtom*);
-    void FindLargestFragment(OBBitVec &);
+    // documented in mol.cpp -- locates all atom indexes which can reach 'end'
+    void FindChildren(std::vector<int> & children,int bgnIdx,int endIdx);
+    // documented in mol.cpp -- locates all atoms which can reach 'end'
+    void FindChildren(std::vector<OBAtom*>& children,OBAtom* bgn,OBAtom* end);
+    //! Find the largest fragment in OBMol
+    //! (which may include multiple non-connected fragments)
+    //! \param frag   Return (by reference) a bit vector indicating the atoms
+    //! in the largest fragment
+    void FindLargestFragment(OBBitVec &frag);
     //! Sort a list of contig fragments by size from largest to smallest
     //! Each vector<int> contains the atom numbers of a contig fragment
     void ContigFragList(std::vector<std::vector<int> >&);
@@ -381,7 +468,9 @@ namespace OpenBabel
     void ConnectTheDots();
     //! Attempts to perceive multiple bonds based on geometries
     void PerceiveBondOrders();
+    //! Fills out an OBAngleData with angles from the molecule
     void FindAngles();
+    //! Fills out an OBTorsionData with angles from the molecule
     void FindTorsions();
     // documented in mol.cpp: graph-theoretical distance for each atom
     bool         GetGTDVector(std::vector<int> &);
@@ -399,20 +488,35 @@ namespace OpenBabel
     bool Has3D();
     //! Are there any non-zero coordinates?
     bool HasNonZeroCoords();
+    //! Has aromatic perception been performed?
     bool HasAromaticPerceived()     { return(HasFlag(OB_AROMATIC_MOL)); }
+    //! Has the smallest set of smallest rings (FindSSSR) been performed?
     bool HasSSSRPerceived()         { return(HasFlag(OB_SSSR_MOL));     }
+    //! Have ring atoms and bonds been assigned?
     bool HasRingAtomsAndBondsPerceived(){return(HasFlag(OB_RINGFLAGS_MOL));}
+    //! Have atom types been assigned by OBAtomTyper?
     bool HasAtomTypesPerceived()    { return(HasFlag(OB_ATOMTYPES_MOL));}
+    //! Has atom chirality been assigned?
     bool HasChiralityPerceived()    { return(HasFlag(OB_CHIRALITY_MOL));}
+    //! Have atomic Gasteiger partial charges been assigned by OBGastChrg?
     bool HasPartialChargesPerceived() { return(HasFlag(OB_PCHARGE_MOL));}
+    //! Has atomic hybridization been assigned by OBAtomTyper?
     bool HasHybridizationPerceived() { return(HasFlag(OB_HYBRID_MOL));  }
+    //! Has implicit hydrogen valence been assigned by OBAtomTyper?
     bool HasImplicitValencePerceived() { return(HasFlag(OB_IMPVAL_MOL));}
+    //! Has aromaticity and Kekule forms been assigned by Kekulize?
     bool HasKekulePerceived() { return(HasFlag(OB_KEKULE_MOL));         }
+    //! Have ring "closure" bonds been assigned? (e.g., OBBond::IsClosure())
     bool HasClosureBondsPerceived() { return(HasFlag(OB_CLOSURE_MOL));  }
+    //! Have biomolecule chains and residues been assigned by OBChainsParser?
     bool HasChainsPerceived() { return(HasFlag(OB_CHAINS_MOL));         }
+    //! Have hydrogens been added to the molecule?
     bool HasHydrogensAdded() { return(HasFlag(OB_H_ADDED_MOL));         }
+    //! Have aromatic nitrogens been "corrected?" (deprecated)
     bool HasAromaticCorrected() { return(HasFlag(OB_AROM_CORRECTED_MOL));}
+    //! Has the molecule been corrected for pH by CorrectForPH?
     bool IsCorrectedForPH() { return(HasFlag(OB_PH_CORRECTED_MOL));     }
+    //! Has total spin multiplicity been assigned?
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_TSPIN_MOL)); }
     //! Is this molecule chiral?
     bool IsChiral();
@@ -422,50 +526,88 @@ namespace OpenBabel
 
     //! \name Multiple conformer member functions
     //@{
+    //! \return the number of conformers in this molecule
     int     NumConformers()    { return((_vconf.empty())?0:_vconf.size()); }
+    //! Set the entire set of conformers for this molecule to @p v
     void    SetConformers(std::vector<double*> &v);
+    //! Add a new set of coordinates @p f as a new conformer
     void    AddConformer(double *f)    {  _vconf.push_back(f);    }
-    void    SetConformer(int i)        {  _c = _vconf[i];         }
-    void    CopyConformer(double*,int);
-    void    DeleteConformer(int);
+    //! Set the molecule's current conformer to @p i
+    //! Does nothing if @p i is less than 0 or i is larger than NumConformers()
+    void    SetConformer(int i);
+    //! Copy the conformer @p nconf into the array @p c
+    //! \warning Does no checking to see if @p c is large enough
+    void    CopyConformer(double* c,int nconf);
+    //! Delete the conformer @p nconf
+    void    DeleteConformer(int nconf);
+    //! \return the coordinates to conformer @p i
     double  *GetConformer(int i)       {  return(_vconf[i]);      }
+    //! Set the iterator to the beginning of the conformer list
+    //! \return the array of coordinates for the first conformer
     double  *BeginConformer(std::vector<double*>::iterator&i)
     { i = _vconf.begin();
       return((i == _vconf.end()) ? NULL:*i); }
+    //! Advance the iterator to the next confomer, if possible
+    //! \return The array of coordinates for the next conformer, or NULL if none exist
     double  *NextConformer(std::vector<double*>::iterator&i)
     { ++i;
       return((i == _vconf.end()) ? NULL:*i); }
+    //! \return the entire set of conformers for this molecule as a vector of floating point arrays
     std::vector<double*> &GetConformers() {   return(_vconf);     }
     //@}
 
     //! \name Iterator methods
     //@{
+    //! \return An atom iterator pointing to the beginning of the atom list
     OBAtomIterator BeginAtoms()   { return _vatom.begin(); }
+    //! \return An atom iterator pointing to the end of the atom list
     OBAtomIterator EndAtoms()     { return _vatom.end();   }
+    //! \return A bond iterator pointing to the beginning of the bond list
     OBBondIterator BeginBonds()   { return _vbond.begin(); }
+    //! \return A bond iterator pointing to the end of the bond list
     OBBondIterator EndBonds()     { return _vbond.end();   }
+    //! \return A residue iterator pointing to the beginning of the residue list
     OBResidueIterator BeginResidues() { return _residue.begin(); }
+    //! \return A residue iterator pointing to the end of the residue list
     OBResidueIterator EndResidues()   { return _residue.end();   }
 
-    OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);
-    OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
-    OBBond *BeginBond(std::vector<OBBond*>::iterator &i);
-    OBBond *NextBond(std::vector<OBBond*>::iterator &i);
-    OBResidue *BeginResidue(std::vector<OBResidue*>::iterator &i)
+    //! Set the iterator @p i to the beginning of the atom list
+    //! \return the first atom (or NULL if none exist)
+    OBAtom *BeginAtom(OBAtomIterator &i);
+    //! Advance the iterator @p i to the next atom in the molecule
+    //! \return the next atom (if any, or NULL if none exist)
+    OBAtom *NextAtom(OBAtomIterator &i);
+    //! Set the iterator @p i to the beginning of the bond list
+    //! \return the first bond (or NULL if none exist)
+    OBBond *BeginBond(OBBondIterator &i);
+    //! Advance the iterator @p i to the next bond in the molecule
+    //! \return the next bond (if any, or NULL if none exist)
+    OBBond *NextBond(OBBondIterator &i);
+    //! Set the iterator @p i to the beginning of the resdiue list
+    //! \return the first residue (or NULL if none exist)
+    OBResidue *BeginResidue(OBResidueIterator &i)
     {
       i = _residue.begin();
       return((i == _residue.end()) ? NULL:*i);
     }
-    OBResidue *NextResidue(std::vector<OBResidue*>::iterator &i)
+    //! Advance the iterator @p i to the next residue in the molecule
+    //! \return the next residue (if any, or NULL if not possible)
+    OBResidue *NextResidue(OBResidueIterator &i)
     {
       ++i;
       return((i == _residue.end()) ? NULL:*i);
     }
+    //! Set the iterator to the beginning of the internal coordinate list
+    //! \return the first internal coordinate record, or NULL if none exist
+    //! \see SetInternalCoord
     OBInternalCoord *BeginInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
     {
       i = _internals.begin();
       return((i == _internals.end()) ? NULL:*i);
     }
+    //! Advance the iterator to the next internal coordinate record
+    //! \return the next first internal coordinate record, or NULL if none exist
+    //! \see SetInternalCoord 
     OBInternalCoord *NextInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
     {
       ++i;
@@ -484,15 +626,12 @@ namespace OpenBabel
   OBAPI void ThrowError(char *str);
   // Deprecated -- use OBMessageHandler class instead (docs in obutil.cpp)
   OBAPI void ThrowError(std::string &str);
-  // Convert Cartesian XYZ to a set of OBInternalCoord coordinates
+  //! Convert Cartesian XYZ to a set of OBInternalCoord coordinates
   OBAPI void CartesianToInternal(std::vector<OBInternalCoord*>&,OBMol&);
-  // Convert set of OBInternalCoord coordinates into Cartesian XYZ
+  //! Convert set of OBInternalCoord coordinates into Cartesian XYZ
   OBAPI void InternalToCartesian(std::vector<OBInternalCoord*>&,OBMol&);
   // Replace the last extension in str with a new one (docs in obutil.cpp)
   OBAPI std::string NewExtension(std::string&,char*);
-  // Now handled by OBConversion class
-  // OBAPI bool SetInputType(OBMol&,std::string&);
-  // OBAPI bool SetOutputType(OBMol&,std::string&);
 
   //global definitions
   //! Global OBElementTable for element properties

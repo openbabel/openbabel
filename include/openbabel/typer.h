@@ -74,13 +74,18 @@ public:
     void ParseLine(const char*);
     //! Assign aromaticity flag to atoms and bonds
     void AssignAromaticFlags(OBMol &);
+    //! "Anti-alias" potentially aromatic flags around a molecule
+    //! (aromatic atoms need to have >= 2 neighboring ring atoms)
     void PropagatePotentialAromatic(OBAtom*);
+    // Documentation in typer.cpp
     void SelectRootAtoms(OBMol &, bool avoidInnerRingAtoms = true);
     //! Remove 3-member rings from consideration
     void ExcludeSmallRing(OBMol &);
     //! Check aromaticity starting from the root atom, up to a specified depth
     void CheckAromaticity(OBAtom *root,int searchDepth);
-    bool TraverseCycle(OBAtom*,OBAtom*,OBBond*,std::pair<int,int>&,int);
+    // Documentation in typer.cpp
+    bool TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev,
+                       std::pair<int,int> &er,int depth);
 };
 
 } //namespace OpenBabel

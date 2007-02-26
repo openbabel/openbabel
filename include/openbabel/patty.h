@@ -56,6 +56,7 @@ public :
         debug = false;
         read_rules(s);
     }
+
     ~patty()
     {
         std::vector<OBSmartsPattern*>::iterator i;

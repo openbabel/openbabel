@@ -159,21 +159,17 @@ namespace OpenBabel
   class OBAPI OBSmartsPattern
   {
   protected:
-    std::vector<bool>          		_growbond;
-    std::vector<std::vector<int> >	_mlist;
-    Pattern				*_pat;
-    std::string				_str;
+    std::vector<bool>          		  _growbond; //!< \deprecated (Not used)
+    std::vector<std::vector<int> >	_mlist;    //!< The list of matches
+    Pattern                        *_pat;      //!< The parsed SMARTS pattern
+    std::string				              _str;      //!< The string of the SMARTS expression
 
   public:
-    OBSmartsPattern()
-      {
-        _pat=NULL;
-      }
+    OBSmartsPattern() : _pat(NULL) { }
     virtual ~OBSmartsPattern();
 
-    OBSmartsPattern(const OBSmartsPattern& cp)
+  OBSmartsPattern(const OBSmartsPattern& cp): _pat(NULL)
       {
-        _pat = NULL;
         *this = cp;
       }
     OBSmartsPattern& operator=(const OBSmartsPattern& cp)
@@ -185,68 +181,114 @@ namespace OpenBabel
         Init(s);
         return (*this);
       }
+    
+    //! \name Initialization Methods
+    //@{
+    //! Parse the @p pattern SMARTS string.
+    //! \return Whether the pattern is a valid SMARTS expression
+    bool         Init(const char* pattern);
+    //! Parse the @p pattern SMARTS string.
+    //! \return Whether the pattern is a valid SMARTS expression
+    bool         Init(const std::string& pattern);
+    //@}
 
-    unsigned int NumMatches() const
-    {
-      return (unsigned int)_mlist.size();
-    }
+    //! \name Pattern Properties
+    //@{
+    //! \return the SMARTS string which is currently used
+    const std::string &GetSMARTS() const    {      return _str;    }
+    //! \return the SMARTS string which is currently used
+    std::string  &GetSMARTS()               {      return _str;    }
+
+    //! \return If the SMARTS pattern is an empty expression (e.g., invalid)
+    bool         Empty() const     {      return(_pat == NULL);    }
+    //! \return If the SMARTS pattern is a valid expression
+    bool         IsValid() const   {      return(_pat != NULL);    }
+
+    //! \return the number of atoms in the SMARTS pattern
     unsigned int NumAtoms()   const
     {
       return _pat ? _pat->acount : 0;
     }
+    //! \return the number of bonds in the SMARTS pattern
     unsigned int NumBonds()   const
     {
       return _pat ? _pat->bcount : 0;
     }
 
-    int          GetAtomicNum(int);
-    void         GetBond(int&,int&,int&,int);
-    int          GetCharge(int);
-    const std::string &GetSMARTS() const
-    {
-      return _str;
-    }
-    std::string  &GetSMARTS()
-      {
-        return _str;
-      }
+    //! Access the bond @p idx in the internal pattern
+    //! \param src The index of the beginning atom
+    //! \param dst The index of the end atom
+    //! \param ord The bond order of this bond
+    //! \param idx The index of the bond in the SMARTS pattern
+    void         GetBond(int& src,int& dst,int& ord,int idx);
+    //! \return the atomic number of the atom @p idx in the internal pattern
+    int          GetAtomicNum(int idx);
+    //! \return the formal charge of the atom @p idx in the internal pattern
+    int          GetCharge(int idx);
+
+    //! \return the vector binding of the atom @p idx in the internal pattern
     int          GetVectorBinding(int idx) const
     {
       return(_pat->atom[idx].vb);
     }
-    bool         Empty()                   const
-    {
-      return(_pat == NULL);
-    }
-    bool         IsValid()                 const
-    {
-      return(_pat != NULL);
-    }
-    bool         Init(const char*);
-    bool         Init(const std::string&);
-    void         WriteMapList(std::ostream&);
+    //@}
 
+    //! \name Matching methods (SMARTS on a specific OBMol)
+    //@{
+    //! Perform SMARTS matching for the pattern specified using Init().
+    //! \param mol The molecule to use for matching
+    //! \param single Whether only a single match is required (faster). Default is false.
+    //! \return Whether matches occurred
     bool Match(OBMol &mol, bool single=false);
-    bool RestrictedMatch(OBMol &mol, std::vector<std::pair<int,int> > &pairs, bool single=false);
-    bool RestrictedMatch(OBMol &mol, OBBitVec &bv, bool single=false);
 
+    bool RestrictedMatch(OBMol &mol, std::vector<std::pair<int,int> > &pairs, bool single=false);
+
+    bool RestrictedMatch(OBMol &mol, OBBitVec &bv, bool single=false);
+    //! \return the number of non-unique SMARTS matches 
+    //! To get the number of unique SMARTS matches, query GetUMapList()->size()
+    unsigned int NumMatches() const
+    {
+      return (unsigned int)_mlist.size();
+    }
+
+    //! \return the entire list of non-unique matches for this pattern
+    //! \see GetUMapList()
     std::vector<std::vector<int> > &GetMapList()
       {
         return(_mlist);
       }
-    std::vector<std::vector<int> > &GetUMapList();
+    //! \return An iterator over the (non-unique) match list, starting at the beginning
     std::vector<std::vector<int> >::iterator BeginMList()
       {
         return(_mlist.begin());
       }
+    //! \return An iterator over the non-unique match list, set to the end
     std::vector<std::vector<int> >::iterator EndMList()
       {
         return(_mlist.end());
       }
+
+    //! \return the entire list of unique matches for this pattern
+    /**
+        A unique match is defined as one which does not cover the 
+        identical atoms that a previous match has covered.
+        
+        For instance, the pattern [OD1]~C~[OD1] describes a
+        carboxylate group. This pattern will match both atom number
+        permutations of the carboxylate, and if GetMapList() is called, both
+        matches will be returned. If GetUMapList() is called only unique
+        matches of the pattern will be returned.
+    **/
+    std::vector<std::vector<int> > &GetUMapList();
+    //@}
+
+    //! Debugging -- write a list of matches to the output stream
+    void         WriteMapList(std::ostream&);
   };
 
   //! \class OBSSMatch parsmart.h <openbabel/parsmart.h>
-  //! \brief Internal class: performs fast, exhaustive matching used to find just a single match in match() using recursion and explicit stack handling.
+  //! \brief Internal class: performs fast, exhaustive matching used to find 
+  //! just a single match in match() using recursion and explicit stack handling.
   class OBAPI OBSSMatch
   {
   protected:

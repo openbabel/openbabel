@@ -424,7 +424,20 @@ namespace OpenBabel
     //if (bond->IsAromatic())
     //cerr << bond->GetIdx() << ' ' << bond->IsAromatic() << endl;
   }
+  
+  /** \brief Traverse a potentially aromatic cycle starting at @p root.
+      \return  True if the cycle is likely aromatic
+      \param root  The initial, "root" atom in traversing this ring
+      \param atom  The current atom to visit and check
+      \param prev  The bond traversed in moving to this @p atom
+      \param er    The min and max number of pi electrons for this ring
+      \param depth The maximum number of atoms to visit in a ring (e.g., 6)
 
+      This method traverses a potentially aromatic ring, adding up the possible
+      pi electrons for each atom. At the end (e.g., when @p atom == @p root)
+      the Huekel 4n+2 rule is checked to see if there is a possible electronic
+      configuration which corresponds to aromaticity.
+   **/
   bool OBAromaticTyper::TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev, 
                                       std::pair<int,int> &er,int depth)
   {
@@ -510,7 +523,7 @@ namespace OpenBabel
   }
 
   /**
-   * Select the root atoms for traversing atoms in rings.
+   * \brief Select the root atoms for traversing atoms in rings.
    *
    * Picking only the begin atom of a closure bond can cause
    * difficulties when the selected atom is an inner atom

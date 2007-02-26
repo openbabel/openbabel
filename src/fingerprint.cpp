@@ -395,9 +395,9 @@ namespace OpenBabel
     These fingerprints are condensed representation of molecules (or other objects)
     as a list of boolean values (actually bits in a vector<unsigned>) with length 
     of a power of 2. The main motivation is for fast searching of data sources
-    containing large numbers of molecules (up to several million). OpenBabel
+    containing large numbers of molecules (up to several million). Open Babel
     provides some routines which can search text files containing lists of molecules
-    in any format. See the documentation on the class FastSearch.   
+    in any format. See the documentation on the class FastSearch.
 
     There are descriptions of molecular fingerprints at <br>
     http://www.daylight.com/dayhtml/doc/theory/theory.finger.html) and <br>
@@ -418,6 +418,10 @@ namespace OpenBabel
     source file is just compiled with the rest of OpenBabel. Alternatively,
     they can be separately compiled as a DLL or shared library and discovered
     when OpenBabel runs.
+
+    For more on these specific implementations of fingerprints in Open
+    Babel, please take a look at the developer's wiki:
+    http://openbabel.sourceforge.net/wiki/Fingerprints
  
     Fingerprints derived from this abstract base class OBFingerprint can be for any 
     object derived from OBBase (not just for OBMol). 

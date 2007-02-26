@@ -484,6 +484,8 @@ RECURSIVE              = NO
 
 EXCLUDE                = \
                          include/openbabel/babelconfig.h \
+                         src/babelconfig.h \
+                         src/config.h \
                          src/zipstreamimpl.h \
                          src/zipstream.h \
                          src/all.h

@@ -170,20 +170,21 @@ namespace OpenBabel
     delete pOb; //move so that non-OBMol objects are deleted 9March2006
     return ret;
   }
+
+  /*! Instead of sending molecules for output via AddChemObject(), they are
+    saved in here in OBMoleculeFormat or discarded. By default they are 
+    saved only if they are in the first input file. Parts of subsequent
+    molecules, such as chemical structure, coordinates and OBGenericData
+    can replace the parts in molecules with the same title that have already
+    been stored, subject to a set of rules. After all input files have been
+    read, the stored molecules (possibly now having augmented properties) are
+    sent to the output format.
+    
+    Is a static function with <this> as parameter so that it can be called from other
+    format classes like XMLMoleculeFormat which are not derived from OBMoleculeFormat. 
+  */
   bool OBMoleculeFormat::DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF )
   {
-    /* Instead of sending molecules for output via AddChemObject(), they are
-       saved in here in OBMoleculeFormat or discarded. By default they are 
-       saved only if they are in the first input file. Parts of subsequent
-       molecules, such as chemical structure, coordinates and OBGenericData
-       can replace the parts in molecules with the same title that have already
-       been stored, subject to a set of rules. After all input files have been
-       read, the stored molecules (possibly now having augmented properties)are
-       sent to the output format.
-
-       Is a static function with <this> as parameter so that it can be called from other
-       format classes like XMLMoleculeFormat which are not derived from OBMoleculeFormat. 
-    */
     static bool IsFirstFile;
     bool OnlyMolsInFirstFile=true;
 
@@ -244,37 +245,36 @@ namespace OpenBabel
     delete pmol;
     return true;
   }
-
+  
+  /*! Makes a new OBMol on the heap by combining two molecules according to the rule below. 
+    If both have OBGenericData of the same type, or OBPairData with the
+    same attribute,  the version from pFirst is used.
+    Returns a pointer to a new OBMol which will need deleting by the calling program
+    (probably by being sent to an output format). 
+    If the molecules cannot be regarded as being the same structure a NULL
+    pointer is returned and an error message logged.
+    
+    pFirst and pSecond and the objects they point to are not changed. (const
+    modifiers difficult because class OBMol not designed appropriately)
+    
+    Combining molecules: rules for each of the three parts
+    Title:
+    Use the title of pFirst unless it has none, when use that of pSecond.
+    Warning if neither molecule has a title.
+    
+    Structure
+    - a structure with atoms replaces one with no atoms
+    - a structure with bonds replaces one with no bonds,
+    provided the formula is the same, else an error.
+    - structures with atoms and bonds are compared by InChI; error if not the same. 
+    - a structure with 3D coordinates replaces one with 2D coordinates
+    - a structure with 2D coordinates replace one with 0D coordinates
+    
+    OBGenericData
+    OBPairData
+  */
   OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
   {
-    /* Makes a new OBMol on the heap by combining two molecules according to the rule below. 
-       If both have OBGenericData of the same type, or OBPairData with the
-       same attribute,  the version from pFirst is used.
-       Returns a pointer to a new OBMol which will need deleting by the calling program
-       (probably by being sent to an output format). 
-       If the molecules cannot be regarded as being the same structure a NULL
-       pointer is returned and an error message logged.
-
-       pFirst and pSecond and the objects they point to are not changed. (const
-       modifiers difficult because class OBMol not designed appropriately)
-
-       Combining molecules: rules for each of the three parts
-       Title:
-       Use the title of pFirst unless it has none, when use that of pSecond.
-       Warning if neither molecule has a title.
-
-       Structure
-       - a structure with atoms replaces one with no atoms
-       - a structure with bonds replaces one with no bonds,
-       provided the formula is the same, else an error.
-       - structures with atoms and bonds are compared by InChI; error if not the same. 
-       - a structure with 3D coordinates replaces one with 2D coordinates
-       - a structure with 2D coordinates replace one with 0D coordinates
-
-       OBGenericData
-       OBPairData
-    */
-  
     string title("No title");
     if(*pFirst->GetTitle()!=0)
       title = pFirst->GetTitle();

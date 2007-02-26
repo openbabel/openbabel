@@ -34,6 +34,11 @@ namespace OpenBabel
   /*! \class patty patty.h <openbabel/patty.h>
     \brief Programmable Atom Typer
 
+    \deprecated This code is currently not used by the Open Babel
+    library. Instead, OBAtomTyper and OBAromaticTyper are used. Unless
+    there is interest in retaining this independent class, it will be
+    removed in the future.
+
     Patty stands for programmable atom typer. The patty class was kindly
     donated by W. Patrick Walters. The patty class provides a more
     flexible means for atom typing than the OBAtomTyper. The behavior of
@@ -62,6 +67,7 @@ namespace OpenBabel
     numbered beginning from one, the first element in the vector<string>
     is empty, and the values are placed in [1...mol.NumAtoms()].
   */
+
   void patty::read_rules(const string &infile)
   {
     ifstream ifs, ifs1, *ifsP;

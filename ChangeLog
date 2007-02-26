@@ -1,3 +1,22 @@
+2007-02-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchiformat.cpp: Fix compile problems on GCC.
+
+	* src/mol.cpp: Fix PR#(PR#1665519) with AddHydrogens when no
+	conformers are available.
+
+	* Doxyfile: Remove babelconfig and config from header list.
+
+	* src/patty.cpp: Mark as deprecated.
+
+	* src/fingerprint.cpp, src/mol.cpp, src/typer.cpp
+	src/parsmart.cpp, : Documentation updates.
+
+	* include/obmolecformat.cpp, src/formats/obmolecformat.cpp,
+	include/openbabel/xml.h, include/openbabel/typer.h,
+	include/openbabel/parsmart.h, include/openbabel/rand.h, 
+	include/openbabel/mol.h: Likewise.
+
 2007-02-26 Chris Morley
 
 	* src/formats/inchiformat.cpp(WriteMolecule): Mods to 0D and 2D
@@ -15,7 +34,7 @@
 	crash with erroneous input.
 	
 	* src/mol.cpp(Separate): Copy dimension to each fragment.
-	
+
 2007-02-26  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/mol.cpp: OBMol::AddBond() / OBMol::DeleteBond() 

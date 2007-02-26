@@ -37,6 +37,10 @@ namespace OpenBabel {
 /** \class OBMoleculeFormat obmolecformat.h <openbabel/obmolecformat.h>
     \brief An OBFormat convenience subclass for conversion to/from OBMol data
 
+    This class is not intended for direct use outside of Open Babel, unless
+    you're writing a new format converting to or from an OBMol molecule.
+    (e.g., see http://openbabel.sourceforge.net/wiki/HowTo:Add_A_New_File_Format).
+
     An OBFormat which converts to and/or from OBMol can derive from this class
     to save duplicating the ReadChemObject() and/or WriteChemObject() methods.
     Derive directly from OBFormat if the object converted is not OBMol or 
@@ -47,9 +51,9 @@ class OBCOMMON OBMoleculeFormat : public OBFormat
 {
 private:
   static std::map<std::string, OBMol*> IMols;
-  static OBMol* _jmol; //Accumulates molecules with the -j option
-  static std::vector<OBMol> MolArray; //Used in --separate option
-  static bool StoredMolsReady; //Used in --separate option
+  static OBMol* _jmol; //!< Accumulates molecules with the -j option
+  static std::vector<OBMol> MolArray; //!< Used in --separate option
+  static bool StoredMolsReady; //!< Used in --separate option
 
 public:
 
@@ -64,9 +68,10 @@ public:
     OBConversion::RegisterOptionParam("j",        this, 0,OBConversion::GENOPTIONS);
     OBConversion::RegisterOptionParam("join",     this, 0,OBConversion::GENOPTIONS);
     OBConversion::RegisterOptionParam("separate", this, 0,OBConversion::GENOPTIONS);
+
     //The follow are OBMol options, which should not be in OBConversion.
-    //But here isn't entirely appropriate either, since could have
-    //OBMol formats loaded but none of them derived from this class.
+    //But here isn't entirely appropriate either, since one could have
+    //OBMol formats loaded but which don't derived from this class.
     //However, this possibility is remote.
     OBConversion::RegisterOptionParam("s", NULL, 1,OBConversion::GENOPTIONS);
     OBConversion::RegisterOptionParam("v", NULL, 1,OBConversion::GENOPTIONS);
@@ -79,32 +84,43 @@ public:
     OBConversion::RegisterOptionParam("k", NULL, 0,OBConversion::GENOPTIONS);
   };
 
-  //Static routines which can be called from elsewhere
+  //! Static routine,  which can be called from elsewhere
   static bool ReadChemObjectImpl(OBConversion* pConv, OBFormat*);
+  //! Static routine,  which can be called from elsewhere
   static bool WriteChemObjectImpl(OBConversion* pConv, OBFormat*);
 
-  /// The "Convert" interface functions
+  /// The "Convert" interface for reading a new molecule
   virtual bool ReadChemObject(OBConversion* pConv)
   { return ReadChemObjectImpl(pConv, this);}
     
+  /// The "Convert" interface for writing a new molecule
   virtual bool WriteChemObject(OBConversion* pConv)
   { return WriteChemObjectImpl(pConv, this);}
   
-  /// Routines to handle the -C option for combining data from several OBMols
+  /// \name Routines to handle the -C option for combining data from several OBMols
+  //@{
+  //! Defer output of a molecule until later, so it can be combined with others
+  //! \return Success, or false if no molecule was read.
   static bool   DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF);
+  //! Write out all molecules queued with DeferMolOutput
   static bool   OutputDeferredMols(OBConversion* pConv);
+  //! Delete the list of queued molecules from DeferMolOutput
   static bool   DeleteDeferredMols();
+  //! \return the OBMol which combines @p pFirst and @p pSecond (i.e.)
   static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
-  
+  //@}
+
 #ifdef _WIN32
   typedef stdext::hash_map<std::string, unsigned> NameIndexType;
 #else
   typedef std::map<std::string, unsigned> NameIndexType;
 #endif
-
+  
+  // documentation in obmolecformat.cpp
   static bool   ReadNameIndex(NameIndexType& index, const std::string& datafilename,
                   OBFormat* pInFormat);
 
+  //! \return the type of data converted by this format (here, OBMol)
   const std::type_info& GetType()
   {
     return typeid(OBMol*);

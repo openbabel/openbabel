@@ -40,6 +40,14 @@ namespace OpenBabel
       with XML formats. Copies an OBConversion and then extends it
       with a XML parser. Instances made on the heap are deleted when
       the original OBConversion object is.
+
+      This class is not intended to be used externally -- instead use
+      OBConversion which will find both XML and non-XML OBFormats.
+
+      Instead, this subclass also has support for handling specific
+      needs in XML formats. For example, an XML file may include
+      multiple namespaces, and the conversion should call appropriate
+      XMLBaseFormat formats as needed.
   **/
   class OBCOMMON XMLConversion : public OBConversion
     {
