@@ -278,7 +278,7 @@ namespace OpenBabel
     xmlTextReaderRead(_reader);
     const xmlChar* pvalue = xmlTextReaderConstValue(_reader);
     string value((const char*)pvalue);
-    return value;
+    return Trim(value);
   }
 
   ////////////////////////////////////////////////////////

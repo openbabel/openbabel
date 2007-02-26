@@ -474,7 +474,7 @@ namespace OpenBabel {
     //
     FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
     streambuf* pOrigInBuf = pInStream->rdbuf();
-    if(!(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
+    if(pInFormat && !(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
       streambuf* pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
 
     int count = Convert();

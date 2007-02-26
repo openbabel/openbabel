@@ -1,3 +1,21 @@
+2007-02-26 Chris Morley
+
+	* src/formats/inchiformat.cpp(WriteMolecule): Mods to 0D and 2D
+	stereochemistry; more to be done, work in progress.
+	Added Option to use InChI options.
+	
+	* src/formats/mdlformat.cpp(ReadMolecule):Use the content of
+	any "NAME"(case independent) property as OBMol title if there
+	is not already one.
+	
+	* src/format/xml/cmlformat.cpp, xml.cpp(GetContent): Add Trim()
+	after several cases of xmlTextReaderConstValue to remove any \n
+	
+	* src/obconversion.cpp(Convert): Add test for pInFormat to avoid
+	crash with erroneous input.
+	
+	* src/mol.cpp(Separate): Copy dimension to each fragment.
+	
 2007-02-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/ring.cpp (FindRings): Don't return early if all atoms are

@@ -211,6 +211,7 @@ Input options, e.g. -a2\n \
         if(pvalue)
           {
             value = (const char*)pvalue;
+            Trim(value);
             pair<string,string> nameAndvalue(name,value);					
             molWideData.push_back(nameAndvalue);			
             molWideData.push_back(atomrefdata);
@@ -273,7 +274,8 @@ Input options, e.g. -a2\n \
               {
                 OBPairData *dp = new OBPairData;
                 dp->SetAttribute((const char*)pattr);
-                dp->SetValue((const char*)pvalue);
+                string val((const char*)pvalue);
+                dp->SetValue(Trim(val));
                 _pmol->SetData(dp);
               }
             PropertyScalarsNeeded=0;
@@ -305,6 +307,7 @@ Input options, e.g. -a2\n \
         if(!pvalue)
           return false;
         string value = (const char*)pvalue;
+        Trim(value);
         pair<string,string> nameAndvalue(name,value);					
         cmlBondOrAtom.push_back(nameAndvalue);			
       }
@@ -792,7 +795,10 @@ Input options, e.g. -a2\n \
             const xmlChar* pvalue = xmlTextReaderConstValue(reader());
             string value;
             if(pvalue)
+            {
               value = (const char*)pvalue;
+              Trim(value);
+            }
             pair<string,string> nameAndvalue(name,value);					
             cmlBondOrAtom.push_back(nameAndvalue);			
             ret = xmlTextReaderMoveToNextAttribute(reader());

@@ -384,6 +384,9 @@ public:
             dp->SetAttribute(attr);
             dp->SetValue(buff);
             mol.SetData(dp);
+            
+            if(!strcasecmp(attr.c_str(),"NAME") && *mol.GetTitle()=='\0')
+              mol.SetTitle(buff);
           }
         if (!strncmp(buffer,"$$$$",4)) break;
         if (!strncmp(buffer,"$MOL",4)) break;

@@ -3755,6 +3755,7 @@ namespace OpenBabel
     while(iter) //for each disconnected fragment
     {
       OBMol newmol;
+      newmol.SetDimension(GetDimension());
       map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
       do //for each atom in fragment
       {

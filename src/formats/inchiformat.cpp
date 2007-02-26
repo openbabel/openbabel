@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <set>
 #include <vector>
+#include "openbabel/chiral.h"
 
 using namespace std;
 namespace OpenBabel
@@ -38,6 +39,7 @@ public:
     OBConversion::RegisterFormat("inchi",this);
     OBConversion::RegisterOptionParam("n", this, 0, OBConversion::INOPTIONS);
     OBConversion::RegisterOptionParam("t", this);
+    OBConversion::RegisterOptionParam("X", this, 1, OBConversion::OUTOPTIONS);
   }
 
   virtual const char* Description()
@@ -45,18 +47,21 @@ public:
       return 
 "InChI format\n \
 IUPAC/NIST molecular identifier\n \
-Write options, e.g. -xat \n \
+Write options, e.g. -xat\n \
+ X <Option string> List of InChI options:\n \
  t add molecule name\n \
  a output auxilliary information\n \
  u output only unique molecules\n \
  U output only unique molecules and sort them\n \
  e compare first molecule to others\n \
  w don't warn on undef stereo or charge rearrangement\n\n \
+ The InChI options should be space delimited in a single quoted string.\n \
+ See InChI documentation for possible options.\n\n \
 Note that when reading an InChI the stereochemical info is currently ignored.\n \
 Input options, e.g. -at\n \
- n molecule name follows InChI on same line \n \
- a add InChI string to molecule name \n\n"
-  ;
+ n molecule name follows InChI on same line\n \
+ a add InChI string to molecule name\n\n \
+";
   };
 
   virtual const char* SpecificationURL()
@@ -289,7 +294,10 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(pmol==NULL) return false;
   
   //Use a copy of the molecule - we will be modifying it by adding H 
-  OBMol mol = *pmol;
+  //But atom genericdata, chiral data, not copied.
+//  OBMol mol = *pmol;
+// Try not copying
+  OBMol& mol = *pmol;
 
   stringstream molID;
   if(strlen(mol.GetTitle())==0)
@@ -338,16 +346,17 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       if(pbond->IsHash())
         bs = INCHI_BOND_STEREO_SINGLE_1DOWN;
 
+      //The value is negated if this atom is at thick end of the bond
+      if(bs && pbond->GetBeginAtom()!=patom)
+        bs = -bs;
+
       iat.bond_stereo[nbonds++] = bs;
       if(nbonds>MAXVAL)
       {
-#ifdef HAVE_SSTREAM
-        stringstream errorMsg;
-#else
-        strstream errorMsg;
-#endif
-        errorMsg << "Too many bonds to " << iat.elname << " atom" << endl;
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+        string msg("Too many bonds to ");
+        msg += iat.elname;
+        msg += " atom";
+        obErrorLog.ThrowError(__FUNCTION__, msg, obWarning);
         return false;
       }
     }
@@ -375,6 +384,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   inp.atom = &inchiAtoms[0];
 
   vector<inchi_Stereo0D> stereoVec;
+  
   if(Is0D)
   {
     //Tetrahedral stereo
@@ -393,9 +403,19 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           int i=0;
           vector<OBEdgeBase*>::iterator itr;
           OBBond *pbond;
+
           for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr),++i)
             stereo.neighbor[i] = pbond->GetNbrAtomIdx(patom)-1;
-          //if(i!=4)...error
+
+          OBChiralData* cd=(OBChiralData*)patom->GetData(OBGenericDataType::ChiralData);
+          if(!cd)
+          { //if no Chiral Data Set, need to make one!
+            cd=new OBChiralData;
+            patom->SetData(cd);
+          }
+          vector<unsigned int> nbr_atoms(4);
+          copy (stereo.neighbor,stereo.neighbor+4,nbr_atoms.begin());
+          CorrectChirality(mol, patom);
 
           stereo.parity = INCHI_PARITY_UNKNOWN;
           if(patom->IsPositiveStereo() || patom->IsClockwise())
@@ -463,12 +483,28 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       }
     }
   }
+  
+  const char* copts = pConv->IsOption("X");
+  char* opts=NULL;
+  if(copts)
+  {
+    vector<string> optsvec;
+    tokenize(optsvec, string(copts));
+#ifdef WIN32
+    string ch(" /");
+#elif
+    string ch(" -");
+#endif
+    string sopts;
+    for(int i=0;i<optsvec.size();++i)
+      sopts += ch + optsvec[i];
+    opts = new char[strlen(sopts.c_str())+1]; //has to be char, not const char
+    inp.szOptions = strcpy(opts, sopts.c_str());
+  }
 
-//	*inp.szOptions = '\0';
   inp.num_atoms = mol.NumAtoms();
   inp.num_stereo0D = stereoVec.size();
   if(inp.num_stereo0D>0)
-    
     inp.stereo0D = &stereoVec[0];
 
   inchi_Output inout;
@@ -476,6 +512,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   int ret = GetINCHI(&inp, &inout);
 
+  delete[] opts;
   if(ret!=inchi_Ret_OKAY)
   {
     string mes(inout.szMessage);
