@@ -489,10 +489,11 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(copts)
   {
     vector<string> optsvec;
-    tokenize(optsvec, string(copts));
+    string tmp(copts); // GCC doesn't like passing string temporaries to functions
+    tokenize(optsvec, tmp);
 #ifdef WIN32
     string ch(" /");
-#elif
+#else
     string ch(" -");
 #endif
     string sopts;
