@@ -1,3 +1,10 @@
+2007-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mol2format.cpp: Fix PR#1666406 with mis-typed Sybyl
+	atom types.
+
+	* data/types.txt, data/types.h: Likewise.
+
 2007-02-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/inchiformat.cpp: Fix compile problems on GCC.

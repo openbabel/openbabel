@@ -154,12 +154,30 @@ namespace OpenBabel
 
         atom.SetVector(x, y, z);
 
+        // Handle "CL" and "BR" and other mis-typed atoms
         str = temp_type;
+        if (strncmp(temp_type, "CL", 2) == 0) {
+          str = "Cl";
+        } else  if (strncmp(temp_type,"BR",2) == 0) {
+          str = "Br";
+        } else if (strncmp(temp_type,"S.o2", 4) == 02) {
+          str = "S.O2";
+        } else if (strncmp(temp_type,"S.o", 3) == 0) {
+          str = "S.O";
+        } else if (strncmp(temp_type,"S.1", 3) == 0) {
+          str = "S.2"; // no idea what the best type might be here
+        } else if (strncmp(temp_type,"P", 1) == 0) {
+          str = "P.3";
+        } else if (strncmp(temp_type,"SI", 2) == 0) {
+          str = "Si";
+        }
+
         ttab.SetToType("ATN");
         ttab.Translate(str1,str);
         elemno = atoi(str1.c_str());
 
-        // Handle "CL" and "BR" atom types!
+        // We might have missed some SI or FE type things above, so here's
+        // another check
         if( !elemno && isupper(temp_type[1]) )
           {
             temp_type[1] = (char)tolower(temp_type[1]);
@@ -167,6 +185,10 @@ namespace OpenBabel
             ttab.Translate(str1,str);
             elemno = atoi(str1.c_str());
           }
+
+        if (!elemno )
+          cerr << " can't find type " << str << endl;
+
         atom.SetAtomicNum(elemno);
         ttab.SetToType("INT");
         ttab.Translate(str1,str);
