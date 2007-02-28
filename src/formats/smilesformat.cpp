@@ -50,13 +50,13 @@ namespace OpenBabel
     virtual const char* Description()
     {
       return
-        "SMILES format\n \
-            A linear text format which can describe the connectivity\n \
-            and chirality of a molecule\n \
-            Write Options e.g. -xt\n \
-            -n no molecule name\n \
-            -t molecule name only\n \
-      -r radicals lower case eg ethyl is Cc\n\n";
+        "SMILES format\n"
+        "   A linear text format which can describe the connectivity\n"
+        "   and chirality of a molecule\n"
+        "    Write Options e.g. -xt\n"
+        "   -n no molecule name\n"
+        "   -t molecule name only\n"
+	"   -r radicals lower case eg ethyl is Cc\n\n";
     };
 
     virtual unsigned int Flags() { return DEFAULTFORMAT;};
@@ -144,6 +144,7 @@ namespace OpenBabel
     void         ToSmilesString(OBSmiNode *node,char *buffer);
     void         RemoveUsedClosures();
     void         AssignCisTrans(OBSmiNode*);
+    char         GetCisTransBondSymbol(OBBond *, OBSmiNode *);
     bool         BuildTree(OBSmiNode*);
     bool         GetSmilesElement(OBSmiNode*,char*);
     bool         GetChiralStereo(OBSmiNode*,char*);
@@ -189,6 +190,8 @@ namespace OpenBabel
     void FindAromaticBonds(OBMol &mol,OBAtom*,int);
     void FindAromaticBonds(OBMol&);
     void FindOrphanAromaticAtoms(OBMol &mol); //CM 18 Sept 2003
+    void FixCisTransBonds(OBMol &);
+    void CorrectUpDownMarks(OBBond *, OBAtom *);
   };
 
   /////////////////////////////////////////////////////////////////
@@ -354,16 +357,10 @@ namespace OpenBabel
               _order = 5;
               break;
             case '/':
-	      if (_prev && !_vprev.empty() && (_prev == _vprev[_vprev.size()-1])) // Is '/' right after '('?
-		_bondflags |= OB_TORDOWN_BOND;					  //  if so, reverses sense of up/down
-	      else								  //      C/C=C/C is trans
-		_bondflags |= OB_TORUP_BOND;					  //      C(/C)=C/C is cis
+              _bondflags |= OB_TORDOWN_BOND;   // initial mark, see FixCisTransBonds() below 
               break;
             case '\\':
-	      if (_prev && !_vprev.empty() && (_prev == _vprev[_vprev.size()-1])) // Is '\' right after '('?
-		_bondflags |= OB_TORUP_BOND;					  //   reverses up/down, see note above
-	      else
-		_bondflags |= OB_TORDOWN_BOND;
+              _bondflags |= OB_TORUP_BOND;     // initial mark, see FixCisTransBonds() below 
               break;
             default:
               if (!ParseSimple(mol))
@@ -385,6 +382,8 @@ namespace OpenBabel
     FindOrphanAromaticAtoms(mol);// CM 18 Sept 2003
     mol.AssignSpinMultiplicity();
     mol.UnsetAromaticPerceived();
+
+    FixCisTransBonds(mol);
 
     mol.EndModify();
 
@@ -419,7 +418,127 @@ namespace OpenBabel
     return(true);
   }
 
-  // CM 18 Sept 2003
+  void OBSmilesParser::FixCisTransBonds(OBMol &mol)
+  {
+    // OpenBabel's internal model for cis/trans uses an imaginary drawing,
+    // in which the double bond is horizontal on the page, and an "up" bond
+    // means, "above the double-bond on the page", and "down" means, "below
+    // the double bond on the page".  Thus, a cis configuration can be
+    // represented as either "up/up" or "down/down", and a trans
+    // configuration can be either "up/down" or "down/up".
+    //
+    // When parsing a SMILES, '/' and '\' bonds are initially marked as
+    // "down" and "up", respectively, but they don't mean "down" and "up"
+    // yet -- they only mean "forward slash" and "backslash".  These bond
+    // types have to be converted to an actual cis/trans specification.
+    //
+    // For example, consider the following trans ethene:
+    //
+    //   SMILES     Configuration  Initial parsing    Final designation
+    //   ------     -------------  ---------------    -----------------
+    //   C/C=C/C    	trans	     down/down           down/up
+    //   C(\C)=C/C  	trans	     up/down             down/up
+    //   C/C=C(/C)  	trans	     down/down           down/up
+    //   C(=C/C)\C  	trans	     down/up             up/down
+    //
+    // The SMILES parsing rule is:
+    //   Before double-bonded atom: '/' means down, '\' means up
+    //   After  double-bonded atom: '/' means up,   '\' means down
+    //
+    // Note: This must be called *after* aromaticity detection.
+
+    FOR_BONDS_OF_MOL(dbi, mol) {
+
+      OBBond *dbl_bond = &(*dbi);
+
+      // Not a double bond?
+      if (!dbl_bond->IsDouble() || dbl_bond->IsAromatic())
+	continue;
+
+      // Find the single bonds around the atoms connected by the double bond.
+      // While we're at it, note whether the pair of atoms on either end are
+      // identical, in which case it's not cis/trans.
+
+      OBAtom *a1 = dbl_bond->GetBeginAtom();
+      OBAtom *a2 = dbl_bond->GetEndAtom();
+
+      // Check that both atoms on the double bond have at least one
+      // other neighbor, but not more than two other neighbors;
+      int v1 = a1->GetValence();
+      int v2 = a2->GetValence();
+      if (v1 < 2 || v1 > 3 | v2 < 2 | v2 > 3) {
+	continue;
+      }
+
+      // Get the bonds of neighbors of atom1 and atom2
+      OBBond *a1_b1 = NULL, *a1_b2 = NULL, *a2_b1 = NULL, *a2_b2 = NULL;
+
+      FOR_BONDS_OF_ATOM(bi, a1) {
+	OBBond *b = &(*bi);
+	if ((b) == (dbl_bond)) continue;  // skip the double bond we're working on
+        if (NULL == a1_b1)
+          a1_b1 = b;    // remember 1st bond of Atom1
+        else
+          a1_b2 = b;    // remember 2nd bond of Atom1
+      }
+
+      FOR_BONDS_OF_ATOM(bi, a2) {
+	OBBond *b = &(*bi);
+	if (b == dbl_bond) continue;
+        if (NULL == a2_b1)
+          a2_b1 = b;    // remember 1st bond of Atom2
+        else
+          a2_b2 = b;    // remember 2nd bond of Atom2
+      }
+
+      // Now check that at least two are marked up/down.
+      int count = 0;
+      if (a1_b1 && (a1_b1->IsUp() || a1_b1->IsDown())) count++;
+      if (a1_b2 && (a1_b2->IsUp() || a1_b2->IsDown())) count++;
+      if (a2_b1 && (a2_b1->IsUp() || a2_b1->IsDown())) count++;
+      if (a2_b2 && (a2_b2->IsUp() || a2_b2->IsDown())) count++;
+      if (count < 2) {
+	continue;
+      }
+
+      // OK, now do what we're here for.  We have two, three or four
+      // bonds, marked "up" or "down", but at this point it just
+      // means '/' or '\', respectively.  In order to decide whether
+      // a bond is "up" or "down", we examine the order of atoms in
+      // the molecule.  See the comments at the top of this function.
+
+      CorrectUpDownMarks(a1_b1, a1);
+      CorrectUpDownMarks(a1_b2, a1);
+      CorrectUpDownMarks(a2_b1, a2);
+      CorrectUpDownMarks(a2_b2, a2);
+    }
+  }
+
+  void OBSmilesParser::CorrectUpDownMarks(OBBond *b, OBAtom *a)
+  {
+    // This is an adjunct to FixCisTransBonds(), above.  See the comments
+    // there.  In this function, atom a is one of the double-bonded atoms,
+    // and bond b is a bond from atom a to one of the substituent atoms.
+
+    if (!b || !a || !(b->IsUp() || b->IsDown())) return;
+    
+    OBAtom *ax = b->GetNbrAtom(a);
+
+    // If the substituent comes before the double-bonded atom, then
+    // the initial marks from the SMILES are correct.
+    if (ax->GetIdx() < a->GetIdx())
+      return;
+
+    // The substituent comes after the double-bonded atom, so
+    // the bond '/' means "up", and '\' means "down".
+    if (b->IsUp()) {
+      b->SetDown();
+    } else {
+      b->SetUp();
+    }
+  }
+
+
   void OBSmilesParser::FindOrphanAromaticAtoms(OBMol &mol)
   {
     //Facilitates the use lower case shorthand for radical entry
@@ -1588,12 +1707,12 @@ namespace OpenBabel
         _ptr++;
         break;
       case '/': //chiral, but _order still == 1
-        _bondflags |= OB_TORUP_BOND;
+        _bondflags |= OB_TORDOWN_BOND;
         _ptr++;
         break;
         _ptr++;
       case '\\': // chiral, but _order still == 1
-        _bondflags |= OB_TORDOWN_BOND;
+        _bondflags |= OB_TORUP_BOND;
         _ptr++;
         break;
       default: // no bond indicator just leave order = 1
@@ -1837,90 +1956,61 @@ namespace OpenBabel
     vector<pair<int,OBBond*> > vc = GetClosureDigits(atom);
     if (!vc.empty())
       {
-        vector<pair<int,OBBond*> >::iterator i;
-        for (i = vc.begin();i != vc.end();i++)
+        vector<pair<int,OBBond*> >::iterator bpi;
+        for (bpi = vc.begin();bpi != vc.end();bpi++)
           {
-            if (i->second)
-              {
-                if (i->second->IsUp())
-                  {
-                    if ( (i->second->GetBeginAtom())->HasDoubleBond() ||
-                         (i->second->GetEndAtom())->HasDoubleBond() )
-                      strcat(buffer,"/");
-                  }
-                if (i->second->IsDown())
-                  {
-                    if ( (i->second->GetBeginAtom())->HasDoubleBond() ||
-                         (i->second->GetEndAtom())->HasDoubleBond() )
-                      strcat(buffer,"\\");
-                  }
+	    if (bpi->second) {
+	      char bs[2];
+	      bs[0] = GetCisTransBondSymbol(bpi->second, node);
+	      bs[1] = '\0';
+	      if (bs[0]) {
+		strcat(buffer, bs);	// append "/" or "\"
+	      }
+	      else {
 #ifndef KEKULE
-                if (i->second->GetBO() == 2 && !i->second->IsAromatic())
-                  strcat(buffer,"=");
+		if (bpi->second->GetBO() == 2 && !bpi->second->IsAromatic())
+		  strcat(buffer,"=");
 #else
-
-                if (i->second->GetBO() == 2)
-                  strcat(buffer,"=");
+		if (bpi->second->GetBO() == 2)
+		  strcat(buffer,"=");
 #endif
+		if (bpi->second->GetBO() == 3)
+		  strcat(buffer,"#");
+	      }
+	    }
 
-                if (i->second->GetBO() == 3)
-                  strcat(buffer,"#");
-              }
-
-            if (i->first > 9)
+            if (bpi->first > 9)
               strcat(buffer,"%");
-            snprintf(tmpbuf,sizeof(tmpbuf), "%d",i->first);
+            snprintf(tmpbuf,sizeof(tmpbuf), "%d",bpi->first);
             strcat(buffer,tmpbuf);
           }
       }
 
     // Follow path to child atoms.
+    //
     // Note: Cis/trans bonds are tricky, for example, C/C=C/C is trans,
-    // but C(/C)=C/C is cis.  If a '/' or '\' bond symbol immediately follows
-    // a left parenthesis '(', then it needs to be reversed.  This is a bad
-    // hack, and should be replaced with an internal mechanism that represents
-    // true cis/trans as an ordered set of four atoms around a double bond.
+    // but C(/C)=C/C is cis.  See the comments in FixCisTransBonds(), above.
 
     OBBond *bond;
     for (int i = 0;i < node->Size();i++)
       {
-	int open_parens = 0;
         bond = node->GetNextBond(i);
         if (i+1 < node->Size()) {
           strcat(buffer,"(");
-	  open_parens = 1;	// see note above re cis/trans
-	} else {
-	  open_parens = 0;
+        }
+        if (bond->IsUp() || bond->IsDown()) {
+	  char cc[2];
+	  cc[0] = GetCisTransBondSymbol(bond, node);
+	  cc[1] = '\0';
+	  strcat(buffer, cc);
 	}
-        if (bond->IsUp())
-          {
-            if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                 (bond->GetEndAtom())->HasDoubleBond() ) {
-	      if (open_parens)
-		strcat(buffer,"\\");	// follows '(', reverse to DOWN bond
-	      else
-		strcat(buffer,"/");	// UP bond
-	    }
-          }
-        if (bond->IsDown())
-          {
-            if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                 (bond->GetEndAtom())->HasDoubleBond() ) {
-	      if (open_parens)
-		strcat(buffer,"/");	// follows '(', reverse to UP bond
-	      else
-		strcat(buffer,"\\");	// DOWN bond
-	    }
-          }
 #ifndef KEKULE
         if (bond->GetBO() == 2 && !bond->IsAromatic())
           strcat(buffer,"=");
 #else
-
         if (bond->GetBO() == 2)
           strcat(buffer,"=");
 #endif
-
         if (bond->GetBO() == 3)
           strcat(buffer,"#");
 
@@ -2120,34 +2210,84 @@ namespace OpenBabel
                 //                obAssert(a);
                 //                obAssert(d);
 
+		// Calculate the torsion angle between the "substituent" atoms.  This is an
+		// odd use of the CalcTorsionAngle() function.  It measures how much you'd
+		// have to twist around the double bond to bring both substituents to the
+		// same side.  Cis bonds are already on the same side, so they'l have a
+		// torsion angle of zero.  Trans bonds are opposite, so you'd have to twist
+		// around the double bond by 180 degrees.  So small (near zero) means cis,
+		// and large (near 180) means trans.  This is cool because it also works in
+		// any 3D orientation.
+		double angle = fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(),
+						     c->GetVector(),d->GetVector()));
+
                 if (((OBBond*)*j)->IsUp() || ((OBBond*)*j)->IsDown()) //stereo already assigned
                   {
-                    if (fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(),
-                                              c->GetVector(),d->GetVector())) > 10.0)
+                    if (angle > 10.0) {
+		      // 180 degrees == trans configuration
+                      if (((OBBond*)*j)->IsUp())
+                        ((OBBond*)*k)->SetDown();	// set bonds "opposite sides" (up/down)
+                      else
+                        ((OBBond*)*k)->SetUp();		// set bonds "same side" (both up)
+		    }
+                    else {
+		      // small angle == cis configuration
                       if (((OBBond*)*j)->IsUp())
                         ((OBBond*)*k)->SetUp();
                       else
                         ((OBBond*)*k)->SetDown();
-                    else
-                      if (((OBBond*)*j)->IsUp())
-                        ((OBBond*)*k)->SetDown();
-                      else
-                        ((OBBond*)*k)->SetUp();
+		    }
                   }
                 else //assign stereo to both ends
                   {
                     ((OBBond*)*j)->SetUp();
-                    if (fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(),
-                                              c->GetVector(),d->GetVector())) > 10.0)
-                      ((OBBond*)*k)->SetUp();
-                    else
-                      ((OBBond*)*k)->SetDown();
+		    // See comments above re: angle between substituents
+                    if (angle > 10.0) {
+                      ((OBBond*)*k)->SetDown();	// trans configuration, set bonds "opposite sides" (up/down)
+		    } else {
+                      ((OBBond*)*k)->SetUp();	// cis configuration, set bonds "same side" (both up)
+		    }
                   }
               }
           }
         AssignCisTrans(node->GetNextNode(i));
       }
   }
+
+  char OBMol2Smi::GetCisTransBondSymbol(OBBond *bond, OBSmiNode *node)
+  {
+    // This is the converse of CorrectUpDownMarks() above, for writing
+    // the SMILES back out.  Given a cis/trans bond and the node in the
+    // SMILES tree, figures out whether to write a '/' or '\' symbol.
+    // See the comments in FixCisTransBonds(), above.
+    // 
+    // The OBSmiNode is the most-recently-written atom in the SMILES string
+    // we're creating.  If it is the double-bonded atom, then the substituent
+    // follows, so that "up" means '/' and "down" means '\'.  If the OBSmiNode
+    // atom is the single-bonded atom then the double-bonded atom comes next,
+    // in which case "up" means '\' and "down" means '/'.
+    //
+    // Note that there's an ambiguity: What if both ends of the bond are
+    // double-bonded atoms?  In this case, the first one takes precedence.
+
+    if (!bond || (!bond->IsUp() && !bond->IsDown()))
+      return '\0';
+
+    OBAtom *atom = node->GetAtom();
+    if (atom->HasDoubleBond()) {	// double-bonded atom is first in the SMILES?
+      if (bond->IsUp())
+	return '/';
+      else
+	return '\\';
+    }
+    else {				// double-bonded atom is second in the SMILES
+      if (bond->IsUp())
+	return '\\';
+      else
+	return '/';
+    }
+  }
+
 
   void OBMol2Smi::Init(OBConversion* pconv)
   {
@@ -2338,7 +2478,7 @@ namespace OpenBabel
     //  if (!normalValence && atom->ImplicitHydrogenCount())
     //Reduce implicit H count by number of D,T (and explicit 1H) because they will be
     //output explicitly
-    //		int nHisotopes = atom->ExplicitHydrogenCount() - atom->ExplicitHydrogenCount(true);
+    //          int nHisotopes = atom->ExplicitHydrogenCount() - atom->ExplicitHydrogenCount(true);
     //    int nH = atom->ImplicitHydrogenCount() - nHisotopes;
     int nH = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true);//excludes H isotopes
     if (nH && !atom->IsHydrogen()) 

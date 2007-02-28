@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2005-2006 by Craig A. James, eMolecules Inc.
+Copyright (C) 2005-2007 by Craig A. James, eMolecules Inc.
 Some portions Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
@@ -168,6 +168,7 @@ public:
   void         Init(OBConversion* pconv=NULL);
 
   void         AssignCisTrans(OBMol*);
+  char         GetCisTransBondSymbol(OBBond *, OBCanSmiNode *);
   void         AddHydrogenToChiralCenters(OBMol &mol, OBBitVec &frag_atoms);
   bool         AtomIsChiral(OBAtom *atom);
   bool         BuildCanonTree(OBMol &mol, OBBitVec &frag_atoms,
@@ -345,32 +346,81 @@ void OBMol2Cansmi::AssignCisTrans(OBMol *pmol)
         break;
     }
 
-    if (((OBBond*)*j)->IsUp() || ((OBBond*)*j)->IsDown()) { //stereo already assigned
-      if (fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(), c->GetVector(),d->GetVector())) > 10.0) {
-        if (((OBBond*)*j)->IsUp()) {
-          ((OBBond*)*k)->SetUp();
-        } else {
-          ((OBBond*)*k)->SetDown();
-        }
+    // Calculate the torsion angle between the "substituent" atoms.  This is an
+    // odd use of the CalcTorsionAngle() function.  It measures how much you'd
+    // have to twist around the double bond to bring both substituents to the
+    // same side.  Cis bonds are already on the same side, so they'll have a
+    // torsion angle of zero.  Trans bonds are opposite, so you'd have to twist
+    // around the double bond by 180 degrees.  So small (near zero) means cis,
+    // and large (near 180) means trans.  This is cool because it also works in
+    // any 3D orientation.
+    double angle = fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(),
+					 c->GetVector(),d->GetVector()));
+
+    if (((OBBond*)*j)->IsUp() || ((OBBond*)*j)->IsDown()) //stereo already assigned
+      {
+	if (angle > 10.0) {
+	  // 180 degrees == trans configuration
+	  if (((OBBond*)*j)->IsUp())
+	    ((OBBond*)*k)->SetDown();	// set bonds "opposite sides" (up/down)
+	  else
+	    ((OBBond*)*k)->SetUp();		// set bonds "same side" (both up)
+	}
+	else {
+	  // small angle == cis configuration
+	  if (((OBBond*)*j)->IsUp())
+	    ((OBBond*)*k)->SetUp();
+	  else
+	    ((OBBond*)*k)->SetDown();
+	}
       }
-      else {
-        if (((OBBond*)*j)->IsUp()) {
-          ((OBBond*)*k)->SetDown();
-        } else {
-          ((OBBond*)*k)->SetUp();
-        }
+    else //assign stereo to both ends
+      {
+	((OBBond*)*j)->SetUp();
+	// See comments above re: angle between substituents
+	if (angle > 10.0) {
+	  ((OBBond*)*k)->SetDown();	// trans configuration, set bonds "opposite sides" (up/down)
+	} else {
+	  ((OBBond*)*k)->SetUp();	// cis configuration, set bonds "same side" (both up)
+	}
       }
-    }
-    else {      //assign stereo to both ends
-      ((OBBond*)*j)->SetUp();
-      if (fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(), c->GetVector(),d->GetVector())) > 10.0) {
-        ((OBBond*)*k)->SetUp();
-      } else {
-        ((OBBond*)*k)->SetDown();
-      }
-    }
   }
 }
+
+char OBMol2Cansmi::GetCisTransBondSymbol(OBBond *bond, OBCanSmiNode *node)
+{
+  // Given a cis/trans bond and the node in the SMILES tree, figures out
+  // whether to write a '/' or '\' symbol.
+  // See the comments smilesformat.cpp: FixCisTransBonds().
+  // 
+  // The OBCanSmiNode is the most-recently-written atom in the SMILES string
+  // we're creating.  If it is the double-bonded atom, then the substituent
+  // follows, so that "up" means '/' and "down" means '\'.  If the OBCanSmiNode
+  // atom is the single-bonded atom then the double-bonded atom comes next,
+  // in which case "up" means '\' and "down" means '/'.
+  //
+  // Note that there's an ambiguity: What if both ends of the bond are
+  // double-bonded atoms?  In this case, the first one takes precedence.
+
+  if (!bond || (!bond->IsUp() && !bond->IsDown()))
+    return '\0';
+
+  OBAtom *atom = node->GetAtom();
+
+  if (atom->HasDoubleBond()) {		// double-bonded atom is first in the SMILES?
+    if (bond->IsUp())
+      return '/';
+    else
+      return '\\';
+  }
+  else {				// double-bonded atom is second in the SMILES
+    if (bond->IsUp())
+      return '\\';
+    else
+      return '/';
+  }
+}
+
 
 /***************************************************************************
 * FUNCTION: GetSmilesElement
@@ -1131,10 +1181,16 @@ void OBMol2Cansmi::ToCansmilesString(OBCanSmiNode *node,
     vector<OBBondClosureInfo>::iterator bci;
     for (bci = vclose_bonds.begin();bci != vclose_bonds.end();bci++) {
       if (!bci->is_open) {
-        if (bci->bond->IsUp())                                    strcat(buffer,"\\");
-        if (bci->bond->IsDown())                                  strcat(buffer,"/");
-        if (bci->bond->GetBO() == 2 && !bci->bond->IsAromatic())  strcat(buffer,"=");
-        if (bci->bond->GetBO() == 3)                              strcat(buffer,"#");
+	char bs[2];
+	bs[0] = GetCisTransBondSymbol(bci->bond, node);
+	bs[1] = '\0';
+	if (bs[0]) {
+	  strcat(buffer, bs);	// append "/" or "\"
+	}
+	else {
+	  if (bci->bond->GetBO() == 2 && !bci->bond->IsAromatic())  strcat(buffer,"=");
+	  if (bci->bond->GetBO() == 3)                              strcat(buffer,"#");
+	}
       }
       if (bci->ringdigit > 9) strcat(buffer,"%");
       sprintf(buffer+strlen(buffer), "%d", bci->ringdigit); 
@@ -1143,27 +1199,25 @@ void OBMol2Cansmi::ToCansmilesString(OBCanSmiNode *node,
 
   // Write child bonds, then recursively follow paths to child nodes
   // to print the SMILES for each child branch.
-  //
-  // Note: Cis/trans bonds are tricky, for example, C/C=C/C is trans,
-  // but C(/C)=C/C is cis.  If a '/' or '\' bond symbol immediately follows
-  // a left parenthesis '(', then it needs to be reversed.  This is a bad
-  // hack, and should be replaced with an internal mechanism that represents
-  // true cis/trans as an ordered set of four atoms around a double bond.
 
   OBBond *bond;
   for (int i = 0;i < node->Size();i++) {
     bond = node->GetChildBond(i);
     int up   = bond->IsUp();
     int down = bond->IsDown();
-    int open_parens = 0;                // see note above
     if (i+1 < node->Size()) {
       strcat(buffer,"(");
-      open_parens = 1;
     }
-    if (up && !open_parens || down && open_parens) strcat(buffer,"\\");
-    if (down && !open_parens || up && open_parens) strcat(buffer,"/");
-    if (bond->GetBO() == 2 && !bond->IsAromatic()) strcat(buffer,"=");
-    if (bond->GetBO() == 3)                        strcat(buffer,"#");
+    if (bond->IsUp() || bond->IsDown()) {
+      char cc[2];
+      cc[0] = GetCisTransBondSymbol(bond, node);
+      cc[1] = '\0';
+      strcat(buffer, cc);
+    }
+    else if (bond->GetBO() == 2 && !bond->IsAromatic())
+      strcat(buffer,"=");
+    else if (bond->GetBO() == 3)
+      strcat(buffer,"#");
     
     ToCansmilesString(node->GetChildNode(i),buffer, frag_atoms, symmetry_classes, canonical_order);
     if (i+1 < node->Size()) strcat(buffer,")");
@@ -1469,8 +1523,7 @@ public:
       " Write Options e.g. -xt\n"
       "   -i  Includes isotopic and chiral markings\n"
       "   -n  No molecule name\n"
-      "   -t  Molecule name only\n"
-      "   -r  Radicals lower case eg ethyl is Cc\n\n";
+      "   -t  Molecule name only\n\n";
   };
 
   virtual const char* SpecificationURL()

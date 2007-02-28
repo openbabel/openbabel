@@ -1268,23 +1268,14 @@ namespace OpenBabel
 
   static BondExpr *ParseBondPrimitive( void )
   {
-    char prevsym = *(LexPtr-1);
     char bsym    = *LexPtr++;
 
-    // E/Z double bonds are tricky.  If the '/' or '\' symbol is in parentheses
-    // immediately after the double-bonded atom, it flips the sense of up/down.
-    // For example:
-    //    C/C=C/C    trans  (first bond is "UP")
-    //    C(/C)=C/C  cis    (first bond is "DOWN")
-
-    if (   bsym == '/'  && prevsym != '('
-	|| bsym == '\\' && prevsym == '(') {
-      return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_UPUNSPEC : BT_UP);
-    }
-    if (   bsym == '\\' && prevsym != '('
-	|| bsym == '/' && prevsym == '(') {
-      return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_DOWNUNSPEC : BT_DOWN);
-    }
+    if (bsym == '/')
+      return BuildBondLeaf(BL_TYPE,BT_SINGLE);
+      // return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_UPUNSPEC : BT_UP);
+    if (bsym == '\\')
+      return BuildBondLeaf(BL_TYPE,BT_SINGLE);
+      // return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_DOWNUNSPEC : BT_DOWN);
 
     switch(bsym)
       {
