@@ -1,12 +1,16 @@
+2007-02-28  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: Replaced isnan() by OBIsNan(). 
+
 2007-02-28  Craig James <cjames@emolecules.com>
 
 	* src/formats/smilesformat.cpp: Fixed PR#1663854 "Canonical SMILES
-          gives incorrect cis/trans" in cansmilesformat.cpp, also fixed the
-          same problem in smilesformat.cpp.
+	gives incorrect cis/trans" in cansmilesformat.cpp, also fixed the
+	same problem in smilesformat.cpp.
 
 	* Disabled SMARTS parsing of cis/trans '/' and '\', these are
-          temporarily treated as ordinary single bonds, due to severe bug
-          in SMARTS matching.  See PR#1663730, this is a temporary workaround.
+	temporarily treated as ordinary single bonds, due to severe bug
+	in SMARTS matching.  See PR#1663730, this is a temporary workaround.
 
 2007-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

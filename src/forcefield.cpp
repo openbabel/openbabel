@@ -27,6 +27,8 @@ GNU General Public License for more details.
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
 
+#define OBIsNan(x) ((x) != (x))
+
 using namespace std;
 
 namespace OpenBabel
@@ -1367,14 +1369,15 @@ namespace OpenBabel
       c = -c;
       d = -d;
     }
-    
-    if (isnan(a.x()) || isnan(a.y()) || isnan(a.z()))
+
+
+    if (OBIsNan(a.x()) || OBIsNan(a.y()) || OBIsNan(a.z()))
       a = VZero;
-    if (isnan(b.x()) || isnan(b.y()) || isnan(b.z()))
+    if (OBIsNan(b.x()) || OBIsNan(b.y()) || OBIsNan(b.z()))
       b = VZero;
-    if (isnan(c.x()) || isnan(c.y()) || isnan(c.z()))
+    if (OBIsNan(c.x()) || OBIsNan(c.y()) || OBIsNan(c.z()))
       c = VZero;
-    if (isnan(d.x()) || isnan(d.y()) || isnan(d.z()))
+    if (OBIsNan(d.x()) || OBIsNan(d.y()) || OBIsNan(d.z()))
       d = VZero;
     
     return tor;  
