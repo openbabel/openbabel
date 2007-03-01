@@ -149,7 +149,7 @@ int DLHandler::findFiles (std::vector<std::string>& file_list,const std::string 
 
 bool DLHandler::openLib(const string& lib_name)
 {
-  return dlopen(lib_name.c_str(), RTLD_LAZY) != 0;
+  return dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_GLOBAL) != 0;
 }
 
 const char* DLHandler::getFormatFilePattern()
