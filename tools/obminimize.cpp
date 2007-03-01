@@ -43,7 +43,7 @@ int main(int argc,char **argv)
   char *program_name= argv[0];
   int c;
   int steps = 2500;
-  string basename, filename = "", option, option2, ff = "";
+  string basename, filename = "", option, option2, ff = "Ghemical";
 
   if (argc < 2) {
     cout << "Usage: obgen <filename> [options]" << endl;
