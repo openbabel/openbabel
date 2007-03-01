@@ -144,6 +144,18 @@ namespace OpenBabel
     return(NULL);
   }
 
+  std::vector<OBGenericData*> &OBBase::GetData(DataOrigin source)
+  {
+    std::vector<OBGenericData*> filtered; // filtered data only from source
+
+    OBDataIterator i;
+    for (i = _vdata.begin();i != _vdata.end();++i)
+      if ((*i)->GetOrigin() == source)
+        filtered.push_back((*i));
+
+    return filtered;
+  }
+
   void OBBase::DeleteData(unsigned int dt)
   {
     vector<OBGenericData*> vdata;

@@ -114,6 +114,8 @@ namespace OpenBabel
       OBGenericData                    *GetData(const char *);
       //! \return all data, suitable for iterating
       std::vector<OBGenericData*>      &GetData() { return(_vdata); }
+      //! \return all data with a specific origin, suitable for iterating
+      std::vector<OBGenericData*>      &GetData(DataOrigin source);
       //! \return An iterator pointing to the beginning of the data
       OBDataIterator  BeginData()
         { return(_vdata.begin());        }

@@ -1,3 +1,23 @@
+2007-02-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefield.cpp, src/forcefield.h: Cut out some compiler
+	warnings from	GCC. Remove is14(), already available through
+	OBAtom::IsOneFour.
+
+	* src/forcefields/forcefieldghemical.cpp: Make sure to return from
+	all functions.
+
+	* src/dlhandler_unix.cpp: Use global loading. May improve script
+	language interface on Linux.
+
+	* include/openbabel/base.h, src/base.cpp: Support for filtering
+	OBGenericData based on the source.
+
+	* include/openbabel/generic.h, src/generic.cpp: Likewise.
+
+	* test/files/smartsresults.txt: Fix results based on Craig's
+	SMARTS changes today.
+
 2007-02-28  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Replaced isnan() by OBIsNan(). 

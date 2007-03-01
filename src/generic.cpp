@@ -39,6 +39,10 @@ namespace OpenBabel
       as OBGenericData types, which will expand over time to support additional
       interconversion (e.g., spectroscopy, dynamics, surfaces...)
 
+      For more information on currently supported types, please see
+      the developer wiki:
+      http://openbabel.sourceforge.net/wiki/Generic_Data
+
       For your own custom data, either define a custom subclass using 
       an id from the OBGenericDataType::CustomData0 to 
       OBGenericDataType::CustomData15 slots,
@@ -47,12 +51,19 @@ namespace OpenBabel
       descriptors
       e.g., in QSAR, atom or bond labels, or other textual data.
 
-      New in Open Babel, version 2.1 is the template-based OBPairTemplate,
+      <strong>New in Open Babel, version 2.1</strong>
+      is the template-based OBPairTemplate,
       which can be used to store arbitrary data types. There are predefined
       types OBPairInteger and OBPairFloatingPoint for storing integers and
       floating-point values without converting to a string representation.
 
-      Example code using OBGenericData
+      Also <strong>new</strong> is the "source" or "origin" of a data
+      entry, enumerated by DataOrigin. This can be accessed by
+      SetOrigin() and GetOrigin(), as well as via "filtering" methods
+      in OBBase, allowing you to separate data read in from a file,
+      added by a user, or assigned by Open Babel internally.
+
+      Example code using OBGenericData:
 
       @code
       if (mol.HasData(OBGenericDataType::UnitCell))
@@ -77,7 +88,8 @@ namespace OpenBabel
          }
       @endcode
 
-      Similar code also works for OBGenericData stored in an OBAtom or OBBond (or OBResidue).
+      Similar code also works for OBGenericData stored in an OBAtom or 
+      OBBond or OBResidue.
 
       @code
       if (!atom.HasData("UserLabel")) // stored textual data as an OBPairData
@@ -112,6 +124,7 @@ namespace OpenBabel
       virtual OBGenericData* Clone(OBBase* parent) const{return new MyNewClass(*this);}
       @endcode
       and the compiler generated copy constructor would be sufficient. 
+
       It is recommended that, if possible, OBGenericData classes do not
       store atom and bond pointers. Using atom and bond indices instead
       would allow the simple version of Clone() above. See 
@@ -163,8 +176,7 @@ namespace OpenBabel
   { }
 
   OBCommentData::OBCommentData(const OBCommentData &src) :
-    OBGenericData("Comment", OBGenericDataType::CommentData),
-    _data(src._data)
+    OBGenericData(src), _data(src._data)
   {  }
 
   //
@@ -183,7 +195,8 @@ namespace OpenBabel
   //
 
   OBExternalBondData::OBExternalBondData():
-    OBGenericData("ExternalBondData", OBGenericDataType::ExternalBondData)
+    OBGenericData("ExternalBondData", OBGenericDataType::ExternalBondData,
+                  perceived)
   { }
 
   void OBExternalBondData::SetData(OBAtom *atom,OBBond *bond,int idx)
@@ -205,12 +218,12 @@ namespace OpenBabel
   //
 
   OBVirtualBond::OBVirtualBond():
-    OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData),
+    OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData, perceived),
     _bgn(0), _end(0), _ord(0), _stereo(0)
   {  }
 
   OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo):
-    OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData),
+    OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData, perceived),
     _bgn(bgn), _end(end), _ord(ord), _stereo(stereo)
   {  }
 
@@ -461,7 +474,37 @@ namespace OpenBabel
   int OBUnitCell::GetSpaceGroupNumber( std::string name)
   {
     static const char * const spacegroups[] = { 
-      "P1", "P-1", "P2", "P2(1)", "C2", "Pm", "Pc", "Cm", "Cc", "P2/m", "P2(1)/m", "C2/m", "P2/c", "P2(1)/c", "C2/c", "P222", "P222(1)", "P2(1)2(1)2", "P2(1)2(1)2(1)", "C222(1)", "C222", "F222", "I222", "I2(1)2(1)2(1)", "Pmm2", "Pmc2(1)", "Pcc2", "Pma2", "Pca2(1)", "Pnc2", "Pmn2(1)", "Pba2", "Pna2(1)", "Pnn2", "Cmm2", "Cmc2(1)", "Ccc2", "Amm2", "Abm2", "Ama2", "Aba2", "Fmm2", "Fdd2", "Imm2", "Iba2", "Ima2", "Pmmm", "Pnnn", "Pccm", "Pban", "Pmma", "Pnna", "Pmna", "Pcca", "Pbam", "Pccn", "Pbcm", "Pnnm", "Pmmn", "Pbcn", "Pbca", "Pnma", "Cmcm", "Cmca", "Cmmm", "Cccm", "Cmma", "Ccca", "Fmmm", "Fddd", "Immm", "Ibam", "Ibca", "Imma", "P4", "P4(1)", "P4(2)", "P4(3)", "I4", "I4(1)", "P-4", "I-4", "P4/m", "P4(2)/m", "P4/n", "P4(2)/n", "I4/m", "I4(1)/a", "P422", "P42(1)2", "P4(1)22", "P4(1)2(1)2", "P4(2)22", "P4(2)2(1)2", "P4(3)22", "P4(3)2(1)2", "I422", "I4(1)22", "P4mm", "P4bm", "P4(2)cm", "P4(2)nm", "P4cc", "P4nc", "P4(2)mc", "P4(2)bc", "I4mm", "I4cm", "I4(1)md", "I4(1)cd", "P-42m", "P-42c", "P-42(1)m", "P-42(1)c", "P-4m2", "P-4c2", "P-4b2", "P-4n2", "I-4m2", "I-4c2", "I-42m", "I-42d", "P4/mmm", "P4/mcc", "P4/nbm", "P4/nnc", "P4/mbm", "P4/mnc", "P4/nmm", "P4/ncc", "P4(2)/mmc", "P4(2)/mcm", "P4(2)/nbc", "P4(2)/nnm", "P4(2)/mbc", "P4(2)/mnm", "P4(2)/nmc", "P4(2)/ncm", "I4/mmm", "I4/mcm", "I4(1)/amd", "I4(1)/acd", "P3", "P3(1)", "P3(2)", "R3", "P-3", "R-3", "P312", "P321", "P3(1)12", "P3(1)21", "P3(2)12", "P3(2)21", "R32", "P3m1", "P31m", "P3c1", "P31c", "R3m", "R3c", "P-31m", "P-31c", "P-3m1", "P-3c1", "R-3m", "R-3c", "P6", "P6(1)", "P6(5)", "P6(2)", "P6(4)", "P6(3)", "P-6", "P6/m", "P6(3)/m", "P622", "P6(1)22", "P6(5)22", "P6(2)22", "P6(4)22", "P6(3)22", "P6mm", "P6cc", "P6(3)cm", "P6(3)mc", "P-6m2", "P-6c2", "P-62m", "P-62c", "P6/mmm", "P6/mcc", "P6(3)/mcm", "P6(3)/mmc", "P23", "F23", "I23", "P2(1)3", "I2(1)3", "Pm-3", "Pn-3", "Fm-3", "Fd-3", "Im-3", "Pa-3", "Ia-3", "P432", "P4(2)32", "F432", "F4(1)32", "I432", "P4(3)32", "P4(1)32", "I4(1)32", "P-43m", "F4-3m", "I-43m", "P-43n", "F-43c", "I-43d", "Pm-3m", "Pn-3n", "Pm-3n", "Pn-3m", "Fm-3m", "Fm-3c", "Fd-3m", "Fd-3c", "Im-3m", "Ia-3d" 
+      "P1", "P-1", "P2", "P2(1)", "C2", "Pm", "Pc", "Cm", "Cc", "P2/m", 
+      "P2(1)/m", "C2/m", "P2/c", "P2(1)/c", "C2/c", "P222", "P222(1)", 
+      "P2(1)2(1)2", "P2(1)2(1)2(1)", "C222(1)", "C222", "F222", "I222", 
+      "I2(1)2(1)2(1)", "Pmm2", "Pmc2(1)", "Pcc2", "Pma2", "Pca2(1)", "Pnc2", 
+      "Pmn2(1)", "Pba2", "Pna2(1)", "Pnn2", "Cmm2", "Cmc2(1)", "Ccc2", "Amm2", 
+      "Abm2", "Ama2", "Aba2", "Fmm2", "Fdd2", "Imm2", "Iba2", "Ima2", "Pmmm", 
+      "Pnnn", "Pccm", "Pban", "Pmma", "Pnna", "Pmna", "Pcca", "Pbam", "Pccn", 
+      "Pbcm", "Pnnm", "Pmmn", "Pbcn", "Pbca", "Pnma", "Cmcm", "Cmca", "Cmmm", 
+      "Cccm", "Cmma", "Ccca", "Fmmm", "Fddd", "Immm", "Ibam", "Ibca", "Imma", 
+      "P4", "P4(1)", "P4(2)", "P4(3)", "I4", "I4(1)", "P-4", "I-4", "P4/m", 
+      "P4(2)/m", "P4/n", "P4(2)/n", "I4/m", "I4(1)/a", "P422", "P42(1)2", 
+      "P4(1)22", "P4(1)2(1)2", "P4(2)22", "P4(2)2(1)2", "P4(3)22", "P4(3)2(1)2",
+      "I422", "I4(1)22", "P4mm", "P4bm", "P4(2)cm", "P4(2)nm", "P4cc", "P4nc",
+      "P4(2)mc", "P4(2)bc", "I4mm", "I4cm", "I4(1)md", "I4(1)cd", "P-42m", 
+      "P-42c", "P-42(1)m", "P-42(1)c", "P-4m2", "P-4c2", "P-4b2", "P-4n2", 
+      "I-4m2", "I-4c2", "I-42m", "I-42d", "P4/mmm", "P4/mcc", "P4/nbm",
+      "P4/nnc", "P4/mbm", "P4/mnc", "P4/nmm", "P4/ncc", "P4(2)/mmc", 
+      "P4(2)/mcm", "P4(2)/nbc", "P4(2)/nnm", "P4(2)/mbc", "P4(2)/mnm", 
+      "P4(2)/nmc", "P4(2)/ncm", "I4/mmm", "I4/mcm", "I4(1)/amd", "I4(1)/acd",
+      "P3", "P3(1)", "P3(2)", "R3", "P-3", "R-3", "P312", "P321", "P3(1)12",
+      "P3(1)21", "P3(2)12", "P3(2)21", "R32", "P3m1", "P31m", "P3c1", "P31c",
+      "R3m", "R3c", "P-31m", "P-31c", "P-3m1", "P-3c1", "R-3m", "R-3c", "P6",
+      "P6(1)", "P6(5)", "P6(2)", "P6(4)", "P6(3)", "P-6", "P6/m", "P6(3)/m",
+      "P622", "P6(1)22", "P6(5)22", "P6(2)22", "P6(4)22", "P6(3)22", "P6mm",
+      "P6cc", "P6(3)cm", "P6(3)mc", "P-6m2", "P-6c2", "P-62m", "P-62c",
+      "P6/mmm", "P6/mcc", "P6(3)/mcm", "P6(3)/mmc", "P23", "F23", "I23",
+      "P2(1)3", "I2(1)3", "Pm-3", "Pn-3", "Fm-3", "Fd-3", "Im-3", "Pa-3",
+      "Ia-3", "P432", "P4(2)32", "F432", "F4(1)32", "I432", "P4(3)32",
+      "P4(1)32", "I4(1)32", "P-43m", "F4-3m", "I-43m", "P-43n", "F-43c",
+      "I-43d", "Pm-3m", "Pn-3n", "Pm-3n", "Pn-3m", "Fm-3m", "Fm-3c", 
+      "Fd-3m", "Fd-3c", "Im-3m", "Ia-3d"
     };
 
     static const int numStrings = sizeof( spacegroups ) / sizeof( spacegroups[0] );
@@ -522,18 +565,14 @@ namespace OpenBabel
   //
   // member functions for OBSymmetryData class
   //
-  OBSymmetryData::OBSymmetryData()
-  {
-    _type = OBGenericDataType::SymmetryData;
-    _attr = "Symmetry";
-  }
+  OBSymmetryData::OBSymmetryData(): 
+    OBGenericData("Symmetry", OBGenericDataType::SymmetryData)
+  { }
 
   OBSymmetryData::OBSymmetryData(const OBSymmetryData &src) :
-    OBGenericData()
-  {
-    _pointGroup = src._pointGroup;
-    _spaceGroup = src._spaceGroup;
-  }
+    OBGenericData(src._attr, src._type, src._source), 
+    _pointGroup(src._pointGroup), _spaceGroup(src._spaceGroup)
+  {  }
 
   OBSymmetryData & OBSymmetryData::operator=(const OBSymmetryData &src)
   {
@@ -542,31 +581,29 @@ namespace OpenBabel
 
     _pointGroup = src._pointGroup;
     _spaceGroup = src._spaceGroup;
+    _source = src._source;
 
     return(*this);
   }
 
-  OBConformerData::OBConformerData()
-  {
-    _type = OBGenericDataType::ConformerData;
-    _attr = "Conformers";
-  }
+  OBConformerData::OBConformerData() :
+    OBGenericData("Conformers", OBGenericDataType::ConformerData)
+  {  }
 
   OBConformerData::OBConformerData(const OBConformerData &src) :
-    OBGenericData()
-  {
-    _vDimension = src._vDimension;
-    _vEnergies = src._vEnergies;
-    _vForces = src._vForces;
-    _vVelocity = src._vVelocity;
-    _vDisplace = src._vDisplace;
-    _vData = src._vData;
-  }
+    OBGenericData("Conformers", OBGenericDataType::ConformerData),
+    _vDimension(src._vDimension),
+    _vEnergies(src._vEnergies), _vForces(src._vForces),
+    _vVelocity(src._vVelocity), _vDisplace(src._vDisplace),
+    _vData(src._vData)
+  {  }
 
   OBConformerData & OBConformerData::operator=(const OBConformerData &src)
   {
     if(this == &src)
       return(*this);
+    
+    _source = src._source;
 
     _vDimension = src._vDimension;
     _vEnergies = src._vEnergies;
@@ -582,10 +619,9 @@ namespace OpenBabel
   //member functions for OBRingData class
   //
 
-  OBRingData::OBRingData()
+  OBRingData::OBRingData() :
+    OBGenericData("RingData", OBGenericDataType::RingData)
   {
-    _type = OBGenericDataType::RingData;
-    _attr = "RingData";
     _vr.clear();
   }
 
@@ -693,10 +729,9 @@ namespace OpenBabel
   /*!
   **\brief OBAngle copy constructor
   */
-  OBAngle::OBAngle(const OBAngle &src)
-    :	_vertex(src._vertex), _termini(src._termini), _radians(src._radians)
-  {
-  }
+  OBAngle::OBAngle(const OBAngle &src):
+    _vertex(src._vertex), _termini(src._termini), _radians(src._radians)
+  {  }
 
   /*!
   **\brief OBAngle assignment operator
@@ -799,21 +834,15 @@ namespace OpenBabel
   **\brief OBAngleData constructor
   */
   OBAngleData::OBAngleData()
-    :	OBGenericData()
-  {
-    _type = OBGenericDataType::AngleData;
-    _attr = "AngleData";
-  }
+    :	OBGenericData("AngleData", OBGenericDataType::AngleData)
+  {  }
 
   /*!
   **\brief OBAngleData copy constructor
   */
   OBAngleData::OBAngleData(const OBAngleData &src)
     :	OBGenericData(src), _angles(src._angles)
-  {
-    _type = OBGenericDataType::AngleData;
-    _attr = "AngleData";
-  }
+  {  }
 
   /*!
   **\brief OBAngleData assignment operator
@@ -823,6 +852,7 @@ namespace OpenBabel
     if (this == &src)
       return(*this);
 
+    _source = src._source;
     _angles = src._angles;
 
     return(*this);
@@ -1066,20 +1096,15 @@ namespace OpenBabel
 
   //\!brief OBTorsionData ctor
   OBTorsionData::OBTorsionData()
-  {
-    _type = OBGenericDataType::TorsionData;
-    _attr = "TorsionData";
-  }
+    : OBGenericData("TorsionData", OBGenericDataType::TorsionData)
+  {  }
 
   //
   //member functions for OBTorsionData class - stores OBTorsion set
   //
   OBTorsionData::OBTorsionData(const OBTorsionData &src)
     :	OBGenericData(src), _torsions(src._torsions)
-  {
-    _type = OBGenericDataType::TorsionData;
-    _attr = "TorsionData";
-  }
+  {  }
 
   OBTorsionData& OBTorsionData::operator =(const OBTorsionData &src)
   {
@@ -1088,8 +1113,7 @@ namespace OpenBabel
 
     OBGenericData::operator =(src);
 
-    _type     = OBGenericDataType::TorsionData;
-    _attr     = "TorsionData";
+    _source = src._source;
     _torsions = src._torsions;
 
     return(*this);
@@ -1166,6 +1190,7 @@ namespace OpenBabel
     }
     return (true);
   }
+
   int OBChiralData::AddAtomRef(unsigned int atomref, atomreftype t)
   {
     switch(t){
@@ -1228,24 +1253,24 @@ namespace OpenBabel
   }
 
   OBChiralData::OBChiralData()
-  {
-    _type = OBGenericDataType::ChiralData;
-    _attr = "ChiralData";
-  }
+    : OBGenericData("ChiralData", OBGenericDataType::ChiralData)
+  {  }
 
   OBChiralData::OBChiralData(const OBChiralData &src)
-    : OBGenericData()
+    : OBGenericData(src)
   {
     _atom4refs = src._atom4refs;
     _atom4refo = src._atom4refo;
     _atom4refc = src._atom4refc;
-    parity=src.parity;
+    parity     = src.parity;
   }
 
   OBChiralData & OBChiralData::operator=(const OBChiralData &src)
   {
     if(this == &src)
       return(*this);
+
+    _source = src._source;
 
     _atom4refs = src._atom4refs;
     _atom4refo = src._atom4refo;
