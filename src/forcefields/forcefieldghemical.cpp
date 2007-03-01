@@ -1193,6 +1193,8 @@ namespace OpenBabel
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(logbuf);
     }
+    // For now, just return true. Should return false if validation fails.
+    return true;
   }
 
 } // end namespace OpenBabel

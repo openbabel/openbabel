@@ -1,3 +1,4 @@
+
 /**********************************************************************
 forcefield.cpp - Handle OBForceField class.
  
@@ -80,7 +81,7 @@ namespace OpenBabel
       pFF->SetLogFile(&cerr);
       pFF->SetLogLevel(OBFF_LOGLVL_LOW);
       if (!pFF->Setup(mol)) {
-      cerr << "ERROR: could not setup force field." << endl;
+         cerr << "ERROR: could not setup force field." << endl;
       }
       
       pFF->ValidateGradients();
@@ -220,15 +221,6 @@ namespace OpenBabel
     return true;
   }
  
-  bool is14(OBAtom *a, OBAtom *b)
-  {
-    FOR_NBORS_OF_ATOM (nbr, a)
-      FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-      FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-      if (b == &*nbr3)
-        return true;
-  }
-
   int OBForceField::get_nbr (OBAtom* atom, int level) {
     OBAtom *nbr,*nbr2;
     vector<OBEdgeBase*>::iterator i;
@@ -251,6 +243,8 @@ namespace OpenBabel
     }
     if (level == 1) return 0;
   
+    if (!nbr) return 0; // ensure nbr is not used uninitialized
+
     // Find second neighboor
     FOR_NBORS_OF_ATOM(tmp, nbr) {
       if (atom->GetIdx() > tmp->GetIdx()) {
@@ -263,7 +257,9 @@ namespace OpenBabel
       }
     }
     if (level == 2) return 0;
-  
+
+    if (!nbr2) return 0; // ensure nbr2 is not used uninitialized
+
     // Find thirth neighboor
     FOR_NBORS_OF_ATOM(tmp, nbr2) {
       if ((atom->GetIdx() > tmp->GetIdx()) && (nbr->GetIdx() != tmp->GetIdx()))

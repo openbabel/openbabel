@@ -231,25 +231,26 @@ namespace OpenBabel
     bool IsInSameRing(OBAtom* a, OBAtom* b);
  
     int get_nbr (OBAtom* atom, int level);
-    bool is14(OBAtom *a, OBAtom *b);
+    //    bool is14(OBAtom *a, OBAtom *b);
+    // use OBAtom::IsOneFour(b)
       
-    OBMol _mol;
+    OBMol _mol; //!< Molecule to be evaluated or minimized
 
-    // ofstream for logfile
+    //! Output for logfile
     std::ostream* logos;
     char logbuf[200];
-    int loglvl;
+    int loglvl; //!< Log level for output
 
-    // used to hold i for current conformer (needed by UpdateCoordinates)
+    //! Used to hold i for current conformer (needed by UpdateCoordinates)
     int current_conformer;
 
-    // used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     double _econv, _e_n1;
     int _method, _cstep, _nsteps;
     std::vector<vector3> _grad1, _dir1;
 
   public:
-    //! short description of the force field type.
+    // short description of the force field type.
     //virtual std::string Description()=0;
     //! \return A pointer to a forcefield (the default if ID is empty), or NULL if not available
     static OBForceField* FindForceField(const std::string& ID)

@@ -277,7 +277,7 @@ namespace OpenBabel
 
   //
   //  a
-  //   \
+  //   \  
   //    b---d      plane = a-b-c
   //   /
   //  c
