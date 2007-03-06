@@ -36,6 +36,7 @@ int main(int argc,char **argv)
   vector< vector<string> > extensionList; // some formats have multiple codes
   vector< OBFormat *> formatList;
 
+  OBConversion conv;
   Formatpos pos;
   OBFormat* pFormat;
   const char* str=NULL;
@@ -78,8 +79,6 @@ int main(int argc,char **argv)
   string notes, description, name, code;
   ofstream ofs, indexExt, indexName;
 
-  indexExt.open("code-index.html");
-  indexName.open("name-index.html");
   for(unsigned int i = 0; i < formatList.size(); ++i)
     {
       pFormat = formatList[i];
@@ -87,94 +86,65 @@ int main(int argc,char **argv)
       name = description.substr(0,description.find('\n'));
       code = extensionList[i][0] + "-data.html";
 
-      indexName << "<li>" << name
-                << "<a href=\"" << extensionList[i][0] << ".shtml\">" 
-                << name << "</a></li>" << endl;
-
       ofs.open(code.c_str());
 
-      ofs << "<h1>" << name << "<h1>" << endl;
-      ofs << "\n\n" << "<table>" << endl;
-      ofs << "<tr><th>Filename Extensions</th><td>";
+      ofs << "{{Format|" << endl;
+      ofs << "|extensions=";
+
       for (unsigned int j = 0; j < extensionList[i].size(); ++j)
         {
           ofs << extensionList[i][j];
-          indexExt << "<li>" << extensionList[i][j] 
-                   << "<a href=\"" << extensionList[i][0] << ".shtml\">" 
-                   << extensionList[i][j] << " - " 
-                   << name << "</a></li>" << endl;
-
           if (j != extensionList[i].size() - 1)
             ofs << ", ";
         }
-      ofs << "</td></tr>" << endl;
+      ofs << endl;
 
-      ofs << "<tr><th>Chemical MIME Type</th><td>";
+      ofs << "|mime=";
       if (strlen(pFormat->GetMIMEType()) != 0)
-        ofs << pFormat->GetMIMEType() << "</td></tr>" << endl;
+        ofs << pFormat->GetMIMEType() << endl;
       else
-        ofs << "Undefined</td></tr>" << endl;
+        ofs << endl;
 	
-
-      ofs << "<tr><th>Specification URL</th><td>";
+      ofs << "|url=";
       if (strlen(pFormat->SpecificationURL()) != 0)
         {
-          ofs << "<a href=\"" << pFormat->SpecificationURL() << "\">";
-          ofs << pFormat->SpecificationURL() << "</a>";
+          ofs << pFormat->SpecificationURL() << endl;
         }
       else
-        ofs << "Unknown";
-      ofs << "</td></tr>" << endl;
+        ofs << "Unknown" << endl;
 
-      ofs << "<tr><th>Notes</th><td>";
-      notes.clear();
+      ofs << "|import=";
       if (pFormat->Flags() & NOTREADABLE)
-        notes += "Export only";
-      else if (pFormat->Flags() & NOTWRITABLE)
-        notes += "Import only";
-
+        ofs << "No";
+      else
+        ofs << "Yes";
       if (pFormat->Flags() & READONEONLY)
-        {
-          if (notes.size())
-            notes += ", ";
-          notes += "One record per input file";
-        }
-      if (pFormat->Flags() & WRITEONEONLY)
-        {
-          if (notes.size())
-            notes += ", ";
-          notes += "One record per output file";
-        }
+        ofs << ", One record per input file";
       if (pFormat->Flags() & READBINARY)
-        {
-          if (notes.size())
-            notes += ", ";
-          notes += "Input is a binary file";
-        }
+        ofs << ", Input is a binary file";
+      ofs << endl;
+
+      ofs << "|export=";
+      if (pFormat->Flags() & NOTWRITABLE)
+        ofs << "No";
+      else
+        ofs << "Yes";
+      if (pFormat->Flags() & WRITEONEONLY)
+        ofs << ", One record per output file";
       if (pFormat->Flags() & WRITEBINARY)
-        {
-          if (notes.size())
-            notes += ", ";
-          notes += "Output is a binary file";
-        }
+        ofs << ", Output is a binary file";
+      ofs << endl;
 
-
-      if (notes.size() == 0)
-        notes = "None";
-      ofs << notes << "</td></tr>" << endl;
-
-      ofs << "</table>" << endl;
-
-
-      ofs << "<h2>Options</h2>\n<pre>";
+      ofs << "|version=2.1 and later" << endl; // added in 2.1
+      ofs << "|dimensionality=3D" << endl;
+      ofs << "|options =\n<pre>";
       ofs << 	description.substr(description.find('\n'), description.size()); 
-      ofs << "\n</pre>" << endl;
+      ofs << "</pre>" << endl;
+      ofs << "}}" << endl << endl;
 
       ofs.close();
     }
 
-  indexExt.close();
-  indexName.close();
   return(0);
 } // end main
 
