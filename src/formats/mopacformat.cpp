@@ -33,10 +33,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "MOPAC Output format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        "MOPAC Output format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
     };
 
     virtual unsigned int Flags()
@@ -161,15 +161,22 @@ namespace OpenBabel
       OBConversion::RegisterFormat("mopcrt",this, "chemical/x-mopac-input");
       OBConversion::RegisterFormat("mop",this, "chemical/x-mopac-input");
       OBConversion::RegisterFormat("mpc",this, "chemical/x-mopac-input");
+      // Command-line keywords
+      OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);
+      // Command-line keyword file
+      OBConversion::RegisterOptionParam("f", NULL, 1, OBConversion::OUTOPTIONS);
     }
 
     virtual const char* Description() //required
     {
       return
-        "MOPAC Cartesian format\n \
-       Options e.g. -xs\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n";
+        "MOPAC Cartesian format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n"
+        "Write Options e.g. -xk\n"
+        "  k  \"keywords\" Use the specified keywords for input\n"
+        "  f    <file>     Read the file specified for input keywords\n\n";
     };
 
     virtual const char* GetMIMEType() 
@@ -208,6 +215,8 @@ namespace OpenBabel
     ifs.getline(buffer,BUFF_SIZE); // filename
     ifs.getline(buffer,BUFF_SIZE); // title (currently ignored)
 
+    mol.BeginModify();
+
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
         tokenize(vs,buffer);
@@ -227,9 +236,12 @@ namespace OpenBabel
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
-    if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS) &&
+        !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
     mol.SetTitle(title);
+
+    mol.EndModify();
 
     return(true);
   }
@@ -238,7 +250,7 @@ namespace OpenBabel
 
   bool MOPACCARTFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
-    OBMol* pmol = pOb->CastAndClear<OBMol>();
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
       return false;
 
@@ -249,15 +261,34 @@ namespace OpenBabel
     unsigned int i;
     char buffer[BUFF_SIZE];
 
-    ofs << "PUT KEYWORDS HERE" << endl;
-    ofs << endl;
-    ofs << mol.GetTitle() << endl;
+    const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+    const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    string defaultKeywords = "PUT KEYWORDS HERE";
 
-    OBAtom *atom;
-    string str,str1;
-    for(i = 1;i <= mol.NumAtoms(); i++)
+    if(keywords)
       {
-        atom = mol.GetAtom(i);
+        defaultKeywords = keywords;
+      }
+
+    if (keywordFile)
+      {
+        ifstream kfstream(keywordFile);
+        string keyBuffer;
+        if (kfstream)
+          {
+            while (getline(kfstream, keyBuffer))
+              ofs << keyBuffer << endl;
+          }
+      }
+    else
+      ofs << defaultKeywords << endl;
+
+    ofs << mol.GetTitle() << endl;
+    ofs << endl; // comment
+
+    string str,str1;
+    FOR_ATOMS_OF_MOL(atom, mol)
+      {
         snprintf(buffer,BUFF_SIZE,"%-3s%8.5f 1 %8.5f 1 %8.5f 1",
                  etab.GetSymbol(atom->GetAtomicNum()),
                  atom->GetX(),
@@ -268,28 +299,35 @@ namespace OpenBabel
     return(true);
   }
 
-//************************************************************
+  //************************************************************
   class MOPACINTFormat : public OBMoleculeFormat
   {
-    public:
-      //Register this format type ID
-      MOPACINTFormat()
-      {
-        OBConversion::RegisterFormat("mopin", this, "chemical/x-mopac-input");
-      }
+  public:
+    //Register this format type ID
+    MOPACINTFormat()
+    {
+      OBConversion::RegisterFormat("mopin", this, "chemical/x-mopac-input");
+      // Command-line keywords
+      OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);
+      // Command-line keyword file
+      OBConversion::RegisterOptionParam("f", NULL, 1, OBConversion::OUTOPTIONS);
+    }
 
-      virtual const char* Description() //required
-      {
-        return "MOPAC Internal\n";
-      };
+    virtual const char* Description() //required
+    {
+      return "MOPAC Internal\n"
+        "Write Options e.g. -xk\n"
+        "  k  \"keywords\" Use the specified keywords for input\n"
+        "  f    <file>     Read the file specified for input keywords\n\n";
+    };
 
-      virtual const char* GetMIMEType() 
-      { return "chemical/x-mopac-input"; };
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-mopac-input"; };
 
-      ////////////////////////////////////////////////////
-      /// The "API" interface functions
-      virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-      virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
   };
 
   //Make an instance of the format class
@@ -300,7 +338,7 @@ namespace OpenBabel
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
-        return false;
+      return false;
 
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
@@ -321,27 +359,27 @@ namespace OpenBabel
     mol.BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE)) {
-        tokenize(vs,buffer);
-        if (vs.size() == 0)
-            break;
-        else if (vs.size() < 10)
-            return false;
-        atom = mol.NewAtom();
+      tokenize(vs,buffer);
+      if (vs.size() == 0)
+        break;
+      else if (vs.size() < 10)
+        return false;
+      atom = mol.NewAtom();
         
-        OBInternalCoord *coord = new OBInternalCoord;
-        //vic[atom->GetIdx()]->_dst = atof(vs[1].c_str());
-        //vic[atom->GetIdx()]->_ang = atof(vs[3].c_str());
-        //vic[atom->GetIdx()]->_tor = atof(vs[5].c_str());
-        coord->_dst = atof(vs[1].c_str());
-        coord->_ang = atof(vs[3].c_str());
-        coord->_tor = atof(vs[5].c_str());
-	vic.push_back(coord);
+      OBInternalCoord *coord = new OBInternalCoord;
+      //vic[atom->GetIdx()]->_dst = atof(vs[1].c_str());
+      //vic[atom->GetIdx()]->_ang = atof(vs[3].c_str());
+      //vic[atom->GetIdx()]->_tor = atof(vs[5].c_str());
+      coord->_dst = atof(vs[1].c_str());
+      coord->_ang = atof(vs[3].c_str());
+      coord->_tor = atof(vs[5].c_str());
+      vic.push_back(coord);
 
-	indices.push_back(atoi(vs[7].c_str()));
-        indices.push_back(atoi(vs[8].c_str()));
-        indices.push_back(atoi(vs[9].c_str()));
+      indices.push_back(atoi(vs[7].c_str()));
+      indices.push_back(atoi(vs[8].c_str()));
+      indices.push_back(atoi(vs[9].c_str()));
  
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+      atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
     }
     
     int idx = 0;
@@ -364,17 +402,17 @@ namespace OpenBabel
       idx += 3;
     }
 
-   /* 
-    vector<OBInternalCoord*>::iterator j;
-    for (j = vic.begin(); j != vic.end(); j++) {
-      cout << (*j)->_dst << " " << (*j)->_ang << " " << (*j)->_tor << " ";
-      if ((*j)->_a)
-        cout << (*j)->_a->GetIdx() << " "; 
-      if ((*j)->_b)
-	cout << (*j)->_b->GetIdx() << " ";
-      if ((*j)->_c)
-	cout << (*j)->_c->GetIdx() << endl;
-    }
+    /* 
+       vector<OBInternalCoord*>::iterator j;
+       for (j = vic.begin(); j != vic.end(); j++) {
+       cout << (*j)->_dst << " " << (*j)->_ang << " " << (*j)->_tor << " ";
+       if ((*j)->_a)
+       cout << (*j)->_a->GetIdx() << " "; 
+       if ((*j)->_b)
+       cout << (*j)->_b->GetIdx() << " ";
+       if ((*j)->_c)
+       cout << (*j)->_c->GetIdx() << endl;
+       }
     */
     InternalToCartesian(vic,mol);
 
@@ -392,7 +430,7 @@ namespace OpenBabel
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
@@ -404,43 +442,64 @@ namespace OpenBabel
     vic.push_back((OBInternalCoord*)NULL);
     
     for (unsigned int i = 0; i<mol.NumAtoms(); i++)
-        vic.push_back(new OBInternalCoord);
+      vic.push_back(new OBInternalCoord);
 
     CartesianToInternal(vic,mol);
 
-    ofs << "PUT KEYWORDS HERE" << endl;
-    ofs << endl;
+    const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+    const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    string defaultKeywords = "PUT KEYWORDS HERE";
+
+    if(keywords)
+      {
+        defaultKeywords = keywords;
+      }
+
+    if (keywordFile)
+      {
+        ifstream kfstream(keywordFile);
+        string keyBuffer;
+        if (kfstream)
+          {
+            while (getline(kfstream, keyBuffer))
+              ofs << keyBuffer << endl;
+          }
+      }
+    else
+      ofs << defaultKeywords << endl;
+
     ofs << mol.GetTitle() << endl;
+    ofs << endl; // comment
 
     double r,w,t;
     FOR_ATOMS_OF_MOL (atom, mol) {
-        a = vic[atom->GetIdx()]->_a;
-        b = vic[atom->GetIdx()]->_b;
-        c = vic[atom->GetIdx()]->_c;
-        r = vic[atom->GetIdx()]->_dst;
-        w = vic[atom->GetIdx()]->_ang;
-        t = vic[atom->GetIdx()]->_tor;
+      a = vic[atom->GetIdx()]->_a;
+      b = vic[atom->GetIdx()]->_b;
+      c = vic[atom->GetIdx()]->_c;
+      r = vic[atom->GetIdx()]->_dst;
+      w = vic[atom->GetIdx()]->_ang;
+      t = vic[atom->GetIdx()]->_tor;
 	
-        strncpy(type, etab.GetSymbol(atom->GetAtomicNum()), 16);
-        type[15] = '\0';
+      strncpy(type, etab.GetSymbol(atom->GetAtomicNum()), 16);
+      type[15] = '\0';
 
-	if (t < 0)
-	    t += 360;
-	snprintf(buffer, BUFF_SIZE, "%-2s %10.6f  1  %10.6f  1  %10.6f  1  ", type, r, w, t);
-        ofs << buffer;
-	if (atom->GetIdx() == 1) 
-	    snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", 0, 0, 0);
-	if (atom->GetIdx() == 2) 
-	    snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", a->GetIdx(), 0, 0);
-	if (atom->GetIdx() == 3) 
-	    snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", a->GetIdx(), b->GetIdx(), 0);
-	if (atom->GetIdx() >= 4) 
-	    snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
-	ofs << buffer;
+      if (t < 0)
+        t += 360;
+      snprintf(buffer, BUFF_SIZE, "%-2s %10.6f  1  %10.6f  1  %10.6f  1  ", type, r, w, t);
+      ofs << buffer;
+      if (atom->GetIdx() == 1) 
+        snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", 0, 0, 0);
+      if (atom->GetIdx() == 2) 
+        snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", a->GetIdx(), 0, 0);
+      if (atom->GetIdx() == 3) 
+        snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", a->GetIdx(), b->GetIdx(), 0);
+      if (atom->GetIdx() >= 4) 
+        snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+      ofs << buffer;
     }
 
     return(true);
-}
+  }
 
 
 } //namespace OpenBabel
