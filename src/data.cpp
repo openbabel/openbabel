@@ -645,6 +645,9 @@ namespace OpenBabel
     for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
       {
         r1 = a1->GetResidue();
+        if (r1 == NULL) // atoms may not have residues
+          continue;
+
         if (skipres && r1->GetNum() == skipres)
           continue;
 
@@ -657,6 +660,9 @@ namespace OpenBabel
         for (j=i,a2 = mol.NextAtom(j);a2;a2 = mol.NextAtom(j))
           {
             r2 = a2->GetResidue();
+            if (r2 == NULL) // atoms may not have residues
+              continue;
+
             if (r1->GetNum() != r2->GetNum())
               break;
             if (r1->GetName() != r2->GetName())
@@ -710,6 +716,7 @@ namespace OpenBabel
           }
 	
         r1 = a1->GetResidue();
+        if (r1 == NULL) continue; // atoms may not have residues
         if (skipres && r1->GetNum() == skipres)
           continue;
 

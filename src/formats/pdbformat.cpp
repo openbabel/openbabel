@@ -38,10 +38,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Protein Data Bank format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        "Protein Data Bank format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -95,6 +95,7 @@ namespace OpenBabel
     OBBitVec bs;
 
     mol.SetTitle(title);
+    mol.SetChainsPerceived(); // It's a PDB file, we read all chain/res info.
 
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"END",3))
@@ -112,6 +113,11 @@ namespace OpenBabel
           ParseConectRecord(buffer,mol);
       }
 
+    if (!mol.NumAtoms()) { // skip the rest of this processing
+      mol.EndModify();
+      return(false);
+    }
+
     resdat.AssignBonds(mol,bs);
     /*assign hetatm bonds based on distance*/
 
@@ -128,11 +134,6 @@ namespace OpenBabel
 
     mol.EndModify();
 
-    //    mol.SetAtomTypesPerceived();
-    //    atomtyper.AssignImplicitValence(mol);
-
-    if (!mol.NumAtoms())
-      return(false);
     return(true);
   }
 
@@ -190,8 +191,8 @@ namespace OpenBabel
           if (!isdigit(type[1])) type = atmid.substr(1,1);
           else type = atmid.substr(2,1); 
         } else if (sbuf[6] == ' ' &&
-                 strncasecmp(type.c_str(), "Zn", 2) != 0 &&
-                 strncasecmp(type.c_str(), "Fe", 2) != 0)
+                   strncasecmp(type.c_str(), "Zn", 2) != 0 &&
+                   strncasecmp(type.c_str(), "Fe", 2) != 0)
           type = atmid.substr(0,1);     // one-character element
         
 
@@ -271,9 +272,9 @@ namespace OpenBabel
                       if (type[0] == 'O' && type[1] == 'H')
                         type = type.substr(0,1); // no "Oh" element (e.g. 1MBN)
                       else if(isupper(type[1]))
-                      {
-                        type[1] = tolower(type[1]);
-                      }
+                        {
+                          type[1] = tolower(type[1]);
+                        }
                     }
           }
         
@@ -458,13 +459,18 @@ namespace OpenBabel
       }
 
     vector<OBAtom*>::iterator i;
-    for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
-      if (static_cast<long int>(a1->GetResidue()->
+    for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) {
+      // atoms may not have residue information, but if they do,
+      // check serial numbers
+      if (a1->GetResidue() != NULL && 
+          static_cast<long int>(a1->GetResidue()->
                                 GetSerialNum(a1)) == startAtomSerialNumber)
         {
           firstAtom = a1;
           break;
         }
+    }
+
     if (firstAtom == NULL)
       {
         errorMsg << "WARNING: Problems reading a PDB file:\n"
@@ -511,13 +517,16 @@ namespace OpenBabel
       {
         // Find atom that is connected to, write an error message
         OBAtom *connectedAtom = 0L;
-        for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
-          if (static_cast<long int>(a1->GetResidue()->
+        for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) {
+          // again, atoms may not have residues, but if they do, check serials
+          if (a1->GetResidue() != NULL &&
+              static_cast<long int>(a1->GetResidue()->
                                     GetSerialNum(a1)) == boundedAtomsSerialNumbers[k])
             {
               connectedAtom = a1;
               break;
             }
+        }
         if (connectedAtom == 0L)
           {
             errorMsg << "WARNING: Problems reading a PDB file:\n"

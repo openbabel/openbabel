@@ -1,3 +1,26 @@
+2007-03-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/obdoc.cpp: Update for wiki format to facilitate updates
+	after 2.1 release. 
+
+	* src/formats/pdbformat.cpp: Mark that chain/residue
+	perception is not needed. Make sure that code anticipates atoms
+	with no residue.
+
+	* src/data.cpp (OBResidueData): Anticipate that some atoms will
+	have no residue.
+
+	* src/formats/mopacformat.cpp: Add keyword support, fix problem
+	with writing molecules (i.e., molecule was cleared before
+	cartesians written).
+	
+	* src/formats/smilesformat.cpp, src/formats/mol2format.cpp, 
+	src/formats/xml/cmlformat.cpp, src/formats/carformat.cpp,
+	src/formats/cifformat.cpp, src/formats/fastaformat.cpp,
+	src/formats/gaussformat.cpp, src/formats/gamessformat.cpp,
+	src/formats/alchemyformat.cpp, src/formats/cansmilesformat.cpp:
+	Clean up descriptions and indentation.
+
 2007-02-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp, src/forcefield.h: Cut out some compiler
