@@ -32,8 +32,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Alchemy format\n \
-            No comments yet\n";
+        "Alchemy format\n"
+        "    No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

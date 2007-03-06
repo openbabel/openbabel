@@ -23,19 +23,20 @@ namespace OpenBabel
   public:
     //Register this format type ID in the constructor
     FASTAFormat() {
-      OBConversion::RegisterFormat("fasta", this);
+      OBConversion::RegisterFormat("fasta", this, "chemical/x-fasta");
+      OBConversion::RegisterFormat("fa", this);
+      OBConversion::RegisterFormat("fsa", this);
       OBConversion::RegisterOptionParam("n", this);
     }
 
     virtual const char* Description() //required
     {
       return
-        "FASTA format\n \
-	A file format used to exchange information between\n \
-	genetic sequence databases\n \
-	    Write Options e.g. -xn \n \
-	    n  Omit title and comments\n \
-";
+        "FASTA format\n"
+        "A file format used to exchange information between\n"
+        "genetic sequence databases\n"
+        "Write Options e.g. -xn \n"
+        "  n  Omit title and comments\n";
     };
 
     virtual const char* SpecificationURL() {

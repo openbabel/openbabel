@@ -31,13 +31,15 @@ namespace OpenBabel
     MOL2Format()
     {
       OBConversion::RegisterFormat("mol2",this, "chemical/x-mol2");
+      OBConversion::RegisterFormat("ml2",this);
+      OBConversion::RegisterFormat("sy2",this);
     }
 
     virtual const char* Description() //required
     {
       return
-        "Sybyl Mol2 format\n \
-            No comments yet\n";
+        "Sybyl Mol2 format\n"
+        "  No comments yet\n";
     };
 
     virtual const char* SpecificationURL()
@@ -365,8 +367,8 @@ namespace OpenBabel
         //
 
         snprintf(label,BUFF_SIZE, "%s%d",
-                etab.GetSymbol(atom->GetAtomicNum()),
-                ++labelcount[atom->GetAtomicNum()]);
+                 etab.GetSymbol(atom->GetAtomicNum()),
+                 ++labelcount[atom->GetAtomicNum()]);
         strcpy(rlabel,"<1>");
         strcpy(rnum,"1");
 
@@ -387,11 +389,11 @@ namespace OpenBabel
           }
 
         snprintf(buffer,BUFF_SIZE,"%7d%1s%-6s%12.4f%10.4f%10.4f%1s%-5s%4s%1s %-8s%10.4f",
-                atom->GetIdx(),"",label,
-                atom->GetX(),atom->GetY(),atom->GetZ(),
-                "",str1.c_str(),
-                rnum,"",rlabel,
-                atom->GetPartialCharge());
+                 atom->GetIdx(),"",label,
+                 atom->GetX(),atom->GetY(),atom->GetZ(),
+                 "",str1.c_str(),
+                 rnum,"",rlabel,
+                 atom->GetPartialCharge());
         ofs << buffer << endl;
       }
 
@@ -411,8 +413,8 @@ namespace OpenBabel
         else
           snprintf(label,BUFF_SIZE,"%d",bond->GetBO());
         snprintf(buffer, BUFF_SIZE,"%6d%6d%6d%3s%2s",
-                bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),
-                "",label);
+                 bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),
+                 "",label);
         ofs << buffer << endl;
       }
     ofs << endl;

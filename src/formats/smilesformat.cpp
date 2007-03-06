@@ -51,12 +51,12 @@ namespace OpenBabel
     {
       return
         "SMILES format\n"
-        "   A linear text format which can describe the connectivity\n"
-        "   and chirality of a molecule\n"
-        "    Write Options e.g. -xt\n"
-        "   -n no molecule name\n"
-        "   -t molecule name only\n"
-	"   -r radicals lower case eg ethyl is Cc\n\n";
+        "A linear text format which can describe the connectivity\n"
+        "and chirality of a molecule\n"
+        "Write Options e.g. -xt\n"
+        "  n no molecule name\n"
+        "  t molecule name only\n"
+        "  r radicals lower case eg ethyl is Cc\n\n";
     };
 
     virtual unsigned int Flags() { return DEFAULTFORMAT;};
@@ -394,10 +394,10 @@ namespace OpenBabel
       {
         OBBond* bond = mol.GetBond(*itr);
         if(!bond->GetBeginAtom()->IsAromatic() && !bond->GetEndAtom()->IsAromatic())
-        {
-          bond->SetBO(2);
-          mol.UnsetImplicitValencePerceived();
-        }
+          {
+            bond->SetBO(2);
+            mol.UnsetImplicitValencePerceived();
+          }
       }
     
     //NE add the OBChiralData stored inside the _mapcd to the atoms now after end
@@ -453,7 +453,7 @@ namespace OpenBabel
 
       // Not a double bond?
       if (!dbl_bond->IsDouble() || dbl_bond->IsAromatic())
-	continue;
+        continue;
 
       // Find the single bonds around the atoms connected by the double bond.
       // While we're at it, note whether the pair of atoms on either end are
@@ -467,15 +467,15 @@ namespace OpenBabel
       int v1 = a1->GetValence();
       int v2 = a2->GetValence();
       if (v1 < 2 || v1 > 3 | v2 < 2 | v2 > 3) {
-	continue;
+        continue;
       }
 
       // Get the bonds of neighbors of atom1 and atom2
       OBBond *a1_b1 = NULL, *a1_b2 = NULL, *a2_b1 = NULL, *a2_b2 = NULL;
 
       FOR_BONDS_OF_ATOM(bi, a1) {
-	OBBond *b = &(*bi);
-	if ((b) == (dbl_bond)) continue;  // skip the double bond we're working on
+        OBBond *b = &(*bi);
+        if ((b) == (dbl_bond)) continue;  // skip the double bond we're working on
         if (NULL == a1_b1)
           a1_b1 = b;    // remember 1st bond of Atom1
         else
@@ -483,8 +483,8 @@ namespace OpenBabel
       }
 
       FOR_BONDS_OF_ATOM(bi, a2) {
-	OBBond *b = &(*bi);
-	if (b == dbl_bond) continue;
+        OBBond *b = &(*bi);
+        if (b == dbl_bond) continue;
         if (NULL == a2_b1)
           a2_b1 = b;    // remember 1st bond of Atom2
         else
@@ -498,7 +498,7 @@ namespace OpenBabel
       if (a2_b1 && (a2_b1->IsUp() || a2_b1->IsDown())) count++;
       if (a2_b2 && (a2_b2->IsUp() || a2_b2->IsDown())) count++;
       if (count < 2) {
-	continue;
+        continue;
       }
 
       // OK, now do what we're here for.  We have two, three or four
@@ -1473,35 +1473,35 @@ namespace OpenBabel
             //But convert anyway
             ++_ptr;
             if(symb=="si")
-            {
-              element = 14;
-              break;
-            }
+              {
+                element = 14;
+                break;
+              }
             else if(symb=="ge")
-            {
-              element = 32;
-              break;
-            }
+              {
+                element = 32;
+                break;
+              }
             else if(symb=="sb")
-            {
-              element = 51;
-              break;
-            }
+              {
+                element = 51;
+                break;
+              }
             else if(symb=="bi")
-            {
-              element = 83;
-              break;
-            }
+              {
+                element = 83;
+                break;
+              }
             else if(symb=="te")
-            {
-              element = 52;
-              break;
-            }
+              {
+                element = 52;
+                break;
+              }
             else if(symb=="sn")
-            {
-              element = 50;
-              break;
-            }
+              {
+                element = 50;
+                break;
+              }
             else
               return(false);
           }
@@ -1865,10 +1865,10 @@ namespace OpenBabel
       return false;
     else
       FOR_BONDS_OF_ATOM(bond, atom)
-      {
-        if (bond->IsUp() || bond->IsDown())
-          return true;
-      }
+        {
+          if (bond->IsUp() || bond->IsDown())
+            return true;
+        }
     return false;
   }
 
@@ -1886,23 +1886,23 @@ namespace OpenBabel
           && !_uatoms[atom->GetIdx()])
         if (!atom->IsChiral() || !mol.HasNonZeroCoords())
           // don't use chiral root atoms unless this is from a SMILES
-        {
-          //clear out closures in case structure is dot disconnected
-          _vclose.clear();
-          _atmorder.clear();
-          _storder.clear();
-          _vopen.clear();
-          //dot disconnected structure
-          if (strlen(buffer) > 0)
-            strcat(buffer,".");
-          root = new OBSmiNode (atom);
-          BuildTree(root);
-          FindClosureBonds(mol);
-          if (mol.Has2D())
-            AssignCisTrans(root);
-          ToSmilesString(root,buffer);
-          delete root;
-        }
+          {
+            //clear out closures in case structure is dot disconnected
+            _vclose.clear();
+            _atmorder.clear();
+            _storder.clear();
+            _vopen.clear();
+            //dot disconnected structure
+            if (strlen(buffer) > 0)
+              strcat(buffer,".");
+            root = new OBSmiNode (atom);
+            BuildTree(root);
+            FindClosureBonds(mol);
+            if (mol.Has2D())
+              AssignCisTrans(root);
+            ToSmilesString(root,buffer);
+            delete root;
+          }
     
     //If no starting node found e.g. [H][H] CM 21Mar05
     if(root==NULL)
@@ -1959,25 +1959,25 @@ namespace OpenBabel
         vector<pair<int,OBBond*> >::iterator bpi;
         for (bpi = vc.begin();bpi != vc.end();bpi++)
           {
-	    if (bpi->second) {
-	      char bs[2];
-	      bs[0] = GetCisTransBondSymbol(bpi->second, node);
-	      bs[1] = '\0';
-	      if (bs[0]) {
-		strcat(buffer, bs);	// append "/" or "\"
-	      }
-	      else {
+            if (bpi->second) {
+              char bs[2];
+              bs[0] = GetCisTransBondSymbol(bpi->second, node);
+              bs[1] = '\0';
+              if (bs[0]) {
+                strcat(buffer, bs);	// append "/" or "\"
+              }
+              else {
 #ifndef KEKULE
-		if (bpi->second->GetBO() == 2 && !bpi->second->IsAromatic())
-		  strcat(buffer,"=");
+                if (bpi->second->GetBO() == 2 && !bpi->second->IsAromatic())
+                  strcat(buffer,"=");
 #else
-		if (bpi->second->GetBO() == 2)
-		  strcat(buffer,"=");
+                if (bpi->second->GetBO() == 2)
+                  strcat(buffer,"=");
 #endif
-		if (bpi->second->GetBO() == 3)
-		  strcat(buffer,"#");
-	      }
-	    }
+                if (bpi->second->GetBO() == 3)
+                  strcat(buffer,"#");
+              }
+            }
 
             if (bpi->first > 9)
               strcat(buffer,"%");
@@ -1999,11 +1999,11 @@ namespace OpenBabel
           strcat(buffer,"(");
         }
         if (bond->IsUp() || bond->IsDown()) {
-	  char cc[2];
-	  cc[0] = GetCisTransBondSymbol(bond, node);
-	  cc[1] = '\0';
-	  strcat(buffer, cc);
-	}
+          char cc[2];
+          cc[0] = GetCisTransBondSymbol(bond, node);
+          cc[1] = '\0';
+          strcat(buffer, cc);
+        }
 #ifndef KEKULE
         if (bond->GetBO() == 2 && !bond->IsAromatic())
           strcat(buffer,"=");
@@ -2210,43 +2210,43 @@ namespace OpenBabel
                 //                obAssert(a);
                 //                obAssert(d);
 
-		// Calculate the torsion angle between the "substituent" atoms.  This is an
-		// odd use of the CalcTorsionAngle() function.  It measures how much you'd
-		// have to twist around the double bond to bring both substituents to the
-		// same side.  Cis bonds are already on the same side, so they'l have a
-		// torsion angle of zero.  Trans bonds are opposite, so you'd have to twist
-		// around the double bond by 180 degrees.  So small (near zero) means cis,
-		// and large (near 180) means trans.  This is cool because it also works in
-		// any 3D orientation.
-		double angle = fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(),
-						     c->GetVector(),d->GetVector()));
+                // Calculate the torsion angle between the "substituent" atoms.  This is an
+                // odd use of the CalcTorsionAngle() function.  It measures how much you'd
+                // have to twist around the double bond to bring both substituents to the
+                // same side.  Cis bonds are already on the same side, so they'l have a
+                // torsion angle of zero.  Trans bonds are opposite, so you'd have to twist
+                // around the double bond by 180 degrees.  So small (near zero) means cis,
+                // and large (near 180) means trans.  This is cool because it also works in
+                // any 3D orientation.
+                double angle = fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(),
+                                                     c->GetVector(),d->GetVector()));
 
                 if (((OBBond*)*j)->IsUp() || ((OBBond*)*j)->IsDown()) //stereo already assigned
                   {
                     if (angle > 10.0) {
-		      // 180 degrees == trans configuration
+                      // 180 degrees == trans configuration
                       if (((OBBond*)*j)->IsUp())
                         ((OBBond*)*k)->SetDown();	// set bonds "opposite sides" (up/down)
                       else
                         ((OBBond*)*k)->SetUp();		// set bonds "same side" (both up)
-		    }
+                    }
                     else {
-		      // small angle == cis configuration
+                      // small angle == cis configuration
                       if (((OBBond*)*j)->IsUp())
                         ((OBBond*)*k)->SetUp();
                       else
                         ((OBBond*)*k)->SetDown();
-		    }
+                    }
                   }
                 else //assign stereo to both ends
                   {
                     ((OBBond*)*j)->SetUp();
-		    // See comments above re: angle between substituents
+                    // See comments above re: angle between substituents
                     if (angle > 10.0) {
                       ((OBBond*)*k)->SetDown();	// trans configuration, set bonds "opposite sides" (up/down)
-		    } else {
+                    } else {
                       ((OBBond*)*k)->SetUp();	// cis configuration, set bonds "same side" (both up)
-		    }
+                    }
                   }
               }
           }
@@ -2276,15 +2276,15 @@ namespace OpenBabel
     OBAtom *atom = node->GetAtom();
     if (atom->HasDoubleBond()) {	// double-bonded atom is first in the SMILES?
       if (bond->IsUp())
-	return '/';
+        return '/';
       else
-	return '\\';
+        return '\\';
     }
     else {				// double-bonded atom is second in the SMILES
       if (bond->IsUp())
-	return '\\';
+        return '\\';
       else
-	return '/';
+        return '/';
     }
   }
 
@@ -2535,33 +2535,33 @@ namespace OpenBabel
         OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
         
         if(!cd)
-        {   //if no Chiral Data Set, need to make one!
+          {   //if no Chiral Data Set, need to make one!
             cd=new OBChiralData;
             atom->SetData(cd);
-        }
+          }
 
         //get connected atoms in order
         //   OBAtom *nbr;
         vector<int>::iterator j;
         vector<unsigned int> vnbor,vsmiles;
         FOR_NBORS_OF_ATOM(nbr,atom)
-        {
+          {
             vnbor.push_back(nbr->GetIdx());
-        }
+          }
     
         for (j = _storder.begin();j != _storder.end();j++)
           {
             for(unsigned int x=0;x<vnbor.size();x++)
-            {
-              // this cast is not ideal but what else?
-              if(static_cast<unsigned>(*j)==vnbor[x])
-                vsmiles.push_back(vnbor[x]);
-            }
+              {
+                // this cast is not ideal but what else?
+                if(static_cast<unsigned>(*j)==vnbor[x])
+                  vsmiles.push_back(vnbor[x]);
+              }
           }
         if(vsmiles.size()==3)
-        {
+          {
             vsmiles.insert(++(vsmiles.begin()),atom->GetIdx());
-        }
+          }
         
         cd->SetAtom4Refs(vsmiles,output);   // This saves the output atom4refs calculated above
         CorrectChirality(*mol,atom);
@@ -2711,7 +2711,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL(){return
-                                             "";}; //optional
+        "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

@@ -34,10 +34,10 @@ public:
   virtual const char* Description() //required
   {
     return
-      "Accelrys/MSI Biosym/Insight II CAR format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+      "Accelrys/MSI Biosym/Insight II CAR format\n"
+      "Read Options e.g. -as\n"
+      "  s  Output single bonds only\n"
+      "  b  Disable bonding entirely\n\n";
   };
 
   virtual const char* SpecificationURL()

@@ -27,6 +27,8 @@ namespace OpenBabel
     GaussianOutputFormat()
     {
       OBConversion::RegisterFormat("gal",this, "chemical/x-gaussian-log");
+      OBConversion::RegisterFormat("g92",this);
+      OBConversion::RegisterFormat("g94",this);
       OBConversion::RegisterFormat("g98",this);
       OBConversion::RegisterFormat("g03",this);
     }
@@ -34,10 +36,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Gaussian98/03 Output\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        "Gaussian98/03 Output\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -78,10 +80,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Gaussian 98/03 Cartesian Input\n \
-       Write Options e.g. -xk\n\
-        k  \"keywords\" Use the specified keywords for input\n\
-        f    <file>     Read the file specified for input keywords\n\n";
+        "Gaussian 98/03 Cartesian Input\n"
+        "Write Options e.g. -xk\n"
+        "  k  \"keywords\" Use the specified keywords for input\n"
+        "  f    <file>     Read the file specified for input keywords\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -125,57 +127,57 @@ namespace OpenBabel
     string defaultKeywords = "#Put Keywords Here, check Charge and Multiplicity.";
 
     if(keywords)
-    {
-      defaultKeywords = keywords;
-    }
+      {
+        defaultKeywords = keywords;
+      }
     
     if (keywordsEnable)
-    {
-      string model;
-      string basis;
-      string method;
-
-      OBPairData *pd = (OBPairData *) pmol->GetData("model");
-      if(pd)
-        model = pd->GetValue();
-
-      pd = (OBPairData *) pmol->GetData("basis");
-      if(pd)
-        basis = pd->GetValue();
-
-      pd = (OBPairData *) pmol->GetData("method");
-      if(pd)
-        method = pd->GetValue();
-
-      if(method == "optimize")
       {
-        method = "opt";
+        string model;
+        string basis;
+        string method;
+
+        OBPairData *pd = (OBPairData *) pmol->GetData("model");
+        if(pd)
+          model = pd->GetValue();
+
+        pd = (OBPairData *) pmol->GetData("basis");
+        if(pd)
+          basis = pd->GetValue();
+
+        pd = (OBPairData *) pmol->GetData("method");
+        if(pd)
+          method = pd->GetValue();
+
+        if(method == "optimize")
+          {
+            method = "opt";
+          }
+
+        if(model != "" && basis != "" && method != "")
+          {
+            ofs << model << "/" << basis << "," << method << endl;
+          }
+        else
+          {
+            ofs << "#Unable to translate keywords!" << endl;
+            ofs << defaultKeywords << endl;
+          }
       }
-
-      if(model != "" && basis != "" && method != "")
+    else if (keywordFile)
       {
-        ofs << model << "/" << basis << "," << method << endl;
+        ifstream kfstream(keywordFile);
+        string keyBuffer;
+        if (kfstream)
+          {
+            while (getline(kfstream, keyBuffer))
+              ofs << keyBuffer << endl;
+          }
       }
-      else
+    else 
       {
-        ofs << "#Unable to translate keywords!" << endl;
         ofs << defaultKeywords << endl;
       }
-    }
-    else if (keywordFile)
-    {
-      ifstream kfstream(keywordFile);
-      string keyBuffer;
-      if (kfstream)
-      {
-        while (getline(kfstream, keyBuffer))
-          ofs << keyBuffer << endl;
-      }
-    }
-    else 
-    {
-      ofs << defaultKeywords << endl;
-    }
     ofs << endl; // blank line after keywords
     ofs << " " << mol.GetTitle() << endl << endl;
 
@@ -185,13 +187,13 @@ namespace OpenBabel
       {
         if (atom->GetIsotope() == 0)
           snprintf(buffer, BUFF_SIZE, "%-3s      %10.5f      %10.5f      %10.5f ",
-                  etab.GetSymbol(atom->GetAtomicNum()),
-                  atom->GetX(), atom->GetY(), atom->GetZ());
+                   etab.GetSymbol(atom->GetAtomicNum()),
+                   atom->GetX(), atom->GetY(), atom->GetZ());
         else
           snprintf(buffer, BUFF_SIZE, "%-3s(Iso=%d) %10.5f      %10.5f      %10.5f ",
-                  etab.GetSymbol(atom->GetAtomicNum()),
-                  atom->GetIsotope(),
-                  atom->GetX(), atom->GetY(), atom->GetZ());
+                   etab.GetSymbol(atom->GetAtomicNum()),
+                   atom->GetIsotope(),
+                   atom->GetX(), atom->GetY(), atom->GetZ());
 	
         ofs << buffer << endl;
       }

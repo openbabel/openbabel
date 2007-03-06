@@ -57,24 +57,24 @@ namespace OpenBabel
 
     virtual const char* Description()
     {
-      return " \
-Chemical Markup Language\n \
-XML format. This implementation uses libxml2.\n \
-Write options for CML: -x[flags] (e.g. -x1ac)\n \
-1  output CML1 (rather than CML2)\n \
-a  output array format for atoms and bonds\n \
-h  use hydrogenCount for all hydrogens\n \
-m  output metadata\n \
-x  omit XML and namespace declarations\n \
-c  continuous output: no formatting\n \
-p  output properties\n \
-N<prefix> add namespace prefix to elements\n\n \
-Input options, e.g. -a2\n \
-2  input 2D rather than 3D coordinates if both provided\n\n";
+      return
+        "Chemical Markup Language\n"
+        "XML format. This implementation uses libxml2.\n"
+        "Write options for CML: -x[flags] (e.g. -x1ac)\n"
+        "  1  output CML1 (rather than CML2)\n"
+        "  a  output array format for atoms and bonds\n"
+        "  h  use hydrogenCount for all hydrogens\n"
+        "  m  output metadata\n"
+        "  x  omit XML and namespace declarations\n"
+        "  c  continuous output: no formatting\n"
+        "  p  output properties\n"
+        "  N<prefix> add namespace prefix to elements\n\n"
+        "Input options, e.g. -a2\n"
+        "  2  input 2D rather than 3D coordinates if both provided\n\n";
     };
 
     virtual const char* SpecificationURL()
-    {return "http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage";};
+    {return "http://www.xml-cml.org/";}
 
     virtual const char* GetMIMEType() 
     { return "chemical/x-cml"; };
@@ -287,14 +287,14 @@ Input options, e.g. -a2\n \
         if(pattr && !strcmp(pattr,"Thermo_OldNasa"))
           ReadNasaThermo();
         else
-        {
-          pattr  = (const char*)xmlTextReaderGetAttribute(reader(), BAD_CAST "title");
-          if(pattr)
-            titleonproperty = pattr;
-          else
-            titleonproperty.clear();
-          PropertyScalarsNeeded = 1;
-        }
+          {
+            pattr  = (const char*)xmlTextReaderGetAttribute(reader(), BAD_CAST "title");
+            if(pattr)
+              titleonproperty = pattr;
+            else
+              titleonproperty.clear();
+            PropertyScalarsNeeded = 1;
+          }
       }
 
     // CML1 elements
@@ -795,10 +795,10 @@ Input options, e.g. -a2\n \
             const xmlChar* pvalue = xmlTextReaderConstValue(reader());
             string value;
             if(pvalue)
-            {
-              value = (const char*)pvalue;
-              Trim(value);
-            }
+              {
+                value = (const char*)pvalue;
+                Trim(value);
+              }
             pair<string,string> nameAndvalue(name,value);					
             cmlBondOrAtom.push_back(nameAndvalue);			
             ret = xmlTextReaderMoveToNextAttribute(reader());
