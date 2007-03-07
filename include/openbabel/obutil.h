@@ -190,6 +190,7 @@ namespace OpenBabel
    * \deprecated
    */
   OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
+  OBAPI bool IsNan(const double &);
   /**
    * \return true if \a a is much smaller than \a b. More precisely:
    * @code

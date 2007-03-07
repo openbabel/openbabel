@@ -29,55 +29,45 @@ namespace OpenBabel
   class OBFFBondCalculationGhemical : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b; // atoms of the bond
       double kb, r0, rab, delta;
       int bt; // bondtype
       
-      double GetEnergy();
-      vector3 GetGradient(OBAtom *atom);
+      void Compute(bool gradients = true);
   };
   
   class OBFFAngleCalculationGhemical : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b, *c; // atoms of the angle
       double ka, theta0, theta, delta;
       
-      double GetEnergy();
-      vector3 GetGradient(OBAtom *atom);
+      void Compute(bool gradients = true);
   };
   
   class OBFFTorsionCalculationGhemical : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b, *c, *d; // atoms of the torsion
       double V, s, n, tor;
       double k1, k2, k3;
       int tt; //torsiontype
       
-      double GetEnergy();
-      vector3 GetGradient(OBAtom *atom);
+      void Compute(bool gradients = true);
   };
 
   class OBFFVDWCalculationGhemical : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b; // atoms of the pair
       double ka, Ra, kb, Rb, kab, rab;
       bool is14, samering;
 
-      double GetEnergy();
-      vector3 GetGradient(OBAtom *atom);
+      void Compute(bool gradients = true);
   };
 
   class OBFFElectrostaticCalculationGhemical : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b; // atoms of the pair
       double qq, rab;
       
-      double GetEnergy();
-      vector3 GetGradient(OBAtom *atom);
+      void Compute(bool gradients = true);
   };
 
   // Class OBForceFieldGhemical
@@ -141,17 +131,17 @@ namespace OpenBabel
       bool Setup(OBMol &mol);
       
       //! Returns total energy
-      double Energy();
+      double Energy(bool gradients = true);
      //! Returns the bond stretching energy
-      double E_Bond();
+      double E_Bond(bool gradients = true);
       //! Returns the angle bending energy
-      double E_Angle();
+      double E_Angle(bool gradients = true);
       //! Returns the torsional energy
-      double E_Torsion();
+      double E_Torsion(bool gradients = true);
       //! Returns energy due to Van der Waals interactions
-      double E_VDW();
+      double E_VDW(bool gradients = true);
       //! Returns energy due to electrostatic interactions
-      double E_Electrostatic();
+      double E_Electrostatic(bool gradients = true);
       
       //! Compare and print the numerical and analytical gradients
       bool ValidateGradients();

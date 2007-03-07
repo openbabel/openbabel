@@ -1119,8 +1119,10 @@ namespace OpenBabel
     vector<string> vs;
     char buffer[150];
  
+    *logos << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
     _mol.SetAtomTypesPerceived();
     
+    // DEBUG
     FOR_BONDS_OF_MOL (bond, _mol)
       if (bond->IsDouble())
         cout << bond->GetBeginAtom()->GetIdx() << "=" << bond->GetEndAtom()->GetIdx() << endl;
@@ -1129,63 +1131,6 @@ namespace OpenBabel
     _mol.Kekulize();
     _mol.UnsetAromaticPerceived();
     
-    cout << endl << "R I N G S" << endl << endl;
-    //      "XX   XX     XX     XX
-    
-    OBAtom *ringatom;
-    OBBond *ringbond;
-    vector<OBRing*> vr;
-    vr = _mol.GetSSSR();
-    
-    vector<OBRing*>::iterator ri;
-    vector<int>::iterator rj;
-    int n, index, ringsize, first_rj, prev_rj, pi_electrons;
-    for (ri = vr.begin();ri != vr.end();ri++) {
-      ringsize = (*ri)->Size();
-      cout << "RING: ";
-      
-      n = 1;
-      pi_electrons = 0;
-      for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) {
-        index = *rj;
-        ringatom = _mol.GetAtom(index);
-	//cout << index << ": " << ringatom << endl; 
-        // is the bond to the previous ring atom double?
-        if (n > 1) {
-	  ringbond = _mol.GetBond(prev_rj, *rj);
-	  if (ringbond->GetBO() == 2) {
-	    pi_electrons += 2;
-	    cout << "=" << *rj;
-	    prev_rj = *rj;
-	    n++;
-	    continue;
-	  }
-	  prev_rj = *rj;
-	} else {
-	  cout << *rj;
-	  prev_rj = *rj;
-	  n++;
-	  continue;
-	}
-	// does the current ring atom have a exocyclic bond?
-	FOR_NBORS_OF_ATOM (nbr, ringatom) {
-	  if ((*ri)->IsInRing(nbr->GetIdx()))
-	    continue;
-	  ringbond = _mol.GetBond(nbr->GetIdx(), *rj);
-	  if (ringbond->GetBO() == 2) {
-	    pi_electrons++;
-	    cout << "(=*)";
-	  }
-	}
-	cout << "-" << *rj;
-	n++;
-      }
-      if ((*ri)->Size() == pi_electrons)
-        cout << "  AROMATIC!" << endl;
-      else
-        cout << endl;
-    }
-
     cout << endl << "B O N D S" << endl << endl;
     cout << " I    J     BO     AR" << endl;
     cout << "---------------------" << endl;
@@ -1195,7 +1140,12 @@ namespace OpenBabel
       sprintf(buffer, "%2d   %2d     %d     %d", bond->GetBeginAtom()->GetIdx(), bond->GetEndAtom()->GetIdx(), bond->GetBO(), bond->IsAromatic());
       cout  << buffer << endl;
     }
-    
+   
+    ////////////////////////////////////////////////////////////////////////////
+    // read smarts from mmfsymb.par, assign atom types
+    // this is for non-aromatic atom types only!!!
+    ////////////////////////////////////////////////////////////////////////////
+
     // open data/mmffsymb.par
     string buffer2, subbuffer;
     ifstream ifs1, ifs2, *ifsP;
@@ -1214,16 +1164,12 @@ namespace OpenBabel
       ifs2.open(buffer2.c_str());
       ifsP = &ifs2;
     }
-
-    IF_OBFF_LOGLVL_MEDIUM
-      *logos << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
-    
+   
     while (ifsP->getline(buffer, 150)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
       	tokenize(vs, buffer);
-
 
         sp = new OBSmartsPattern;
         if (sp->Init(vs[0])) {
@@ -1244,12 +1190,126 @@ namespace OpenBabel
           }
         }
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    // find aromatic rings and assign atom types
+    ////////////////////////////////////////////////////////////////////////////
+
+    cout << endl << "R I N G S" << endl << endl;
+    //      "XX   XX     XX     XX
+    
+    OBAtom *ringatom;
+    OBBond *ringbond;
+    vector<OBRing*> vr;
+    vr = _mol.GetSSSR();
+    
+    vector<OBRing*>::iterator ri;
+    vector<int>::iterator rj;
+    int n, index, ringsize, first_rj, prev_rj, pi_electrons;
+    for (ri = vr.begin();ri != vr.end();ri++) { // for each ring
+      ringsize = (*ri)->Size();
+      cout << "RING: ";
+      
+      n = 1;
+      pi_electrons = 0;
+      for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) { // for each ring atom
+        index = *rj;
+        ringatom = _mol.GetAtom(index);
+	//cout << index << ": " << ringatom << endl; 
+        
+	// is the bond to the previous ring atom double?
+        if (n > 1) {
+	  ringbond = _mol.GetBond(prev_rj, index);
+	  if (ringbond->GetBO() == 2) {
+	    pi_electrons += 2;
+	    cout << "=" << index;
+	    prev_rj = index;
+	    n++;
+	    continue;
+	  } else 
+	    cout << "-" << index;
+	  prev_rj = index;
+	} else {
+	  cout << index;
+	  prev_rj = index;
+	  first_rj = index;
+	}
+	
+	// does the current ring atom have a exocyclic double bond?
+	FOR_NBORS_OF_ATOM (nbr, ringatom) {
+	  if ((*ri)->IsInRing(nbr->GetIdx()))
+	    continue;
+	  ringbond = _mol.GetBond(nbr->GetIdx(), index);
+	  if (ringbond->GetBO() == 2) {
+	    pi_electrons++;
+	    cout << "(=*)";
+	  }
+	}
+
+        // is the atom N, O or S in 5 rings
+	if (ringsize == 5) {
+	  if (ringatom->IsNitrogen() && !(ringatom->BOSum() - ringatom->GetValence())) {
+            pi_electrons += 2;
+	    cout << "(:)";
+	  }
+  	  if ((ringatom->IsOxygen() || ringatom->IsSulfur()) && ringatom->IsAromatic()) {
+            pi_electrons += 2;
+	    cout << "(:)";
+	  }
+	}
+
+	n++;
+      
+      } // for each ring atom
+      
+      // is the bond from the first to the last atom double?
+      ringbond = _mol.GetBond(first_rj, index);
+      if (ringbond->GetBO() == 2) {
+        pi_electrons += 2;
+        cout << "=";
+      }
+
+      // check if the ring is aromatic
+      if (pi_electrons == 6) {
+        cout << " size=" << ringsize << " pi=" << pi_electrons << "    AROMATIC!" << endl;
+        for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) { // for each ring atom
+          index = *rj;
+          ringatom = _mol.GetAtom(index);
+	  
+	  if (ringsize == 6) {
+  	    if (ringatom->IsCarbon()) 
+	      ringatom->SetType("37"); // CB: CARBON AS IN BENZENE, PYRROLE
+
+  	    if (ringatom->IsNitrogen()) {
+	      if (ringatom->GetValence() == 2)
+	        ringatom->SetType("38"); // NPYD: NITROGEN, AS IN PYRIDINE
+	      if (ringatom->GetValence() == 3) {
+	        ringatom->SetType("58"); // NPD+: PYRIDINIUM-TYPE NITROGEN - FORMAL CHARGE=1
+	
+	        FOR_NBORS_OF_ATOM (nbr, ringatom) {
+	          if ((*ri)->IsInRing(nbr->GetIdx()))
+	            continue;
+	          if (nbr->IsOxygen())
+	            ringatom->SetType("69"); // NPOX: PYRIDINE N-OXIDE NITROGEN
+	        }
+	      }
+	    }
+
+	  }
+
+	}
+      } else {
+        cout << " size=" << ringsize << " pi=" << pi_electrons << endl;
+      }
+    } // for each ring
 
     IF_OBFF_LOGLVL_MEDIUM {
       *logos << "IDX\tTYPE" << std::endl;
       FOR_ATOMS_OF_MOL (a, _mol)
         *logos << a->GetIdx() << "\t" << a->GetType() << std::endl;
     }
+    
+    return true;
   }
   
   bool OBForceFieldMMFF94::SetupCalculations()

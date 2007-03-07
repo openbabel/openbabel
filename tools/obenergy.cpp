@@ -35,14 +35,19 @@ int main(int argc,char **argv)
 {
   char *program_name= argv[0];
   int c;
+  int verbose = 0;
   string basename, filename = "", option, option2, ff = "";
 
   if (argc < 2) {
-    cout << "Usage: obenergy <filename> [options]" << endl;
+    cout << "Usage: obenergy [options] <filename>" << endl;
     cout << endl;
     cout << "options:      description:" << endl;
     cout << endl;
+    cout << "  -v          verbose: print out indivual energy interactions" << endl;
+    cout << endl;
     cout << "  -ff         select a forcefield" << endl;
+    cout << endl;
+    cout << "              available forcefields:" << endl;
     cout << endl;
     FOR_EACH(OBForceField, iter) {
       //cout << "              " << iter.ID() << " - " << iter.Description() << endl;
@@ -50,18 +55,30 @@ int main(int argc,char **argv)
     }
     exit(-1);
   } else {
-    basename = filename = argv[1];
+    int ifile = 1;
+    for (int i = 1; i < argc; i++) {
+      option = argv[i];
+      
+      if (option == "-v") {
+        verbose = 1;
+	ifile++;
+	break;
+      }
+
+      if ((option == "-ff") && (argc > (i+1))) {
+        ff = argv[i+1];
+	ifile += 2;
+      }
+    }
+    
+    basename = filename = argv[ifile];
     size_t extPos = filename.rfind('.');
 
     if (extPos!= string::npos) {
       basename = filename.substr(0, extPos);
     }
 
-    for (int i = 2; i < argc; i++) {
-      option = argv[i];
-      if ((option == "-ff") && (argc > (i+1)))
-        ff = argv[i+1];
-    }
+
   }
 
   // Find Input filetype
@@ -99,17 +116,76 @@ int main(int argc,char **argv)
       }
  
       pFF->SetLogFile(&cout);
-      pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
+      if (verbose)
+        pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
+      else
+        pFF->SetLogLevel(OBFF_LOGLVL_MEDIUM);
       
       if (!pFF->Setup(mol)) {
         cerr << program_name << ": could not setup force field." << endl;
         exit (-1);
       }
       
-      pFF->Energy();
-      //cout << endl << " Energy = " << pFF->Energy() << " " << pFF->GetUnit() << endl << endl;
+      pFF->Energy(false);
 
   } // end for loop
 
   return(1);
 }
+
+/* obenergy man page*/
+/** \page calculate the energy for a molecule
+*
+* \n
+* \par SYNOPSIS
+*
+* \b obenergy [options] \<filename\>
+*
+* \par DESCRIPTION
+*
+* The obenergy tool can be used to calculate the energy for molecules 
+* inside (multi-)molecule files (e.g., MOL2, etc.)
+*
+* \par OPTIONS
+*
+* If no filename is given, obenergy will give all options including the
+* available forcefields.
+*
+* \b -v:
+*     Verbose: print out all individual energy interactions \n\n
+* \b -ff \<forcefield\>:
+*     Select the forcefield \n\n
+*
+* \par EXAMPLES
+*  - View the possible options, including available forcefields: 
+*   obenergy
+*  - Calculate the energy for the molecule(s) in file test.mol2:
+*   obenergy test.mol2
+*  - Calculate the energy for the molecule(s) in file test.mol2 using the Ghemical forcefield:
+*   obenergy -ff Ghemical test.mol2 
+*  - Calculate the energy for the molecule(s) in file test.mol2 and print out all individual energy interactions:
+*    obenergy -v test.mol2
+*
+* \par AUTHORS
+*
+* The obenergy program was contributed by \b Tim \b Vandermeersch.
+*
+* Open Babel is currently maintained by \b Geoff \b Hutchison, \b Chris \b Morley and \b Michael \b Banck.
+*
+* For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
+*
+* \par COPYRIGHT
+*  Copyright (C) 2007 by Tim Vandermeersch. \n \n
+*  This program is free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation version 2 of the License.\n \n
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+* \par SEE ALSO
+*   The web pages for Open Babel can be found at: http://openbabel.sourceforge.net/ \n
+*   The web pages for Open Babel Molecular Mechanics can be found at: 
+*   http://openbabel.sourceforge.net/wiki/Molecular_mechanics \n
+**/

@@ -30,7 +30,6 @@ namespace OpenBabel
     vector3 va, vb, ab, vf;
     double e, energy, l, l_ref, force, delta, delta2, f;
     
-    char errbuf[3600]; // DEBUG
     //sprintf(errbuf, "bondunit=%f  bond_cubic=%f  bond_quartic=%f\n", bondunit, bond_cubic, bond_quartic); // DEBUG
  
 
@@ -81,7 +80,6 @@ namespace OpenBabel
     vector3 va, vb, vc, ab, bc, vfa, vfc, normal;
     double e, energy, force, ang, ang_ref, delta, delta2, delta3, delta4, f, dotprod, rab, rab2, rab3, rbc, rbc2, rbc3, root, dotprod_abbc;
     
-    char errbuf[10000]; // DEBUG
     //sprintf(errbuf, "angleunit=%f  angle_sextic=%f\n", angleunit, angle_sextic); // DEBUG
  
     energy = 0.0f;
@@ -149,7 +147,6 @@ namespace OpenBabel
     OBBond *b1, *b2;
     double e, energy, force, ang, ang_ref, l1, l2, l_ref1, l_ref2, delta_a, delta_b1, delta_b2;
 
-    char errbuf[100000]; // DEBUG
     //sprintf(errbuf, "stretchbendunit=%f\n", stretchbendunit); // DEBUG
  
     energy = 0.0f;
@@ -200,7 +197,6 @@ namespace OpenBabel
     double e, energy, tor, v1, v2, v3, cosine, cosine2, cosine3, sine, sine2, sine3, phi1, phi2, phi3, f, rc1, rc12, rc13, rc2, rc22, rc23, dot_c1c2, dot_rc1rc2, root;
     vector3 va, vb, vc, vd, ab, bc, cd, c1, c2, cross_bcc1, cross_bcc2, vfa, vfd;
 
-    char errbuf[30000]; // DEBUG
     //sprintf(errbuf, "torsionunit=%f\n", torsionunit); // DEBUG
  
     energy = 0.0f;
@@ -286,7 +282,6 @@ namespace OpenBabel
   {
     OBAtom *a, *b, *c, *d;
     double e, energy, force, angle, angle2;
-    char errbuf[10000];
     //sprintf(errbuf, "outplanebendunit=%f\n", outplanebendunit); // DEBUG
 
     energy = 0.0f;
@@ -358,7 +353,6 @@ namespace OpenBabel
     double e, energy, ra, rb, rab, rr, rrab, rrab2, rrab4, rrab6, rrab7, abrr, eps, epsa, epsb, f;
     int idx;
 
-    char errbuf[100000]; // DEBUG
     //sprintf(errbuf, "a_expterm=%f  b_expterm=%f c_expter=%fm\n", a_expterm, b_expterm, c_expterm); // DEBUG
  
     energy = 0.0f;
@@ -418,7 +412,6 @@ namespace OpenBabel
     vector3 va, vb, vc, vd, ab, cd, q, r;
     int idx;
     
-    char errbuf[3600]; // DEBUG
     //sprintf(errbuf, "dielectric=%f\n", dielectric); // DEBUG
 	
     energy = 0.0f;

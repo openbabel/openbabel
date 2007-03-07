@@ -77,7 +77,8 @@ namespace OpenBabel
     double    dpar1, dpar2, dpar3, dpar4, dpar5;
 
     //! Assignment 
-    OBFFParameter& operator=(const OBFFParameter &ai) {
+    OBFFParameter& operator=(const OBFFParameter &ai) 
+    {
       if (this != &ai) {
         a = ai.a;
         b = ai.b;
@@ -103,7 +104,8 @@ namespace OpenBabel
     }
 
     //! Reset the atom types and set all parameters to zero
-    void clear () {
+    void clear () 
+    {
       a = 0;
       b = 0;
       c = 0;
@@ -119,30 +121,65 @@ namespace OpenBabel
       dpar4 = 0.0f;
       dpar5 = 0.0f;
     }
-  };
+  }; // class OBFFParameter
   
   // specific class introductions in forcefieldYYYY.cpp (for YYYY calculations)
   //! \class OBFFCalculation forcefield.h <openbabel/forcefield.h>
   //! \brief Base class for energy and gradient calculations on specific force fields
   class OBFFCalculation
   {
-  public:
-    //! Constructor
-    OBFFCalculation() 
-      {
-      }
-    //! Destructor
-    ~OBFFCalculation()
-      {
-      }
-      
-    //! \return Energy for this OBFFCalculation
-    virtual double GetEnergy() { return 0.0f; }
-    //! \return Gradient for this OBFFCalculation with respect to coordinates of atom
-    virtual vector3 GetGradient(OBAtom *atom) { return vector3(0.0f, 0.0f, 0.0f); }
+    public:
+      //! Used to store the energy for this OBFFCalculation
+      double energy;
+      //! Used to store the gradients for this OBFFCalculation
+      vector3 grada, gradb, gradc, gradd;
+      //! Used to store the atoms for this OBFFCalculation
+      OBAtom *a, *b, *c, *d;
 
-    //! Used to store the energy for this OBFFCalculation
-    double energy;
+      //! Constructor
+      OBFFCalculation() 
+        {
+	  a = NULL;
+	  b = NULL;
+	  c = NULL;
+	  d = NULL;
+	  energy = 0.0f;
+          grada = VZero;
+          gradb = VZero;
+          gradc = VZero;
+          gradd = VZero;
+        }
+      //! Destructor
+      virtual ~OBFFCalculation()
+        {
+        }
+      
+      //! Compute the energy and gradients for this OBFFCalculation
+      virtual void Compute(bool gradients = true) 
+        {
+        }
+      //! \return Energy for this OBFFCalculation (call Compute() first)
+      virtual double GetEnergy() 
+      {
+        if (!energy)
+	  Compute(false);
+
+        return energy; 
+      }
+      //! \return Gradient for this OBFFCalculation with respect to coordinates of atom (call Compute() first)
+      virtual vector3 GetGradient(OBAtom *atom) 
+      {
+        if (atom == a)
+          return grada;
+        else if (atom == b)
+          return gradb;
+        else if (atom == c)
+          return gradc;
+        else if (atom == d)
+          return gradd;
+        else 
+          return  VZero;
+      }
   };
 
   // Class OBForceField
@@ -214,6 +251,7 @@ namespace OpenBabel
      * \return the negative gradient of atom a
      */
     vector3 NumericalDerivative(OBAtom *a, int terms = OBFF_ENERGY);
+    vector3 NumericalSecondDerivative(OBAtom *a, int terms = OBFF_ENERGY);
     //! Calculate the potential energy function derivative analyticaly with repect to the coordinates of atom with index a (this vector is the gradient)
     /*!
       If the currently selected forcefield doesn't have analytical gradients, 
@@ -241,7 +279,7 @@ namespace OpenBabel
     char logbuf[200];
     int loglvl; //!< Log level for output
 
-    //! Used to hold i for current conformer (needed by UpdateCoordinates)
+    //! used to hold i for current conformer (needed by UpdateConformers)
     int current_conformer;
 
     //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
@@ -250,13 +288,18 @@ namespace OpenBabel
     std::vector<vector3> _grad1, _dir1;
 
   public:
-    // short description of the force field type.
+    //! Destructor
+    virtual ~OBForceField()
+      {
+      }
+    //! short description of the force field type.
     //virtual std::string Description()=0;
     //! \return A pointer to a forcefield (the default if ID is empty), or NULL if not available
     static OBForceField* FindForceField(const std::string& ID)
     { 
       return Iter().FindType(ID);
     } 
+    //! \return A pointer to a forcefield (the default if ID is empty), or NULL if not available
     static OBForceField* FindForceField(const char *ID)
     {
       std::string ffname(ID);
@@ -266,8 +309,10 @@ namespace OpenBabel
     virtual std::string GetUnit() { return std::string("au"); }
     //! Setup the forcefield for mol (assigns atom types, charges, etc. \return True if succesfull
     virtual bool Setup(OBMol &mol) { return false; }
-    //! Update coordinates after steepest descent, conjugate gradient
+    //! Update coordinates for current conformer
     bool UpdateCoordinates(OBMol &mol);
+    //! Update coordinates for all conformers
+    bool UpdateConformers(OBMol &mol);
     //! Print msg to the logfile
     void OBFFLog(std::string msg)
     {
@@ -276,6 +321,7 @@ namespace OpenBabel
       
       *logos << msg;
     }
+    //! Print msg to the logfile
     void OBFFLog(const char *msg)
     {
       if (!logos)
@@ -292,22 +338,49 @@ namespace OpenBabel
       
     //! \name Methods for energy evaluation
     //@{
-    //! \return Total energy
-    virtual double Energy() { return 0.0f; }
-    //! \return Bond stretching energy
-    virtual double E_Bond() { return 0.0f; }
-    //! \return Angle bending energy
-    virtual double E_Angle() { return 0.0f; }
-    //! \return Stretch bending energy
-    virtual double E_StrBnd() { return 0.0f; }
-    //! \return Torsional energy
-    virtual double E_Torsion() { return 0.0f; }
-    //! \return Out-Of-Plane bending energy
-    virtual double E_OOP() { return 0.0f; }
-    //! \return Van der Waals energy
-    virtual double E_VDW() { return 0.0f; }
-    //! \return Electrostatic energy
-    virtual double E_Electrostatic() { return 0.0f; }
+    /*! \return Total energy
+        \par Output to log:
+          OBFF_LOGLVL_NONE:   none \n
+          OBFF_LOGLVL_LOW:    none \n
+          OBFF_LOGLVL_MEDIUM: energy for indivudual energy terms \n
+          OBFF_LOGLVL_HIGH:   energy for individual energy interactions \n
+     */
+    virtual double Energy(bool gradients = true) { return 0.0f; }
+    /*! \return Bond stretching energy
+        \par Output to log:
+	  see Energy()
+     */
+    virtual double E_Bond(bool gradients = true) { return 0.0f; }
+    /*! \return Angle bending energy
+        \par Output to log:
+	  see Energy()
+     */
+    virtual double E_Angle(bool gradients = true) { return 0.0f; }
+    /*! \return Stretch bending energy
+         \par Output to log:
+	  see Energy()
+     */ 
+    virtual double E_StrBnd(bool gradients = true) { return 0.0f; }
+    /*! \return Torsional energy
+         \par Output to log:
+	  see Energy()
+     */ 
+    virtual double E_Torsion(bool gradients = true) { return 0.0f; }
+    /*! \return Out-Of-Plane bending energy
+             \par Output to log:
+	  see Energy()
+     */ 
+    virtual double E_OOP(bool gradients = true) { return 0.0f; }
+    /*! \return Van der Waals energy
+             \par Output to log:
+	  see Energy()
+     */ 
+    virtual double E_VDW(bool gradients = true) { return 0.0f; }
+    /*! \return Electrostatic energy
+             \par Output to log:
+	  see Energy()
+     */ 
+    virtual double E_Electrostatic(bool gradients = true) { return 0.0f; }
     //@}
      
     /////////////////////////////////////////////////////////////////////////
@@ -373,13 +446,29 @@ namespace OpenBabel
     /*! Perform a linesearch starting at atom in direction direction
       \param atom start coordinates
       \param direction the search direction
+
       \return vector which starts at atom and stops at the minimum (the length is the ideal stepsize)
+
+      \par Output to log:
+        OBFF_LOGLVL_NONE:   none \n
+        OBFF_LOGLVL_LOW:    none \n
+        OBFF_LOGLVL_MEDIUM: none \n
+        OBFF_LOGLVL_HIGH:   none \n
     */
     vector3 LineSearch(OBAtom *atom, vector3 &direction);
     /*! Perform steepest descent optimalization for steps steps or until convergence criteria is reached.
       \param steps the number of steps 
       \param econv energy convergence criteria (defualt is 1e-6)
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+
+      \par Output to log:
+        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+	too much information about the energy calculations needed for the minimization will interfere with the list 
+	of energies for succesive steps. \n\n
+        OBFF_LOGLVL_NONE:   none \n
+        OBFF_LOGLVL_LOW:    header including number of steps and first step \n
+        OBFF_LOGLVL_MEDIUM: see note above \n
+        OBFF_LOGLVL_HIGH:   see note above \n 
     */
     void SteepestDescent(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
     /*! Initialize steepest descent optimalization, to be used in combination with SteepestDescentTakeNSteps().
@@ -395,20 +484,51 @@ namespace OpenBabel
       
       If you don't need any updating in your program, SteepestDescent() is recommended.
 
-      \param steps the number of steps
+      \param steps the number of steps 
       \param econv energy convergence criteria (defualt is 1e-6)
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+
+      \par Output to log:
+        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+	too much information about the energy calculations needed for the minimization will interfere with the list 
+	of energies for succesive steps. \n\n
+	OBFF_LOGLVL_NONE:   none \n
+        OBFF_LOGLVL_LOW:    header including number of steps \n
+        OBFF_LOGLVL_MEDIUM: see note above \n
+        OBFF_LOGLVL_HIGH:   see note above \n
+ 
     */
-    void SteepestDescentInitialize(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    void SteepestDescentInitialize(int steps = 1000, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
     /*! Take n steps in a steepestdescent optimalization that was previously initialized with SteepestDescentInitialize().
       \param n the number of steps to take
+      
       \return false if convergence or the number of steps given by SteepestDescentInitialize() has been reached 
+      
+      \par Output to log:
+        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+	too much information about the energy calculations needed for the minimization will interfere with the list 
+	of energies for succesive steps. \n\n
+	OBFF_LOGLVL_NONE:   none \n
+        OBFF_LOGLVL_LOW:    step number, energy and energy for the previous step \n
+        OBFF_LOGLVL_MEDIUM: see note above \n
+        OBFF_LOGLVL_HIGH:   see note above \n
+ 
     */
     bool SteepestDescentTakeNSteps(int n);
     /*! Perform conjugate gradient optimalization for steps steps or until convergence criteria is reached.
       \param steps the number of steps 
       \param econv energy convergence criteria (defualt is 1e-6)
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+
+      \par Output to log:
+        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+	too much information about the energy calculations needed for the minimization will interfere with the list 
+	of energies for succesive steps. \n\n
+	OBFF_LOGLVL_NONE:   none \n
+        OBFF_LOGLVL_LOW:    information about the progress of the minimization \n
+        OBFF_LOGLVL_MEDIUM: see note above \n
+        OBFF_LOGLVL_HIGH:   see note above \n
+ 
     */
     void ConjugateGradients(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
     /*! Initialize conjugate gradient optimalization and take the first step, to be used in combination with ConjugateGradientsTakeNSteps().
@@ -424,14 +544,33 @@ namespace OpenBabel
       
       If you don't need any updating in your program, ConjugateGradients() is recommended.
 
-      \param steps the number of steps
+      \param steps the number of steps 
       \param econv energy convergence criteria (defualt is 1e-6)
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+      
+      \par Output to log:
+        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+	too much information about the energy calculations needed for the minimization will interfere with the list 
+	of energies for succesive steps. \n\n
+	OBFF_LOGLVL_NONE:   none \n
+        OBFF_LOGLVL_LOW:    header including number of steps and first step \n
+        OBFF_LOGLVL_MEDIUM: see note above \n
+        OBFF_LOGLVL_HIGH:   see note above \n
     */
-    void ConjugateGradientsInitialize(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    void ConjugateGradientsInitialize(int steps = 1000, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
     /*! Take n steps in a conjugate gradient optimalization that was previously initialized with ConjugateGradientsInitialize().
       \param n the number of steps to take
+      
       \return false if convergence or the number of steps given by ConjugateGradientsInitialize() has been reached 
+      
+      \par Output to log:
+        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+	too much information about the energy calculations needed for the minimization will interfere with the list 
+	of energies for succesive steps. \n\n
+	OBFF_LOGLVL_NONE:   none \n
+        OBFF_LOGLVL_LOW:    step number, energy and energy for the previous step \n
+        OBFF_LOGLVL_MEDIUM: see note above \n
+        OBFF_LOGLVL_HIGH:   see note above \n
     */
     bool ConjugateGradientsTakeNSteps(int n);
     //@}
@@ -454,8 +593,8 @@ namespace OpenBabel
     virtual bool ValidateGradients() { return false; }
     /*! 
       Calculate the error of the analytical gradient (debugging)
-      \return error = fabs(numgrad - anagrad) / anagrad * 100%
-    */
+      \return  error = fabs(numgrad - anagrad) / anagrad * 100% 
+   */
     vector3 ValidateGradientError(vector3 &numgrad, vector3 &anagrad);
     //@}
      

@@ -15,27 +15,6 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-***********************************************************************/
-#include <openbabel/babelconfig.h>
-
-#include <openbabel/forcefield.h>
-
-#include <openbabel/mol.h>
-#include <openbabel/atom.h>
-#include <openbabel/bond.h>
-#include <openbabel/obiter.h>
-#include <openbabel/math/matrix3x3.h>
-#include <openbabel/rotamer.h>
-#include <openbabel/rotor.h>
-
-#define OBIsNan(x) ((x) != (x))
-
-using namespace std;
-
-namespace OpenBabel
-{
-  /** \class OBForceField forcefield.h <openbabel/forcefield.h>
-      \brief Base class for molecular mechanics force fields
 
       development status:
       - src/forcefield.cpp
@@ -68,15 +47,93 @@ namespace OpenBabel
       - Validation: in progress... 
 
 
-      Here is an example:
+***********************************************************************/
+#include <openbabel/babelconfig.h>
 
-      This example will minimize the structure in mol using conjugate gradients
+#include <openbabel/forcefield.h>
+
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/math/matrix3x3.h>
+#include <openbabel/rotamer.h>
+#include <openbabel/rotor.h>
+
+using namespace std;
+
+namespace OpenBabel
+{
+  /** \class OBForceField forcefield.h <openbabel/forcefield.h>
+      \brief Base class for molecular mechanics force fields
+
+      The OBForceField class is the base class for molecular mechanics in Open Babel.
+      Classes derived from the OBForceField implement specific force fields (Ghemical, MMFF94, ...).
+      Other classes such as OBFFParameter, OBFFCalculation and its derived classes are 
+      only for internal use. As a user interested in using the available force fields 
+      in Open Babel, you don't need these classes. The rest of this short introduction
+      is aimed at these users. For information on how to implement additional force
+      fields, see the wiki pages or post your questions to the openbabel-devel mailing
+      list.
+
+      Before we can start using a force field, we must first select it and set it up.
+      This is illustrated in the first example below. The Setup procedure assigns atom
+      types, charges and parameters. There are several reasons why this may fail, a log
+      message will be written to the logfile before Setup() returns false.
+
+      The force field classes use their own logging functions. You can set the logfile 
+      using SetLogFile() and set the log level using SetLogLevel(). If needed you can
+      also write to the logfile using OBFFLog(). There are four log levels: 
+      BFF_LOGLVL_NONE, OBFF_LOGLVL_LOW, OBFF_LOGLVL_MEDIUM, OBFF_LOGLVL_HIGH.
+      See the API documentation to know what kind of output each function writes to
+      the logfile for the different log levels.
+
+      Below are two examples which explain the basics. 
+
+      Calculate the energy for the structure in mol using the Ghemical forcefield.
+      \code
+      #include <openbabel/forcefield.h>
+      #include <openbabel/mol.h>
+
+      // See OBConversion class to fill the mol object.
+      OBMol mol;
+      // Select the forcefield, this returns a pointer that we 
+      // will later use to access the forcefield functions.
+      OBForceField* pFF = OBForceField::FindForceField("Ghemical");
+
+      // Make sure we have a valid pointer
+      if (!pFF)
+        // exit...
+     
+      // Set the logfile (can also be &cout or &cerr)
+      pFF->SetLogFile(&cerr);
+      // Set the log level. See indivual functions to know
+      // what kind of output each function produces for the
+      // different log levels.
+      pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
+
+      // We need to setup the forcefield before we can use it. Setup()
+      // returns false if it failes to find the atom types, parameters, ...
+      if (!pFF->Setup(mol)) {
+         cerr << "ERROR: could not setup force field." << endl;
+      }
+      
+      // Calculate the energy. The output will be written to the
+      // logfile specified by SetLogFile()
+      pFF->Energy();
+      \endcode
+ 
+      Minimize the structure in mol using conjugate gradients.
       \code
       #include <openbabel/forcefield.h>
       #include <openbabel/mol.h>
 
       OBMol mol;
       OBForceField* pFF = OBForceField::FindForceField("Ghemical");
+
+      // Make sure we have a valid pointer
+      if (!pFF)
+        // exit...
       
       pFF->SetLogFile(&cerr);
       pFF->SetLogLevel(OBFF_LOGLVL_LOW);
@@ -84,7 +141,7 @@ namespace OpenBabel
          cerr << "ERROR: could not setup force field." << endl;
       }
       
-      pFF->ValidateGradients();
+      // Perform the actual minimization, maximum 1000 steps 
       pFF->ConjugateGradients(1000);
       \endcode
   **/
@@ -356,7 +413,7 @@ namespace OpenBabel
     OBRotorIterator ri;
     OBRotor *rotor = rl.BeginRotor(ri);
     for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) { // foreach rotor
-      for (int j = 0; j < rotor->GetResolution().size(); j++) { // foreach torsion
+      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) { // foreach torsion
         rotorKey[i] = j;
         rotamers.AddRotamer(rotorKey);
       }
@@ -401,13 +458,19 @@ namespace OpenBabel
     current_conformer = best_conformer;
   }
 
-
   void OBForceField::DistanceGeometry() 
   {
     int N = _mol.NumAtoms();
     int i = 0;
     int j = 0;
-    double matrix[N][N], G[N][N];
+    //double matrix[N][N], G[N][N];
+	vector<vector<double> > matrix(N);
+	for(int i=0; i<N; i++)
+		matrix[i].reserve(N);
+	vector<vector<double> > G(N);
+	for(int i=0; i<N; i++)
+		G[i].reserve(N);
+	
     bool is15;
     
     IF_OBFF_LOGLVL_LOW
@@ -437,7 +500,7 @@ namespace OpenBabel
     //      a
     //       \ B           delta_x = bc + ab*cos(180-B) + cd*cos(180-C)
     //        b---c        delta_y = ab*sin(180-B) + cd*sin(180-C)
-    //           C \
+    //           C \       .
     //              d      ad = sqrt(delta_x^2 + delta_y^2)
     //
     FOR_ATOMS_OF_MOL (a, _mol) {
@@ -652,9 +715,14 @@ namespace OpenBabel
     }
 
     // Calculate eigenvalues and eigenvectors
-    double eigenvalues[N];
-    double eigenvectors[N][N];
-    matrix3x3::jacobi(N, (double *) &G, (double *) &eigenvalues, (double *) &eigenvectors);
+    //double eigenvalues[N];
+	vector<double> eigenvalues(N);
+    //double eigenvectors[N][N];
+	vector<vector<double> > eigenvectors(N);
+	for(int i=0; i<N; i++)
+		eigenvectors[i].reserve(N);
+
+	matrix3x3::jacobi(N, (double *) &G, (double *) &eigenvalues, (double *) &eigenvectors);
     
     // output eigenvalues and eigenvectors
     IF_OBFF_LOGLVL_LOW {
@@ -702,7 +770,7 @@ namespace OpenBabel
     }
 
   }
-  
+
   // LineSearch 
   //
   // atom: coordinates of atom at iteration k (x_k)
@@ -734,17 +802,21 @@ namespace OpenBabel
     direction.normalize();
     orig_xyz = atom->GetVector();
     
-    e_n1 = Energy(); // calculate e_k
+    e_n1 = Energy(false); // calculate e_k
     
-    for (int i=0; i<100; i++) {
+    int i;
+    for (i=0; i<100; i++) {
       old_xyz = atom->GetVector();
       
       xyz_k = atom->GetVector() + direction*step;
       atom->SetVector(xyz_k);  // update coordinates
     
-      e_n2 = Energy(); // calculate e_k+1
+      e_n2 = Energy(false); // calculate e_k+1
       
-      if (e_n2 == e_n1) // convergence criteria
+      // convergence criteria, this is 10 times the default convergence
+      // of SteepestDescent or ConjugateGradients. A higher precision here 
+      // only takes longer with the same result.
+      if (IsApprox(e_n2, e_n1, 1e-7f))
         break;
 
       if (e_n2 > e_n1) { // decrease stepsize
@@ -759,6 +831,7 @@ namespace OpenBabel
       }
       
     }
+    //cout << "LineSearch steps: " << i << endl;
 
     dir = atom->GetVector() - orig_xyz;
     atom->SetVector(orig_xyz);     
@@ -927,6 +1000,7 @@ namespace OpenBabel
   void OBForceField::SteepestDescentInitialize(int steps, double econv, int method) 
   {
     _nsteps = steps;
+    _cstep = 0;
     _econv = econv;
     _method = method;
 
@@ -1090,9 +1164,14 @@ namespace OpenBabel
   void OBForceField::ConjugateGradients(int steps, double econv, int method)
   {
     ConjugateGradientsInitialize(steps, econv, method);
-    ConjugateGradientsTakeNSteps(steps);
+    ConjugateGradientsTakeNSteps(steps); // ConjugateGradientsInitialize takes the fisrt step
   }
   
+  //  
+  //         f(1) - f(0)
+  // f'(0) = -----------      f(1) = f(0+h)
+  //              h
+  //
   vector3 OBForceField::NumericalDerivative(OBAtom *atom, int terms)
   {
     vector3 va, grad;
@@ -1103,7 +1182,7 @@ namespace OpenBabel
     va = atom->GetVector();
 
     if (terms & OBFF_ENERGY)
-      e_orig = Energy();
+      e_orig = Energy(false);
     else {
       e_orig = 0.0f;
       if (terms & OBFF_EBOND)
@@ -1126,7 +1205,7 @@ namespace OpenBabel
     atom->SetVector(va.x() + delta, va.y(), va.z());
 
     if (terms & OBFF_ENERGY)
-      e_plus_delta = Energy();
+      e_plus_delta = Energy(false);
     else {
       e_plus_delta = 0.0f;
       if (terms & OBFF_EBOND)
@@ -1151,7 +1230,7 @@ namespace OpenBabel
     atom->SetVector(va.x(), va.y() + delta, va.z());
     
     if (terms & OBFF_ENERGY)
-      e_plus_delta = Energy();
+      e_plus_delta = Energy(false);
     else {
       e_plus_delta = 0.0f;
       if (terms & OBFF_EBOND)
@@ -1176,7 +1255,7 @@ namespace OpenBabel
     atom->SetVector(va.x(), va.y(), va.z() + delta);
     
     if (terms & OBFF_ENERGY)
-      e_plus_delta = Energy();
+      e_plus_delta = Energy(false);
     else {
       e_plus_delta = 0.0f;
       if (terms & OBFF_EBOND)
@@ -1203,8 +1282,222 @@ namespace OpenBabel
     grad.Set(-dx, -dy, -dz);
     return (grad);
   }
+  
+  //  
+  //         f(2) - 2f(1) + f(0)
+  // f'(0) = -------------------      f(1) = f(0+h)
+  //                 h^2              f(1) = f(0+2h)
+  //
+  vector3 OBForceField::NumericalSecondDerivative(OBAtom *atom, int terms)
+  {
+    vector3 va, grad;
+    double e_0, e_1, e_2, delta, dx, dy, dz;
+
+    delta = 0.00001f;
+
+    va = atom->GetVector();
+
+    // calculate f(0)
+    if (terms & OBFF_ENERGY)
+      e_0 = Energy(false);
+    else {
+      e_0 = 0.0f;
+      if (terms & OBFF_EBOND)
+        e_0 += E_Bond(false);
+      if (terms & OBFF_EANGLE)
+        e_0 += E_Angle(false);
+      if (terms & OBFF_ESTRBND)
+        e_0 += E_StrBnd(false);
+      if (terms & OBFF_ETORSION)
+        e_0 += E_Torsion(false);
+      if (terms & OBFF_EOOP)
+        e_0 += E_OOP(false);
+      if (terms & OBFF_EVDW)
+        e_0 += E_VDW(false);
+      if (terms & OBFF_EELECTROSTATIC)
+        e_0 += E_Electrostatic(false);
+    }
+    
+    // 
+    // X direction
+    //
+    
+    // calculate f(1)
+    atom->SetVector(va.x() + delta, va.y(), va.z());
+
+    if (terms & OBFF_ENERGY)
+      e_1 = Energy(false);
+    else {
+      e_1 = 0.0f;
+      if (terms & OBFF_EBOND)
+        e_1 += E_Bond(false);
+      if (terms & OBFF_EANGLE)
+        e_1 += E_Angle(false);
+      if (terms & OBFF_ESTRBND)
+        e_1 += E_StrBnd(false);
+      if (terms & OBFF_ETORSION)
+        e_1 += E_Torsion(false);
+      if (terms & OBFF_EOOP)
+        e_1 += E_OOP(false);
+      if (terms & OBFF_EVDW)
+        e_1 += E_VDW(false);
+      if (terms & OBFF_EELECTROSTATIC)
+        e_1 += E_Electrostatic(false);
+    }
+    
+    // calculate f(2)
+    atom->SetVector(va.x() + 2 * delta, va.y(), va.z());
+
+    if (terms & OBFF_ENERGY)
+      e_2 = Energy(false);
+    else {
+      e_2 = 0.0f;
+      if (terms & OBFF_EBOND)
+        e_2 += E_Bond(false);
+      if (terms & OBFF_EANGLE)
+        e_2 += E_Angle(false);
+      if (terms & OBFF_ESTRBND)
+        e_2 += E_StrBnd(false);
+      if (terms & OBFF_ETORSION)
+        e_2 += E_Torsion(false);
+      if (terms & OBFF_EOOP)
+        e_2 += E_OOP(false);
+      if (terms & OBFF_EVDW)
+        e_2 += E_VDW(false);
+      if (terms & OBFF_EELECTROSTATIC)
+        e_2 += E_Electrostatic(false);
+    }
+    
+    dx = (e_2 - 2 * e_1 + e_0) / (delta * delta);
+    
+    // 
+    // Y direction
+    //
+    
+    // calculate f(1)
+    atom->SetVector(va.x(), va.y() + delta, va.z());
+
+    if (terms & OBFF_ENERGY)
+      e_1 = Energy(false);
+    else {
+      e_1 = 0.0f;
+      if (terms & OBFF_EBOND)
+        e_1 += E_Bond(false);
+      if (terms & OBFF_EANGLE)
+        e_1 += E_Angle(false);
+      if (terms & OBFF_ESTRBND)
+        e_1 += E_StrBnd(false);
+      if (terms & OBFF_ETORSION)
+        e_1 += E_Torsion(false);
+      if (terms & OBFF_EOOP)
+        e_1 += E_OOP(false);
+      if (terms & OBFF_EVDW)
+        e_1 += E_VDW(false);
+      if (terms & OBFF_EELECTROSTATIC)
+        e_1 += E_Electrostatic(false);
+    }
+    
+    // calculate f(2)
+    atom->SetVector(va.x(), va.y() + 2 * delta, va.z());
+
+    if (terms & OBFF_ENERGY)
+      e_2 = Energy(false);
+    else {
+      e_2 = 0.0f;
+      if (terms & OBFF_EBOND)
+        e_2 += E_Bond(false);
+      if (terms & OBFF_EANGLE)
+        e_2 += E_Angle(false);
+      if (terms & OBFF_ESTRBND)
+        e_2 += E_StrBnd(false);
+      if (terms & OBFF_ETORSION)
+        e_2 += E_Torsion(false);
+      if (terms & OBFF_EOOP)
+        e_2 += E_OOP(false);
+      if (terms & OBFF_EVDW)
+        e_2 += E_VDW(false);
+      if (terms & OBFF_EELECTROSTATIC)
+        e_2 += E_Electrostatic(false);
+    }
+    
+    dy = (e_2 - 2 * e_1 + e_0) / (delta * delta);
+
+    // 
+    // Z direction
+    //
+    
+    // calculate f(1)
+    atom->SetVector(va.x(), va.y(), va.z() + delta);
+
+    if (terms & OBFF_ENERGY)
+      e_1 = Energy(false);
+    else {
+      e_1 = 0.0f;
+      if (terms & OBFF_EBOND)
+        e_1 += E_Bond(false);
+      if (terms & OBFF_EANGLE)
+        e_1 += E_Angle(false);
+      if (terms & OBFF_ESTRBND)
+        e_1 += E_StrBnd(false);
+      if (terms & OBFF_ETORSION)
+        e_1 += E_Torsion(false);
+      if (terms & OBFF_EOOP)
+        e_1 += E_OOP(false);
+      if (terms & OBFF_EVDW)
+        e_1 += E_VDW(false);
+      if (terms & OBFF_EELECTROSTATIC)
+        e_1 += E_Electrostatic(false);
+    }
+    
+    // calculate f(2)
+    atom->SetVector(va.x(), va.y(), va.z() + 2 * delta);
+
+    if (terms & OBFF_ENERGY)
+      e_2 = Energy(false);
+    else {
+      e_2 = 0.0f;
+      if (terms & OBFF_EBOND)
+        e_2 += E_Bond(false);
+      if (terms & OBFF_EANGLE)
+        e_2 += E_Angle(false);
+      if (terms & OBFF_ESTRBND)
+        e_2 += E_StrBnd(false);
+      if (terms & OBFF_ETORSION)
+        e_2 += E_Torsion(false);
+      if (terms & OBFF_EOOP)
+        e_2 += E_OOP(false);
+      if (terms & OBFF_EVDW)
+        e_2 += E_VDW(false);
+      if (terms & OBFF_EELECTROSTATIC)
+        e_2 += E_Electrostatic(false);
+    }
+    
+    dz = (e_2 - 2 * e_1 + e_0) / (delta * delta);
+
+    // reset coordinates to original
+    atom->SetVector(va.x(), va.y(), va.z());
+
+    grad.Set(-dx, -dy, -dz);
+    return (grad);
+  }
 
   bool OBForceField::UpdateCoordinates(OBMol &mol)
+  { 
+    OBAtom *atom;
+    
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
+    
+    // Copy coordinates for current conformer only
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      atom = mol.GetAtom(a->GetIdx());
+      atom->SetVector(a->GetVector());
+    }
+
+    return true;
+  }
+  
+  bool OBForceField::UpdateConformers(OBMol &mol)
   { 
     OBAtom *atom;
 
@@ -1231,8 +1524,6 @@ namespace OpenBabel
       mol.SetConformer(current_conformer);
     }
     
-    //mol = _mol;
-    //mol.SetConformer(current_conformer);
     return true;
   }
 
@@ -1315,7 +1606,7 @@ namespace OpenBabel
   {
     vector3 vab, vbc, vcd, vac, vbd, grada, gradb, gradc, gradd;
     vector3 abbc, bccd, bcabbc, bcbccd, cdabbc, cdbccd, acabbc, acbccd, ababbc, abbccd, bdabbc, bdbccd;
-    double tor, rab, rbc, rcd, rabbc, rbccd, rabbc2, rbccd2, rabbc3, rbccd3, abbc_bccd, abbc_bccd2;
+    double tor, rabbc, rbccd, rabbc2, rbccd2, rabbc3, rbccd3, abbc_bccd, rabbc_rbccd, abbc_bccd2;
 
     vab = a - b;
     vbc = b - c;
@@ -1345,37 +1636,48 @@ namespace OpenBabel
     rbccd2 = rbccd * rbccd;
     rabbc3 = rabbc2 * rabbc;
     rbccd3 = rbccd2 * rbccd;
-    abbc_bccd = dot(abbc, bccd) / (rabbc * rbccd);
-    abbc_bccd2 = 1.0f - abbc_bccd * abbc_bccd;
-    
-    a = (bcbccd / (rabbc*rbccd) - (bcabbc*dot(abbc,bccd)) / (rabbc3*rbccd)) / sqrt(abbc_bccd2);
-    d = (bcabbc / (rabbc*rbccd) - (bcbccd*dot(abbc,bccd)) / (rabbc*rbccd3)) / sqrt(abbc_bccd2);
+    abbc_bccd = dot(abbc, bccd);
+    rabbc_rbccd = abbc_bccd / (rabbc * rbccd);
+    abbc_bccd2 = sqrt(1.0f - rabbc_rbccd * rabbc_rbccd);
 
-    b = ( -(cdbccd*dot(abbc,bccd)) / (rabbc*rbccd3) + 
+    if (IsNearZero(abbc_bccd2))
+      abbc_bccd2 = 1e-7f;
+    
+    /*
+    cout << "sqrt(abbc_bccd2) = " << sqrt(abbc_bccd2) << endl;
+    cout << "(rabbc*rbccd) = " << (rabbc*rbccd) << endl;
+    cout << "dot(abbc,bccd) = " << dot(abbc,bccd) << endl;
+    cout << "(rabbc*rbccd3) = " << (rabbc*rbccd3) << endl;
+    cout << "(rabbc3*rbccd) = " << (rabbc3*rbccd) << endl;
+    */
+    
+    a = (bcbccd / (rabbc*rbccd) - (bcabbc*abbc_bccd) / (rabbc3*rbccd)) / abbc_bccd2;
+    d = (bcabbc / (rabbc*rbccd) - (bcbccd*abbc_bccd) / (rabbc*rbccd3)) / abbc_bccd2;
+
+    b = ( -(cdbccd*abbc_bccd) / (rabbc*rbccd3) + 
           (cdabbc - acbccd) / (rabbc*rbccd) + 
-          (acabbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
+          (acabbc*abbc_bccd) / (rabbc3*rbccd)    ) / abbc_bccd2;
     
-    c = (  (bdbccd*dot(abbc,bccd)) / (rabbc*rbccd3) + 
+    c = (  (bdbccd*abbc_bccd) / (rabbc*rbccd3) + 
            (abbccd - bdabbc) / (rabbc*rbccd) +
-           -(ababbc*dot(abbc,bccd)) / (rabbc3*rbccd)    ) / sqrt(abbc_bccd2);
-    
+           -(ababbc*abbc_bccd) / (rabbc3*rbccd)    ) / abbc_bccd2;
+
+    if (IsNan(a.x()) || IsNan(a.y()) || IsNan(a.z()))
+      a = VZero;
+    if (IsNan(b.x()) || IsNan(b.y()) || IsNan(b.z()))
+      b = VZero;
+    if (IsNan(c.x()) || IsNan(c.y()) || IsNan(c.z()))
+      c = VZero;
+    if (IsNan(d.x()) || IsNan(d.y()) || IsNan(d.z()))
+      d = VZero;
+
     if (dot(abbc, bccd) > 0.0f) {
       a = -a;
       b = -b;
       c = -c;
       d = -d;
     }
-
-
-    if (OBIsNan(a.x()) || OBIsNan(a.y()) || OBIsNan(a.z()))
-      a = VZero;
-    if (OBIsNan(b.x()) || OBIsNan(b.y()) || OBIsNan(b.z()))
-      b = VZero;
-    if (OBIsNan(c.x()) || OBIsNan(c.y()) || OBIsNan(c.z()))
-      c = VZero;
-    if (OBIsNan(d.x()) || OBIsNan(d.y()) || OBIsNan(d.z()))
-      d = VZero;
-    
+   
     return tor;  
   }
   
@@ -1392,9 +1694,9 @@ namespace OpenBabel
       a_in = false;
       b_in = false;
       for(j = (*i)->_path.begin();j != (*i)->_path.end();j++) {
-        if (*j == a->GetIdx())
+        if ((unsigned)(*j) == a->GetIdx())
           a_in = true;
-        if (*j == b->GetIdx())
+        if ((unsigned)(*j) == b->GetIdx())
           b_in = true;
       }
       

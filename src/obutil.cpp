@@ -82,6 +82,12 @@ namespace OpenBabel
   {
     return (fabs(a) < epsilon);
   }
+  
+  //! Comparison for nan (not a number)
+  OBAPI bool IsNan(const double &a)
+  {
+    return ((a) != (a));
+  }
 
   //! Tests whether its argument can be squared without triggering an overflow or
   //! underflow.
