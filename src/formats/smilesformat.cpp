@@ -466,7 +466,7 @@ namespace OpenBabel
       // other neighbor, but not more than two other neighbors;
       int v1 = a1->GetValence();
       int v2 = a2->GetValence();
-      if (v1 < 2 || v1 > 3 | v2 < 2 | v2 > 3) {
+      if (v1 < 2 || v1 > 3 || v2 < 2 || v2 > 3) {
         continue;
       }
 

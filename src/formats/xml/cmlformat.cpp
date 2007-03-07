@@ -683,6 +683,8 @@ namespace OpenBabel
                         return true;
                       }
                     // ... or ordinary cis/trans
+                    if(value!="C" && value!="T")
+                      return false;
                     //which is valid only with one substituent on each C
 					
                     OBAtom* pAt1 = pDBond->GetBeginAtom();
@@ -709,29 +711,49 @@ namespace OpenBabel
 
                 if(!pbond1 || !pbond2)
                   return false;
-                if(pbond1->IsUp() || pbond1->IsDown()) //congugated double bonds
+                //Congugated double bonds are a special case see OBMol2Smi::GetCisTransBondSymbol()
+                //Feb07 C/C=C/C=C/C=C/C  trans/trans/trans has OB_TORUP_BOND and OB_TORDOWN in OBMol as
+                //       d   u   u   u
+                if(pbond1->IsUp() || pbond1->IsDown()) 
                   {
-                    if((pbond1->IsUp() && (value=="C")) || (pbond1->IsDown() && value=="T"))
-                      pbond2->SetDown();
+                    if((pbond1->IsUp() && (value=="T")) || (pbond1->IsDown() && value=="C"))
+                      pbond2->SetUp(); 
                     else
-                      pbond2->SetUp();
+                      pbond2->SetDown();
                   }
 
-                else if(pbond2->IsUp() || pbond2->IsDown()) //congugated double bonds
+/*                else if(pbond2->IsUp() || pbond2->IsDown()) //congugated double bonds
                   {
-                    if((pbond2->IsUp() && (value=="C")) || (pbond2->IsDown() && value=="T"))
-                      pbond1->SetDown();
-                    else
+                    if((pbond2->IsUp() && (value=="T")) || (pbond2->IsDown() && value=="C"))
                       pbond1->SetUp();
+                    else
+                      pbond1->SetDown();
                   }
+*/
                 else
                   {
                     pbond1->SetDown();
                     if(value=="C")
-                      pbond2->SetUp();
+                      pbond2->SetDown();
                     else if(value=="T")
-                      pbond2->SetDown();				
+                      pbond2->SetUp();
                   }
+                
+                //Need to mark direction of the other bond also, in case
+                // it is part of a conjugated chain (when u/d is reversed see above)
+                OBAtom* pAtom2 = _pmol->GetAtom(AtomRefIdx[2]); //end of double bond
+                FOR_BONDS_OF_ATOM(b, pAtom2)
+                {
+                  if(&*b==pbond2 || b->IsDouble()) continue;
+                  if((b->GetNbrAtom(pAtom2))->GetAtomicNum()==6)
+                  {
+                    if(pbond2->IsUp())
+                      b->SetDown();
+                    else
+                      b->SetUp();
+                  }
+                }
+
               }
           }
       }
@@ -1425,7 +1447,19 @@ namespace OpenBabel
           }
 
         xmlTextWriterEndElement(writer());//bondArray
+
+        //When array form, write bondStereo here
+        if(arrayform)
+          {
+            for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
+              {
+                if(pbond->GetBO()==2)
+                  WriteBondStereo(pbond);
+              }
+          }
+
       }
+
 	
     bool propertyListWritten=false;
     if(mol.HasData(ThermoData))
@@ -1472,6 +1506,10 @@ namespace OpenBabel
           {
             idx1=(b1->GetNbrAtom(patomA))->GetIdx();
             ud1 = b1->IsDown() ? -1 : 1;
+            // Conjugated double bonds have to be treated differently, see comments
+            // in OBMol2Smi::GetCisTransBondSymbol(). Reverse symbol for other than first double bond.
+            if((b1->GetNbrAtom(patomA))->HasDoubleBond())
+              ud1 = -ud1;
             break;
           }
       }
@@ -1491,7 +1529,7 @@ namespace OpenBabel
     xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
     xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
                                       "a%d a%d a%d a%d", idx1, patomA->GetIdx(), patomB->GetIdx(), idx2);
-    char ch = (ud1==ud2) ? 'T' : 'C';
+    char ch = (ud1==ud2) ? 'C' : 'T'; //reversed Feb07
     xmlTextWriterWriteFormatString(writer(),"%c", ch);
     xmlTextWriterEndElement(writer());//bondStereo
   }

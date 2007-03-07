@@ -44,24 +44,23 @@ public:
 
   virtual const char* Description()
   {
-      return 
-"InChI format\n \
-IUPAC/NIST molecular identifier\n \
-Write options, e.g. -xat\n \
- X <Option string> List of InChI options:\n \
- t add molecule name\n \
- a output auxilliary information\n \
- u output only unique molecules\n \
- U output only unique molecules and sort them\n \
- e compare first molecule to others\n \
- w don't warn on undef stereo or charge rearrangement\n\n \
- The InChI options should be space delimited in a single quoted string.\n \
- See InChI documentation for possible options.\n\n \
-Note that when reading an InChI the stereochemical info is currently ignored.\n \
-Input options, e.g. -at\n \
- n molecule name follows InChI on same line\n \
- a add InChI string to molecule name\n\n \
-";
+    return 
+    "InChI format\n"
+    "IUPAC/NIST molecular identifier\n"
+    "Write options, e.g. -xat\n"
+    " X <Option string> List of InChI options:\n"
+    " t add molecule name\n"
+    " a output auxilliary information\n"
+    " u output only unique molecules\n"
+    " U output only unique molecules and sort them\n"
+    " e compare first molecule to others\n"
+    " w don't warn on undef stereo or charge rearrangement\n\n"
+    " The InChI options should be space delimited in a single quoted string.\n"
+    " See InChI documentation for possible options.\n\n"
+    "Note that when reading an InChI the stereochemical info is currently ignored.\n"
+    "Input options, e.g. -at\n"
+    " n molecule name follows InChI on same line\n"
+    " a add InChI string to molecule name\n\n" ;
   };
 
   virtual const char* SpecificationURL()
@@ -429,14 +428,14 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     
     //Double bond stereo
     //Currently does not handle cumulenes
-    set<OBBond*> UpDown;
-    set<OBBond*>::iterator uditr;
+    vector<OBBond*> UpDown;
+    vector<OBBond*>::iterator uditr;
     OBBond *pbond;
     vector<OBEdgeBase*>::iterator bitr;
     for (pbond = mol.BeginBond(bitr);pbond;pbond = mol.NextBond(bitr))
     {
      if(pbond->IsUp() || pbond->IsDown())
-       UpDown.insert(pbond);
+       UpDown.push_back(pbond);
     }
     if(!UpDown.empty())
     {
@@ -474,9 +473,19 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             stereo.neighbor[2] = pB->GetIdx()-1;
             stereo.neighbor[3]= pY->GetNbrAtomIdx(pB)-1;
             if((pX->IsUp() && pY->IsUp())||(pX->IsDown() && pY->IsDown()))
-              stereo.parity = INCHI_PARITY_ODD;
+            {
+              if((pX->GetNbrAtom(pA))->HasDoubleBond())
+                stereo.parity = INCHI_PARITY_EVEN;
+              else
+                stereo.parity = INCHI_PARITY_ODD;
+            }
             else
-              stereo.parity = INCHI_PARITY_EVEN;
+            {
+              if((pX->GetNbrAtom(pA))->HasDoubleBond())
+                stereo.parity = INCHI_PARITY_ODD;
+              else
+                stereo.parity = INCHI_PARITY_EVEN;
+            }
             stereoVec.push_back(stereo);
           }
         }

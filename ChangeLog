@@ -1,3 +1,21 @@
+2007-03-07 Chris Morley
+
+	* src/for,ats/smilesformat.cpp(FixCisTransBonds): replace
+	bitwise | by logical ||. 
+	I guess if (v1 < 2 || v1 > 3 || v2 < 2 || v2 > 3) was meant.
+	
+	* include/openbabel/base.h(GetData(DataOrigin), base.cpp: 
+	This was returning a reference to a local object. 
+	Return a copy of it instead.
+	
+	* src/formats/inchiformat.cpp: Reformat Description().
+	In WriteMolecule, modify bond stereo to work with new Up/Down
+	usage.
+	
+	* src/formats/xml/cmlformat.cpp: For reading and writing,
+	modify bond stereo to work with new Up/Down usage.
+	Now writes bondStereo elements in array form.
+	
 2007-03-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/obdoc.cpp: Update for wiki format to facilitate updates
