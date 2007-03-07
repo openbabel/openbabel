@@ -1,3 +1,17 @@
+2007-03-08  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/obutil.cpp: moved IsNan() to here. Hopefully this will eliminate
+	the problem with non C99 compatible compilers.
+
+	* src/forcefield.cpp: update documentation + small optimalization
+	changes.
+
+	* include/openbabel/forcefield.h: update documentation (in progress).
+
+	* tools/obenergy.cpp: Added man page.
+	
+	* tools/obminimize.cpp: Added man page.
+
 2007-03-07 Chris Morley
 
 	* src/for,ats/smilesformat.cpp(FixCisTransBonds): replace
