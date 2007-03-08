@@ -188,9 +188,6 @@ namespace OpenBabel
             elemno = atoi(str1.c_str());
           }
 
-        if (!elemno )
-          cerr << " can't find type " << str << endl;
-
         atom.SetAtomicNum(elemno);
         ttab.SetToType("INT");
         ttab.Translate(str1,str);
