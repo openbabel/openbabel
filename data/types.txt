@@ -14,7 +14,7 @@
 #  Remaining lines specify equivalent atomic type names in each column       #
 #                                                                            #
 ##############################################################################
-192	20
+194	20
 INT	ATN	HYB	MMD	MM2	XYZ	ALC	HAD	MCML	C3D	SYB	MOL	MAP	DRE	XED	DOK	M3D	IDX	SBN PCM
 X	0	0	62	0	X	Du	0	X	0	Du	26	X	X	21	25	un.0	0	26  0
 Mn	25	0	62	0	Mn	Du	0	M	258	Mn	26	Mn	Mn	20	25	Mn.0	1	26  Mn
@@ -210,3 +210,4 @@ HO	1	0	42	24	O	H	0	O	11	O	13	H	H_HB	15	6	H.1	190	26 28
 O	8	2	20	7	O	O3	0	O	86	O.	9	O3	O_3	26	12	O.3	191	26 46
 C3	6	3	3	1	C	C3	4	C	64	C.3	1	C3	C_3	1	5	C.4	192	1   22
 Cr	24	0	0	0	Cr	0	0	0	0	Cr.th	0	0	0	0	0	0	193	26 Cr
+Du	0	0	61	0	Du	Du	0	Z	0	Lp	26	Du	Du	20	25	un.0	194	26  0
