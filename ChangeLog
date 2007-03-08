@@ -1,3 +1,7 @@
+2007-03-08  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* forcefield.h/cpp: documentation update.
+
 2007-03-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* doc/*.1: Initial cleanups of man pages, including new pages for

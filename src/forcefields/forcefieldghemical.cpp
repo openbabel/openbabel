@@ -474,13 +474,13 @@ namespace OpenBabel
       anglecalc.b = b;
       anglecalc.c = c;
 
-      parameter = GetParameter(a->GetType(), b->GetType(), c->GetType(), _ffangleparams);
+      parameter = GetParameter(a->GetType(), b->GetType(), c->GetType(), NULL, _ffangleparams);
       if (parameter == NULL) {
-        parameter = GetParameter("FFFF", b->GetType(), c->GetType(), _ffangleparams);
+        parameter = GetParameter("FFFF", b->GetType(), c->GetType(), NULL, _ffangleparams);
         if (parameter == NULL) {
-          parameter = GetParameter(a->GetType(), b->GetType(), "FFFF", _ffangleparams);
+          parameter = GetParameter(a->GetType(), b->GetType(), "FFFF", NULL, _ffangleparams);
           if (parameter == NULL) {
-            parameter = GetParameter("FFFF", b->GetType(), "FFFF", _ffangleparams);
+            parameter = GetParameter("FFFF", b->GetType(), "FFFF", NULL, _ffangleparams);
             if (parameter == NULL) {
               anglecalc.ka = KCAL_TO_KJ * 0.020f;
               anglecalc.theta0 = 120.0f;
@@ -614,7 +614,7 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
 
-      parameter_a = GetParameter(a->GetType(), _ffvdwparams);
+      parameter_a = GetParameter(a->GetType(), NULL, NULL, NULL, _ffvdwparams);
       if (parameter_a == NULL) { // no vdw parameter -> use hydrogen
         vdwcalc.Ra = 1.5f;
         vdwcalc.ka = 0.042f;
@@ -628,7 +628,7 @@ namespace OpenBabel
         vdwcalc.ka = parameter_a->dpar2;
       }
 
-      parameter_b = GetParameter(b->GetType(), _ffvdwparams);
+      parameter_b = GetParameter(b->GetType(), NULL, NULL, NULL, _ffvdwparams);
       if (parameter_b == NULL) { // no vdw parameter -> use hydrogen
         vdwcalc.Rb = 1.5f;
         vdwcalc.kb = 0.042;;

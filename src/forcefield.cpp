@@ -89,6 +89,13 @@ namespace OpenBabel
       the logfile for the different log levels.
 
       Below are two examples which explain the basics. 
+      
+      This piece of code can always be used to find available forcefields:
+      \code
+      FOR_EACH(OBForceField, iter) {
+        cout << "forcefield ID: " << iter.ID() << endl;
+      }
+      \endcode
 
       Calculate the energy for the structure in mol using the Ghemical forcefield.
       \code
