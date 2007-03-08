@@ -121,8 +121,6 @@ static char ChainsResName[RESIDMAX][4] = {
 #define BitO3All       0x0600
 #define BitC2All       0x1800
 
-#define BitVisit       0x8000
-
 #define BC_ASSIGN      0x01
 #define BC_COUNT       0x02
 #define BC_ELEM        0x03
@@ -791,7 +789,7 @@ namespace OpenBabel
     int bsize = mol.NumBonds();
 
     bitmasks = new unsigned short[asize];
-    visits   = new unsigned short[asize];
+    visits   = new bool[asize];
     resids   = new unsigned char[asize];
     flags    = new unsigned char[bsize];
     hetflags = new bool[asize];
@@ -829,7 +827,7 @@ namespace OpenBabel
       }
     if (visits != NULL)
       {
-        delte visits;
+        delete visits;
         visits = NULL;
       }
     if (hetflags != NULL)
@@ -1295,6 +1293,7 @@ namespace OpenBabel
     idx  = atom->GetIdx() - 1;
     if (visits[i])
       return;
+    visits[i] = true;
 
     count = 0;
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
@@ -1314,7 +1313,8 @@ namespace OpenBabel
           if (bitmasks[neighbour[j]] & BitCAAll)
             {
               atomids[neighbour[j]] = AI_CA;
-              TracePeptideChain(mol,neighbour[j],r);
+              if (!visits[neighbour[j]])
+                TracePeptideChain(mol,neighbour[j],r);
             }
         break;
 
@@ -1350,19 +1350,22 @@ namespace OpenBabel
             atomids[j]  = AI_C;
             bitmasks[k] = 0;
 
-            TracePeptideChain(mol,j,r);
+              if (!visits[j])
+                TracePeptideChain(mol,j,r);
           }
         else /* count == 2 */
           {
             if ( bitmasks[na] & BitCAll )
               {
                 atomids[na] = AI_C;
-                TracePeptideChain(mol,na,r);
+                if (!visits[na])
+                  TracePeptideChain(mol,na,r);
               }
             else if ( bitmasks[nb] & BitCAll )
               {
                 atomids[nb] = AI_C;
-                TracePeptideChain(mol,nb,r);
+                if (!visits[nb])
+                  TracePeptideChain(mol,nb,r);
               }
           }
         break;
@@ -1374,7 +1377,8 @@ namespace OpenBabel
             if ( bitmasks[neighbour[j]] & BitNAll )
               {
                 atomids[neighbour[j]] = AI_N;
-                TracePeptideChain(mol,neighbour[j],r+1);
+                if (!visits[neighbour[j]])
+                  TracePeptideChain(mol,neighbour[j],r+1);
               }
             else if( bitmasks[neighbour[j]] & BitOAll )
               {
@@ -1385,8 +1389,6 @@ namespace OpenBabel
           }
         break;
       }
-    
-    visits[i] = true;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -1580,6 +1582,7 @@ namespace OpenBabel
 
     if (visits[i])
       return;
+    visits[i] = true;
 
     count = 0;
     atom  = mol.GetAtom(i + 1);
@@ -1602,7 +1605,8 @@ namespace OpenBabel
             if( bitmasks[neighbour[j]] & BitO5 )
               {
                 atomids[neighbour[j]] = AI_O5;
-                TraceNucleicChain(mol,neighbour[j],r);
+                if (!visits[neighbour[j]])
+                  TraceNucleicChain(mol,neighbour[j],r);
               }
             else if( bitmasks[neighbour[j]] & BitOP )
               {
@@ -1619,7 +1623,8 @@ namespace OpenBabel
           if( bitmasks[neighbour[j]] & BitC5 )
             {
               atomids[neighbour[j]] = AI_C5;
-              TraceNucleicChain(mol,neighbour[j],r);
+              if (!visits[neighbour[j]])
+                TraceNucleicChain(mol,neighbour[j],r);
             }
 
         break;
@@ -1629,7 +1634,8 @@ namespace OpenBabel
           if( bitmasks[neighbour[j]] & BitC4 )
             {
               atomids[neighbour[j]] = AI_C4;
-              TraceNucleicChain(mol,neighbour[j],r);
+              if (!visits[neighbour[j]])
+                TraceNucleicChain(mol,neighbour[j],r);
             }
 
         break;
@@ -1640,7 +1646,8 @@ namespace OpenBabel
             if( bitmasks[neighbour[j]] & BitC3 )
               {
                 atomids[neighbour[j]] = AI_C3;
-                TraceNucleicChain(mol,neighbour[j],r);
+                if (!visits[neighbour[j]])
+                  TraceNucleicChain(mol,neighbour[j],r);
               }
             else if( bitmasks[neighbour[j]] & BitO4 )
               {
@@ -1657,12 +1664,14 @@ namespace OpenBabel
             if( bitmasks[neighbour[j]] & BitO3All )
               {
                 atomids[neighbour[j]] = AI_O3;
-                TraceNucleicChain(mol,neighbour[j],r);
+                if (!visits[neighbour[j]])
+                  TraceNucleicChain(mol,neighbour[j],r);
               }
             else if( bitmasks[neighbour[j]] & BitC2All )
               {
                 atomids[neighbour[j]] = AI_C2;
-                TraceNucleicChain(mol,neighbour[j],r);
+                if (!visits[neighbour[j]])
+                  TraceNucleicChain(mol,neighbour[j],r);
               }
           }
 
@@ -1673,7 +1682,8 @@ namespace OpenBabel
           if( bitmasks[neighbour[j]] & BitP )
             {
               atomids[neighbour[j]] = AI_P;
-              TraceNucleicChain(mol,neighbour[j],r+1);
+              if (!visits[neighbour[j]])
+                TraceNucleicChain(mol,neighbour[j],r+1);
             }
 
         break;
@@ -1695,7 +1705,6 @@ namespace OpenBabel
 
         break;
       }
-    visits[i] = true;
   }
 
   //////////////////////////////////////////////////////////////////////////////

@@ -6,8 +6,13 @@
 	* Doxyfile-man: Update to point to new babel location.
 
 	* src/chains.cpp: Fixing bug with chain perception related to
-	PR#1626789, possibly also 1577248. Setting visit flags skipped
-	marking some atoms as members of residues. Still some bugs.
+	PR#1626789, and 1577248. Setting visit flags skipped
+	marking some atoms as members of residues.
+
+	* test/residue.cpp: Add new tests for PR#1577248.
+
+	* data/types.txt, data/types.h: Add Lp atom type for Sybyl based
+	on PR#1672575.
 	
 2007-03-08  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
