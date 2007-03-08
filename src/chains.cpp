@@ -144,7 +144,7 @@ namespace OpenBabel
   // Structure / Type Definitions
   //////////////////////////////////////////////////////////////////////////////
 
-  //! Template for backbone atoms in chain perception
+  //! Structure template for atomic patterns in residues for OBChainsParser
   typedef struct Template
   {
     int flag;        //!< binary flag representing this atom type
@@ -745,7 +745,10 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////////////////////////
 
   // validated
-  OBChainsParser::OBChainsParser(void)
+  OBChainsParser::OBChainsParser(void) :
+    bitmasks(NULL), visits(NULL),   hetflags(NULL), atomids (NULL),
+    resids  (NULL), resnos  (NULL), sernos  (NULL), hcounts (NULL), 
+    chains  (NULL), flags   (NULL)
   {
     int i, res = RESIDMIN;
 
@@ -766,16 +769,6 @@ namespace OpenBabel
         DefineMonomer(&NDecisionTree,res,Nucleotides[i].data);
         res++;
       }
-
-    bitmasks = NULL;
-    hetflags = NULL;
-    atomids  = NULL;
-    resids   = NULL;
-    resnos   = NULL;
-    sernos   = NULL;
-    hcounts  = NULL;
-    chains   = NULL;
-    flags    = NULL;
   }
 
   OBChainsParser::~OBChainsParser(void)
@@ -798,6 +791,7 @@ namespace OpenBabel
     int bsize = mol.NumBonds();
 
     bitmasks = new unsigned short[asize];
+    visits   = new unsigned short[asize];
     resids   = new unsigned char[asize];
     flags    = new unsigned char[bsize];
     hetflags = new bool[asize];
@@ -808,6 +802,7 @@ namespace OpenBabel
     chains   = new char[asize];
 
     memset(bitmasks, 0,   sizeof(unsigned short) * asize);
+    memset(visits,   0,   sizeof(bool)           * asize);
     memset(resids,   0,   sizeof(unsigned char)  * asize);
     memset(hetflags, 0,   sizeof(bool)           * asize);
     memset(resnos,   0,   sizeof(short)          * asize);
@@ -831,6 +826,11 @@ namespace OpenBabel
       {
         delete bitmasks;
         bitmasks = NULL;
+      }
+    if (visits != NULL)
+      {
+        delte visits;
+        visits = NULL;
       }
     if (hetflags != NULL)
       {
@@ -948,6 +948,7 @@ namespace OpenBabel
         else
           {
             name    = ChainsResName[resids[i]];
+
             residue = mol.NewResidue();
 
             residue->SetName(name);
@@ -971,9 +972,9 @@ namespace OpenBabel
       mol.DeleteResidue(mol.GetResidue(0));
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
   // Perception Functions
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
   bool OBChainsParser::PerceiveChains(OBMol &mol, bool nukeSingleResidue)
   {
@@ -999,16 +1000,16 @@ namespace OpenBabel
     return result;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
   // Hetero Atom Perception
-  ////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
 
   bool OBChainsParser::DetermineHetAtoms(OBMol &mol)
   {
     OBAtom *atom;
     vector<OBAtom *>::iterator a;
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
-      if (!atom->IsHydrogen() && atom->GetValence() == 0)
+      if (!atom->IsHydrogen() && atom->GetHvyValence() == 0)
         {
           // find un-connected atoms (e.g., HOH oxygen atoms)
           //  if it's not an oxygen, it's probably some ligand
@@ -1018,9 +1019,9 @@ namespace OpenBabel
     return true;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
   // Connected Chain Perception
-  ////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
 
   bool OBChainsParser::DetermineConnectedChains(OBMol &mol)
   {
@@ -1043,7 +1044,9 @@ namespace OpenBabel
         if (!hetflags[idx] && chains[idx] == ' ' && !atom->IsHydrogen())
           {
             size = RecurseChain(mol, idx, 'A' + count);
-            if (size < 10)
+            
+            // size = number of heavy atoms in residue chain
+            if (size < 10) // small ligand, probably
               {
                 if (size == 1 && atom->IsOxygen())
                   resid = 1; /* HOH */
@@ -1062,8 +1065,11 @@ namespace OpenBabel
                   }
                 resno++;
               }
-            else
-              count++;
+            else {
+              count++; // number of connected chains
+              if (count > 26) // out of chain IDs
+                break;
+            }
           }
       }
 
@@ -1087,7 +1093,7 @@ namespace OpenBabel
     result    = 1;
     chains[i] = c;
 
-    for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
+    for (nbr = atom->BeginNbrAtom(b); nbr; nbr = atom->NextNbrAtom(b))
       {
         index = nbr->GetIdx() - 1;
         if (chains[index] == ' ')
@@ -1097,9 +1103,9 @@ namespace OpenBabel
     return (result);
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
   // Peptide Backbone Perception
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
   bool OBChainsParser::DeterminePeptideBackbone(OBMol &mol)
   {
@@ -1287,7 +1293,8 @@ namespace OpenBabel
 
     atom = mol.GetAtom(i+1);
     idx  = atom->GetIdx() - 1;
-    bitmasks[i] &= BitVisit;
+    if (visits[i])
+      return;
 
     count = 0;
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
@@ -1307,8 +1314,7 @@ namespace OpenBabel
           if (bitmasks[neighbour[j]] & BitCAAll)
             {
               atomids[neighbour[j]] = AI_CA;
-              if (!(bitmasks[neighbour[j]] & BitVisit))
-                TracePeptideChain(mol,neighbour[j],r);
+              TracePeptideChain(mol,neighbour[j],r);
             }
         break;
 
@@ -1335,7 +1341,7 @@ namespace OpenBabel
                 j = na;
                 k = nb;
               }
-            else /* bitmasks[nb] & BitCAll */
+            else if (bitmasks[nb] & BitCAll )
               {
                 j = nb;
                 k = na;
@@ -1344,22 +1350,19 @@ namespace OpenBabel
             atomids[j]  = AI_C;
             bitmasks[k] = 0;
 
-            if (!(bitmasks[j] & BitVisit))
-              TracePeptideChain(mol,j,r);
+            TracePeptideChain(mol,j,r);
           }
         else /* count == 2 */
           {
             if ( bitmasks[na] & BitCAll )
               {
                 atomids[na] = AI_C;
-                if (!(bitmasks[na] & BitVisit))
-                  TracePeptideChain(mol,na,r);
+                TracePeptideChain(mol,na,r);
               }
-            else
+            else if ( bitmasks[nb] & BitCAll )
               {
                 atomids[nb] = AI_C;
-                if (!(bitmasks[nb] & BitVisit))
-                  TracePeptideChain(mol,nb,r);
+                TracePeptideChain(mol,nb,r);
               }
           }
         break;
@@ -1371,8 +1374,7 @@ namespace OpenBabel
             if ( bitmasks[neighbour[j]] & BitNAll )
               {
                 atomids[neighbour[j]] = AI_N;
-                if (!(bitmasks[neighbour[j]] & BitVisit))
-                  TracePeptideChain(mol,neighbour[j],r+1);
+                TracePeptideChain(mol,neighbour[j],r+1);
               }
             else if( bitmasks[neighbour[j]] & BitOAll )
               {
@@ -1383,11 +1385,13 @@ namespace OpenBabel
           }
         break;
       }
+    
+    visits[i] = true;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
   // Peptide Sidechains Perception
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
   bool OBChainsParser::DeterminePeptideSidechains(OBMol &mol)
   {
@@ -1413,7 +1417,8 @@ namespace OpenBabel
         resids[j] = i;
   }
 
-  int OBChainsParser::IdentifyResidue(void *tree, OBMol &mol, int seed, int resno)
+  int OBChainsParser::IdentifyResidue(void *tree, OBMol &mol, int seed,
+                                      int resno)
   {
     ByteCode *ptr;
 
@@ -1436,7 +1441,7 @@ namespace OpenBabel
     OBAtom *atom, *nbr;
     vector<OBBond *>::iterator b;
 
-    while( ptr )
+    while( ptr ) {
       switch(ptr->type)
         {
         case(BC_IDENT):  curr = Stack[StackPtr-1].atom;
@@ -1464,8 +1469,7 @@ namespace OpenBabel
           break;
 
         case(BC_ELEM):   curr = Stack[StackPtr-1].atom;
-          if( mol.GetAtom(curr+1)->GetAtomicNum() == static_cast<unsigned int>(ptr->elem.value)
-              )
+          if( mol.GetAtom(curr+1)->GetAtomicNum() == static_cast<unsigned int>(ptr->elem.value) )
             {
               bond = Stack[StackPtr-1].bond;
               ResMonoAtom[AtomCount++] = curr;
@@ -1512,12 +1516,13 @@ namespace OpenBabel
           break;
 
         case(BC_ASSIGN): 
-          for( i=0; i<AtomCount; i++ )
-            if( !bitmasks[ResMonoAtom[i]] )
+          for( i=0; i<AtomCount; i++ ) {
+            if( !bitmasks[ResMonoAtom[i]])
               {
                 j = ptr->assign.atomid[i];
                 atomids[ResMonoAtom[i]] = j;
               }
+          }
           for( i=0; i<BondCount; i++ )
             {
               j = ptr->assign.bflags[i];
@@ -1528,13 +1533,14 @@ namespace OpenBabel
 
         default:  /* Illegal Instruction! */
           return( 0 );
-        }
+        } // (switch)
+    } // while (loop through atoms)
     return 0;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
   // Nucleic Backbone Perception
-  ////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
 
   bool OBChainsParser::DetermineNucleicBackbone(OBMol &mol)
   {
@@ -1572,6 +1578,9 @@ namespace OpenBabel
     OBAtom *atom, *nbr;
     vector<OBBond *>::iterator b;
 
+    if (visits[i])
+      return;
+
     count = 0;
     atom  = mol.GetAtom(i + 1);
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
@@ -1579,7 +1588,6 @@ namespace OpenBabel
         neighbour[count++] = nbr->GetIdx() - 1;
 
     resnos[i] = r;
-    bitmasks[i] &= BitVisit;
 
     na = neighbour[0];
     nb = neighbour[1];
@@ -1594,8 +1602,7 @@ namespace OpenBabel
             if( bitmasks[neighbour[j]] & BitO5 )
               {
                 atomids[neighbour[j]] = AI_O5;
-                if (!(bitmasks[neighbour[j]] & BitVisit))
-                  TraceNucleicChain(mol,neighbour[j],r);
+                TraceNucleicChain(mol,neighbour[j],r);
               }
             else if( bitmasks[neighbour[j]] & BitOP )
               {
@@ -1612,8 +1619,7 @@ namespace OpenBabel
           if( bitmasks[neighbour[j]] & BitC5 )
             {
               atomids[neighbour[j]] = AI_C5;
-                if (!(bitmasks[neighbour[j]] & BitVisit))
-                  TraceNucleicChain(mol,neighbour[j],r);
+              TraceNucleicChain(mol,neighbour[j],r);
             }
 
         break;
@@ -1623,8 +1629,7 @@ namespace OpenBabel
           if( bitmasks[neighbour[j]] & BitC4 )
             {
               atomids[neighbour[j]] = AI_C4;
-              if (!(bitmasks[neighbour[j]] & BitVisit))
-                TraceNucleicChain(mol,neighbour[j],r);
+              TraceNucleicChain(mol,neighbour[j],r);
             }
 
         break;
@@ -1635,8 +1640,7 @@ namespace OpenBabel
             if( bitmasks[neighbour[j]] & BitC3 )
               {
                 atomids[neighbour[j]] = AI_C3;
-                if (!(bitmasks[neighbour[j]] & BitVisit))
-                  TraceNucleicChain(mol,neighbour[j],r);
+                TraceNucleicChain(mol,neighbour[j],r);
               }
             else if( bitmasks[neighbour[j]] & BitO4 )
               {
@@ -1653,14 +1657,12 @@ namespace OpenBabel
             if( bitmasks[neighbour[j]] & BitO3All )
               {
                 atomids[neighbour[j]] = AI_O3;
-                if (!(bitmasks[neighbour[j]] & BitVisit))
-                  TraceNucleicChain(mol,neighbour[j],r);
+                TraceNucleicChain(mol,neighbour[j],r);
               }
             else if( bitmasks[neighbour[j]] & BitC2All )
               {
                 atomids[neighbour[j]] = AI_C2;
-                if (!(bitmasks[neighbour[j]] & BitVisit))
-                  TraceNucleicChain(mol,neighbour[j],r);
+                TraceNucleicChain(mol,neighbour[j],r);
               }
           }
 
@@ -1671,8 +1673,7 @@ namespace OpenBabel
           if( bitmasks[neighbour[j]] & BitP )
             {
               atomids[neighbour[j]] = AI_P;
-              if (!(bitmasks[neighbour[j]] & BitVisit))
-                TraceNucleicChain(mol,neighbour[j],r+1);
+              TraceNucleicChain(mol,neighbour[j],r+1);
             }
 
         break;
@@ -1694,11 +1695,12 @@ namespace OpenBabel
 
         break;
       }
+    visits[i] = true;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
   // Nucleic Sidechains Perception
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
   bool OBChainsParser::DetermineNucleicSidechains(OBMol &mol)
   {
@@ -1712,9 +1714,9 @@ namespace OpenBabel
     return true;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
   // Hydrogens Perception
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
   bool OBChainsParser::DetermineHydrogens(OBMol &mol)
   {
@@ -1760,9 +1762,9 @@ namespace OpenBabel
     return true;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
   // Utility Functions
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
   // validated
   void OBChainsParser::DefineMonomer(void **tree, int resid, char *smiles)

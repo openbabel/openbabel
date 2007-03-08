@@ -29,8 +29,8 @@ namespace OpenBabel
   class OBAtom;
   class OBMol;
 
-  //! Structure for atomic patterns (templates) in residues for OBChainsParser
-  //! Implementation and documentation in chains.cpp
+  // Structure template for atomic patterns in residues for OBChainsParser
+  // implementation in chains.cpp
   typedef struct Template Template;
 
   //! \class OBChainsParser chains.h <openbabel/chains.h>
@@ -55,14 +55,22 @@ namespace OpenBabel
 
     private: // internal methods
 
+      //! Determine HETATOM records for ligands vs. possible residues
       bool  DetermineHetAtoms(OBMol &);
+      //! Determine connected chains (e.g., subunits)
       bool  DetermineConnectedChains(OBMol &);
+      //! Walk a peptide "backbone" atom sequence, from one residue to the next
       bool  DeterminePeptideBackbone(OBMol &);
+      //! Identify peptide residues based on side chains
       bool  DeterminePeptideSidechains(OBMol &);
+      //! Walk a nucleic acid "backone" from one residue to the next
       bool  DetermineNucleicBackbone(OBMol &);
+      //! Identify nucleic acids based on "side chains"
       bool  DetermineNucleicSidechains(OBMol &);
+      //! Determine any bonded hydrogens based on peptide/nucleic residue info
       bool  DetermineHydrogens(OBMol &);
 
+      //! Set up the chain perception to operate on the supplied molecule
       void  SetupMol(OBMol &);
       void  SetResidueInformation(OBMol &, bool nukeSingleResidue);
       void  ClearResidueInformation(OBMol &);
@@ -95,13 +103,14 @@ namespace OpenBabel
       int   ResMonoAtom[MaxMonoAtom];
       int   ResMonoBond[MaxMonoBond];
 
-      unsigned short *bitmasks;
+      unsigned short *bitmasks; 
+      bool           *visits;   //!< mark visits to prevent looping
       unsigned char  *resids;
       unsigned char  *flags;
       bool           *hetflags;
       short          *atomids;
       short          *resnos;
-      short          *sernos; //!< array of residue serial numbers
+      short          *sernos;   //!< array of residue serial numbers
       char           *hcounts;
       char           *chains;
     };
