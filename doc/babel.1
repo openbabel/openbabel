@@ -1,5 +1,5 @@
-.Dd November 25, 2005
-.Os "Open Babel" 2.0
+.Dd April 1, 2007
+.Os "Open Babel" 2.1
 .Dt babel 1 URM
 .Sh NAME
 .Nm babel
@@ -15,14 +15,13 @@
 .Ar outfile
 .Sh DESCRIPTION
 .Re
-Open Babel is a cross-platform program designed to interconvert
+Babel is a cross-platform program designed to interconvert
 between many file formats used in molecular modeling and computational
 chemistry and related areas.
 .Pp
-Note that Open Babel can also be used as a library to interconvert
-many file formats and to provide standard chemistry software
-routines. See the Open Babel web pages
-<\fBhttp://openbabel.sourceforge.net/\fR> for more information.
+Open Babel is also a complete programmers toolkit for developing 
+chemistry software. For more information, se the Open Babel web pages
+<\fBhttp://openbabel.sourceforge.net/\fR>.
 .Sh OPTIONS
 .Re
 If only input and ouput files are given, Open Babel will guess the
@@ -274,24 +273,27 @@ Conversion from a SMI file in STDIN to a Mol2 file written to STDOUT:
 Split a multi-molecule file into new1.smi, new2.smi, etc.:
 .Dl "babel infile.mol new.smi -m"
 .Sh SEE ALSO
+.Xr obenergy 1 ,
 .Xr obfit 1 ,
 .Xr obgrep 1 , 
+.Xr obminimize 1 , 
 .Xr obprop 1 , 
-.Xr obrotate 1 
+.Xr obrotate 1 ,
+.Xr obrotamer 1 .
 The web pages for Open Babel can be found at:
 <\fBhttp://openbabel.sourceforge.net/\fR> 
 .Sh AUTHORS
 .An -nosplit
-A cast of many, including currrent maintainers
+A cast of many, including the currrent maintainers
 .An Geoff Hutchison ,
 .An Chris Morley ,
 .An Michael Banck , 
 and innumerable others who have contributed fixes and additions. 
 For more contributors to Open Babel, see 
-<\fBhttp://openbabel.sourceforge.net/THANKS.shtml\fR>
+<\fBhttp://openbabel.sourceforge.net/wiki/THANKS\fR>
 .Sh COPYRIGHT
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. 
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison 
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison 
 .Pp
  This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -1,9 +1,16 @@
+2007-03-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* doc/*.1: Initial cleanups of man pages, including new pages for
+	obenergy, obminimize, and obrotamer.
+
+	* Doxyfile-man: Update to point to new babel location.
+	
 2007-03-08  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/obutil.cpp: moved IsNan() to here. Hopefully this will eliminate
 	the problem with non C99 compatible compilers.
 
-	* src/forcefield.cpp: update documentation + small optimalization
+	* src/forcefield.cpp: update documentation + small optimization
 	changes.
 
 	* include/openbabel/forcefield.h: update documentation (in progress).

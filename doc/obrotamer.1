@@ -1,46 +1,34 @@
 .Dd April 1, 2007
 .Os "Open Babel" 2.1
-.Dt obprop 1 URM
+.Dt obrotamer 1 URM
 .Sh NAME
-.Nm obprop
-.Nd "print standard molecular properties"
+.Nm obrotamer
+.Nd "generate conformer/rotamer coordinates"
 .Sh SYNOPSIS
 .Nm
 .Ar filename
 .Sh DESCRIPTION
-The obprop program is a tool to print a set of standard molecular
-properties for all molecules in a file. It also serves as example code
-for using the Open Babel library (libopenbabel).
-.Pp
-Output format includes:
-.br
-name 
-.Op Ar Name
-.br
-mol_weight 
-.Op Ar Molecular Weight
-.br
-num_rings
-.Op Ar Number of Rings (by SSSR)
-.br
-$$$
-.Pp
-The "$$$" is the separator between multiple molecular entries in a file
+The obrotamer tool can be used as part of a conformational search 
+by generating random isomers based on rotating dihedral angles. These
+rotamers are not conformers -- that is, obrotamer does not perform geometry
+optimization after generating the rotamer structure. The obminimize tool
+can do geometry optimization using molecular mechanics.
 .Sh EXAMPLES
-.Dl "obprop pyridines.sdf"
+.Dl "obrotamer baseconformer.sdf >rotamer1.sdf"
+.Pp
+Generate a random rotational isomer of baseconformer.sdf and write
+it to rotamer1.sdf
 .Sh SEE ALSO
 .Xr babel 1 ,
-.Xr obchiral 1 ,
+.Xr obenergy 1 ,
 .Xr obfit 1 ,
 .Xr obgrep 1 ,
+.Xr obminimize 1 ,
 .Xr obrotate 1 .
 .Pp
 The web pages for Open Babel can be found at:
 <\fBhttp://openbabel.sourceforge.net/\fR>
 .Sh AUTHORS
-The obprop program was contributed by
-.An Fabien Fontaine
-.Pp
 .An -nosplit
 Open Babel is developed by a cast of many, including currrent maintainers
 .An Geoff Hutchison ,
@@ -51,7 +39,7 @@ For more contributors to Open Babel, see
 <\fBhttp://openbabel.sourceforge.net/wiki/THANKS\fR>
 .Sh COPYRIGHT
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. 
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison and
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison and
 other contributors.
 .Pp
  This program is free software; you can redistribute it and/or modify
