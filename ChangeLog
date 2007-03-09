@@ -1,3 +1,11 @@
+2007-03-09 Chris Morley
+
+	* src/formats/cansmilesformat.cpp(BuildCanonTree):The insert in 
+	line 893 invalidates iterator ai. Add a line so that the subsequent
+	test (outside the loop) does not crash my debug build but always
+	is false - no push_back. Solves bug 1650790. I hope that Craig or
+	somebody can check whether the cannonical SMILES output is still ok.
+
 2007-03-09  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* include/obiter.h: added deconstructor functions.  Lack of these can

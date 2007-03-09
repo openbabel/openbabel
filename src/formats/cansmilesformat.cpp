@@ -891,6 +891,7 @@ namespace OpenBabel
         if (   new_needs_bsymbol == sorted_needs_bsymbol
                && canonical_order[idx-1] < canonical_order[(*ai)->GetIdx()-1]) {
           sort_nbrs.insert(ai, nbr);
+          ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test 
           break;
         }
       }
