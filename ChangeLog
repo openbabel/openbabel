@@ -4,6 +4,10 @@
 
 2007-03-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/formats/smilesformat.cpp: Fix problem with "invented" stereo
+	from 2D files -- make sure to check bond torsion ~0.0 and
+	~180.0. Fixes PR#1663814.
+
 	* doc/*.1: Initial cleanups of man pages, including new pages for
 	obenergy, obminimize, and obrotamer.
 

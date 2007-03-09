@@ -2672,9 +2672,12 @@ namespace OpenBabel
 
     torsion = CalcTorsionAngle(a->GetVector(),b->GetVector(),
                                c->GetVector(),d->GetVector());
-
-    strcpy(stereo,(torsion<0.0)?"@":"@@");
-    //if (b->GetHvyValence() == 3) strcat(stereo,"H");
+    // if torsion == 0 or torsion == 180, there's no stereo
+    // otherwise, copy the stereo flag
+    if (!IsNegligible(torsion, 1.0, 1.0e-3) && !IsApprox(torsion, 180.0, 1.0e-3))
+      strcpy(stereo,(torsion<0.0)?"@":"@@");
+    else
+      stereo[0] = '\0';
 
     //re-zero psuedo-coords
     if (is2D)
