@@ -1,3 +1,8 @@
+2007-03-09  Donald E. Curtis <dcurtis3@sourceforge.net>
+
+	* include/obiter.h: added deconstructor functions.  Lack of these can
+	cause problems when using the FOR_*_OF_* macros.
+
 2007-03-08  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* forcefield.h/cpp: documentation update.
