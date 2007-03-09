@@ -1,3 +1,11 @@
+2007-03-09  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/logp.h, src/logp.cpp, src/Makefile.am,
+	src/Makefile.in, data/LogP.txt:
+	Added OBLogP class (see mailing list).
+
+	* tools/obprop.cpp: Added LogP property.
+
 2007-03-09 Chris Morley
 
 	* src/formats/cansmilesformat.cpp(BuildCanonTree):The insert in 

@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/logp.h>
 #include <openbabel/obconversion.h>
 #include <unistd.h>
 
@@ -86,6 +87,7 @@ int main(int argc,char **argv)
     }
   
   OBMol mol;
+  OBLogP logP;
   
   
   ////////////////////////////////////////////////////////////////////////////
@@ -102,10 +104,13 @@ int main(int argc,char **argv)
       conv.Read(&mol, &ifs);
       if (mol.Empty())
         break;
+      
+      mol.AddHydrogens();
       // Print the properties        
       cout << "name " << mol.GetTitle() << endl;
       cout << "mol_weight "<< mol.GetMolWt() << endl;
-      cout << "num_rings " << nrings(mol) << endl;
+      cout << "num_rings  " << nrings(mol) << endl;
+      cout << "logP       " << logP.GroupContributions(mol) << endl;
       cout << "$$$$" << endl; // SDF like end of compound descriptor list
       
     } // end for loop
