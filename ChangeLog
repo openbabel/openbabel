@@ -1,3 +1,12 @@
+2007-03-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+	
+	* include/openbabel/psa.h, src/psa.cpp, src/Makefile.am,
+	src/Makefile.in, data/psa.txt: Added OBPSA class.
+
+	* tools/obprop.cpp: Added PSA property.
+
+	* test/logp_psa.cpp: LogP and PSA test for 3 molecules.
+
 2007-03-10 Chris Morley
 
 	* src/formats/inchiformat.cpp(WriteMolecule): For 2D molecules

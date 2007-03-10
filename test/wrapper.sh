@@ -8,6 +8,7 @@ TESTS="${TESTS} iterators"
 TESTS="${TESTS} invalidsmarts invalidsmiles math"
 TESTS="${TESTS} mol residue rings"
 TESTS="${TESTS} smarts smilesmatch unitcell"
+TESTS="${TESTS} logp_psa"
 TESTS="${TESTS} cml.sh test-set.sh"
 PROVE=prove
 

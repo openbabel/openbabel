@@ -19,17 +19,17 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#include <openbabel/logp.h>
+#include <openbabel/psa.h>
 
 using namespace std;
 
 namespace OpenBabel
 {
-  OBLogP::OBLogP()
+  OBPSA::OBPSA()
   {
     OBSmartsPattern *sp;
     
-    // open data/logP_contributions.txt
+    // open data/psa.txt
     string buffer2, subbuffer;
     ifstream ifs1, ifs2, *ifsP;
     buffer2 = BABEL_DATADIR;
@@ -37,8 +37,8 @@ namespace OpenBabel
     subbuffer = buffer2;
     subbuffer += BABEL_VERSION;
     subbuffer += FILE_SEP_CHAR;
-    subbuffer += "logP.txt";
-    buffer2 += "logP.txt";
+    subbuffer += "psa.txt";
+    buffer2 += "psa.txt";
 
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
@@ -49,14 +49,11 @@ namespace OpenBabel
       }
 
     vector<string> vs;
-    bool heavy = false;
     
     char buffer[80];
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "#", 1)) continue;
-      if (EQn(buffer, ";heavy", 6))
-        heavy = true;
-      else if (EQn(buffer, ";", 1)) continue;
+      if (EQn(buffer, ";", 1)) continue;
 
 	
       tokenize(vs, buffer);
@@ -65,23 +62,20 @@ namespace OpenBabel
       
       sp = new OBSmartsPattern;
       if (sp->Init(vs[0])) {
-        if (heavy)
-          _logPcontribsHeavy.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
-	else
-          _logPcontribsHydrogen.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
+        _PSAcontribs.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
       } else {
         delete sp;
         sp = NULL;
-        obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from logP_contributions.txt", obInfo);
+        obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from psa.txt", obInfo);
       }
     }
   }
   
-  OBLogP::~OBLogP()
+  OBPSA::~OBPSA()
   {
   }
   
-  double OBLogP::GroupContributions(OBMol &mol)
+  double OBPSA::GroupContributions(OBMol &mol)
   {
     vector<vector<int> > _mlist; //!< match list for atom typing
     vector<vector<int> >::iterator j;
@@ -90,33 +84,15 @@ namespace OpenBabel
     vector<double> atomValues(mol.NumAtoms(), 0.0);
 
     // atom contributions
-    //cout << "atom contributions:" << endl;
-    for (i = _logPcontribsHeavy.begin();i != _logPcontribsHeavy.end();++i) {
+    for (i = _PSAcontribs.begin();i != _PSAcontribs.end();++i) {
       if (i->first->Match(mol)) {
         _mlist = i->first->GetMapList();
         for (j = _mlist.begin();j != _mlist.end();++j) {
 	  atomValues[(*j)[0] - 1] = i->second;
-	  //cout << (*j)[0] << " = " << i->first->GetSMARTS() << " : " << i->second << endl;
         }
       }
     }
     
-    vector<double> hydrogenValues(mol.NumAtoms(), 0.0);
-    //hydrogenValues.resize(mol.NumAtoms());   
-    
-    // hydrogen contributions
-    //cout << "hydrogen contributions:" << endl;
-    for (i = _logPcontribsHydrogen.begin();i != _logPcontribsHydrogen.end();++i) {
-      if (i->first->Match(mol)) {
-        _mlist = i->first->GetMapList();
-        for (j = _mlist.begin();j != _mlist.end();++j) {
-	  int Hcount = mol.GetAtom((*j)[0])->GetValence() - mol.GetAtom((*j)[0])->GetHvyValence();
-	  hydrogenValues[(*j)[0] - 1] = i->second * Hcount;
-	  //cout << (*j)[0] << " = " << i->first->GetSMARTS() << " : " << i->second << endl;
-        }
-      }
-    }
-
     // total atomic and hydrogen contribution
     double total = 0.0;
 
@@ -125,17 +101,7 @@ namespace OpenBabel
         continue;
 
       total += atomValues[index];
-      total += hydrogenValues[index];
     }
-    
-    /* 
-    FOR_ATOMS_OF_MOL (a, mol)
-      cout << "hydrogens on atom " << a->GetIdx() << ": " << a->GetValence() - a->GetHvyValence() << endl;
-    for (int index = 0; index < mol.NumAtoms(); index++)
-      cout << "atom " << index << ": " << atomValues[index] << endl;
-    for (int index = 0; index < mol.NumAtoms(); index++)
-      cout << "hydrogen " << index << ": " << hydrogenValues[index] << endl;
-    */
 
     return total;
   }

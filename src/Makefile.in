@@ -70,8 +70,8 @@ am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	kekulize.cpp matrix.cpp mol.cpp molchrg.cpp obconversion.cpp \
 	oberror.cpp obiter.cpp obutil.cpp parsmart.cpp patty.cpp \
 	phmodel.cpp rand.cpp residue.cpp ring.cpp rotor.cpp \
-	rotamer.cpp tokenst.cpp typer.cpp transform.cpp logp.cpp \
-	dlhandler_unix.cpp
+	rotamer.cpp tokenst.cpp typer.cpp transform.cpp logp.cpp psa.cpp \
+	dlhandler_unix.cpp 
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo canon.lo chains.lo chiral.lo data.lo \
@@ -79,7 +79,7 @@ am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	matrix.lo mol.lo molchrg.lo obconversion.lo oberror.lo \
 	obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo rand.lo \
 	residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo \
-	transform.lo logp.lo $(am__objects_1)
+	transform.lo logp.lo psa.lo $(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -274,7 +274,7 @@ libopenbabel_la_SOURCES = \
 		obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
-		transform.cpp logp.cpp $(dlhandler)
+		transform.cpp logp.cpp psa.cpp $(dlhandler)
 
 libopenbabel_la_LDFLAGS = -version-info 3:0:1 -no-undefined
 @BUILD_SHARED_TRUE@AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
@@ -410,6 +410,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tokenst.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/transform.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/typer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/psa.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
