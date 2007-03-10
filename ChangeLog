@@ -1,3 +1,18 @@
+2007-03-10 Chris Morley
+
+	* src/formats/inchiformat.cpp(WriteMolecule): For 2D molecules
+	use a modified CalculateChiralVolume() to add psueudo z
+	coordinates, rather than using InChI's 2D bond stereo method.
+	I think we are close to getting the InChI write stereochemistry
+	right at last, but systematic checking needed.
+	
+	* include/openbabel/chiral.h, src/chiral.cpp
+	(CalculateChiralVolume): add backwards-compatible extra 
+	parameter to facilitate use of pseudo z coordinates.
+	
+	* src/formats/cansmilesformat.cpp(BuildCanonTree): two more
+	instances of the bug corrected yesterday.
+
 2007-03-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure, configure.in: Bump for 2.1.0b7 snapshot.

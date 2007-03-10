@@ -292,10 +292,6 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(pmol==NULL) return false;
   
-  //Use a copy of the molecule - we will be modifying it by adding H 
-  //But atom genericdata, chiral data, not copied.
-//  OBMol mol = *pmol;
-// Try not copying
   OBMol& mol = *pmol;
 
   stringstream molID;
@@ -305,12 +301,25 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     molID << mol.GetTitle() << ' ';
   if(pConv->GetOutputIndex()==1)
     firstID=molID.str();
-  
-  mol.AddHydrogens(false,false); //so stereo works
 
   inchi_Input inp;
   memset(&inp,0,sizeof(inchi_Input));
   bool Is0D=true;
+  if(mol.GetDimension()!=3)
+  {
+    mol.FindChiralCenters();
+    if(mol.GetDimension()==2)
+    {
+      //Add pseudo z coordinates for wedge and hash bonds
+      FOR_ATOMS_OF_MOL(a,mol)
+      {
+        if(a->IsChiral())
+          CalcSignedVolume(mol, &*a, false);
+          a->DeleteData(OBGenericDataType::ChiralData); //has no effect
+      }
+    }
+  }
+
   OBAtom* patom;
   vector<inchi_Atom> inchiAtoms(mol.NumAtoms());
   vector<OBNodeBase*>::iterator itr;
@@ -319,6 +328,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //OB atom index starts at 1; inchi atom index starts at 0
     inchi_Atom& iat = inchiAtoms[patom->GetIdx()-1];
     memset(&iat,0,sizeof(inchi_Atom));
+
     iat.x = patom->GetX();
     iat.y = patom->GetY();
     iat.z = patom->GetZ();
@@ -337,27 +347,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       if(bo==5)
         bo=4;
       iat.bond_type[nbonds]     = bo;
-
-      S_CHAR bs = INCHI_BOND_STEREO_NONE;
-
-      if(pbond->IsWedge())
-        bs = INCHI_BOND_STEREO_SINGLE_1UP;
-      if(pbond->IsHash())
-        bs = INCHI_BOND_STEREO_SINGLE_1DOWN;
-
-      //The value is negated if this atom is at thick end of the bond
-      if(bs && pbond->GetBeginAtom()!=patom)
-        bs = -bs;
-
-      iat.bond_stereo[nbonds++] = bs;
-      if(nbonds>MAXVAL)
-      {
-        string msg("Too many bonds to ");
-        msg += iat.elname;
-        msg += " atom";
-        obErrorLog.ThrowError(__FUNCTION__, msg, obWarning);
-        return false;
-      }
+      iat.bond_stereo[nbonds++] = INCHI_BOND_STEREO_NONE; //not used
     }
   
     strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
@@ -387,7 +377,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(Is0D)
   {
     //Tetrahedral stereo
-    mol.FindChiralCenters();
+//    mol.FindChiralCenters(); done above
     OBAtom* patom;
     vector<OBNodeBase*>::iterator itr;
     if(mol.IsChiral())

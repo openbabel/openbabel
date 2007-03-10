@@ -202,7 +202,8 @@ namespace OpenBabel
   //! Calculate the signed volume for an atom.  If the atom has a valence of 3
   //! the coordinates of an attached hydrogen are calculated
   //! Puts attached Hydrogen last at the moment, like mol V3000 format.
-  double CalcSignedVolume(OBMol &mol,OBAtom *atm)
+  //! If ReZero=false (the default is true) always make pseudo z coords and leave them in mol
+  double CalcSignedVolume(OBMol &mol,OBAtom *atm, bool ReZeroZ)
   {
     vector3 tmp_crd;
     vector<unsigned int> nbr_atms;
@@ -210,7 +211,7 @@ namespace OpenBabel
     bool use_central_atom = false,is2D=false;
     //   double hbrad = etab.CorrectedBondRad(1,0);
            
-    if (!mol.Has3D()) //give peudo Z coords if mol is 2D
+    if (!ReZeroZ || !mol.Has3D()) //give pseudo Z coords if mol is 2D
       {
         vector3 v,vz(0.0,0.0,1.0);
         is2D = true;
@@ -306,7 +307,7 @@ namespace OpenBabel
     cd->SetAtom4Refs(nbr_atms,calcvolume);
     
     //re-zero psuedo-coords
-    if (is2D)
+    if (is2D && ReZeroZ)
       {
         vector3 v;
         OBAtom *atom;

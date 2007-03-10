@@ -886,6 +886,7 @@ namespace OpenBabel
         int sorted_needs_bsymbol = bond->IsDouble() || bond->IsTriple();
         if (new_needs_bsymbol && !sorted_needs_bsymbol) {
           sort_nbrs.insert(ai, nbr);
+          ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test 
           break;
         }
         if (   new_needs_bsymbol == sorted_needs_bsymbol
@@ -990,6 +991,7 @@ namespace OpenBabel
         nbr2_canorder = canonical_order[nbr2->GetIdx()-1];
         if (nbr1_canorder < nbr2_canorder) {
           vbonds.insert(bi, bond1);
+          bi = vbonds.begin();//insert invalidated bi; set it to fail next test
           break;
         }
       }
