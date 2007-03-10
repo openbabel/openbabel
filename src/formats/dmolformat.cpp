@@ -36,10 +36,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "DMol3 coordinates format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        "DMol3 coordinates format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -114,6 +114,7 @@ namespace OpenBabel
         v3.Set(x,y,z);
 
         OBUnitCell *uc = new OBUnitCell;
+        uc->SetOrigin(fileformatInput);
         uc->SetData(v1,v2,v3);
         mol.SetData(uc);
 
@@ -177,15 +178,15 @@ namespace OpenBabel
         ofs << "$cell vectors" << endl;
         v1 = v[0] * ANGSTROM_TO_BOHR;
         snprintf(buffer, BUFF_SIZE, 
-                "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
+                 "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
         ofs << buffer << endl;
         v1 = v[1] * ANGSTROM_TO_BOHR;
         snprintf(buffer, BUFF_SIZE, 
-                "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
+                 "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
         ofs << buffer << endl;
         v1 = v[2] * ANGSTROM_TO_BOHR;
         snprintf(buffer, BUFF_SIZE,
-                "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
+                 "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
         ofs << buffer << endl;
       }
 

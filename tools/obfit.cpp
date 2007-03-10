@@ -313,14 +313,12 @@ int main(int argc,char **argv)
           char rmsd_string[80];
           sprintf(rmsd_string,"%f", best_rmsd);
   
-          OBCommentData *cd = new OBCommentData;
-          molmv.SetData(cd);
-  
           OBPairData *dp = new OBPairData;
           string field_name = "RMSD";
 	    
           dp->SetAttribute(field_name);
           dp->SetValue(rmsd_string);
+          dp->SetOrigin(external);
           molmv.SetData(dp);
 
           //translate the rotated molecule

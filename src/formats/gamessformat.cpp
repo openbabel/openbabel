@@ -135,6 +135,7 @@ namespace OpenBabel
    if(!curset)
    {
    curset = new OBSetData();
+   curset->SetOrigin(fileformatInput);
    curset->SetAttribute(tag);
    set->AddData(curset);
    }
@@ -192,6 +193,7 @@ namespace OpenBabel
    data = new OBPairData();
    data->SetAttribute(attr);
    data->SetValue(value);
+   data->SetOrigin(fileformatInput);
 
    curset->AddData(data);
    }
@@ -222,8 +224,8 @@ namespace OpenBabel
     // must build generic data while we parse then add at the end.
     OBSetData *gmsset = new OBSetData();
     gmsset->SetAttribute("gamess");
+    gmsset->SetOrigin(fileformatInput);
 
-    mol.Clear();
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
       {
@@ -343,6 +345,7 @@ namespace OpenBabel
                       {
                         curset = new OBSetData();
                         curset->SetAttribute(vs[0]);
+                        curset->SetOrigin(fileformatInput);
                         gmsset->AddData(curset);
                       }
 
@@ -355,6 +358,7 @@ namespace OpenBabel
                           data = new OBPairData();
                           data->SetAttribute(vs[i].substr(0,loc));
                           data->SetValue(vs[i].substr(loc+1));
+                          data->SetOrigin(fileformatInput);
                           curset->AddData(data);
                         }
                     }
@@ -383,7 +387,7 @@ namespace OpenBabel
           }
         */
       }
-    cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
+    // cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
 
     const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
 
@@ -493,6 +497,7 @@ namespace OpenBabel
             nd = new OBPairData();
             nd->SetAttribute("model");
             nd->SetValue(model);
+            nd->SetOrigin(fileformatInput);
             pmol->SetData(nd);
           }
         if(basis != "")
@@ -500,6 +505,7 @@ namespace OpenBabel
             nd = new OBPairData();
             nd->SetAttribute("basis");
             nd->SetValue(basis);
+            nd->SetOrigin(fileformatInput);
             pmol->SetData(nd);
           }
         if(method != "")
@@ -507,6 +513,7 @@ namespace OpenBabel
             nd = new OBPairData();
             nd->SetAttribute("method");
             nd->SetValue(method);
+            nd->SetOrigin(fileformatInput);
             pmol->SetData(nd);
           }
 

@@ -62,16 +62,16 @@ namespace OpenBabel
       #include <openbabel/obconversion.h>
       int main(int argc,char **argv)
       {
-         OBConversion conv(&cin,&cout);
-         if(conv.SetInAndOutFormats("SDF","MOL2"))
-         { 
-            OBMol mol;
-            if(conv.Read(&mol))
-               ...manipulate molecule 
+      OBConversion conv(&cin,&cout);
+      if(conv.SetInAndOutFormats("SDF","MOL2"))
+      { 
+      OBMol mol;
+      if(conv.Read(&mol))
+      ...manipulate molecule 
     
-            conv->Write(&mol);
-         }
-         return(1);
+      conv->Write(&mol);
+      }
+      return(1);
       }
       \endcode
  
@@ -145,7 +145,7 @@ namespace OpenBabel
       double exactMass = 0.0f;
       FOR_ATOMS_OF_MOL(a, mol)
       {
-         exactMass +=  a->GetExactMass();
+      exactMass +=  a->GetExactMass();
       }
       \endcode
 
@@ -374,6 +374,7 @@ namespace OpenBabel
 
     //get new data and attach it to molecule
     OBAngleData *angles = new OBAngleData;
+    angles->SetOrigin(perceived);
     SetData(angles);
 
     OBAngle angle;
@@ -396,12 +397,12 @@ namespace OpenBabel
           }
 		
           if (unique_angle) {
-	    angle.SetAtoms((OBAtom*)b, (OBAtom*)&*a, (OBAtom*)&*c);
+            angle.SetAtoms((OBAtom*)b, (OBAtom*)&*a, (OBAtom*)&*c);
             angles->SetData(angle);
             angle.Clear();
           }
         }
-	unique_angle = 0;
+        unique_angle = 0;
       }
     }
     
@@ -416,6 +417,7 @@ namespace OpenBabel
 
     //get new data and attach it to molecule
     OBTorsionData *torsions = new OBTorsionData;
+    torsions->SetOrigin(perceived);
     SetData(torsions);
 
     OBTorsion torsion;
@@ -574,8 +576,8 @@ namespace OpenBabel
   ** Vector is indexed from zero
   */
   bool OBMol::GetGTDVector(vector<int> &gtd)
-    //calculates the graph theoretical distance for every atom
-    //and puts it into gtd
+  //calculates the graph theoretical distance for every atom
+  //and puts it into gtd
   {
     gtd.clear();
     gtd.resize(NumAtoms());
@@ -886,6 +888,7 @@ namespace OpenBabel
       SetData(new OBRingData);
 
     OBRingData *rd = (OBRingData *) GetData(OBGenericDataType::RingData);
+    rd->SetOrigin(perceived);
     return(rd->GetData());
   }
 
@@ -1029,7 +1032,7 @@ namespace OpenBabel
     string attr = "Formula";
     OBPairData *dp = (OBPairData *) GetData(attr);
   
-    if (dp != NULL) // we already set the formula
+    if (dp != NULL) // we already set the formula (or it was read from a file)
       return dp->GetValue();
 
     obErrorLog.ThrowError(__FUNCTION__,
@@ -1041,6 +1044,7 @@ namespace OpenBabel
     dp = new OBPairData;
     dp->SetAttribute(attr);
     dp->SetValue( sformula );
+    dp->SetOrigin( perceived ); // internal generation
     SetData(dp);
 
     return sformula;
@@ -1057,6 +1061,8 @@ namespace OpenBabel
         dp->SetAttribute(attr);
       }
     dp->SetValue(molFormula);
+    // typically file input, but this needs to be revisited
+    dp->SetOrigin(fileformatInput);
 
     SetData(dp);
   }
@@ -1129,10 +1135,10 @@ namespace OpenBabel
   }
 
   OBMol &OBMol::operator=(const OBMol &source)
-    //only atom and bond info is copied from src to dest
-    //Conformers are now copied also, MM 2/7/01
-    //Residue information are copied, MM 4-27-01
-    //All OBGenericData incl OBRotameterList is copied, CM 2006
+  //atom and bond info is copied from src to dest
+  //Conformers are now copied also, MM 2/7/01
+  //Residue information are copied, MM 4-27-01
+  //All OBGenericData incl OBRotameterList is copied, CM 2006
   {
     OBMol &src = (OBMol &)source;
     vector<OBAtom*>::iterator i;
@@ -1201,61 +1207,6 @@ namespace OpenBabel
           }
         SetConformers(conf);
       }
-
-    /* Now done with other OBGenericData
-    //Copy rotamer list
-    OBRotamerList *rml = (OBRotamerList *)src.GetData(OBGenericDataType::RotamerList);
-    if (rml && rml->NumAtoms() == src.NumAtoms())
-    {
-    //Destroy old rotamer list if necessary
-    if ((OBRotamerList *)GetData(OBGenericDataType::RotamerList))
-    {
-    DeleteData(OBGenericDataType::RotamerList);
-    }
-
-    //Set base coordinates
-    OBRotamerList *cp_rml = new OBRotamerList;
-    unsigned int k,l;
-    vector<double*> bc;
-    double *c=NULL;
-    double *cc=NULL;
-    for (k=0 ; k<rml->NumBaseCoordinateSets() ; ++k)
-    {
-    c = new double [3*rml->NumAtoms()];
-    cc = rml->GetBaseCoordinateSet(k);
-    for (l=0 ; l<3*rml->NumAtoms() ; ++l)
-    c[l] = cc[l];
-    bc.push_back(c);
-    }
-    if (rml->NumBaseCoordinateSets())
-    cp_rml->SetBaseCoordinateSets(bc,rml->NumAtoms());
-
-    //Set reference array
-    unsigned char *ref = new unsigned char [rml->NumRotors()*4];
-    if (ref)
-    {
-    rml->GetReferenceArray(ref);
-    cp_rml->Setup((*this),ref,rml->NumRotors());
-    delete [] ref;
-    }
-
-    //Set Rotamers
-    unsigned char *rotamers = new unsigned char [(rml->NumRotors()+1)*rml->NumRotamers()];
-    if (rotamers)
-    {
-    vector<unsigned char*>::iterator kk;
-    unsigned int idx=0;
-    for (kk = rml->BeginRotamer();kk != rml->EndRotamer();k++k)
-    {
-    memcpy(&rotamers[idx],(const unsigned char*)*kk,sizeof(unsigned char)*(rml->NumRotors()+1));
-    idx += sizeof(unsigned char)*(rml->NumRotors()+1);
-    }
-    cp_rml->AddRotamers(rotamers,rml->NumRotamers());
-    delete [] rotamers;
-    }
-    SetData(cp_rml);
-    }
-    */
 
     //Copy all the OBGenericData, providing the new molecule, this,
     //for those classes like OBRotameterList which contain Atom pointers
@@ -1384,12 +1335,6 @@ namespace OpenBabel
     if (nukePerceivedData)
       _flags = 0;
     _c = NULL;
-
-    /*
-      leave generic data alone for now - just nuke it on clear()
-      if (HasData("Comment")) delete [] (char*)GetData("Comment");
-      _vdata.clear();
-    */
 
     if (Empty())
       return;
@@ -1542,13 +1487,13 @@ namespace OpenBabel
     pBond->SetIdx(_nbonds);
 
 #define OBBondIncrement 100
-        if (_vbond.empty() || _nbonds+1 >= (signed)_vbond.size())
-          {
-            _vbond.resize(_nbonds+OBBondIncrement);
-            vector<OBBond*>::iterator i;
-            for (i = _vbond.begin(),i+=(_nbonds+1);i != _vbond.end();++i)
-              *i = (OBBond*)NULL;
-          }
+    if (_vbond.empty() || _nbonds+1 >= (signed)_vbond.size())
+      {
+        _vbond.resize(_nbonds+OBBondIncrement);
+        vector<OBBond*>::iterator i;
+        for (i = _vbond.begin(),i+=(_nbonds+1);i != _vbond.end();++i)
+          *i = (OBBond*)NULL;
+      }
 #undef  OBBondIncrement
 
     _vbond[_nbonds] = (OBBond*)pBond;
@@ -1696,15 +1641,15 @@ namespace OpenBabel
     /*
       
      
-    int idx1,idx2;
-    vector<double*>::iterator j;
-    for (idx1=0,idx2=0,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx1)
-    if (!atom->IsHydrogen())
-    {
-    for (j = _vconf.begin();j != _vconf.end();++j)
-    memcpy((char*)&((*j)[idx2*3]),(char*)&((*j)[idx1*3]),sizeof(double)*3);
-    idx2++;
-    }
+      int idx1,idx2;
+      vector<double*>::iterator j;
+      for (idx1=0,idx2=0,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx1)
+      if (!atom->IsHydrogen())
+      {
+      for (j = _vconf.begin();j != _vconf.end();++j)
+      memcpy((char*)&((*j)[idx2*3]),(char*)&((*j)[idx1*3]),sizeof(double)*3);
+      idx2++;
+      }
     */
 
     IncrementMod();
@@ -1783,15 +1728,15 @@ namespace OpenBabel
       atom->SetIdx(idx1);
 
     for (i = delatoms.begin();i != delatoms.end();++i)
-    {
-      DestroyAtom(*i);
-    }
+      {
+        DestroyAtom(*i);
+      }
 
     return(true);
   }
 
   bool OBMol::DeleteHydrogens(OBAtom *atom)
-    //deletes all hydrogens attached to the atom passed to the function
+  //deletes all hydrogens attached to the atom passed to the function
   {
     OBAtom *nbr;
     vector<OBAtom*>::iterator i;
@@ -1817,7 +1762,7 @@ namespace OpenBabel
 
 
   bool OBMol::DeleteHydrogen(OBAtom *atom)
-    //deletes the hydrogen atom passed to the function
+  //deletes the hydrogen atom passed to the function
   {
     if (!atom->IsHydrogen())
       return false;
@@ -3716,32 +3661,35 @@ namespace OpenBabel
   vector<OBMol> OBMol::Separate(int StartIndex)
   {
     vector<OBMol> result;
+    if (NumAtoms() == 0)
+      return result; // nothing to do, but let's prevent a crash
+
     OBMolAtomDFSIter iter(this, StartIndex);
     while(iter) //for each disconnected fragment
-    {
-      OBMol newmol;
-      newmol.SetDimension(GetDimension());
-      map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
-      do //for each atom in fragment
       {
-        OBAtom* pnext = &*iter;
-        newmol.AddAtom(*pnext); //each subsequent atom with its bond
-        AtomMap[pnext] = newmol.GetAtom(newmol.NumAtoms());
-      }while((iter++).next());
+        OBMol newmol;
+        newmol.SetDimension(GetDimension());
+        map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
+        do //for each atom in fragment
+          {
+            OBAtom* pnext = &*iter;
+            newmol.AddAtom(*pnext); //each subsequent atom with its bond
+            AtomMap[pnext] = newmol.GetAtom(newmol.NumAtoms());
+          }while((iter++).next());
 
-      FOR_BONDS_OF_MOL(b, this)
-      {
-        map<OBAtom*, OBAtom*>::iterator pos;
-        pos = AtomMap.find(b->GetBeginAtom());
-        if(pos!=AtomMap.end())
-          //if bond belongs to current fragment make a similar one in new molecule
-          newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
-                b->GetBO(), b->GetFlags());
+        FOR_BONDS_OF_MOL(b, this)
+          {
+            map<OBAtom*, OBAtom*>::iterator pos;
+            pos = AtomMap.find(b->GetBeginAtom());
+            if(pos!=AtomMap.end())
+              //if bond belongs to current fragment make a similar one in new molecule
+              newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
+                             b->GetBO(), b->GetFlags());
+          }
+
+        //Remap
+        result.push_back(newmol);
       }
-
-      //Remap
-      result.push_back(newmol);
-    }
     return result;
   }
 

@@ -100,6 +100,7 @@ namespace OpenBabel
     Beta  = atof((char*)vs[6].c_str());
     Gamma = atof((char*)vs[7].c_str());
     OBUnitCell *uc = new OBUnitCell;
+    uc->SetOrigin(fileformatInput);
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
     mol.SetData(uc);
     m = uc->GetOrthoMatrix();

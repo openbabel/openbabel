@@ -63,6 +63,12 @@ namespace OpenBabel
       in OBBase, allowing you to separate data read in from a file,
       added by a user, or assigned by Open Babel internally.
 
+      While the library and import routines will set DataOrigin correctly, 
+      you should try to annotate data added by your code. Typically this would
+      either be userAdded or external. The former refers to something the
+      user requested as an annotation, while the latter refers to annotations
+      your code adds automatically.
+
       Example code using OBGenericData:
 
       @code
@@ -89,14 +95,17 @@ namespace OpenBabel
       @endcode
 
       Similar code also works for OBGenericData stored in an OBAtom or 
-      OBBond or OBResidue.
+      OBBond or OBResidue. These examples show use of DataOrigin outside
+      of the Open Babel library.
 
       @code
+      string atomLabel; // e.g., from the user adding annotation to an atom
       if (!atom.HasData("UserLabel")) // stored textual data as an OBPairData
       {
          OBPairData *label = new OBPairData;
          label->SetAttribute("UserLabel");
-         label->SetValue(userInput);
+         label->SetValue(atomLabel);
+         label->SetOrigin(userInput); // set by user, not by Open Babel
 
          atom.SetData(label);
       }
@@ -121,7 +130,8 @@ namespace OpenBabel
       these and similar pointers it is more likely that the very simple 
       clone function
       @code
-      virtual OBGenericData* Clone(OBBase* parent) const{return new MyNewClass(*this);}
+      virtual OBGenericData* Clone(OBBase* parent) const
+         {return new MyNewClass(*this);}
       @endcode
       and the compiler generated copy constructor would be sufficient. 
 
@@ -132,7 +142,8 @@ namespace OpenBabel
       For classes which are not intended to support copying, Clone() can 
       return NULL 
       @code
-      virtual OBGenericData* Clone(OBBase* parent) const{return NULL;}
+      virtual OBGenericData* Clone(OBBase* parent) const 
+         {return NULL;}
       @endcode
       Clone() is a pure virtual function so that you need to decide what
       kind of function you need and include it explicitly.
@@ -1252,8 +1263,10 @@ namespace OpenBabel
       }
   }
 
+  // Chiral data is a perceived data type. We might read in some chiral info
+  // but this class derives and converts from whatever is read
   OBChiralData::OBChiralData()
-    : OBGenericData("ChiralData", OBGenericDataType::ChiralData)
+    : OBGenericData("ChiralData", OBGenericDataType::ChiralData, perceived)
   {  }
 
   OBChiralData::OBChiralData(const OBChiralData &src)

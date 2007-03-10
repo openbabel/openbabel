@@ -32,10 +32,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Free Form Fractional format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        "Free Form Fractional format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -112,6 +112,7 @@ namespace OpenBabel
     Beta  = atof(TrimErrors(vs[4]));
     Gamma = atof(TrimErrors(vs[5]));
     OBUnitCell *uc = new OBUnitCell;
+    uc->SetOrigin(fileformatInput);
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
     mol.SetData(uc);
     matrix3x3 m = uc->GetOrthoMatrix();
@@ -197,9 +198,9 @@ namespace OpenBabel
       {
         uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
         snprintf(buffer, BUFF_SIZE,
-                "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
-                uc->GetA(), uc->GetB(), uc->GetC(),
-                uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
+                 "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
+                 uc->GetA(), uc->GetB(), uc->GetC(),
+                 uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
         ofs << buffer << "\n";
       }
 
@@ -211,10 +212,10 @@ namespace OpenBabel
           v *= uc->GetFractionalMatrix();
 
         snprintf(buffer, BUFF_SIZE, "%s %10.5f%10.5f%10.5f",
-                etab.GetSymbol(atom->GetAtomicNum()),
-                v.x(),
-                v.y(),
-                v.z());
+                 etab.GetSymbol(atom->GetAtomicNum()),
+                 v.x(),
+                 v.y(),
+                 v.z());
         ofs << buffer << endl;
       }
     ofs << endl; // add a blank line between molecules

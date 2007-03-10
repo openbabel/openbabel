@@ -253,6 +253,7 @@ namespace OpenBabel
                 if(--CrystalScalarsNeeded==0)
                   {
                     pUnitCell = new OBUnitCell;
+                    pUnitCell->SetOrigin(fileformatInput);
                     pUnitCell->SetData(CrystalVals[0],CrystalVals[1],CrystalVals[2],
                                        CrystalVals[3],CrystalVals[4],CrystalVals[5]);
                     _pmol->SetData(pUnitCell);
@@ -276,6 +277,7 @@ namespace OpenBabel
                 dp->SetAttribute((const char*)pattr);
                 string val((const char*)pvalue);
                 dp->SetValue(Trim(val));
+                dp->SetOrigin(fileformatInput);
                 _pmol->SetData(dp);
               }
             PropertyScalarsNeeded=0;
@@ -861,6 +863,7 @@ namespace OpenBabel
   {
     //Do all NasaThermo data here
     OBNasaThermoData* pTD = new OBNasaThermoData;
+    pTD->SetOrigin(fileformatInput);
     _pmol->SetData(pTD);
     for(;;)
       {

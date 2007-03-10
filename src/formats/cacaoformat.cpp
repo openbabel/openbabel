@@ -33,10 +33,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Cacao Cartesian format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        "Cacao Cartesian format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -103,6 +103,7 @@ namespace OpenBabel
 
     OBUnitCell *uc = new OBUnitCell;
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
+    uc->SetOrigin(fileformatInput);
     mol.SetData(uc);
     m = uc->GetOrthoMatrix();
 
@@ -173,18 +174,18 @@ namespace OpenBabel
       {
         OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
         snprintf(buffer, BUFF_SIZE, "CELL %f,%f,%f,%f,%f,%f\n",
-                uc->GetA(), uc->GetB(), uc->GetC(),
-                uc->GetAlpha(), uc->GetBeta(), uc->GetGamma());
+                 uc->GetA(), uc->GetB(), uc->GetC(),
+                 uc->GetAlpha(), uc->GetBeta(), uc->GetGamma());
         ofs << buffer;
       }
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         snprintf(buffer,BUFF_SIZE,"%2s %7.4f, %7.4f, %7.4f\n",
-                etab.GetSymbol(atom->GetAtomicNum()),
-                atom->x(),
-                atom->y(),
-                atom->z());
+                 etab.GetSymbol(atom->GetAtomicNum()),
+                 atom->x(),
+                 atom->y(),
+                 atom->z());
         ofs << buffer;
       }
 
@@ -288,7 +289,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL(){return
-                                             "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";}; //optional
+        "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -345,10 +346,10 @@ namespace OpenBabel
         if (vit[i]->_tor < 0.0)
           vit[i]->_tor += 360.0;
         snprintf(buffer, BUFF_SIZE, "%2d,%d,%2s%7.3f,%7.3f,%7.3f",
-                vit[i]->_a->GetIdx(),i,tmptype,
-                vit[i]->_dst,
-                vit[i]->_ang,
-                vit[i]->_tor);
+                 vit[i]->_a->GetIdx(),i,tmptype,
+                 vit[i]->_dst,
+                 vit[i]->_ang,
+                 vit[i]->_tor);
         ofs << buffer << endl;
       }
 

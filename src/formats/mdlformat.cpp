@@ -351,6 +351,7 @@ public:
       {
         OBCommentData *cd = new OBCommentData;
         cd->SetData(comment);
+        cd->SetOrigin(fileformatInput);
         mol.SetData(cd);
       }
         
@@ -383,6 +384,7 @@ public:
             OBPairData *dp = new OBPairData;
             dp->SetAttribute(attr);
             dp->SetValue(buff);
+            dp->SetOrigin(fileformatInput);
             mol.SetData(dp);
             
             if(!strcasecmp(attr.c_str(),"NAME") && *mol.GetTitle()=='\0')

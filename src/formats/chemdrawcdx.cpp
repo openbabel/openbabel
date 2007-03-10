@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2006 by Fredrik Wallner
-Some portions Copyright (C) 2006 by Geoffrey Hutchsion
+Some portions Copyright (C) 2006-2007 by Geoffrey Hutchsion
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -67,8 +67,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "ChemDraw binary format\n \
-		Read only.\n";
+        "ChemDraw binary format\n"
+        "Read only.\n";
     };
 
     //Optional URL where the file format is specified
@@ -162,7 +162,7 @@ namespace OpenBabel
         READ_INT16 (ifs, tag);
         if(tag & kCDXTag_Object)	// Object
           {
-  	       READ_INT32 (ifs, id);
+            READ_INT32 (ifs, id);
 #ifdef debug
             printf("Object ID: %08X in root has type: %04X\n", id, tag);
 #endif
@@ -267,7 +267,7 @@ namespace OpenBabel
         else	// Property
           {
             READ_INT16 (ifs ,size);
-             //			printf("Root Tag: %04X\tSize: %04X\n", tag, size);
+            //			printf("Root Tag: %04X\tSize: %04X\n", tag, size);
             switch(tag)
               {
               case kCDXProp_Name: pmol->SetTitle(getName(&ifs, size)); break;
@@ -489,19 +489,19 @@ namespace OpenBabel
     int charge;
 	
     if(size == 4)		// Bug in ChemDraw 8.0, see http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/properties/Atom_Charge.htm
-    {
-      READ_INT32 (*ifs, charge);
-    }
-    else
-      if(size == 1)
       {
-        ifs->read((char *)&charge, size);
-#if __BYTE_ORDER == __BIG_ENDIAN
-		charge = charge >> 24;
-#endif
+        READ_INT32 (*ifs, charge);
       }
     else
-      return 0;
+      if(size == 1)
+        {
+          ifs->read((char *)&charge, size);
+#if __BYTE_ORDER == __BIG_ENDIAN
+          charge = charge >> 24;
+#endif
+        }
+      else
+        return 0;
 	
     //	printf("Charge: %d\n",charge);
     return charge;

@@ -1671,6 +1671,7 @@ namespace OpenBabel
         else
           {
             xbd = new OBExternalBondData;
+            xbd->SetOrigin(fileformatInput);
             mol.SetData(xbd);
           }
         xbd->SetData(atom,refbond,(*bond)[0]);
@@ -2387,7 +2388,7 @@ namespace OpenBabel
           {
             bool external = false;
             vector<pair<int,pair<OBAtom *,OBBond *> > > *externalBonds =
-              (vector<pair<int,pair<OBAtom *,OBBond *> > > *)((OBMol*)atom->GetParent())->GetData("extBonds");
+              (vector<pair<int,pair<OBAtom *,OBBond *> > > *)((OBMol*)atom->GetParent())->GetData(OBGenericDataType::ExternalBondData);
             vector<pair<int,pair<OBAtom *,OBBond *> > >::iterator externalBond;
 
             if (externalBonds)

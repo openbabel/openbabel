@@ -37,12 +37,14 @@ namespace OpenBabel
   individual atoms:
 
   \code
+  string atomLabel; // e.g., from the user adding annotation to an atom
   if (!atom.HasData("UserLabel")) // stored textual data as an OBPairData
   {
      OBPairData *label = new OBPairData;
      label->SetAttribute("UserLabel");
-     label->SetValue(userInput);
-
+     label->SetValue(atomLabel);
+     label->SetOrigin(userInput); // set by user, not by Open Babel
+  
      atom.SetData(label);
   }
   \endcode

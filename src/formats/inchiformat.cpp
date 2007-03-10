@@ -410,6 +410,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           if(!cd)
           { //if no Chiral Data Set, need to make one!
             cd=new OBChiralData;
+            cd->SetOrigin(perceived);
             patom->SetData(cd);
           }
           vector<unsigned int> nbr_atoms(4);

@@ -20,9 +20,9 @@ using namespace std;
 namespace OpenBabel
 {
 
-class CARFormat : public OBMoleculeFormat
-{
-public:
+  class CARFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     CARFormat()
     {
@@ -31,41 +31,41 @@ public:
       OBConversion::RegisterFormat("arc",this, "chemical/x-msi-car");
     }
 
-  virtual const char* Description() //required
-  {
-    return
-      "Accelrys/MSI Biosym/Insight II CAR format\n"
-      "Read Options e.g. -as\n"
-      "  s  Output single bonds only\n"
-      "  b  Disable bonding entirely\n\n";
-  };
+    virtual const char* Description() //required
+    {
+      return
+        "Accelrys/MSI Biosym/Insight II CAR format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
+    };
 
-  virtual const char* SpecificationURL()
-  { return "";}; //optional
+    virtual const char* SpecificationURL()
+    { return "";}; //optional
 
-  virtual const char* GetMIMEType() 
-  { return "chemical/x-msi-car"; };
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-msi-car"; };
 
-  virtual unsigned int Flags()
-  {
-    return NOTWRITABLE;
-  };
+    virtual unsigned int Flags()
+    {
+      return NOTWRITABLE;
+    };
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-};
+  };
 
-//Make an instance of the format class
-CARFormat theCARFormat;
+  //Make an instance of the format class
+  CARFormat theCARFormat;
 
-/////////////////////////////////////////////////////////////////
-bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -82,81 +82,82 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE))
-    {
-      if(strstr(buffer,"end") != NULL)
-	{
-	  if (mol.NumAtoms() > 0) // we've already read in a molecule, so exit
-	    break;
-	  // else, we hit the end of the previous molecular system
-	  // (in a multimolecule file)
-	  ifs.getline(buffer,BUFF_SIZE); // title
-	  ifs.getline(buffer,BUFF_SIZE); // DATE
-	}
+      {
+        if(strstr(buffer,"end") != NULL)
+          {
+            if (mol.NumAtoms() > 0) // we've already read in a molecule, so exit
+              break;
+            // else, we hit the end of the previous molecular system
+            // (in a multimolecule file)
+            ifs.getline(buffer,BUFF_SIZE); // title
+            ifs.getline(buffer,BUFF_SIZE); // DATE
+          }
 
-      if (strncmp(buffer, "!BIOSYM", 7) == 0)
-	{
-	  continue;
-	}
+        if (strncmp(buffer, "!BIOSYM", 7) == 0)
+          {
+            continue;
+          }
 
-      if(strstr(buffer,"PBC") != NULL)
-        {
+        if(strstr(buffer,"PBC") != NULL)
+          {
             if(strstr(buffer,"ON") != NULL)
-            {
-	      ifs.getline(buffer,BUFF_SIZE); // title
-	      ifs.getline(buffer,BUFF_SIZE); // DATE
-	      ifs.getline(buffer,BUFF_SIZE); // PBC a b c alpha beta gamma SG
+              {
+                ifs.getline(buffer,BUFF_SIZE); // title
+                ifs.getline(buffer,BUFF_SIZE); // DATE
+                ifs.getline(buffer,BUFF_SIZE); // PBC a b c alpha beta gamma SG
 
-	      // parse cell parameters
-	      tokenize(vs,buffer);
-	      if (vs.size() == 8)
-		{
-		  //parse cell values
-		  double A,B,C,Alpha,Beta,Gamma;
-		  A = atof((char*)vs[1].c_str());
-		  B = atof((char*)vs[2].c_str());
-		  C = atof((char*)vs[3].c_str());
-		  Alpha = atof((char*)vs[4].c_str());
-		  Beta  = atof((char*)vs[5].c_str());
-		  Gamma = atof((char*)vs[6].c_str());
-		  OBUnitCell *uc = new OBUnitCell;
-		  uc->SetData(A, B, C, Alpha, Beta, Gamma);
-		  uc->SetSpaceGroup(vs[7]);
-		  mol.SetData(uc);
-		}
-            }
+                // parse cell parameters
+                tokenize(vs,buffer);
+                if (vs.size() == 8)
+                  {
+                    //parse cell values
+                    double A,B,C,Alpha,Beta,Gamma;
+                    A = atof((char*)vs[1].c_str());
+                    B = atof((char*)vs[2].c_str());
+                    C = atof((char*)vs[3].c_str());
+                    Alpha = atof((char*)vs[4].c_str());
+                    Beta  = atof((char*)vs[5].c_str());
+                    Gamma = atof((char*)vs[6].c_str());
+                    OBUnitCell *uc = new OBUnitCell;
+                    uc->SetOrigin(fileformatInput);
+                    uc->SetData(A, B, C, Alpha, Beta, Gamma);
+                    uc->SetSpaceGroup(vs[7]);
+                    mol.SetData(uc);
+                  }
+              }
             else // PBC=OFF
-            {
-	      ifs.getline(buffer,BUFF_SIZE); // title
-	      ifs.getline(buffer,BUFF_SIZE); // !DATE
-            }
-	    continue;
-        } // PBC
+              {
+                ifs.getline(buffer,BUFF_SIZE); // title
+                ifs.getline(buffer,BUFF_SIZE); // !DATE
+              }
+            continue;
+          } // PBC
 
-      // reading real data!
-      tokenize(vs,buffer);
-      if (vs.size() < 8) {
-	break;
+        // reading real data!
+        tokenize(vs,buffer);
+        if (vs.size() < 8) {
+          break;
+        }
+
+        atom = mol.NewAtom();
+      
+        atom->SetAtomicNum(etab.GetAtomicNum(vs[7].c_str()));
+        x = atof((char*)vs[1].c_str());
+        y = atof((char*)vs[2].c_str());
+        z = atof((char*)vs[3].c_str());
+        atom->SetVector(x,y,z);
+      
+        // vs[0] contains atom label
+        // vs[4] contains "type of residue containing atom"
+        // vs[5] contains "residue sequence name"
+        // vs[6] contains "potential type of atom"
+      
+        if (vs.size() == 9)
+          {
+            atom->SetPartialCharge(atof((char*)vs[8].c_str()));
+            hasPartialCharges = true;
+          }
       }
-
-      atom = mol.NewAtom();
-      
-      atom->SetAtomicNum(etab.GetAtomicNum(vs[7].c_str()));
-      x = atof((char*)vs[1].c_str());
-      y = atof((char*)vs[2].c_str());
-      z = atof((char*)vs[3].c_str());
-      atom->SetVector(x,y,z);
-      
-      // vs[0] contains atom label
-      // vs[4] contains "type of residue containing atom"
-      // vs[5] contains "residue sequence name"
-      // vs[6] contains "potential type of atom"
-      
-      if (vs.size() == 9)
-	{
-	  atom->SetPartialCharge(atof((char*)vs[8].c_str()));
-	  hasPartialCharges = true;
-	}
-    }
     
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
@@ -165,9 +166,9 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     mol.EndModify();
     if (hasPartialCharges)
-        mol.SetPartialChargesPerceived();
+      mol.SetPartialChargesPerceived();
     mol.SetTitle(title);
     return(true);
-}
+  }
 
 } //namespace OpenBabel

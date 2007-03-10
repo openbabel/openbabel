@@ -867,6 +867,7 @@ namespace OpenBabel
               if(spg=="") spg=pos->second.mSpacegroupNumberIT;
               if(spg=="") spg="P1";
               OBUnitCell *pCell=new OBUnitCell;
+              pCell->SetOrigin(fileformatInput);
               pCell->SetData(pos->second.mvLatticePar[0],
                              pos->second.mvLatticePar[1],
                              pos->second.mvLatticePar[2],
@@ -880,6 +881,9 @@ namespace OpenBabel
           else
             if(pos->second.mFormula!="") pmol->SetTitle(pos->second.mFormula);
             else pmol->SetTitle(pConv->GetTitle());
+
+          if(pos->second.mFormula!="") pmol->SetFormula(pos->second.mFormula);
+
           const unsigned int nbatoms=pos->second.mvAtom.size();
           pmol->ReserveAtoms(nbatoms);
           for(vector<CIFData::CIFAtom>::const_iterator posat=pos->second.mvAtom.begin();posat!=pos->second.mvAtom.end();++posat)

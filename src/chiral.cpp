@@ -300,6 +300,7 @@ namespace OpenBabel
     if(cd==NULL)
       {
         cd = new OBChiralData;
+        cd->SetOrigin(perceived);
         atm->SetData(cd);
       }
     cd->SetAtom4Refs(nbr_atms,calcvolume);

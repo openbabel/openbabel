@@ -60,6 +60,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 		return false;
 	pmol->SetDimension(0);
 	OBNasaThermoData* pND = new OBNasaThermoData; //to store rate constant data
+  pND->SetOrigin(fileformatInput);
 	pmol->SetData(pND);
 
 	istream &ifs = *pConv->GetInStream();

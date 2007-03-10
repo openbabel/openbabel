@@ -104,16 +104,18 @@ namespace OpenBabel
             string attr(txt.substr(0,pos)), val(txt.substr(pos+1));
             //Update value if it already exists
             OBPairData* dp = dynamic_cast<OBPairData*>(GetData(attr));
-            if(dp)
-              dp->SetValue(val);						
-            else
-              {
-                // Pair did not exist; make new one
-                dp = new OBPairData;
-                dp->SetAttribute(attr);
-                dp->SetValue(val);
-                SetData(dp);
-              }
+            if(dp) {
+              dp->SetValue(val);
+              dp->SetOrigin(userInput);
+            } 
+            else {
+              // Pair did not exist; make new one
+              dp = new OBPairData;
+              dp->SetAttribute(attr);
+              dp->SetValue(val);
+              dp->SetOrigin(userInput);
+              SetData(dp);
+            }
           }
       }
 

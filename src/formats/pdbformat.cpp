@@ -121,6 +121,8 @@ namespace OpenBabel
     resdat.AssignBonds(mol,bs);
     /*assign hetatm bonds based on distance*/
 
+    mol.EndModify();
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
 
@@ -131,8 +133,6 @@ namespace OpenBabel
     while(ifs.peek() != EOF && ifs.good() && 
           (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
-
-    mol.EndModify();
 
     return(true);
   }

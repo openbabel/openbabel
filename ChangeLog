@@ -1,3 +1,15 @@
+2007-03-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure, configure.in: Bump for 2.1.0b7 snapshot.
+
+	* Doxyfile: Bump version for eventual 2.1.0 release.
+
+	* src/*, src/formats/*: Add OBGenericData::SetOrigin calls to
+	provide attribution to sources of data: file input, user input,
+	perceived, etc.
+
+	* tools/obfit.cpp: Likewise.
+
 2007-03-09  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/logp.h, src/logp.cpp, src/Makefile.am,

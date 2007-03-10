@@ -281,6 +281,7 @@ namespace OpenBabel
       {
         OBCommentData *cd = new OBCommentData;
         cd->SetData(comment);
+        cd->SetOrigin(fileformatInput);
         mol.SetData(cd);
         delete [] comment;
         comment = NULL;

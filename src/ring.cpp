@@ -134,6 +134,7 @@ namespace OpenBabel
         
         SetData(new OBRingData);
         OBRingData *rd = (OBRingData*)GetData(OBGenericDataType::RingData);
+        rd->SetOrigin(perceived); // to separate from user or file input
         rd->SetData(vr);
       }
   }
