@@ -71,7 +71,8 @@ public:
 	// event handlers 
 	void OnQuit(wxCommandEvent& event);
 	void OnSaveInputText(wxCommandEvent& event);
-	void OnAbout(wxCommandEvent& event);
+  void OnCopyToInput(wxCommandEvent& event);
+  void OnAbout(wxCommandEvent& event);
 	void OnHelp(wxCommandEvent& event);
 	void OnGetInputFile(wxCommandEvent& event);
 	void OnGetOutputFile(wxCommandEvent& event);
@@ -174,7 +175,8 @@ enum
 		ID_OUTFILENAME,ID_OUTGETFILES,
 		ID_INFORMAT,ID_OUTFORMAT,ID_ININFO,ID_OUTINFO,
 		ID_INFORCEFORMAT,ID_OUTFORCEFORMAT,ID_NOOUTFILE,ID_CONVERT,
-		ID_MESSAGES,ID_INPUTHERE,ID_RESTRICTFORMATS,ID_SELFORMATS
+		ID_MESSAGES,ID_INPUTHERE,ID_RESTRICTFORMATS,ID_SELFORMATS,
+    ID_COPYTOINPUT
 };
 
 #endif

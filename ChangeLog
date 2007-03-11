@@ -1,3 +1,18 @@
+2007-03-11 Chris Morley
+
+	* src/formats/inchiformat.cpp: Moved handling of InChI
+	options to new subroutine and it added options to 
+	ReadMolecule().
+	In WriteMolecule() removed deletion of OBChiralData and
+	re-zeroed z coords, so that OBMol is unchanged.
+	
+	* src/GUI/OBGUI.cpp, OBGUI.h; Made default ostream a 
+	stringstream which is written to textbox at end. Solves
+	bugs 1596906 and (probably) 1669973.
+	Added facility for copying output to input.
+	
+	* src/GUI/optswx.cpp,stdwx.cpp:Leave header files in src/GUI
+
 2007-03-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 	
 	* include/openbabel/psa.h, src/psa.cpp, src/Makefile.am,

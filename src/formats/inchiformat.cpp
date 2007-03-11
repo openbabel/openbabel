@@ -40,6 +40,7 @@ public:
     OBConversion::RegisterOptionParam("n", this, 0, OBConversion::INOPTIONS);
     OBConversion::RegisterOptionParam("t", this);
     OBConversion::RegisterOptionParam("X", this, 1, OBConversion::OUTOPTIONS);
+    OBConversion::RegisterOptionParam("X", this, 1, OBConversion::INOPTIONS);
   }
 
   virtual const char* Description()
@@ -55,12 +56,13 @@ public:
     " U output only unique molecules and sort them\n"
     " e compare first molecule to others\n"
     " w don't warn on undef stereo or charge rearrangement\n\n"
-    " The InChI options should be space delimited in a single quoted string.\n"
-    " See InChI documentation for possible options.\n\n"
     "Note that when reading an InChI the stereochemical info is currently ignored.\n"
     "Input options, e.g. -at\n"
+    " X <Option string> List of InChI options:\n"
     " n molecule name follows InChI on same line\n"
-    " a add InChI string to molecule name\n\n" ;
+    " a add InChI string to molecule name\n\n"
+    " The InChI options should be space delimited in a single quoted string.\n"
+    " See InChI documentation for possible options.\n\n" ;
   };
 
   virtual const char* SpecificationURL()
@@ -75,6 +77,7 @@ public:
 
 private:
   OBAtom* GetCommonAtom(OBBond* pb1, OBBond* pb2);
+  char* GetInChIOptions(OBConversion* pConv, bool Reading);
 
   ///Compare std::strings with embedded numbers so that 
   // "a6b" (or "a06b") is less than "a15b"
@@ -155,18 +158,25 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     clog << "Note that any stereochemical info in the InChI is not currently read." << endl;
 
   //Set up input struct
-  inchi_InputINCHI inInchi;
-  inInchi.szOptions="";
-  inInchi.szInChI = const_cast<char*>( inchi.c_str()); //***KLUDGE***
+  inchi_InputINCHI inp;
+
+  char* opts= GetInChIOptions(pConv, true);
+  inp.szOptions = opts;
+
+  char* nonconstinchi = new char[inchi.size()+1];
+  inp.szInChI = strcpy(nonconstinchi, inchi.c_str());
+
   inchi_OutputStruct out;
 
   //Call the conversion routine in InChI code
-  int ret = GetStructFromINCHI( &inInchi, &out );
+  int ret = GetStructFromINCHI( &inp, &out );
 
   if (ret!=inchi_Ret_OKAY)
   {
     obErrorLog.ThrowError("InChI code", out.szMessage, obWarning);
   }
+  delete[] nonconstinchi;
+  delete[] opts;
 
   //Read name if requested e.g InChI=1/CH4/h1H4 methane 
   //OR InChI=1/CH4/h1H4 "First alkane"  Quote can be any punct char and
@@ -218,21 +228,41 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   }
   
   //***TODO 0D stereo, implicit H isotopes
-  /*for(i=0;i<out.num_stereo0D;++i)
+/*  //Stereochemistry
+  for(i=0;i<out.num_stereo0D;++i)
   {
-    inchi_Stereo0D stereo = out.stereo0D;
+    inchi_Stereo0D& stereo = out.stereo0D[i];
+
+    vector<unsigned int> AtomRefs;
+    AtomRefs.push_back(stereo.neighbor[0] + 1);
+    AtomRefs.push_back(stereo.neighbor[1] + 1);
+    AtomRefs.push_back(stereo.neighbor[2] + 1);
+    AtomRefs.push_back(stereo.neighbor[3] + 1);
+
     switch(stereo.type)
     {
     case INCHI_StereoType_DoubleBond:
       break;
+
     case INCHI_StereoType_Tetrahedral:
+    {
+      OBChiralData* cd = new OBChiralData;
+      cd->SetAtom4Refs(AtomRefs, input);
       OBAtom* patom = pmol->GetAtom(stereo.central_atom+1);
       if(!patom)
         return false;
 
+      if(stereo.parity==INCHI_PARITY_EVEN)
+          patom->SetClockwiseStereo();
+      else if(stereo.parity==INCHI_PARITY_ODD)
+          patom->SetAntiClockwiseStereo();
+      patom->SetData(cd);
+
       break;
+    }
+
     case INCHI_StereoType_Allene:
-      default:
+    default:
       obErrorLog.ThrowError("InChI code", "Unsupported stereo type has been ignored.", obWarning);
     }
   }
@@ -289,6 +319,7 @@ int InChIFormat::SkipObjects(int n, OBConversion* pConv)
 /////////////////////////////////////////////////////////////////
 bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
+  //Although the OBMol may be altered, it is restored before exit.
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(pmol==NULL) return false;
   
@@ -315,7 +346,6 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       {
         if(a->IsChiral())
           CalcSignedVolume(mol, &*a, false);
-          a->DeleteData(OBGenericDataType::ChiralData); //has no effect
       }
     }
   }
@@ -371,6 +401,15 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   
   inp.atom = &inchiAtoms[0];
+
+  //Restore zero z coordinate which may have ben modified for chiral 2D molecules
+  if(mol.GetDimension()==2)
+  {
+    FOR_ATOMS_OF_MOL(a,mol)
+    {
+      a->SetVector(a->x(), a->y(), 0.0);
+    }
+  }
 
   vector<inchi_Stereo0D> stereoVec;
   
@@ -484,24 +523,8 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     }
   }
   
-  const char* copts = pConv->IsOption("X");
-  char* opts=NULL;
-  if(copts)
-  {
-    vector<string> optsvec;
-    string tmp(copts); // GCC doesn't like passing string temporaries to functions
-    tokenize(optsvec, tmp);
-#ifdef WIN32
-    string ch(" /");
-#else
-    string ch(" -");
-#endif
-    string sopts;
-    for(int i=0;i<optsvec.size();++i)
-      sopts += ch + optsvec[i];
-    opts = new char[strlen(sopts.c_str())+1]; //has to be char, not const char
-    inp.szOptions = strcpy(opts, sopts.c_str());
-  }
+  char* opts = GetInChIOptions(pConv, false);
+  inp.szOptions = opts;
 
   inp.num_atoms = mol.NumAtoms();
   inp.num_stereo0D = stereoVec.size();
@@ -838,6 +861,34 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(pConv->IsLast())
     ofs << nFailures << " failure" << s << endl;
   return true;
+}
+
+//Returns pointer to InChI options string, which needs to be deleted with delete[]
+//If there are no options returns an empty string
+char* InChIFormat::GetInChIOptions(OBConversion* pConv, bool Reading)
+{
+  char* opts;
+  OBConversion::Option_type opttyp = Reading ? OBConversion::INOPTIONS : OBConversion::OUTOPTIONS;
+  const char* copts = pConv->IsOption("X", opttyp);
+  if(copts)
+  {
+    vector<string> optsvec;
+    string tmp(copts); // GCC doesn't like passing string temporaries to functions
+    tokenize(optsvec, tmp);
+#ifdef WIN32
+    string ch(" /");
+#else
+    string ch(" -");
+#endif
+    string sopts;
+    for(int i=0;i<optsvec.size();++i)
+      sopts += ch + optsvec[i];
+    opts = new char[strlen(sopts.c_str())+1]; //has to be char, not const char
+    return strcpy(opts, sopts.c_str());
+  }
+  opts = new char[1];
+  *opts = '\0';
+  return opts;
 }
 
 }//namespace OpenBabel

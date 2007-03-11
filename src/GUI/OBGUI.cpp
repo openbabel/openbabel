@@ -16,12 +16,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
-#include <openbabel/stdwx.h>
+#include <stdwx.h>
 #include <sstream>
 #include <openbabel/obconversion.h>
 #include <openbabel/dlhandler.h>
-#include <openbabel/selformats.h>
-#include <openbabel/OBGUI.h>
+#include <selformats.h>
+#include <OBGUI.h>
 
 /*
 #ifdef _DEBUG
@@ -38,6 +38,7 @@ BEGIN_EVENT_TABLE(OBGUIFrame, wxFrame)
 	EVT_MENU(ID_CONVERT,		 OBGUIFrame::OnConvert)
 	EVT_MENU(wxID_EXIT,      OBGUIFrame::OnQuit)
 	EVT_MENU(wxID_SAVE,      OBGUIFrame::OnSaveInputText)
+	EVT_MENU(ID_COPYTOINPUT,  OBGUIFrame::OnCopyToInput)
 	EVT_MENU(ID_SELFORMATS,  OBGUIFrame::OnSelectFormats)
 	EVT_MENU(ID_RESTRICTFORMATS,  OBGUIFrame::OnRestrictFormats)
 	EVT_MENU_RANGE(ID_SHOWCONVOPTIONS,ID_SHOWOUTOPTIONS, OBGUIFrame::OnChangeFormat)
@@ -121,6 +122,8 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 	fileMenu->Append(ID_CONVERT, _T("&Convert"));
 	fileMenu->Append(wxID_SAVE, _T("&Save Input Text As...\tCtrl+S"),
 		_T("Brings up Save dialog"));
+	fileMenu->Append(ID_COPYTOINPUT, _T("&Copy Output To Input"),
+		_T("Copies output text and format to input"));
 	fileMenu->Append(wxID_EXIT, _T("E&xit\tAlt-X"), _T("Quit OpenBabelGUI"));
 	helpMenu->Append(wxID_HELP, _T("&Instructions"),
 		_T("Opens default browser to view help file"));
@@ -210,7 +213,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 	
 	m_pOutText = new wxTextCtrl(m_pSplitter, ID_OUTTEXT, "",
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|notwrapped|wxNO_BORDER);
-	
+
 	m_pSplitter->SplitHorizontally(m_pMessages, m_pOutText, 20);
 	m_pSplitter->SetMinimumPaneSize(20);
 	int messize;
@@ -253,7 +256,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
       1,        // make vertically stretchable
       wxEXPAND| // make horizontally stretchable
       wxALL,    // and make border all around
-      5 );     // set border width to 10
+      5 );     // set border width
 
 	m_pGenOptsPanel = new DynOptionswx(panel, OptionsSizer);
 	m_pAPIOptsPanel = new DynOptionswx(panel, OptionsSizer);
@@ -374,6 +377,18 @@ void OBGUIFrame::OnSaveInputText(wxCommandEvent& WXUNUSED(event))
 	}
 }
 
+void OBGUIFrame::OnCopyToInput(wxCommandEvent& WXUNUSED(event))
+{
+  //Copies contents of output textbox to input textbox, 
+  // and output format to input format.
+  m_pInText->Clear();
+  m_pInText->WriteText(m_pOutText->GetValue());
+  SetChoice(m_pInFormat, m_pOutFormat->GetStringSelection());
+  m_pInText->SetInsertionPoint(0);
+  m_pInputHere->SetValue(true);
+  ChangeInputHere(true);
+}
+
 void OBGUIFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
 {
 //  // 1) Get File Type
@@ -431,8 +446,9 @@ void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
 	//Default input is from input text box;
 	std::stringstream ss(m_pInText->GetValue().c_str());
 //	char ch = ss.peek();
-	//Default output is cout, which is redirected to Output text box
-	OBConversion Conv(&ss, &std::cout);
+	//Default output is a string stream which is written to the Output text box at the end
+  std::ostringstream GUIostream;
+	OBConversion Conv(&ss, &GUIostream);
 
 	int iSel = m_pInFormat->GetSelection();
 	if((iSel)<0) return;
@@ -480,13 +496,13 @@ with the output format.\nDo you wish to continue the conversion?",
   //redirect cerr & clog & cout
 		wxStreamToTextRedirector cerrCapture(m_pMessages, &std::cerr);
 		wxStreamToTextRedirector clogCapture(m_pMessages, &std::clog);
-		wxStreamToTextRedirector coutCapture(m_pOutText);
+//		wxStreamToTextRedirector coutCapture(m_pOutText);
 
-	m_pOutText->Freeze();//Otherwise seems to be redrawn after each char from cout
+//	m_pOutText->Freeze();//Otherwise seems to be redrawn after each char from cout
 	
 	int count = Conv.FullConvert(FileList, stdOutputFileName, OutputFileList);
 	
-	m_pOutText->Thaw();
+//	m_pOutText->Thaw();
 
 	//Get the last word on the first line of the description which should
 	//be "molecules", "reactions", etc and remove the s if only one object converted
@@ -504,12 +520,20 @@ with the output format.\nDo you wish to continue the conversion?",
 			<< " files output. The first is " << OutputFileList[0];
   }
 	
-	if(count>0 && !m_pNoOutFile->IsChecked())
-	{
-		//Read back file and add to output console
-		m_pOutText->Clear();
-		m_pOutText->LoadFile(OutputFileList[0].c_str());
-	}
+	if(count>0)
+  {
+    if(!m_pNoOutFile->IsChecked())
+	  {
+		  //Read back file and add to output console
+		  m_pOutText->Clear();
+		  m_pOutText->LoadFile(OutputFileList[0].c_str());
+	  }
+    else
+    {
+      m_pOutText->WriteText(wxString(GUIostream.str().c_str()));
+      m_pOutText->SetInsertionPoint(0);
+    }
+  }
 }
 
 ///////////////////////////////////////////

@@ -16,10 +16,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
-#include <openbabel/stdwx.h>
+#include <stdwx.h>
 #include <sstream>
 #include <utility>
-#include <openbabel/optswx.h>
+#include <optswx.h>
 
 
 #ifdef _DEBUG
