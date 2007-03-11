@@ -37,10 +37,6 @@ namespace OpenBabel
 #define OBFF_LOGLVL_MEDIUM	2 //!< individual energy terms
 #define OBFF_LOGLVL_HIGH	3   //!< individual calculations and parameters
 
-#ifndef isnan
-#define static inline isnan(double x) { return x != x; }
-#endif
- 
   // terms
 #define OBFF_ENERGY		(1 << 0)   //!< all terms
 #define OBFF_EBOND		(1 << 1)   //!< bond term

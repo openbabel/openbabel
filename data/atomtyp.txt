@@ -51,16 +51,10 @@ IMPVAL  [#6^2-]			2
 IMPVAL  [#6^1-]			1 #CM for isocyanides
 IMPVAL  [c+]                    2
 
-IMPVAL	[#8^3]				2
-IMPVAL	[#8^2]				2
-IMPVAL	[$([#8]=*)]			1
-IMPVAL	[#8-]				1
-IMPVAL  [$([#8D1]~[#7D3]~[#8D1])]	1
-IMPVAL	[$([#8D1]~[#6]~[#8D1])]		1
-# This is from JOELib -- add H to acidic oxygens
-IMPVAL	[$([#8D1]-[#6]=[#8D1])]		2
-# But don't add an H for pH-corrected formal-charge = -1 oxygens
-IMPVAL	[$([#8D1-]-[#6]=[#8D1])]	1
+IMPVAL [#8] 2
+IMPVAL [#8-] 1
+IMPVAL [#8+] 3
+IMPVAL [$([#8]=*)] 1
 
 IMPVAL	[N^3]			3
 IMPVAL	[N^3+]			4
@@ -82,6 +76,8 @@ IMPVAL  [n+]			3
 
 IMPVAL  [#9D0]		  1
 IMPVAL  [#9D0-]		  0 #[F-]
+
+IMPVAL  [#14] 4
 
 IMPVAL	[#15D4]			4
 IMPVAL	[#15D3]			3

@@ -1,4 +1,14 @@
 2007-03-11 Chris Morley
+	
+	* src/data/atomtyp.h: Aggressive simplification of 
+	IMPVAL for oxygen and new value for Si. Read and test with
+	/test/files/FormulaTest.smi. Solves bugs 1635901 and
+	1474930
+	
+	* include/openbabel/forcefield.h: Remove unused 
+	#ifndef isnan
+
+2007-03-11 Chris Morley
 
 	* src/formats/inchiformat.cpp: Moved handling of InChI
 	options to new subroutine and it added options to 
