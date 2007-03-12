@@ -2,7 +2,7 @@
 obprop - Open Babel properties calculation
 
 Copyright (C) 2003 Fabien Fontaine
-Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
+Some portions Copyright (C) 2004-2007 Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -36,7 +36,7 @@ using namespace OpenBabel;
 void some_tests(OBMol &mol);
 // PROTOTYPES /////////////////////////////////////////////////////////////////
 int nrings(OBMol &mol);
-
+string sequence(OBMol &mol);
 
 ///////////////////////////////////////////////////////////////////////////////
 //! \brief Compute some properties easy to access from open babel
@@ -54,10 +54,20 @@ int main(int argc,char **argv)
       string err = "Usage: ";
       err += program_name;
       err += " <filename>\n";
-      err += "Output format:\n";
-      err += "name NAME\n";
-      err += "mol_weight MOLECULAR_WEIGHT\n";
-      err += "num_rings NUMBER_OF_RING_(SSSR)\n";
+      "Output format:\n"
+        "name NAME\n"
+        "formula  FORMULA\n"
+        "mol_weight MOLECULAR_WEIGHT\n"
+        "exact_mass ISOTOPIC MASS\n"
+        "canonical_SMILES STRING\n"
+        "InChI  STRING\n"
+        "num_atoms  NUM\n"
+        "num_bonds  NUM\n"
+        "num_residues  NUM\n"
+        "sequence RESIDUE_SEQUENCE\n"
+        "num_rings NUMBER_OF_RING_(SSSR)\n"
+        "logP   NUM\n"
+        "PSA    POLAR_SURFACE_AREA\n";
       err += "$$$$";
       ThrowError(err);
       exit(-1);
@@ -90,8 +100,10 @@ int main(int argc,char **argv)
   OBMol mol;
   OBLogP logP;
   OBPSA psa;
-  
-  
+  OBFormat *canSMIFormat = conv.FindFormat("can");
+  OBFormat *inchiFormat = conv.FindFormat("inchi");
+
+
   ////////////////////////////////////////////////////////////////////////////
   // List of properties
   // Name
@@ -110,11 +122,27 @@ int main(int argc,char **argv)
       if (!mol.HasHydrogensAdded())
         mol.AddHydrogens();
       // Print the properties        
-      cout << "name       " << mol.GetTitle() << endl;
-      cout << "mol_weight "<< mol.GetMolWt() << endl;
-      cout << "num_rings  " << nrings(mol) << endl;
-      cout << "logP       " << logP.GroupContributions(mol) << endl;
-      cout << "PSA        " << psa.GroupContributions(mol) << endl;
+      cout << "name             " << mol.GetTitle() << endl;
+      cout << "formula          " << mol.GetFormula() << endl;
+      cout << "mol_weight       " << mol.GetMolWt() << endl;
+      cout << "exact_mass       " << mol.GetExactMass() << endl;
+      if (canSMIFormat) {
+        conv.SetOutFormat(canSMIFormat);
+        cout << "canonical_SMILES " << conv.WriteString(&mol);
+      }
+      if (inchiFormat) {
+        conv.SetOutFormat(inchiFormat);
+        cout << "InChI            " << conv.WriteString(&mol);
+      }
+      cout << "num_atoms        " << mol.NumAtoms() << endl;
+      cout << "num_bonds        " << mol.NumBonds() << endl;
+      cout << "num_residues     " << mol.NumResidues() << endl;
+      if (mol.NumResidues() > 0) {
+        cout << "sequence         " << sequence(mol) << endl;
+      }
+      cout << "num_rings        " << nrings(mol) << endl;
+      cout << "logP             " << logP.GroupContributions(mol) << endl;
+      cout << "PSA              " << psa.GroupContributions(mol) << endl;
       cout << "$$$$" << endl; // SDF like end of compound descriptor list
       
     } // end for loop
@@ -125,7 +153,7 @@ int main(int argc,char **argv)
 
 
 ///////////////////////////////////////////////////////////////////////////////
-//! \brief Return the number of size of the set of smallest rings (SSSR)
+//! \return the number of size of the set of smallest rings (SSSR)
 int nrings(OBMol &mol)
 {
   int nr;
@@ -134,6 +162,31 @@ int nrings(OBMol &mol)
   vr = mol.GetSSSR();
   nr = vr.size();
   return (nr);
+}
+
+//! \return the sequence of residues ordered by chain
+string sequence(OBMol &mol)
+{
+  unsigned int currentChain = 0;
+  string residueSequence;
+  FOR_RESIDUES_OF_MOL(r, mol)
+    {
+      if (r->GetName().find("HOH") != string::npos)
+        continue;
+      
+      if (r->GetChainNum() != currentChain) {
+        if (residueSequence.size() != 0) { // remove the trailing "-"
+          residueSequence.erase(residueSequence.size() - 1);
+          residueSequence += ", "; // separate different chains
+        }
+        
+        currentChain = r->GetChainNum();
+      }
+      residueSequence += r->GetName();
+      residueSequence += "-";
+    }
+  if (residueSequence.size() != 0) // remove the trailing "-"
+    residueSequence.erase(residueSequence.size() - 1);
 }
 
 /* obprop man page*/
