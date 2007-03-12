@@ -9,7 +9,8 @@ table_DATA = \
 		mmffoop.par mmffarom.par mmffchg.par mmfftor.par mmffang.par \
 		mmffhdef.par mmffsup.par mmffsymb.par mmffpbci.par mmffdef.par \
 		mmffvdw.par mmffstbn.par mmffbndk.par mmffprop.par mmffbond.par \
-		mmffdfsb.par
+		mmffdfsb.par \
+		logp.txt psa.txt
 
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h \
