@@ -1,3 +1,24 @@
+2007-03-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mopacformat.cpp: Added patch #1676963
+	for MOPAC 2007 output format. Thanks to 'dn2010.'
+
+	* src/formats/qchemformat.cpp: Added support for keywords.
+
+	* src/formats/acrformat.cpp: New format, contributed by Daniel
+	Mansfield.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Add acrformat.
+
+	* src/formats/gaussformat.cpp: Add feature to write bonds,
+	contributed by Daniel Mansfield.
+
+	* tools/obprop.cpp: Additional properties, including canonical
+	SMILES and InChI.
+
+	* data/Makefile.am, data/Makefile.in: Make sure to install
+	logp.txt and psa.txt.
+
 2007-03-11 Chris Morley
 	
 	* src/data/atomtyp.h: Aggressive simplification of 

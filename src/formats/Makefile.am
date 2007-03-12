@@ -42,6 +42,7 @@ endif
 libformats_la_SOURCES = \
 	APIInterface.cpp obmolecformat.cpp \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
+	acrformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawct.cpp chemdrawcdx.cpp \
@@ -65,6 +66,7 @@ else BUILD_SHARED
 pkglib_LTLIBRARIES = \
 	APIInterface.la \
 	CSRformat.la PQSformat.la alchemyformat.la \
+	acrformat.la \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la cansmilesformat.la \
 	carformat.la cccformat.la \
@@ -92,6 +94,9 @@ CSRformat_la_LDFLAGS = -module -avoid-version
 
 PQSformat_la_SOURCES = PQSformat.cpp obmolecformat.cpp
 PQSformat_la_LDFLAGS = -module -avoid-version 
+
+acrformat_la_SOURCES = acrformat.cpp obmolecformat.cpp
+acrformat_la_LDFLAGS = -module -avoid-version 
 
 alchemyformat_la_SOURCES = alchemyformat.cpp obmolecformat.cpp
 alchemyformat_la_LDFLAGS = -module -avoid-version 
