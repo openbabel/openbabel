@@ -69,8 +69,10 @@ public:
     virtual const char* Description() //required
     {
         return
-            "Q-Chem input format\n \
-            No comments yet\n";
+          "Q-Chem input format\n"
+          "Write Options e.g. -xk\n"
+          "  k  \"keywords\" Use the specified keywords for input\n"
+          "  f    <file>     Read the file specified for input keywords\n\n";
     };
 
   virtual const char* SpecificationURL()
@@ -249,17 +251,41 @@ bool QChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "$comment" << endl;
     ofs << mol.GetTitle() << endl;
     ofs << "$end" << endl;
+
     ofs << endl << "$molecule" << endl;
     ofs << mol.GetTotalCharge() << " " << mol.GetTotalSpinMultiplicity() << endl;
 
-    for(i = 1;i <= mol.NumAtoms(); i++)
-    {
-        atom = mol.GetAtom(i);
+    FOR_ATOMS_OF_MOL(atom, mol)
+      {
         ofs << atom->GetAtomicNum() << " "
-        << atom->GetX() << " " << atom->GetY() << " " << atom->GetZ() << endl;
-    }
+            << atom->GetX() << " " << atom->GetY() << " " << atom->GetZ() << endl;
+      }
     ofs << "$end" << endl;
-    ofs << endl << "$rem" << endl << "$end" << endl;
+    ofs << endl << "$rem" << endl;
+
+    const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+    const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    string defaultKeywords = "";
+
+    if(keywords)
+      {
+        defaultKeywords = keywords;
+      }
+
+    if (keywordFile)
+      {
+        ifstream kfstream(keywordFile);
+        string keyBuffer;
+        if (kfstream)
+          {
+            while (getline(kfstream, keyBuffer))
+              ofs << keyBuffer << endl;
+          }
+      }
+    else
+      ofs << defaultKeywords << endl;
+
+    ofs << "$end" << endl;
 
     return(true);
 }
