@@ -1,15 +1,18 @@
 Open Babel THANKS
 -------------------
 
-Open Babel was largely written as OELib and Babel by Matt Stahl and
-others. It would not be what it is without the help of a cast of many:
+Open Babel would not be what it is without the help of a cast of
+many. We are fundamentally a community project and aim to offer open
+development, responsive to users and contributors alike.
 
 Rich Apodaca
 Michael Banck
+Daniil Bratashov
 Francesco Bresciani
 Jean Brefort
 Alex Clark
 Joe Corkery
+Donald Curtis
 Menno Deij
 Nick England
 Vincent Favre-Nicolin
@@ -22,6 +25,7 @@ Tommi Hassinen
 Bryan Herger
 David Hoekman
 Geoffrey Hutchison
+Benoit Jacob
 Craig James
 Mikael Johansson
 Stefan Kebekus
@@ -30,9 +34,11 @@ Erik Kruus
 Christian Laggner
 Eugen Leitl
 Teng Lin
+Daniel Mansfield
 David Mathog
 Chris Morley
 Peter Murray-Rust
+Carsten Niehaus
 Anthony Nicholls
 Noel O'Boyle
 Sergei Pachkovsky
@@ -41,16 +47,18 @@ Louis Richard
 Roger Sayle
 Ernst-Georg Schmid
 Ajay Shah
+Sangwoo Shim
+Andrew Smellie
 Matt Stahl
 Chris Swain
+S Joshua Swamidass
 Bob Tolbert
+Tim Vandermeersch
+Martin Vogt
 Pat Walters
 Pawel Wolinski
 Joerg Wegner
 
 There are probably many more who have contributed to Babel, OBabel,
 OELib or directly to Open Babel who are not listed here. Please help
-us keep this list updated. We'd ideally like to list a short
-description of what people contributed and a link to their homepage
-from the Open Babel webpages. THANKS!
-
+us keep this list updated. THANKS!
