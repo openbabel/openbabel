@@ -72,6 +72,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("gau",this);
       OBConversion::RegisterFormat("gjc",this);
       OBConversion::RegisterFormat("gjf",this);
+      OBConversion::RegisterOptionParam("b", NULL, 0, OBConversion::OUTOPTIONS);
       // Command-line keywords
       OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);
       // Command-line keyword file
@@ -80,8 +81,9 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Gaussian 98/03 Cartesian Input\n"
+        "Gaussian 98/03 Input\n"
         "Write Options e.g. -xk\n"
+        "  b               Output includes bonds\n"
         "  k  \"keywords\" Use the specified keywords for input\n"
         "  f    <file>     Read the file specified for input keywords\n\n";
     };
@@ -181,8 +183,11 @@ namespace OpenBabel
     ofs << endl; // blank line after keywords
     ofs << " " << mol.GetTitle() << endl << endl;
 
-    snprintf(buffer, BUFF_SIZE, "%d  %d", mol.GetTotalCharge(), mol.GetTotalSpinMultiplicity());
+    snprintf(buffer, BUFF_SIZE, "%d  %d", 
+             mol.GetTotalCharge(),
+             mol.GetTotalSpinMultiplicity());
     ofs << buffer << endl;
+
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         if (atom->GetIsotope() == 0)
@@ -197,6 +202,41 @@ namespace OpenBabel
 	
         ofs << buffer << endl;
       }
+
+    // Bonds, contributed by Daniel Mansfield
+    if (pConv->IsOption("b",OBConversion::OUTOPTIONS))
+    {
+      // first, make begin.GetIdx < end.GetIdx
+      OBBond* bond;
+      OBAtom *atom;
+      vector<OBEdgeBase*>::iterator j;
+      vector<OBNodeBase*>::iterator i;
+      OBAtom *bgn, *end;
+      for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j)) 
+        {
+          if (bond->GetBeginAtomIdx() > bond->GetEndAtomIdx()) {
+            bgn = bond->GetBeginAtom();
+            end = bond->GetEndAtom();
+            bond->SetBegin(end);
+            bond->SetEnd(bgn);
+          }
+        }
+
+      // this seems inefficient -- perhaps using atom neighbor iterators?
+      // -GRH
+      for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+        {
+          ofs << endl << atom->GetIdx() << " ";
+          for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j)) 
+            {
+              if (bond->GetBeginAtomIdx() == atom->GetIdx()) {
+                snprintf(buffer, BUFF_SIZE, "%d %1.1f ", bond->GetEndAtomIdx(), (float) bond->GetBondOrder());
+                ofs << buffer;
+              }
+            }
+        } // iterate through atoms
+    } // end writing bonds
+
     // file should end with a blank line
     ofs << endl;
     return(true);
