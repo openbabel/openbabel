@@ -49,9 +49,11 @@ libformats_la_SOURCES = \
 	chemtoolformat.cpp cifformat.cpp \
 	copyformat.cpp crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp fastaformat.cpp \
+	fchkformat.cpp \
 	featformat.cpp fhformat.cpp fingerprintformat.cpp \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
+	getinchi.cpp \
 	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
 	mol2format.cpp molreport.cpp mopacformat.cpp \
 	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
@@ -74,6 +76,7 @@ pkglib_LTLIBRARIES = \
 	chemtoolformat.la cifformat.la \
 	copyformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la fastaformat.la \
+	fchkformat.la \
 	featformat.la fhformat.la fingerprintformat.la \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
 	gromos96format.la hinformat.la inchiformat.la \
@@ -161,6 +164,9 @@ fastsearchformat_la_LDFLAGS = -module -avoid-version
 fastaformat_la_SOURCES = fastaformat.cpp obmolecformat.cpp
 fastaformat_la_LDFLAGS = -module -avoid-version 
 
+fchkformat_la_SOURCES = fchkformat.cpp obmolecformat.cpp
+fchkformat_la_LDFLAGS = -module -avoid-version 
+
 featformat_la_SOURCES = featformat.cpp obmolecformat.cpp
 featformat_la_LDFLAGS = -module -avoid-version 
 
@@ -188,7 +194,7 @@ gromos96format_la_LDFLAGS = -module -avoid-version
 hinformat_la_SOURCES = hinformat.cpp obmolecformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 
 
-inchiformat_la_SOURCES = inchiformat.cpp obmolecformat.cpp
+inchiformat_la_SOURCES = inchiformat.cpp obmolecformat.cpp getinchi.cpp
 if BUILD_INCHI
 inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
 else

@@ -1300,6 +1300,63 @@ namespace OpenBabel
     _atom4refc.clear();
   }
 
+//
+//member functions for OBVibrationData class
+//
+
+/*!
+**\brief OBVibrationData constructor
+*/
+OBVibrationData::OBVibrationData()
+{
+  this->_type = OBGenericDataType::VibrationData;
+  this->_attr = "VibrationData";
+}
+
+/*!
+**\brief OBVibrationData copy constructor
+*/
+OBVibrationData::OBVibrationData(const OBVibrationData & src)
+{
+  this->SetData(src._vLx, src._vFrequencies, src._vIntensities);
+}
+
+/*!
+**\brief OBVibrationData assignment operator
+*/
+OBVibrationData & OBVibrationData::operator=(const OBVibrationData & src)
+{
+  if (this == &src)
+    return *this;
+
+  this->SetData(src._vLx, src._vFrequencies, src._vIntensities);
+
+  return *this;
+}
+
+/*!
+**\brief Assign the data
+**\param vLx Normal modes in 1/sqrt(a.u.)
+**\param vFrequencies Harmonic frequencies in inverse centimeters
+**\param vIntensities Infrared absorption intensities in KM/Mole
+*/
+void OBVibrationData::SetData(const std::vector< std::vector< vector3 > > & vLx,
+                              const std::vector<double> & vFrequencies,
+                              const std::vector<double> & vIntensities)
+{
+  this->_vLx = vLx;
+  this->_vFrequencies = vFrequencies;
+  this->_vIntensities = vIntensities;
+}
+
+/*!
+**\brief Get the number of frequencies
+*/
+unsigned int OBVibrationData::GetNumberOfFrequencies() const
+{
+  return !this->_vFrequencies.empty() ? this->_vFrequencies.size() - 1 : 0;
+}
+
 } //end namespace OpenBabel
 
 //! \file generic.cpp

@@ -2,6 +2,7 @@
 
 	* src/formats/mopacformat.cpp: Added patch #1676963
 	for MOPAC 2007 output format. Thanks to 'dn2010.'
+	(Daniil Bratashov). Solves PR#1654907.
 
 	* src/formats/qchemformat.cpp: Added support for keywords.
 
@@ -13,11 +14,20 @@
 	* src/formats/gaussformat.cpp: Add feature to write bonds,
 	contributed by Daniel Mansfield.
 
-	* tools/obprop.cpp: Additional properties, including canonical
-	SMILES and InChI.
+	* src/formats/fchkformat.cpp: Add initial support from Maxim
+	Fedorovsky. (Maxim's contribution also supported vibrational data
+	using Eigen and matrix operations.)
 
-	* data/Makefile.am, data/Makefile.in: Make sure to install
-	logp.txt and psa.txt.
+	* include/openbabel/generic.h, src/generic.cpp: Include
+	OBVibrationData class (even if the matrix operations to use it
+	aren't in Open Babel yet).
+
+	* tools/obprop.cpp: Additional properties, including canonical
+	SMILES and InChI. Fixes request PR#1620842.
+
+	* THANKS: Work on updates for 2.1 release.
+
+	* NEWS: Likewise.
 
 2007-03-11 Chris Morley
 	

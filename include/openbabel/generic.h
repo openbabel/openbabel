@@ -873,6 +873,41 @@ namespace OpenBabel
       
   };
 
+  //! \class OBVibrationData generic.h <openbabel/generic.h>
+  //! \brief Used to hold the normal modes of a molecule, etc.
+ class OBAPI OBVibrationData: public OBGenericData
+  {
+  protected:
+    //! Normal modes in 1/sqrt(a.u.)
+    std::vector< std::vector< vector3 > > _vLx;
+    
+    //! Harmonic frequencies in inverse centimeters
+    std::vector<double>  _vFrequencies;
+    
+    //! Infrared absorption intensities in KM/Mole
+    std::vector<double>  _vIntensities;
+    
+  public:
+    OBVibrationData();
+    OBVibrationData(const OBVibrationData &);
+    ~OBVibrationData() {}
+    
+    OBVibrationData & operator=(const OBVibrationData &);
+    
+    void SetData(const std::vector< std::vector< vector3 > > &,
+                 const std::vector<double> &,
+                 const std::vector<double> &);
+    
+    std::vector< std::vector< vector3 > > GetLx() const
+      { return this->_vLx; }
+    std::vector<double> GetFrequencies() const
+      { return this->_vFrequencies; }
+    std::vector<double> GetIntensities() const
+      { return this->_vIntensities; }
+
+    unsigned int GetNumberOfFrequencies() const;
+};
+
   //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
   typedef std::vector<OBGenericData*>::iterator OBDataIterator;
 

@@ -210,6 +210,12 @@ am__fastsearchformat_la_SOURCES_DIST = fastsearchformat.cpp
 @BUILD_SHARED_TRUE@	fastsearchformat.lo
 fastsearchformat_la_OBJECTS = $(am_fastsearchformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_fastsearchformat_la_rpath = -rpath $(pkglibdir)
+fchkformat_la_LIBADD =
+am__fchkformat_la_SOURCES_DIST = fchkformat.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@am_fchkformat_la_OBJECTS = fchkformat.lo \
+@BUILD_SHARED_TRUE@	obmolecformat.lo
+fchkformat_la_OBJECTS = $(am_fchkformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_fchkformat_la_rpath = -rpath $(pkglibdir)
 featformat_la_LIBADD =
 am__featformat_la_SOURCES_DIST = featformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@am_featformat_la_OBJECTS = featformat.lo \
@@ -269,9 +275,10 @@ am__hinformat_la_SOURCES_DIST = hinformat.cpp obmolecformat.cpp
 hinformat_la_OBJECTS = $(am_hinformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_hinformat_la_rpath = -rpath $(pkglibdir)
 inchiformat_la_DEPENDENCIES =
-am__inchiformat_la_SOURCES_DIST = inchiformat.cpp obmolecformat.cpp
+am__inchiformat_la_SOURCES_DIST = inchiformat.cpp obmolecformat.cpp \
+	getinchi.cpp
 @BUILD_SHARED_TRUE@am_inchiformat_la_OBJECTS = inchiformat.lo \
-@BUILD_SHARED_TRUE@	obmolecformat.lo
+@BUILD_SHARED_TRUE@	obmolecformat.lo getinchi.lo
 inchiformat_la_OBJECTS = $(am_inchiformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_inchiformat_la_rpath = -rpath $(pkglibdir)
 jaguarformat_la_LIBADD =
@@ -289,12 +296,12 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 	chem3dformat.cpp chemdrawct.cpp chemdrawcdx.cpp \
 	chemtoolformat.cpp cifformat.cpp copyformat.cpp crkformat.cpp \
 	cssrformat.cpp dmolformat.cpp fastsearchformat.cpp \
-	fastaformat.cpp featformat.cpp fhformat.cpp \
+	fastaformat.cpp fchkformat.cpp featformat.cpp fhformat.cpp \
 	fingerprintformat.cpp freefracformat.cpp gamessformat.cpp \
 	gaussformat.cpp ghemicalformat.cpp gromos96format.cpp \
-	hinformat.cpp inchiformat.cpp jaguarformat.cpp mdlformat.cpp \
-	mmodformat.cpp mol2format.cpp molreport.cpp mopacformat.cpp \
-	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp \
+	hinformat.cpp getinchi.cpp inchiformat.cpp jaguarformat.cpp \
+	mdlformat.cpp mmodformat.cpp mol2format.cpp molreport.cpp \
+	mopacformat.cpp mpdformat.cpp mpqcformat.cpp nwchemformat.cpp \
 	pcmodelformat.cpp pdbformat.cpp povrayformat.cpp \
 	qchemformat.cpp reportformat.cpp rxnformat.cpp shelxformat.cpp \
 	smilesformat.cpp thermoformat.cpp tinkerformat.cpp \
@@ -311,14 +318,15 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 @BUILD_SHARED_FALSE@	chemtoolformat.lo cifformat.lo \
 @BUILD_SHARED_FALSE@	copyformat.lo crkformat.lo cssrformat.lo \
 @BUILD_SHARED_FALSE@	dmolformat.lo fastsearchformat.lo \
-@BUILD_SHARED_FALSE@	fastaformat.lo featformat.lo fhformat.lo \
-@BUILD_SHARED_FALSE@	fingerprintformat.lo freefracformat.lo \
-@BUILD_SHARED_FALSE@	gamessformat.lo gaussformat.lo \
-@BUILD_SHARED_FALSE@	ghemicalformat.lo gromos96format.lo \
-@BUILD_SHARED_FALSE@	hinformat.lo inchiformat.lo \
-@BUILD_SHARED_FALSE@	jaguarformat.lo mdlformat.lo mmodformat.lo \
-@BUILD_SHARED_FALSE@	mol2format.lo molreport.lo mopacformat.lo \
-@BUILD_SHARED_FALSE@	mpdformat.lo mpqcformat.lo nwchemformat.lo \
+@BUILD_SHARED_FALSE@	fastaformat.lo fchkformat.lo featformat.lo \
+@BUILD_SHARED_FALSE@	fhformat.lo fingerprintformat.lo \
+@BUILD_SHARED_FALSE@	freefracformat.lo gamessformat.lo \
+@BUILD_SHARED_FALSE@	gaussformat.lo ghemicalformat.lo \
+@BUILD_SHARED_FALSE@	gromos96format.lo hinformat.lo getinchi.lo \
+@BUILD_SHARED_FALSE@	inchiformat.lo jaguarformat.lo \
+@BUILD_SHARED_FALSE@	mdlformat.lo mmodformat.lo mol2format.lo \
+@BUILD_SHARED_FALSE@	molreport.lo mopacformat.lo mpdformat.lo \
+@BUILD_SHARED_FALSE@	mpqcformat.lo nwchemformat.lo \
 @BUILD_SHARED_FALSE@	pcmodelformat.lo pdbformat.lo \
 @BUILD_SHARED_FALSE@	povrayformat.lo qchemformat.lo \
 @BUILD_SHARED_FALSE@	reportformat.lo rxnformat.lo \
@@ -512,26 +520,26 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(cifformat_la_SOURCES) $(copyformat_la_SOURCES) \
 	$(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) \
 	$(dmolformat_la_SOURCES) $(fastaformat_la_SOURCES) \
-	$(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) \
-	$(fhformat_la_SOURCES) $(fingerprintformat_la_SOURCES) \
-	$(freefracformat_la_SOURCES) $(gamessformat_la_SOURCES) \
-	$(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) \
-	$(gromos96format_la_SOURCES) $(hinformat_la_SOURCES) \
-	$(inchiformat_la_SOURCES) $(jaguarformat_la_SOURCES) \
-	$(libformats_la_SOURCES) $(mdlformat_la_SOURCES) \
-	$(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) \
-	$(molreportformat_la_SOURCES) $(mopacformat_la_SOURCES) \
-	$(mpdformat_la_SOURCES) $(mpqcformat_la_SOURCES) \
-	$(nwchemformat_la_SOURCES) $(pcmodelformat_la_SOURCES) \
-	$(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) \
-	$(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) \
-	$(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) \
-	$(smilesformat_la_SOURCES) $(thermoformat_la_SOURCES) \
-	$(tinkerformat_la_SOURCES) $(titleformat_la_SOURCES) \
-	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
-	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
-	$(xyzformat_la_SOURCES) $(yasaraformat_la_SOURCES) \
-	$(zindoformat_la_SOURCES)
+	$(fastsearchformat_la_SOURCES) $(fchkformat_la_SOURCES) \
+	$(featformat_la_SOURCES) $(fhformat_la_SOURCES) \
+	$(fingerprintformat_la_SOURCES) $(freefracformat_la_SOURCES) \
+	$(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) \
+	$(ghemicalformat_la_SOURCES) $(gromos96format_la_SOURCES) \
+	$(hinformat_la_SOURCES) $(inchiformat_la_SOURCES) \
+	$(jaguarformat_la_SOURCES) $(libformats_la_SOURCES) \
+	$(mdlformat_la_SOURCES) $(mmodformat_la_SOURCES) \
+	$(mol2format_la_SOURCES) $(molreportformat_la_SOURCES) \
+	$(mopacformat_la_SOURCES) $(mpdformat_la_SOURCES) \
+	$(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) \
+	$(pcmodelformat_la_SOURCES) $(pdbformat_la_SOURCES) \
+	$(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) \
+	$(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) \
+	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
+	$(thermoformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
+	$(titleformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
+	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
+	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
+	$(yasaraformat_la_SOURCES) $(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__PQSformat_la_SOURCES_DIST) \
@@ -557,6 +565,7 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__dmolformat_la_SOURCES_DIST) \
 	$(am__fastaformat_la_SOURCES_DIST) \
 	$(am__fastsearchformat_la_SOURCES_DIST) \
+	$(am__fchkformat_la_SOURCES_DIST) \
 	$(am__featformat_la_SOURCES_DIST) \
 	$(am__fhformat_la_SOURCES_DIST) \
 	$(am__fingerprintformat_la_SOURCES_DIST) \
@@ -769,9 +778,11 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	chemtoolformat.cpp cifformat.cpp \
 @BUILD_SHARED_FALSE@	copyformat.cpp crkformat.cpp cssrformat.cpp \
 @BUILD_SHARED_FALSE@	dmolformat.cpp fastsearchformat.cpp fastaformat.cpp \
+@BUILD_SHARED_FALSE@	fchkformat.cpp \
 @BUILD_SHARED_FALSE@	featformat.cpp fhformat.cpp fingerprintformat.cpp \
 @BUILD_SHARED_FALSE@	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 @BUILD_SHARED_FALSE@	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
+@BUILD_SHARED_FALSE@	getinchi.cpp \
 @BUILD_SHARED_FALSE@	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
 @BUILD_SHARED_FALSE@	mol2format.cpp molreport.cpp mopacformat.cpp \
 @BUILD_SHARED_FALSE@	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
@@ -792,6 +803,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	chemtoolformat.la cifformat.la \
 @BUILD_SHARED_TRUE@	copyformat.la crkformat.la cssrformat.la \
 @BUILD_SHARED_TRUE@	dmolformat.la fastsearchformat.la fastaformat.la \
+@BUILD_SHARED_TRUE@	fchkformat.la \
 @BUILD_SHARED_TRUE@	featformat.la fhformat.la fingerprintformat.la \
 @BUILD_SHARED_TRUE@	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
 @BUILD_SHARED_TRUE@	gromos96format.la hinformat.la inchiformat.la \
@@ -854,6 +866,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@fastsearchformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@fastaformat_la_SOURCES = fastaformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@fastaformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@fchkformat_la_SOURCES = fchkformat.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@fchkformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@featformat_la_SOURCES = featformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@featformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@fhformat_la_SOURCES = fhformat.cpp obmolecformat.cpp
@@ -872,7 +886,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@gromos96format_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@hinformat_la_SOURCES = hinformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@hinformat_la_LDFLAGS = -module -avoid-version 
-@BUILD_SHARED_TRUE@inchiformat_la_SOURCES = inchiformat.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@inchiformat_la_SOURCES = inchiformat.cpp obmolecformat.cpp getinchi.cpp
 @BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version
 @BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
 @BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LIBADD = -linchi
@@ -1050,6 +1064,8 @@ fastaformat.la: $(fastaformat_la_OBJECTS) $(fastaformat_la_DEPENDENCIES)
 	$(CXXLINK) $(am_fastaformat_la_rpath) $(fastaformat_la_LDFLAGS) $(fastaformat_la_OBJECTS) $(fastaformat_la_LIBADD) $(LIBS)
 fastsearchformat.la: $(fastsearchformat_la_OBJECTS) $(fastsearchformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_fastsearchformat_la_rpath) $(fastsearchformat_la_LDFLAGS) $(fastsearchformat_la_OBJECTS) $(fastsearchformat_la_LIBADD) $(LIBS)
+fchkformat.la: $(fchkformat_la_OBJECTS) $(fchkformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_fchkformat_la_rpath) $(fchkformat_la_LDFLAGS) $(fchkformat_la_OBJECTS) $(fchkformat_la_LIBADD) $(LIBS)
 featformat.la: $(featformat_la_OBJECTS) $(featformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_featformat_la_rpath) $(featformat_la_LDFLAGS) $(featformat_la_OBJECTS) $(featformat_la_LIBADD) $(LIBS)
 fhformat.la: $(fhformat_la_OBJECTS) $(fhformat_la_DEPENDENCIES) 
@@ -1158,12 +1174,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dmolformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fastaformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fastsearchformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fchkformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/featformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fhformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprintformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/freefracformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gamessformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gaussformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getinchi.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ghemicalformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gromos96format.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hinformat.Plo@am__quote@
