@@ -117,7 +117,7 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
-            while (vs.size() == 4)
+            while (strstr(vs[0].c_str(),"DIPOLE") == NULL)
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 atom->SetPartialCharge(atof(vs[2].c_str()));
