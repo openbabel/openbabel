@@ -1,11 +1,27 @@
-2007-03-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2007-03-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefieldmmff94.cpp: Switch pow() to use
+	doubles to prevent compile problems on older Linux/GCC systems.
+
+	* src/logp.cpp, src/psa.cpp: Switch to use OpenDatafile() call.
+
+	* include/openbabel/Makefile.am: Make sure to include psa.h and
+	logp.h in distribution.
+
+	* src/data.cpp: Move comments to provide better documentation for
+	OpenDatafile.
+
+	* config.sub, config.guess, configure, Makefile.* Update with
+	automake-1.10 and autoconf-2.61.
+
+2007-03-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* tool/obminimize.cpp: added '-sd', '-cg', '-c criteria' options
 
 	* doc/obminimize.1: update for added options (man pages for obenergy
 	and obminimize are also on wiki now) 
 
-2007-03-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2007-03-12  Geoffrey Hutchison  <babel@geoffhutchison.net>	
 
 	* src/formats/mopacformat.cpp: Added patch #1676963
 	for MOPAC 2007 output format. Thanks to 'dn2010.'
