@@ -650,6 +650,9 @@ namespace OpenBabel
       vdwcalc.kab = KCAL_TO_KJ * sqrt(vdwcalc.ka * vdwcalc.kb);
       
       // 1-4 scaling
+      if (a->IsOneFour(b))
+        vdwcalc.kab *= 0.5f;
+      /*
       vdwcalc.is14 = false;
       FOR_NBORS_OF_ATOM (nbr, a)
         FOR_NBORS_OF_ATOM (nbr2, &*nbr)
@@ -658,15 +661,17 @@ namespace OpenBabel
               vdwcalc.is14 = true;
               vdwcalc.kab *= 0.5f;
             }
-      
+      */
+
       // not sure why this is needed, but validation showed it works...
+      /*
       if (a->IsInRingSize(6) && b->IsInRingSize(6) && IsInSameRing(a, b))
         vdwcalc.samering = true;
       else if ((a->IsInRingSize(5) || a->IsInRingSize(4)) && (b->IsInRingSize(5) || b->IsInRingSize(4)))
         vdwcalc.samering = true;
       else
         vdwcalc.samering = false;
-
+      */
 
       vdwcalc.ka = (vdwcalc.Ra + vdwcalc.Rb) * pow(1.0 * vdwcalc.kab , 1.0 / 12.0);
       vdwcalc.kb = (vdwcalc.Ra + vdwcalc.Rb) * pow(2.0 * vdwcalc.kab , 1.0 / 6.0);
@@ -695,11 +700,16 @@ namespace OpenBabel
         elecalc.b = &*b;
         
 	// 1-4 scaling
+        if (a->IsOneFour(b))
+          elecalc.qq *= 0.5f;
+	  
+	/*
         FOR_NBORS_OF_ATOM (nbr, a)
           FOR_NBORS_OF_ATOM (nbr2, &*nbr)
             FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
               if (b == &*nbr3)
                 elecalc.qq *= 0.5f;
+        */
 
         _electrostaticcalculations.push_back(elecalc);
       }
@@ -814,8 +824,8 @@ namespace OpenBabel
   
   bool OBForceFieldGhemical::SetGhemicalTypes()
   {
-    std::vector<std::vector<int> > _mlist; //!< match list for atom typing
-    std::vector<std::pair<OBSmartsPattern*,std::string> > _vexttyp; //!< external atom type rules
+    vector<vector<int> > _mlist; //!< match list for atom typing
+    vector<pair<OBSmartsPattern*,string> > _vexttyp; //!< external atom type rules
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,string> >::iterator i;
     OBSmartsPattern *sp;
@@ -853,7 +863,7 @@ namespace OpenBabel
         else {
           delete sp;
           sp = NULL;
-          obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
+          obErrorLog.ThrowError(__FUNCTION__, " Could not parse atom type table from ghemical.prm", obInfo);
           return false;
         }
         
