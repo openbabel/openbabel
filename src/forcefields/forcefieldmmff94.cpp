@@ -84,7 +84,7 @@ namespace OpenBabel
 
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
-	    (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
+                (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
         *logos  << logbuf << std::endl;
       }
     }
@@ -348,7 +348,7 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f",  atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
-	    atoi((*i).c->GetType()), atoi((*i).d->GetType()), (*i).tt, (*i).tor, (*i).v1, (*i).v2, (*i).v3, (*i).energy);
+                atoi((*i).c->GetType()), atoi((*i).d->GetType()), (*i).tt, (*i).tor, (*i).v1, (*i).v2, (*i).v3, (*i).energy);
         *logos  << logbuf << endl;
       }
     }
@@ -402,32 +402,32 @@ namespace OpenBabel
     }
 
     IF_OBFF_LOGLVL_HIGH
-     *logos << std::endl << "     TOTAL OUT-OF-PLANE BENDING ENERGY = " << energy << std::endl << std::endl;
+      *logos << std::endl << "     TOTAL OUT-OF-PLANE BENDING ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
  
   double OBFFVDWCalculationMMFF94::GetEnergy()
   {
-      double rab2, rab3, rab4, rab5, rab6, rab7;
-      double erep2, erep3, erep4, erep5, erep6, erep7;
+    double rab2, rab3, rab4, rab5, rab6, rab7;
+    double erep2, erep3, erep4, erep5, erep6, erep7;
 
-      rab = a->GetDistance(b);
-      rab2 = rab * rab;
-      rab4 = rab2 * rab2;
-      rab6 = rab4 * rab2;
-      rab7 = rab6 * rab;
+    rab = a->GetDistance(b);
+    rab2 = rab * rab;
+    rab4 = rab2 * rab2;
+    rab6 = rab4 * rab2;
+    rab7 = rab6 * rab;
 
-      erep = (1.07f * R_AB) / (rab + 0.07f * R_AB); //***
-      erep2 = erep * erep;
-      erep4 = erep2 * erep2;
-      erep6 = erep4 * erep2;
-      erep7 = erep6 * erep;
+    erep = (1.07f * R_AB) / (rab + 0.07f * R_AB); //***
+    erep2 = erep * erep;
+    erep4 = erep2 * erep2;
+    erep6 = erep4 * erep2;
+    erep7 = erep6 * erep;
       
-      eattr = (((1.12f * R_AB7) / (rab7 + 0.12f * R_AB7)) - 2.0f);
+    eattr = (((1.12f * R_AB7) / (rab7 + 0.12f * R_AB7)) - 2.0f);
       
-      energy = escale * epsilon * erep7 * eattr;
+    energy = escale * epsilon * erep7 * eattr;
       
-      return energy;
+    return energy;
   }
   
   double OBForceFieldMMFF94::E_VDW()
@@ -451,7 +451,7 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f  %8.3f  %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
-	        (*i).rab, (*i).R_AB, (*i).epsilon, (*i).erep, (*i).eattr, (*i).energy);
+                (*i).rab, (*i).R_AB, (*i).epsilon, (*i).erep, (*i).eattr, (*i).energy);
         *logos  << logbuf << endl;
       }
     }
@@ -490,35 +490,35 @@ namespace OpenBabel
       *logos << std::endl << "     TOTAL ELECTROSTATIC ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
-/*
-  vector<vector3> OBForceFieldMMFF94::GetForces()
-  {
+  /*
+    vector<vector3> OBForceFieldMMFF94::GetForces()
+    {
     vector<OBFFBondCalculationMMFF94>::iterator i;
     vector<OBFFAngleCalculationMMFF94>::iterator i2;
     vector<vector3> forces;
     vector3 anagrad;
     
     FOR_ATOMS_OF_MOL (a, _mol) {
-      anagrad.Set(0,0,0);
+    anagrad.Set(0,0,0);
 
-      for (i = _bondcalculations.begin(); i != _bondcalculations.end(); i++) {
-        if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
-          anagrad += i->GetGradient(&*a);
-	}
-      }
+    for (i = _bondcalculations.begin(); i != _bondcalculations.end(); i++) {
+    if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
+    anagrad += i->GetGradient(&*a);
+    }
+    }
 
-      for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); i2++) {
-        if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
-          anagrad += i2->GetGradient(&*a);
-	}
-      }
+    for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); i2++) {
+    if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
+    anagrad += i2->GetGradient(&*a);
+    }
+    }
 
-      forces.push_back(anagrad);
+    forces.push_back(anagrad);
     }
 
     return forces; 
-  }
-*/
+    }
+  */
   //
   // OBForceFieldMMFF member functions
   //
@@ -583,24 +583,24 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.ipar5 = atoi(vs[0].c_str());  // FF class
-	parameter.a = atoi(vs[1].c_str());
-	parameter.b = atoi(vs[2].c_str());
-	parameter.dpar1 = atof(vs[3].c_str());  // kb
-	parameter.dpar2 = atof(vs[4].c_str());  // r0
-	_ffbondparams.push_back(parameter);
+      parameter.clear();
+      parameter.ipar5 = atoi(vs[0].c_str());  // FF class
+      parameter.a = atoi(vs[1].c_str());
+      parameter.b = atoi(vs[2].c_str());
+      parameter.dpar1 = atof(vs[3].c_str());  // kb
+      parameter.dpar2 = atof(vs[4].c_str());  // r0
+      _ffbondparams.push_back(parameter);
     }
 	
     if (ifs1)
@@ -632,23 +632,23 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.a = atoi(vs[1].c_str());
-	parameter.b = atoi(vs[2].c_str());
-	parameter.dpar1 = atof(vs[3].c_str());  // r0-ref
-	parameter.dpar2 = atof(vs[4].c_str());  // kb-ref
-	_ffbndkparams.push_back(parameter);
+      parameter.clear();
+      parameter.a = atoi(vs[1].c_str());
+      parameter.b = atoi(vs[2].c_str());
+      parameter.dpar1 = atof(vs[3].c_str());  // r0-ref
+      parameter.dpar2 = atof(vs[4].c_str());  // kb-ref
+      _ffbndkparams.push_back(parameter);
     }
 	
     if (ifs1)
@@ -680,25 +680,25 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.ipar5 = atoi(vs[0].c_str());  // FF class
-	parameter.a = atoi(vs[1].c_str());
-	parameter.b = atoi(vs[2].c_str());
-	parameter.c = atoi(vs[3].c_str());
-	parameter.dpar1 = atof(vs[4].c_str());  // ka
-	parameter.dpar2 = atof(vs[5].c_str());  // theta0
-	_ffangleparams.push_back(parameter);
+      parameter.clear();
+      parameter.ipar5 = atoi(vs[0].c_str());  // FF class
+      parameter.a = atoi(vs[1].c_str());
+      parameter.b = atoi(vs[2].c_str());
+      parameter.c = atoi(vs[3].c_str());
+      parameter.dpar1 = atof(vs[4].c_str());  // ka
+      parameter.dpar2 = atof(vs[5].c_str());  // theta0
+      _ffangleparams.push_back(parameter);
     }
 	
     if (ifs1)
@@ -730,25 +730,25 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.ipar5 = atoi(vs[0].c_str());  // FF class
-	parameter.a = atoi(vs[1].c_str());
-	parameter.b = atoi(vs[2].c_str());
-	parameter.c = atoi(vs[3].c_str());
-	parameter.dpar1 = atof(vs[4].c_str());  // kbaIJK
-	parameter.dpar2 = atof(vs[5].c_str());  // kbaKJI
-	_ffstrbndparams.push_back(parameter);
+      parameter.clear();
+      parameter.ipar5 = atoi(vs[0].c_str());  // FF class
+      parameter.a = atoi(vs[1].c_str());
+      parameter.b = atoi(vs[2].c_str());
+      parameter.c = atoi(vs[3].c_str());
+      parameter.dpar1 = atof(vs[4].c_str());  // kbaIJK
+      parameter.dpar2 = atof(vs[5].c_str());  // kbaKJI
+      _ffstrbndparams.push_back(parameter);
     }
 	
     if (ifs1)
@@ -780,24 +780,24 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.a = atoi(vs[0].c_str());
-	parameter.b = atoi(vs[1].c_str());
-	parameter.c = atoi(vs[2].c_str());
-	parameter.dpar1 = atof(vs[3].c_str());  // kbaIJK
-	parameter.dpar2 = atof(vs[4].c_str());  // kbaKJI
-	_ffdfsbparams.push_back(parameter);
+      parameter.clear();
+      parameter.a = atoi(vs[0].c_str());
+      parameter.b = atoi(vs[1].c_str());
+      parameter.c = atoi(vs[2].c_str());
+      parameter.dpar1 = atof(vs[3].c_str());  // kbaIJK
+      parameter.dpar2 = atof(vs[4].c_str());  // kbaKJI
+      _ffdfsbparams.push_back(parameter);
     }
 	
     if (ifs1)
@@ -829,24 +829,24 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.a = atoi(vs[0].c_str());
-	parameter.b = atoi(vs[1].c_str());
-	parameter.c = atoi(vs[2].c_str());
-	parameter.d = atoi(vs[3].c_str());
-	parameter.dpar1 = atof(vs[4].c_str());  // koop
-	_ffoopparams.push_back(parameter);
+      parameter.clear();
+      parameter.a = atoi(vs[0].c_str());
+      parameter.b = atoi(vs[1].c_str());
+      parameter.c = atoi(vs[2].c_str());
+      parameter.d = atoi(vs[3].c_str());
+      parameter.dpar1 = atof(vs[4].c_str());  // koop
+      _ffoopparams.push_back(parameter);
     }
 	
     if (ifs1)
@@ -878,27 +878,27 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.ipar5 = atoi(vs[0].c_str());  // FF class
-	parameter.a = atoi(vs[1].c_str());
-	parameter.b = atoi(vs[2].c_str());
-	parameter.c = atoi(vs[3].c_str());
-	parameter.d = atoi(vs[4].c_str());
-	parameter.dpar1 = atof(vs[5].c_str());  // v1
-	parameter.dpar2 = atof(vs[6].c_str());  // v2
-	parameter.dpar3 = atof(vs[7].c_str());  // v3
-	_fftorsionparams.push_back(parameter);
+      parameter.clear();
+      parameter.ipar5 = atoi(vs[0].c_str());  // FF class
+      parameter.a = atoi(vs[1].c_str());
+      parameter.b = atoi(vs[2].c_str());
+      parameter.c = atoi(vs[3].c_str());
+      parameter.d = atoi(vs[4].c_str());
+      parameter.dpar1 = atof(vs[5].c_str());  // v1
+      parameter.dpar2 = atof(vs[6].c_str());  // v2
+      parameter.dpar3 = atof(vs[7].c_str());  // v3
+      _fftorsionparams.push_back(parameter);
     }
 	
     if (ifs1)
@@ -930,30 +930,30 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.a = atoi(vs[0].c_str());
-	parameter.dpar1 = atof(vs[1].c_str());  // alpha-i
-	parameter.dpar2 = atof(vs[2].c_str());  // N-i
-	parameter.dpar3 = atof(vs[3].c_str());  // A-i
-	parameter.dpar4 = atof(vs[4].c_str());  // G-i
-        if (EQn(vs[5].c_str(), "-", 1))
-	  parameter.ipar1 = 0;
-        else if (EQn(vs[5].c_str(), "D", 1))
-	  parameter.ipar1 = 1;  // hydrogen bond donor
-        else if (EQn(vs[5].c_str(), "A", 1))
-	  parameter.ipar1 = 2;  // hydrogen bond acceptor
-	_ffvdwparams.push_back(parameter);
+      parameter.clear();
+      parameter.a = atoi(vs[0].c_str());
+      parameter.dpar1 = atof(vs[1].c_str());  // alpha-i
+      parameter.dpar2 = atof(vs[2].c_str());  // N-i
+      parameter.dpar3 = atof(vs[3].c_str());  // A-i
+      parameter.dpar4 = atof(vs[4].c_str());  // G-i
+      if (EQn(vs[5].c_str(), "-", 1))
+        parameter.ipar1 = 0;
+      else if (EQn(vs[5].c_str(), "D", 1))
+        parameter.ipar1 = 1;  // hydrogen bond donor
+      else if (EQn(vs[5].c_str(), "A", 1))
+        parameter.ipar1 = 2;  // hydrogen bond acceptor
+      _ffvdwparams.push_back(parameter);
     }
 
     if (ifs1)
@@ -985,22 +985,22 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.a = atoi(vs[1].c_str());
-	parameter.b = atoi(vs[2].c_str());
-	parameter.dpar1 = atof(vs[3].c_str());  // bci
-	_ffchgparams.push_back(parameter);
+      parameter.clear();
+      parameter.a = atoi(vs[1].c_str());
+      parameter.b = atoi(vs[2].c_str());
+      parameter.dpar1 = atof(vs[3].c_str());  // bci
+      _ffchgparams.push_back(parameter);
     }
 
     if (ifs1)
@@ -1032,22 +1032,22 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     while (ifsP->getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	parameter.clear();
-	parameter.a = atoi(vs[1].c_str());
-	parameter.dpar1 = atof(vs[2].c_str());  // pbci
-	parameter.dpar2 = atof(vs[3].c_str());  // fcadj
-	_ffpbciparams.push_back(parameter);
+      parameter.clear();
+      parameter.a = atoi(vs[1].c_str());
+      parameter.dpar1 = atof(vs[2].c_str());  // pbci
+      parameter.dpar2 = atof(vs[3].c_str());  // fcadj
+      _ffpbciparams.push_back(parameter);
     }
 
     if (ifs1)
@@ -1077,10 +1077,10 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
     
     _arom.clear();
     _lin.clear();
@@ -1089,16 +1089,16 @@ namespace OpenBabel
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	if (atoi(vs[6].c_str()) == 1)
-          _arom.push_back(atoi(vs[0].c_str()));
+      if (atoi(vs[6].c_str()) == 1)
+        _arom.push_back(atoi(vs[0].c_str()));
 
-	if (atoi(vs[7].c_str()) == 1)
-          _lin.push_back(atoi(vs[0].c_str()));
+      if (atoi(vs[7].c_str()) == 1)
+        _lin.push_back(atoi(vs[0].c_str()));
 
-	if (atoi(vs[8].c_str()) == 1)
-          _sbmb.push_back(atoi(vs[0].c_str()));
+      if (atoi(vs[8].c_str()) == 1)
+        _sbmb.push_back(atoi(vs[0].c_str()));
     }
 
     if (ifs1)
@@ -1160,35 +1160,35 @@ namespace OpenBabel
     ifs1.open(subbuffer.c_str());
     ifsP= &ifs1;
     if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
-    }
+      {
+        ifs2.open(buffer2.c_str());
+        ifsP = &ifs2;
+      }
    
     while (ifsP->getline(buffer, 150)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
-      	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-        sp = new OBSmartsPattern;
-        if (sp->Init(vs[0])) {
-          _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[1]));
-        } else {
-          delete sp;
-          sp = NULL;
-          obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
-          return false;
-        }
+      sp = new OBSmartsPattern;
+      if (sp->Init(vs[0])) {
+        _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[1]));
+      } else {
+        delete sp;
+        sp = NULL;
+        obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
+        return false;
+      }
  
-        for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
-          if (i->first->Match(_mol)) {
-            _mlist = i->first->GetMapList();
-            for (j = _mlist.begin();j != _mlist.end();++j) {
-              _mol.GetAtom((*j)[0])->SetType(i->second);
-	    }
+      for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
+        if (i->first->Match(_mol)) {
+          _mlist = i->first->GetMapList();
+          for (j = _mlist.begin();j != _mlist.end();++j) {
+            _mol.GetAtom((*j)[0])->SetType(i->second);
           }
         }
+      }
     }
     
     ////////////////////////////////////////////////////////////////////////////
@@ -1215,50 +1215,50 @@ namespace OpenBabel
       for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) { // for each ring atom
         index = *rj;
         ringatom = _mol.GetAtom(index);
-	//cout << index << ": " << ringatom << endl; 
+        //cout << index << ": " << ringatom << endl; 
         
-	// is the bond to the previous ring atom double?
+        // is the bond to the previous ring atom double?
         if (n > 1) {
-	  ringbond = _mol.GetBond(prev_rj, index);
-	  if (ringbond->GetBO() == 2) {
-	    pi_electrons += 2;
-	    cout << "=" << index;
-	    prev_rj = index;
-	    n++;
-	    continue;
-	  } else 
-	    cout << "-" << index;
-	  prev_rj = index;
-	} else {
-	  cout << index;
-	  prev_rj = index;
-	  first_rj = index;
-	}
+          ringbond = _mol.GetBond(prev_rj, index);
+          if (ringbond->GetBO() == 2) {
+            pi_electrons += 2;
+            cout << "=" << index;
+            prev_rj = index;
+            n++;
+            continue;
+          } else 
+            cout << "-" << index;
+          prev_rj = index;
+        } else {
+          cout << index;
+          prev_rj = index;
+          first_rj = index;
+        }
 	
-	// does the current ring atom have a exocyclic double bond?
-	FOR_NBORS_OF_ATOM (nbr, ringatom) {
-	  if ((*ri)->IsInRing(nbr->GetIdx()))
-	    continue;
-	  ringbond = _mol.GetBond(nbr->GetIdx(), index);
-	  if (ringbond->GetBO() == 2) {
-	    pi_electrons++;
-	    cout << "(=*)";
-	  }
-	}
+        // does the current ring atom have a exocyclic double bond?
+        FOR_NBORS_OF_ATOM (nbr, ringatom) {
+          if ((*ri)->IsInRing(nbr->GetIdx()))
+            continue;
+          ringbond = _mol.GetBond(nbr->GetIdx(), index);
+          if (ringbond->GetBO() == 2) {
+            pi_electrons++;
+            cout << "(=*)";
+          }
+        }
 
         // is the atom N, O or S in 5 rings
-	if (ringsize == 5) {
-	  if (ringatom->IsNitrogen() && !(ringatom->BOSum() - ringatom->GetValence())) {
+        if (ringsize == 5) {
+          if (ringatom->IsNitrogen() && !(ringatom->BOSum() - ringatom->GetValence())) {
             pi_electrons += 2;
-	    cout << "(:)";
-	  }
-  	  if ((ringatom->IsOxygen() || ringatom->IsSulfur()) && ringatom->IsAromatic()) {
+            cout << "(:)";
+          }
+          if ((ringatom->IsOxygen() || ringatom->IsSulfur()) && ringatom->IsAromatic()) {
             pi_electrons += 2;
-	    cout << "(:)";
-	  }
-	}
+            cout << "(:)";
+          }
+        }
 
-	n++;
+        n++;
       
       } // for each ring atom
       
@@ -1276,28 +1276,28 @@ namespace OpenBabel
           index = *rj;
           ringatom = _mol.GetAtom(index);
 	  
-	  if (ringsize == 6) {
-  	    if (ringatom->IsCarbon()) 
-	      ringatom->SetType("37"); // CB: CARBON AS IN BENZENE, PYRROLE
+          if (ringsize == 6) {
+            if (ringatom->IsCarbon()) 
+              ringatom->SetType("37"); // CB: CARBON AS IN BENZENE, PYRROLE
 
-  	    if (ringatom->IsNitrogen()) {
-	      if (ringatom->GetValence() == 2)
-	        ringatom->SetType("38"); // NPYD: NITROGEN, AS IN PYRIDINE
-	      if (ringatom->GetValence() == 3) {
-	        ringatom->SetType("58"); // NPD+: PYRIDINIUM-TYPE NITROGEN - FORMAL CHARGE=1
+            if (ringatom->IsNitrogen()) {
+              if (ringatom->GetValence() == 2)
+                ringatom->SetType("38"); // NPYD: NITROGEN, AS IN PYRIDINE
+              if (ringatom->GetValence() == 3) {
+                ringatom->SetType("58"); // NPD+: PYRIDINIUM-TYPE NITROGEN - FORMAL CHARGE=1
 	
-	        FOR_NBORS_OF_ATOM (nbr, ringatom) {
-	          if ((*ri)->IsInRing(nbr->GetIdx()))
-	            continue;
-	          if (nbr->IsOxygen())
-	            ringatom->SetType("69"); // NPOX: PYRIDINE N-OXIDE NITROGEN
-	        }
-	      }
-	    }
+                FOR_NBORS_OF_ATOM (nbr, ringatom) {
+                  if ((*ri)->IsInRing(nbr->GetIdx()))
+                    continue;
+                  if (nbr->IsOxygen())
+                    ringatom->SetType("69"); // NPOX: PYRIDINE N-OXIDE NITROGEN
+                }
+              }
+            }
 
-	  }
+          }
 
-	}
+        }
       } else {
         cout << " size=" << ringsize << " pi=" << pi_electrons << endl;
       }
@@ -1338,18 +1338,18 @@ namespace OpenBabel
         
         //parameter = GetParameterMMFF94(1, atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams);
         //parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbndkparams);
-	if (parameter == NULL) {
+        if (parameter == NULL) {
           obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters", obError);
           return false;
-	}
+        }
       } else {
         bondcalc.a = a;
-	bondcalc.b = b;
+        bondcalc.b = b;
         bondcalc.kb = parameter->dpar1;
         bondcalc.r0 = parameter->dpar2;
         bondcalc.bt = bondtype;
 
-	_bondcalculations.push_back(bondcalc);
+        _bondcalculations.push_back(bondcalc);
       }
     }
 
@@ -1383,7 +1383,7 @@ namespace OpenBabel
           cout << angletype << " idx: " << a->GetIdx() << "-" << b->GetIdx() << "-" << c->GetIdx() << " types: " << a->GetType() << "-" << b->GetType() << "-" << c->GetType() << endl;
           obErrorLog.ThrowError(__FUNCTION__, "Could not find all angle parameters", obError);
           return false;
-	}
+        }
       }
       
       anglecalc.a = a;
@@ -1404,11 +1404,11 @@ namespace OpenBabel
         rowb = GetElementRow(b);
         rowc = GetElementRow(c);
         
-	parameter = GetParameter(rowa, rowb, rowc, 0, _ffdfsbparams);
+        parameter = GetParameter(rowa, rowb, rowc, 0, _ffdfsbparams);
         if (parameter == NULL) {
           obErrorLog.ThrowError(__FUNCTION__, "Could not find all stretch-bend parameters", obError);
           return false;
-	}
+        }
 
         if (rowa == parameter->a) {
           strbndcalc.kbaABC = parameter->dpar1;
@@ -1467,40 +1467,40 @@ namespace OpenBabel
       if (parameter == NULL) {
         for (int idx=0; idx < _fftorsionparams.size(); idx++) {  // *-XX-XX-XX 
           if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx].ipar5) &&
-	       (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
+               (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
               ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx].ipar5) &&
-	       (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
+               (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
               ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx].ipar5) &&
-	       (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].a)) ||
+               (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].a)) ||
               ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx].ipar5) &&
-	       (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].a)))
-	  {
-            torsioncalc.v1 = _fftorsionparams[idx].dpar1;
-            torsioncalc.v2 = _fftorsionparams[idx].dpar2;
-            torsioncalc.v3 = _fftorsionparams[idx].dpar3;
-	    found = true;  
-	  }
-        }
-
-        if (!found)
-	  for (int idx=0; idx < _fftorsionparams.size(); idx++) {  // *-XX-XX-*
-            if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
-	         (atoi(c->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)) ||
-                ((_fftorsionparams[idx].a == 0) && (atoi(c->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
-	         (atoi(b->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)))
-	    {
+               (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].a)))
+            {
               torsioncalc.v1 = _fftorsionparams[idx].dpar1;
               torsioncalc.v2 = _fftorsionparams[idx].dpar2;
               torsioncalc.v3 = _fftorsionparams[idx].dpar3;
-	      found = true;  
-	    }
+              found = true;  
+            }
+        }
+
+        if (!found)
+          for (int idx=0; idx < _fftorsionparams.size(); idx++) {  // *-XX-XX-*
+            if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
+                 (atoi(c->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)) ||
+                ((_fftorsionparams[idx].a == 0) && (atoi(c->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
+                 (atoi(b->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)))
+              {
+                torsioncalc.v1 = _fftorsionparams[idx].dpar1;
+                torsioncalc.v2 = _fftorsionparams[idx].dpar2;
+                torsioncalc.v3 = _fftorsionparams[idx].dpar3;
+                found = true;  
+              }
           }
 
-	if (!found) {
-	  obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
+        if (!found) {
+          obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
           cout << torsiontype << " idx: " << a->GetIdx() << "-" << b->GetIdx() << "-" << c->GetIdx() << "-" << d->GetIdx() << " types: " << a->GetType() << "-" << b->GetType() << "-" << c->GetType() << "-" << d->GetType() << endl;
           return false;
-	}
+        }
       } else {
         torsioncalc.v1 = parameter->dpar1;
         torsioncalc.v2 = parameter->dpar2;
@@ -1534,76 +1534,76 @@ namespace OpenBabel
           c = NULL;
           d = NULL;
 
-	  FOR_NBORS_OF_ATOM(nbr, b) {
-	    if (a ==NULL)
-	      a = (OBAtom*) &*nbr;
-	    else if (c == NULL)
-	      c = (OBAtom*) &*nbr;
-	    else
-	      d = (OBAtom*) &*nbr;
-	  }
+          FOR_NBORS_OF_ATOM(nbr, b) {
+            if (a ==NULL)
+              a = (OBAtom*) &*nbr;
+            else if (c == NULL)
+              c = (OBAtom*) &*nbr;
+            else
+              d = (OBAtom*) &*nbr;
+          }
 	  
-	  if ((a == NULL) || (c == NULL) || (d == NULL))
-	    break;
+          if ((a == NULL) || (c == NULL) || (d == NULL))
+            break;
 
-	  if (((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)) ||
-	      ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)))
-	  {
-	    found = true;
+          if (((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
+              ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
+              ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
+              ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
+              ((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)) ||
+              ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)))
+            {
+              found = true;
 
-	    oopcalc.koop = _ffoopparams[idx].dpar1;
+              oopcalc.koop = _ffoopparams[idx].dpar1;
             
-	    // A-B-CD || C-B-AD  PLANE = ABC
-            oopcalc.a = a;
-            oopcalc.b = b;
-            oopcalc.c = c;
-            oopcalc.d = d;
+              // A-B-CD || C-B-AD  PLANE = ABC
+              oopcalc.a = a;
+              oopcalc.b = b;
+              oopcalc.c = c;
+              oopcalc.d = d;
 	    
-	    _oopcalculations.push_back(oopcalc);
+              _oopcalculations.push_back(oopcalc);
 
-	    // C-B-DA || D-B-CA  PLANE BCD
-	    oopcalc.a = d;
-            oopcalc.d = a;
+              // C-B-DA || D-B-CA  PLANE BCD
+              oopcalc.a = d;
+              oopcalc.d = a;
 	
-	    _oopcalculations.push_back(oopcalc);
+              _oopcalculations.push_back(oopcalc);
             
-	    // A-B-DC || D-B-AC  PLANE ABD
-	    oopcalc.a = a;
-	    oopcalc.c = d;
-            oopcalc.d = c;
+              // A-B-DC || D-B-AC  PLANE ABD
+              oopcalc.a = a;
+              oopcalc.c = d;
+              oopcalc.d = c;
 	    
-	    _oopcalculations.push_back(oopcalc);
-	  }
+              _oopcalculations.push_back(oopcalc);
+            }
 
-	  if ((_ffoopparams[idx].a == 0) && (_ffoopparams[idx].c == 0) && (_ffoopparams[idx].d == 0) && !found) // *-XX-*-*
-	  {
-	    oopcalc.koop = _ffoopparams[idx].dpar1;
+          if ((_ffoopparams[idx].a == 0) && (_ffoopparams[idx].c == 0) && (_ffoopparams[idx].d == 0) && !found) // *-XX-*-*
+            {
+              oopcalc.koop = _ffoopparams[idx].dpar1;
 	    
-	    // A-B-CD || C-B-AD  PLANE = ABC
-            oopcalc.a = a;
-            oopcalc.b = b;
-            oopcalc.c = c;
-            oopcalc.d = d;
+              // A-B-CD || C-B-AD  PLANE = ABC
+              oopcalc.a = a;
+              oopcalc.b = b;
+              oopcalc.c = c;
+              oopcalc.d = d;
 	    
-	    _oopcalculations.push_back(oopcalc);
+              _oopcalculations.push_back(oopcalc);
 
-	    // C-B-DA || D-B-CA  PLANE BCD
-	    oopcalc.a = d;
-            oopcalc.d = a;
+              // C-B-DA || D-B-CA  PLANE BCD
+              oopcalc.a = d;
+              oopcalc.d = a;
 	
-	    _oopcalculations.push_back(oopcalc);
+              _oopcalculations.push_back(oopcalc);
             
-	    // A-B-DC || D-B-AC  PLANE ABD
-	    oopcalc.a = a;
-	    oopcalc.c = d;
-            oopcalc.d = c;
+              // A-B-DC || D-B-AC  PLANE ABD
+              oopcalc.a = a;
+              oopcalc.c = d;
+              oopcalc.d = c;
 	    
-	    _oopcalculations.push_back(oopcalc);
-	  }
+              _oopcalculations.push_back(oopcalc);
+            }
         }
       }
     }
@@ -1646,22 +1646,22 @@ namespace OpenBabel
       double R_AA, R_BB, R_AB6, g_AB, g_AB2;
       double R_AB2, R_AB4, R_AB7, sqrt_a, sqrt_b;
  
-      R_AA = vdwcalc.Aa * pow(vdwcalc.alpha_a, 0.25f);
-      R_BB = vdwcalc.Ab * pow(vdwcalc.alpha_b, 0.25f);
+      R_AA = vdwcalc.Aa * pow(vdwcalc.alpha_a, 0.25);
+      R_BB = vdwcalc.Ab * pow(vdwcalc.alpha_b, 0.25);
       
       vdwcalc.escale = 1.0f;
       if (vdwcalc.aDA == 1) { // hydrogen bond donor
         vdwcalc.R_AB = 0.5f * (R_AA + R_BB);
-	if (vdwcalc.bDA == 2) { // hydrogen bond acceptor
-	  vdwcalc.R_AB = 0.8f * vdwcalc.R_AB;
+        if (vdwcalc.bDA == 2) { // hydrogen bond acceptor
+          vdwcalc.R_AB = 0.8f * vdwcalc.R_AB;
           vdwcalc.escale = 0.5f;
-	}
+        }
       } else if (vdwcalc.bDA == 1) { // hydrogen bond donor
         vdwcalc.R_AB = 0.5f * (R_AA + R_BB);
-	if (vdwcalc.aDA == 2) { // hydrogen bond acceptor
-	  vdwcalc.R_AB = 0.8f * vdwcalc.R_AB;
+        if (vdwcalc.aDA == 2) { // hydrogen bond acceptor
+          vdwcalc.R_AB = 0.8f * vdwcalc.R_AB;
           vdwcalc.escale = 0.5f;
-	}
+        }
       } else {
         g_AB = (R_AA - R_BB) / ( R_AA + R_BB);
         g_AB2 = g_AB * g_AB;
@@ -1693,12 +1693,12 @@ namespace OpenBabel
       a = (OBAtom*) &*atom;
       parameter_a = GetParameter(atoi(atom->GetType()), 0, 0, 0, _ffpbciparams);
 
-        if (atom->IsCarboxylOxygen())
-            q0i = -0.500;
-        else if (atom->IsPhosphateOxygen() && atom->GetHvyValence() == 1)
-            q0i = -0.666;
-        else if (atom->IsSulfateOxygen())
-            q0i = -0.500;
+      if (atom->IsCarboxylOxygen())
+        q0i = -0.500;
+      else if (atom->IsPhosphateOxygen() && atom->GetHvyValence() == 1)
+        q0i = -0.666;
+      else if (atom->IsSulfateOxygen())
+        q0i = -0.500;
  
       *logos << "fcharge = " << q0i << std::endl;
       //FOR_NBORS_OF_ATOM (nbr, a) {
@@ -1784,65 +1784,65 @@ namespace OpenBabel
       bondfound = false;
 
       while (ifs2.getline(buffer, 150)) {
-	tokenize(vs, buffer);
-	if (vs.size() == 0) {
-	  bondfound = false;
-	  continue;
-	}
+        tokenize(vs, buffer);
+        if (vs.size() == 0) {
+          bondfound = false;
+          continue;
+        }
 	
         string str(buffer);
-	if (string::npos != str.find(_mol.GetTitle(),0))
-	  molfound = true;
+        if (string::npos != str.find(_mol.GetTitle(),0))
+          molfound = true;
 
-	if (atomfound) {
+        if (atomfound) {
           if (n) {
-	    types.push_back(atoi(vs[2].c_str()));
-	    types.push_back(atoi(vs[5].c_str()));
-	    types.push_back(atoi(vs[8].c_str()));
-	    types.push_back(atoi(vs[11].c_str()));
-	  } else {
-	    if (vs.size() > 2)
-	      types.push_back(atoi(vs[2].c_str()));
-	    if (vs.size() > 5)
-	      types.push_back(atoi(vs[5].c_str()));
-	    if (vs.size() > 8)
-	      types.push_back(atoi(vs[8].c_str()));
+            types.push_back(atoi(vs[2].c_str()));
+            types.push_back(atoi(vs[5].c_str()));
+            types.push_back(atoi(vs[8].c_str()));
+            types.push_back(atoi(vs[11].c_str()));
+          } else {
+            if (vs.size() > 2)
+              types.push_back(atoi(vs[2].c_str()));
+            if (vs.size() > 5)
+              types.push_back(atoi(vs[5].c_str()));
+            if (vs.size() > 8)
+              types.push_back(atoi(vs[8].c_str()));
 	    
-	    atomfound = false;
-	  }
-	  n--;
+            atomfound = false;
+          }
+          n--;
         }
         
-	if (molfound && EQn(buffer, " ATOM NAME  TYPE", 16))
-	  atomfound = true;
+        if (molfound && EQn(buffer, " ATOM NAME  TYPE", 16))
+          atomfound = true;
 	
-	if (bondfound)
-	  bond_lengths.push_back(atof(vs[7].c_str()));
+        if (bondfound)
+          bond_lengths.push_back(atof(vs[7].c_str()));
 	
-	if (molfound) {
-	  if (EQn(buffer, " Total ENERGY", 13))
-	    etot = atof(vs[3].c_str());
-	  if (EQn(buffer, " Bond Stretching", 16))
-	    ebond = atof(vs[2].c_str());
-	  if (EQn(buffer, " Angle Bending", 14))
-	    eangle = atof(vs[2].c_str());
-	  if (EQn(buffer, " Out-of-Plane Bending", 21))
-	    eoop = atof(vs[2].c_str());
-	  if (EQn(buffer, " Stretch-Bend", 13))
-	    estbn = atof(vs[1].c_str());
-	  if (EQn(buffer, "     Total Torsion", 18))
-	    etor = atof(vs[2].c_str());
-	  if (EQn(buffer, "     Net vdW", 12))
-	    evdw = atof(vs[2].c_str());
-	  if (EQn(buffer, " Electrostatic", 14))
-	    eeq = atof(vs[1].c_str());
-	  if (EQn(buffer, " ---------------------", 22) && (termcount == 0)) {
-	    termcount++;
-	    bondfound = true;
-	  }
-	  if (EQn(buffer, " OPTIMOL>  # read next", 22))
-	    break;
-	}
+        if (molfound) {
+          if (EQn(buffer, " Total ENERGY", 13))
+            etot = atof(vs[3].c_str());
+          if (EQn(buffer, " Bond Stretching", 16))
+            ebond = atof(vs[2].c_str());
+          if (EQn(buffer, " Angle Bending", 14))
+            eangle = atof(vs[2].c_str());
+          if (EQn(buffer, " Out-of-Plane Bending", 21))
+            eoop = atof(vs[2].c_str());
+          if (EQn(buffer, " Stretch-Bend", 13))
+            estbn = atof(vs[1].c_str());
+          if (EQn(buffer, "     Total Torsion", 18))
+            etor = atof(vs[2].c_str());
+          if (EQn(buffer, "     Net vdW", 12))
+            evdw = atof(vs[2].c_str());
+          if (EQn(buffer, " Electrostatic", 14))
+            eeq = atof(vs[1].c_str());
+          if (EQn(buffer, " ---------------------", 22) && (termcount == 0)) {
+            termcount++;
+            bondfound = true;
+          }
+          if (EQn(buffer, " OPTIMOL>  # read next", 22))
+            break;
+        }
 
   
 
@@ -1871,12 +1871,12 @@ namespace OpenBabel
 
         if (atoi(_mol.GetAtom(ni)->GetType()) == (*i))
           sprintf(logbuf, "%2d   %3d  %4d    %3d      %3d          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
-	      _mol.GetAtom(ni)->IsAromatic(), atoi(_mol.GetAtom(ni)->GetType()), *i);
+                  _mol.GetAtom(ni)->IsAromatic(), atoi(_mol.GetAtom(ni)->GetType()), *i);
         else {
           sprintf(logbuf, "%2d   %3d  %4d    %3d      %3d      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
-	      _mol.GetAtom(ni)->IsAromatic(), atoi(_mol.GetAtom(ni)->GetType()), *i);
-	  failed = true;
-	}
+                  _mol.GetAtom(ni)->IsAromatic(), atoi(_mol.GetAtom(ni)->GetType()), *i);
+          failed = true;
+        }
       
         cout << logbuf << endl;
         
@@ -1886,13 +1886,13 @@ namespace OpenBabel
       if (failed) {
         cout << "Could not succesfully assign atom types" << endl;
         //return false;
-	continue;
+        continue;
       }
 
       if (!SetupCalculations()) {
         cout << "Could not setup calculations (missing parameters...)" << endl;
         //return false;
-	continue;
+        continue;
       }
 
       // the calculated bond length has an error compared to the one listed in the validation suite logfile. 
@@ -1925,7 +1925,7 @@ namespace OpenBabel
  
         energy += 143.9325f * 0.5f * (*k).kb * delta2 * (1.0f - 2.0f * (*k).delta + 7/12 * 4.0f * delta2);
 
-	idx++;
+        idx++;
       }
  
 
@@ -2125,7 +2125,7 @@ namespace OpenBabel
 
   int OBForceFieldMMFF94::GetBondType(OBAtom* a, OBAtom* b)
   {
-      /*
+    /*
       cout << "IsInSameRing = " << IsInSameRing(a,b) << endl;
       cout << "a: idx = " << a->GetIdx() << "  type = " << a->GetType() << endl;
       cout << "  SB-MB = " << HasSbmbSet(atoi(a->GetType())) << endl;
@@ -2135,48 +2135,48 @@ namespace OpenBabel
       cout << "  SB-MB = " << HasSbmbSet(atoi(b->GetType())) << endl;
       cout << "  Arom = " << HasAromSet(atoi(b->GetType())) << endl;
       cout << "  IsAromatic = " << b->IsAromatic() << endl;
-      */
-      if (_mol.GetBond(a,b)->IsSingle()) {
-        if (HasSbmbSet(atoi(a->GetType())) && HasSbmbSet(atoi(b->GetType())) && !HasAromSet(atoi(a->GetType())) && !HasAromSet(atoi(b->GetType())))
-          return 1;
+    */
+    if (_mol.GetBond(a,b)->IsSingle()) {
+      if (HasSbmbSet(atoi(a->GetType())) && HasSbmbSet(atoi(b->GetType())) && !HasAromSet(atoi(a->GetType())) && !HasAromSet(atoi(b->GetType())))
+        return 1;
         
-//	if (!IsInSameRing(a, b) && HasAromSet(atoi(a->GetType())) && HasAromSet(atoi(b->GetType())))
-        //int ia = a->BOSum() - a->GetValence();
-        //int ib = b->BOSum() - b->GetValence();
-	bool ia, ib;
-	ia = ib = false;
-	FOR_NBORS_OF_ATOM(nbr, a) {
-	  OBBond* bond = _mol.GetBond(a, &*nbr);
-	  if (bond->IsDouble() && !IsInSameRing(a, &*nbr))
-	    ia = true;
-	}
-	FOR_NBORS_OF_ATOM(nbr, b) {
-	  OBBond* bond = _mol.GetBond(b, &*nbr);
-	  if (bond->IsDouble() && !IsInSameRing(b, &*nbr))
-	    ib = true;
-	}
-
-	if (!IsInSameRing(a, b) && HasSbmbSet(atoi(a->GetType())) && HasSbmbSet(atoi(b->GetType())) && ia && ib)
-          return 1;
-
-        if (HasSbmbSet(atoi(a->GetType())) && HasSbmbSet(atoi(b->GetType()))) {
-	  if ((atoi(a->GetType()) == 80) || (atoi(b->GetType()) == 80))
-	    return 0;
-
-          if (a->IsAromatic() && b->IsAromatic() &&  
-	      !HasAromSet(atoi(a->GetType())) && !HasAromSet(atoi(b->GetType())) &&
-	      IsInSameRing(a,b))
-	    return 1; // phenone
-          //if (a->IsAromatic() && !b->IsAromatic() &&  
-          if (a->IsAromatic() && HasAromSet(atoi(a->GetType())) && !HasAromSet(atoi(b->GetType())))
-              // && !b->IsInRing())
-	    return 1; // benzoic acid
-	  //if (!a->IsAromatic() && b->IsAromatic() &&  
-	  if (b->IsAromatic() && !HasAromSet(atoi(a->GetType())) && HasAromSet(atoi(b->GetType())))
-	      // && !a->IsInRing())
-	    return 1; // benzoic acid
-        }
+      //	if (!IsInSameRing(a, b) && HasAromSet(atoi(a->GetType())) && HasAromSet(atoi(b->GetType())))
+      //int ia = a->BOSum() - a->GetValence();
+      //int ib = b->BOSum() - b->GetValence();
+      bool ia, ib;
+      ia = ib = false;
+      FOR_NBORS_OF_ATOM(nbr, a) {
+        OBBond* bond = _mol.GetBond(a, &*nbr);
+        if (bond->IsDouble() && !IsInSameRing(a, &*nbr))
+          ia = true;
       }
+      FOR_NBORS_OF_ATOM(nbr, b) {
+        OBBond* bond = _mol.GetBond(b, &*nbr);
+        if (bond->IsDouble() && !IsInSameRing(b, &*nbr))
+          ib = true;
+      }
+
+      if (!IsInSameRing(a, b) && HasSbmbSet(atoi(a->GetType())) && HasSbmbSet(atoi(b->GetType())) && ia && ib)
+        return 1;
+
+      if (HasSbmbSet(atoi(a->GetType())) && HasSbmbSet(atoi(b->GetType()))) {
+        if ((atoi(a->GetType()) == 80) || (atoi(b->GetType()) == 80))
+          return 0;
+
+        if (a->IsAromatic() && b->IsAromatic() &&  
+            !HasAromSet(atoi(a->GetType())) && !HasAromSet(atoi(b->GetType())) &&
+            IsInSameRing(a,b))
+          return 1; // phenone
+        //if (a->IsAromatic() && !b->IsAromatic() &&  
+        if (a->IsAromatic() && HasAromSet(atoi(a->GetType())) && !HasAromSet(atoi(b->GetType())))
+          // && !b->IsInRing())
+          return 1; // benzoic acid
+        //if (!a->IsAromatic() && b->IsAromatic() &&  
+        if (b->IsAromatic() && !HasAromSet(atoi(a->GetType())) && HasAromSet(atoi(b->GetType())))
+          // && !a->IsInRing())
+          return 1; // benzoic acid
+      }
+    }
 
     return 0;
   }
@@ -2189,23 +2189,23 @@ namespace OpenBabel
 
     if (a->IsInRingSize(3) && b->IsInRingSize(3) && c->IsInRingSize(3)) {
       switch (sumbondtypes) {
-        case 0:
-	  return 3; 
-        case 1:
-	  return 5; 
-        case 2:
-	  return 6; 
+      case 0:
+        return 3; 
+      case 1:
+        return 5; 
+      case 2:
+        return 6; 
       }
     }
     
     if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4)) {
       switch (sumbondtypes) {
-        case 0:
-	  return 4; 
-        case 1:
-	  return 7; 
-        case 2:
-	  return 8; 
+      case 0:
+        return 4; 
+      case 1:
+        return 7; 
+      case 2:
+        return 8; 
       }
     }
 
@@ -2227,59 +2227,59 @@ namespace OpenBabel
       inverse = true;
 
     switch (atabc) {
-      case 0:
-        return 0;
+    case 0:
+      return 0;
 
-      case 1:
-        if (btab)
-	  if (!inverse)
-	    return 1;
-	  else
-	    return 2;
-	if (btbc)
-	  if (!inverse)
-	    return 2;
-	  else
-	    return 1;
+    case 1:
+      if (btab)
+        if (!inverse)
+          return 1;
+        else
+          return 2;
+      if (btbc)
+        if (!inverse)
+          return 2;
+        else
+          return 1;
 
-      case 2:
-        return 3;
+    case 2:
+      return 3;
 
-      case 3:
-        return 5;
+    case 3:
+      return 5;
 
-      case 4:
-        return 4;
+    case 4:
+      return 4;
 
-      case 5:
-        if (btab)
-	  if (!inverse)
-	    return 6;
-	  else
-	    return 7;
-	if (btbc)
-	  if (!inverse)
-	    return 7;
-	  else
-	    return 6;
+    case 5:
+      if (btab)
+        if (!inverse)
+          return 6;
+        else
+          return 7;
+      if (btbc)
+        if (!inverse)
+          return 7;
+        else
+          return 6;
       
-      case 6:
-        return 8;
+    case 6:
+      return 8;
       
-      case 7:
-         if (btab)
-	  if (!inverse)
-	    return 9;
-	  else
-	    return 10;
-	if (btbc)
-	  if (!inverse)
-	    return 10;
-	  else
-	    return 9;
+    case 7:
+      if (btab)
+        if (!inverse)
+          return 9;
+        else
+          return 10;
+      if (btbc)
+        if (!inverse)
+          return 10;
+        else
+          return 9;
       
-      case 8:
-        return 11;
+    case 8:
+      return 11;
     }
   }
   
@@ -2304,17 +2304,17 @@ namespace OpenBabel
     if (a->IsInRingSize(5) && b->IsInRingSize(5) && c->IsInRingSize(5) && d->IsInRingSize(5))
       if (IsInSameRing(a,b) && IsInSameRing(b,c) && IsInSameRing(c,d) && !a->IsAromatic()) {
         OBBond *bond;
-	bond = _mol.GetBond(a, b);
-	if (!bond->IsSingle())
-	  return 0;
+        bond = _mol.GetBond(a, b);
+        if (!bond->IsSingle())
+          return 0;
         bond = _mol.GetBond(b, c);
-	if (!bond->IsSingle())
-	  return 0;
+        if (!bond->IsSingle())
+          return 0;
         bond = _mol.GetBond(c, d);
-	if (!bond->IsSingle())
-	  return 0;
+        if (!bond->IsSingle())
+          return 0;
         
-	return 5; // needs checking for saturations
+        return 5; // needs checking for saturations
       }
 
     return 0;
@@ -2324,8 +2324,8 @@ namespace OpenBabel
   // note: when two atoms are in the same ring, but one of them
   // is also in another ring, we return false
   /*
-  bool OBForceFieldMMFF94::IsInSameRing(OBAtom* a, OBAtom* b)
-  {
+    bool OBForceFieldMMFF94::IsInSameRing(OBAtom* a, OBAtom* b)
+    {
     int a_in, b_in, a_in_cur, b_in_cur;
     vector<OBRing*> vr;
     vr = _mol.GetSSSR();
@@ -2335,34 +2335,34 @@ namespace OpenBabel
     vector<OBRing*>::iterator i;
     vector<int>::iterator j;
     for (i = vr.begin();i != vr.end();i++) {
-      for(j = (*i)->_path.begin();j != (*i)->_path.end();j++) {
-        if (*j == a->GetIdx())
-          a_in++;
-        if (*j == b->GetIdx())
-          b_in++;
-      }
+    for(j = (*i)->_path.begin();j != (*i)->_path.end();j++) {
+    if (*j == a->GetIdx())
+    a_in++;
+    if (*j == b->GetIdx())
+    b_in++;
+    }
     }
 
     for (i = vr.begin();i != vr.end();i++) {
-      a_in_cur = 0;
-      b_in_cur = 0;
-      for(j = (*i)->_path.begin();j != (*i)->_path.end();j++) {
-        if (*j == a->GetIdx())
-          a_in_cur++;
-        if (*j == b->GetIdx())
-          b_in_cur++;
-      }
+    a_in_cur = 0;
+    b_in_cur = 0;
+    for(j = (*i)->_path.begin();j != (*i)->_path.end();j++) {
+    if (*j == a->GetIdx())
+    a_in_cur++;
+    if (*j == b->GetIdx())
+    b_in_cur++;
+    }
       
-      if (a_in_cur && b_in_cur) {
-        if (((a_in >= 2) && (b_in == 1)) || ((b_in >= 2) && (a_in == 1))) // see note above
-          return false;
+    if (a_in_cur && b_in_cur) {
+    if (((a_in >= 2) && (b_in == 1)) || ((b_in >= 2) && (a_in == 1))) // see note above
+    return false;
 
-        return true;
-      }
+    return true;
+    }
     }
 
     return false;
-  }
+    }
   */
   bool OBForceFieldMMFF94::HasLinSet(int atomtype)
   {
@@ -2405,35 +2405,35 @@ namespace OpenBabel
     if (!b)
       for (int idx=0; idx < parameter.size(); idx++)
         if ((a == parameter[idx].a) && (ffclass == parameter[idx].ipar5)) {
-	  par = &parameter[idx];
-	  return par;
-	}
+          par = &parameter[idx];
+          return par;
+        }
 
     if (!c)
       for (int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b) && (ffclass == parameter[idx].ipar5)) || 
-	    ((a == parameter[idx].b) && (b == parameter[idx].a) && (ffclass == parameter[idx].ipar5))) 
-	{
-	  par = &parameter[idx];
-	  return par;
-	}
+            ((a == parameter[idx].b) && (b == parameter[idx].a) && (ffclass == parameter[idx].ipar5))) 
+          {
+            par = &parameter[idx];
+            return par;
+          }
 
     if (!d)
       for (int idx=0; idx < parameter.size(); idx++)
         if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (ffclass == parameter[idx].ipar5)) || 
-	    ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a) && (ffclass == parameter[idx].ipar5))) 
-	{
-	  par = &parameter[idx];
-	  return par;
-        }
+            ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a) && (ffclass == parameter[idx].ipar5))) 
+          {
+            par = &parameter[idx];
+            return par;
+          }
 
     for (int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (d == parameter[idx].d) && (ffclass == parameter[idx].ipar5)) || 
           ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && (d == parameter[idx].a) && (ffclass == parameter[idx].ipar5))) 
-      {
-	par = &parameter[idx];
-	return par;
-      }
+        {
+          par = &parameter[idx];
+          return par;
+        }
 
     return NULL;
   }
