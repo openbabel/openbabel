@@ -298,7 +298,10 @@ namespace OpenBabel
     };
 
   //! Opens a datafile in a directory where OpenBabel expects to find it.
-  OBAPI std::string OpenDatafile(std::ifstream& fs, const std::string& filename);
+  // full documentation in data.cpp
+  OBAPI std::string OpenDatafile(std::ifstream& fs, 
+                                 const std::string& filename,
+                                 const std::string& envvar = "BABEL_DATADIR");
 
   // Used by other code for reading files
 #ifdef WIN32

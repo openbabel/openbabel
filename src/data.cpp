@@ -2,7 +2,7 @@
 data.cpp - Global data and resource file parsers.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -853,58 +853,14 @@ namespace OpenBabel
       return;
     _init = true;
 
-    string buffer, subbuffer;
-    ifstream ifs1, ifs2, ifs3, ifs4, *ifsP;
-    // First, look for an environment variable
-    if (getenv(_envvar.c_str()) != NULL)
-      {
-        buffer = getenv(_envvar.c_str());
-        buffer += FILE_SEP_CHAR;
-
-        if (!_subdir.empty())
-          {
-            subbuffer = buffer;
-            subbuffer += _subdir;
-            subbuffer += FILE_SEP_CHAR;
-          }
-
-        buffer += _filename;
-        subbuffer += _filename;
-
-        ifs1.open(subbuffer.c_str());
-        ifsP= &ifs1;
-        if (!(*ifsP))
-          {
-            ifs2.open(buffer.c_str());
-            ifsP = &ifs2;
-          }
-      }
-    // Then, check the configured data directory
-    else // if (!(*ifsP))
-      {
-        buffer = _dir;
-        buffer += FILE_SEP_CHAR;
-
-        subbuffer = buffer;
-        subbuffer += BABEL_VERSION;
-        subbuffer += FILE_SEP_CHAR;
-
-        subbuffer += _filename;
-        buffer += _filename;
-
-        ifs3.open(subbuffer.c_str());
-        ifsP= &ifs3;
-        if (!(*ifsP))
-          {
-            ifs4.open(buffer.c_str());
-            ifsP = &ifs4;
-          }
-      }
-
+    ifstream ifs;
     char charBuffer[BUFF_SIZE];
-    if ((*ifsP))
+
+    OpenDatafile(ifs, _filename, _envvar);
+     
+    if ((ifs))
       {
-        while(ifsP->getline(charBuffer,BUFF_SIZE))
+        while(ifs.getline(charBuffer,BUFF_SIZE))
           ParseLine(charBuffer);
       }
 
@@ -930,14 +886,8 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, s, obWarning);
         }
 
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
-    if (ifs3)
-      ifs3.close();
-    if (ifs4)
-      ifs4.close();
+    if (ifs)
+      ifs.close();
 
     if (GetSize() == 0)
       {
@@ -949,25 +899,34 @@ namespace OpenBabel
       
   }
 
-  /**Opens the filestream with the first file called @p filename
+  /** Opens the filestream with the first file called @p filename
      found by looking 
      successively in the following directories:
      - the current directory
-     - the directory in the environment variable BABEL_DATADIR
-     or in the macro BABEL_DATADIR if the environment variable is not set
-     - in a subdirectory of the BABEL_DATADIR directory with the version of 
+     - in a subdirectory (of the directory below) with the version of 
      OpenBabel as its name
+     - the parent directory specified by the environment variable 
+     named @p envvar 
+     or "BABEL_DATADIR" if @p envvar is not specified, or the compiled-in
+     macro BABEL_DATADIR if the environment variable is not set
+
+     \param ifs        Stream to load
+     \param filename   Name of the data file to load
+     \param envvar     Name of the environment variable 
 
      \return the full name of the file that was opened (i.e with path) except 
      if it is in current directory
 
   **/
-  string OpenDatafile(ifstream& ifs, const string& filename)
+  string OpenDatafile(ifstream& ifs, const string& filename, 
+                      const string& envvar)
   {
     ios_base::openmode imode = ios_base::in;
 #ifdef ALL_READS_BINARY //Makes unix files compatible with VC++6
 		imode = ios_base::in|ios_base::binary;
 #endif
+
+    // check the current directory
     ifs.close();
     ifs.clear();
     ifs.open(filename.c_str(),imode);
@@ -975,33 +934,35 @@ namespace OpenBabel
       return filename;
 
     string file;
-    char* datadir = getenv("BABEL_DATADIR");
+    char* datadir = getenv(envvar.c_str());
     if(!datadir)
       datadir = BABEL_DATADIR;
-    if(datadir)
-      {
-        file = datadir;
-        file += '/';
-        file += filename;
-      }
 
-    ifs.clear();
-    ifs.open(file.c_str(),imode);
-    if(ifs)
-      return file;;
+    // check the subdirectory for this version number
+    file = datadir;
+    file += FILE_SEP_CHAR;
+    file += BABEL_VERSION;
+    file += FILE_SEP_CHAR + filename;
 
     ifs.clear();
     ifs.open(file.c_str(),imode);
     if(ifs)
       return file;
+
+    // couldn't find it with the version built in, so try the parent
     file = datadir;
-    file += "/";
-    file += BABEL_VERSION;
-    file += "/" + filename;
+    file += FILE_SEP_CHAR;
+    file += filename;
 
     ifs.clear();
     ifs.open(file.c_str(),imode);
-    return file;
+
+    if (ifs)
+      return file;
+
+    ifs.clear();
+    ifs.close();
+    return(""); // error
   }
 
 } // end namespace OpenBabel

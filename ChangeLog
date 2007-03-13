@@ -6,14 +6,25 @@
 
 	* src/forcefields/forcefieldmmff94.cpp: Switch pow() to use
 	doubles to prevent compile problems on older Linux/GCC systems.
+	Switch to using OpenDatafile.
 
 	* src/logp.cpp, src/psa.cpp: Switch to use OpenDatafile() call.
+
+	* src/fingerprints/finger3.cpp: Likewise.
+
+	* src/forcefields/forcefieldmm2.cpp,
+	src/forcefields/forcefieldghemical.cpp: Likewise.
+
+	* src/formats/xml/Makefile.am, src/formats/xml/Makefile.in: Fix
+	problems with compiling XML formats on Mac OS X.
 
 	* include/openbabel/Makefile.am: Make sure to include psa.h and
 	logp.h in distribution.
 
 	* src/data.cpp: Move comments to provide better documentation for
-	OpenDatafile.
+	OpenDatafile. Switch OBGlobalDatabase::Init to OpenDatafile.
+
+	* include/openbabel/data.h: Add envvar argument to OpenDatafile.
 
 	* config.sub, config.guess, configure, Makefile.* Update with
 	automake-1.10 and autoconf-2.61.

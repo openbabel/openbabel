@@ -390,6 +390,9 @@ namespace OpenBabel
 
   In addition, this page gives a general list of additions to the library.
 
+  - OBGenericData - Generic data is now inhereted through OBBase for
+      most types, including OBAtom, OBBond, OBMol, OBResidue, 
+      OBReaction, and OBGrid.
   - OBForceField - Generic interface to molecular mechanics force
       fields, including Ghemical (Tripos-like) methods, and ultimately
       others such as MM2, MMFF94, etc.

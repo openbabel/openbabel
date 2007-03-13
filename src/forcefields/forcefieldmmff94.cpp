@@ -570,25 +570,14 @@ namespace OpenBabel
     OBFFParameter parameter;
     
     // open data/mmffbond.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffbond.par";
-    buffer2 += "mmffbond.par";
 
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffbond.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffbond.par", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -603,10 +592,8 @@ namespace OpenBabel
       _ffbondparams.push_back(parameter);
     }
 	
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -619,25 +606,13 @@ namespace OpenBabel
     OBFFParameter parameter;
     
     // open data/mmffbndk.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffbndk.par";
-    buffer2 += "mmffbndk.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffbndk.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffbndk.par", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -651,10 +626,8 @@ namespace OpenBabel
       _ffbndkparams.push_back(parameter);
     }
 	
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -667,25 +640,13 @@ namespace OpenBabel
     OBFFParameter parameter;
     
     // open data/mmffang.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffang.par";
-    buffer2 += "mmffang.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffang.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffang.par", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -701,10 +662,8 @@ namespace OpenBabel
       _ffangleparams.push_back(parameter);
     }
 	
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -717,25 +676,13 @@ namespace OpenBabel
     OBFFParameter parameter;
     
     // open data/mmffstbn.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffstbn.par";
-    buffer2 += "mmffstbn.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffstbn.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffstbn.par", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -751,10 +698,8 @@ namespace OpenBabel
       _ffstrbndparams.push_back(parameter);
     }
 	
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -767,25 +712,13 @@ namespace OpenBabel
     OBFFParameter parameter;
     
     // open data/mmffdfsb.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffdfsb.par";
-    buffer2 += "mmffdfsb.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffdfsb.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffdfsb.par", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -800,10 +733,8 @@ namespace OpenBabel
       _ffdfsbparams.push_back(parameter);
     }
 	
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -816,25 +747,13 @@ namespace OpenBabel
     OBFFParameter parameter;
     
     // open data/mmffoop.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffoop.par";
-    buffer2 += "mmffoop.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffoop.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffoop.par", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -849,10 +768,8 @@ namespace OpenBabel
       _ffoopparams.push_back(parameter);
     }
 	
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -864,26 +781,14 @@ namespace OpenBabel
     
     OBFFParameter parameter;
     
-    // open data/mmffoop.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmfftor.par";
-    buffer2 += "mmfftor.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    // open data/mmfftor.par
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmfftor.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmfftor.par", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -901,10 +806,8 @@ namespace OpenBabel
       _fftorsionparams.push_back(parameter);
     }
 	
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -916,26 +819,14 @@ namespace OpenBabel
     
     OBFFParameter parameter;
     
-    // open data/mmffoop.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffvdw.par";
-    buffer2 += "mmffvdw.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    // open data/mmffvdw.par
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffvdw.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffvdw.par", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -956,10 +847,8 @@ namespace OpenBabel
       _ffvdwparams.push_back(parameter);
     }
 
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -971,26 +860,14 @@ namespace OpenBabel
     
     OBFFParameter parameter;
     
-    // open data/mmffoop.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffchg.par";
-    buffer2 += "mmffchg.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    // open data/mmffchg.par
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffchg.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffchg.par", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -1003,10 +880,8 @@ namespace OpenBabel
       _ffchgparams.push_back(parameter);
     }
 
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -1018,26 +893,14 @@ namespace OpenBabel
     
     OBFFParameter parameter;
     
-    // open data/mmffoop.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffpbci.par";
-    buffer2 += "mmffpbci.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    // open data/mmffpbci.par
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffpbci.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffpbci", obError);
+      return false;
+    }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -1050,10 +913,8 @@ namespace OpenBabel
       _ffpbciparams.push_back(parameter);
     }
 
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -1064,28 +925,16 @@ namespace OpenBabel
     char buffer[80];
     
     // open data/mmffprop.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffprop.par";
-    buffer2 += "mmffprop.par";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffprop.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffprop.par", obError);
+      return false;
+    }
     
     _arom.clear();
     _lin.clear();
     _sbmb.clear();
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -1101,10 +950,8 @@ namespace OpenBabel
         _sbmb.push_back(atoi(vs[0].c_str()));
     }
 
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -1147,25 +994,13 @@ namespace OpenBabel
     ////////////////////////////////////////////////////////////////////////////
 
     // open data/mmffsymb.par
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mmffsymb.par";
-    buffer2 += "mmffsymb.par";
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mmffsymb.par").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffsymb.par", obError);
+      return false;
+    }
 
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
-   
-    while (ifsP->getline(buffer, 150)) {
+    while (ifs.getline(buffer, 150)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
 	
@@ -1190,6 +1025,9 @@ namespace OpenBabel
         }
       }
     }
+
+    if (ifs)
+      ifs.close();
     
     ////////////////////////////////////////////////////////////////////////////
     // find aromatic rings and assign atom types

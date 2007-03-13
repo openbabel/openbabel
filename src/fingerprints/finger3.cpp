@@ -88,48 +88,33 @@ public:
 		//depending on whether the first line is #Comments after SMARTS
 		//Output strings in vector are SMARTS + comments
 		string file = filename;
-		ifstream ifs1, ifs2, *ifsP;
-		char* datadir = getenv("BABEL_DATADIR");
-		if(!datadir)
-			datadir = BABEL_DATADIR;
-		if(datadir)
-		{
-		  file = datadir;
-		  file += FILE_SEP_CHAR;
-		  file += filename;
-		}
-
-		ifs1.open(file.c_str());
-		ifsP = &ifs1;
-		if(!(*ifsP))
-		{
-		  file = datadir;
-		  file += FILE_SEP_CHAR;
-		  file += BABEL_VERSION;
-		  file += FILE_SEP_CHAR + filename;
-		  ifs2.open(file.c_str());
-		  ifsP = &ifs2;
-		}
-
-		if(!(*ifsP))
-		  {
+		ifstream ifs;
 #ifdef HAVE_SSTREAM 
-		    stringstream errorMsg; 
+	  stringstream errorMsg; 
 #else 
-		    strstream errorMsg; 
+	  strstream errorMsg; 
 #endif 
+
+    if (OpenDatafile(ifs, filename).length() == 0) {
+      errorMsg << "Cannot open " << filename << endl;
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+      return false;
+    }
+
+		if(!(ifs))
+		  {
 		    errorMsg << "Cannot open " << filename << endl; 
 		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError); 
 		    return false;
 		  }
 		string smarts, formatline;
 
-		if(!getline(*ifsP, formatline)) return false;
+		if(!getline(ifs, formatline)) return false;
 		if(formatline=="#Comments after SMARTS")
 		{
-			while(ifsP->good())
+			while(ifs.good())
 			{
-				if( getline(*ifsP,smarts) 
+				if( getline(ifs,smarts) 
 						&& smarts.size() > 0 
 						&& smarts[0] != '#')
 					lines.push_back(smarts); //leave the comments in
@@ -138,9 +123,9 @@ public:
 		else
 		{
 			// Christian Laggner's format: SMARTS at end of line
-			while(ifsP->good())
+			while(ifs.good())
 			{
-				if( getline(*ifsP,smarts) && smarts[0]!='#')
+				if( getline(ifs,smarts) && smarts[0]!='#')
 				{
           string::size_type pos = smarts.find(':');
 					if(pos!=string::npos)
@@ -152,6 +137,9 @@ public:
 				}
 			}
 		}
+
+    if (ifs)
+      ifs.close();
 		return true;
 	}
 };

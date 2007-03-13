@@ -251,8 +251,8 @@ namespace OpenBabel
       dot_c1c2 = dot(c1, c2);
       dot_rc1rc2 = dot_c1c2 / (rc1 * rc2);
       root = sqrt(1.0f - dot_rc1rc2);
-//        if (dot(b2,c3) > 0.0)
-  //        torsion *= -1.0;
+      //        if (dot(b2,c3) > 0.0)
+      //        torsion *= -1.0;
  
       vfa = rc12 * cross_bcc2 - dot_c1c2 * cross_bcc1;
       vfa = f * vfa / (rc13 * rc2 * root);
@@ -295,48 +295,48 @@ namespace OpenBabel
           c = NULL;
           d = NULL;
 
-	  FOR_NBORS_OF_ATOM(nbr, b) {
-	    if (a ==NULL)
-	      a = (OBAtom*) &*nbr;
-	    else if (c == NULL)
-	      c = (OBAtom*) &*nbr;
-	    else
-	      d = (OBAtom*) &*nbr;
-	  }
+          FOR_NBORS_OF_ATOM(nbr, b) {
+            if (a ==NULL)
+              a = (OBAtom*) &*nbr;
+            else if (c == NULL)
+              c = (OBAtom*) &*nbr;
+            else
+              d = (OBAtom*) &*nbr;
+          }
 	  
-	  if (atoi(d->GetType()) == _ffoutplanebendparams[idx].b) {
-	    force = _ffoutplanebendparams[idx].dpar1;
+          if (atoi(d->GetType()) == _ffoutplanebendparams[idx].b) {
+            force = _ffoutplanebendparams[idx].dpar1;
             angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
             //angle = PointPlaneAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
-	    angle2 = angle * angle;
-	    e = outplanebendunit * force * angle2;
-	    energy +=e;
+            angle2 = angle * angle;
+            e = outplanebendunit * force * angle2;
+            energy +=e;
 
-	    //sprintf(errbuf, "%sout-of-plane: a-b-c-d  %d-%d-%d-%d  angle=%f  E=%f\n", errbuf, a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx(), angle, e); // DEBUG
-	  }
-	  if (atoi(a->GetType()) == _ffoutplanebendparams[idx].b) {
-	    // a <-> d
-	    force = _ffoutplanebendparams[idx].dpar1;
+            //sprintf(errbuf, "%sout-of-plane: a-b-c-d  %d-%d-%d-%d  angle=%f  E=%f\n", errbuf, a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx(), angle, e); // DEBUG
+          }
+          if (atoi(a->GetType()) == _ffoutplanebendparams[idx].b) {
+            // a <-> d
+            force = _ffoutplanebendparams[idx].dpar1;
             angle = Point2PlaneAngle(a->GetVector(), d->GetVector(), b->GetVector(), c->GetVector());
             //angle = PointPlaneAngle(d->GetVector(), b->GetVector(), c->GetVector(), a->GetVector());
-	    angle2 = angle * angle;
-	    e = outplanebendunit * force * angle2;
-	    energy +=e;
+            angle2 = angle * angle;
+            e = outplanebendunit * force * angle2;
+            energy +=e;
 
-	    //sprintf(errbuf, "%sout-of-plane: a-b-c-d  %d-%d-%d-%d  angle=%f  E=%f\n", errbuf, d->GetIdx(), b->GetIdx(), c->GetIdx(), a->GetIdx(), angle, e); // DEBUG
-	  }
-	  if (atoi(c->GetType()) == _ffoutplanebendparams[idx].b) {
-	    // c <-> d
-	    force = _ffoutplanebendparams[idx].dpar1;
+            //sprintf(errbuf, "%sout-of-plane: a-b-c-d  %d-%d-%d-%d  angle=%f  E=%f\n", errbuf, d->GetIdx(), b->GetIdx(), c->GetIdx(), a->GetIdx(), angle, e); // DEBUG
+          }
+          if (atoi(c->GetType()) == _ffoutplanebendparams[idx].b) {
+            // c <-> d
+            force = _ffoutplanebendparams[idx].dpar1;
             angle = Point2PlaneAngle(c->GetVector(), a->GetVector(), b->GetVector(), d->GetVector());
             //angle = PointPlaneAngle(a->GetVector(), b->GetVector(), d->GetVector(), c->GetVector());
-	    angle2 = angle * angle;
-	    e = outplanebendunit * force * angle2;
-	    energy +=e;
+            angle2 = angle * angle;
+            e = outplanebendunit * force * angle2;
+            energy +=e;
 
-	    //sprintf(errbuf, "%sout-of-plane: a-b-c-d  %d-%d-%d-%d  angle=%f  E=%f\n", errbuf, a->GetIdx(), b->GetIdx(), d->GetIdx(), c->GetIdx(), angle, e); // DEBUG
-	  }
-	}
+            //sprintf(errbuf, "%sout-of-plane: a-b-c-d  %d-%d-%d-%d  angle=%f  E=%f\n", errbuf, a->GetIdx(), b->GetIdx(), d->GetIdx(), c->GetIdx(), angle, e); // DEBUG
+          }
+        }
       }
     }
     //sprintf(errbuf, "%sOut-of-plane bending: E=%f\n", errbuf, energy); // DEBUG
@@ -368,19 +368,19 @@ namespace OpenBabel
  
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffvdwprparams);
       if (parameter != NULL) {
-	  rr = parameter->dpar1;
-	  eps = parameter->dpar2;
+        rr = parameter->dpar1;
+        eps = parameter->dpar2;
       } else {
-	parameter = GetParameter(atoi(a->GetType()), 0, 0, 0, _ffvdwparams);
-	ra = parameter->dpar1;
-	epsa = parameter->dpar2;
-	parameter = GetParameter(atoi(b->GetType()), 0, 0, 0, _ffvdwparams);
+        parameter = GetParameter(atoi(a->GetType()), 0, 0, 0, _ffvdwparams);
+        ra = parameter->dpar1;
+        epsa = parameter->dpar2;
+        parameter = GetParameter(atoi(b->GetType()), 0, 0, 0, _ffvdwparams);
         rb = parameter->dpar1;
         epsb = parameter->dpar2;
 	
         //sprintf(errbuf, "%s\n\n     *** v1=%f  v2=%f  v3=%f\n\n", errbuf, v1, v2, v3); // DEBUG
-	rr = ra + rb;
-	eps = (epsa + epsb) / 2; // is this correct??
+        rr = ra + rb;
+        eps = (epsa + epsb) / 2; // is this correct??
       }
 
       rrab = rr / rab;
@@ -428,50 +428,50 @@ namespace OpenBabel
         dipole = _ffdipoleparams[idx].dpar1;
 
         FOR_BONDS_OF_MOL(bond2, _mol) {
-	  if (&*bond == &*bond2)
-	    continue;
-	  if (bond2->GetIdx() < bond->GetIdx())
-	    continue;
+          if (&*bond == &*bond2)
+            continue;
+          if (bond2->GetIdx() < bond->GetIdx())
+            continue;
 
           c = bond2->GetBeginAtom();
           d = bond2->GetEndAtom();	
           
-	  idx = GetParameterIdx(atoi(c->GetType()), atoi(d->GetType()), 0, 0, _ffdipoleparams);
+          idx = GetParameterIdx(atoi(c->GetType()), atoi(d->GetType()), 0, 0, _ffdipoleparams);
           if (idx > 0) {
             dipole2 = _ffdipoleparams[idx].dpar1;
 
             //
-	    //    dipole1      dipole2
-	    //       i-----------j           i = center of bond 1
-	    //        \ a1    a2/            j = center of bond 2
-	    //         \       /             
-	    //          \     /              
-	    //           \a3 /
-	    //            \ /
-	    //             k
-	    //
+            //    dipole1      dipole2
+            //       i-----------j           i = center of bond 1
+            //        \ a1    a2/            j = center of bond 2
+            //         \       /             
+            //          \     /              
+            //           \a3 /
+            //            \ /
+            //             k
+            //
             va = a->GetVector();
-	    vb = b->GetVector();
-	    vc = c->GetVector();
-	    vd = d->GetVector();
+            vb = b->GetVector();
+            vc = c->GetVector();
+            vd = d->GetVector();
             
-	    ab = va - vb;
+            ab = va - vb;
             cd = vc - vd;
-	    ri2 = dot(ab, ab);
-	    rk2 = dot(cd, cd);
-	    q = (va + vb) / 2;
-	    r = (vc + vd) / 2;
-	    r2 = dot(r, r);
-	    rirkr3 = sqrt(ri2 * rk2 * r2) * r2;
-	    dotp = dot(ab, cd);
-	    doti = dot(ab, r);
-	    dotk = dot(cd, r);
+            ri2 = dot(ab, ab);
+            rk2 = dot(cd, cd);
+            q = (va + vb) / 2;
+            r = (vc + vd) / 2;
+            r2 = dot(r, r);
+            rirkr3 = sqrt(ri2 * rk2 * r2) * r2;
+            dotp = dot(ab, cd);
+            doti = dot(ab, r);
+            dotk = dot(cd, r);
             fik = f * dipole * dipole2;
 	    
-	    e = fik * (dotp - 3.0f * doti * dotk/r2) / rirkr3;
-	    energy += e;
+            e = fik * (dotp - 3.0f * doti * dotk/r2) / rirkr3;
+            energy += e;
             //sprintf(errbuf, "%sdipole=%f  dipole2=%f  r=%f cos_a1=%f  cos_a2=%f  cos_a3=%f  E=%f\n", errbuf, dipole, dipole2, r, cos_a1, cos_a2, cos_a3, e); // DEBUG
-	  }
+          }
         }
       }
     }
@@ -516,163 +516,149 @@ namespace OpenBabel
     OBFFParameter parameter;
     
     // open data/mm2.prm
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "mm2.prm";
-    buffer2 += "mm2.prm";
-
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-    {
-      ifs2.open(buffer2.c_str());
-      ifsP = &ifs2;
+    ifstream ifs;
+    if (OpenDatafile(ifs, "mm2.prm").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mm2.prm", obError);
+      return false;
     }
     
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
 	
-	tokenize(vs, buffer);
+      tokenize(vs, buffer);
 
-	if (EQn(buffer, "bondunit", 8)) {
-	  bondunit = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "bond-cubic", 10)) {
-	  bond_cubic = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "bond-quartic", 12)) {
-	  bond_quartic = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "angleunit", 9)) {
-	  angleunit = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "angle-sextic", 12)) {
-	  angle_sextic = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "strbndunit", 10)) {
-	  stretchbendunit = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "torsionunit", 11)) {
-	  torsionunit = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "opbendunit", 10)) {
-	  outplanebendunit = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "a-expterm", 9)) {
-	  a_expterm = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "b-expterm", 9)) {
-	  b_expterm = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "c-expterm", 9)) {
-	  c_expterm = atof(vs[1].c_str());
-	  continue;
-	}
-	if (EQn(buffer, "vdwtype", 7))
-	  continue;
-	if (EQn(buffer, "vdw-14-scale", 12))
-	  continue;
-	if (EQn(buffer, "dielectric", 10)) {
-	  dielectric = atof(vs[1].c_str());
-	  continue;
-	}
+      if (EQn(buffer, "bondunit", 8)) {
+        bondunit = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "bond-cubic", 10)) {
+        bond_cubic = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "bond-quartic", 12)) {
+        bond_quartic = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "angleunit", 9)) {
+        angleunit = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "angle-sextic", 12)) {
+        angle_sextic = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "strbndunit", 10)) {
+        stretchbendunit = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "torsionunit", 11)) {
+        torsionunit = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "opbendunit", 10)) {
+        outplanebendunit = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "a-expterm", 9)) {
+        a_expterm = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "b-expterm", 9)) {
+        b_expterm = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "c-expterm", 9)) {
+        c_expterm = atof(vs[1].c_str());
+        continue;
+      }
+      if (EQn(buffer, "vdwtype", 7))
+        continue;
+      if (EQn(buffer, "vdw-14-scale", 12))
+        continue;
+      if (EQn(buffer, "dielectric", 10)) {
+        dielectric = atof(vs[1].c_str());
+        continue;
+      }
 	
-	parameter.clear();
+      parameter.clear();
 	
-	if (EQn(buffer, "bond3", 5))
-	  continue;
-	if (EQn(buffer, "bond4", 5))
-	  continue;
-	if (EQn(buffer, "bond", 4)) {
-	  parameter.a = atoi(vs[1].c_str());
-	  parameter.b = atoi(vs[2].c_str());
-	  parameter.dpar2 = atof(vs[3].c_str());
-	  parameter.dpar1 = atof(vs[4].c_str());
-	  _ffbondparams.push_back(parameter);
-	  continue;
-	}
-	if (EQn(buffer, "angle3", 6))
-	  continue;
-	if (EQn(buffer, "angle4", 6))
-	  continue;
-	if (EQn(buffer, "angle", 5)) {
-	  parameter.a = atoi(vs[1].c_str());
-	  parameter.b = atoi(vs[2].c_str());
-	  parameter.c = atoi(vs[3].c_str());
-	  parameter.dpar2 = atof(vs[4].c_str());
-	  parameter.dpar1 = atof(vs[5].c_str());
-	  _ffangleparams.push_back(parameter);
-	  continue;
-	}
-	if (EQn(buffer, "strbnd", 6)) {
-          parameter.a = atoi(vs[1].c_str());	
-          parameter.dpar1 = atof(vs[2].c_str());	
-	  _ffstretchbendparams.push_back(parameter);
-	  continue;
-	}
-	if (EQn(buffer, "torsion4", 8))
-	  continue;
-	if (EQn(buffer, "torsion", 7)) {
-	  parameter.a = atoi(vs[1].c_str());
-	  parameter.b = atoi(vs[2].c_str());
-	  parameter.c = atoi(vs[3].c_str());
-	  parameter.d = atoi(vs[4].c_str());
-	  parameter.dpar1 = atof(vs[5].c_str());
-	  parameter.dpar2 = atof(vs[8].c_str());
-	  parameter.dpar3 = atof(vs[11].c_str());
-	  _fftorsionparams.push_back(parameter);
-	  continue;
-	}
-	if (EQn(buffer, "opbend", 6)) {
-          parameter.a = atoi(vs[1].c_str());	
-          parameter.b = atoi(vs[2].c_str());	
-          parameter.dpar1 = atof(vs[3].c_str());	
-	  _ffoutplanebendparams.push_back(parameter);
-	  continue;
-        }	
-	if (EQn(buffer, "vdwpr", 5)) {
-	  parameter.a = atoi(vs[1].c_str());
-	  parameter.b = atoi(vs[2].c_str());
-	  parameter.dpar1 = atof(vs[3].c_str());
-	  parameter.dpar2 = atof(vs[4].c_str());
-	  _ffvdwprparams.push_back(parameter);
-	  continue;
-        }	
-	if (EQn(buffer, "vdw", 3)) {
-	  parameter.a = atoi(vs[1].c_str());
-	  parameter.dpar1 = atof(vs[2].c_str());
-	  parameter.dpar2 = atof(vs[3].c_str());
-	  _ffvdwparams.push_back(parameter);
-	  continue;
-        }	
-	if (EQn(buffer, "dipole", 6)) {
-	  parameter.a = atoi(vs[1].c_str());
-	  parameter.b = atoi(vs[2].c_str());
-	  parameter.dpar1 = atof(vs[3].c_str());
-	  parameter.dpar2 = atof(vs[4].c_str());
-	  _ffdipoleparams.push_back(parameter);
-	  continue;
-	}
+      if (EQn(buffer, "bond3", 5))
+        continue;
+      if (EQn(buffer, "bond4", 5))
+        continue;
+      if (EQn(buffer, "bond", 4)) {
+        parameter.a = atoi(vs[1].c_str());
+        parameter.b = atoi(vs[2].c_str());
+        parameter.dpar2 = atof(vs[3].c_str());
+        parameter.dpar1 = atof(vs[4].c_str());
+        _ffbondparams.push_back(parameter);
+        continue;
+      }
+      if (EQn(buffer, "angle3", 6))
+        continue;
+      if (EQn(buffer, "angle4", 6))
+        continue;
+      if (EQn(buffer, "angle", 5)) {
+        parameter.a = atoi(vs[1].c_str());
+        parameter.b = atoi(vs[2].c_str());
+        parameter.c = atoi(vs[3].c_str());
+        parameter.dpar2 = atof(vs[4].c_str());
+        parameter.dpar1 = atof(vs[5].c_str());
+        _ffangleparams.push_back(parameter);
+        continue;
+      }
+      if (EQn(buffer, "strbnd", 6)) {
+        parameter.a = atoi(vs[1].c_str());	
+        parameter.dpar1 = atof(vs[2].c_str());	
+        _ffstretchbendparams.push_back(parameter);
+        continue;
+      }
+      if (EQn(buffer, "torsion4", 8))
+        continue;
+      if (EQn(buffer, "torsion", 7)) {
+        parameter.a = atoi(vs[1].c_str());
+        parameter.b = atoi(vs[2].c_str());
+        parameter.c = atoi(vs[3].c_str());
+        parameter.d = atoi(vs[4].c_str());
+        parameter.dpar1 = atof(vs[5].c_str());
+        parameter.dpar2 = atof(vs[8].c_str());
+        parameter.dpar3 = atof(vs[11].c_str());
+        _fftorsionparams.push_back(parameter);
+        continue;
+      }
+      if (EQn(buffer, "opbend", 6)) {
+        parameter.a = atoi(vs[1].c_str());	
+        parameter.b = atoi(vs[2].c_str());	
+        parameter.dpar1 = atof(vs[3].c_str());	
+        _ffoutplanebendparams.push_back(parameter);
+        continue;
+      }	
+      if (EQn(buffer, "vdwpr", 5)) {
+        parameter.a = atoi(vs[1].c_str());
+        parameter.b = atoi(vs[2].c_str());
+        parameter.dpar1 = atof(vs[3].c_str());
+        parameter.dpar2 = atof(vs[4].c_str());
+        _ffvdwprparams.push_back(parameter);
+        continue;
+      }	
+      if (EQn(buffer, "vdw", 3)) {
+        parameter.a = atoi(vs[1].c_str());
+        parameter.dpar1 = atof(vs[2].c_str());
+        parameter.dpar2 = atof(vs[3].c_str());
+        _ffvdwparams.push_back(parameter);
+        continue;
+      }	
+      if (EQn(buffer, "dipole", 6)) {
+        parameter.a = atoi(vs[1].c_str());
+        parameter.b = atoi(vs[2].c_str());
+        parameter.dpar1 = atof(vs[3].c_str());
+        parameter.dpar2 = atof(vs[4].c_str());
+        _ffdipoleparams.push_back(parameter);
+        continue;
+      }
     }
 	
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }

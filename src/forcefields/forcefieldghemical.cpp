@@ -441,8 +441,8 @@ namespace OpenBabel
             _bondcalculations.push_back(bondcalc);
 
             IF_OBFF_LOGLVL_LOW {
-	        sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR BOND %s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType());
-		OBFFLog(logbuf);
+              sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR BOND %s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType());
+              OBFFLog(logbuf);
             }
 
             continue;
@@ -487,14 +487,14 @@ namespace OpenBabel
             
               _anglecalculations.push_back(anglecalc);
             
-	      IF_OBFF_LOGLVL_LOW {
-	        sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR ANGLE %s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType());
-		OBFFLog(logbuf);
+              IF_OBFF_LOGLVL_LOW {
+                sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR ANGLE %s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType());
+                OBFFLog(logbuf);
               }
 
               continue;
             }
-	  }
+          }
         }
       }
       anglecalc.ka = KCAL_TO_KJ * parameter->dpar2;
@@ -543,14 +543,14 @@ namespace OpenBabel
               torsioncalc.s = 1.0f;
               torsioncalc.n = 1.0f;
               
-	      torsioncalc.k1 = 0.0f;
-	      torsioncalc.k2 = 0.0f;
-	      torsioncalc.k3 = 0.0f;
+              torsioncalc.k1 = 0.0f;
+              torsioncalc.k2 = 0.0f;
+              torsioncalc.k3 = 0.0f;
               _torsioncalculations.push_back(torsioncalc);
 
-	      IF_OBFF_LOGLVL_LOW {
-	        sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR TORSION %s-%s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType(), d->GetType());
-		OBFFLog(logbuf);
+              IF_OBFF_LOGLVL_LOW {
+                sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR TORSION %s-%s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType(), d->GetType());
+                OBFFLog(logbuf);
               }
 
               continue;
@@ -564,36 +564,36 @@ namespace OpenBabel
 
       s = (int) (torsioncalc.s * torsioncalc.n);
       switch(s) {
-        case +3:
-          torsioncalc.k1 = 0.0f;
-          torsioncalc.k2 = 0.0f;
-	  torsioncalc.k3 = torsioncalc.V;
-	  break;
-        case +2:
-          torsioncalc.k1 = 0.0f;
-	  torsioncalc.k2 = -torsioncalc.V;
-          torsioncalc.k3 = 0.0f;
-	  break;
-        case +1:
-	  torsioncalc.k1 = torsioncalc.V;
-          torsioncalc.k2 = 0.0f;
-          torsioncalc.k3 = 0.0f;
-	  break;
-        case -1:
-	  torsioncalc.k1 = -torsioncalc.V;
-          torsioncalc.k2 = 0.0f;
-          torsioncalc.k3 = 0.0f;
-	  break;
-        case -2:
-          torsioncalc.k1 = 0.0f;
-	  torsioncalc.k2 = torsioncalc.V;
-          torsioncalc.k3 = 0.0f;
-	  break;
-        case -3:
-          torsioncalc.k1 = 0.0f;
-          torsioncalc.k2 = 0.0f;
-	  torsioncalc.k3 = -torsioncalc.V;
-	  break;
+      case +3:
+        torsioncalc.k1 = 0.0f;
+        torsioncalc.k2 = 0.0f;
+        torsioncalc.k3 = torsioncalc.V;
+        break;
+      case +2:
+        torsioncalc.k1 = 0.0f;
+        torsioncalc.k2 = -torsioncalc.V;
+        torsioncalc.k3 = 0.0f;
+        break;
+      case +1:
+        torsioncalc.k1 = torsioncalc.V;
+        torsioncalc.k2 = 0.0f;
+        torsioncalc.k3 = 0.0f;
+        break;
+      case -1:
+        torsioncalc.k1 = -torsioncalc.V;
+        torsioncalc.k2 = 0.0f;
+        torsioncalc.k3 = 0.0f;
+        break;
+      case -2:
+        torsioncalc.k1 = 0.0f;
+        torsioncalc.k2 = torsioncalc.V;
+        torsioncalc.k3 = 0.0f;
+        break;
+      case -3:
+        torsioncalc.k1 = 0.0f;
+        torsioncalc.k2 = 0.0f;
+        torsioncalc.k3 = -torsioncalc.V;
+        break;
       }
 
       _torsioncalculations.push_back(torsioncalc);     
@@ -619,9 +619,9 @@ namespace OpenBabel
         vdwcalc.Ra = 1.5f;
         vdwcalc.ka = 0.042f;
 	
-	IF_OBFF_LOGLVL_LOW {
-	  sprintf(logbuf, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", a->GetType());
-	  OBFFLog(logbuf);
+        IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", a->GetType());
+          OBFFLog(logbuf);
         }
       } else {
         vdwcalc.Ra = parameter_a->dpar1;
@@ -633,9 +633,9 @@ namespace OpenBabel
         vdwcalc.Rb = 1.5f;
         vdwcalc.kb = 0.042;;
         
-	IF_OBFF_LOGLVL_LOW {
-	  sprintf(logbuf, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", b->GetType());
-	  OBFFLog(logbuf);
+        IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", b->GetType());
+          OBFFLog(logbuf);
         }
       } else {
         vdwcalc.Rb = parameter_b->dpar1;
@@ -656,11 +656,11 @@ namespace OpenBabel
       vdwcalc.is14 = false;
       FOR_NBORS_OF_ATOM (nbr, a)
         FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-          FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-            if (b == &*nbr3) {
-              vdwcalc.is14 = true;
-              vdwcalc.kab *= 0.5f;
-            }
+        FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
+        if (b == &*nbr3) {
+          vdwcalc.is14 = true;
+          vdwcalc.kab *= 0.5f;
+        }
       */
 
       // not sure why this is needed, but validation showed it works...
@@ -699,16 +699,16 @@ namespace OpenBabel
         elecalc.a = &*a;
         elecalc.b = &*b;
         
-	// 1-4 scaling
+        // 1-4 scaling
         if (a->IsOneFour(b))
           elecalc.qq *= 0.5f;
 	  
 	/*
         FOR_NBORS_OF_ATOM (nbr, a)
           FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-            FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-              if (b == &*nbr3)
-                elecalc.qq *= 0.5f;
+          FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
+          if (b == &*nbr3)
+            elecalc.qq *= 0.5f;
         */
 
         _electrostaticcalculations.push_back(elecalc);
@@ -726,25 +726,13 @@ namespace OpenBabel
     OBFFParameter parameter;
 
     // open data/ghemical.prm
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "ghemical.prm";
-    buffer2 += "ghemical.prm";
+    ifstream ifs;
+    if (OpenDatafile(ifs, "ghemical.prm").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open ghemical.prm", obError);
+      return false;
+    }
 
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
-
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       tokenize(vs, buffer);
 
       if (EQn(buffer, "bond", 4)) {
@@ -814,10 +802,8 @@ namespace OpenBabel
       }
     }
 	
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
  
     return 0;
   }
@@ -835,25 +821,13 @@ namespace OpenBabel
     _mol.SetAtomTypesPerceived();
     
     // open data/ghemical.prm
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "ghemical.prm";
-    buffer2 += "ghemical.prm";
+    ifstream ifs;
+    if (OpenDatafile(ifs, "ghemical.prm").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open ghemical.prm", obError);
+      return false;
+    }
 
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
-   
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "atom", 4)) {
       	tokenize(vs, buffer);
 
@@ -886,7 +860,7 @@ namespace OpenBabel
       
       FOR_ATOMS_OF_MOL (a, _mol) {
         sprintf(logbuf, "%d\t%s\n", a->GetIdx(), a->GetType());
-	OBFFLog(logbuf);
+        OBFFLog(logbuf);
       }
 
       OBFFLog("\nC H A R G E S\n\n");
@@ -894,7 +868,7 @@ namespace OpenBabel
       
       FOR_ATOMS_OF_MOL (a, _mol) {
         sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
-	OBFFLog(logbuf);
+        OBFFLog(logbuf);
       }
     }
     
@@ -905,10 +879,8 @@ namespace OpenBabel
     //  else
     //    cout << "ATOMTYPE " << a->GetType() << endl;
  
-    if (ifs1)
-      ifs1.close();
-    if (ifs2)
-      ifs2.close();
+    if (ifs)
+      ifs.close();
 
     return true;
   }
@@ -936,11 +908,11 @@ namespace OpenBabel
       for (unsigned int idx=0; idx < _ffchargeparams.size(); idx++) {
         if (((_a == _ffchargeparams[idx]._a) && (_b == _ffchargeparams[idx]._b)) && (bondtype == _ffchargeparams[idx].ipar5)) {
           a->SetPartialCharge(a->GetPartialCharge() - _ffchargeparams[idx].dpar1);
-	  b->SetPartialCharge(b->GetPartialCharge() + _ffchargeparams[idx].dpar1);
-	} else if (((_a == _ffchargeparams[idx]._b) && (_b == _ffchargeparams[idx]._a)) && (bondtype == _ffchargeparams[idx].ipar5)) {
+          b->SetPartialCharge(b->GetPartialCharge() + _ffchargeparams[idx].dpar1);
+        } else if (((_a == _ffchargeparams[idx]._b) && (_b == _ffchargeparams[idx]._a)) && (bondtype == _ffchargeparams[idx].ipar5)) {
           a->SetPartialCharge(a->GetPartialCharge() + _ffchargeparams[idx].dpar1);
-	  b->SetPartialCharge(b->GetPartialCharge() - _ffchargeparams[idx].dpar1);
-	}
+          b->SetPartialCharge(b->GetPartialCharge() - _ffchargeparams[idx].dpar1);
+        }
       }
     }
 
