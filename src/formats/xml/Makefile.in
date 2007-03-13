@@ -253,15 +253,15 @@ AM_LDFLAGS = @LIBS@ @XML_LIBS@
 @BUILD_SHARED_TRUE@	pubchem.la xmlformat.la cdxmlformat.la
 
 @BUILD_SHARED_TRUE@cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cdxmlformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cdxmlformat_la_LDFLAGS = -module -avoid-version $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@cmlreactlformat_la_SOURCES = cmlreactlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cmlreactlformat_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@cmlreactlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@pubchem_la_SOURCES = pubchem.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@pubchem_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@pubchem_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@xmlformat_la_SOURCES = xmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@xmlformat_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@xmlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
 all: all-am
 
 .SUFFIXES:
