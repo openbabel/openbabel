@@ -1,3 +1,18 @@
+2007-03-13 Chris Morley
+	
+	* src/formats/inchiformat.cpp: Add bond stereo handling to
+	ReadMolecule(). Correct 0D stereo in reading and writing.
+	Remove the waring message about stereochemistry. Apart from
+	a few special cases, e.g. allenes, 'either' parity, I think
+	the InChI writing and reading is now ok., but still more 
+	testing needed...
+	TestFormat messages improved.
+	
+	* src/formats/xml/cmlformat.cpp: Correct handling of 0D
+	atomParity on reading and writing.
+	
+	* src/GUI/optswx.cpp: Added documentation
+
 2007-03-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefieldghemical.cpp: Fix 1,4-scaling problem.

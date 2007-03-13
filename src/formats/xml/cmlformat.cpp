@@ -636,7 +636,7 @@ namespace OpenBabel
 
         if(name=="atomParity" || name=="bondStereo")
           {
-            vector<int> AtomRefIdx;
+            vector<unsigned int> AtomRefIdx;
 			
             string nextname = (++AttributeIter)->first;
             string atrefsvalue = AttributeIter->second;
@@ -661,10 +661,18 @@ namespace OpenBabel
                 //calculated using the atoms in AtomRefIdx.
                 //Need now to adjust the parity to match the standard order
                 // ...
+                OBAtom* patom = _pmol->GetAtom(Idx);
+                if(!patom)
+                  return false;
                 if(parity>0)
-                  _pmol->GetAtom(Idx)->SetClockwiseStereo();
+                  patom->SetClockwiseStereo();
                 else if(parity<0)
-                  _pmol->GetAtom(Idx)->SetAntiClockwiseStereo();
+                  patom->SetAntiClockwiseStereo();
+                OBChiralData* cd = new OBChiralData;
+                cd->Clear();
+                cd->SetAtom4Refs(AtomRefIdx, input);
+                patom->SetData(cd);
+
               }
             else //bondStereo
               {
@@ -1197,27 +1205,14 @@ namespace OpenBabel
                           {
                             int cfg=0;
                             if((patom->IsPositiveStereo() || patom->IsClockwise()))
-                              cfg=1; //whether +1 or -1 is pure guess. TODO***
+                              cfg=1;
                             else if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
                               cfg=-1;
-                            if(cfg)
+                            OBChiralData* cd=(OBChiralData*)patom->GetData(OBGenericDataType::ChiralData);
+                            if(cfg && cd)
                               {
-                                //in the order they are in OBMol except that any H is put at the end
-                                vector<int> ref;
-                                ref.clear();
-                                int Hidx=0;
-                                FOR_NBORS_OF_ATOM(a,patom)
-                                  {
-                                    if(a->IsHydrogen())
-                                      Hidx = a->GetIdx();
-                                    else
-                                      ref.push_back(a->GetIdx()); 
-                                  }
-                                if(Hidx)
-                                  ref.push_back(Hidx);
-                                if(ref.size()==3)//e.g. using implicit Hs
-                                  ref.push_back(patom->GetIdx());
-
+                                //UseAtom4Refs from OBChiralData
+                                vector<unsigned int>& ref = cd->GetAtom4Refs(input);
                                 xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
                                 xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
                                                                   "a%d a%d a%d a%d", ref[0], ref[1], ref[2], ref[3]);														

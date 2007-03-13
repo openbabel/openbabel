@@ -56,7 +56,7 @@ public:
     " U output only unique molecules and sort them\n"
     " e compare first molecule to others\n"
     " w don't warn on undef stereo or charge rearrangement\n\n"
-    "Note that when reading an InChI the stereochemical info is currently ignored.\n"
+
     "Input options, e.g. -at\n"
     " X <Option string> List of InChI options:\n"
     " n molecule name follows InChI on same line\n"
@@ -154,9 +154,6 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       return false; //eof
   }while(inchi.size()<9); //ignore empty "InChI=" or "InChI=1/"
 
-  if(pConv->IsFirstInput())
-    clog << "Note that any stereochemical info in the InChI is not currently read." << endl;
-
   //Set up input struct
   inchi_InputINCHI inp;
 
@@ -218,7 +215,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     patom->SetSpinMultiplicity(piat->radical);
     patom->SetFormalCharge(piat->charge);
-    patom->SetVector(piat->x,piat->y,piat->z);
+//    patom->SetVector(piat->x,piat->y,piat->z);
 
     int j;
     for(j=0;j<piat->num_bonds;++j)
@@ -228,35 +225,69 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   }
   
   //***TODO 0D stereo, implicit H isotopes
-/*  //Stereochemistry
+  //Stereochemistry
   for(i=0;i<out.num_stereo0D;++i)
   {
     inchi_Stereo0D& stereo = out.stereo0D[i];
 
-    vector<unsigned int> AtomRefs;
-    AtomRefs.push_back(stereo.neighbor[0] + 1);
-    AtomRefs.push_back(stereo.neighbor[1] + 1);
-    AtomRefs.push_back(stereo.neighbor[2] + 1);
-    AtomRefs.push_back(stereo.neighbor[3] + 1);
+    vector<unsigned int> refs;
+    for(int i=0;i<4; ++i)
+      refs.push_back(stereo.neighbor[i] + 1);
 
     switch(stereo.type)
     {
     case INCHI_StereoType_DoubleBond:
+    {
+      // Parity 'unknown', 'undefined' not handled
+      if(!(stereo.parity==INCHI_PARITY_EVEN || stereo.parity==INCHI_PARITY_ODD))
+        break;
+      OBBond* pBond1 = pmol->GetBond(refs[0], refs[1]); //attached bonds
+      OBBond* pBond2 = pmol->GetBond(refs[2], refs[3]); 
+      if(!pBond1 || !pBond2)
+        return false;
+      bool ud = (stereo.parity==INCHI_PARITY_EVEN) ? true : false;//'trans'
+      if(!pBond2->IsUp() && !pBond2->IsDown())
+      {
+        //pBond2 not previously set
+        if(pBond1->IsUp())
+          ud = !ud;
+        if(ud)
+          pBond2->SetDown();
+        else
+          pBond2->SetUp();
+        if(!pBond1->IsUp() && !pBond1->IsDown())
+          pBond1->SetUp();
+      }
+      else
+      {
+        //pBond2 has been previously set
+        if(pBond2->IsUp())
+          ud = !ud;
+        if(ud)
+          pBond1->SetDown();
+        else
+          pBond1->SetUp();
+      }
+      //InChI seems to prefer to define double bond stereo using H atoms.
+      //This leads to rather messy SMILES because the hydrogens have to be explicit.
+      //Could try to transfer u/d to non-Hs, but current method of u/d in congugated
+      //molecules makes it more complicated than it should be.
       break;
-
+    }
     case INCHI_StereoType_Tetrahedral:
     {
       OBChiralData* cd = new OBChiralData;
-      cd->SetAtom4Refs(AtomRefs, input);
-      OBAtom* patom = pmol->GetAtom(stereo.central_atom+1);
+      cd->Clear();
+      cd->SetAtom4Refs(refs, input);
+      OBAtom* patom = pmol->GetAtom(stereo.central_atom + 1);
       if(!patom)
         return false;
+      patom->SetData(cd);
 
       if(stereo.parity==INCHI_PARITY_EVEN)
           patom->SetClockwiseStereo();
       else if(stereo.parity==INCHI_PARITY_ODD)
           patom->SetAntiClockwiseStereo();
-      patom->SetData(cd);
 
       break;
     }
@@ -267,37 +298,6 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
   }
   
-  
-  vector<inchi_Stereo0D> stereoVec;
-  //Tetrahedral stereo
-  OBAtom* patom;
-  vector<OBNodeBase*>::iterator itr;
-  if(mol.IsChiral())
-  {
-    for(patom = mol.BeginAtom(itr);patom;patom = mol.NextAtom(itr))
-    {
-      if(patom->IsChiral())
-      {
-        inchi_Stereo0D stereo;
-        stereo.central_atom = patom->GetIdx()-1;
-        stereo.type = INCHI_StereoType_Tetrahedral;
-        int i=0;
-        vector<OBEdgeBase*>::iterator itr;
-        OBBond *pbond;
-        for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr),++i)
-          stereo.neighbor[i] = pbond->GetNbrAtomIdx(patom)-1;
-        //if(i!=4)...error
-
-        stereo.parity = INCHI_PARITY_UNKNOWN;
-        if(patom->IsPositiveStereo() || patom->IsClockwise())
-          stereo.parity = INCHI_PARITY_ODD;
-        if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
-          stereo.parity = INCHI_PARITY_EVEN;
-        stereoVec.push_back(stereo);
-      }
-    }
-  }
-  */
   pmol->EndModify();
   FreeStructFromINCHI( &out );
   return true;
@@ -428,29 +428,21 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           inchi_Stereo0D stereo;
           stereo.central_atom = patom->GetIdx()-1;
           stereo.type = INCHI_StereoType_Tetrahedral;
-          int i=0;
-          vector<OBEdgeBase*>::iterator itr;
-          OBBond *pbond;
-
-          for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr),++i)
-            stereo.neighbor[i] = pbond->GetNbrAtomIdx(patom)-1;
-
           OBChiralData* cd=(OBChiralData*)patom->GetData(OBGenericDataType::ChiralData);
-          if(!cd)
-          { //if no Chiral Data Set, need to make one!
-            cd=new OBChiralData;
-            cd->SetOrigin(perceived);
-            patom->SetData(cd);
+          vector<unsigned int>& refs = cd->GetAtom4Refs(input);
+          if(refs.size()<4)
+          {
+            obErrorLog.ThrowError(__FUNCTION__, "Tetrahedral stereo info not available", obWarning);
+            break;
           }
-          vector<unsigned int> nbr_atoms(4);
-          copy (stereo.neighbor,stereo.neighbor+4,nbr_atoms.begin());
-          CorrectChirality(mol, patom);
+          for(int i=0;i<4; ++i)
+            stereo.neighbor[i] = refs[i]-1;
 
           stereo.parity = INCHI_PARITY_UNKNOWN;
           if(patom->IsPositiveStereo() || patom->IsClockwise())
-            stereo.parity = INCHI_PARITY_ODD;
-          if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
             stereo.parity = INCHI_PARITY_EVEN;
+          if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
+            stereo.parity = INCHI_PARITY_ODD;
           stereoVec.push_back(stereo);
         }
       }
@@ -704,10 +696,10 @@ public:
   virtual const char* Description() //required
   {
       return 
-"Compares first molecule with others using InChI\n \
-e.g. babel first.smi second.mol third.cml -ok\n \
-Same as -oinchi -xet\n \
-";
+"Compares first molecule with others using InChI\n"
+"e.g. babel first.smi second.mol third.cml -ok\n"
+"Same as  -oinchi -xet  and can take the same options as InChI format.\n"
+;
   };
   
   virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
@@ -736,14 +728,19 @@ public:
 
   virtual const char* Description()
   { return
-"Test format\n \
-Does a round trip conversion and compares before and after using InChI.\n \
-Uses the input format unless -xO set\n \
-Option e.g. -xOsmi\n \
- O<ext> Test the format that has the specified ID\n \
- m      Output message for each successful molecule\n\n \
-Also use opts appropriate for the target format.\n \
-";
+"Test format\n"
+"Does a round trip conversion and compares before and after using InChI.\n"
+"Uses the input format unless -xO set\n"
+"Option e.g. -xOsmi\n"
+" O<ext> Test the format that has the specified ID\n"
+" m      Output message for each successful molecule\n"
+" X <Option string> List of InChI options:\n\n"
+
+"You can also use commandline options appropriate for the target format.\n\n"
+
+"InputFormat => OBMol => SpecifiedFormat => OBMol\n"
+"Compare InChIs generated from each of the OBMols\n"
+;
   };
 
   virtual unsigned int Flags() { return NOTREADABLE;}
@@ -769,7 +766,7 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     nMols=nFailures=0;
   nMols++;
 
-  //mol has already been input using the target format
+  //mol has already been input using the input format
 
   //Send its InChI to a stringstream
   OBFormat* pInchi = OBConversion::FindFormat("inchi");
@@ -785,9 +782,9 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   //Use a new OBConversion to write and then read using the target format
   //(Using the same OBConversion gave problems with CMLFormat)
-  OBConversion NewConv(*pConv);
-  NewConv.SetAuxConv(NULL); //until proper copy constructor for OBConversion written
-  
+  OBConversion NewConv(*pConv); //copy
+
+
   const char* pTargetExt = pConv->IsOption("O");
 #ifdef HAVE_SSTREAM
   stringstream errorMsg;
@@ -840,7 +837,7 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   char ch = InChIFormat::CompareInchi(ssinchi1.str().c_str(), ssinchi2.str().c_str());
 
-  if(!ch && pConv->IsOption("m"))
+  if(ch || pConv->IsOption("m"))//On failure, or anyway if specified
   {
     stringstream molID;
     if(strlen(mol.GetTitle())==0)
@@ -848,18 +845,16 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     else
       molID << mol.GetTitle();
     ofs << molID.str() << " in " << pConv->GetInFilename();
+    ofs << " and its conversion" << InChIFormat::InChIErrorMessage(ch) << endl;
     if(ch)
-    {
-      ofs << " and its conversion" << InChIFormat::InChIErrorMessage(ch) << endl;
       ++nFailures;
-    }
-    else
-      ofs << " ok" << endl;
   }
 
-  char s = nFailures==1 ? ' ' : 's';
   if(pConv->IsLast())
-    ofs << nFailures << " failure" << s << endl;
+  {
+   char s = nFailures==1 ? ' ' : 's';
+   ofs << '\n' << nFailures << " failure" << s << endl;
+  }
   return true;
 }
 

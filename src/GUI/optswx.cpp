@@ -28,7 +28,66 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+/*
+The string returned by OBFormat::Description() gives information about the
+format and the commandline options that can be used with it. More general
+options have similar descriptions in for instance in 
+OBConversion::TargetClassDescription(). These strings are parsed in 
+OBGUIFrame::OnChangeFormat and the following routine so that the GUI can
+present these options as checkboxes, editboxes, etc. The method was originally
+designed to use the existing descriptions as far as possible, so that the
+information is extracted without having to add special codes, etc. It is
+fairly unobtrusive, but liable to breaking because of alterations which
+had more significance than the person making then was expecting.
 
+For format descriptions options for Read and Write are extracted with 
+separate calls to DynOptionswx::Construct(). The list of options starts with
+a a line containing "Options". Those for reading have "Read" or "Input" 
+preceding this on the same line and those for writing have "Write", "Output"
+or nothing preceding it on the same line. These are all case insensitive.
+The options themselves are one to a line on subsequent lines, ending with a 
+blank lineor the end of the string.
+
+Each option has a name, which can be a single letter. Any punctuation 
+preceding thename is ignored.
+
+If the first character after the name, other than space or tab, is a 
+punctuation character, then the option will be displayed as an edit box,
+to be used to enter parameters.
+
+--property <attrib> <value> add or replace a property\n
+
+The name of this parameter, e.g. "attrib" and "value" in the example,
+is not displyed in the GUI. Additional editboxes are displayed if the first
+character after the next whitespace is punctuation. If it is a letter, it is
+the start of the caption text which continues to the end of the line (but see
+below). The caption is displyed after the edit box(es).Edit boxes for options
+with multicharacter names are larger than for those with single character names.
+
+If the last character of the line is ':' then a full-line edit box is
+displayed and the caption is displayed before it.
+
+If the text contains the word "default", the subsequent word is written into the
+editbox. It will have some punctuation characters stripped from its start and end,
+so that 
+q <day> Starting day, default <Sunday>
+ will display as an edit box containing "Sunday" and caption "Starting day".
+
+If the first character after the option name, other than space or tab, is a
+letter, then a checkbox is usually displayed.
+  c  continuous output: no formatting\n
+
+If the text contains "default", the checkbox is displayed checked and the
+caption contains only the text up to this point. If the follow word is 
+"no", "not or "none" the checkbox is unchecked.
+
+A set of radio buttons are displayed, rather than a checkbox if "or" is the 
+last word of the caption. Including "default" in the caption checks that button.
+For example
+1  output CML V1.0  or \n \
+2  output CML V2.0 (default)\n \
+
+*/
 ////////////////////////////////////////////////////
 DynOptionswx::~DynOptionswx()
 { Clear();}
