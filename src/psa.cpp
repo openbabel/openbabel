@@ -1,8 +1,7 @@
 /**********************************************************************
-logp.cpp - Handle logP prediction algorithms.
+psa.cpp - Handle polar surface area (PSA) prediction algorithms.
  
-Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Copyright (C) 2007 by Tim Vandermeersch
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -30,28 +29,18 @@ namespace OpenBabel
     OBSmartsPattern *sp;
     
     // open data/psa.txt
-    string buffer2, subbuffer;
-    ifstream ifs1, ifs2, *ifsP;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "psa.txt";
-    buffer2 += "psa.txt";
+    ifstream ifs;
 
-    ifs1.open(subbuffer.c_str());
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-        ifs2.open(buffer2.c_str());
-        ifsP = &ifs2;
-      }
+    if (OpenDatafile(ifs, "psa.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, " Could not find PSA data file.", obError);
+      return;
+    }
+
 
     vector<string> vs;
     
     char buffer[80];
-    while (ifsP->getline(buffer, 80)) {
+    while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "#", 1)) continue;
       if (EQn(buffer, ";", 1)) continue;
 
@@ -109,5 +98,5 @@ namespace OpenBabel
 
 } // end namespace OpenBabel
 
-//! \file logp.h
-//! \brief Handle logP prediction algorithms.
+//! \file psa.cpp
+//! \brief Handle PSA prediction algorithms.
