@@ -45,7 +45,7 @@ int main(int argc,char **argv)
     cout << endl;
     cout << "  -v          verbose: print out indivual energy interactions" << endl;
     cout << endl;
-    cout << "  -ff         select a forcefield" << endl;
+    cout << "  -ff ffid    select a forcefield" << endl;
     cout << endl;
     cout << "              available forcefields:" << endl;
     cout << endl;

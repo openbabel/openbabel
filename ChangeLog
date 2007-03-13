@@ -1,3 +1,10 @@
+2007-03-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* tool/obminimize.cpp: added '-sd', '-cg', '-c criteria' options
+
+	* doc/obminimize.1: update for added options (man pages for obenergy
+	and obminimize are also on wiki now) 
+
 2007-03-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mopacformat.cpp: Added patch #1676963

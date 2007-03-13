@@ -37,6 +37,8 @@ int main(int argc,char **argv)
   char *program_name= argv[0];
   int c;
   int steps = 2500;
+  double crit = 1e-6;
+  bool sd = false;
   string basename, filename = "", option, option2, ff = "Ghemical";
 
   if (argc < 2) {
@@ -44,9 +46,15 @@ int main(int argc,char **argv)
     cout << endl;
     cout << "options:      description:" << endl;
     cout << endl;
-    cout << "  -n          specify the maximum numer of steps" << endl;
+    cout << "  -n steps    specify the maximum numer of steps (default=2500)" << endl;
     cout << endl;
-    cout << "  -ff         select a forcefield:" << endl;
+    cout << "  -cg         use conjugate gradients algorithm (default)" << endl;
+    cout << endl;
+    cout << "  -sd         use steepest descent algorithm" << endl;
+    cout << endl;
+    cout << "  -c crit     set convergence criteria (default=1e-6)" << endl;
+    cout << endl;
+    cout << "  -ff ffid    select a forcefield:" << endl;
     cout << endl;
     FOR_EACH(OBForceField, iter) {
       //cout << "              " << iter.ID() << " - " << iter.Description() << endl;
@@ -63,6 +71,19 @@ int main(int argc,char **argv)
 	ifile += 2;
       }
 
+      if (option == "-sd") {
+        sd = true;
+	ifile++;
+      }
+      
+      if (option == "-cg")
+	ifile++;
+
+      if ((option == "-c") && (argc > (i+1))) {
+        crit = atof(argv[i+1]);
+	ifile += 2;
+      }
+ 
       if ((option == "-ff") && (argc > (i+1))) {
         ff = argv[i+1];
 	ifile += 2;
@@ -120,7 +141,11 @@ int main(int argc,char **argv)
         exit (-1);
       }
       
-      pFF->ConjugateGradients(steps);
+      if (sd)
+        pFF->SteepestDescent(steps, crit);
+      else
+        pFF->ConjugateGradients(steps, crit);
+
       pFF->UpdateCoordinates(mol);
 
       //char FileOut[32];
@@ -133,6 +158,11 @@ int main(int argc,char **argv)
 
   return(1);
 }
+
+//
+// THIS MAN PAGE IS NO LONGER UP TO DATE:
+// SEE DOC/*.1 OR WIKI PAGES
+//
 
 /* obminimize man page*/
 /** \page minimize the energy for a molecule

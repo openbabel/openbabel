@@ -16,7 +16,13 @@ If no filename is given, obminimize will give all options including the
 available forcefields.
 .Bl -tag -width flag
 .It Fl n Ar steps
-Specify the maximum number of steps
+Specify the maximum number of steps (default=2500)
+.It Fl cg
+Use conjugate gradients algorithm (default)
+.It Fl sd
+Use steepest descent algorithm
+.It Fl c Ar criteria
+Set convergence criteria (default=1e-6)
 .It Fl ff Ar forcefield
 Select the forcefield
 .El
@@ -35,6 +41,10 @@ Ghemical forcefield:
 Minimize the energy for the molecule(s) in file test.mol2 by taking
 at most 300 geometry optimization steps
 .Dl "obminimize -n 300 test.mol2"
+.Pp
+Minimize the energy for the molecule(s) in file test.mol2 using the 
+steepest descent algorithm and convergence criteria 1e-5:
+.Dl "obminimize -sd -c 1e-5 test.mol2"
 .Sh SEE ALSO
 .Xr babel 1 ,
 .Xr obenergy 1 ,
