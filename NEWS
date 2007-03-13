@@ -47,11 +47,13 @@ keywords for QM formats
 
 New File Formats:
   Import & Export: 
+    Carine's ASCII Crystal (ACR)
     ChemDraw CDX & CDXML
     Crystallographic Interchange Format (CIF)
     Fasta Sequence
     Thermo Format
-  Input:
+  Import:
+    Gaussian fchk
     InChI
   Export:
     Open Babel MolReport
