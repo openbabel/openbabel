@@ -1,3 +1,9 @@
+2007-03-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchiformat.cpp, src/formats/cmlformat.cpp: Fix compile
+	problems with GCC and last changes. (Return value from
+	OBChiralData should be assigned to a full object.)
+
 2007-03-13 Chris Morley
 	
 	* src/formats/inchiformat.cpp: Add bond stereo handling to
@@ -41,7 +47,7 @@
 
 	* include/openbabel/data.h: Add envvar argument to OpenDatafile.
 
-	* config.sub, config.guess, configure, Makefile.* Update with
+	* config.sub, config.guess, configure, Makefile.*: Update with
 	automake-1.10 and autoconf-2.61.
 
 2007-03-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
@@ -100,7 +106,7 @@
 	In WriteMolecule() removed deletion of OBChiralData and
 	re-zeroed z coords, so that OBMol is unchanged.
 	
-	* src/GUI/OBGUI.cpp, OBGUI.h; Made default ostream a 
+	* src/GUI/OBGUI.cpp, OBGUI.h: Made default ostream a 
 	stringstream which is written to textbox at end. Solves
 	bugs 1596906 and (probably) 1669973.
 	Added facility for copying output to input.

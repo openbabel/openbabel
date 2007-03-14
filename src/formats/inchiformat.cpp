@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2005,2006 Chris Morley
+Copyright (C) 2005,2006,2007 Chris Morley
 
 Based on the IUPAC InChI reference software, which is distributed
 under the GNU LGPL:
@@ -429,7 +429,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           stereo.central_atom = patom->GetIdx()-1;
           stereo.type = INCHI_StereoType_Tetrahedral;
           OBChiralData* cd=(OBChiralData*)patom->GetData(OBGenericDataType::ChiralData);
-          vector<unsigned int>& refs = cd->GetAtom4Refs(input);
+          vector<unsigned int>refs = cd->GetAtom4Refs(input);
           if(refs.size()<4)
           {
             obErrorLog.ThrowError(__FUNCTION__, "Tetrahedral stereo info not available", obWarning);

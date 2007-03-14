@@ -1212,7 +1212,7 @@ namespace OpenBabel
                             if(cfg && cd)
                               {
                                 //UseAtom4Refs from OBChiralData
-                                vector<unsigned int>& ref = cd->GetAtom4Refs(input);
+                                vector<unsigned int> ref = cd->GetAtom4Refs(input);
                                 xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
                                 xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
                                                                   "a%d a%d a%d a%d", ref[0], ref[1], ref[2], ref[3]);														
