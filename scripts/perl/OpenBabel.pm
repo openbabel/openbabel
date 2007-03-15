@@ -1757,6 +1757,48 @@ sub ACQUIRE {
 }
 
 
+############# Class : Chemistry::OpenBabel::OBVibrationData ##############
+
+package Chemistry::OpenBabel::OBVibrationData;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel::OBGenericData Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBVibrationData(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBVibrationData($self);
+        delete $OWNER{$self};
+    }
+}
+
+*SetData = *Chemistry::OpenBabelc::OBVibrationData_SetData;
+*GetLx = *Chemistry::OpenBabelc::OBVibrationData_GetLx;
+*GetFrequencies = *Chemistry::OpenBabelc::OBVibrationData_GetFrequencies;
+*GetIntensities = *Chemistry::OpenBabelc::OBVibrationData_GetIntensities;
+*GetNumberOfFrequencies = *Chemistry::OpenBabelc::OBVibrationData_GetNumberOfFrequencies;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : Chemistry::OpenBabel::OBBase ##############
 
 package Chemistry::OpenBabel::OBBase;
@@ -1895,6 +1937,7 @@ sub DESTROY {
 *GetUnit = *Chemistry::OpenBabelc::pluginiterForceField_GetUnit;
 *Setup = *Chemistry::OpenBabelc::pluginiterForceField_Setup;
 *UpdateCoordinates = *Chemistry::OpenBabelc::pluginiterForceField_UpdateCoordinates;
+*UpdateConformers = *Chemistry::OpenBabelc::pluginiterForceField_UpdateConformers;
 *OBFFLog = *Chemistry::OpenBabelc::pluginiterForceField_OBFFLog;
 *Energy = *Chemistry::OpenBabelc::pluginiterForceField_Energy;
 *E_Bond = *Chemistry::OpenBabelc::pluginiterForceField_E_Bond;
@@ -3341,6 +3384,24 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
+*swig_energy_get = *Chemistry::OpenBabelc::OBFFCalculation_energy_get;
+*swig_energy_set = *Chemistry::OpenBabelc::OBFFCalculation_energy_set;
+*swig_grada_get = *Chemistry::OpenBabelc::OBFFCalculation_grada_get;
+*swig_grada_set = *Chemistry::OpenBabelc::OBFFCalculation_grada_set;
+*swig_gradb_get = *Chemistry::OpenBabelc::OBFFCalculation_gradb_get;
+*swig_gradb_set = *Chemistry::OpenBabelc::OBFFCalculation_gradb_set;
+*swig_gradc_get = *Chemistry::OpenBabelc::OBFFCalculation_gradc_get;
+*swig_gradc_set = *Chemistry::OpenBabelc::OBFFCalculation_gradc_set;
+*swig_gradd_get = *Chemistry::OpenBabelc::OBFFCalculation_gradd_get;
+*swig_gradd_set = *Chemistry::OpenBabelc::OBFFCalculation_gradd_set;
+*swig_a_get = *Chemistry::OpenBabelc::OBFFCalculation_a_get;
+*swig_a_set = *Chemistry::OpenBabelc::OBFFCalculation_a_set;
+*swig_b_get = *Chemistry::OpenBabelc::OBFFCalculation_b_get;
+*swig_b_set = *Chemistry::OpenBabelc::OBFFCalculation_b_set;
+*swig_c_get = *Chemistry::OpenBabelc::OBFFCalculation_c_get;
+*swig_c_set = *Chemistry::OpenBabelc::OBFFCalculation_c_set;
+*swig_d_get = *Chemistry::OpenBabelc::OBFFCalculation_d_get;
+*swig_d_set = *Chemistry::OpenBabelc::OBFFCalculation_d_set;
 sub new {
     my $pkg = shift;
     my $self = Chemistry::OpenBabelc::new_OBFFCalculation(@_);
@@ -3358,10 +3419,9 @@ sub DESTROY {
     }
 }
 
+*Compute = *Chemistry::OpenBabelc::OBFFCalculation_Compute;
 *GetEnergy = *Chemistry::OpenBabelc::OBFFCalculation_GetEnergy;
 *GetGradient = *Chemistry::OpenBabelc::OBFFCalculation_GetGradient;
-*swig_energy_get = *Chemistry::OpenBabelc::OBFFCalculation_energy_get;
-*swig_energy_set = *Chemistry::OpenBabelc::OBFFCalculation_energy_set;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -3391,10 +3451,22 @@ sub new {
 *Iter = *Chemistry::OpenBabelc::OBForceField_Iter;
 *FindDefaultType = *Chemistry::OpenBabelc::OBForceField_FindDefaultType;
 *FindType = *Chemistry::OpenBabelc::OBForceField_FindType;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBForceField($self);
+        delete $OWNER{$self};
+    }
+}
+
 *FindForceField = *Chemistry::OpenBabelc::OBForceField_FindForceField;
 *GetUnit = *Chemistry::OpenBabelc::OBForceField_GetUnit;
 *Setup = *Chemistry::OpenBabelc::OBForceField_Setup;
 *UpdateCoordinates = *Chemistry::OpenBabelc::OBForceField_UpdateCoordinates;
+*UpdateConformers = *Chemistry::OpenBabelc::OBForceField_UpdateConformers;
 *OBFFLog = *Chemistry::OpenBabelc::OBForceField_OBFFLog;
 *Energy = *Chemistry::OpenBabelc::OBForceField_Energy;
 *E_Bond = *Chemistry::OpenBabelc::OBForceField_E_Bond;
@@ -3426,17 +3498,6 @@ sub new {
 *VectorLengthDerivative = *Chemistry::OpenBabelc::OBForceField_VectorLengthDerivative;
 *VectorAngleDerivative = *Chemistry::OpenBabelc::OBForceField_VectorAngleDerivative;
 *VectorTorsionDerivative = *Chemistry::OpenBabelc::OBForceField_VectorTorsionDerivative;
-sub DESTROY {
-    return unless $_[0]->isa('HASH');
-    my $self = tied(%{$_[0]});
-    return unless defined $self;
-    delete $ITERATORS{$self};
-    if (exists $OWNER{$self}) {
-        Chemistry::OpenBabelc::delete_OBForceField($self);
-        delete $OWNER{$self};
-    }
-}
-
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -3463,10 +3524,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBMolAtomIter_good;
-*inc = *Chemistry::OpenBabelc::OBMolAtomIter_inc;
-*deref = *Chemistry::OpenBabelc::OBMolAtomIter_deref;
-*__ref__ = *Chemistry::OpenBabelc::OBMolAtomIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -3478,6 +3535,10 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBMolAtomIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolAtomIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolAtomIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBMolAtomIter___ref__;
 *swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomIter_Visit_get;
 *swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBMolAtomIter_Clear;
@@ -3641,11 +3702,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBMolAtomDFSIter_good;
-*inc = *Chemistry::OpenBabelc::OBMolAtomDFSIter_inc;
-*deref = *Chemistry::OpenBabelc::OBMolAtomDFSIter_deref;
-*__ref__ = *Chemistry::OpenBabelc::OBMolAtomDFSIter___ref__;
-*next = *Chemistry::OpenBabelc::OBMolAtomDFSIter_next;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -3657,6 +3713,11 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBMolAtomDFSIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolAtomDFSIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolAtomDFSIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBMolAtomDFSIter___ref__;
+*next = *Chemistry::OpenBabelc::OBMolAtomDFSIter_next;
 *swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Visit_get;
 *swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Clear;
@@ -3820,10 +3881,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBMolAtomBFSIter_good;
-*inc = *Chemistry::OpenBabelc::OBMolAtomBFSIter_inc;
-*deref = *Chemistry::OpenBabelc::OBMolAtomBFSIter_deref;
-*__ref__ = *Chemistry::OpenBabelc::OBMolAtomBFSIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -3835,6 +3892,10 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBMolAtomBFSIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolAtomBFSIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolAtomBFSIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBMolAtomBFSIter___ref__;
 *swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Visit_get;
 *swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Clear;
@@ -3998,10 +4059,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBMolBondIter_good;
-*inc = *Chemistry::OpenBabelc::OBMolBondIter_inc;
-*deref = *Chemistry::OpenBabelc::OBMolBondIter_deref;
-*__ref__ = *Chemistry::OpenBabelc::OBMolBondIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4013,6 +4070,10 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBMolBondIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolBondIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolBondIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBMolBondIter___ref__;
 *swig_Visit_get = *Chemistry::OpenBabelc::OBMolBondIter_Visit_get;
 *swig_Visit_set = *Chemistry::OpenBabelc::OBMolBondIter_Visit_set;
 *SetIdx = *Chemistry::OpenBabelc::OBMolBondIter_SetIdx;
@@ -4108,10 +4169,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBAtomAtomIter_good;
-*inc = *Chemistry::OpenBabelc::OBAtomAtomIter_inc;
-*deref = *Chemistry::OpenBabelc::OBAtomAtomIter_deref;
-*__ref__ = *Chemistry::OpenBabelc::OBAtomAtomIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4123,6 +4180,10 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBAtomAtomIter_good;
+*inc = *Chemistry::OpenBabelc::OBAtomAtomIter_inc;
+*deref = *Chemistry::OpenBabelc::OBAtomAtomIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBAtomAtomIter___ref__;
 *swig_Visit_get = *Chemistry::OpenBabelc::OBAtomAtomIter_Visit_get;
 *swig_Visit_set = *Chemistry::OpenBabelc::OBAtomAtomIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBAtomAtomIter_Clear;
@@ -4286,10 +4347,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBAtomBondIter_good;
-*inc = *Chemistry::OpenBabelc::OBAtomBondIter_inc;
-*deref = *Chemistry::OpenBabelc::OBAtomBondIter_deref;
-*__ref__ = *Chemistry::OpenBabelc::OBAtomBondIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4301,6 +4358,10 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBAtomBondIter_good;
+*inc = *Chemistry::OpenBabelc::OBAtomBondIter_inc;
+*deref = *Chemistry::OpenBabelc::OBAtomBondIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBAtomBondIter___ref__;
 *swig_Visit_get = *Chemistry::OpenBabelc::OBAtomBondIter_Visit_get;
 *swig_Visit_set = *Chemistry::OpenBabelc::OBAtomBondIter_Visit_set;
 *SetIdx = *Chemistry::OpenBabelc::OBAtomBondIter_SetIdx;
@@ -4396,10 +4457,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBResidueIter_good;
-*inc = *Chemistry::OpenBabelc::OBResidueIter_inc;
-*deref = *Chemistry::OpenBabelc::OBResidueIter_deref;
-*__ref__ = *Chemistry::OpenBabelc::OBResidueIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4411,6 +4468,10 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBResidueIter_good;
+*inc = *Chemistry::OpenBabelc::OBResidueIter_inc;
+*deref = *Chemistry::OpenBabelc::OBResidueIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBResidueIter___ref__;
 *AddAtom = *Chemistry::OpenBabelc::OBResidueIter_AddAtom;
 *InsertAtom = *Chemistry::OpenBabelc::OBResidueIter_InsertAtom;
 *RemoveAtom = *Chemistry::OpenBabelc::OBResidueIter_RemoveAtom;
@@ -4478,10 +4539,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBResidueAtomIter_good;
-*inc = *Chemistry::OpenBabelc::OBResidueAtomIter_inc;
-*deref = *Chemistry::OpenBabelc::OBResidueAtomIter_deref;
-*__ref__ = *Chemistry::OpenBabelc::OBResidueAtomIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4493,6 +4550,10 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBResidueAtomIter_good;
+*inc = *Chemistry::OpenBabelc::OBResidueAtomIter_inc;
+*deref = *Chemistry::OpenBabelc::OBResidueAtomIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBResidueAtomIter___ref__;
 *swig_Visit_get = *Chemistry::OpenBabelc::OBResidueAtomIter_Visit_get;
 *swig_Visit_set = *Chemistry::OpenBabelc::OBResidueAtomIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBResidueAtomIter_Clear;
@@ -4656,9 +4717,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBMolAngleIter_good;
-*inc = *Chemistry::OpenBabelc::OBMolAngleIter_inc;
-*__ref__ = *Chemistry::OpenBabelc::OBMolAngleIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4670,6 +4728,9 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBMolAngleIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolAngleIter_inc;
+*__ref__ = *Chemistry::OpenBabelc::OBMolAngleIter___ref__;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -4696,9 +4757,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBMolTorsionIter_good;
-*inc = *Chemistry::OpenBabelc::OBMolTorsionIter_inc;
-*__ref__ = *Chemistry::OpenBabelc::OBMolTorsionIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4710,6 +4768,9 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBMolTorsionIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolTorsionIter_inc;
+*__ref__ = *Chemistry::OpenBabelc::OBMolTorsionIter___ref__;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -4736,9 +4797,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBMolPairIter_good;
-*inc = *Chemistry::OpenBabelc::OBMolPairIter_inc;
-*__ref__ = *Chemistry::OpenBabelc::OBMolPairIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4750,6 +4808,9 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBMolPairIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolPairIter_inc;
+*__ref__ = *Chemistry::OpenBabelc::OBMolPairIter___ref__;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -4776,10 +4837,6 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
-*good = *Chemistry::OpenBabelc::OBMolRingIter_good;
-*inc = *Chemistry::OpenBabelc::OBMolRingIter_inc;
-*deref = *Chemistry::OpenBabelc::OBMolRingIter_deref;
-*__ref__ = *Chemistry::OpenBabelc::OBMolRingIter___ref__;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -4791,6 +4848,10 @@ sub DESTROY {
     }
 }
 
+*good = *Chemistry::OpenBabelc::OBMolRingIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolRingIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolRingIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBMolRingIter___ref__;
 *swig__path_get = *Chemistry::OpenBabelc::OBMolRingIter__path_get;
 *swig__path_set = *Chemistry::OpenBabelc::OBMolRingIter__path_set;
 *swig__pathset_get = *Chemistry::OpenBabelc::OBMolRingIter__pathset_get;

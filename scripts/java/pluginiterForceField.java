@@ -84,40 +84,76 @@ public class pluginiterForceField {
     return openbabelJNI.pluginiterForceField_UpdateCoordinates(swigCPtr, this, OBMol.getCPtr(mol), mol);
   }
 
+  public boolean UpdateConformers(OBMol mol) {
+    return openbabelJNI.pluginiterForceField_UpdateConformers(swigCPtr, this, OBMol.getCPtr(mol), mol);
+  }
+
   public void OBFFLog(String msg) {
     openbabelJNI.pluginiterForceField_OBFFLog__SWIG_0(swigCPtr, this, msg);
   }
 
+  public double Energy(boolean gradients) {
+    return openbabelJNI.pluginiterForceField_Energy__SWIG_0(swigCPtr, this, gradients);
+  }
+
   public double Energy() {
-    return openbabelJNI.pluginiterForceField_Energy(swigCPtr, this);
+    return openbabelJNI.pluginiterForceField_Energy__SWIG_1(swigCPtr, this);
+  }
+
+  public double E_Bond(boolean gradients) {
+    return openbabelJNI.pluginiterForceField_E_Bond__SWIG_0(swigCPtr, this, gradients);
   }
 
   public double E_Bond() {
-    return openbabelJNI.pluginiterForceField_E_Bond(swigCPtr, this);
+    return openbabelJNI.pluginiterForceField_E_Bond__SWIG_1(swigCPtr, this);
+  }
+
+  public double E_Angle(boolean gradients) {
+    return openbabelJNI.pluginiterForceField_E_Angle__SWIG_0(swigCPtr, this, gradients);
   }
 
   public double E_Angle() {
-    return openbabelJNI.pluginiterForceField_E_Angle(swigCPtr, this);
+    return openbabelJNI.pluginiterForceField_E_Angle__SWIG_1(swigCPtr, this);
+  }
+
+  public double E_StrBnd(boolean gradients) {
+    return openbabelJNI.pluginiterForceField_E_StrBnd__SWIG_0(swigCPtr, this, gradients);
   }
 
   public double E_StrBnd() {
-    return openbabelJNI.pluginiterForceField_E_StrBnd(swigCPtr, this);
+    return openbabelJNI.pluginiterForceField_E_StrBnd__SWIG_1(swigCPtr, this);
+  }
+
+  public double E_Torsion(boolean gradients) {
+    return openbabelJNI.pluginiterForceField_E_Torsion__SWIG_0(swigCPtr, this, gradients);
   }
 
   public double E_Torsion() {
-    return openbabelJNI.pluginiterForceField_E_Torsion(swigCPtr, this);
+    return openbabelJNI.pluginiterForceField_E_Torsion__SWIG_1(swigCPtr, this);
+  }
+
+  public double E_OOP(boolean gradients) {
+    return openbabelJNI.pluginiterForceField_E_OOP__SWIG_0(swigCPtr, this, gradients);
   }
 
   public double E_OOP() {
-    return openbabelJNI.pluginiterForceField_E_OOP(swigCPtr, this);
+    return openbabelJNI.pluginiterForceField_E_OOP__SWIG_1(swigCPtr, this);
+  }
+
+  public double E_VDW(boolean gradients) {
+    return openbabelJNI.pluginiterForceField_E_VDW__SWIG_0(swigCPtr, this, gradients);
   }
 
   public double E_VDW() {
-    return openbabelJNI.pluginiterForceField_E_VDW(swigCPtr, this);
+    return openbabelJNI.pluginiterForceField_E_VDW__SWIG_1(swigCPtr, this);
+  }
+
+  public double E_Electrostatic(boolean gradients) {
+    return openbabelJNI.pluginiterForceField_E_Electrostatic__SWIG_0(swigCPtr, this, gradients);
   }
 
   public double E_Electrostatic() {
-    return openbabelJNI.pluginiterForceField_E_Electrostatic(swigCPtr, this);
+    return openbabelJNI.pluginiterForceField_E_Electrostatic__SWIG_1(swigCPtr, this);
   }
 
   public boolean SetLogFile(SWIGTYPE_p_std__ostream pos) {
@@ -172,6 +208,10 @@ public class pluginiterForceField {
     openbabelJNI.pluginiterForceField_SteepestDescentInitialize__SWIG_2(swigCPtr, this, steps);
   }
 
+  public void SteepestDescentInitialize() {
+    openbabelJNI.pluginiterForceField_SteepestDescentInitialize__SWIG_3(swigCPtr, this);
+  }
+
   public boolean SteepestDescentTakeNSteps(int n) {
     return openbabelJNI.pluginiterForceField_SteepestDescentTakeNSteps(swigCPtr, this, n);
   }
@@ -198,6 +238,10 @@ public class pluginiterForceField {
 
   public void ConjugateGradientsInitialize(int steps) {
     openbabelJNI.pluginiterForceField_ConjugateGradientsInitialize__SWIG_2(swigCPtr, this, steps);
+  }
+
+  public void ConjugateGradientsInitialize() {
+    openbabelJNI.pluginiterForceField_ConjugateGradientsInitialize__SWIG_3(swigCPtr, this);
   }
 
   public boolean ConjugateGradientsTakeNSteps(int n) {

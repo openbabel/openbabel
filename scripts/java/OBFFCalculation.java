@@ -32,8 +32,92 @@ public class OBFFCalculation {
     swigCPtr = 0;
   }
 
+  public void setEnergy(double value) {
+    openbabelJNI.OBFFCalculation_energy_set(swigCPtr, this, value);
+  }
+
+  public double getEnergy() {
+    return openbabelJNI.OBFFCalculation_energy_get(swigCPtr, this);
+  }
+
+  public void setGrada(vector3 value) {
+    openbabelJNI.OBFFCalculation_grada_set(swigCPtr, this, vector3.getCPtr(value), value);
+  }
+
+  public vector3 getGrada() {
+    return new vector3(openbabelJNI.OBFFCalculation_grada_get(swigCPtr, this), false);
+  }
+
+  public void setGradb(vector3 value) {
+    openbabelJNI.OBFFCalculation_gradb_set(swigCPtr, this, vector3.getCPtr(value), value);
+  }
+
+  public vector3 getGradb() {
+    return new vector3(openbabelJNI.OBFFCalculation_gradb_get(swigCPtr, this), false);
+  }
+
+  public void setGradc(vector3 value) {
+    openbabelJNI.OBFFCalculation_gradc_set(swigCPtr, this, vector3.getCPtr(value), value);
+  }
+
+  public vector3 getGradc() {
+    return new vector3(openbabelJNI.OBFFCalculation_gradc_get(swigCPtr, this), false);
+  }
+
+  public void setGradd(vector3 value) {
+    openbabelJNI.OBFFCalculation_gradd_set(swigCPtr, this, vector3.getCPtr(value), value);
+  }
+
+  public vector3 getGradd() {
+    return new vector3(openbabelJNI.OBFFCalculation_gradd_get(swigCPtr, this), false);
+  }
+
+  public void setA(OBAtom value) {
+    openbabelJNI.OBFFCalculation_a_set(swigCPtr, this, OBAtom.getCPtr(value), value);
+  }
+
+  public OBAtom getA() {
+    long cPtr = openbabelJNI.OBFFCalculation_a_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new OBAtom(cPtr, false);
+  }
+
+  public void setB(OBAtom value) {
+    openbabelJNI.OBFFCalculation_b_set(swigCPtr, this, OBAtom.getCPtr(value), value);
+  }
+
+  public OBAtom getB() {
+    long cPtr = openbabelJNI.OBFFCalculation_b_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new OBAtom(cPtr, false);
+  }
+
+  public void setC(OBAtom value) {
+    openbabelJNI.OBFFCalculation_c_set(swigCPtr, this, OBAtom.getCPtr(value), value);
+  }
+
+  public OBAtom getC() {
+    long cPtr = openbabelJNI.OBFFCalculation_c_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new OBAtom(cPtr, false);
+  }
+
+  public void setD(OBAtom value) {
+    openbabelJNI.OBFFCalculation_d_set(swigCPtr, this, OBAtom.getCPtr(value), value);
+  }
+
+  public OBAtom getD() {
+    long cPtr = openbabelJNI.OBFFCalculation_d_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new OBAtom(cPtr, false);
+  }
+
   public OBFFCalculation() {
     this(openbabelJNI.new_OBFFCalculation(), true);
+  }
+
+  public void Compute(boolean gradients) {
+    openbabelJNI.OBFFCalculation_Compute__SWIG_0(swigCPtr, this, gradients);
+  }
+
+  public void Compute() {
+    openbabelJNI.OBFFCalculation_Compute__SWIG_1(swigCPtr, this);
   }
 
   public double GetEnergy() {
@@ -42,14 +126,6 @@ public class OBFFCalculation {
 
   public vector3 GetGradient(OBAtom atom) {
     return new vector3(openbabelJNI.OBFFCalculation_GetGradient(swigCPtr, this, OBAtom.getCPtr(atom), atom), true);
-  }
-
-  public void setEnergy(double value) {
-    openbabelJNI.OBFFCalculation_energy_set(swigCPtr, this, value);
-  }
-
-  public double getEnergy() {
-    return openbabelJNI.OBFFCalculation_energy_get(swigCPtr, this);
   }
 
 }

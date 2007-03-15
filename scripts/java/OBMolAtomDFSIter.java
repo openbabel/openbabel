@@ -653,6 +653,10 @@ public class OBMolAtomDFSIter {
     return new vectorData(openbabelJNI.OBMolAtomDFSIter_GetData__SWIG_3(swigCPtr, this), false);
   }
 
+  public vectorData GetData(DataOrigin source) {
+    return new vectorData(openbabelJNI.OBMolAtomDFSIter_GetData__SWIG_4(swigCPtr, this, source.swigValue()), true);
+  }
+
   public SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator BeginData() {
     return new SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator(openbabelJNI.OBMolAtomDFSIter_BeginData(swigCPtr, this), true);
   }

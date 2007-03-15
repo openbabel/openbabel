@@ -8,8 +8,12 @@
 
 
 public class openbabel implements openbabelConstants {
+  public static String OpenDatafile(SWIGTYPE_p_std__ifstream fs, String filename, String envvar) {
+    return openbabelJNI.OpenDatafile__SWIG_0(SWIGTYPE_p_std__ifstream.getCPtr(fs), filename, envvar);
+  }
+
   public static String OpenDatafile(SWIGTYPE_p_std__ifstream fs, String filename) {
-    return openbabelJNI.OpenDatafile(SWIGTYPE_p_std__ifstream.getCPtr(fs), filename);
+    return openbabelJNI.OpenDatafile__SWIG_1(SWIGTYPE_p_std__ifstream.getCPtr(fs), filename);
   }
 
   public static double dot(vector3 v1, vector3 v2) {

@@ -5,8 +5,6 @@ version:      1.2.0
 version_from: 
 installdirs:  site
 requires:
-license:      gpl
-license_url:  http://www.gnu.org/copyleft/gpl.html
 
 distribution_type: module
 generated_by: ExtUtils::MakeMaker version 6.17

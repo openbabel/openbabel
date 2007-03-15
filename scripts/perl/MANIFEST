@@ -14,3 +14,4 @@ t/data.t				 OBGlobalDataBase tests (from data.h)
 t/format.t				 OBFormat unit tests
 t/mol.t					 OBMol unit tests
 t/residue.t				 OBResidue unit tests
+t/internalcoord.t                        OBInternalCoord unit tests

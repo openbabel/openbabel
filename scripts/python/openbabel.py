@@ -607,7 +607,6 @@ class OBResidueData(OBGlobalDataBase):
 OBResidueData_swigregister = _openbabel.OBResidueData_swigregister
 OBResidueData_swigregister(OBResidueData)
 
-OpenDatafile = _openbabel.OpenDatafile
 FILE_SEP_CHAR = _openbabel.FILE_SEP_CHAR
 class DoubleType(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
@@ -620,6 +619,7 @@ class DoubleType(object):
     __del__ = lambda self : None;
 DoubleType_swigregister = _openbabel.DoubleType_swigregister
 DoubleType_swigregister(DoubleType)
+OpenDatafile = _openbabel.OpenDatafile
 
 DoubleMultiply = _openbabel.DoubleMultiply
 DoubleAdd = _openbabel.DoubleAdd
@@ -1059,6 +1059,21 @@ class OBSerialNums(OBGenericData):
 OBSerialNums_swigregister = _openbabel.OBSerialNums_swigregister
 OBSerialNums_swigregister(OBSerialNums)
 
+class OBVibrationData(OBGenericData):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBVibrationData_swiginit(self,_openbabel.new_OBVibrationData(*args))
+    __swig_destroy__ = _openbabel.delete_OBVibrationData
+    __del__ = lambda self : None;
+    def SetData(*args): return _openbabel.OBVibrationData_SetData(*args)
+    def GetLx(*args): return _openbabel.OBVibrationData_GetLx(*args)
+    def GetFrequencies(*args): return _openbabel.OBVibrationData_GetFrequencies(*args)
+    def GetIntensities(*args): return _openbabel.OBVibrationData_GetIntensities(*args)
+    def GetNumberOfFrequencies(*args): return _openbabel.OBVibrationData_GetNumberOfFrequencies(*args)
+OBVibrationData_swigregister = _openbabel.OBVibrationData_swigregister
+OBVibrationData_swigregister(OBVibrationData)
+
 class OBBase(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -1127,6 +1142,7 @@ class pluginiterForceField(object):
     def GetUnit(*args): return _openbabel.pluginiterForceField_GetUnit(*args)
     def Setup(*args): return _openbabel.pluginiterForceField_Setup(*args)
     def UpdateCoordinates(*args): return _openbabel.pluginiterForceField_UpdateCoordinates(*args)
+    def UpdateConformers(*args): return _openbabel.pluginiterForceField_UpdateConformers(*args)
     def OBFFLog(*args): return _openbabel.pluginiterForceField_OBFFLog(*args)
     def Energy(*args): return _openbabel.pluginiterForceField_Energy(*args)
     def E_Bond(*args): return _openbabel.pluginiterForceField_E_Bond(*args)
@@ -2152,13 +2168,22 @@ OBFFParameter_swigregister(OBFFParameter)
 class OBFFCalculation(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
+    energy = _swig_property(_openbabel.OBFFCalculation_energy_get, _openbabel.OBFFCalculation_energy_set)
+    grada = _swig_property(_openbabel.OBFFCalculation_grada_get, _openbabel.OBFFCalculation_grada_set)
+    gradb = _swig_property(_openbabel.OBFFCalculation_gradb_get, _openbabel.OBFFCalculation_gradb_set)
+    gradc = _swig_property(_openbabel.OBFFCalculation_gradc_get, _openbabel.OBFFCalculation_gradc_set)
+    gradd = _swig_property(_openbabel.OBFFCalculation_gradd_get, _openbabel.OBFFCalculation_gradd_set)
+    a = _swig_property(_openbabel.OBFFCalculation_a_get, _openbabel.OBFFCalculation_a_set)
+    b = _swig_property(_openbabel.OBFFCalculation_b_get, _openbabel.OBFFCalculation_b_set)
+    c = _swig_property(_openbabel.OBFFCalculation_c_get, _openbabel.OBFFCalculation_c_set)
+    d = _swig_property(_openbabel.OBFFCalculation_d_get, _openbabel.OBFFCalculation_d_set)
     def __init__(self, *args): 
         _openbabel.OBFFCalculation_swiginit(self,_openbabel.new_OBFFCalculation(*args))
     __swig_destroy__ = _openbabel.delete_OBFFCalculation
     __del__ = lambda self : None;
+    def Compute(*args): return _openbabel.OBFFCalculation_Compute(*args)
     def GetEnergy(*args): return _openbabel.OBFFCalculation_GetEnergy(*args)
     def GetGradient(*args): return _openbabel.OBFFCalculation_GetGradient(*args)
-    energy = _swig_property(_openbabel.OBFFCalculation_energy_get, _openbabel.OBFFCalculation_energy_set)
 OBFFCalculation_swigregister = _openbabel.OBFFCalculation_swigregister
 OBFFCalculation_swigregister(OBFFCalculation)
 
@@ -2167,13 +2192,16 @@ class OBForceField(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel.OBForceField_swiginit(self,_openbabel.new_OBForceField(*args))
-    def Iter(*args): return _openbabel.OBForceField_Iter(*args)
-    def FindDefaultType(*args): return _openbabel.OBForceField_FindDefaultType(*args)
-    def FindType(*args): return _openbabel.OBForceField_FindType(*args)
-    def FindForceField(*args): return _openbabel.OBForceField_FindForceField(*args)
+    Iter = staticmethod(_openbabel.OBForceField_Iter)
+    FindDefaultType = staticmethod(_openbabel.OBForceField_FindDefaultType)
+    FindType = staticmethod(_openbabel.OBForceField_FindType)
+    __swig_destroy__ = _openbabel.delete_OBForceField
+    __del__ = lambda self : None;
+    FindForceField = staticmethod(_openbabel.OBForceField_FindForceField)
     def GetUnit(*args): return _openbabel.OBForceField_GetUnit(*args)
     def Setup(*args): return _openbabel.OBForceField_Setup(*args)
     def UpdateCoordinates(*args): return _openbabel.OBForceField_UpdateCoordinates(*args)
+    def UpdateConformers(*args): return _openbabel.OBForceField_UpdateConformers(*args)
     def OBFFLog(*args): return _openbabel.OBForceField_OBFFLog(*args)
     def Energy(*args): return _openbabel.OBForceField_Energy(*args)
     def E_Bond(*args): return _openbabel.OBForceField_E_Bond(*args)
@@ -2202,25 +2230,30 @@ class OBForceField(object):
     def Validate(*args): return _openbabel.OBForceField_Validate(*args)
     def ValidateGradients(*args): return _openbabel.OBForceField_ValidateGradients(*args)
     def ValidateGradientError(*args): return _openbabel.OBForceField_ValidateGradientError(*args)
-    def VectorLengthDerivative(*args): return _openbabel.OBForceField_VectorLengthDerivative(*args)
-    def VectorAngleDerivative(*args): return _openbabel.OBForceField_VectorAngleDerivative(*args)
-    def VectorTorsionDerivative(*args): return _openbabel.OBForceField_VectorTorsionDerivative(*args)
-    __swig_destroy__ = _openbabel.delete_OBForceField
-    __del__ = lambda self : None;
+    VectorLengthDerivative = staticmethod(_openbabel.OBForceField_VectorLengthDerivative)
+    VectorAngleDerivative = staticmethod(_openbabel.OBForceField_VectorAngleDerivative)
+    VectorTorsionDerivative = staticmethod(_openbabel.OBForceField_VectorTorsionDerivative)
 OBForceField_swigregister = _openbabel.OBForceField_swigregister
 OBForceField_swigregister(OBForceField)
+OBForceField_Iter = _openbabel.OBForceField_Iter
+OBForceField_FindDefaultType = _openbabel.OBForceField_FindDefaultType
+OBForceField_FindType = _openbabel.OBForceField_FindType
+OBForceField_FindForceField = _openbabel.OBForceField_FindForceField
+OBForceField_VectorLengthDerivative = _openbabel.OBForceField_VectorLengthDerivative
+OBForceField_VectorAngleDerivative = _openbabel.OBForceField_VectorAngleDerivative
+OBForceField_VectorTorsionDerivative = _openbabel.OBForceField_VectorTorsionDerivative
 
 class _OBMolAtomIter(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBMolAtomIter_swiginit(self,_openbabel.new__OBMolAtomIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBMolAtomIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBMolAtomIter_good(*args)
     def inc(*args): return _openbabel._OBMolAtomIter_inc(*args)
     def deref(*args): return _openbabel._OBMolAtomIter_deref(*args)
     def __ref__(*args): return _openbabel._OBMolAtomIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBMolAtomIter
-    __del__ = lambda self : None;
     Visit = _swig_property(_openbabel._OBMolAtomIter_Visit_get, _openbabel._OBMolAtomIter_Visit_set)
     def Clear(*args): return _openbabel._OBMolAtomIter_Clear(*args)
     def SetIdx(*args): return _openbabel._OBMolAtomIter_SetIdx(*args)
@@ -2365,13 +2398,13 @@ class _OBMolAtomDFSIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBMolAtomDFSIter_swiginit(self,_openbabel.new__OBMolAtomDFSIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBMolAtomDFSIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBMolAtomDFSIter_good(*args)
     def inc(*args): return _openbabel._OBMolAtomDFSIter_inc(*args)
     def deref(*args): return _openbabel._OBMolAtomDFSIter_deref(*args)
     def __ref__(*args): return _openbabel._OBMolAtomDFSIter___ref__(*args)
     def next(*args): return _openbabel._OBMolAtomDFSIter_next(*args)
-    __swig_destroy__ = _openbabel.delete__OBMolAtomDFSIter
-    __del__ = lambda self : None;
     Visit = _swig_property(_openbabel._OBMolAtomDFSIter_Visit_get, _openbabel._OBMolAtomDFSIter_Visit_set)
     def Clear(*args): return _openbabel._OBMolAtomDFSIter_Clear(*args)
     def SetIdx(*args): return _openbabel._OBMolAtomDFSIter_SetIdx(*args)
@@ -2516,12 +2549,12 @@ class _OBMolAtomBFSIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBMolAtomBFSIter_swiginit(self,_openbabel.new__OBMolAtomBFSIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBMolAtomBFSIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBMolAtomBFSIter_good(*args)
     def inc(*args): return _openbabel._OBMolAtomBFSIter_inc(*args)
     def deref(*args): return _openbabel._OBMolAtomBFSIter_deref(*args)
     def __ref__(*args): return _openbabel._OBMolAtomBFSIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBMolAtomBFSIter
-    __del__ = lambda self : None;
     Visit = _swig_property(_openbabel._OBMolAtomBFSIter_Visit_get, _openbabel._OBMolAtomBFSIter_Visit_set)
     def Clear(*args): return _openbabel._OBMolAtomBFSIter_Clear(*args)
     def SetIdx(*args): return _openbabel._OBMolAtomBFSIter_SetIdx(*args)
@@ -2666,12 +2699,12 @@ class _OBMolBondIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBMolBondIter_swiginit(self,_openbabel.new__OBMolBondIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBMolBondIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBMolBondIter_good(*args)
     def inc(*args): return _openbabel._OBMolBondIter_inc(*args)
     def deref(*args): return _openbabel._OBMolBondIter_deref(*args)
     def __ref__(*args): return _openbabel._OBMolBondIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBMolBondIter
-    __del__ = lambda self : None;
     Visit = _swig_property(_openbabel._OBMolBondIter_Visit_get, _openbabel._OBMolBondIter_Visit_set)
     def SetIdx(*args): return _openbabel._OBMolBondIter_SetIdx(*args)
     def SetBO(*args): return _openbabel._OBMolBondIter_SetBO(*args)
@@ -2748,12 +2781,12 @@ class _OBAtomAtomIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBAtomAtomIter_swiginit(self,_openbabel.new__OBAtomAtomIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBAtomAtomIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBAtomAtomIter_good(*args)
     def inc(*args): return _openbabel._OBAtomAtomIter_inc(*args)
     def deref(*args): return _openbabel._OBAtomAtomIter_deref(*args)
     def __ref__(*args): return _openbabel._OBAtomAtomIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBAtomAtomIter
-    __del__ = lambda self : None;
     Visit = _swig_property(_openbabel._OBAtomAtomIter_Visit_get, _openbabel._OBAtomAtomIter_Visit_set)
     def Clear(*args): return _openbabel._OBAtomAtomIter_Clear(*args)
     def SetIdx(*args): return _openbabel._OBAtomAtomIter_SetIdx(*args)
@@ -2898,12 +2931,12 @@ class _OBAtomBondIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBAtomBondIter_swiginit(self,_openbabel.new__OBAtomBondIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBAtomBondIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBAtomBondIter_good(*args)
     def inc(*args): return _openbabel._OBAtomBondIter_inc(*args)
     def deref(*args): return _openbabel._OBAtomBondIter_deref(*args)
     def __ref__(*args): return _openbabel._OBAtomBondIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBAtomBondIter
-    __del__ = lambda self : None;
     Visit = _swig_property(_openbabel._OBAtomBondIter_Visit_get, _openbabel._OBAtomBondIter_Visit_set)
     def SetIdx(*args): return _openbabel._OBAtomBondIter_SetIdx(*args)
     def SetBO(*args): return _openbabel._OBAtomBondIter_SetBO(*args)
@@ -2980,12 +3013,12 @@ class _OBResidueIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBResidueIter_swiginit(self,_openbabel.new__OBResidueIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBResidueIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBResidueIter_good(*args)
     def inc(*args): return _openbabel._OBResidueIter_inc(*args)
     def deref(*args): return _openbabel._OBResidueIter_deref(*args)
     def __ref__(*args): return _openbabel._OBResidueIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBResidueIter
-    __del__ = lambda self : None;
     def AddAtom(*args): return _openbabel._OBResidueIter_AddAtom(*args)
     def InsertAtom(*args): return _openbabel._OBResidueIter_InsertAtom(*args)
     def RemoveAtom(*args): return _openbabel._OBResidueIter_RemoveAtom(*args)
@@ -3035,12 +3068,12 @@ class _OBResidueAtomIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBResidueAtomIter_swiginit(self,_openbabel.new__OBResidueAtomIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBResidueAtomIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBResidueAtomIter_good(*args)
     def inc(*args): return _openbabel._OBResidueAtomIter_inc(*args)
     def deref(*args): return _openbabel._OBResidueAtomIter_deref(*args)
     def __ref__(*args): return _openbabel._OBResidueAtomIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBResidueAtomIter
-    __del__ = lambda self : None;
     Visit = _swig_property(_openbabel._OBResidueAtomIter_Visit_get, _openbabel._OBResidueAtomIter_Visit_set)
     def Clear(*args): return _openbabel._OBResidueAtomIter_Clear(*args)
     def SetIdx(*args): return _openbabel._OBResidueAtomIter_SetIdx(*args)
@@ -3185,11 +3218,11 @@ class _OBMolAngleIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBMolAngleIter_swiginit(self,_openbabel.new__OBMolAngleIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBMolAngleIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBMolAngleIter_good(*args)
     def inc(*args): return _openbabel._OBMolAngleIter_inc(*args)
     def __ref__(*args): return _openbabel._OBMolAngleIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBMolAngleIter
-    __del__ = lambda self : None;
 _OBMolAngleIter_swigregister = _openbabel._OBMolAngleIter_swigregister
 _OBMolAngleIter_swigregister(_OBMolAngleIter)
 
@@ -3198,11 +3231,11 @@ class _OBMolTorsionIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBMolTorsionIter_swiginit(self,_openbabel.new__OBMolTorsionIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBMolTorsionIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBMolTorsionIter_good(*args)
     def inc(*args): return _openbabel._OBMolTorsionIter_inc(*args)
     def __ref__(*args): return _openbabel._OBMolTorsionIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBMolTorsionIter
-    __del__ = lambda self : None;
 _OBMolTorsionIter_swigregister = _openbabel._OBMolTorsionIter_swigregister
 _OBMolTorsionIter_swigregister(_OBMolTorsionIter)
 
@@ -3211,11 +3244,11 @@ class _OBMolPairIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBMolPairIter_swiginit(self,_openbabel.new__OBMolPairIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBMolPairIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBMolPairIter_good(*args)
     def inc(*args): return _openbabel._OBMolPairIter_inc(*args)
     def __ref__(*args): return _openbabel._OBMolPairIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBMolPairIter
-    __del__ = lambda self : None;
 _OBMolPairIter_swigregister = _openbabel._OBMolPairIter_swigregister
 _OBMolPairIter_swigregister(_OBMolPairIter)
 
@@ -3224,12 +3257,12 @@ class _OBMolRingIter(object):
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel._OBMolRingIter_swiginit(self,_openbabel.new__OBMolRingIter(*args))
+    __swig_destroy__ = _openbabel.delete__OBMolRingIter
+    __del__ = lambda self : None;
     def good(*args): return _openbabel._OBMolRingIter_good(*args)
     def inc(*args): return _openbabel._OBMolRingIter_inc(*args)
     def deref(*args): return _openbabel._OBMolRingIter_deref(*args)
     def __ref__(*args): return _openbabel._OBMolRingIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete__OBMolRingIter
-    __del__ = lambda self : None;
     _path = _swig_property(_openbabel._OBMolRingIter__path_get, _openbabel._OBMolRingIter__path_set)
     _pathset = _swig_property(_openbabel._OBMolRingIter__pathset_get, _openbabel._OBMolRingIter__pathset_set)
     def Size(*args): return _openbabel._OBMolRingIter_Size(*args)
@@ -3303,16 +3336,18 @@ class OBResidueAtomIter(OBIter):
 
 class doubleArray(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    def __init__(self): raise AttributeError, "No constructor defined"
     __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.doubleArray_swiginit(self,_openbabel.new_doubleArray(*args))
     __swig_destroy__ = _openbabel.delete_doubleArray
     __del__ = lambda self : None;
     def __getitem__(*args): return _openbabel.doubleArray___getitem__(*args)
     def __setitem__(*args): return _openbabel.doubleArray___setitem__(*args)
     def cast(*args): return _openbabel.doubleArray_cast(*args)
-    def frompointer(*args): return _openbabel.doubleArray_frompointer(*args)
+    frompointer = staticmethod(_openbabel.doubleArray_frompointer)
 doubleArray_swigregister = _openbabel.doubleArray_swigregister
 doubleArray_swigregister(doubleArray)
+doubleArray_frompointer = _openbabel.doubleArray_frompointer
 
 def double_array(mylist):
     """Create a C array of doubles from a list."""
