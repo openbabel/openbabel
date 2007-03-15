@@ -1,6 +1,7 @@
 SUBDIRS = cmltest
 
-noinst_PROGRAMS = aromatic atom bond cansmi \
+# Only compile these when running "make check"
+check_PROGRAMS = aromatic atom bond cansmi \
 	conversion data format formula formalcharge \
 	internalcoord invalidsmarts invalidsmiles \
 	iterators math mol residue rings smarts \
