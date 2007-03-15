@@ -4,6 +4,13 @@
 	problems with GCC and last changes. (Return value from
 	OBChiralData should be assigned to a full object.)
 
+	* src/obconversion.cpp, src/obconversion.h: Tackle some gzip
+	problems, including PR  #1617838. We need to be sure we don't try
+	to gzip twice. Create a zip_istream pointer, then free it as
+	needed.
+
+	* scripts/*: Updated for recent library changes.
+
 2007-03-13 Chris Morley
 	
 	* src/formats/inchiformat.cpp: Add bond stereo handling to

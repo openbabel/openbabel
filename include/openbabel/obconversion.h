@@ -198,6 +198,7 @@ namespace OpenBabel {
             delete pInStream; NeedToFreeInStream = false;
           }
           pInStream=pIn;
+          CheckedForGzip = false; // haven't tried to gzip decode this stream
         };
       void          SetOutStream(std::ostream* pOut)
         {
@@ -381,7 +382,7 @@ protected:
       bool		  MoreFilesToCome;
       bool		  OneObjectOnly;
       bool		  ReadyToInput;
-      bool      CheckedForGzip; ///< input stream was already checked if it is gzip-encoded
+      bool      CheckedForGzip;      ///< input stream is gzip-encoded
       bool      NeedToFreeInStream;
       bool      NeedToFreeOutStream;
 

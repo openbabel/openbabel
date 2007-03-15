@@ -215,8 +215,9 @@ namespace OpenBabel {
   OBConversion::OBConversion(istream* is, ostream* os) : 
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
-    MoreFilesToCome(false), OneObjectOnly(false),NeedToFreeInStream(false),
-    NeedToFreeOutStream(false), pOb1(NULL), pAuxConv(NULL)
+    MoreFilesToCome(false), OneObjectOnly(false), CheckedForGzip(false),
+    NeedToFreeInStream(false), NeedToFreeOutStream(false), 
+    pOb1(NULL), pAuxConv(NULL)
   {
     pInStream=is;
     pOutStream=os;
@@ -273,6 +274,7 @@ namespace OpenBabel {
     pOb1           = o.pOb1;
     ReadyToInput   = o.ReadyToInput;
     m_IsFirstInput = o.m_IsFirstInput;
+    CheckedForGzip = o.CheckedForGzip;
     NeedToFreeInStream = o.NeedToFreeInStream;
     NeedToFreeOutStream = o.NeedToFreeOutStream;
 
@@ -443,14 +445,27 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////
   int OBConversion::Convert(istream* is, ostream* os) 
   {
-    if (is) pInStream=is;
+    if (is) { 
+      pInStream=is;
+      CheckedForGzip = false; // haven't checked this for gzip yet
+    }
     if (os) pOutStream=os;
     ostream* pOrigOutStream = pOutStream;
 
 #ifdef HAVE_LIBZ
-    zlib_stream::zip_istream zIn(*pInStream);
-    if(zIn.is_gzip())
-      pInStream = &zIn;
+    zlib_stream::zip_istream *zIn;
+
+    // only try to decode the gzip stream once
+    if (!CheckedForGzip) {
+      zIn = new zlib_stream::zip_istream(*pInStream);
+      if (zIn->is_gzip()) {
+        pInStream = zIn;
+        CheckedForGzip = true;
+        NeedToFreeInStream = true;
+      }
+      else
+        delete zIn;
+    }
 
     zlib_stream::zip_ostream zOut(*pOutStream);
     if(IsOption("z",GENOPTIONS))
@@ -764,14 +779,27 @@ namespace OpenBabel {
 
   bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
   {
-    if(pin) pInStream=pin;
+    if(pin) { 
+      pInStream=pin;
+      CheckedForGzip = false; // haven't set this stream to gzip (yet)
+    }
 
     if(!pInFormat || !pInStream) return false;
 
 #ifdef HAVE_LIBZ
-    zlib_stream::zip_istream zIn(*pInStream);
-    if(zIn.is_gzip())
-      pInStream = &zIn;
+    zlib_stream::zip_istream *zIn;
+
+    // only try to decode the gzip stream once
+    if (!CheckedForGzip) {
+      zIn = new zlib_stream::zip_istream(*pInStream);
+      if (zIn->is_gzip()) {
+        pInStream = zIn;
+        CheckedForGzip = true;
+        NeedToFreeInStream = true;
+      }
+      else
+        delete zIn;
+    }
 #endif
 
     FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
@@ -1217,8 +1245,10 @@ namespace OpenBabel {
                         SetOneObjectOnly();
 
 #ifdef HAVE_LIBZ
-                        if(Indx==1 && zIn.is_gzip())
+                        if(Indx==1 && zIn.is_gzip()) {
                           SetInStream(&zIn);
+                          CheckedForGzip = true; // we know this one is gzip'ed
+                        }
 #endif
 
                         int ThisFileCount = Convert();
