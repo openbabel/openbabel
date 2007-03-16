@@ -1343,7 +1343,7 @@ namespace OpenBabel
     double *c = new double [NumAtoms()*3];
     _c = c;
 
-    int idx;
+    unsigned int idx;
     OBAtom *atom;
     vector<OBAtom*>::iterator j;
     for (idx=0,atom = BeginAtom(j);atom;atom = NextAtom(j),++idx)

@@ -1,3 +1,17 @@
+2007-03-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/atom.h, include/openbabel/mol.h: Fix
+	PR#1626789 with large PDB files. Fixes regression to 2006-09-25
+	changes supporting >2^16 atoms or bonds.
+	
+	* src/mol.cpp(EndModify): Ensure idx is unsigned (to match atom indexes).
+
+	* include/openbabel/chains.h, src/chains.cpp: Make sure atomids is
+	int, not short. Atom IDs can go up to a full unsigned int.
+
+	* src/formats/chemdrawcdx.cpp: Some code cleanups, including use
+	of obErrorLog.
+
 2007-03-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/groupcontrib.cpp, include/openbabel/groupcontrib.h: General

@@ -108,7 +108,7 @@ namespace OpenBabel
       unsigned char  *resids;
       unsigned char  *flags;
       bool           *hetflags;
-      short          *atomids;
+      int            *atomids;
       short          *resnos;
       short          *sernos;   //!< array of residue serial numbers
       char           *hcounts;

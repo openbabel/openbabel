@@ -793,7 +793,7 @@ namespace OpenBabel
     resids   = new unsigned char[asize];
     flags    = new unsigned char[bsize];
     hetflags = new bool[asize];
-    atomids  = new short[asize];
+    atomids  = new int[asize];
     resnos   = new short[asize];
     sernos   = new short[asize];
     hcounts  = new char[asize];

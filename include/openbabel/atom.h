@@ -89,7 +89,7 @@ namespace OpenBabel
       OBMol                        *_parent;    //!< parent molecule (if any)
       std::vector<OBBond*>          _vbond;     //!< bonds to this atom -- assumed to be one of the endpoints
 
-      unsigned short                _cidx;      //!< index into coordinate array
+      unsigned int                  _cidx;      //!< index into coordinate array
       unsigned short                _hyb;       //!< hybridization
       unsigned short                _flags;     //!< bitwise flags (e.g. aromaticity)
       double                        _pcharge;   //!< partial charge

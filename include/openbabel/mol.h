@@ -102,19 +102,19 @@ namespace OpenBabel
   {
   protected:
     int                           _flags;	//!< bitfield of flags
-    bool                          _autoPartialCharge; //!< Assign partial charges automatically
-    bool                          _autoFormalCharge; //!< Assign formal charges automatically
-    std::string                   _title;	//!< Molecule title
-    std::vector<OBAtom*>          _vatom;	//!< vector of atoms
-    std::vector<OBBond*>          _vbond;	//!< vector of bonds
+    bool                          _autoPartialCharge;//!< Assign partial charges automatically
+    bool                          _autoFormalCharge;//!< Assign formal charges automatically
+    std::string                   _title;     	//!< Molecule title
+    std::vector<OBAtom*>          _vatom;      	//!< vector of atoms
+    std::vector<OBBond*>          _vbond;      	//!< vector of bonds
     unsigned short int            _dimension;   //!< Dimensionality of coordinates
     double                        _energy;      //!< Molecular heat of formation (if applicable)
     int				  _totalCharge; //!< Total charge on the molecule
     unsigned int                  _totalSpin;   //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
-    double                       *_c;	        //!< coordinate array
+    double                       *_c;	          //!< coordinate array
     std::vector<double*>          _vconf;       //!< vector of conformers
-    unsigned short int            _natoms;      //!< Number of atoms
-    unsigned short int            _nbonds;      //!< Number of bonds
+    unsigned int                  _natoms;      //!< Number of atoms
+    unsigned int                  _nbonds;      //!< Number of bonds
     std::vector<OBResidue*>       _residue;     //!< Residue information (if applicable)
     std::vector<OBInternalCoord*> _internals;   //!< Internal Coordinates (if applicable)
     unsigned short int            _mod;	        //!< Number of nested calls to BeginModify()
