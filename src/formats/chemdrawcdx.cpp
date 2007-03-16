@@ -105,8 +105,11 @@ namespace OpenBabel
     };
 
 
-    int readFragment(istream *ifs, UINT32 fragmentId, OBMol *pmol, map<UINT32, int> &atoms, list<cdBond> &bonds);
-    int readNode(istream *ifs, UINT32 nodeId, OBMol *pmol, map<UINT32, int> &atoms, list<cdBond> &bonds, UINT32 fragmentID);
+    int readFragment(istream *ifs, UINT32 fragmentId, 
+                     OBMol *pmol, map<UINT32, int> &atoms, list<cdBond> &bonds);
+    int readNode(istream *ifs, UINT32 nodeId, OBMol *pmol, 
+                 map<UINT32, int> &atoms, list<cdBond> &bonds, 
+                 UINT32 fragmentID);
     int readBond(istream *ifs, UINT32 nodeId, OBMol *pmol, list<cdBond> &bonds);
     int readGeneric(istream *ifs, UINT32 objId);
     const char* getName(istream *ifs, UINT32 size);
@@ -127,6 +130,7 @@ namespace OpenBabel
 
     istream& ifs = *pConv->GetInStream();
     char buffer[BUFF_SIZE];
+    char errorMsg[BUFF_SIZE];
     UINT16 tag;
     UINT16 size;
     UINT32 id;
@@ -163,40 +167,21 @@ namespace OpenBabel
         if(tag & kCDXTag_Object)	// Object
           {
             READ_INT32 (ifs, id);
-#ifdef debug
-            printf("Object ID: %08X in root has type: %04X\n", id, tag);
-#endif
+            sprintf(errorMsg, "Object ID: %08X in root has type: %04X\n", id, tag);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+
             if(tag == kCDXObj_Fragment)
               {
                 if(readFragment(&ifs, id, pmol, atoms, bonds) != 0)
                   {
-                    printf("Error reading fragment\n");
+                    obErrorLog.ThrowError(__FUNCTION__, "Error reading fragment", obWarning);
                     return false;
                   }
-                //				printf("Number of atoms in molecule: %d\n", pmol->NumNodes());
                 iInt = 0;
-                /*				FOR_ATOMS_OF_MOL(a, pmol)
-                          {
-                          printf("Atom #%d\tatomic number #%d\t", ++iInt, a->GetAtomicNum());
-                          if(a->HasData(OBGenericDataType::PairData))
-                          {
-                          pd = dynamic_cast<OBPairData *> (a->GetData("nodeId"));
-                          printf("%s #%s\n", dynamic_cast<OBPairData *> (a->GetData("nodeId"))->GetAttribute().c_str(), dynamic_cast<OBPairData *> (a->GetData("nodeId"))->GetValue().c_str());
-                          atoms[atol(pd->GetValue().c_str())] = a->GetIdx();
-                          }
-                          else
-                          printf("no nodeId!\n");
-                          }
-                */
-                //				printf("Number of bonds: %d\n", bonds.size());
-                //				for (bondsIter=bonds.begin(); bondsIter != bonds.end(); bondsIter++)
-                //				{
-                //					printf("Bond between %08X (%d) and %08x (%d)\n", bondsIter->begin, atoms[bondsIter->begin], bondsIter->end, atoms[bondsIter->end]);
-                //				}
                 prevBond = cdBond(0,0,0);
                 for (bondsIter=bonds.begin(); bondsIter != bonds.end(); bondsIter++)
                   {
-                    //					printf("Bond between %08X (%d) and %08x (%d)\n", bondsIter->begin, atoms[bondsIter->begin], bondsIter->end, atoms[bondsIter->end]);
+                    // printf("Bond between %08X (%d) and %08x (%d)\n", bondsIter->begin, atoms[bondsIter->begin], bondsIter->end, atoms[bondsIter->end]);
                     if(atoms[bondsIter->begin] == -1)
                       {
                         //						printf("Bond starts at a non-atom\n");
@@ -205,23 +190,16 @@ namespace OpenBabel
                             //							printf("Bond between two non-atoms pushed back\n");
                             if((prevBond.begin == bondsIter->begin) && (prevBond.end == bondsIter->end))
                               {
-                                //								printf("Can't assign all bonds!\n");
+                                obErrorLog.ThrowError(__FUNCTION__, "Can't assign all bonds!", obDebug);
                                 break;
                               }	
                             bonds.push_back(*bondsIter);
                           }
                         else
-                          {
-                            //							printf("Renumber bond start to real atom %d...", atoms[bondsIter->end]);
-                            atoms[bondsIter->begin] = atoms[bondsIter->end];
-                            //							printf(" Done\n");
-                          }
+                          atoms[bondsIter->begin] = atoms[bondsIter->end];
                       }
                     else if(atoms[bondsIter->end] == -1)
-                      {
-                        //						printf("Renumber bond end to real atom\n");						
-                        atoms[bondsIter->end] = atoms[bondsIter->begin];
-                      }
+                      atoms[bondsIter->end] = atoms[bondsIter->begin];
                     else
                       {
                         int flags = 0;
@@ -243,7 +221,13 @@ namespace OpenBabel
                   }
                 break;
               }
-            else if((tag == kCDXObj_Graphic) || (tag == kCDXObj_Text) || (tag == kCDXObj_BracketedGroup) || (tag == kCDXObj_BracketAttachment) || (tag == kCDXObj_CrossingBond) || (tag == kCDXObj_ReactionStep) || (tag == kCDXObj_Curve) || (tag == kCDXObj_EmbeddedObject)) 
+            else if ((tag == kCDXObj_Graphic) || (tag == kCDXObj_Text)
+                     || (tag == kCDXObj_BracketedGroup) 
+                     || (tag == kCDXObj_BracketAttachment) 
+                     || (tag == kCDXObj_CrossingBond) 
+                     || (tag == kCDXObj_ReactionStep) 
+                     || (tag == kCDXObj_Curve) 
+                     || (tag == kCDXObj_EmbeddedObject)) 
               {	// Objects that can be ignored
                 readGeneric(&ifs, id);
               }
@@ -253,123 +237,80 @@ namespace OpenBabel
             else
               {
                 depth++;
-                printf("New object in root, type %04X\n", tag);
+                sprintf(errorMsg, "New object in root, type %04X\n", tag);
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
               }
           }
         else if(tag == 0)	// End of object
           {
             if(depth > 1)
               {
-                printf("End object\n");
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
                 depth--;
               }
           }
         else	// Property
           {
             READ_INT16 (ifs ,size);
-            //			printf("Root Tag: %04X\tSize: %04X\n", tag, size);
             switch(tag)
               {
-              case kCDXProp_Name: pmol->SetTitle(getName(&ifs, size)); break;
-              case kCDXProp_FontTable: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_BoundingBox: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Window_Position: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Window_Size: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Atom_ShowQuery: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Atom_ShowStereo: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Atom_ShowAtomNumber: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Bond_ShowQuery: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Bond_ShowStereo: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_MacPrintInfo: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_DrawingSpaceType: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Width: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Height: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_PageOverlap: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Magnification: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_ChainAngle: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_BondSpacing: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_BondSpacingAbs: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_BondLength: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_BoldWidth: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_LineWidth: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_MarginWidth: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_HashSpacing: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_LabelStyle: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_CaptionStyle: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_CaptionJustification: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_LabelJustification: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_FractionalWidths: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_LabelLineHeight: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_CaptionLineHeight: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Window_IsZoomed: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_WidthPages: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_HeightPages: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_HeaderPosition: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_FooterPosition: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_PrintTrimMarks: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_PrintMargins: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_ColorTable: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_CreationProgram: ifs.seekg(size, ios_base::cur); break;
-              case kCDXProp_Group_Integral: ifs.seekg(size, ios_base::cur); break;
-              default: ifs.seekg(size, ios_base::cur); printf("Root Tag: %04X\tSize: %04X\n", tag, size); break;
+              case kCDXProp_Name: 
+                pmol->SetTitle(getName(&ifs, size)); 
+                break;
+              case kCDXProp_FontTable: 
+              case kCDXProp_BoundingBox:
+              case kCDXProp_Window_Position:
+              case kCDXProp_Window_Size:
+              case kCDXProp_Atom_ShowQuery:
+              case kCDXProp_Atom_ShowStereo:
+              case kCDXProp_Atom_ShowAtomNumber:
+              case kCDXProp_Bond_ShowQuery:
+              case kCDXProp_Bond_ShowStereo:
+              case kCDXProp_MacPrintInfo:
+              case kCDXProp_DrawingSpaceType:
+              case kCDXProp_Width:
+              case kCDXProp_Height:
+              case kCDXProp_PageOverlap:
+              case kCDXProp_Magnification:
+              case kCDXProp_ChainAngle:
+              case kCDXProp_BondSpacing:
+              case kCDXProp_BondSpacingAbs:
+              case kCDXProp_BondLength:
+              case kCDXProp_BoldWidth:
+              case kCDXProp_LineWidth:
+              case kCDXProp_MarginWidth:
+              case kCDXProp_HashSpacing:
+              case kCDXProp_LabelStyle:
+              case kCDXProp_CaptionStyle:
+              case kCDXProp_CaptionJustification:
+              case kCDXProp_LabelJustification:
+              case kCDXProp_FractionalWidths:
+              case kCDXProp_LabelLineHeight:
+              case kCDXProp_CaptionLineHeight:
+              case kCDXProp_Window_IsZoomed:
+              case kCDXProp_WidthPages:
+              case kCDXProp_HeightPages:
+              case kCDXProp_HeaderPosition:
+              case kCDXProp_FooterPosition:
+              case kCDXProp_PrintTrimMarks:
+              case kCDXProp_PrintMargins:
+              case kCDXProp_ColorTable:
+              case kCDXProp_CreationProgram:
+              case kCDXProp_Group_Integral:
+                ifs.seekg(size, ios_base::cur); 
+                break;
+              default: // some unknown tag
+                ifs.seekg(size, ios_base::cur); 
+                sprintf(errorMsg, "Root Tag: %04X\tSize: %04X\n", tag, size); 
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+                break;
               }
           }
       }
-    //	if(atoms.empty())
-    //		printf("Atoms is empty\n");
-    //	else
-    //		printf("Atoms holds %d entries\n", atoms.size());
-    //	for (map<UINT32, int>::iterator im = atoms.begin(); im != atoms.end(); ++im )
-    //        printf("\"%08X\"  = %d\n", im->first, im->second);
-    //
-    //    OBAtom *atom;
-    //    vector<OBAtom*>::iterator i;
-    //
-    //    for(atom = pmol->BeginAtom(i);atom;atom = pmol->NextAtom(i))
-    //    {
-    //        printf("Atom %d: %9.4f %9.4f    0.0000 %-1s\n",
-    //        		atom->GetIdx(),
-    //                atom->x(),
-    //                atom->y(),
-    //                etab.GetSymbol(atom->GetAtomicNum()));
-    //    }
-    //
-    //    OBBond *bond;
-    //    vector<OBBond*>::iterator j;
-    //
-    //    for(bond = pmol->BeginBond(j);bond;bond = pmol->NextBond(j))
-    //    {
-    //        printf("Bond %d: %3d%3d%3d%3d\n",
-    //        		bond->GetIdx(),
-    //                bond->GetBeginAtomIdx(),
-    //                bond->GetEndAtomIdx(),
-    //                bond->GetBO(), bond->GetBO());
-    //    }
-    //  	
 
-    /** Parse the input stream and use the OpenBabel API to populate the OBMol **/
-
-    // To use an input option
-    /*	if(pConv->IsOption("s",OBConversion::INOPTIONS))
-        {
-        //Code for when -as is specified
-        }
-    */
-    /* If the molecule has other than 3D coordinates for its atoms, it
-       is necessary to set the dimension to 0, or 2 */
     pmol->SetDimension(2);
-
     pmol->EndModify();
 
-    /* For multi-molecule formats, leave the input stream at the start of the
-       next molecule, ready for this routine to be called again. 
-
-       Return true if ok. Returning false means discard the OBMol and stop
-       converting, unless the -e option is set. With a multi-molecule inputstream
-       this will skip the current molecule and continue with the next, if SkipObjects()
-       has been defined. If it has not, and continuation after errors is still required,
-       it is necessary to leave the input stream at the beginning of next object when
-       returning false;*/
     return true;
   }
 
@@ -484,6 +425,45 @@ namespace OpenBabel
     return 0;
   }
 
+  int getIsotope(istream *ifs, UINT32 size, OBAtom &atom)
+  {
+    UINT16 isotope;
+	
+    if(size != 2)
+      return -1;
+	
+    READ_INT16 (*ifs, isotope);
+    atom.SetIsotope(isotope);
+    return 0;
+  }
+
+  int getRadical(istream *ifs, UINT32 size, OBAtom &atom)
+  {
+    int radical;
+
+    ifs->read((char *)&radical, size);
+#if __BYTE_ORDER == __BIG_ENDIAN
+    radical = radical >> 24;
+#endif
+	
+    //    cout << " Atomic radical " << size << " " << radical << endl;
+    switch (radical)
+      {
+      case 2:
+        atom.SetSpinMultiplicity(2);
+        break;
+      case 3:
+        atom.SetSpinMultiplicity(3);
+        break;
+      case 1:
+      case 0:
+      default:
+        break; // all singlets (current no way in OB to set diradical singlet)
+      }
+
+    return 0;
+  }
+
   int getCharge(istream *ifs, UINT32 size)
   {
     int charge;
@@ -521,7 +501,7 @@ namespace OpenBabel
 
   int readText(istream *ifs, UINT32 textId)
   {
-    //	char buffer[1024];
+    char errorMsg[BUFF_SIZE];
     UINT16 tag;
     UINT16 size;
     UINT32 id;
@@ -535,7 +515,8 @@ namespace OpenBabel
             depth++;
             READ_INT32 (*ifs, id);
             //			printf("Object ID (in text-object %08X): %08X has type: %04X\n", textId, id, tag);
-            printf("New object in text, type %04X\n", tag);
+            sprintf(errorMsg, "New object in text, type %04X\n", tag);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
           }
         else if(tag == 0)	// End of object
           {
@@ -558,9 +539,11 @@ namespace OpenBabel
   }
 
 		
-  int ChemDrawBinaryFormat::readNode(istream *ifs, UINT32 nodeId, OBMol *pmol, map<UINT32, int> &atoms, list<cdBond> &bonds, UINT32 fragmentID)
+  int ChemDrawBinaryFormat::readNode(istream *ifs, UINT32 nodeId,
+                                     OBMol *pmol, map<UINT32, int> &atoms,
+                                     list<cdBond> &bonds, UINT32 fragmentID)
   {
-    //	char buffer[1024];
+    char errorMsg[BUFF_SIZE];
     UINT16 tag;
     UINT16 size;
     UINT32 id;
@@ -591,14 +574,15 @@ namespace OpenBabel
           {
             depth++;
             READ_INT32 (*ifs, id);
-#ifdef debug
-            printf("Object ID (in node %08X): %08X has type: %04X\n", nodeId, id, tag);
-#endif
+
+            sprintf(errorMsg, "Object ID (in node %08X): %08X has type: %04X\n", nodeId, id, tag);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+
             if(tag == kCDXObj_Fragment)
               {
                 if(readFragment(ifs, id, pmol, atoms, bonds) != 0)
                   {
-                    printf("Error reading fragment\n");
+                    obErrorLog.ThrowError(__FUNCTION__, "Error reading fragment", obWarning);
                     return false;
                   }
                 bonds.push_back(cdBond(nodeId, id, 1));
@@ -619,7 +603,8 @@ namespace OpenBabel
               }			
             else
               {
-                printf("New object in node, type %04X\n", tag);
+                sprintf(errorMsg, "New object in node, type %04X\n", tag);
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
               }			
           }
         else if(tag == 0)	// End of object
@@ -630,35 +615,57 @@ namespace OpenBabel
         else	// Property
           {
             READ_INT16 (*ifs, size);
-#ifdef debug
-            printf("Node Tag: %04X\tSize: %04X\n", tag, size);
-#endif
+            sprintf(errorMsg, "Node Tag: %04X\tSize: %04X\n", tag, size);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+
             switch(tag)
               {
-              case kCDXProp_Atom_NumHydrogens: getAtomHydrogens(ifs, size); break;
-              case kCDXProp_2DPosition: get2DPosition(ifs, size, x, y); 
-                atom.SetVector((double) x / 500000., (double) y / -500000.0, (double) 0.0); break;
-              case kCDXProp_Node_Element: getElement(ifs, size, atom); break;
-              case kCDXProp_Atom_Charge: atom.SetFormalCharge(getCharge(ifs, size)); break;
-              case kCDXProp_Node_Type: nodeType = getNodeType(ifs, size); break;
-              case kCDXProp_Atom_Isotope: ifs->seekg(size, ios_base::cur); break;  // Should use
-              case kCDXProp_Atom_ElementList: ifs->seekg(size, ios_base::cur); break;  // Should use
-              case kCDXProp_Atom_Radical: ifs->seekg(size, ios_base::cur); break;  // Should use
-              case kCDXProp_Atom_AbnormalValence: ifs->seekg(size, ios_base::cur); break;  
-              case kCDXProp_Name: ifs->seekg(size, ios_base::cur); break;  
-              case kCDXProp_IgnoreWarnings: ifs->seekg(size, ios_base::cur); break; 
-              case kCDXProp_ChemicalWarning: ifs->seekg(size, ios_base::cur); break;  // Maybe use?
-              case kCDXProp_MarginWidth: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_ZOrder: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_Atom_GenericNickname: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_Atom_CIPStereochemistry: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_Atom_Geometry: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_Atom_BondOrdering: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_Node_LabelDisplay: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_LabelStyle: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_ForegroundColor: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_BackgroundColor: ifs->seekg(size, ios_base::cur); break;
-              default: ifs->seekg(size, ios_base::cur); printf("Node Tag: %04X\tSize: %04X\n", tag, size); break;
+              case kCDXProp_Atom_NumHydrogens:
+                getAtomHydrogens(ifs, size); 
+                break;
+              case kCDXProp_2DPosition:
+                get2DPosition(ifs, size, x, y); 
+                atom.SetVector((double) x / 500000., (double) y / -500000.0, (double) 0.0);
+                break;
+              case kCDXProp_Node_Element:
+                getElement(ifs, size, atom); 
+                break;
+              case kCDXProp_Atom_Charge:
+                atom.SetFormalCharge(getCharge(ifs, size)); 
+                break;
+              case kCDXProp_Node_Type:
+                nodeType = getNodeType(ifs, size); 
+                break;
+              case kCDXProp_Atom_Isotope:
+                getIsotope(ifs, size, atom);
+                break;
+              case kCDXProp_Atom_Radical:
+                getRadical(ifs, size, atom);
+                break;
+              case kCDXProp_Atom_ElementList:
+              case kCDXProp_Atom_AbnormalValence:
+              case kCDXProp_Name:
+              case kCDXProp_IgnoreWarnings:
+              case kCDXProp_ChemicalWarning:
+                ifs->seekg(size, ios_base::cur); 
+                break;  // Maybe use? (any of the above properties)
+              case kCDXProp_MarginWidth:
+              case kCDXProp_ZOrder:
+              case kCDXProp_Atom_GenericNickname:
+              case kCDXProp_Atom_CIPStereochemistry: // maybe use for chirality
+              case kCDXProp_Atom_Geometry:
+              case kCDXProp_Atom_BondOrdering:
+              case kCDXProp_Node_LabelDisplay:
+              case kCDXProp_LabelStyle:
+              case kCDXProp_ForegroundColor:
+              case kCDXProp_BackgroundColor:
+                ifs->seekg(size, ios_base::cur); 
+                break;
+              default: // some unknown node tag
+                ifs->seekg(size, ios_base::cur); 
+                sprintf(errorMsg, "Node Tag: %04X\tSize: %04X\n", tag, size); 
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+                break;
               }
           }
         if(depth < 1)
@@ -666,19 +673,31 @@ namespace OpenBabel
 						// Check the data before returning...
             switch(nodeType)
               {
-              case kCDXNodeType_Fragment: atoms[nodeId] = -1; break;
-              case kCDXNodeType_ExternalConnectionPoint: atoms[nodeId] = -1; bonds.push_back(cdBond(nodeId,fragmentID,1)); break;
-              default: atom2 = pmol->NewAtom(); atom2->SetVector(atom.GetVector()); atom2->SetFormalCharge(atom.GetFormalCharge()); atom2->SetAtomicNum(atom.GetAtomicNum()); atoms[nodeId] = atom2->GetIdx(); /*printf("nodeId: %08X\tatomIdx: %d\n", nodeId, atom2->GetIdx());*/  break;
+              case kCDXNodeType_Fragment:
+                atoms[nodeId] = -1; 
+                break;
+              case kCDXNodeType_ExternalConnectionPoint:
+                atoms[nodeId] = -1;
+                bonds.push_back(cdBond(nodeId,fragmentID,1)); 
+                break;
+              default:
+                atom2 = pmol->NewAtom();
+                atom2->SetVector(atom.GetVector());
+                atom2->SetFormalCharge(atom.GetFormalCharge());
+                atom2->SetAtomicNum(atom.GetAtomicNum());
+                atoms[nodeId] = atom2->GetIdx();
+                break;
               }
-            return 0;
+            return 0; // everything worked correctly
           }
-      }
-    return -1;
+      } // end while(ifs.good())
+    return -1; // file ended early
   }
 
-  int ChemDrawBinaryFormat::readBond(istream *ifs, UINT32 bondId, OBMol *pmol, list<cdBond> &bonds)
+  int ChemDrawBinaryFormat::readBond(istream *ifs, UINT32 bondId, 
+                                     OBMol *pmol, list<cdBond> &bonds)
   {
-    //	char buffer[1024];
+    char errorMsg[BUFF_SIZE];
     UINT16 tag;
     UINT16 size;
     UINT32 id, bgnID, endID;
@@ -691,9 +710,9 @@ namespace OpenBabel
           {
             depth++;
             READ_INT32 (*ifs, id);
-#ifdef debug
-            printf("Object ID (in bond %08X): %08X has type: %04X\n", bondId, id, tag);
-#endif
+            sprintf(errorMsg, "Object ID (in bond %08X): %08X has type: %04X\n", bondId, id, tag);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+
             if(tag == kCDXObj_Text)
               {
                 readText(ifs, id);
@@ -701,7 +720,8 @@ namespace OpenBabel
               }
             else
               {
-                printf("New object in bond, type %04X\n", tag);
+                sprintf(errorMsg, "New object in bond, type %04X\n", tag);
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
               }
           }
         else if(tag == 0)	// End of object
@@ -712,34 +732,54 @@ namespace OpenBabel
         else	// Property
           {
             READ_INT16 (*ifs, size);
-#ifdef debug
-            printf("Bond Tag: %04X\tSize: %04X\n", tag, size);
-#endif
+
+            sprintf(errorMsg, "Bond Tag: %04X\tSize: %04X\n", tag, size);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+
             switch(tag)
               {
-              case kCDXProp_Bond_Begin: bgnID = getBondStart(ifs, size); break;
-              case kCDXProp_Bond_End: endID = getBondEnd(ifs, size); break;
-              case kCDXProp_Bond_Order: order = getBondOrder(ifs, size); break;
-              case kCDXProp_Bond_Display: stereo = getBondDisplay(ifs, size); break; // Stereo info
-              case kCDXProp_Bond_CIPStereochemistry: ifs->seekg(size, ios_base::cur); break; // Maybe use?
-              case kCDXProp_Bond_BeginAttach: ifs->seekg(size, ios_base::cur); break; // Maybe use?
-              case kCDXProp_Bond_EndAttach: ifs->seekg(size, ios_base::cur); break; // Maybe use?
-              case kCDXProp_ChemicalWarning: ifs->seekg(size, ios_base::cur); break; // Maybe use?
-              case kCDXProp_IgnoreWarnings: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_MarginWidth: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_Bond_Display2: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_Bond_DoublePosition: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_Bond_BondOrdering: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_BondLength: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_BondSpacing: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_LineWidth: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_BoldWidth: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_HashSpacing: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_ZOrder: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_ForegroundColor: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_BackgroundColor: ifs->seekg(size, ios_base::cur); break;
-              case kCDXProp_LabelStyle: ifs->seekg(size, ios_base::cur); break;
-              default: ifs->seekg(size, ios_base::cur); printf("Bond Tag: %04X\tSize: %04X\n", tag, size); break;
+              case kCDXProp_Bond_Begin:
+                bgnID = getBondStart(ifs, size); 
+                break;
+              case kCDXProp_Bond_End:
+                endID = getBondEnd(ifs, size); 
+                break;
+              case kCDXProp_Bond_Order:
+                order = getBondOrder(ifs, size); 
+                break;
+              case kCDXProp_Bond_Display:
+                stereo = getBondDisplay(ifs, size); 
+                break; // Stereo info
+
+              case kCDXProp_BondLength:
+              case kCDXProp_Bond_CIPStereochemistry:
+              case kCDXProp_Bond_BeginAttach:
+              case kCDXProp_Bond_EndAttach:
+              case kCDXProp_ChemicalWarning:
+                ifs->seekg(size, ios_base::cur); 
+                break; // Maybe use? (any of the above cases)
+
+              case kCDXProp_IgnoreWarnings:
+              case kCDXProp_MarginWidth:
+              case kCDXProp_Bond_Display2:
+              case kCDXProp_Bond_DoublePosition:
+              case kCDXProp_Bond_BondOrdering:
+              case kCDXProp_BondSpacing:
+              case kCDXProp_LineWidth:
+              case kCDXProp_BoldWidth:
+              case kCDXProp_HashSpacing:
+              case kCDXProp_ZOrder:
+              case kCDXProp_ForegroundColor:
+              case kCDXProp_BackgroundColor:
+              case kCDXProp_LabelStyle:
+                ifs->seekg(size, ios_base::cur); 
+                break;
+
+              default: // some unknown, undocumented property
+                ifs->seekg(size, ios_base::cur);
+                sprintf(errorMsg, "Bond Tag: %04X\tSize: %04X\n", tag, size);
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+                break;
               }
           }
         if(depth < 1)
@@ -753,6 +793,7 @@ namespace OpenBabel
 
   int ChemDrawBinaryFormat::readGeneric(istream *ifs, UINT32 objId)
   {
+    char errorMsg[BUFF_SIZE];
     UINT16 tag;
     UINT16 size;
     UINT32 id;
@@ -765,51 +806,56 @@ namespace OpenBabel
           {
             depth++;
             READ_INT32 (*ifs, id);
-#ifdef debug
-            printf("Object ID (in generic %08X): %08X has type: %04X\n", objId, id, tag);
-#endif
-            //			if(tag == kCDXObj_Text)
-            //			{
-            //				readText(ifs, id);
-            //				depth--;
-            //			}
-            if((tag == kCDXObj_BracketAttachment) || (tag == kCDXObj_CrossingBond) || (tag == kCDXObj_BracketedGroup) || (tag == kCDXObj_Text)|| (tag == kCDXObj_Fragment))
-              {	// Objects to ignore (Fragment could possibly be a problem)
+
+            sprintf(errorMsg, "Object ID (in generic %08X): %08X has type: %04X\n", objId, id, tag);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+
+            if ((tag == kCDXObj_BracketAttachment) 
+                || (tag == kCDXObj_CrossingBond) 
+                || (tag == kCDXObj_BracketedGroup) 
+                || (tag == kCDXObj_Text)
+                || (tag == kCDXObj_Fragment))
+              {	// Objects to ignore (Fragment might be worth parsing)
                 readGeneric(ifs, id);
                 depth--;
               }
-            else
-              printf("New object in generic, type %04X\n", tag);
+            else {
+              sprintf(errorMsg, "New object in generic, type %04X\n", tag);
+              obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+            }
           }
         else if(tag == 0)	// End of object
           {
             depth--;
-#ifdef debug
-            printf("End of Object in generic %08X\n", objId);
-#endif
+            sprintf(errorMsg, "End of Object in generic %08X\n", objId);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
           }
         else	// Property
           {
             READ_INT16 (*ifs, size);
-#ifdef debug
-            printf("Generic Tag: %04X\tSize: %04X\n", tag, size);
-#endif
+
+            sprintf(errorMsg, "Generic Tag: %04X\tSize: %04X\n", tag, size);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
             switch(tag)
               {
-              default: ifs->seekg(size, ios_base::cur); break;
+              default:
+                ifs->seekg(size, ios_base::cur); 
+                break;
               }
           }
-        if(depth < 1)
+        if(depth < 1) // matched begin and end tags, so we're good
           {
             return 0;
           }
-      }
-    return -1;
+      } // while reading
+    return -1; // file ended while reading
   }
 
-  int ChemDrawBinaryFormat::readFragment(istream *ifs, UINT32 fragmentId, OBMol *pmol, map<UINT32, int> &atoms, list<cdBond> &bonds)
+  int ChemDrawBinaryFormat::readFragment(istream *ifs, UINT32 fragmentId,
+                                         OBMol *pmol, map<UINT32, int> &atoms,
+                                         list<cdBond> &bonds)
   {
-    //	char buffer[1024];
+    char errorMsg[BUFF_SIZE];
     UINT16 tag;
     UINT16 size;
     UINT32 id;
@@ -824,14 +870,15 @@ namespace OpenBabel
           {
             depth++;
             READ_INT32 (*ifs, id);
-# ifdef debug
-            printf("Object ID (in fragment %08X): %08X has type: %04X\n", fragmentId, id, tag);
-#endif
+
+            sprintf(errorMsg, "Object ID (in fragment %08X): %08X has type: %04X\n", fragmentId, id, tag);
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+
             if(tag == kCDXObj_Fragment)
               {
                 if(readFragment(ifs, id, pmol, atoms, bonds) != 0)
                   {
-                    printf("Error reading fragment\n");
+                    obErrorLog.ThrowError(__FUNCTION__, "Error reading fragment", obWarning);
                     return false;
                   }
               }
@@ -855,7 +902,8 @@ namespace OpenBabel
             //			}
             else
               {
-                printf("New object in fragment, type %04X\n", tag);
+                sprintf(errorMsg, "New object in fragment, type %04X\n", tag);
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
               }
 
           }
@@ -866,24 +914,28 @@ namespace OpenBabel
         else	// Property
           {
             READ_INT16 ((*ifs), size);
-            //			printf("Fragment Tag: %04X\tSize: %04X\n", tag, size);
             switch(tag)
               {
-              case kCDXProp_Frag_ConnectionOrder: ifs->seekg(size, ios_base::cur); break;  // Should use
-              case kCDXProp_BoundingBox: ifs->seekg(size, ios_base::cur); break;
-              default: ifs->seekg(size, ios_base::cur); printf("Fragment Tag: %04X\tSize: %04X\n", tag, size); break;
+              case kCDXProp_Frag_ConnectionOrder:
+                ifs->seekg(size, ios_base::cur); 
+                break;  // Should use
+              case kCDXProp_BoundingBox:
+                ifs->seekg(size, ios_base::cur); 
+                break;
+              default:
+                ifs->seekg(size, ios_base::cur); 
+                sprintf(errorMsg, "Fragment Tag: %04X\tSize: %04X\n", tag, size);
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
+
+                break;
               }
           }
         if(depth < 1)
           {
-            //			if(atoms.empty())
-            //				printf("In readFragment: Atoms is empty\n");
-            //			else
-            //				printf("In readFragment: Atoms holds %d entries\n", atoms.size());
-            return 0;
+            return 0; // all begin and end tags matched -- everything good 
           }
-      }
-    return -1;
+      } // while reading
+    return -1; // file ended before reading was finished
   }
 
 } //namespace OpenBabel
