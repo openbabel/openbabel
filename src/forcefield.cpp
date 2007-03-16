@@ -1,8 +1,7 @@
-
 /**********************************************************************
 forcefield.cpp - Handle OBForceField class.
- 
-Copyright (C) 2006 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+Copyright (C) 2006-2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -93,7 +92,7 @@ namespace OpenBabel
       This piece of code can always be used to find available forcefields:
       \code
       FOR_EACH(OBForceField, iter) {
-        cout << "forcefield ID: " << iter.ID() << endl;
+      cout << "forcefield ID: " << iter.ID() << endl;
       }
       \endcode
 
@@ -110,7 +109,7 @@ namespace OpenBabel
 
       // Make sure we have a valid pointer
       if (!pFF)
-        // exit...
+      // exit...
      
       // Set the logfile (can also be &cout or &cerr)
       pFF->SetLogFile(&cerr);
@@ -122,7 +121,7 @@ namespace OpenBabel
       // We need to setup the forcefield before we can use it. Setup()
       // returns false if it failes to find the atom types, parameters, ...
       if (!pFF->Setup(mol)) {
-         cerr << "ERROR: could not setup force field." << endl;
+      cerr << "ERROR: could not setup force field." << endl;
       }
       
       // Calculate the energy. The output will be written to the
@@ -140,12 +139,12 @@ namespace OpenBabel
 
       // Make sure we have a valid pointer
       if (!pFF)
-        // exit...
+      // exit...
       
       pFF->SetLogFile(&cerr);
       pFF->SetLogLevel(OBFF_LOGLVL_LOW);
       if (!pFF->Setup(mol)) {
-         cerr << "ERROR: could not setup force field." << endl;
+      cerr << "ERROR: could not setup force field." << endl;
       }
       
       // Perform the actual minimization, maximum 1000 steps 
@@ -471,12 +470,12 @@ namespace OpenBabel
     int i = 0;
     int j = 0;
     //double matrix[N][N], G[N][N];
-	vector<vector<double> > matrix(N);
-	for(int i=0; i<N; i++)
-		matrix[i].reserve(N);
-	vector<vector<double> > G(N);
-	for(int i=0; i<N; i++)
-		G[i].reserve(N);
+    vector<vector<double> > matrix(N);
+    for(int i=0; i<N; i++)
+      matrix[i].reserve(N);
+    vector<vector<double> > G(N);
+    for(int i=0; i<N; i++)
+      G[i].reserve(N);
 	
     bool is15;
     
@@ -516,19 +515,20 @@ namespace OpenBabel
         j = b->GetIdx() - 1;
 
         if (&*a == &*b) {
-          matrix[i][j] = 0.0f; // diagonal
+          matrix[i][j] = 0.0; // diagonal
           continue;
         }
         // Find relationship
         is15 = true;
         FOR_NBORS_OF_ATOM (nbr1, _mol.GetAtom(a->GetIdx())) { // 1-2
           if (&*nbr1 == &*b) {
-            matrix[i][j] = 1.3f;
+            matrix[i][j] = 1.3;
             break;
           }
           FOR_NBORS_OF_ATOM (nbr2, _mol.GetAtom(nbr1->GetIdx())) { // 1-3
             if (&*nbr2 == &*b) {
-              matrix[i][j] = sqrt(1.3f*1.3f + 1.3f*1.3f - 2.0f * cos(DEG_TO_RAD*120.0f) * 1.3f*1.3f );
+              matrix[i][j] = sqrt(1.3*1.3 + 1.3*1.3 - 2.0 * 
+                                  cos(DEG_TO_RAD*120.0) * 1.3*1.3 );
               is15 = false;
               break;
             }
@@ -536,19 +536,21 @@ namespace OpenBabel
               if (&*nbr3 == &*b) {
                 is15 = false;
                 if (i > j) // minimum distance (torsion angle = 0)
-                  matrix[i][j] = 1.3f + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f));
+                  matrix[i][j] = 1.3 + 1.3*cos(DEG_TO_RAD*(180.0 - 120.0)) 
+                    + 1.3*cos(DEG_TO_RAD*(180.0 - 120.0));
                 else {// maximum distance (torsion angle = 180)
                   double delta_x, delta_y;
-                  delta_x = 1.3f + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*cos(DEG_TO_RAD*(180.0f-120.0f));
-                  delta_y = 1.3f*sin(DEG_TO_RAD*(180.0f-120.0f)) + 1.3f*sin(DEG_TO_RAD*(180.0f-120.0f));
+                  delta_x = 1.3 + 1.3*cos(DEG_TO_RAD*(180.0-120.0)) 
+                    + 1.3*cos(DEG_TO_RAD*(180.0-120.0));
+                  delta_y = 1.3*sin(DEG_TO_RAD*(180.0-120.0)) + 1.3*sin(DEG_TO_RAD*(180.0-120.0));
                   matrix[i][j] = sqrt(delta_x*delta_x + delta_y*delta_y);
                 }
                 break;
               }
               if (i > j && is15) {// minimum distance (sum vdw radii)
-                matrix[i][j] = 1.4f + 1.4f;
+                matrix[i][j] = 1.4 + 1.4;
               } else if (is15) // maximum distance (torsion angle = 180)
-                matrix[i][j] = 99.0f;
+                matrix[i][j] = 99.0;
             }
           }
         }
@@ -659,7 +661,7 @@ namespace OpenBabel
         j = b->GetIdx() - 1;
 
         if (&*a == &*b) {
-          matrix[i][j] = 0.0f; // diagonal
+          matrix[i][j] = 0.0; // diagonal
           continue;
         }
        
@@ -701,7 +703,7 @@ namespace OpenBabel
     // (origin = first atom )
     for (i=0; i<N; i++) {
       for (j=0; j<N; j++) {
-        G[i][j] = 0.5f * (matrix[0][i]*matrix[0][i] + matrix[0][j]*matrix[0][j] - matrix[i][j]*matrix[i][j]);
+        G[i][j] = 0.5 * (matrix[0][i]*matrix[0][i] + matrix[0][j]*matrix[0][j] - matrix[i][j]*matrix[i][j]);
       }
     }
     
@@ -723,13 +725,13 @@ namespace OpenBabel
 
     // Calculate eigenvalues and eigenvectors
     //double eigenvalues[N];
-	vector<double> eigenvalues(N);
+    vector<double> eigenvalues(N);
     //double eigenvectors[N][N];
-	vector<vector<double> > eigenvectors(N);
-	for(int i=0; i<N; i++)
-		eigenvectors[i].reserve(N);
+    vector<vector<double> > eigenvectors(N);
+    for(int i=0; i<N; i++)
+      eigenvectors[i].reserve(N);
 
-	matrix3x3::jacobi(N, (double *) &G, (double *) &eigenvalues, (double *) &eigenvectors);
+    matrix3x3::jacobi(N, (double *) &G, (double *) &eigenvalues, (double *) &eigenvectors);
     
     // output eigenvalues and eigenvectors
     IF_OBFF_LOGLVL_LOW {
@@ -803,15 +805,15 @@ namespace OpenBabel
   vector3 OBForceField::LineSearch(OBAtom *atom, vector3 &direction)
   {
     double e_n1, e_n2, step;
-    vector3 old_xyz, orig_xyz, xyz_k, dir(0.0f, 0.0f, 0.0f);
+    vector3 old_xyz, orig_xyz, xyz_k, dir(0.0, 0.0, 0.0);
 
-    step = 0.2f;
+    step = 0.2;
     direction.normalize();
     orig_xyz = atom->GetVector();
     
     e_n1 = Energy(false); // calculate e_k
     
-    int i;
+    unsigned int i;
     for (i=0; i<100; i++) {
       old_xyz = atom->GetVector();
       
@@ -823,18 +825,18 @@ namespace OpenBabel
       // convergence criteria, this is 10 times the default convergence
       // of SteepestDescent or ConjugateGradients. A higher precision here 
       // only takes longer with the same result.
-      if (IsApprox(e_n2, e_n1, 1e-7f))
+      if (IsNear(e_n2, e_n1, 1.0e-7))
         break;
 
       if (e_n2 > e_n1) { // decrease stepsize
-        step *= 0.5f;
+        step *= 0.5;
         atom->SetVector(old_xyz);
       }
       if (e_n2 < e_n1) {  // increase stepsize
         e_n1 = e_n2;
-        step *= 1.2f;
-        if (step > 1.0f)
-          step = 1.0f;
+        step *= 1.2;
+        if (step > 1.0)
+          step = 1.0;
       }
       
     }
@@ -844,24 +846,24 @@ namespace OpenBabel
     atom->SetVector(orig_xyz);     
 
     // cutoff accuracy
-    if (dir.length() < 1e-8)
+    if (dir.length() < 1.0e-8)
       return VZero;
 
-    return dir;    
+    return dir;
   }
   
   vector3 OBForceField::ValidateLineSearch(OBAtom *atom, vector3 &direction)
   {
     double e_n1, e_n2, step;
-    vector3 old_xyz, orig_xyz, xyz_k, dir(0.0f, 0.0f, 0.0f);
+    vector3 old_xyz, orig_xyz, xyz_k, dir(0.0, 0.0, 0.0);
 
-    step = 0.2f;
+    step = 0.2;
     direction.normalize();
     orig_xyz = atom->GetVector();
     
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y()); // e_k
     
-    for (int i=0; i<100; i++) {
+    for (unsigned int i=0; i<100; i++) {
       old_xyz = atom->GetVector();
       
       xyz_k = atom->GetVector() + direction*step;
@@ -873,14 +875,14 @@ namespace OpenBabel
         break;
 
       if (e_n2 > e_n1) { // decrease stepsize
-        step *= 0.5f;
+        step *= 0.5;
         atom->SetVector(old_xyz);
       }
       if (e_n2 < e_n1) {  // increase stepsize
         e_n1 = e_n2;
-        step *= 1.2f;
-        if (step > 1.0f)
-          step = 1.0f;
+        step *= 1.2;
+        if (step > 1.0)
+          step = 1.0;
       }
       
     }
@@ -904,7 +906,7 @@ namespace OpenBabel
     double e_n1, e_n2;
     char logbuf[100];
     
-    atom->SetVector(9.0f, 9.0f, 0.0f);
+    atom->SetVector(9.0, 9.0, 0.0);
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
     
     IF_OBFF_LOGLVL_LOW {
@@ -916,9 +918,9 @@ namespace OpenBabel
     }
 
     for (int i = 1; i <= steps; i++) {
-      grad.Set(-2*atom->x(), -4*atom->y(), 0.0f);
+      grad.Set(-2*atom->x(), -4*atom->y(), 0.0);
       grad = ValidateLineSearch(&*atom, grad);
-      atom->SetVector(atom->x() + grad.x(), atom->y() + grad.y(), 0.0f);
+      atom->SetVector(atom->x() + grad.x(), atom->y() + grad.y(), 0.0);
       e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
       
       IF_OBFF_LOGLVL_LOW {
@@ -926,9 +928,9 @@ namespace OpenBabel
         OBFFLog(logbuf);
       }
 
-      if (fabs(e_n1 - e_n2) < 0.0000001f) {
+      if (IsNear(e_n2, e_n1, 1.0e-7)) {
         IF_OBFF_LOGLVL_LOW
-          OBFFLog("    STEEPEST DESCENT HAS CONVERGED (DELTA E < 0.0000001)\n");
+          OBFFLog("    STEEPEST DESCENT HAS CONVERGED (DELTA E < 1.0e-7)\n");
         break;
       }
 
@@ -949,7 +951,7 @@ namespace OpenBabel
     char logbuf[100];
 
     firststep = true;
-    atom->SetVector(9.0f, 9.0f, 0.0f);
+    atom->SetVector(9.0, 9.0, 0.0);
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
  
     IF_OBFF_LOGLVL_LOW {
@@ -962,7 +964,7 @@ namespace OpenBabel
  
     for (int i = 1; i <= steps; i++) {
       if (firststep) {
-        grad1.Set(-2*atom->x(), -4*atom->y(), 0.0f);
+        grad1.Set(-2*atom->x(), -4*atom->y(), 0.0);
         dir1 = grad1;
         dir1 = ValidateLineSearch(&*atom, dir1);
         atom->SetVector(atom->x() + dir1.x(), atom->y() + dir1.y(), atom->z() + dir1.z());
@@ -971,13 +973,13 @@ namespace OpenBabel
         IF_OBFF_LOGLVL_LOW {
           sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
           OBFFLog(logbuf);
-	}
+        }
         
         e_n1 = e_n2;
         dir1 = grad1;
         firststep = false;
       } else {
-        grad2.Set(-2*atom->x(), -4*atom->y(), 0.0f);
+        grad2.Set(-2*atom->x(), -4*atom->y(), 0.0);
         g2g2 = dot(grad2, grad2);
         g1g1 = dot(grad1, grad1);
         g2g1 = g2g2 / g1g1;
@@ -991,11 +993,11 @@ namespace OpenBabel
         IF_OBFF_LOGLVL_LOW {
           sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
           OBFFLog(logbuf);
-	}
+        }
         
-        if (fabs(e_n1 - e_n2) < 0.0000001f) {
+        if (IsNear(e_n2, e_n1, 1.0e-7)) {
           IF_OBFF_LOGLVL_LOW
-             OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 0.0000001)\n");
+            OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 1.0e-7)\n");
           break;
         }
 
@@ -1045,7 +1047,7 @@ namespace OpenBabel
         OBFFLog(logbuf);
       }
 
-      if (fabs(_e_n1 - e_n2) < _econv) {
+      if (IsNear(e_n2, _e_n1, _econv)) {
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
         return false;
@@ -1066,7 +1068,8 @@ namespace OpenBabel
     SteepestDescentTakeNSteps(steps);
   }
   
-  void OBForceField::ConjugateGradientsInitialize(int steps, double econv, int method)
+  void OBForceField::ConjugateGradientsInitialize(int steps, double econv, 
+                                                  int method)
   {
     double e_n2;
     vector3 grad2, dir2;
@@ -1123,7 +1126,7 @@ namespace OpenBabel
     if (_grad1.size() != (_mol.NumAtoms()+1))
       return false;
 
-    e_n2 = 0.0f;
+    e_n2 = 0.0;
     
     for (int i = 1; i <= n; i++) {
       _cstep++;
@@ -1134,16 +1137,17 @@ namespace OpenBabel
         else
           grad2 = NumericalDerivative(&*a);
         
-	g2g2 = dot(grad2, grad2);
+        g2g2 = dot(grad2, grad2);
         g1g1 = dot(_grad1[a->GetIdx()], _grad1[a->GetIdx()]);
         g2g1 = g2g2 / g1g1;
         dir2 = grad2 + g2g1 * _dir1[a->GetIdx()];
+
         dir2 = LineSearch(&*a, dir2);
         a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
 	  
         _grad1[a->GetIdx()] = grad2;
         _dir1[a->GetIdx()] = dir2;
-	if (e_n2)
+        if (e_n2)
           _e_n1 = e_n2;
       }
       e_n2 = Energy();
@@ -1153,7 +1157,7 @@ namespace OpenBabel
         OBFFLog(logbuf);
       }
  
-      if (fabs(_e_n1 - e_n2) < _econv) { 
+      if (IsNear(e_n2, _e_n1, _econv)) {
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED\n");
         return false;
@@ -1184,14 +1188,14 @@ namespace OpenBabel
     vector3 va, grad;
     double e_orig, e_plus_delta, delta, dx, dy, dz;
 
-    delta = 0.00001f;
+    delta = 1.0e-5;
 
     va = atom->GetVector();
 
     if (terms & OBFF_ENERGY)
       e_orig = Energy(false);
     else {
-      e_orig = 0.0f;
+      e_orig = 0.0;
       if (terms & OBFF_EBOND)
         e_orig += E_Bond();
       if (terms & OBFF_EANGLE)
@@ -1214,7 +1218,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_plus_delta = Energy(false);
     else {
-      e_plus_delta = 0.0f;
+      e_plus_delta = 0.0;
       if (terms & OBFF_EBOND)
         e_plus_delta += E_Bond();
       if (terms & OBFF_EANGLE)
@@ -1239,7 +1243,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_plus_delta = Energy(false);
     else {
-      e_plus_delta = 0.0f;
+      e_plus_delta = 0.0;
       if (terms & OBFF_EBOND)
         e_plus_delta += E_Bond();
       if (terms & OBFF_EANGLE)
@@ -1264,7 +1268,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_plus_delta = Energy(false);
     else {
-      e_plus_delta = 0.0f;
+      e_plus_delta = 0.0;
       if (terms & OBFF_EBOND)
         e_plus_delta += E_Bond();
       if (terms & OBFF_EANGLE)
@@ -1300,7 +1304,7 @@ namespace OpenBabel
     vector3 va, grad;
     double e_0, e_1, e_2, delta, dx, dy, dz;
 
-    delta = 0.00001f;
+    delta = 1.0e-5;
 
     va = atom->GetVector();
 
@@ -1308,7 +1312,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_0 = Energy(false);
     else {
-      e_0 = 0.0f;
+      e_0 = 0.0;
       if (terms & OBFF_EBOND)
         e_0 += E_Bond(false);
       if (terms & OBFF_EANGLE)
@@ -1335,7 +1339,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_1 = Energy(false);
     else {
-      e_1 = 0.0f;
+      e_1 = 0.0;
       if (terms & OBFF_EBOND)
         e_1 += E_Bond(false);
       if (terms & OBFF_EANGLE)
@@ -1358,7 +1362,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_2 = Energy(false);
     else {
-      e_2 = 0.0f;
+      e_2 = 0.0;
       if (terms & OBFF_EBOND)
         e_2 += E_Bond(false);
       if (terms & OBFF_EANGLE)
@@ -1387,7 +1391,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_1 = Energy(false);
     else {
-      e_1 = 0.0f;
+      e_1 = 0.0;
       if (terms & OBFF_EBOND)
         e_1 += E_Bond(false);
       if (terms & OBFF_EANGLE)
@@ -1410,7 +1414,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_2 = Energy(false);
     else {
-      e_2 = 0.0f;
+      e_2 = 0.0;
       if (terms & OBFF_EBOND)
         e_2 += E_Bond(false);
       if (terms & OBFF_EANGLE)
@@ -1439,7 +1443,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_1 = Energy(false);
     else {
-      e_1 = 0.0f;
+      e_1 = 0.0;
       if (terms & OBFF_EBOND)
         e_1 += E_Bond(false);
       if (terms & OBFF_EANGLE)
@@ -1462,7 +1466,7 @@ namespace OpenBabel
     if (terms & OBFF_ENERGY)
       e_2 = Energy(false);
     else {
-      e_2 = 0.0f;
+      e_2 = 0.0;
       if (terms & OBFF_EBOND)
         e_2 += E_Bond(false);
       if (terms & OBFF_EANGLE)
@@ -1538,17 +1542,17 @@ namespace OpenBabel
   {
     double errx, erry, errz;
 
-    if (fabs(numgrad.x()) < 1.0f)
+    if (fabs(numgrad.x()) < 1.0)
       errx = numgrad.x() * fabs(numgrad.x() - anagrad.x()) * 100;
     else
       errx = fabs((numgrad.x() - anagrad.x()) / numgrad.x()) * 100;
 
-    if (fabs(numgrad.y()) < 1.0f)
+    if (fabs(numgrad.y()) < 1.0)
       erry = numgrad.y() * fabs(numgrad.y() - anagrad.y()) * 100;
     else
       erry = fabs((numgrad.y() - anagrad.y()) / numgrad.y()) * 100;
     
-    if (fabs(numgrad.z()) < 1.0f)
+    if (fabs(numgrad.z()) < 1.0)
       errz = numgrad.z() * fabs(numgrad.z() - anagrad.z()) * 100;
     else
       errz = fabs((numgrad.z() - anagrad.z()) / numgrad.z()) * 100;
@@ -1588,23 +1592,23 @@ namespace OpenBabel
     rcb2 = rcb * rcb;
     
     abcb = dot(vab, vcb) / (rab * rcb);
-    abcb2 = 1.0f - abcb * abcb;
+    abcb2 = 1.0 - abcb * abcb;
     theta = acos(abcb) * RAD_TO_DEG;
     
     if (IsNearZero(abcb2)) {
       a = VZero;
       b = VZero;
       c = VZero;
-      return 0.0f;
+      return 0.0;
     }
 
     a = (vcb * rab * rcb - (vab / rab) * dot(vab, vcb) * rcb) / (sqrt(abcb2) * rab2 * rcb2);
     c = -((vcb / rcb) * dot(vab, vcb) * rab - vab * rab * rcb) / (sqrt(abcb2) * rab2 * rcb2);
     b = -a - c;
 
-    a *= (1.0f / DEG_TO_RAD);
-    b *= (1.0f / DEG_TO_RAD);
-    c *= (1.0f / DEG_TO_RAD);
+    a *= (1.0 / DEG_TO_RAD);
+    b *= (1.0 / DEG_TO_RAD);
+    c *= (1.0 / DEG_TO_RAD);
 
     return theta;
   }
@@ -1624,7 +1628,7 @@ namespace OpenBabel
     bccd = cross(vbc, vcd);
     
     tor = RAD_TO_DEG * acos(dot(abbc, bccd) / (abbc.length() * bccd.length()));
-    if (dot(abbc, bccd) > 0.0f)
+    if (dot(abbc, bccd) > 0.0)
       tor = -tor;
  
     bcabbc = cross(vbc, abbc);
@@ -1645,17 +1649,17 @@ namespace OpenBabel
     rbccd3 = rbccd2 * rbccd;
     abbc_bccd = dot(abbc, bccd);
     rabbc_rbccd = abbc_bccd / (rabbc * rbccd);
-    abbc_bccd2 = sqrt(1.0f - rabbc_rbccd * rabbc_rbccd);
+    abbc_bccd2 = sqrt(1.0 - rabbc_rbccd * rabbc_rbccd);
 
     if (IsNearZero(abbc_bccd2))
-      abbc_bccd2 = 1e-7f;
+      abbc_bccd2 = 1e-7;
     
     /*
-    cout << "sqrt(abbc_bccd2) = " << sqrt(abbc_bccd2) << endl;
-    cout << "(rabbc*rbccd) = " << (rabbc*rbccd) << endl;
-    cout << "dot(abbc,bccd) = " << dot(abbc,bccd) << endl;
-    cout << "(rabbc*rbccd3) = " << (rabbc*rbccd3) << endl;
-    cout << "(rabbc3*rbccd) = " << (rabbc3*rbccd) << endl;
+      cout << "sqrt(abbc_bccd2) = " << sqrt(abbc_bccd2) << endl;
+      cout << "(rabbc*rbccd) = " << (rabbc*rbccd) << endl;
+      cout << "dot(abbc,bccd) = " << dot(abbc,bccd) << endl;
+      cout << "(rabbc*rbccd3) = " << (rabbc*rbccd3) << endl;
+      cout << "(rabbc3*rbccd) = " << (rabbc3*rbccd) << endl;
     */
     
     a = (bcbccd / (rabbc*rbccd) - (bcabbc*abbc_bccd) / (rabbc3*rbccd)) / abbc_bccd2;
@@ -1678,7 +1682,7 @@ namespace OpenBabel
     if (IsNan(d.x()) || IsNan(d.y()) || IsNan(d.z()))
       d = VZero;
 
-    if (dot(abbc, bccd) > 0.0f) {
+    if (dot(abbc, bccd) > 0.0) {
       a = -a;
       b = -b;
       c = -c;

@@ -12,6 +12,10 @@
 	* src/formats/chemdrawcdx.cpp: Some code cleanups, including use
 	of obErrorLog.
 
+	* src/forcefield.cpp: Fix PR#1680717. Seems to be an issue with
+	floating-point roundoff. When 0.0f and similar tags were removed,
+	works great.
+
 2007-03-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/groupcontrib.cpp, include/openbabel/groupcontrib.h: General
