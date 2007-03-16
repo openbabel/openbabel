@@ -18,22 +18,30 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#include <openbabel/logp.h>
+#include <openbabel/groupcontrib.h>
 
 using namespace std;
 
 namespace OpenBabel
 {
-  OBLogP::OBLogP()
+  OBGroupContrib::OBGroupContrib()
+  {
+  }
+
+  OBGroupContrib::~OBGroupContrib()
+  {
+  }
+
+  bool OBGroupContrib::ParseFile(const char *filename)
   {
     OBSmartsPattern *sp;
     
     // open data/psa.txt
     ifstream ifs;
 
-    if (OpenDatafile(ifs, "logp.txt").length() == 0) {
-      obErrorLog.ThrowError(__FUNCTION__, " Could not find logP data file.", obError);
-      return;
+    if (OpenDatafile(ifs, filename).length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, " Could not find contribution data file.", obError);
+      return false;
     }
 
     vector<string> vs;
@@ -54,22 +62,22 @@ namespace OpenBabel
       sp = new OBSmartsPattern;
       if (sp->Init(vs[0])) {
         if (heavy)
-          _logPcontribsHeavy.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
+          _contribsHeavy.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
 	else
-          _logPcontribsHydrogen.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
+          _contribsHydrogen.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
       } else {
         delete sp;
         sp = NULL;
-        obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from logP_contributions.txt", obInfo);
+        obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
+	return false;
       }
     }
+
+    return true;
   }
   
-  OBLogP::~OBLogP()
-  {
-  }
-  
-  double OBLogP::GroupContributions(OBMol &mol)
+ 
+  double OBGroupContrib::GroupContributions(OBMol &mol)
   {
     vector<vector<int> > _mlist; //!< match list for atom typing
     vector<vector<int> >::iterator j;
@@ -79,7 +87,7 @@ namespace OpenBabel
 
     // atom contributions
     //cout << "atom contributions:" << endl;
-    for (i = _logPcontribsHeavy.begin();i != _logPcontribsHeavy.end();++i) {
+    for (i = _contribsHeavy.begin();i != _contribsHeavy.end();++i) {
       if (i->first->Match(mol)) {
         _mlist = i->first->GetMapList();
         for (j = _mlist.begin();j != _mlist.end();++j) {
@@ -94,7 +102,7 @@ namespace OpenBabel
     
     // hydrogen contributions
     //cout << "hydrogen contributions:" << endl;
-    for (i = _logPcontribsHydrogen.begin();i != _logPcontribsHydrogen.end();++i) {
+    for (i = _contribsHydrogen.begin();i != _contribsHydrogen.end();++i) {
       if (i->first->Match(mol)) {
         _mlist = i->first->GetMapList();
         for (j = _mlist.begin();j != _mlist.end();++j) {
@@ -115,8 +123,8 @@ namespace OpenBabel
       total += atomValues[index];
       total += hydrogenValues[index];
     }
-    
-    /* 
+   
+    /*
     FOR_ATOMS_OF_MOL (a, mol)
       cout << "hydrogens on atom " << a->GetIdx() << ": " << a->GetValence() - a->GetHvyValence() << endl;
     for (int index = 0; index < mol.NumAtoms(); index++)
@@ -127,7 +135,48 @@ namespace OpenBabel
 
     return total;
   }
- 
+  
+  OBLogP::OBLogP()
+  {
+    ParseFile("logp.txt");
+  }
+
+  OBLogP::~OBLogP()
+  {
+  }
+  
+  double OBLogP::Predict(OBMol &mol)
+  {
+    return GroupContributions(mol);
+  }
+
+  OBPSA::OBPSA()
+  {
+    ParseFile("psa.txt");
+  }
+
+  OBPSA::~OBPSA()
+  {
+  }
+  
+  double OBPSA::Predict(OBMol &mol)
+  {
+    return GroupContributions(mol);
+  }
+
+  OBMR::OBMR()
+  {
+    ParseFile("mr.txt");
+  }
+
+  OBMR::~OBMR()
+  {
+  }
+  
+  double OBMR::Predict(OBMol &mol)
+  {
+    return GroupContributions(mol);
+  }
 
 } // end namespace OpenBabel
 

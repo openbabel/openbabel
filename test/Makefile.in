@@ -38,7 +38,8 @@ check_PROGRAMS = aromatic$(EXEEXT) atom$(EXEEXT) bond$(EXEEXT) \
 	internalcoord$(EXEEXT) invalidsmarts$(EXEEXT) \
 	invalidsmiles$(EXEEXT) iterators$(EXEEXT) math$(EXEEXT) \
 	mol$(EXEEXT) residue$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
-	smilesmatch$(EXEEXT) unitcell$(EXEEXT) mmff94validate$(EXEEXT)
+	smilesmatch$(EXEEXT) unitcell$(EXEEXT) mmff94validate$(EXEEXT) \
+	logp_psa$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
 @PERL_TESTS_FALSE@TESTS = smarts$(EXEEXT) rings$(EXEEXT) \
 @PERL_TESTS_FALSE@	unitcell$(EXEEXT) $(top_srcdir)/test/cml.sh \
@@ -109,6 +110,10 @@ am_iterators_OBJECTS = iterators.$(OBJEXT)
 iterators_OBJECTS = $(am_iterators_OBJECTS)
 iterators_LDADD = $(LDADD)
 iterators_DEPENDENCIES = ../src/libopenbabel.la
+am_logp_psa_OBJECTS = logp_psa.$(OBJEXT)
+logp_psa_OBJECTS = $(am_logp_psa_OBJECTS)
+logp_psa_LDADD = $(LDADD)
+logp_psa_DEPENDENCIES = ../src/libopenbabel.la
 am_math_OBJECTS = math.$(OBJEXT)
 math_OBJECTS = $(am_math_OBJECTS)
 math_LDADD = $(LDADD)
@@ -161,18 +166,20 @@ SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(cansmi_SOURCES) $(conversion_SOURCES) $(data_SOURCES) \
 	$(formalcharge_SOURCES) $(format_SOURCES) $(formula_SOURCES) \
 	$(internalcoord_SOURCES) $(invalidsmarts_SOURCES) \
-	$(invalidsmiles_SOURCES) $(iterators_SOURCES) $(math_SOURCES) \
-	$(mmff94validate_SOURCES) $(mol_SOURCES) $(residue_SOURCES) \
-	$(rings_SOURCES) $(roundtrip_SOURCES) $(smarts_SOURCES) \
-	$(smilesmatch_SOURCES) $(unitcell_SOURCES)
+	$(invalidsmiles_SOURCES) $(iterators_SOURCES) \
+	$(logp_psa_SOURCES) $(math_SOURCES) $(mmff94validate_SOURCES) \
+	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
+	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
+	$(unitcell_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(cansmi_SOURCES) $(conversion_SOURCES) $(data_SOURCES) \
 	$(formalcharge_SOURCES) $(format_SOURCES) $(formula_SOURCES) \
 	$(internalcoord_SOURCES) $(invalidsmarts_SOURCES) \
-	$(invalidsmiles_SOURCES) $(iterators_SOURCES) $(math_SOURCES) \
-	$(mmff94validate_SOURCES) $(mol_SOURCES) $(residue_SOURCES) \
-	$(rings_SOURCES) $(roundtrip_SOURCES) $(smarts_SOURCES) \
-	$(smilesmatch_SOURCES) $(unitcell_SOURCES)
+	$(invalidsmiles_SOURCES) $(iterators_SOURCES) \
+	$(logp_psa_SOURCES) $(math_SOURCES) $(mmff94validate_SOURCES) \
+	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
+	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
+	$(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -447,6 +454,9 @@ invalidsmiles$(EXEEXT): $(invalidsmiles_OBJECTS) $(invalidsmiles_DEPENDENCIES)
 iterators$(EXEEXT): $(iterators_OBJECTS) $(iterators_DEPENDENCIES) 
 	@rm -f iterators$(EXEEXT)
 	$(CXXLINK) $(iterators_OBJECTS) $(iterators_LDADD) $(LIBS)
+logp_psa$(EXEEXT): $(logp_psa_OBJECTS) $(logp_psa_DEPENDENCIES) 
+	@rm -f logp_psa$(EXEEXT)
+	$(CXXLINK) $(logp_psa_LDFLAGS) $(logp_psa_OBJECTS) $(logp_psa_LDADD) $(LIBS)
 math$(EXEEXT): $(math_OBJECTS) $(math_DEPENDENCIES) 
 	@rm -f math$(EXEEXT)
 	$(CXXLINK) $(math_OBJECTS) $(math_LDADD) $(LIBS)
@@ -494,6 +504,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/invalidsmarts.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/invalidsmiles.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iterators.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/logp_psa.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/math.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mmff94validate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Po@am__quote@

@@ -26,8 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
-#include <openbabel/logp.h>
-#include <openbabel/psa.h>
+#include <openbabel/groupcontrib.h>
 #include <openbabel/obconversion.h>
 #include <unistd.h>
 
@@ -100,6 +99,7 @@ int main(int argc,char **argv)
   OBMol mol;
   OBLogP logP;
   OBPSA psa;
+  OBMR mr;
   OBFormat *canSMIFormat = conv.FindFormat("can");
   OBFormat *inchiFormat = conv.FindFormat("inchi");
 
@@ -141,8 +141,9 @@ int main(int argc,char **argv)
         cout << "sequence         " << sequence(mol) << endl;
       }
       cout << "num_rings        " << nrings(mol) << endl;
-      cout << "logP             " << logP.GroupContributions(mol) << endl;
-      cout << "PSA              " << psa.GroupContributions(mol) << endl;
+      cout << "logP             " << logP.Predict(mol) << endl;
+      cout << "PSA              " << psa.Predict(mol) << endl;
+      cout << "MR               " << mr.Predict(mol) << endl;
       cout << "$$$$" << endl; // SDF like end of compound descriptor list
       
     } // end for loop

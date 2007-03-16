@@ -28,7 +28,7 @@ libopenbabel_la_SOURCES = \
 		obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
-		transform.cpp logp.cpp psa.cpp $(dlhandler)
+		transform.cpp groupcontrib.cpp $(dlhandler)
 
 libopenbabel_la_LDFLAGS = -version-info 3:0:1 -no-undefined
 

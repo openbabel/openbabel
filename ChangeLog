@@ -1,3 +1,17 @@
+2007-03-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/groupcontrib.cpp, include/openbabel/groupcontrib.h: General
+	class to handle group contribution algorithms (LogP, TPSA, MR, ...).
+	Also contins OBLogP, OBPSA and OBMR. Should these simple classes be
+	bundled in a OBDescriptors class?
+
+	* src/logp.cpp, src/psa.cpp, include/openbabel/logp.h,
+	include/openbabel/psa.h: moved to groupcontrib.cpp/h
+
+	* data/mr.txt: data for molecular refractivity.
+
+	* test/logp_psa.cpp: forgot to commit.
+
 2007-03-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/inchiformat.cpp, src/formats/cmlformat.cpp: Fix compile
