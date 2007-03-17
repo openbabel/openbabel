@@ -198,9 +198,9 @@ namespace OpenBabel
     
     if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
       {
-        colors.push_back(0.0f);
-        colors.push_back(0.0f);
-        colors.push_back(0.0f);
+        colors.push_back(0.0);
+        colors.push_back(0.0);
+        colors.push_back(0.0);
         return(colors);
       }
 

@@ -47,7 +47,7 @@ namespace OpenBabel
       #include <openbabel/mol.h>
 
       OBMol mol;
-      double exactMass = 0.0f;
+      double exactMass = 0.0;
       FOR_ATOMS_OF_MOL(a, mol)
       {
          // The variable a behaves like OBAtom* when used with -> and * but

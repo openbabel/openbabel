@@ -1,7 +1,7 @@
 /**********************************************************************
 forcefieldmm2.cpp - MM2 force field.
  
-Copyright (C) 2006 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
+Copyright (C) 2006-2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -32,8 +32,7 @@ namespace OpenBabel
     
     //sprintf(errbuf, "bondunit=%f  bond_cubic=%f  bond_quartic=%f\n", bondunit, bond_cubic, bond_quartic); // DEBUG
  
-
-    energy = 0.0f;
+    energy = 0.0;
     if (forces.size() < _mol.NumAtoms() + 1)
       forces.resize(_mol.NumAtoms()+1);
 
@@ -57,9 +56,9 @@ namespace OpenBabel
 
       delta = l - l_ref;
       delta2 = delta * delta;
-      e = bondunit * force * delta2 * (1.0f + bond_cubic * delta + bond_quartic * delta2);
+      e = bondunit * force * delta2 * (1.0 + bond_cubic * delta + bond_quartic * delta2);
       energy += e;
-      f = 2.0f * bondunit * force * delta * (1.0f + 1.5f * bond_cubic * delta + 2.0f * bond_quartic * delta2);
+      f = 2.0 * bondunit * force * delta * (1.0 + 1.5 * bond_cubic * delta + 2.0 * bond_quartic * delta2);
       vf = f * ab.normalize();
       forces[a->GetIdx()] -= vf;
       forces[b->GetIdx()] += vf;
@@ -82,7 +81,7 @@ namespace OpenBabel
     
     //sprintf(errbuf, "angleunit=%f  angle_sextic=%f\n", angleunit, angle_sextic); // DEBUG
  
-    energy = 0.0f;
+    energy = 0.0;
     if (forces.size() < _mol.NumAtoms() + 1)
       forces.resize(_mol.NumAtoms()+1);
 
@@ -111,9 +110,9 @@ namespace OpenBabel
       delta2 = delta * delta;
       delta3 = delta2 * delta;
       delta4 = delta2 * delta2;
-      e = angleunit * force * delta2 * (1.0f + angle_sextic * delta4);
+      e = angleunit * force * delta2 * (1.0 + angle_sextic * delta4);
       energy += e;
-      f = 2.0f * angleunit * force * delta * (1.0f + 3.0f * angle_sextic * delta4);
+      f = 2.0 * angleunit * force * delta * (1.0 + 3.0 * angle_sextic * delta4);
       dotprod = dot(ab, bc);
       rab = ab.length();
       rab2 = rab * rab;
@@ -122,7 +121,7 @@ namespace OpenBabel
       rbc2 = rbc * rbc;
       rbc3 = rbc2 * rbc;
       dotprod_abbc = dotprod / (rab * rbc);
-      root = sqrt(1.0f - dotprod_abbc);
+      root = sqrt(1.0 - dotprod_abbc);
       vfa = rab2 * bc - dotprod * ab;
       vfa = f * vfa / (rab3 * rbc * root);
       vfc = dotprod * bc - rbc2 * ab;
@@ -149,7 +148,7 @@ namespace OpenBabel
 
     //sprintf(errbuf, "stretchbendunit=%f\n", stretchbendunit); // DEBUG
  
-    energy = 0.0f;
+    energy = 0.0;
 
     FOR_ANGLES_OF_MOL(angle, _mol) {
       b = _mol.GetAtom((*angle)[0] + 1);
@@ -199,7 +198,7 @@ namespace OpenBabel
 
     //sprintf(errbuf, "torsionunit=%f\n", torsionunit); // DEBUG
  
-    energy = 0.0f;
+    energy = 0.0;
 
     FOR_TORSIONS_OF_MOL(t, _mol) {
       a = _mol.GetAtom((*t)[0] + 1);
@@ -232,9 +231,9 @@ namespace OpenBabel
       sine2 = sin(DEG_TO_RAD * 2 * tor);
       cosine3 = cos(DEG_TO_RAD * 3 * tor);
       sine3 = sin(DEG_TO_RAD * 3 * tor);
-      phi1 = 1.0f + cosine;
-      phi2 = 1.0f - cosine2;
-      phi3 = 1.0f + cosine3;
+      phi1 = 1.0 + cosine;
+      phi2 = 1.0 - cosine2;
+      phi3 = 1.0 + cosine3;
       e = torsionunit * (v1 * phi1 + v2 * phi2 + v3 * phi3);
       energy += e;
       f = -torsionunit * (- v1 * sine + 2 * v2 * sine2 - 3 * v3 * sine3);
@@ -250,7 +249,7 @@ namespace OpenBabel
       cross_bcc2 = cross(bc, c2);
       dot_c1c2 = dot(c1, c2);
       dot_rc1rc2 = dot_c1c2 / (rc1 * rc2);
-      root = sqrt(1.0f - dot_rc1rc2);
+      root = sqrt(1.0 - dot_rc1rc2);
       //        if (dot(b2,c3) > 0.0)
       //        torsion *= -1.0;
  
@@ -284,7 +283,7 @@ namespace OpenBabel
     double e, energy, force, angle, angle2;
     //sprintf(errbuf, "outplanebendunit=%f\n", outplanebendunit); // DEBUG
 
-    energy = 0.0f;
+    energy = 0.0;
 
     FOR_ATOMS_OF_MOL(atom, _mol) {
       b = (OBAtom*) &*atom;
@@ -355,7 +354,7 @@ namespace OpenBabel
 
     //sprintf(errbuf, "a_expterm=%f  b_expterm=%f c_expter=%fm\n", a_expterm, b_expterm, c_expterm); // DEBUG
  
-    energy = 0.0f;
+    energy = 0.0;
 
     FOR_PAIRS_OF_MOL(p, _mol) {
       a = _mol.GetAtom((*p)[0]);
@@ -391,7 +390,7 @@ namespace OpenBabel
       abrr = rab / rr;
       e = eps * (a_expterm * exp(-b_expterm * abrr) - c_expterm * rrab6);
       energy += e;
-      f = eps * (a_expterm * b_expterm * exp(-b_expterm * abrr) - 6.0f * c_expterm * rrab7);
+      f = eps * (a_expterm * b_expterm * exp(-b_expterm * abrr) - 6.0 * c_expterm * rrab7);
       vf = f * ab.normalize();
       //forces[a->GetIdx()] -= vf;
       //forces[b->GetIdx()] += vf;
@@ -414,9 +413,9 @@ namespace OpenBabel
     
     //sprintf(errbuf, "dielectric=%f\n", dielectric); // DEBUG
 	
-    energy = 0.0f;
-    debye = 4.8033324f;
-    electric = 332.05382f;
+    energy = 0.0;
+    debye = 4.8033324;
+    electric = 332.05382;
     f = electric / (debye * debye * dielectric);
 
     FOR_BONDS_OF_MOL(bond, _mol) {
@@ -468,7 +467,7 @@ namespace OpenBabel
             dotk = dot(cd, r);
             fik = f * dipole * dipole2;
 	    
-            e = fik * (dotp - 3.0f * doti * dotk/r2) / rirkr3;
+            e = fik * (dotp - 3.0 * doti * dotk/r2) / rirkr3;
             energy += e;
             //sprintf(errbuf, "%sdipole=%f  dipole2=%f  r=%f cos_a1=%f  cos_a2=%f  cos_a3=%f  E=%f\n", errbuf, dipole, dipole2, r, cos_a1, cos_a2, cos_a3, e); // DEBUG
           }

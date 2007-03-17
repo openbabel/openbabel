@@ -328,7 +328,7 @@ namespace OpenBabel
     cd = c - d;
  
     normal = cross(bc, cd);
-    angle = 90.0f - vectorAngle(normal, ac);
+    angle = 90.0 - vectorAngle(normal, ac);
 
     return angle;
   }

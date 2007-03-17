@@ -125,11 +125,10 @@ namespace OpenBabel
   {
     if (size == 0)
       {
-        vector3 v(0.0f, 0.0f, 0.0f);
-        return(v);
+        return(ZZero);
       }
 		unsigned int i; 
-    double x=0,y=0,z=0;
+    double x=0.0, y=0.0, z=0.0;
     for (i = 0;i < size;++i)
       {
         x += c[i*3];
@@ -169,7 +168,7 @@ namespace OpenBabel
   OBAPI double calc_rms(double *r,double *f, unsigned int N)
   {
     if (N == 0)
-      return 0.0f; // no RMS deviation between two empty sets
+      return 0.0; // no RMS deviation between two empty sets
 
     double d2=0.0;
     for (unsigned int i = 0;i < N;++i)

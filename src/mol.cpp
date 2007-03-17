@@ -142,7 +142,7 @@ namespace OpenBabel
       #include <openbabel/mol.h>
 
       OBMol mol;
-      double exactMass = 0.0f;
+      double exactMass = 0.0;
       FOR_ATOMS_OF_MOL(a, mol)
       {
       exactMass +=  a->GetExactMass();
@@ -3308,7 +3308,7 @@ namespace OpenBabel
       {
         // if atoms have the same electronegativity, make sure those with shorter bonds
         // are handled first (helps with assignment of conjugated single/double bonds)
-        shortestBond = 1.0e5f;
+        shortestBond = 1.0e5;
         for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
           {
             if (b->GetAtomicNum()!=1) shortestBond =

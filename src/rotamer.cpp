@@ -272,7 +272,7 @@ void OBRotamerList::Setup(OBMol &mol,unsigned char *ref,int nrotors)
 void OBRotamerList::AddRotamer(double *c)
 {
     int idx,size;
-    double angle,res=255.0f/360.0f;
+    double angle,res=255.0/360.0;
     vector3 v1,v2,v3,v4;
 
     unsigned char *rot = new unsigned char [_vrotor.size()+1];
@@ -291,10 +291,10 @@ void OBRotamerList::AddRotamer(double *c)
         v4.Set(c[idx],c[idx+1],c[idx+2]);
 
         angle = CalcTorsionAngle(v1,v2,v3,v4);
-        while (angle < 0.0f)
-            angle += 360.0f;
-        while (angle > 360.0f)
-            angle -= 360.0f;
+        while (angle < 0.0)
+            angle += 360.0;
+        while (angle > 360.0)
+            angle -= 360.0;
         rot[size] = (unsigned char)rint(angle*res);
     }
 
@@ -304,7 +304,7 @@ void OBRotamerList::AddRotamer(double *c)
 void OBRotamerList::AddRotamer(int *arr)
 {
     unsigned int i;
-    double angle,res=255.0f/360.0f;
+    double angle,res=255.0/360.0;
 
     unsigned char *rot = new unsigned char [_vrotor.size()+1];
     rot[0] = (unsigned char)arr[0];
@@ -312,10 +312,10 @@ void OBRotamerList::AddRotamer(int *arr)
     for (i = 0;i < _vrotor.size();++i)
     {
         angle = _vres[i][arr[i+1]];
-        while (angle < 0.0f)
-            angle += 360.0f;
-        while (angle > 360.0f)
-            angle -= 360.0f;
+        while (angle < 0.0)
+            angle += 360.0;
+        while (angle > 360.0)
+            angle -= 360.0;
         rot[i+1] = (unsigned char)rint(angle*res);
     }
     _vrotamer.push_back(rot);
@@ -324,7 +324,7 @@ void OBRotamerList::AddRotamer(int *arr)
   void OBRotamerList::AddRotamer(std::vector<int> arr)
   {
     unsigned int i;
-    double angle,res=255.0f/360.0f;
+    double angle,res=255.0/360.0;
     
     if (arr.size() != (_vrotor.size() + 1))
       return; // wrong size key
@@ -335,10 +335,10 @@ void OBRotamerList::AddRotamer(int *arr)
     for (i = 0;i < _vrotor.size();++i)
     {
         angle = _vres[i][arr[i+1]];
-        while (angle < 0.0f)
-            angle += 360.0f;
-        while (angle > 360.0f)
-            angle -= 360.0f;
+        while (angle < 0.0)
+            angle += 360.0;
+        while (angle > 360.0)
+            angle -= 360.0;
         rot[i+1] = (unsigned char)rint(angle*res);
     }
     _vrotamer.push_back(rot);
@@ -347,7 +347,7 @@ void OBRotamerList::AddRotamer(int *arr)
 void OBRotamerList::AddRotamer(unsigned char *arr)
 {
     unsigned int i;
-    double angle,res=255.0f/360.0f;
+    double angle,res=255.0/360.0;
 
     unsigned char *rot = new unsigned char [_vrotor.size()+1];
     rot[0] = (unsigned char)arr[0];
@@ -355,10 +355,10 @@ void OBRotamerList::AddRotamer(unsigned char *arr)
     for (i = 0;i < _vrotor.size();++i)
     {
         angle = _vres[i][(int)arr[i+1]];
-        while (angle < 0.0f)
-            angle += 360.0f;
-        while (angle > 360.0f)
-            angle -= 360.0f;
+        while (angle < 0.0)
+            angle += 360.0;
+        while (angle > 360.0)
+            angle -= 360.0;
         rot[i+1] = (unsigned char)rint(angle*res);
     }
     _vrotamer.push_back(rot);
@@ -381,7 +381,7 @@ void OBRotamerList::AddRotamers(unsigned char *arr,int nrotamers)
 void OBRotamerList::ExpandConformerList(OBMol &mol,vector<double*> &clist)
 {
     unsigned int j;
-    double angle,invres=360.0f/255.0f;
+    double angle,invres=360.0/255.0;
     unsigned char *conf;
     vector<double*> tmpclist;
     vector<unsigned char*>::iterator i;
@@ -413,7 +413,7 @@ void OBRotamerList::ExpandConformerList(OBMol &mol,vector<double*> &clist)
 vector<double*> OBRotamerList::CreateConformerList(OBMol& mol)
 {
     unsigned int j;
-    double angle,invres=360.0f/255.0f;
+    double angle,invres=360.0/255.0;
     unsigned char *conf;
     vector<double*> tmpclist;
     vector<unsigned char*>::iterator i;
@@ -500,8 +500,8 @@ void SetRotorToAngle(double *c, OBAtom **ref,double ang,vector<int> atoms)
   if (c1mag*c2mag < 0.01) costheta = 1.0; //avoid div by zero error
   else costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
 
-  if (costheta < -0.999999) costheta = -0.999999f;
-  if (costheta >  0.999999) costheta =  0.999999f;
+  if (costheta < -0.999999) costheta = -0.999999;
+  if (costheta >  0.999999) costheta =  0.999999;
 			      
   if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0) radang = -acos(costheta);
   else                                     radang = acos(costheta);

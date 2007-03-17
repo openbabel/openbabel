@@ -311,18 +311,18 @@ namespace OpenBabel
     vector<vector3> v;
     v.reserve(3);
 
-    if (IsNegligible(_v1.length(), 1.0, 1e-9) &&
-        IsNegligible(_v2.length(), 1.0, 1e-9) &&
-        IsNegligible(_v3.length(), 1.0, 1e-9))
+    if (IsNegligible(_v1.length(), 1.0, 1.0e-9) &&
+        IsNegligible(_v2.length(), 1.0, 1.0e-9) &&
+        IsNegligible(_v3.length(), 1.0, 1.0e-9))
       {
         vector3 temp;
         matrix3x3 m = GetOrthoMatrix();
 
-        temp = vector3(1.0f, 0.0f, 0.0f);
+        temp = vector3(1.0, 0.0, 0.0);
         v.push_back(m * temp);
-        temp = vector3(0.0f, 1.0f, 0.0f);
+        temp = vector3(0.0, 1.0, 0.0);
         v.push_back(m * temp);
-        temp = vector3(0.0f, 0.0f, 1.0f);
+        temp = vector3(0.0, 0.0, 1.0);
         v.push_back(m * temp);
       }
     else
@@ -339,9 +339,9 @@ namespace OpenBabel
   {
     matrix3x3 m;
 
-    if (IsNegligible(_v1.length(), 1.0, 1e-9) &&
-        IsNegligible(_v2.length(), 1.0, 1e-9) &&
-        IsNegligible(_v3.length(), 1.0, 1e-9))
+    if (IsNegligible(_v1.length(), 1.0, 1.0e-9) &&
+        IsNegligible(_v2.length(), 1.0, 1.0e-9) &&
+        IsNegligible(_v3.length(), 1.0, 1.0e-9))
       {
         m = GetOrthoMatrix();
       }
@@ -387,15 +387,15 @@ namespace OpenBabel
     v = sqrt(1 - SQUARE(cosAlpha) - SQUARE(cosBeta) - SQUARE(cosGamma) +
              2 * cosAlpha*cosBeta*cosGamma);
 
-    m.Set(0,0, 1.0f / _a);
-    m.Set(0,1, -cosGamma / (_a * sinGamma) );
-    m.Set(0,2, (cosGamma * cosAlpha - cosBeta) / (_a * v * sinGamma) );
-    m.Set(1,0, 0.0);
-    m.Set(1,1, 1.0f / (_b * sinGamma) );
-    m.Set(1,2, (cosGamma * cosBeta - cosAlpha) / (_b * v * sinGamma) );
-    m.Set(2,0, 0.0);
-    m.Set(2,1, 0.0);
-    m.Set(2,2, sinGamma / (_c * v) );
+    m.Set(0,0,  1.0 / _a);
+    m.Set(0,1,  -cosGamma / (_a * sinGamma) );
+    m.Set(0,2,  (cosGamma * cosAlpha - cosBeta) / (_a * v * sinGamma) );
+    m.Set(1,0,  0.0);
+    m.Set(1,1,  1.0 / (_b * sinGamma) );
+    m.Set(1,2,  (cosGamma * cosBeta - cosAlpha) / (_b * v * sinGamma) );
+    m.Set(2,0,  0.0);
+    m.Set(2,1,  0.0);
+    m.Set(2,2,  sinGamma / (_c * v) );
 
     return m;
   }
@@ -452,9 +452,9 @@ namespace OpenBabel
       return _lattice;
 
     unsigned int rightAngles = 0;
-    if (IsApprox(_alpha, 90.0f, 1.0e-3)) rightAngles++;
-    if (IsApprox(_beta,  90.0f, 1.0e-3)) rightAngles++;
-    if (IsApprox(_gamma, 90.0f, 1.0e-3)) rightAngles++;
+    if (IsApprox(_alpha, 90.0, 1.0e-3)) rightAngles++;
+    if (IsApprox(_beta,  90.0, 1.0e-3)) rightAngles++;
+    if (IsApprox(_gamma, 90.0, 1.0e-3)) rightAngles++;
 
     switch (rightAngles)
       {
@@ -467,7 +467,9 @@ namespace OpenBabel
           _lattice = Orthorhombic;
         break;
       case 2:
-        if ( (IsApprox(_alpha, 120.0f, 1.0e-3) || IsApprox(_beta, 120.0f, 1.0e-3) || IsApprox(_gamma, 120.0f, 1.0e-3))
+        if ( (IsApprox(_alpha, 120.0, 1.0e-3) 
+              || IsApprox(_beta, 120.0, 1.0e-3) 
+              || IsApprox(_gamma, 120.0f, 1.0e-3))
              && (IsApprox(_a, _b, 1.0e-4) || IsApprox(_b, _c, 1.0e-4)) )
           _lattice = Hexagonal;
         else
@@ -567,7 +569,7 @@ namespace OpenBabel
         result = _a * _a * _a;
         break;
       default:
-        result = 0.0f;
+        result = 0.0;
       }
     
     return result;
