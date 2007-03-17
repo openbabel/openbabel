@@ -10,6 +10,10 @@
 
 	* src/formats/mol2format.cpp: Use above.
 
+	* src/*: Strip out 0.0f and similar floating-point casts,
+	extending yesterday's changes with forcefield.cpp. Defensive
+	programming against similar floating-point issues.
+
 2007-03-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/atom.h, include/openbabel/mol.h: Fix
