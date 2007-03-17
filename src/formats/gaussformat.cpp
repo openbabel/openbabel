@@ -338,8 +338,16 @@ namespace OpenBabel
       mol.PerceiveBondOrders();
 
     mol.EndModify();
-    if (hasPartialCharges)
+    if (hasPartialCharges) {
       mol.SetPartialChargesPerceived();
+
+      // Annotate that partial charges come from Mulliken
+      OBPairData *dp = new OBPairData;
+      dp->SetAttribute("PartialCharges");
+      dp->SetValue("Mulliken");
+      dp->SetOrigin(perceived);
+      mol.SetData(dp);
+    }
     mol.SetTotalCharge(charge);
     mol.SetTotalSpinMultiplicity(spin);
     

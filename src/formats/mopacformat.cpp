@@ -140,11 +140,16 @@ namespace OpenBabel
     if (hasPartialCharges)
       {
         mol.SetPartialChargesPerceived();
-        for (unsigned int i = 1; i <= mol.NumAtoms(); i++)
-          {
-            atom = mol.GetAtom(i);
-            atom->SetPartialCharge(charges[i-1]);
-          }
+        FOR_ATOMS_OF_MOL(atom, mol) {
+          atom->SetPartialCharge(charges[atom->GetIdx()-1]); // atom index issue
+        }
+
+        // Annotate that partial charges come from MOPAC Mulliken
+        OBPairData *dp = new OBPairData;
+        dp->SetAttribute("PartialCharges");
+        dp->SetValue("Mulliken");
+        dp->SetOrigin(perceived);
+        mol.SetData(dp);
       }
     mol.SetTitle(title);
 

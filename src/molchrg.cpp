@@ -61,6 +61,13 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::AssignPartialCharges", obAuditMsg);
 
+    // Annotate that partial charges come from Gasteiger
+    OBPairData *dp = new OBPairData;
+    dp->SetAttribute("PartialCharges");
+    dp->SetValue("Gasteiger");
+    dp->SetOrigin(perceived);
+    mol.SetData(dp);
+
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 

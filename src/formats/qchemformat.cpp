@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2000-2006 by Geoffrey Hutchison
+Copyright (C) 2000-2007 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Michael Banck
 Some portions Copyright (C) 2004 by Chris Morley
  
@@ -20,87 +20,87 @@ using namespace std;
 namespace OpenBabel
 {
 
-class QChemOutputFormat : public OBMoleculeFormat
-{
-public:
+  class QChemOutputFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     QChemOutputFormat()
     {
-        OBConversion::RegisterFormat("qcout",this);
-    }
-
-  virtual const char* Description() //required
-  {
-    return
-      "Q-Chem output format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
-  };
-
-  virtual const char* SpecificationURL()
-  {return "http://www.q-chem.com/";}; //optional
-
-    //Flags() can return be any the following combined by | or be omitted if none apply
-    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
-    {
-        return READONEONLY | NOTWRITABLE;
-    };
-
-    /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
-
-//Make an instance of the format class
-QChemOutputFormat theQChemOutputFormat;
-
-
-class QChemInputFormat : public OBMoleculeFormat
-{
-public:
-    //Register this format type ID
-    QChemInputFormat()
-    {
-        OBConversion::RegisterFormat("qcin",this);
+      OBConversion::RegisterFormat("qcout",this);
     }
 
     virtual const char* Description() //required
     {
-        return
-          "Q-Chem input format\n"
-          "Write Options e.g. -xk\n"
-          "  k  \"keywords\" Use the specified keywords for input\n"
-          "  f    <file>     Read the file specified for input keywords\n\n";
+      return
+        "Q-Chem output format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
     };
 
-  virtual const char* SpecificationURL()
-  {return "http://www.q-chem.com/";}; //optional
+    virtual const char* SpecificationURL()
+    {return "http://www.q-chem.com/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return WRITEONEONLY | NOTREADABLE;
+      return READONEONLY | NOTWRITABLE;
+    };
+
+    /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  };
+  //***
+
+  //Make an instance of the format class
+  QChemOutputFormat theQChemOutputFormat;
+
+
+  class QChemInputFormat : public OBMoleculeFormat
+  {
+  public:
+    //Register this format type ID
+    QChemInputFormat()
+    {
+      OBConversion::RegisterFormat("qcin",this);
+    }
+
+    virtual const char* Description() //required
+    {
+      return
+        "Q-Chem input format\n"
+        "Write Options e.g. -xk\n"
+        "  k  \"keywords\" Use the specified keywords for input\n"
+        "  f    <file>     Read the file specified for input keywords\n\n";
+    };
+
+    virtual const char* SpecificationURL()
+    {return "http://www.q-chem.com/";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return WRITEONEONLY | NOTREADABLE;
     };
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-};
+  };
 
-//Make an instance of the format class
-QChemInputFormat theQChemInputFormat;
+  //Make an instance of the format class
+  QChemInputFormat theQChemInputFormat;
 
-/////////////////////////////////////////////////////////////////
-bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -121,9 +121,9 @@ bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.BeginModify();
 
     while	(ifs.getline(buffer,BUFF_SIZE))
-    {
+      {
         if(strstr(buffer,"Standard Nuclear Orientation") != NULL)
-        {
+          {
             // mol.EndModify();
             mol.Clear();
             mol.BeginModify();
@@ -132,7 +132,7 @@ bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
             while (vs.size() == 5)
-            {
+              {
                 atom = mol.NewAtom();
                 atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
                 x = atof((char*)vs[2].c_str());
@@ -141,12 +141,12 @@ bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                 atom->SetVector(x,y,z);
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
-                    break;
+                  break;
                 tokenize(vs,buffer);
-            }
-        }
+              }
+          }
         else if(strstr(buffer,"Mulliken Net Atomic Charges") != NULL)
-        {
+          {
             hasPartialCharges = true;
             ifs.getline(buffer,BUFF_SIZE);	// (blank)
             ifs.getline(buffer,BUFF_SIZE);	// column headings
@@ -154,20 +154,20 @@ bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
             while (vs.size() >= 3)
-            {
+              {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 atom->SetPartialCharge(atof(vs[2].c_str()));
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
-                    break;
+                  break;
                 tokenize(vs,buffer);
-            }
-        }
+              }
+          }
         // In principle, the final geometry in cartesians is exactly the same
         // as this geometry, so we shouldn't lose any information
         // but we grab the charge and spin from this $molecule block
         else if(strstr(buffer,"OPTIMIZATION CONVERGED") != NULL)
-        {
+          {
             // Unfortunately this will come in a Z-matrix, which would
             // change our frame of reference -- we'll ignore this geometry
             ifs.getline(buffer,BUFF_SIZE); // *****
@@ -177,45 +177,45 @@ bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             ifs.getline(buffer,BUFF_SIZE); // Charge,Spin
             tokenize(vs, buffer, ", \t\n");
             if (vs.size() == 2)
-            {
+              {
                 charge = atoi(vs[0].c_str());
                 spin = atoi(vs[1].c_str());
-            }
+              }
 
-	    // Uncomment this if you want to test the z-matrix parsing.
-//  	  ifs.getline(buffer,BUFF_SIZE);  
-//           coord = new OBInternalCoord();
-//           internals.push_back(coord);
-//           index = 1;
-//           vector<OBAtom*>::iterator i;
-//           for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
-//                 tokenize(vs,buffer);
-//                 atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+            // Uncomment this if you want to test the z-matrix parsing.
+            //  	  ifs.getline(buffer,BUFF_SIZE);  
+            //           coord = new OBInternalCoord();
+            //           internals.push_back(coord);
+            //           index = 1;
+            //           vector<OBAtom*>::iterator i;
+            //           for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
+            //                 tokenize(vs,buffer);
+            //                 atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
 
-//                 tokenize(vs,buffer);
-//                 coord = new OBInternalCoord();
-//                 if (index > 1)
-//                 {
-//                         coord->_a = mol.GetAtom(atoi(vs[2].c_str()));
-//                         coord->_dst = atof(vs[3].c_str());
-//                 }
-//                 if (index > 2)
-//                 {
-//                         coord->_b = mol.GetAtom(atoi(vs[4].c_str()));
-//                         coord->_ang = atof(vs[5].c_str());
-//                 }
-//                 if (index > 3)
-//                 {
-//                         coord->_c = mol.GetAtom(atoi(vs[6].c_str()));
-//                         coord->_tor = atof(vs[7].c_str());
-//                 }
-//                 index++;
-//                 ifs.getline(buffer,BUFF_SIZE);
-//                 internals.push_back(coord);
-//           }  // end for
-//          InternalToCartesian(internals, mol);
-        } // end (OPTIMIZATION CONVERGED)
-    } // end while
+            //                 tokenize(vs,buffer);
+            //                 coord = new OBInternalCoord();
+            //                 if (index > 1)
+            //                 {
+            //                         coord->_a = mol.GetAtom(atoi(vs[2].c_str()));
+            //                         coord->_dst = atof(vs[3].c_str());
+            //                 }
+            //                 if (index > 2)
+            //                 {
+            //                         coord->_b = mol.GetAtom(atoi(vs[4].c_str()));
+            //                         coord->_ang = atof(vs[5].c_str());
+            //                 }
+            //                 if (index > 3)
+            //                 {
+            //                         coord->_c = mol.GetAtom(atoi(vs[6].c_str()));
+            //                         coord->_tor = atof(vs[7].c_str());
+            //                 }
+            //                 index++;
+            //                 ifs.getline(buffer,BUFF_SIZE);
+            //                 internals.push_back(coord);
+            //           }  // end for
+            //          InternalToCartesian(internals, mol);
+          } // end (OPTIMIZATION CONVERGED)
+      } // end while
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
@@ -224,22 +224,29 @@ bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     mol.EndModify();
 
-    if (hasPartialCharges)
-        mol.SetPartialChargesPerceived();
+    if (hasPartialCharges) {
+      mol.SetPartialChargesPerceived();
+      // Annotate that partial charges come from Q-Chem Mulliken
+      OBPairData *dp = new OBPairData;
+      dp->SetAttribute("PartialCharges");
+      dp->SetValue("Mulliken");
+      dp->SetOrigin(perceived);
+      mol.SetData(dp);
+    }
     mol.SetTotalCharge(charge);
     mol.SetTotalSpinMultiplicity(spin);
 
     mol.SetTitle(title);
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool QChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool QChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -288,6 +295,6 @@ bool QChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "$end" << endl;
 
     return(true);
-}
+  }
 
 } //namespace OpenBabel

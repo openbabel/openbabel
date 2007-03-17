@@ -1,3 +1,15 @@
+2007-03-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/molchrg.cpp: Add new OBPairData descriptor "PartialCharges"
+	to express origin as Gasteiger charges.
+
+	* src/formats/qchemformat.cpp, src/formats/mopacformat.cpp, 
+	src/formats/gamessformat.cpp, src/formats/gaussformat.cpp: 
+	Set PartialCharges descriptor to express origin as Mulliken
+	charges.
+
+	* src/formats/mol2format.cpp: Use above.
+
 2007-03-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/atom.h, include/openbabel/mol.h: Fix

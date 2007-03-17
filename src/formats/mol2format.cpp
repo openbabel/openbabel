@@ -332,10 +332,23 @@ namespace OpenBabel
     ofs << buffer << endl;
     ofs << "SMALL" << endl;
 
-    //if (mol.HasPartialChargesPerceived()) ofs << "GASTEIGER" << endl;
-    //  else                                  ofs << "NO_CHARGES" << endl;
+    OBPairData *dp = (OBPairData*)mol.GetData("PartialCharges");
+    if (dp != NULL) {
+      if (dp->GetValue() == "Mulliken")
+        ofs << "MULLIKEN_CHARGES" << endl;
+      else if (dp->GetValue() == "Gasteiger")
+        ofs << "GASTEIGER" << endl;
+      else // should pick from the Tripos types
+        // Tripos spec says:
+        // NO_CHARGES, DEL_RE, GASTEIGER, GAST_HUCK, HUCKEL, PULLMAN, 
+        // GAUSS80_CHARGES, AMPAC_CHARGES, MULLIKEN_CHARGES, DICT_ CHARGES,
+        // MMFF94_CHARGES, USER_CHARGES
+        ofs << "USER_CHARGES" << endl;
+    }
+    else { // No idea what these charges are... all our code sets "PartialCharges"
+      ofs << "USER_CHARGES" << endl;
+    }
 
-    ofs << "GASTEIGER" << endl;
     ofs << "Energy = " << mol.GetEnergy() << endl;
 
     if (mol.HasData(OBGenericDataType::CommentData))
