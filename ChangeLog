@@ -1,3 +1,12 @@
+2007-03-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.cpp (Separate): Add support for copying, updating
+	OBChiralData. Fixes PR#1680730.
+
+	* src/obutil.cpp: Fix typo in yesterday's change.
+
+	* test/logp_psa.cpp: Update to output predicted values, even if they match.
+
 2007-03-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/molchrg.cpp: Add new OBPairData descriptor "PartialCharges"

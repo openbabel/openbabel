@@ -2,7 +2,7 @@
 mol.cpp - Handle molecules.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
  
 This file is part of the Open Babel project.
@@ -3670,15 +3670,67 @@ namespace OpenBabel
         OBMol newmol;
         newmol.SetDimension(GetDimension());
         map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
+        map<OBAtom*, OBChiralData*> ChiralMap; // key is from old mol
         do //for each atom in fragment
           {
             OBAtom* pnext = &*iter;
             newmol.AddAtom(*pnext); //each subsequent atom with its bond
             AtomMap[pnext] = newmol.GetAtom(newmol.NumAtoms());
+
+            OBChiralData* cd = (OBChiralData*)pnext->GetData(OBGenericDataType::ChiralData);
+            if (cd)
+              ChiralMap[pnext] = cd;
           }while((iter++).next());
 
-        FOR_BONDS_OF_MOL(b, this)
-          {
+        // update any OBChiralData records
+        map<OBAtom*, OBChiralData*>::iterator ChiralSearch;
+        for (ChiralSearch = ChiralMap.begin(); ChiralSearch != ChiralMap.end();
+             ++ChiralSearch)
+        {
+          OBAtom *oldAtom = ChiralSearch->first;
+          OBChiralData *oldCD = ChiralSearch->second;
+          OBAtom *newAtom = AtomMap[oldAtom];
+          if (newAtom == NULL) continue; // shouldn't happen, but be defensive
+
+          OBChiralData *newCD = new OBChiralData;
+          OBAtom *a0, *a1, *a2, *a3; // old atom references
+          if (oldCD->GetSize(input)) {
+            a0 = this->GetAtom(oldCD->GetAtomRef(0, input));
+            a1 = this->GetAtom(oldCD->GetAtomRef(1, input));
+            a2 = this->GetAtom(oldCD->GetAtomRef(2, input));
+            a3 = this->GetAtom(oldCD->GetAtomRef(3, input));
+            newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
+            newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
+            newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
+            newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
+          }
+          
+          if (oldCD->GetSize(output)) {
+            a0 = this->GetAtom(oldCD->GetAtomRef(0, output));
+            a1 = this->GetAtom(oldCD->GetAtomRef(1, output));
+            a2 = this->GetAtom(oldCD->GetAtomRef(2, output));
+            a3 = this->GetAtom(oldCD->GetAtomRef(3, output));
+            newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
+            newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
+            newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
+            newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
+          }
+          
+          if (oldCD->GetSize(calcvolume)) {
+            a0 = this->GetAtom(oldCD->GetAtomRef(0, calcvolume));
+            a1 = this->GetAtom(oldCD->GetAtomRef(1, calcvolume));
+            a2 = this->GetAtom(oldCD->GetAtomRef(2, calcvolume));
+            a3 = this->GetAtom(oldCD->GetAtomRef(3, calcvolume));
+            newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
+            newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
+            newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
+            newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
+          }
+
+          newAtom->SetData(newCD);
+        }
+
+        FOR_BONDS_OF_MOL(b, this) {
             map<OBAtom*, OBAtom*>::iterator pos;
             pos = AtomMap.find(b->GetBeginAtom());
             if(pos!=AtomMap.end())
