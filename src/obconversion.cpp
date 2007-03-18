@@ -486,16 +486,16 @@ namespace OpenBabel {
     //in scope during Convert(), it is always constructed, but is only used in
     //with formats with non-binary and which are not XML (which should not be 
     //sensitive to line endings anyway).
-    //
+
     FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
     streambuf* pOrigInBuf = pInStream->rdbuf();
     if(pInFormat && !(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
-      streambuf* pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
-
+      pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
+    
     int count = Convert();
 
-    pOutStream = pOrigOutStream;
     pInStream->rdbuf(pOrigInBuf);
+    pOutStream = pOrigOutStream;
     return count;
   }
 
@@ -805,11 +805,13 @@ namespace OpenBabel {
     FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
     streambuf* pOrigInBuf = pInStream->rdbuf();
     if(!(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
-      streambuf* pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
+      pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
 
     pInStream->rdbuf(pOrigInBuf);
+
     return pInFormat->ReadMolecule(pOb, this);
   }
+
   //////////////////////////////////////////////////
   /// Writes the object pOb but does not delete it afterwards.
   /// The output stream is lastingly changed if pos is not NULL
