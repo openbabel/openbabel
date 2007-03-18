@@ -320,7 +320,7 @@ LDADD = ../src/libopenbabel.la @LIBDL@
 TESTDATADIR = $(top_srcdir)/test/files/
 AM_CPPFLAGS = -I$(top_srcdir)/include -DTESTDATADIR="\"$(TESTDATADIR)\""
 EXTRA_DIST = files wrapper.sh cml.sh test-set.sh \
-		aromatic.pl
+		aromatic.pl inchi
 
 roundtrip_SOURCES = roundtrip.cpp
 
@@ -340,7 +340,7 @@ invalidsmarts_SOURCES = invalidsmarts.cpp
 iterators_SOURCES = iterators.cpp
 math_SOURCES = math.cpp
 mmff94validate_SOURCES = mmff94validate.cpp
-# logp_psa_SOURCES = logp_psa.cpp
+logp_psa_SOURCES = logp_psa.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
@@ -456,7 +456,7 @@ iterators$(EXEEXT): $(iterators_OBJECTS) $(iterators_DEPENDENCIES)
 	$(CXXLINK) $(iterators_OBJECTS) $(iterators_LDADD) $(LIBS)
 logp_psa$(EXEEXT): $(logp_psa_OBJECTS) $(logp_psa_DEPENDENCIES) 
 	@rm -f logp_psa$(EXEEXT)
-	$(CXXLINK) $(logp_psa_LDFLAGS) $(logp_psa_OBJECTS) $(logp_psa_LDADD) $(LIBS)
+	$(CXXLINK) $(logp_psa_OBJECTS) $(logp_psa_LDADD) $(LIBS)
 math$(EXEEXT): $(math_OBJECTS) $(math_DEPENDENCIES) 
 	@rm -f math$(EXEEXT)
 	$(CXXLINK) $(math_OBJECTS) $(math_LDADD) $(LIBS)
