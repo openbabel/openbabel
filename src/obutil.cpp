@@ -125,7 +125,7 @@ namespace OpenBabel
   {
     if (size == 0)
       {
-        return(ZZero);
+        return(VZero);
       }
 		unsigned int i; 
     double x=0.0, y=0.0, z=0.0;
