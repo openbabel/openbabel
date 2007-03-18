@@ -220,10 +220,26 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     int j;
     for(j=0;j<piat->num_bonds;++j)
     {
-      pmol->AddBond(i+1, piat->neighbor[j]+1, piat->bond_type[j]);	
+      pmol->AddBond(i+1, piat->neighbor[j]+1, piat->bond_type[j]);
+    }
+
+    //OB takes care of implicit hydrogens, so num_iso_H[0] and num_iso_H[1] are ignored.
+    //But implicit D and T need to be added explicitly.
+    for(int m=2;m<3;++m)
+    {
+      if(piat->num_iso_H[m])
+      {
+        for(int k=0;k<piat->num_iso_H[m];++k)
+        {
+          OBAtom* DorT = pmol->NewAtom();
+          DorT->SetAtomicNum(1);
+          DorT->SetIsotope(m);
+          pmol->AddBond(i+1, pmol->NumAtoms(), 1);
+        }
+      }
     }
   }
-  
+
   //***TODO 0D stereo, implicit H isotopes
   //Stereochemistry
   for(i=0;i<out.num_stereo0D;++i)
@@ -532,11 +548,28 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(ret!=inchi_Ret_OKAY)
   {
     string mes(inout.szMessage);
-    if(!(pConv->IsOption("w") 
-         && (mes=="Omitted undefined stereo" || mes=="Charges were rearranged")))
+    if(pConv->IsOption("w")) 
     {
-      obErrorLog.ThrowError("InChI code", molID.str() + ':' + mes, obWarning);
+      string::size_type pos;
+      string targ[3];
+      targ[0] = "Omitted undefined stereo";
+      targ[1] = "Charges were rearranged";
+      targ[2] = "Proton(s) added/removed";
+      for(int i=0;i<3;++i)
+      {
+        pos = mes.find(targ[i]);
+        if(pos!=string::npos)
+        {
+          mes.erase(pos,targ[i].size());
+          if(mes[pos]==';')
+            mes[pos]=' ';
+        }
+      }
     }
+    Trim(mes);
+    if(!mes.empty())
+      obErrorLog.ThrowError("InChI code", molID.str() + ':' + mes, obWarning);
+
     if(ret!=inchi_Ret_WARNING)
     {
       FreeINCHI(&inout);

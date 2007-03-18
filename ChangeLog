@@ -1,3 +1,26 @@
+2007-03-18 Chris Morley
+
+	* src/formats/mdlformat.cpp:Added support for atom aliases when
+	reading. It's not much described in the main MDL specification,
+	so this implementation is just adequate to handle the InChI
+	samples, where for some reason, this antiquated feature is
+	used in several molecules.
+	
+	* src/formats/inchiformat.cpp(ReadMolecule): Now reads implicit
+	H isotopes.
+	(WriteMolecule): rewrote option to not display routine warnings.
+	
+	* test/: Added inchiwrite.cpp, two NIST sample molecule sets and
+	annotated results sets.
+	
+	* src/format.getinchi.cpp: Added declaration of GetInChI().
+	
+	* src/canon.cpp(FixCisTransBonds): changed | to || in if statement
+	
+	* src.forcefield(GenerateCoordinates): initialize torang to 0,
+	to avoid compiler warning. This variable doesn't seem to be
+	doing much but please could somebody check this is ok.
+	
 2007-03-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp (Separate): Add support for copying, updating

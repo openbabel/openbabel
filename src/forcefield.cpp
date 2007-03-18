@@ -348,7 +348,7 @@ namespace OpenBabel
     coord = new OBInternalCoord();
     internals.push_back(coord);
       
-    int torang;
+    int torang=0;
     for (atom = _mol.BeginAtom(i);atom;atom = _mol.NextAtom(i)) {
       coord = new OBInternalCoord();
       nbr = _mol.GetAtom(get_nbr(atom, 1));

@@ -969,7 +969,7 @@ static void FixCisTransBonds(OBMol *pmol,
     // other neighbor;
     int v1 = GetValence(a1, frag_atoms);
     int v2 = GetValence(a2, frag_atoms);
-    if (v1 < 2 || v1 > 3 | v2 < 2 | v2 > 3) {
+    if (v1 < 2 || v1 > 3 || v2 < 2 || v2 > 3) {
       is_cis_trans = false;
     }
 

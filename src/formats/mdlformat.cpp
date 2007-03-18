@@ -88,8 +88,10 @@ Write Options, e.g. -x3\n \
     bool ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
     bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
   private:
-    bool HasProperties;
+    bool  HasProperties;
     char* GetTimeDate(char* td);
+    bool  ParseAliasText(OBMol& mol, char* txt, int atomnumber);
+
     map<int,int> indexmap; //relates index in file to index in OBMol
     vector<string> vs;
   };
@@ -296,15 +298,29 @@ public:
               return true;
             if(!strncmp(buffer,"M  END",6))
               break;
-            if(strncmp(buffer,"M  CHG",6) && strncmp(buffer,"M  RAD",6) && strncmp(buffer,"M  ISO",6))
-              continue;
             if(!strncmp(buffer,"S  SKP",6))
               {
                 int i = atoi(buffer+6);
                 for(;i>0;--i)
                   ifs.getline(buffer,BUFF_SIZE);
-                break;
+                continue;
               }
+            if(buffer[0]=='A') //alias
+            {
+              //Parses entries like 
+              //A  6
+              //CD2
+              int atomnum = atoi(buffer+2);
+              ifs.getline(buffer,BUFF_SIZE);
+              if(!ParseAliasText(mol, buffer, atomnum))
+              {
+                obErrorLog.ThrowError(__FUNCTION__, "Error in alias block", obError);
+                return false;
+              }
+              continue;
+            }
+            if(strncmp(buffer,"M  CHG",6) && strncmp(buffer,"M  RAD",6) && strncmp(buffer,"M  ISO",6))
+              continue;
             r1 = buffer;
             int n = atoi((r1.substr(6,3)).c_str()); //entries on this line
             if(n==0) break;
@@ -324,8 +340,8 @@ public:
                   at->SetIsotope(value);
                 //Although not done here,according to the specification, 
                 //previously set formal charges should be reset to zero
+                }
                 // Lines setting several other properties are not implemented
-              }
           }
       }
     mol.AssignSpinMultiplicity();
@@ -893,6 +909,68 @@ public:
              ((ts->tm_year>=100)? ts->tm_year-100 : ts->tm_year),
              ts->tm_hour, ts->tm_min);
     return td;
+  }
+
+  bool MDLFormat::ParseAliasText(OBMol& mol, char* txt, int atomnumber)
+  {
+    //Crude implementation
+    //Only single character element symbols are handled
+    //Atom which replaces atomnumber is the first non-H 
+    //Will parse ND2 DS CH-
+    if(!isalpha(*txt)) //first char is the element that replaces atomnumber
+      return false;
+    //Swaps any leading H isotope with the first non-H atom
+    if(*txt=='H' || *txt=='D' || *txt=='T')
+    {
+      char* p =txt+1;
+      while(*p && *p=='H' && *p=='D' && *p=='T')p++;
+      if(*p)
+        std::swap(*p, *txt);
+    }
+    char symb[2];
+    symb[0]=*(txt++);
+    symb[1]='\0';
+    OBAtom* pAtom = mol.GetAtom(atomnumber);
+    if(!pAtom)
+      return false;
+    int iso = 0;
+    pAtom->SetAtomicNum(etab.GetAtomicNum(symb,iso));
+    if(iso)
+      pAtom->SetIsotope(iso);
+
+    while(*txt)
+    {
+      if(isspace(*txt))
+        continue;
+      int chg=0;
+      if(*txt=='-')
+        chg = -1;
+      else if(*txt=='+')
+        chg = 1;
+      if(chg)
+      {
+        pAtom->SetFormalCharge(pAtom->GetFormalCharge()+chg);//put on central atom e.g. CH-
+        ++txt;
+        continue;
+      }
+      if(!isalpha(*txt))
+        return false;
+      symb[0]=*txt;
+      int rep = atoi(++txt);
+      if(rep)
+        ++txt;
+      do //for each rep
+      {
+        OBAtom* newAtom = mol.NewAtom();
+        iso = 0;
+        newAtom->SetAtomicNum(etab.GetAtomicNum(symb,iso));
+        if(iso)
+          newAtom->SetIsotope(iso);
+
+        if (!mol.AddBond(atomnumber,mol.NumAtoms(),1,0)) return false;
+      }while(--rep>0);
+    }
+    return true;
   }
 
 }
