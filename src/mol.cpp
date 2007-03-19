@@ -2559,8 +2559,9 @@ namespace OpenBabel
     for (idx=1,atomi = BeginAtom(i);atomi;atomi = NextAtom(i),++idx)
       atomi->SetIdx(idx);
 
-    DestroyAtom(atom);
     EndModify();
+
+    DestroyAtom(atom);
 
     return(true);
   }
@@ -2678,9 +2679,10 @@ namespace OpenBabel
     for (bondi = BeginBond(i),j=0;bondi;bondi = NextBond(i),++j)
       bondi->SetIdx(j);
 
+    EndModify();
+
     DestroyBond(bond);
 
-    EndModify();
     return(true);
   }
 

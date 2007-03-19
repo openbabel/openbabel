@@ -1,3 +1,10 @@
+2007-03-19  Donald E. Curtis <dcurtis3@sourceforge.net>
+
+	* src/mol.cpp: OBMol::DeleteAtom - Moved DeleteAtom to *after* the
+	EndModify call.  At this point the atom is already removed from the _vatom
+	vector.  OBMol::DeleteBond - Moved DeleteBond to *after* the EndModify
+	call.  At this point the bond is already removed from the _vbond vector.
+
 2007-03-18 Chris Morley
 
 	* src/formats/mdlformat.cpp:Added support for atom aliases when
