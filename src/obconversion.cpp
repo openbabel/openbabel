@@ -461,7 +461,6 @@ namespace OpenBabel {
       if (zIn->is_gzip()) {
         pInStream = zIn;
         CheckedForGzip = true;
-        NeedToFreeInStream = true;
       }
       else
         delete zIn;
@@ -795,7 +794,6 @@ namespace OpenBabel {
       if (zIn->is_gzip()) {
         pInStream = zIn;
         CheckedForGzip = true;
-        NeedToFreeInStream = true;
       }
       else
         delete zIn;

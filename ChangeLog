@@ -1,3 +1,9 @@
+2007-03-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.cpp: Amend yesterday's change to address double
+	free() bug, PR#1683541. Still don't like this, as it could leak
+	the zip_istream we create.
+
 2007-03-19  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/mol.cpp: OBMol::DeleteAtom - Moved DeleteAtom to *after* the
@@ -7,7 +13,7 @@
 
 2007-03-18 Chris Morley
 
-	* src/formats/mdlformat.cpp:Added support for atom aliases when
+	* src/formats/mdlformat.cpp: Added support for atom aliases when
 	reading. It's not much described in the main MDL specification,
 	so this implementation is just adequate to handle the InChI
 	samples, where for some reason, this antiquated feature is
