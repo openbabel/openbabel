@@ -63,6 +63,7 @@ namespace OpenBabel
         "Write options for CML: -x[flags] (e.g. -x1ac)\n"
         "  1  output CML1 (rather than CML2)\n"
         "  a  output array format for atoms and bonds\n"
+        "  A  write aromatic bonds as such, not Kekule form\n"
         "  h  use hydrogenCount for all hydrogens\n"
         "  m  output metadata\n"
         "  x  omit XML and namespace declarations\n"
@@ -387,6 +388,8 @@ namespace OpenBabel
   bool CMLFormat::DoAtoms()
   {	
     int dim=0; //dimension of molecule
+    bool use2d = _pxmlConv->IsOption("2", OBConversion::INOPTIONS);
+
     int nAtoms=_pmol->NumAtoms();//was 0
     cmlArray::iterator AtomIter;
     for(AtomIter=AtomArray.begin();AtomIter!=AtomArray.end();++AtomIter)
@@ -397,11 +400,11 @@ namespace OpenBabel
         int nhvy = nAtoms;
 
         double x=0,y=0,z=0;
-        bool use2d = _pxmlConv->IsOption("2", OBConversion::INOPTIONS);
 		
         vector<pair<string,string> >::iterator AttributeIter;
         for(AttributeIter=AtomIter->begin();AttributeIter!=AtomIter->end();++AttributeIter)
           {
+            bool datanotused=false;
             string& attrname = AttributeIter->first;
             string& value    = AttributeIter->second;
 
@@ -463,8 +466,10 @@ namespace OpenBabel
                     z=strtod(vals[2].c_str(),NULL);
                   }
               }
+            else
+              datanotused=true;
 
-            if(dim)
+            if(!datanotused && dim)
               {
                 if(!pUnitCell)
                   pAtom->SetVector(x, y , z);
@@ -1052,6 +1057,7 @@ namespace OpenBabel
 
     bool cml1 = _pxmlConv->IsOption("1");
     bool arrayform = _pxmlConv->IsOption("a");
+    bool WriteAromaticBonds =  _pxmlConv->IsOption("A");
     int dim = mol.GetDimension();
 	
     prefix = BAD_CAST _pxmlConv->IsOption("N");
@@ -1105,7 +1111,7 @@ namespace OpenBabel
 
     if(mol.NumAtoms()>0)
       {
-        //if molecule has no bonds and atoms don't have coordinates, just output formula
+        //if molecule has no bonds and atoms doesn't have coordinates, just output formula
         if(numbonds==0 && UseFormulaWithNoBonds && !mol.Has2D())
           WriteFormula(mol);
         else
@@ -1118,6 +1124,9 @@ namespace OpenBabel
 #endif
             bool anyChg=false, anySpin=false, anyIsotope=false;
             double X, Y, Z; //atom coordinates
+
+            if(mol.GetDimension()!=3)
+              mol.FindChiralCenters();
 
             OBAtom *patom;
             vector<OBAtom*>::iterator i;
@@ -1201,13 +1210,13 @@ namespace OpenBabel
                             xmlTextWriterWriteFormatAttribute(writer(), C_Y3orFRACT,"%f", Y);
                             xmlTextWriterWriteFormatAttribute(writer(), C_Z3orFRACT,"%f", Z);
                           }
-                        if(patom->HasChiralitySpecified())
+                        int cfg=0;
+                        if((patom->IsPositiveStereo() || patom->IsClockwise()))
+                          cfg=1;
+                        else if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
+                          cfg=-1;
+                        if(cfg)
                           {
-                            int cfg=0;
-                            if((patom->IsPositiveStereo() || patom->IsClockwise()))
-                              cfg=1;
-                            else if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
-                              cfg=-1;
                             OBChiralData* cd=(OBChiralData*)patom->GetData(OBGenericDataType::ChiralData);
                             if(cfg && cd)
                               {
@@ -1387,12 +1396,12 @@ namespace OpenBabel
                   {
                     xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS2,"a%d a%d",
                                                       pbond->GetBeginAtomIdx(), pbond->GetEndAtomIdx() );
-                    if(bo==5) //aromatic
+                    if(bo==5 || (WriteAromaticBonds && pbond->IsAromatic())) //aromatic
                       xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%c", 'A');
                     else
                       xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%d", bo);
 					
-                    if(bo==2)
+                    if(bo==2 || pbond->IsWedge() || pbond->IsHash())
                       WriteBondStereo(pbond);
                   }
                 else
@@ -1451,14 +1460,12 @@ namespace OpenBabel
           {
             for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
               {
-                if(pbond->GetBO()==2)
+                if(pbond->GetBO()==2 || pbond->IsWedge() || pbond->IsHash())
                   WriteBondStereo(pbond);
               }
           }
-
       }
 
-	
     bool propertyListWritten=false;
     if(mol.HasData(ThermoData))
       WriteThermo(mol, propertyListWritten);
@@ -1494,40 +1501,54 @@ namespace OpenBabel
   {
     static const xmlChar C_ATOMREFS4[]  = "atomRefs4";
     static const xmlChar C_BONDSTEREO[] = "bondStereo";
+  
+    char ch=0;
+    if(pbond->IsWedge())
+      ch='W';
+    else if(pbond->IsHash())
+      ch='H';
 
-    int ud1=0, ud2=0;
-    int idx1, idx2;
-    OBAtom* patomA = pbond->GetBeginAtom();
-    FOR_BONDS_OF_ATOM(b1,patomA)
-      {
-        if(b1->IsUp() || b1->IsDown() )
-          {
-            idx1=(b1->GetNbrAtom(patomA))->GetIdx();
-            ud1 = b1->IsDown() ? -1 : 1;
-            // Conjugated double bonds have to be treated differently, see comments
-            // in OBMol2Smi::GetCisTransBondSymbol(). Reverse symbol for other than first double bond.
-            if((b1->GetNbrAtom(patomA))->HasDoubleBond())
-              ud1 = -ud1;
-            break;
-          }
-      }
-    OBAtom* patomB = pbond->GetEndAtom();
-    FOR_BONDS_OF_ATOM(b2,patomB)
-      {
-        if(b2->IsUp() || b2->IsDown() )
-          {
-            idx2=(b2->GetNbrAtom(patomB))->GetIdx();
-            ud2 = b2->IsDown() ? -1 : 1;
-            break;
-          }
-      }
-    if(!ud1 || !ud2)
-      return;
-	
-    xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
-    xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
-                                      "a%d a%d a%d a%d", idx1, patomA->GetIdx(), patomB->GetIdx(), idx2);
-    char ch = (ud1==ud2) ? 'C' : 'T'; //reversed Feb07
+    if(ch)
+      //this line here because element may not be written with double bond
+      xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
+    else
+    {
+      //double bond stereo
+      int ud1=0, ud2=0;
+      int idx1, idx2;
+      OBAtom* patomA = pbond->GetBeginAtom();
+      FOR_BONDS_OF_ATOM(b1,patomA)
+        {
+          if(b1->IsUp() || b1->IsDown() )
+            {
+              idx1=(b1->GetNbrAtom(patomA))->GetIdx();
+              ud1 = b1->IsDown() ? -1 : 1;
+              // Conjugated double bonds have to be treated differently, see comments
+              // in OBMol2Smi::GetCisTransBondSymbol(). Reverse symbol for other than first double bond.
+              if((b1->GetNbrAtom(patomA))->HasDoubleBond())
+                ud1 = -ud1;
+              break;
+            }
+        }
+      OBAtom* patomB = pbond->GetEndAtom();
+      FOR_BONDS_OF_ATOM(b2,patomB)
+        {
+          if(b2->IsUp() || b2->IsDown() )
+            {
+              idx2=(b2->GetNbrAtom(patomB))->GetIdx();
+              ud2 = b2->IsDown() ? -1 : 1;
+              break;
+            }
+        }
+      if(!ud1 || !ud2)
+        return;
+  	
+      xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
+      xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
+                                        "a%d a%d a%d a%d", idx1, patomA->GetIdx(), patomB->GetIdx(), idx2);
+      ch = (ud1==ud2) ? 'C' : 'T';
+    }
+
     xmlTextWriterWriteFormatString(writer(),"%c", ch);
     xmlTextWriterEndElement(writer());//bondStereo
   }

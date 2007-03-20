@@ -1,3 +1,12 @@
+2007-03-20 Chris Morley
+
+	* src/formats/xml/cmlformat.cpp: Add code to write W and H in
+	bondstereo. Ensure <bondStereo> is written in array form.
+	
+	Mods inDoAtoms to read the right set of atom coordinates.
+	
+	Add option to write bonds as aromatic.
+	
 2007-03-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.cpp: Amend yesterday's change to address double
