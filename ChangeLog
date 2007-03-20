@@ -4,6 +4,12 @@
 	free() bug, PR#1683541. Still don't like this, as it could leak
 	the zip_istream we create.
 
+	* src/parsmart.cpp: Fix PR#1683890 for SMARTS pattern 'x' with no
+	number. Default is "at least one ring bond."
+
+	* test/files/smartstest.txt, test/files/smartsresults.txt: Update
+	for above. 'x' pattern and 'x0' pattern.
+
 2007-03-19  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/mol.cpp: OBMol::DeleteAtom - Moved DeleteAtom to *after* the
