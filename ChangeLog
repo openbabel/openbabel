@@ -1,3 +1,18 @@
+2007-03-18 Chris Morley
+
+	windows-vc2005: Simplified projects to OpenBabelDLL with driver
+	programs for commandline, GUI, and Python interface.
+
+	* include/openbabel/forcefield.h: So that the Python build
+	in Windows will work, added a dummy function so that the 
+	compiler will really make some functions of the templated class
+	OBIter<OBForceField> which SWIG is expecting. The needs to be
+	done properly, but needed to get it working for the 2.1 release. 
+	
+	* include/openbabel/obconversion.h and src/obconversion.cpp:
+	added the patches supplied by Jerome Pansanel for providing a
+	list of available formats.
+	
 2007-03-20 Chris Morley
 
 	* src/formats/xml/cmlformat.cpp: Add code to write W and H in

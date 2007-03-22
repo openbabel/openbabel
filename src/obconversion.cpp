@@ -1427,6 +1427,49 @@ namespace OpenBabel {
     return pos->second;
   }
 
+  /**
+   * Returns the list of supported input format
+   */
+  std::vector<std::string> OBConversion::GetSupportedInputFormat()
+  {
+    if( SupportedInputFormat.empty() )
+    {
+      Formatpos pos;
+      OBFormat *pFormat;
+      const char* str = NULL;
+      while( GetNextFormat(pos, str, pFormat) )
+      {
+        if( (pFormat->Flags() & NOTREADABLE) )
+        {
+          continue;
+        }
+        SupportedInputFormat.push_back(str);
+      }
+    }
+    return( SupportedInputFormat );
+  }
+  /**
+   * Returns the list of supported output format
+   */
+  std::vector<std::string> OBConversion::GetSupportedOutputFormat()
+  {
+    if( SupportedOutputFormat.empty() )
+    {
+      Formatpos pos;
+      OBFormat *pFormat;
+      const char* str = NULL;
+      while( GetNextFormat(pos, str, pFormat) )
+      {
+        if( ( pFormat->Flags() & NOTWRITABLE) )
+        {
+          continue;
+        }
+        SupportedOutputFormat.push_back(str);
+      }
+    }
+    return( SupportedOutputFormat );
+  }
+
 }//namespace OpenBabel
 
 //! \file obconversion.cpp

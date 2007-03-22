@@ -204,11 +204,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\canon.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\chains.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\chiral.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\cifformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\xml\cmlreactlformat.cpp"
 				>
 			</File>
 			<File
@@ -234,26 +246,6 @@
 			<File
 				RelativePath="..\..\src\forcefield.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\src\forcefields\forcefieldghemical.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\forcefields\forcefieldmm2.cpp"
@@ -280,6 +272,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\groupcontrib.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\kekulize.cpp"
 				>
 			</File>
@@ -297,14 +293,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\molchrg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\molreport.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\newlinebuf.cpp"
 				>
 			</File>
 			<File
@@ -406,6 +394,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\canon.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\chains.h"
 				>
 			</File>
@@ -446,6 +438,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\groupcontrib.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\xml\iconv.h"
 				>
 			</File>
@@ -466,6 +462,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\logp.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\matrix.h"
 				>
 			</File>
@@ -479,10 +479,6 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\molchrg.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\openbabel\newlinebuf.h"
 				>
 			</File>
 			<File
@@ -519,6 +515,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\pluginiter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\psa.h"
 				>
 			</File>
 			<File
@@ -563,6 +563,10 @@
 			Filter="*format.cpp"
 			>
 			<File
+				RelativePath="..\..\src\formats\acrformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\alchemyformat.cpp"
 				>
 			</File>
@@ -595,11 +599,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\cansmilesformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\carformat.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\cccformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\xml\cdxmlformat.cpp"
 				>
 			</File>
 			<File
@@ -615,19 +627,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\chemkinformat.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\formats\chemtoolformat.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\xml\cmlformat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\xml\cmlreactformat.cpp"
 				>
 			</File>
 			<File
@@ -659,6 +663,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\fchkformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\featformat.cpp"
 				>
 			</File>
@@ -669,6 +677,18 @@
 			<File
 				RelativePath="..\..\src\formats\fingerprintformat.cpp"
 				>
+			</File>
+			<File
+				RelativePath="..\..\src\forcefields\forcefieldghemical.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\freefracformat.cpp"
@@ -715,7 +735,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\molreport.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\mopacformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\mpdformat.cpp"
 				>
 			</File>
 			<File
@@ -728,6 +756,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\obmolecformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\pcmodelformat.cpp"
 				>
 			</File>
 			<File
@@ -752,6 +784,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\reportformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\rxnformat.cpp"
 				>
 			</File>
 			<File

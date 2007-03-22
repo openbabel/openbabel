@@ -122,6 +122,52 @@ class vectorInt(_object):
 vectorInt_swigregister = _openbabel.vectorInt_swigregister
 vectorInt_swigregister(vectorInt)
 
+class vectorUnsignedInt(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, vectorUnsignedInt, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, vectorUnsignedInt, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorUnsignedInt_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorUnsignedInt___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorUnsignedInt___len__(*args)
+    def pop(*args): return _openbabel.vectorUnsignedInt_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorUnsignedInt___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorUnsignedInt___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorUnsignedInt___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorUnsignedInt___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorUnsignedInt___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorUnsignedInt___setitem__(*args)
+    def append(*args): return _openbabel.vectorUnsignedInt_append(*args)
+    def empty(*args): return _openbabel.vectorUnsignedInt_empty(*args)
+    def size(*args): return _openbabel.vectorUnsignedInt_size(*args)
+    def clear(*args): return _openbabel.vectorUnsignedInt_clear(*args)
+    def swap(*args): return _openbabel.vectorUnsignedInt_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorUnsignedInt_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorUnsignedInt_begin(*args)
+    def end(*args): return _openbabel.vectorUnsignedInt_end(*args)
+    def rbegin(*args): return _openbabel.vectorUnsignedInt_rbegin(*args)
+    def rend(*args): return _openbabel.vectorUnsignedInt_rend(*args)
+    def pop_back(*args): return _openbabel.vectorUnsignedInt_pop_back(*args)
+    def erase(*args): return _openbabel.vectorUnsignedInt_erase(*args)
+    def __init__(self, *args): 
+        this = _openbabel.new_vectorUnsignedInt(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vectorUnsignedInt_push_back(*args)
+    def front(*args): return _openbabel.vectorUnsignedInt_front(*args)
+    def back(*args): return _openbabel.vectorUnsignedInt_back(*args)
+    def assign(*args): return _openbabel.vectorUnsignedInt_assign(*args)
+    def resize(*args): return _openbabel.vectorUnsignedInt_resize(*args)
+    def insert(*args): return _openbabel.vectorUnsignedInt_insert(*args)
+    def reserve(*args): return _openbabel.vectorUnsignedInt_reserve(*args)
+    def capacity(*args): return _openbabel.vectorUnsignedInt_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorUnsignedInt
+    __del__ = lambda self : None;
+vectorUnsignedInt_swigregister = _openbabel.vectorUnsignedInt_swigregister
+vectorUnsignedInt_swigregister(vectorUnsignedInt)
+
 class vvInt(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, vvInt, name, value)
@@ -638,8 +684,52 @@ class OBResidueData(OBGlobalDataBase):
 OBResidueData_swigregister = _openbabel.OBResidueData_swigregister
 OBResidueData_swigregister(OBResidueData)
 
-OpenDatafile = _openbabel.OpenDatafile
 FILE_SEP_CHAR = _openbabel.FILE_SEP_CHAR
+class DoubleType(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, DoubleType, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, DoubleType, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["hi"] = _openbabel.DoubleType_hi_set
+    __swig_getmethods__["hi"] = _openbabel.DoubleType_hi_get
+    if _newclass:hi = _swig_property(_openbabel.DoubleType_hi_get, _openbabel.DoubleType_hi_set)
+    __swig_setmethods__["lo"] = _openbabel.DoubleType_lo_set
+    __swig_getmethods__["lo"] = _openbabel.DoubleType_lo_get
+    if _newclass:lo = _swig_property(_openbabel.DoubleType_lo_get, _openbabel.DoubleType_lo_set)
+    def __init__(self, *args): 
+        this = _openbabel.new_DoubleType(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_DoubleType
+    __del__ = lambda self : None;
+DoubleType_swigregister = _openbabel.DoubleType_swigregister
+DoubleType_swigregister(DoubleType)
+OpenDatafile = _openbabel.OpenDatafile
+
+DoubleMultiply = _openbabel.DoubleMultiply
+DoubleAdd = _openbabel.DoubleAdd
+DoubleModulus = _openbabel.DoubleModulus
+class OBRandom(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBRandom, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, OBRandom, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new_OBRandom(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def Seed(*args): return _openbabel.OBRandom_Seed(*args)
+    def TimeSeed(*args): return _openbabel.OBRandom_TimeSeed(*args)
+    def NextInt(*args): return _openbabel.OBRandom_NextInt(*args)
+    def NextFloat(*args): return _openbabel.OBRandom_NextFloat(*args)
+    __swig_destroy__ = _openbabel.delete_OBRandom
+    __del__ = lambda self : None;
+OBRandom_swigregister = _openbabel.OBRandom_swigregister
+OBRandom_swigregister(OBRandom)
+
+M_PI = _openbabel.M_PI
 class OBStopwatch(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, OBStopwatch, name, value)
@@ -675,50 +765,6 @@ class OBSqrtTbl(_object):
 OBSqrtTbl_swigregister = _openbabel.OBSqrtTbl_swigregister
 OBSqrtTbl_swigregister(OBSqrtTbl)
 
-class DoubleType(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, DoubleType, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, DoubleType, name)
-    __repr__ = _swig_repr
-    __swig_setmethods__["hi"] = _openbabel.DoubleType_hi_set
-    __swig_getmethods__["hi"] = _openbabel.DoubleType_hi_get
-    if _newclass:hi = _swig_property(_openbabel.DoubleType_hi_get, _openbabel.DoubleType_hi_set)
-    __swig_setmethods__["lo"] = _openbabel.DoubleType_lo_set
-    __swig_getmethods__["lo"] = _openbabel.DoubleType_lo_get
-    if _newclass:lo = _swig_property(_openbabel.DoubleType_lo_get, _openbabel.DoubleType_lo_set)
-    def __init__(self, *args): 
-        this = _openbabel.new_DoubleType(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _openbabel.delete_DoubleType
-    __del__ = lambda self : None;
-DoubleType_swigregister = _openbabel.DoubleType_swigregister
-DoubleType_swigregister(DoubleType)
-
-DoubleMultiply = _openbabel.DoubleMultiply
-DoubleAdd = _openbabel.DoubleAdd
-DoubleModulus = _openbabel.DoubleModulus
-class OBRandom(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBRandom, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBRandom, name)
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        this = _openbabel.new_OBRandom(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    def Seed(*args): return _openbabel.OBRandom_Seed(*args)
-    def TimeSeed(*args): return _openbabel.OBRandom_TimeSeed(*args)
-    def NextInt(*args): return _openbabel.OBRandom_NextInt(*args)
-    def NextFloat(*args): return _openbabel.OBRandom_NextFloat(*args)
-    __swig_destroy__ = _openbabel.delete_OBRandom
-    __del__ = lambda self : None;
-OBRandom_swigregister = _openbabel.OBRandom_swigregister
-OBRandom_swigregister(OBRandom)
-
-PI = _openbabel.PI
 RAD_TO_DEG = _openbabel.RAD_TO_DEG
 DEG_TO_RAD = _openbabel.DEG_TO_RAD
 class vector3(_object):
@@ -736,7 +782,6 @@ class vector3(_object):
     def SetY(*args): return _openbabel.vector3_SetY(*args)
     def SetZ(*args): return _openbabel.vector3_SetZ(*args)
     def Get(*args): return _openbabel.vector3_Get(*args)
-    def IsApprox(*args): return _openbabel.vector3_IsApprox(*args)
     def AsArray(*args): return _openbabel.vector3_AsArray(*args)
     def __iadd__(*args): return _openbabel.vector3___iadd__(*args)
     def __isub__(*args): return _openbabel.vector3___isub__(*args)
@@ -745,11 +790,14 @@ class vector3(_object):
     def randomUnitVector(*args): return _openbabel.vector3_randomUnitVector(*args)
     def normalize(*args): return _openbabel.vector3_normalize(*args)
     def CanBeNormalized(*args): return _openbabel.vector3_CanBeNormalized(*args)
-    def length(*args): return _openbabel.vector3_length(*args)
     def length_2(*args): return _openbabel.vector3_length_2(*args)
+    def length(*args): return _openbabel.vector3_length(*args)
     def x(*args): return _openbabel.vector3_x(*args)
     def y(*args): return _openbabel.vector3_y(*args)
     def z(*args): return _openbabel.vector3_z(*args)
+    def __eq__(*args): return _openbabel.vector3___eq__(*args)
+    def __ne__(*args): return _openbabel.vector3___ne__(*args)
+    def IsApprox(*args): return _openbabel.vector3_IsApprox(*args)
     def distSq(*args): return _openbabel.vector3_distSq(*args)
     def createOrthoVector(*args): return _openbabel.vector3_createOrthoVector(*args)
     __swig_destroy__ = _openbabel.delete_vector3
@@ -757,8 +805,61 @@ class vector3(_object):
 vector3_swigregister = _openbabel.vector3_swigregister
 vector3_swigregister(vector3)
 
+__lshift__ = _openbabel.__lshift__
+__add__ = _openbabel.__add__
+__div__ = _openbabel.__div__
+dot = _openbabel.dot
+cross = _openbabel.cross
+vectorAngle = _openbabel.vectorAngle
+CalcTorsionAngle = _openbabel.CalcTorsionAngle
 Point2Plane = _openbabel.Point2Plane
+Point2PlaneAngle = _openbabel.Point2PlaneAngle
 Trim = _openbabel.Trim
+UndefinedData = _openbabel.UndefinedData
+PairData = _openbabel.PairData
+EnergyData = _openbabel.EnergyData
+CommentData = _openbabel.CommentData
+ConformerData = _openbabel.ConformerData
+ExternalBondData = _openbabel.ExternalBondData
+RotamerList = _openbabel.RotamerList
+VirtualBondData = _openbabel.VirtualBondData
+RingData = _openbabel.RingData
+TorsionData = _openbabel.TorsionData
+AngleData = _openbabel.AngleData
+SerialNums = _openbabel.SerialNums
+UnitCell = _openbabel.UnitCell
+SpinData = _openbabel.SpinData
+ChargeData = _openbabel.ChargeData
+SymmetryData = _openbabel.SymmetryData
+ChiralData = _openbabel.ChiralData
+OccupationData = _openbabel.OccupationData
+DensityData = _openbabel.DensityData
+ElectronicData = _openbabel.ElectronicData
+VibrationData = _openbabel.VibrationData
+RotationData = _openbabel.RotationData
+NuclearData = _openbabel.NuclearData
+SetData = _openbabel.SetData
+CustomData0 = _openbabel.CustomData0
+CustomData1 = _openbabel.CustomData1
+CustomData2 = _openbabel.CustomData2
+CustomData3 = _openbabel.CustomData3
+CustomData4 = _openbabel.CustomData4
+CustomData5 = _openbabel.CustomData5
+CustomData6 = _openbabel.CustomData6
+CustomData7 = _openbabel.CustomData7
+CustomData8 = _openbabel.CustomData8
+CustomData9 = _openbabel.CustomData9
+CustomData10 = _openbabel.CustomData10
+CustomData11 = _openbabel.CustomData11
+CustomData12 = _openbabel.CustomData12
+CustomData13 = _openbabel.CustomData13
+CustomData14 = _openbabel.CustomData14
+CustomData15 = _openbabel.CustomData15
+any = _openbabel.any
+fileformatInput = _openbabel.fileformatInput
+userInput = _openbabel.userInput
+perceived = _openbabel.perceived
+external = _openbabel.external
 class OBGenericData(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, OBGenericData, name, value)
@@ -773,56 +874,20 @@ class OBGenericData(_object):
     __swig_destroy__ = _openbabel.delete_OBGenericData
     __del__ = lambda self : None;
     def SetAttribute(*args): return _openbabel.OBGenericData_SetAttribute(*args)
+    def SetOrigin(*args): return _openbabel.OBGenericData_SetOrigin(*args)
     def GetAttribute(*args): return _openbabel.OBGenericData_GetAttribute(*args)
     def GetDataType(*args): return _openbabel.OBGenericData_GetDataType(*args)
     def GetValue(*args): return _openbabel.OBGenericData_GetValue(*args)
+    def GetOrigin(*args): return _openbabel.OBGenericData_GetOrigin(*args)
 OBGenericData_swigregister = _openbabel.OBGenericData_swigregister
 OBGenericData_swigregister(OBGenericData)
+__sub__ = _openbabel.__sub__
+__mul__ = _openbabel.__mul__
 cvar = _openbabel.cvar
 VZero = cvar.VZero
 VX = cvar.VX
 VY = cvar.VY
 VZ = cvar.VZ
-UndefinedData = cvar.UndefinedData
-PairData = cvar.PairData
-EnergyData = cvar.EnergyData
-CommentData = cvar.CommentData
-ConformerData = cvar.ConformerData
-ExternalBondData = cvar.ExternalBondData
-RotamerList = cvar.RotamerList
-VirtualBondData = cvar.VirtualBondData
-RingData = cvar.RingData
-TorsionData = cvar.TorsionData
-AngleData = cvar.AngleData
-SerialNums = cvar.SerialNums
-UnitCell = cvar.UnitCell
-SpinData = cvar.SpinData
-ChargeData = cvar.ChargeData
-SymmetryData = cvar.SymmetryData
-ChiralData = cvar.ChiralData
-OccupationData = cvar.OccupationData
-DensityData = cvar.DensityData
-ElectronicData = cvar.ElectronicData
-VibrationData = cvar.VibrationData
-RotationData = cvar.RotationData
-NuclearData = cvar.NuclearData
-SetData = cvar.SetData
-CustomData0 = cvar.CustomData0
-CustomData1 = cvar.CustomData1
-CustomData2 = cvar.CustomData2
-CustomData3 = cvar.CustomData3
-CustomData4 = cvar.CustomData4
-CustomData5 = cvar.CustomData5
-CustomData6 = cvar.CustomData6
-CustomData7 = cvar.CustomData7
-CustomData8 = cvar.CustomData8
-CustomData9 = cvar.CustomData9
-CustomData10 = cvar.CustomData10
-CustomData11 = cvar.CustomData11
-CustomData12 = cvar.CustomData12
-CustomData13 = cvar.CustomData13
-CustomData14 = cvar.CustomData14
-CustomData15 = cvar.CustomData15
 
 class OBCommentData(OBGenericData):
     __swig_setmethods__ = {}
@@ -970,6 +1035,10 @@ class OBRingData(OBGenericData):
     def SetData(*args): return _openbabel.OBRingData_SetData(*args)
     def PushBack(*args): return _openbabel.OBRingData_PushBack(*args)
     def GetData(*args): return _openbabel.OBRingData_GetData(*args)
+    def BeginRings(*args): return _openbabel.OBRingData_BeginRings(*args)
+    def EndRings(*args): return _openbabel.OBRingData_EndRings(*args)
+    def BeginRing(*args): return _openbabel.OBRingData_BeginRing(*args)
+    def NextRing(*args): return _openbabel.OBRingData_NextRing(*args)
 OBRingData_swigregister = _openbabel.OBRingData_swigregister
 OBRingData_swigregister(OBRingData)
 
@@ -1203,6 +1272,28 @@ class OBSerialNums(OBGenericData):
 OBSerialNums_swigregister = _openbabel.OBSerialNums_swigregister
 OBSerialNums_swigregister(OBSerialNums)
 
+class OBVibrationData(OBGenericData):
+    __swig_setmethods__ = {}
+    for _s in [OBGenericData]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBVibrationData, name, value)
+    __swig_getmethods__ = {}
+    for _s in [OBGenericData]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, OBVibrationData, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new_OBVibrationData(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBVibrationData
+    __del__ = lambda self : None;
+    def SetData(*args): return _openbabel.OBVibrationData_SetData(*args)
+    def GetLx(*args): return _openbabel.OBVibrationData_GetLx(*args)
+    def GetFrequencies(*args): return _openbabel.OBVibrationData_GetFrequencies(*args)
+    def GetIntensities(*args): return _openbabel.OBVibrationData_GetIntensities(*args)
+    def GetNumberOfFrequencies(*args): return _openbabel.OBVibrationData_GetNumberOfFrequencies(*args)
+OBVibrationData_swigregister = _openbabel.OBVibrationData_swigregister
+OBVibrationData_swigregister(OBVibrationData)
+
 class OBBase(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, OBBase, name, value)
@@ -1211,6 +1302,7 @@ class OBBase(_object):
     __repr__ = _swig_repr
     __swig_destroy__ = _openbabel.delete_OBBase
     __del__ = lambda self : None;
+    def Clear(*args): return _openbabel.OBBase_Clear(*args)
     def DoTransformations(*args): return _openbabel.OBBase_DoTransformations(*args)
     __swig_getmethods__["ClassDescription"] = lambda x: _openbabel.OBBase_ClassDescription
     if _newclass:ClassDescription = staticmethod(_openbabel.OBBase_ClassDescription)
@@ -1229,12 +1321,105 @@ OBBase_swigregister = _openbabel.OBBase_swigregister
 OBBase_swigregister(OBBase)
 OBBase_ClassDescription = _openbabel.OBBase_ClassDescription
 
+class pluginiterFingerprint(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, pluginiterFingerprint, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, pluginiterFingerprint, name)
+    __repr__ = _swig_repr
+    def Register(*args): return _openbabel.pluginiterFingerprint_Register(*args)
+    def FindType(*args): return _openbabel.pluginiterFingerprint_FindType(*args)
+    def FindDefaultType(*args): return _openbabel.pluginiterFingerprint_FindDefaultType(*args)
+    def ID(*args): return _openbabel.pluginiterFingerprint_ID(*args)
+    def ToStart(*args): return _openbabel.pluginiterFingerprint_ToStart(*args)
+    def inc(*args): return _openbabel.pluginiterFingerprint_inc(*args)
+    def good(*args): return _openbabel.pluginiterFingerprint_good(*args)
+    def deref(*args): return _openbabel.pluginiterFingerprint_deref(*args)
+    def __init__(self, *args): 
+        this = _openbabel.new_pluginiterFingerprint(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_pluginiterFingerprint
+    __del__ = lambda self : None;
+    def Iter(*args): return _openbabel.pluginiterFingerprint_Iter(*args)
+    def SetBit(*args): return _openbabel.pluginiterFingerprint_SetBit(*args)
+    def Fold(*args): return _openbabel.pluginiterFingerprint_Fold(*args)
+    def GetFingerprint(*args): return _openbabel.pluginiterFingerprint_GetFingerprint(*args)
+    def Description(*args): return _openbabel.pluginiterFingerprint_Description(*args)
+    def Flags(*args): return _openbabel.pluginiterFingerprint_Flags(*args)
+    def Tanimoto(*args): return _openbabel.pluginiterFingerprint_Tanimoto(*args)
+    def Getbitsperint(*args): return _openbabel.pluginiterFingerprint_Getbitsperint(*args)
+    def FindFingerprint(*args): return _openbabel.pluginiterFingerprint_FindFingerprint(*args)
+pluginiterFingerprint_swigregister = _openbabel.pluginiterFingerprint_swigregister
+pluginiterFingerprint_swigregister(pluginiterFingerprint)
+
+class pluginiterForceField(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, pluginiterForceField, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, pluginiterForceField, name)
+    __repr__ = _swig_repr
+    def Register(*args): return _openbabel.pluginiterForceField_Register(*args)
+    def FindType(*args): return _openbabel.pluginiterForceField_FindType(*args)
+    def FindDefaultType(*args): return _openbabel.pluginiterForceField_FindDefaultType(*args)
+    def ID(*args): return _openbabel.pluginiterForceField_ID(*args)
+    def ToStart(*args): return _openbabel.pluginiterForceField_ToStart(*args)
+    def inc(*args): return _openbabel.pluginiterForceField_inc(*args)
+    def good(*args): return _openbabel.pluginiterForceField_good(*args)
+    def deref(*args): return _openbabel.pluginiterForceField_deref(*args)
+    def __init__(self, *args): 
+        this = _openbabel.new_pluginiterForceField(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_pluginiterForceField
+    __del__ = lambda self : None;
+    def Iter(*args): return _openbabel.pluginiterForceField_Iter(*args)
+    def FindForceField(*args): return _openbabel.pluginiterForceField_FindForceField(*args)
+    def GetUnit(*args): return _openbabel.pluginiterForceField_GetUnit(*args)
+    def Setup(*args): return _openbabel.pluginiterForceField_Setup(*args)
+    def UpdateCoordinates(*args): return _openbabel.pluginiterForceField_UpdateCoordinates(*args)
+    def UpdateConformers(*args): return _openbabel.pluginiterForceField_UpdateConformers(*args)
+    def OBFFLog(*args): return _openbabel.pluginiterForceField_OBFFLog(*args)
+    def Energy(*args): return _openbabel.pluginiterForceField_Energy(*args)
+    def E_Bond(*args): return _openbabel.pluginiterForceField_E_Bond(*args)
+    def E_Angle(*args): return _openbabel.pluginiterForceField_E_Angle(*args)
+    def E_StrBnd(*args): return _openbabel.pluginiterForceField_E_StrBnd(*args)
+    def E_Torsion(*args): return _openbabel.pluginiterForceField_E_Torsion(*args)
+    def E_OOP(*args): return _openbabel.pluginiterForceField_E_OOP(*args)
+    def E_VDW(*args): return _openbabel.pluginiterForceField_E_VDW(*args)
+    def E_Electrostatic(*args): return _openbabel.pluginiterForceField_E_Electrostatic(*args)
+    def SetLogFile(*args): return _openbabel.pluginiterForceField_SetLogFile(*args)
+    def SetLogLevel(*args): return _openbabel.pluginiterForceField_SetLogLevel(*args)
+    def GetLogLevel(*args): return _openbabel.pluginiterForceField_GetLogLevel(*args)
+    def DistanceGeometry(*args): return _openbabel.pluginiterForceField_DistanceGeometry(*args)
+    def GenerateCoordinates(*args): return _openbabel.pluginiterForceField_GenerateCoordinates(*args)
+    def SystematicRotorSearch(*args): return _openbabel.pluginiterForceField_SystematicRotorSearch(*args)
+    def LineSearch(*args): return _openbabel.pluginiterForceField_LineSearch(*args)
+    def SteepestDescent(*args): return _openbabel.pluginiterForceField_SteepestDescent(*args)
+    def SteepestDescentInitialize(*args): return _openbabel.pluginiterForceField_SteepestDescentInitialize(*args)
+    def SteepestDescentTakeNSteps(*args): return _openbabel.pluginiterForceField_SteepestDescentTakeNSteps(*args)
+    def ConjugateGradients(*args): return _openbabel.pluginiterForceField_ConjugateGradients(*args)
+    def ConjugateGradientsInitialize(*args): return _openbabel.pluginiterForceField_ConjugateGradientsInitialize(*args)
+    def ConjugateGradientsTakeNSteps(*args): return _openbabel.pluginiterForceField_ConjugateGradientsTakeNSteps(*args)
+    def ValidateLineSearch(*args): return _openbabel.pluginiterForceField_ValidateLineSearch(*args)
+    def ValidateSteepestDescent(*args): return _openbabel.pluginiterForceField_ValidateSteepestDescent(*args)
+    def ValidateConjugateGradients(*args): return _openbabel.pluginiterForceField_ValidateConjugateGradients(*args)
+    def Validate(*args): return _openbabel.pluginiterForceField_Validate(*args)
+    def ValidateGradients(*args): return _openbabel.pluginiterForceField_ValidateGradients(*args)
+    def ValidateGradientError(*args): return _openbabel.pluginiterForceField_ValidateGradientError(*args)
+    def VectorLengthDerivative(*args): return _openbabel.pluginiterForceField_VectorLengthDerivative(*args)
+    def VectorAngleDerivative(*args): return _openbabel.pluginiterForceField_VectorAngleDerivative(*args)
+    def VectorTorsionDerivative(*args): return _openbabel.pluginiterForceField_VectorTorsionDerivative(*args)
+    def kludge(*args): return _openbabel.pluginiterForceField_kludge(*args)
+pluginiterForceField_swigregister = _openbabel.pluginiterForceField_swigregister
+pluginiterForceField_swigregister(pluginiterForceField)
+
 obError = _openbabel.obError
 obWarning = _openbabel.obWarning
 obInfo = _openbabel.obInfo
 obAuditMsg = _openbabel.obAuditMsg
 obDebug = _openbabel.obDebug
-class OBError:
+class OBError(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, OBError, name, value)
     __swig_getmethods__ = {}
@@ -1396,6 +1581,8 @@ class OBConversion(_object):
     if _newclass:RegisterOptionParam = staticmethod(_openbabel.OBConversion_RegisterOptionParam)
     __swig_getmethods__["GetOptionParams"] = lambda x: _openbabel.OBConversion_GetOptionParams
     if _newclass:GetOptionParams = staticmethod(_openbabel.OBConversion_GetOptionParams)
+    def GetSupportedInputFormat(*args): return _openbabel.OBConversion_GetSupportedInputFormat(*args)
+    def GetSupportedOutputFormat(*args): return _openbabel.OBConversion_GetSupportedOutputFormat(*args)
     def Convert(*args): return _openbabel.OBConversion_Convert(*args)
     def FullConvert(*args): return _openbabel.OBConversion_FullConvert(*args)
     def AddChemObject(*args): return _openbabel.OBConversion_AddChemObject(*args)
@@ -1406,6 +1593,7 @@ class OBConversion(_object):
     def SetOutputIndex(*args): return _openbabel.OBConversion_SetOutputIndex(*args)
     def SetMoreFilesToCome(*args): return _openbabel.OBConversion_SetMoreFilesToCome(*args)
     def SetOneObjectOnly(*args): return _openbabel.OBConversion_SetOneObjectOnly(*args)
+    def SetLast(*args): return _openbabel.OBConversion_SetLast(*args)
     __swig_getmethods__["GetDefaultFormat"] = lambda x: _openbabel.OBConversion_GetDefaultFormat
     if _newclass:GetDefaultFormat = staticmethod(_openbabel.OBConversion_GetDefaultFormat)
     def Write(*args): return _openbabel.OBConversion_Write(*args)
@@ -1415,10 +1603,6 @@ class OBConversion(_object):
     def Read(*args): return _openbabel.OBConversion_Read(*args)
     def ReadString(*args): return _openbabel.OBConversion_ReadString(*args)
     def ReadFile(*args): return _openbabel.OBConversion_ReadFile(*args)
-    __swig_getmethods__["BatchFileName"] = lambda x: _openbabel.OBConversion_BatchFileName
-    if _newclass:BatchFileName = staticmethod(_openbabel.OBConversion_BatchFileName)
-    __swig_getmethods__["IncrementedFileName"] = lambda x: _openbabel.OBConversion_IncrementedFileName
-    if _newclass:IncrementedFileName = staticmethod(_openbabel.OBConversion_IncrementedFileName)
 OBConversion_swigregister = _openbabel.OBConversion_swigregister
 OBConversion_swigregister(OBConversion)
 OBConversion_RegisterFormat = _openbabel.OBConversion_RegisterFormat
@@ -1430,8 +1614,6 @@ OBConversion_Description = _openbabel.OBConversion_Description
 OBConversion_RegisterOptionParam = _openbabel.OBConversion_RegisterOptionParam
 OBConversion_GetOptionParams = _openbabel.OBConversion_GetOptionParams
 OBConversion_GetDefaultFormat = _openbabel.OBConversion_GetDefaultFormat
-OBConversion_BatchFileName = _openbabel.OBConversion_BatchFileName
-OBConversion_IncrementedFileName = _openbabel.OBConversion_IncrementedFileName
 
 NOTREADABLE = _openbabel.NOTREADABLE
 READONEONLY = _openbabel.READONEONLY
@@ -1440,6 +1622,7 @@ ZEROATOMSOK = _openbabel.ZEROATOMSOK
 NOTWRITABLE = _openbabel.NOTWRITABLE
 WRITEONEONLY = _openbabel.WRITEONEONLY
 WRITEBINARY = _openbabel.WRITEBINARY
+READXML = _openbabel.READXML
 DEFAULTFORMAT = _openbabel.DEFAULTFORMAT
 class OBResidue(OBBase):
     __swig_setmethods__ = {}
@@ -1515,6 +1698,130 @@ AA_HIS = _openbabel.AA_HIS
 AA_CYS = _openbabel.AA_CYS
 AA_MET = _openbabel.AA_MET
 AA_TRP = _openbabel.AA_TRP
+ACIDIC = _openbabel.ACIDIC
+ACYCLIC = _openbabel.ACYCLIC
+ALIPHATIC = _openbabel.ALIPHATIC
+AROMATIC = _openbabel.AROMATIC
+BASIC = _openbabel.BASIC
+BURIED = _openbabel.BURIED
+CHARGED = _openbabel.CHARGED
+CYCLIC = _openbabel.CYCLIC
+HYDROPHOBIC = _openbabel.HYDROPHOBIC
+LARGE = _openbabel.LARGE
+MEDIUM = _openbabel.MEDIUM
+NEGATIVE = _openbabel.NEGATIVE
+NEUTRAL = _openbabel.NEUTRAL
+POLAR = _openbabel.POLAR
+POSITIVE = _openbabel.POSITIVE
+SMALL = _openbabel.SMALL
+SURFACE = _openbabel.SURFACE
+ALPHA_CARBON = _openbabel.ALPHA_CARBON
+AMINO_BACKBONE = _openbabel.AMINO_BACKBONE
+BACKBONE = _openbabel.BACKBONE
+CYSTEINE_SULPHUR = _openbabel.CYSTEINE_SULPHUR
+LIGAND = _openbabel.LIGAND
+NUCLEIC_BACKBONE = _openbabel.NUCLEIC_BACKBONE
+SHAPELY_BACKBONE = _openbabel.SHAPELY_BACKBONE
+SHAPELY_SPECIAL = _openbabel.SHAPELY_SPECIAL
+SIDECHAIN = _openbabel.SIDECHAIN
+SUGAR_PHOSPHATE = _openbabel.SUGAR_PHOSPHATE
+ALA = _openbabel.ALA
+GLY = _openbabel.GLY
+LEU = _openbabel.LEU
+SER = _openbabel.SER
+VAL = _openbabel.VAL
+THR = _openbabel.THR
+LYS = _openbabel.LYS
+ASP = _openbabel.ASP
+ILE = _openbabel.ILE
+ASN = _openbabel.ASN
+GLU = _openbabel.GLU
+PRO = _openbabel.PRO
+ARG = _openbabel.ARG
+PHE = _openbabel.PHE
+GLN = _openbabel.GLN
+TYR = _openbabel.TYR
+HIS = _openbabel.HIS
+CYS = _openbabel.CYS
+MET = _openbabel.MET
+TRP = _openbabel.TRP
+ASX = _openbabel.ASX
+GLX = _openbabel.GLX
+PCA = _openbabel.PCA
+HYP = _openbabel.HYP
+A = _openbabel.A
+C = _openbabel.C
+G = _openbabel.G
+T = _openbabel.T
+U = _openbabel.U
+UPLUS = _openbabel.UPLUS
+I = _openbabel.I
+_1MA = _openbabel._1MA
+_5MC = _openbabel._5MC
+OMC = _openbabel.OMC
+_1MG = _openbabel._1MG
+_2MG = _openbabel._2MG
+M2G = _openbabel.M2G
+_7MG = _openbabel._7MG
+OMG = _openbabel.OMG
+YG = _openbabel.YG
+H2U = _openbabel.H2U
+_5MU = _openbabel._5MU
+PSU = _openbabel.PSU
+UNK = _openbabel.UNK
+ACE = _openbabel.ACE
+FOR = _openbabel.FOR
+HOH = _openbabel.HOH
+DOD = _openbabel.DOD
+SO4 = _openbabel.SO4
+PO4 = _openbabel.PO4
+NAD = _openbabel.NAD
+COA = _openbabel.COA
+NAP = _openbabel.NAP
+NDP = _openbabel.NDP
+AMINO = _openbabel.AMINO
+AMINO_NUCLEO = _openbabel.AMINO_NUCLEO
+COENZYME = _openbabel.COENZYME
+ION = _openbabel.ION
+NUCLEO = _openbabel.NUCLEO
+PROTEIN = _openbabel.PROTEIN
+PURINE = _openbabel.PURINE
+PYRIMIDINE = _openbabel.PYRIMIDINE
+SOLVENT = _openbabel.SOLVENT
+WATER = _openbabel.WATER
+class OBInternalCoord(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBInternalCoord, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, OBInternalCoord, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["_a"] = _openbabel.OBInternalCoord__a_set
+    __swig_getmethods__["_a"] = _openbabel.OBInternalCoord__a_get
+    if _newclass:_a = _swig_property(_openbabel.OBInternalCoord__a_get, _openbabel.OBInternalCoord__a_set)
+    __swig_setmethods__["_b"] = _openbabel.OBInternalCoord__b_set
+    __swig_getmethods__["_b"] = _openbabel.OBInternalCoord__b_get
+    if _newclass:_b = _swig_property(_openbabel.OBInternalCoord__b_get, _openbabel.OBInternalCoord__b_set)
+    __swig_setmethods__["_c"] = _openbabel.OBInternalCoord__c_set
+    __swig_getmethods__["_c"] = _openbabel.OBInternalCoord__c_get
+    if _newclass:_c = _swig_property(_openbabel.OBInternalCoord__c_get, _openbabel.OBInternalCoord__c_set)
+    __swig_setmethods__["_dst"] = _openbabel.OBInternalCoord__dst_set
+    __swig_getmethods__["_dst"] = _openbabel.OBInternalCoord__dst_get
+    if _newclass:_dst = _swig_property(_openbabel.OBInternalCoord__dst_get, _openbabel.OBInternalCoord__dst_set)
+    __swig_setmethods__["_ang"] = _openbabel.OBInternalCoord__ang_set
+    __swig_getmethods__["_ang"] = _openbabel.OBInternalCoord__ang_get
+    if _newclass:_ang = _swig_property(_openbabel.OBInternalCoord__ang_get, _openbabel.OBInternalCoord__ang_set)
+    __swig_setmethods__["_tor"] = _openbabel.OBInternalCoord__tor_set
+    __swig_getmethods__["_tor"] = _openbabel.OBInternalCoord__tor_get
+    if _newclass:_tor = _swig_property(_openbabel.OBInternalCoord__tor_get, _openbabel.OBInternalCoord__tor_set)
+    def __init__(self, *args): 
+        this = _openbabel.new_OBInternalCoord(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBInternalCoord
+    __del__ = lambda self : None;
+OBInternalCoord_swigregister = _openbabel.OBInternalCoord_swigregister
+OBInternalCoord_swigregister(OBInternalCoord)
+
 OB_4RING_ATOM = _openbabel.OB_4RING_ATOM
 OB_3RING_ATOM = _openbabel.OB_3RING_ATOM
 OB_AROMATIC_ATOM = _openbabel.OB_AROMATIC_ATOM
@@ -1586,10 +1893,10 @@ class OBAtom(OBBase):
     def GetHeteroValence(*args): return _openbabel.OBAtom_GetHeteroValence(*args)
     def GetType(*args): return _openbabel.OBAtom_GetType(*args)
     def GetX(*args): return _openbabel.OBAtom_GetX(*args)
-    def x(*args): return _openbabel.OBAtom_x(*args)
     def GetY(*args): return _openbabel.OBAtom_GetY(*args)
-    def y(*args): return _openbabel.OBAtom_y(*args)
     def GetZ(*args): return _openbabel.OBAtom_GetZ(*args)
+    def x(*args): return _openbabel.OBAtom_x(*args)
+    def y(*args): return _openbabel.OBAtom_y(*args)
     def z(*args): return _openbabel.OBAtom_z(*args)
     def GetCoordinate(*args): return _openbabel.OBAtom_GetCoordinate(*args)
     def GetVector(*args): return _openbabel.OBAtom_GetVector(*args)
@@ -1608,11 +1915,16 @@ class OBAtom(OBBase):
     def GetDistance(*args): return _openbabel.OBAtom_GetDistance(*args)
     def GetAngle(*args): return _openbabel.OBAtom_GetAngle(*args)
     def NewResidue(*args): return _openbabel.OBAtom_NewResidue(*args)
+    def AddResidue(*args): return _openbabel.OBAtom_AddResidue(*args)
     def DeleteResidue(*args): return _openbabel.OBAtom_DeleteResidue(*args)
     def AddBond(*args): return _openbabel.OBAtom_AddBond(*args)
     def InsertBond(*args): return _openbabel.OBAtom_InsertBond(*args)
     def DeleteBond(*args): return _openbabel.OBAtom_DeleteBond(*args)
     def ClearBond(*args): return _openbabel.OBAtom_ClearBond(*args)
+    def HtoMethyl(*args): return _openbabel.OBAtom_HtoMethyl(*args)
+    def SetHybAndGeom(*args): return _openbabel.OBAtom_SetHybAndGeom(*args)
+    def ForceNoH(*args): return _openbabel.OBAtom_ForceNoH(*args)
+    def HasNoHForced(*args): return _openbabel.OBAtom_HasNoHForced(*args)
     def CountFreeOxygens(*args): return _openbabel.OBAtom_CountFreeOxygens(*args)
     def ImplicitHydrogenCount(*args): return _openbabel.OBAtom_ImplicitHydrogenCount(*args)
     def ExplicitHydrogenCount(*args): return _openbabel.OBAtom_ExplicitHydrogenCount(*args)
@@ -1623,10 +1935,6 @@ class OBAtom(OBBase):
     def AverageBondAngle(*args): return _openbabel.OBAtom_AverageBondAngle(*args)
     def BOSum(*args): return _openbabel.OBAtom_BOSum(*args)
     def KBOSum(*args): return _openbabel.OBAtom_KBOSum(*args)
-    def HtoMethyl(*args): return _openbabel.OBAtom_HtoMethyl(*args)
-    def SetHybAndGeom(*args): return _openbabel.OBAtom_SetHybAndGeom(*args)
-    def ForceNoH(*args): return _openbabel.OBAtom_ForceNoH(*args)
-    def HasNoHForced(*args): return _openbabel.OBAtom_HasNoHForced(*args)
     def HasResidue(*args): return _openbabel.OBAtom_HasResidue(*args)
     def IsHydrogen(*args): return _openbabel.OBAtom_IsHydrogen(*args)
     def IsCarbon(*args): return _openbabel.OBAtom_IsCarbon(*args)
@@ -1671,91 +1979,6 @@ class OBAtom(OBBase):
     def MatchesSMARTS(*args): return _openbabel.OBAtom_MatchesSMARTS(*args)
 OBAtom_swigregister = _openbabel.OBAtom_swigregister
 OBAtom_swigregister(OBAtom)
-ACIDIC = cvar.ACIDIC
-ACYCLIC = cvar.ACYCLIC
-ALIPHATIC = cvar.ALIPHATIC
-AROMATIC = cvar.AROMATIC
-BASIC = cvar.BASIC
-BURIED = cvar.BURIED
-CHARGED = cvar.CHARGED
-CYCLIC = cvar.CYCLIC
-HYDROPHOBIC = cvar.HYDROPHOBIC
-LARGE = cvar.LARGE
-MEDIUM = cvar.MEDIUM
-NEGATIVE = cvar.NEGATIVE
-NEUTRAL = cvar.NEUTRAL
-POLAR = cvar.POLAR
-POSITIVE = cvar.POSITIVE
-SMALL = cvar.SMALL
-SURFACE = cvar.SURFACE
-ALPHA_CARBON = cvar.ALPHA_CARBON
-AMINO_BACKBONE = cvar.AMINO_BACKBONE
-BACKBONE = cvar.BACKBONE
-CYSTEINE_SULPHUR = cvar.CYSTEINE_SULPHUR
-LIGAND = cvar.LIGAND
-NUCLEIC_BACKBONE = cvar.NUCLEIC_BACKBONE
-SHAPELY_BACKBONE = cvar.SHAPELY_BACKBONE
-SHAPELY_SPECIAL = cvar.SHAPELY_SPECIAL
-SIDECHAIN = cvar.SIDECHAIN
-SUGAR_PHOSPHATE = cvar.SUGAR_PHOSPHATE
-ALA = cvar.ALA
-GLY = cvar.GLY
-LEU = cvar.LEU
-SER = cvar.SER
-VAL = cvar.VAL
-THR = cvar.THR
-LYS = cvar.LYS
-ASP = cvar.ASP
-ILE = cvar.ILE
-ASN = cvar.ASN
-GLU = cvar.GLU
-PRO = cvar.PRO
-ARG = cvar.ARG
-PHE = cvar.PHE
-GLN = cvar.GLN
-TYR = cvar.TYR
-HIS = cvar.HIS
-CYS = cvar.CYS
-MET = cvar.MET
-TRP = cvar.TRP
-ASX = cvar.ASX
-GLX = cvar.GLX
-PCA = cvar.PCA
-HYP = cvar.HYP
-A = cvar.A
-C = cvar.C
-G = cvar.G
-T = cvar.T
-U = cvar.U
-UPLUS = cvar.UPLUS
-I = cvar.I
-OMC = cvar.OMC
-M2G = cvar.M2G
-OMG = cvar.OMG
-YG = cvar.YG
-H2U = cvar.H2U
-PSU = cvar.PSU
-UNK = cvar.UNK
-ACE = cvar.ACE
-FOR = cvar.FOR
-HOH = cvar.HOH
-DOD = cvar.DOD
-SO4 = cvar.SO4
-PO4 = cvar.PO4
-NAD = cvar.NAD
-COA = cvar.COA
-NAP = cvar.NAP
-NDP = cvar.NDP
-AMINO = cvar.AMINO
-AMINO_NUCLEO = cvar.AMINO_NUCLEO
-COENZYME = cvar.COENZYME
-ION = cvar.ION
-NUCLEO = cvar.NUCLEO
-PROTEIN = cvar.PROTEIN
-PURINE = cvar.PURINE
-PYRIMIDINE = cvar.PYRIMIDINE
-SOLVENT = cvar.SOLVENT
-WATER = cvar.WATER
 
 OB_AROMATIC_BOND = _openbabel.OB_AROMATIC_BOND
 OB_WEDGE_BOND = _openbabel.OB_WEDGE_BOND
@@ -1786,6 +2009,7 @@ class OBBond(OBBase):
     __del__ = lambda self : None;
     def SetIdx(*args): return _openbabel.OBBond_SetIdx(*args)
     def SetBO(*args): return _openbabel.OBBond_SetBO(*args)
+    def SetBondOrder(*args): return _openbabel.OBBond_SetBondOrder(*args)
     def SetBegin(*args): return _openbabel.OBBond_SetBegin(*args)
     def SetEnd(*args): return _openbabel.OBBond_SetEnd(*args)
     def SetParent(*args): return _openbabel.OBBond_SetParent(*args)
@@ -1883,14 +2107,15 @@ class OBMol(OBBase):
     def DestroyBond(*args): return _openbabel.OBMol_DestroyBond(*args)
     def DestroyResidue(*args): return _openbabel.OBMol_DestroyResidue(*args)
     def AddAtom(*args): return _openbabel.OBMol_AddAtom(*args)
+    def InsertAtom(*args): return _openbabel.OBMol_InsertAtom(*args)
     def AddBond(*args): return _openbabel.OBMol_AddBond(*args)
     def AddResidue(*args): return _openbabel.OBMol_AddResidue(*args)
-    def InsertAtom(*args): return _openbabel.OBMol_InsertAtom(*args)
+    def NewAtom(*args): return _openbabel.OBMol_NewAtom(*args)
+    def NewBond(*args): return _openbabel.OBMol_NewBond(*args)
+    def NewResidue(*args): return _openbabel.OBMol_NewResidue(*args)
     def DeleteAtom(*args): return _openbabel.OBMol_DeleteAtom(*args)
     def DeleteBond(*args): return _openbabel.OBMol_DeleteBond(*args)
     def DeleteResidue(*args): return _openbabel.OBMol_DeleteResidue(*args)
-    def NewAtom(*args): return _openbabel.OBMol_NewAtom(*args)
-    def NewResidue(*args): return _openbabel.OBMol_NewResidue(*args)
     def BeginModify(*args): return _openbabel.OBMol_BeginModify(*args)
     def EndModify(*args): return _openbabel.OBMol_EndModify(*args)
     def GetMod(*args): return _openbabel.OBMol_GetMod(*args)
@@ -1950,6 +2175,7 @@ class OBMol(OBBase):
     def UnsetAromaticPerceived(*args): return _openbabel.OBMol_UnsetAromaticPerceived(*args)
     def UnsetPartialChargesPerceived(*args): return _openbabel.OBMol_UnsetPartialChargesPerceived(*args)
     def UnsetImplicitValencePerceived(*args): return _openbabel.OBMol_UnsetImplicitValencePerceived(*args)
+    def UnsetHydrogensAdded(*args): return _openbabel.OBMol_UnsetHydrogensAdded(*args)
     def UnsetFlag(*args): return _openbabel.OBMol_UnsetFlag(*args)
     def DoTransformations(*args): return _openbabel.OBMol_DoTransformations(*args)
     __swig_getmethods__["ClassDescription"] = lambda x: _openbabel.OBMol_ClassDescription
@@ -1962,12 +2188,13 @@ class OBMol(OBBase):
     def Kekulize(*args): return _openbabel.OBMol_Kekulize(*args)
     def PerceiveKekuleBonds(*args): return _openbabel.OBMol_PerceiveKekuleBonds(*args)
     def NewPerceiveKekuleBonds(*args): return _openbabel.OBMol_NewPerceiveKekuleBonds(*args)
-    def DeleteHydrogen(*args): return _openbabel.OBMol_DeleteHydrogen(*args)
     def DeleteHydrogens(*args): return _openbabel.OBMol_DeleteHydrogens(*args)
     def DeleteNonPolarHydrogens(*args): return _openbabel.OBMol_DeleteNonPolarHydrogens(*args)
+    def DeleteHydrogen(*args): return _openbabel.OBMol_DeleteHydrogen(*args)
     def AddHydrogens(*args): return _openbabel.OBMol_AddHydrogens(*args)
     def AddPolarHydrogens(*args): return _openbabel.OBMol_AddPolarHydrogens(*args)
     def StripSalts(*args): return _openbabel.OBMol_StripSalts(*args)
+    def Separate(*args): return _openbabel.OBMol_Separate(*args)
     def ConvertDativeBonds(*args): return _openbabel.OBMol_ConvertDativeBonds(*args)
     def CorrectForPH(*args): return _openbabel.OBMol_CorrectForPH(*args)
     def AssignSpinMultiplicity(*args): return _openbabel.OBMol_AssignSpinMultiplicity(*args)
@@ -1982,6 +2209,7 @@ class OBMol(OBBase):
     def Align(*args): return _openbabel.OBMol_Align(*args)
     def ConnectTheDots(*args): return _openbabel.OBMol_ConnectTheDots(*args)
     def PerceiveBondOrders(*args): return _openbabel.OBMol_PerceiveBondOrders(*args)
+    def FindAngles(*args): return _openbabel.OBMol_FindAngles(*args)
     def FindTorsions(*args): return _openbabel.OBMol_FindTorsions(*args)
     def GetGTDVector(*args): return _openbabel.OBMol_GetGTDVector(*args)
     def GetGIVector(*args): return _openbabel.OBMol_GetGIVector(*args)
@@ -2042,25 +2270,6 @@ get_rmat = _openbabel.get_rmat
 ob_make_rmat = _openbabel.ob_make_rmat
 qtrfit = _openbabel.qtrfit
 superimpose = _openbabel.superimpose
-class OBRTree(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBRTree, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBRTree, name)
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        this = _openbabel.new_OBRTree(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _openbabel.delete_OBRTree
-    __del__ = lambda self : None;
-    def GetAtomIdx(*args): return _openbabel.OBRTree_GetAtomIdx(*args)
-    def PathToRoot(*args): return _openbabel.OBRTree_PathToRoot(*args)
-OBRTree_swigregister = _openbabel.OBRTree_swigregister
-OBRTree_swigregister(OBRTree)
-tokenize = _openbabel.tokenize
-ThrowError = _openbabel.ThrowError
-
 class OBRing(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, OBRing, name, value)
@@ -2073,22 +2282,24 @@ class OBRing(_object):
     __swig_setmethods__["_pathset"] = _openbabel.OBRing__pathset_set
     __swig_getmethods__["_pathset"] = _openbabel.OBRing__pathset_get
     if _newclass:_pathset = _swig_property(_openbabel.OBRing__pathset_get, _openbabel.OBRing__pathset_set)
-    def findCenterAndNormal(*args): return _openbabel.OBRing_findCenterAndNormal(*args)
     def __init__(self, *args): 
         this = _openbabel.new_OBRing(*args)
         try: self.this.append(this)
         except: self.this = this
     def Size(*args): return _openbabel.OBRing_Size(*args)
     def PathSize(*args): return _openbabel.OBRing_PathSize(*args)
-    def IsMember(*args): return _openbabel.OBRing_IsMember(*args)
     def IsAromatic(*args): return _openbabel.OBRing_IsAromatic(*args)
+    def IsMember(*args): return _openbabel.OBRing_IsMember(*args)
     def IsInRing(*args): return _openbabel.OBRing_IsInRing(*args)
     def SetParent(*args): return _openbabel.OBRing_SetParent(*args)
     def GetParent(*args): return _openbabel.OBRing_GetParent(*args)
+    def findCenterAndNormal(*args): return _openbabel.OBRing_findCenterAndNormal(*args)
     __swig_destroy__ = _openbabel.delete_OBRing
     __del__ = lambda self : None;
 OBRing_swigregister = _openbabel.OBRing_swigregister
 OBRing_swigregister(OBRing)
+tokenize = _openbabel.tokenize
+ThrowError = _openbabel.ThrowError
 
 CompareRingSize = _openbabel.CompareRingSize
 class OBRingSearch(_object):
@@ -2106,12 +2317,29 @@ class OBRingSearch(_object):
     def SortRings(*args): return _openbabel.OBRingSearch_SortRings(*args)
     def RemoveRedundant(*args): return _openbabel.OBRingSearch_RemoveRedundant(*args)
     def AddRingFromClosure(*args): return _openbabel.OBRingSearch_AddRingFromClosure(*args)
-    def WriteRings(*args): return _openbabel.OBRingSearch_WriteRings(*args)
     def SaveUniqueRing(*args): return _openbabel.OBRingSearch_SaveUniqueRing(*args)
+    def WriteRings(*args): return _openbabel.OBRingSearch_WriteRings(*args)
     def BeginRings(*args): return _openbabel.OBRingSearch_BeginRings(*args)
     def EndRings(*args): return _openbabel.OBRingSearch_EndRings(*args)
 OBRingSearch_swigregister = _openbabel.OBRingSearch_swigregister
 OBRingSearch_swigregister(OBRingSearch)
+
+class OBRTree(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBRTree, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, OBRTree, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new_OBRTree(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBRTree
+    __del__ = lambda self : None;
+    def GetAtomIdx(*args): return _openbabel.OBRTree_GetAtomIdx(*args)
+    def PathToRoot(*args): return _openbabel.OBRTree_PathToRoot(*args)
+OBRTree_swigregister = _openbabel.OBRTree_swigregister
+OBRTree_swigregister(OBRTree)
 
 class OBSmartsPattern(_object):
     __swig_setmethods__ = {}
@@ -2125,24 +2353,24 @@ class OBSmartsPattern(_object):
         this = _openbabel.new_OBSmartsPattern(*args)
         try: self.this.append(this)
         except: self.this = this
-    def NumMatches(*args): return _openbabel.OBSmartsPattern_NumMatches(*args)
-    def NumAtoms(*args): return _openbabel.OBSmartsPattern_NumAtoms(*args)
-    def NumBonds(*args): return _openbabel.OBSmartsPattern_NumBonds(*args)
-    def GetAtomicNum(*args): return _openbabel.OBSmartsPattern_GetAtomicNum(*args)
-    def GetBond(*args): return _openbabel.OBSmartsPattern_GetBond(*args)
-    def GetCharge(*args): return _openbabel.OBSmartsPattern_GetCharge(*args)
+    def Init(*args): return _openbabel.OBSmartsPattern_Init(*args)
     def GetSMARTS(*args): return _openbabel.OBSmartsPattern_GetSMARTS(*args)
-    def GetVectorBinding(*args): return _openbabel.OBSmartsPattern_GetVectorBinding(*args)
     def Empty(*args): return _openbabel.OBSmartsPattern_Empty(*args)
     def IsValid(*args): return _openbabel.OBSmartsPattern_IsValid(*args)
-    def Init(*args): return _openbabel.OBSmartsPattern_Init(*args)
-    def WriteMapList(*args): return _openbabel.OBSmartsPattern_WriteMapList(*args)
+    def NumAtoms(*args): return _openbabel.OBSmartsPattern_NumAtoms(*args)
+    def NumBonds(*args): return _openbabel.OBSmartsPattern_NumBonds(*args)
+    def GetBond(*args): return _openbabel.OBSmartsPattern_GetBond(*args)
+    def GetAtomicNum(*args): return _openbabel.OBSmartsPattern_GetAtomicNum(*args)
+    def GetCharge(*args): return _openbabel.OBSmartsPattern_GetCharge(*args)
+    def GetVectorBinding(*args): return _openbabel.OBSmartsPattern_GetVectorBinding(*args)
     def Match(*args): return _openbabel.OBSmartsPattern_Match(*args)
     def RestrictedMatch(*args): return _openbabel.OBSmartsPattern_RestrictedMatch(*args)
+    def NumMatches(*args): return _openbabel.OBSmartsPattern_NumMatches(*args)
     def GetMapList(*args): return _openbabel.OBSmartsPattern_GetMapList(*args)
-    def GetUMapList(*args): return _openbabel.OBSmartsPattern_GetUMapList(*args)
     def BeginMList(*args): return _openbabel.OBSmartsPattern_BeginMList(*args)
     def EndMList(*args): return _openbabel.OBSmartsPattern_EndMList(*args)
+    def GetUMapList(*args): return _openbabel.OBSmartsPattern_GetUMapList(*args)
+    def WriteMapList(*args): return _openbabel.OBSmartsPattern_WriteMapList(*args)
 OBSmartsPattern_swigregister = _openbabel.OBSmartsPattern_swigregister
 OBSmartsPattern_swigregister(OBSmartsPattern)
 
@@ -2163,1015 +2391,1531 @@ OBSSMatch_swigregister = _openbabel.OBSSMatch_swigregister
 OBSSMatch_swigregister(OBSSMatch)
 
 SmartsLexReplace = _openbabel.SmartsLexReplace
-class OBMolAtomIter(_object):
+class OBFingerprint(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBMolAtomIter, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBFingerprint, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBMolAtomIter, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, OBFingerprint, name)
+    def __init__(self): raise AttributeError, "No constructor defined"
     __repr__ = _swig_repr
-    def __init__(self, *args): 
-        this = _openbabel.new_OBMolAtomIter(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    def good(*args): return _openbabel.OBMolAtomIter_good(*args)
-    def inc(*args): return _openbabel.OBMolAtomIter_inc(*args)
-    def deref(*args): return _openbabel.OBMolAtomIter_deref(*args)
-    def __ref__(*args): return _openbabel.OBMolAtomIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete_OBMolAtomIter
+    __swig_getmethods__["Iter"] = lambda x: _openbabel.OBFingerprint_Iter
+    if _newclass:Iter = staticmethod(_openbabel.OBFingerprint_Iter)
+    __swig_getmethods__["FindDefaultType"] = lambda x: _openbabel.OBFingerprint_FindDefaultType
+    if _newclass:FindDefaultType = staticmethod(_openbabel.OBFingerprint_FindDefaultType)
+    __swig_getmethods__["FindType"] = lambda x: _openbabel.OBFingerprint_FindType
+    if _newclass:FindType = staticmethod(_openbabel.OBFingerprint_FindType)
+    __swig_destroy__ = _openbabel.delete_OBFingerprint
     __del__ = lambda self : None;
-    __swig_setmethods__["Visit"] = _openbabel.OBMolAtomIter_Visit_set
-    __swig_getmethods__["Visit"] = _openbabel.OBMolAtomIter_Visit_get
-    if _newclass:Visit = _swig_property(_openbabel.OBMolAtomIter_Visit_get, _openbabel.OBMolAtomIter_Visit_set)
-    def Clear(*args): return _openbabel.OBMolAtomIter_Clear(*args)
-    def SetIdx(*args): return _openbabel.OBMolAtomIter_SetIdx(*args)
-    def SetHyb(*args): return _openbabel.OBMolAtomIter_SetHyb(*args)
-    def SetAtomicNum(*args): return _openbabel.OBMolAtomIter_SetAtomicNum(*args)
-    def SetIsotope(*args): return _openbabel.OBMolAtomIter_SetIsotope(*args)
-    def SetImplicitValence(*args): return _openbabel.OBMolAtomIter_SetImplicitValence(*args)
-    def IncrementImplicitValence(*args): return _openbabel.OBMolAtomIter_IncrementImplicitValence(*args)
-    def DecrementImplicitValence(*args): return _openbabel.OBMolAtomIter_DecrementImplicitValence(*args)
-    def SetFormalCharge(*args): return _openbabel.OBMolAtomIter_SetFormalCharge(*args)
-    def SetSpinMultiplicity(*args): return _openbabel.OBMolAtomIter_SetSpinMultiplicity(*args)
-    def SetType(*args): return _openbabel.OBMolAtomIter_SetType(*args)
-    def SetPartialCharge(*args): return _openbabel.OBMolAtomIter_SetPartialCharge(*args)
-    def SetVector(*args): return _openbabel.OBMolAtomIter_SetVector(*args)
-    def SetCoordPtr(*args): return _openbabel.OBMolAtomIter_SetCoordPtr(*args)
-    def SetResidue(*args): return _openbabel.OBMolAtomIter_SetResidue(*args)
-    def SetParent(*args): return _openbabel.OBMolAtomIter_SetParent(*args)
-    def SetAromatic(*args): return _openbabel.OBMolAtomIter_SetAromatic(*args)
-    def UnsetAromatic(*args): return _openbabel.OBMolAtomIter_UnsetAromatic(*args)
-    def SetClockwiseStereo(*args): return _openbabel.OBMolAtomIter_SetClockwiseStereo(*args)
-    def SetAntiClockwiseStereo(*args): return _openbabel.OBMolAtomIter_SetAntiClockwiseStereo(*args)
-    def SetPositiveStereo(*args): return _openbabel.OBMolAtomIter_SetPositiveStereo(*args)
-    def SetNegativeStereo(*args): return _openbabel.OBMolAtomIter_SetNegativeStereo(*args)
-    def UnsetStereo(*args): return _openbabel.OBMolAtomIter_UnsetStereo(*args)
-    def SetInRing(*args): return _openbabel.OBMolAtomIter_SetInRing(*args)
-    def SetChiral(*args): return _openbabel.OBMolAtomIter_SetChiral(*args)
-    def ClearCoordPtr(*args): return _openbabel.OBMolAtomIter_ClearCoordPtr(*args)
-    def GetFormalCharge(*args): return _openbabel.OBMolAtomIter_GetFormalCharge(*args)
-    def GetAtomicNum(*args): return _openbabel.OBMolAtomIter_GetAtomicNum(*args)
-    def GetIsotope(*args): return _openbabel.OBMolAtomIter_GetIsotope(*args)
-    def GetSpinMultiplicity(*args): return _openbabel.OBMolAtomIter_GetSpinMultiplicity(*args)
-    def GetAtomicMass(*args): return _openbabel.OBMolAtomIter_GetAtomicMass(*args)
-    def GetExactMass(*args): return _openbabel.OBMolAtomIter_GetExactMass(*args)
-    def GetIdx(*args): return _openbabel.OBMolAtomIter_GetIdx(*args)
-    def GetCoordinateIdx(*args): return _openbabel.OBMolAtomIter_GetCoordinateIdx(*args)
-    def GetCIdx(*args): return _openbabel.OBMolAtomIter_GetCIdx(*args)
-    def GetValence(*args): return _openbabel.OBMolAtomIter_GetValence(*args)
-    def GetHyb(*args): return _openbabel.OBMolAtomIter_GetHyb(*args)
-    def GetImplicitValence(*args): return _openbabel.OBMolAtomIter_GetImplicitValence(*args)
-    def GetHvyValence(*args): return _openbabel.OBMolAtomIter_GetHvyValence(*args)
-    def GetHeteroValence(*args): return _openbabel.OBMolAtomIter_GetHeteroValence(*args)
-    def GetType(*args): return _openbabel.OBMolAtomIter_GetType(*args)
-    def GetX(*args): return _openbabel.OBMolAtomIter_GetX(*args)
-    def x(*args): return _openbabel.OBMolAtomIter_x(*args)
-    def GetY(*args): return _openbabel.OBMolAtomIter_GetY(*args)
-    def y(*args): return _openbabel.OBMolAtomIter_y(*args)
-    def GetZ(*args): return _openbabel.OBMolAtomIter_GetZ(*args)
-    def z(*args): return _openbabel.OBMolAtomIter_z(*args)
-    def GetCoordinate(*args): return _openbabel.OBMolAtomIter_GetCoordinate(*args)
-    def GetVector(*args): return _openbabel.OBMolAtomIter_GetVector(*args)
-    def GetPartialCharge(*args): return _openbabel.OBMolAtomIter_GetPartialCharge(*args)
-    def GetResidue(*args): return _openbabel.OBMolAtomIter_GetResidue(*args)
-    def GetParent(*args): return _openbabel.OBMolAtomIter_GetParent(*args)
-    def GetNewBondVector(*args): return _openbabel.OBMolAtomIter_GetNewBondVector(*args)
-    def GetBond(*args): return _openbabel.OBMolAtomIter_GetBond(*args)
-    def GetNextAtom(*args): return _openbabel.OBMolAtomIter_GetNextAtom(*args)
-    def BeginBonds(*args): return _openbabel.OBMolAtomIter_BeginBonds(*args)
-    def EndBonds(*args): return _openbabel.OBMolAtomIter_EndBonds(*args)
-    def BeginBond(*args): return _openbabel.OBMolAtomIter_BeginBond(*args)
-    def NextBond(*args): return _openbabel.OBMolAtomIter_NextBond(*args)
-    def BeginNbrAtom(*args): return _openbabel.OBMolAtomIter_BeginNbrAtom(*args)
-    def NextNbrAtom(*args): return _openbabel.OBMolAtomIter_NextNbrAtom(*args)
-    def GetDistance(*args): return _openbabel.OBMolAtomIter_GetDistance(*args)
-    def GetAngle(*args): return _openbabel.OBMolAtomIter_GetAngle(*args)
-    def NewResidue(*args): return _openbabel.OBMolAtomIter_NewResidue(*args)
-    def DeleteResidue(*args): return _openbabel.OBMolAtomIter_DeleteResidue(*args)
-    def AddBond(*args): return _openbabel.OBMolAtomIter_AddBond(*args)
-    def InsertBond(*args): return _openbabel.OBMolAtomIter_InsertBond(*args)
-    def DeleteBond(*args): return _openbabel.OBMolAtomIter_DeleteBond(*args)
-    def ClearBond(*args): return _openbabel.OBMolAtomIter_ClearBond(*args)
-    def CountFreeOxygens(*args): return _openbabel.OBMolAtomIter_CountFreeOxygens(*args)
-    def ImplicitHydrogenCount(*args): return _openbabel.OBMolAtomIter_ImplicitHydrogenCount(*args)
-    def ExplicitHydrogenCount(*args): return _openbabel.OBMolAtomIter_ExplicitHydrogenCount(*args)
-    def MemberOfRingCount(*args): return _openbabel.OBMolAtomIter_MemberOfRingCount(*args)
-    def MemberOfRingSize(*args): return _openbabel.OBMolAtomIter_MemberOfRingSize(*args)
-    def CountRingBonds(*args): return _openbabel.OBMolAtomIter_CountRingBonds(*args)
-    def SmallestBondAngle(*args): return _openbabel.OBMolAtomIter_SmallestBondAngle(*args)
-    def AverageBondAngle(*args): return _openbabel.OBMolAtomIter_AverageBondAngle(*args)
-    def BOSum(*args): return _openbabel.OBMolAtomIter_BOSum(*args)
-    def KBOSum(*args): return _openbabel.OBMolAtomIter_KBOSum(*args)
-    def HtoMethyl(*args): return _openbabel.OBMolAtomIter_HtoMethyl(*args)
-    def SetHybAndGeom(*args): return _openbabel.OBMolAtomIter_SetHybAndGeom(*args)
-    def ForceNoH(*args): return _openbabel.OBMolAtomIter_ForceNoH(*args)
-    def HasNoHForced(*args): return _openbabel.OBMolAtomIter_HasNoHForced(*args)
-    def HasResidue(*args): return _openbabel.OBMolAtomIter_HasResidue(*args)
-    def IsHydrogen(*args): return _openbabel.OBMolAtomIter_IsHydrogen(*args)
-    def IsCarbon(*args): return _openbabel.OBMolAtomIter_IsCarbon(*args)
-    def IsNitrogen(*args): return _openbabel.OBMolAtomIter_IsNitrogen(*args)
-    def IsOxygen(*args): return _openbabel.OBMolAtomIter_IsOxygen(*args)
-    def IsSulfur(*args): return _openbabel.OBMolAtomIter_IsSulfur(*args)
-    def IsPhosphorus(*args): return _openbabel.OBMolAtomIter_IsPhosphorus(*args)
-    def IsAromatic(*args): return _openbabel.OBMolAtomIter_IsAromatic(*args)
-    def IsInRing(*args): return _openbabel.OBMolAtomIter_IsInRing(*args)
-    def IsInRingSize(*args): return _openbabel.OBMolAtomIter_IsInRingSize(*args)
-    def IsHeteroatom(*args): return _openbabel.OBMolAtomIter_IsHeteroatom(*args)
-    def IsNotCorH(*args): return _openbabel.OBMolAtomIter_IsNotCorH(*args)
-    def IsConnected(*args): return _openbabel.OBMolAtomIter_IsConnected(*args)
-    def IsOneThree(*args): return _openbabel.OBMolAtomIter_IsOneThree(*args)
-    def IsOneFour(*args): return _openbabel.OBMolAtomIter_IsOneFour(*args)
-    def IsCarboxylOxygen(*args): return _openbabel.OBMolAtomIter_IsCarboxylOxygen(*args)
-    def IsPhosphateOxygen(*args): return _openbabel.OBMolAtomIter_IsPhosphateOxygen(*args)
-    def IsSulfateOxygen(*args): return _openbabel.OBMolAtomIter_IsSulfateOxygen(*args)
-    def IsNitroOxygen(*args): return _openbabel.OBMolAtomIter_IsNitroOxygen(*args)
-    def IsAmideNitrogen(*args): return _openbabel.OBMolAtomIter_IsAmideNitrogen(*args)
-    def IsPolarHydrogen(*args): return _openbabel.OBMolAtomIter_IsPolarHydrogen(*args)
-    def IsNonPolarHydrogen(*args): return _openbabel.OBMolAtomIter_IsNonPolarHydrogen(*args)
-    def IsAromaticNOxide(*args): return _openbabel.OBMolAtomIter_IsAromaticNOxide(*args)
-    def IsChiral(*args): return _openbabel.OBMolAtomIter_IsChiral(*args)
-    def IsAxial(*args): return _openbabel.OBMolAtomIter_IsAxial(*args)
-    def IsClockwise(*args): return _openbabel.OBMolAtomIter_IsClockwise(*args)
-    def IsAntiClockwise(*args): return _openbabel.OBMolAtomIter_IsAntiClockwise(*args)
-    def IsPositiveStereo(*args): return _openbabel.OBMolAtomIter_IsPositiveStereo(*args)
-    def IsNegativeStereo(*args): return _openbabel.OBMolAtomIter_IsNegativeStereo(*args)
-    def HasChiralitySpecified(*args): return _openbabel.OBMolAtomIter_HasChiralitySpecified(*args)
-    def HasChiralVolume(*args): return _openbabel.OBMolAtomIter_HasChiralVolume(*args)
-    def IsHbondAcceptor(*args): return _openbabel.OBMolAtomIter_IsHbondAcceptor(*args)
-    def IsHbondDonor(*args): return _openbabel.OBMolAtomIter_IsHbondDonor(*args)
-    def IsHbondDonorH(*args): return _openbabel.OBMolAtomIter_IsHbondDonorH(*args)
-    def HasAlphaBetaUnsat(*args): return _openbabel.OBMolAtomIter_HasAlphaBetaUnsat(*args)
-    def HasBondOfOrder(*args): return _openbabel.OBMolAtomIter_HasBondOfOrder(*args)
-    def CountBondsOfOrder(*args): return _openbabel.OBMolAtomIter_CountBondsOfOrder(*args)
-    def HasNonSingleBond(*args): return _openbabel.OBMolAtomIter_HasNonSingleBond(*args)
-    def HasSingleBond(*args): return _openbabel.OBMolAtomIter_HasSingleBond(*args)
-    def HasDoubleBond(*args): return _openbabel.OBMolAtomIter_HasDoubleBond(*args)
-    def HasAromaticBond(*args): return _openbabel.OBMolAtomIter_HasAromaticBond(*args)
-    def MatchesSMARTS(*args): return _openbabel.OBMolAtomIter_MatchesSMARTS(*args)
-    def DoTransformations(*args): return _openbabel.OBMolAtomIter_DoTransformations(*args)
-    def ClassDescription(*args): return _openbabel.OBMolAtomIter_ClassDescription(*args)
-    def HasData(*args): return _openbabel.OBMolAtomIter_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBMolAtomIter_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBMolAtomIter_SetData(*args)
-    def DataSize(*args): return _openbabel.OBMolAtomIter_DataSize(*args)
-    def GetData(*args): return _openbabel.OBMolAtomIter_GetData(*args)
-    def BeginData(*args): return _openbabel.OBMolAtomIter_BeginData(*args)
-    def EndData(*args): return _openbabel.OBMolAtomIter_EndData(*args)
-OBMolAtomIter_swigregister = _openbabel.OBMolAtomIter_swigregister
-OBMolAtomIter_swigregister(OBMolAtomIter)
+    def SetBit(*args): return _openbabel.OBFingerprint_SetBit(*args)
+    def Fold(*args): return _openbabel.OBFingerprint_Fold(*args)
+    def GetFingerprint(*args): return _openbabel.OBFingerprint_GetFingerprint(*args)
+    def Description(*args): return _openbabel.OBFingerprint_Description(*args)
+    FPT_UNIQUEBITS = _openbabel.OBFingerprint_FPT_UNIQUEBITS
+    def Flags(*args): return _openbabel.OBFingerprint_Flags(*args)
+    __swig_getmethods__["Tanimoto"] = lambda x: _openbabel.OBFingerprint_Tanimoto
+    if _newclass:Tanimoto = staticmethod(_openbabel.OBFingerprint_Tanimoto)
+    __swig_getmethods__["Getbitsperint"] = lambda x: _openbabel.OBFingerprint_Getbitsperint
+    if _newclass:Getbitsperint = staticmethod(_openbabel.OBFingerprint_Getbitsperint)
+    __swig_getmethods__["FindFingerprint"] = lambda x: _openbabel.OBFingerprint_FindFingerprint
+    if _newclass:FindFingerprint = staticmethod(_openbabel.OBFingerprint_FindFingerprint)
+OBFingerprint_swigregister = _openbabel.OBFingerprint_swigregister
+OBFingerprint_swigregister(OBFingerprint)
+OBFingerprint_Iter = _openbabel.OBFingerprint_Iter
+OBFingerprint_FindDefaultType = _openbabel.OBFingerprint_FindDefaultType
+OBFingerprint_FindType = _openbabel.OBFingerprint_FindType
+OBFingerprint_Tanimoto = _openbabel.OBFingerprint_Tanimoto
+OBFingerprint_Getbitsperint = _openbabel.OBFingerprint_Getbitsperint
+OBFingerprint_FindFingerprint = _openbabel.OBFingerprint_FindFingerprint
 
-class OBMolAtomDFSIter(_object):
+class FptIndexHeader(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBMolAtomDFSIter, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FptIndexHeader, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBMolAtomDFSIter, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, FptIndexHeader, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["headerlength"] = _openbabel.FptIndexHeader_headerlength_set
+    __swig_getmethods__["headerlength"] = _openbabel.FptIndexHeader_headerlength_get
+    if _newclass:headerlength = _swig_property(_openbabel.FptIndexHeader_headerlength_get, _openbabel.FptIndexHeader_headerlength_set)
+    __swig_setmethods__["nEntries"] = _openbabel.FptIndexHeader_nEntries_set
+    __swig_getmethods__["nEntries"] = _openbabel.FptIndexHeader_nEntries_get
+    if _newclass:nEntries = _swig_property(_openbabel.FptIndexHeader_nEntries_get, _openbabel.FptIndexHeader_nEntries_set)
+    __swig_setmethods__["words"] = _openbabel.FptIndexHeader_words_set
+    __swig_getmethods__["words"] = _openbabel.FptIndexHeader_words_get
+    if _newclass:words = _swig_property(_openbabel.FptIndexHeader_words_get, _openbabel.FptIndexHeader_words_set)
+    __swig_setmethods__["fpid"] = _openbabel.FptIndexHeader_fpid_set
+    __swig_getmethods__["fpid"] = _openbabel.FptIndexHeader_fpid_get
+    if _newclass:fpid = _swig_property(_openbabel.FptIndexHeader_fpid_get, _openbabel.FptIndexHeader_fpid_set)
+    __swig_setmethods__["datafilename"] = _openbabel.FptIndexHeader_datafilename_set
+    __swig_getmethods__["datafilename"] = _openbabel.FptIndexHeader_datafilename_get
+    if _newclass:datafilename = _swig_property(_openbabel.FptIndexHeader_datafilename_get, _openbabel.FptIndexHeader_datafilename_set)
     def __init__(self, *args): 
-        this = _openbabel.new_OBMolAtomDFSIter(*args)
+        this = _openbabel.new_FptIndexHeader(*args)
         try: self.this.append(this)
         except: self.this = this
-    def __deref__(*args): return _openbabel.OBMolAtomDFSIter___deref__(*args)
-    def __ref__(*args): return _openbabel.OBMolAtomDFSIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete_OBMolAtomDFSIter
+    __swig_destroy__ = _openbabel.delete_FptIndexHeader
     __del__ = lambda self : None;
-    __swig_setmethods__["Visit"] = _openbabel.OBMolAtomDFSIter_Visit_set
-    __swig_getmethods__["Visit"] = _openbabel.OBMolAtomDFSIter_Visit_get
-    if _newclass:Visit = _swig_property(_openbabel.OBMolAtomDFSIter_Visit_get, _openbabel.OBMolAtomDFSIter_Visit_set)
-    def Clear(*args): return _openbabel.OBMolAtomDFSIter_Clear(*args)
-    def SetIdx(*args): return _openbabel.OBMolAtomDFSIter_SetIdx(*args)
-    def SetHyb(*args): return _openbabel.OBMolAtomDFSIter_SetHyb(*args)
-    def SetAtomicNum(*args): return _openbabel.OBMolAtomDFSIter_SetAtomicNum(*args)
-    def SetIsotope(*args): return _openbabel.OBMolAtomDFSIter_SetIsotope(*args)
-    def SetImplicitValence(*args): return _openbabel.OBMolAtomDFSIter_SetImplicitValence(*args)
-    def IncrementImplicitValence(*args): return _openbabel.OBMolAtomDFSIter_IncrementImplicitValence(*args)
-    def DecrementImplicitValence(*args): return _openbabel.OBMolAtomDFSIter_DecrementImplicitValence(*args)
-    def SetFormalCharge(*args): return _openbabel.OBMolAtomDFSIter_SetFormalCharge(*args)
-    def SetSpinMultiplicity(*args): return _openbabel.OBMolAtomDFSIter_SetSpinMultiplicity(*args)
-    def SetType(*args): return _openbabel.OBMolAtomDFSIter_SetType(*args)
-    def SetPartialCharge(*args): return _openbabel.OBMolAtomDFSIter_SetPartialCharge(*args)
-    def SetVector(*args): return _openbabel.OBMolAtomDFSIter_SetVector(*args)
-    def SetCoordPtr(*args): return _openbabel.OBMolAtomDFSIter_SetCoordPtr(*args)
-    def SetResidue(*args): return _openbabel.OBMolAtomDFSIter_SetResidue(*args)
-    def SetParent(*args): return _openbabel.OBMolAtomDFSIter_SetParent(*args)
-    def SetAromatic(*args): return _openbabel.OBMolAtomDFSIter_SetAromatic(*args)
-    def UnsetAromatic(*args): return _openbabel.OBMolAtomDFSIter_UnsetAromatic(*args)
-    def SetClockwiseStereo(*args): return _openbabel.OBMolAtomDFSIter_SetClockwiseStereo(*args)
-    def SetAntiClockwiseStereo(*args): return _openbabel.OBMolAtomDFSIter_SetAntiClockwiseStereo(*args)
-    def SetPositiveStereo(*args): return _openbabel.OBMolAtomDFSIter_SetPositiveStereo(*args)
-    def SetNegativeStereo(*args): return _openbabel.OBMolAtomDFSIter_SetNegativeStereo(*args)
-    def UnsetStereo(*args): return _openbabel.OBMolAtomDFSIter_UnsetStereo(*args)
-    def SetInRing(*args): return _openbabel.OBMolAtomDFSIter_SetInRing(*args)
-    def SetChiral(*args): return _openbabel.OBMolAtomDFSIter_SetChiral(*args)
-    def ClearCoordPtr(*args): return _openbabel.OBMolAtomDFSIter_ClearCoordPtr(*args)
-    def GetFormalCharge(*args): return _openbabel.OBMolAtomDFSIter_GetFormalCharge(*args)
-    def GetAtomicNum(*args): return _openbabel.OBMolAtomDFSIter_GetAtomicNum(*args)
-    def GetIsotope(*args): return _openbabel.OBMolAtomDFSIter_GetIsotope(*args)
-    def GetSpinMultiplicity(*args): return _openbabel.OBMolAtomDFSIter_GetSpinMultiplicity(*args)
-    def GetAtomicMass(*args): return _openbabel.OBMolAtomDFSIter_GetAtomicMass(*args)
-    def GetExactMass(*args): return _openbabel.OBMolAtomDFSIter_GetExactMass(*args)
-    def GetIdx(*args): return _openbabel.OBMolAtomDFSIter_GetIdx(*args)
-    def GetCoordinateIdx(*args): return _openbabel.OBMolAtomDFSIter_GetCoordinateIdx(*args)
-    def GetCIdx(*args): return _openbabel.OBMolAtomDFSIter_GetCIdx(*args)
-    def GetValence(*args): return _openbabel.OBMolAtomDFSIter_GetValence(*args)
-    def GetHyb(*args): return _openbabel.OBMolAtomDFSIter_GetHyb(*args)
-    def GetImplicitValence(*args): return _openbabel.OBMolAtomDFSIter_GetImplicitValence(*args)
-    def GetHvyValence(*args): return _openbabel.OBMolAtomDFSIter_GetHvyValence(*args)
-    def GetHeteroValence(*args): return _openbabel.OBMolAtomDFSIter_GetHeteroValence(*args)
-    def GetType(*args): return _openbabel.OBMolAtomDFSIter_GetType(*args)
-    def GetX(*args): return _openbabel.OBMolAtomDFSIter_GetX(*args)
-    def x(*args): return _openbabel.OBMolAtomDFSIter_x(*args)
-    def GetY(*args): return _openbabel.OBMolAtomDFSIter_GetY(*args)
-    def y(*args): return _openbabel.OBMolAtomDFSIter_y(*args)
-    def GetZ(*args): return _openbabel.OBMolAtomDFSIter_GetZ(*args)
-    def z(*args): return _openbabel.OBMolAtomDFSIter_z(*args)
-    def GetCoordinate(*args): return _openbabel.OBMolAtomDFSIter_GetCoordinate(*args)
-    def GetVector(*args): return _openbabel.OBMolAtomDFSIter_GetVector(*args)
-    def GetPartialCharge(*args): return _openbabel.OBMolAtomDFSIter_GetPartialCharge(*args)
-    def GetResidue(*args): return _openbabel.OBMolAtomDFSIter_GetResidue(*args)
-    def GetParent(*args): return _openbabel.OBMolAtomDFSIter_GetParent(*args)
-    def GetNewBondVector(*args): return _openbabel.OBMolAtomDFSIter_GetNewBondVector(*args)
-    def GetBond(*args): return _openbabel.OBMolAtomDFSIter_GetBond(*args)
-    def GetNextAtom(*args): return _openbabel.OBMolAtomDFSIter_GetNextAtom(*args)
-    def BeginBonds(*args): return _openbabel.OBMolAtomDFSIter_BeginBonds(*args)
-    def EndBonds(*args): return _openbabel.OBMolAtomDFSIter_EndBonds(*args)
-    def BeginBond(*args): return _openbabel.OBMolAtomDFSIter_BeginBond(*args)
-    def NextBond(*args): return _openbabel.OBMolAtomDFSIter_NextBond(*args)
-    def BeginNbrAtom(*args): return _openbabel.OBMolAtomDFSIter_BeginNbrAtom(*args)
-    def NextNbrAtom(*args): return _openbabel.OBMolAtomDFSIter_NextNbrAtom(*args)
-    def GetDistance(*args): return _openbabel.OBMolAtomDFSIter_GetDistance(*args)
-    def GetAngle(*args): return _openbabel.OBMolAtomDFSIter_GetAngle(*args)
-    def NewResidue(*args): return _openbabel.OBMolAtomDFSIter_NewResidue(*args)
-    def DeleteResidue(*args): return _openbabel.OBMolAtomDFSIter_DeleteResidue(*args)
-    def AddBond(*args): return _openbabel.OBMolAtomDFSIter_AddBond(*args)
-    def InsertBond(*args): return _openbabel.OBMolAtomDFSIter_InsertBond(*args)
-    def DeleteBond(*args): return _openbabel.OBMolAtomDFSIter_DeleteBond(*args)
-    def ClearBond(*args): return _openbabel.OBMolAtomDFSIter_ClearBond(*args)
-    def CountFreeOxygens(*args): return _openbabel.OBMolAtomDFSIter_CountFreeOxygens(*args)
-    def ImplicitHydrogenCount(*args): return _openbabel.OBMolAtomDFSIter_ImplicitHydrogenCount(*args)
-    def ExplicitHydrogenCount(*args): return _openbabel.OBMolAtomDFSIter_ExplicitHydrogenCount(*args)
-    def MemberOfRingCount(*args): return _openbabel.OBMolAtomDFSIter_MemberOfRingCount(*args)
-    def MemberOfRingSize(*args): return _openbabel.OBMolAtomDFSIter_MemberOfRingSize(*args)
-    def CountRingBonds(*args): return _openbabel.OBMolAtomDFSIter_CountRingBonds(*args)
-    def SmallestBondAngle(*args): return _openbabel.OBMolAtomDFSIter_SmallestBondAngle(*args)
-    def AverageBondAngle(*args): return _openbabel.OBMolAtomDFSIter_AverageBondAngle(*args)
-    def BOSum(*args): return _openbabel.OBMolAtomDFSIter_BOSum(*args)
-    def KBOSum(*args): return _openbabel.OBMolAtomDFSIter_KBOSum(*args)
-    def HtoMethyl(*args): return _openbabel.OBMolAtomDFSIter_HtoMethyl(*args)
-    def SetHybAndGeom(*args): return _openbabel.OBMolAtomDFSIter_SetHybAndGeom(*args)
-    def ForceNoH(*args): return _openbabel.OBMolAtomDFSIter_ForceNoH(*args)
-    def HasNoHForced(*args): return _openbabel.OBMolAtomDFSIter_HasNoHForced(*args)
-    def HasResidue(*args): return _openbabel.OBMolAtomDFSIter_HasResidue(*args)
-    def IsHydrogen(*args): return _openbabel.OBMolAtomDFSIter_IsHydrogen(*args)
-    def IsCarbon(*args): return _openbabel.OBMolAtomDFSIter_IsCarbon(*args)
-    def IsNitrogen(*args): return _openbabel.OBMolAtomDFSIter_IsNitrogen(*args)
-    def IsOxygen(*args): return _openbabel.OBMolAtomDFSIter_IsOxygen(*args)
-    def IsSulfur(*args): return _openbabel.OBMolAtomDFSIter_IsSulfur(*args)
-    def IsPhosphorus(*args): return _openbabel.OBMolAtomDFSIter_IsPhosphorus(*args)
-    def IsAromatic(*args): return _openbabel.OBMolAtomDFSIter_IsAromatic(*args)
-    def IsInRing(*args): return _openbabel.OBMolAtomDFSIter_IsInRing(*args)
-    def IsInRingSize(*args): return _openbabel.OBMolAtomDFSIter_IsInRingSize(*args)
-    def IsHeteroatom(*args): return _openbabel.OBMolAtomDFSIter_IsHeteroatom(*args)
-    def IsNotCorH(*args): return _openbabel.OBMolAtomDFSIter_IsNotCorH(*args)
-    def IsConnected(*args): return _openbabel.OBMolAtomDFSIter_IsConnected(*args)
-    def IsOneThree(*args): return _openbabel.OBMolAtomDFSIter_IsOneThree(*args)
-    def IsOneFour(*args): return _openbabel.OBMolAtomDFSIter_IsOneFour(*args)
-    def IsCarboxylOxygen(*args): return _openbabel.OBMolAtomDFSIter_IsCarboxylOxygen(*args)
-    def IsPhosphateOxygen(*args): return _openbabel.OBMolAtomDFSIter_IsPhosphateOxygen(*args)
-    def IsSulfateOxygen(*args): return _openbabel.OBMolAtomDFSIter_IsSulfateOxygen(*args)
-    def IsNitroOxygen(*args): return _openbabel.OBMolAtomDFSIter_IsNitroOxygen(*args)
-    def IsAmideNitrogen(*args): return _openbabel.OBMolAtomDFSIter_IsAmideNitrogen(*args)
-    def IsPolarHydrogen(*args): return _openbabel.OBMolAtomDFSIter_IsPolarHydrogen(*args)
-    def IsNonPolarHydrogen(*args): return _openbabel.OBMolAtomDFSIter_IsNonPolarHydrogen(*args)
-    def IsAromaticNOxide(*args): return _openbabel.OBMolAtomDFSIter_IsAromaticNOxide(*args)
-    def IsChiral(*args): return _openbabel.OBMolAtomDFSIter_IsChiral(*args)
-    def IsAxial(*args): return _openbabel.OBMolAtomDFSIter_IsAxial(*args)
-    def IsClockwise(*args): return _openbabel.OBMolAtomDFSIter_IsClockwise(*args)
-    def IsAntiClockwise(*args): return _openbabel.OBMolAtomDFSIter_IsAntiClockwise(*args)
-    def IsPositiveStereo(*args): return _openbabel.OBMolAtomDFSIter_IsPositiveStereo(*args)
-    def IsNegativeStereo(*args): return _openbabel.OBMolAtomDFSIter_IsNegativeStereo(*args)
-    def HasChiralitySpecified(*args): return _openbabel.OBMolAtomDFSIter_HasChiralitySpecified(*args)
-    def HasChiralVolume(*args): return _openbabel.OBMolAtomDFSIter_HasChiralVolume(*args)
-    def IsHbondAcceptor(*args): return _openbabel.OBMolAtomDFSIter_IsHbondAcceptor(*args)
-    def IsHbondDonor(*args): return _openbabel.OBMolAtomDFSIter_IsHbondDonor(*args)
-    def IsHbondDonorH(*args): return _openbabel.OBMolAtomDFSIter_IsHbondDonorH(*args)
-    def HasAlphaBetaUnsat(*args): return _openbabel.OBMolAtomDFSIter_HasAlphaBetaUnsat(*args)
-    def HasBondOfOrder(*args): return _openbabel.OBMolAtomDFSIter_HasBondOfOrder(*args)
-    def CountBondsOfOrder(*args): return _openbabel.OBMolAtomDFSIter_CountBondsOfOrder(*args)
-    def HasNonSingleBond(*args): return _openbabel.OBMolAtomDFSIter_HasNonSingleBond(*args)
-    def HasSingleBond(*args): return _openbabel.OBMolAtomDFSIter_HasSingleBond(*args)
-    def HasDoubleBond(*args): return _openbabel.OBMolAtomDFSIter_HasDoubleBond(*args)
-    def HasAromaticBond(*args): return _openbabel.OBMolAtomDFSIter_HasAromaticBond(*args)
-    def MatchesSMARTS(*args): return _openbabel.OBMolAtomDFSIter_MatchesSMARTS(*args)
-    def DoTransformations(*args): return _openbabel.OBMolAtomDFSIter_DoTransformations(*args)
-    def ClassDescription(*args): return _openbabel.OBMolAtomDFSIter_ClassDescription(*args)
-    def HasData(*args): return _openbabel.OBMolAtomDFSIter_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBMolAtomDFSIter_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBMolAtomDFSIter_SetData(*args)
-    def DataSize(*args): return _openbabel.OBMolAtomDFSIter_DataSize(*args)
-    def GetData(*args): return _openbabel.OBMolAtomDFSIter_GetData(*args)
-    def BeginData(*args): return _openbabel.OBMolAtomDFSIter_BeginData(*args)
-    def EndData(*args): return _openbabel.OBMolAtomDFSIter_EndData(*args)
-OBMolAtomDFSIter_swigregister = _openbabel.OBMolAtomDFSIter_swigregister
-OBMolAtomDFSIter_swigregister(OBMolAtomDFSIter)
+FptIndexHeader_swigregister = _openbabel.FptIndexHeader_swigregister
+FptIndexHeader_swigregister(FptIndexHeader)
 
-class OBMolAtomBFSIter(_object):
+class FptIndex(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBMolAtomBFSIter, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FptIndex, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBMolAtomBFSIter, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, FptIndex, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["header"] = _openbabel.FptIndex_header_set
+    __swig_getmethods__["header"] = _openbabel.FptIndex_header_get
+    if _newclass:header = _swig_property(_openbabel.FptIndex_header_get, _openbabel.FptIndex_header_set)
+    __swig_setmethods__["fptdata"] = _openbabel.FptIndex_fptdata_set
+    __swig_getmethods__["fptdata"] = _openbabel.FptIndex_fptdata_get
+    if _newclass:fptdata = _swig_property(_openbabel.FptIndex_fptdata_get, _openbabel.FptIndex_fptdata_set)
+    __swig_setmethods__["seekdata"] = _openbabel.FptIndex_seekdata_set
+    __swig_getmethods__["seekdata"] = _openbabel.FptIndex_seekdata_get
+    if _newclass:seekdata = _swig_property(_openbabel.FptIndex_seekdata_get, _openbabel.FptIndex_seekdata_set)
+    def Read(*args): return _openbabel.FptIndex_Read(*args)
+    def CheckFP(*args): return _openbabel.FptIndex_CheckFP(*args)
     def __init__(self, *args): 
-        this = _openbabel.new_OBMolAtomBFSIter(*args)
+        this = _openbabel.new_FptIndex(*args)
         try: self.this.append(this)
         except: self.this = this
-    def __deref__(*args): return _openbabel.OBMolAtomBFSIter___deref__(*args)
-    def __ref__(*args): return _openbabel.OBMolAtomBFSIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete_OBMolAtomBFSIter
+    __swig_destroy__ = _openbabel.delete_FptIndex
     __del__ = lambda self : None;
-    __swig_setmethods__["Visit"] = _openbabel.OBMolAtomBFSIter_Visit_set
-    __swig_getmethods__["Visit"] = _openbabel.OBMolAtomBFSIter_Visit_get
-    if _newclass:Visit = _swig_property(_openbabel.OBMolAtomBFSIter_Visit_get, _openbabel.OBMolAtomBFSIter_Visit_set)
-    def Clear(*args): return _openbabel.OBMolAtomBFSIter_Clear(*args)
-    def SetIdx(*args): return _openbabel.OBMolAtomBFSIter_SetIdx(*args)
-    def SetHyb(*args): return _openbabel.OBMolAtomBFSIter_SetHyb(*args)
-    def SetAtomicNum(*args): return _openbabel.OBMolAtomBFSIter_SetAtomicNum(*args)
-    def SetIsotope(*args): return _openbabel.OBMolAtomBFSIter_SetIsotope(*args)
-    def SetImplicitValence(*args): return _openbabel.OBMolAtomBFSIter_SetImplicitValence(*args)
-    def IncrementImplicitValence(*args): return _openbabel.OBMolAtomBFSIter_IncrementImplicitValence(*args)
-    def DecrementImplicitValence(*args): return _openbabel.OBMolAtomBFSIter_DecrementImplicitValence(*args)
-    def SetFormalCharge(*args): return _openbabel.OBMolAtomBFSIter_SetFormalCharge(*args)
-    def SetSpinMultiplicity(*args): return _openbabel.OBMolAtomBFSIter_SetSpinMultiplicity(*args)
-    def SetType(*args): return _openbabel.OBMolAtomBFSIter_SetType(*args)
-    def SetPartialCharge(*args): return _openbabel.OBMolAtomBFSIter_SetPartialCharge(*args)
-    def SetVector(*args): return _openbabel.OBMolAtomBFSIter_SetVector(*args)
-    def SetCoordPtr(*args): return _openbabel.OBMolAtomBFSIter_SetCoordPtr(*args)
-    def SetResidue(*args): return _openbabel.OBMolAtomBFSIter_SetResidue(*args)
-    def SetParent(*args): return _openbabel.OBMolAtomBFSIter_SetParent(*args)
-    def SetAromatic(*args): return _openbabel.OBMolAtomBFSIter_SetAromatic(*args)
-    def UnsetAromatic(*args): return _openbabel.OBMolAtomBFSIter_UnsetAromatic(*args)
-    def SetClockwiseStereo(*args): return _openbabel.OBMolAtomBFSIter_SetClockwiseStereo(*args)
-    def SetAntiClockwiseStereo(*args): return _openbabel.OBMolAtomBFSIter_SetAntiClockwiseStereo(*args)
-    def SetPositiveStereo(*args): return _openbabel.OBMolAtomBFSIter_SetPositiveStereo(*args)
-    def SetNegativeStereo(*args): return _openbabel.OBMolAtomBFSIter_SetNegativeStereo(*args)
-    def UnsetStereo(*args): return _openbabel.OBMolAtomBFSIter_UnsetStereo(*args)
-    def SetInRing(*args): return _openbabel.OBMolAtomBFSIter_SetInRing(*args)
-    def SetChiral(*args): return _openbabel.OBMolAtomBFSIter_SetChiral(*args)
-    def ClearCoordPtr(*args): return _openbabel.OBMolAtomBFSIter_ClearCoordPtr(*args)
-    def GetFormalCharge(*args): return _openbabel.OBMolAtomBFSIter_GetFormalCharge(*args)
-    def GetAtomicNum(*args): return _openbabel.OBMolAtomBFSIter_GetAtomicNum(*args)
-    def GetIsotope(*args): return _openbabel.OBMolAtomBFSIter_GetIsotope(*args)
-    def GetSpinMultiplicity(*args): return _openbabel.OBMolAtomBFSIter_GetSpinMultiplicity(*args)
-    def GetAtomicMass(*args): return _openbabel.OBMolAtomBFSIter_GetAtomicMass(*args)
-    def GetExactMass(*args): return _openbabel.OBMolAtomBFSIter_GetExactMass(*args)
-    def GetIdx(*args): return _openbabel.OBMolAtomBFSIter_GetIdx(*args)
-    def GetCoordinateIdx(*args): return _openbabel.OBMolAtomBFSIter_GetCoordinateIdx(*args)
-    def GetCIdx(*args): return _openbabel.OBMolAtomBFSIter_GetCIdx(*args)
-    def GetValence(*args): return _openbabel.OBMolAtomBFSIter_GetValence(*args)
-    def GetHyb(*args): return _openbabel.OBMolAtomBFSIter_GetHyb(*args)
-    def GetImplicitValence(*args): return _openbabel.OBMolAtomBFSIter_GetImplicitValence(*args)
-    def GetHvyValence(*args): return _openbabel.OBMolAtomBFSIter_GetHvyValence(*args)
-    def GetHeteroValence(*args): return _openbabel.OBMolAtomBFSIter_GetHeteroValence(*args)
-    def GetType(*args): return _openbabel.OBMolAtomBFSIter_GetType(*args)
-    def GetX(*args): return _openbabel.OBMolAtomBFSIter_GetX(*args)
-    def x(*args): return _openbabel.OBMolAtomBFSIter_x(*args)
-    def GetY(*args): return _openbabel.OBMolAtomBFSIter_GetY(*args)
-    def y(*args): return _openbabel.OBMolAtomBFSIter_y(*args)
-    def GetZ(*args): return _openbabel.OBMolAtomBFSIter_GetZ(*args)
-    def z(*args): return _openbabel.OBMolAtomBFSIter_z(*args)
-    def GetCoordinate(*args): return _openbabel.OBMolAtomBFSIter_GetCoordinate(*args)
-    def GetVector(*args): return _openbabel.OBMolAtomBFSIter_GetVector(*args)
-    def GetPartialCharge(*args): return _openbabel.OBMolAtomBFSIter_GetPartialCharge(*args)
-    def GetResidue(*args): return _openbabel.OBMolAtomBFSIter_GetResidue(*args)
-    def GetParent(*args): return _openbabel.OBMolAtomBFSIter_GetParent(*args)
-    def GetNewBondVector(*args): return _openbabel.OBMolAtomBFSIter_GetNewBondVector(*args)
-    def GetBond(*args): return _openbabel.OBMolAtomBFSIter_GetBond(*args)
-    def GetNextAtom(*args): return _openbabel.OBMolAtomBFSIter_GetNextAtom(*args)
-    def BeginBonds(*args): return _openbabel.OBMolAtomBFSIter_BeginBonds(*args)
-    def EndBonds(*args): return _openbabel.OBMolAtomBFSIter_EndBonds(*args)
-    def BeginBond(*args): return _openbabel.OBMolAtomBFSIter_BeginBond(*args)
-    def NextBond(*args): return _openbabel.OBMolAtomBFSIter_NextBond(*args)
-    def BeginNbrAtom(*args): return _openbabel.OBMolAtomBFSIter_BeginNbrAtom(*args)
-    def NextNbrAtom(*args): return _openbabel.OBMolAtomBFSIter_NextNbrAtom(*args)
-    def GetDistance(*args): return _openbabel.OBMolAtomBFSIter_GetDistance(*args)
-    def GetAngle(*args): return _openbabel.OBMolAtomBFSIter_GetAngle(*args)
-    def NewResidue(*args): return _openbabel.OBMolAtomBFSIter_NewResidue(*args)
-    def DeleteResidue(*args): return _openbabel.OBMolAtomBFSIter_DeleteResidue(*args)
-    def AddBond(*args): return _openbabel.OBMolAtomBFSIter_AddBond(*args)
-    def InsertBond(*args): return _openbabel.OBMolAtomBFSIter_InsertBond(*args)
-    def DeleteBond(*args): return _openbabel.OBMolAtomBFSIter_DeleteBond(*args)
-    def ClearBond(*args): return _openbabel.OBMolAtomBFSIter_ClearBond(*args)
-    def CountFreeOxygens(*args): return _openbabel.OBMolAtomBFSIter_CountFreeOxygens(*args)
-    def ImplicitHydrogenCount(*args): return _openbabel.OBMolAtomBFSIter_ImplicitHydrogenCount(*args)
-    def ExplicitHydrogenCount(*args): return _openbabel.OBMolAtomBFSIter_ExplicitHydrogenCount(*args)
-    def MemberOfRingCount(*args): return _openbabel.OBMolAtomBFSIter_MemberOfRingCount(*args)
-    def MemberOfRingSize(*args): return _openbabel.OBMolAtomBFSIter_MemberOfRingSize(*args)
-    def CountRingBonds(*args): return _openbabel.OBMolAtomBFSIter_CountRingBonds(*args)
-    def SmallestBondAngle(*args): return _openbabel.OBMolAtomBFSIter_SmallestBondAngle(*args)
-    def AverageBondAngle(*args): return _openbabel.OBMolAtomBFSIter_AverageBondAngle(*args)
-    def BOSum(*args): return _openbabel.OBMolAtomBFSIter_BOSum(*args)
-    def KBOSum(*args): return _openbabel.OBMolAtomBFSIter_KBOSum(*args)
-    def HtoMethyl(*args): return _openbabel.OBMolAtomBFSIter_HtoMethyl(*args)
-    def SetHybAndGeom(*args): return _openbabel.OBMolAtomBFSIter_SetHybAndGeom(*args)
-    def ForceNoH(*args): return _openbabel.OBMolAtomBFSIter_ForceNoH(*args)
-    def HasNoHForced(*args): return _openbabel.OBMolAtomBFSIter_HasNoHForced(*args)
-    def HasResidue(*args): return _openbabel.OBMolAtomBFSIter_HasResidue(*args)
-    def IsHydrogen(*args): return _openbabel.OBMolAtomBFSIter_IsHydrogen(*args)
-    def IsCarbon(*args): return _openbabel.OBMolAtomBFSIter_IsCarbon(*args)
-    def IsNitrogen(*args): return _openbabel.OBMolAtomBFSIter_IsNitrogen(*args)
-    def IsOxygen(*args): return _openbabel.OBMolAtomBFSIter_IsOxygen(*args)
-    def IsSulfur(*args): return _openbabel.OBMolAtomBFSIter_IsSulfur(*args)
-    def IsPhosphorus(*args): return _openbabel.OBMolAtomBFSIter_IsPhosphorus(*args)
-    def IsAromatic(*args): return _openbabel.OBMolAtomBFSIter_IsAromatic(*args)
-    def IsInRing(*args): return _openbabel.OBMolAtomBFSIter_IsInRing(*args)
-    def IsInRingSize(*args): return _openbabel.OBMolAtomBFSIter_IsInRingSize(*args)
-    def IsHeteroatom(*args): return _openbabel.OBMolAtomBFSIter_IsHeteroatom(*args)
-    def IsNotCorH(*args): return _openbabel.OBMolAtomBFSIter_IsNotCorH(*args)
-    def IsConnected(*args): return _openbabel.OBMolAtomBFSIter_IsConnected(*args)
-    def IsOneThree(*args): return _openbabel.OBMolAtomBFSIter_IsOneThree(*args)
-    def IsOneFour(*args): return _openbabel.OBMolAtomBFSIter_IsOneFour(*args)
-    def IsCarboxylOxygen(*args): return _openbabel.OBMolAtomBFSIter_IsCarboxylOxygen(*args)
-    def IsPhosphateOxygen(*args): return _openbabel.OBMolAtomBFSIter_IsPhosphateOxygen(*args)
-    def IsSulfateOxygen(*args): return _openbabel.OBMolAtomBFSIter_IsSulfateOxygen(*args)
-    def IsNitroOxygen(*args): return _openbabel.OBMolAtomBFSIter_IsNitroOxygen(*args)
-    def IsAmideNitrogen(*args): return _openbabel.OBMolAtomBFSIter_IsAmideNitrogen(*args)
-    def IsPolarHydrogen(*args): return _openbabel.OBMolAtomBFSIter_IsPolarHydrogen(*args)
-    def IsNonPolarHydrogen(*args): return _openbabel.OBMolAtomBFSIter_IsNonPolarHydrogen(*args)
-    def IsAromaticNOxide(*args): return _openbabel.OBMolAtomBFSIter_IsAromaticNOxide(*args)
-    def IsChiral(*args): return _openbabel.OBMolAtomBFSIter_IsChiral(*args)
-    def IsAxial(*args): return _openbabel.OBMolAtomBFSIter_IsAxial(*args)
-    def IsClockwise(*args): return _openbabel.OBMolAtomBFSIter_IsClockwise(*args)
-    def IsAntiClockwise(*args): return _openbabel.OBMolAtomBFSIter_IsAntiClockwise(*args)
-    def IsPositiveStereo(*args): return _openbabel.OBMolAtomBFSIter_IsPositiveStereo(*args)
-    def IsNegativeStereo(*args): return _openbabel.OBMolAtomBFSIter_IsNegativeStereo(*args)
-    def HasChiralitySpecified(*args): return _openbabel.OBMolAtomBFSIter_HasChiralitySpecified(*args)
-    def HasChiralVolume(*args): return _openbabel.OBMolAtomBFSIter_HasChiralVolume(*args)
-    def IsHbondAcceptor(*args): return _openbabel.OBMolAtomBFSIter_IsHbondAcceptor(*args)
-    def IsHbondDonor(*args): return _openbabel.OBMolAtomBFSIter_IsHbondDonor(*args)
-    def IsHbondDonorH(*args): return _openbabel.OBMolAtomBFSIter_IsHbondDonorH(*args)
-    def HasAlphaBetaUnsat(*args): return _openbabel.OBMolAtomBFSIter_HasAlphaBetaUnsat(*args)
-    def HasBondOfOrder(*args): return _openbabel.OBMolAtomBFSIter_HasBondOfOrder(*args)
-    def CountBondsOfOrder(*args): return _openbabel.OBMolAtomBFSIter_CountBondsOfOrder(*args)
-    def HasNonSingleBond(*args): return _openbabel.OBMolAtomBFSIter_HasNonSingleBond(*args)
-    def HasSingleBond(*args): return _openbabel.OBMolAtomBFSIter_HasSingleBond(*args)
-    def HasDoubleBond(*args): return _openbabel.OBMolAtomBFSIter_HasDoubleBond(*args)
-    def HasAromaticBond(*args): return _openbabel.OBMolAtomBFSIter_HasAromaticBond(*args)
-    def MatchesSMARTS(*args): return _openbabel.OBMolAtomBFSIter_MatchesSMARTS(*args)
-    def DoTransformations(*args): return _openbabel.OBMolAtomBFSIter_DoTransformations(*args)
-    def ClassDescription(*args): return _openbabel.OBMolAtomBFSIter_ClassDescription(*args)
-    def HasData(*args): return _openbabel.OBMolAtomBFSIter_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBMolAtomBFSIter_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBMolAtomBFSIter_SetData(*args)
-    def DataSize(*args): return _openbabel.OBMolAtomBFSIter_DataSize(*args)
-    def GetData(*args): return _openbabel.OBMolAtomBFSIter_GetData(*args)
-    def BeginData(*args): return _openbabel.OBMolAtomBFSIter_BeginData(*args)
-    def EndData(*args): return _openbabel.OBMolAtomBFSIter_EndData(*args)
-OBMolAtomBFSIter_swigregister = _openbabel.OBMolAtomBFSIter_swigregister
-OBMolAtomBFSIter_swigregister(OBMolAtomBFSIter)
+FptIndex_swigregister = _openbabel.FptIndex_swigregister
+FptIndex_swigregister(FptIndex)
 
-class OBMolBondIter(_object):
+class FastSearch(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBMolBondIter, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FastSearch, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBMolBondIter, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, FastSearch, name)
     __repr__ = _swig_repr
+    def ReadIndexFile(*args): return _openbabel.FastSearch_ReadIndexFile(*args)
+    def ReadIndex(*args): return _openbabel.FastSearch_ReadIndex(*args)
+    __swig_destroy__ = _openbabel.delete_FastSearch
+    __del__ = lambda self : None;
+    def Find(*args): return _openbabel.FastSearch_Find(*args)
+    def FindMatch(*args): return _openbabel.FastSearch_FindMatch(*args)
+    def FindSimilar(*args): return _openbabel.FastSearch_FindSimilar(*args)
+    def GetFingerprint(*args): return _openbabel.FastSearch_GetFingerprint(*args)
+    def GetIndexHeader(*args): return _openbabel.FastSearch_GetIndexHeader(*args)
     def __init__(self, *args): 
-        this = _openbabel.new_OBMolBondIter(*args)
+        this = _openbabel.new_FastSearch(*args)
         try: self.this.append(this)
         except: self.this = this
-    def good(*args): return _openbabel.OBMolBondIter_good(*args)
-    def inc(*args): return _openbabel.OBMolBondIter_inc(*args)
-    def deref(*args): return _openbabel.OBMolBondIter_deref(*args)
-    def __ref__(*args): return _openbabel.OBMolBondIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete_OBMolBondIter
-    __del__ = lambda self : None;
-    __swig_setmethods__["Visit"] = _openbabel.OBMolBondIter_Visit_set
-    __swig_getmethods__["Visit"] = _openbabel.OBMolBondIter_Visit_get
-    if _newclass:Visit = _swig_property(_openbabel.OBMolBondIter_Visit_get, _openbabel.OBMolBondIter_Visit_set)
-    def SetIdx(*args): return _openbabel.OBMolBondIter_SetIdx(*args)
-    def SetBO(*args): return _openbabel.OBMolBondIter_SetBO(*args)
-    def SetBegin(*args): return _openbabel.OBMolBondIter_SetBegin(*args)
-    def SetEnd(*args): return _openbabel.OBMolBondIter_SetEnd(*args)
-    def SetParent(*args): return _openbabel.OBMolBondIter_SetParent(*args)
-    def SetLength(*args): return _openbabel.OBMolBondIter_SetLength(*args)
-    def Set(*args): return _openbabel.OBMolBondIter_Set(*args)
-    def SetKSingle(*args): return _openbabel.OBMolBondIter_SetKSingle(*args)
-    def SetKDouble(*args): return _openbabel.OBMolBondIter_SetKDouble(*args)
-    def SetKTriple(*args): return _openbabel.OBMolBondIter_SetKTriple(*args)
-    def SetAromatic(*args): return _openbabel.OBMolBondIter_SetAromatic(*args)
-    def SetHash(*args): return _openbabel.OBMolBondIter_SetHash(*args)
-    def SetWedge(*args): return _openbabel.OBMolBondIter_SetWedge(*args)
-    def SetUp(*args): return _openbabel.OBMolBondIter_SetUp(*args)
-    def SetDown(*args): return _openbabel.OBMolBondIter_SetDown(*args)
-    def SetInRing(*args): return _openbabel.OBMolBondIter_SetInRing(*args)
-    def SetClosure(*args): return _openbabel.OBMolBondIter_SetClosure(*args)
-    def UnsetHash(*args): return _openbabel.OBMolBondIter_UnsetHash(*args)
-    def UnsetWedge(*args): return _openbabel.OBMolBondIter_UnsetWedge(*args)
-    def UnsetUp(*args): return _openbabel.OBMolBondIter_UnsetUp(*args)
-    def UnsetDown(*args): return _openbabel.OBMolBondIter_UnsetDown(*args)
-    def UnsetAromatic(*args): return _openbabel.OBMolBondIter_UnsetAromatic(*args)
-    def UnsetKekule(*args): return _openbabel.OBMolBondIter_UnsetKekule(*args)
-    def GetIdx(*args): return _openbabel.OBMolBondIter_GetIdx(*args)
-    def GetBO(*args): return _openbabel.OBMolBondIter_GetBO(*args)
-    def GetBondOrder(*args): return _openbabel.OBMolBondIter_GetBondOrder(*args)
-    def GetFlags(*args): return _openbabel.OBMolBondIter_GetFlags(*args)
-    def GetBeginAtomIdx(*args): return _openbabel.OBMolBondIter_GetBeginAtomIdx(*args)
-    def GetEndAtomIdx(*args): return _openbabel.OBMolBondIter_GetEndAtomIdx(*args)
-    def GetBeginAtom(*args): return _openbabel.OBMolBondIter_GetBeginAtom(*args)
-    def GetEndAtom(*args): return _openbabel.OBMolBondIter_GetEndAtom(*args)
-    def GetNbrAtom(*args): return _openbabel.OBMolBondIter_GetNbrAtom(*args)
-    def GetParent(*args): return _openbabel.OBMolBondIter_GetParent(*args)
-    def GetEquibLength(*args): return _openbabel.OBMolBondIter_GetEquibLength(*args)
-    def GetLength(*args): return _openbabel.OBMolBondIter_GetLength(*args)
-    def GetNbrAtomIdx(*args): return _openbabel.OBMolBondIter_GetNbrAtomIdx(*args)
-    def IsAromatic(*args): return _openbabel.OBMolBondIter_IsAromatic(*args)
-    def IsInRing(*args): return _openbabel.OBMolBondIter_IsInRing(*args)
-    def IsRotor(*args): return _openbabel.OBMolBondIter_IsRotor(*args)
-    def IsAmide(*args): return _openbabel.OBMolBondIter_IsAmide(*args)
-    def IsPrimaryAmide(*args): return _openbabel.OBMolBondIter_IsPrimaryAmide(*args)
-    def IsSecondaryAmide(*args): return _openbabel.OBMolBondIter_IsSecondaryAmide(*args)
-    def IsEster(*args): return _openbabel.OBMolBondIter_IsEster(*args)
-    def IsCarbonyl(*args): return _openbabel.OBMolBondIter_IsCarbonyl(*args)
-    def IsSingle(*args): return _openbabel.OBMolBondIter_IsSingle(*args)
-    def IsDouble(*args): return _openbabel.OBMolBondIter_IsDouble(*args)
-    def IsTriple(*args): return _openbabel.OBMolBondIter_IsTriple(*args)
-    def IsKSingle(*args): return _openbabel.OBMolBondIter_IsKSingle(*args)
-    def IsKDouble(*args): return _openbabel.OBMolBondIter_IsKDouble(*args)
-    def IsKTriple(*args): return _openbabel.OBMolBondIter_IsKTriple(*args)
-    def IsClosure(*args): return _openbabel.OBMolBondIter_IsClosure(*args)
-    def IsUp(*args): return _openbabel.OBMolBondIter_IsUp(*args)
-    def IsDown(*args): return _openbabel.OBMolBondIter_IsDown(*args)
-    def IsWedge(*args): return _openbabel.OBMolBondIter_IsWedge(*args)
-    def IsHash(*args): return _openbabel.OBMolBondIter_IsHash(*args)
-    def IsDoubleBondGeometry(*args): return _openbabel.OBMolBondIter_IsDoubleBondGeometry(*args)
-    def DoTransformations(*args): return _openbabel.OBMolBondIter_DoTransformations(*args)
-    def ClassDescription(*args): return _openbabel.OBMolBondIter_ClassDescription(*args)
-    def HasData(*args): return _openbabel.OBMolBondIter_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBMolBondIter_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBMolBondIter_SetData(*args)
-    def DataSize(*args): return _openbabel.OBMolBondIter_DataSize(*args)
-    def GetData(*args): return _openbabel.OBMolBondIter_GetData(*args)
-    def BeginData(*args): return _openbabel.OBMolBondIter_BeginData(*args)
-    def EndData(*args): return _openbabel.OBMolBondIter_EndData(*args)
-OBMolBondIter_swigregister = _openbabel.OBMolBondIter_swigregister
-OBMolBondIter_swigregister(OBMolBondIter)
+FastSearch_swigregister = _openbabel.FastSearch_swigregister
+FastSearch_swigregister(FastSearch)
 
-class OBAtomAtomIter(_object):
+class FastSearchIndexer(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBAtomAtomIter, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FastSearchIndexer, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBAtomAtomIter, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, FastSearchIndexer, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 
-        this = _openbabel.new_OBAtomAtomIter(*args)
+        this = _openbabel.new_FastSearchIndexer(*args)
         try: self.this.append(this)
         except: self.this = this
-    def good(*args): return _openbabel.OBAtomAtomIter_good(*args)
-    def inc(*args): return _openbabel.OBAtomAtomIter_inc(*args)
-    def deref(*args): return _openbabel.OBAtomAtomIter_deref(*args)
-    def __ref__(*args): return _openbabel.OBAtomAtomIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete_OBAtomAtomIter
+    __swig_destroy__ = _openbabel.delete_FastSearchIndexer
     __del__ = lambda self : None;
-    __swig_setmethods__["Visit"] = _openbabel.OBAtomAtomIter_Visit_set
-    __swig_getmethods__["Visit"] = _openbabel.OBAtomAtomIter_Visit_get
-    if _newclass:Visit = _swig_property(_openbabel.OBAtomAtomIter_Visit_get, _openbabel.OBAtomAtomIter_Visit_set)
-    def Clear(*args): return _openbabel.OBAtomAtomIter_Clear(*args)
-    def SetIdx(*args): return _openbabel.OBAtomAtomIter_SetIdx(*args)
-    def SetHyb(*args): return _openbabel.OBAtomAtomIter_SetHyb(*args)
-    def SetAtomicNum(*args): return _openbabel.OBAtomAtomIter_SetAtomicNum(*args)
-    def SetIsotope(*args): return _openbabel.OBAtomAtomIter_SetIsotope(*args)
-    def SetImplicitValence(*args): return _openbabel.OBAtomAtomIter_SetImplicitValence(*args)
-    def IncrementImplicitValence(*args): return _openbabel.OBAtomAtomIter_IncrementImplicitValence(*args)
-    def DecrementImplicitValence(*args): return _openbabel.OBAtomAtomIter_DecrementImplicitValence(*args)
-    def SetFormalCharge(*args): return _openbabel.OBAtomAtomIter_SetFormalCharge(*args)
-    def SetSpinMultiplicity(*args): return _openbabel.OBAtomAtomIter_SetSpinMultiplicity(*args)
-    def SetType(*args): return _openbabel.OBAtomAtomIter_SetType(*args)
-    def SetPartialCharge(*args): return _openbabel.OBAtomAtomIter_SetPartialCharge(*args)
-    def SetVector(*args): return _openbabel.OBAtomAtomIter_SetVector(*args)
-    def SetCoordPtr(*args): return _openbabel.OBAtomAtomIter_SetCoordPtr(*args)
-    def SetResidue(*args): return _openbabel.OBAtomAtomIter_SetResidue(*args)
-    def SetParent(*args): return _openbabel.OBAtomAtomIter_SetParent(*args)
-    def SetAromatic(*args): return _openbabel.OBAtomAtomIter_SetAromatic(*args)
-    def UnsetAromatic(*args): return _openbabel.OBAtomAtomIter_UnsetAromatic(*args)
-    def SetClockwiseStereo(*args): return _openbabel.OBAtomAtomIter_SetClockwiseStereo(*args)
-    def SetAntiClockwiseStereo(*args): return _openbabel.OBAtomAtomIter_SetAntiClockwiseStereo(*args)
-    def SetPositiveStereo(*args): return _openbabel.OBAtomAtomIter_SetPositiveStereo(*args)
-    def SetNegativeStereo(*args): return _openbabel.OBAtomAtomIter_SetNegativeStereo(*args)
-    def UnsetStereo(*args): return _openbabel.OBAtomAtomIter_UnsetStereo(*args)
-    def SetInRing(*args): return _openbabel.OBAtomAtomIter_SetInRing(*args)
-    def SetChiral(*args): return _openbabel.OBAtomAtomIter_SetChiral(*args)
-    def ClearCoordPtr(*args): return _openbabel.OBAtomAtomIter_ClearCoordPtr(*args)
-    def GetFormalCharge(*args): return _openbabel.OBAtomAtomIter_GetFormalCharge(*args)
-    def GetAtomicNum(*args): return _openbabel.OBAtomAtomIter_GetAtomicNum(*args)
-    def GetIsotope(*args): return _openbabel.OBAtomAtomIter_GetIsotope(*args)
-    def GetSpinMultiplicity(*args): return _openbabel.OBAtomAtomIter_GetSpinMultiplicity(*args)
-    def GetAtomicMass(*args): return _openbabel.OBAtomAtomIter_GetAtomicMass(*args)
-    def GetExactMass(*args): return _openbabel.OBAtomAtomIter_GetExactMass(*args)
-    def GetIdx(*args): return _openbabel.OBAtomAtomIter_GetIdx(*args)
-    def GetCoordinateIdx(*args): return _openbabel.OBAtomAtomIter_GetCoordinateIdx(*args)
-    def GetCIdx(*args): return _openbabel.OBAtomAtomIter_GetCIdx(*args)
-    def GetValence(*args): return _openbabel.OBAtomAtomIter_GetValence(*args)
-    def GetHyb(*args): return _openbabel.OBAtomAtomIter_GetHyb(*args)
-    def GetImplicitValence(*args): return _openbabel.OBAtomAtomIter_GetImplicitValence(*args)
-    def GetHvyValence(*args): return _openbabel.OBAtomAtomIter_GetHvyValence(*args)
-    def GetHeteroValence(*args): return _openbabel.OBAtomAtomIter_GetHeteroValence(*args)
-    def GetType(*args): return _openbabel.OBAtomAtomIter_GetType(*args)
-    def GetX(*args): return _openbabel.OBAtomAtomIter_GetX(*args)
-    def x(*args): return _openbabel.OBAtomAtomIter_x(*args)
-    def GetY(*args): return _openbabel.OBAtomAtomIter_GetY(*args)
-    def y(*args): return _openbabel.OBAtomAtomIter_y(*args)
-    def GetZ(*args): return _openbabel.OBAtomAtomIter_GetZ(*args)
-    def z(*args): return _openbabel.OBAtomAtomIter_z(*args)
-    def GetCoordinate(*args): return _openbabel.OBAtomAtomIter_GetCoordinate(*args)
-    def GetVector(*args): return _openbabel.OBAtomAtomIter_GetVector(*args)
-    def GetPartialCharge(*args): return _openbabel.OBAtomAtomIter_GetPartialCharge(*args)
-    def GetResidue(*args): return _openbabel.OBAtomAtomIter_GetResidue(*args)
-    def GetParent(*args): return _openbabel.OBAtomAtomIter_GetParent(*args)
-    def GetNewBondVector(*args): return _openbabel.OBAtomAtomIter_GetNewBondVector(*args)
-    def GetBond(*args): return _openbabel.OBAtomAtomIter_GetBond(*args)
-    def GetNextAtom(*args): return _openbabel.OBAtomAtomIter_GetNextAtom(*args)
-    def BeginBonds(*args): return _openbabel.OBAtomAtomIter_BeginBonds(*args)
-    def EndBonds(*args): return _openbabel.OBAtomAtomIter_EndBonds(*args)
-    def BeginBond(*args): return _openbabel.OBAtomAtomIter_BeginBond(*args)
-    def NextBond(*args): return _openbabel.OBAtomAtomIter_NextBond(*args)
-    def BeginNbrAtom(*args): return _openbabel.OBAtomAtomIter_BeginNbrAtom(*args)
-    def NextNbrAtom(*args): return _openbabel.OBAtomAtomIter_NextNbrAtom(*args)
-    def GetDistance(*args): return _openbabel.OBAtomAtomIter_GetDistance(*args)
-    def GetAngle(*args): return _openbabel.OBAtomAtomIter_GetAngle(*args)
-    def NewResidue(*args): return _openbabel.OBAtomAtomIter_NewResidue(*args)
-    def DeleteResidue(*args): return _openbabel.OBAtomAtomIter_DeleteResidue(*args)
-    def AddBond(*args): return _openbabel.OBAtomAtomIter_AddBond(*args)
-    def InsertBond(*args): return _openbabel.OBAtomAtomIter_InsertBond(*args)
-    def DeleteBond(*args): return _openbabel.OBAtomAtomIter_DeleteBond(*args)
-    def ClearBond(*args): return _openbabel.OBAtomAtomIter_ClearBond(*args)
-    def CountFreeOxygens(*args): return _openbabel.OBAtomAtomIter_CountFreeOxygens(*args)
-    def ImplicitHydrogenCount(*args): return _openbabel.OBAtomAtomIter_ImplicitHydrogenCount(*args)
-    def ExplicitHydrogenCount(*args): return _openbabel.OBAtomAtomIter_ExplicitHydrogenCount(*args)
-    def MemberOfRingCount(*args): return _openbabel.OBAtomAtomIter_MemberOfRingCount(*args)
-    def MemberOfRingSize(*args): return _openbabel.OBAtomAtomIter_MemberOfRingSize(*args)
-    def CountRingBonds(*args): return _openbabel.OBAtomAtomIter_CountRingBonds(*args)
-    def SmallestBondAngle(*args): return _openbabel.OBAtomAtomIter_SmallestBondAngle(*args)
-    def AverageBondAngle(*args): return _openbabel.OBAtomAtomIter_AverageBondAngle(*args)
-    def BOSum(*args): return _openbabel.OBAtomAtomIter_BOSum(*args)
-    def KBOSum(*args): return _openbabel.OBAtomAtomIter_KBOSum(*args)
-    def HtoMethyl(*args): return _openbabel.OBAtomAtomIter_HtoMethyl(*args)
-    def SetHybAndGeom(*args): return _openbabel.OBAtomAtomIter_SetHybAndGeom(*args)
-    def ForceNoH(*args): return _openbabel.OBAtomAtomIter_ForceNoH(*args)
-    def HasNoHForced(*args): return _openbabel.OBAtomAtomIter_HasNoHForced(*args)
-    def HasResidue(*args): return _openbabel.OBAtomAtomIter_HasResidue(*args)
-    def IsHydrogen(*args): return _openbabel.OBAtomAtomIter_IsHydrogen(*args)
-    def IsCarbon(*args): return _openbabel.OBAtomAtomIter_IsCarbon(*args)
-    def IsNitrogen(*args): return _openbabel.OBAtomAtomIter_IsNitrogen(*args)
-    def IsOxygen(*args): return _openbabel.OBAtomAtomIter_IsOxygen(*args)
-    def IsSulfur(*args): return _openbabel.OBAtomAtomIter_IsSulfur(*args)
-    def IsPhosphorus(*args): return _openbabel.OBAtomAtomIter_IsPhosphorus(*args)
-    def IsAromatic(*args): return _openbabel.OBAtomAtomIter_IsAromatic(*args)
-    def IsInRing(*args): return _openbabel.OBAtomAtomIter_IsInRing(*args)
-    def IsInRingSize(*args): return _openbabel.OBAtomAtomIter_IsInRingSize(*args)
-    def IsHeteroatom(*args): return _openbabel.OBAtomAtomIter_IsHeteroatom(*args)
-    def IsNotCorH(*args): return _openbabel.OBAtomAtomIter_IsNotCorH(*args)
-    def IsConnected(*args): return _openbabel.OBAtomAtomIter_IsConnected(*args)
-    def IsOneThree(*args): return _openbabel.OBAtomAtomIter_IsOneThree(*args)
-    def IsOneFour(*args): return _openbabel.OBAtomAtomIter_IsOneFour(*args)
-    def IsCarboxylOxygen(*args): return _openbabel.OBAtomAtomIter_IsCarboxylOxygen(*args)
-    def IsPhosphateOxygen(*args): return _openbabel.OBAtomAtomIter_IsPhosphateOxygen(*args)
-    def IsSulfateOxygen(*args): return _openbabel.OBAtomAtomIter_IsSulfateOxygen(*args)
-    def IsNitroOxygen(*args): return _openbabel.OBAtomAtomIter_IsNitroOxygen(*args)
-    def IsAmideNitrogen(*args): return _openbabel.OBAtomAtomIter_IsAmideNitrogen(*args)
-    def IsPolarHydrogen(*args): return _openbabel.OBAtomAtomIter_IsPolarHydrogen(*args)
-    def IsNonPolarHydrogen(*args): return _openbabel.OBAtomAtomIter_IsNonPolarHydrogen(*args)
-    def IsAromaticNOxide(*args): return _openbabel.OBAtomAtomIter_IsAromaticNOxide(*args)
-    def IsChiral(*args): return _openbabel.OBAtomAtomIter_IsChiral(*args)
-    def IsAxial(*args): return _openbabel.OBAtomAtomIter_IsAxial(*args)
-    def IsClockwise(*args): return _openbabel.OBAtomAtomIter_IsClockwise(*args)
-    def IsAntiClockwise(*args): return _openbabel.OBAtomAtomIter_IsAntiClockwise(*args)
-    def IsPositiveStereo(*args): return _openbabel.OBAtomAtomIter_IsPositiveStereo(*args)
-    def IsNegativeStereo(*args): return _openbabel.OBAtomAtomIter_IsNegativeStereo(*args)
-    def HasChiralitySpecified(*args): return _openbabel.OBAtomAtomIter_HasChiralitySpecified(*args)
-    def HasChiralVolume(*args): return _openbabel.OBAtomAtomIter_HasChiralVolume(*args)
-    def IsHbondAcceptor(*args): return _openbabel.OBAtomAtomIter_IsHbondAcceptor(*args)
-    def IsHbondDonor(*args): return _openbabel.OBAtomAtomIter_IsHbondDonor(*args)
-    def IsHbondDonorH(*args): return _openbabel.OBAtomAtomIter_IsHbondDonorH(*args)
-    def HasAlphaBetaUnsat(*args): return _openbabel.OBAtomAtomIter_HasAlphaBetaUnsat(*args)
-    def HasBondOfOrder(*args): return _openbabel.OBAtomAtomIter_HasBondOfOrder(*args)
-    def CountBondsOfOrder(*args): return _openbabel.OBAtomAtomIter_CountBondsOfOrder(*args)
-    def HasNonSingleBond(*args): return _openbabel.OBAtomAtomIter_HasNonSingleBond(*args)
-    def HasSingleBond(*args): return _openbabel.OBAtomAtomIter_HasSingleBond(*args)
-    def HasDoubleBond(*args): return _openbabel.OBAtomAtomIter_HasDoubleBond(*args)
-    def HasAromaticBond(*args): return _openbabel.OBAtomAtomIter_HasAromaticBond(*args)
-    def MatchesSMARTS(*args): return _openbabel.OBAtomAtomIter_MatchesSMARTS(*args)
-    def DoTransformations(*args): return _openbabel.OBAtomAtomIter_DoTransformations(*args)
-    def ClassDescription(*args): return _openbabel.OBAtomAtomIter_ClassDescription(*args)
-    def HasData(*args): return _openbabel.OBAtomAtomIter_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBAtomAtomIter_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBAtomAtomIter_SetData(*args)
-    def DataSize(*args): return _openbabel.OBAtomAtomIter_DataSize(*args)
-    def GetData(*args): return _openbabel.OBAtomAtomIter_GetData(*args)
-    def BeginData(*args): return _openbabel.OBAtomAtomIter_BeginData(*args)
-    def EndData(*args): return _openbabel.OBAtomAtomIter_EndData(*args)
-OBAtomAtomIter_swigregister = _openbabel.OBAtomAtomIter_swigregister
-OBAtomAtomIter_swigregister(OBAtomAtomIter)
+    def Add(*args): return _openbabel.FastSearchIndexer_Add(*args)
+FastSearchIndexer_swigregister = _openbabel.FastSearchIndexer_swigregister
+FastSearchIndexer_swigregister(FastSearchIndexer)
 
-class OBAtomBondIter(_object):
+OBFF_LOGLVL_NONE = _openbabel.OBFF_LOGLVL_NONE
+OBFF_LOGLVL_LOW = _openbabel.OBFF_LOGLVL_LOW
+OBFF_LOGLVL_MEDIUM = _openbabel.OBFF_LOGLVL_MEDIUM
+OBFF_LOGLVL_HIGH = _openbabel.OBFF_LOGLVL_HIGH
+OBFF_ENERGY = _openbabel.OBFF_ENERGY
+OBFF_EBOND = _openbabel.OBFF_EBOND
+OBFF_EANGLE = _openbabel.OBFF_EANGLE
+OBFF_ESTRBND = _openbabel.OBFF_ESTRBND
+OBFF_ETORSION = _openbabel.OBFF_ETORSION
+OBFF_EOOP = _openbabel.OBFF_EOOP
+OBFF_EVDW = _openbabel.OBFF_EVDW
+OBFF_EELECTROSTATIC = _openbabel.OBFF_EELECTROSTATIC
+OBFF_NUMERICAL_GRADIENT = _openbabel.OBFF_NUMERICAL_GRADIENT
+OBFF_ANALYTICAL_GRADIENT = _openbabel.OBFF_ANALYTICAL_GRADIENT
+KCAL_TO_KJ = _openbabel.KCAL_TO_KJ
+class OBFFParameter(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBAtomBondIter, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBFFParameter, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBAtomBondIter, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, OBFFParameter, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["a"] = _openbabel.OBFFParameter_a_set
+    __swig_getmethods__["a"] = _openbabel.OBFFParameter_a_get
+    if _newclass:a = _swig_property(_openbabel.OBFFParameter_a_get, _openbabel.OBFFParameter_a_set)
+    __swig_setmethods__["b"] = _openbabel.OBFFParameter_b_set
+    __swig_getmethods__["b"] = _openbabel.OBFFParameter_b_get
+    if _newclass:b = _swig_property(_openbabel.OBFFParameter_b_get, _openbabel.OBFFParameter_b_set)
+    __swig_setmethods__["c"] = _openbabel.OBFFParameter_c_set
+    __swig_getmethods__["c"] = _openbabel.OBFFParameter_c_get
+    if _newclass:c = _swig_property(_openbabel.OBFFParameter_c_get, _openbabel.OBFFParameter_c_set)
+    __swig_setmethods__["d"] = _openbabel.OBFFParameter_d_set
+    __swig_getmethods__["d"] = _openbabel.OBFFParameter_d_get
+    if _newclass:d = _swig_property(_openbabel.OBFFParameter_d_get, _openbabel.OBFFParameter_d_set)
+    __swig_setmethods__["_a"] = _openbabel.OBFFParameter__a_set
+    __swig_getmethods__["_a"] = _openbabel.OBFFParameter__a_get
+    if _newclass:_a = _swig_property(_openbabel.OBFFParameter__a_get, _openbabel.OBFFParameter__a_set)
+    __swig_setmethods__["_b"] = _openbabel.OBFFParameter__b_set
+    __swig_getmethods__["_b"] = _openbabel.OBFFParameter__b_get
+    if _newclass:_b = _swig_property(_openbabel.OBFFParameter__b_get, _openbabel.OBFFParameter__b_set)
+    __swig_setmethods__["_c"] = _openbabel.OBFFParameter__c_set
+    __swig_getmethods__["_c"] = _openbabel.OBFFParameter__c_get
+    if _newclass:_c = _swig_property(_openbabel.OBFFParameter__c_get, _openbabel.OBFFParameter__c_set)
+    __swig_setmethods__["_d"] = _openbabel.OBFFParameter__d_set
+    __swig_getmethods__["_d"] = _openbabel.OBFFParameter__d_get
+    if _newclass:_d = _swig_property(_openbabel.OBFFParameter__d_get, _openbabel.OBFFParameter__d_set)
+    __swig_setmethods__["ipar1"] = _openbabel.OBFFParameter_ipar1_set
+    __swig_getmethods__["ipar1"] = _openbabel.OBFFParameter_ipar1_get
+    if _newclass:ipar1 = _swig_property(_openbabel.OBFFParameter_ipar1_get, _openbabel.OBFFParameter_ipar1_set)
+    __swig_setmethods__["ipar2"] = _openbabel.OBFFParameter_ipar2_set
+    __swig_getmethods__["ipar2"] = _openbabel.OBFFParameter_ipar2_get
+    if _newclass:ipar2 = _swig_property(_openbabel.OBFFParameter_ipar2_get, _openbabel.OBFFParameter_ipar2_set)
+    __swig_setmethods__["ipar3"] = _openbabel.OBFFParameter_ipar3_set
+    __swig_getmethods__["ipar3"] = _openbabel.OBFFParameter_ipar3_get
+    if _newclass:ipar3 = _swig_property(_openbabel.OBFFParameter_ipar3_get, _openbabel.OBFFParameter_ipar3_set)
+    __swig_setmethods__["ipar4"] = _openbabel.OBFFParameter_ipar4_set
+    __swig_getmethods__["ipar4"] = _openbabel.OBFFParameter_ipar4_get
+    if _newclass:ipar4 = _swig_property(_openbabel.OBFFParameter_ipar4_get, _openbabel.OBFFParameter_ipar4_set)
+    __swig_setmethods__["ipar5"] = _openbabel.OBFFParameter_ipar5_set
+    __swig_getmethods__["ipar5"] = _openbabel.OBFFParameter_ipar5_get
+    if _newclass:ipar5 = _swig_property(_openbabel.OBFFParameter_ipar5_get, _openbabel.OBFFParameter_ipar5_set)
+    __swig_setmethods__["dpar1"] = _openbabel.OBFFParameter_dpar1_set
+    __swig_getmethods__["dpar1"] = _openbabel.OBFFParameter_dpar1_get
+    if _newclass:dpar1 = _swig_property(_openbabel.OBFFParameter_dpar1_get, _openbabel.OBFFParameter_dpar1_set)
+    __swig_setmethods__["dpar2"] = _openbabel.OBFFParameter_dpar2_set
+    __swig_getmethods__["dpar2"] = _openbabel.OBFFParameter_dpar2_get
+    if _newclass:dpar2 = _swig_property(_openbabel.OBFFParameter_dpar2_get, _openbabel.OBFFParameter_dpar2_set)
+    __swig_setmethods__["dpar3"] = _openbabel.OBFFParameter_dpar3_set
+    __swig_getmethods__["dpar3"] = _openbabel.OBFFParameter_dpar3_get
+    if _newclass:dpar3 = _swig_property(_openbabel.OBFFParameter_dpar3_get, _openbabel.OBFFParameter_dpar3_set)
+    __swig_setmethods__["dpar4"] = _openbabel.OBFFParameter_dpar4_set
+    __swig_getmethods__["dpar4"] = _openbabel.OBFFParameter_dpar4_get
+    if _newclass:dpar4 = _swig_property(_openbabel.OBFFParameter_dpar4_get, _openbabel.OBFFParameter_dpar4_set)
+    __swig_setmethods__["dpar5"] = _openbabel.OBFFParameter_dpar5_set
+    __swig_getmethods__["dpar5"] = _openbabel.OBFFParameter_dpar5_get
+    if _newclass:dpar5 = _swig_property(_openbabel.OBFFParameter_dpar5_get, _openbabel.OBFFParameter_dpar5_set)
+    def clear(*args): return _openbabel.OBFFParameter_clear(*args)
     def __init__(self, *args): 
-        this = _openbabel.new_OBAtomBondIter(*args)
+        this = _openbabel.new_OBFFParameter(*args)
         try: self.this.append(this)
         except: self.this = this
-    def good(*args): return _openbabel.OBAtomBondIter_good(*args)
-    def inc(*args): return _openbabel.OBAtomBondIter_inc(*args)
-    def deref(*args): return _openbabel.OBAtomBondIter_deref(*args)
-    def __ref__(*args): return _openbabel.OBAtomBondIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete_OBAtomBondIter
+    __swig_destroy__ = _openbabel.delete_OBFFParameter
     __del__ = lambda self : None;
-    __swig_setmethods__["Visit"] = _openbabel.OBAtomBondIter_Visit_set
-    __swig_getmethods__["Visit"] = _openbabel.OBAtomBondIter_Visit_get
-    if _newclass:Visit = _swig_property(_openbabel.OBAtomBondIter_Visit_get, _openbabel.OBAtomBondIter_Visit_set)
-    def SetIdx(*args): return _openbabel.OBAtomBondIter_SetIdx(*args)
-    def SetBO(*args): return _openbabel.OBAtomBondIter_SetBO(*args)
-    def SetBegin(*args): return _openbabel.OBAtomBondIter_SetBegin(*args)
-    def SetEnd(*args): return _openbabel.OBAtomBondIter_SetEnd(*args)
-    def SetParent(*args): return _openbabel.OBAtomBondIter_SetParent(*args)
-    def SetLength(*args): return _openbabel.OBAtomBondIter_SetLength(*args)
-    def Set(*args): return _openbabel.OBAtomBondIter_Set(*args)
-    def SetKSingle(*args): return _openbabel.OBAtomBondIter_SetKSingle(*args)
-    def SetKDouble(*args): return _openbabel.OBAtomBondIter_SetKDouble(*args)
-    def SetKTriple(*args): return _openbabel.OBAtomBondIter_SetKTriple(*args)
-    def SetAromatic(*args): return _openbabel.OBAtomBondIter_SetAromatic(*args)
-    def SetHash(*args): return _openbabel.OBAtomBondIter_SetHash(*args)
-    def SetWedge(*args): return _openbabel.OBAtomBondIter_SetWedge(*args)
-    def SetUp(*args): return _openbabel.OBAtomBondIter_SetUp(*args)
-    def SetDown(*args): return _openbabel.OBAtomBondIter_SetDown(*args)
-    def SetInRing(*args): return _openbabel.OBAtomBondIter_SetInRing(*args)
-    def SetClosure(*args): return _openbabel.OBAtomBondIter_SetClosure(*args)
-    def UnsetHash(*args): return _openbabel.OBAtomBondIter_UnsetHash(*args)
-    def UnsetWedge(*args): return _openbabel.OBAtomBondIter_UnsetWedge(*args)
-    def UnsetUp(*args): return _openbabel.OBAtomBondIter_UnsetUp(*args)
-    def UnsetDown(*args): return _openbabel.OBAtomBondIter_UnsetDown(*args)
-    def UnsetAromatic(*args): return _openbabel.OBAtomBondIter_UnsetAromatic(*args)
-    def UnsetKekule(*args): return _openbabel.OBAtomBondIter_UnsetKekule(*args)
-    def GetIdx(*args): return _openbabel.OBAtomBondIter_GetIdx(*args)
-    def GetBO(*args): return _openbabel.OBAtomBondIter_GetBO(*args)
-    def GetBondOrder(*args): return _openbabel.OBAtomBondIter_GetBondOrder(*args)
-    def GetFlags(*args): return _openbabel.OBAtomBondIter_GetFlags(*args)
-    def GetBeginAtomIdx(*args): return _openbabel.OBAtomBondIter_GetBeginAtomIdx(*args)
-    def GetEndAtomIdx(*args): return _openbabel.OBAtomBondIter_GetEndAtomIdx(*args)
-    def GetBeginAtom(*args): return _openbabel.OBAtomBondIter_GetBeginAtom(*args)
-    def GetEndAtom(*args): return _openbabel.OBAtomBondIter_GetEndAtom(*args)
-    def GetNbrAtom(*args): return _openbabel.OBAtomBondIter_GetNbrAtom(*args)
-    def GetParent(*args): return _openbabel.OBAtomBondIter_GetParent(*args)
-    def GetEquibLength(*args): return _openbabel.OBAtomBondIter_GetEquibLength(*args)
-    def GetLength(*args): return _openbabel.OBAtomBondIter_GetLength(*args)
-    def GetNbrAtomIdx(*args): return _openbabel.OBAtomBondIter_GetNbrAtomIdx(*args)
-    def IsAromatic(*args): return _openbabel.OBAtomBondIter_IsAromatic(*args)
-    def IsInRing(*args): return _openbabel.OBAtomBondIter_IsInRing(*args)
-    def IsRotor(*args): return _openbabel.OBAtomBondIter_IsRotor(*args)
-    def IsAmide(*args): return _openbabel.OBAtomBondIter_IsAmide(*args)
-    def IsPrimaryAmide(*args): return _openbabel.OBAtomBondIter_IsPrimaryAmide(*args)
-    def IsSecondaryAmide(*args): return _openbabel.OBAtomBondIter_IsSecondaryAmide(*args)
-    def IsEster(*args): return _openbabel.OBAtomBondIter_IsEster(*args)
-    def IsCarbonyl(*args): return _openbabel.OBAtomBondIter_IsCarbonyl(*args)
-    def IsSingle(*args): return _openbabel.OBAtomBondIter_IsSingle(*args)
-    def IsDouble(*args): return _openbabel.OBAtomBondIter_IsDouble(*args)
-    def IsTriple(*args): return _openbabel.OBAtomBondIter_IsTriple(*args)
-    def IsKSingle(*args): return _openbabel.OBAtomBondIter_IsKSingle(*args)
-    def IsKDouble(*args): return _openbabel.OBAtomBondIter_IsKDouble(*args)
-    def IsKTriple(*args): return _openbabel.OBAtomBondIter_IsKTriple(*args)
-    def IsClosure(*args): return _openbabel.OBAtomBondIter_IsClosure(*args)
-    def IsUp(*args): return _openbabel.OBAtomBondIter_IsUp(*args)
-    def IsDown(*args): return _openbabel.OBAtomBondIter_IsDown(*args)
-    def IsWedge(*args): return _openbabel.OBAtomBondIter_IsWedge(*args)
-    def IsHash(*args): return _openbabel.OBAtomBondIter_IsHash(*args)
-    def IsDoubleBondGeometry(*args): return _openbabel.OBAtomBondIter_IsDoubleBondGeometry(*args)
-    def DoTransformations(*args): return _openbabel.OBAtomBondIter_DoTransformations(*args)
-    def ClassDescription(*args): return _openbabel.OBAtomBondIter_ClassDescription(*args)
-    def HasData(*args): return _openbabel.OBAtomBondIter_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBAtomBondIter_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBAtomBondIter_SetData(*args)
-    def DataSize(*args): return _openbabel.OBAtomBondIter_DataSize(*args)
-    def GetData(*args): return _openbabel.OBAtomBondIter_GetData(*args)
-    def BeginData(*args): return _openbabel.OBAtomBondIter_BeginData(*args)
-    def EndData(*args): return _openbabel.OBAtomBondIter_EndData(*args)
-OBAtomBondIter_swigregister = _openbabel.OBAtomBondIter_swigregister
-OBAtomBondIter_swigregister(OBAtomBondIter)
+OBFFParameter_swigregister = _openbabel.OBFFParameter_swigregister
+OBFFParameter_swigregister(OBFFParameter)
 
-class OBResidueIter(_object):
+class OBFFCalculation(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBResidueIter, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBFFCalculation, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBResidueIter, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, OBFFCalculation, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["energy"] = _openbabel.OBFFCalculation_energy_set
+    __swig_getmethods__["energy"] = _openbabel.OBFFCalculation_energy_get
+    if _newclass:energy = _swig_property(_openbabel.OBFFCalculation_energy_get, _openbabel.OBFFCalculation_energy_set)
+    __swig_setmethods__["grada"] = _openbabel.OBFFCalculation_grada_set
+    __swig_getmethods__["grada"] = _openbabel.OBFFCalculation_grada_get
+    if _newclass:grada = _swig_property(_openbabel.OBFFCalculation_grada_get, _openbabel.OBFFCalculation_grada_set)
+    __swig_setmethods__["gradb"] = _openbabel.OBFFCalculation_gradb_set
+    __swig_getmethods__["gradb"] = _openbabel.OBFFCalculation_gradb_get
+    if _newclass:gradb = _swig_property(_openbabel.OBFFCalculation_gradb_get, _openbabel.OBFFCalculation_gradb_set)
+    __swig_setmethods__["gradc"] = _openbabel.OBFFCalculation_gradc_set
+    __swig_getmethods__["gradc"] = _openbabel.OBFFCalculation_gradc_get
+    if _newclass:gradc = _swig_property(_openbabel.OBFFCalculation_gradc_get, _openbabel.OBFFCalculation_gradc_set)
+    __swig_setmethods__["gradd"] = _openbabel.OBFFCalculation_gradd_set
+    __swig_getmethods__["gradd"] = _openbabel.OBFFCalculation_gradd_get
+    if _newclass:gradd = _swig_property(_openbabel.OBFFCalculation_gradd_get, _openbabel.OBFFCalculation_gradd_set)
+    __swig_setmethods__["a"] = _openbabel.OBFFCalculation_a_set
+    __swig_getmethods__["a"] = _openbabel.OBFFCalculation_a_get
+    if _newclass:a = _swig_property(_openbabel.OBFFCalculation_a_get, _openbabel.OBFFCalculation_a_set)
+    __swig_setmethods__["b"] = _openbabel.OBFFCalculation_b_set
+    __swig_getmethods__["b"] = _openbabel.OBFFCalculation_b_get
+    if _newclass:b = _swig_property(_openbabel.OBFFCalculation_b_get, _openbabel.OBFFCalculation_b_set)
+    __swig_setmethods__["c"] = _openbabel.OBFFCalculation_c_set
+    __swig_getmethods__["c"] = _openbabel.OBFFCalculation_c_get
+    if _newclass:c = _swig_property(_openbabel.OBFFCalculation_c_get, _openbabel.OBFFCalculation_c_set)
+    __swig_setmethods__["d"] = _openbabel.OBFFCalculation_d_set
+    __swig_getmethods__["d"] = _openbabel.OBFFCalculation_d_get
+    if _newclass:d = _swig_property(_openbabel.OBFFCalculation_d_get, _openbabel.OBFFCalculation_d_set)
     def __init__(self, *args): 
-        this = _openbabel.new_OBResidueIter(*args)
+        this = _openbabel.new_OBFFCalculation(*args)
         try: self.this.append(this)
         except: self.this = this
-    def good(*args): return _openbabel.OBResidueIter_good(*args)
-    def inc(*args): return _openbabel.OBResidueIter_inc(*args)
-    def __deref__(*args): return _openbabel.OBResidueIter___deref__(*args)
-    def __ref__(*args): return _openbabel.OBResidueIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete_OBResidueIter
+    __swig_destroy__ = _openbabel.delete_OBFFCalculation
     __del__ = lambda self : None;
-    def AddAtom(*args): return _openbabel.OBResidueIter_AddAtom(*args)
-    def InsertAtom(*args): return _openbabel.OBResidueIter_InsertAtom(*args)
-    def RemoveAtom(*args): return _openbabel.OBResidueIter_RemoveAtom(*args)
-    def Clear(*args): return _openbabel.OBResidueIter_Clear(*args)
-    def SetName(*args): return _openbabel.OBResidueIter_SetName(*args)
-    def SetNum(*args): return _openbabel.OBResidueIter_SetNum(*args)
-    def SetChain(*args): return _openbabel.OBResidueIter_SetChain(*args)
-    def SetChainNum(*args): return _openbabel.OBResidueIter_SetChainNum(*args)
-    def SetIdx(*args): return _openbabel.OBResidueIter_SetIdx(*args)
-    def SetAtomID(*args): return _openbabel.OBResidueIter_SetAtomID(*args)
-    def SetHetAtom(*args): return _openbabel.OBResidueIter_SetHetAtom(*args)
-    def SetSerialNum(*args): return _openbabel.OBResidueIter_SetSerialNum(*args)
-    def GetName(*args): return _openbabel.OBResidueIter_GetName(*args)
-    def GetNum(*args): return _openbabel.OBResidueIter_GetNum(*args)
-    def GetNumAtoms(*args): return _openbabel.OBResidueIter_GetNumAtoms(*args)
-    def GetChain(*args): return _openbabel.OBResidueIter_GetChain(*args)
-    def GetChainNum(*args): return _openbabel.OBResidueIter_GetChainNum(*args)
-    def GetIdx(*args): return _openbabel.OBResidueIter_GetIdx(*args)
-    def GetResKey(*args): return _openbabel.OBResidueIter_GetResKey(*args)
-    def GetAtoms(*args): return _openbabel.OBResidueIter_GetAtoms(*args)
-    def GetBonds(*args): return _openbabel.OBResidueIter_GetBonds(*args)
-    def GetAtomID(*args): return _openbabel.OBResidueIter_GetAtomID(*args)
-    def GetSerialNum(*args): return _openbabel.OBResidueIter_GetSerialNum(*args)
-    def GetAminoAcidProperty(*args): return _openbabel.OBResidueIter_GetAminoAcidProperty(*args)
-    def GetAtomProperty(*args): return _openbabel.OBResidueIter_GetAtomProperty(*args)
-    def GetResidueProperty(*args): return _openbabel.OBResidueIter_GetResidueProperty(*args)
-    def IsHetAtom(*args): return _openbabel.OBResidueIter_IsHetAtom(*args)
-    def IsResidueType(*args): return _openbabel.OBResidueIter_IsResidueType(*args)
-    def BeginAtoms(*args): return _openbabel.OBResidueIter_BeginAtoms(*args)
-    def EndAtoms(*args): return _openbabel.OBResidueIter_EndAtoms(*args)
-    def BeginAtom(*args): return _openbabel.OBResidueIter_BeginAtom(*args)
-    def NextAtom(*args): return _openbabel.OBResidueIter_NextAtom(*args)
-    def DoTransformations(*args): return _openbabel.OBResidueIter_DoTransformations(*args)
-    def ClassDescription(*args): return _openbabel.OBResidueIter_ClassDescription(*args)
-    def HasData(*args): return _openbabel.OBResidueIter_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBResidueIter_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBResidueIter_SetData(*args)
-    def DataSize(*args): return _openbabel.OBResidueIter_DataSize(*args)
-    def GetData(*args): return _openbabel.OBResidueIter_GetData(*args)
-    def BeginData(*args): return _openbabel.OBResidueIter_BeginData(*args)
-    def EndData(*args): return _openbabel.OBResidueIter_EndData(*args)
-OBResidueIter_swigregister = _openbabel.OBResidueIter_swigregister
-OBResidueIter_swigregister(OBResidueIter)
+    def Compute(*args): return _openbabel.OBFFCalculation_Compute(*args)
+    def GetEnergy(*args): return _openbabel.OBFFCalculation_GetEnergy(*args)
+    def GetGradient(*args): return _openbabel.OBFFCalculation_GetGradient(*args)
+OBFFCalculation_swigregister = _openbabel.OBFFCalculation_swigregister
+OBFFCalculation_swigregister(OBFFCalculation)
 
-class OBResidueAtomIter(_object):
+class OBForceField(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBResidueAtomIter, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBForceField, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBResidueAtomIter, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, OBForceField, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 
-        this = _openbabel.new_OBResidueAtomIter(*args)
+        this = _openbabel.new_OBForceField(*args)
         try: self.this.append(this)
         except: self.this = this
-    def good(*args): return _openbabel.OBResidueAtomIter_good(*args)
-    def inc(*args): return _openbabel.OBResidueAtomIter_inc(*args)
-    def deref(*args): return _openbabel.OBResidueAtomIter_deref(*args)
-    def __ref__(*args): return _openbabel.OBResidueAtomIter___ref__(*args)
-    __swig_destroy__ = _openbabel.delete_OBResidueAtomIter
+    __swig_getmethods__["Iter"] = lambda x: _openbabel.OBForceField_Iter
+    if _newclass:Iter = staticmethod(_openbabel.OBForceField_Iter)
+    __swig_getmethods__["FindDefaultType"] = lambda x: _openbabel.OBForceField_FindDefaultType
+    if _newclass:FindDefaultType = staticmethod(_openbabel.OBForceField_FindDefaultType)
+    __swig_getmethods__["FindType"] = lambda x: _openbabel.OBForceField_FindType
+    if _newclass:FindType = staticmethod(_openbabel.OBForceField_FindType)
+    __swig_destroy__ = _openbabel.delete_OBForceField
     __del__ = lambda self : None;
-    __swig_setmethods__["Visit"] = _openbabel.OBResidueAtomIter_Visit_set
-    __swig_getmethods__["Visit"] = _openbabel.OBResidueAtomIter_Visit_get
-    if _newclass:Visit = _swig_property(_openbabel.OBResidueAtomIter_Visit_get, _openbabel.OBResidueAtomIter_Visit_set)
-    def Clear(*args): return _openbabel.OBResidueAtomIter_Clear(*args)
-    def SetIdx(*args): return _openbabel.OBResidueAtomIter_SetIdx(*args)
-    def SetHyb(*args): return _openbabel.OBResidueAtomIter_SetHyb(*args)
-    def SetAtomicNum(*args): return _openbabel.OBResidueAtomIter_SetAtomicNum(*args)
-    def SetIsotope(*args): return _openbabel.OBResidueAtomIter_SetIsotope(*args)
-    def SetImplicitValence(*args): return _openbabel.OBResidueAtomIter_SetImplicitValence(*args)
-    def IncrementImplicitValence(*args): return _openbabel.OBResidueAtomIter_IncrementImplicitValence(*args)
-    def DecrementImplicitValence(*args): return _openbabel.OBResidueAtomIter_DecrementImplicitValence(*args)
-    def SetFormalCharge(*args): return _openbabel.OBResidueAtomIter_SetFormalCharge(*args)
-    def SetSpinMultiplicity(*args): return _openbabel.OBResidueAtomIter_SetSpinMultiplicity(*args)
-    def SetType(*args): return _openbabel.OBResidueAtomIter_SetType(*args)
-    def SetPartialCharge(*args): return _openbabel.OBResidueAtomIter_SetPartialCharge(*args)
-    def SetVector(*args): return _openbabel.OBResidueAtomIter_SetVector(*args)
-    def SetCoordPtr(*args): return _openbabel.OBResidueAtomIter_SetCoordPtr(*args)
-    def SetResidue(*args): return _openbabel.OBResidueAtomIter_SetResidue(*args)
-    def SetParent(*args): return _openbabel.OBResidueAtomIter_SetParent(*args)
-    def SetAromatic(*args): return _openbabel.OBResidueAtomIter_SetAromatic(*args)
-    def UnsetAromatic(*args): return _openbabel.OBResidueAtomIter_UnsetAromatic(*args)
-    def SetClockwiseStereo(*args): return _openbabel.OBResidueAtomIter_SetClockwiseStereo(*args)
-    def SetAntiClockwiseStereo(*args): return _openbabel.OBResidueAtomIter_SetAntiClockwiseStereo(*args)
-    def SetPositiveStereo(*args): return _openbabel.OBResidueAtomIter_SetPositiveStereo(*args)
-    def SetNegativeStereo(*args): return _openbabel.OBResidueAtomIter_SetNegativeStereo(*args)
-    def UnsetStereo(*args): return _openbabel.OBResidueAtomIter_UnsetStereo(*args)
-    def SetInRing(*args): return _openbabel.OBResidueAtomIter_SetInRing(*args)
-    def SetChiral(*args): return _openbabel.OBResidueAtomIter_SetChiral(*args)
-    def ClearCoordPtr(*args): return _openbabel.OBResidueAtomIter_ClearCoordPtr(*args)
-    def GetFormalCharge(*args): return _openbabel.OBResidueAtomIter_GetFormalCharge(*args)
-    def GetAtomicNum(*args): return _openbabel.OBResidueAtomIter_GetAtomicNum(*args)
-    def GetIsotope(*args): return _openbabel.OBResidueAtomIter_GetIsotope(*args)
-    def GetSpinMultiplicity(*args): return _openbabel.OBResidueAtomIter_GetSpinMultiplicity(*args)
-    def GetAtomicMass(*args): return _openbabel.OBResidueAtomIter_GetAtomicMass(*args)
-    def GetExactMass(*args): return _openbabel.OBResidueAtomIter_GetExactMass(*args)
-    def GetIdx(*args): return _openbabel.OBResidueAtomIter_GetIdx(*args)
-    def GetCoordinateIdx(*args): return _openbabel.OBResidueAtomIter_GetCoordinateIdx(*args)
-    def GetCIdx(*args): return _openbabel.OBResidueAtomIter_GetCIdx(*args)
-    def GetValence(*args): return _openbabel.OBResidueAtomIter_GetValence(*args)
-    def GetHyb(*args): return _openbabel.OBResidueAtomIter_GetHyb(*args)
-    def GetImplicitValence(*args): return _openbabel.OBResidueAtomIter_GetImplicitValence(*args)
-    def GetHvyValence(*args): return _openbabel.OBResidueAtomIter_GetHvyValence(*args)
-    def GetHeteroValence(*args): return _openbabel.OBResidueAtomIter_GetHeteroValence(*args)
-    def GetType(*args): return _openbabel.OBResidueAtomIter_GetType(*args)
-    def GetX(*args): return _openbabel.OBResidueAtomIter_GetX(*args)
-    def x(*args): return _openbabel.OBResidueAtomIter_x(*args)
-    def GetY(*args): return _openbabel.OBResidueAtomIter_GetY(*args)
-    def y(*args): return _openbabel.OBResidueAtomIter_y(*args)
-    def GetZ(*args): return _openbabel.OBResidueAtomIter_GetZ(*args)
-    def z(*args): return _openbabel.OBResidueAtomIter_z(*args)
-    def GetCoordinate(*args): return _openbabel.OBResidueAtomIter_GetCoordinate(*args)
-    def GetVector(*args): return _openbabel.OBResidueAtomIter_GetVector(*args)
-    def GetPartialCharge(*args): return _openbabel.OBResidueAtomIter_GetPartialCharge(*args)
-    def GetResidue(*args): return _openbabel.OBResidueAtomIter_GetResidue(*args)
-    def GetParent(*args): return _openbabel.OBResidueAtomIter_GetParent(*args)
-    def GetNewBondVector(*args): return _openbabel.OBResidueAtomIter_GetNewBondVector(*args)
-    def GetBond(*args): return _openbabel.OBResidueAtomIter_GetBond(*args)
-    def GetNextAtom(*args): return _openbabel.OBResidueAtomIter_GetNextAtom(*args)
-    def BeginBonds(*args): return _openbabel.OBResidueAtomIter_BeginBonds(*args)
-    def EndBonds(*args): return _openbabel.OBResidueAtomIter_EndBonds(*args)
-    def BeginBond(*args): return _openbabel.OBResidueAtomIter_BeginBond(*args)
-    def NextBond(*args): return _openbabel.OBResidueAtomIter_NextBond(*args)
-    def BeginNbrAtom(*args): return _openbabel.OBResidueAtomIter_BeginNbrAtom(*args)
-    def NextNbrAtom(*args): return _openbabel.OBResidueAtomIter_NextNbrAtom(*args)
-    def GetDistance(*args): return _openbabel.OBResidueAtomIter_GetDistance(*args)
-    def GetAngle(*args): return _openbabel.OBResidueAtomIter_GetAngle(*args)
-    def NewResidue(*args): return _openbabel.OBResidueAtomIter_NewResidue(*args)
-    def DeleteResidue(*args): return _openbabel.OBResidueAtomIter_DeleteResidue(*args)
-    def AddBond(*args): return _openbabel.OBResidueAtomIter_AddBond(*args)
-    def InsertBond(*args): return _openbabel.OBResidueAtomIter_InsertBond(*args)
-    def DeleteBond(*args): return _openbabel.OBResidueAtomIter_DeleteBond(*args)
-    def ClearBond(*args): return _openbabel.OBResidueAtomIter_ClearBond(*args)
-    def CountFreeOxygens(*args): return _openbabel.OBResidueAtomIter_CountFreeOxygens(*args)
-    def ImplicitHydrogenCount(*args): return _openbabel.OBResidueAtomIter_ImplicitHydrogenCount(*args)
-    def ExplicitHydrogenCount(*args): return _openbabel.OBResidueAtomIter_ExplicitHydrogenCount(*args)
-    def MemberOfRingCount(*args): return _openbabel.OBResidueAtomIter_MemberOfRingCount(*args)
-    def MemberOfRingSize(*args): return _openbabel.OBResidueAtomIter_MemberOfRingSize(*args)
-    def CountRingBonds(*args): return _openbabel.OBResidueAtomIter_CountRingBonds(*args)
-    def SmallestBondAngle(*args): return _openbabel.OBResidueAtomIter_SmallestBondAngle(*args)
-    def AverageBondAngle(*args): return _openbabel.OBResidueAtomIter_AverageBondAngle(*args)
-    def BOSum(*args): return _openbabel.OBResidueAtomIter_BOSum(*args)
-    def KBOSum(*args): return _openbabel.OBResidueAtomIter_KBOSum(*args)
-    def HtoMethyl(*args): return _openbabel.OBResidueAtomIter_HtoMethyl(*args)
-    def SetHybAndGeom(*args): return _openbabel.OBResidueAtomIter_SetHybAndGeom(*args)
-    def ForceNoH(*args): return _openbabel.OBResidueAtomIter_ForceNoH(*args)
-    def HasNoHForced(*args): return _openbabel.OBResidueAtomIter_HasNoHForced(*args)
-    def HasResidue(*args): return _openbabel.OBResidueAtomIter_HasResidue(*args)
-    def IsHydrogen(*args): return _openbabel.OBResidueAtomIter_IsHydrogen(*args)
-    def IsCarbon(*args): return _openbabel.OBResidueAtomIter_IsCarbon(*args)
-    def IsNitrogen(*args): return _openbabel.OBResidueAtomIter_IsNitrogen(*args)
-    def IsOxygen(*args): return _openbabel.OBResidueAtomIter_IsOxygen(*args)
-    def IsSulfur(*args): return _openbabel.OBResidueAtomIter_IsSulfur(*args)
-    def IsPhosphorus(*args): return _openbabel.OBResidueAtomIter_IsPhosphorus(*args)
-    def IsAromatic(*args): return _openbabel.OBResidueAtomIter_IsAromatic(*args)
-    def IsInRing(*args): return _openbabel.OBResidueAtomIter_IsInRing(*args)
-    def IsInRingSize(*args): return _openbabel.OBResidueAtomIter_IsInRingSize(*args)
-    def IsHeteroatom(*args): return _openbabel.OBResidueAtomIter_IsHeteroatom(*args)
-    def IsNotCorH(*args): return _openbabel.OBResidueAtomIter_IsNotCorH(*args)
-    def IsConnected(*args): return _openbabel.OBResidueAtomIter_IsConnected(*args)
-    def IsOneThree(*args): return _openbabel.OBResidueAtomIter_IsOneThree(*args)
-    def IsOneFour(*args): return _openbabel.OBResidueAtomIter_IsOneFour(*args)
-    def IsCarboxylOxygen(*args): return _openbabel.OBResidueAtomIter_IsCarboxylOxygen(*args)
-    def IsPhosphateOxygen(*args): return _openbabel.OBResidueAtomIter_IsPhosphateOxygen(*args)
-    def IsSulfateOxygen(*args): return _openbabel.OBResidueAtomIter_IsSulfateOxygen(*args)
-    def IsNitroOxygen(*args): return _openbabel.OBResidueAtomIter_IsNitroOxygen(*args)
-    def IsAmideNitrogen(*args): return _openbabel.OBResidueAtomIter_IsAmideNitrogen(*args)
-    def IsPolarHydrogen(*args): return _openbabel.OBResidueAtomIter_IsPolarHydrogen(*args)
-    def IsNonPolarHydrogen(*args): return _openbabel.OBResidueAtomIter_IsNonPolarHydrogen(*args)
-    def IsAromaticNOxide(*args): return _openbabel.OBResidueAtomIter_IsAromaticNOxide(*args)
-    def IsChiral(*args): return _openbabel.OBResidueAtomIter_IsChiral(*args)
-    def IsAxial(*args): return _openbabel.OBResidueAtomIter_IsAxial(*args)
-    def IsClockwise(*args): return _openbabel.OBResidueAtomIter_IsClockwise(*args)
-    def IsAntiClockwise(*args): return _openbabel.OBResidueAtomIter_IsAntiClockwise(*args)
-    def IsPositiveStereo(*args): return _openbabel.OBResidueAtomIter_IsPositiveStereo(*args)
-    def IsNegativeStereo(*args): return _openbabel.OBResidueAtomIter_IsNegativeStereo(*args)
-    def HasChiralitySpecified(*args): return _openbabel.OBResidueAtomIter_HasChiralitySpecified(*args)
-    def HasChiralVolume(*args): return _openbabel.OBResidueAtomIter_HasChiralVolume(*args)
-    def IsHbondAcceptor(*args): return _openbabel.OBResidueAtomIter_IsHbondAcceptor(*args)
-    def IsHbondDonor(*args): return _openbabel.OBResidueAtomIter_IsHbondDonor(*args)
-    def IsHbondDonorH(*args): return _openbabel.OBResidueAtomIter_IsHbondDonorH(*args)
-    def HasAlphaBetaUnsat(*args): return _openbabel.OBResidueAtomIter_HasAlphaBetaUnsat(*args)
-    def HasBondOfOrder(*args): return _openbabel.OBResidueAtomIter_HasBondOfOrder(*args)
-    def CountBondsOfOrder(*args): return _openbabel.OBResidueAtomIter_CountBondsOfOrder(*args)
-    def HasNonSingleBond(*args): return _openbabel.OBResidueAtomIter_HasNonSingleBond(*args)
-    def HasSingleBond(*args): return _openbabel.OBResidueAtomIter_HasSingleBond(*args)
-    def HasDoubleBond(*args): return _openbabel.OBResidueAtomIter_HasDoubleBond(*args)
-    def HasAromaticBond(*args): return _openbabel.OBResidueAtomIter_HasAromaticBond(*args)
-    def MatchesSMARTS(*args): return _openbabel.OBResidueAtomIter_MatchesSMARTS(*args)
-    def DoTransformations(*args): return _openbabel.OBResidueAtomIter_DoTransformations(*args)
-    def ClassDescription(*args): return _openbabel.OBResidueAtomIter_ClassDescription(*args)
-    def HasData(*args): return _openbabel.OBResidueAtomIter_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBResidueAtomIter_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBResidueAtomIter_SetData(*args)
-    def DataSize(*args): return _openbabel.OBResidueAtomIter_DataSize(*args)
-    def GetData(*args): return _openbabel.OBResidueAtomIter_GetData(*args)
-    def BeginData(*args): return _openbabel.OBResidueAtomIter_BeginData(*args)
-    def EndData(*args): return _openbabel.OBResidueAtomIter_EndData(*args)
-OBResidueAtomIter_swigregister = _openbabel.OBResidueAtomIter_swigregister
-OBResidueAtomIter_swigregister(OBResidueAtomIter)
+    __swig_getmethods__["FindForceField"] = lambda x: _openbabel.OBForceField_FindForceField
+    if _newclass:FindForceField = staticmethod(_openbabel.OBForceField_FindForceField)
+    def GetUnit(*args): return _openbabel.OBForceField_GetUnit(*args)
+    def Setup(*args): return _openbabel.OBForceField_Setup(*args)
+    def UpdateCoordinates(*args): return _openbabel.OBForceField_UpdateCoordinates(*args)
+    def UpdateConformers(*args): return _openbabel.OBForceField_UpdateConformers(*args)
+    def OBFFLog(*args): return _openbabel.OBForceField_OBFFLog(*args)
+    def Energy(*args): return _openbabel.OBForceField_Energy(*args)
+    def E_Bond(*args): return _openbabel.OBForceField_E_Bond(*args)
+    def E_Angle(*args): return _openbabel.OBForceField_E_Angle(*args)
+    def E_StrBnd(*args): return _openbabel.OBForceField_E_StrBnd(*args)
+    def E_Torsion(*args): return _openbabel.OBForceField_E_Torsion(*args)
+    def E_OOP(*args): return _openbabel.OBForceField_E_OOP(*args)
+    def E_VDW(*args): return _openbabel.OBForceField_E_VDW(*args)
+    def E_Electrostatic(*args): return _openbabel.OBForceField_E_Electrostatic(*args)
+    def SetLogFile(*args): return _openbabel.OBForceField_SetLogFile(*args)
+    def SetLogLevel(*args): return _openbabel.OBForceField_SetLogLevel(*args)
+    def GetLogLevel(*args): return _openbabel.OBForceField_GetLogLevel(*args)
+    def DistanceGeometry(*args): return _openbabel.OBForceField_DistanceGeometry(*args)
+    def GenerateCoordinates(*args): return _openbabel.OBForceField_GenerateCoordinates(*args)
+    def SystematicRotorSearch(*args): return _openbabel.OBForceField_SystematicRotorSearch(*args)
+    def LineSearch(*args): return _openbabel.OBForceField_LineSearch(*args)
+    def SteepestDescent(*args): return _openbabel.OBForceField_SteepestDescent(*args)
+    def SteepestDescentInitialize(*args): return _openbabel.OBForceField_SteepestDescentInitialize(*args)
+    def SteepestDescentTakeNSteps(*args): return _openbabel.OBForceField_SteepestDescentTakeNSteps(*args)
+    def ConjugateGradients(*args): return _openbabel.OBForceField_ConjugateGradients(*args)
+    def ConjugateGradientsInitialize(*args): return _openbabel.OBForceField_ConjugateGradientsInitialize(*args)
+    def ConjugateGradientsTakeNSteps(*args): return _openbabel.OBForceField_ConjugateGradientsTakeNSteps(*args)
+    def ValidateLineSearch(*args): return _openbabel.OBForceField_ValidateLineSearch(*args)
+    def ValidateSteepestDescent(*args): return _openbabel.OBForceField_ValidateSteepestDescent(*args)
+    def ValidateConjugateGradients(*args): return _openbabel.OBForceField_ValidateConjugateGradients(*args)
+    def Validate(*args): return _openbabel.OBForceField_Validate(*args)
+    def ValidateGradients(*args): return _openbabel.OBForceField_ValidateGradients(*args)
+    def ValidateGradientError(*args): return _openbabel.OBForceField_ValidateGradientError(*args)
+    __swig_getmethods__["VectorLengthDerivative"] = lambda x: _openbabel.OBForceField_VectorLengthDerivative
+    if _newclass:VectorLengthDerivative = staticmethod(_openbabel.OBForceField_VectorLengthDerivative)
+    __swig_getmethods__["VectorAngleDerivative"] = lambda x: _openbabel.OBForceField_VectorAngleDerivative
+    if _newclass:VectorAngleDerivative = staticmethod(_openbabel.OBForceField_VectorAngleDerivative)
+    __swig_getmethods__["VectorTorsionDerivative"] = lambda x: _openbabel.OBForceField_VectorTorsionDerivative
+    if _newclass:VectorTorsionDerivative = staticmethod(_openbabel.OBForceField_VectorTorsionDerivative)
+    def kludge(*args): return _openbabel.OBForceField_kludge(*args)
+OBForceField_swigregister = _openbabel.OBForceField_swigregister
+OBForceField_swigregister(OBForceField)
+OBForceField_Iter = _openbabel.OBForceField_Iter
+OBForceField_FindDefaultType = _openbabel.OBForceField_FindDefaultType
+OBForceField_FindType = _openbabel.OBForceField_FindType
+OBForceField_FindForceField = _openbabel.OBForceField_FindForceField
+OBForceField_VectorLengthDerivative = _openbabel.OBForceField_VectorLengthDerivative
+OBForceField_VectorAngleDerivative = _openbabel.OBForceField_VectorAngleDerivative
+OBForceField_VectorTorsionDerivative = _openbabel.OBForceField_VectorTorsionDerivative
+
+class _OBMolAtomIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBMolAtomIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBMolAtomIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBMolAtomIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBMolAtomIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBMolAtomIter_good(*args)
+    def inc(*args): return _openbabel._OBMolAtomIter_inc(*args)
+    def deref(*args): return _openbabel._OBMolAtomIter_deref(*args)
+    def __ref__(*args): return _openbabel._OBMolAtomIter___ref__(*args)
+    __swig_setmethods__["Visit"] = _openbabel._OBMolAtomIter_Visit_set
+    __swig_getmethods__["Visit"] = _openbabel._OBMolAtomIter_Visit_get
+    if _newclass:Visit = _swig_property(_openbabel._OBMolAtomIter_Visit_get, _openbabel._OBMolAtomIter_Visit_set)
+    def Clear(*args): return _openbabel._OBMolAtomIter_Clear(*args)
+    def SetIdx(*args): return _openbabel._OBMolAtomIter_SetIdx(*args)
+    def SetHyb(*args): return _openbabel._OBMolAtomIter_SetHyb(*args)
+    def SetAtomicNum(*args): return _openbabel._OBMolAtomIter_SetAtomicNum(*args)
+    def SetIsotope(*args): return _openbabel._OBMolAtomIter_SetIsotope(*args)
+    def SetImplicitValence(*args): return _openbabel._OBMolAtomIter_SetImplicitValence(*args)
+    def IncrementImplicitValence(*args): return _openbabel._OBMolAtomIter_IncrementImplicitValence(*args)
+    def DecrementImplicitValence(*args): return _openbabel._OBMolAtomIter_DecrementImplicitValence(*args)
+    def SetFormalCharge(*args): return _openbabel._OBMolAtomIter_SetFormalCharge(*args)
+    def SetSpinMultiplicity(*args): return _openbabel._OBMolAtomIter_SetSpinMultiplicity(*args)
+    def SetType(*args): return _openbabel._OBMolAtomIter_SetType(*args)
+    def SetPartialCharge(*args): return _openbabel._OBMolAtomIter_SetPartialCharge(*args)
+    def SetVector(*args): return _openbabel._OBMolAtomIter_SetVector(*args)
+    def SetCoordPtr(*args): return _openbabel._OBMolAtomIter_SetCoordPtr(*args)
+    def SetResidue(*args): return _openbabel._OBMolAtomIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel._OBMolAtomIter_SetParent(*args)
+    def SetAromatic(*args): return _openbabel._OBMolAtomIter_SetAromatic(*args)
+    def UnsetAromatic(*args): return _openbabel._OBMolAtomIter_UnsetAromatic(*args)
+    def SetClockwiseStereo(*args): return _openbabel._OBMolAtomIter_SetClockwiseStereo(*args)
+    def SetAntiClockwiseStereo(*args): return _openbabel._OBMolAtomIter_SetAntiClockwiseStereo(*args)
+    def SetPositiveStereo(*args): return _openbabel._OBMolAtomIter_SetPositiveStereo(*args)
+    def SetNegativeStereo(*args): return _openbabel._OBMolAtomIter_SetNegativeStereo(*args)
+    def UnsetStereo(*args): return _openbabel._OBMolAtomIter_UnsetStereo(*args)
+    def SetInRing(*args): return _openbabel._OBMolAtomIter_SetInRing(*args)
+    def SetChiral(*args): return _openbabel._OBMolAtomIter_SetChiral(*args)
+    def ClearCoordPtr(*args): return _openbabel._OBMolAtomIter_ClearCoordPtr(*args)
+    def GetFormalCharge(*args): return _openbabel._OBMolAtomIter_GetFormalCharge(*args)
+    def GetAtomicNum(*args): return _openbabel._OBMolAtomIter_GetAtomicNum(*args)
+    def GetIsotope(*args): return _openbabel._OBMolAtomIter_GetIsotope(*args)
+    def GetSpinMultiplicity(*args): return _openbabel._OBMolAtomIter_GetSpinMultiplicity(*args)
+    def GetAtomicMass(*args): return _openbabel._OBMolAtomIter_GetAtomicMass(*args)
+    def GetExactMass(*args): return _openbabel._OBMolAtomIter_GetExactMass(*args)
+    def GetIdx(*args): return _openbabel._OBMolAtomIter_GetIdx(*args)
+    def GetCoordinateIdx(*args): return _openbabel._OBMolAtomIter_GetCoordinateIdx(*args)
+    def GetCIdx(*args): return _openbabel._OBMolAtomIter_GetCIdx(*args)
+    def GetValence(*args): return _openbabel._OBMolAtomIter_GetValence(*args)
+    def GetHyb(*args): return _openbabel._OBMolAtomIter_GetHyb(*args)
+    def GetImplicitValence(*args): return _openbabel._OBMolAtomIter_GetImplicitValence(*args)
+    def GetHvyValence(*args): return _openbabel._OBMolAtomIter_GetHvyValence(*args)
+    def GetHeteroValence(*args): return _openbabel._OBMolAtomIter_GetHeteroValence(*args)
+    def GetType(*args): return _openbabel._OBMolAtomIter_GetType(*args)
+    def GetX(*args): return _openbabel._OBMolAtomIter_GetX(*args)
+    def GetY(*args): return _openbabel._OBMolAtomIter_GetY(*args)
+    def GetZ(*args): return _openbabel._OBMolAtomIter_GetZ(*args)
+    def x(*args): return _openbabel._OBMolAtomIter_x(*args)
+    def y(*args): return _openbabel._OBMolAtomIter_y(*args)
+    def z(*args): return _openbabel._OBMolAtomIter_z(*args)
+    def GetCoordinate(*args): return _openbabel._OBMolAtomIter_GetCoordinate(*args)
+    def GetVector(*args): return _openbabel._OBMolAtomIter_GetVector(*args)
+    def GetPartialCharge(*args): return _openbabel._OBMolAtomIter_GetPartialCharge(*args)
+    def GetResidue(*args): return _openbabel._OBMolAtomIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel._OBMolAtomIter_GetParent(*args)
+    def GetNewBondVector(*args): return _openbabel._OBMolAtomIter_GetNewBondVector(*args)
+    def GetBond(*args): return _openbabel._OBMolAtomIter_GetBond(*args)
+    def GetNextAtom(*args): return _openbabel._OBMolAtomIter_GetNextAtom(*args)
+    def BeginBonds(*args): return _openbabel._OBMolAtomIter_BeginBonds(*args)
+    def EndBonds(*args): return _openbabel._OBMolAtomIter_EndBonds(*args)
+    def BeginBond(*args): return _openbabel._OBMolAtomIter_BeginBond(*args)
+    def NextBond(*args): return _openbabel._OBMolAtomIter_NextBond(*args)
+    def BeginNbrAtom(*args): return _openbabel._OBMolAtomIter_BeginNbrAtom(*args)
+    def NextNbrAtom(*args): return _openbabel._OBMolAtomIter_NextNbrAtom(*args)
+    def GetDistance(*args): return _openbabel._OBMolAtomIter_GetDistance(*args)
+    def GetAngle(*args): return _openbabel._OBMolAtomIter_GetAngle(*args)
+    def NewResidue(*args): return _openbabel._OBMolAtomIter_NewResidue(*args)
+    def AddResidue(*args): return _openbabel._OBMolAtomIter_AddResidue(*args)
+    def DeleteResidue(*args): return _openbabel._OBMolAtomIter_DeleteResidue(*args)
+    def AddBond(*args): return _openbabel._OBMolAtomIter_AddBond(*args)
+    def InsertBond(*args): return _openbabel._OBMolAtomIter_InsertBond(*args)
+    def DeleteBond(*args): return _openbabel._OBMolAtomIter_DeleteBond(*args)
+    def ClearBond(*args): return _openbabel._OBMolAtomIter_ClearBond(*args)
+    def HtoMethyl(*args): return _openbabel._OBMolAtomIter_HtoMethyl(*args)
+    def SetHybAndGeom(*args): return _openbabel._OBMolAtomIter_SetHybAndGeom(*args)
+    def ForceNoH(*args): return _openbabel._OBMolAtomIter_ForceNoH(*args)
+    def HasNoHForced(*args): return _openbabel._OBMolAtomIter_HasNoHForced(*args)
+    def CountFreeOxygens(*args): return _openbabel._OBMolAtomIter_CountFreeOxygens(*args)
+    def ImplicitHydrogenCount(*args): return _openbabel._OBMolAtomIter_ImplicitHydrogenCount(*args)
+    def ExplicitHydrogenCount(*args): return _openbabel._OBMolAtomIter_ExplicitHydrogenCount(*args)
+    def MemberOfRingCount(*args): return _openbabel._OBMolAtomIter_MemberOfRingCount(*args)
+    def MemberOfRingSize(*args): return _openbabel._OBMolAtomIter_MemberOfRingSize(*args)
+    def CountRingBonds(*args): return _openbabel._OBMolAtomIter_CountRingBonds(*args)
+    def SmallestBondAngle(*args): return _openbabel._OBMolAtomIter_SmallestBondAngle(*args)
+    def AverageBondAngle(*args): return _openbabel._OBMolAtomIter_AverageBondAngle(*args)
+    def BOSum(*args): return _openbabel._OBMolAtomIter_BOSum(*args)
+    def KBOSum(*args): return _openbabel._OBMolAtomIter_KBOSum(*args)
+    def HasResidue(*args): return _openbabel._OBMolAtomIter_HasResidue(*args)
+    def IsHydrogen(*args): return _openbabel._OBMolAtomIter_IsHydrogen(*args)
+    def IsCarbon(*args): return _openbabel._OBMolAtomIter_IsCarbon(*args)
+    def IsNitrogen(*args): return _openbabel._OBMolAtomIter_IsNitrogen(*args)
+    def IsOxygen(*args): return _openbabel._OBMolAtomIter_IsOxygen(*args)
+    def IsSulfur(*args): return _openbabel._OBMolAtomIter_IsSulfur(*args)
+    def IsPhosphorus(*args): return _openbabel._OBMolAtomIter_IsPhosphorus(*args)
+    def IsAromatic(*args): return _openbabel._OBMolAtomIter_IsAromatic(*args)
+    def IsInRing(*args): return _openbabel._OBMolAtomIter_IsInRing(*args)
+    def IsInRingSize(*args): return _openbabel._OBMolAtomIter_IsInRingSize(*args)
+    def IsHeteroatom(*args): return _openbabel._OBMolAtomIter_IsHeteroatom(*args)
+    def IsNotCorH(*args): return _openbabel._OBMolAtomIter_IsNotCorH(*args)
+    def IsConnected(*args): return _openbabel._OBMolAtomIter_IsConnected(*args)
+    def IsOneThree(*args): return _openbabel._OBMolAtomIter_IsOneThree(*args)
+    def IsOneFour(*args): return _openbabel._OBMolAtomIter_IsOneFour(*args)
+    def IsCarboxylOxygen(*args): return _openbabel._OBMolAtomIter_IsCarboxylOxygen(*args)
+    def IsPhosphateOxygen(*args): return _openbabel._OBMolAtomIter_IsPhosphateOxygen(*args)
+    def IsSulfateOxygen(*args): return _openbabel._OBMolAtomIter_IsSulfateOxygen(*args)
+    def IsNitroOxygen(*args): return _openbabel._OBMolAtomIter_IsNitroOxygen(*args)
+    def IsAmideNitrogen(*args): return _openbabel._OBMolAtomIter_IsAmideNitrogen(*args)
+    def IsPolarHydrogen(*args): return _openbabel._OBMolAtomIter_IsPolarHydrogen(*args)
+    def IsNonPolarHydrogen(*args): return _openbabel._OBMolAtomIter_IsNonPolarHydrogen(*args)
+    def IsAromaticNOxide(*args): return _openbabel._OBMolAtomIter_IsAromaticNOxide(*args)
+    def IsChiral(*args): return _openbabel._OBMolAtomIter_IsChiral(*args)
+    def IsAxial(*args): return _openbabel._OBMolAtomIter_IsAxial(*args)
+    def IsClockwise(*args): return _openbabel._OBMolAtomIter_IsClockwise(*args)
+    def IsAntiClockwise(*args): return _openbabel._OBMolAtomIter_IsAntiClockwise(*args)
+    def IsPositiveStereo(*args): return _openbabel._OBMolAtomIter_IsPositiveStereo(*args)
+    def IsNegativeStereo(*args): return _openbabel._OBMolAtomIter_IsNegativeStereo(*args)
+    def HasChiralitySpecified(*args): return _openbabel._OBMolAtomIter_HasChiralitySpecified(*args)
+    def HasChiralVolume(*args): return _openbabel._OBMolAtomIter_HasChiralVolume(*args)
+    def IsHbondAcceptor(*args): return _openbabel._OBMolAtomIter_IsHbondAcceptor(*args)
+    def IsHbondDonor(*args): return _openbabel._OBMolAtomIter_IsHbondDonor(*args)
+    def IsHbondDonorH(*args): return _openbabel._OBMolAtomIter_IsHbondDonorH(*args)
+    def HasAlphaBetaUnsat(*args): return _openbabel._OBMolAtomIter_HasAlphaBetaUnsat(*args)
+    def HasBondOfOrder(*args): return _openbabel._OBMolAtomIter_HasBondOfOrder(*args)
+    def CountBondsOfOrder(*args): return _openbabel._OBMolAtomIter_CountBondsOfOrder(*args)
+    def HasNonSingleBond(*args): return _openbabel._OBMolAtomIter_HasNonSingleBond(*args)
+    def HasSingleBond(*args): return _openbabel._OBMolAtomIter_HasSingleBond(*args)
+    def HasDoubleBond(*args): return _openbabel._OBMolAtomIter_HasDoubleBond(*args)
+    def HasAromaticBond(*args): return _openbabel._OBMolAtomIter_HasAromaticBond(*args)
+    def MatchesSMARTS(*args): return _openbabel._OBMolAtomIter_MatchesSMARTS(*args)
+    def DoTransformations(*args): return _openbabel._OBMolAtomIter_DoTransformations(*args)
+    def ClassDescription(*args): return _openbabel._OBMolAtomIter_ClassDescription(*args)
+    def HasData(*args): return _openbabel._OBMolAtomIter_HasData(*args)
+    def DeleteData(*args): return _openbabel._OBMolAtomIter_DeleteData(*args)
+    def SetData(*args): return _openbabel._OBMolAtomIter_SetData(*args)
+    def DataSize(*args): return _openbabel._OBMolAtomIter_DataSize(*args)
+    def GetData(*args): return _openbabel._OBMolAtomIter_GetData(*args)
+    def BeginData(*args): return _openbabel._OBMolAtomIter_BeginData(*args)
+    def EndData(*args): return _openbabel._OBMolAtomIter_EndData(*args)
+_OBMolAtomIter_swigregister = _openbabel._OBMolAtomIter_swigregister
+_OBMolAtomIter_swigregister(_OBMolAtomIter)
+
+class _OBMolAtomDFSIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBMolAtomDFSIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBMolAtomDFSIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBMolAtomDFSIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBMolAtomDFSIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBMolAtomDFSIter_good(*args)
+    def inc(*args): return _openbabel._OBMolAtomDFSIter_inc(*args)
+    def deref(*args): return _openbabel._OBMolAtomDFSIter_deref(*args)
+    def __ref__(*args): return _openbabel._OBMolAtomDFSIter___ref__(*args)
+    def next(*args): return _openbabel._OBMolAtomDFSIter_next(*args)
+    __swig_setmethods__["Visit"] = _openbabel._OBMolAtomDFSIter_Visit_set
+    __swig_getmethods__["Visit"] = _openbabel._OBMolAtomDFSIter_Visit_get
+    if _newclass:Visit = _swig_property(_openbabel._OBMolAtomDFSIter_Visit_get, _openbabel._OBMolAtomDFSIter_Visit_set)
+    def Clear(*args): return _openbabel._OBMolAtomDFSIter_Clear(*args)
+    def SetIdx(*args): return _openbabel._OBMolAtomDFSIter_SetIdx(*args)
+    def SetHyb(*args): return _openbabel._OBMolAtomDFSIter_SetHyb(*args)
+    def SetAtomicNum(*args): return _openbabel._OBMolAtomDFSIter_SetAtomicNum(*args)
+    def SetIsotope(*args): return _openbabel._OBMolAtomDFSIter_SetIsotope(*args)
+    def SetImplicitValence(*args): return _openbabel._OBMolAtomDFSIter_SetImplicitValence(*args)
+    def IncrementImplicitValence(*args): return _openbabel._OBMolAtomDFSIter_IncrementImplicitValence(*args)
+    def DecrementImplicitValence(*args): return _openbabel._OBMolAtomDFSIter_DecrementImplicitValence(*args)
+    def SetFormalCharge(*args): return _openbabel._OBMolAtomDFSIter_SetFormalCharge(*args)
+    def SetSpinMultiplicity(*args): return _openbabel._OBMolAtomDFSIter_SetSpinMultiplicity(*args)
+    def SetType(*args): return _openbabel._OBMolAtomDFSIter_SetType(*args)
+    def SetPartialCharge(*args): return _openbabel._OBMolAtomDFSIter_SetPartialCharge(*args)
+    def SetVector(*args): return _openbabel._OBMolAtomDFSIter_SetVector(*args)
+    def SetCoordPtr(*args): return _openbabel._OBMolAtomDFSIter_SetCoordPtr(*args)
+    def SetResidue(*args): return _openbabel._OBMolAtomDFSIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel._OBMolAtomDFSIter_SetParent(*args)
+    def SetAromatic(*args): return _openbabel._OBMolAtomDFSIter_SetAromatic(*args)
+    def UnsetAromatic(*args): return _openbabel._OBMolAtomDFSIter_UnsetAromatic(*args)
+    def SetClockwiseStereo(*args): return _openbabel._OBMolAtomDFSIter_SetClockwiseStereo(*args)
+    def SetAntiClockwiseStereo(*args): return _openbabel._OBMolAtomDFSIter_SetAntiClockwiseStereo(*args)
+    def SetPositiveStereo(*args): return _openbabel._OBMolAtomDFSIter_SetPositiveStereo(*args)
+    def SetNegativeStereo(*args): return _openbabel._OBMolAtomDFSIter_SetNegativeStereo(*args)
+    def UnsetStereo(*args): return _openbabel._OBMolAtomDFSIter_UnsetStereo(*args)
+    def SetInRing(*args): return _openbabel._OBMolAtomDFSIter_SetInRing(*args)
+    def SetChiral(*args): return _openbabel._OBMolAtomDFSIter_SetChiral(*args)
+    def ClearCoordPtr(*args): return _openbabel._OBMolAtomDFSIter_ClearCoordPtr(*args)
+    def GetFormalCharge(*args): return _openbabel._OBMolAtomDFSIter_GetFormalCharge(*args)
+    def GetAtomicNum(*args): return _openbabel._OBMolAtomDFSIter_GetAtomicNum(*args)
+    def GetIsotope(*args): return _openbabel._OBMolAtomDFSIter_GetIsotope(*args)
+    def GetSpinMultiplicity(*args): return _openbabel._OBMolAtomDFSIter_GetSpinMultiplicity(*args)
+    def GetAtomicMass(*args): return _openbabel._OBMolAtomDFSIter_GetAtomicMass(*args)
+    def GetExactMass(*args): return _openbabel._OBMolAtomDFSIter_GetExactMass(*args)
+    def GetIdx(*args): return _openbabel._OBMolAtomDFSIter_GetIdx(*args)
+    def GetCoordinateIdx(*args): return _openbabel._OBMolAtomDFSIter_GetCoordinateIdx(*args)
+    def GetCIdx(*args): return _openbabel._OBMolAtomDFSIter_GetCIdx(*args)
+    def GetValence(*args): return _openbabel._OBMolAtomDFSIter_GetValence(*args)
+    def GetHyb(*args): return _openbabel._OBMolAtomDFSIter_GetHyb(*args)
+    def GetImplicitValence(*args): return _openbabel._OBMolAtomDFSIter_GetImplicitValence(*args)
+    def GetHvyValence(*args): return _openbabel._OBMolAtomDFSIter_GetHvyValence(*args)
+    def GetHeteroValence(*args): return _openbabel._OBMolAtomDFSIter_GetHeteroValence(*args)
+    def GetType(*args): return _openbabel._OBMolAtomDFSIter_GetType(*args)
+    def GetX(*args): return _openbabel._OBMolAtomDFSIter_GetX(*args)
+    def GetY(*args): return _openbabel._OBMolAtomDFSIter_GetY(*args)
+    def GetZ(*args): return _openbabel._OBMolAtomDFSIter_GetZ(*args)
+    def x(*args): return _openbabel._OBMolAtomDFSIter_x(*args)
+    def y(*args): return _openbabel._OBMolAtomDFSIter_y(*args)
+    def z(*args): return _openbabel._OBMolAtomDFSIter_z(*args)
+    def GetCoordinate(*args): return _openbabel._OBMolAtomDFSIter_GetCoordinate(*args)
+    def GetVector(*args): return _openbabel._OBMolAtomDFSIter_GetVector(*args)
+    def GetPartialCharge(*args): return _openbabel._OBMolAtomDFSIter_GetPartialCharge(*args)
+    def GetResidue(*args): return _openbabel._OBMolAtomDFSIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel._OBMolAtomDFSIter_GetParent(*args)
+    def GetNewBondVector(*args): return _openbabel._OBMolAtomDFSIter_GetNewBondVector(*args)
+    def GetBond(*args): return _openbabel._OBMolAtomDFSIter_GetBond(*args)
+    def GetNextAtom(*args): return _openbabel._OBMolAtomDFSIter_GetNextAtom(*args)
+    def BeginBonds(*args): return _openbabel._OBMolAtomDFSIter_BeginBonds(*args)
+    def EndBonds(*args): return _openbabel._OBMolAtomDFSIter_EndBonds(*args)
+    def BeginBond(*args): return _openbabel._OBMolAtomDFSIter_BeginBond(*args)
+    def NextBond(*args): return _openbabel._OBMolAtomDFSIter_NextBond(*args)
+    def BeginNbrAtom(*args): return _openbabel._OBMolAtomDFSIter_BeginNbrAtom(*args)
+    def NextNbrAtom(*args): return _openbabel._OBMolAtomDFSIter_NextNbrAtom(*args)
+    def GetDistance(*args): return _openbabel._OBMolAtomDFSIter_GetDistance(*args)
+    def GetAngle(*args): return _openbabel._OBMolAtomDFSIter_GetAngle(*args)
+    def NewResidue(*args): return _openbabel._OBMolAtomDFSIter_NewResidue(*args)
+    def AddResidue(*args): return _openbabel._OBMolAtomDFSIter_AddResidue(*args)
+    def DeleteResidue(*args): return _openbabel._OBMolAtomDFSIter_DeleteResidue(*args)
+    def AddBond(*args): return _openbabel._OBMolAtomDFSIter_AddBond(*args)
+    def InsertBond(*args): return _openbabel._OBMolAtomDFSIter_InsertBond(*args)
+    def DeleteBond(*args): return _openbabel._OBMolAtomDFSIter_DeleteBond(*args)
+    def ClearBond(*args): return _openbabel._OBMolAtomDFSIter_ClearBond(*args)
+    def HtoMethyl(*args): return _openbabel._OBMolAtomDFSIter_HtoMethyl(*args)
+    def SetHybAndGeom(*args): return _openbabel._OBMolAtomDFSIter_SetHybAndGeom(*args)
+    def ForceNoH(*args): return _openbabel._OBMolAtomDFSIter_ForceNoH(*args)
+    def HasNoHForced(*args): return _openbabel._OBMolAtomDFSIter_HasNoHForced(*args)
+    def CountFreeOxygens(*args): return _openbabel._OBMolAtomDFSIter_CountFreeOxygens(*args)
+    def ImplicitHydrogenCount(*args): return _openbabel._OBMolAtomDFSIter_ImplicitHydrogenCount(*args)
+    def ExplicitHydrogenCount(*args): return _openbabel._OBMolAtomDFSIter_ExplicitHydrogenCount(*args)
+    def MemberOfRingCount(*args): return _openbabel._OBMolAtomDFSIter_MemberOfRingCount(*args)
+    def MemberOfRingSize(*args): return _openbabel._OBMolAtomDFSIter_MemberOfRingSize(*args)
+    def CountRingBonds(*args): return _openbabel._OBMolAtomDFSIter_CountRingBonds(*args)
+    def SmallestBondAngle(*args): return _openbabel._OBMolAtomDFSIter_SmallestBondAngle(*args)
+    def AverageBondAngle(*args): return _openbabel._OBMolAtomDFSIter_AverageBondAngle(*args)
+    def BOSum(*args): return _openbabel._OBMolAtomDFSIter_BOSum(*args)
+    def KBOSum(*args): return _openbabel._OBMolAtomDFSIter_KBOSum(*args)
+    def HasResidue(*args): return _openbabel._OBMolAtomDFSIter_HasResidue(*args)
+    def IsHydrogen(*args): return _openbabel._OBMolAtomDFSIter_IsHydrogen(*args)
+    def IsCarbon(*args): return _openbabel._OBMolAtomDFSIter_IsCarbon(*args)
+    def IsNitrogen(*args): return _openbabel._OBMolAtomDFSIter_IsNitrogen(*args)
+    def IsOxygen(*args): return _openbabel._OBMolAtomDFSIter_IsOxygen(*args)
+    def IsSulfur(*args): return _openbabel._OBMolAtomDFSIter_IsSulfur(*args)
+    def IsPhosphorus(*args): return _openbabel._OBMolAtomDFSIter_IsPhosphorus(*args)
+    def IsAromatic(*args): return _openbabel._OBMolAtomDFSIter_IsAromatic(*args)
+    def IsInRing(*args): return _openbabel._OBMolAtomDFSIter_IsInRing(*args)
+    def IsInRingSize(*args): return _openbabel._OBMolAtomDFSIter_IsInRingSize(*args)
+    def IsHeteroatom(*args): return _openbabel._OBMolAtomDFSIter_IsHeteroatom(*args)
+    def IsNotCorH(*args): return _openbabel._OBMolAtomDFSIter_IsNotCorH(*args)
+    def IsConnected(*args): return _openbabel._OBMolAtomDFSIter_IsConnected(*args)
+    def IsOneThree(*args): return _openbabel._OBMolAtomDFSIter_IsOneThree(*args)
+    def IsOneFour(*args): return _openbabel._OBMolAtomDFSIter_IsOneFour(*args)
+    def IsCarboxylOxygen(*args): return _openbabel._OBMolAtomDFSIter_IsCarboxylOxygen(*args)
+    def IsPhosphateOxygen(*args): return _openbabel._OBMolAtomDFSIter_IsPhosphateOxygen(*args)
+    def IsSulfateOxygen(*args): return _openbabel._OBMolAtomDFSIter_IsSulfateOxygen(*args)
+    def IsNitroOxygen(*args): return _openbabel._OBMolAtomDFSIter_IsNitroOxygen(*args)
+    def IsAmideNitrogen(*args): return _openbabel._OBMolAtomDFSIter_IsAmideNitrogen(*args)
+    def IsPolarHydrogen(*args): return _openbabel._OBMolAtomDFSIter_IsPolarHydrogen(*args)
+    def IsNonPolarHydrogen(*args): return _openbabel._OBMolAtomDFSIter_IsNonPolarHydrogen(*args)
+    def IsAromaticNOxide(*args): return _openbabel._OBMolAtomDFSIter_IsAromaticNOxide(*args)
+    def IsChiral(*args): return _openbabel._OBMolAtomDFSIter_IsChiral(*args)
+    def IsAxial(*args): return _openbabel._OBMolAtomDFSIter_IsAxial(*args)
+    def IsClockwise(*args): return _openbabel._OBMolAtomDFSIter_IsClockwise(*args)
+    def IsAntiClockwise(*args): return _openbabel._OBMolAtomDFSIter_IsAntiClockwise(*args)
+    def IsPositiveStereo(*args): return _openbabel._OBMolAtomDFSIter_IsPositiveStereo(*args)
+    def IsNegativeStereo(*args): return _openbabel._OBMolAtomDFSIter_IsNegativeStereo(*args)
+    def HasChiralitySpecified(*args): return _openbabel._OBMolAtomDFSIter_HasChiralitySpecified(*args)
+    def HasChiralVolume(*args): return _openbabel._OBMolAtomDFSIter_HasChiralVolume(*args)
+    def IsHbondAcceptor(*args): return _openbabel._OBMolAtomDFSIter_IsHbondAcceptor(*args)
+    def IsHbondDonor(*args): return _openbabel._OBMolAtomDFSIter_IsHbondDonor(*args)
+    def IsHbondDonorH(*args): return _openbabel._OBMolAtomDFSIter_IsHbondDonorH(*args)
+    def HasAlphaBetaUnsat(*args): return _openbabel._OBMolAtomDFSIter_HasAlphaBetaUnsat(*args)
+    def HasBondOfOrder(*args): return _openbabel._OBMolAtomDFSIter_HasBondOfOrder(*args)
+    def CountBondsOfOrder(*args): return _openbabel._OBMolAtomDFSIter_CountBondsOfOrder(*args)
+    def HasNonSingleBond(*args): return _openbabel._OBMolAtomDFSIter_HasNonSingleBond(*args)
+    def HasSingleBond(*args): return _openbabel._OBMolAtomDFSIter_HasSingleBond(*args)
+    def HasDoubleBond(*args): return _openbabel._OBMolAtomDFSIter_HasDoubleBond(*args)
+    def HasAromaticBond(*args): return _openbabel._OBMolAtomDFSIter_HasAromaticBond(*args)
+    def MatchesSMARTS(*args): return _openbabel._OBMolAtomDFSIter_MatchesSMARTS(*args)
+    def DoTransformations(*args): return _openbabel._OBMolAtomDFSIter_DoTransformations(*args)
+    def ClassDescription(*args): return _openbabel._OBMolAtomDFSIter_ClassDescription(*args)
+    def HasData(*args): return _openbabel._OBMolAtomDFSIter_HasData(*args)
+    def DeleteData(*args): return _openbabel._OBMolAtomDFSIter_DeleteData(*args)
+    def SetData(*args): return _openbabel._OBMolAtomDFSIter_SetData(*args)
+    def DataSize(*args): return _openbabel._OBMolAtomDFSIter_DataSize(*args)
+    def GetData(*args): return _openbabel._OBMolAtomDFSIter_GetData(*args)
+    def BeginData(*args): return _openbabel._OBMolAtomDFSIter_BeginData(*args)
+    def EndData(*args): return _openbabel._OBMolAtomDFSIter_EndData(*args)
+_OBMolAtomDFSIter_swigregister = _openbabel._OBMolAtomDFSIter_swigregister
+_OBMolAtomDFSIter_swigregister(_OBMolAtomDFSIter)
+
+class _OBMolAtomBFSIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBMolAtomBFSIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBMolAtomBFSIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBMolAtomBFSIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBMolAtomBFSIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBMolAtomBFSIter_good(*args)
+    def inc(*args): return _openbabel._OBMolAtomBFSIter_inc(*args)
+    def deref(*args): return _openbabel._OBMolAtomBFSIter_deref(*args)
+    def __ref__(*args): return _openbabel._OBMolAtomBFSIter___ref__(*args)
+    __swig_setmethods__["Visit"] = _openbabel._OBMolAtomBFSIter_Visit_set
+    __swig_getmethods__["Visit"] = _openbabel._OBMolAtomBFSIter_Visit_get
+    if _newclass:Visit = _swig_property(_openbabel._OBMolAtomBFSIter_Visit_get, _openbabel._OBMolAtomBFSIter_Visit_set)
+    def Clear(*args): return _openbabel._OBMolAtomBFSIter_Clear(*args)
+    def SetIdx(*args): return _openbabel._OBMolAtomBFSIter_SetIdx(*args)
+    def SetHyb(*args): return _openbabel._OBMolAtomBFSIter_SetHyb(*args)
+    def SetAtomicNum(*args): return _openbabel._OBMolAtomBFSIter_SetAtomicNum(*args)
+    def SetIsotope(*args): return _openbabel._OBMolAtomBFSIter_SetIsotope(*args)
+    def SetImplicitValence(*args): return _openbabel._OBMolAtomBFSIter_SetImplicitValence(*args)
+    def IncrementImplicitValence(*args): return _openbabel._OBMolAtomBFSIter_IncrementImplicitValence(*args)
+    def DecrementImplicitValence(*args): return _openbabel._OBMolAtomBFSIter_DecrementImplicitValence(*args)
+    def SetFormalCharge(*args): return _openbabel._OBMolAtomBFSIter_SetFormalCharge(*args)
+    def SetSpinMultiplicity(*args): return _openbabel._OBMolAtomBFSIter_SetSpinMultiplicity(*args)
+    def SetType(*args): return _openbabel._OBMolAtomBFSIter_SetType(*args)
+    def SetPartialCharge(*args): return _openbabel._OBMolAtomBFSIter_SetPartialCharge(*args)
+    def SetVector(*args): return _openbabel._OBMolAtomBFSIter_SetVector(*args)
+    def SetCoordPtr(*args): return _openbabel._OBMolAtomBFSIter_SetCoordPtr(*args)
+    def SetResidue(*args): return _openbabel._OBMolAtomBFSIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel._OBMolAtomBFSIter_SetParent(*args)
+    def SetAromatic(*args): return _openbabel._OBMolAtomBFSIter_SetAromatic(*args)
+    def UnsetAromatic(*args): return _openbabel._OBMolAtomBFSIter_UnsetAromatic(*args)
+    def SetClockwiseStereo(*args): return _openbabel._OBMolAtomBFSIter_SetClockwiseStereo(*args)
+    def SetAntiClockwiseStereo(*args): return _openbabel._OBMolAtomBFSIter_SetAntiClockwiseStereo(*args)
+    def SetPositiveStereo(*args): return _openbabel._OBMolAtomBFSIter_SetPositiveStereo(*args)
+    def SetNegativeStereo(*args): return _openbabel._OBMolAtomBFSIter_SetNegativeStereo(*args)
+    def UnsetStereo(*args): return _openbabel._OBMolAtomBFSIter_UnsetStereo(*args)
+    def SetInRing(*args): return _openbabel._OBMolAtomBFSIter_SetInRing(*args)
+    def SetChiral(*args): return _openbabel._OBMolAtomBFSIter_SetChiral(*args)
+    def ClearCoordPtr(*args): return _openbabel._OBMolAtomBFSIter_ClearCoordPtr(*args)
+    def GetFormalCharge(*args): return _openbabel._OBMolAtomBFSIter_GetFormalCharge(*args)
+    def GetAtomicNum(*args): return _openbabel._OBMolAtomBFSIter_GetAtomicNum(*args)
+    def GetIsotope(*args): return _openbabel._OBMolAtomBFSIter_GetIsotope(*args)
+    def GetSpinMultiplicity(*args): return _openbabel._OBMolAtomBFSIter_GetSpinMultiplicity(*args)
+    def GetAtomicMass(*args): return _openbabel._OBMolAtomBFSIter_GetAtomicMass(*args)
+    def GetExactMass(*args): return _openbabel._OBMolAtomBFSIter_GetExactMass(*args)
+    def GetIdx(*args): return _openbabel._OBMolAtomBFSIter_GetIdx(*args)
+    def GetCoordinateIdx(*args): return _openbabel._OBMolAtomBFSIter_GetCoordinateIdx(*args)
+    def GetCIdx(*args): return _openbabel._OBMolAtomBFSIter_GetCIdx(*args)
+    def GetValence(*args): return _openbabel._OBMolAtomBFSIter_GetValence(*args)
+    def GetHyb(*args): return _openbabel._OBMolAtomBFSIter_GetHyb(*args)
+    def GetImplicitValence(*args): return _openbabel._OBMolAtomBFSIter_GetImplicitValence(*args)
+    def GetHvyValence(*args): return _openbabel._OBMolAtomBFSIter_GetHvyValence(*args)
+    def GetHeteroValence(*args): return _openbabel._OBMolAtomBFSIter_GetHeteroValence(*args)
+    def GetType(*args): return _openbabel._OBMolAtomBFSIter_GetType(*args)
+    def GetX(*args): return _openbabel._OBMolAtomBFSIter_GetX(*args)
+    def GetY(*args): return _openbabel._OBMolAtomBFSIter_GetY(*args)
+    def GetZ(*args): return _openbabel._OBMolAtomBFSIter_GetZ(*args)
+    def x(*args): return _openbabel._OBMolAtomBFSIter_x(*args)
+    def y(*args): return _openbabel._OBMolAtomBFSIter_y(*args)
+    def z(*args): return _openbabel._OBMolAtomBFSIter_z(*args)
+    def GetCoordinate(*args): return _openbabel._OBMolAtomBFSIter_GetCoordinate(*args)
+    def GetVector(*args): return _openbabel._OBMolAtomBFSIter_GetVector(*args)
+    def GetPartialCharge(*args): return _openbabel._OBMolAtomBFSIter_GetPartialCharge(*args)
+    def GetResidue(*args): return _openbabel._OBMolAtomBFSIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel._OBMolAtomBFSIter_GetParent(*args)
+    def GetNewBondVector(*args): return _openbabel._OBMolAtomBFSIter_GetNewBondVector(*args)
+    def GetBond(*args): return _openbabel._OBMolAtomBFSIter_GetBond(*args)
+    def GetNextAtom(*args): return _openbabel._OBMolAtomBFSIter_GetNextAtom(*args)
+    def BeginBonds(*args): return _openbabel._OBMolAtomBFSIter_BeginBonds(*args)
+    def EndBonds(*args): return _openbabel._OBMolAtomBFSIter_EndBonds(*args)
+    def BeginBond(*args): return _openbabel._OBMolAtomBFSIter_BeginBond(*args)
+    def NextBond(*args): return _openbabel._OBMolAtomBFSIter_NextBond(*args)
+    def BeginNbrAtom(*args): return _openbabel._OBMolAtomBFSIter_BeginNbrAtom(*args)
+    def NextNbrAtom(*args): return _openbabel._OBMolAtomBFSIter_NextNbrAtom(*args)
+    def GetDistance(*args): return _openbabel._OBMolAtomBFSIter_GetDistance(*args)
+    def GetAngle(*args): return _openbabel._OBMolAtomBFSIter_GetAngle(*args)
+    def NewResidue(*args): return _openbabel._OBMolAtomBFSIter_NewResidue(*args)
+    def AddResidue(*args): return _openbabel._OBMolAtomBFSIter_AddResidue(*args)
+    def DeleteResidue(*args): return _openbabel._OBMolAtomBFSIter_DeleteResidue(*args)
+    def AddBond(*args): return _openbabel._OBMolAtomBFSIter_AddBond(*args)
+    def InsertBond(*args): return _openbabel._OBMolAtomBFSIter_InsertBond(*args)
+    def DeleteBond(*args): return _openbabel._OBMolAtomBFSIter_DeleteBond(*args)
+    def ClearBond(*args): return _openbabel._OBMolAtomBFSIter_ClearBond(*args)
+    def HtoMethyl(*args): return _openbabel._OBMolAtomBFSIter_HtoMethyl(*args)
+    def SetHybAndGeom(*args): return _openbabel._OBMolAtomBFSIter_SetHybAndGeom(*args)
+    def ForceNoH(*args): return _openbabel._OBMolAtomBFSIter_ForceNoH(*args)
+    def HasNoHForced(*args): return _openbabel._OBMolAtomBFSIter_HasNoHForced(*args)
+    def CountFreeOxygens(*args): return _openbabel._OBMolAtomBFSIter_CountFreeOxygens(*args)
+    def ImplicitHydrogenCount(*args): return _openbabel._OBMolAtomBFSIter_ImplicitHydrogenCount(*args)
+    def ExplicitHydrogenCount(*args): return _openbabel._OBMolAtomBFSIter_ExplicitHydrogenCount(*args)
+    def MemberOfRingCount(*args): return _openbabel._OBMolAtomBFSIter_MemberOfRingCount(*args)
+    def MemberOfRingSize(*args): return _openbabel._OBMolAtomBFSIter_MemberOfRingSize(*args)
+    def CountRingBonds(*args): return _openbabel._OBMolAtomBFSIter_CountRingBonds(*args)
+    def SmallestBondAngle(*args): return _openbabel._OBMolAtomBFSIter_SmallestBondAngle(*args)
+    def AverageBondAngle(*args): return _openbabel._OBMolAtomBFSIter_AverageBondAngle(*args)
+    def BOSum(*args): return _openbabel._OBMolAtomBFSIter_BOSum(*args)
+    def KBOSum(*args): return _openbabel._OBMolAtomBFSIter_KBOSum(*args)
+    def HasResidue(*args): return _openbabel._OBMolAtomBFSIter_HasResidue(*args)
+    def IsHydrogen(*args): return _openbabel._OBMolAtomBFSIter_IsHydrogen(*args)
+    def IsCarbon(*args): return _openbabel._OBMolAtomBFSIter_IsCarbon(*args)
+    def IsNitrogen(*args): return _openbabel._OBMolAtomBFSIter_IsNitrogen(*args)
+    def IsOxygen(*args): return _openbabel._OBMolAtomBFSIter_IsOxygen(*args)
+    def IsSulfur(*args): return _openbabel._OBMolAtomBFSIter_IsSulfur(*args)
+    def IsPhosphorus(*args): return _openbabel._OBMolAtomBFSIter_IsPhosphorus(*args)
+    def IsAromatic(*args): return _openbabel._OBMolAtomBFSIter_IsAromatic(*args)
+    def IsInRing(*args): return _openbabel._OBMolAtomBFSIter_IsInRing(*args)
+    def IsInRingSize(*args): return _openbabel._OBMolAtomBFSIter_IsInRingSize(*args)
+    def IsHeteroatom(*args): return _openbabel._OBMolAtomBFSIter_IsHeteroatom(*args)
+    def IsNotCorH(*args): return _openbabel._OBMolAtomBFSIter_IsNotCorH(*args)
+    def IsConnected(*args): return _openbabel._OBMolAtomBFSIter_IsConnected(*args)
+    def IsOneThree(*args): return _openbabel._OBMolAtomBFSIter_IsOneThree(*args)
+    def IsOneFour(*args): return _openbabel._OBMolAtomBFSIter_IsOneFour(*args)
+    def IsCarboxylOxygen(*args): return _openbabel._OBMolAtomBFSIter_IsCarboxylOxygen(*args)
+    def IsPhosphateOxygen(*args): return _openbabel._OBMolAtomBFSIter_IsPhosphateOxygen(*args)
+    def IsSulfateOxygen(*args): return _openbabel._OBMolAtomBFSIter_IsSulfateOxygen(*args)
+    def IsNitroOxygen(*args): return _openbabel._OBMolAtomBFSIter_IsNitroOxygen(*args)
+    def IsAmideNitrogen(*args): return _openbabel._OBMolAtomBFSIter_IsAmideNitrogen(*args)
+    def IsPolarHydrogen(*args): return _openbabel._OBMolAtomBFSIter_IsPolarHydrogen(*args)
+    def IsNonPolarHydrogen(*args): return _openbabel._OBMolAtomBFSIter_IsNonPolarHydrogen(*args)
+    def IsAromaticNOxide(*args): return _openbabel._OBMolAtomBFSIter_IsAromaticNOxide(*args)
+    def IsChiral(*args): return _openbabel._OBMolAtomBFSIter_IsChiral(*args)
+    def IsAxial(*args): return _openbabel._OBMolAtomBFSIter_IsAxial(*args)
+    def IsClockwise(*args): return _openbabel._OBMolAtomBFSIter_IsClockwise(*args)
+    def IsAntiClockwise(*args): return _openbabel._OBMolAtomBFSIter_IsAntiClockwise(*args)
+    def IsPositiveStereo(*args): return _openbabel._OBMolAtomBFSIter_IsPositiveStereo(*args)
+    def IsNegativeStereo(*args): return _openbabel._OBMolAtomBFSIter_IsNegativeStereo(*args)
+    def HasChiralitySpecified(*args): return _openbabel._OBMolAtomBFSIter_HasChiralitySpecified(*args)
+    def HasChiralVolume(*args): return _openbabel._OBMolAtomBFSIter_HasChiralVolume(*args)
+    def IsHbondAcceptor(*args): return _openbabel._OBMolAtomBFSIter_IsHbondAcceptor(*args)
+    def IsHbondDonor(*args): return _openbabel._OBMolAtomBFSIter_IsHbondDonor(*args)
+    def IsHbondDonorH(*args): return _openbabel._OBMolAtomBFSIter_IsHbondDonorH(*args)
+    def HasAlphaBetaUnsat(*args): return _openbabel._OBMolAtomBFSIter_HasAlphaBetaUnsat(*args)
+    def HasBondOfOrder(*args): return _openbabel._OBMolAtomBFSIter_HasBondOfOrder(*args)
+    def CountBondsOfOrder(*args): return _openbabel._OBMolAtomBFSIter_CountBondsOfOrder(*args)
+    def HasNonSingleBond(*args): return _openbabel._OBMolAtomBFSIter_HasNonSingleBond(*args)
+    def HasSingleBond(*args): return _openbabel._OBMolAtomBFSIter_HasSingleBond(*args)
+    def HasDoubleBond(*args): return _openbabel._OBMolAtomBFSIter_HasDoubleBond(*args)
+    def HasAromaticBond(*args): return _openbabel._OBMolAtomBFSIter_HasAromaticBond(*args)
+    def MatchesSMARTS(*args): return _openbabel._OBMolAtomBFSIter_MatchesSMARTS(*args)
+    def DoTransformations(*args): return _openbabel._OBMolAtomBFSIter_DoTransformations(*args)
+    def ClassDescription(*args): return _openbabel._OBMolAtomBFSIter_ClassDescription(*args)
+    def HasData(*args): return _openbabel._OBMolAtomBFSIter_HasData(*args)
+    def DeleteData(*args): return _openbabel._OBMolAtomBFSIter_DeleteData(*args)
+    def SetData(*args): return _openbabel._OBMolAtomBFSIter_SetData(*args)
+    def DataSize(*args): return _openbabel._OBMolAtomBFSIter_DataSize(*args)
+    def GetData(*args): return _openbabel._OBMolAtomBFSIter_GetData(*args)
+    def BeginData(*args): return _openbabel._OBMolAtomBFSIter_BeginData(*args)
+    def EndData(*args): return _openbabel._OBMolAtomBFSIter_EndData(*args)
+_OBMolAtomBFSIter_swigregister = _openbabel._OBMolAtomBFSIter_swigregister
+_OBMolAtomBFSIter_swigregister(_OBMolAtomBFSIter)
+
+class _OBMolBondIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBMolBondIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBMolBondIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBMolBondIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBMolBondIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBMolBondIter_good(*args)
+    def inc(*args): return _openbabel._OBMolBondIter_inc(*args)
+    def deref(*args): return _openbabel._OBMolBondIter_deref(*args)
+    def __ref__(*args): return _openbabel._OBMolBondIter___ref__(*args)
+    __swig_setmethods__["Visit"] = _openbabel._OBMolBondIter_Visit_set
+    __swig_getmethods__["Visit"] = _openbabel._OBMolBondIter_Visit_get
+    if _newclass:Visit = _swig_property(_openbabel._OBMolBondIter_Visit_get, _openbabel._OBMolBondIter_Visit_set)
+    def SetIdx(*args): return _openbabel._OBMolBondIter_SetIdx(*args)
+    def SetBO(*args): return _openbabel._OBMolBondIter_SetBO(*args)
+    def SetBondOrder(*args): return _openbabel._OBMolBondIter_SetBondOrder(*args)
+    def SetBegin(*args): return _openbabel._OBMolBondIter_SetBegin(*args)
+    def SetEnd(*args): return _openbabel._OBMolBondIter_SetEnd(*args)
+    def SetParent(*args): return _openbabel._OBMolBondIter_SetParent(*args)
+    def SetLength(*args): return _openbabel._OBMolBondIter_SetLength(*args)
+    def Set(*args): return _openbabel._OBMolBondIter_Set(*args)
+    def SetKSingle(*args): return _openbabel._OBMolBondIter_SetKSingle(*args)
+    def SetKDouble(*args): return _openbabel._OBMolBondIter_SetKDouble(*args)
+    def SetKTriple(*args): return _openbabel._OBMolBondIter_SetKTriple(*args)
+    def SetAromatic(*args): return _openbabel._OBMolBondIter_SetAromatic(*args)
+    def SetHash(*args): return _openbabel._OBMolBondIter_SetHash(*args)
+    def SetWedge(*args): return _openbabel._OBMolBondIter_SetWedge(*args)
+    def SetUp(*args): return _openbabel._OBMolBondIter_SetUp(*args)
+    def SetDown(*args): return _openbabel._OBMolBondIter_SetDown(*args)
+    def SetInRing(*args): return _openbabel._OBMolBondIter_SetInRing(*args)
+    def SetClosure(*args): return _openbabel._OBMolBondIter_SetClosure(*args)
+    def UnsetHash(*args): return _openbabel._OBMolBondIter_UnsetHash(*args)
+    def UnsetWedge(*args): return _openbabel._OBMolBondIter_UnsetWedge(*args)
+    def UnsetUp(*args): return _openbabel._OBMolBondIter_UnsetUp(*args)
+    def UnsetDown(*args): return _openbabel._OBMolBondIter_UnsetDown(*args)
+    def UnsetAromatic(*args): return _openbabel._OBMolBondIter_UnsetAromatic(*args)
+    def UnsetKekule(*args): return _openbabel._OBMolBondIter_UnsetKekule(*args)
+    def GetIdx(*args): return _openbabel._OBMolBondIter_GetIdx(*args)
+    def GetBO(*args): return _openbabel._OBMolBondIter_GetBO(*args)
+    def GetBondOrder(*args): return _openbabel._OBMolBondIter_GetBondOrder(*args)
+    def GetFlags(*args): return _openbabel._OBMolBondIter_GetFlags(*args)
+    def GetBeginAtomIdx(*args): return _openbabel._OBMolBondIter_GetBeginAtomIdx(*args)
+    def GetEndAtomIdx(*args): return _openbabel._OBMolBondIter_GetEndAtomIdx(*args)
+    def GetBeginAtom(*args): return _openbabel._OBMolBondIter_GetBeginAtom(*args)
+    def GetEndAtom(*args): return _openbabel._OBMolBondIter_GetEndAtom(*args)
+    def GetNbrAtom(*args): return _openbabel._OBMolBondIter_GetNbrAtom(*args)
+    def GetParent(*args): return _openbabel._OBMolBondIter_GetParent(*args)
+    def GetEquibLength(*args): return _openbabel._OBMolBondIter_GetEquibLength(*args)
+    def GetLength(*args): return _openbabel._OBMolBondIter_GetLength(*args)
+    def GetNbrAtomIdx(*args): return _openbabel._OBMolBondIter_GetNbrAtomIdx(*args)
+    def IsAromatic(*args): return _openbabel._OBMolBondIter_IsAromatic(*args)
+    def IsInRing(*args): return _openbabel._OBMolBondIter_IsInRing(*args)
+    def IsRotor(*args): return _openbabel._OBMolBondIter_IsRotor(*args)
+    def IsAmide(*args): return _openbabel._OBMolBondIter_IsAmide(*args)
+    def IsPrimaryAmide(*args): return _openbabel._OBMolBondIter_IsPrimaryAmide(*args)
+    def IsSecondaryAmide(*args): return _openbabel._OBMolBondIter_IsSecondaryAmide(*args)
+    def IsEster(*args): return _openbabel._OBMolBondIter_IsEster(*args)
+    def IsCarbonyl(*args): return _openbabel._OBMolBondIter_IsCarbonyl(*args)
+    def IsSingle(*args): return _openbabel._OBMolBondIter_IsSingle(*args)
+    def IsDouble(*args): return _openbabel._OBMolBondIter_IsDouble(*args)
+    def IsTriple(*args): return _openbabel._OBMolBondIter_IsTriple(*args)
+    def IsKSingle(*args): return _openbabel._OBMolBondIter_IsKSingle(*args)
+    def IsKDouble(*args): return _openbabel._OBMolBondIter_IsKDouble(*args)
+    def IsKTriple(*args): return _openbabel._OBMolBondIter_IsKTriple(*args)
+    def IsClosure(*args): return _openbabel._OBMolBondIter_IsClosure(*args)
+    def IsUp(*args): return _openbabel._OBMolBondIter_IsUp(*args)
+    def IsDown(*args): return _openbabel._OBMolBondIter_IsDown(*args)
+    def IsWedge(*args): return _openbabel._OBMolBondIter_IsWedge(*args)
+    def IsHash(*args): return _openbabel._OBMolBondIter_IsHash(*args)
+    def IsDoubleBondGeometry(*args): return _openbabel._OBMolBondIter_IsDoubleBondGeometry(*args)
+    def Clear(*args): return _openbabel._OBMolBondIter_Clear(*args)
+    def DoTransformations(*args): return _openbabel._OBMolBondIter_DoTransformations(*args)
+    def ClassDescription(*args): return _openbabel._OBMolBondIter_ClassDescription(*args)
+    def HasData(*args): return _openbabel._OBMolBondIter_HasData(*args)
+    def DeleteData(*args): return _openbabel._OBMolBondIter_DeleteData(*args)
+    def SetData(*args): return _openbabel._OBMolBondIter_SetData(*args)
+    def DataSize(*args): return _openbabel._OBMolBondIter_DataSize(*args)
+    def GetData(*args): return _openbabel._OBMolBondIter_GetData(*args)
+    def BeginData(*args): return _openbabel._OBMolBondIter_BeginData(*args)
+    def EndData(*args): return _openbabel._OBMolBondIter_EndData(*args)
+_OBMolBondIter_swigregister = _openbabel._OBMolBondIter_swigregister
+_OBMolBondIter_swigregister(_OBMolBondIter)
+
+class _OBAtomAtomIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBAtomAtomIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBAtomAtomIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBAtomAtomIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBAtomAtomIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBAtomAtomIter_good(*args)
+    def inc(*args): return _openbabel._OBAtomAtomIter_inc(*args)
+    def deref(*args): return _openbabel._OBAtomAtomIter_deref(*args)
+    def __ref__(*args): return _openbabel._OBAtomAtomIter___ref__(*args)
+    __swig_setmethods__["Visit"] = _openbabel._OBAtomAtomIter_Visit_set
+    __swig_getmethods__["Visit"] = _openbabel._OBAtomAtomIter_Visit_get
+    if _newclass:Visit = _swig_property(_openbabel._OBAtomAtomIter_Visit_get, _openbabel._OBAtomAtomIter_Visit_set)
+    def Clear(*args): return _openbabel._OBAtomAtomIter_Clear(*args)
+    def SetIdx(*args): return _openbabel._OBAtomAtomIter_SetIdx(*args)
+    def SetHyb(*args): return _openbabel._OBAtomAtomIter_SetHyb(*args)
+    def SetAtomicNum(*args): return _openbabel._OBAtomAtomIter_SetAtomicNum(*args)
+    def SetIsotope(*args): return _openbabel._OBAtomAtomIter_SetIsotope(*args)
+    def SetImplicitValence(*args): return _openbabel._OBAtomAtomIter_SetImplicitValence(*args)
+    def IncrementImplicitValence(*args): return _openbabel._OBAtomAtomIter_IncrementImplicitValence(*args)
+    def DecrementImplicitValence(*args): return _openbabel._OBAtomAtomIter_DecrementImplicitValence(*args)
+    def SetFormalCharge(*args): return _openbabel._OBAtomAtomIter_SetFormalCharge(*args)
+    def SetSpinMultiplicity(*args): return _openbabel._OBAtomAtomIter_SetSpinMultiplicity(*args)
+    def SetType(*args): return _openbabel._OBAtomAtomIter_SetType(*args)
+    def SetPartialCharge(*args): return _openbabel._OBAtomAtomIter_SetPartialCharge(*args)
+    def SetVector(*args): return _openbabel._OBAtomAtomIter_SetVector(*args)
+    def SetCoordPtr(*args): return _openbabel._OBAtomAtomIter_SetCoordPtr(*args)
+    def SetResidue(*args): return _openbabel._OBAtomAtomIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel._OBAtomAtomIter_SetParent(*args)
+    def SetAromatic(*args): return _openbabel._OBAtomAtomIter_SetAromatic(*args)
+    def UnsetAromatic(*args): return _openbabel._OBAtomAtomIter_UnsetAromatic(*args)
+    def SetClockwiseStereo(*args): return _openbabel._OBAtomAtomIter_SetClockwiseStereo(*args)
+    def SetAntiClockwiseStereo(*args): return _openbabel._OBAtomAtomIter_SetAntiClockwiseStereo(*args)
+    def SetPositiveStereo(*args): return _openbabel._OBAtomAtomIter_SetPositiveStereo(*args)
+    def SetNegativeStereo(*args): return _openbabel._OBAtomAtomIter_SetNegativeStereo(*args)
+    def UnsetStereo(*args): return _openbabel._OBAtomAtomIter_UnsetStereo(*args)
+    def SetInRing(*args): return _openbabel._OBAtomAtomIter_SetInRing(*args)
+    def SetChiral(*args): return _openbabel._OBAtomAtomIter_SetChiral(*args)
+    def ClearCoordPtr(*args): return _openbabel._OBAtomAtomIter_ClearCoordPtr(*args)
+    def GetFormalCharge(*args): return _openbabel._OBAtomAtomIter_GetFormalCharge(*args)
+    def GetAtomicNum(*args): return _openbabel._OBAtomAtomIter_GetAtomicNum(*args)
+    def GetIsotope(*args): return _openbabel._OBAtomAtomIter_GetIsotope(*args)
+    def GetSpinMultiplicity(*args): return _openbabel._OBAtomAtomIter_GetSpinMultiplicity(*args)
+    def GetAtomicMass(*args): return _openbabel._OBAtomAtomIter_GetAtomicMass(*args)
+    def GetExactMass(*args): return _openbabel._OBAtomAtomIter_GetExactMass(*args)
+    def GetIdx(*args): return _openbabel._OBAtomAtomIter_GetIdx(*args)
+    def GetCoordinateIdx(*args): return _openbabel._OBAtomAtomIter_GetCoordinateIdx(*args)
+    def GetCIdx(*args): return _openbabel._OBAtomAtomIter_GetCIdx(*args)
+    def GetValence(*args): return _openbabel._OBAtomAtomIter_GetValence(*args)
+    def GetHyb(*args): return _openbabel._OBAtomAtomIter_GetHyb(*args)
+    def GetImplicitValence(*args): return _openbabel._OBAtomAtomIter_GetImplicitValence(*args)
+    def GetHvyValence(*args): return _openbabel._OBAtomAtomIter_GetHvyValence(*args)
+    def GetHeteroValence(*args): return _openbabel._OBAtomAtomIter_GetHeteroValence(*args)
+    def GetType(*args): return _openbabel._OBAtomAtomIter_GetType(*args)
+    def GetX(*args): return _openbabel._OBAtomAtomIter_GetX(*args)
+    def GetY(*args): return _openbabel._OBAtomAtomIter_GetY(*args)
+    def GetZ(*args): return _openbabel._OBAtomAtomIter_GetZ(*args)
+    def x(*args): return _openbabel._OBAtomAtomIter_x(*args)
+    def y(*args): return _openbabel._OBAtomAtomIter_y(*args)
+    def z(*args): return _openbabel._OBAtomAtomIter_z(*args)
+    def GetCoordinate(*args): return _openbabel._OBAtomAtomIter_GetCoordinate(*args)
+    def GetVector(*args): return _openbabel._OBAtomAtomIter_GetVector(*args)
+    def GetPartialCharge(*args): return _openbabel._OBAtomAtomIter_GetPartialCharge(*args)
+    def GetResidue(*args): return _openbabel._OBAtomAtomIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel._OBAtomAtomIter_GetParent(*args)
+    def GetNewBondVector(*args): return _openbabel._OBAtomAtomIter_GetNewBondVector(*args)
+    def GetBond(*args): return _openbabel._OBAtomAtomIter_GetBond(*args)
+    def GetNextAtom(*args): return _openbabel._OBAtomAtomIter_GetNextAtom(*args)
+    def BeginBonds(*args): return _openbabel._OBAtomAtomIter_BeginBonds(*args)
+    def EndBonds(*args): return _openbabel._OBAtomAtomIter_EndBonds(*args)
+    def BeginBond(*args): return _openbabel._OBAtomAtomIter_BeginBond(*args)
+    def NextBond(*args): return _openbabel._OBAtomAtomIter_NextBond(*args)
+    def BeginNbrAtom(*args): return _openbabel._OBAtomAtomIter_BeginNbrAtom(*args)
+    def NextNbrAtom(*args): return _openbabel._OBAtomAtomIter_NextNbrAtom(*args)
+    def GetDistance(*args): return _openbabel._OBAtomAtomIter_GetDistance(*args)
+    def GetAngle(*args): return _openbabel._OBAtomAtomIter_GetAngle(*args)
+    def NewResidue(*args): return _openbabel._OBAtomAtomIter_NewResidue(*args)
+    def AddResidue(*args): return _openbabel._OBAtomAtomIter_AddResidue(*args)
+    def DeleteResidue(*args): return _openbabel._OBAtomAtomIter_DeleteResidue(*args)
+    def AddBond(*args): return _openbabel._OBAtomAtomIter_AddBond(*args)
+    def InsertBond(*args): return _openbabel._OBAtomAtomIter_InsertBond(*args)
+    def DeleteBond(*args): return _openbabel._OBAtomAtomIter_DeleteBond(*args)
+    def ClearBond(*args): return _openbabel._OBAtomAtomIter_ClearBond(*args)
+    def HtoMethyl(*args): return _openbabel._OBAtomAtomIter_HtoMethyl(*args)
+    def SetHybAndGeom(*args): return _openbabel._OBAtomAtomIter_SetHybAndGeom(*args)
+    def ForceNoH(*args): return _openbabel._OBAtomAtomIter_ForceNoH(*args)
+    def HasNoHForced(*args): return _openbabel._OBAtomAtomIter_HasNoHForced(*args)
+    def CountFreeOxygens(*args): return _openbabel._OBAtomAtomIter_CountFreeOxygens(*args)
+    def ImplicitHydrogenCount(*args): return _openbabel._OBAtomAtomIter_ImplicitHydrogenCount(*args)
+    def ExplicitHydrogenCount(*args): return _openbabel._OBAtomAtomIter_ExplicitHydrogenCount(*args)
+    def MemberOfRingCount(*args): return _openbabel._OBAtomAtomIter_MemberOfRingCount(*args)
+    def MemberOfRingSize(*args): return _openbabel._OBAtomAtomIter_MemberOfRingSize(*args)
+    def CountRingBonds(*args): return _openbabel._OBAtomAtomIter_CountRingBonds(*args)
+    def SmallestBondAngle(*args): return _openbabel._OBAtomAtomIter_SmallestBondAngle(*args)
+    def AverageBondAngle(*args): return _openbabel._OBAtomAtomIter_AverageBondAngle(*args)
+    def BOSum(*args): return _openbabel._OBAtomAtomIter_BOSum(*args)
+    def KBOSum(*args): return _openbabel._OBAtomAtomIter_KBOSum(*args)
+    def HasResidue(*args): return _openbabel._OBAtomAtomIter_HasResidue(*args)
+    def IsHydrogen(*args): return _openbabel._OBAtomAtomIter_IsHydrogen(*args)
+    def IsCarbon(*args): return _openbabel._OBAtomAtomIter_IsCarbon(*args)
+    def IsNitrogen(*args): return _openbabel._OBAtomAtomIter_IsNitrogen(*args)
+    def IsOxygen(*args): return _openbabel._OBAtomAtomIter_IsOxygen(*args)
+    def IsSulfur(*args): return _openbabel._OBAtomAtomIter_IsSulfur(*args)
+    def IsPhosphorus(*args): return _openbabel._OBAtomAtomIter_IsPhosphorus(*args)
+    def IsAromatic(*args): return _openbabel._OBAtomAtomIter_IsAromatic(*args)
+    def IsInRing(*args): return _openbabel._OBAtomAtomIter_IsInRing(*args)
+    def IsInRingSize(*args): return _openbabel._OBAtomAtomIter_IsInRingSize(*args)
+    def IsHeteroatom(*args): return _openbabel._OBAtomAtomIter_IsHeteroatom(*args)
+    def IsNotCorH(*args): return _openbabel._OBAtomAtomIter_IsNotCorH(*args)
+    def IsConnected(*args): return _openbabel._OBAtomAtomIter_IsConnected(*args)
+    def IsOneThree(*args): return _openbabel._OBAtomAtomIter_IsOneThree(*args)
+    def IsOneFour(*args): return _openbabel._OBAtomAtomIter_IsOneFour(*args)
+    def IsCarboxylOxygen(*args): return _openbabel._OBAtomAtomIter_IsCarboxylOxygen(*args)
+    def IsPhosphateOxygen(*args): return _openbabel._OBAtomAtomIter_IsPhosphateOxygen(*args)
+    def IsSulfateOxygen(*args): return _openbabel._OBAtomAtomIter_IsSulfateOxygen(*args)
+    def IsNitroOxygen(*args): return _openbabel._OBAtomAtomIter_IsNitroOxygen(*args)
+    def IsAmideNitrogen(*args): return _openbabel._OBAtomAtomIter_IsAmideNitrogen(*args)
+    def IsPolarHydrogen(*args): return _openbabel._OBAtomAtomIter_IsPolarHydrogen(*args)
+    def IsNonPolarHydrogen(*args): return _openbabel._OBAtomAtomIter_IsNonPolarHydrogen(*args)
+    def IsAromaticNOxide(*args): return _openbabel._OBAtomAtomIter_IsAromaticNOxide(*args)
+    def IsChiral(*args): return _openbabel._OBAtomAtomIter_IsChiral(*args)
+    def IsAxial(*args): return _openbabel._OBAtomAtomIter_IsAxial(*args)
+    def IsClockwise(*args): return _openbabel._OBAtomAtomIter_IsClockwise(*args)
+    def IsAntiClockwise(*args): return _openbabel._OBAtomAtomIter_IsAntiClockwise(*args)
+    def IsPositiveStereo(*args): return _openbabel._OBAtomAtomIter_IsPositiveStereo(*args)
+    def IsNegativeStereo(*args): return _openbabel._OBAtomAtomIter_IsNegativeStereo(*args)
+    def HasChiralitySpecified(*args): return _openbabel._OBAtomAtomIter_HasChiralitySpecified(*args)
+    def HasChiralVolume(*args): return _openbabel._OBAtomAtomIter_HasChiralVolume(*args)
+    def IsHbondAcceptor(*args): return _openbabel._OBAtomAtomIter_IsHbondAcceptor(*args)
+    def IsHbondDonor(*args): return _openbabel._OBAtomAtomIter_IsHbondDonor(*args)
+    def IsHbondDonorH(*args): return _openbabel._OBAtomAtomIter_IsHbondDonorH(*args)
+    def HasAlphaBetaUnsat(*args): return _openbabel._OBAtomAtomIter_HasAlphaBetaUnsat(*args)
+    def HasBondOfOrder(*args): return _openbabel._OBAtomAtomIter_HasBondOfOrder(*args)
+    def CountBondsOfOrder(*args): return _openbabel._OBAtomAtomIter_CountBondsOfOrder(*args)
+    def HasNonSingleBond(*args): return _openbabel._OBAtomAtomIter_HasNonSingleBond(*args)
+    def HasSingleBond(*args): return _openbabel._OBAtomAtomIter_HasSingleBond(*args)
+    def HasDoubleBond(*args): return _openbabel._OBAtomAtomIter_HasDoubleBond(*args)
+    def HasAromaticBond(*args): return _openbabel._OBAtomAtomIter_HasAromaticBond(*args)
+    def MatchesSMARTS(*args): return _openbabel._OBAtomAtomIter_MatchesSMARTS(*args)
+    def DoTransformations(*args): return _openbabel._OBAtomAtomIter_DoTransformations(*args)
+    def ClassDescription(*args): return _openbabel._OBAtomAtomIter_ClassDescription(*args)
+    def HasData(*args): return _openbabel._OBAtomAtomIter_HasData(*args)
+    def DeleteData(*args): return _openbabel._OBAtomAtomIter_DeleteData(*args)
+    def SetData(*args): return _openbabel._OBAtomAtomIter_SetData(*args)
+    def DataSize(*args): return _openbabel._OBAtomAtomIter_DataSize(*args)
+    def GetData(*args): return _openbabel._OBAtomAtomIter_GetData(*args)
+    def BeginData(*args): return _openbabel._OBAtomAtomIter_BeginData(*args)
+    def EndData(*args): return _openbabel._OBAtomAtomIter_EndData(*args)
+_OBAtomAtomIter_swigregister = _openbabel._OBAtomAtomIter_swigregister
+_OBAtomAtomIter_swigregister(_OBAtomAtomIter)
+
+class _OBAtomBondIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBAtomBondIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBAtomBondIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBAtomBondIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBAtomBondIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBAtomBondIter_good(*args)
+    def inc(*args): return _openbabel._OBAtomBondIter_inc(*args)
+    def deref(*args): return _openbabel._OBAtomBondIter_deref(*args)
+    def __ref__(*args): return _openbabel._OBAtomBondIter___ref__(*args)
+    __swig_setmethods__["Visit"] = _openbabel._OBAtomBondIter_Visit_set
+    __swig_getmethods__["Visit"] = _openbabel._OBAtomBondIter_Visit_get
+    if _newclass:Visit = _swig_property(_openbabel._OBAtomBondIter_Visit_get, _openbabel._OBAtomBondIter_Visit_set)
+    def SetIdx(*args): return _openbabel._OBAtomBondIter_SetIdx(*args)
+    def SetBO(*args): return _openbabel._OBAtomBondIter_SetBO(*args)
+    def SetBondOrder(*args): return _openbabel._OBAtomBondIter_SetBondOrder(*args)
+    def SetBegin(*args): return _openbabel._OBAtomBondIter_SetBegin(*args)
+    def SetEnd(*args): return _openbabel._OBAtomBondIter_SetEnd(*args)
+    def SetParent(*args): return _openbabel._OBAtomBondIter_SetParent(*args)
+    def SetLength(*args): return _openbabel._OBAtomBondIter_SetLength(*args)
+    def Set(*args): return _openbabel._OBAtomBondIter_Set(*args)
+    def SetKSingle(*args): return _openbabel._OBAtomBondIter_SetKSingle(*args)
+    def SetKDouble(*args): return _openbabel._OBAtomBondIter_SetKDouble(*args)
+    def SetKTriple(*args): return _openbabel._OBAtomBondIter_SetKTriple(*args)
+    def SetAromatic(*args): return _openbabel._OBAtomBondIter_SetAromatic(*args)
+    def SetHash(*args): return _openbabel._OBAtomBondIter_SetHash(*args)
+    def SetWedge(*args): return _openbabel._OBAtomBondIter_SetWedge(*args)
+    def SetUp(*args): return _openbabel._OBAtomBondIter_SetUp(*args)
+    def SetDown(*args): return _openbabel._OBAtomBondIter_SetDown(*args)
+    def SetInRing(*args): return _openbabel._OBAtomBondIter_SetInRing(*args)
+    def SetClosure(*args): return _openbabel._OBAtomBondIter_SetClosure(*args)
+    def UnsetHash(*args): return _openbabel._OBAtomBondIter_UnsetHash(*args)
+    def UnsetWedge(*args): return _openbabel._OBAtomBondIter_UnsetWedge(*args)
+    def UnsetUp(*args): return _openbabel._OBAtomBondIter_UnsetUp(*args)
+    def UnsetDown(*args): return _openbabel._OBAtomBondIter_UnsetDown(*args)
+    def UnsetAromatic(*args): return _openbabel._OBAtomBondIter_UnsetAromatic(*args)
+    def UnsetKekule(*args): return _openbabel._OBAtomBondIter_UnsetKekule(*args)
+    def GetIdx(*args): return _openbabel._OBAtomBondIter_GetIdx(*args)
+    def GetBO(*args): return _openbabel._OBAtomBondIter_GetBO(*args)
+    def GetBondOrder(*args): return _openbabel._OBAtomBondIter_GetBondOrder(*args)
+    def GetFlags(*args): return _openbabel._OBAtomBondIter_GetFlags(*args)
+    def GetBeginAtomIdx(*args): return _openbabel._OBAtomBondIter_GetBeginAtomIdx(*args)
+    def GetEndAtomIdx(*args): return _openbabel._OBAtomBondIter_GetEndAtomIdx(*args)
+    def GetBeginAtom(*args): return _openbabel._OBAtomBondIter_GetBeginAtom(*args)
+    def GetEndAtom(*args): return _openbabel._OBAtomBondIter_GetEndAtom(*args)
+    def GetNbrAtom(*args): return _openbabel._OBAtomBondIter_GetNbrAtom(*args)
+    def GetParent(*args): return _openbabel._OBAtomBondIter_GetParent(*args)
+    def GetEquibLength(*args): return _openbabel._OBAtomBondIter_GetEquibLength(*args)
+    def GetLength(*args): return _openbabel._OBAtomBondIter_GetLength(*args)
+    def GetNbrAtomIdx(*args): return _openbabel._OBAtomBondIter_GetNbrAtomIdx(*args)
+    def IsAromatic(*args): return _openbabel._OBAtomBondIter_IsAromatic(*args)
+    def IsInRing(*args): return _openbabel._OBAtomBondIter_IsInRing(*args)
+    def IsRotor(*args): return _openbabel._OBAtomBondIter_IsRotor(*args)
+    def IsAmide(*args): return _openbabel._OBAtomBondIter_IsAmide(*args)
+    def IsPrimaryAmide(*args): return _openbabel._OBAtomBondIter_IsPrimaryAmide(*args)
+    def IsSecondaryAmide(*args): return _openbabel._OBAtomBondIter_IsSecondaryAmide(*args)
+    def IsEster(*args): return _openbabel._OBAtomBondIter_IsEster(*args)
+    def IsCarbonyl(*args): return _openbabel._OBAtomBondIter_IsCarbonyl(*args)
+    def IsSingle(*args): return _openbabel._OBAtomBondIter_IsSingle(*args)
+    def IsDouble(*args): return _openbabel._OBAtomBondIter_IsDouble(*args)
+    def IsTriple(*args): return _openbabel._OBAtomBondIter_IsTriple(*args)
+    def IsKSingle(*args): return _openbabel._OBAtomBondIter_IsKSingle(*args)
+    def IsKDouble(*args): return _openbabel._OBAtomBondIter_IsKDouble(*args)
+    def IsKTriple(*args): return _openbabel._OBAtomBondIter_IsKTriple(*args)
+    def IsClosure(*args): return _openbabel._OBAtomBondIter_IsClosure(*args)
+    def IsUp(*args): return _openbabel._OBAtomBondIter_IsUp(*args)
+    def IsDown(*args): return _openbabel._OBAtomBondIter_IsDown(*args)
+    def IsWedge(*args): return _openbabel._OBAtomBondIter_IsWedge(*args)
+    def IsHash(*args): return _openbabel._OBAtomBondIter_IsHash(*args)
+    def IsDoubleBondGeometry(*args): return _openbabel._OBAtomBondIter_IsDoubleBondGeometry(*args)
+    def Clear(*args): return _openbabel._OBAtomBondIter_Clear(*args)
+    def DoTransformations(*args): return _openbabel._OBAtomBondIter_DoTransformations(*args)
+    def ClassDescription(*args): return _openbabel._OBAtomBondIter_ClassDescription(*args)
+    def HasData(*args): return _openbabel._OBAtomBondIter_HasData(*args)
+    def DeleteData(*args): return _openbabel._OBAtomBondIter_DeleteData(*args)
+    def SetData(*args): return _openbabel._OBAtomBondIter_SetData(*args)
+    def DataSize(*args): return _openbabel._OBAtomBondIter_DataSize(*args)
+    def GetData(*args): return _openbabel._OBAtomBondIter_GetData(*args)
+    def BeginData(*args): return _openbabel._OBAtomBondIter_BeginData(*args)
+    def EndData(*args): return _openbabel._OBAtomBondIter_EndData(*args)
+_OBAtomBondIter_swigregister = _openbabel._OBAtomBondIter_swigregister
+_OBAtomBondIter_swigregister(_OBAtomBondIter)
+
+class _OBResidueIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBResidueIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBResidueIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBResidueIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBResidueIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBResidueIter_good(*args)
+    def inc(*args): return _openbabel._OBResidueIter_inc(*args)
+    def deref(*args): return _openbabel._OBResidueIter_deref(*args)
+    def __ref__(*args): return _openbabel._OBResidueIter___ref__(*args)
+    def AddAtom(*args): return _openbabel._OBResidueIter_AddAtom(*args)
+    def InsertAtom(*args): return _openbabel._OBResidueIter_InsertAtom(*args)
+    def RemoveAtom(*args): return _openbabel._OBResidueIter_RemoveAtom(*args)
+    def Clear(*args): return _openbabel._OBResidueIter_Clear(*args)
+    def SetName(*args): return _openbabel._OBResidueIter_SetName(*args)
+    def SetNum(*args): return _openbabel._OBResidueIter_SetNum(*args)
+    def SetChain(*args): return _openbabel._OBResidueIter_SetChain(*args)
+    def SetChainNum(*args): return _openbabel._OBResidueIter_SetChainNum(*args)
+    def SetIdx(*args): return _openbabel._OBResidueIter_SetIdx(*args)
+    def SetAtomID(*args): return _openbabel._OBResidueIter_SetAtomID(*args)
+    def SetHetAtom(*args): return _openbabel._OBResidueIter_SetHetAtom(*args)
+    def SetSerialNum(*args): return _openbabel._OBResidueIter_SetSerialNum(*args)
+    def GetName(*args): return _openbabel._OBResidueIter_GetName(*args)
+    def GetNum(*args): return _openbabel._OBResidueIter_GetNum(*args)
+    def GetNumAtoms(*args): return _openbabel._OBResidueIter_GetNumAtoms(*args)
+    def GetChain(*args): return _openbabel._OBResidueIter_GetChain(*args)
+    def GetChainNum(*args): return _openbabel._OBResidueIter_GetChainNum(*args)
+    def GetIdx(*args): return _openbabel._OBResidueIter_GetIdx(*args)
+    def GetResKey(*args): return _openbabel._OBResidueIter_GetResKey(*args)
+    def GetAtoms(*args): return _openbabel._OBResidueIter_GetAtoms(*args)
+    def GetBonds(*args): return _openbabel._OBResidueIter_GetBonds(*args)
+    def GetAtomID(*args): return _openbabel._OBResidueIter_GetAtomID(*args)
+    def GetSerialNum(*args): return _openbabel._OBResidueIter_GetSerialNum(*args)
+    def GetAminoAcidProperty(*args): return _openbabel._OBResidueIter_GetAminoAcidProperty(*args)
+    def GetAtomProperty(*args): return _openbabel._OBResidueIter_GetAtomProperty(*args)
+    def GetResidueProperty(*args): return _openbabel._OBResidueIter_GetResidueProperty(*args)
+    def IsHetAtom(*args): return _openbabel._OBResidueIter_IsHetAtom(*args)
+    def IsResidueType(*args): return _openbabel._OBResidueIter_IsResidueType(*args)
+    def BeginAtoms(*args): return _openbabel._OBResidueIter_BeginAtoms(*args)
+    def EndAtoms(*args): return _openbabel._OBResidueIter_EndAtoms(*args)
+    def BeginAtom(*args): return _openbabel._OBResidueIter_BeginAtom(*args)
+    def NextAtom(*args): return _openbabel._OBResidueIter_NextAtom(*args)
+    def DoTransformations(*args): return _openbabel._OBResidueIter_DoTransformations(*args)
+    def ClassDescription(*args): return _openbabel._OBResidueIter_ClassDescription(*args)
+    def HasData(*args): return _openbabel._OBResidueIter_HasData(*args)
+    def DeleteData(*args): return _openbabel._OBResidueIter_DeleteData(*args)
+    def SetData(*args): return _openbabel._OBResidueIter_SetData(*args)
+    def DataSize(*args): return _openbabel._OBResidueIter_DataSize(*args)
+    def GetData(*args): return _openbabel._OBResidueIter_GetData(*args)
+    def BeginData(*args): return _openbabel._OBResidueIter_BeginData(*args)
+    def EndData(*args): return _openbabel._OBResidueIter_EndData(*args)
+_OBResidueIter_swigregister = _openbabel._OBResidueIter_swigregister
+_OBResidueIter_swigregister(_OBResidueIter)
+
+class _OBResidueAtomIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBResidueAtomIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBResidueAtomIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBResidueAtomIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBResidueAtomIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBResidueAtomIter_good(*args)
+    def inc(*args): return _openbabel._OBResidueAtomIter_inc(*args)
+    def deref(*args): return _openbabel._OBResidueAtomIter_deref(*args)
+    def __ref__(*args): return _openbabel._OBResidueAtomIter___ref__(*args)
+    __swig_setmethods__["Visit"] = _openbabel._OBResidueAtomIter_Visit_set
+    __swig_getmethods__["Visit"] = _openbabel._OBResidueAtomIter_Visit_get
+    if _newclass:Visit = _swig_property(_openbabel._OBResidueAtomIter_Visit_get, _openbabel._OBResidueAtomIter_Visit_set)
+    def Clear(*args): return _openbabel._OBResidueAtomIter_Clear(*args)
+    def SetIdx(*args): return _openbabel._OBResidueAtomIter_SetIdx(*args)
+    def SetHyb(*args): return _openbabel._OBResidueAtomIter_SetHyb(*args)
+    def SetAtomicNum(*args): return _openbabel._OBResidueAtomIter_SetAtomicNum(*args)
+    def SetIsotope(*args): return _openbabel._OBResidueAtomIter_SetIsotope(*args)
+    def SetImplicitValence(*args): return _openbabel._OBResidueAtomIter_SetImplicitValence(*args)
+    def IncrementImplicitValence(*args): return _openbabel._OBResidueAtomIter_IncrementImplicitValence(*args)
+    def DecrementImplicitValence(*args): return _openbabel._OBResidueAtomIter_DecrementImplicitValence(*args)
+    def SetFormalCharge(*args): return _openbabel._OBResidueAtomIter_SetFormalCharge(*args)
+    def SetSpinMultiplicity(*args): return _openbabel._OBResidueAtomIter_SetSpinMultiplicity(*args)
+    def SetType(*args): return _openbabel._OBResidueAtomIter_SetType(*args)
+    def SetPartialCharge(*args): return _openbabel._OBResidueAtomIter_SetPartialCharge(*args)
+    def SetVector(*args): return _openbabel._OBResidueAtomIter_SetVector(*args)
+    def SetCoordPtr(*args): return _openbabel._OBResidueAtomIter_SetCoordPtr(*args)
+    def SetResidue(*args): return _openbabel._OBResidueAtomIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel._OBResidueAtomIter_SetParent(*args)
+    def SetAromatic(*args): return _openbabel._OBResidueAtomIter_SetAromatic(*args)
+    def UnsetAromatic(*args): return _openbabel._OBResidueAtomIter_UnsetAromatic(*args)
+    def SetClockwiseStereo(*args): return _openbabel._OBResidueAtomIter_SetClockwiseStereo(*args)
+    def SetAntiClockwiseStereo(*args): return _openbabel._OBResidueAtomIter_SetAntiClockwiseStereo(*args)
+    def SetPositiveStereo(*args): return _openbabel._OBResidueAtomIter_SetPositiveStereo(*args)
+    def SetNegativeStereo(*args): return _openbabel._OBResidueAtomIter_SetNegativeStereo(*args)
+    def UnsetStereo(*args): return _openbabel._OBResidueAtomIter_UnsetStereo(*args)
+    def SetInRing(*args): return _openbabel._OBResidueAtomIter_SetInRing(*args)
+    def SetChiral(*args): return _openbabel._OBResidueAtomIter_SetChiral(*args)
+    def ClearCoordPtr(*args): return _openbabel._OBResidueAtomIter_ClearCoordPtr(*args)
+    def GetFormalCharge(*args): return _openbabel._OBResidueAtomIter_GetFormalCharge(*args)
+    def GetAtomicNum(*args): return _openbabel._OBResidueAtomIter_GetAtomicNum(*args)
+    def GetIsotope(*args): return _openbabel._OBResidueAtomIter_GetIsotope(*args)
+    def GetSpinMultiplicity(*args): return _openbabel._OBResidueAtomIter_GetSpinMultiplicity(*args)
+    def GetAtomicMass(*args): return _openbabel._OBResidueAtomIter_GetAtomicMass(*args)
+    def GetExactMass(*args): return _openbabel._OBResidueAtomIter_GetExactMass(*args)
+    def GetIdx(*args): return _openbabel._OBResidueAtomIter_GetIdx(*args)
+    def GetCoordinateIdx(*args): return _openbabel._OBResidueAtomIter_GetCoordinateIdx(*args)
+    def GetCIdx(*args): return _openbabel._OBResidueAtomIter_GetCIdx(*args)
+    def GetValence(*args): return _openbabel._OBResidueAtomIter_GetValence(*args)
+    def GetHyb(*args): return _openbabel._OBResidueAtomIter_GetHyb(*args)
+    def GetImplicitValence(*args): return _openbabel._OBResidueAtomIter_GetImplicitValence(*args)
+    def GetHvyValence(*args): return _openbabel._OBResidueAtomIter_GetHvyValence(*args)
+    def GetHeteroValence(*args): return _openbabel._OBResidueAtomIter_GetHeteroValence(*args)
+    def GetType(*args): return _openbabel._OBResidueAtomIter_GetType(*args)
+    def GetX(*args): return _openbabel._OBResidueAtomIter_GetX(*args)
+    def GetY(*args): return _openbabel._OBResidueAtomIter_GetY(*args)
+    def GetZ(*args): return _openbabel._OBResidueAtomIter_GetZ(*args)
+    def x(*args): return _openbabel._OBResidueAtomIter_x(*args)
+    def y(*args): return _openbabel._OBResidueAtomIter_y(*args)
+    def z(*args): return _openbabel._OBResidueAtomIter_z(*args)
+    def GetCoordinate(*args): return _openbabel._OBResidueAtomIter_GetCoordinate(*args)
+    def GetVector(*args): return _openbabel._OBResidueAtomIter_GetVector(*args)
+    def GetPartialCharge(*args): return _openbabel._OBResidueAtomIter_GetPartialCharge(*args)
+    def GetResidue(*args): return _openbabel._OBResidueAtomIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel._OBResidueAtomIter_GetParent(*args)
+    def GetNewBondVector(*args): return _openbabel._OBResidueAtomIter_GetNewBondVector(*args)
+    def GetBond(*args): return _openbabel._OBResidueAtomIter_GetBond(*args)
+    def GetNextAtom(*args): return _openbabel._OBResidueAtomIter_GetNextAtom(*args)
+    def BeginBonds(*args): return _openbabel._OBResidueAtomIter_BeginBonds(*args)
+    def EndBonds(*args): return _openbabel._OBResidueAtomIter_EndBonds(*args)
+    def BeginBond(*args): return _openbabel._OBResidueAtomIter_BeginBond(*args)
+    def NextBond(*args): return _openbabel._OBResidueAtomIter_NextBond(*args)
+    def BeginNbrAtom(*args): return _openbabel._OBResidueAtomIter_BeginNbrAtom(*args)
+    def NextNbrAtom(*args): return _openbabel._OBResidueAtomIter_NextNbrAtom(*args)
+    def GetDistance(*args): return _openbabel._OBResidueAtomIter_GetDistance(*args)
+    def GetAngle(*args): return _openbabel._OBResidueAtomIter_GetAngle(*args)
+    def NewResidue(*args): return _openbabel._OBResidueAtomIter_NewResidue(*args)
+    def AddResidue(*args): return _openbabel._OBResidueAtomIter_AddResidue(*args)
+    def DeleteResidue(*args): return _openbabel._OBResidueAtomIter_DeleteResidue(*args)
+    def AddBond(*args): return _openbabel._OBResidueAtomIter_AddBond(*args)
+    def InsertBond(*args): return _openbabel._OBResidueAtomIter_InsertBond(*args)
+    def DeleteBond(*args): return _openbabel._OBResidueAtomIter_DeleteBond(*args)
+    def ClearBond(*args): return _openbabel._OBResidueAtomIter_ClearBond(*args)
+    def HtoMethyl(*args): return _openbabel._OBResidueAtomIter_HtoMethyl(*args)
+    def SetHybAndGeom(*args): return _openbabel._OBResidueAtomIter_SetHybAndGeom(*args)
+    def ForceNoH(*args): return _openbabel._OBResidueAtomIter_ForceNoH(*args)
+    def HasNoHForced(*args): return _openbabel._OBResidueAtomIter_HasNoHForced(*args)
+    def CountFreeOxygens(*args): return _openbabel._OBResidueAtomIter_CountFreeOxygens(*args)
+    def ImplicitHydrogenCount(*args): return _openbabel._OBResidueAtomIter_ImplicitHydrogenCount(*args)
+    def ExplicitHydrogenCount(*args): return _openbabel._OBResidueAtomIter_ExplicitHydrogenCount(*args)
+    def MemberOfRingCount(*args): return _openbabel._OBResidueAtomIter_MemberOfRingCount(*args)
+    def MemberOfRingSize(*args): return _openbabel._OBResidueAtomIter_MemberOfRingSize(*args)
+    def CountRingBonds(*args): return _openbabel._OBResidueAtomIter_CountRingBonds(*args)
+    def SmallestBondAngle(*args): return _openbabel._OBResidueAtomIter_SmallestBondAngle(*args)
+    def AverageBondAngle(*args): return _openbabel._OBResidueAtomIter_AverageBondAngle(*args)
+    def BOSum(*args): return _openbabel._OBResidueAtomIter_BOSum(*args)
+    def KBOSum(*args): return _openbabel._OBResidueAtomIter_KBOSum(*args)
+    def HasResidue(*args): return _openbabel._OBResidueAtomIter_HasResidue(*args)
+    def IsHydrogen(*args): return _openbabel._OBResidueAtomIter_IsHydrogen(*args)
+    def IsCarbon(*args): return _openbabel._OBResidueAtomIter_IsCarbon(*args)
+    def IsNitrogen(*args): return _openbabel._OBResidueAtomIter_IsNitrogen(*args)
+    def IsOxygen(*args): return _openbabel._OBResidueAtomIter_IsOxygen(*args)
+    def IsSulfur(*args): return _openbabel._OBResidueAtomIter_IsSulfur(*args)
+    def IsPhosphorus(*args): return _openbabel._OBResidueAtomIter_IsPhosphorus(*args)
+    def IsAromatic(*args): return _openbabel._OBResidueAtomIter_IsAromatic(*args)
+    def IsInRing(*args): return _openbabel._OBResidueAtomIter_IsInRing(*args)
+    def IsInRingSize(*args): return _openbabel._OBResidueAtomIter_IsInRingSize(*args)
+    def IsHeteroatom(*args): return _openbabel._OBResidueAtomIter_IsHeteroatom(*args)
+    def IsNotCorH(*args): return _openbabel._OBResidueAtomIter_IsNotCorH(*args)
+    def IsConnected(*args): return _openbabel._OBResidueAtomIter_IsConnected(*args)
+    def IsOneThree(*args): return _openbabel._OBResidueAtomIter_IsOneThree(*args)
+    def IsOneFour(*args): return _openbabel._OBResidueAtomIter_IsOneFour(*args)
+    def IsCarboxylOxygen(*args): return _openbabel._OBResidueAtomIter_IsCarboxylOxygen(*args)
+    def IsPhosphateOxygen(*args): return _openbabel._OBResidueAtomIter_IsPhosphateOxygen(*args)
+    def IsSulfateOxygen(*args): return _openbabel._OBResidueAtomIter_IsSulfateOxygen(*args)
+    def IsNitroOxygen(*args): return _openbabel._OBResidueAtomIter_IsNitroOxygen(*args)
+    def IsAmideNitrogen(*args): return _openbabel._OBResidueAtomIter_IsAmideNitrogen(*args)
+    def IsPolarHydrogen(*args): return _openbabel._OBResidueAtomIter_IsPolarHydrogen(*args)
+    def IsNonPolarHydrogen(*args): return _openbabel._OBResidueAtomIter_IsNonPolarHydrogen(*args)
+    def IsAromaticNOxide(*args): return _openbabel._OBResidueAtomIter_IsAromaticNOxide(*args)
+    def IsChiral(*args): return _openbabel._OBResidueAtomIter_IsChiral(*args)
+    def IsAxial(*args): return _openbabel._OBResidueAtomIter_IsAxial(*args)
+    def IsClockwise(*args): return _openbabel._OBResidueAtomIter_IsClockwise(*args)
+    def IsAntiClockwise(*args): return _openbabel._OBResidueAtomIter_IsAntiClockwise(*args)
+    def IsPositiveStereo(*args): return _openbabel._OBResidueAtomIter_IsPositiveStereo(*args)
+    def IsNegativeStereo(*args): return _openbabel._OBResidueAtomIter_IsNegativeStereo(*args)
+    def HasChiralitySpecified(*args): return _openbabel._OBResidueAtomIter_HasChiralitySpecified(*args)
+    def HasChiralVolume(*args): return _openbabel._OBResidueAtomIter_HasChiralVolume(*args)
+    def IsHbondAcceptor(*args): return _openbabel._OBResidueAtomIter_IsHbondAcceptor(*args)
+    def IsHbondDonor(*args): return _openbabel._OBResidueAtomIter_IsHbondDonor(*args)
+    def IsHbondDonorH(*args): return _openbabel._OBResidueAtomIter_IsHbondDonorH(*args)
+    def HasAlphaBetaUnsat(*args): return _openbabel._OBResidueAtomIter_HasAlphaBetaUnsat(*args)
+    def HasBondOfOrder(*args): return _openbabel._OBResidueAtomIter_HasBondOfOrder(*args)
+    def CountBondsOfOrder(*args): return _openbabel._OBResidueAtomIter_CountBondsOfOrder(*args)
+    def HasNonSingleBond(*args): return _openbabel._OBResidueAtomIter_HasNonSingleBond(*args)
+    def HasSingleBond(*args): return _openbabel._OBResidueAtomIter_HasSingleBond(*args)
+    def HasDoubleBond(*args): return _openbabel._OBResidueAtomIter_HasDoubleBond(*args)
+    def HasAromaticBond(*args): return _openbabel._OBResidueAtomIter_HasAromaticBond(*args)
+    def MatchesSMARTS(*args): return _openbabel._OBResidueAtomIter_MatchesSMARTS(*args)
+    def DoTransformations(*args): return _openbabel._OBResidueAtomIter_DoTransformations(*args)
+    def ClassDescription(*args): return _openbabel._OBResidueAtomIter_ClassDescription(*args)
+    def HasData(*args): return _openbabel._OBResidueAtomIter_HasData(*args)
+    def DeleteData(*args): return _openbabel._OBResidueAtomIter_DeleteData(*args)
+    def SetData(*args): return _openbabel._OBResidueAtomIter_SetData(*args)
+    def DataSize(*args): return _openbabel._OBResidueAtomIter_DataSize(*args)
+    def GetData(*args): return _openbabel._OBResidueAtomIter_GetData(*args)
+    def BeginData(*args): return _openbabel._OBResidueAtomIter_BeginData(*args)
+    def EndData(*args): return _openbabel._OBResidueAtomIter_EndData(*args)
+_OBResidueAtomIter_swigregister = _openbabel._OBResidueAtomIter_swigregister
+_OBResidueAtomIter_swigregister(_OBResidueAtomIter)
+
+class _OBMolAngleIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBMolAngleIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBMolAngleIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBMolAngleIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBMolAngleIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBMolAngleIter_good(*args)
+    def inc(*args): return _openbabel._OBMolAngleIter_inc(*args)
+    def __ref__(*args): return _openbabel._OBMolAngleIter___ref__(*args)
+_OBMolAngleIter_swigregister = _openbabel._OBMolAngleIter_swigregister
+_OBMolAngleIter_swigregister(_OBMolAngleIter)
+
+class _OBMolTorsionIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBMolTorsionIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBMolTorsionIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBMolTorsionIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBMolTorsionIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBMolTorsionIter_good(*args)
+    def inc(*args): return _openbabel._OBMolTorsionIter_inc(*args)
+    def __ref__(*args): return _openbabel._OBMolTorsionIter___ref__(*args)
+_OBMolTorsionIter_swigregister = _openbabel._OBMolTorsionIter_swigregister
+_OBMolTorsionIter_swigregister(_OBMolTorsionIter)
+
+class _OBMolPairIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBMolPairIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBMolPairIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBMolPairIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBMolPairIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBMolPairIter_good(*args)
+    def inc(*args): return _openbabel._OBMolPairIter_inc(*args)
+    def __ref__(*args): return _openbabel._OBMolPairIter___ref__(*args)
+_OBMolPairIter_swigregister = _openbabel._OBMolPairIter_swigregister
+_OBMolPairIter_swigregister(_OBMolPairIter)
+
+class _OBMolRingIter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, _OBMolRingIter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, _OBMolRingIter, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new__OBMolRingIter(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete__OBMolRingIter
+    __del__ = lambda self : None;
+    def good(*args): return _openbabel._OBMolRingIter_good(*args)
+    def inc(*args): return _openbabel._OBMolRingIter_inc(*args)
+    def deref(*args): return _openbabel._OBMolRingIter_deref(*args)
+    def __ref__(*args): return _openbabel._OBMolRingIter___ref__(*args)
+    __swig_setmethods__["_path"] = _openbabel._OBMolRingIter__path_set
+    __swig_getmethods__["_path"] = _openbabel._OBMolRingIter__path_get
+    if _newclass:_path = _swig_property(_openbabel._OBMolRingIter__path_get, _openbabel._OBMolRingIter__path_set)
+    __swig_setmethods__["_pathset"] = _openbabel._OBMolRingIter__pathset_set
+    __swig_getmethods__["_pathset"] = _openbabel._OBMolRingIter__pathset_get
+    if _newclass:_pathset = _swig_property(_openbabel._OBMolRingIter__pathset_get, _openbabel._OBMolRingIter__pathset_set)
+    def Size(*args): return _openbabel._OBMolRingIter_Size(*args)
+    def PathSize(*args): return _openbabel._OBMolRingIter_PathSize(*args)
+    def IsAromatic(*args): return _openbabel._OBMolRingIter_IsAromatic(*args)
+    def IsMember(*args): return _openbabel._OBMolRingIter_IsMember(*args)
+    def IsInRing(*args): return _openbabel._OBMolRingIter_IsInRing(*args)
+    def SetParent(*args): return _openbabel._OBMolRingIter_SetParent(*args)
+    def GetParent(*args): return _openbabel._OBMolRingIter_GetParent(*args)
+    def findCenterAndNormal(*args): return _openbabel._OBMolRingIter_findCenterAndNormal(*args)
+_OBMolRingIter_swigregister = _openbabel._OBMolRingIter_swigregister
+_OBMolRingIter_swigregister(_OBMolRingIter)
+
+class OBIter(object):
+    OBiterator = None # This is defined by the subclasses
+
+    def __init__(self, *params):
+        self.iter = self.OBiterator(*params)
+        self.finished = False
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if not self.finished:
+            b = self.iter.deref()
+            self.iter.inc()
+            if not self.iter.good():
+                # There is nothing left to iterate over
+                self.finished = True
+            return b
+        else:
+            raise StopIteration
+
+class OBAtomAtomIter(OBIter):
+    """Iterator over the atoms attached to an atom."""
+    OBiterator = _OBAtomAtomIter
+class OBAtomBondIter(OBIter):
+    """Iterator over the bonds attached to an atom."""
+    OBiterator = _OBAtomBondIter
+class OBMolAngleIter(OBIter):
+    """Iterator over the angles in a molecule."""
+    OBiterator = _OBMolAngleIter
+class OBMolAtomIter(OBIter):
+    """Iterator over the atoms in a molecule."""
+    OBiterator = _OBMolAtomIter
+class OBMolAtomBFSIter(OBIter):
+    """Iterator over the atoms in a molecule in a breadth-first manner."""
+    OBiterator = _OBMolAtomBFSIter
+class OBMolAtomDFSIter(OBIter):
+    """Iterator over the atoms in a molecule in a depth-first manner."""
+    OBiterator = _OBMolAtomDFSIter
+class OBMolBondIter(OBIter):
+    """Iterator over the bonds in a molecule."""
+    OBiterator = _OBMolBondIter
+class OBMolPairIter(OBIter):
+    """Iterator over pairs of atoms in a molecule."""
+    OBiterator = _OBMolPairIter
+class OBMolRingIter(OBIter):
+    """Iterator over the rings in a molecule."""
+    OBiterator = _OBMolRingIter
+class OBMolTorsionIter(OBIter):
+    """Iterator over the torsion angles in a molecule."""
+    OBiterator = _OBMolTorsionIter
+class OBResidueIter(OBIter):
+    """Iterator over the residues in a molecule."""
+    OBiterator = _OBResidueIter
+class OBResidueAtomIter(OBIter):
+    """Iterator over the atoms in a residue."""
+    OBiterator = _OBResidueAtomIter
+
+class doubleArray(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, doubleArray, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, doubleArray, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new_doubleArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_doubleArray
+    __del__ = lambda self : None;
+    def __getitem__(*args): return _openbabel.doubleArray___getitem__(*args)
+    def __setitem__(*args): return _openbabel.doubleArray___setitem__(*args)
+    def cast(*args): return _openbabel.doubleArray_cast(*args)
+    __swig_getmethods__["frompointer"] = lambda x: _openbabel.doubleArray_frompointer
+    if _newclass:frompointer = staticmethod(_openbabel.doubleArray_frompointer)
+doubleArray_swigregister = _openbabel.doubleArray_swigregister
+doubleArray_swigregister(doubleArray)
+doubleArray_frompointer = _openbabel.doubleArray_frompointer
+
+def double_array(mylist):
+    """Create a C array of doubles from a list."""
+    c = doubleArray(len(mylist))
+    for i,v in enumerate(mylist):
+        c[i] = v
+    return c
 
 
 

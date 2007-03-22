@@ -262,6 +262,14 @@ namespace OpenBabel {
       static int GetOptionParams(std::string name, Option_type typ);
       //@}
 
+      /// @name Supported file format 
+      //@{
+      // @brief Set and return the list of supported input format
+      std::vector<std::string> GetSupportedInputFormat();
+      // @brief Set and return the list of supported output format
+      std::vector<std::string> GetSupportedOutputFormat();
+      //@}
+
       /// @name Conversion
       //@{
       /// @brief Conversion for single input and output stream
@@ -394,6 +402,9 @@ protected:
       size_t rInlen; ///<length in the input stream of the object being read
 	
       OBConversion* pAuxConv;///<Way to extend OBConversion
+
+      std::vector<std::string> SupportedInputFormat; ///< list of supported input format
+      std::vector<std::string> SupportedOutputFormat; ///< list of supported output format
 
     };
 
