@@ -1571,6 +1571,12 @@ namespace OpenBabel
     
     vab = a - b;
     rab = vab.length();
+    if (rab < 0.1) // atoms are too close to each other
+      {
+        vab.randomUnitVector();
+        vab *= 0.1; // move the atoms a small distance apart
+        rab = 0.1;
+      }
     drab = vab / rab;
 
     a = -drab; // -drab/da

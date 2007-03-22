@@ -1,6 +1,12 @@
-2007-03-18 Chris Morley
+2007-03-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
-	windows-vc2005: Simplified projects to OpenBabelDLL with driver
+	* src/forcefield.cpp: When determining length, if two atoms are
+	really close, add a small random separation (~0.1Ang). Fixed
+	PR#1684479.
+
+2007-03-22 Chris Morley
+
+	* windows-vc2005: Simplified projects to OpenBabelDLL with driver
 	programs for commandline, GUI, and Python interface.
 
 	* include/openbabel/forcefield.h: So that the Python build
