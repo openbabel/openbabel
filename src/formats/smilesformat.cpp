@@ -1929,8 +1929,10 @@ namespace OpenBabel
         // Normally skip hydrogens
         // but D,T is explicit and so is H2
         // or an H atom involved in a cis/trans '/' or '\' bond spec
-        if ( (!nbr->IsHydrogen() || nbr->GetIsotope() || atom->IsHydrogen() ||
-              (((OBBond*)*i)->IsUp() || ((OBBond*)*i)->IsDown()) )
+        // or an H atom bonded to a chiral atom (see ToSmilesString below)
+        if ( (!nbr->IsHydrogen() || nbr->GetIsotope() || atom->IsHydrogen() 
+              || (atom->HasChiralitySpecified())
+              || (((OBBond*)*i)->IsUp() || ((OBBond*)*i)->IsDown()) )
              && !_uatoms[nbr->GetIdx()])
           {
             _ubonds.SetBitOn((*i)->GetIdx());
@@ -1992,10 +1994,22 @@ namespace OpenBabel
     // Note: Cis/trans bonds are tricky, for example, C/C=C/C is trans,
     // but C(/C)=C/C is cis.  See the comments in FixCisTransBonds(), above.
 
+    // Also make sure we don't output any explicit "H" atoms used for 
+    // chiral specifications
+
     OBBond *bond;
+    OBAtom *next;
     for (int i = 0;i < node->Size();i++)
       {
         bond = node->GetNextBond(i);
+        next = node->GetNextNode(i)->GetAtom();
+
+        // this was a "H" included by BuildTree we should omit
+        // it's only included to get the current atom's chirality correct
+        // (e.g., for a chiral first atom)
+        if (atom->HasChiralitySpecified() && next->IsHydrogen())
+          continue;
+
         if (i+1 < node->Size()) {
           strcat(buffer,"(");
         }

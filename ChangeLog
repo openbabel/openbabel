@@ -8,6 +8,16 @@
 
 	* test/wrapper.sh: Add notes on passing arguments to "prove."
 
+	* tools/obprop.cpp: Fix formatting problems - PR#1685879, reported
+	by Tapani Kinnunen.
+
+	* src/formats/mol2format.cpp: Add new -xl flag to output "ligand
+	only" data (i.e., no residue info). Fixes PR#1683788.
+
+	* src/formats/smilesformat.cpp: Fix PR#1680070 with output of
+	chiral root (first) atoms. Really need to clean up BuildTree()
+	since that if() statement is messy, but works for 2.1 release.
+
 2007-03-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* data/psa.txt: Added ";heavy", fixes the logp_psa test.
