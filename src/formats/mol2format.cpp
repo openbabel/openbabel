@@ -33,13 +33,15 @@ namespace OpenBabel
       OBConversion::RegisterFormat("mol2",this, "chemical/x-mol2");
       OBConversion::RegisterFormat("ml2",this);
       OBConversion::RegisterFormat("sy2",this);
+      OBConversion::RegisterOptionParam("l", NULL, 0, OBConversion::OUTOPTIONS);
     }
 
     virtual const char* Description() //required
     {
       return
         "Sybyl Mol2 format\n"
-        "  No comments yet\n";
+        "Write Options e.g. -xl\n"
+        "  l               Output ignores residue information (only ligands)\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -315,6 +317,7 @@ namespace OpenBabel
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
+    bool ligandsOnly = pConv->IsOption("l", OBConversion::OUTOPTIONS);
  
     //The old code follows....
     string str,str1;
@@ -334,6 +337,7 @@ namespace OpenBabel
 
     OBPairData *dp = (OBPairData*)mol.GetData("PartialCharges");
     if (dp != NULL) {
+      cerr << dp->GetValue() << endl;
       if (dp->GetValue() == "Mulliken")
         ofs << "MULLIKEN_CHARGES" << endl;
       else if (dp->GetValue() == "Gasteiger")
@@ -390,7 +394,7 @@ namespace OpenBabel
         //  Use original atom names if there are residues
         //
 
-        if ( (res = atom->GetResidue()) )
+        if (!ligandsOnly && (res = atom->GetResidue()) )
           {
             // use original atom names defined by residue
             snprintf(label,BUFF_SIZE,"%s",(char*)res->GetAtomID(atom).c_str());
