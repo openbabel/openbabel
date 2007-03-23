@@ -35,11 +35,11 @@ host_triplet = @host@
 check_PROGRAMS = aromatic$(EXEEXT) atom$(EXEEXT) bond$(EXEEXT) \
 	cansmi$(EXEEXT) conversion$(EXEEXT) data$(EXEEXT) \
 	format$(EXEEXT) formula$(EXEEXT) formalcharge$(EXEEXT) \
-	internalcoord$(EXEEXT) invalidsmarts$(EXEEXT) \
-	invalidsmiles$(EXEEXT) iterators$(EXEEXT) math$(EXEEXT) \
-	mol$(EXEEXT) residue$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
-	smilesmatch$(EXEEXT) unitcell$(EXEEXT) mmff94validate$(EXEEXT) \
-	logp_psa$(EXEEXT)
+	inchiwrite$(EXEEXT) internalcoord$(EXEEXT) \
+	invalidsmarts$(EXEEXT) invalidsmiles$(EXEEXT) \
+	iterators$(EXEEXT) math$(EXEEXT) mol$(EXEEXT) residue$(EXEEXT) \
+	rings$(EXEEXT) smarts$(EXEEXT) smilesmatch$(EXEEXT) \
+	unitcell$(EXEEXT) mmff94validate$(EXEEXT) logp_psa$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
 @PERL_TESTS_FALSE@TESTS = smarts$(EXEEXT) rings$(EXEEXT) \
 @PERL_TESTS_FALSE@	unitcell$(EXEEXT) $(top_srcdir)/test/cml.sh \
@@ -94,6 +94,10 @@ am_formula_OBJECTS = formula.$(OBJEXT)
 formula_OBJECTS = $(am_formula_OBJECTS)
 formula_LDADD = $(LDADD)
 formula_DEPENDENCIES = ../src/libopenbabel.la
+am_inchiwrite_OBJECTS = inchiwrite.$(OBJEXT) getinchi.$(OBJEXT)
+inchiwrite_OBJECTS = $(am_inchiwrite_OBJECTS)
+inchiwrite_LDADD = $(LDADD)
+inchiwrite_DEPENDENCIES = ../src/libopenbabel.la
 am_internalcoord_OBJECTS = internalcoord.$(OBJEXT)
 internalcoord_OBJECTS = $(am_internalcoord_OBJECTS)
 internalcoord_LDADD = $(LDADD)
@@ -165,21 +169,21 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(cansmi_SOURCES) $(conversion_SOURCES) $(data_SOURCES) \
 	$(formalcharge_SOURCES) $(format_SOURCES) $(formula_SOURCES) \
-	$(internalcoord_SOURCES) $(invalidsmarts_SOURCES) \
-	$(invalidsmiles_SOURCES) $(iterators_SOURCES) \
-	$(logp_psa_SOURCES) $(math_SOURCES) $(mmff94validate_SOURCES) \
-	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
-	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
-	$(unitcell_SOURCES)
+	$(inchiwrite_SOURCES) $(internalcoord_SOURCES) \
+	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
+	$(iterators_SOURCES) $(logp_psa_SOURCES) $(math_SOURCES) \
+	$(mmff94validate_SOURCES) $(mol_SOURCES) $(residue_SOURCES) \
+	$(rings_SOURCES) $(roundtrip_SOURCES) $(smarts_SOURCES) \
+	$(smilesmatch_SOURCES) $(unitcell_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(cansmi_SOURCES) $(conversion_SOURCES) $(data_SOURCES) \
 	$(formalcharge_SOURCES) $(format_SOURCES) $(formula_SOURCES) \
-	$(internalcoord_SOURCES) $(invalidsmarts_SOURCES) \
-	$(invalidsmiles_SOURCES) $(iterators_SOURCES) \
-	$(logp_psa_SOURCES) $(math_SOURCES) $(mmff94validate_SOURCES) \
-	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
-	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
-	$(unitcell_SOURCES)
+	$(inchiwrite_SOURCES) $(internalcoord_SOURCES) \
+	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
+	$(iterators_SOURCES) $(logp_psa_SOURCES) $(math_SOURCES) \
+	$(mmff94validate_SOURCES) $(mol_SOURCES) $(residue_SOURCES) \
+	$(rings_SOURCES) $(roundtrip_SOURCES) $(smarts_SOURCES) \
+	$(smilesmatch_SOURCES) $(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -334,13 +338,14 @@ data_SOURCES = data.cpp
 format_SOURCES = format.cpp
 formula_SOURCES = formula.cpp
 formalcharge_SOURCES = formalcharge.cpp
+inchiwrite_SOURCES = inchiwrite.cpp ../src/formats/getinchi.cpp
 internalcoord_SOURCES = internalcoord.cpp
 invalidsmiles_SOURCES = invalidsmiles.cpp
 invalidsmarts_SOURCES = invalidsmarts.cpp
 iterators_SOURCES = iterators.cpp
+logp_psa_SOURCES = logp_psa.cpp
 math_SOURCES = math.cpp
 mmff94validate_SOURCES = mmff94validate.cpp
-logp_psa_SOURCES = logp_psa.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
@@ -442,6 +447,9 @@ format$(EXEEXT): $(format_OBJECTS) $(format_DEPENDENCIES)
 formula$(EXEEXT): $(formula_OBJECTS) $(formula_DEPENDENCIES) 
 	@rm -f formula$(EXEEXT)
 	$(CXXLINK) $(formula_OBJECTS) $(formula_LDADD) $(LIBS)
+inchiwrite$(EXEEXT): $(inchiwrite_OBJECTS) $(inchiwrite_DEPENDENCIES) 
+	@rm -f inchiwrite$(EXEEXT)
+	$(CXXLINK) $(inchiwrite_OBJECTS) $(inchiwrite_LDADD) $(LIBS)
 internalcoord$(EXEEXT): $(internalcoord_OBJECTS) $(internalcoord_DEPENDENCIES) 
 	@rm -f internalcoord$(EXEEXT)
 	$(CXXLINK) $(internalcoord_OBJECTS) $(internalcoord_LDADD) $(LIBS)
@@ -500,6 +508,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/formalcharge.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/formula.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getinchi.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchiwrite.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/internalcoord.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/invalidsmarts.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/invalidsmiles.Po@am__quote@
@@ -535,6 +545,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
+
+getinchi.o: ../src/formats/getinchi.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT getinchi.o -MD -MP -MF $(DEPDIR)/getinchi.Tpo -c -o getinchi.o `test -f '../src/formats/getinchi.cpp' || echo '$(srcdir)/'`../src/formats/getinchi.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/getinchi.Tpo $(DEPDIR)/getinchi.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/formats/getinchi.cpp' object='getinchi.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o getinchi.o `test -f '../src/formats/getinchi.cpp' || echo '$(srcdir)/'`../src/formats/getinchi.cpp
+
+getinchi.obj: ../src/formats/getinchi.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT getinchi.obj -MD -MP -MF $(DEPDIR)/getinchi.Tpo -c -o getinchi.obj `if test -f '../src/formats/getinchi.cpp'; then $(CYGPATH_W) '../src/formats/getinchi.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/formats/getinchi.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/getinchi.Tpo $(DEPDIR)/getinchi.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/formats/getinchi.cpp' object='getinchi.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o getinchi.obj `if test -f '../src/formats/getinchi.cpp'; then $(CYGPATH_W) '../src/formats/getinchi.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/formats/getinchi.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

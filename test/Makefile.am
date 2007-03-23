@@ -3,6 +3,7 @@ SUBDIRS = cmltest
 # Only compile these when running "make check"
 check_PROGRAMS = aromatic atom bond cansmi \
 	conversion data format formula formalcharge \
+	inchiwrite \
 	internalcoord invalidsmarts invalidsmiles \
 	iterators math mol residue rings smarts \
 	smilesmatch unitcell \
@@ -39,13 +40,14 @@ data_SOURCES = data.cpp
 format_SOURCES = format.cpp
 formula_SOURCES = formula.cpp
 formalcharge_SOURCES = formalcharge.cpp
+inchiwrite_SOURCES = inchiwrite.cpp ../src/formats/getinchi.cpp
 internalcoord_SOURCES = internalcoord.cpp
 invalidsmiles_SOURCES = invalidsmiles.cpp
 invalidsmarts_SOURCES = invalidsmarts.cpp
 iterators_SOURCES = iterators.cpp
+logp_psa_SOURCES = logp_psa.cpp
 math_SOURCES = math.cpp
 mmff94validate_SOURCES = mmff94validate.cpp
-logp_psa_SOURCES = logp_psa.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
