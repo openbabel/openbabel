@@ -80,7 +80,7 @@ int main(int argc,char **argv)
   OBConversion conv;
   OBFormat *format = conv.FormatFromExt(FileIn);
     
-  if (!format || !conv.SetInAndOutFormats(format, format))
+  if (!format || !conv.SetInFormat(format))
     {
       cerr << program_name << ": cannot read input format!" << endl;
       exit (-1);
@@ -112,34 +112,47 @@ int main(int argc,char **argv)
   
   //.....ADD YOURS HERE.....
   
-  for (c=0;;)
+  unsigned int currentMol = 0;
+  while(ifs.good() && conv.Read(&mol, &ifs))
     {
-      mol.Clear();
-      conv.Read(&mol, &ifs);
+      ++currentMol;
       if (mol.Empty())
-        break;
+        continue;
       
       if (!mol.HasHydrogensAdded())
         mol.AddHydrogens();
-      // Print the properties        
-      cout << "name             " << mol.GetTitle() << endl;
+      // Print the properties
+      if (strlen(mol.GetTitle()) != 0)
+        cout << "name             " << mol.GetTitle() << endl;
+      else 
+        cout << "name             " << FileIn << " " << currentMol << endl;
+
       cout << "formula          " << mol.GetFormula() << endl;
       cout << "mol_weight       " << mol.GetMolWt() << endl;
       cout << "exact_mass       " << mol.GetExactMass() << endl;
+
       if (canSMIFormat) {
         conv.SetOutFormat(canSMIFormat);
         cout << "canonical_SMILES " << conv.WriteString(&mol);
       }
+      else
+        cout << "canonical_SMILES " << "-" << endl;
+
       if (inchiFormat) {
         conv.SetOutFormat(inchiFormat);
         cout << "InChI            " << conv.WriteString(&mol);
       }
+      else
+        cout << "InChI            " << "-" << endl;
+
       cout << "num_atoms        " << mol.NumAtoms() << endl;
       cout << "num_bonds        " << mol.NumBonds() << endl;
       cout << "num_residues     " << mol.NumResidues() << endl;
-      if (mol.NumResidues() > 0) {
+      if (mol.NumResidues() > 0)
         cout << "sequence         " << sequence(mol) << endl;
-      }
+      else
+        cout << "sequence         " << "-" << endl;
+
       cout << "num_rings        " << nrings(mol) << endl;
       cout << "logP             " << logP.Predict(mol) << endl;
       cout << "PSA              " << psa.Predict(mol) << endl;
