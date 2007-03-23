@@ -1,0 +1,54 @@
+*
+*                Copyright (c) Merck and Co., Inc., 1994
+*                         All Rights Reserved
+*
+* MMFF AROMATIC SYMBOLIC TYPES VS ORIGINALLY ASSIGNED TYPES
+*OLD    AROM    AT  RING       IM   N5
+*TYPE   TYPE    NUM SIZE  L5   CAT ANION
+C*      CB      6    6    0    0    0     
+N*      NPYD    7    6    0    0    0     
+NCN+    NPD+    7    6    0    0    0     
+N+=C    NPD+    7    6    0    0    0     
+N=+N    NPD+    7    6    0    0    0     
+N2OX    NPOX    7    6    0    0    0     
+*
+C*      C5A     6    5    2    0    0
+C*      C5B     6    5    3    0    0
+C*      C5      6    5    4    0    0
+N*      NPYL    7    5    1    0    0
+N*      N5A     7    5    2    0    0
+N*      N5B     7    5    3    0    0
+N*      N5      7    5    4    0    0
+CNN+    CIM+    6    5    2    1    0
+CNN+    CIM+    6    5    3    1    0
+CNN+    CIM+    6    5    4    1    0
+CGD+    CIM+    6    5    4    1    0
+C5A     C5      6    5    3    0    0
+C5B     C5      6    5    2    0    0
+N5A     N5      7    5    3    0    0
+N5B     N5      7    5    2    0    0
+N2OX    N5AX    7    5    2    0    0
+N2OX    N5BX    7    5    3    0    0
+N2OX    N5OX    7    5    4    0    0
+NCN+    NIM+    7    5    2    1    0
+NCN+    NIM+    7    5    3    1    0
+NCN+    NIM+    7    5    4    1    0
+NGD+    NIM+    7    5    2    1    0
+NGD+    NIM+    7    5    3    1    0
+NGD+    NIM+    7    5    4    1    0
+N+=C    N5A+    7    5    2    0    0
+N+=C    N5B+    7    5    3    0    0
+N+=C    N5+     7    5    4    0    0
+N+=N    N5A+    7    5    2    0    0
+N+=N    N5B+    7    5    3    0    0
+N+=N    N5+     7    5    4    0    0
+NPD+    N5A+    7    5    2    0    0
+NPD+    N5B+    7    5    3    0    0
+NPD+    N5+     7    5    4    0    0
+NM      N5M     7    5    1    0    1
+NM      N5M     7    5    2    0    1
+NM      N5M     7    5    3    0    1
+NM      N5M     7    5    4    0    1
+O*      OFUR    8    5    1    0    0
+S*      STHI   16    5    1    0    0
+$

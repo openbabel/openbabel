@@ -1,0 +1,34 @@
+    // Need to test:
+    // atomic spin (i.e. radicals)
+    // stereochemistry
+    // bond types
+    // atom types
+    // fractional coordinate conversion
+    // internal -> cartesian conversion
+    // cartesian -> internal conversion
+    // residue information
+    // isotopes
+    // chain information
+    // chain perception
+    // bond type perception
+    // aromatic perception
+    // ring perception
+    // chirality perception
+    // compress / uncompress
+    // NumRotors
+
+    // Builder utils
+    // H->Methyl
+    // Add hydrogens
+    // SetHybAndGeom
+    // SetLength
+    // SetTorsion (obrotate)
+    // Center
+    // ToIntertialFrame
+    // Rotate
+    // Kekulize
+    // Delete hydrogens
+    // Add polar hydrogens
+    // Add pH hydrogens
+    // strip salts
+    // obfit

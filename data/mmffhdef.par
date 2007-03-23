@@ -1,0 +1,112 @@
+*
+*                Copyright (c) Merck and Co., Inc., 1994
+*                         All Rights Reserved
+*
+* MMFF SYMBOLIC TYPES FOR HYDROGEN FOR SPECIFIED PARENT TYPES
+*
+* PARENT HYDROGEN 
+* TYPE    TYPE
+*
+  CR      HC
+  C=C     HC
+  CSP2    HC
+  C=O     HC
+  C=N     HC
+  CGD     HC
+  C=OR    HC
+  C=ON    HC
+  CONN    HC
+  COO     HC
+  COON    HC
+  COOO    HC
+  C=OS    HC
+  C=S     HC
+  C=SN    HC
+  CSO2    HC
+  C=SO    HC
+  CSS     HC
+  C=P     HC
+  CSP     HC
+  =C=     HC
+  OR      HOR
+  OC=O    HOCO
+  OC=C    HOCC
+  OC=N    HOCN
+  OC=S    HOCS  ! NEW
+  ONO2    HON   ! NEW
+  ON=O    HON   ! NEW
+  OSO3    HOS
+  OSO2    HOS
+  OSO     HOS
+  OS=O    HOS
+  -OS     HOS
+  OPO3    HOP
+  OPO2    HOP
+  OPO     HOP
+  -OP     HOP
+  -O-     HO
+  NR      HNR
+  N=C     HN=C
+  N=N     HN=C
+  NC=O    HNCO
+  NC%N    HNC%
+  NC%C    HNC%
+  NC=S    HNCS
+  NN=C    HNNC
+  NN=N    HNNN
+  F       HX
+  CL      HX
+  BR      HX
+  I       HX
+  S       HS 
+  >S=N    HS=N
+  SNO     HSNO
+  SI      HSI
+  CR4R    HC
+  CR3R    HC
+  PO3     HP
+  PO2     HP
+  PO      HP
+  PTET    HP
+  P       HP
+  CE4R    HC
+  NR+     HNR+
+  OM      HOM
+  CB      HC 
+  NPYL    HPYL
+  NC=C    HNCC
+  NC=N    HNCN
+  CO2M    HC 
+  CS2M    HC 
+  NSO2    HNSO
+  NSO3    HNSO
+  NPO2    HNPO
+  NPO3    HNPO
+  NO2     HNO2
+  N=O     HNO
+  NSO     HNSO
+  O+      HO+
+  O=+     HO=+
+  O%+     HO%+
+  N+=C    HNC+
+  N+=N    HNN+  ! NEW
+  NCN+    HNN+
+  NGD+    HGD+
+  NIM+    HIM+
+  NPD+    HPD+
+  N5A+    HN5+
+  N5B+    HN5+
+  N5+     HN5+
+  NPYL    HPYL
+  CIM+    HC
+  CGD+    HC
+  CNN+    HC
+  NM      HNM
+  C5A     HC 
+  C5B     HC
+  C5      HC
+  N2OX    HNOX
+  N3OX    HNOX
+  OH2     HOH
+  -P=C    HP
+$
