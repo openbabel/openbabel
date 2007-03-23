@@ -198,7 +198,7 @@ libopenbabelinclude_HEADERS = \
 		chains.h chiral.h data.h \
 		dlhandler.h fingerprint.h forcefield.h \
 		generic.h grid.h internalcoord.h kinetics.h \
-		lineend.h matrix.h mol.h molchrg.h \
+		lineend.h  matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \
 		obmolecformat.h obutil.h \
 		parsmart.h patty.h phmodel.h pluginiter.h \
