@@ -1,4 +1,4 @@
-########################################################################
+######################################################################
 # Copyright OELIB:          OpenEye Scientific Software, Santa Fe,      
 #                           U.S.A., 1999,2000,2001                      
 # Copyright JOELIB/JOELib2: Dept. Computer Architecture, University of  
@@ -14,13 +14,12 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of        
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         
 # GNU General Public License for more details.                          
-########################################################################
+######################################################################
 # LopP Atomic Contributions
 # ref. Wildman, S.A. and Crippen, G.M., J. Chem. Inf. Comput. Sci., 
 #   1999, 39, 868-873.
-# Table below is adapted from above ref. uncommon p- and d-block 
-#   elements have not been included.
-########################################################################
+# Table below is adapted from above ref.
+######################################################################
 ;hydrogen
 [*]	0.1125
 [#6]	0.123

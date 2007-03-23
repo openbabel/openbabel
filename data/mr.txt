@@ -1,4 +1,4 @@
-#########################################################################
+######################################################################
 # Copyright OELIB:          OpenEye Scientific Software, Santa Fe,      
 #                           U.S.A., 1999,2000,2001                      
 # Copyright JOELIB/JOELib2: Dept. Computer Architecture, University of  
@@ -14,13 +14,12 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of        
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         
 # GNU General Public License for more details.                          
-########################################################################
+######################################################################
 # MR Atomic Contributions
 # ref. Wildman, S.A. and Crippen, G.M., J. Chem. Inf. Comput. 
 #   Sci., 1999, 39, 868-873.
-# Table below is adapted from above ref. uncommon p- and d-block 
-#   elements have not been included.
-########################################################################
+# Table below is adapted from above ref. 
+######################################################################
 ;hydrogen
 [*]	1.112
 [#6]	1.057
@@ -158,9 +157,9 @@
 [#35-*]	8.927
 [#53-*]	14.02
 [#53+*]	14.02
-[#15]	6.92
+[#15]	6.920
 [S-0]	7.591
 [S-*]	7.365
 [S+*]	7.365
 [s]	6.691
-[B,Si,Ga,Ge,As,Se,Sn,Te,Pb,Nc,Nr,Kr,Xe,Rn]	-0.3808
+[B,Si,Ga,Ge,As,Se,Sn,Te,Pb,Nc,Nr,Kr,Xe,Rn]	-0.5754

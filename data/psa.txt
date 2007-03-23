@@ -1,4 +1,4 @@
-#########################################################################
+######################################################################
 # Copyright OELIB:          OpenEye Scientific Software, Santa Fe,      
 #                           U.S.A., 1999,2000,2001                      
 # Copyright JOELIB/JOELib2: Dept. Computer Architecture, University of  
@@ -14,10 +14,10 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of        
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         
 # GNU General Public License for more details.                          
-########################################################################
+######################################################################
 # Atomic Contributions to Polar Surface Area PSA
 # ref. Ertl P., Rohde R., Selzer P., J. Med. Chem. 2000, 43, 3714-3717
-########################################################################
+######################################################################
 ;heavy
 [*]	0.00
 [N](-*)(-*)-*	3.24

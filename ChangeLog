@@ -1,6 +1,16 @@
+2007-03-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/psa.txt, data/mr.txt, data/logp.txt: Small changes -- DOS
+	to UNIX line endings. 
+
+	* test/Makefile.am, test/Makefile.in: Make sure to add inchiwrite
+	to compile list.
+
+	* test/wrapper.sh: Add notes on passing arguments to "prove."
+
 2007-03-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
-	* data/psa.txt: Added ";heavy", fixes the logp_psa test
+	* data/psa.txt: Added ";heavy", fixes the logp_psa test.
 
 2007-03-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
