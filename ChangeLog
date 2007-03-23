@@ -1,3 +1,8 @@
+2007-03-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* tools/obprop.cpp: Function string sequence(OBMol) was not returning
+	any string.
+
 2007-03-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/psa.txt, data/mr.txt, data/logp.txt: Small changes -- DOS
