@@ -814,7 +814,11 @@ namespace OpenBabel
     }
   };
 
-  enum atomreftype{output,input,calcvolume}; // sets which atom4ref is accessed
+  enum atomreftype{
+    output,     //!< 
+    input,      //!<
+    calcvolume  //!<
+  }; // sets which atom4ref is accessed by OBChiralData
 
   //! \class OBChiralData generic.h <openbabel/generic.h>
   //! \brief Used to hold chiral inforamtion about the atom as OBGenericData
@@ -824,25 +828,34 @@ namespace OpenBabel
     friend class OBAtom;
 
   protected:
-    std::vector<unsigned int> _atom4refs;
+    std::vector<unsigned int> _atom4refs; //!< input atom references
+    std::vector<unsigned int> _atom4refo; //!< output atom references
+    std::vector<unsigned int> _atom4refc; //!< calcvolume references
+
+    //! The parity of the vector (of length 4)
+    //! 1234 returns 0, 1243 returns 1
     int parity;
-    std::vector<unsigned int> _atom4refo;
-    std::vector<unsigned int> _atom4refc;
 
   public:
-    std::vector<unsigned int> GetAtom4Refs(atomreftype t) const;
-    unsigned int GetAtomRef(int a,atomreftype t);
 
     OBChiralData();
     OBChiralData(const OBChiralData &src);
     virtual OBGenericData* Clone(OBBase* /*parent*/) const
-    {return new OBChiralData(*this);}
+      { return new OBChiralData(*this); }
     OBChiralData &operator =(const OBChiralData &);
     ~OBChiralData(){}
 
     void Clear();
+
+    //! \return a vector of all 4 atom references of type @p t
+    std::vector<unsigned int> GetAtom4Refs(atomreftype t) const;
+    //! \return the atom reference specified by @p a of type @p t
+    unsigned int GetAtomRef(int a,atomreftype t);
+
     bool SetAtom4Refs(std::vector<unsigned int> atom4refs, atomreftype t);
     int AddAtomRef(unsigned int atomref, atomreftype t);
+
+    //! \return the size of the atom references of a given type @p t
     unsigned int GetSize(atomreftype t) const;
   };
 
