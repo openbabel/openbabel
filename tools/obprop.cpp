@@ -201,6 +201,8 @@ string sequence(OBMol &mol)
     }
   if (residueSequence.size() != 0) // remove the trailing "-"
     residueSequence.erase(residueSequence.size() - 1);
+
+  return residueSequence;
 }
 
 /* obprop man page*/

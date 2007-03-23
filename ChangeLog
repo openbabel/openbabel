@@ -22,6 +22,9 @@
 
 	* data/psa.txt: Added ";heavy", fixes the logp_psa test.
 
+	* tools/obprop.cpp: Function string sequence(OBMol) was not returning
+	any string.
+
 2007-03-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp: When determining length, if two atoms are
