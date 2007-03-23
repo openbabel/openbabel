@@ -18,6 +18,7 @@
 # Atomic Contributions to Polar Surface Area PSA
 # ref. Ertl P., Rohde R., Selzer P., J. Med. Chem. 2000, 43, 3714-3717
 ########################################################################
+;heavy
 [*]	0.00
 [N](-*)(-*)-*	3.24
 [N](-*)=*	12.36

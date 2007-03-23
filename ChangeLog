@@ -1,3 +1,7 @@
+2007-03-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* data/psa.txt: Added ";heavy", fixes the logp_psa test
+
 2007-03-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp: When determining length, if two atoms are
