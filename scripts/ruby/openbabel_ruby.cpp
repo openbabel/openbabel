@@ -18098,82 +18098,6 @@ free_OpenBabel_OBAngleData(OpenBabel::OBAngleData *arg1) {
 swig_class cOBChiralData;
 
 SWIGINTERN VALUE
-_wrap_OBChiralData_GetAtom4Refs(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
-  OpenBabel::atomreftype arg2 ;
-  std::vector<unsigned int > result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 1) || (argc > 1)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBChiralData, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetAtom4Refs" "', argument " "1"" of type '" "OpenBabel::OBChiralData const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBChiralData * >(argp1);
-  ecode2 = SWIG_AsVal_int(argv[0], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetAtom4Refs" "', argument " "2"" of type '" "OpenBabel::atomreftype""'");
-  } 
-  arg2 = static_cast< OpenBabel::atomreftype >(val2);
-  result = ((OpenBabel::OBChiralData const *)arg1)->GetAtom4Refs(arg2);
-  {
-    vresult = rb_ary_new2((&result)->size());
-    for (unsigned int i=0; i<(&result)->size(); i++)
-    rb_ary_store(vresult,i,INT2NUM(((std::vector<unsigned int > &)result)[i]));
-  }
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_OBChiralData_GetAtomRef(int argc, VALUE *argv, VALUE self) {
-  OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
-  int arg2 ;
-  OpenBabel::atomreftype arg3 ;
-  unsigned int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 2) || (argc > 2)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBChiralData, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetAtomRef" "', argument " "1"" of type '" "OpenBabel::OBChiralData *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBChiralData * >(argp1);
-  ecode2 = SWIG_AsVal_int(argv[0], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetAtomRef" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(argv[1], &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "GetAtomRef" "', argument " "3"" of type '" "OpenBabel::atomreftype""'");
-  } 
-  arg3 = static_cast< OpenBabel::atomreftype >(val3);
-  result = (unsigned int)(arg1)->GetAtomRef(arg2,arg3);
-  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
 _wrap_new_OBChiralData__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBChiralData *result = 0 ;
   
@@ -18313,6 +18237,82 @@ _wrap_OBChiralData_Clear(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBChiralData * >(argp1);
   (arg1)->Clear();
   return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBChiralData_GetAtom4Refs(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
+  OpenBabel::atomreftype arg2 ;
+  std::vector<unsigned int > result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBChiralData, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetAtom4Refs" "', argument " "1"" of type '" "OpenBabel::OBChiralData const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBChiralData * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetAtom4Refs" "', argument " "2"" of type '" "OpenBabel::atomreftype""'");
+  } 
+  arg2 = static_cast< OpenBabel::atomreftype >(val2);
+  result = ((OpenBabel::OBChiralData const *)arg1)->GetAtom4Refs(arg2);
+  {
+    vresult = rb_ary_new2((&result)->size());
+    for (unsigned int i=0; i<(&result)->size(); i++)
+    rb_ary_store(vresult,i,INT2NUM(((std::vector<unsigned int > &)result)[i]));
+  }
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBChiralData_GetAtomRef(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
+  int arg2 ;
+  OpenBabel::atomreftype arg3 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBChiralData, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetAtomRef" "', argument " "1"" of type '" "OpenBabel::OBChiralData *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBChiralData * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetAtomRef" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "GetAtomRef" "', argument " "3"" of type '" "OpenBabel::atomreftype""'");
+  } 
+  arg3 = static_cast< OpenBabel::atomreftype >(val3);
+  result = (unsigned int)(arg1)->GetAtomRef(arg2,arg3);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -23448,6 +23448,27 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_pluginiterForceField_kludge(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "kludge" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+  (*arg1)->kludge();
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
 swig_class cOBError;
 
 SWIGINTERN VALUE
@@ -27125,6 +27146,54 @@ _wrap_OBConversion_GetOptionParams(int argc, VALUE *argv, VALUE self) {
   arg2 = static_cast< OpenBabel::OBConversion::Option_type >(val2);
   result = (int)OpenBabel::OBConversion::GetOptionParams(arg1,arg2);
   vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBConversion_GetSupportedInputFormat(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+  std::vector<std::string > result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBConversion, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetSupportedInputFormat" "', argument " "1"" of type '" "OpenBabel::OBConversion *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBConversion * >(argp1);
+  result = (arg1)->GetSupportedInputFormat();
+  vresult = SWIG_NewPointerObj((new std::vector<std::string >(static_cast< const std::vector<std::string >& >(result))), SWIGTYPE_p_std__vectorTstd__string_t, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBConversion_GetSupportedOutputFormat(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+  std::vector<std::string > result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBConversion, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetSupportedOutputFormat" "', argument " "1"" of type '" "OpenBabel::OBConversion *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBConversion * >(argp1);
+  result = (arg1)->GetSupportedOutputFormat();
+  vresult = SWIG_NewPointerObj((new std::vector<std::string >(static_cast< const std::vector<std::string >& >(result))), SWIGTYPE_p_std__vectorTstd__string_t, SWIG_POINTER_OWN |  0 );
   return vresult;
 fail:
   return Qnil;
@@ -51546,6 +51615,27 @@ _wrap_OBForceField_VectorTorsionDerivative(int argc, VALUE *argv, VALUE self) {
   result = (double)OpenBabel::OBForceField::VectorTorsionDerivative(*arg1,*arg2,*arg3,*arg4);
   vresult = SWIG_From_double(static_cast< double >(result));
   return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBForceField_kludge(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "kludge" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+  (arg1)->kludge();
+  return Qnil;
 fail:
   return Qnil;
 }
@@ -86651,10 +86741,10 @@ SWIGEXPORT void Init_openbabel(void) {
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBChiralData, (void *) &cOBChiralData);
   rb_define_alloc_func(cOBChiralData.klass, _wrap_OBChiralData_allocate);
   rb_define_method(cOBChiralData.klass, "initialize", VALUEFUNC(_wrap_new_OBChiralData), -1);
-  rb_define_method(cOBChiralData.klass, "GetAtom4Refs", VALUEFUNC(_wrap_OBChiralData_GetAtom4Refs), -1);
-  rb_define_method(cOBChiralData.klass, "GetAtomRef", VALUEFUNC(_wrap_OBChiralData_GetAtomRef), -1);
   rb_define_method(cOBChiralData.klass, "Clone", VALUEFUNC(_wrap_OBChiralData_Clone), -1);
   rb_define_method(cOBChiralData.klass, "Clear", VALUEFUNC(_wrap_OBChiralData_Clear), -1);
+  rb_define_method(cOBChiralData.klass, "GetAtom4Refs", VALUEFUNC(_wrap_OBChiralData_GetAtom4Refs), -1);
+  rb_define_method(cOBChiralData.klass, "GetAtomRef", VALUEFUNC(_wrap_OBChiralData_GetAtomRef), -1);
   rb_define_method(cOBChiralData.klass, "SetAtom4Refs", VALUEFUNC(_wrap_OBChiralData_SetAtom4Refs), -1);
   rb_define_method(cOBChiralData.klass, "AddAtomRef", VALUEFUNC(_wrap_OBChiralData_AddAtomRef), -1);
   rb_define_method(cOBChiralData.klass, "GetSize", VALUEFUNC(_wrap_OBChiralData_GetSize), -1);
@@ -86778,6 +86868,7 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cPluginiterForceField.klass, "VectorLengthDerivative", VALUEFUNC(_wrap_pluginiterForceField_VectorLengthDerivative), -1);
   rb_define_method(cPluginiterForceField.klass, "VectorAngleDerivative", VALUEFUNC(_wrap_pluginiterForceField_VectorAngleDerivative), -1);
   rb_define_method(cPluginiterForceField.klass, "VectorTorsionDerivative", VALUEFUNC(_wrap_pluginiterForceField_VectorTorsionDerivative), -1);
+  rb_define_method(cPluginiterForceField.klass, "kludge", VALUEFUNC(_wrap_pluginiterForceField_kludge), -1);
   cPluginiterForceField.mark = 0;
   cPluginiterForceField.destroy = (void (*)(void *)) free_OpenBabel_PluginIter_Sl_OpenBabel_OBForceField_Sg_;
   cPluginiterForceField.trackObjects = 0;
@@ -86902,6 +86993,8 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cOBConversion.klass, "SetOptions", VALUEFUNC(_wrap_OBConversion_SetOptions), -1);
   rb_define_singleton_method(cOBConversion.klass, "RegisterOptionParam", VALUEFUNC(_wrap_OBConversion_RegisterOptionParam), -1);
   rb_define_singleton_method(cOBConversion.klass, "GetOptionParams", VALUEFUNC(_wrap_OBConversion_GetOptionParams), -1);
+  rb_define_method(cOBConversion.klass, "GetSupportedInputFormat", VALUEFUNC(_wrap_OBConversion_GetSupportedInputFormat), -1);
+  rb_define_method(cOBConversion.klass, "GetSupportedOutputFormat", VALUEFUNC(_wrap_OBConversion_GetSupportedOutputFormat), -1);
   rb_define_method(cOBConversion.klass, "Convert", VALUEFUNC(_wrap_OBConversion_Convert), -1);
   rb_define_method(cOBConversion.klass, "FullConvert", VALUEFUNC(_wrap_OBConversion_FullConvert), -1);
   rb_define_method(cOBConversion.klass, "AddChemObject", VALUEFUNC(_wrap_OBConversion_AddChemObject), -1);
@@ -87841,6 +87934,7 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_singleton_method(cOBForceField.klass, "VectorLengthDerivative", VALUEFUNC(_wrap_OBForceField_VectorLengthDerivative), -1);
   rb_define_singleton_method(cOBForceField.klass, "VectorAngleDerivative", VALUEFUNC(_wrap_OBForceField_VectorAngleDerivative), -1);
   rb_define_singleton_method(cOBForceField.klass, "VectorTorsionDerivative", VALUEFUNC(_wrap_OBForceField_VectorTorsionDerivative), -1);
+  rb_define_method(cOBForceField.klass, "kludge", VALUEFUNC(_wrap_OBForceField_kludge), -1);
   cOBForceField.mark = 0;
   cOBForceField.destroy = (void (*)(void *)) free_OpenBabel_OBForceField;
   cOBForceField.trackObjects = 0;

@@ -284,4 +284,8 @@ public class pluginiterForceField {
     return openbabelJNI.pluginiterForceField_VectorTorsionDerivative(swigCPtr, this, vector3.getCPtr(a), a, vector3.getCPtr(b), b, vector3.getCPtr(c), c, vector3.getCPtr(d), d);
   }
 
+  public void kludge() {
+    openbabelJNI.pluginiterForceField_kludge(swigCPtr, this);
+  }
+
 }

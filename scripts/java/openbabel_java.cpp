@@ -7855,42 +7855,6 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1OBAngleData(JNIEnv *jenv, jcla
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBChiralData_1GetAtom4Refs(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jlong jresult = 0 ;
-  OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
-  OpenBabel::atomreftype arg2 ;
-  std::vector<unsigned int > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBChiralData **)&jarg1; 
-  arg2 = (OpenBabel::atomreftype)jarg2; 
-  result = ((OpenBabel::OBChiralData const *)arg1)->GetAtom4Refs(arg2);
-  *(std::vector<unsigned int > **)&jresult = new std::vector<unsigned int >((std::vector<unsigned int > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBChiralData_1GetAtomRef(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
-  jlong jresult = 0 ;
-  OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
-  int arg2 ;
-  OpenBabel::atomreftype arg3 ;
-  unsigned int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBChiralData **)&jarg1; 
-  arg2 = (int)jarg2; 
-  arg3 = (OpenBabel::atomreftype)jarg3; 
-  result = (unsigned int)(arg1)->GetAtomRef(arg2,arg3);
-  jresult = (jlong)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1OBChiralData_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   OpenBabel::OBChiralData *result = 0 ;
@@ -7959,6 +7923,42 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBChiralData_1Clear(JNIEnv *jenv, jcla
   (void)jarg1_;
   arg1 = *(OpenBabel::OBChiralData **)&jarg1; 
   (arg1)->Clear();
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBChiralData_1GetAtom4Refs(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jlong jresult = 0 ;
+  OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
+  OpenBabel::atomreftype arg2 ;
+  std::vector<unsigned int > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBChiralData **)&jarg1; 
+  arg2 = (OpenBabel::atomreftype)jarg2; 
+  result = ((OpenBabel::OBChiralData const *)arg1)->GetAtom4Refs(arg2);
+  *(std::vector<unsigned int > **)&jresult = new std::vector<unsigned int >((std::vector<unsigned int > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBChiralData_1GetAtomRef(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
+  jlong jresult = 0 ;
+  OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
+  int arg2 ;
+  OpenBabel::atomreftype arg3 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBChiralData **)&jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (OpenBabel::atomreftype)jarg3; 
+  result = (unsigned int)(arg1)->GetAtomRef(arg2,arg3);
+  jresult = (jlong)result; 
+  return jresult;
 }
 
 
@@ -10856,6 +10856,17 @@ SWIGEXPORT jdouble JNICALL Java_openbabelJNI_pluginiterForceField_1VectorTorsion
 }
 
 
+SWIGEXPORT void JNICALL Java_openbabelJNI_pluginiterForceField_1kludge(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::PluginIter<OpenBabel::OBForceField > **)&jarg1; 
+  (*arg1)->kludge();
+}
+
+
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1OBError_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jstring jarg5, jint jarg6) {
   jlong jresult = 0 ;
   std::string *arg1 = 0 ;
@@ -12675,6 +12686,36 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_OBConversion_1GetOptionParams(JNIEnv *
   arg2 = (OpenBabel::OBConversion::Option_type)jarg2; 
   result = (int)OpenBabel::OBConversion::GetOptionParams(arg1,arg2);
   jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBConversion_1GetSupportedInputFormat(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+  SwigValueWrapper<std::vector<std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBConversion **)&jarg1; 
+  result = (arg1)->GetSupportedInputFormat();
+  *(std::vector<std::string > **)&jresult = new std::vector<std::string >((std::vector<std::string > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBConversion_1GetSupportedOutputFormat(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+  SwigValueWrapper<std::vector<std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBConversion **)&jarg1; 
+  result = (arg1)->GetSupportedOutputFormat();
+  *(std::vector<std::string > **)&jresult = new std::vector<std::string >((std::vector<std::string > &)result); 
   return jresult;
 }
 
@@ -26412,6 +26453,17 @@ SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBForceField_1VectorTorsionDerivati
   result = (double)OpenBabel::OBForceField::VectorTorsionDerivative(*arg1,*arg2,*arg3,*arg4);
   jresult = (jdouble)result; 
   return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_OBForceField_1kludge(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBForceField **)&jarg1; 
+  (arg1)->kludge();
 }
 
 

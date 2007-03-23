@@ -1680,8 +1680,6 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel::OBGenericData Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
-*GetAtom4Refs = *Chemistry::OpenBabelc::OBChiralData_GetAtom4Refs;
-*GetAtomRef = *Chemistry::OpenBabelc::OBChiralData_GetAtomRef;
 sub new {
     my $pkg = shift;
     my $self = Chemistry::OpenBabelc::new_OBChiralData(@_);
@@ -1701,6 +1699,8 @@ sub DESTROY {
 }
 
 *Clear = *Chemistry::OpenBabelc::OBChiralData_Clear;
+*GetAtom4Refs = *Chemistry::OpenBabelc::OBChiralData_GetAtom4Refs;
+*GetAtomRef = *Chemistry::OpenBabelc::OBChiralData_GetAtomRef;
 *SetAtom4Refs = *Chemistry::OpenBabelc::OBChiralData_SetAtom4Refs;
 *AddAtomRef = *Chemistry::OpenBabelc::OBChiralData_AddAtomRef;
 *GetSize = *Chemistry::OpenBabelc::OBChiralData_GetSize;
@@ -1969,6 +1969,7 @@ sub DESTROY {
 *VectorLengthDerivative = *Chemistry::OpenBabelc::pluginiterForceField_VectorLengthDerivative;
 *VectorAngleDerivative = *Chemistry::OpenBabelc::pluginiterForceField_VectorAngleDerivative;
 *VectorTorsionDerivative = *Chemistry::OpenBabelc::pluginiterForceField_VectorTorsionDerivative;
+*kludge = *Chemistry::OpenBabelc::pluginiterForceField_kludge;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -2255,6 +2256,8 @@ sub DESTROY {
 *SetOptions = *Chemistry::OpenBabelc::OBConversion_SetOptions;
 *RegisterOptionParam = *Chemistry::OpenBabelc::OBConversion_RegisterOptionParam;
 *GetOptionParams = *Chemistry::OpenBabelc::OBConversion_GetOptionParams;
+*GetSupportedInputFormat = *Chemistry::OpenBabelc::OBConversion_GetSupportedInputFormat;
+*GetSupportedOutputFormat = *Chemistry::OpenBabelc::OBConversion_GetSupportedOutputFormat;
 *Convert = *Chemistry::OpenBabelc::OBConversion_Convert;
 *FullConvert = *Chemistry::OpenBabelc::OBConversion_FullConvert;
 *AddChemObject = *Chemistry::OpenBabelc::OBConversion_AddChemObject;
@@ -3498,6 +3501,7 @@ sub DESTROY {
 *VectorLengthDerivative = *Chemistry::OpenBabelc::OBForceField_VectorLengthDerivative;
 *VectorAngleDerivative = *Chemistry::OpenBabelc::OBForceField_VectorAngleDerivative;
 *VectorTorsionDerivative = *Chemistry::OpenBabelc::OBForceField_VectorTorsionDerivative;
+*kludge = *Chemistry::OpenBabelc::OBForceField_kludge;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);

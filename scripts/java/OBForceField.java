@@ -271,4 +271,8 @@ public class OBForceField {
     return openbabelJNI.OBForceField_VectorTorsionDerivative(vector3.getCPtr(a), a, vector3.getCPtr(b), b, vector3.getCPtr(c), c, vector3.getCPtr(d), d);
   }
 
+  public void kludge() {
+    openbabelJNI.OBForceField_kludge(swigCPtr, this);
+  }
+
 }

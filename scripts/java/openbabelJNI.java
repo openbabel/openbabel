@@ -464,13 +464,13 @@ class openbabelJNI {
   public final static native void OBAngleData_SetData(long jarg1, OBAngleData jarg1_, long jarg2, OBAngle jarg2_);
   public final static native long OBAngleData_GetSize(long jarg1, OBAngleData jarg1_);
   public final static native void delete_OBAngleData(long jarg1);
-  public final static native long OBChiralData_GetAtom4Refs(long jarg1, OBChiralData jarg1_, int jarg2);
-  public final static native long OBChiralData_GetAtomRef(long jarg1, OBChiralData jarg1_, int jarg2, int jarg3);
   public final static native long new_OBChiralData__SWIG_0();
   public final static native long new_OBChiralData__SWIG_1(long jarg1, OBChiralData jarg1_);
   public final static native long OBChiralData_Clone(long jarg1, OBChiralData jarg1_, long jarg2, OBBase jarg2_);
   public final static native void delete_OBChiralData(long jarg1);
   public final static native void OBChiralData_Clear(long jarg1, OBChiralData jarg1_);
+  public final static native long OBChiralData_GetAtom4Refs(long jarg1, OBChiralData jarg1_, int jarg2);
+  public final static native long OBChiralData_GetAtomRef(long jarg1, OBChiralData jarg1_, int jarg2, int jarg3);
   public final static native boolean OBChiralData_SetAtom4Refs(long jarg1, OBChiralData jarg1_, long jarg2, vectorUnsignedInt jarg2_, int jarg3);
   public final static native int OBChiralData_AddAtomRef(long jarg1, OBChiralData jarg1_, long jarg2, int jarg3);
   public final static native long OBChiralData_GetSize(long jarg1, OBChiralData jarg1_, int jarg2);
@@ -642,6 +642,7 @@ class openbabelJNI {
   public final static native double pluginiterForceField_VectorLengthDerivative(long jarg1, pluginiterForceField jarg1_, long jarg2, vector3 jarg2_, long jarg3, vector3 jarg3_);
   public final static native double pluginiterForceField_VectorAngleDerivative(long jarg1, pluginiterForceField jarg1_, long jarg2, vector3 jarg2_, long jarg3, vector3 jarg3_, long jarg4, vector3 jarg4_);
   public final static native double pluginiterForceField_VectorTorsionDerivative(long jarg1, pluginiterForceField jarg1_, long jarg2, vector3 jarg2_, long jarg3, vector3 jarg3_, long jarg4, vector3 jarg4_, long jarg5, vector3 jarg5_);
+  public final static native void pluginiterForceField_kludge(long jarg1, pluginiterForceField jarg1_);
   public final static native long new_OBError__SWIG_0(String jarg1, String jarg2, String jarg3, String jarg4, String jarg5, int jarg6);
   public final static native long new_OBError__SWIG_1(String jarg1, String jarg2, String jarg3, String jarg4, String jarg5);
   public final static native long new_OBError__SWIG_2(String jarg1, String jarg2, String jarg3, String jarg4);
@@ -740,6 +741,8 @@ class openbabelJNI {
   public final static native void OBConversion_RegisterOptionParam__SWIG_1(String jarg1, long jarg2, OBFormat jarg2_, int jarg3);
   public final static native void OBConversion_RegisterOptionParam__SWIG_2(String jarg1, long jarg2, OBFormat jarg2_);
   public final static native int OBConversion_GetOptionParams(String jarg1, int jarg2);
+  public final static native long OBConversion_GetSupportedInputFormat(long jarg1, OBConversion jarg1_);
+  public final static native long OBConversion_GetSupportedOutputFormat(long jarg1, OBConversion jarg1_);
   public final static native int OBConversion_Convert__SWIG_0(long jarg1, OBConversion jarg1_, long jarg2, long jarg3);
   public final static native int OBConversion_Convert__SWIG_1(long jarg1, OBConversion jarg1_);
   public final static native int OBConversion_FullConvert(long jarg1, OBConversion jarg1_, long jarg2, long jarg3, long jarg4);
@@ -1634,6 +1637,7 @@ class openbabelJNI {
   public final static native double OBForceField_VectorLengthDerivative(long jarg1, vector3 jarg1_, long jarg2, vector3 jarg2_);
   public final static native double OBForceField_VectorAngleDerivative(long jarg1, vector3 jarg1_, long jarg2, vector3 jarg2_, long jarg3, vector3 jarg3_);
   public final static native double OBForceField_VectorTorsionDerivative(long jarg1, vector3 jarg1_, long jarg2, vector3 jarg2_, long jarg3, vector3 jarg3_, long jarg4, vector3 jarg4_);
+  public final static native void OBForceField_kludge(long jarg1, OBForceField jarg1_);
   public final static native long new_OBMolAtomIter__SWIG_0();
   public final static native long new_OBMolAtomIter__SWIG_1(long jarg1, OBMol jarg1_);
   public final static native long new_OBMolAtomIter__SWIG_2(long jarg1, OBMolAtomIter jarg1_);

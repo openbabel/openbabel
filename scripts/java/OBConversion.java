@@ -201,6 +201,14 @@ public class OBConversion {
     return openbabelJNI.OBConversion_GetOptionParams(name, typ.swigValue());
   }
 
+  public SWIGTYPE_p_std__vectorTstd__string_t GetSupportedInputFormat() {
+    return new SWIGTYPE_p_std__vectorTstd__string_t(openbabelJNI.OBConversion_GetSupportedInputFormat(swigCPtr, this), true);
+  }
+
+  public SWIGTYPE_p_std__vectorTstd__string_t GetSupportedOutputFormat() {
+    return new SWIGTYPE_p_std__vectorTstd__string_t(openbabelJNI.OBConversion_GetSupportedOutputFormat(swigCPtr, this), true);
+  }
+
   public int Convert(SWIGTYPE_p_std__istream is, SWIGTYPE_p_std__ostream os) {
     return openbabelJNI.OBConversion_Convert__SWIG_0(swigCPtr, this, SWIGTYPE_p_std__istream.getCPtr(is), SWIGTYPE_p_std__ostream.getCPtr(os));
   }

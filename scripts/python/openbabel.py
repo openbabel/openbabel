@@ -1032,14 +1032,14 @@ calcvolume = _openbabel.calcvolume
 class OBChiralData(OBGenericData):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
-    def GetAtom4Refs(*args): return _openbabel.OBChiralData_GetAtom4Refs(*args)
-    def GetAtomRef(*args): return _openbabel.OBChiralData_GetAtomRef(*args)
     def __init__(self, *args): 
         _openbabel.OBChiralData_swiginit(self,_openbabel.new_OBChiralData(*args))
     def Clone(*args): return _openbabel.OBChiralData_Clone(*args)
     __swig_destroy__ = _openbabel.delete_OBChiralData
     __del__ = lambda self : None;
     def Clear(*args): return _openbabel.OBChiralData_Clear(*args)
+    def GetAtom4Refs(*args): return _openbabel.OBChiralData_GetAtom4Refs(*args)
+    def GetAtomRef(*args): return _openbabel.OBChiralData_GetAtomRef(*args)
     def SetAtom4Refs(*args): return _openbabel.OBChiralData_SetAtom4Refs(*args)
     def AddAtomRef(*args): return _openbabel.OBChiralData_AddAtomRef(*args)
     def GetSize(*args): return _openbabel.OBChiralData_GetSize(*args)
@@ -1174,6 +1174,7 @@ class pluginiterForceField(object):
     def VectorLengthDerivative(*args): return _openbabel.pluginiterForceField_VectorLengthDerivative(*args)
     def VectorAngleDerivative(*args): return _openbabel.pluginiterForceField_VectorAngleDerivative(*args)
     def VectorTorsionDerivative(*args): return _openbabel.pluginiterForceField_VectorTorsionDerivative(*args)
+    def kludge(*args): return _openbabel.pluginiterForceField_kludge(*args)
 pluginiterForceField_swigregister = _openbabel.pluginiterForceField_swigregister
 pluginiterForceField_swigregister(pluginiterForceField)
 
@@ -1308,6 +1309,8 @@ class OBConversion(object):
     def SetOptions(*args): return _openbabel.OBConversion_SetOptions(*args)
     RegisterOptionParam = staticmethod(_openbabel.OBConversion_RegisterOptionParam)
     GetOptionParams = staticmethod(_openbabel.OBConversion_GetOptionParams)
+    def GetSupportedInputFormat(*args): return _openbabel.OBConversion_GetSupportedInputFormat(*args)
+    def GetSupportedOutputFormat(*args): return _openbabel.OBConversion_GetSupportedOutputFormat(*args)
     def Convert(*args): return _openbabel.OBConversion_Convert(*args)
     def FullConvert(*args): return _openbabel.OBConversion_FullConvert(*args)
     def AddChemObject(*args): return _openbabel.OBConversion_AddChemObject(*args)
@@ -2233,6 +2236,7 @@ class OBForceField(object):
     VectorLengthDerivative = staticmethod(_openbabel.OBForceField_VectorLengthDerivative)
     VectorAngleDerivative = staticmethod(_openbabel.OBForceField_VectorAngleDerivative)
     VectorTorsionDerivative = staticmethod(_openbabel.OBForceField_VectorTorsionDerivative)
+    def kludge(*args): return _openbabel.OBForceField_kludge(*args)
 OBForceField_swigregister = _openbabel.OBForceField_swigregister
 OBForceField_swigregister(OBForceField)
 OBForceField_Iter = _openbabel.OBForceField_Iter

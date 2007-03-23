@@ -32,14 +32,6 @@ public class OBChiralData extends OBGenericData {
     super.delete();
   }
 
-  public vectorUnsignedInt GetAtom4Refs(atomreftype t) {
-    return new vectorUnsignedInt(openbabelJNI.OBChiralData_GetAtom4Refs(swigCPtr, this, t.swigValue()), true);
-  }
-
-  public long GetAtomRef(int a, atomreftype t) {
-    return openbabelJNI.OBChiralData_GetAtomRef(swigCPtr, this, a, t.swigValue());
-  }
-
   public OBChiralData() {
     this(openbabelJNI.new_OBChiralData__SWIG_0(), true);
   }
@@ -55,6 +47,14 @@ public class OBChiralData extends OBGenericData {
 
   public void Clear() {
     openbabelJNI.OBChiralData_Clear(swigCPtr, this);
+  }
+
+  public vectorUnsignedInt GetAtom4Refs(atomreftype t) {
+    return new vectorUnsignedInt(openbabelJNI.OBChiralData_GetAtom4Refs(swigCPtr, this, t.swigValue()), true);
+  }
+
+  public long GetAtomRef(int a, atomreftype t) {
+    return openbabelJNI.OBChiralData_GetAtomRef(swigCPtr, this, a, t.swigValue());
   }
 
   public boolean SetAtom4Refs(vectorUnsignedInt atom4refs, atomreftype t) {

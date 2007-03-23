@@ -22984,104 +22984,6 @@ XS(_wrap_delete_OBAngleData) {
 }
 
 
-XS(_wrap_OBChiralData_GetAtom4Refs) {
-  {
-    OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
-    OpenBabel::atomreftype arg2 ;
-    std::vector<unsigned int > result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int val2 ;
-    int ecode2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBChiralData_GetAtom4Refs(self,t);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBChiralData, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBChiralData_GetAtom4Refs" "', argument " "1"" of type '" "OpenBabel::OBChiralData const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBChiralData * >(argp1);
-    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBChiralData_GetAtom4Refs" "', argument " "2"" of type '" "OpenBabel::atomreftype""'");
-    } 
-    arg2 = static_cast< OpenBabel::atomreftype >(val2);
-    result = ((OpenBabel::OBChiralData const *)arg1)->GetAtom4Refs(arg2);
-    {
-      size_t len = (&result)->size();
-      SV **svs = new SV*[len];
-      for (size_t i=0; i<len; i++) {
-        svs[i] = sv_newmortal();
-        sv_setiv(svs[i], result[i]);
-      }
-      AV *myav = av_make(len, svs);
-      delete[] svs;
-      ST(argvi) = newRV_noinc((SV*) myav);
-      sv_2mortal(ST(argvi));
-      argvi++;
-    }
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBChiralData_GetAtomRef) {
-  {
-    OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
-    int arg2 ;
-    OpenBabel::atomreftype arg3 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int val2 ;
-    int ecode2 = 0 ;
-    int val3 ;
-    int ecode3 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: OBChiralData_GetAtomRef(self,a,t);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBChiralData, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBChiralData_GetAtomRef" "', argument " "1"" of type '" "OpenBabel::OBChiralData *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBChiralData * >(argp1);
-    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBChiralData_GetAtomRef" "', argument " "2"" of type '" "int""'");
-    } 
-    arg2 = static_cast< int >(val2);
-    ecode3 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
-    if (!SWIG_IsOK(ecode3)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBChiralData_GetAtomRef" "', argument " "3"" of type '" "OpenBabel::atomreftype""'");
-    } 
-    arg3 = static_cast< OpenBabel::atomreftype >(val3);
-    result = (unsigned int)(arg1)->GetAtomRef(arg2,arg3);
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_new_OBChiralData__SWIG_0) {
   {
     OpenBabel::OBChiralData *result = 0 ;
@@ -23267,6 +23169,104 @@ XS(_wrap_OBChiralData_Clear) {
     
     XSRETURN(argvi);
   fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBChiralData_GetAtom4Refs) {
+  {
+    OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
+    OpenBabel::atomreftype arg2 ;
+    std::vector<unsigned int > result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: OBChiralData_GetAtom4Refs(self,t);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBChiralData, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBChiralData_GetAtom4Refs" "', argument " "1"" of type '" "OpenBabel::OBChiralData const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBChiralData * >(argp1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBChiralData_GetAtom4Refs" "', argument " "2"" of type '" "OpenBabel::atomreftype""'");
+    } 
+    arg2 = static_cast< OpenBabel::atomreftype >(val2);
+    result = ((OpenBabel::OBChiralData const *)arg1)->GetAtom4Refs(arg2);
+    {
+      size_t len = (&result)->size();
+      SV **svs = new SV*[len];
+      for (size_t i=0; i<len; i++) {
+        svs[i] = sv_newmortal();
+        sv_setiv(svs[i], result[i]);
+      }
+      AV *myav = av_make(len, svs);
+      delete[] svs;
+      ST(argvi) = newRV_noinc((SV*) myav);
+      sv_2mortal(ST(argvi));
+      argvi++;
+    }
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBChiralData_GetAtomRef) {
+  {
+    OpenBabel::OBChiralData *arg1 = (OpenBabel::OBChiralData *) 0 ;
+    int arg2 ;
+    OpenBabel::atomreftype arg3 ;
+    unsigned int result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int val3 ;
+    int ecode3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: OBChiralData_GetAtomRef(self,a,t);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBChiralData, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBChiralData_GetAtomRef" "', argument " "1"" of type '" "OpenBabel::OBChiralData *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBChiralData * >(argp1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBChiralData_GetAtomRef" "', argument " "2"" of type '" "int""'");
+    } 
+    arg2 = static_cast< int >(val2);
+    ecode3 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBChiralData_GetAtomRef" "', argument " "3"" of type '" "OpenBabel::atomreftype""'");
+    } 
+    arg3 = static_cast< OpenBabel::atomreftype >(val3);
+    result = (unsigned int)(arg1)->GetAtomRef(arg2,arg3);
+    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
     
     SWIG_croak_null();
   }
@@ -30152,6 +30152,33 @@ XS(_wrap_pluginiterForceField_VectorTorsionDerivative) {
 }
 
 
+XS(_wrap_pluginiterForceField_kludge) {
+  {
+    OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: pluginiterForceField_kludge(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterForceField_kludge" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
+    (*arg1)->kludge();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_new_OBError__SWIG_0) {
   {
     std::string *arg1 = 0 ;
@@ -34861,6 +34888,62 @@ XS(_wrap_OBConversion_GetOptionParams) {
     XSRETURN(argvi);
   fail:
     
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBConversion_GetSupportedInputFormat) {
+  {
+    OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+    std::vector<std::string > result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBConversion_GetSupportedInputFormat(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBConversion, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBConversion_GetSupportedInputFormat" "', argument " "1"" of type '" "OpenBabel::OBConversion *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBConversion * >(argp1);
+    result = (arg1)->GetSupportedInputFormat();
+    ST(argvi) = SWIG_NewPointerObj((new std::vector<std::string >(static_cast< const std::vector<std::string >& >(result))), SWIGTYPE_p_std__vectorTstd__string_t, SWIG_POINTER_OWN | 0); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBConversion_GetSupportedOutputFormat) {
+  {
+    OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+    std::vector<std::string > result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBConversion_GetSupportedOutputFormat(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBConversion, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBConversion_GetSupportedOutputFormat" "', argument " "1"" of type '" "OpenBabel::OBConversion *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBConversion * >(argp1);
+    result = (arg1)->GetSupportedOutputFormat();
+    ST(argvi) = SWIG_NewPointerObj((new std::vector<std::string >(static_cast< const std::vector<std::string >& >(result))), SWIGTYPE_p_std__vectorTstd__string_t, SWIG_POINTER_OWN | 0); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
     
     SWIG_croak_null();
   }
@@ -65938,6 +66021,33 @@ XS(_wrap_OBForceField_VectorTorsionDerivative) {
     
     
     
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBForceField_kludge) {
+  {
+    OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBForceField_kludge(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBForceField_kludge" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
+    (arg1)->kludge();
+    
+    
+    XSRETURN(argvi);
+  fail:
     
     SWIG_croak_null();
   }
@@ -109788,12 +109898,12 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBAngleData_SetData", _wrap_OBAngleData_SetData},
 {"Chemistry::OpenBabelc::OBAngleData_GetSize", _wrap_OBAngleData_GetSize},
 {"Chemistry::OpenBabelc::delete_OBAngleData", _wrap_delete_OBAngleData},
-{"Chemistry::OpenBabelc::OBChiralData_GetAtom4Refs", _wrap_OBChiralData_GetAtom4Refs},
-{"Chemistry::OpenBabelc::OBChiralData_GetAtomRef", _wrap_OBChiralData_GetAtomRef},
 {"Chemistry::OpenBabelc::new_OBChiralData", _wrap_new_OBChiralData},
 {"Chemistry::OpenBabelc::OBChiralData_Clone", _wrap_OBChiralData_Clone},
 {"Chemistry::OpenBabelc::delete_OBChiralData", _wrap_delete_OBChiralData},
 {"Chemistry::OpenBabelc::OBChiralData_Clear", _wrap_OBChiralData_Clear},
+{"Chemistry::OpenBabelc::OBChiralData_GetAtom4Refs", _wrap_OBChiralData_GetAtom4Refs},
+{"Chemistry::OpenBabelc::OBChiralData_GetAtomRef", _wrap_OBChiralData_GetAtomRef},
 {"Chemistry::OpenBabelc::OBChiralData_SetAtom4Refs", _wrap_OBChiralData_SetAtom4Refs},
 {"Chemistry::OpenBabelc::OBChiralData_AddAtomRef", _wrap_OBChiralData_AddAtomRef},
 {"Chemistry::OpenBabelc::OBChiralData_GetSize", _wrap_OBChiralData_GetSize},
@@ -109887,6 +109997,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::pluginiterForceField_VectorLengthDerivative", _wrap_pluginiterForceField_VectorLengthDerivative},
 {"Chemistry::OpenBabelc::pluginiterForceField_VectorAngleDerivative", _wrap_pluginiterForceField_VectorAngleDerivative},
 {"Chemistry::OpenBabelc::pluginiterForceField_VectorTorsionDerivative", _wrap_pluginiterForceField_VectorTorsionDerivative},
+{"Chemistry::OpenBabelc::pluginiterForceField_kludge", _wrap_pluginiterForceField_kludge},
 {"Chemistry::OpenBabelc::new_OBError", _wrap_new_OBError},
 {"Chemistry::OpenBabelc::OBError_message", _wrap_OBError_message},
 {"Chemistry::OpenBabelc::OBError_GetMethod", _wrap_OBError_GetMethod},
@@ -109965,6 +110076,8 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBConversion_SetOptions", _wrap_OBConversion_SetOptions},
 {"Chemistry::OpenBabelc::OBConversion_RegisterOptionParam", _wrap_OBConversion_RegisterOptionParam},
 {"Chemistry::OpenBabelc::OBConversion_GetOptionParams", _wrap_OBConversion_GetOptionParams},
+{"Chemistry::OpenBabelc::OBConversion_GetSupportedInputFormat", _wrap_OBConversion_GetSupportedInputFormat},
+{"Chemistry::OpenBabelc::OBConversion_GetSupportedOutputFormat", _wrap_OBConversion_GetSupportedOutputFormat},
 {"Chemistry::OpenBabelc::OBConversion_Convert", _wrap_OBConversion_Convert},
 {"Chemistry::OpenBabelc::OBConversion_FullConvert", _wrap_OBConversion_FullConvert},
 {"Chemistry::OpenBabelc::OBConversion_AddChemObject", _wrap_OBConversion_AddChemObject},
@@ -110593,6 +110706,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBForceField_VectorLengthDerivative", _wrap_OBForceField_VectorLengthDerivative},
 {"Chemistry::OpenBabelc::OBForceField_VectorAngleDerivative", _wrap_OBForceField_VectorAngleDerivative},
 {"Chemistry::OpenBabelc::OBForceField_VectorTorsionDerivative", _wrap_OBForceField_VectorTorsionDerivative},
+{"Chemistry::OpenBabelc::OBForceField_kludge", _wrap_OBForceField_kludge},
 {"Chemistry::OpenBabelc::new_OBMolAtomIter", _wrap_new_OBMolAtomIter},
 {"Chemistry::OpenBabelc::delete_OBMolAtomIter", _wrap_delete_OBMolAtomIter},
 {"Chemistry::OpenBabelc::OBMolAtomIter_good", _wrap_OBMolAtomIter_good},
