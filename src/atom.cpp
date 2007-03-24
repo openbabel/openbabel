@@ -353,7 +353,7 @@ namespace OpenBabel
       _v.Set((*_c)[_cidx],(*_c)[_cidx+1],(*_c)[_cidx+2]);
   }
 
-  void OBAtom::SetVector(vector3 &v)
+  void OBAtom::SetVector(const vector3 &v)
   {
     if (!_c)
       _v = v;

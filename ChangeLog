@@ -1,3 +1,8 @@
+2007-03-24  Benoit Jacob <jacob@math.jussieu.fr>
+
+	* include/openbabel/atom.h, src/atom.cpp: Change SetVector to
+	const parameter.
+
 2007-03-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/psa.txt, data/mr.txt, data/logp.txt: Small changes -- DOS
@@ -1304,7 +1309,7 @@
 
 2006-12-04  Benoit Jacob <jacob@math.jussieu.fr>
 
-   * src/math/vector3.cpp: optimize createOrthoVector(), update doc.
+	* src/math/vector3.cpp: optimize createOrthoVector(), update doc.
 
 2006-12-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
