@@ -145,7 +145,7 @@ namespace OpenBabel
       //! Set the partial charge to @p pcharge
       void SetPartialCharge(double pcharge){ _pcharge = pcharge; }
       //! Set the coordinate vector for this atom to @p v as a vector3
-      void SetVector(vector3 &v);
+      void SetVector(const vector3 &v);
       //! Set the coordinate vector for this atom based on @p x @p y & @p z
       void SetVector(const double x,const double y,const double z);
       //! Set the position of this atom from a pointer-driven array of coordinates
