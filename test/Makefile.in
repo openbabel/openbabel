@@ -37,12 +37,14 @@ check_PROGRAMS = aromatic$(EXEEXT) atom$(EXEEXT) bond$(EXEEXT) \
 	format$(EXEEXT) formula$(EXEEXT) formalcharge$(EXEEXT) \
 	inchiwrite$(EXEEXT) internalcoord$(EXEEXT) \
 	invalidsmarts$(EXEEXT) invalidsmiles$(EXEEXT) \
-	iterators$(EXEEXT) math$(EXEEXT) mol$(EXEEXT) residue$(EXEEXT) \
-	rings$(EXEEXT) smarts$(EXEEXT) smilesmatch$(EXEEXT) \
-	unitcell$(EXEEXT) mmff94validate$(EXEEXT) logp_psa$(EXEEXT)
+	iterators$(EXEEXT) logp_psa$(EXEEXT) math$(EXEEXT) \
+	mol$(EXEEXT) residue$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
+	smilesmatch$(EXEEXT) unitcell$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
-@PERL_TESTS_FALSE@TESTS = smarts$(EXEEXT) rings$(EXEEXT) \
-@PERL_TESTS_FALSE@	unitcell$(EXEEXT) $(top_srcdir)/test/cml.sh \
+@PERL_TESTS_FALSE@TESTS = cansmi$(EXEEXT) invalidsmarts$(EXEEXT) \
+@PERL_TESTS_FALSE@	invalidsmiles$(EXEEXT) smarts$(EXEEXT) \
+@PERL_TESTS_FALSE@	rings$(EXEEXT) unitcell$(EXEEXT) \
+@PERL_TESTS_FALSE@	$(top_srcdir)/test/cml.sh \
 @PERL_TESTS_FALSE@	$(top_srcdir)/test/test-set.sh
 @PERL_TESTS_TRUE@TESTS = wrapper.sh
 subdir = test
@@ -122,10 +124,6 @@ am_math_OBJECTS = math.$(OBJEXT)
 math_OBJECTS = $(am_math_OBJECTS)
 math_LDADD = $(LDADD)
 math_DEPENDENCIES = ../src/libopenbabel.la
-am_mmff94validate_OBJECTS = mmff94validate.$(OBJEXT)
-mmff94validate_OBJECTS = $(am_mmff94validate_OBJECTS)
-mmff94validate_LDADD = $(LDADD)
-mmff94validate_DEPENDENCIES = ../src/libopenbabel.la
 am_mol_OBJECTS = mol.$(OBJEXT)
 mol_OBJECTS = $(am_mol_OBJECTS)
 mol_LDADD = $(LDADD)
@@ -172,18 +170,18 @@ SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(inchiwrite_SOURCES) $(internalcoord_SOURCES) \
 	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
 	$(iterators_SOURCES) $(logp_psa_SOURCES) $(math_SOURCES) \
-	$(mmff94validate_SOURCES) $(mol_SOURCES) $(residue_SOURCES) \
-	$(rings_SOURCES) $(roundtrip_SOURCES) $(smarts_SOURCES) \
-	$(smilesmatch_SOURCES) $(unitcell_SOURCES)
+	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
+	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
+	$(unitcell_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(cansmi_SOURCES) $(conversion_SOURCES) $(data_SOURCES) \
 	$(formalcharge_SOURCES) $(format_SOURCES) $(formula_SOURCES) \
 	$(inchiwrite_SOURCES) $(internalcoord_SOURCES) \
 	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
 	$(iterators_SOURCES) $(logp_psa_SOURCES) $(math_SOURCES) \
-	$(mmff94validate_SOURCES) $(mol_SOURCES) $(residue_SOURCES) \
-	$(rings_SOURCES) $(roundtrip_SOURCES) $(smarts_SOURCES) \
-	$(smilesmatch_SOURCES) $(unitcell_SOURCES)
+	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
+	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
+	$(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -345,7 +343,6 @@ invalidsmarts_SOURCES = invalidsmarts.cpp
 iterators_SOURCES = iterators.cpp
 logp_psa_SOURCES = logp_psa.cpp
 math_SOURCES = math.cpp
-mmff94validate_SOURCES = mmff94validate.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
@@ -468,9 +465,6 @@ logp_psa$(EXEEXT): $(logp_psa_OBJECTS) $(logp_psa_DEPENDENCIES)
 math$(EXEEXT): $(math_OBJECTS) $(math_DEPENDENCIES) 
 	@rm -f math$(EXEEXT)
 	$(CXXLINK) $(math_OBJECTS) $(math_LDADD) $(LIBS)
-mmff94validate$(EXEEXT): $(mmff94validate_OBJECTS) $(mmff94validate_DEPENDENCIES) 
-	@rm -f mmff94validate$(EXEEXT)
-	$(CXXLINK) $(mmff94validate_OBJECTS) $(mmff94validate_LDADD) $(LIBS)
 mol$(EXEEXT): $(mol_OBJECTS) $(mol_DEPENDENCIES) 
 	@rm -f mol$(EXEEXT)
 	$(CXXLINK) $(mol_OBJECTS) $(mol_LDADD) $(LIBS)
@@ -516,7 +510,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iterators.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/logp_psa.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/math.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mmff94validate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/residue.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ringtest.Po@am__quote@
