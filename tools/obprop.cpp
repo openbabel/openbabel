@@ -112,12 +112,12 @@ int main(int argc,char **argv)
   
   //.....ADD YOURS HERE.....
   
-  unsigned int currentMol = 0;
-  while(ifs.good() && conv.Read(&mol, &ifs))
+  for (c = 1;; ++c)
     {
-      ++currentMol;
+      mol.Clear();
+      conv.Read(&mol, &ifs);
       if (mol.Empty())
-        continue;
+        break;
       
       if (!mol.HasHydrogensAdded())
         mol.AddHydrogens();
@@ -125,7 +125,7 @@ int main(int argc,char **argv)
       if (strlen(mol.GetTitle()) != 0)
         cout << "name             " << mol.GetTitle() << endl;
       else 
-        cout << "name             " << FileIn << " " << currentMol << endl;
+        cout << "name             " << FileIn << " " << c << endl;
 
       cout << "formula          " << mol.GetFormula() << endl;
       cout << "mol_weight       " << mol.GetMolWt() << endl;

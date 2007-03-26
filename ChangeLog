@@ -1,3 +1,8 @@
+2007-03-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/obprop.cpp (main): Fix PR#1688251 with while/for loop on
+	CML files. Thanks to Tapani Kinnunen for the report.
+
 2007-03-24  Benoit Jacob <jacob@math.jussieu.fr>
 
 	* include/openbabel/atom.h, src/atom.cpp: Change SetVector to
