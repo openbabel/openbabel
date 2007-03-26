@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>obprop</title>
+<title>obrotamer</title>
 </head>
 <body bgcolor='white'>
 <a href='#toc'>Table of Contents</a><p>
@@ -11,69 +11,41 @@
 <h2><a name='sect0' href='#toc0'>Name</a></h2>
 
 <p>
-<b>obprop</b> -- print standard molecular properties
+<b>obrotamer</b> -- generate conformer/rotamer coordinates
 
 <p>
 <h2><a name='sect1' href='#toc1'><b>Synopsis</b></a></h2>
 
 <p>
-<b>obprop</b> <i>filename</i>
+<b>obrotamer</b> <i>filename</i>
 
 <p>
 <h2><a name='sect2' href='#toc2'><b>Description</b></a></h2>
 
 <p>
-The obprop program is a tool to print a set of standard molecular properties
-for all molecules in a file. It also serves as example code for
-using the Open Babel library (libopenbabel).
-
-<p><p>
-Output format includes:<br>
-
-name [<i>Name</i>]<br>
-
-formula [<i>Formula</i>]<br>
-
-mol_weight [<i>Molecular</i> <i>Weight</i>]<br>
-
-exact_mass [<i>Isotopic</i> <i>Mass</i>]<br>
-
-canonical_SMILES [<i>String</i>]<br>
-
-num_atoms [<i>Number</i>]<br>
-
-num_bonds [<i>Number</i>]<br>
-
-num_residues [<i>Number</i>]<br>
-
-sequence [<i>Residue</i> <i>Sequence</i>]<br>
-
-num_rings [<i>Number</i> <i>of</i> <i>Rings</i> <i>(by</i> <i>SSSR)</i>]<br>
-
-logP [<i>Number</i> <i>(octanol-water</i> <i>partition)</i>]<br>
-
-PSA [<i>Number</i> <i>(topological</i> <i>polar</i> <i>surface</i> <i>area)</i>]
-MR [<i>Number</i> <i>(molar</i> <i>refractivity)</i>]<br>
-
-$$$
-
-<p><p>
-The &ldquo;$$$&rdquo; is the separator between multiple molecular entries in a file
+The obrotamer tool can be used as part of a conformational search by generating
+random isomers based on rotating dihedral angles. These rotamers
+are not conformers -- that is, obrotamer does not perform geometry optimization
+after generating the rotamer structure. The obminimize tool can
+do geometry optimization using molecular mechanics.
 
 <p>
 <h2><a name='sect3' href='#toc3'><b>Examples</b></a></h2>
 
 <p>
-<pre>obprop pyridines.sdf</pre>
+Generate a random rotational isomer of baseconformer.sdf and write it to
+rotamer1.sdf:<br>
+<pre>obrotamer baseconformer.sdf &gt;rotamer1.sdf</pre>
 
 <p>
 <h2><a name='sect4' href='#toc4'><b>See</b> <b>Also</b></a></h2>
 
 <p>
 <a href='babel.html'>babel(1)</a>
-, <a href='obchiral.html'>obchiral(1)</a>
+, <a href='obenergy.html'>obenergy(1)</a>
 , <a href='obfit.html'>obfit(1)</a>
 , <a href='obgrep.html'>obgrep(1)</a>
+, <a href='obminimize.html'>obminimize(1)</a>
 , <a href='obrotate.html'>obrotate(1)</a>
 .
 
@@ -84,9 +56,6 @@ The web pages for Open Babel can be found at: &lt;<b><a href="http://openbabel.s
 <h2><a name='sect5' href='#toc5'><b>Authors</b></a></h2>
 
 <p>
-The obprop program was contributed by Fabien Fontaine
-
-<p><p>
 Open Babel is developed by a cast of many, including currrent maintainers
 Geoff Hutchison, Chris Morley, Michael Banck, and innumerable others who
 have contributed fixes and additions. For more contributors to Open
@@ -96,9 +65,8 @@ Babel, see &lt;<b><a href="http://openbabel.sourceforge.net/wiki/THANKS">http://
 <h2><a name='sect6' href='#toc6'><b>Copyright</b></a></h2>
 
 <p>
-Copyright (C) 2003 by Fabien Fontaine<br>
-
-Some portions Copyright (C) 2004-2007 by Geoffrey R. Hutchison and other
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.<br>
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison and other
 contributors.
 
 <p><p>

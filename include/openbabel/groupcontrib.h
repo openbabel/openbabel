@@ -37,7 +37,7 @@ namespace OpenBabel
        *  algorithm from JOELib2.
        *
        *  \param mol OBMol object for which to predict the logP, MR, TPSA
-       *  \return predicted logP
+       *  \return predicted value
        */
       double GroupContributions(OBMol &mol);
     private:
@@ -87,11 +87,11 @@ namespace OpenBabel
       OBMR();
       //! destructor
       ~OBMR();
-      /*! Predict the MR (Molecular Reractivity) for molecule mol 
+      /*! Predict the MR (Molar Refractivity) for molecule mol 
        *  using the group contributions algorithm from JOELib2.
        *
-       *  \param mol OBMol object for which to predict the TPSA
-       *  \return predicted TPSA
+       *  \param mol OBMol object for which to predict the MR
+       *  \return predicted MR
        */
       double Predict(OBMol &mol);
   };

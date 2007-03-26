@@ -8,6 +8,12 @@
 
 	* src/data.cpp, src/groupcontrib.cpp: Fix doxygen warnings.
 
+	* include/openbabel/groupcontrib.h: Documentation fixes.
+
+	* NEWS: Minor fixes.
+
+	* doc/*.1, doc/*.html: Documentation updates.
+
 2007-03-24  Benoit Jacob <jacob@math.jussieu.fr>
 
 	* include/openbabel/atom.h, src/atom.cpp: Change SetVector to

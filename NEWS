@@ -26,7 +26,7 @@ What's New from 2.0.2:
 - New obminimize tool - optimize the geometry of structures using
    molecular mechanics.
 - Improved obprop tool - outputs a variety of molecular properties including
-   Polar Surface Area (PSA) and logP.
+   Topological Polar Surface Area (TPSA), Molar Refractivity (MR), and logP.
 - The babel tool can now setting program keywords for some quantum mechanics
    formats from the command-line, including: GAMESS, Gaussian, Q-Chem, and
    MOPAC. (This feature can also be accessed by developers and

@@ -1,4 +1,4 @@
-.Dd April 1, 2007
+.Dd April 7, 2007
 .Os "Open Babel" 2.1
 .Dt obprop 1 URM
 .Sh NAME
@@ -17,11 +17,41 @@ Output format includes:
 name 
 .Op Ar Name
 .br
+formula
+.Op Ar Formula
+.br
 mol_weight 
 .Op Ar Molecular Weight
 .br
+exact_mass
+.Op Ar Isotopic Mass
+.br
+canonical_SMILES
+.Op Ar String
+.br
+num_atoms
+.Op Ar Number
+.br
+num_bonds
+.Op Ar Number
+.br
+num_residues
+.Op Ar Number
+.br
+sequence
+.Op Ar Residue Sequence
+.br
 num_rings
 .Op Ar Number of Rings (by SSSR)
+.br
+logP
+.Op Ar Number (octanol-water partition)
+.br
+PSA
+.Op Ar Number (topological polar surface area)
+.br
+MR
+.Op Ar Number (molar refractivity)
 .br
 $$$
 .Pp
@@ -50,8 +80,9 @@ and innumerable others who have contributed fixes and additions.
 For more contributors to Open Babel, see 
 <\fBhttp://openbabel.sourceforge.net/wiki/THANKS\fR>
 .Sh COPYRIGHT
-Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. 
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison and
+Copyright (C) 2003 by Fabien Fontaine
+.br
+Some portions Copyright (C) 2004-2007 by Geoffrey R. Hutchison and
 other contributors.
 .Pp
  This program is free software; you can redistribute it and/or modify
