@@ -918,8 +918,8 @@ namespace OpenBabel
      if it is in current directory
 
   **/
-  string OpenDatafile(ifstream& ifs, const string& filename, 
-                      const string& envvar)
+  std::string OpenDatafile(std::ifstream& ifs, const std::string& filename, 
+                           const std::string& envvar)
   {
     ios_base::openmode imode = ios_base::in;
 #ifdef ALL_READS_BINARY //Makes unix files compatible with VC++6
