@@ -15762,10 +15762,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBAtom_1SetVector_1_1SWIG_10(JNIEnv *j
   arg1 = *(OpenBabel::OBAtom **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (arg1)->SetVector(*arg2);
+  (arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -26773,10 +26773,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolAtomIter_1SetVector_1_1SWIG_10(JN
   arg1 = *(OpenBabel::OBMolAtomIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -29134,10 +29134,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolAtomDFSIter_1SetVector_1_1SWIG_10
   arg1 = *(OpenBabel::OBMolAtomDFSIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -31463,10 +31463,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolAtomBFSIter_1SetVector_1_1SWIG_10
   arg1 = *(OpenBabel::OBMolAtomBFSIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -34928,10 +34928,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBAtomAtomIter_1SetVector_1_1SWIG_10(J
   arg1 = *(OpenBabel::OBAtomAtomIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -39223,10 +39223,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBResidueAtomIter_1SetVector_1_1SWIG_1
   arg1 = *(OpenBabel::OBResidueAtomIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 

@@ -30718,7 +30718,7 @@ _wrap_OBAtom_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::vector3 *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
+  void *argp2 ;
   int res2 = 0 ;
   
   if ((argc < 1) || (argc > 1)) {
@@ -30731,13 +30731,13 @@ _wrap_OBAtom_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  (arg1)->SetVector(*arg2);
+  (arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
   return Qnil;
 fail:
   return Qnil;
@@ -52410,7 +52410,7 @@ _wrap_OBMolAtomIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::vector3 *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
+  void *argp2 ;
   int res2 = 0 ;
   
   if ((argc < 1) || (argc > 1)) {
@@ -52423,13 +52423,13 @@ _wrap_OBMolAtomIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomIter * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
   return Qnil;
 fail:
   return Qnil;
@@ -57459,7 +57459,7 @@ _wrap_OBMolAtomDFSIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::vector3 *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
+  void *argp2 ;
   int res2 = 0 ;
   
   if ((argc < 1) || (argc > 1)) {
@@ -57472,13 +57472,13 @@ _wrap_OBMolAtomDFSIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
   return Qnil;
 fail:
   return Qnil;
@@ -62389,7 +62389,7 @@ _wrap_OBMolAtomBFSIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::vector3 *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
+  void *argp2 ;
   int res2 = 0 ;
   
   if ((argc < 1) || (argc > 1)) {
@@ -62402,13 +62402,13 @@ _wrap_OBMolAtomBFSIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
   return Qnil;
 fail:
   return Qnil;
@@ -69964,7 +69964,7 @@ _wrap_OBAtomAtomIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::vector3 *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
+  void *argp2 ;
   int res2 = 0 ;
   
   if ((argc < 1) || (argc > 1)) {
@@ -69977,13 +69977,13 @@ _wrap_OBAtomAtomIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBAtomAtomIter * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
   return Qnil;
 fail:
   return Qnil;
@@ -79591,7 +79591,7 @@ _wrap_OBResidueAtomIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::vector3 *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
+  void *argp2 ;
   int res2 = 0 ;
   
   if ((argc < 1) || (argc > 1)) {
@@ -79604,13 +79604,13 @@ _wrap_OBResidueAtomIter_SetVector__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBResidueAtomIter * >(argp1);
   res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetVector" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
   return Qnil;
 fail:
   return Qnil;
