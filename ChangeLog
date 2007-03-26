@@ -3,6 +3,11 @@
 	* tools/obprop.cpp (main): Fix PR#1688251 with while/for loop on
 	CML files. Thanks to Tapani Kinnunen for the report.
 
+	* src/formats/mol2format.cpp: Fix problem reported by Noel with
+	"USER_CHARGES" appearing instead of Gasteiger.
+
+	* src/data.cpp, src/groupcontrib.cpp: Fix doxygen warnings.
+
 2007-03-24  Benoit Jacob <jacob@math.jussieu.fr>
 
 	* include/openbabel/atom.h, src/atom.cpp: Change SetVector to

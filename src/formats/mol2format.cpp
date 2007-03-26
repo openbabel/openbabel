@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -337,20 +337,17 @@ namespace OpenBabel
 
     OBPairData *dp = (OBPairData*)mol.GetData("PartialCharges");
     if (dp != NULL) {
-      cerr << dp->GetValue() << endl;
-      if (dp->GetValue() == "Mulliken")
-        ofs << "MULLIKEN_CHARGES" << endl;
-      else if (dp->GetValue() == "Gasteiger")
-        ofs << "GASTEIGER" << endl;
-      else // should pick from the Tripos types
         // Tripos spec says:
         // NO_CHARGES, DEL_RE, GASTEIGER, GAST_HUCK, HUCKEL, PULLMAN, 
         // GAUSS80_CHARGES, AMPAC_CHARGES, MULLIKEN_CHARGES, DICT_ CHARGES,
         // MMFF94_CHARGES, USER_CHARGES
-        ofs << "USER_CHARGES" << endl;
+      if (dp->GetValue() == "Mulliken")
+        ofs << "MULLIKEN_CHARGES" << endl;
+      else // should pick from the Tripos types
+        ofs << "GASTEIGER" << endl;
     }
     else { // No idea what these charges are... all our code sets "PartialCharges"
-      ofs << "USER_CHARGES" << endl;
+        ofs << "GASTEIGER" << endl;
     }
 
     ofs << "Energy = " << mol.GetEnergy() << endl;
