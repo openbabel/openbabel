@@ -8,8 +8,8 @@
 # wrapper.sh --verbose # display full output of tests while running
 
 TESTS="aromatic.pl atom bond cansmi conversion data format"
-TESTS="${TESTS} formula formalcharge internalcoord"
-TESTS="${TESTS} iterators"
+TESTS="${TESTS} formula formalcharge inchi.pl inchi2.pl"
+TESTS="${TESTS} internalcoord iterators" 
 TESTS="${TESTS} invalidsmarts invalidsmiles"
 TESTS="${TESTS} logp_psa math"
 TESTS="${TESTS} mol residue rings"

@@ -25,7 +25,7 @@ TESTDATADIR = $(top_srcdir)/test/files/
 AM_CPPFLAGS = -I$(top_srcdir)/include -DTESTDATADIR="\"$(TESTDATADIR)\""
 
 EXTRA_DIST = files wrapper.sh cml.sh test-set.sh \
-		aromatic.pl inchi
+		aromatic.pl inchi inchi.pl inchi2.pl
 
 roundtrip_SOURCES = roundtrip.cpp
 

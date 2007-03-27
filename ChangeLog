@@ -1,3 +1,19 @@
+2007-03-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.cpp: Make sure to always return from any
+	exception. Otherwise we could crash running code.
+
+	* src/formats/mdlformat.cpp: Avoid infinite loop in
+	ParseAliasText.
+
+	* src/formats/acrformat.cpp: Minor formatting change.
+
+	* test/Makefile.am, test/Makefile.in, test/wrapper.sh: Add
+	inchiwrite tests to suite.
+
+	* test/inchiwrite.cpp, test/inchi.pl: Formatting to integrate into
+	Perl "prove" test suite.
+
 2007-03-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/obprop.cpp (main): Fix PR#1688251 with while/for loop on
