@@ -34,7 +34,7 @@ namespace OpenBabel
     //Register this format type ID in the constructor
     ACRFormat()
     {
-      OBConversion::RegisterFormat("ACR",this);
+      OBConversion::RegisterFormat("acr",this);
       //		OBConversion::RegisterOptionParam("f", this, 1);
       //		OBConversion::RegisterOptionParam("n", this);
       OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
@@ -45,7 +45,7 @@ namespace OpenBabel
     {
       return
         "ACR format\n"
-        "CaRIne ASCII Crystal format \n"
+        "CaRIne ASCII Crystal format (ACR)\n"
         //      "Write Options e.g. -xf3 \n"
         // "  f# Number of (fictional) levels \n"
         //			"  n  Omit (virtual) title\n"
