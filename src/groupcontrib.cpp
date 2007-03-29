@@ -1,7 +1,11 @@
 /**********************************************************************
-logp.cpp - Handle logP prediction algorithms.
- 
-Copyright (C) 2007 by Tim Vandermeersch
+logp.cpp - Handles group contribution prediction algorithms.
+
+Copyright (C) 2007      by Tim Vandermeersch
+              2001-2007 by Stephen Jelfs
+              2001-2007 by Joerg Kurt Wegner, me@cheminformatics.eu
+
+Original version: JOELib2, http://joelib.sf.net
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
