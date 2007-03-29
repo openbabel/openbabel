@@ -28264,60 +28264,6 @@ XS(_wrap_pluginiterForceField_GetLogLevel) {
 }
 
 
-XS(_wrap_pluginiterForceField_DistanceGeometry) {
-  {
-    OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: pluginiterForceField_DistanceGeometry(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterForceField_DistanceGeometry" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
-    (*arg1)->DistanceGeometry();
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_pluginiterForceField_GenerateCoordinates) {
-  {
-    OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: pluginiterForceField_GenerateCoordinates(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterForceField_GenerateCoordinates" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
-    (*arg1)->GenerateCoordinates();
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_pluginiterForceField_SystematicRotorSearch) {
   {
     OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
@@ -29705,131 +29651,6 @@ XS(_wrap_pluginiterForceField_ConjugateGradientsTakeNSteps) {
     arg2 = static_cast< int >(val2);
     result = (bool)(*arg1)->ConjugateGradientsTakeNSteps(arg2);
     ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_pluginiterForceField_ValidateLineSearch) {
-  {
-    OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-    OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-    OpenBabel::vector3 *arg3 = 0 ;
-    OpenBabel::vector3 result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
-    void *argp3 = 0 ;
-    int res3 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: pluginiterForceField_ValidateLineSearch(self,atom,direction);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterForceField_ValidateLineSearch" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pluginiterForceField_ValidateLineSearch" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
-    }
-    arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "pluginiterForceField_ValidateLineSearch" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pluginiterForceField_ValidateLineSearch" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
-    result = (*arg1)->ValidateLineSearch(arg2,*arg3);
-    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_pluginiterForceField_ValidateSteepestDescent) {
-  {
-    OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-    int arg2 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int val2 ;
-    int ecode2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: pluginiterForceField_ValidateSteepestDescent(self,steps);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterForceField_ValidateSteepestDescent" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
-    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "pluginiterForceField_ValidateSteepestDescent" "', argument " "2"" of type '" "int""'");
-    } 
-    arg2 = static_cast< int >(val2);
-    (*arg1)->ValidateSteepestDescent(arg2);
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_pluginiterForceField_ValidateConjugateGradients) {
-  {
-    OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-    int arg2 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int val2 ;
-    int ecode2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: pluginiterForceField_ValidateConjugateGradients(self,steps);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__PluginIterTOpenBabel__OBForceField_t, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pluginiterForceField_ValidateConjugateGradients" "', argument " "1"" of type '" "OpenBabel::PluginIter<OpenBabel::OBForceField > *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::PluginIter<OpenBabel::OBForceField > * >(argp1);
-    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "pluginiterForceField_ValidateConjugateGradients" "', argument " "2"" of type '" "int""'");
-    } 
-    arg2 = static_cast< int >(val2);
-    (*arg1)->ValidateConjugateGradients(arg2);
-    
     
     
     XSRETURN(argvi);
@@ -64169,60 +63990,6 @@ XS(_wrap_OBForceField_GetLogLevel) {
 }
 
 
-XS(_wrap_OBForceField_DistanceGeometry) {
-  {
-    OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBForceField_DistanceGeometry(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBForceField_DistanceGeometry" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
-    (arg1)->DistanceGeometry();
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBForceField_GenerateCoordinates) {
-  {
-    OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBForceField_GenerateCoordinates(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBForceField_GenerateCoordinates" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
-    (arg1)->GenerateCoordinates();
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBForceField_SystematicRotorSearch) {
   {
     OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
@@ -65610,131 +65377,6 @@ XS(_wrap_OBForceField_ConjugateGradientsTakeNSteps) {
     arg2 = static_cast< int >(val2);
     result = (bool)(arg1)->ConjugateGradientsTakeNSteps(arg2);
     ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBForceField_ValidateLineSearch) {
-  {
-    OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-    OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-    OpenBabel::vector3 *arg3 = 0 ;
-    OpenBabel::vector3 result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
-    void *argp3 = 0 ;
-    int res3 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: OBForceField_ValidateLineSearch(self,atom,direction);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBForceField_ValidateLineSearch" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBForceField_ValidateLineSearch" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
-    }
-    arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
-    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OBForceField_ValidateLineSearch" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBForceField_ValidateLineSearch" "', argument " "3"" of type '" "OpenBabel::vector3 &""'"); 
-    }
-    arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
-    result = (arg1)->ValidateLineSearch(arg2,*arg3);
-    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBForceField_ValidateSteepestDescent) {
-  {
-    OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-    int arg2 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int val2 ;
-    int ecode2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBForceField_ValidateSteepestDescent(self,steps);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBForceField_ValidateSteepestDescent" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
-    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBForceField_ValidateSteepestDescent" "', argument " "2"" of type '" "int""'");
-    } 
-    arg2 = static_cast< int >(val2);
-    (arg1)->ValidateSteepestDescent(arg2);
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBForceField_ValidateConjugateGradients) {
-  {
-    OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-    int arg2 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int val2 ;
-    int ecode2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBForceField_ValidateConjugateGradients(self,steps);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBForceField, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBForceField_ValidateConjugateGradients" "', argument " "1"" of type '" "OpenBabel::OBForceField *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBForceField * >(argp1);
-    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBForceField_ValidateConjugateGradients" "', argument " "2"" of type '" "int""'");
-    } 
-    arg2 = static_cast< int >(val2);
-    (arg1)->ValidateConjugateGradients(arg2);
-    
     
     
     XSRETURN(argvi);
@@ -109978,8 +109620,6 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::pluginiterForceField_SetLogFile", _wrap_pluginiterForceField_SetLogFile},
 {"Chemistry::OpenBabelc::pluginiterForceField_SetLogLevel", _wrap_pluginiterForceField_SetLogLevel},
 {"Chemistry::OpenBabelc::pluginiterForceField_GetLogLevel", _wrap_pluginiterForceField_GetLogLevel},
-{"Chemistry::OpenBabelc::pluginiterForceField_DistanceGeometry", _wrap_pluginiterForceField_DistanceGeometry},
-{"Chemistry::OpenBabelc::pluginiterForceField_GenerateCoordinates", _wrap_pluginiterForceField_GenerateCoordinates},
 {"Chemistry::OpenBabelc::pluginiterForceField_SystematicRotorSearch", _wrap_pluginiterForceField_SystematicRotorSearch},
 {"Chemistry::OpenBabelc::pluginiterForceField_LineSearch", _wrap_pluginiterForceField_LineSearch},
 {"Chemistry::OpenBabelc::pluginiterForceField_SteepestDescent", _wrap_pluginiterForceField_SteepestDescent},
@@ -109988,9 +109628,6 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::pluginiterForceField_ConjugateGradients", _wrap_pluginiterForceField_ConjugateGradients},
 {"Chemistry::OpenBabelc::pluginiterForceField_ConjugateGradientsInitialize", _wrap_pluginiterForceField_ConjugateGradientsInitialize},
 {"Chemistry::OpenBabelc::pluginiterForceField_ConjugateGradientsTakeNSteps", _wrap_pluginiterForceField_ConjugateGradientsTakeNSteps},
-{"Chemistry::OpenBabelc::pluginiterForceField_ValidateLineSearch", _wrap_pluginiterForceField_ValidateLineSearch},
-{"Chemistry::OpenBabelc::pluginiterForceField_ValidateSteepestDescent", _wrap_pluginiterForceField_ValidateSteepestDescent},
-{"Chemistry::OpenBabelc::pluginiterForceField_ValidateConjugateGradients", _wrap_pluginiterForceField_ValidateConjugateGradients},
 {"Chemistry::OpenBabelc::pluginiterForceField_Validate", _wrap_pluginiterForceField_Validate},
 {"Chemistry::OpenBabelc::pluginiterForceField_ValidateGradients", _wrap_pluginiterForceField_ValidateGradients},
 {"Chemistry::OpenBabelc::pluginiterForceField_ValidateGradientError", _wrap_pluginiterForceField_ValidateGradientError},
@@ -110687,8 +110324,6 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBForceField_SetLogFile", _wrap_OBForceField_SetLogFile},
 {"Chemistry::OpenBabelc::OBForceField_SetLogLevel", _wrap_OBForceField_SetLogLevel},
 {"Chemistry::OpenBabelc::OBForceField_GetLogLevel", _wrap_OBForceField_GetLogLevel},
-{"Chemistry::OpenBabelc::OBForceField_DistanceGeometry", _wrap_OBForceField_DistanceGeometry},
-{"Chemistry::OpenBabelc::OBForceField_GenerateCoordinates", _wrap_OBForceField_GenerateCoordinates},
 {"Chemistry::OpenBabelc::OBForceField_SystematicRotorSearch", _wrap_OBForceField_SystematicRotorSearch},
 {"Chemistry::OpenBabelc::OBForceField_LineSearch", _wrap_OBForceField_LineSearch},
 {"Chemistry::OpenBabelc::OBForceField_SteepestDescent", _wrap_OBForceField_SteepestDescent},
@@ -110697,9 +110332,6 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBForceField_ConjugateGradients", _wrap_OBForceField_ConjugateGradients},
 {"Chemistry::OpenBabelc::OBForceField_ConjugateGradientsInitialize", _wrap_OBForceField_ConjugateGradientsInitialize},
 {"Chemistry::OpenBabelc::OBForceField_ConjugateGradientsTakeNSteps", _wrap_OBForceField_ConjugateGradientsTakeNSteps},
-{"Chemistry::OpenBabelc::OBForceField_ValidateLineSearch", _wrap_OBForceField_ValidateLineSearch},
-{"Chemistry::OpenBabelc::OBForceField_ValidateSteepestDescent", _wrap_OBForceField_ValidateSteepestDescent},
-{"Chemistry::OpenBabelc::OBForceField_ValidateConjugateGradients", _wrap_OBForceField_ValidateConjugateGradients},
 {"Chemistry::OpenBabelc::OBForceField_Validate", _wrap_OBForceField_Validate},
 {"Chemistry::OpenBabelc::OBForceField_ValidateGradients", _wrap_OBForceField_ValidateGradients},
 {"Chemistry::OpenBabelc::OBForceField_ValidateGradientError", _wrap_OBForceField_ValidateGradientError},

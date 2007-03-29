@@ -155,14 +155,6 @@ public class OBForceField {
     return openbabelJNI.OBForceField_GetLogLevel(swigCPtr, this);
   }
 
-  public void DistanceGeometry() {
-    openbabelJNI.OBForceField_DistanceGeometry(swigCPtr, this);
-  }
-
-  public void GenerateCoordinates() {
-    openbabelJNI.OBForceField_GenerateCoordinates(swigCPtr, this);
-  }
-
   public void SystematicRotorSearch() {
     openbabelJNI.OBForceField_SystematicRotorSearch(swigCPtr, this);
   }
@@ -233,18 +225,6 @@ public class OBForceField {
 
   public boolean ConjugateGradientsTakeNSteps(int n) {
     return openbabelJNI.OBForceField_ConjugateGradientsTakeNSteps(swigCPtr, this, n);
-  }
-
-  public vector3 ValidateLineSearch(OBAtom atom, vector3 direction) {
-    return new vector3(openbabelJNI.OBForceField_ValidateLineSearch(swigCPtr, this, OBAtom.getCPtr(atom), atom, vector3.getCPtr(direction), direction), true);
-  }
-
-  public void ValidateSteepestDescent(int steps) {
-    openbabelJNI.OBForceField_ValidateSteepestDescent(swigCPtr, this, steps);
-  }
-
-  public void ValidateConjugateGradients(int steps) {
-    openbabelJNI.OBForceField_ValidateConjugateGradients(swigCPtr, this, steps);
   }
 
   public boolean Validate() {

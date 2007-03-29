@@ -7,7 +7,12 @@ public class OBTest
 
   public void run()
   {
-    OBConversion c = new OBConversion();
+    OBConversion conv = new OBConversion();
+    conv.SetInFormat("smi");
+
+    OBMol mol = new OBMol();
+    conv.ReadString(mol, "CCCCC");
+    System.out.println(mol.NumAtoms());
   }
 
   public static void main(String[] args)

@@ -1950,8 +1950,6 @@ sub DESTROY {
 *SetLogFile = *Chemistry::OpenBabelc::pluginiterForceField_SetLogFile;
 *SetLogLevel = *Chemistry::OpenBabelc::pluginiterForceField_SetLogLevel;
 *GetLogLevel = *Chemistry::OpenBabelc::pluginiterForceField_GetLogLevel;
-*DistanceGeometry = *Chemistry::OpenBabelc::pluginiterForceField_DistanceGeometry;
-*GenerateCoordinates = *Chemistry::OpenBabelc::pluginiterForceField_GenerateCoordinates;
 *SystematicRotorSearch = *Chemistry::OpenBabelc::pluginiterForceField_SystematicRotorSearch;
 *LineSearch = *Chemistry::OpenBabelc::pluginiterForceField_LineSearch;
 *SteepestDescent = *Chemistry::OpenBabelc::pluginiterForceField_SteepestDescent;
@@ -1960,9 +1958,6 @@ sub DESTROY {
 *ConjugateGradients = *Chemistry::OpenBabelc::pluginiterForceField_ConjugateGradients;
 *ConjugateGradientsInitialize = *Chemistry::OpenBabelc::pluginiterForceField_ConjugateGradientsInitialize;
 *ConjugateGradientsTakeNSteps = *Chemistry::OpenBabelc::pluginiterForceField_ConjugateGradientsTakeNSteps;
-*ValidateLineSearch = *Chemistry::OpenBabelc::pluginiterForceField_ValidateLineSearch;
-*ValidateSteepestDescent = *Chemistry::OpenBabelc::pluginiterForceField_ValidateSteepestDescent;
-*ValidateConjugateGradients = *Chemistry::OpenBabelc::pluginiterForceField_ValidateConjugateGradients;
 *Validate = *Chemistry::OpenBabelc::pluginiterForceField_Validate;
 *ValidateGradients = *Chemistry::OpenBabelc::pluginiterForceField_ValidateGradients;
 *ValidateGradientError = *Chemistry::OpenBabelc::pluginiterForceField_ValidateGradientError;
@@ -3482,8 +3477,6 @@ sub DESTROY {
 *SetLogFile = *Chemistry::OpenBabelc::OBForceField_SetLogFile;
 *SetLogLevel = *Chemistry::OpenBabelc::OBForceField_SetLogLevel;
 *GetLogLevel = *Chemistry::OpenBabelc::OBForceField_GetLogLevel;
-*DistanceGeometry = *Chemistry::OpenBabelc::OBForceField_DistanceGeometry;
-*GenerateCoordinates = *Chemistry::OpenBabelc::OBForceField_GenerateCoordinates;
 *SystematicRotorSearch = *Chemistry::OpenBabelc::OBForceField_SystematicRotorSearch;
 *LineSearch = *Chemistry::OpenBabelc::OBForceField_LineSearch;
 *SteepestDescent = *Chemistry::OpenBabelc::OBForceField_SteepestDescent;
@@ -3492,9 +3485,6 @@ sub DESTROY {
 *ConjugateGradients = *Chemistry::OpenBabelc::OBForceField_ConjugateGradients;
 *ConjugateGradientsInitialize = *Chemistry::OpenBabelc::OBForceField_ConjugateGradientsInitialize;
 *ConjugateGradientsTakeNSteps = *Chemistry::OpenBabelc::OBForceField_ConjugateGradientsTakeNSteps;
-*ValidateLineSearch = *Chemistry::OpenBabelc::OBForceField_ValidateLineSearch;
-*ValidateSteepestDescent = *Chemistry::OpenBabelc::OBForceField_ValidateSteepestDescent;
-*ValidateConjugateGradients = *Chemistry::OpenBabelc::OBForceField_ValidateConjugateGradients;
 *Validate = *Chemistry::OpenBabelc::OBForceField_Validate;
 *ValidateGradients = *Chemistry::OpenBabelc::OBForceField_ValidateGradients;
 *ValidateGradientError = *Chemistry::OpenBabelc::OBForceField_ValidateGradientError;

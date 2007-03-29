@@ -613,8 +613,6 @@ class openbabelJNI {
   public final static native boolean pluginiterForceField_SetLogFile(long jarg1, pluginiterForceField jarg1_, long jarg2);
   public final static native boolean pluginiterForceField_SetLogLevel(long jarg1, pluginiterForceField jarg1_, int jarg2);
   public final static native int pluginiterForceField_GetLogLevel(long jarg1, pluginiterForceField jarg1_);
-  public final static native void pluginiterForceField_DistanceGeometry(long jarg1, pluginiterForceField jarg1_);
-  public final static native void pluginiterForceField_GenerateCoordinates(long jarg1, pluginiterForceField jarg1_);
   public final static native void pluginiterForceField_SystematicRotorSearch(long jarg1, pluginiterForceField jarg1_);
   public final static native long pluginiterForceField_LineSearch(long jarg1, pluginiterForceField jarg1_, long jarg2, OBAtom jarg2_, long jarg3, vector3 jarg3_);
   public final static native void pluginiterForceField_SteepestDescent__SWIG_0(long jarg1, pluginiterForceField jarg1_, int jarg2, double jarg3, int jarg4);
@@ -633,9 +631,6 @@ class openbabelJNI {
   public final static native void pluginiterForceField_ConjugateGradientsInitialize__SWIG_2(long jarg1, pluginiterForceField jarg1_, int jarg2);
   public final static native void pluginiterForceField_ConjugateGradientsInitialize__SWIG_3(long jarg1, pluginiterForceField jarg1_);
   public final static native boolean pluginiterForceField_ConjugateGradientsTakeNSteps(long jarg1, pluginiterForceField jarg1_, int jarg2);
-  public final static native long pluginiterForceField_ValidateLineSearch(long jarg1, pluginiterForceField jarg1_, long jarg2, OBAtom jarg2_, long jarg3, vector3 jarg3_);
-  public final static native void pluginiterForceField_ValidateSteepestDescent(long jarg1, pluginiterForceField jarg1_, int jarg2);
-  public final static native void pluginiterForceField_ValidateConjugateGradients(long jarg1, pluginiterForceField jarg1_, int jarg2);
   public final static native boolean pluginiterForceField_Validate(long jarg1, pluginiterForceField jarg1_);
   public final static native boolean pluginiterForceField_ValidateGradients(long jarg1, pluginiterForceField jarg1_);
   public final static native long pluginiterForceField_ValidateGradientError(long jarg1, pluginiterForceField jarg1_, long jarg2, vector3 jarg2_, long jarg3, vector3 jarg3_);
@@ -1608,8 +1603,6 @@ class openbabelJNI {
   public final static native boolean OBForceField_SetLogFile(long jarg1, OBForceField jarg1_, long jarg2);
   public final static native boolean OBForceField_SetLogLevel(long jarg1, OBForceField jarg1_, int jarg2);
   public final static native int OBForceField_GetLogLevel(long jarg1, OBForceField jarg1_);
-  public final static native void OBForceField_DistanceGeometry(long jarg1, OBForceField jarg1_);
-  public final static native void OBForceField_GenerateCoordinates(long jarg1, OBForceField jarg1_);
   public final static native void OBForceField_SystematicRotorSearch(long jarg1, OBForceField jarg1_);
   public final static native long OBForceField_LineSearch(long jarg1, OBForceField jarg1_, long jarg2, OBAtom jarg2_, long jarg3, vector3 jarg3_);
   public final static native void OBForceField_SteepestDescent__SWIG_0(long jarg1, OBForceField jarg1_, int jarg2, double jarg3, int jarg4);
@@ -1628,9 +1621,6 @@ class openbabelJNI {
   public final static native void OBForceField_ConjugateGradientsInitialize__SWIG_2(long jarg1, OBForceField jarg1_, int jarg2);
   public final static native void OBForceField_ConjugateGradientsInitialize__SWIG_3(long jarg1, OBForceField jarg1_);
   public final static native boolean OBForceField_ConjugateGradientsTakeNSteps(long jarg1, OBForceField jarg1_, int jarg2);
-  public final static native long OBForceField_ValidateLineSearch(long jarg1, OBForceField jarg1_, long jarg2, OBAtom jarg2_, long jarg3, vector3 jarg3_);
-  public final static native void OBForceField_ValidateSteepestDescent(long jarg1, OBForceField jarg1_, int jarg2);
-  public final static native void OBForceField_ValidateConjugateGradients(long jarg1, OBForceField jarg1_, int jarg2);
   public final static native boolean OBForceField_Validate(long jarg1, OBForceField jarg1_);
   public final static native boolean OBForceField_ValidateGradients(long jarg1, OBForceField jarg1_);
   public final static native long OBForceField_ValidateGradientError(long jarg1, OBForceField jarg1_, long jarg2, vector3 jarg2_, long jarg3, vector3 jarg3_);

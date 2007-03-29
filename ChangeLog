@@ -1,3 +1,8 @@
+2007-03-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/: Updated interface wrappers, including new Java
+	README. (Java is confirmed to work on Mac OS X.)
+
 2007-03-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.cpp: Make sure to always return from any
