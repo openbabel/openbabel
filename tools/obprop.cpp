@@ -131,19 +131,27 @@ int main(int argc,char **argv)
       cout << "mol_weight       " << mol.GetMolWt() << endl;
       cout << "exact_mass       " << mol.GetExactMass() << endl;
 
+      string smilesString = "-";
       if (canSMIFormat) {
         conv.SetOutFormat(canSMIFormat);
-        cout << "canonical_SMILES " << conv.WriteString(&mol);
+        smilesString = conv.WriteString(&mol);
+        if ( smilesString.length() == 0 )
+        {
+          smilesString = "-";
+        }
       }
-      else
-        cout << "canonical_SMILES " << "-" << endl;
+      cout << "canonical_SMILES " << smilesString << endl;
 
+      string inchiString = "-";
       if (inchiFormat) {
         conv.SetOutFormat(inchiFormat);
-        cout << "InChI            " << conv.WriteString(&mol);
+        inchiString = conv.WriteString(&mol);
+        if ( inchiString.length() == 0 )
+        {
+          inchiString = "-";
+        }
       }
-      else
-        cout << "InChI            " << "-" << endl;
+      cout << "InChI            " << inchiString << endl;
 
       cout << "num_atoms        " << mol.NumAtoms() << endl;
       cout << "num_bonds        " << mol.NumBonds() << endl;
