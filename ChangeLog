@@ -1,3 +1,14 @@
+2007-03-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/base.cpp: Additional "What's new" documentation for 2.1
+	release.
+
+	* include/openbabel/residue.h: Hide some residue names (e.g.,
+	_1MG) from SWIG wrappers -- such constants are not valid symbols
+	in some languages like Ruby.
+
+	* scripts/ Update accordingly.
+
 2007-03-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/: Updated interface wrappers, including new Java
