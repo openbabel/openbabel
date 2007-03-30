@@ -376,9 +376,9 @@ namespace OpenBabel
   indicated with a disclaimer "Since: version 2.1." Documentation, in
   general should be more thorough and complete.
 
-  One major change is that the library uses the same header <code>\#include</code>
-  paths as external code. This documentation attempts to uniformly use the
-  correct style, e.g.:
+  One major change is that the library uses the same header 
+  <code>\#include</code> paths as external code. This documentation
+  attempts to uniformly use the correct style, e.g.:
   <code>\#include \<openbabel/mol.h\></code>
 
   Another major change was to increase the indexing of atoms and
@@ -390,7 +390,10 @@ namespace OpenBabel
 
   In addition, this page gives a general list of additions to the library.
 
-  - OBGenericData - Generic data is now inhereted through OBBase for
+  - obiter.h - Additional iterators, including breadth-first and depth-first
+      iterators for atoms in OBMol, convenience iterators for rings, angles,
+      torsions, and 1-4 non-bonded atom pair interactions.
+  - OBGenericData - Generic data is now inherited through OBBase for
       most types, including OBAtom, OBBond, OBMol, OBResidue, 
       OBReaction, and OBGrid.
   - OBForceField - Generic interface to molecular mechanics force
