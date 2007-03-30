@@ -3,6 +3,7 @@ EXTRA_DIST = openbabel-perl.i perl \
 					openbabel-ruby.i ruby \
 					openbabel-java.i java
 
+# Remove various files before making a distribution archive
 dist-hook:
 	find $(distdir) -name .svn | xargs rm -rf
 	find $(distdir) -name "*~" | xargs rm -rf
@@ -11,6 +12,7 @@ dist-hook:
 	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
 	(cd $(distdir)/ruby; $(MAKE) distclean)
 	(cd $(distdir)/java; rm -f *.so *.o *.class)
+	(cd $(distdir)/java; rm -f *.jnilib *.jar)
 
 # build the scripting language interfaces if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG
