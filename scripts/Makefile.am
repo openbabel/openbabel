@@ -55,7 +55,7 @@ if BUILD_RUBY
 BUILT_SOURCES += ruby/openbabel_ruby.cpp
 
 ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
-	$(SWIG) -ruby -naturalvar -c++ -o $@ -I$(top_srcdir)/include $<;
+	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include $<;
 	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
 endif # BUILD_RUBY
 
