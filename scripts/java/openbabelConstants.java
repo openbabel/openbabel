@@ -151,17 +151,11 @@ public interface openbabelConstants {
   public final static int U = openbabelJNI.U_get();
   public final static int UPLUS = openbabelJNI.UPLUS_get();
   public final static int I = openbabelJNI.I_get();
-  public final static int _1MA = openbabelJNI._1MA_get();
-  public final static int _5MC = openbabelJNI._5MC_get();
   public final static int OMC = openbabelJNI.OMC_get();
-  public final static int _1MG = openbabelJNI._1MG_get();
-  public final static int _2MG = openbabelJNI._2MG_get();
   public final static int M2G = openbabelJNI.M2G_get();
-  public final static int _7MG = openbabelJNI._7MG_get();
   public final static int OMG = openbabelJNI.OMG_get();
   public final static int YG = openbabelJNI.YG_get();
   public final static int H2U = openbabelJNI.H2U_get();
-  public final static int _5MU = openbabelJNI._5MU_get();
   public final static int PSU = openbabelJNI.PSU_get();
   public final static int UNK = openbabelJNI.UNK_get();
   public final static int ACE = openbabelJNI.ACE_get();

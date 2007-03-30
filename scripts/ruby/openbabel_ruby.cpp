@@ -86858,17 +86858,11 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_const(mOpenbabel, "U", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::U)));
   rb_define_const(mOpenbabel, "UPLUS", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::UPLUS)));
   rb_define_const(mOpenbabel, "I", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::I)));
-  rb_define_const(mOpenbabel, "_1MA", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_1MA)));
-  rb_define_const(mOpenbabel, "_5MC", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_5MC)));
   rb_define_const(mOpenbabel, "OMC", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::OMC)));
-  rb_define_const(mOpenbabel, "_1MG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_1MG)));
-  rb_define_const(mOpenbabel, "_2MG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_2MG)));
   rb_define_const(mOpenbabel, "M2G", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::M2G)));
-  rb_define_const(mOpenbabel, "_7MG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_7MG)));
   rb_define_const(mOpenbabel, "OMG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::OMG)));
   rb_define_const(mOpenbabel, "YG", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::YG)));
   rb_define_const(mOpenbabel, "H2U", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::H2U)));
-  rb_define_const(mOpenbabel, "_5MU", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::_5MU)));
   rb_define_const(mOpenbabel, "PSU", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::PSU)));
   rb_define_const(mOpenbabel, "UNK", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::UNK)));
   rb_define_const(mOpenbabel, "ACE", SWIG_From_int(static_cast< int >(OpenBabel::OBResidueIndex::ACE)));

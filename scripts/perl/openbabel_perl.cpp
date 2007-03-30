@@ -112415,38 +112415,13 @@ XS(SWIG_init) {
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "_1MA", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_1MA)));
-    SvREADONLY_on(sv);
-  } while(0) /*@SWIG@*/;
-  /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "_5MC", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_5MC)));
-    SvREADONLY_on(sv);
-  } while(0) /*@SWIG@*/;
-  /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "OMC", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::OMC)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "_1MG", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_1MG)));
-    SvREADONLY_on(sv);
-  } while(0) /*@SWIG@*/;
-  /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "_2MG", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_2MG)));
-    SvREADONLY_on(sv);
-  } while(0) /*@SWIG@*/;
-  /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "M2G", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::M2G)));
-    SvREADONLY_on(sv);
-  } while(0) /*@SWIG@*/;
-  /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "_7MG", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_7MG)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
@@ -112462,11 +112437,6 @@ XS(SWIG_init) {
   /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "H2U", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::H2U)));
-    SvREADONLY_on(sv);
-  } while(0) /*@SWIG@*/;
-  /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "_5MU", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBResidueIndex::_5MU)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
