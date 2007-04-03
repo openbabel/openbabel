@@ -330,25 +330,17 @@ namespace OpenBabel {
       U     = 28,
       UPLUS = 29,
       I     = 30,
-#ifndef SWIG
       _1MA  = 32,
       _5MC  = 32,
-#endif
       OMC   = 33,
-#ifndef SWIG
       _1MG  = 34,
       _2MG  = 35,
-#endif
       M2G   = 36,
-#ifndef SWIG
       _7MG  = 37,
-#endif
       OMG   = 38,
       YG    = 39,
       H2U   = 40,
-#ifndef SWIG
       _5MU  = 41,
-#endif
       PSU   = 42,
       UNK   = 43,
       ACE   = 44,

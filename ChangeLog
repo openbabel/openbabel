@@ -1,3 +1,11 @@
+2007-04-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/residue.h: Undo previous change. Rich Apodaca
+	suggested some SWIG-fu instead.
+
+	* scripts/ Update accordingly. Includes ruby changes, new README
+	and examples.
+
 2007-03-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/base.cpp: Additional "What's new" documentation for 2.1

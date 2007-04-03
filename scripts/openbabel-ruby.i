@@ -1,4 +1,13 @@
 %module openbabel
+%module OpenBabel
+
+// These fields are renamed to valid constant names
+%rename(U1MA) OpenBabel::OBResidueIndex::_1MA;
+%rename(U1MG) OpenBabel::OBResidueIndex::_1MG;
+%rename(U2MG) OpenBabel::OBResidueIndex::_2MG;
+%rename(U7MG) OpenBabel::OBResidueIndex::_7MG;
+%rename(U5MU) OpenBabel::OBResidueIndex::_5MU;
+%rename(U5MC) OpenBabel::OBResidueIndex::_5MC;
 
 %{
 // used to set import/export for Cygwin DLLs

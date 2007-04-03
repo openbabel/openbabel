@@ -14786,6 +14786,30 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_I_1get(JNIEnv *jenv, jclass jcls) {
 }
 
 
+SWIGEXPORT jint JNICALL Java_openbabelJNI__11MA_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)OpenBabel::OBResidueIndex::_1MA;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_openbabelJNI__15MC_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)OpenBabel::OBResidueIndex::_5MC;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jint JNICALL Java_openbabelJNI_OMC_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
@@ -14798,6 +14822,30 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_OMC_1get(JNIEnv *jenv, jclass jcls) {
 }
 
 
+SWIGEXPORT jint JNICALL Java_openbabelJNI__11MG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)OpenBabel::OBResidueIndex::_1MG;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_openbabelJNI__12MG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)OpenBabel::OBResidueIndex::_2MG;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jint JNICALL Java_openbabelJNI_M2G_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
@@ -14805,6 +14853,18 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_M2G_1get(JNIEnv *jenv, jclass jcls) {
   (void)jenv;
   (void)jcls;
   result = (int)OpenBabel::OBResidueIndex::M2G;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_openbabelJNI__17MG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)OpenBabel::OBResidueIndex::_7MG;
   jresult = (jint)result; 
   return jresult;
 }
@@ -14841,6 +14901,18 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_H2U_1get(JNIEnv *jenv, jclass jcls) {
   (void)jenv;
   (void)jcls;
   result = (int)OpenBabel::OBResidueIndex::H2U;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_openbabelJNI__15MU_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)OpenBabel::OBResidueIndex::_5MU;
   jresult = (jint)result; 
   return jresult;
 }

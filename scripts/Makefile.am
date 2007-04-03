@@ -46,10 +46,6 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include $<;
-#	(cd java; \
-#	  for file in SWIGTYPE_p_*; \
-#		do tgt=$$(echo $${file} | sed -e "s/SWIGTYPE_p_//" | sed -e "s/std__//g" | sed -e "s/OpenBabel__//g" | sed -e "s/p_/p/g"); \
-#		mv $$file $$tgt; done)
 
 if BUILD_RUBY
 BUILT_SOURCES += ruby/openbabel_ruby.cpp
@@ -57,6 +53,8 @@ BUILT_SOURCES += ruby/openbabel_ruby.cpp
 ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
 	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include $<;
 	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
+	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
+	mv ruby/openbabel_ruby.new ruby/openbabel_ruby.cpp
 endif # BUILD_RUBY
 
 endif # BUILD_SWIG

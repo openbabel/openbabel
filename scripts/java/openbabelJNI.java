@@ -890,11 +890,17 @@ class openbabelJNI {
   public final static native int U_get();
   public final static native int UPLUS_get();
   public final static native int I_get();
+  public final static native int _1MA_get();
+  public final static native int _5MC_get();
   public final static native int OMC_get();
+  public final static native int _1MG_get();
+  public final static native int _2MG_get();
   public final static native int M2G_get();
+  public final static native int _7MG_get();
   public final static native int OMG_get();
   public final static native int YG_get();
   public final static native int H2U_get();
+  public final static native int _5MU_get();
   public final static native int PSU_get();
   public final static native int UNK_get();
   public final static native int ACE_get();
