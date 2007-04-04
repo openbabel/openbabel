@@ -1,0 +1,8 @@
+README
+openbabel.py
+openbabel_python.cpp
+pybel.py
+setup.py
+examples/examples.py
+examples/testpybel.py
+examples/head.sdf
