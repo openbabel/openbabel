@@ -1,8 +1,19 @@
 ================================
-The Ruby Interface to Open Babel
+The Ruby Interface to Open Babel (v. 1.0)
 ================================
 
-This is the Ruby interface to the Open Babel library. This wrapper was generated with SWIG and provides access to almost all of the Open Babel API via Ruby.
+This is the Ruby interface to the Open Babel library. 
+
+Open Babel is a chemical toolbox designed to speak the many languages
+of chemical data. It's an open, collaborative project allowing anyone
+to search, convert, analyze, or store data from molecular modeling,
+chemistry, solid-state materials, biochemistry, or related areas.
+
+This code was automatically generated with SWIG and provides access to almost all 
+of the Open Babel API via Ruby.
+
+More details can also be found at the Open Babel website:
+<http://openbabel.sourceforge.net/wiki/Ruby/>
 
 INSTALLATION
 
@@ -24,7 +35,9 @@ irb(main):002:0> mol=OpenBabel::OBMol.new
 irb(main):003:0> mol.num_atoms
 => 0
 
-Note: all Open Babel methods have been renamed to follow Ruby conventions. For example, the method to count the number of atoms in a molecule is "num_atoms", not "NumAtoms."
+Note: all Open Babel methods have been renamed to follow Ruby conventions. 
+For example, the method to count the number of atoms in a molecule is
+ "num_atoms", not "NumAtoms."
 
 Also note: The following fields have been renamed for Ruby compatibility:
 
@@ -37,21 +50,32 @@ OpenBabel::OBResidueIndex::_5MC -> OpenBabel::OBResidueIndex::U5MC
 
 USING SWIG TO GENERATE THE WRAPPER C++ CODE
 
-Given the "openbabel-ruby.i" interface file (contained in this directory's parent directory), wrapper code can be generated with SWIG. From the directory containing this README, use the following command:
+Given the "openbabel-ruby.i" interface file (contained in this directory's 
+parent directory), wrapper code can be generated with SWIG. From the directory
+containing this README, use the following command:
 
-swig -ruby -autorename -c++ -I../../include -o openbabel-ruby_wrap.cpp ../openbabel-ruby.i
+swig -ruby -autorename -c++ -I../../include -o openbabel_ruby.cpp ../openbabel-ruby.i
 
-This command produces the wrapper "openbabel-ruby_wrap.cpp".
+This command produces the glue code "openbabel_ruby.cpp".
 
-To disable the autorenaming of Open Babel methods, use the "-noautorename" flag (SWIG 1.3.29+). Earlier SWIG versions don't support renaming.
+To disable the autorenaming of Open Babel methods, use the "-noautorename"
+flag (SWIG 1.3.29+). Earlier SWIG versions don't support renaming.
 
-Generating the C++ wrapper using SWIG currently gives a top-level module called "Openbabel" instead of "OpenBabel". To use the latter name, change the argument to "rb_define_module" from "Openbabel" to "OpenBabel" in openbabel-ruby_wrap.cpp.
+Generating the C++ glue code using SWIG currently gives a top-level module 
+called "Openbabel" instead of "OpenBabel". To use the latter name, change the 
+argument to "rb_define_module" from "Openbabel" to "OpenBabel" in 
+openbabel_ruby.cpp. These modifications are also made automatically by the 
+Open Babel makefiles. Make sure you run ./configure with the 
+--enable-maintainer-mode flag when building Open Babel to enable rebuilding
+these scripting interfaces.
 
 COPYRIGHT AND LICENSE
 
-Copyright (C) 2007 Geoffrey R. Hutchison  <babel@geoffhutchison.net> and Richard L. Apodaca <rich_apodaca@yahoo.com>
+Copyright (C) 2007 Geoffrey R. Hutchison  <babel@geoffhutchison.net> 
+    and Richard L. Apodaca <rich_apodaca@yahoo.com>
 
 This Ruby module is part of the Open Babel project.
+<http://openbabel.sourceforge.net/>
 
 Open Babel is distributed under the GNU General Public License (GPL).
 This program is free software; you can redistribute it and/or modify
