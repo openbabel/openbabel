@@ -1,3 +1,13 @@
+2007-04-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* data/psa.txt: corrected smiles for 3-rings.
+
+	* src/groupcontrib.cpp: call ConvertDativeBonds before assigning
+	contributions, is needed for TPSA (e.g. [N](-*)(=*)=* ). Update to
+	documentation.
+
+	* include/openbabel/groupcontrib.h: documentation update.
+
 2007-04-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/residue.h: Undo previous change. Rich Apodaca
