@@ -461,7 +461,7 @@ namespace OpenBabel
       //! \param includePandS Whether to include phosphorus and sulfur neighbors
       //! in this determination (or to exclude them)
       bool HasAlphaBetaUnsat(bool includePandS=true);
-      //! \return Whether this atom is connected to any bond with order == @p
+      //! \return Whether this atom is connected to any bond with order == @p bo
       bool HasBondOfOrder(unsigned int bo);
       //! \return The count of bonds connected to this atom with order == @p bo
       int  CountBondsOfOrder(unsigned int bo);
