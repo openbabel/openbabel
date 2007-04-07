@@ -1,3 +1,7 @@
+2007-04-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* NEWS: Minor fixes for 2.1.0 final release.
+
 2007-04-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* data/psa.txt: corrected smiles for 3-rings.
