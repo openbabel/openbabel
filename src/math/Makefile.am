@@ -1,0 +1,4 @@
+noinst_LTLIBRARIES = libmath.la
+libmath_la_SOURCES = matrix3x3.cpp vector3.cpp
+
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/include
