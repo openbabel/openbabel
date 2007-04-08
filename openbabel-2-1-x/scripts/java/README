@@ -1,0 +1,35 @@
+Open Babel for Java (JNI) 0.9
+--------------------
+
+This directory contains a set of SWIG-generated interface classes for
+using the Open Babel C++ library from Java. It is currently
+experimental and has not been thoroughly tested.
+
+The Open Babel wiki pages on Java give information on compiling and
+running Java programs with Open Babel:
+http://openbabel.sourceforge.net/wiki/Java
+
+*** Linux Compilation
+
+To compile, run the following steps:
+% javac *.java
+# assuming that jni.h is found in /usr/include/java
+% g++ -c -fpic openbabel_java.cpp -I../../include -I/usr/include/java
+# assuming that the C++ libopenbabel is in /usr/local/lib
+% g++ -shared -L/usr/local/lib openbabel_java.o -lopenbabel -o libopenbabel.so
+
+
+*** Mac OS X Compliation
+
+% javac *.java
+% g++ -c -I/System/Library/Frameworks/JavaVM.framework/Headers \
+openbabel_java.cpp
+% g++ -dynamiclib -o libopenbabel.jnilib openbabel_java.o \
+-framework JavaVM -L/usr/local/lib -lopenbabel
+
+
+*** Running Programs
+
+To run the OBTest program:
+% java OBTest
+

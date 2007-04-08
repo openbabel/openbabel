@@ -1,0 +1,57 @@
+##############################################################################
+#                                                                            #
+#    Open Babel file: bond.txt                                               #
+#                                                                            #
+#  Copyright (c) 2002-2003 by Geoffrey R Hutchison                           #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# Currently unused, will eventually be used by PerceiveBondOrders()          #
+#                                                                            #
+# List of functional groups with double, triple (etc.) bond orders           #
+# Pattern		Atom1 Atom2 Bond Order (repeat as needed)            #
+# * = Any atom (for setting non-multiple bonds)                              #
+#                                                                            #
+# NOTE: These are applied in order, first to last. So in the case of "ties"  #
+#     the last pattern "wins." Thus, it's best to have these in order of     #
+#     electronegativity (i.e. double bond to oxygen over sulphur)            #
+#                                                                            #
+##############################################################################
+
+# Azide
+[#7D2][#7D2][#7D1]		0 1 2 1 2 2
+# Nitro
+[#8D1][#7D3][#8D1]		0 1 2 1 2 2
+# Sulphone
+[#16D4]([#8D1])([#8D1])(*)(*)	0 1 2 0 2 2 0 3 1 0 4 1
+# Phosphone
+[#15D4]([#8D1])(*)(*)(*)	0 1 2 0 2 1 0 3 1 0 4 1
+
+# Carboxylic Acid, ester, etc.
+[#8D1][#6D3][#8]		0 1 2 1 2 1
+# Amide C(=O)N
+[#6D3]([#8D1])[#7]		0 1 2 0 2 1
+# Seleninic acid Se(=O)OH
+[#8D1][#34D3][#8]		0 1 2 1 2 1
+# Thioacid / Thioester C(=O)S
+[#6D3]([#8D1])[#16]		0 1 2 0 2 1
+# dithioacid / dithioester C(=S)S
+[#6D3]([#16D1])[#16]		0 1 2 0 2 1
+# thioamide C(=S)N
+[#6D3]([#16D1])[#7]		0 1 2 0 2 1
+
+# allene C=C=C *if* there are two bonds on each end carbon
+[#6D3][#6D2][#6D3]		0 1 2 1 2 2
+
+# amidine -C(=NH)NH2
+# (only need to deal with case with implicit hydrogens)
+# (the code can figure out the other case by itself)
+[#6D3][#7D1][#7D1]	        0 1 2 0 2 1
+
+# guanidinium (place C=N towards C-N-C nitrogen)
+# as in amidine, only need to deal with case with implicit hydrogens
+[#7D2][#6D3]([#7D2])[#7D2]	0 1 1 1 2 2 1 3 1
+
+### other potential functional groups that may (or may not) be useful to add
+# imidines ( N=C/N\C=N
+# sulfoxides
+

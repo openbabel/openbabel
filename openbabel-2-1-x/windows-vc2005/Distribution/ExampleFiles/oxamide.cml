@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<molecule xmlns="http://www.xml-cml.org/schema/cml2/core" id="10113">
+ <atomArray>
+  <atom id="a1" elementType="C" x2="3.403000" y2="-0.250000"/>
+  <atom id="a2" elementType="O" x2="3.403000" y2="-1.250000"/>
+  <atom id="a3" elementType="C" x2="4.269000" y2="0.250000"/>
+  <atom id="a4" elementType="O" x2="4.269000" y2="1.250000"/>
+  <atom id="a5" elementType="N" x2="5.135000" y2="-0.250000"/>
+  <atom id="a6" elementType="N" x2="2.536900" y2="0.250000"/>
+  <atom id="a7" elementType="H" x2="5.671900" y2="0.060000"/>
+  <atom id="a8" elementType="H" x2="5.135000" y2="-0.870000"/>
+  <atom id="a9" elementType="H" x2="2.000000" y2="-0.060000"/>
+  <atom id="a10" elementType="H" x2="2.536900" y2="0.870000"/>
+ </atomArray>
+ <bondArray>
+  <bond atomRefs2="a1 a2" order="2"/>
+  <bond atomRefs2="a1 a3" order="1"/>
+  <bond atomRefs2="a1 a6" order="1"/>
+  <bond atomRefs2="a3 a4" order="2"/>
+  <bond atomRefs2="a3 a5" order="1"/>
+  <bond atomRefs2="a5 a7" order="1"/>
+  <bond atomRefs2="a5 a8" order="1"/>
+  <bond atomRefs2="a6 a9" order="1"/>
+  <bond atomRefs2="a6 a10" order="1"/>
+ </bondArray>
+ <propertyList>
+  <property>
+   <scalar title="PUBCHEM_COMPOUND_CID">10113</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_CACTVS_HBOND_ACCEPTOR">2</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_CACTVS_HBOND_DONOR">2</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_CACTVS_ROTATABLE_BOND">0</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_IUPAC_OPENEYE_NAME">oxamide</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_IUPAC_CAS_NAME">oxamide</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_IUPAC_NAME">ethanediamide</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_IUPAC_SYSTEMATIC_NAME">oxamide</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_NIST_INCHI">InChI=1/C2H4N2O2/c3-1(5)2(4)6/h(H2,3,5)(H2,4,6)/f/h3-4H2</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_CACTVS_XLOGP">-2.238</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_OPENEYE_MF">C2H4N2O2</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_OPENEYE_MW">88.0654</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_OPENEYE_CAN_SMILES">C(=O)(C(=O)N)N</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_OPENEYE_ISO_SMILES">C(=O)(C(=O)N)N</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_TOTAL_CHARGE">0</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_HEAVY_ATOM_COUNT">6</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_ATOM_DEF_STEREO_COUNT">0</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_ATOM_UDEF_STEREO_COUNT">0</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_BOND_DEF_STEREO_COUNT">0</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_BOND_UDEF_STEREO_COUNT">0</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_ISOTOPIC_ATOM_COUNT">0</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_COMPONENT_COUNT">1</scalar>
+  </property>
+  <property>
+   <scalar title="PUBCHEM_CACTVS_TAUTO_COUNT">3</scalar>
+  </property>
+  <property>
+   <scalar title="CM_NOTE">note with spaces</scalar>
+  </property>
+ </propertyList>
+</molecule>

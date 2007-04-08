@@ -1,0 +1,279 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT([Open Babel], 2.1.0, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_CONFIG_SRCDIR(src/zipstreamimpl.h)
+AM_INIT_AUTOMAKE([no-define])
+AM_MAINTAINER_MODE
+AX_MAINTAINER_MODE_AUTO_SILENT
+AM_CONFIG_HEADER(src/config.h)
+AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of Open Babel])
+
+AC_ARG_ENABLE(wx-gui,
+	AS_HELP_STRING([--enable-wx-gui],
+		       [enable building the wxWidget GUI (experimental)]),
+		[wx_gui="$enable_wx_gui"],
+		[wx_gui="no"])
+
+AC_ARG_ENABLE(inchi,
+	AS_HELP_STRING([--enable-inchi],
+		       [always build the InChI library]),
+		[inchi="$enable_inchi"],
+		[inchi="no"])
+
+AC_ARG_ENABLE(dynamic-modules,
+	AS_HELP_STRING([--disable-dynamic-modules],
+		       [disable building shared file format modules]),
+		[dynamic_modules="$enable_dynamic_modules"],
+		[dynamic_modules="yes"])
+
+AC_ARG_ENABLE(precompiled-headers,
+  AS_HELP_STRING([--enable-precompiled-headers],
+           [enable building with precompiled headers]),
+    [precompiled_headers="$enable_precompiled_headers"],
+    [precompiled_headers="no"])
+
+AC_CANONICAL_HOST
+
+AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_TARNAME], [Where the data files are located])
+
+AH_VERBATIM([OBAPI], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBAPI __declspec(dllimport)
+ #else
+  #define OBAPI __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBAPI 
+#endif
+])
+
+AH_VERBATIM([EXTERN], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define EXTERN __declspec(dllimport) extern
+ #else
+  #define EXTERN __declspec(dllexport) extern
+ #endif
+#else //Everything else (behaviour as original)
+ #define EXTERN extern 
+#endif
+])
+
+AH_VERBATIM([OBCONV], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBCONV __declspec(dllimport)
+ #else
+  #define OBCONV __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBCONV
+#endif
+])
+
+AH_VERBATIM([OBERROR], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBERROR __declspec(dllimport)
+ #else
+  #define OBERROR __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBERROR 
+#endif
+])
+
+AH_VERBATIM([OBFPTR], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBFPTR __declspec(dllimport)
+ #else
+  #define OBFPTR __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBFPTR 
+#endif
+])
+
+AH_VERBATIM([OBCOMMON], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBCOMMON __declspec(dllimport)
+ #else
+  #define OBCOMMON __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBCOMMON 
+#endif
+])
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_CXXCPP
+AC_PROG_INSTALL
+AC_PATH_PROG(DOXYGEN, doxygen)
+AC_PATH_PROG(SWIG, swig)
+AC_PATH_PROG(PERL, perl)
+AC_PATH_PROG(PROVE, prove)
+AC_PATH_PROG(PYTHON, python)
+AC_PATH_PROG(RUBY, ruby)
+
+dnl Conditionally build docs, scripts, etc.
+
+dnl check for wx widgets for src/GUI
+WXCONFIG=wx-config
+AC_ARG_WITH(wx-config,
+[[  --with-wx-config=FILE     Use the given path to wx-config when determining
+                            wxWidgets configuration; defaults to "wx-config"]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        WXCONFIG=$withval
+    fi
+])
+AC_MSG_CHECKING([wxWidgets version])
+if wxversion=`$WXCONFIG --version`; then
+    AC_MSG_RESULT([$wxversion])
+else
+    AC_MSG_RESULT([not found])
+fi
+
+WX_CPPFLAGS="`$WXCONFIG --cppflags`"
+WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+WX_LIBS="`$WXCONFIG --libs`"
+
+dnl only needed for wx GUI
+AC_SUBST(WX_LIBS)
+AC_SUBST(WX_CXXFLAGS)
+AC_SUBST(WX_CPPFLAGS)
+
+AM_CONDITIONAL(BUILD_WXGUI, test x"$wxversion" != "x" -a "$wx_gui" = "yes")
+
+dnl Use Perl's "prove" test harness to run unit tests
+AM_CONDITIONAL(PERL_TESTS, test x"$PROVE" != "x")
+
+AM_CONDITIONAL(BUILD_DOCS, test x"$DOXYGEN" != "x")
+if test x"$DOXYGEN" = "x"; then
+AC_MSG_WARN(Cannot find doxygen to build documentation. 
+	Have a look at http://www.doxygen.org/)
+fi
+
+dnl Build SWIG interfaces -- ideally use the latest SWIG available!!
+dnl (this will happen also only if MAINTAINER_MODE is set
+AM_CONDITIONAL(BUILD_SWIG, test x"$SWIG" != "x")
+
+SCRIPTING="no"
+if test x"$SWIG" != "x"; then
+SCRIPTING="yes"
+elif test x"$PYTHON" != "x"; then
+SCRIPTING="yes"
+elif test x"$PERL" != "x"; then
+SCRIPTING="yes"
+fi
+AM_CONDITIONAL(BUILD_SCRIPTS, test "$SCRIPTING" = "yes")
+
+AM_CONDITIONAL(BUILD_RUBY, test x"$RUBY" != "x")
+
+dnl libtool
+dnl You can set the shared library version in src/Makefile.am
+dnl AC_DISABLE_SHARED
+dnl We do support DLLs on Win32 systems
+AC_LIBTOOL_WIN32_DLL
+AC_LIBTOOL_DLOPEN
+AM_PROG_LIBTOOL
+
+case $host in
+     *-*-cygwin*)
+        dynamic_modules="no"
+        ;;
+     *-*-mingw*)
+        dynamic_modules="no"
+        ;;
+esac
+AM_CONDITIONAL(BUILD_SHARED, test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes")
+
+oldmodule=$module
+module=yes
+eval std_shrext=\"$shrext_cmds\"
+AC_DEFINE_UNQUOTED([MODULE_EXTENSION], ["$std_shrext"], [The file extension used for shared modules])
+module=$oldmodule
+
+AM_CONDITIONAL(BUILD_PCH, test "$precompiled_headers" = "yes")
+
+AC_C_BIGENDIAN
+
+AC_LANG_CPLUSPLUS
+dnl Checks for libraries.
+AC_CHECK_LIB(m, asin, , exit)
+AC_CHECK_LIB(c, dlopen, LIBDL="", [AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl")])
+AC_SUBST(LIBDL)
+
+AM_PATH_XML2(2.6.5)
+AM_CONDITIONAL(BUILD_XML, test x"$XML_LIBS" != "x")
+
+AC_CHECK_LIB(inchi, GetINCHI, LIBINCHI="-linchi", LIBINCHI="")
+AM_CONDITIONAL(BUILD_INCHI, test x"$LIBINCHI" == "x" -o "$inchi" = "yes")
+
+CHECK_ZLIB
+AC_CHECK_LIB(z, inflateEnd)
+AC_CHECK_HEADERS(zlib.h iconv.h)
+AM_CONDITIONAL(BUILD_ZLIB, [test "$zlib_cv_libz" = "yes" -a "$zlib_cv_zlib_h" = "yes"])
+
+dnl Checks for header files.
+AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
+AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
+AC_CHECK_HEADERS(ctype.h iostream fstream sstream strstream)
+AC_HEADER_TIME
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_TYPES(clock_t)
+AC_C_CONST
+AC_C_INLINE
+
+dnl Checks for library functions.
+AC_CHECK_FUNCS([rint sranddev])
+AC_REPLACE_FUNCS([snprintf strncasecmp])
+
+AH_VERBATIM([SNPRTF], 
+[
+#if !HAVE_SNPRINTF
+extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
+#endif
+])
+
+dnl Gotta figure out whether scandir needs a const or not for the 3rd arg.
+AC_MSG_CHECKING([whether scandir needs a const cast])
+AC_COMPILE_IFELSE([
+#include <sys/types.h>
+#include <dirent.h>
+ extern int matchFiles (struct dirent *entry_p);
+ struct dirent **entries_pp;
+ int count = scandir ("./", &entries_pp, $dirent_t matchFiles, 0);
+], 
+[ AC_DEFINE(SCANDIR_T, , [set if scandir needs a const]) 
+  AC_DEFINE(SCANDIR_CONST, , [set if scandir needs a const])
+scandirconst_cast=no], 
+[ AC_DEFINE(SCANDIR_T, [(int (*)(const dirent *))], [set if scandir needs a const]) 
+  AC_DEFINE(SCANDIR_CONST, [const])
+scandirconst_cast=yes])
+
+AC_MSG_RESULT([$scandirconst_cast], [set if scandir needs a const])
+
+AC_CONFIG_COMMANDS([include/openbabel/babelconfig.h], 
+                   [grep -v PACKAGE src/config.h >include/openbabel/babelconfig.h])
+
+AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
+		   src/formats/Makefile src/fingerprints/Makefile \
+		   src/formats/xml/Makefile src/formats/inchi/Makefile \
+       src/forcefields/Makefile src/GUI/Makefile \
+       include/Makefile include/openbabel/Makefile \
+       include/openbabel/math/Makefile \
+		   test/Makefile test/cmltest/Makefile tools/Makefile \
+		   doc/Makefile scripts/Makefile openbabel-2.0.pc)
+

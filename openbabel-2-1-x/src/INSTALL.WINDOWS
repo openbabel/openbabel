@@ -1,0 +1,182 @@
+At 14:37 28/01/2004 -0600, Geoff Hutchison wrote:
+
+Thanks very much Geoff,
+
+I've had 4 different people in the last ten days or so asking me about compiling Openbabel under windows! It is now cost-effective for me to post something to the site rather than answering the questions. I'm outlining the various points here ***and asking for comments*** - please!
+
+WINDOWS.INSTALL FOR OPENBABEL
+
+Note: This document may not be completely accurate. If you find something, don't curse - change it and repost the document to the list or recommit it.
+
+OpenBabel is primarily developed under Unix and uses standard unix tools for compilations and running. The current distribution reflects this in organisation and content. There is no specific help for Windows installation other than this document.
+
+1. If you are running on a Windows machine you cannot install OB automatically and these notes will give some pointers.
+
+2a The Openbabel site does not currently have precompiled executables for Windows. Henry Rzepa and I have created some and distribute them from http://www.xml-cml.org. These are as-is and although we have tested them for ourselves they are not guaranteed to work. We cannot debug them remotely.
+
+2b *** if you have problems read the section on PROBLEMS before mailing me. If you don't, I probably shan't answer...***
+
+3. If you do not wish to use the exes or wish to compile OB yourself you have 2 main options:
+
+4a. Use gcc under cygwin. gcc is the tool most people use under Unix and so you can expect the same approximate behaviour under cygwin. I have had relatively little trouble using cygwin. If you haven't installed cygwin before it is straightforward but can be a bit overwhelming - there are a huge number of optional components. Make sure you have g++. If you don't get everything you need you can update later.
+
+Cygwin comes up in a separate window. Find the directory with the OB source - if this was D:\progs\openbabel\src under Windows, 
+	cd /cygdrive/d/openbabel/src. 
+Then follow the Openbabel instructions - e.g.:
+	./configure
+	make
+
+When you have finished you will be able to run openbabel under cygwin. This uses a cygwin library (cygwin.dll). If you wish to distribute the babel.exe in a non-cygwin environment, the DLL must also be distributed. The easiest option is to locate it in the same directory as babel.exe. The http://www.xml-cml.org site has this configuration and this may help you test it.
+
+4b. Use a native windows compiler. These include Borland, Visual C++, etc. The problem is that C and C++ are extremely variable languages and also depend greatly on libraries (which are hugely variable).  Although C has an ANSI standard and much of C++ has (e.g. standard templates (STL) which OB uses), there are many variants supported or not supported by the compilers. Moreover many older but common programming constructs in C are now deprecated and some compilers will diagnose a huge number of warnings. In general this is beneficial - you should change code to avoid warnings - but some compilers throw so many it can be overwhelming. You will generally run into the following problems:
+
+- compiler specific routines. Some of the code is hacked for different compilers. You may see something that looks roughly like:
+#ifdef _BORLAND
+...
+#endif
+This means that the Borland compiler alone will use the code within the ifdef. If you see ifdefs for your own compiler you may be lucky and may be able to compile out-of-the box as someone has already done this.  You may see commands to suppress warnings or use particular libraries or routines.
+#pragma are often compiler-specific commands 
+
+Here is an example from winbabeldialog.h:
+--------------
+#if !defined(AFX_WINBABELDIALOG_H__20564789_2421_11D6_9BEA_000000000000__INCLUDED_)
+#define AFX_WINBABELDIALOG_H__20564789_2421_11D6_9BEA_000000000000__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+---------------
+
+I have no idea what any of this means but it will only be used on a specific compiler with specific settings so you probably won't encounter it.
+
+In some cases a compiler is instructed to take different action depending on what libraries are available. To add to the fun different compilers have different names for the same library functionality. There may be commands such as
+#if HAS_MEMCPY
+...
+#else 
+...
+#endif
+which takes one action if the compiler has a memcpy.c routine and a different one if not.
+
+- babelconfig.h DATADIR and VERSION. These are not supported outside Unix. The following discussion in a bug report may help.
+
+Submitted By: Abel Cheung (deaddog) 
+Summary: header defines DATADIR, overriding other software
+Initial Comment: 
+After installation of CVS openbabel, it defines DATADIR in <openbabel/babelconfig.h>, this definition can override DATADIR in other software. For example, gchempaint installs its data files in $datadir/gchempaint, but it is expecting data files in $datadir/openbabel/gchempaint, causing all sort of errors.
+----------------------------------------------------------------------
+Comment By: Jean Bréfort (jbrefort) 
+Date: 2004-01-28 16:52
+To answer Peter's questions: 
+- DATADIR is the directory where applications have their 
+resources (as icons, static data, helpfiles,...) stored. The 
+default value is $(prefix)/share. Then in most cases the 
+real data are in a subdirectory, generally 
+$(datadir)/appname. Should DATADIR have been the default 
+value in OpenBabel, the bug would have not been found now. 
+Much worse, babelconfig.h defines VERSION... 
+-There is no need for a babelconfig.h in the CVS. 
+babelconfig.h.in is enough. The same is true for configure, 
+Makefile.in and Makefile as far as the package uses autoconf 
+and automake. 
+My conclusion is that we have here a critical bug. A 
+priority of 5 is really a minimum.
+----------------------------------------------------------------------
+Comment By: Peter Murray-Rust (petermr) 
+Date: 2004-01-28 13:13
+DATADIR is certainly one of the installation problems. 
+AFAICS babelconfig.h is generated by ./configure on Unix 
+systems. There is no equivalent on Windows systems. However 
+there may be a babelconfig.h already in the CVS. Therefore 
+compiling with this will give compilation values based on 
+(some) arbitrary UNIX values for the environment.
+Is there is a need for a non-autoconfigured babelconfig.h? 
+Perhaps editable according to compiler?
+It's also not very clear to newcomers what DATADIR should 
+point to. I assume it is actually normally the source directory.
+P.
+
+----------------------------------------------------------------------
+Comment By: Jean Bréfort (jbrefort) 
+Date: 2004-01-28 07:37
+Renaming DATADIR to BABAL_DATADIR fixes this bug, but there 
+are potentially many others in babelconfig.h. Configuration 
+headers should never be installed, they are useful only at 
+compile time. Normally, babelconfig.h should be the first 
+included header in each cpp file and should NEVER be 
+included in a header file (at least for a public library). 
+If there is a chance that an external program needs access 
+to BABEL_DATADIR, add a helper function such as 
+ob_get_datadir().
+
+--- On windows configure has no meaning so if people suggest you use it, ignore them. I think I comment out babelconfig.h.  I then edit mol.h to include something like  
+#define DATADIR "."
+This sometimes works. PLEASE add your own experience here
+
+- problems with strncasecmp and snprintf
+These are convenience routines (?extensions) which are not present in all compilers. If you don't have them you have to go out on the web and add them yourself. We are hoping to add them to the Babel directory which should solve this
+
+- problem with dates and times
+There are often horrible. If things like time.h don't exist comment out anything relating to times and dates. 
+
+- problems with math/ subdirectory
+For some reason a few routines are in a subdirectory. Not all compilers include them properly. If so copy them into the main  directory and change 
+#include math/vector.h 
+to
+#include "vector.h"
+
+- problems with bondtyper
+does this routine work? I delete it and all references to it.
+- newmain, commandline, windows, winbabeldialog.h. I often delete these as well
+- povray. If you have compile problems here and don't want to draw pictures remove this. You then have to comment out where it is called.
+
+These comments are not exact (I can't remember exactly what to do) so please treat them as a framework and edit them. At least they should help you feel you are not alone.
+
+PROBLEMS.
+
+If you have problems do not send me a mail saying "Openbabel fails to work; please help". Do not send such a  message to the list either. Work out where the problem lies and then either mail the list of us a bug report.
+- does babel compile? If not, report:
+	the version of Babel and the date checked out. Always try to use the most recent one - noone likes chasing bugs that have been fixed
+	the platform
+	the compiler and any switches
+	DO NOT send more than a page of output. DO NOT send stackdumps (I have had 5 Mbytes of filestore sent to me) 
+- does babel link. Unfortunately this can be very opaque as CPP munges names in compiler-specific manners. It is sometimes worth compiling twice (especially under g++).
+- does babel crash when running? Test babel with very simple files. We have posted very small CML files for this purpose. Run them and see if you can recreate the error. If not it may be a problem in your data. When reporting bugs use files which are as small as possible but which reproduce the error.
+
+In the end, however, bug tracking is often a matter of hard work and logical thought. Try several different approaches, varying the inputs slightly and get as much information as possible.
+
+Good luck
+
+Peter Murray-Rust 2004-01-28
+
+
+> There is relatively little use of the bugtracking and feature system -
+> perhaps this should be used more for this purpose. That would generate a
+> more permanent record than this mailing list - which does not seem to be
+> archived. Would that be possible?
+
+Well, we can add additional "trackers" for various purposes. For example,
+I could add a tracker for documentation if that seems a good idea.
+
+The mailing list *is* archived:
+http://sourceforge.net/mailarchive/forum.php?forum_id=3042
+
+It's also linked off of the side of the Open Babel homepage:
+(as "Mailing List Archives")
+http://openbabel.sourceforge.net/
+
+Sorry I missed this - I went tot the project page and it said the lists weren't archived. But this message has been changed - maybe a sourceforge bug.
+
+> As a start we would hope to commit our experience in compiling with 2 or 3
+> compilers under windows. And we would wish to commit an Open version of
+> missing C libraries (e.g. strncasecmp)
+
+I believe we already have the latter ready for 1.100.2, though of course
+we will need some testing and feedback on this.
+
+Cheers,
+-Geoff
+Peter Murray-Rust
+Unilever Centre for Molecular Informatics
+Chemistry Department, Cambridge University
+Lensfield Road, CAMBRIDGE, CB2 1EW, UK
+Tel: +44-1223-763069
