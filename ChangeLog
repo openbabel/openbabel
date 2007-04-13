@@ -40,6 +40,48 @@
 
 	* scripts/ Update accordingly.
 
+2007-03-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/: Updated interface wrappers, including new Java
+	README. (Java is confirmed to work on Mac OS X.)
+
+2007-03-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.cpp: Make sure to always return from any
+	exception. Otherwise we could crash running code.
+
+	* src/formats/mdlformat.cpp: Avoid infinite loop in
+	ParseAliasText.
+
+	* src/formats/acrformat.cpp: Minor formatting change.
+
+	* test/Makefile.am, test/Makefile.in, test/wrapper.sh: Add
+	inchiwrite tests to suite.
+
+	* test/inchiwrite.cpp, test/inchi.pl: Formatting to integrate into
+	Perl "prove" test suite.
+
+2007-03-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/obprop.cpp (main): Fix PR#1688251 with while/for loop on
+	CML files. Thanks to Tapani Kinnunen for the report.
+
+	* src/formats/mol2format.cpp: Fix problem reported by Noel with
+	"USER_CHARGES" appearing instead of Gasteiger.
+
+	* src/data.cpp, src/groupcontrib.cpp: Fix doxygen warnings.
+
+	* include/openbabel/groupcontrib.h: Documentation fixes.
+
+	* NEWS: Minor fixes.
+
+	* doc/*.1, doc/*.html: Documentation updates.
+
+2007-03-24  Benoit Jacob <jacob@math.jussieu.fr>
+
+	* include/openbabel/atom.h, src/atom.cpp: Change SetVector to
+	const parameter.
+
 2007-03-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* tools/obprop.cpp: Function string sequence(OBMol) was not returning
@@ -1348,7 +1390,7 @@
 
 2006-12-04  Benoit Jacob <jacob@math.jussieu.fr>
 
-   * src/math/vector3.cpp: optimize createOrthoVector(), update doc.
+	* src/math/vector3.cpp: optimize createOrthoVector(), update doc.
 
 2006-12-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

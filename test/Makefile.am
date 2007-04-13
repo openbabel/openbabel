@@ -5,9 +5,8 @@ check_PROGRAMS = aromatic atom bond cansmi \
 	conversion data format formula formalcharge \
 	inchiwrite \
 	internalcoord invalidsmarts invalidsmiles \
-	iterators math mol residue rings smarts \
-	smilesmatch unitcell \
-	mmff94validate logp_psa
+	iterators logp_psa math mol residue rings smarts \
+	smilesmatch unitcell
 
 bin_PROGRAMS = roundtrip
 
@@ -16,8 +15,8 @@ if PERL_TESTS
 # (This provides a nicer summary and verbose results on request)
 TESTS = wrapper.sh
 else
-# Standard automake tests
-TESTS = smarts rings unitcell \
+# Standard automake tests (if we don't have prove)
+TESTS = cansmi invalidsmarts invalidsmiles smarts rings unitcell \
 	$(top_srcdir)/test/cml.sh $(top_srcdir)/test/test-set.sh
 endif
 
@@ -26,7 +25,7 @@ TESTDATADIR = $(top_srcdir)/test/files/
 AM_CPPFLAGS = -I$(top_srcdir)/include -DTESTDATADIR="\"$(TESTDATADIR)\""
 
 EXTRA_DIST = files wrapper.sh cml.sh test-set.sh \
-		aromatic.pl inchi
+		aromatic.pl inchi inchi.pl inchi2.pl
 
 roundtrip_SOURCES = roundtrip.cpp
 
@@ -47,7 +46,6 @@ invalidsmarts_SOURCES = invalidsmarts.cpp
 iterators_SOURCES = iterators.cpp
 logp_psa_SOURCES = logp_psa.cpp
 math_SOURCES = math.cpp
-mmff94validate_SOURCES = mmff94validate.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp

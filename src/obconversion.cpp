@@ -556,7 +556,7 @@ namespace OpenBabel {
         catch(...)
           {
             if(!IsOption("e", GENOPTIONS) && !OneObjectOnly)
-              throw;
+              return Index; // the number we've actually output so far
           }
 
         if(!ret)
@@ -1306,6 +1306,7 @@ namespace OpenBabel {
         obErrorLog.ThrowError(__FUNCTION__, "Conversion failed with an exception.",obError);
         return Count;
       }
+    return Count;
   }
 
   bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)

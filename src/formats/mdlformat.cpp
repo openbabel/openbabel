@@ -940,8 +940,10 @@ public:
 
     while(*txt)
     {
-      if(isspace(*txt))
+      if(isspace(*txt)) {
+        ++txt;
         continue;
+      }
       int chg=0;
       if(*txt=='-')
         chg = -1;

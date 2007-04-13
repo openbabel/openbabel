@@ -27,7 +27,6 @@ namespace OpenBabel
     CARFormat()
     {
       OBConversion::RegisterFormat("car",this, "chemical/x-msi-car");
-      OBConversion::RegisterFormat("cor",this, "chemical/x-msi-car");
       OBConversion::RegisterFormat("arc",this, "chemical/x-msi-car");
     }
 

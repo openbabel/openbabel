@@ -46,32 +46,39 @@ int main(int argc, char* argv[])
     return 1;
   }
   ifstream ifs(argv[1]);
-  if(!ifs)
-    cerr << "Cannot open " << argv[1];
+  if(!ifs) { 
+    cout << "# Cannot open " << argv[1];
+    return 1;
+  }
   ifstream results(argv[2]);
-  if(!results)
-    cerr << "Cannot open " << argv[2];
+  if(!results) {
+    cout << "# Cannot open " << argv[2];
+    return 1;
+  }
 
   stringstream ssout;
   OBConversion conv(&ifs, &ssout);
   OBFormat* pFormat = conv.FormatFromExt(argv[1]);
   if(!pFormat)
   {
-    cerr << "Did not recognize the Format of " << argv[1] << endl;
+    cout << "# Skipped. Did not recognize the format of " << argv[1] << endl;
     return 1;
   }
   conv.SetInFormat(pFormat);
   if(!conv.SetOutFormat("inchi"))
   {  
-    cerr << "Did not find InChI Format" << endl;
+    cout << "# Skipped. Did not find InChI Format" << endl;
     return 1;
   }
 
   conv.AddOption("w",OBConversion::OUTOPTIONS); //suppress routine warnings
   int count = conv.Convert();
-  cout << count << " molecules converted\n" << endl;
-  if(count<=0)
+  if(count<=0) {
+    cout << "# Skipped. Did not convert any molecules" << endl;
     return 2;
+  }
+
+  cout << "1.." << count << " # molecules converted\n";
 
   //Compare ssout with the correct InChIs
   int nfail=0;
@@ -86,16 +93,22 @@ int main(int argc, char* argv[])
     if(correct.size()<9)//skip molecules with an empty InChI
     {
       skipped++;
+      cout << "ok " << n << " # ignored empty InChI\n";
       continue;
     }
+
     if(generated != correct)
     {
-      cout << "Mismatch in molecule #" << n << ". generated / correct\n"
-        << generated << '\n' << correct << '\n' << endl;
+      cout << "Not ok " << n << " # Mismatch in molecule #" 
+           << n << ". generated / correct\n"
+           << "# " << generated << "\n# " << correct << '\n';
       nfail++;
     }
+    else
+      cout << "ok " << n << " # InChI matched expected\n";
   }
   cout << n-1-skipped<< " molecules compared" << endl;
+  cout << "# " << skipped << " # empty molecules skipped" << endl;
   cout << nfail << " failures" << endl;
   return 0;
 }

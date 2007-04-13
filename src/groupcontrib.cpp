@@ -1,5 +1,5 @@
 /**********************************************************************
-logp.cpp - Handles group contribution prediction algorithms.
+groupcontrib.cpp - Handle logP, PSA, MR, and other group-based predictions
 
 Copyright (C) 2007      by Tim Vandermeersch
               2001-2007 by Stephen Jelfs
@@ -251,5 +251,5 @@ namespace OpenBabel
 
 } // end namespace OpenBabel
 
-//! \file logp.cpp
-//! \brief Handle logP prediction algorithms.
+//! \file groupcontrib.cpp
+//! \brief Handle logP, PSA and other group-based prediction algorithms.

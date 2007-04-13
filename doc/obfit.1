@@ -1,4 +1,4 @@
-.Dd April 1, 2007
+.Dd April 7, 2007
 .Os "Open Babel" 2.1
 .Dt obfit 1 URM
 .Sh NAME
@@ -21,7 +21,7 @@ translated to provide the smallest possible RMSD between the matching
 regions. If a molecule does not match the SMARTS pattern, it will be
 output with no transformation.
 .Sh EXAMPLES
-Align all the molecules in 'moving.sdf' on a single molecule of 'fixed.sdf' by superimposing them on its N-methylpiperidyl portion:
+Align all the molecules in 'testmv.sdf' on a single molecule of 'testref.sdf' by superimposing them on its N-methylpiperidyl portion (and outputting a new SD file to the standard output):
 .Pp
 .Dl "obfit '[nh]1c2c(=O)n(C)c(=O)n(C)c2cc1' testref.sdf testmv.sdf"
 .Sh SEE ALSO
@@ -50,7 +50,8 @@ For more contributors to Open Babel, see
 <\fBhttp://openbabel.sourceforge.net/wiki/THANKS\fR>
 .Sh COPYRIGHT
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. 
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison and
+.br
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison and
 other contributors.
 .Pp
  This program is free software; you can redistribute it and/or modify

@@ -168,14 +168,6 @@ public class pluginiterForceField {
     return openbabelJNI.pluginiterForceField_GetLogLevel(swigCPtr, this);
   }
 
-  public void DistanceGeometry() {
-    openbabelJNI.pluginiterForceField_DistanceGeometry(swigCPtr, this);
-  }
-
-  public void GenerateCoordinates() {
-    openbabelJNI.pluginiterForceField_GenerateCoordinates(swigCPtr, this);
-  }
-
   public void SystematicRotorSearch() {
     openbabelJNI.pluginiterForceField_SystematicRotorSearch(swigCPtr, this);
   }
@@ -246,18 +238,6 @@ public class pluginiterForceField {
 
   public boolean ConjugateGradientsTakeNSteps(int n) {
     return openbabelJNI.pluginiterForceField_ConjugateGradientsTakeNSteps(swigCPtr, this, n);
-  }
-
-  public vector3 ValidateLineSearch(OBAtom atom, vector3 direction) {
-    return new vector3(openbabelJNI.pluginiterForceField_ValidateLineSearch(swigCPtr, this, OBAtom.getCPtr(atom), atom, vector3.getCPtr(direction), direction), true);
-  }
-
-  public void ValidateSteepestDescent(int steps) {
-    openbabelJNI.pluginiterForceField_ValidateSteepestDescent(swigCPtr, this, steps);
-  }
-
-  public void ValidateConjugateGradients(int steps) {
-    openbabelJNI.pluginiterForceField_ValidateConjugateGradients(swigCPtr, this, steps);
   }
 
   public boolean Validate() {

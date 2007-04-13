@@ -10344,28 +10344,6 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_pluginiterForceField_1GetLogLevel(JNIE
 }
 
 
-SWIGEXPORT void JNICALL Java_openbabelJNI_pluginiterForceField_1DistanceGeometry(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::PluginIter<OpenBabel::OBForceField > **)&jarg1; 
-  (*arg1)->DistanceGeometry();
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_pluginiterForceField_1GenerateCoordinates(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::PluginIter<OpenBabel::OBForceField > **)&jarg1; 
-  (*arg1)->GenerateCoordinates();
-}
-
-
 SWIGEXPORT void JNICALL Java_openbabelJNI_pluginiterForceField_1SystematicRotorSearch(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
   
@@ -10635,57 +10613,6 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_pluginiterForceField_1ConjugateGra
   result = (bool)(*arg1)->ConjugateGradientsTakeNSteps(arg2);
   jresult = (jboolean)result; 
   return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_pluginiterForceField_1ValidateLineSearch(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
-  jlong jresult = 0 ;
-  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  OpenBabel::vector3 *arg3 = 0 ;
-  OpenBabel::vector3 result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  (void)jarg3_;
-  arg1 = *(OpenBabel::PluginIter<OpenBabel::OBForceField > **)&jarg1; 
-  arg2 = *(OpenBabel::OBAtom **)&jarg2; 
-  arg3 = *(OpenBabel::vector3 **)&jarg3;
-  if(!arg3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
-    return 0;
-  } 
-  result = (*arg1)->ValidateLineSearch(arg2,*arg3);
-  *(OpenBabel::vector3 **)&jresult = new OpenBabel::vector3((OpenBabel::vector3 &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_pluginiterForceField_1ValidateSteepestDescent(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-  int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::PluginIter<OpenBabel::OBForceField > **)&jarg1; 
-  arg2 = (int)jarg2; 
-  (*arg1)->ValidateSteepestDescent(arg2);
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_pluginiterForceField_1ValidateConjugateGradients(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  OpenBabel::PluginIter<OpenBabel::OBForceField > *arg1 = (OpenBabel::PluginIter<OpenBabel::OBForceField > *) 0 ;
-  int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::PluginIter<OpenBabel::OBForceField > **)&jarg1; 
-  arg2 = (int)jarg2; 
-  (*arg1)->ValidateConjugateGradients(arg2);
 }
 
 
@@ -15762,10 +15689,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBAtom_1SetVector_1_1SWIG_10(JNIEnv *j
   arg1 = *(OpenBabel::OBAtom **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (arg1)->SetVector(*arg2);
+  (arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -25953,28 +25880,6 @@ SWIGEXPORT jint JNICALL Java_openbabelJNI_OBForceField_1GetLogLevel(JNIEnv *jenv
 }
 
 
-SWIGEXPORT void JNICALL Java_openbabelJNI_OBForceField_1DistanceGeometry(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBForceField **)&jarg1; 
-  (arg1)->DistanceGeometry();
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_OBForceField_1GenerateCoordinates(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBForceField **)&jarg1; 
-  (arg1)->GenerateCoordinates();
-}
-
-
 SWIGEXPORT void JNICALL Java_openbabelJNI_OBForceField_1SystematicRotorSearch(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
   
@@ -26244,57 +26149,6 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBForceField_1ConjugateGradientsTa
   result = (bool)(arg1)->ConjugateGradientsTakeNSteps(arg2);
   jresult = (jboolean)result; 
   return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBForceField_1ValidateLineSearch(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
-  jlong jresult = 0 ;
-  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
-  OpenBabel::vector3 *arg3 = 0 ;
-  OpenBabel::vector3 result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  (void)jarg3_;
-  arg1 = *(OpenBabel::OBForceField **)&jarg1; 
-  arg2 = *(OpenBabel::OBAtom **)&jarg2; 
-  arg3 = *(OpenBabel::vector3 **)&jarg3;
-  if(!arg3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
-    return 0;
-  } 
-  result = (arg1)->ValidateLineSearch(arg2,*arg3);
-  *(OpenBabel::vector3 **)&jresult = new OpenBabel::vector3((OpenBabel::vector3 &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_OBForceField_1ValidateSteepestDescent(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-  int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBForceField **)&jarg1; 
-  arg2 = (int)jarg2; 
-  (arg1)->ValidateSteepestDescent(arg2);
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_OBForceField_1ValidateConjugateGradients(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  OpenBabel::OBForceField *arg1 = (OpenBabel::OBForceField *) 0 ;
-  int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBForceField **)&jarg1; 
-  arg2 = (int)jarg2; 
-  (arg1)->ValidateConjugateGradients(arg2);
 }
 
 
@@ -26773,10 +26627,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolAtomIter_1SetVector_1_1SWIG_10(JN
   arg1 = *(OpenBabel::OBMolAtomIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -29134,10 +28988,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolAtomDFSIter_1SetVector_1_1SWIG_10
   arg1 = *(OpenBabel::OBMolAtomDFSIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -31463,10 +31317,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolAtomBFSIter_1SetVector_1_1SWIG_10
   arg1 = *(OpenBabel::OBMolAtomBFSIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -34928,10 +34782,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBAtomAtomIter_1SetVector_1_1SWIG_10(J
   arg1 = *(OpenBabel::OBAtomAtomIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
@@ -39223,10 +39077,10 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBResidueAtomIter_1SetVector_1_1SWIG_1
   arg1 = *(OpenBabel::OBResidueAtomIter **)&jarg1; 
   arg2 = *(OpenBabel::vector3 **)&jarg2;
   if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 & reference is null");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
     return ;
   } 
-  (*arg1)->SetVector(*arg2);
+  (*arg1)->SetVector((OpenBabel::vector3 const &)*arg2);
 }
 
 
