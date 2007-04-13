@@ -445,6 +445,11 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           stereo.central_atom = patom->GetIdx()-1;
           stereo.type = INCHI_StereoType_Tetrahedral;
           OBChiralData* cd=(OBChiralData*)patom->GetData(OBGenericDataType::ChiralData);
+          if (!cd) {
+            obErrorLog.ThrowError(__FUNCTION__, "Tetrahedral stereo info not available", obWarning);
+            break;
+          }
+            
           vector<unsigned int>refs = cd->GetAtom4Refs(input);
           if(refs.size()<4)
           {

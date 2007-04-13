@@ -1,3 +1,12 @@
+2007-04-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchi/strutil.c: Bug reported on the InChI mailing
+	list.
+
+	* src/formats/inchiformat.cpp: Bug caught during ChemSpotlight
+	testing -- some files don't have chirality information (e.g., 3D
+	files but with 0.0 coordinates throughout). Warn and give up.
+
 2007-04-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* NEWS: Minor fixes for 2.1.0 final release.
