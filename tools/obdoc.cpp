@@ -79,6 +79,8 @@ int main(int argc,char **argv)
   string notes, description, name, code;
   ofstream ofs, indexExt, indexName;
 
+  indexExt.open("code-index.html");
+
   for(unsigned int i = 0; i < formatList.size(); ++i)
     {
       pFormat = formatList[i];
@@ -94,6 +96,11 @@ int main(int argc,char **argv)
       for (unsigned int j = 0; j < extensionList[i].size(); ++j)
         {
           ofs << extensionList[i][j];
+
+          indexExt << "* " << extensionList[i][j]	 
+                   << " - [[" << name << "]]"	 
+                   << endl;
+ 
           if (j != extensionList[i].size() - 1)
             ofs << ", ";
         }
@@ -144,6 +151,8 @@ int main(int argc,char **argv)
 
       ofs.close();
     }
+
+  indexExt.close();
 
   return(0);
 } // end main
