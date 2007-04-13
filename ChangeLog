@@ -1,5 +1,10 @@
 2007-04-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* Merged 2.1.0 branch into trunk.
+
+	* configure.in, configure: Bump to 2.2.0b1 version for trunk.
+	(Not sure if we'll do 2.2 or 3.0, but we'll see.)
+
 	* src/formats/inchi/strutil.c: Bug reported on the InChI mailing
 	list.
 
