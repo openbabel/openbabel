@@ -230,6 +230,8 @@ namespace OpenBabel
     OBFFParameter* GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
     //! see GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)
     OBFFParameter* GetParameter(const char* a, const char* b, const char* c, const char* d, std::vector<OBFFParameter> &parameter);
+    //! Get index for vector<OBFFParameter> ...
+    int GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
            
     //! Calculate the potential energy function derivative numerically with repect to the coordinates of atom with index a (this vector is the gradient)
     /*!
@@ -260,6 +262,15 @@ namespace OpenBabel
      */
     bool IsInSameRing(OBAtom* a, OBAtom* b);
  
+    /*! Find the first arom in a 1-(level+1) relationship
+     *  \param atom atom 1
+     *  \param level the 1-(level+1) relationship (1, 2 or 3)
+     *  \return index for the atom with 1-(level+1) relationship
+     */
+    int get_nbr (OBAtom* atom, int level);
+    //    bool is14(OBAtom *a, OBAtom *b);
+    // use OBAtom::IsOneFour(b)
+      
     OBMol _mol; //!< Molecule to be evaluated or minimized
 
     //! Output for logfile
@@ -444,6 +455,10 @@ namespace OpenBabel
       
     //! \name Methods for structure generation
     //@{
+    //! Generate coordinates for the molecule (distance geometry). (OB 3.0)
+    void DistanceGeometry();
+    //! Generate coordinates for the molecule (knowledge based, energy minimization). (OB 3.0)
+    void GenerateCoordinates();
     /*! Generate conformers for the molecule (systematicaly rotating torsions).
      *  
      *  The initial starting structure here is important, this structure should be
@@ -607,6 +622,12 @@ namespace OpenBabel
       
     //! \name Methods for forcefield validation
     //@{
+    //! (debugging)
+    vector3 ValidateLineSearch(OBAtom *atom, vector3 &direction);
+    //! (debugging)
+    void ValidateSteepestDescent(int steps);
+    //! (debugging)
+    void ValidateConjugateGradients(int steps);
     //! Validate the force field implementation (debugging)
     virtual bool Validate() { return false; }
     /*! 
