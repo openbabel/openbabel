@@ -1247,18 +1247,21 @@ int remove_ion_pairs( int num_atoms, inp_ATOM *at )
                     }
                     
                     for ( k = 0; k < 2; k ++ ) {
-                        n  = k? n_Cp : n_Cm;
-                        i1 = k? j[i_Cp] : j[i_Cm];
-                        if ( v[i1] < 4 ) {
-                            int delta = 4 - v[i1];
-                            i2 = is_in_the_list( at[n].neighbor, (AT_NUMB)i, at[n].valence ) - at[n].neighbor;
-                            at[i].bond_type[i1] += delta;
-                            at[n].bond_type[i2] += delta;
-                            at[i].chem_bonds_valence += delta;
-                            at[n].chem_bonds_valence += delta;
-                            at[n].charge = 0;
-                            at[n].radical = 0;
-                        }
+                      n  = k? n_Cp : n_Cm;
+                      i3 = k? i_Cp : i_Cm; /* added to fix the bug */
+                      /*i1 = k? j[i_Cp] : j[i_Cm];*/ /* replaced with next line */
+                      i1 = j[i3];
+                      if ( v[i3 /*was i1*/] < 4 ) { /* line 1252, WDI found a bug here: bounds violation */
+                        int delta = 4 - v[i3 /*was i1*/];
+                        i2 = is_in_the_list( at[n].neighbor, (AT_NUMB)i, 
+                                             at[n].valence ) - at[n].neighbor;
+                        at[i].bond_type[i1] += delta;
+                        at[n].bond_type[i2] += delta;
+                        at[i].chem_bonds_valence += delta;
+                        at[n].chem_bonds_valence += delta;
+                        at[n].charge = 0;
+                        at[n].radical = 0;
+                      }
                     }
                     at[i].charge = 0;
                     at[i].radical = 0;

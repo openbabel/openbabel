@@ -1,3 +1,45 @@
+2007-04-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchi/strutil.c: Bug reported on the InChI mailing
+	list.
+
+	* src/formats/inchiformat.cpp: Bug caught during ChemSpotlight
+	testing -- some files don't have chirality information (e.g., 3D
+	files but with 0.0 coordinates throughout). Warn and give up.
+
+2007-04-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* NEWS: Minor fixes for 2.1.0 final release.
+
+2007-04-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* data/psa.txt: corrected smiles for 3-rings.
+
+	* src/groupcontrib.cpp: call ConvertDativeBonds before assigning
+	contributions, is needed for TPSA (e.g. [N](-*)(=*)=* ). Update to
+	documentation.
+
+	* include/openbabel/groupcontrib.h: documentation update.
+
+2007-04-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/residue.h: Undo previous change. Rich Apodaca
+	suggested some SWIG-fu instead.
+
+	* scripts/ Update accordingly. Includes ruby changes, new README
+	and examples.
+
+2007-03-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/base.cpp: Additional "What's new" documentation for 2.1
+	release.
+
+	* include/openbabel/residue.h: Hide some residue names (e.g.,
+	_1MG) from SWIG wrappers -- such constants are not valid symbols
+	in some languages like Ruby.
+
+	* scripts/ Update accordingly.
+
 2007-03-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* tools/obprop.cpp: Function string sequence(OBMol) was not returning

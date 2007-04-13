@@ -1,7 +1,11 @@
 /**********************************************************************
 groupcontrib.h - Handle group contribution algorithms.
  
-Copyright (C) 2007 by Tim Vandermeersch
+Copyright (C) 2007      by Tim Vandermeersch
+              2001-2007 by Stephen Jelfs
+              2001-2007 by Joerg Kurt Wegner, me@cheminformatics.eu
+
+Original version: JOELib2, http://joelib.sf.net
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -32,20 +36,24 @@ namespace OpenBabel
       OBGroupContrib();
       //! destructor
       ~OBGroupContrib();
+    protected:
+      /*! Parse the data file. (this function is called from the class constructor)
+       */
       bool ParseFile(const char *filename);
-      /*! Predict the logP, MR, TPSA (see derived classes) for molecule mol using the group contributions
-       *  algorithm from JOELib2.
+      /*! Predict the logP, MR, TPSA (each class derived from OBGroupContrib 
+       *  loads different parameters in it's contstructor) for 
+       *  molecule mol using the group contributions algorithm from JOELib2.
        *
        *  \param mol OBMol object for which to predict the logP, MR, TPSA
        *  \return predicted logP
        */
       double GroupContributions(OBMol &mol);
-    private:
+   private:
       std::vector<std::pair<OBSmartsPattern*, double> > _contribsHeavy; //! heavy atom contributions
       std::vector<std::pair<OBSmartsPattern*, double> > _contribsHydrogen; //!  hydrogen contributions
   };
 
-  // class introduction in logp.cpp
+  // class introduction in groupcontrib.cpp
   class OBAPI OBLogP: public OBGroupContrib
   {
     public:
@@ -62,7 +70,7 @@ namespace OpenBabel
       double Predict(OBMol &mol);
   };
   
-  // class introduction in psa.cpp
+  // class introduction in groupcontrib.cpp
   class OBAPI OBPSA: public OBGroupContrib
   {
     public:
@@ -79,7 +87,7 @@ namespace OpenBabel
       double Predict(OBMol &mol);
   };
 
-  // class introduction in psa.cpp
+  // class introduction in groupcontrib.cpp
   class OBAPI OBMR: public OBGroupContrib
   {
     public:

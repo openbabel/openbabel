@@ -31,10 +31,6 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-#	(cd java; \
-#	  for file in SWIGTYPE_p_*; \
-#		do tgt=$$(echo $${file} | sed -e "s/SWIGTYPE_p_//" | sed -e "s/std__//g" | sed -e "s/OpenBabel__//g" | sed -e "s/p_/p/g"); \
-#		mv $$file $$tgt; done)
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@am__append_1 = ruby/openbabel_ruby.cpp
 subdir = scripts
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -363,6 +359,7 @@ uninstall-am:
 	uninstall uninstall-am
 
 
+# Remove various files before making a distribution archive
 dist-hook:
 	find $(distdir) -name .svn | xargs rm -rf
 	find $(distdir) -name "*~" | xargs rm -rf
@@ -371,6 +368,7 @@ dist-hook:
 	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
 	(cd $(distdir)/ruby; $(MAKE) distclean)
 	(cd $(distdir)/java; rm -f *.so *.o *.class)
+	(cd $(distdir)/java; rm -f *.jnilib *.jar)
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@perl/openbabel_perl.cpp: openbabel-perl.i $(script_headers)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
@@ -393,8 +391,10 @@ dist-hook:
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include $<;
 
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
-@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -ruby -naturalvar -c++ -o $@ -I$(top_srcdir)/include $<;
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include $<;
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv ruby/openbabel_ruby.new ruby/openbabel_ruby.cpp
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

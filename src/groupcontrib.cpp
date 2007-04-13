@@ -28,6 +28,14 @@ using namespace std;
 
 namespace OpenBabel
 {
+  /** \class OBGroupContrib groupcontrib.h <openbabel/groupcontrib.h>
+      \brief Handle group contribution algorithms.
+ 
+      This is the base class for calculations that use the JOELib2 contribution 
+      algorithm. See the derived OBPSA, OBLogP, OBMR classes for more 
+      information on how to use these classes.
+    */
+
   OBGroupContrib::OBGroupContrib()
   {
   }
@@ -40,7 +48,7 @@ namespace OpenBabel
   {
     OBSmartsPattern *sp;
     
-    // open data/psa.txt
+    // open data file
     ifstream ifs;
 
     if (OpenDatafile(ifs, filename).length() == 0) {
@@ -83,16 +91,21 @@ namespace OpenBabel
  
   double OBGroupContrib::GroupContributions(OBMol &mol)
   {
-    vector<vector<int> > _mlist; //!< match list for atom typing
+    vector<vector<int> > _mlist; // match list for atom typing
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*, double> >::iterator i;
     
     vector<double> atomValues(mol.NumAtoms(), 0.0);
 
+    OBMol tmpmol;
+    tmpmol = mol;
+
+    tmpmol.ConvertDativeBonds();
+
     // atom contributions
     //cout << "atom contributions:" << endl;
     for (i = _contribsHeavy.begin();i != _contribsHeavy.end();++i) {
-      if (i->first->Match(mol)) {
+      if (i->first->Match(tmpmol)) {
         _mlist = i->first->GetMapList();
         for (j = _mlist.begin();j != _mlist.end();++j) {
 	  atomValues[(*j)[0] - 1] = i->second;
@@ -101,16 +114,16 @@ namespace OpenBabel
       }
     }
     
-    vector<double> hydrogenValues(mol.NumAtoms(), 0.0);
-    //hydrogenValues.resize(mol.NumAtoms());   
+    vector<double> hydrogenValues(tmpmol.NumAtoms(), 0.0);
+    //hydrogenValues.resize(tmpmol.NumAtoms());   
     
     // hydrogen contributions
     //cout << "hydrogen contributions:" << endl;
     for (i = _contribsHydrogen.begin();i != _contribsHydrogen.end();++i) {
-      if (i->first->Match(mol)) {
+      if (i->first->Match(tmpmol)) {
         _mlist = i->first->GetMapList();
         for (j = _mlist.begin();j != _mlist.end();++j) {
-	  int Hcount = mol.GetAtom((*j)[0])->GetValence() - mol.GetAtom((*j)[0])->GetHvyValence();
+	  int Hcount = tmpmol.GetAtom((*j)[0])->GetValence() - tmpmol.GetAtom((*j)[0])->GetHvyValence();
 	  hydrogenValues[(*j)[0] - 1] = i->second * Hcount;
 	  //cout << (*j)[0] << " = " << i->first->GetSMARTS() << " : " << i->second << endl;
         }
@@ -120,8 +133,8 @@ namespace OpenBabel
     // total atomic and hydrogen contribution
     double total = 0.0;
 
-    for (int index = 0; index < mol.NumAtoms(); index++) {
-      if (mol.GetAtom(index+1)->IsHydrogen())
+    for (int index = 0; index < tmpmol.NumAtoms(); index++) {
+      if (tmpmol.GetAtom(index+1)->IsHydrogen())
         continue;
 
       total += atomValues[index];
@@ -129,17 +142,35 @@ namespace OpenBabel
     }
    
     /*
-    FOR_ATOMS_OF_MOL (a, mol)
+    FOR_ATOMS_OF_MOL (a, tmpmol)
       cout << "hydrogens on atom " << a->GetIdx() << ": " << a->GetValence() - a->GetHvyValence() << endl;
-    for (int index = 0; index < mol.NumAtoms(); index++)
+    for (int index = 0; index < tmpmol.NumAtoms(); index++)
       cout << "atom " << index << ": " << atomValues[index] << endl;
-    for (int index = 0; index < mol.NumAtoms(); index++)
+    for (int index = 0; index < tmpmol.NumAtoms(); index++)
       cout << "hydrogen " << index << ": " << hydrogenValues[index] << endl;
     */
 
     return total;
   }
   
+  /** \class OBLogP groupcontrib.h <openbabel/groupcontrib.h>
+      \brief calculate the LogP (octanol/water partition coefficient).
+ 
+      This class uses the JOELib2 group contribution algorithm to calculate 
+      the logP (octanol/water partition coefficient) of a molecule.
+
+      example:
+      \code
+      #include <openbabel/groupcontrib.h>
+      #include <openbabel/mol.h>
+
+      OBMol mol;
+      OBLogP logP;
+      
+      cout << "logP = " << logP.Predict(mol) << endl;
+      \endcode
+   */
+
   OBLogP::OBLogP()
   {
     ParseFile("logp.txt");
@@ -154,6 +185,24 @@ namespace OpenBabel
     return GroupContributions(mol);
   }
 
+  /** \class OBPSA groupcontrib.h <openbabel/groupcontrib.h>
+      \brief calculate the TPSA (topological polar surface area).
+ 
+      This class uses the JOELib2 group contribution algorithm to calculate 
+      the TPSA (Topological Polar Surface Area) of a molecule.
+
+      example:
+      \code
+      #include <openbabel/groupcontrib.h>
+      #include <openbabel/mol.h>
+
+      OBMol mol;
+      OBLogP psa;
+      
+      cout << "TPSA = " << psa.Predict(mol) << endl;
+      \endcode
+   */
+
   OBPSA::OBPSA()
   {
     ParseFile("psa.txt");
@@ -167,6 +216,24 @@ namespace OpenBabel
   {
     return GroupContributions(mol);
   }
+  
+  /** \class OBMR groupcontrib.h <openbabel/groupcontrib.h>
+      \brief calculate the MR (molar refractivity).
+ 
+      This class uses the JOELib2 group contribution algorithm to calculate 
+      the MR (Molar Refractivity) of a molecule.
+
+      example:
+      \code
+      #include <openbabel/groupcontrib.h>
+      #include <openbabel/mol.h>
+
+      OBMol mol;
+      OBLogP mr;
+      
+      cout << "MR = " << mr.Predict(mol) << endl;
+      \endcode
+   */
 
   OBMR::OBMR()
   {

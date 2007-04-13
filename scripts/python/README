@@ -1,22 +1,21 @@
 openbabel version 1.2
 ================================
 
-This is a Python "wrapper" to the Open Babel chemistry library. 
-OpenBabel is a project designed to pick up where Babel left off, as a
-cross-platform program and library designed to interconvert between
-many file formats used in molecular modeling and computational chemistry.
+This is a Python interface to the Open Babel chemistry library. 
+
+Open Babel is a chemical toolbox designed to speak the many languages
+of chemical data. It's an open, collaborative project allowing anyone
+to search, convert, analyze, or store data from molecular modeling,
+chemistry, solid-state materials, biochemistry, or related areas.
 
 The wrapper is generated using the SWIG package and provides access to
 almost all of the Open Babel interfaces via Python, including the base
 classes OBMol, OBAtom, OBBond, and OBResidue, as well as the
 conversion framework OBConversion.
 
-The version numbering does not correspond to any particular release of
-Open Babel. For more information on the releases of openbabel.py, see
-the NEWS file.
-
-Future development will include a "glue module" to integrate with
-other Python chemistry projects.
+For more details, tutorials, example code, etc., please visit the Open Babel
+website:
+<http://openbabel.sourceforge.net/wiki/Python>
 
 INSTALLATION
 
@@ -30,8 +29,8 @@ installed Open Babel):
 
 DEPENDENCIES
 
-     python-2.3 or a more recent version. (May work with 2.2 -- untested)
-     openbabel-2.0 or a more recent version.
+     python-2.3 or a more recent version.
+     openbabel-2.1 or a more recent version.
 
 Note that if you are trying to build/run this Python code in the Open
 Babel source/build directory BEFORE you install Open Babel, you may
@@ -42,9 +41,11 @@ Open Babel package and THEN rebuild this Python module.
 
 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005 Geoffrey R. Hutchison <babel@geoffhutchison.net>
+Copyright (C) 2005-2007 Geoffrey R. Hutchison <babel@geoffhutchison.net>
+Some portions Copyright (C) 2006-2007 Noel O'Boyle
 
 This Python module is part of the Open Babel project.
+<http://openbabel.sourceforge.net/>
 
 Open Babel is distributed under the GNU General Public License (GPL).
 This program is free software; you can redistribute it and/or modify

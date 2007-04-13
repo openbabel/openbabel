@@ -3,6 +3,7 @@ EXTRA_DIST = openbabel-perl.i perl \
 					openbabel-ruby.i ruby \
 					openbabel-java.i java
 
+# Remove various files before making a distribution archive
 dist-hook:
 	find $(distdir) -name .svn | xargs rm -rf
 	find $(distdir) -name "*~" | xargs rm -rf
@@ -11,6 +12,7 @@ dist-hook:
 	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
 	(cd $(distdir)/ruby; $(MAKE) distclean)
 	(cd $(distdir)/java; rm -f *.so *.o *.class)
+	(cd $(distdir)/java; rm -f *.jnilib *.jar)
 
 # build the scripting language interfaces if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG
@@ -44,17 +46,15 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include $<;
-#	(cd java; \
-#	  for file in SWIGTYPE_p_*; \
-#		do tgt=$$(echo $${file} | sed -e "s/SWIGTYPE_p_//" | sed -e "s/std__//g" | sed -e "s/OpenBabel__//g" | sed -e "s/p_/p/g"); \
-#		mv $$file $$tgt; done)
 
 if BUILD_RUBY
 BUILT_SOURCES += ruby/openbabel_ruby.cpp
 
 ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
-	$(SWIG) -ruby -naturalvar -c++ -o $@ -I$(top_srcdir)/include $<;
+	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include $<;
 	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
+	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
+	mv ruby/openbabel_ruby.new ruby/openbabel_ruby.cpp
 endif # BUILD_RUBY
 
 endif # BUILD_SWIG

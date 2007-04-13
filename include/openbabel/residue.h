@@ -290,6 +290,9 @@ namespace OpenBabel {
   }
 
   //! Residue names (index into Residue[] array)
+  // some of these are invalid or troublesome in scripting interfaces
+  // so they are removed by the #ifndef SWIG parts
+  // (otherwise ignore them for C++ use)
   namespace OBResidueIndex
   {
     enum
@@ -327,7 +330,7 @@ namespace OpenBabel {
       U     = 28,
       UPLUS = 29,
       I     = 30,
-      _1MA  = 31,
+      _1MA  = 32,
       _5MC  = 32,
       OMC   = 33,
       _1MG  = 34,
