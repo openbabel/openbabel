@@ -500,7 +500,7 @@ static void CountAndRenumberClasses(vector<pair<OBAtom*,unsigned int> > &vp,
 ***************************************************************************/
 
 static int ExtendInvarients(vector<pair<OBAtom*, unsigned int> > &symmetry_classes,
-                            OBBitVec &frag_atoms, int nfragatoms, int natoms)
+                            OBBitVec &frag_atoms, unsigned int nfragatoms, unsigned int natoms)
 {
   unsigned int nclasses1, nclasses2;
   vector<pair<OBAtom*,unsigned int> > tmp_classes;
@@ -645,7 +645,7 @@ static void BreakChiralTies(OBMol *pmol,
       continue;
 
     // Get its symmetry class
-    int symclass = idx2sym_class[idx];
+    unsigned int symclass = idx2sym_class[idx];
     
     // Start the vector of "same class" atoms by adding this atom
     vector<OBAtom *> same_class;
@@ -722,7 +722,7 @@ static void BreakChiralTies(OBMol *pmol,
     vector<OBAtom*> symclass1, symclass2;
     symclass1.push_back(ref_atom);
 
-    for (int i = 1; i < sorted_neighbors.size(); i++) {
+    for (unsigned int i = 1; i < sorted_neighbors.size(); i++) {
       OBAtom *atom             = sorted_neighbors[i].first;
       vector<OBAtom*>neighbors = sorted_neighbors[i].second;
       double t2 = CalcTorsionAngle(neighbors[0]->GetVector(),
@@ -751,9 +751,9 @@ static void BreakChiralTies(OBMol *pmol,
     // The add-or-subtract decision is based on t1, the "torsion angle" calculated
     // above; by doing this, we force a consistent choice of '@' or '@@' for the,
     // two chiral centers; otherwise it's arbitrary and you'll get two different SMILES.
-    for (int i = 0; i < atom_sym_classes.size(); i++) {
+    for (unsigned int i = 0; i < atom_sym_classes.size(); i++) {
       atom_sym_classes[i].second *= 2;
-      for (int j = 0; j < symclass2.size(); j++) {
+      for (unsigned int j = 0; j < symclass2.size(); j++) {
         if (symclass2[j] == atom_sym_classes[i].first) {
           if (t1 > 0)
             atom_sym_classes[i].second += 1;
@@ -832,7 +832,7 @@ static void FindConjugatedEZBonds(OBAtom *atom,
 
   // Now recursively call this function on the other atom across
   // the double bond from this one.
-  OBBond *dbond;
+  // OBBond *dbond;
   FOR_BONDS_OF_ATOM(bond, atom) {
     if (bond->IsDouble()) {
       OBAtom *nbr = bond->GetNbrAtom(atom);
@@ -929,7 +929,7 @@ static void FixCisTransBonds(OBMol *pmol,
     // neighbors of atom1 and atom2
     OBBond *a1_b1 = NULL, *a1_b2 = NULL, *a2_b1 = NULL, *a2_b2 = NULL;
 
-    int symclass = -1;
+    unsigned int symclass = -1;
     FOR_BONDS_OF_ATOM(bi, a1) {
       OBBond *b = &(*bi);
       if ((b) == (dbl_bond)) continue;  // skip the double bond we're working on
@@ -1096,10 +1096,10 @@ void CanonicalLabels(OBMol *pmol,
   vector<pair<OBAtom*,unsigned int> > atom_sym_classes, vp1, vp2;
   vector<OBNodeBase*>::iterator j;
   unsigned int nclass1, nclass2; //number of classes
-  int i;
+  unsigned int i;
 
-  int nfragatoms = frag_atoms.CountBits();
-  int natoms = pmol->NumAtoms();
+  unsigned int nfragatoms = frag_atoms.CountBits();
+  unsigned int natoms = pmol->NumAtoms();
 
   // Start by calculating symmetry classes, without accounting for chiral centers
   nclass1 = CalculateSymmetry(pmol, frag_atoms, atom_sym_classes);
@@ -1122,7 +1122,7 @@ void CanonicalLabels(OBMol *pmol,
       int last_rank = -1;
       for (i = 0; i < vp1.size(); i++) {
         vp1[i].second *= 2;             // Double symmetry classes
-        if (vp1[i].second == last_rank && !tie_broken) {
+        if (vp1[i].second == static_cast<unsigned int>(last_rank) && !tie_broken) {
           vp1[i-1].second -= 1;         // Break a tie
           tie_broken = 1;
         }

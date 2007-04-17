@@ -132,7 +132,7 @@ namespace OpenBabel
     return _element.size();
   }
 
-  char *OBElementTable::GetSymbol(int atomicnum)
+  const char *OBElementTable::GetSymbol(int atomicnum)
   {
     if (!_init)
       Init();
@@ -934,7 +934,7 @@ namespace OpenBabel
       return filename;
 
     string file;
-    char* datadir = getenv(envvar.c_str());
+    const char* datadir = getenv(envvar.c_str());
     if(!datadir)
       datadir = BABEL_DATADIR;
 

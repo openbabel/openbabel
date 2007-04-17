@@ -263,7 +263,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
+    // unsigned int i;
     char buffer[BUFF_SIZE];
 
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
@@ -354,7 +354,7 @@ namespace OpenBabel
     vector<string> vs;
     
     vector<OBInternalCoord*> vic;
-    vector<int> indices;
+    vector<unsigned int> indices;
     vic.push_back((OBInternalCoord*)NULL);
     
     ifs.getline(buffer,BUFF_SIZE); // keywords

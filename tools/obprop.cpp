@@ -52,7 +52,7 @@ int main(int argc,char **argv)
     {
       string err = "Usage: ";
       err += program_name;
-      err += " <filename>\n";
+      err += " <filename>\n"
       "Output format:\n"
         "name NAME\n"
         "formula  FORMULA\n"

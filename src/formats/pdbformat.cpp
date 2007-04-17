@@ -569,7 +569,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     char type_name[10], padded_name[10];
     char the_res[10];
-    char *element_name;
+    char element_name[4];
     int res_num;
     bool het=true;
 
@@ -664,7 +664,7 @@ namespace OpenBabel
             res_num = 1;
           }
 
-        element_name = etab.GetSymbol(atom->GetAtomicNum());
+        strncpy (element_name,etab.GetSymbol(atom->GetAtomicNum()),sizeof(element_name));
         if (strlen(element_name) == 2)
           element_name[1] = toupper(element_name[1]);
         snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",

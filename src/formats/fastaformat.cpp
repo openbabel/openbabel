@@ -85,7 +85,7 @@ namespace OpenBabel
   string
   FASTAFormat::conv_3to1(string three)
   {
-    char *aa_tbl[][3] = {
+    const char *aa_tbl[][3] = {
 	    {"alanine", "ALA", "A"}, 
 	    {"arginine", "ARG", "R"}, 
 	    {"asparagine", "ASN", "N"}, 

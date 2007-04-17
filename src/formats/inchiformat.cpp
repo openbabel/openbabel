@@ -914,7 +914,7 @@ char* InChIFormat::GetInChIOptions(OBConversion* pConv, bool Reading)
     string ch(" -");
 #endif
     string sopts;
-    for(int i=0;i<optsvec.size();++i)
+    for(unsigned int i=0;i<optsvec.size();++i)
       sopts += ch + optsvec[i];
     opts = new char[strlen(sopts.c_str())+1]; //has to be char, not const char
     return strcpy(opts, sopts.c_str());

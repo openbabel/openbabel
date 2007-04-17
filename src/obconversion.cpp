@@ -18,6 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 // Definition of OBConversion routines
 #include <openbabel/babelconfig.h>
+#include <climits>
 
 #ifdef _WIN32
 	#pragma warning (disable : 4786)
@@ -1022,7 +1023,7 @@ namespace OpenBabel {
     //If infile == outfile issue error message and return false
     //If name without the extensions are the same issue warning and return true;
     //Otherwise return true
-    bool ret=true;
+    // bool ret=true;
     string inname1, inname2;
     string::size_type pos;
     pos = infile.rfind('.');

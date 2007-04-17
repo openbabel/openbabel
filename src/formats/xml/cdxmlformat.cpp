@@ -178,7 +178,6 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
 
 bool ChemDrawXMLFormat::EndElement(const string& name)
 {
-  unsigned int i;
   if(name=="n")
   {
     _pmol->AddAtom(_tempAtom);

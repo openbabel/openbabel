@@ -200,7 +200,7 @@ namespace OpenBabel
   //! PDB atom types (i.e., columns 13-16 of a PDB file)
   //!  index numbers from this array are used in the pseudo-SMILES format
   //!  for side-chains in the AminoAcids[] & Nucleotides[] global arrays below
-  static char ChainsAtomName[ATOMMAX][4] = {
+  static const char ChainsAtomName[ATOMMAX][4] = {
     /*  0 */  { ' ', 'N', ' ', ' ' },
     /*  1 */  { ' ', 'C', 'A', ' ' },
     /*  2 */  { ' ', 'C', ' ', ' ' },
@@ -275,15 +275,15 @@ namespace OpenBabel
   //!  the pseudo-SMILES pattern
   typedef struct
   {
-    char *name; //!< Residue name, standardized by PDB
-    char *data; //!< pseudo-SMILES definition of side-chain
+    const char *name; //!< Residue name, standardized by PDB
+    const char *data; //!< pseudo-SMILES definition of side-chain
   }
   ResidType;
 
   //! Side chains for recognized amino acids using a pseudo-SMARTS syntax
   //!  for branching and bonds. Numbers indicate atom types defined by 
   //!  ChainsAtomName global array above
-  static ResidType AminoAcids[AMINOMAX] = {
+  static const ResidType AminoAcids[AMINOMAX] = {
     { "ILE", "1-4(-9-14)-10"                        },
     { "VAL", "1-4(-9)-10"                           },
     { "ALA", "1-4"                                  },
@@ -314,7 +314,7 @@ namespace OpenBabel
   //! Side chains for recognized nucleotides using a pseudo-SMARTS syntax
   //!  for branching and bonds. Numbers indicate atom types defined by 
   //!  ChainsAtomName global array above
-  static ResidType Nucleotides[NUCLEOMAX] = {
+  static const ResidType Nucleotides[NUCLEOMAX] = {
     { "  A", "49-50-51-52-53-54(-56)-57-58-61-62(-53)-50"      },
     { "  C", "49-57-58(-59)-61-62(-64)-65-67-57"               },
     { "  G", "49-50-51-52-53-54(-55)-57-58(-60)-61-62(-53)-50" },
@@ -744,9 +744,9 @@ namespace OpenBabel
 
   // validated
   OBChainsParser::OBChainsParser(void) :
-    bitmasks(NULL), visits(NULL),   hetflags(NULL), atomids (NULL),
-    resids  (NULL), resnos  (NULL), sernos  (NULL), hcounts (NULL), 
-    chains  (NULL), flags   (NULL)
+    bitmasks(NULL), visits(NULL), resids  (NULL), flags   (NULL),
+    hetflags(NULL), atomids (NULL), resnos  (NULL), sernos  (NULL),
+    hcounts (NULL), chains  (NULL)
   {
     int i, res = RESIDMIN;
 
@@ -891,7 +891,7 @@ namespace OpenBabel
   void OBChainsParser::SetResidueInformation(OBMol &mol, bool nukeSingleResidue)
   {
     char buffer[BUFF_SIZE];
-    char *symbol;
+    const char *symbol;
     string atomid, name;
 
     OBAtom    *atom;
@@ -1776,7 +1776,7 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////////////////////////
 
   // validated
-  void OBChainsParser::DefineMonomer(void **tree, int resid, char *smiles)
+  void OBChainsParser::DefineMonomer(void **tree, int resid, const char *smiles)
   {
     int i;
 
@@ -1795,7 +1795,7 @@ namespace OpenBabel
     GenerateByteCodes((ByteCode**)tree, resid, 0, 0, 0 );
   }
 
-  int OBChainsParser::IdentifyElement(char *ptr)
+  int OBChainsParser::IdentifyElement(const char *ptr)
   {
     int ch;
 
@@ -2099,9 +2099,9 @@ namespace OpenBabel
     return( 0 );
   }
 
-  char *OBChainsParser::ParseSmiles(char *ptr, int prev)
+  const char *OBChainsParser::ParseSmiles(const char *ptr, int prev)
   {
-    char *name;
+    const char *name;
     int atomid;
     int next;
     int type;

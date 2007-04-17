@@ -18,6 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/matrix.h>
+#include <cstdio>
 
 using namespace std;
 

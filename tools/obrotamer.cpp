@@ -73,7 +73,7 @@ int main(int argc,char *argv[])
   
   OBRotorList rl;
   OBRotamerList rotamers;
-  int *rotorKey = NULL;
+  // int *rotorKey = NULL;
   OBRandom rand;
   rand.TimeSeed();
 

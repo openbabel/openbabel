@@ -202,7 +202,7 @@ namespace OpenBabel
     //! but should never be called
     virtual const std::string &GetValue()  const
     {			return _attr; }
-    virtual const DataOrigin GetOrigin() const
+    virtual DataOrigin GetOrigin() const
     {     return _source; }
   };
 

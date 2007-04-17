@@ -2127,14 +2127,16 @@ namespace OpenBabel
           if (bond->GetBeginAtomIdx() == static_cast<unsigned int>(*k) ||
               bond->
               GetEndAtomIdx() == static_cast<unsigned int>(*k))
-            if (!a1) a1 = mol.GetAtom(*k);
-            else if (!a2)
-              {
-                a2 = mol.GetAtom(*k)
-                  ;
+            {
+              if (!a1) a1 = mol.GetAtom(*k);
+              else if (!a2)
+                {
+                  a2 = mol.GetAtom(*k)
+                    ;
                 _storder.erase(k);
-                break;
-              }
+                    break;
+                }
+            }
 
         for (k = _storder.begin()
                ;

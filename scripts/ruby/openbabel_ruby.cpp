@@ -30451,10 +30451,10 @@ _wrap_OBAtom_set_type__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  (arg1)->SetType(arg2);
+  (arg1)->SetType((char const *)arg2);
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return Qnil;
 fail:
@@ -42045,10 +42045,10 @@ _wrap_throw_error__SWIG_0(int argc, VALUE *argv, VALUE self) {
   }
   res1 = SWIG_AsCharPtrAndSize(argv[0], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::ThrowError" "', argument " "1"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::ThrowError" "', argument " "1"" of type '" "char const *""'");
   }
   arg1 = reinterpret_cast< char * >(buf1);
-  OpenBabel::ThrowError(arg1);
+  OpenBabel::ThrowError((char const *)arg1);
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return Qnil;
 fail:
@@ -52000,10 +52000,10 @@ _wrap_OBMolAtomIter_set_type__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return Qnil;
 fail:
@@ -57049,10 +57049,10 @@ _wrap_OBMolAtomDFSIter_set_type__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return Qnil;
 fail:
@@ -61979,10 +61979,10 @@ _wrap_OBMolAtomBFSIter_set_type__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return Qnil;
 fail:
@@ -69554,10 +69554,10 @@ _wrap_OBAtomAtomIter_set_type__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBAtomAtomIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return Qnil;
 fail:
@@ -79181,10 +79181,10 @@ _wrap_OBResidueAtomIter_set_type__SWIG_0(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< OpenBabel::OBResidueAtomIter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetType" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return Qnil;
 fail:

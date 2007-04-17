@@ -377,7 +377,7 @@ namespace OpenBabel
       }
   }
 
-  void OBAtom::SetType(char *type)
+  void OBAtom::SetType(const char *type)
   {
     strncpy(_type,type, sizeof(_type) - 1);
     _type[sizeof(_type) - 1] = '\0';
@@ -1359,24 +1359,28 @@ namespace OpenBabel
         //find ring atoms first
         for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
           if ((*i)->IsInRing())
-            if (!r1)
-              r1 = nbr;
-            else if (!r2)
-              r2 = nbr;
-            else if (!r3)
-              r3 = nbr;
+           {
+             if (!r1)
+                r1 = nbr;
+              else if (!r2)
+                r2 = nbr;
+              else if (!r3)
+                r3 = nbr;
+           }
 
         //find non-ring atoms
         for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
           if (!(*i)->IsInRing())
-            if (!a1)
-              a1 = nbr;
-            else if (!a2)
-              a2 = nbr;
-            else if (!a3)
-              a3 = nbr;
-            else if (!a4)
-              a4 = nbr;
+           {
+             if (!a1)
+                a1 = nbr;
+              else if (!a2)
+                a2 = nbr;
+              else if (!a3)
+                a3 = nbr;
+              else if (!a4)
+               a4 = nbr;
+            }
 
         //adjust geometries of heavy atoms according to hybridization
         if (hyb == 1)

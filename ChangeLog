@@ -1,3 +1,9 @@
+2007-04-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure, configure.in: Bump version to 2.1.1b1.
+
+	* */*.cpp, include/*.h: Warning fixes contributed by Jean Brefort.
+
 2007-04-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/inchi/strutil.c: Bug reported on the InChI mailing

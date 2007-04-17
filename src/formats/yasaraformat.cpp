@@ -24,6 +24,8 @@ GNU General Public License for more details.
 
 ***********************************************************/
 #include <openbabel/babelconfig.h>
+#include <climits>
+#include <cstring>
 
 /* Adapt on some 64bit machines! */
 typedef int int32;
@@ -103,7 +105,7 @@ void str_ncopy(char *string1,char *string2,int len)
 
 /* ELEMENT SYMBOLS */
 #define MOB_ELEMENTS 128
-char *mob_elementsym[MOB_ELEMENTS]=
+const char *mob_elementsym[MOB_ELEMENTS]=
 {"?",
  "H","He",
  "Li","Be","B","C","N","O","F","Ne",
@@ -363,7 +365,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   bool hetatom;
   char buffer[8],resname[4],atomname[5];
-  char *str;
+  const char *str;
   unsigned int i,j/*,m,q*/;
   unsigned int /*resno,chainNum,*/link,linked,linktype,atoms,element,links,chain;
   int /*samenames,*/reslen,charged;
@@ -433,8 +435,8 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     if (atomname[0]==' '&&(!pConv->IsOption("f",OBConversion::INOPTIONS))) memcpy(atomname,atomname+1,4);
     /* RENAME TERMINAL OXYGENS */
     str=atomname;
-    if (str=="OT1") str="O";
-    if (str=="OT2") str="OXT";
+    if (!strcmp(str,"OT1")) str="O";
+    if (!strcmp(str,"OT2")) str="OXT";
     res->SetAtomID(dstatom,str);
     if (srcatom->header[MOB_ELEMENT]&MOB_HETATOMFLAG) hetatom=true;
     else hetatom=false;

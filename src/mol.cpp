@@ -1003,7 +1003,7 @@ namespace OpenBabel
     for (int j = 0; j < NumElements; ++j)
       {
         char DT[4] = {'D',0,'T',0};
-        char* symb;
+        const char* symb;
         int alph = alphabetical[j]-1;
         if (atomicCount[ alph ])
           {
@@ -1427,7 +1427,7 @@ namespace OpenBabel
 
 #define OBAtomIncrement 100
 
-    if (_vatom.empty() || _natoms+1 >= (signed)_vatom.size())
+    if (_vatom.empty() || _natoms+1 >= _vatom.size())
       {
         _vatom.resize(_natoms+OBAtomIncrement);
         vector<OBAtom*>::iterator j;
@@ -1449,7 +1449,8 @@ namespace OpenBabel
           if ((*i)->GetDataType() == OBGenericDataType::VirtualBondData)
             {
               vb = (OBVirtualBond*)*i;
-              if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms)
+              if (static_cast<unsigned int>(vb->GetBgn()) > _natoms ||
+                  static_cast<unsigned int>(vb->GetEnd()) > _natoms)
                 continue;
               if (obatom->GetIdx() == static_cast<unsigned int>(vb->GetBgn())
                   || obatom->GetIdx() == static_cast<unsigned int>(vb->GetEnd()))
@@ -1487,7 +1488,7 @@ namespace OpenBabel
     pBond->SetIdx(_nbonds);
 
 #define OBBondIncrement 100
-    if (_vbond.empty() || _nbonds+1 >= (signed)_vbond.size())
+    if (_vbond.empty() || _nbonds+1 >= _vbond.size())
       {
         _vbond.resize(_nbonds+OBBondIncrement);
         vector<OBBond*>::iterator i;
@@ -1517,7 +1518,7 @@ namespace OpenBabel
 
 #define OBAtomIncrement 100
 
-    if (_vatom.empty() || _natoms+1 >= (signed)_vatom.size())
+    if (_vatom.empty() || _natoms+1 >= _vatom.size())
       {
         _vatom.resize(_natoms+OBAtomIncrement);
         vector<OBAtom*>::iterator j;
@@ -1539,7 +1540,8 @@ namespace OpenBabel
           if ((*i)->GetDataType() == OBGenericDataType::VirtualBondData)
             {
               vb = (OBVirtualBond*)*i;
-              if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms)
+              if (static_cast<unsigned int>(vb->GetBgn()) > _natoms ||
+                  static_cast<unsigned int>(vb->GetEnd()) > _natoms)
                 continue;
               if (obatom->GetIdx() == static_cast<unsigned int>(vb->GetBgn())
                   || obatom->GetIdx() == static_cast<unsigned int>(vb->GetEnd()))
@@ -2618,7 +2620,7 @@ namespace OpenBabel
           }
 
 #define OBBondIncrement 100
-        if (_vbond.empty() || _nbonds+1 >= (signed)_vbond.size())
+        if (_vbond.empty() || _nbonds+1 >= _vbond.size())
           {
             _vbond.resize(_nbonds+OBBondIncrement);
             vector<OBBond*>::iterator i;
@@ -3384,9 +3386,9 @@ namespace OpenBabel
                      && (currentElNeg > maxElNeg ||
                          (IsApprox(currentElNeg,maxElNeg, 1.0e-6)
                           // If only the bond length counts, prefer double bonds in the ring
-                          && (((atom->GetBond(b))->GetLength() < shortestBond) 
+                          && ((((atom->GetBond(b))->GetLength() < shortestBond) 
                               && (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing()))
-                          || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()))))
+                          || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing())))))
                   {
                     if (b->HasNonSingleBond() ||
                         (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
@@ -3566,7 +3568,7 @@ namespace OpenBabel
 
   void OBMol::SetConformer(int i)
   {  
-    if (i >= 0 && i < _vconf.size())
+    if (i >= 0 && static_cast<unsigned int>(i) < _vconf.size())
       _c = _vconf[i];
   }
 

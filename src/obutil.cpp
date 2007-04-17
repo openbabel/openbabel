@@ -47,7 +47,7 @@ namespace OpenBabel
 
   //! Deprecated: use the OBMessageHandler class instead
   //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
-  OBAPI void ThrowError(char *str)
+  OBAPI void ThrowError(const char *str)
   {
     obErrorLog.ThrowError("", str, obInfo);
   }

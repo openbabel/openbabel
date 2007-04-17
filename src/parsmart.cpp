@@ -185,7 +185,7 @@ namespace OpenBabel
   /*  Standard Utility Routines  */
   /*=============================*/
 
-  static void FatalAllocationError( char *ptr )
+  static void FatalAllocationError( const char *ptr )
   {
     stringstream errorMsg;
     errorMsg << "Error: Unable to allocate" << ptr << endl;
@@ -2730,21 +2730,25 @@ namespace OpenBabel
               r2 = j;
               for (k = 0;k < pat->bcount;++k)
                 if (pat->bond[k].dst == r2)
-                  if (r1 == -1)
-                    r1 = pat->bond[k].src;
-                  else if (r3 == -1)
-                    r3 = pat->bond[k].src;
-                  else if (r4 == -1)
-                    r4 = pat->bond[k].src;
+                  {
+                    if (r1 == -1)
+                      r1 = pat->bond[k].src;
+                    else if (r3 == -1)
+                      r3 = pat->bond[k].src;
+                    else if (r4 == -1)
+                      r4 = pat->bond[k].src;
+                  }
 	    
               for (k = 0;k < pat->bcount;++k)
                 if (pat->bond[k].src == r2)
-                  if (r1 == -1)
-                    r1 = pat->bond[k].dst;
-                  else if (r3 == -1)
-                    r3 = pat->bond[k].dst;
-                  else if (r4 == -1)
-                    r4 = pat->bond[k].dst;
+                  {
+                    if (r1 == -1)
+                      r1 = pat->bond[k].dst;
+                    else if (r3 == -1)
+                      r3 = pat->bond[k].dst;
+                    else if (r4 == -1)
+                      r4 = pat->bond[k].dst;
+                  }
 	    
               if (r1 == -1 || r2 == -1 || r3 == -1 || r4 == -1)
                 continue;

@@ -15643,7 +15643,7 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBAtom_1SetType_1_1SWIG_10(JNIEnv *jen
     arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
     if (!arg2) return ;
   }
-  (arg1)->SetType(arg2);
+  (arg1)->SetType((char const *)arg2);
   if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
 }
 
@@ -21716,7 +21716,7 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_ThrowError_1_1SWIG_10(JNIEnv *jenv, jc
     arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
     if (!arg1) return ;
   }
-  OpenBabel::ThrowError(arg1);
+  OpenBabel::ThrowError((char const *)arg1);
   if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
 }
 
@@ -26581,7 +26581,7 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolAtomIter_1SetType_1_1SWIG_10(JNIE
     arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
     if (!arg2) return ;
   }
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
 }
 
@@ -28942,7 +28942,7 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolAtomDFSIter_1SetType_1_1SWIG_10(J
     arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
     if (!arg2) return ;
   }
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
 }
 
@@ -31271,7 +31271,7 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolAtomBFSIter_1SetType_1_1SWIG_10(J
     arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
     if (!arg2) return ;
   }
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
 }
 
@@ -34736,7 +34736,7 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBAtomAtomIter_1SetType_1_1SWIG_10(JNI
     arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
     if (!arg2) return ;
   }
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
 }
 
@@ -39031,7 +39031,7 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBResidueAtomIter_1SetType_1_1SWIG_10(
     arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
     if (!arg2) return ;
   }
-  (*arg1)->SetType(arg2);
+  (*arg1)->SetType((char const *)arg2);
   if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
 }
 

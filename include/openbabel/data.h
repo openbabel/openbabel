@@ -119,7 +119,7 @@ namespace OpenBabel
       //! \return the atomic number of this element
       int GetAtomicNum()         {       return(_num);    }
       //! \return the atomic symbol for this element
-      char *GetSymbol()          {       return(_symbol); }
+      const char *GetSymbol()    {       return(_symbol); }
       //! \return the covalent radius of this element
       double GetCovalentRad()    {       return(_Rcov);   }
       //! \return the van der Waals radius of this element
@@ -168,7 +168,7 @@ namespace OpenBabel
       //! a value in the second argument
       int   GetAtomicNum(const char *, int &iso);
       //! \return the element symbol matching the atomic number passed
-      char *GetSymbol(int);
+      const char *GetSymbol(int);
       //! \return the van der Waals radius for this atomic number
       double GetVdwRad(int);
       //! \return the covalent radius for this atomic number

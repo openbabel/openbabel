@@ -757,12 +757,12 @@ namespace OpenBabel
                                      vector<unsigned int> &symmetry_classes,
                                      char *stereo)
   {
-    bool is2D=false;
+    // bool is2D=false;
     double torsion;
     OBAtom *atom = node->GetAtom();
     OBMol *mol = (OBMol*) atom->GetParent();
 
-    // If the molecule has no coordinates but DOES have chirality specified, it
+    /* If the molecule has no coordinates but DOES have chirality specified, it
     // must have come from a SMILES.  In this case, the atoms' GetIdx() values 
     // will be in the same order they appeared in the original SMILES, so we
     // can deduce the meaning of @ or @@ via "IsClockwise()" or "IsAnticlockwise()".
@@ -776,7 +776,7 @@ namespace OpenBabel
     //           C D (up wedge bond on D)
     //
     // and "@@" would be the opposite (with C and D switched).
-    //
+    */
 
     if (!mol->HasNonZeroCoords()) {               // no coordinates?
 
@@ -804,10 +804,10 @@ namespace OpenBabel
       return false;
 
     // If any of the neighbors have the same symmetry class, we're done.
-    for (int i = 0; i < chiral_neighbors.size(); i++) {
+    for (unsigned int i = 0; i < chiral_neighbors.size(); i++) {
       int idx = chiral_neighbors[i]->GetIdx();
-      int symclass = symmetry_classes[idx-1];
-      for (int j = i+1; j < chiral_neighbors.size(); j++) {
+      unsigned int symclass = symmetry_classes[idx-1];
+      for (unsigned int j = i+1; j < chiral_neighbors.size(); j++) {
         int idx = chiral_neighbors[j]->GetIdx();
         if (symclass == symmetry_classes[idx-1])
           return false;
@@ -855,7 +855,7 @@ namespace OpenBabel
     vector<OBAtom *>::iterator ai;
     OBBond *bond;
     OBCanSmiNode *next;
-    int idx, canorder;
+    int idx/*, canorder*/;
 
     atom = node->GetAtom();
 
@@ -1005,7 +1005,7 @@ namespace OpenBabel
       bond1 = *bi;
       _ubonds.SetBitOn(bond1->GetIdx());
       int digit = GetUnusedIndex();
-      int bo = (bond1->IsAromatic())? 1 : bond1->GetBO();
+      // int bo = (bond1->IsAromatic())? 1 : bond1->GetBO();
       _vopen.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
       vp_closures.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
     }
@@ -1206,8 +1206,8 @@ namespace OpenBabel
     OBBond *bond;
     for (int i = 0;i < node->Size();i++) {
       bond = node->GetChildBond(i);
-      int up   = bond->IsUp();
-      int down = bond->IsDown();
+      // int up   = bond->IsUp();
+      // int down = bond->IsDown();
       if (i+1 < node->Size()) {
         strcat(buffer,"(");
       }
@@ -1260,7 +1260,7 @@ namespace OpenBabel
       // It happens that the lowest canonically-numbered atom is usually 
       // a good place to start the canonical SMILES.
       OBAtom *root_atom;
-      int lowest_canorder = 999999;
+      unsigned int lowest_canorder = 999999;
       root_atom = NULL;
       for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
         int idx = atom->GetIdx();
@@ -1364,9 +1364,9 @@ namespace OpenBabel
 
   void CreateCansmiString(OBMol &mol, char *buffer, OBBitVec &frag_atoms, bool iso)
   {
-    char tmp[BUFF_SIZE];
-    int chg;
-    char *p, *pp;
+    // char tmp[BUFF_SIZE];
+    // int chg;
+    // char *p, *pp;
 
     // This is a hack to prevent recursion problems.
     //  we still need to fix the underlying problem -GRH
@@ -1414,7 +1414,7 @@ namespace OpenBabel
 
           vector3 v;
           OBAtom *nbr;
-          OBBond *bond;
+          // OBBond *bond;
 
           FOR_BONDS_OF_ATOM(bond, atom) {
 

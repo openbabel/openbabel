@@ -491,7 +491,7 @@ namespace OpenBabel
                   {
                     OBAtom* hatom = _pmol->NewAtom();
                     hatom->SetAtomicNum(1);
-                    hatom->SetType("H");
+                    hatom->SetType(const_cast<char*>("H"));
                     _pmol->AddBond(nhvy,_pmol->NumAtoms(),1);
                     ++nAtoms;
                   }

@@ -623,7 +623,7 @@ namespace OpenBabel
   // Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
   OBAPI std::string& Trim(std::string& txt);
   // Deprecated -- use OBMessageHandler class instead (docs in obutil.cpp)
-  OBAPI void ThrowError(char *str);
+  OBAPI void ThrowError(const char *str);
   // Deprecated -- use OBMessageHandler class instead (docs in obutil.cpp)
   OBAPI void ThrowError(std::string &str);
   //! Convert Cartesian XYZ to a set of OBInternalCoord coordinates

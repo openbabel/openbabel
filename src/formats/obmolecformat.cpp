@@ -64,7 +64,7 @@ namespace OpenBabel
        if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK)))
          MolArray = pmol->Separate(); //use un-transformed molecule
        //Add an appropriate title to each fragment
-       for(int i=0;i<MolArray.size();++i)
+       for(unsigned int i=0;i<MolArray.size();++i)
        {
          stringstream ss;
          ss << pmol->GetTitle() << '#' << i+1;

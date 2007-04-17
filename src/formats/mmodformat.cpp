@@ -215,10 +215,12 @@ namespace OpenBabel
           {
             type = 41;
             if ((nbr = atom->BeginNbrAtom(j)))
-              if (nbr->IsOxygen())
-                type = 42;
-              else if (nbr->IsNitrogen())
-                type = 43;
+              {
+                if (nbr->IsOxygen())
+                  type = 42;
+                else if (nbr->IsNitrogen())
+                  type = 43;
+			  }
           }
         else
           {

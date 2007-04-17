@@ -133,7 +133,7 @@ namespace OpenBabel
     // total atomic and hydrogen contribution
     double total = 0.0;
 
-    for (int index = 0; index < tmpmol.NumAtoms(); index++) {
+    for (unsigned int index = 0; index < tmpmol.NumAtoms(); index++) {
       if (tmpmol.GetAtom(index+1)->IsHydrogen())
         continue;
 
