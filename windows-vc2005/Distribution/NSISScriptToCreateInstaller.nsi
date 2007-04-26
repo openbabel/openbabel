@@ -458,7 +458,7 @@ FunctionEnd
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
-  OutFile "OpenBabel${OBVERSION} Windows Installer.exe"
+  OutFile "OpenBabel${OBVERSION}_Windows_Installer.exe"
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\OpenBabel-${OBVERSION}"
@@ -529,12 +529,16 @@ Section "Dummy Section" SecDummy
   File ..\iconv.dll
   File ..\libinchi.dll
   File ..\..\data\SMARTS_InteLigand.txt
+  File vcredist_x86.exe
   
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
+
+  ;Install VC++ 2005 redistributable
+  ExecShell open "$INSTDIR/vcredist_x86 /q:a"
 
   ;Create shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -585,6 +589,7 @@ Section "Uninstall"
   Delete "$INSTDIR\OpenBabelGUI.html"
   Delete "$INSTDIR\libinchi.dll"
   Delete "$INSTDIR\Uninstall.exe"
+  Delete "$INSTDIR\vcredist_x86.exe"
 
   RMDir "$INSTDIR"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
