@@ -1,3 +1,10 @@
+2007-04-30  Chris Morley 
+
+	* NSIS installer script: Add some extra data files, replaced
+	*.* which was causing extra files to be copied, and deleted
+	HKCU/SoftwareOpenBabelGUI/ on uninstall.
+	As used in OpenBabel2.1.0_Windows_Installer.exe	
+
 2007-04-26  Noel O'Boyle <baoilleach@gmail.com>
 
 	* NSIS installer script: Updated to install the MS VC++
