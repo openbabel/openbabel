@@ -566,7 +566,7 @@ void OBGUIFrame::OnGetInputFile(wxCommandEvent& WXUNUSED(event))
 {
 	wxFileDialog dialog(this,_T("Choose Input File"),m_InFileBasePath,_T(""),
 			GetFilter(m_pInFormat) + InputFilterString,
-			wxMULTIPLE | wxFILE_MUST_EXIST | wxHIDE_READONLY );
+			wxMULTIPLE | wxFILE_MUST_EXIST);
 	if(dialog.ShowModal() == wxID_OK)
 	{
 //		m_pInFilename->Clear();
