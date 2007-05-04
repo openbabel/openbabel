@@ -540,11 +540,11 @@ Section "Dummy Section" SecDummy
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
   
+  ;Install VC++ 2005 redistributable
+  ExecWait '"$INSTDIR/vcredist_x86.exe" /q:a'
+
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-
-  ;Install VC++ 2005 redistributable
-  ExecShell open "$INSTDIR/vcredist_x86 /q:a"
 
   ;Create shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
