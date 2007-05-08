@@ -201,9 +201,26 @@ namespace OpenBabel
         {
           delete *i;
           _vdata.erase(i);
+          return; //Must stop since iterators invalidated by erase
         }
-
   }
+
+  bool OBBase::DeleteData(const string& s)
+  {
+    OBDataIterator i;
+    for (i = _vdata.begin();i != _vdata.end();++i)
+    {
+      if ((*i)->GetAttribute() == s)
+      {
+        delete *i;
+          _vdata.erase(i);
+          return true;
+      }
+    }
+    return false;//not found
+  }
+
+
 
   /*! \mainpage v2.1 API Documentation
 

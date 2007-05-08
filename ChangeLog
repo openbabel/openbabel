@@ -1,3 +1,13 @@
+2007-05-08  Chris Morley
+
+	* include/openbabel.h/base.h, src/base.cpp: corrected
+	bug in DeleteData(OBGenericData*) which is the probable
+	cause of bug #1715092. Added new function DeleteData(string)
+	which makes it easier to use.
+	Moved the declarations for Tokenize and Trim from mol.h to
+	base.h so that they could be used more widely. Maybe there is
+	an even better home.
+
 2007-05-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/*.i: Added casting from OBGenericData to OBUnitCell.

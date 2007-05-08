@@ -34,6 +34,12 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
+  // Utility function prototypes
+  OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n");
+  OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
+  // Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
+  OBAPI std::string& Trim(std::string& txt);
+
   //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
   typedef std::vector<OBGenericData*>::iterator OBDataIterator;
   
@@ -97,6 +103,8 @@ namespace OpenBabel
       void                              DeleteData(OBGenericData*);
       //! Delete all of the given generic data from this object
       void                              DeleteData(std::vector<OBGenericData*>&);
+      //! Deletes the generic data with the specified attribute, returning false if not found
+      bool                              DeleteData(const std::string& s);
       //! Adds a data object; does nothing if d==NULL
       void                              SetData(OBGenericData *d)
         {
