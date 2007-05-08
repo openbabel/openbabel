@@ -28,6 +28,7 @@
 #include <openbabel/fingerprint.h>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/groupcontrib.h>
 
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
@@ -57,6 +58,10 @@ namespace std {
 %inline %{
 OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
 	return (OpenBabel::OBPairData *) data;
+}
+
+OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBUnitCell *) data;
 }
 %}
 
@@ -94,6 +99,7 @@ OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
 %include <openbabel/fingerprint.h>
 
 %include <openbabel/forcefield.h>
+%include <openbabel/groupcontrib.h>
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)

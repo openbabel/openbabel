@@ -55,6 +55,10 @@ namespace std {
 OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
 	return (OpenBabel::OBPairData *) data;
 }
+
+OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBUnitCell *) data;
+}
 %}
 
 %import <openbabel/babelconfig.h>

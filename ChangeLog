@@ -1,14 +1,20 @@
+2007-05-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/*.i: Added casting from OBGenericData to OBUnitCell.
+
 2007-05-08  Noel O'Boyle <baoilleach@gmail.com>
 
-	* scripting interfaces: added a template for a vector of OBRing*
+	* scripts/*.i: added a template for a vector of OBRing*
 	which is required for OBMol.GetSSSR()
 
 2007-05-08  Noel O'Boyle <baoilleach@gmail.com>
 
-	* scripting interfaces: added a method to cast OBGenericData to
-	OBPairData
-	* pybel: added dictionary-like support for accessing molecule data,
-	and updated the tests and the API documentation
+	* scripts/*.i: added a method to cast OBGenericData to
+	OBPairData.
+	
+	* scripts/python/pybel.*: added dictionary-like support for
+	accessing molecule data, and updated the tests and the API
+	documentation.
 
 2007-04-30  Chris Morley 
 
