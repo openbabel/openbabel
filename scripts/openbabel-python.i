@@ -52,6 +52,7 @@ namespace std {
 %template (vectorBond)		vector<OpenBabel::OBBond>;
 %template (vectorResidue)	vector<OpenBabel::OBResidue>;
 %template (vectorRing)		vector<OpenBabel::OBRing>;
+%template (vectorpRing)		vector<OpenBabel::OBRing*>;
 %template (vectorData)    vector<OpenBabel::OBGenericData*>;
 }
 

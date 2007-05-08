@@ -1,5 +1,10 @@
 2007-05-08  Noel O'Boyle <baoilleach@gmail.com>
 
+	* scripting interfaces: added a template for a vector of OBRing*
+	which is required for OBMol.GetSSSR()
+
+2007-05-08  Noel O'Boyle <baoilleach@gmail.com>
+
 	* scripting interfaces: added a method to cast OBGenericData to
 	OBPairData
 	* pybel: added dictionary-like support for accessing molecule data,
