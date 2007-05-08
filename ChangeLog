@@ -1,3 +1,10 @@
+2007-05-08  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripting interfaces: added a method to cast OBGenericData to
+	OBPairData
+	* pybel: added dictionary-like support for accessing molecule data,
+	and updated the tests and the API documentation
+
 2007-04-30  Chris Morley 
 
 	* NSIS installer script: Add some extra data files, replaced

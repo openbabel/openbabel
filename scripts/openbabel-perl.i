@@ -53,6 +53,12 @@ namespace std {
 }
 
 
+%inline %{
+OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBPairData *) data;
+}
+%}
+
 %rename(inc)   *::operator++;
 %rename(good)  *::operator bool;
 %rename(deref) *::operator->;

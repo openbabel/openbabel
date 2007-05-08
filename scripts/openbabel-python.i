@@ -30,6 +30,10 @@
 
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
+
+
+
+
 %}
 
 %include "std_list.i"
@@ -52,6 +56,11 @@ namespace std {
 }
 
 
+%inline %{
+OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBPairData *) data;
+}
+%}
 
 // These methods are renamed to valid Python method names, as otherwise
 // they cannot be used from Python

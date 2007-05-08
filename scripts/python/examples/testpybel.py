@@ -51,7 +51,7 @@ class Test_readstring(unittest.TestCase):
     def testgetprops(self):
         """Get the values of the properties."""
         test = { 'dim':0, 'spin':1, 'energy': 0.0,
-                 'charge':0, 'flags':514, 'formula': 'C4H10',
+                 'charge':0, 'formula': 'C4H10',
                  'mod':0 }
         result = {}
         for attr in self.mol._getmethods:
@@ -137,6 +137,36 @@ class Test_readfile(unittest.TestCase):
         test = ['O=C1C=CC(=O)C=C1C\tNSC 1\n', 'c1cccc2c1nc(SSc1nc3ccccc3s1)s2\tNSC 2\n']
         self.assertEqual(filecontents, test)
 
+class Test_data(unittest.TestCase):
+    def setUp(self):
+        self.mol = pybel.readfile("sdf", "head.sdf").next()
+        self.data = self.mol.data
+
+    def accesstest(self):
+        # Should raise KeyError
+        return self.data['noel']
+
+    def testcomment(self):
+        """Mess about with the comment field"""
+        self.assertEqual('Comment' in self.data, True)
+        self.assertEqual(self.data['Comment'], 'CORINA 2.61 0041  25.10.2001')
+        self.data['Comment'] = 'New comment'
+        self.assertEqual(self.data['Comment'], 'New comment')
+
+    def testaccess(self):
+        """Change the value of a field"""
+        self.assertRaises(KeyError, self.accesstest)
+        self.data['noel'] = 'testvalue'
+        self.assertEqual(self.data['noel'], 'testvalue')
+
+    def testglobalaccess(self):
+        """Check out the keys"""
+        self.assertEqual(self.data.has_key('Comment'), True)
+        self.assertEqual(self.data.has_key('Noel'), False)
+        self.assertEqual(len(self.data), 2)
+        for key in self.data:
+            self.assertEqual(key in ['Comment', 'NSC'], True)
+
 class Test_atoms(unittest.TestCase):
     """Testing some of the atom code"""
     def setUp(self):
@@ -187,9 +217,4 @@ class Test_cornercases(unittest.TestCase):
         self.assertEqual(atom.atomicnum, 0)
         
 if __name__=="__main__":
-    testgroups = [Test_readstring, Test_readfile, Test_atoms,
-                  Test_smarts, Test_cornercases, Test_fingerprint]
-    for testgroup in testgroups:
-        print "\n=== %s ===" % testgroup.__doc__
-        suite = unittest.makeSuite(testgroup)
-        unittest.TextTestRunner(verbosity=2).run(suite)
+    unittest.main()

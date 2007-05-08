@@ -61,6 +61,11 @@ namespace std {
 }
 
 
+%inline %{
+OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBPairData *) data;
+}
+%}
 
 // These methods are renamed to valid method names
 %rename(inc)   *::operator++;

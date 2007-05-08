@@ -8,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>pybel</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/vmware/Tools/openbabel/scripts/python/pybel.py">/home/vmware/Tools/openbabel/scripts/python/pybel.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:///C|/python24/lib/site-packages/pybel.py">c:\python24\lib\site-packages\pybel.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -33,6 +33,7 @@
 <dt><font face="helvetica, arial"><a href="pybel.html#Atom">Atom</a>
 </font></dt><dt><font face="helvetica, arial"><a href="pybel.html#Fingerprint">Fingerprint</a>
 </font></dt><dt><font face="helvetica, arial"><a href="pybel.html#Molecule">Molecule</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pybel.html#MoleculeData">MoleculeData</a>
 </font></dt><dt><font face="helvetica, arial"><a href="pybel.html#Outputfile">Outputfile</a>
 </font></dt><dt><font face="helvetica, arial"><a href="pybel.html#Smarts">Smarts</a>
 </font></dt></dl>
@@ -132,7 +133,7 @@ Optional&nbsp;parameters:<br>
 An&nbsp;empty&nbsp;<a href="#Molecule">Molecule</a>&nbsp;is&nbsp;created&nbsp;if&nbsp;an&nbsp;Open&nbsp;Babel&nbsp;molecule&nbsp;is&nbsp;not&nbsp;provided.<br>
 &nbsp;<br>
 Attributes:<br>
-&nbsp;&nbsp;&nbsp;atoms,&nbsp;charge,&nbsp;dim,&nbsp;energy,&nbsp;exactmass,&nbsp;flags,&nbsp;formula,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;atoms,&nbsp;charge,&nbsp;data,&nbsp;dim,&nbsp;energy,&nbsp;exactmass,&nbsp;flags,&nbsp;formula,&nbsp;<br>
 &nbsp;&nbsp;&nbsp;mod,&nbsp;molwt,&nbsp;spin,&nbsp;sssr,&nbsp;title.<br>
 (refer&nbsp;to&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;library&nbsp;documentation&nbsp;for&nbsp;more&nbsp;info).<br>
 &nbsp;<br>
@@ -184,6 +185,67 @@ Data and other attributes defined here:<br>
 <dl><dt><strong>__dict__</strong> = &lt;dictproxy object&gt;<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dl>
 
 <dl><dt><strong>__weakref__</strong> = &lt;attribute '__weakref__' of 'Molecule' objects&gt;<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;(if&nbsp;defined)</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MoleculeData">class <strong>MoleculeData</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Store&nbsp;molecule&nbsp;data&nbsp;in&nbsp;a&nbsp;dictionary-type&nbsp;<a href="__builtin__.html#object">object</a><br>
+&nbsp;<br>
+Required&nbsp;parameters:<br>
+&nbsp;&nbsp;obmol&nbsp;--&nbsp;an&nbsp;Open&nbsp;Babel&nbsp;OBMol&nbsp;<br>
+&nbsp;<br>
+Methods&nbsp;and&nbsp;accessor&nbsp;methods&nbsp;are&nbsp;like&nbsp;those&nbsp;of&nbsp;a&nbsp;dictionary&nbsp;except<br>
+that&nbsp;the&nbsp;data&nbsp;is&nbsp;retrieved&nbsp;on-the-fly&nbsp;from&nbsp;the&nbsp;underlying&nbsp;OBMol.<br>
+&nbsp;<br>
+Example:<br>
+&gt;&gt;&gt;&nbsp;mol&nbsp;=&nbsp;<a href="#-readfile">readfile</a>("sdf",&nbsp;'head.sdf').next()<br>
+&gt;&gt;&gt;&nbsp;data&nbsp;=&nbsp;mol.data<br>
+&gt;&gt;&gt;&nbsp;print&nbsp;data<br>
+{'Comment':&nbsp;'CORINA&nbsp;2.61&nbsp;0041&nbsp;&nbsp;25.10.2001',&nbsp;'NSC':&nbsp;'1'}<br>
+&gt;&gt;&gt;&nbsp;print&nbsp;len(data),&nbsp;data.<a href="#MoleculeData-keys">keys</a>(),&nbsp;data.<a href="#MoleculeData-has_key">has_key</a>("Second&nbsp;comment")<br>
+2&nbsp;['Comment',&nbsp;'NSC']&nbsp;False<br>
+&gt;&gt;&gt;&nbsp;print&nbsp;data['Comment']<br>
+CORINA&nbsp;2.61&nbsp;0041&nbsp;&nbsp;25.10.2001<br>
+&gt;&gt;&gt;&nbsp;data['Comment']&nbsp;=&nbsp;'This&nbsp;is&nbsp;a&nbsp;new&nbsp;comment'<br>
+&gt;&gt;&gt;&nbsp;for&nbsp;k,v&nbsp;in&nbsp;data.<a href="#MoleculeData-iteritems">iteritems</a>():<br>
+...&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;k,&nbsp;"--&gt;",&nbsp;v<br>
+Comment&nbsp;--&gt;&nbsp;This&nbsp;is&nbsp;a&nbsp;new&nbsp;comment<br>
+NSC&nbsp;--&gt;&nbsp;1<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="MoleculeData-__contains__"><strong>__contains__</strong></a>(self, key)</dt></dl>
+
+<dl><dt><a name="MoleculeData-__getitem__"><strong>__getitem__</strong></a>(self, key)</dt></dl>
+
+<dl><dt><a name="MoleculeData-__init__"><strong>__init__</strong></a>(self, obmol)</dt></dl>
+
+<dl><dt><a name="MoleculeData-__iter__"><strong>__iter__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MoleculeData-__len__"><strong>__len__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MoleculeData-__repr__"><strong>__repr__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MoleculeData-__setitem__"><strong>__setitem__</strong></a>(self, key, value)</dt></dl>
+
+<dl><dt><a name="MoleculeData-has_key"><strong>has_key</strong></a>(self, key)</dt></dl>
+
+<dl><dt><a name="MoleculeData-items"><strong>items</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MoleculeData-iteritems"><strong>iteritems</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MoleculeData-keys"><strong>keys</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MoleculeData-values"><strong>values</strong></a>(self)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dictproxy object&gt;<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;attribute '__weakref__' of 'MoleculeData' objects&gt;<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;(if&nbsp;defined)</tt></dl>
 
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">

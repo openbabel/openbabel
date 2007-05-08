@@ -49,6 +49,13 @@ namespace std {
 %template (vectorData)    vector<OpenBabel::OBGenericData*>;
 }
 
+
+%inline %{
+OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBPairData *) data;
+}
+%}
+
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
