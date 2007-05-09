@@ -196,12 +196,12 @@ namespace OpenBabel
 
     //! Create a new OBAtom in this molecule and ensure connections.
     //! (e.g. OBAtom::GetParent()
-    virtual OBAtom    *NewAtom();
+    OBAtom    *NewAtom();
     //! Create a new OBBond in this molecule and ensure connections.
     //! (e.g. OBBond::GetParent()
-    virtual OBBond    *NewBond();
+    OBBond    *NewBond();
     //! Create a new OBResidue in this molecule and ensure connections.
-    virtual OBResidue *NewResidue();
+    OBResidue *NewResidue();
     //! Deletes an atom from this molecule and all appropriate bonds.
     //! Updates the molecule and atom and bond indexes accordingly.
     //! \warning Does not update any residues which may contain this atom
@@ -618,10 +618,7 @@ namespace OpenBabel
   };
 
   // Utility function prototypes
-  OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n");
-  OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
-  // Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
-  OBAPI std::string& Trim(std::string& txt);
+  //tokenize and Trim declarations moved to base.h
   // Deprecated -- use OBMessageHandler class instead (docs in obutil.cpp)
   OBAPI void ThrowError(char *str);
   // Deprecated -- use OBMessageHandler class instead (docs in obutil.cpp)
