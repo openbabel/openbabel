@@ -24,7 +24,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <fstream>
 
-#include <openbabel/fingerprintNEW.h>
+#include <openbabel/fingerprint.h>
 #include <openbabel/oberror.h>
 
 using namespace std;

@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #include <iomanip>
 
 #include <openbabel/obmolecformat.h>
-#include <openbabel/fingerprintNEW.h>
+#include <openbabel/fingerprint.h>
 
 using namespace std;
 namespace OpenBabel
