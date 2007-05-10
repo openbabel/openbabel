@@ -176,7 +176,7 @@ namespace OpenBabel
 
     public:
       //! Constructor
-      OBForceFieldMMFF94(std::string ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+      OBForceFieldMMFF94(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
         ParseParamFile();
       }
@@ -188,7 +188,7 @@ namespace OpenBabel
       OBForceFieldMMFF94 &operator = (OBForceFieldMMFF94 &);
 
       //! Get the description for this force field
-      std::string Description()
+      const char* Description()
       { 
         return "Merck Molecular Force Field. (94)";
       }

@@ -1,5 +1,11 @@
 2007-05-10  Chris Morley
 
+	* src/forcefields/forcefieldmmff94.cpp, .h: Mod for new plugin
+	framework.
+	Add return values to several functions, so that it would compile.
+
+2007-05-10  Chris Morley
+
 	Revision of plugin classes including OBFormat
 	OBFormat, OBForcefield, OBFingerprint and the new
 	OBDescriptor all derive from OBPlugin (not OBPluginiter)

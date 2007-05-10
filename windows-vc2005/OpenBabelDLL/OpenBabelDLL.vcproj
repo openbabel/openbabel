@@ -256,6 +256,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\forcefields\forcefieldghemical.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\src\forcefields\forcefieldmm2.cpp"
 				>
 				<FileConfiguration
@@ -266,6 +278,10 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\forcefields\forcefieldmmff94.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\..\src\format.cpp"
@@ -286,13 +302,6 @@
 			<File
 				RelativePath="..\..\src\groupcontrib.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\kekulize.cpp"
@@ -454,6 +463,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\forcefields\forcefieldmm2.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\forcefields\forcefieldmmff94.h"
 				>
 			</File>
 			<File
@@ -712,18 +725,6 @@
 			<File
 				RelativePath="..\..\src\formats\fingerprintformat.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\..\src\forcefields\forcefieldghemical.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\freefracformat.cpp"

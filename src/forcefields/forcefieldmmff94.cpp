@@ -520,6 +520,7 @@ namespace OpenBabel
   OBForceFieldMMFF94 &OBForceFieldMMFF94::operator=(OBForceFieldMMFF94 &src)
   {
     _mol = src._mol;
+    return *this;
   }
 
   bool OBForceFieldMMFF94::Setup(OBMol &mol)
@@ -546,6 +547,7 @@ namespace OpenBabel
     ParseParamTorsion();
     ParseParamVDW();
     ParseParamCharge();
+    return true;
   }
   
   bool OBForceFieldMMFF94::ParseParamBond()
@@ -1529,6 +1531,7 @@ namespace OpenBabel
       // q =  
       //}
     }
+    return true;
   }
 
   double OBForceFieldMMFF94::Energy()
@@ -1805,7 +1808,8 @@ namespace OpenBabel
       ifs.close();
     if (ifs2)
       ifs2.close();
-  }
+  return true;
+}
   
   vector3 OBForceFieldMMFF94::GetGradient(OBAtom *a, int terms)
   {
@@ -1945,6 +1949,7 @@ namespace OpenBabel
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       cout << logbuf << endl;
     }
+    return true;
   }
 
   int OBForceFieldMMFF94::GetBondType(OBAtom* a, OBAtom* b)
@@ -2105,6 +2110,7 @@ namespace OpenBabel
     case 8:
       return 11;
     }
+    return -1; //???
   }
   
   int OBForceFieldMMFF94::GetTorsionType(OBAtom* a, OBAtom* b, OBAtom *c, OBAtom *d)
