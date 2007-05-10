@@ -1,3 +1,8 @@
+2007-05-10  Noel O'Boyle <baoilleach@gmail.com>
+
+	* pybel.py: Added support for unitcell, and deletion of OBPairData
+	(need to update the tests and the API docs)
+
 2007-05-08  Chris Morley
 
 	* include/openbabel.h/base.h, src/base.cpp: corrected

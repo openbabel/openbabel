@@ -116,7 +116,7 @@ class Molecule(object):
     
     Attributes:
        atoms, charge, data, dim, energy, exactmass, flags, formula, 
-       mod, molwt, spin, sssr, title.
+       mod, molwt, spin, sssr, title, unitcell.
     (refer to the Open Babel library documentation for more info).
     
     Methods:
@@ -162,11 +162,18 @@ class Molecule(object):
         elif attr == "data":
             # Create a data attribute on-the-fly
             return MoleculeData(self.OBMol)
+        elif attr == "unitcell":
+            # Create a unitcell attribute on-th-fly
+            unitcell = self.OBMol.GetData(ob.UnitCell)
+            if unitcell:
+                return ob.toUnitCell(unitcell)
+            else:
+                raise AttributeError, "Molecule has no attribute 'unitcell'"
         elif attr in self._getmethods:
             # Call the OB Method to find the attribute value
             return getattr(self.OBMol, self._getmethods[attr])()
         else:
-            raise AttributeError, "Molecule has no attribute %s" % attr
+            raise AttributeError, "Molecule has no attribute '%s'" % attr
 
     def __iter__(self):
         """Iterate over the Atoms of the Molecule.
@@ -382,8 +389,8 @@ class MoleculeData(object):
     >>> data = mol.data
     >>> print data
     {'Comment': 'CORINA 2.61 0041  25.10.2001', 'NSC': '1'}
-    >>> print len(data), data.keys(), data.has_key("Second comment")
-    2 ['Comment', 'NSC'] False
+    >>> print len(data), data.keys(), data.has_key("NSC")
+    2 ['Comment', 'NSC'] True
     >>> print data['Comment']
     CORINA 2.61 0041  25.10.2001
     >>> data['Comment'] = 'This is a new comment'
@@ -391,11 +398,14 @@ class MoleculeData(object):
     ...    print k, "-->", v
     Comment --> This is a new comment
     NSC --> 1
+    >>> del data['NSC']
+    >>> print len(data), data.keys(), data.has_key("NSC")
+    1 ['Comment'] False
     """
     def __init__(self, obmol):
         self._mol = obmol
     def _data(self):
-        return [ob.toPairData(x) for x in self._mol.GetData()]
+        return [ob.toPairData(x) for x in self._mol.GetData() if x.GetDataType()==ob.PairData or x.GetDataType()==ob.CommentData]
     def _testforkey(self, key):
         if not key in self:
             raise KeyError, "'%s'" % key
@@ -410,12 +420,15 @@ class MoleculeData(object):
     def iteritems(self):
         return iter(self.items())
     def __len__(self):
-        return self._mol.GetData().size()
+        return len(self._data())
     def __contains__(self, key):
         return self._mol.HasData(key)
-    #def __delitem__(self, key):
-        #self._testforkey(key)
-        #self._mol.DeleteData(self._mol.GetData(key))
+    def __delitem__(self, key):
+        self._testforkey(key)
+        self._mol.DeleteData(self._mol.GetData(key))
+    def clear(self):
+        for key in self:
+            del self[key]
     def has_key(self, key):
         return key in self
     def __getitem__(self, key):
@@ -436,4 +449,4 @@ class MoleculeData(object):
  
 if __name__=="__main__":
     import doctest
-    doctest.testmod()
+    doctest.testmod(verbose=True)
