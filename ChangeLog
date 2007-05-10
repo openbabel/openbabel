@@ -1,3 +1,38 @@
+2007-05-10  Chris Morley
+
+	Revision of plugin classes including OBFormat
+	OBFormat, OBForcefield, OBFingerprint and the new
+	OBDescriptor all derive from OBPlugin (not OBPluginiter)
+	New files:
+	include/openbabel/descriptor.h, include/openbabel/format.h
+	include/openbabel/plugin.h, src/descriptor.cpp
+	src/filters.cpp, src/format.cpp, src/plugin.cpp
+	Removed file:
+	include/openbabel/pluginiter.h
+	Relocation of these and other files probably a good idea
+	(incl new folder src/descriptors) but not done yet.
+	class OBFormat moved out of obconversion.h, .cpp into
+	its own files.
+
+	* tools/babel.cpp: remove -F and add -L option
+
+	* src/transform.cpp: reorganize to include new options
+	--filter, --add, --delete
+
+	* src/groupcontrib.cpp: remove OBLogP and similar classes;
+	now descriptors which are instances of OBGroupContrib
+
+	* src/formats/* : several forcefield and fingerprint files
+	changed to fit new framework, obmolecformat.h to register
+	new options.
+
+	* src/formats/xml/cmlformat.cpp: if inchi is a property 
+	write to <identifier> not <property> tag.
+
+	* src/GUI/OBGUI.h, .cpp:display plugins in a menu item.
+
+	* windows-vc2005: update Window build
+
 2007-05-10  Noel O'Boyle <baoilleach@gmail.com>
 
 	* pybel.py: Added support for unitcell, and deletion of OBPairData

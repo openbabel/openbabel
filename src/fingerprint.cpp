@@ -24,7 +24,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <fstream>
 
-#include <openbabel/fingerprint.h>
+#include <openbabel/fingerprintNEW.h>
 #include <openbabel/oberror.h>
 
 using namespace std;
@@ -316,8 +316,7 @@ namespace OpenBabel
   OBFingerprint* FptIndex::CheckFP()
   {
     //check that fingerprint type is available
-    string tempFP(header.fpid);
-    OBFingerprint* pFP = OBFingerprint::FindFingerprint(tempFP);
+    OBFingerprint* pFP = OBFingerprint::FindFingerprint(header.fpid);
     if(!pFP)
       {
         stringstream errorMsg;

@@ -25,7 +25,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
-#include <openbabel/pluginiter.h>
+#include <openbabel/plugin.h>
 
 #ifndef OBFPRT
 #define OBFPRT
@@ -36,12 +36,58 @@ namespace OpenBabel
   class OBBase; //Forward declaration; used only as pointer.
 
 /// \brief The base class for fingerprints
-class OBFPRT OBFingerprint
+class OBFPRT OBFingerprint : public OBPlugin
 {
 //see end of cpp file for detailed documentation
 
-MAKE_PLUGIN(OBFingerprint);
+MAKE_PLUGIN(OBFingerprint)
+/*******************************************************************
+//This section is in the macro
+public:
+	//The collection of sub-types is in a local static variable to avoid
+	//any difficulties with the order of initialization of static objects. 
+	static PluginMapType& Map()
+	{
+		static PluginMapType m;
+		return m;
+	}
+	static OBFingerprint*& Default()
+  {
+    static OBFingerprint* d;
+    return d;
+  }
 
+  OBFingerprint(const std::string ID, bool IsDefault=false)
+	{
+		if(IsDefault || Map().empty())
+			Default() = this;
+		Map()[ID]=this;
+		//Ensure OBFingerprint is registered in OBPlugin so it can be accessed from the commandline	
+		PluginMap()[TypeID()] =this;
+   }
+   
+   //Making the map accessible to the base class (Cannot be used during construction)
+   virtual PluginMapType& GetMap()
+   {
+   	return Map();
+   }
+   
+	///Returns the fingerprint associated with the ID, or the default fingerprint if ID is empty.
+   static OBFingerprint* FindType(const std::string ID)
+	{
+		if(ID.empty())
+			return Default();
+    return static_cast<OBFingerprint*>(BaseFindType(Map(),ID));
+	}
+	
+//*******************************************************************/
+	
+   const char* TypeID()
+	{
+		return "fingerprints";
+	}
+	
+	//Rest of OBFingerprints declarations
 public:
 
   virtual ~OBFingerprint(){}
@@ -55,16 +101,9 @@ public:
   /// \return fingerprint in vector, which may be resized, folded to nbits (if nbits!=0)
   virtual bool GetFingerprint(OBBase* pOb, std::vector<unsigned int>& fp, int nbits=0)=0;
 
-  /// Required short description of the fingerprint type.
-  virtual std::string Description()=0;
-
   /// Optional flags
   enum FptFlag{FPT_UNIQUEBITS=1};
   virtual unsigned int Flags() { return 0;}; 
-
-  // Obtain info on available fingerprints
-  // Replaced by FOR_EACH(OBFingerprint)
-//  static bool GetNextFPrt(std::string& id, OBFingerprint*& pFPrt);
 
   /// \return the Tanimoto coefficient between two vectors (vector<unsigned int>& SeekPositions)
   static double Tanimoto(const std::vector<unsigned int>& vec1, const std::vector<unsigned int>& vec2);
@@ -103,8 +142,8 @@ private:
 
 public:
 /// \return a pointer to a fingerprint (the default if ID is empty), or NULL if not available
-///For backward compatibility; prefer FindType (in pluginiter.h) instead
-static OBFingerprint* FindFingerprint(const std::string& ID){ return Iter().FindType(ID);}
+  ///For backward compatibility;  a synonym of OBFingerprint::FindType
+static OBFingerprint* FindFingerprint(const char* ID){ return FindType(ID);}
 
 private:
   static const unsigned int bitsperint;// = 8 * sizeof(unsigned int);

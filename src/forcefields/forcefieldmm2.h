@@ -87,12 +87,12 @@ namespace OpenBabel
       //! Setup
       bool Setup(OBMol &mol);
       //! Constructor
-      OBForceFieldMM2(std::string ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+      OBForceFieldMM2(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
         ParseParamFile();
       }
       
-      virtual std::string Description()
+      virtual const char* Description()
 	{ return "MM2 force field.";};
 
 

@@ -89,11 +89,9 @@ namespace OpenBabel
 
       Below are two examples which explain the basics. 
       
-      This piece of code can always be used to find available forcefields:
+      This piece of code will output a list of available forcefields to cout:
       \code
-      FOR_EACH(OBForceField, iter) {
-      cout << "forcefield ID: " << iter.ID() << endl;
-      }
+      OBPlugin::List("forcefields");
       \endcode
 
       Calculate the energy for the structure in mol using the Ghemical forcefield.

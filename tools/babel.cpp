@@ -40,6 +40,7 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
 #include <openbabel/obconversion.h>
+#include <openbabel/plugin.h>
 
 using namespace std;
 using namespace OpenBabel;
@@ -146,7 +147,7 @@ int main(int argc,char *argv[])
                     }
                   break;
 				
-                case 'F':
+                /*case 'F':
                   if(!Conv.SetOutFormat("fpt"))
                     cout << "FingerprintFormat needs to be loaded" << endl;
                   else
@@ -155,7 +156,15 @@ int main(int argc,char *argv[])
                       Conv.Write(NULL);
                     }
                   return 0;
-				
+				        */
+                case 'L': //display a list of plugin type or classes
+                  {
+                    const char* param=NULL;
+                    if(argc>arg+1)
+                      param = argv[arg+2];
+                    OBPlugin::List(argv[arg+1], param);
+                    return 0;
+                  }
                 case '?':
                 case 'H':
                   if(isalnum(argv[arg][2]))
@@ -174,25 +183,12 @@ int main(int argc,char *argv[])
                         }
                       else
                         {
-                          Formatpos pos;
-                          OBFormat* pFormat;
-                          const char* str=NULL;
-                          while(OBConversion::GetNextFormat(pos,str,pFormat))
-                            {
-                              if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
-                                continue;
-                              cout << str << endl;
-                              const char* p = strchr(pFormat->Description(),'\n');
-                              cout << p+1; //second line of description
-                              if(strlen(pFormat->SpecificationURL()))
-                                cout << "Specification at: " << pFormat->SpecificationURL();
-                              cout << endl << endl;
-                            }
+                          OBPlugin::List("formats","verbose");
                         }
                     }
                   else
                     help();
-                  exit(0);
+                  return 0;
 					
                 case '-': //long option --name text
                   {
@@ -422,7 +418,8 @@ void help()
   cout << "  -Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl; 
   cout << "  -Hall Outputs details of all formats" <<endl; 
   cout << "  -V Outputs version number" <<endl; 
-  cout << "  -F Outputs the available fingerprint types" <<endl; 
+  cout << "  -L <BaseType> Lists plugin classes of this type" << endl;
+  cout << "      e.g. <fingerprints>, or <plugins> for a list of BaseTypes" << endl; 
   cout << "  -m Produces multiple output files, to allow:" <<endl;
   cout << "     Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
   cout << "       puts each molecule into new1.smi new2.smi etc" <<endl;
@@ -442,15 +439,7 @@ void help()
     cout << pAPI->Description();
   
   cout << "The following file formats are recognized:" << endl;
-  Formatpos pos;
-  OBFormat* pFormat;
-  const char* str=NULL;
-  while(OBConversion::GetNextFormat(pos,str,pFormat))
-    {
-      if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
-	continue;
-      cout << "  " << str << endl;
-    }
+  OBPlugin::List("formats");
   cout << "\nSee further specific info and options using -H<format-type>, e.g. -Hcml" << endl;
 }
 

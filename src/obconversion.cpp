@@ -75,23 +75,6 @@ namespace OpenBabel {
       destruction of objects in ReadMolecule() and WriteMolecule() and no restriction
       on whether the pointers are to the heap or the stack.
   **/
-  const char* OBFormat::TargetClassDescription()
-  {
-    //Provides class of default format unless overridden
-    if(OBConversion::GetDefaultFormat())
-      return OBConversion::GetDefaultFormat()->TargetClassDescription();
-    else
-      return "";
-  }
-  const type_info& OBFormat::GetType()
-  {
-    //Provides info on class of default format unless overridden
-    if(OBConversion::GetDefaultFormat())
-      return OBConversion::GetDefaultFormat()->GetType();
-    else
-      return typeid(this); //rubbish return if DefaultFormat not set
-  }
-
   //***************************************************
 
   /** @class OBConversion obconversion.h <openbabel/obconversion.h>
@@ -210,7 +193,7 @@ namespace OpenBabel {
     
   int OBConversion::FormatFilesLoaded = 0;
 
-  OBFormat* OBConversion::pDefaultFormat=NULL;
+//  OBFormat* OBConversion::pDefaultFormat=NULL;
 
   OBConversion::OBConversion(istream* is, ostream* os) : 
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
@@ -227,26 +210,6 @@ namespace OpenBabel {
     //These options take a parameter
     RegisterOptionParam("f", NULL, 1,GENOPTIONS);
     RegisterOptionParam("l", NULL, 1,GENOPTIONS);
-  }
-
-  ///This static function returns a reference to the FormatsMap
-  ///which, because it is a static local variable is constructed only once.
-  ///This fiddle is to avoid the "static initialization order fiasco"
-  ///See Marshall Cline's C++ FAQ Lite document, www.parashift.com/c++-faq-lite/". 
-  FMapType& OBConversion::FormatsMap()
-  {
-    static FMapType* fm = new FMapType;
-    return *fm;
-  }
-
-  ///This static function returns a reference to the FormatsMIMEMap
-  ///which, because it is a static local variable is constructed only once.
-  ///This fiddle is to avoid the "static initialization order fiasco"
-  ///See Marshall Cline's C++ FAQ Lite document, www.parashift.com/c++-faq-lite/". 
-  FMapType& OBConversion::FormatsMIMEMap()
-  {
-    static FMapType* fm = new FMapType;
-    return *fm;
   }
 
   /////////////////////////////////////////////////
@@ -306,12 +269,7 @@ namespace OpenBabel {
   /// the initialization code makes an instance of the imported OBFormat class.
   int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME)
   {
-    FormatsMap()[ID] = pFormat;
-    if (MIME)
-      FormatsMIMEMap()[MIME] = pFormat;
-    if(pFormat->Flags() & DEFAULTFORMAT)
-      pDefaultFormat=pFormat;
-    return FormatsMap().size();
+    return pFormat->RegisterFormat(ID, MIME);
   }
 
   //////////////////////////////////////////////////////
@@ -368,7 +326,9 @@ namespace OpenBabel {
    *  declare a "dummy" OBConversion object to access this static method.
    *  (Not elegant, but will hopefully be fixed in the future.)
    */
-  bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat)
+
+/*
+bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat)
   {
 
     pFormat = NULL;
@@ -397,7 +357,7 @@ namespace OpenBabel {
     str = s.c_str();
     return true;
   }
-
+*/
   //////////////////////////////////////////////////////
   /// Sets the formats from their ids, e g CML.
   /// If inID is NULL, the input format is left unchanged. Similarly for outID
@@ -556,7 +516,10 @@ namespace OpenBabel {
         catch(...)
           {
             if(!IsOption("e", GENOPTIONS) && !OneObjectOnly)
+            {
+              obErrorLog.ThrowError(__FUNCTION__, "Convert failed with an exception" , obError);
               return Index; // the number we've actually output so far
+            }
           }
 
         if(!ret)
@@ -720,11 +683,7 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////
   OBFormat* OBConversion::FindFormat(const char* ID)
   {
-    //Case insensitive
-    if(FormatsMap().find(ID) == FormatsMap().end())
-      return NULL;
-    else
-      return FormatsMap()[ID];
+    return OBFormat::FindType(ID);
   }
 
   //////////////////////////////////////////////////
@@ -770,10 +729,7 @@ namespace OpenBabel {
 
   OBFormat* OBConversion::FormatFromMIME(const char* MIME)
   {
-    if(FormatsMIMEMap().find(MIME) == FormatsMIMEMap().end())
-      return NULL;
-    else
-      return FormatsMIMEMap()[MIME];
+    return OBFormat::FormatFromMIME(MIME);
   }
 
   bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
@@ -944,21 +900,16 @@ namespace OpenBabel {
   ////////////////////////////////////////////
   const char* OBConversion::Description()
   {
-#ifdef HAVE_LIBZ
-    return "Conversion options\n \
- -f <#> Start import at molecule # specified\n \
- -l <#> End import at molecule # specified\n \
- -e Continue with next object after error, if possible\n \
- -z Compress the output with gzip\n \
- -k Attempt to translate keywords\n";
-#else
-    return "Conversion options\n \
- -f <#> Start import at molecule # specified\n \
- -l <#> End import at molecule # specified\n \
- -e Continue with next object after error, if possible\n \
- -k Attempt to translate keywords\n";
-#endif
-    // -t All input files describe a single molecule
+    return 
+      "Conversion options\n"
+      "-f <#> Start import at molecule # specified\n"
+      "-l <#> End import at molecule # specified\n"
+      "-e Continue with next object after error, if possible\n"
+      #ifdef HAVE_LIBZ
+      "-z Compress the output with gzip\n"
+      #endif
+      "-k Attempt to translate keywords\n";
+      // -t All input files describe a single molecule
   }
 
   ////////////////////////////////////////////
@@ -1433,42 +1384,18 @@ namespace OpenBabel {
    */
   std::vector<std::string> OBConversion::GetSupportedInputFormat()
   {
-    if( SupportedInputFormat.empty() )
-    {
-      Formatpos pos;
-      OBFormat *pFormat;
-      const char* str = NULL;
-      while( GetNextFormat(pos, str, pFormat) )
-      {
-        if( (pFormat->Flags() & NOTREADABLE) )
-        {
-          continue;
-        }
-        SupportedInputFormat.push_back(str);
-      }
-    }
-    return( SupportedInputFormat );
+    vector<string> vlist;
+    OBPlugin::ListAsVector("formats", "in", vlist);
+    return vlist;
   }
   /**
    * Returns the list of supported output format
    */
   std::vector<std::string> OBConversion::GetSupportedOutputFormat()
   {
-    if( SupportedOutputFormat.empty() )
-    {
-      Formatpos pos;
-      OBFormat *pFormat;
-      const char* str = NULL;
-      while( GetNextFormat(pos, str, pFormat) )
-      {
-        if( ( pFormat->Flags() & NOTWRITABLE) )
-        {
-          continue;
-        }
-        SupportedOutputFormat.push_back(str);
-      }
-    }
-    return( SupportedOutputFormat );
+    vector<string> vlist;
+    OBPlugin::ListAsVector("formats", "out", vlist);
+    return vlist;
   }
 
 }//namespace OpenBabel

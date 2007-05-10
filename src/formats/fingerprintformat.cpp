@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #include <iomanip>
 
 #include <openbabel/obmolecformat.h>
-#include <openbabel/fingerprint.h>
+#include <openbabel/fingerprintNEW.h>
 
 using namespace std;
 namespace OpenBabel
@@ -60,13 +60,13 @@ Options e.g. -xfFP3 -xn128\n \
   bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     ostream &ofs = *pConv->GetOutStream();
-    if(pConv->IsOption("F"))
+/*    if(pConv->IsOption("F"))
       {
         FOR_EACH(OBFingerprint, iter)
           ofs << iter.ID() << " -- " << iter->Description() << endl;
         return true;
       }
-
+*/
 
     bool hexoutput=false;
     if(pConv->IsOption("h") || (pConv->GetOutputIndex()==1 && pConv->IsLast()))
@@ -81,7 +81,7 @@ Options e.g. -xfFP3 -xn128\n \
         fpid = fpid.substr(0,fpid.find('"'));
       }
 
-    OBFingerprint* pFP = OBFingerprint::FindFingerprint(fpid);
+    OBFingerprint* pFP = OBFingerprint::FindFingerprint(fpid.c_str());
     if(!pFP)
       {
         stringstream errorMsg;

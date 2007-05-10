@@ -101,6 +101,7 @@ private:
 	DECLARE_EVENT_TABLE()
 
 	wxMenu* fileMenu;
+  wxMenu* listMenu;
 	wxMenu* viewMenu;
 	wxMenu* helpMenu;
 
@@ -150,6 +151,7 @@ private:
 
 	bool SetChoice(wxChoice* pChoice, const wxString& FileName);
 	void MakeBold(wxWindow* pWnd);
+  void MakePluginsMenu();
 };
 
 class MyDialog : public wxDialog
@@ -176,7 +178,8 @@ enum
 		ID_INFORMAT,ID_OUTFORMAT,ID_ININFO,ID_OUTINFO,
 		ID_INFORCEFORMAT,ID_OUTFORCEFORMAT,ID_NOOUTFILE,ID_CONVERT,
 		ID_MESSAGES,ID_INPUTHERE,ID_RESTRICTFORMATS,ID_SELFORMATS,
-    ID_COPYTOINPUT
+    ID_COPYTOINPUT,
+    ID_PLUGINS
 };
 
 #endif

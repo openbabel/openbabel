@@ -4,6 +4,7 @@ groupcontrib.cpp - Handle logP, PSA, MR, and other group-based predictions
 Copyright (C) 2007      by Tim Vandermeersch
               2001-2007 by Stephen Jelfs
               2001-2007 by Joerg Kurt Wegner, me@cheminformatics.eu
+              2007      by Chris Morley
 
 Original version: JOELib2, http://joelib.sf.net
  
@@ -21,8 +22,11 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
-
-#include <openbabel/groupcontrib.h>
+#include <vector>
+#include <utility>
+#include <openbabel/mol.h>
+#include <openbabel/parsmart.h>
+#include <openbabel/descriptor.h>
 
 using namespace std;
 
@@ -35,53 +39,78 @@ namespace OpenBabel
       algorithm. See the derived OBPSA, OBLogP, OBMR classes for more 
       information on how to use these classes.
     */
+  class OBAPI OBGroupContrib : public OBDescriptor
+{
+public:
+  //! constructor. Each instance provides an ID and a datafile.
+  OBGroupContrib(const char* ID, const char* filename, const char* descr)
+    : OBDescriptor(ID, false), _filename(filename), _descr(descr){}
 
-  OBGroupContrib::OBGroupContrib()
-  {
-  }
+  /*! Predict the logP, MR, TPSA (each instance of OBGroupContrib 
+   *  uses different parameters loaded from its own datafile) for 
+   *  molecule mol using the group contributions algorithm from JOELib2.
+   */
+  virtual const char* Description(){ return _descr;}; 
+  virtual double Predict(OBBase* pOb); 
 
-  OBGroupContrib::~OBGroupContrib()
-  {
-  }
+ private:
+  bool ParseFile();
 
-  bool OBGroupContrib::ParseFile(const char *filename)
+  const char* _filename;
+  const char* _descr;
+  std::vector<std::pair<OBSmartsPattern*, double> > _contribsHeavy; //! heavy atom contributions
+  std::vector<std::pair<OBSmartsPattern*, double> > _contribsHydrogen; //!  hydrogen contributions
+};
+
+  bool OBGroupContrib::ParseFile()
   {
     OBSmartsPattern *sp;
     
     // open data file
     ifstream ifs;
 
-    if (OpenDatafile(ifs, filename).length() == 0) {
+    if (OpenDatafile(ifs, _filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, " Could not find contribution data file.", obError);
       return false;
     }
 
     vector<string> vs;
     bool heavy = false;
-    
-    char buffer[80];
+    string ln;
+    while(getline(ifs,ln)){
+      if(ln[0]=='#') continue;
+      if(ln.find(";heavy")!=string::npos)
+        heavy=true;
+      if(ln[0]==';') continue;
+      tokenize(vs, ln);
+
+/*    char buffer[80];
     while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "#", 1)) continue;
       if (EQn(buffer, ";heavy", 6))
         heavy = true;
       else if (EQn(buffer, ";", 1)) continue;
 
-	
       tokenize(vs, buffer);
+*/
       if (vs.size() < 2)
         continue;
       
-      sp = new OBSmartsPattern;
-      if (sp->Init(vs[0])) {
+      sp = new OBSmartsPattern;//causes non-serious memory leak.
+      // Could be cured by copying OBSmartsPattern rather than a pointer in vectors
+      if (sp->Init(vs[0])) 
+      {
         if (heavy)
           _contribsHeavy.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
-	else
+        else
           _contribsHydrogen.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
-      } else {
+      }
+      else
+      {
         delete sp;
         sp = NULL;
         obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
-	return false;
+        return false;
       }
     }
 
@@ -89,8 +118,17 @@ namespace OpenBabel
   }
   
  
-  double OBGroupContrib::GroupContributions(OBMol &mol)
+  double OBGroupContrib::Predict(OBBase* pOb)
   {
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    if(!pmol)
+      return 0.0;
+    OBMol& mol = *pmol;
+
+    //Read in data, unless it has already been done.
+    if(_contribsHeavy.empty() && _contribsHydrogen.empty())
+      ParseFile();
+
     vector<vector<int> > _mlist; // match list for atom typing
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*, double> >::iterator i;
@@ -152,104 +190,24 @@ namespace OpenBabel
 
     return total;
   }
-  
-  /** \class OBLogP groupcontrib.h <openbabel/groupcontrib.h>
-      \brief calculate the LogP (octanol/water partition coefficient).
- 
-      This class uses the JOELib2 group contribution algorithm to calculate 
-      the logP (octanol/water partition coefficient) of a molecule.
 
-      example:
-      \code
-      #include <openbabel/groupcontrib.h>
-      #include <openbabel/mol.h>
+  //******************************************************
+  // Make global instances for descriptors which are all calculated 
+  // from group contibutions in the same way but with different data.
 
-      OBMol mol;
-      OBLogP logP;
-      
-      cout << "logP = " << logP.Predict(mol) << endl;
-      \endcode
-   */
+  // LogP (octanol/water partition coefficient)
+  OBGroupContrib thelogP("logP", "logp.txt",
+    "octanol/water partition coefficient");
 
-  OBLogP::OBLogP()
-  {
-    ParseFile("logp.txt");
-  }
+  // TPSA (topological polar surface area)
+  OBGroupContrib theTPSA("TPSA", "psa.txt",
+    "topological polar surface area");
 
-  OBLogP::~OBLogP()
-  {
-  }
-  
-  double OBLogP::Predict(OBMol &mol)
-  {
-    return GroupContributions(mol);
-  }
-
-  /** \class OBPSA groupcontrib.h <openbabel/groupcontrib.h>
-      \brief calculate the TPSA (topological polar surface area).
- 
-      This class uses the JOELib2 group contribution algorithm to calculate 
-      the TPSA (Topological Polar Surface Area) of a molecule.
-
-      example:
-      \code
-      #include <openbabel/groupcontrib.h>
-      #include <openbabel/mol.h>
-
-      OBMol mol;
-      OBLogP psa;
-      
-      cout << "TPSA = " << psa.Predict(mol) << endl;
-      \endcode
-   */
-
-  OBPSA::OBPSA()
-  {
-    ParseFile("psa.txt");
-  }
-
-  OBPSA::~OBPSA()
-  {
-  }
-  
-  double OBPSA::Predict(OBMol &mol)
-  {
-    return GroupContributions(mol);
-  }
-  
-  /** \class OBMR groupcontrib.h <openbabel/groupcontrib.h>
-      \brief calculate the MR (molar refractivity).
- 
-      This class uses the JOELib2 group contribution algorithm to calculate 
-      the MR (Molar Refractivity) of a molecule.
-
-      example:
-      \code
-      #include <openbabel/groupcontrib.h>
-      #include <openbabel/mol.h>
-
-      OBMol mol;
-      OBLogP mr;
-      
-      cout << "MR = " << mr.Predict(mol) << endl;
-      \endcode
-   */
-
-  OBMR::OBMR()
-  {
-    ParseFile("mr.txt");
-  }
-
-  OBMR::~OBMR()
-  {
-  }
-  
-  double OBMR::Predict(OBMol &mol)
-  {
-    return GroupContributions(mol);
-  }
-
-} // end namespace OpenBabel
+  // MR (molar refractivity)
+  OBGroupContrib theMR("MR", "mr.txt",
+    "molar refractivity");
 
 //! \file groupcontrib.cpp
 //! \brief Handle logP, PSA and other group-based prediction algorithms.
+
+  }//namespace

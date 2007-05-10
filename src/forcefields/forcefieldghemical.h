@@ -104,7 +104,7 @@ namespace OpenBabel
 
     public:
       //! Constructor
-      OBForceFieldGhemical(std::string ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+      OBForceFieldGhemical(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
         ParseParamFile();
       }
@@ -116,7 +116,7 @@ namespace OpenBabel
       OBForceFieldGhemical &operator = (OBForceFieldGhemical &);
       
       //! Get the description for this force field
-      std::string Description() 
+      const char* Description() 
       { 
         return "Ghemical force field.";
       }

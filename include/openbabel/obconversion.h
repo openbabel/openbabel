@@ -31,6 +31,7 @@ GNU General Public License for more details.
 
 #include <openbabel/dlhandler.h>
 #include <openbabel/oberror.h>
+#include <openbabel/format.h>
 
 // These macros are used in DLL builds. If they have not
 // been set in babelconfig.h, define them as nothing.
@@ -45,114 +46,7 @@ GNU General Public License for more details.
 namespace OpenBabel {
 
 
-  class OBBase;
-  class OBConversion;
   OBERROR extern  OBMessageHandler obErrorLog;
-
-  //*************************************************
-
-  /// @brief Base class for file formats.
-  // class introduction in obconversion.cpp
-  class OBCONV OBFormat
-    {
-    public:
-      /// @brief The "API" interface Read function.
-
-      /// Reads a single object.
-      /// Does not make a new object on the heap; 
-      /// can be used with a pointer to an chem object on the heap or the stack.
-      virtual bool ReadMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/)
-        { std::cerr << "Not a valid input format"; return false;}
-
-      /// @brief The "Convert" interface Read function.
-
-      /// Possibly reads multiple new objects on the heap and subjects them 
-      /// to its DoTransformations() function, which may delete them again. 
-      /// Sends result to pConv->AddChemObject()
-      virtual bool ReadChemObject(OBConversion* /*pConv*/)
-        { std::cerr << "Not a valid input format"; return false;}
-
-      /// @brief The "API" interface Write function.
-
-      /// Writes a single object
-      /// Does not delete the object; 
-      /// can be used with a pointer to an chem object on the heap or the stack.
-      /// \return false on error.
-      virtual bool WriteMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/)
-        { std::cerr << "Not a valid output format"; return false;}
-
-      /// @brief The "Convert" interface Write function.
-
-      /// Writes a single object
-      /// Deletes the object after writing 
-      /// \return false on error
-      virtual bool WriteChemObject(OBConversion* /*pConv*/)
-        { std::cerr << "Not a valid output format"; return false;}
-
-      /// @brief Information on this format. Printed out in response to -Hxxx option where xxx id the id of the format.
-
-      /// Must be provided by each format class.
-      /// Can include a list of command line Options. These may be used to construction
-      /// check boxes, radio buttons etc for GUI interface.
-      virtual const char* Description()=0;
-	
-      /// @brief A decription of the chemical object converted by this format.
-
-      /// If not provided, the object type used by the default format is used (usually OBMol). 
-      virtual const char* TargetClassDescription();
-
-      /// \return the type of chemical object used by the format.
-
-      /// Defaults to that used by the default format. Useful for checking 
-      /// that a format can handle a particular object.
-      virtual const std::type_info& GetType();
- 	
-      /// @brief Web address where the format is defined.
-      virtual const char* SpecificationURL() { return ""; }
-
-      /// @brief Chemical MIME type associated with this file type (if any)
-      virtual const char* GetMIMEType() { return ""; }
-
-      /// @brief Decribes the capabilities of the format (Read only etc.)
-   
-      /// Currently, can be a bitwise OR of any of the following
-      /// NOTREADABLE READONEONLY NOTWRITABLE WRITEONEONLY DEFAULTFORMAT
-      /// READBINARY WRITEBINARY READXML
-      virtual unsigned int Flags() { return 0;}; 
-
-      /// @brief Skip past first n objects in input stream (or current one with n=0)
-
-      /// \return 1 on success, -1 on error and 0 if not implemented 
-      virtual int SkipObjects(int /*n*/, OBConversion* /*pConv*/)
-        {
-          return 0; //shows not implemented in the format class
-        };
-
-      /// \return a pointer to a new instance of the format, or NULL if fails.
-
-      /// Normally a single global instance is used but this may cause problems
-      /// if there are member variables and the format is used in more than one place
-      /// in the program.
-      virtual OBFormat* MakeNewInstance()
-        {
-          return NULL; //shows not implemented in the format class
-        }
-
-      /// @brief Format classes do not have a destructor
-      virtual ~OBFormat(){};
-    };
-
-  //*************************************************
-  /// @struct CharPtrLess obconversion.h <openbabel/obconversion.h>
-  /// @brief Case insensitive string comparison for FormatsMap key.
-	struct CharPtrLess : public std::binary_function<const char*,const char*, bool>
-	{
-		bool operator()(const char* p1,const char* p2) const
-		{ return strcasecmp(p1,p2)<0; }
-	};
-
-	typedef std::map<const char*,OBFormat*,CharPtrLess > FMapType;
-	typedef FMapType::iterator Formatpos;
 
   //*************************************************
   /// @brief Class to convert from one format to another.
@@ -180,7 +74,7 @@ namespace OpenBabel {
       static OBFormat*        FormatFromMIME(const char* MIME);
 
       ///Repeatedly called to recover available Formats
-      static bool	        GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
+//      static bool	        GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
       //@}
 		
       /// @name Information
@@ -299,7 +193,7 @@ namespace OpenBabel {
       /// @name Convenience functions
       //@{
       ///The default format is set in a single OBFormat class (generally it is OBMol) 
-      static OBFormat* GetDefaultFormat(){return pDefaultFormat;};
+      static OBFormat* GetDefaultFormat(){return OBFormat::FindType(NULL);};
 
       /// @brief Outputs an object of a class derived from OBBase.
 	
@@ -365,8 +259,8 @@ protected:
 
     protected:
       bool             SetStartAndEnd();
-      static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
-      static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
+//      static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
+//      static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
       typedef std::map<std::string,int> OPAMapType;
       static OPAMapType& OptionParamArray(Option_type typ);
       static int       LoadFormatFiles();
@@ -407,17 +301,6 @@ protected:
       std::vector<std::string> SupportedOutputFormat; ///< list of supported output format
 
     };
-
-  ///For OBFormat::Flags()
-#define NOTREADABLE     0x01
-#define READONEONLY     0x02
-#define READBINARY      0x04
-#define ZEROATOMSOK     0x08
-#define NOTWRITABLE     0x10
-#define WRITEONEONLY    0x20
-#define WRITEBINARY     0x40
-#define READXML         0x80
-#define DEFAULTFORMAT   0x4000
 
 } //namespace OpenBabel
 #endif //OB_CONV_H

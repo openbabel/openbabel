@@ -10,7 +10,7 @@
 #define HAVE_SNPRINTF 1
 #define HAVE_STRNCASECMP 1
 //#define HAVE_LIBZ 1 Causes DLL builds to not work with any file input!
-#define BABEL_VERSION  "2.1"
+#define BABEL_VERSION  "2.2"
 
 #define BABEL_DATADIR "."
 #define snprintf _snprintf

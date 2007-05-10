@@ -108,6 +108,7 @@ namespace OpenBabel
     void WriteProperties(OBMol& mol, bool& propertyListWritten);
     void WriteThermo(OBMol& mol, bool& propertyListWritten);
     string GetMolID();//for error mesaages
+    bool CMLFormat::WriteInChI(OBMol& mol);
 
   private:
     map<string,int> AtomMap; //key=atom id, value= ob atom index
@@ -1109,6 +1110,8 @@ namespace OpenBabel
         UseFormulaWithNoBonds = false;
       }
 
+    WriteInChI(mol);
+
     if(mol.NumAtoms()>0)
       {
         //if molecule has no bonds and atoms doesn't have coordinates, just output formula
@@ -1613,12 +1616,12 @@ namespace OpenBabel
     static const xmlChar C_SCALAR[]       = "scalar";
     static const xmlChar C_TITLE[]        = "title";
 
-    //	xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTYLIST, NULL);
     vector<OBGenericData*>::iterator k;
     vector<OBGenericData*> vdata = mol.GetData();
     for (k = vdata.begin();k != vdata.end();k++)
       {
-        if ((*k)->GetDataType() == OBGenericDataType::PairData)
+        if ((*k)->GetDataType() == OBGenericDataType::PairData
+          && (*k)->GetAttribute()!="InChI") //InChI is output in <identifier>
           {
             if(!propertyListWritten)
               {
@@ -1706,4 +1709,23 @@ namespace OpenBabel
     return molID.str();
   }
 
+  bool CMLFormat::WriteInChI(OBMol& mol)
+  {
+    //If OBPair data has an entry with attribute "inchi" it is not
+    //output in the property list but as a separate element in the form:
+    //<identifier convention="iupac:inchi" value="InChI=1/CH4/h1H4"/>
+    static const xmlChar C_IDENTIFIER[] = "identifier";
+    static const xmlChar C_CONVENTION[] = "convention";
+    static const xmlChar C_VALUE[]      = "value";
+    OBPairData* pData = dynamic_cast<OBPairData*>(mol.GetData("InChI"));
+    if(pData)
+    {
+      xmlTextWriterStartElementNS(writer(), prefix, C_IDENTIFIER, NULL);
+      xmlTextWriterWriteFormatAttribute(writer(), C_CONVENTION,"%s","iupac:inchi");
+      xmlTextWriterWriteFormatAttribute(writer(), C_VALUE,"%s", pData->GetValue().c_str());
+      xmlTextWriterEndElement(writer());//identifier
+      return true;
+    }
+    return false; //not written
+  }
 }//namespace

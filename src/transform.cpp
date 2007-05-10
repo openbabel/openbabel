@@ -16,7 +16,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
+#include <sstream>
 #include <openbabel/mol.h>
+#include <openbabel/descriptor.h>
 
 using namespace std;
 namespace OpenBabel
@@ -44,7 +46,7 @@ namespace OpenBabel
       return this;
 
     bool ret=true;
-    bool smatch=true, vmatch=true;
+    bool fmatch=true;
 
     map<string,string>::const_iterator itr;
 
@@ -119,25 +121,47 @@ namespace OpenBabel
           }
       }
 
-    itr = pOptions->find("v");
+    itr = pOptions->find("add");
+    if(itr!=pOptions->end())
+      OBDescriptor::AddProperties(this, itr->second);
+    
+    itr = pOptions->find("delete");
+    if(itr!=pOptions->end())
+      OBDescriptor::DeleteProperties(this, itr->second);
+    
+      //Filter using OBDescriptor comparison and (older) SMARTS tests
+    //Continue only if previous test was true.
+    itr = pOptions->find("filter");
     if(itr!=pOptions->end())
       {
-        //inverse match quoted SMARTS string which follows
-        OBSmartsPattern sp;
-        sp.Init(itr->second);
-        vmatch = !sp.Match(*this); //(*pmol) ;
+        std::istringstream optionText(itr->second);
+        fmatch = OBDescriptor::FilterCompare(this, optionText, false);
       }
 
-    itr = pOptions->find("s");
-    if(itr!=pOptions->end())
+    if(fmatch)
       {
-        //match quoted SMARTS string which follows
-        OBSmartsPattern sp;
-        sp.Init(itr->second.c_str());
-        smatch = sp.Match(*this); //(*pmol) ;
+        itr = pOptions->find("v");
+        if(itr!=pOptions->end())
+          {
+            //inverse match quoted SMARTS string which follows
+            OBSmartsPattern sp;
+            sp.Init(itr->second);
+            fmatch = !sp.Match(*this); //(*pmol) ;
+          }
       }
+    if(fmatch)
+    {
+      itr = pOptions->find("s");
+      if(itr!=pOptions->end())
+        {
+          //match quoted SMARTS string which follows
+          OBSmartsPattern sp;
+          sp.Init(itr->second.c_str());
+          fmatch = sp.Match(*this); //(*pmol) ;
+        }
+    }
 
-    if(!smatch || !vmatch)
+    if(!fmatch)
       {
         //filter failed: delete OBMol and return NULL
         delete this;
@@ -159,22 +183,25 @@ namespace OpenBabel
   ///////////////////////////////////////////////////
   const char* OBMol::ClassDescription()
   {
-    return "For conversions of molecules\n \
-Additional options :\n \
--d Delete hydrogens (make implicit)\n \
--h Add hydrogens (make explicit)\n \
--p Add Hydrogens appropriate for pH model\n \
--b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n \
--c Center Coordinates\n \
---join Join all input molecules into a single output molecule\n \
---separate Output disconnected fragments separately\n \
--C Combine mols in first file with others having same name\n \
--s\"smarts\" Convert only molecules matching SMARTS:\n \
--v\"smarts\" Convert only molecules NOT matching SMARTS:\n \
---property <attrib> <value> add or replace a property (SDF)\n \
---title <title> Add or replace molecule title\n \
---addtotitle <text> Append to title\n \
---addformula Append formula to title\n\n" ;
+    return "For conversions of molecules\n"
+"Additional options :\n"
+"-d Delete hydrogens (make implicit)\n"
+"-h Add hydrogens (make explicit)\n"
+"-p Add Hydrogens appropriate for pH model\n"
+"-b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n"
+"-c Center Coordinates\n"
+"-C Combine mols in first file with others having same name\n"
+"--filter <filterstring> Filter: convert only when tests are true:\n"
+"--add <list> Add properties from descriptors:\n"
+"--delete <list> Delete properties in list:\n"
+"-s\"smarts\" Convert only molecules matching SMARTS:\n"
+"-v\"smarts\" Convert only molecules NOT matching SMARTS:\n"
+"--join Join all input molecules into a single output molecule\n"
+"--separate Output disconnected fragments separately\n"
+"--property <attrib> <value> add or replace a property (SDF)\n"
+"--title <title> Add or replace molecule title\n"
+"--addtotitle <text> Append to title\n"
+"--addformula Append formula to title\n\n" ;
   }
 
 } //namespace OpenBabel

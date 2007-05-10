@@ -27,7 +27,7 @@ GNU General Public License for more details.
 #include <set>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
-#include <openbabel/pluginiter.h>
+#include <openbabel/plugin.h>
 
 namespace OpenBabel
 {
@@ -180,7 +180,7 @@ namespace OpenBabel
 
   // Class OBForceField
   // class introduction in forcefield.cpp
-  class OBAPI OBForceField
+  class OBAPI OBForceField : public OBPlugin
   {
   
   MAKE_PLUGIN(OBForceField)
@@ -291,22 +291,24 @@ namespace OpenBabel
     virtual ~OBForceField()
       {
       }
-    //! short description of the force field type.
-    //virtual std::string Description()=0;
+    const char* TypeID()
+      {
+        return "forcefields";
+      }
+
     /*! \param ID forcefield id (Ghemical, ...)
      *  \return A pointer to a forcefield (the default if ID is empty), or NULL if not available
      */
     static OBForceField* FindForceField(const std::string& ID)
     { 
-      return Iter().FindType(ID);
+      return FindType(ID.c_str());
     } 
     /*! \param ID forcefield id (Ghemical, ...)
      *  \return A pointer to a forcefield (the default if ID is empty), or NULL if not available
      */
     static OBForceField* FindForceField(const char *ID)
     {
-      std::string ffname(ID);
-      return FindForceField(ffname);
+      return FindType(ID);
     }
     //! \return The unit (kcal/mol, kJ/mol, ...) in which the energy is expressed as std::string
     virtual std::string GetUnit() { return std::string("au"); }
@@ -676,13 +678,13 @@ namespace OpenBabel
     ///This function contains rubbish merely to ensure the compiler instantiates
     ///some templated functions which are needed for the Windows Python build.
     ///TODO Find the proper way of doing this.
-    void kludge()
+/*    void kludge()
     {
       PluginIter<OBForceField> it;
       (++it)->SetLogLevel(1);
       if(it)it.ID();
     }
-
+*/
   }; // class OBForceField
 
 }// namespace OpenBabel

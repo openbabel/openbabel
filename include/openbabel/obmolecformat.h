@@ -50,6 +50,7 @@ namespace OpenBabel {
 class OBCOMMON OBMoleculeFormat : public OBFormat
 {
 private:
+  static bool OptionsRegistered;
   static std::map<std::string, OBMol*> IMols;
   static OBMol* _jmol; //!< Accumulates molecules with the -j option
   static std::vector<OBMol> MolArray; //!< Used in --separate option
@@ -59,30 +60,37 @@ public:
 
   OBMoleculeFormat()
   {
-    OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
-    OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
-    OBConversion::RegisterOptionParam("title", this, 1,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("addtotitle", this, 1,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("property", this, 2, OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("C",        this, 0,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("j",        this, 0,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("join",     this, 0,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("separate", this, 0,OBConversion::GENOPTIONS);
+    if(!OptionsRegistered)
+    {
+      OptionsRegistered=true;
+      OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("title", this, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("addtotitle", this, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("property", this, 2, OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("C",        this, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("j",        this, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("join",     this, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("separate", this, 0,OBConversion::GENOPTIONS);
 
-    //The follow are OBMol options, which should not be in OBConversion.
-    //But here isn't entirely appropriate either, since one could have
-    //OBMol formats loaded but which don't derived from this class.
-    //However, this possibility is remote.
-    OBConversion::RegisterOptionParam("s", NULL, 1,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("v", NULL, 1,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("h", NULL, 0,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("d", NULL, 0,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("b", NULL, 0,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("c", NULL, 0,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("p", NULL, 0,OBConversion::GENOPTIONS); 
-    OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
-    OBConversion::RegisterOptionParam("k", NULL, 0,OBConversion::GENOPTIONS);
-  };
+      //The follow are OBMol options, which should not be in OBConversion.
+      //But here isn't entirely appropriate either, since one could have
+      //OBMol formats loaded but which don't derived from this class.
+      //However, this possibility is remote.
+      OBConversion::RegisterOptionParam("s", NULL, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("v", NULL, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("h", NULL, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("d", NULL, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("b", NULL, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("c", NULL, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("p", NULL, 0,OBConversion::GENOPTIONS); 
+      OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("k", NULL, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("filter", NULL, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("add", NULL, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("delete", NULL, 1,OBConversion::GENOPTIONS);
+    }
+  }
 
   //! Static routine,  which can be called from elsewhere
   static bool ReadChemObjectImpl(OBConversion* pConv, OBFormat*);

@@ -228,7 +228,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\descriptor.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\dlhandler_win32.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\filters.cpp"
 				>
 			</File>
 			<File
@@ -260,6 +268,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\format.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\generic.cpp"
 				>
 			</File>
@@ -274,6 +286,13 @@
 			<File
 				RelativePath="..\..\src\groupcontrib.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\kekulize.cpp"
@@ -321,6 +340,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\phmodel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\plugin.cpp"
 				>
 			</File>
 			<File
@@ -410,6 +433,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\descriptor.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\dlhandler.h"
 				>
 			</File>
@@ -427,6 +454,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\forcefields\forcefieldmm2.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\format.h"
 				>
 			</File>
 			<File
@@ -511,6 +542,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\phmodel.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\plugin.h"
 				>
 			</File>
 			<File

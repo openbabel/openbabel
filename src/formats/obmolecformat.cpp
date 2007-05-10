@@ -28,7 +28,7 @@ static char THIS_FILE[]=__FILE__;
 using namespace std;
 namespace OpenBabel
 {
-
+  bool OBMoleculeFormat::OptionsRegistered=false;
   std::map<std::string, OBMol*> OBMoleculeFormat::IMols;
   OBMol* OBMoleculeFormat::_jmol;
   std::vector<OBMol> OBMoleculeFormat::MolArray;

@@ -22,7 +22,7 @@ GNU General Public License for more details.
 #include <map>
 #include <string>
 
-#include <openbabel/fingerprint.h>
+#include <openbabel/fingerprintNEW.h>
 
 using namespace std;
 namespace OpenBabel
@@ -45,10 +45,11 @@ public:
 			_patternsfile = filename;
 	};
 	
-	virtual string Description()
-	{	
-		string desc("SMARTS patterns specified in the file ");
-		return (desc + _patternsfile);
+	virtual const char* Description()
+	{
+		static string desc;
+    desc = "SMARTS patterns specified in the file " + _patternsfile;
+    return (desc.c_str());
 	};
 
 	//Each bits represents a single substructure; no need for confirmation when substructure searching

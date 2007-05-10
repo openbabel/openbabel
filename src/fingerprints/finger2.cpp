@@ -18,7 +18,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
-#include <openbabel/fingerprint.h>
+#include <openbabel/fingerprintNEW.h>
 #include <set>
 #include <vector>
 
@@ -35,10 +35,10 @@ namespace OpenBabel
 class fingerprint2 : public OBFingerprint
 {
 public:
-	fingerprint2(string ID, bool IsDefault=false) 
+	fingerprint2(const char* ID, bool IsDefault=false) 
 		: OBFingerprint(ID, IsDefault){};
 
-	virtual string Description()
+	virtual const char* Description()
 	{ return "Indexes linear fragments up to 7 atoms.";};
 
 	//Calculates the fingerprint 
