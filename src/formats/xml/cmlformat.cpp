@@ -108,7 +108,7 @@ namespace OpenBabel
     void WriteProperties(OBMol& mol, bool& propertyListWritten);
     void WriteThermo(OBMol& mol, bool& propertyListWritten);
     string GetMolID();//for error mesaages
-    bool CMLFormat::WriteInChI(OBMol& mol);
+    bool WriteInChI(OBMol& mol);
 
   private:
     map<string,int> AtomMap; //key=atom id, value= ob atom index

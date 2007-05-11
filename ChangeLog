@@ -1,3 +1,8 @@
+2007-05-11  Jean Brefort  <jean.brefort@normalesup.org>
+	* include/openbabel/format.h: add missing new line (makes gcc happy).
+	* include/openbabel/plugin.h: remove ClassName:: from method declaration.
+	* src/formats/xml/cmlformat.cpp: ditto.
+
 2007-05-10  Chris Morley
 
 	* src/forcefields/forcefieldmmff94.cpp, .h: Mod for new plugin

@@ -79,7 +79,7 @@ public:
   static std::string ListAsString(const char* PluginID, const char* param=NULL);
 
   ///Utility function to return only the first line of a string
-  static std::string OBPlugin::FirstLine(const char* txt);
+  static std::string FirstLine(const char* txt);
 
   static PluginIterator Begin(const char* PluginID)
   {
