@@ -1,3 +1,9 @@
+2007-05-12  Noel O'Boyle <baoilleach@gmail.com>
+
+	* SWIG interface files: Added template for vectors of strings
+	* pybel.py: Added informats and outformats, dictionaries corresponding
+	to the supported input and output formats
+
 2007-05-11  Jean Brefort  <jean.brefort@normalesup.org>
 	* include/openbabel/format.h: add missing new line (makes gcc happy).
 	* include/openbabel/plugin.h: remove ClassName:: from method declaration.

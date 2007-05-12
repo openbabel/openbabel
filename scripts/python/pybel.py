@@ -1,6 +1,14 @@
 import openbabel as ob
 import os.path
 
+def _formatstodict(list):
+    broken = [x.replace("[Read-only]", "").replace("[Write-only]","").split(" -- ") for x in list]
+    broken = [(x,y.strip()) for x,y in broken]
+    return dict(broken)
+_obconv = ob.OBConversion()
+informats = _formatstodict(_obconv.GetSupportedInputFormat())
+outformats = _formatstodict(_obconv.GetSupportedOutputFormat())
+
 def readfile(format, filename):
     """Iterate over the molecules in a file.
 

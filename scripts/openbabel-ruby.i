@@ -51,6 +51,7 @@ namespace std {
 %template (vectorUnsignedInt)     vector<unsigned int>;
 %template (vvInt)		      vector< vector<int> >;
 %template (vectorDouble) 	vector<double>;
+%template (vectorString)		  vector<std::string>;
 %template (vVector3)		  vector<OpenBabel::vector3>;
 
 %template (vectorMol)		  vector<OpenBabel::OBMol>;
