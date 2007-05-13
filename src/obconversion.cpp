@@ -761,9 +761,10 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
     if(!(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
       pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
 
-    pInStream->rdbuf(pOrigInBuf);
+    bool ret = pInFormat->ReadMolecule(pOb, this);
 
-    return pInFormat->ReadMolecule(pOb, this);
+    pInStream->rdbuf(pOrigInBuf);
+    return ret;
   }
 
   //////////////////////////////////////////////////

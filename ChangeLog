@@ -1,3 +1,9 @@
+2007-05-10  Chris Morley
+
+	* src/obconversion.cpp(Read): Ensured that FilteringInputStreambuf
+	is used. Previously it wasn't, which could cause errors
+	except with unix reading unix files.
+	 
 2007-05-12  Noel O'Boyle <baoilleach@gmail.com>
 
 	* SWIG interface files: Added template for vectors of strings
