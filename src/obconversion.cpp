@@ -444,11 +444,13 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
     //Because FilteringInputStreambuf has to be at this level to remain
     //in scope during Convert(), it is always constructed, but is only used in
     //with formats with non-binary and which are not XML (which should not be 
-    //sensitive to line endings anyway).
+    //sensitive to line endings anyway). If a FilteringInputStreambuf is already
+    //installed, do not install another one.
 
     FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
     streambuf* pOrigInBuf = pInStream->rdbuf();
-    if(pInFormat && !(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
+    if(pInFormat && !(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML)
+       && !dynamic_cast< FilteringInputStreambuf< LineEndingExtractor >* >(pInStream->rdbuf()))
       pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
     
     int count = Convert();
@@ -756,10 +758,12 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
     }
 #endif
 
+    //Do not install filtering input stream if a binary or XML format or if already installed
+    if((pInFormat->Flags() & READBINARY) || (pInFormat->Flags() & READXML)
+       || dynamic_cast< FilteringInputStreambuf< LineEndingExtractor >* >(pInStream->rdbuf()))
+          return pInFormat->ReadMolecule(pOb, this);
     FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
-    streambuf* pOrigInBuf = pInStream->rdbuf();
-    if(!(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML))
-      pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
+    streambuf* pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
 
     bool ret = pInFormat->ReadMolecule(pOb, this);
 

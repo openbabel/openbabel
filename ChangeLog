@@ -1,4 +1,11 @@
-2007-05-10  Chris Morley
+
+2007-05-14  Chris Morley
+
+	* src/obconversion.cpp(Read, Convert): Do not install a 
+	FilteringInputStreambuf if stream already contains one. This
+	solves my problem with multiple reads on the same input stream.
+	 
+2007-05-13  Chris Morley
 
 	* src/obconversion.cpp(Read): Ensured that FilteringInputStreambuf
 	is used. Previously it wasn't, which could cause errors
