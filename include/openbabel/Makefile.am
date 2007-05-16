@@ -5,13 +5,13 @@ libopenbabelinclude_HEADERS = \
 		atom.h \
 		babelconfig.h base.h bitvec.h bond.h \
 		bondtyper.h canon.h \
-		chains.h chiral.h data.h \
-		dlhandler.h fingerprint.h forcefield.h \
+		chains.h chiral.h data.h descriptor.h \
+		dlhandler.h fingerprint.h forcefield.h format.h \
 		generic.h grid.h internalcoord.h kinetics.h \
 		lineend.h  matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \
 		obmolecformat.h obutil.h \
-		parsmart.h patty.h phmodel.h pluginiter.h \
+		parsmart.h patty.h phmodel.h plugin.h \
 		groupcontrib.h \
 		rand.h reaction.h \
 		residue.h ring.h rotamer.h rotor.h typer.h \

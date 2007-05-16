@@ -20,13 +20,14 @@ endif
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp canon.cpp \
-		chains.cpp chiral.cpp data.cpp \
-		fingerprint.cpp forcefield.cpp generic.cpp \
+		chains.cpp chiral.cpp data.cpp descriptor.cpp filters.cpp \
+		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
 		obutil.cpp parsmart.cpp \
-		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
+		patty.cpp phmodel.cpp plugin.cpp \
+                rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp groupcontrib.cpp $(dlhandler)
 

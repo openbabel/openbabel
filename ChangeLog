@@ -1,3 +1,10 @@
+2007-05-16  Noel O'Boyle <baoilleach@gmail.com>
+
+	* Added Chris's header changes to Makefile.am
+	* Removed comments starting with //* as they confused SWIG as there
+	was no matching */
+	* python SWIG interface file: Included the new headers
+	Note: the python bindings still don't compile.
 
 2007-05-14  Chris Morley
 

@@ -41,7 +41,6 @@ class OBFPRT OBFingerprint : public OBPlugin
 //see end of cpp file for detailed documentation
 
 MAKE_PLUGIN(OBFingerprint)
-/*******************************************************************
 //This section is in the macro
 public:
 	//The collection of sub-types is in a local static variable to avoid
@@ -80,7 +79,6 @@ public:
     return static_cast<OBFingerprint*>(BaseFindType(Map(),ID));
 	}
 	
-//*******************************************************************/
 	
    const char* TypeID()
 	{
@@ -149,7 +147,6 @@ private:
   static const unsigned int bitsperint;// = 8 * sizeof(unsigned int);
 };
 
-//*************************************************************
 //Fast search routines
 /// \struct FptIndexHeader fingerprint.h <openbabel/fingerprint.h>
 /// \brief Header for fastsearch index file
@@ -215,7 +212,6 @@ private:
   OBFingerprint* _pFP;
 };
 
-//**********************************************
 /// \class FastSearchIndexer fingerprint.h <openbabel/fingerprint.h>
 /// \brief Class to prepare fingerprint index files See FastSearch class for details
 class OBFPRT FastSearchIndexer
