@@ -26,9 +26,11 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
-#include <openbabel/groupcontrib.h>
+#include <openbabel/descriptor.h>
 #include <openbabel/obconversion.h>
-#include <unistd.h>
+#ifndef WIN32 
+  #include <unistd.h>
+#endif
 
 using namespace std;
 using namespace OpenBabel;
@@ -52,7 +54,7 @@ int main(int argc,char **argv)
     {
       string err = "Usage: ";
       err += program_name;
-      err += " <filename>\n";
+      err += " <filename>\n"
       "Output format:\n"
         "name NAME\n"
         "formula  FORMULA\n"
@@ -66,9 +68,11 @@ int main(int argc,char **argv)
         "sequence RESIDUE_SEQUENCE\n"
         "num_rings NUMBER_OF_RING_(SSSR)\n"
         "logP   NUM\n"
-        "PSA    POLAR_SURFACE_AREA\n";
+        "PSA    POLAR_SURFACE_AREA\n"
+        "MR     MOLAR REFRACTIVITY";
       err += "$$$$";
-      ThrowError(err);
+//      ThrowError(err); wasn't being output because error level too low
+      cerr << err; //Why not do directly
       exit(-1);
     }
   else
@@ -97,9 +101,6 @@ int main(int argc,char **argv)
     }
   
   OBMol mol;
-  OBLogP logP;
-  OBPSA psa;
-  OBMR mr;
   OBFormat *canSMIFormat = conv.FindFormat("can");
   OBFormat *inchiFormat = conv.FindFormat("inchi");
 
@@ -162,11 +163,25 @@ int main(int argc,char **argv)
         cout << "sequence         " << "-" << endl;
 
       cout << "num_rings        " << nrings(mol) << endl;
-      cout << "logP             " << logP.Predict(mol) << endl;
-      cout << "PSA              " << psa.Predict(mol) << endl;
-      cout << "MR               " << mr.Predict(mol) << endl;
+
+      OBDescriptor* pDesc;
+      pDesc= OBDescriptor::FindType("logP");
+      if(pDesc)
+        cout << "logP             " << pDesc->Predict(&mol) << endl;
+
+      pDesc = OBDescriptor::FindType("PSA");
+      if(pDesc)
+        cout << "PSA              " << pDesc->Predict(&mol) << endl;
+
+      pDesc = OBDescriptor::FindType("MR");
+      if(pDesc)
+        cout << "MR               " << pDesc->Predict(&mol) << endl;
+
       cout << "$$$$" << endl; // SDF like end of compound descriptor list
       
+      //Other OBDescriptors could be output here, even ones that were rarely
+      // used. Since these are plugin classes, they may not be loaded, but
+      // then with code like the above they are just ignored.
     } // end for loop
   
   return(1);

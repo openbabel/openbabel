@@ -25,86 +25,50 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/parsmart.h>
+#include <openbabel/descriptor.h>
 
 namespace OpenBabel
 {
-  // class introduction in groupcontrib.cpp
-  class OBAPI OBGroupContrib
-  {
-    public:
-      //! constructor
-      OBGroupContrib();
-      //! destructor
-      ~OBGroupContrib();
-    protected:
-      /*! Parse the data file. (this function is called from the class constructor)
-       */
-      bool ParseFile(const char *filename);
-      /*! Predict the logP, MR, TPSA (each class derived from OBGroupContrib 
-       *  loads different parameters in it's contstructor) for 
-       *  molecule mol using the group contributions algorithm from JOELib2.
-       *
-       *  \param mol OBMol object for which to predict the logP, MR, TPSA
-       *  \return predicted value
-       */
-      double GroupContributions(OBMol &mol);
-   private:
-      std::vector<std::pair<OBSmartsPattern*, double> > _contribsHeavy; //! heavy atom contributions
-      std::vector<std::pair<OBSmartsPattern*, double> > _contribsHydrogen; //!  hydrogen contributions
-  };
 
-  // class introduction in groupcontrib.cpp
-  class OBAPI OBLogP: public OBGroupContrib
-  {
-    public:
-      //! constructor
-      OBLogP();
-      //! destructor
-      ~OBLogP();
-      /*! Predict the logP for molecule mol using the group contributions
-       *  algorithm from JOELib2.
-       *
-       *  \param mol OBMol object for which to predict the logP
-       *  \return predicted logP
-       */
-      double Predict(OBMol &mol);
-  };
-  
-  // class introduction in groupcontrib.cpp
-  class OBAPI OBPSA: public OBGroupContrib
-  {
-    public:
-      //! constructor
-      OBPSA();
-      //! destructor
-      ~OBPSA();
-      /*! Predict the TPSA (Topological Polar Surface Area) for molecule mol 
-       *  using the group contributions algorithm from JOELib2.
-       *
-       *  \param mol OBMol object for which to predict the TPSA
-       *  \return predicted TPSA
-       */
-      double Predict(OBMol &mol);
-  };
+  /** \class OBGroupContrib groupcontrib.h <openbabel/groupcontrib.h>
+      \brief Handle group contribution algorithms.
+ 
+      This is the base class for calculations that use the JOELib2 contribution 
+      algorithm. 
+    */
+class OBAPI OBGroupContrib : public OBDescriptor
+{
+public:
+  //! constructor. Each instance provides an ID and a datafile.
+  OBGroupContrib(const char* ID, const char* filename, const char* descr)
+    : OBDescriptor(ID, false), _filename(filename), _descr(descr){}
 
-  // class introduction in groupcontrib.cpp
-  class OBAPI OBMR: public OBGroupContrib
-  {
-    public:
-      //! constructor
-      OBMR();
-      //! destructor
-      ~OBMR();
-      /*! Predict the MR (Molar Refractivity) for molecule mol 
-       *  using the group contributions algorithm from JOELib2.
-       *
-       *  \param mol OBMol object for which to predict the MR
-       *  \return predicted MR
-       */
-      double Predict(OBMol &mol);
-  };
+  /*! Predict the logP, MR, TPSA (each instance of OBGroupContrib 
+   *  uses different parameters loaded from its own datafile) for 
+   *  molecule mol using the group contributions algorithm from JOELib2.
+   */
+  virtual const char* Description(){ return _descr;}; 
+  virtual double Predict(OBBase* pOb); 
 
+ private:
+  bool ParseFile();
 
+  const char* _filename;
+  const char* _descr;
+  std::vector<std::pair<OBSmartsPattern*, double> > _contribsHeavy; //! heavy atom contributions
+  std::vector<std::pair<OBSmartsPattern*, double> > _contribsHydrogen; //!  hydrogen contributions
+};
+
+/* The classes OBLogp, OBPSA and OBMR have been replaced by instances of
+OBGroupContrib with different IDs.
+So instead of: 
+      OBLogp logP;
+      cout << "logP  " << logP.Predict(mol) << endl;
+use:
+      OBDescriptor* pDesc = OBDescriptor::FindType("logP")
+      if(pDesc)
+        cout << "logP  " << pDesc->Predict(&mol) << endl;
+*/
 } // end namespace OpenBabel
 
 #endif // OB_GROUPCONTRIB_H

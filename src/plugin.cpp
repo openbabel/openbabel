@@ -43,13 +43,19 @@ bool OBPlugin::ListAsVector(const char* PluginID, const char* param, vector<stri
       itr = PluginMap().find(PluginID);
       if(itr!=PluginMap().end())
       {
+        bool onlyIDs = param!=NULL && strstr(param,"ids")!=NULL;
         //Get map of plugin type (like OBFingerprint) and output its contents
         PluginMapType Map = itr->second->GetMap();
         for(itr=Map.begin(); itr!=Map.end(); ++itr)
         {
-          string txt;
-          if((itr->second)->Display(txt, param, itr->first))
-            vlist.push_back(txt);
+          if(onlyIDs)
+            vlist.push_back(itr->first);
+          else
+          {
+            string txt;
+            if((itr->second)->Display(txt, param, itr->first))
+              vlist.push_back(txt);
+          }
         }
         return true;
       }

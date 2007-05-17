@@ -26,41 +26,12 @@ GNU General Public License for more details.
 #include <utility>
 #include <openbabel/mol.h>
 #include <openbabel/parsmart.h>
-#include <openbabel/descriptor.h>
+#include <openbabel/groupcontrib.h>
 
 using namespace std;
 
 namespace OpenBabel
 {
-  /** \class OBGroupContrib groupcontrib.h <openbabel/groupcontrib.h>
-      \brief Handle group contribution algorithms.
- 
-      This is the base class for calculations that use the JOELib2 contribution 
-      algorithm. See the derived OBPSA, OBLogP, OBMR classes for more 
-      information on how to use these classes.
-    */
-  class OBAPI OBGroupContrib : public OBDescriptor
-{
-public:
-  //! constructor. Each instance provides an ID and a datafile.
-  OBGroupContrib(const char* ID, const char* filename, const char* descr)
-    : OBDescriptor(ID, false), _filename(filename), _descr(descr){}
-
-  /*! Predict the logP, MR, TPSA (each instance of OBGroupContrib 
-   *  uses different parameters loaded from its own datafile) for 
-   *  molecule mol using the group contributions algorithm from JOELib2.
-   */
-  virtual const char* Description(){ return _descr;}; 
-  virtual double Predict(OBBase* pOb); 
-
- private:
-  bool ParseFile();
-
-  const char* _filename;
-  const char* _descr;
-  std::vector<std::pair<OBSmartsPattern*, double> > _contribsHeavy; //! heavy atom contributions
-  std::vector<std::pair<OBSmartsPattern*, double> > _contribsHydrogen; //!  hydrogen contributions
-};
 
   bool OBGroupContrib::ParseFile()
   {

@@ -1,3 +1,17 @@
+2007-05-17  Chris Morley
+
+	* tools/obprop.cpp: mods to use new versions of logP etc.
+	
+	* include/openbabel/groupcontrib.h, src/goupcontrib.cpp:
+	move declarations of OBGroupContib into header file and delete
+	OBLogP etc which should not have been there but still compiled.
+	
+	* src/plugin.cpp(ListAsVector): Add support for only IDs.
+	
+	* include/openbabel/fingerprint.h:comment had become
+	uncommented.
+	
+	
 2007-05-16  Noel O'Boyle <baoilleach@gmail.com>
 
 	* Added Chris's header changes to Makefile.am

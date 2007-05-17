@@ -41,46 +41,8 @@ class OBFPRT OBFingerprint : public OBPlugin
 //see end of cpp file for detailed documentation
 
 MAKE_PLUGIN(OBFingerprint)
-//This section is in the macro
-public:
-	//The collection of sub-types is in a local static variable to avoid
-	//any difficulties with the order of initialization of static objects. 
-	static PluginMapType& Map()
-	{
-		static PluginMapType m;
-		return m;
-	}
-	static OBFingerprint*& Default()
-  {
-    static OBFingerprint* d;
-    return d;
-  }
 
-  OBFingerprint(const std::string ID, bool IsDefault=false)
-	{
-		if(IsDefault || Map().empty())
-			Default() = this;
-		Map()[ID]=this;
-		//Ensure OBFingerprint is registered in OBPlugin so it can be accessed from the commandline	
-		PluginMap()[TypeID()] =this;
-   }
-   
-   //Making the map accessible to the base class (Cannot be used during construction)
-   virtual PluginMapType& GetMap()
-   {
-   	return Map();
-   }
-   
-	///Returns the fingerprint associated with the ID, or the default fingerprint if ID is empty.
-   static OBFingerprint* FindType(const std::string ID)
-	{
-		if(ID.empty())
-			return Default();
-    return static_cast<OBFingerprint*>(BaseFindType(Map(),ID));
-	}
-	
-	
-   const char* TypeID()
+const char* TypeID()
 	{
 		return "fingerprints";
 	}
