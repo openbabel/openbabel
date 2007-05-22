@@ -18,6 +18,8 @@ General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/plugin.h>
 
+#include <iterator>
+
 using namespace std;
 namespace OpenBabel
 {
@@ -73,7 +75,7 @@ void OBPlugin::List(const char* PluginID, const char* param, ostream* os)
   vector<string> vlist;
   if(!ListAsVector(PluginID,param, vlist))
     *os << PluginID << " is not a recognized plugin type. Those with instances of sub-types loaded are:" << endl;
-  copy(vlist.begin(), vlist.end(), ostream_iterator<string>(*os, "\n"));
+  copy(vlist.begin(), vlist.end(), std::ostream_iterator<string>(*os, "\n"));
 }
 
 string OBPlugin::ListAsString(const char* PluginID, const char* param)

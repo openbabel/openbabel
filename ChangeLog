@@ -1,3 +1,19 @@
+2007-05-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* */Makefile.in: Regenerate UNIX build files.
+
+	* src/plugin.cpp: Make sure to #include <iterator> to solve GCC
+	compile problem. 
+
+	* src/descriptor.cpp: Change _isnan to IsNan, as discussed on the
+	list to solve GCC compile problem.
+
+	* scripts/*: Updated to compile. May have removed functionality
+	because of plugin changes.
+
+	* tools/obminimize.cpp, tools/obgen.cpp, tools/obenergy.cpp:
+	Switch to OBPlugin::List().
+
 2007-05-17  Chris Morley
 
 	* tools/obprop.cpp: mods to use new versions of logP etc.
@@ -10,7 +26,6 @@
 	
 	* include/openbabel/fingerprint.h:comment had become
 	uncommented.
-	
 	
 2007-05-16  Noel O'Boyle <baoilleach@gmail.com>
 

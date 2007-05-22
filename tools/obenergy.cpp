@@ -49,10 +49,7 @@ int main(int argc,char **argv)
     cout << endl;
     cout << "              available forcefields:" << endl;
     cout << endl;
-    FOR_EACH(OBForceField, iter) {
-      //cout << "              " << iter.ID() << " - " << iter.Description() << endl;
-      cout << "              " << iter.ID() << endl;
-    }
+    OBPlugin::List("forcefields", "verbose");
     exit(-1);
   } else {
     int ifile = 1;

@@ -33,7 +33,7 @@
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/oberror.h>
-#include <openbabel/pluginiter.h>
+#include <openbabel/plugin.h>
 #include <openbabel/fingerprint.h>
 
 #include <openbabel/forcefield.h>
@@ -92,9 +92,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
 
-%include <openbabel/pluginiter.h>
-%template (pluginiterFingerprint) OpenBabel::PluginIter<OpenBabel::OBFingerprint>;
-%template (pluginiterForceField) OpenBabel::PluginIter<OpenBabel::OBForceField>;
+%include <openbabel/plugin.h>
 
 %include <openbabel/oberror.h>
 %include <openbabel/obconversion.h>

@@ -22,6 +22,10 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/descriptor.h>
 
+#if defined(WIN32)
+#define IsNan _isnan
+#endif
+
 using namespace std;
 namespace OpenBabel
 {
@@ -227,7 +231,7 @@ bool OBDescriptor::GenericDataCompare(string& ID, OBBase* pOb, istream& optionTe
   }
   stringstream ss(sval);
   double val;
-  if((ss >> val) && _isnan(filterval))
+  if((ss >> val) && IsNan(filterval))
     //Do a string comparison if either the filter or the OBPair value is not a number
     return DoComparison(ch1, ch2, sval, sfilterval);
   else
@@ -366,7 +370,7 @@ bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bo
 
   stringstream ss(sval);
   double val;
-  if((ss >> val) && !_isnan(filterval))
+  if((ss >> val) && !IsNan(filterval))
     //Do a numerical comparison if both values are numbers
     return DoComparison(ch1, ch2, val, filterval);
   else
