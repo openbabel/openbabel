@@ -1,3 +1,8 @@
+2007-05-25  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/xml/cdxmlformat.cpp: don't clear the molecule
+	before writing. [#1725343]
+
 2007-04-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure, configure.in: Bump version to 2.1.1b1.
