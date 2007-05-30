@@ -1,3 +1,14 @@
+2007-05-30  Chris Morley
+
+	* include/openbabel/lineend.h: remove sync()call from destructor
+	so that can delete in OBConversion's destructor after
+	istreams have gone.
+	
+	* include/openbabel/obconversion.h, *src/obconversion.cpp
+	Add InstallStreamFilter() and call from Read() and Convert().
+	I hope this will cure the Windows Python bug, and is a neater
+	method all round.
+	 
 2007-05-25  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/xml/cdxmlformat.cpp: don't clear the molecule

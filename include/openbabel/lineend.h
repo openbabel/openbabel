@@ -64,7 +64,7 @@ namespace OpenBabel
       ) ;
     virtual                 ~FilteringInputStreambuf()
     {
-      sync();
+      //sync(); comment out so can be deleted in OBConversion destructor
     };
     virtual int              overflow( int ) {return EOF;};
     virtual int              underflow() ;

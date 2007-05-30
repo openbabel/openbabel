@@ -38,7 +38,6 @@ GNU General Public License for more details.
 #include <map>
 
 #include <openbabel/obconversion.h>
-#include "openbabel/lineend.h"
 
 #ifdef HAVE_LIBZ
 #include "zipstream.h"
@@ -200,7 +199,7 @@ namespace OpenBabel {
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), CheckedForGzip(false),
     NeedToFreeInStream(false), NeedToFreeOutStream(false), 
-    pOb1(NULL), pAuxConv(NULL)
+    pOb1(NULL), pAuxConv(NULL),pLineEndBuf(NULL)
   {
     pInStream=is;
     pOutStream=os;
@@ -240,7 +239,7 @@ namespace OpenBabel {
     CheckedForGzip = o.CheckedForGzip;
     NeedToFreeInStream = o.NeedToFreeInStream;
     NeedToFreeOutStream = o.NeedToFreeOutStream;
-
+    pLineEndBuf    = o.pLineEndBuf;
     pAuxConv       = NULL;
   }
   ///////////////////////////////////////////////
@@ -439,23 +438,12 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
     //and receives characters this stream's original rdbuf. 
     //It filters them, converting CRLF and CR line endings to LF.
     //seek and tellg requests to the stream are passed through to the original
-    //rdbuf.
-    //streambuf objects cannot be member variables and so need to be made here.
-    //Because FilteringInputStreambuf has to be at this level to remain
-    //in scope during Convert(), it is always constructed, but is only used in
-    //with formats with non-binary and which are not XML (which should not be 
-    //sensitive to line endings anyway). If a FilteringInputStreambuf is already
-    //installed, do not install another one.
+    //rdbuf. A FilteringInputStreambuf is installed only for appropriate formats
+    //- not for binary or XML formats - if not already present.
+    InstallStreamFilter();
 
-    FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
-    streambuf* pOrigInBuf = pInStream->rdbuf();
-    if(pInFormat && !(pInFormat->Flags() & READBINARY) && !(pInFormat->Flags() & READXML)
-       && !dynamic_cast< FilteringInputStreambuf< LineEndingExtractor >* >(pInStream->rdbuf()))
-      pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
-    
     int count = Convert();
 
-    pInStream->rdbuf(pOrigInBuf);
     pOutStream = pOrigOutStream;
     return count;
   }
@@ -758,17 +746,23 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
     }
 #endif
 
-    //Do not install filtering input stream if a binary or XML format or if already installed
-    if((pInFormat->Flags() & READBINARY) || (pInFormat->Flags() & READXML)
-       || dynamic_cast< FilteringInputStreambuf< LineEndingExtractor >* >(pInStream->rdbuf()))
-          return pInFormat->ReadMolecule(pOb, this);
-    FilteringInputStreambuf< LineEndingExtractor > LineEndBuf(pInStream->rdbuf());
-    streambuf* pOrigInBuf = pInStream->rdbuf(&LineEndBuf);
+    InstallStreamFilter();
+    return pInFormat->ReadMolecule(pOb, this);
+  }
 
-    bool ret = pInFormat->ReadMolecule(pOb, this);
+    void OBConversion::InstallStreamFilter()
+  {
+    //Do not install filtering input stream if a binary or XML format
+    //or if already installed in the current InStream (which may have changed).
+    //Deleting any old LErdbuf before contructing a new one ensures there is 
+    //only one for each OBConversion object. It is deleted in the destructor.
 
-    pInStream->rdbuf(pOrigInBuf);
-    return ret;
+    if(!(pInFormat->Flags() & (READBINARY | READXML)) && pInStream->rdbuf()!=pLineEndBuf)
+    {
+      delete pLineEndBuf;
+      pLineEndBuf = new LErdbuf(pInStream->rdbuf());
+      pInStream->rdbuf(pLineEndBuf);
+    }
   }
 
   //////////////////////////////////////////////////
