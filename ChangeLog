@@ -1,5 +1,10 @@
 2007-05-30  Chris Morley
 
+	* src/fingerprint.cpp(Tanimoto): return 0.0 if no bits set.
+	Should cure bug #1728410.
+	
+2007-05-30  Chris Morley
+
 	* include/openbabel/lineend.h: remove sync()call from destructor
 	so that can delete in OBConversion's destructor after
 	istreams have gone.
