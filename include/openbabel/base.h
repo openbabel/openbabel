@@ -35,8 +35,8 @@ namespace OpenBabel
 {
 
   // Utility function prototypes
-  OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n");
-  OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
+  OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n\r");
+  OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n\r", int limit=-1);
   // Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
   OBAPI std::string& Trim(std::string& txt);
 
