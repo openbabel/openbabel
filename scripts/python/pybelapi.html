@@ -8,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>pybel</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:///C|/python24/lib/site-packages/pybel.py">c:\python24\lib\site-packages\pybel.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/vmware/Tools/exportedTags/scripts/python/pybel.py">/home/vmware/Tools/exportedTags/scripts/python/pybel.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -134,7 +134,7 @@ An&nbsp;empty&nbsp;<a href="#Molecule">Molecule</a>&nbsp;is&nbsp;created&nbsp;if
 &nbsp;<br>
 Attributes:<br>
 &nbsp;&nbsp;&nbsp;atoms,&nbsp;charge,&nbsp;data,&nbsp;dim,&nbsp;energy,&nbsp;exactmass,&nbsp;flags,&nbsp;formula,&nbsp;<br>
-&nbsp;&nbsp;&nbsp;mod,&nbsp;molwt,&nbsp;spin,&nbsp;sssr,&nbsp;title.<br>
+&nbsp;&nbsp;&nbsp;mod,&nbsp;molwt,&nbsp;spin,&nbsp;sssr,&nbsp;title,&nbsp;unitcell.<br>
 (refer&nbsp;to&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;library&nbsp;documentation&nbsp;for&nbsp;more&nbsp;info).<br>
 &nbsp;<br>
 Methods:<br>
@@ -206,18 +206,23 @@ Example:<br>
 &gt;&gt;&gt;&nbsp;data&nbsp;=&nbsp;mol.data<br>
 &gt;&gt;&gt;&nbsp;print&nbsp;data<br>
 {'Comment':&nbsp;'CORINA&nbsp;2.61&nbsp;0041&nbsp;&nbsp;25.10.2001',&nbsp;'NSC':&nbsp;'1'}<br>
-&gt;&gt;&gt;&nbsp;print&nbsp;len(data),&nbsp;data.<a href="#MoleculeData-keys">keys</a>(),&nbsp;data.<a href="#MoleculeData-has_key">has_key</a>("Second&nbsp;comment")<br>
-2&nbsp;['Comment',&nbsp;'NSC']&nbsp;False<br>
+&gt;&gt;&gt;&nbsp;print&nbsp;len(data),&nbsp;data.<a href="#MoleculeData-keys">keys</a>(),&nbsp;data.<a href="#MoleculeData-has_key">has_key</a>("NSC")<br>
+2&nbsp;['Comment',&nbsp;'NSC']&nbsp;True<br>
 &gt;&gt;&gt;&nbsp;print&nbsp;data['Comment']<br>
 CORINA&nbsp;2.61&nbsp;0041&nbsp;&nbsp;25.10.2001<br>
 &gt;&gt;&gt;&nbsp;data['Comment']&nbsp;=&nbsp;'This&nbsp;is&nbsp;a&nbsp;new&nbsp;comment'<br>
 &gt;&gt;&gt;&nbsp;for&nbsp;k,v&nbsp;in&nbsp;data.<a href="#MoleculeData-iteritems">iteritems</a>():<br>
 ...&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;k,&nbsp;"--&gt;",&nbsp;v<br>
 Comment&nbsp;--&gt;&nbsp;This&nbsp;is&nbsp;a&nbsp;new&nbsp;comment<br>
-NSC&nbsp;--&gt;&nbsp;1<br>&nbsp;</tt></td></tr>
+NSC&nbsp;--&gt;&nbsp;1<br>
+&gt;&gt;&gt;&nbsp;del&nbsp;data['NSC']<br>
+&gt;&gt;&gt;&nbsp;print&nbsp;len(data),&nbsp;data.<a href="#MoleculeData-keys">keys</a>(),&nbsp;data.<a href="#MoleculeData-has_key">has_key</a>("NSC")<br>
+1&nbsp;['Comment']&nbsp;False<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="MoleculeData-__contains__"><strong>__contains__</strong></a>(self, key)</dt></dl>
+
+<dl><dt><a name="MoleculeData-__delitem__"><strong>__delitem__</strong></a>(self, key)</dt></dl>
 
 <dl><dt><a name="MoleculeData-__getitem__"><strong>__getitem__</strong></a>(self, key)</dt></dl>
 
@@ -230,6 +235,8 @@ NSC&nbsp;--&gt;&nbsp;1<br>&nbsp;</tt></td></tr>
 <dl><dt><a name="MoleculeData-__repr__"><strong>__repr__</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="MoleculeData-__setitem__"><strong>__setitem__</strong></a>(self, key, value)</dt></dl>
+
+<dl><dt><a name="MoleculeData-clear"><strong>clear</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="MoleculeData-has_key"><strong>has_key</strong></a>(self, key)</dt></dl>
 
@@ -365,5 +372,13 @@ Required&nbsp;parameters:<br>
 &gt;&gt;&gt;&nbsp;mymol&nbsp;=&nbsp;<a href="#-readstring">readstring</a>("smi",input)<br>
 &gt;&gt;&gt;&nbsp;len(mymol.atoms)<br>
 5</tt></dd></dl>
-</td></tr></table>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>informats</strong> = {'acr': 'ACR format', 'alc': 'Alchemy format', 'arc': 'Accelrys/MSI Biosym/Insight II CAR format', 'bgf': 'MSI BGF format', 'box': 'Dock 3.5 Box format', 'bs': 'Ball and Stick format', 'c3d1': 'Chem3D Cartesian 1 format', 'c3d2': 'Chem3D Cartesian 2 format', 'caccrt': 'Cacao Cartesian format', 'car': 'Accelrys/MSI Biosym/Insight II CAR format', ...}<br>
+<strong>outformats</strong> = {'alc': 'Alchemy format', 'bgf': 'MSI BGF format', 'box': 'Dock 3.5 Box format', 'bs': 'Ball and Stick format', 'c3d1': 'Chem3D Cartesian 1 format', 'c3d2': 'Chem3D Cartesian 2 format', 'cac': 'CAChe MolStruct format', 'caccrt': 'Cacao Cartesian format', 'cache': 'CAChe MolStruct format', 'cacint': 'Cacao Internal format', ...}</td></tr></table>
 </body></html>

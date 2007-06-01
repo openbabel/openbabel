@@ -1,3 +1,10 @@
+2007-06-01  Noel O'Boyle <baoilleach@gmail.com>
+
+	Final changes for Windows release of OBPython 1.2
+
+	* windows-vc2005/OBPython/setup.py: bumped version up to 1.2
+	* scripts/python/pybelapi.py: updated API docs
+
 2007-05-30  Chris Morley
 
 	* include/openbabel/base.h(tokenize): Add \r to default
