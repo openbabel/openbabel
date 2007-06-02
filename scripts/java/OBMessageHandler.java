@@ -48,8 +48,8 @@ public class OBMessageHandler {
     openbabelJNI.OBMessageHandler_ThrowError__SWIG_2(swigCPtr, this, method, errorMsg);
   }
 
-  public SWIGTYPE_p_std__vectorTstd__string_t GetMessagesOfLevel(obMessageLevel arg0) {
-    return new SWIGTYPE_p_std__vectorTstd__string_t(openbabelJNI.OBMessageHandler_GetMessagesOfLevel(swigCPtr, this, arg0.swigValue()), true);
+  public vectorString GetMessagesOfLevel(obMessageLevel arg0) {
+    return new vectorString(openbabelJNI.OBMessageHandler_GetMessagesOfLevel(swigCPtr, this, arg0.swigValue()), true);
   }
 
   public void StartLogging() {

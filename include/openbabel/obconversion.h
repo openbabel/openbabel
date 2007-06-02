@@ -31,6 +31,7 @@ GNU General Public License for more details.
 
 #include <openbabel/dlhandler.h>
 #include <openbabel/oberror.h>
+#include <openbabel/lineend.h>
 
 // These macros are used in DLL builds. If they have not
 // been set in babelconfig.h, define them as nothing.
@@ -360,6 +361,8 @@ protected:
       static std::string IncrementedFileName(std::string& BaseName, const int Count);
       ///Checks for misunderstandings when using the -m option
       static bool CheckForUnintendedBatch(const std::string& infile, const std::string& outfile);
+      ///Adds a filtering rdbuffer to handle line endings if not already installed and not a binary or xml format.
+      void InstallStreamFilter();
 
       //@}
 
@@ -393,6 +396,8 @@ protected:
       bool      CheckedForGzip;      ///< input stream is gzip-encoded
       bool      NeedToFreeInStream;
       bool      NeedToFreeOutStream;
+      typedef   FilteringInputStreambuf< LineEndingExtractor > LErdbuf;
+      LErdbuf*  pLineEndBuf;
 
       static int FormatFilesLoaded;
       OBBase*		  pOb1;

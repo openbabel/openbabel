@@ -65,8 +65,8 @@ public class OBConformerData extends OBGenericData {
     openbabelJNI.OBConformerData_SetDisplacements(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t.getCPtr(vd));
   }
 
-  public void SetData(SWIGTYPE_p_std__vectorTstd__string_t vdat) {
-    openbabelJNI.OBConformerData_SetData(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(vdat));
+  public void SetData(vectorString vdat) {
+    openbabelJNI.OBConformerData_SetData(swigCPtr, this, vectorString.getCPtr(vdat), vdat);
   }
 
   public SWIGTYPE_p_std__vectorTunsigned_short_t GetDimension() {
@@ -89,8 +89,8 @@ public class OBConformerData extends OBGenericData {
     return new SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t(openbabelJNI.OBConformerData_GetDisplacements(swigCPtr, this), true);
   }
 
-  public SWIGTYPE_p_std__vectorTstd__string_t GetData() {
-    return new SWIGTYPE_p_std__vectorTstd__string_t(openbabelJNI.OBConformerData_GetData(swigCPtr, this), true);
+  public vectorString GetData() {
+    return new vectorString(openbabelJNI.OBConformerData_GetData(swigCPtr, this), true);
   }
 
 }

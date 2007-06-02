@@ -65,6 +65,10 @@ public class OBBase {
     openbabelJNI.OBBase_DeleteData__SWIG_2(swigCPtr, this, vectorData.getCPtr(arg0), arg0);
   }
 
+  public boolean DeleteData(String s) {
+    return openbabelJNI.OBBase_DeleteData__SWIG_3(swigCPtr, this, s);
+  }
+
   public void SetData(OBGenericData d) {
     openbabelJNI.OBBase_SetData(swigCPtr, this, OBGenericData.getCPtr(d), d);
   }

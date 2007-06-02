@@ -1,6 +1,14 @@
 import openbabel as ob
 import os.path
 
+def _formatstodict(list):
+    broken = [x.replace("[Read-only]", "").replace("[Write-only]","").split(" -- ") for x in list]
+    broken = [(x,y.strip()) for x,y in broken]
+    return dict(broken)
+_obconv = ob.OBConversion()
+informats = _formatstodict(_obconv.GetSupportedInputFormat())
+outformats = _formatstodict(_obconv.GetSupportedOutputFormat())
+
 def readfile(format, filename):
     """Iterate over the molecules in a file.
 
@@ -79,7 +87,7 @@ class Outputfile(object):
         self.format = format
         self.filename = filename
         if not overwrite and os.path.isfile(self.filename):
-            raise IOError, "%s already exists. Use 'overwrite=False' to overwrite it." % self.filename
+            raise IOError, "%s already exists. Use 'overwrite=True' to overwrite it." % self.filename
         self.obConversion = ob.OBConversion()
         formatok = self.obConversion.SetOutFormat(self.format)
         if not formatok:
@@ -115,8 +123,8 @@ class Molecule(object):
     An empty Molecule is created if an Open Babel molecule is not provided.
     
     Attributes:
-       atoms, charge, dim, energy, exactmass, flags, formula, 
-       mod, molwt, spin, sssr, title.
+       atoms, charge, data, dim, energy, exactmass, flags, formula, 
+       mod, molwt, spin, sssr, title, unitcell.
     (refer to the Open Babel library documentation for more info).
     
     Methods:
@@ -159,11 +167,21 @@ class Molecule(object):
         if attr == "atoms":
             # Create an atoms attribute on-the-fly
             return [ Atom(self.OBMol.GetAtom(i+1),i+1) for i in range(self.OBMol.NumAtoms()) ]
+        elif attr == "data":
+            # Create a data attribute on-the-fly
+            return MoleculeData(self.OBMol)
+        elif attr == "unitcell":
+            # Create a unitcell attribute on-th-fly
+            unitcell = self.OBMol.GetData(ob.UnitCell)
+            if unitcell:
+                return ob.toUnitCell(unitcell)
+            else:
+                raise AttributeError, "Molecule has no attribute 'unitcell'"
         elif attr in self._getmethods:
             # Call the OB Method to find the attribute value
             return getattr(self.OBMol, self._getmethods[attr])()
         else:
-            raise AttributeError, "Molecule has no attribute %s" % attr
+            raise AttributeError, "Molecule has no attribute '%s'" % attr
 
     def __iter__(self):
         """Iterate over the Atoms of the Molecule.
@@ -213,7 +231,7 @@ class Molecule(object):
 
         if filename:
             if not overwrite and os.path.isfile(filename):
-                raise IOError, "%s already exists. Use 'overwrite=False' to overwrite it." % filename
+                raise IOError, "%s already exists. Use 'overwrite=True' to overwrite it." % filename
             obconversion.WriteFile(self.OBMol,filename)
         else:
             return obconversion.WriteString(self.OBMol)
@@ -365,7 +383,78 @@ class Smarts(object):
         self.obsmarts.Match(molecule.OBMol)
         return [x for x in self.obsmarts.GetUMapList()]
         
+class MoleculeData(object):
+    """Store molecule data in a dictionary-type object
+    
+    Required parameters:
+      obmol -- an Open Babel OBMol 
+
+    Methods and accessor methods are like those of a dictionary except
+    that the data is retrieved on-the-fly from the underlying OBMol.
+
+    Example:
+    >>> mol = readfile("sdf", 'head.sdf').next()
+    >>> data = mol.data
+    >>> print data
+    {'Comment': 'CORINA 2.61 0041  25.10.2001', 'NSC': '1'}
+    >>> print len(data), data.keys(), data.has_key("NSC")
+    2 ['Comment', 'NSC'] True
+    >>> print data['Comment']
+    CORINA 2.61 0041  25.10.2001
+    >>> data['Comment'] = 'This is a new comment'
+    >>> for k,v in data.iteritems():
+    ...    print k, "-->", v
+    Comment --> This is a new comment
+    NSC --> 1
+    >>> del data['NSC']
+    >>> print len(data), data.keys(), data.has_key("NSC")
+    1 ['Comment'] False
+    """
+    def __init__(self, obmol):
+        self._mol = obmol
+    def _data(self):
+        return [ob.toPairData(x) for x in self._mol.GetData() if x.GetDataType()==ob.PairData or x.GetDataType()==ob.CommentData]
+    def _testforkey(self, key):
+        if not key in self:
+            raise KeyError, "'%s'" % key
+    def keys(self):
+        return [x.GetAttribute() for x in self._data()]
+    def values(self):
+        return [x.GetValue() for x in self._data()]
+    def items(self):
+        return zip(self.keys(), self.values())
+    def __iter__(self):
+        return iter(self.keys())
+    def iteritems(self):
+        return iter(self.items())
+    def __len__(self):
+        return len(self._data())
+    def __contains__(self, key):
+        return self._mol.HasData(key)
+    def __delitem__(self, key):
+        self._testforkey(key)
+        self._mol.DeleteData(self._mol.GetData(key))
+    def clear(self):
+        for key in self:
+            del self[key]
+    def has_key(self, key):
+        return key in self
+    def __getitem__(self, key):
+        self._testforkey(key)
+        return ob.toPairData(self._mol.GetData(key)).GetValue()
+    def __setitem__(self, key, value):
+        if key in self:
+            pairdata = ob.toPairData(self._mol.GetData(key))
+            pairdata.SetValue(value)
+        else:
+            pairdata = ob.OBPairData()
+            pairdata.SetAttribute(key)
+            pairdata.SetValue(value)
+            pairdata.thisown = 0 # So that SWIG Proxy will not delete pairdata
+            self._mol.SetData(pairdata)
+    def __repr__(self):
+        return dict(self.iteritems()).__repr__()
+ 
 if __name__=="__main__":
     import doctest
-    doctest.testmod()
-    
+    doctest.testmod(verbose=True)

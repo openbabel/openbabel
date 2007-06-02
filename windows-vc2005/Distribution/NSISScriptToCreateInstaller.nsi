@@ -454,11 +454,11 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.1.x
+  !define OBVersion 2.1.0
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
-  OutFile "OpenBabel${OBVERSION} Windows Installer.exe"
+  OutFile "OpenBabel${OBVERSION}_Windows_Installer.exe"
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\OpenBabel-${OBVERSION}"
@@ -481,7 +481,7 @@ FunctionEnd
   !define MUI_HEADERIMAGE
   !define MUI_HEADERIMAGE_BITMAP "logo_small.bmp"
   !define MUI_WELCOMEFINISHPAGE_BITMAP "logo_big.bmp"
-  !define MUI_FINISHPAGE_RUN "$INSTDIR/OpenBabelGUI.exe"
+  !define MUI_FINISHPAGE_RUN "$INSTDIR/OBGUII.exe"
   !define MUI_FINISHPAGE_SHOWREADME "http://openbabel.sourceforge.net/wiki/OpenBabelGUI"
 
 ;--------------------------------
@@ -516,23 +516,33 @@ Section "Dummy Section" SecDummy
   SetOutPath "$INSTDIR"
   
   ;ADD YOUR OWN FILES HERE...
-  File /r ExampleFiles\*.*
+  File /r ExampleFiles\150mols.smi
+  File /r ExampleFiles\FourSmallMols.cml
+  File /r ExampleFiles\serotonin.mol
+  File /r ExampleFiles\oxamide.cml
   File /oname=License.txt ..\..\COPYING
-  File /oname=OpenBabelGUI.exe ..\OpenBabelDLL\OBGUII.exe
-  File /oname=OpenBabelGUI.exe.manifest ..\OpenBabelDLL\OBGUII.exe.manifest
+  File /oname=OBGUII.exe ..\OpenBabelDLL\OBGUII.exe
+  File /oname=OBGUII.exe.manifest ..\OpenBabelDLL\OBGUII.exe.manifest
   File ..\OpenBabelDLL\OpenBabelDLL.dll
-  File ..\OpenBabelDLL\OpenBabelDLL.lib
   File ..\OpenBabelDLL\babel.exe
-  File ..\OpenBabelGUI\OpenBabelGUI.html
+  File ..\OBGUII\OpenBabelGUI.html
   File ..\zlib1.dll
   File ..\libxml2.dll
   File ..\iconv.dll
   File ..\libinchi.dll
   File ..\..\data\SMARTS_InteLigand.txt
+  File ..\..\data\psa.txt
+  File ..\..\data\mr.txt
+  File ..\..\data\logp.txt
+  File ..\..\data\ghemical.prm
+  File vcredist_x86.exe
   
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
   
+  ;Install VC++ 2005 redistributable
+  ExecWait '"$INSTDIR/vcredist_x86.exe" /q:a'
+
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
@@ -540,7 +550,7 @@ Section "Dummy Section" SecDummy
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     SetOutPath "$DESKTOP" ;side-effect is to set working dir for shortcuts
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OpenBabelGUI.exe"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUII.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI (web).lnk" "http://openbabel.sourceforge.net/wiki/OpenBabelGUI" "" "$SYSDIR\winhlp32.exe" 
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.sourceforge.net/wiki/Tutorial:Basic_Usage" "" "$SYSDIR\winhlp32.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
@@ -571,20 +581,25 @@ Section "Uninstall"
   ;ADD YOUR OWN FILES HERE...
   Delete "$INSTDIR\150mols.smi"
   Delete "$INSTDIR\babel.exe"
-  Delete "$INSTDIR\babel.exe.manifest"
   Delete "$INSTDIR\FourSmallMols.cml"
   Delete "$INSTDIR\zlib1.dll"
   Delete "$INSTDIR\SMARTS_InteLigand.txt"
+  Delete "$INSTDIR\psa.txt"
+  Delete "$INSTDIR\mr.txt"
+  Delete "$INSTDIR\logp.txt"
+  Delete "$INSTDIR\ghemical.prm"
   Delete "$INSTDIR\serotonin.mol"
   Delete "$INSTDIR\oxamide.cml"
-  Delete "$INSTDIR\OpenBabelGUI.exe"
-  Delete "$INSTDIR\OpenBabelGUI.exe.manifest"
+  Delete "$INSTDIR\OBGUII.exe"
+  Delete "$INSTDIR\OBGUII.exe.manifest"
+  Delete "$INSTDIR\OpenBabelDLL.dll"
   Delete "$INSTDIR\libxml2.dll"
   Delete "$INSTDIR\iconv.dll"
   Delete "$INSTDIR\License.txt"
   Delete "$INSTDIR\OpenBabelGUI.html"
   Delete "$INSTDIR\libinchi.dll"
   Delete "$INSTDIR\Uninstall.exe"
+  Delete "$INSTDIR\vcredist_x86.exe"
 
   RMDir "$INSTDIR"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
@@ -612,5 +627,6 @@ Section "Uninstall"
   startMenuDeleteLoopDone:
 
   DeleteRegKey /ifempty HKCU "Software\OpenBabel ${OBVERSION}"
+  DeleteRegKey          HKCU "Software\OpenBabelGUI"
 
 SectionEnd

@@ -8,6 +8,16 @@
 
 
 public class openbabel implements openbabelConstants {
+  public static OBPairData toPairData(OBGenericData data) {
+    long cPtr = openbabelJNI.toPairData(OBGenericData.getCPtr(data), data);
+    return (cPtr == 0) ? null : new OBPairData(cPtr, false);
+  }
+
+  public static OBUnitCell toUnitCell(OBGenericData data) {
+    long cPtr = openbabelJNI.toUnitCell(OBGenericData.getCPtr(data), data);
+    return (cPtr == 0) ? null : new OBUnitCell(cPtr, false);
+  }
+
   public static String OpenDatafile(SWIGTYPE_p_std__ifstream fs, String filename, String envvar) {
     return openbabelJNI.OpenDatafile__SWIG_0(SWIGTYPE_p_std__ifstream.getCPtr(fs), filename, envvar);
   }
@@ -60,6 +70,26 @@ public class openbabel implements openbabelConstants {
     return new SWIGTYPE_p_std__string(openbabelJNI.Trim(SWIGTYPE_p_std__string.getCPtr(txt)), false);
   }
 
+  public static boolean tokenize(vectorString arg0, String buf, String delimstr) {
+    return openbabelJNI.tokenize__SWIG_0(vectorString.getCPtr(arg0), arg0, buf, delimstr);
+  }
+
+  public static boolean tokenize(vectorString arg0, String buf) {
+    return openbabelJNI.tokenize__SWIG_1(vectorString.getCPtr(arg0), arg0, buf);
+  }
+
+  public static boolean tokenize(vectorString arg0, SWIGTYPE_p_std__string arg1, String delimstr, int limit) {
+    return openbabelJNI.tokenize__SWIG_2(vectorString.getCPtr(arg0), arg0, SWIGTYPE_p_std__string.getCPtr(arg1), delimstr, limit);
+  }
+
+  public static boolean tokenize(vectorString arg0, SWIGTYPE_p_std__string arg1, String delimstr) {
+    return openbabelJNI.tokenize__SWIG_3(vectorString.getCPtr(arg0), arg0, SWIGTYPE_p_std__string.getCPtr(arg1), delimstr);
+  }
+
+  public static boolean tokenize(vectorString arg0, SWIGTYPE_p_std__string arg1) {
+    return openbabelJNI.tokenize__SWIG_4(vectorString.getCPtr(arg0), arg0, SWIGTYPE_p_std__string.getCPtr(arg1));
+  }
+
   public static double Tanimoto(OBBitVec arg0, OBBitVec arg1) {
     return openbabelJNI.Tanimoto(OBBitVec.getCPtr(arg0), arg0, OBBitVec.getCPtr(arg1), arg1);
   }
@@ -104,26 +134,6 @@ public class openbabel implements openbabelConstants {
 
   public static long getElemNo() {
     return openbabelJNI.ElemNo_get();
-  }
-
-  public static boolean tokenize(SWIGTYPE_p_std__vectorTstd__string_t arg0, String buf, String delimstr) {
-    return openbabelJNI.tokenize__SWIG_0(SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(arg0), buf, delimstr);
-  }
-
-  public static boolean tokenize(SWIGTYPE_p_std__vectorTstd__string_t arg0, String buf) {
-    return openbabelJNI.tokenize__SWIG_1(SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(arg0), buf);
-  }
-
-  public static boolean tokenize(SWIGTYPE_p_std__vectorTstd__string_t arg0, SWIGTYPE_p_std__string arg1, String delimstr, int limit) {
-    return openbabelJNI.tokenize__SWIG_2(SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(arg0), SWIGTYPE_p_std__string.getCPtr(arg1), delimstr, limit);
-  }
-
-  public static boolean tokenize(SWIGTYPE_p_std__vectorTstd__string_t arg0, SWIGTYPE_p_std__string arg1, String delimstr) {
-    return openbabelJNI.tokenize__SWIG_3(SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(arg0), SWIGTYPE_p_std__string.getCPtr(arg1), delimstr);
-  }
-
-  public static boolean tokenize(SWIGTYPE_p_std__vectorTstd__string_t arg0, SWIGTYPE_p_std__string arg1) {
-    return openbabelJNI.tokenize__SWIG_4(SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(arg0), SWIGTYPE_p_std__string.getCPtr(arg1));
   }
 
   public static void ThrowError(String str) {

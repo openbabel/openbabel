@@ -52,6 +52,17 @@ class openbabelJNI {
   public final static native double vectorDouble_get(long jarg1, vectorDouble jarg1_, int jarg2);
   public final static native void vectorDouble_set(long jarg1, vectorDouble jarg1_, int jarg2, double jarg3);
   public final static native void delete_vectorDouble(long jarg1);
+  public final static native long new_vectorString__SWIG_0();
+  public final static native long new_vectorString__SWIG_1(long jarg1);
+  public final static native long vectorString_size(long jarg1, vectorString jarg1_);
+  public final static native long vectorString_capacity(long jarg1, vectorString jarg1_);
+  public final static native void vectorString_reserve(long jarg1, vectorString jarg1_, long jarg2);
+  public final static native boolean vectorString_isEmpty(long jarg1, vectorString jarg1_);
+  public final static native void vectorString_clear(long jarg1, vectorString jarg1_);
+  public final static native void vectorString_add(long jarg1, vectorString jarg1_, String jarg2);
+  public final static native String vectorString_get(long jarg1, vectorString jarg1_, int jarg2);
+  public final static native void vectorString_set(long jarg1, vectorString jarg1_, int jarg2, String jarg3);
+  public final static native void delete_vectorString(long jarg1);
   public final static native long new_vVector3__SWIG_0();
   public final static native long new_vVector3__SWIG_1(long jarg1);
   public final static native long vVector3_size(long jarg1, vVector3 jarg1_);
@@ -107,6 +118,17 @@ class openbabelJNI {
   public final static native long vectorRing_get(long jarg1, vectorRing jarg1_, int jarg2);
   public final static native void vectorRing_set(long jarg1, vectorRing jarg1_, int jarg2, long jarg3, OBRing jarg3_);
   public final static native void delete_vectorRing(long jarg1);
+  public final static native long new_vectorpRing__SWIG_0();
+  public final static native long new_vectorpRing__SWIG_1(long jarg1);
+  public final static native long vectorpRing_size(long jarg1, vectorpRing jarg1_);
+  public final static native long vectorpRing_capacity(long jarg1, vectorpRing jarg1_);
+  public final static native void vectorpRing_reserve(long jarg1, vectorpRing jarg1_, long jarg2);
+  public final static native boolean vectorpRing_isEmpty(long jarg1, vectorpRing jarg1_);
+  public final static native void vectorpRing_clear(long jarg1, vectorpRing jarg1_);
+  public final static native void vectorpRing_add(long jarg1, vectorpRing jarg1_, long jarg2);
+  public final static native long vectorpRing_get(long jarg1, vectorpRing jarg1_, int jarg2);
+  public final static native void vectorpRing_set(long jarg1, vectorpRing jarg1_, int jarg2, long jarg3);
+  public final static native void delete_vectorpRing(long jarg1);
   public final static native long new_vectorData__SWIG_0();
   public final static native long new_vectorData__SWIG_1(long jarg1);
   public final static native long vectorData_size(long jarg1, vectorData jarg1_);
@@ -118,6 +140,8 @@ class openbabelJNI {
   public final static native long vectorData_get(long jarg1, vectorData jarg1_, int jarg2);
   public final static native void vectorData_set(long jarg1, vectorData jarg1_, int jarg2, long jarg3);
   public final static native void delete_vectorData(long jarg1);
+  public final static native long toPairData(long jarg1, OBGenericData jarg1_);
+  public final static native long toUnitCell(long jarg1, OBGenericData jarg1_);
   public final static native long new_OBGlobalDataBase();
   public final static native void delete_OBGlobalDataBase(long jarg1);
   public final static native void OBGlobalDataBase_Init(long jarg1, OBGlobalDataBase jarg1_);
@@ -368,7 +392,7 @@ class openbabelJNI {
   public final static native long new_OBRingData__SWIG_1(long jarg1, OBRingData jarg1_);
   public final static native long OBRingData_Clone(long jarg1, OBRingData jarg1_, long jarg2, OBBase jarg2_);
   public final static native void delete_OBRingData(long jarg1);
-  public final static native void OBRingData_SetData(long jarg1, OBRingData jarg1_, long jarg2);
+  public final static native void OBRingData_SetData(long jarg1, OBRingData jarg1_, long jarg2, vectorpRing jarg2_);
   public final static native void OBRingData_PushBack(long jarg1, OBRingData jarg1_, long jarg2, OBRing jarg2_);
   public final static native long OBRingData_GetData(long jarg1, OBRingData jarg1_);
   public final static native long OBRingData_BeginRings(long jarg1, OBRingData jarg1_);
@@ -410,7 +434,7 @@ class openbabelJNI {
   public final static native void OBConformerData_SetForces(long jarg1, OBConformerData jarg1_, long jarg2);
   public final static native void OBConformerData_SetVelocities(long jarg1, OBConformerData jarg1_, long jarg2);
   public final static native void OBConformerData_SetDisplacements(long jarg1, OBConformerData jarg1_, long jarg2);
-  public final static native void OBConformerData_SetData(long jarg1, OBConformerData jarg1_, long jarg2);
+  public final static native void OBConformerData_SetData(long jarg1, OBConformerData jarg1_, long jarg2, vectorString jarg2_);
   public final static native long OBConformerData_GetDimension(long jarg1, OBConformerData jarg1_);
   public final static native long OBConformerData_GetEnergies(long jarg1, OBConformerData jarg1_);
   public final static native long OBConformerData_GetForces(long jarg1, OBConformerData jarg1_);
@@ -488,6 +512,11 @@ class openbabelJNI {
   public final static native long OBVibrationData_GetFrequencies(long jarg1, OBVibrationData jarg1_);
   public final static native long OBVibrationData_GetIntensities(long jarg1, OBVibrationData jarg1_);
   public final static native long OBVibrationData_GetNumberOfFrequencies(long jarg1, OBVibrationData jarg1_);
+  public final static native boolean tokenize__SWIG_0(long jarg1, vectorString jarg1_, String jarg2, String jarg3);
+  public final static native boolean tokenize__SWIG_1(long jarg1, vectorString jarg1_, String jarg2);
+  public final static native boolean tokenize__SWIG_2(long jarg1, vectorString jarg1_, long jarg2, String jarg3, int jarg4);
+  public final static native boolean tokenize__SWIG_3(long jarg1, vectorString jarg1_, long jarg2, String jarg3);
+  public final static native boolean tokenize__SWIG_4(long jarg1, vectorString jarg1_, long jarg2);
   public final static native void delete_OBBase(long jarg1);
   public final static native boolean OBBase_Clear(long jarg1, OBBase jarg1_);
   public final static native long OBBase_DoTransformations(long jarg1, OBBase jarg1_, long jarg2);
@@ -497,6 +526,7 @@ class openbabelJNI {
   public final static native void OBBase_DeleteData__SWIG_0(long jarg1, OBBase jarg1_, long jarg2);
   public final static native void OBBase_DeleteData__SWIG_1(long jarg1, OBBase jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native void OBBase_DeleteData__SWIG_2(long jarg1, OBBase jarg1_, long jarg2, vectorData jarg2_);
+  public final static native boolean OBBase_DeleteData__SWIG_3(long jarg1, OBBase jarg1_, String jarg2);
   public final static native void OBBase_SetData(long jarg1, OBBase jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native long OBBase_DataSize(long jarg1, OBBase jarg1_);
   public final static native long OBBase_GetData__SWIG_0(long jarg1, OBBase jarg1_, long jarg2);
@@ -740,7 +770,7 @@ class openbabelJNI {
   public final static native long OBConversion_GetSupportedOutputFormat(long jarg1, OBConversion jarg1_);
   public final static native int OBConversion_Convert__SWIG_0(long jarg1, OBConversion jarg1_, long jarg2, long jarg3);
   public final static native int OBConversion_Convert__SWIG_1(long jarg1, OBConversion jarg1_);
-  public final static native int OBConversion_FullConvert(long jarg1, OBConversion jarg1_, long jarg2, long jarg3, long jarg4);
+  public final static native int OBConversion_FullConvert(long jarg1, OBConversion jarg1_, long jarg2, vectorString jarg2_, long jarg3, long jarg4, vectorString jarg4_);
   public final static native boolean OBConversion_AddChemObject(long jarg1, OBConversion jarg1_, long jarg2, OBBase jarg2_);
   public final static native long OBConversion_GetChemObject(long jarg1, OBConversion jarg1_);
   public final static native boolean OBConversion_IsLast(long jarg1, OBConversion jarg1_);
@@ -1350,11 +1380,6 @@ class openbabelJNI {
   public final static native long OBMol_NextResidue(long jarg1, OBMol jarg1_, long jarg2);
   public final static native long OBMol_BeginInternalCoord(long jarg1, OBMol jarg1_, long jarg2);
   public final static native long OBMol_NextInternalCoord(long jarg1, OBMol jarg1_, long jarg2);
-  public final static native boolean tokenize__SWIG_0(long jarg1, String jarg2, String jarg3);
-  public final static native boolean tokenize__SWIG_1(long jarg1, String jarg2);
-  public final static native boolean tokenize__SWIG_2(long jarg1, long jarg2, String jarg3, int jarg4);
-  public final static native boolean tokenize__SWIG_3(long jarg1, long jarg2, String jarg3);
-  public final static native boolean tokenize__SWIG_4(long jarg1, long jarg2);
   public final static native void ThrowError__SWIG_0(String jarg1);
   public final static native void ThrowError__SWIG_1(long jarg1);
   public final static native void CartesianToInternal(long jarg1, long jarg2, OBMol jarg2_);
@@ -1775,6 +1800,7 @@ class openbabelJNI {
   public final static native void OBMolAtomIter_DeleteData__SWIG_0(long jarg1, OBMolAtomIter jarg1_, long jarg2);
   public final static native void OBMolAtomIter_DeleteData__SWIG_1(long jarg1, OBMolAtomIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native void OBMolAtomIter_DeleteData__SWIG_2(long jarg1, OBMolAtomIter jarg1_, long jarg2, vectorData jarg2_);
+  public final static native boolean OBMolAtomIter_DeleteData__SWIG_3(long jarg1, OBMolAtomIter jarg1_, String jarg2);
   public final static native void OBMolAtomIter_SetData(long jarg1, OBMolAtomIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native long OBMolAtomIter_DataSize(long jarg1, OBMolAtomIter jarg1_);
   public final static native long OBMolAtomIter_GetData__SWIG_0(long jarg1, OBMolAtomIter jarg1_, long jarg2);
@@ -1931,6 +1957,7 @@ class openbabelJNI {
   public final static native void OBMolAtomDFSIter_DeleteData__SWIG_0(long jarg1, OBMolAtomDFSIter jarg1_, long jarg2);
   public final static native void OBMolAtomDFSIter_DeleteData__SWIG_1(long jarg1, OBMolAtomDFSIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native void OBMolAtomDFSIter_DeleteData__SWIG_2(long jarg1, OBMolAtomDFSIter jarg1_, long jarg2, vectorData jarg2_);
+  public final static native boolean OBMolAtomDFSIter_DeleteData__SWIG_3(long jarg1, OBMolAtomDFSIter jarg1_, String jarg2);
   public final static native void OBMolAtomDFSIter_SetData(long jarg1, OBMolAtomDFSIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native long OBMolAtomDFSIter_DataSize(long jarg1, OBMolAtomDFSIter jarg1_);
   public final static native long OBMolAtomDFSIter_GetData__SWIG_0(long jarg1, OBMolAtomDFSIter jarg1_, long jarg2);
@@ -2085,6 +2112,7 @@ class openbabelJNI {
   public final static native void OBMolAtomBFSIter_DeleteData__SWIG_0(long jarg1, OBMolAtomBFSIter jarg1_, long jarg2);
   public final static native void OBMolAtomBFSIter_DeleteData__SWIG_1(long jarg1, OBMolAtomBFSIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native void OBMolAtomBFSIter_DeleteData__SWIG_2(long jarg1, OBMolAtomBFSIter jarg1_, long jarg2, vectorData jarg2_);
+  public final static native boolean OBMolAtomBFSIter_DeleteData__SWIG_3(long jarg1, OBMolAtomBFSIter jarg1_, String jarg2);
   public final static native void OBMolAtomBFSIter_SetData(long jarg1, OBMolAtomBFSIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native long OBMolAtomBFSIter_DataSize(long jarg1, OBMolAtomBFSIter jarg1_);
   public final static native long OBMolAtomBFSIter_GetData__SWIG_0(long jarg1, OBMolAtomBFSIter jarg1_, long jarg2);
@@ -2164,6 +2192,7 @@ class openbabelJNI {
   public final static native void OBMolBondIter_DeleteData__SWIG_0(long jarg1, OBMolBondIter jarg1_, long jarg2);
   public final static native void OBMolBondIter_DeleteData__SWIG_1(long jarg1, OBMolBondIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native void OBMolBondIter_DeleteData__SWIG_2(long jarg1, OBMolBondIter jarg1_, long jarg2, vectorData jarg2_);
+  public final static native boolean OBMolBondIter_DeleteData__SWIG_3(long jarg1, OBMolBondIter jarg1_, String jarg2);
   public final static native void OBMolBondIter_SetData(long jarg1, OBMolBondIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native long OBMolBondIter_DataSize(long jarg1, OBMolBondIter jarg1_);
   public final static native long OBMolBondIter_GetData__SWIG_0(long jarg1, OBMolBondIter jarg1_, long jarg2);
@@ -2318,6 +2347,7 @@ class openbabelJNI {
   public final static native void OBAtomAtomIter_DeleteData__SWIG_0(long jarg1, OBAtomAtomIter jarg1_, long jarg2);
   public final static native void OBAtomAtomIter_DeleteData__SWIG_1(long jarg1, OBAtomAtomIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native void OBAtomAtomIter_DeleteData__SWIG_2(long jarg1, OBAtomAtomIter jarg1_, long jarg2, vectorData jarg2_);
+  public final static native boolean OBAtomAtomIter_DeleteData__SWIG_3(long jarg1, OBAtomAtomIter jarg1_, String jarg2);
   public final static native void OBAtomAtomIter_SetData(long jarg1, OBAtomAtomIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native long OBAtomAtomIter_DataSize(long jarg1, OBAtomAtomIter jarg1_);
   public final static native long OBAtomAtomIter_GetData__SWIG_0(long jarg1, OBAtomAtomIter jarg1_, long jarg2);
@@ -2397,6 +2427,7 @@ class openbabelJNI {
   public final static native void OBAtomBondIter_DeleteData__SWIG_0(long jarg1, OBAtomBondIter jarg1_, long jarg2);
   public final static native void OBAtomBondIter_DeleteData__SWIG_1(long jarg1, OBAtomBondIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native void OBAtomBondIter_DeleteData__SWIG_2(long jarg1, OBAtomBondIter jarg1_, long jarg2, vectorData jarg2_);
+  public final static native boolean OBAtomBondIter_DeleteData__SWIG_3(long jarg1, OBAtomBondIter jarg1_, String jarg2);
   public final static native void OBAtomBondIter_SetData(long jarg1, OBAtomBondIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native long OBAtomBondIter_DataSize(long jarg1, OBAtomBondIter jarg1_);
   public final static native long OBAtomBondIter_GetData__SWIG_0(long jarg1, OBAtomBondIter jarg1_, long jarg2);
@@ -2449,6 +2480,7 @@ class openbabelJNI {
   public final static native void OBResidueIter_DeleteData__SWIG_0(long jarg1, OBResidueIter jarg1_, long jarg2);
   public final static native void OBResidueIter_DeleteData__SWIG_1(long jarg1, OBResidueIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native void OBResidueIter_DeleteData__SWIG_2(long jarg1, OBResidueIter jarg1_, long jarg2, vectorData jarg2_);
+  public final static native boolean OBResidueIter_DeleteData__SWIG_3(long jarg1, OBResidueIter jarg1_, String jarg2);
   public final static native void OBResidueIter_SetData(long jarg1, OBResidueIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native long OBResidueIter_DataSize(long jarg1, OBResidueIter jarg1_);
   public final static native long OBResidueIter_GetData__SWIG_0(long jarg1, OBResidueIter jarg1_, long jarg2);
@@ -2603,6 +2635,7 @@ class openbabelJNI {
   public final static native void OBResidueAtomIter_DeleteData__SWIG_0(long jarg1, OBResidueAtomIter jarg1_, long jarg2);
   public final static native void OBResidueAtomIter_DeleteData__SWIG_1(long jarg1, OBResidueAtomIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native void OBResidueAtomIter_DeleteData__SWIG_2(long jarg1, OBResidueAtomIter jarg1_, long jarg2, vectorData jarg2_);
+  public final static native boolean OBResidueAtomIter_DeleteData__SWIG_3(long jarg1, OBResidueAtomIter jarg1_, String jarg2);
   public final static native void OBResidueAtomIter_SetData(long jarg1, OBResidueAtomIter jarg1_, long jarg2, OBGenericData jarg2_);
   public final static native long OBResidueAtomIter_DataSize(long jarg1, OBResidueAtomIter jarg1_);
   public final static native long OBResidueAtomIter_GetData__SWIG_0(long jarg1, OBResidueAtomIter jarg1_, long jarg2);

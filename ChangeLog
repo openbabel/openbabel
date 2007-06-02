@@ -8,10 +8,109 @@
 	* test/mol.cpp: Add H-H deletion bug reported by Donald.
 	PR#1704551
 
+2007-06-01  Noel O'Boyle <baoilleach@gmail.com>
+
+	Final changes for Windows release of OBPython 1.2
+
+	* windows-vc2005/OBPython/setup.py: bumped version up to 1.2
+	* scripts/python/pybelapi.py: updated API docs
+
+2007-05-30  Chris Morley
+
+	* include/openbabel/base.h(tokenize): Add \r to default
+	delimiters in the two functions. Now Windows or MAC files
+	(esp data files) should be read properly. 
+	Cures bug #1727333, I hope.
+	
+2007-05-30  Chris Morley
+
+	* src/fingerprint.cpp(Tanimoto): return 0.0 if no bits set.
+	Should cure bug #1728410.
+	
+2007-05-30  Chris Morley
+
+	* include/openbabel/lineend.h: remove sync()call from destructor
+	so that can delete in OBConversion's destructor after
+	istreams have gone.
+	
+	* include/openbabel/obconversion.h, *src/obconversion.cpp
+	Add InstallStreamFilter() and call from Read() and Convert().
+	I hope this will cure the Windows Python bug, and is a neater
+	method all round.
+
 2007-05-25  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/xml/cdxmlformat.cpp: don't clear the molecule
 	before writing. [#1725343]
+	 
+2007-05-14  Chris Morley
+
+	* src/obconversion.cpp(Read, Convert): Do not install a 
+	FilteringInputStreambuf if stream already contains one. This
+	solves my problem with multiple reads on the same input stream.
+	 
+2007-05-13  Chris Morley
+
+	* src/obconversion.cpp(Read): Ensured that FilteringInputStreambuf
+	is used. Previously it wasn't, which could cause errors
+	except with unix reading unix files.
+	 
+2007-05-12  Noel O'Boyle <baoilleach@gmail.com>
+
+	* SWIG interface files: Added template for vectors of strings
+	* pybel.py: Added informats and outformats, dictionaries corresponding
+	to the supported input and output formats
+
+2007-05-11  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* include/openbabel/format.h: add missing new line (makes gcc happy).
+
+	* src/formats/xml/cmlformat.cpp: ditto.
+
+2007-05-10  Noel O'Boyle <baoilleach@gmail.com>
+
+	* pybel.py: Added support for unitcell, and deletion of OBPairData
+	(need to update the tests and the API docs)
+
+2007-05-08  Chris Morley
+
+	* include/openbabel.h/base.h, src/base.cpp: corrected
+	bug in DeleteData(OBGenericData*) which is the probable
+	cause of bug #1715092. Added new function DeleteData(string)
+	which makes it easier to use.
+	Moved the declarations for Tokenize and Trim from mol.h to
+	base.h so that they could be used more widely. Maybe there is
+	an even better home.
+
+2007-05-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/*.i: Added casting from OBGenericData to OBUnitCell.
+
+2007-05-08  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/*.i: added a template for a vector of OBRing*
+	which is required for OBMol.GetSSSR()
+
+2007-05-08  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/*.i: added a method to cast OBGenericData to
+	OBPairData.
+	
+	* scripts/python/pybel.*: added dictionary-like support for
+	accessing molecule data, and updated the tests and the API
+	documentation.
+
+2007-04-30  Chris Morley 
+
+	* NSIS installer script: Add some extra data files, replaced
+	*.* which was causing extra files to be copied, and deleted
+	HKCU/SoftwareOpenBabelGUI/ on uninstall.
+	As used in OpenBabel2.1.0_Windows_Installer.exe	
+
+2007-04-26  Noel O'Boyle <baoilleach@gmail.com>
+
+	* NSIS installer script: Updated to install the MS VC++
+	run-time installer
 
 2007-04-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

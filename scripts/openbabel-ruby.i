@@ -51,16 +51,27 @@ namespace std {
 %template (vectorUnsignedInt)     vector<unsigned int>;
 %template (vvInt)		      vector< vector<int> >;
 %template (vectorDouble) 	vector<double>;
+%template (vectorString)		  vector<std::string>;
 %template (vVector3)		  vector<OpenBabel::vector3>;
 
 %template (vectorMol)		  vector<OpenBabel::OBMol>;
 %template (vectorBond)		vector<OpenBabel::OBBond>;
 %template (vectorResidue)	vector<OpenBabel::OBResidue>;
 %template (vectorRing)		vector<OpenBabel::OBRing>;
+%template (vectorpRing)		vector<OpenBabel::OBRing*>;
 %template (vectorData)    vector<OpenBabel::OBGenericData*>;
 }
 
 
+%inline %{
+OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBPairData *) data;
+}
+
+OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBUnitCell *) data;
+}
+%}
 
 // These methods are renamed to valid method names
 %rename(inc)   *::operator++;

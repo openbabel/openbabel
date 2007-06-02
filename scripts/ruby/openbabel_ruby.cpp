@@ -1634,64 +1634,65 @@ SWIG_Ruby_SetModule(swig_module_info *pointer)
 #define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[90]
 #define SWIGTYPE_p_p_OpenBabel__OBGenericData swig_types[91]
 #define SWIGTYPE_p_p_OpenBabel__OBPairData swig_types[92]
-#define SWIGTYPE_p_p_OpenBabel__OBRingData swig_types[93]
-#define SWIGTYPE_p_p_OpenBabel__OBSerialNums swig_types[94]
-#define SWIGTYPE_p_p_OpenBabel__OBSetData swig_types[95]
-#define SWIGTYPE_p_p_OpenBabel__OBSymmetryData swig_types[96]
-#define SWIGTYPE_p_p_OpenBabel__OBTorsionData swig_types[97]
-#define SWIGTYPE_p_p_OpenBabel__OBUnitCell swig_types[98]
-#define SWIGTYPE_p_p_OpenBabel__OBVibrationData swig_types[99]
-#define SWIGTYPE_p_p_OpenBabel__OBVirtualBond swig_types[100]
-#define SWIGTYPE_p_p_double swig_types[101]
-#define SWIGTYPE_p_p_int swig_types[102]
-#define SWIGTYPE_p_std__dequeTint_t swig_types[103]
-#define SWIGTYPE_p_std__ifstream swig_types[104]
-#define SWIGTYPE_p_std__istream swig_types[105]
-#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[106]
-#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[107]
-#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[108]
-#define SWIGTYPE_p_std__multimapTdouble_unsigned_int_t swig_types[109]
-#define SWIGTYPE_p_std__ostream swig_types[110]
-#define SWIGTYPE_p_std__out_of_range swig_types[111]
-#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[112]
-#define SWIGTYPE_p_std__streampos swig_types[113]
-#define SWIGTYPE_p_std__string swig_types[114]
-#define SWIGTYPE_p_std__type_info swig_types[115]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[116]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[117]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[118]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator swig_types[119]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[120]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[121]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[122]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[123]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[124]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[125]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[126]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[127]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[128]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[129]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[130]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[131]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[132]
-#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[133]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[134]
-#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[135]
-#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[136]
-#define SWIGTYPE_p_std__vectorTdouble_t swig_types[137]
-#define SWIGTYPE_p_std__vectorTint_t swig_types[138]
-#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[139]
-#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[140]
-#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[141]
-#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[142]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[143]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[144]
-#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[145]
-#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[146]
-#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[147]
-#define SWIGTYPE_p_unsigned_int swig_types[148]
-static swig_type_info *swig_types[150];
-static swig_module_info swig_module = {swig_types, 149, 0, 0, 0, 0};
+#define SWIGTYPE_p_p_OpenBabel__OBRing swig_types[93]
+#define SWIGTYPE_p_p_OpenBabel__OBRingData swig_types[94]
+#define SWIGTYPE_p_p_OpenBabel__OBSerialNums swig_types[95]
+#define SWIGTYPE_p_p_OpenBabel__OBSetData swig_types[96]
+#define SWIGTYPE_p_p_OpenBabel__OBSymmetryData swig_types[97]
+#define SWIGTYPE_p_p_OpenBabel__OBTorsionData swig_types[98]
+#define SWIGTYPE_p_p_OpenBabel__OBUnitCell swig_types[99]
+#define SWIGTYPE_p_p_OpenBabel__OBVibrationData swig_types[100]
+#define SWIGTYPE_p_p_OpenBabel__OBVirtualBond swig_types[101]
+#define SWIGTYPE_p_p_double swig_types[102]
+#define SWIGTYPE_p_p_int swig_types[103]
+#define SWIGTYPE_p_std__dequeTint_t swig_types[104]
+#define SWIGTYPE_p_std__ifstream swig_types[105]
+#define SWIGTYPE_p_std__istream swig_types[106]
+#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[107]
+#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[108]
+#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[109]
+#define SWIGTYPE_p_std__multimapTdouble_unsigned_int_t swig_types[110]
+#define SWIGTYPE_p_std__ostream swig_types[111]
+#define SWIGTYPE_p_std__out_of_range swig_types[112]
+#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[113]
+#define SWIGTYPE_p_std__streampos swig_types[114]
+#define SWIGTYPE_p_std__string swig_types[115]
+#define SWIGTYPE_p_std__type_info swig_types[116]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[117]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[118]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[119]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator swig_types[120]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[121]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[122]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[123]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[124]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[125]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[126]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[127]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[128]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[129]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[130]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[131]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[132]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[133]
+#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[134]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[135]
+#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[136]
+#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[137]
+#define SWIGTYPE_p_std__vectorTdouble_t swig_types[138]
+#define SWIGTYPE_p_std__vectorTint_t swig_types[139]
+#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[140]
+#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[141]
+#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[142]
+#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[143]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[144]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[145]
+#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[146]
+#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[147]
+#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[148]
+#define SWIGTYPE_p_unsigned_int swig_types[149]
+static swig_type_info *swig_types[151];
+static swig_module_info swig_module = {swig_types, 150, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2071,6 +2072,143 @@ SWIGINTERN void std_vector_Sl_double_Sg__each(std::vector<double > *self){
                 for (unsigned int i=0; i<self->size(); i++)
                     rb_yield(rb_float_new((*self)[i]));
             }
+
+SWIGINTERN swig_type_info*
+SWIG_pchar_descriptor(void)
+{
+  static int init = 0;
+  static swig_type_info* info = 0;
+  if (!init) {
+    info = SWIG_TypeQuery("_p_char");
+    init = 1;
+  }
+  return info;
+}
+
+
+SWIGINTERN int
+SWIG_AsCharPtrAndSize(VALUE obj, char** cptr, size_t* psize, int *alloc)
+{
+  if (TYPE(obj) == T_STRING) {
+    
+
+
+    char *cstr = STR2CSTR(obj);
+    
+    size_t size = RSTRING_LEN(obj) + 1;
+    if (cptr)  {
+      if (alloc) {
+	if (*alloc == SWIG_NEWOBJ) {
+	  *cptr = reinterpret_cast< char* >(memcpy((new char[size]), cstr, sizeof(char)*(size)));
+	} else {
+	  *cptr = cstr;
+	  *alloc = SWIG_OLDOBJ;
+	}
+      }
+    }
+    if (psize) *psize = size;
+    return SWIG_OK;
+  } else {
+    swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
+    if (pchar_descriptor) {
+      void* vptr = 0;
+      if (SWIG_ConvertPtr(obj, &vptr, pchar_descriptor, 0) == SWIG_OK) {
+	if (cptr) *cptr = (char *)vptr;
+	if (psize) *psize = vptr ? (strlen((char*)vptr) + 1) : 0;
+	if (alloc) *alloc = SWIG_OLDOBJ;
+	return SWIG_OK;
+      }
+    }
+  }  
+  return SWIG_TypeError;
+}
+
+
+SWIGINTERN int
+SWIG_AsPtr_std_string (VALUE obj, std::string **val) 
+{
+  char* buf = 0 ; size_t size = 0; int alloc = SWIG_OLDOBJ;
+  if (SWIG_IsOK((SWIG_AsCharPtrAndSize(obj, &buf, &size, &alloc)))) {
+    if (buf) {
+      if (val) *val = new std::string(buf, size - 1);
+      if (alloc == SWIG_NEWOBJ) delete[] buf;
+      return SWIG_NEWOBJ;
+    } else {
+      if (val) *val = 0;
+      return SWIG_OLDOBJ;
+    }
+  } else {
+    static int init = 0;
+    static swig_type_info* descriptor = 0;
+    if (!init) {
+      descriptor = SWIG_TypeQuery("std::string" " *");
+      init = 1;
+    }
+    if (descriptor) {
+      std::string *vptr;
+      int res = SWIG_ConvertPtr(obj, (void**)&vptr, descriptor, 0);
+      if (SWIG_IsOK(res) && val) *val = vptr;
+      return res;
+    }
+  }
+  return SWIG_ERROR;
+}
+
+SWIGINTERN std::string std_vector_Sl_std_string_Sg__pop(std::vector<std::string > *self){
+                if (self->size() == 0)
+                    throw std::out_of_range("pop from empty vector");
+                std::string x = self->back();
+                self->pop_back();
+                return x;
+            }
+
+SWIGINTERNINLINE VALUE 
+SWIG_FromCharPtrAndSize(const char* carray, size_t size)
+{
+  if (carray) {
+    if (size > LONG_MAX) {
+      swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
+      return pchar_descriptor ? 
+	SWIG_NewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : Qnil;
+    } else {
+      return rb_str_new(carray, static_cast< long >(size));
+    }
+  } else {
+    return Qnil;
+  }
+}
+
+
+SWIGINTERNINLINE VALUE
+SWIG_From_std_string  (const std::string& s)
+{
+  if (s.size()) {
+    return SWIG_FromCharPtrAndSize(s.data(), s.size());
+  } else {
+    return SWIG_FromCharPtrAndSize(s.c_str(), 0);
+  }
+}
+
+SWIGINTERN std::string std_vector_Sl_std_string_Sg____getitem__(std::vector<std::string > *self,int i){
+                int size = int(self->size());
+                if (i<0) i += size;
+                if (i>=0 && i<size)
+                    return (*self)[i];
+                else
+                    throw std::out_of_range("vector index out of range");
+            }
+SWIGINTERN void std_vector_Sl_std_string_Sg____setitem__(std::vector<std::string > *self,int i,std::string x){
+                int size = int(self->size());
+                if (i<0) i+= size;
+                if (i>=0 && i<size)
+                    (*self)[i] = x;
+                else
+                    throw std::out_of_range("vector index out of range");
+            }
+SWIGINTERN void std_vector_Sl_std_string_Sg__each(std::vector<std::string > *self){
+                for (unsigned int i=0; i<self->size(); i++)
+                    rb_yield(SWIG_STR2RB((*self)[i]));
+            }
 SWIGINTERN OpenBabel::vector3 std_vector_Sl_OpenBabel_vector3_Sg__pop(std::vector<OpenBabel::vector3 > *self){
                 if (self->size() == 0)
                     throw std::out_of_range("pop from empty vector");
@@ -2221,6 +2359,36 @@ SWIGINTERN void std_vector_Sl_OpenBabel_OBRing_Sg__each(std::vector<OpenBabel::O
                                                 SWIGTYPE_p_OpenBabel__OBRing, 0));
                 }
             }
+SWIGINTERN OpenBabel::OBRing *std_vector_Sl_OpenBabel_OBRing_Sm__Sg__pop(std::vector<OpenBabel::OBRing * > *self){
+                if (self->size() == 0)
+                    throw std::out_of_range("pop from empty vector");
+                OpenBabel::OBRing* x = self->back();
+                self->pop_back();
+                return x;
+            }
+SWIGINTERN OpenBabel::OBRing *std_vector_Sl_OpenBabel_OBRing_Sm__Sg____getitem__(std::vector<OpenBabel::OBRing * > *self,int i){
+                int size = int(self->size());
+                if (i<0) i += size;
+                if (i>=0 && i<size)
+                    return (*self)[i];
+                else
+                    throw std::out_of_range("vector index out of range");
+            }
+SWIGINTERN void std_vector_Sl_OpenBabel_OBRing_Sm__Sg____setitem__(std::vector<OpenBabel::OBRing * > *self,int i,OpenBabel::OBRing *x){
+                int size = int(self->size());
+                if (i<0) i+= size;
+                if (i>=0 && i<size)
+                    (*self)[i] = x;
+                else
+                    throw std::out_of_range("vector index out of range");
+            }
+SWIGINTERN void std_vector_Sl_OpenBabel_OBRing_Sm__Sg__each(std::vector<OpenBabel::OBRing * > *self){
+                for (unsigned int i=0; i<self->size(); i++) {
+                    OpenBabel::OBRing* x = (*self)[i];
+                    rb_yield(SWIG_NewPointerObj((void *) x, 
+                                                SWIGTYPE_p_OpenBabel__OBRing, 0));
+                }
+            }
 SWIGINTERN OpenBabel::OBGenericData *std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__pop(std::vector<OpenBabel::OBGenericData * > *self){
                 if (self->size() == 0)
                     throw std::out_of_range("pop from empty vector");
@@ -2252,123 +2420,22 @@ SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__each(std::vector<O
                 }
             }
 
-SWIGINTERN swig_type_info*
-SWIG_pchar_descriptor(void)
-{
-  static int init = 0;
-  static swig_type_info* info = 0;
-  if (!init) {
-    info = SWIG_TypeQuery("_p_char");
-    init = 1;
-  }
-  return info;
+OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBPairData *) data;
 }
 
-
-SWIGINTERN int
-SWIG_AsCharPtrAndSize(VALUE obj, char** cptr, size_t* psize, int *alloc)
-{
-  if (TYPE(obj) == T_STRING) {
-    
-
-
-    char *cstr = STR2CSTR(obj);
-    
-    size_t size = RSTRING_LEN(obj) + 1;
-    if (cptr)  {
-      if (alloc) {
-	if (*alloc == SWIG_NEWOBJ) {
-	  *cptr = reinterpret_cast< char* >(memcpy((new char[size]), cstr, sizeof(char)*(size)));
-	} else {
-	  *cptr = cstr;
-	  *alloc = SWIG_OLDOBJ;
-	}
-      }
-    }
-    if (psize) *psize = size;
-    return SWIG_OK;
-  } else {
-    swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
-    if (pchar_descriptor) {
-      void* vptr = 0;
-      if (SWIG_ConvertPtr(obj, &vptr, pchar_descriptor, 0) == SWIG_OK) {
-	if (cptr) *cptr = (char *)vptr;
-	if (psize) *psize = vptr ? (strlen((char*)vptr) + 1) : 0;
-	if (alloc) *alloc = SWIG_OLDOBJ;
-	return SWIG_OK;
-      }
-    }
-  }  
-  return SWIG_TypeError;
+OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
+	return (OpenBabel::OBUnitCell *) data;
 }
 
 
 
-
-
-SWIGINTERN int
-SWIG_AsPtr_std_string (VALUE obj, std::string **val) 
-{
-  char* buf = 0 ; size_t size = 0; int alloc = SWIG_OLDOBJ;
-  if (SWIG_IsOK((SWIG_AsCharPtrAndSize(obj, &buf, &size, &alloc)))) {
-    if (buf) {
-      if (val) *val = new std::string(buf, size - 1);
-      if (alloc == SWIG_NEWOBJ) delete[] buf;
-      return SWIG_NEWOBJ;
-    } else {
-      if (val) *val = 0;
-      return SWIG_OLDOBJ;
-    }
-  } else {
-    static int init = 0;
-    static swig_type_info* descriptor = 0;
-    if (!init) {
-      descriptor = SWIG_TypeQuery("std::string" " *");
-      init = 1;
-    }
-    if (descriptor) {
-      std::string *vptr;
-      int res = SWIG_ConvertPtr(obj, (void**)&vptr, descriptor, 0);
-      if (SWIG_IsOK(res) && val) *val = vptr;
-      return res;
-    }
-  }
-  return SWIG_ERROR;
-}
-
-
-SWIGINTERNINLINE VALUE 
-SWIG_FromCharPtrAndSize(const char* carray, size_t size)
-{
-  if (carray) {
-    if (size > LONG_MAX) {
-      swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
-      return pchar_descriptor ? 
-	SWIG_NewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : Qnil;
-    } else {
-      return rb_str_new(carray, static_cast< long >(size));
-    }
-  } else {
-    return Qnil;
-  }
-}
 
 
 SWIGINTERNINLINE VALUE 
 SWIG_FromCharPtr(const char *cptr)
 { 
   return SWIG_FromCharPtrAndSize(cptr, (cptr ? strlen(cptr) : 0));
-}
-
-
-SWIGINTERNINLINE VALUE
-SWIG_From_std_string  (const std::string& s)
-{
-  if (s.size()) {
-    return SWIG_FromCharPtrAndSize(s.data(), s.size());
-  } else {
-    return SWIG_FromCharPtrAndSize(s.c_str(), 0);
-  }
 }
 
 
@@ -4380,6 +4447,474 @@ fail:
 
 SWIGINTERN void
 free_std_vector_Sl_double_Sg_(std::vector<double > *arg1) {
+    delete arg1;
+}
+
+swig_class cVectorString;
+
+SWIGINTERN VALUE
+_wrap_new_vectorString__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *result = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (std::vector<std::string > *)new std::vector<std::string >();DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_vectorString__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  unsigned int arg1 ;
+  std::vector<std::string > *result = 0 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "std::vector<(std::string)>" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  result = (std::vector<std::string > *)new std::vector<std::string >(arg1);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_vectorString__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  unsigned int arg1 ;
+  std::string *arg2 = 0 ;
+  std::vector<std::string > *result = 0 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "std::vector<(std::string)>" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "std::vector<(std::string)>" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "std::vector<(std::string)>" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (std::vector<std::string > *)new std::vector<std::string >(arg1,(std::string const &)*arg2);DATA_PTR(self) = result;
+  
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return self;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+SWIGINTERN VALUE
+_wrap_vectorString_allocate(VALUE self) {
+#else
+  SWIGINTERN VALUE
+  _wrap_vectorString_allocate(int argc, VALUE *argv, VALUE self) {
+#endif
+    
+    
+    VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_std__vectorTstd__string_t);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+    rb_obj_call_init(vresult, argc, argv);
+#endif
+    return vresult;
+  }
+  
+
+SWIGINTERN VALUE
+_wrap_new_vectorString__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = 0 ;
+  std::vector<std::string > *result = 0 ;
+  std::vector<std::string > temp1 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  {
+    if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+      unsigned int size = RARRAY_LEN(argv[0]);
+      temp1 = std::vector<std::string >(size);
+      arg1 = &temp1;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(argv[0])[i];
+        if (SWIG_STRING_P(o))
+        temp1[i] = (std::string)(SWIG_RB2STR(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""std::string" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(argv[0], (void **) &arg1, SWIGTYPE_p_std__vectorTstd__string_t, 1);
+    }
+  }
+  result = (std::vector<std::string > *)new std::vector<std::string >((std::vector<std::string > const &)*arg1);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_new_vectorString(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[2];
+  int ii;
+  
+  argc = nargs;
+  if (argc > 2) SWIG_fail;
+  for (ii = 0; (ii < argc); ii++) {
+    argv[ii] = args[ii];
+  }
+  if (argc == 0) {
+    return _wrap_new_vectorString__SWIG_0(nargs, args, self);
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      return _wrap_new_vectorString__SWIG_1(nargs, args, self);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      /* native sequence? */
+      if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+        unsigned int size = RARRAY_LEN(argv[0]);
+        if (size == 0) {
+          /* an empty sequence can be of any type */
+          _v = 1;
+        } else {
+          /* check the first element only */
+          VALUE o = RARRAY_PTR(argv[0])[0];
+          if (SWIG_STRING_P(o))
+          _v = 1;
+          else
+          _v = 0;
+        }
+      } else {
+        /* wrapped vector? */
+        std::vector<std::string >* v;
+        if (SWIG_ConvertPtr(argv[0],(void **) &v, 
+            SWIGTYPE_p_std__vectorTstd__string_t,0) != -1)
+        _v = 1;
+        else
+        _v = 0;
+      }
+    }
+    if (_v) {
+      return _wrap_new_vectorString__SWIG_3(nargs, args, self);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_new_vectorString__SWIG_2(nargs, args, self);
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'new_vectorString'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorString___len__(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = (std::vector<std::string > *) 0 ;
+  unsigned int result;
+  std::vector<std::string > temp1 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  {
+    if (rb_obj_is_kind_of(self,rb_cArray)) {
+      unsigned int size = RARRAY_LEN(self);
+      temp1 = std::vector<std::string >(size);
+      arg1 = &temp1;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(self)[i];
+        if (SWIG_STRING_P(o))
+        temp1[i] = (std::string)(SWIG_RB2STR(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""std::string" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(self, (void **) &arg1, SWIGTYPE_p_std__vectorTstd__string_t, 1);
+    }
+  }
+  result = (unsigned int)((std::vector<std::string > const *)arg1)->size();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorString_emptyq___(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = (std::vector<std::string > *) 0 ;
+  bool result;
+  std::vector<std::string > temp1 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  {
+    if (rb_obj_is_kind_of(self,rb_cArray)) {
+      unsigned int size = RARRAY_LEN(self);
+      temp1 = std::vector<std::string >(size);
+      arg1 = &temp1;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(self)[i];
+        if (SWIG_STRING_P(o))
+        temp1[i] = (std::string)(SWIG_RB2STR(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""std::string" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(self, (void **) &arg1, SWIGTYPE_p_std__vectorTstd__string_t, 1);
+    }
+  }
+  result = (bool)((std::vector<std::string > const *)arg1)->empty();
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorString_clear(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = (std::vector<std::string > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTstd__string_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "clear" "', argument " "1"" of type '" "std::vector<std::string > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  (arg1)->clear();
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorString_push(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = (std::vector<std::string > *) 0 ;
+  std::string arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTstd__string_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "push_back" "', argument " "1"" of type '" "std::vector<std::string > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    int res = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "push_back" "', argument " "2"" of type '" "std::string""'"); 
+    }
+    arg2 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  (arg1)->push_back(arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorString_pop(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = (std::vector<std::string > *) 0 ;
+  std::string result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTstd__string_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pop" "', argument " "1"" of type '" "std::vector<std::string > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  try {
+    result = std_vector_Sl_std_string_Sg__pop(arg1);
+  }
+  catch(std::out_of_range &_e) {
+    rb_exc_raise(SWIG_Ruby_ExceptionType(SWIGTYPE_p_std__out_of_range, SWIG_NewPointerObj((new std::out_of_range(static_cast< const std::out_of_range& >(_e))),SWIGTYPE_p_std__out_of_range,SWIG_POINTER_OWN))); SWIG_fail;
+  }
+  
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorString___getitem__(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = (std::vector<std::string > *) 0 ;
+  int arg2 ;
+  std::string result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTstd__string_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__getitem__" "', argument " "1"" of type '" "std::vector<std::string > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "__getitem__" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  try {
+    result = std_vector_Sl_std_string_Sg____getitem__(arg1,arg2);
+  }
+  catch(std::out_of_range &_e) {
+    rb_exc_raise(SWIG_Ruby_ExceptionType(SWIGTYPE_p_std__out_of_range, SWIG_NewPointerObj((new std::out_of_range(static_cast< const std::out_of_range& >(_e))),SWIGTYPE_p_std__out_of_range,SWIG_POINTER_OWN))); SWIG_fail;
+  }
+  
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorString___setitem__(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = (std::vector<std::string > *) 0 ;
+  int arg2 ;
+  std::string arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTstd__string_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__setitem__" "', argument " "1"" of type '" "std::vector<std::string > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "__setitem__" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  {
+    std::string *ptr = (std::string *)0;
+    int res = SWIG_AsPtr_std_string(argv[1], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "__setitem__" "', argument " "3"" of type '" "std::string""'"); 
+    }
+    arg3 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  try {
+    std_vector_Sl_std_string_Sg____setitem__(arg1,arg2,arg3);
+  }
+  catch(std::out_of_range &_e) {
+    rb_exc_raise(SWIG_Ruby_ExceptionType(SWIGTYPE_p_std__out_of_range, SWIG_NewPointerObj((new std::out_of_range(static_cast< const std::out_of_range& >(_e))),SWIGTYPE_p_std__out_of_range,SWIG_POINTER_OWN))); SWIG_fail;
+  }
+  
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorString_each(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = (std::vector<std::string > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTstd__string_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "each" "', argument " "1"" of type '" "std::vector<std::string > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  std_vector_Sl_std_string_Sg__each(arg1);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_std_vector_Sl_std_string_Sg_(std::vector<std::string > *arg1) {
     delete arg1;
 }
 
@@ -6683,6 +7218,460 @@ free_std_vector_Sl_OpenBabel_OBRing_Sg_(std::vector<OpenBabel::OBRing > *arg1) {
     delete arg1;
 }
 
+swig_class cVectorpRing;
+
+SWIGINTERN VALUE
+_wrap_new_vectorpRing__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *result = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (std::vector<OpenBabel::OBRing * > *)new std::vector<OpenBabel::OBRing * >();DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_vectorpRing__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  unsigned int arg1 ;
+  std::vector<OpenBabel::OBRing * > *result = 0 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "std::vector<(p.OpenBabel::OBRing)>" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  result = (std::vector<OpenBabel::OBRing * > *)new std::vector<OpenBabel::OBRing * >(arg1);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_vectorpRing__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  unsigned int arg1 ;
+  OpenBabel::OBRing **arg2 = 0 ;
+  std::vector<OpenBabel::OBRing * > *result = 0 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "std::vector<(p.OpenBabel::OBRing)>" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_p_OpenBabel__OBRing,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "std::vector<(p.OpenBabel::OBRing)>" "', argument " "2"" of type '" "OpenBabel::OBRing *&""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "std::vector<(p.OpenBabel::OBRing)>" "', argument " "2"" of type '" "OpenBabel::OBRing *&""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBRing ** >(argp2);
+  result = (std::vector<OpenBabel::OBRing * > *)new std::vector<OpenBabel::OBRing * >(arg1,*arg2);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+SWIGINTERN VALUE
+_wrap_vectorpRing_allocate(VALUE self) {
+#else
+  SWIGINTERN VALUE
+  _wrap_vectorpRing_allocate(int argc, VALUE *argv, VALUE self) {
+#endif
+    
+    
+    VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+    rb_obj_call_init(vresult, argc, argv);
+#endif
+    return vresult;
+  }
+  
+
+SWIGINTERN VALUE
+_wrap_new_vectorpRing__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *arg1 = 0 ;
+  std::vector<OpenBabel::OBRing * > *result = 0 ;
+  std::vector<OpenBabel::OBRing * > temp1 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  {
+    if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+      unsigned int size = RARRAY_LEN(argv[0]);
+      temp1 = std::vector<OpenBabel::OBRing* >(size);
+      arg1 = &temp1;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(argv[0])[i];
+        OpenBabel::OBRing* x;
+        SWIG_ConvertPtr(o, (void **) &x, SWIGTYPE_p_OpenBabel__OBRing, 1);
+        temp1[i] = x;
+      }
+    } else {
+      SWIG_ConvertPtr(argv[0], (void **) &arg1, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, 1);
+    }
+  }
+  result = (std::vector<OpenBabel::OBRing * > *)new std::vector<OpenBabel::OBRing * >((std::vector<OpenBabel::OBRing * > const &)*arg1);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_new_vectorpRing(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[2];
+  int ii;
+  
+  argc = nargs;
+  if (argc > 2) SWIG_fail;
+  for (ii = 0; (ii < argc); ii++) {
+    argv[ii] = args[ii];
+  }
+  if (argc == 0) {
+    return _wrap_new_vectorpRing__SWIG_0(nargs, args, self);
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      return _wrap_new_vectorpRing__SWIG_1(nargs, args, self);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      /* native sequence? */
+      if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+        unsigned int size = RARRAY_LEN(argv[0]);
+        if (size == 0) {
+          /* an empty sequence can be of any type */
+          _v = 1;
+        } else {
+          /* check the first element only */
+          OpenBabel::OBRing* x;
+          VALUE o = RARRAY_PTR(argv[0])[0];
+          if ((SWIG_ConvertPtr(o,(void **) &x, 
+                SWIGTYPE_p_OpenBabel__OBRing,0)) != -1)
+          _v = 1;
+          else
+          _v = 0;
+        }
+      } else {
+        /* wrapped vector? */
+        std::vector<OpenBabel::OBRing* >* v;
+        if (SWIG_ConvertPtr(argv[0],(void **) &v, 
+            SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t,0) != -1)
+        _v = 1;
+        else
+        _v = 0;
+      }
+    }
+    if (_v) {
+      return _wrap_new_vectorpRing__SWIG_3(nargs, args, self);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_p_OpenBabel__OBRing, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_new_vectorpRing__SWIG_2(nargs, args, self);
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'new_vectorpRing'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorpRing_size(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *arg1 = (std::vector<OpenBabel::OBRing * > *) 0 ;
+  unsigned int result;
+  std::vector<OpenBabel::OBRing * > temp1 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  {
+    if (rb_obj_is_kind_of(self,rb_cArray)) {
+      unsigned int size = RARRAY_LEN(self);
+      temp1 = std::vector<OpenBabel::OBRing* >(size);
+      arg1 = &temp1;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(self)[i];
+        OpenBabel::OBRing* x;
+        SWIG_ConvertPtr(o, (void **) &x, SWIGTYPE_p_OpenBabel__OBRing, 1);
+        temp1[i] = x;
+      }
+    } else {
+      SWIG_ConvertPtr(self, (void **) &arg1, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, 1);
+    }
+  }
+  result = (unsigned int)((std::vector<OpenBabel::OBRing * > const *)arg1)->size();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorpRing_empty(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *arg1 = (std::vector<OpenBabel::OBRing * > *) 0 ;
+  bool result;
+  std::vector<OpenBabel::OBRing * > temp1 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  {
+    if (rb_obj_is_kind_of(self,rb_cArray)) {
+      unsigned int size = RARRAY_LEN(self);
+      temp1 = std::vector<OpenBabel::OBRing* >(size);
+      arg1 = &temp1;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(self)[i];
+        OpenBabel::OBRing* x;
+        SWIG_ConvertPtr(o, (void **) &x, SWIGTYPE_p_OpenBabel__OBRing, 1);
+        temp1[i] = x;
+      }
+    } else {
+      SWIG_ConvertPtr(self, (void **) &arg1, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, 1);
+    }
+  }
+  result = (bool)((std::vector<OpenBabel::OBRing * > const *)arg1)->empty();
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorpRing_clear(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *arg1 = (std::vector<OpenBabel::OBRing * > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "clear" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing * > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing * > * >(argp1);
+  (arg1)->clear();
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorpRing_push_back(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *arg1 = (std::vector<OpenBabel::OBRing * > *) 0 ;
+  OpenBabel::OBRing *arg2 = (OpenBabel::OBRing *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "push_back" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing * > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing * > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "push_back" "', argument " "2"" of type '" "OpenBabel::OBRing *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBRing * >(argp2);
+  (arg1)->push_back(arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorpRing_pop(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *arg1 = (std::vector<OpenBabel::OBRing * > *) 0 ;
+  OpenBabel::OBRing *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pop" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing * > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing * > * >(argp1);
+  try {
+    result = (OpenBabel::OBRing *)std_vector_Sl_OpenBabel_OBRing_Sm__Sg__pop(arg1);
+  }
+  catch(std::out_of_range &_e) {
+    rb_exc_raise(SWIG_Ruby_ExceptionType(SWIGTYPE_p_std__out_of_range, SWIG_NewPointerObj((new std::out_of_range(static_cast< const std::out_of_range& >(_e))),SWIGTYPE_p_std__out_of_range,SWIG_POINTER_OWN))); SWIG_fail;
+  }
+  
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorpRing___getitem__(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *arg1 = (std::vector<OpenBabel::OBRing * > *) 0 ;
+  int arg2 ;
+  OpenBabel::OBRing *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__getitem__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing * > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing * > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "__getitem__" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  try {
+    result = (OpenBabel::OBRing *)std_vector_Sl_OpenBabel_OBRing_Sm__Sg____getitem__(arg1,arg2);
+  }
+  catch(std::out_of_range &_e) {
+    rb_exc_raise(SWIG_Ruby_ExceptionType(SWIGTYPE_p_std__out_of_range, SWIG_NewPointerObj((new std::out_of_range(static_cast< const std::out_of_range& >(_e))),SWIGTYPE_p_std__out_of_range,SWIG_POINTER_OWN))); SWIG_fail;
+  }
+  
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorpRing___setitem__(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *arg1 = (std::vector<OpenBabel::OBRing * > *) 0 ;
+  int arg2 ;
+  OpenBabel::OBRing *arg3 = (OpenBabel::OBRing *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__setitem__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing * > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing * > * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "__setitem__" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3,SWIGTYPE_p_OpenBabel__OBRing, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "__setitem__" "', argument " "3"" of type '" "OpenBabel::OBRing *""'"); 
+  }
+  arg3 = reinterpret_cast< OpenBabel::OBRing * >(argp3);
+  try {
+    std_vector_Sl_OpenBabel_OBRing_Sm__Sg____setitem__(arg1,arg2,arg3);
+  }
+  catch(std::out_of_range &_e) {
+    rb_exc_raise(SWIG_Ruby_ExceptionType(SWIGTYPE_p_std__out_of_range, SWIG_NewPointerObj((new std::out_of_range(static_cast< const std::out_of_range& >(_e))),SWIGTYPE_p_std__out_of_range,SWIG_POINTER_OWN))); SWIG_fail;
+  }
+  
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_vectorpRing_each(int argc, VALUE *argv, VALUE self) {
+  std::vector<OpenBabel::OBRing * > *arg1 = (std::vector<OpenBabel::OBRing * > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "each" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing * > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing * > * >(argp1);
+  std_vector_Sl_OpenBabel_OBRing_Sm__Sg__each(arg1);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_std_vector_Sl_OpenBabel_OBRing_Sm__Sg_(std::vector<OpenBabel::OBRing * > *arg1) {
+    delete arg1;
+}
+
 swig_class cVectorData;
 
 SWIGINTERN VALUE
@@ -7136,6 +8125,54 @@ SWIGINTERN void
 free_std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg_(std::vector<OpenBabel::OBGenericData * > *arg1) {
     delete arg1;
 }
+
+SWIGINTERN VALUE
+_wrap_to_pair_data(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBGenericData *arg1 = (OpenBabel::OBGenericData *) 0 ;
+  OpenBabel::OBPairData *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "toPairData" "', argument " "1"" of type '" "OpenBabel::OBGenericData *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBGenericData * >(argp1);
+  result = (OpenBabel::OBPairData *)toPairData(arg1);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBPairData, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_to_unit_cell(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBGenericData *arg1 = (OpenBabel::OBGenericData *) 0 ;
+  OpenBabel::OBUnitCell *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "toUnitCell" "', argument " "1"" of type '" "OpenBabel::OBGenericData *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBGenericData * >(argp1);
+  result = (OpenBabel::OBUnitCell *)toUnitCell(arg1);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBUnitCell, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
 
 swig_class cOBGlobalDataBase;
 
@@ -16143,8 +17180,6 @@ _wrap_OBConformerData_set_data(int argc, VALUE *argv, VALUE self) {
   std::vector<std::string > arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 ;
-  int res2 = 0 ;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -16155,14 +17190,22 @@ _wrap_OBConformerData_set_data(int argc, VALUE *argv, VALUE self) {
   }
   arg1 = reinterpret_cast< OpenBabel::OBConformerData * >(argp1);
   {
-    res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetData" "', argument " "2"" of type '" "std::vector<std::string >""'"); 
-    }  
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetData" "', argument " "2"" of type '" "std::vector<std::string >""'");
+    if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+      unsigned int size = RARRAY_LEN(argv[0]);
+      arg2 = std::vector<std::string >(size);
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY_PTR(argv[0])[i];
+        if (SWIG_STRING_P(o))
+        ((std::vector<std::string > &)arg2)[i] = (std::string)(SWIG_RB2STR(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""std::string" ">)");
+      }
     } else {
-      arg2 = *(reinterpret_cast< std::vector<std::string > * >(argp2));
+      void *ptr;
+      SWIG_ConvertPtr(argv[0], &ptr, SWIGTYPE_p_std__vectorTstd__string_t, 1);
+      arg2 = *((std::vector<std::string > *) ptr);
     }
   }
   (arg1)->SetData(arg2);
@@ -16313,7 +17356,11 @@ _wrap_OBConformerData_get_data(int argc, VALUE *argv, VALUE self) {
   }
   arg1 = reinterpret_cast< OpenBabel::OBConformerData * >(argp1);
   result = (arg1)->GetData();
-  vresult = SWIG_NewPointerObj((new std::vector<std::string >(static_cast< const std::vector<std::string >& >(result))), SWIGTYPE_p_std__vectorTstd__string_t, SWIG_POINTER_OWN |  0 );
+  {
+    vresult = rb_ary_new2((&result)->size());
+    for (unsigned int i=0; i<(&result)->size(); i++)
+    rb_ary_store(vresult,i,SWIG_STR2RB(((std::vector<std::string > &)result)[i]));
+  }
   return vresult;
 fail:
   return Qnil;
@@ -18897,6 +19944,340 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_tokenize__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(argv[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  res3 = SWIG_AsCharPtrAndSize(argv[2], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::tokenize" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = reinterpret_cast< char * >(buf3);
+  result = (bool)OpenBabel::tokenize(*arg1,(char const *)arg2,(char const *)arg3);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return vresult;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_tokenize__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(argv[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  result = (bool)OpenBabel::tokenize(*arg1,(char const *)arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return vresult;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_tokenize__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  char *arg3 = (char *) 0 ;
+  int arg4 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 4) || (argc > 4)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
+  }
+  arg2 = reinterpret_cast< std::string * >(argp2);
+  res3 = SWIG_AsCharPtrAndSize(argv[2], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::tokenize" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = reinterpret_cast< char * >(buf3);
+  ecode4 = SWIG_AsVal_int(argv[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "OpenBabel::tokenize" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  result = (bool)OpenBabel::tokenize(*arg1,*arg2,(char const *)arg3,arg4);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return vresult;
+fail:
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_tokenize__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  char *arg3 = (char *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
+  }
+  arg2 = reinterpret_cast< std::string * >(argp2);
+  res3 = SWIG_AsCharPtrAndSize(argv[2], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::tokenize" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = reinterpret_cast< char * >(buf3);
+  result = (bool)OpenBabel::tokenize(*arg1,*arg2,(char const *)arg3);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return vresult;
+fail:
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_tokenize__SWIG_4(int argc, VALUE *argv, VALUE self) {
+  std::vector<std::string > *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
+  }
+  arg2 = reinterpret_cast< std::string * >(argp2);
+  result = (bool)OpenBabel::tokenize(*arg1,*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_tokenize(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[4];
+  int ii;
+  
+  argc = nargs;
+  if (argc > 4) SWIG_fail;
+  for (ii = 0; (ii < argc); ii++) {
+    argv[ii] = args[ii];
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_tokenize__SWIG_4(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_tokenize__SWIG_1(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_tokenize__SWIG_3(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_tokenize__SWIG_0(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_tokenize__SWIG_2(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'tokenize'");
+  return Qnil;
+}
+
+
 swig_class cOBBase;
 
 SWIGINTERN void
@@ -19231,6 +20612,45 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_OBBase_delete_data__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBBase *arg1 = (OpenBabel::OBBase *) 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteData" "', argument " "1"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBBase * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(arg1)->DeleteData((std::string const &)*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 SWIGINTERN VALUE _wrap_OBBase_delete_data(int nargs, VALUE *args, VALUE self) {
   int argc;
   VALUE argv[3];
@@ -19282,6 +20702,19 @@ SWIGINTERN VALUE _wrap_OBBase_delete_data(int nargs, VALUE *args, VALUE self) {
       }
       if (_v) {
         return _wrap_OBBase_delete_data__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBBase_delete_data__SWIG_3(nargs, args, self);
       }
     }
   }
@@ -24342,7 +25775,11 @@ _wrap_OBMessageHandler_get_messages_of_level(int argc, VALUE *argv, VALUE self) 
   } 
   arg2 = static_cast< OpenBabel::obMessageLevel >(val2);
   result = (arg1)->GetMessagesOfLevel(arg2);
-  vresult = SWIG_NewPointerObj((new std::vector<std::string >(static_cast< const std::vector<std::string >& >(result))), SWIGTYPE_p_std__vectorTstd__string_t, SWIG_POINTER_OWN |  0 );
+  {
+    vresult = rb_ary_new2((&result)->size());
+    for (unsigned int i=0; i<(&result)->size(); i++)
+    rb_ary_store(vresult,i,SWIG_STR2RB(((std::vector<std::string > &)result)[i]));
+  }
   return vresult;
 fail:
   return Qnil;
@@ -27026,7 +28463,11 @@ _wrap_OBConversion_get_supported_input_format(int argc, VALUE *argv, VALUE self)
   }
   arg1 = reinterpret_cast< OpenBabel::OBConversion * >(argp1);
   result = (arg1)->GetSupportedInputFormat();
-  vresult = SWIG_NewPointerObj((new std::vector<std::string >(static_cast< const std::vector<std::string >& >(result))), SWIGTYPE_p_std__vectorTstd__string_t, SWIG_POINTER_OWN |  0 );
+  {
+    vresult = rb_ary_new2((&result)->size());
+    for (unsigned int i=0; i<(&result)->size(); i++)
+    rb_ary_store(vresult,i,SWIG_STR2RB(((std::vector<std::string > &)result)[i]));
+  }
   return vresult;
 fail:
   return Qnil;
@@ -27050,7 +28491,11 @@ _wrap_OBConversion_get_supported_output_format(int argc, VALUE *argv, VALUE self
   }
   arg1 = reinterpret_cast< OpenBabel::OBConversion * >(argp1);
   result = (arg1)->GetSupportedOutputFormat();
-  vresult = SWIG_NewPointerObj((new std::vector<std::string >(static_cast< const std::vector<std::string >& >(result))), SWIGTYPE_p_std__vectorTstd__string_t, SWIG_POINTER_OWN |  0 );
+  {
+    vresult = rb_ary_new2((&result)->size());
+    for (unsigned int i=0; i<(&result)->size(); i++)
+    rb_ary_store(vresult,i,SWIG_STR2RB(((std::vector<std::string > &)result)[i]));
+  }
   return vresult;
 fail:
   return Qnil;
@@ -41700,340 +43145,6 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_tokenize__SWIG_0(int argc, VALUE *argv, VALUE self) {
-  std::vector<std::string > *arg1 = 0 ;
-  char *arg2 = (char *) 0 ;
-  char *arg3 = (char *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
-  int res3 ;
-  char *buf3 = 0 ;
-  int alloc3 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 3) || (argc > 3)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
-  res2 = SWIG_AsCharPtrAndSize(argv[1], &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "char const *""'");
-  }
-  arg2 = reinterpret_cast< char * >(buf2);
-  res3 = SWIG_AsCharPtrAndSize(argv[2], &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::tokenize" "', argument " "3"" of type '" "char const *""'");
-  }
-  arg3 = reinterpret_cast< char * >(buf3);
-  result = (bool)OpenBabel::tokenize(*arg1,(char const *)arg2,(char const *)arg3);
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
-  return vresult;
-fail:
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_tokenize__SWIG_1(int argc, VALUE *argv, VALUE self) {
-  std::vector<std::string > *arg1 = 0 ;
-  char *arg2 = (char *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 2) || (argc > 2)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
-  res2 = SWIG_AsCharPtrAndSize(argv[1], &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "char const *""'");
-  }
-  arg2 = reinterpret_cast< char * >(buf2);
-  result = (bool)OpenBabel::tokenize(*arg1,(char const *)arg2);
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return vresult;
-fail:
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_tokenize__SWIG_2(int argc, VALUE *argv, VALUE self) {
-  std::vector<std::string > *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  char *arg3 = (char *) 0 ;
-  int arg4 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  int res3 ;
-  char *buf3 = 0 ;
-  int alloc3 = 0 ;
-  int val4 ;
-  int ecode4 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 4) || (argc > 4)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_std__string,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
-  }
-  arg2 = reinterpret_cast< std::string * >(argp2);
-  res3 = SWIG_AsCharPtrAndSize(argv[2], &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::tokenize" "', argument " "3"" of type '" "char const *""'");
-  }
-  arg3 = reinterpret_cast< char * >(buf3);
-  ecode4 = SWIG_AsVal_int(argv[3], &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "OpenBabel::tokenize" "', argument " "4"" of type '" "int""'");
-  } 
-  arg4 = static_cast< int >(val4);
-  result = (bool)OpenBabel::tokenize(*arg1,*arg2,(char const *)arg3,arg4);
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
-  return vresult;
-fail:
-  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_tokenize__SWIG_3(int argc, VALUE *argv, VALUE self) {
-  std::vector<std::string > *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  char *arg3 = (char *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  int res3 ;
-  char *buf3 = 0 ;
-  int alloc3 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 3) || (argc > 3)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_std__string,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
-  }
-  arg2 = reinterpret_cast< std::string * >(argp2);
-  res3 = SWIG_AsCharPtrAndSize(argv[2], &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::tokenize" "', argument " "3"" of type '" "char const *""'");
-  }
-  arg3 = reinterpret_cast< char * >(buf3);
-  result = (bool)OpenBabel::tokenize(*arg1,*arg2,(char const *)arg3);
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
-  return vresult;
-fail:
-  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_tokenize__SWIG_4(int argc, VALUE *argv, VALUE self) {
-  std::vector<std::string > *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 2) || (argc > 2)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTstd__string_t,  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "1"" of type '" "std::vector<std::string > &""'"); 
-  }
-  arg1 = reinterpret_cast< std::vector<std::string > * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_std__string,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::tokenize" "', argument " "2"" of type '" "std::string &""'"); 
-  }
-  arg2 = reinterpret_cast< std::string * >(argp2);
-  result = (bool)OpenBabel::tokenize(*arg1,*arg2);
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE _wrap_tokenize(int nargs, VALUE *args, VALUE self) {
-  int argc;
-  VALUE argv[4];
-  int ii;
-  
-  argc = nargs;
-  if (argc > 4) SWIG_fail;
-  for (ii = 0; (ii < argc); ii++) {
-    argv[ii] = args[ii];
-  }
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_tokenize__SWIG_4(nargs, args, self);
-      }
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_tokenize__SWIG_1(nargs, args, self);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_tokenize__SWIG_3(nargs, args, self);
-        }
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_tokenize__SWIG_0(nargs, args, self);
-        }
-      }
-    }
-  }
-  if (argc == 4) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTstd__string_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          {
-            int res = SWIG_AsVal_int(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            return _wrap_tokenize__SWIG_2(nargs, args, self);
-          }
-        }
-      }
-    }
-  }
-  
-fail:
-  rb_raise(rb_eArgError, "No matching function for overloaded 'tokenize'");
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
 _wrap_throw_error__SWIG_0(int argc, VALUE *argv, VALUE self) {
   char *arg1 = (char *) 0 ;
   int res1 ;
@@ -55867,6 +56978,45 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_OBMolAtomIter_delete_data__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBMolAtomIter *arg1 = (OpenBabel::OBMolAtomIter *) 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomIter * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(*arg1)->DeleteData((std::string const &)*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 SWIGINTERN VALUE _wrap_OBMolAtomIter_delete_data(int nargs, VALUE *args, VALUE self) {
   int argc;
   VALUE argv[3];
@@ -55918,6 +57068,19 @@ SWIGINTERN VALUE _wrap_OBMolAtomIter_delete_data(int nargs, VALUE *args, VALUE s
       }
       if (_v) {
         return _wrap_OBMolAtomIter_delete_data__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBMolAtomIter_delete_data__SWIG_3(nargs, args, self);
       }
     }
   }
@@ -60916,6 +62079,45 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_OBMolAtomDFSIter_delete_data__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(*arg1)->DeleteData((std::string const &)*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 SWIGINTERN VALUE _wrap_OBMolAtomDFSIter_delete_data(int nargs, VALUE *args, VALUE self) {
   int argc;
   VALUE argv[3];
@@ -60967,6 +62169,19 @@ SWIGINTERN VALUE _wrap_OBMolAtomDFSIter_delete_data(int nargs, VALUE *args, VALU
       }
       if (_v) {
         return _wrap_OBMolAtomDFSIter_delete_data__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBMolAtomDFSIter_delete_data__SWIG_3(nargs, args, self);
       }
     }
   }
@@ -65846,6 +67061,45 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_OBMolAtomBFSIter_delete_data__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(*arg1)->DeleteData((std::string const &)*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 SWIGINTERN VALUE _wrap_OBMolAtomBFSIter_delete_data(int nargs, VALUE *args, VALUE self) {
   int argc;
   VALUE argv[3];
@@ -65897,6 +67151,19 @@ SWIGINTERN VALUE _wrap_OBMolAtomBFSIter_delete_data(int nargs, VALUE *args, VALU
       }
       if (_v) {
         return _wrap_OBMolAtomBFSIter_delete_data__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBMolAtomBFSIter_delete_data__SWIG_3(nargs, args, self);
       }
     }
   }
@@ -68491,6 +69758,45 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_OBMolBondIter_delete_data__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMolBondIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteData" "', argument " "1"" of type '" "OpenBabel::OBMolBondIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolBondIter * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(*arg1)->DeleteData((std::string const &)*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 SWIGINTERN VALUE _wrap_OBMolBondIter_delete_data(int nargs, VALUE *args, VALUE self) {
   int argc;
   VALUE argv[3];
@@ -68542,6 +69848,19 @@ SWIGINTERN VALUE _wrap_OBMolBondIter_delete_data(int nargs, VALUE *args, VALUE s
       }
       if (_v) {
         return _wrap_OBMolBondIter_delete_data__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBMolBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBMolBondIter_delete_data__SWIG_3(nargs, args, self);
       }
     }
   }
@@ -73421,6 +74740,45 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_OBAtomAtomIter_delete_data__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBAtomAtomIter *arg1 = (OpenBabel::OBAtomAtomIter *) 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBAtomAtomIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteData" "', argument " "1"" of type '" "OpenBabel::OBAtomAtomIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtomAtomIter * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(*arg1)->DeleteData((std::string const &)*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 SWIGINTERN VALUE _wrap_OBAtomAtomIter_delete_data(int nargs, VALUE *args, VALUE self) {
   int argc;
   VALUE argv[3];
@@ -73472,6 +74830,19 @@ SWIGINTERN VALUE _wrap_OBAtomAtomIter_delete_data(int nargs, VALUE *args, VALUE 
       }
       if (_v) {
         return _wrap_OBAtomAtomIter_delete_data__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtomAtomIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBAtomAtomIter_delete_data__SWIG_3(nargs, args, self);
       }
     }
   }
@@ -76066,6 +77437,45 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_OBAtomBondIter_delete_data__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteData" "', argument " "1"" of type '" "OpenBabel::OBAtomBondIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtomBondIter * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(*arg1)->DeleteData((std::string const &)*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 SWIGINTERN VALUE _wrap_OBAtomBondIter_delete_data(int nargs, VALUE *args, VALUE self) {
   int argc;
   VALUE argv[3];
@@ -76117,6 +77527,19 @@ SWIGINTERN VALUE _wrap_OBAtomBondIter_delete_data(int nargs, VALUE *args, VALUE 
       }
       if (_v) {
         return _wrap_OBAtomBondIter_delete_data__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBAtomBondIter_delete_data__SWIG_3(nargs, args, self);
       }
     }
   }
@@ -78118,6 +79541,45 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_OBResidueIter_delete_data__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBResidueIter *arg1 = (OpenBabel::OBResidueIter *) 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBResidueIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteData" "', argument " "1"" of type '" "OpenBabel::OBResidueIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBResidueIter * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(*arg1)->DeleteData((std::string const &)*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 SWIGINTERN VALUE _wrap_OBResidueIter_delete_data(int nargs, VALUE *args, VALUE self) {
   int argc;
   VALUE argv[3];
@@ -78169,6 +79631,19 @@ SWIGINTERN VALUE _wrap_OBResidueIter_delete_data(int nargs, VALUE *args, VALUE s
       }
       if (_v) {
         return _wrap_OBResidueIter_delete_data__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBResidueIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBResidueIter_delete_data__SWIG_3(nargs, args, self);
       }
     }
   }
@@ -83048,6 +84523,45 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_OBResidueAtomIter_delete_data__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBResidueAtomIter *arg1 = (OpenBabel::OBResidueAtomIter *) 0 ;
+  std::string *arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBResidueAtomIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DeleteData" "', argument " "1"" of type '" "OpenBabel::OBResidueAtomIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBResidueAtomIter * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(argv[0], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DeleteData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(*arg1)->DeleteData((std::string const &)*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return vresult;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return Qnil;
+}
+
+
 SWIGINTERN VALUE _wrap_OBResidueAtomIter_delete_data(int nargs, VALUE *args, VALUE self) {
   int argc;
   VALUE argv[3];
@@ -83099,6 +84613,19 @@ SWIGINTERN VALUE _wrap_OBResidueAtomIter_delete_data(int nargs, VALUE *args, VAL
       }
       if (_v) {
         return _wrap_OBResidueAtomIter_delete_data__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBResidueAtomIter, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBResidueAtomIter_delete_data__SWIG_3(nargs, args, self);
       }
     }
   }
@@ -85054,6 +86581,7 @@ static swig_type_info _swigt__p_p_OpenBabel__OBCommentData = {"_p_p_OpenBabel__O
 static swig_type_info _swigt__p_p_OpenBabel__OBVirtualBond = {"_p_p_OpenBabel__OBVirtualBond", 0, 0, 0, 0, 0};
 static swig_type_info _swigt__p_p_OpenBabel__OBConformerData = {"_p_p_OpenBabel__OBConformerData", 0, 0, 0, 0, 0};
 static swig_type_info _swigt__p_p_OpenBabel__OBUnitCell = {"_p_p_OpenBabel__OBUnitCell", 0, 0, 0, 0, 0};
+static swig_type_info _swigt__p_p_OpenBabel__OBRing = {"_p_p_OpenBabel__OBRing", "OpenBabel::OBRing **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_double = {"_p_p_double", "double **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_int = {"_p_p_int", "int **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__dequeTint_t = {"_p_std__dequeTint_t", "std::deque<int > *", 0, 0, (void*)0, 0};
@@ -85197,6 +86725,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_p_OpenBabel__OBFormat,
   &_swigt__p_p_OpenBabel__OBGenericData,
   &_swigt__p_p_OpenBabel__OBPairData,
+  &_swigt__p_p_OpenBabel__OBRing,
   &_swigt__p_p_OpenBabel__OBRingData,
   &_swigt__p_p_OpenBabel__OBSerialNums,
   &_swigt__p_p_OpenBabel__OBSetData,
@@ -85356,6 +86885,7 @@ static swig_cast_info _swigc__p_p_OpenBabel__OBVirtualBond[] = {{&_swigt__p_p_Op
 static swig_cast_info _swigc__p_p_OpenBabel__OBConformerData[] = {{&_swigt__p_p_OpenBabel__OBConformerData, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_OpenBabel__OBUnitCell[] = {{&_swigt__p_p_OpenBabel__OBUnitCell, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_OpenBabel__OBGenericData[] = {  {&_swigt__p_p_OpenBabel__OBVibrationData, _p_p_OpenBabel__OBVibrationDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBTorsionData, _p_p_OpenBabel__OBTorsionDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBPairData, _p_p_OpenBabel__OBPairDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBAngleData, _p_p_OpenBabel__OBAngleDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBChiralData, _p_p_OpenBabel__OBChiralDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBRingData, _p_p_OpenBabel__OBRingDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBSerialNums, _p_p_OpenBabel__OBSerialNumsTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBExternalBondData, _p_p_OpenBabel__OBExternalBondDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBSetData, _p_p_OpenBabel__OBSetDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBSymmetryData, _p_p_OpenBabel__OBSymmetryDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBCommentData, _p_p_OpenBabel__OBCommentDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBVirtualBond, _p_p_OpenBabel__OBVirtualBondTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBConformerData, _p_p_OpenBabel__OBConformerDataTo_p_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_p_OpenBabel__OBGenericData, 0, 0, 0},  {&_swigt__p_p_OpenBabel__OBUnitCell, _p_p_OpenBabel__OBUnitCellTo_p_p_OpenBabel__OBGenericData, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_OpenBabel__OBRing[] = {  {&_swigt__p_p_OpenBabel__OBRing, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_double[] = {  {&_swigt__p_p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_int[] = {  {&_swigt__p_p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__dequeTint_t[] = {  {&_swigt__p_std__dequeTint_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -85499,6 +87029,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_p_OpenBabel__OBFormat,
   _swigc__p_p_OpenBabel__OBGenericData,
   _swigc__p_p_OpenBabel__OBPairData,
+  _swigc__p_p_OpenBabel__OBRing,
   _swigc__p_p_OpenBabel__OBRingData,
   _swigc__p_p_OpenBabel__OBSerialNums,
   _swigc__p_p_OpenBabel__OBSetData,
@@ -85873,6 +87404,23 @@ SWIGEXPORT void Init_openbabel(void) {
   cVectorDouble.destroy = (void (*)(void *)) free_std_vector_Sl_double_Sg_;
   cVectorDouble.trackObjects = 0;
   
+  cVectorString.klass = rb_define_class_under(mOpenbabel, "VectorString", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_std__vectorTstd__string_t, (void *) &cVectorString);
+  rb_include_module(cVectorString.klass, rb_eval_string("Enumerable"));
+  rb_define_alloc_func(cVectorString.klass, _wrap_vectorString_allocate);
+  rb_define_method(cVectorString.klass, "initialize", VALUEFUNC(_wrap_new_vectorString), -1);
+  rb_define_method(cVectorString.klass, "length", VALUEFUNC(_wrap_vectorString___len__), -1);
+  rb_define_method(cVectorString.klass, "empty?", VALUEFUNC(_wrap_vectorString_emptyq___), -1);
+  rb_define_method(cVectorString.klass, "clear", VALUEFUNC(_wrap_vectorString_clear), -1);
+  rb_define_method(cVectorString.klass, "push", VALUEFUNC(_wrap_vectorString_push), -1);
+  rb_define_method(cVectorString.klass, "pop", VALUEFUNC(_wrap_vectorString_pop), -1);
+  rb_define_method(cVectorString.klass, "[]", VALUEFUNC(_wrap_vectorString___getitem__), -1);
+  rb_define_method(cVectorString.klass, "[]=", VALUEFUNC(_wrap_vectorString___setitem__), -1);
+  rb_define_method(cVectorString.klass, "each", VALUEFUNC(_wrap_vectorString_each), -1);
+  cVectorString.mark = 0;
+  cVectorString.destroy = (void (*)(void *)) free_std_vector_Sl_std_string_Sg_;
+  cVectorString.trackObjects = 0;
+  
   cVVector3.klass = rb_define_class_under(mOpenbabel, "VVector3", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__vector3_t, (void *) &cVVector3);
   rb_include_module(cVVector3.klass, rb_eval_string("Enumerable"));
@@ -85958,6 +87506,23 @@ SWIGEXPORT void Init_openbabel(void) {
   cVectorRing.destroy = (void (*)(void *)) free_std_vector_Sl_OpenBabel_OBRing_Sg_;
   cVectorRing.trackObjects = 0;
   
+  cVectorpRing.klass = rb_define_class_under(mOpenbabel, "VectorpRing", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t, (void *) &cVectorpRing);
+  rb_include_module(cVectorpRing.klass, rb_eval_string("Enumerable"));
+  rb_define_alloc_func(cVectorpRing.klass, _wrap_vectorpRing_allocate);
+  rb_define_method(cVectorpRing.klass, "initialize", VALUEFUNC(_wrap_new_vectorpRing), -1);
+  rb_define_method(cVectorpRing.klass, "size", VALUEFUNC(_wrap_vectorpRing_size), -1);
+  rb_define_method(cVectorpRing.klass, "empty", VALUEFUNC(_wrap_vectorpRing_empty), -1);
+  rb_define_method(cVectorpRing.klass, "clear", VALUEFUNC(_wrap_vectorpRing_clear), -1);
+  rb_define_method(cVectorpRing.klass, "push_back", VALUEFUNC(_wrap_vectorpRing_push_back), -1);
+  rb_define_method(cVectorpRing.klass, "pop", VALUEFUNC(_wrap_vectorpRing_pop), -1);
+  rb_define_method(cVectorpRing.klass, "[]", VALUEFUNC(_wrap_vectorpRing___getitem__), -1);
+  rb_define_method(cVectorpRing.klass, "[]=", VALUEFUNC(_wrap_vectorpRing___setitem__), -1);
+  rb_define_method(cVectorpRing.klass, "each", VALUEFUNC(_wrap_vectorpRing_each), -1);
+  cVectorpRing.mark = 0;
+  cVectorpRing.destroy = (void (*)(void *)) free_std_vector_Sl_OpenBabel_OBRing_Sm__Sg_;
+  cVectorpRing.trackObjects = 0;
+  
   cVectorData.klass = rb_define_class_under(mOpenbabel, "VectorData", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, (void *) &cVectorData);
   rb_include_module(cVectorData.klass, rb_eval_string("Enumerable"));
@@ -85974,6 +87539,8 @@ SWIGEXPORT void Init_openbabel(void) {
   cVectorData.mark = 0;
   cVectorData.destroy = (void (*)(void *)) free_std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg_;
   cVectorData.trackObjects = 0;
+  rb_define_module_function(mOpenbabel, "to_pair_data", VALUEFUNC(_wrap_to_pair_data), -1);
+  rb_define_module_function(mOpenbabel, "to_unit_cell", VALUEFUNC(_wrap_to_unit_cell), -1);
   
   cOBGlobalDataBase.klass = rb_define_class_under(mOpenbabel, "OBGlobalDataBase", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBGlobalDataBase, (void *) &cOBGlobalDataBase);
@@ -86489,6 +88056,7 @@ SWIGEXPORT void Init_openbabel(void) {
   cOBVibrationData.mark = 0;
   cOBVibrationData.destroy = (void (*)(void *)) free_OpenBabel_OBVibrationData;
   cOBVibrationData.trackObjects = 0;
+  rb_define_module_function(mOpenbabel, "tokenize", VALUEFUNC(_wrap_tokenize), -1);
   
   cOBBase.klass = rb_define_class_under(mOpenbabel, "OBBase", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBBase, (void *) &cOBBase);
@@ -87327,7 +88895,6 @@ SWIGEXPORT void Init_openbabel(void) {
   cOBMol.mark = 0;
   cOBMol.destroy = (void (*)(void *)) free_OpenBabel_OBMol;
   cOBMol.trackObjects = 0;
-  rb_define_module_function(mOpenbabel, "tokenize", VALUEFUNC(_wrap_tokenize), -1);
   rb_define_module_function(mOpenbabel, "throw_error", VALUEFUNC(_wrap_throw_error), -1);
   rb_define_module_function(mOpenbabel, "cartesian_to_internal", VALUEFUNC(_wrap_cartesian_to_internal), -1);
   rb_define_module_function(mOpenbabel, "internal_to_cartesian", VALUEFUNC(_wrap_internal_to_cartesian), -1);

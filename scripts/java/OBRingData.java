@@ -45,16 +45,16 @@ public class OBRingData extends OBGenericData {
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
-  public void SetData(SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t vr) {
-    openbabelJNI.OBRingData_SetData(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t.getCPtr(vr));
+  public void SetData(vectorpRing vr) {
+    openbabelJNI.OBRingData_SetData(swigCPtr, this, vectorpRing.getCPtr(vr), vr);
   }
 
   public void PushBack(OBRing r) {
     openbabelJNI.OBRingData_PushBack(swigCPtr, this, OBRing.getCPtr(r), r);
   }
 
-  public SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t GetData() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t(openbabelJNI.OBRingData_GetData(swigCPtr, this), false);
+  public vectorpRing GetData() {
+    return new vectorpRing(openbabelJNI.OBRingData_GetData(swigCPtr, this), false);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator BeginRings() {

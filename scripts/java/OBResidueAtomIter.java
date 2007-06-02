@@ -627,6 +627,10 @@ public class OBResidueAtomIter {
     openbabelJNI.OBResidueAtomIter_DeleteData__SWIG_2(swigCPtr, this, vectorData.getCPtr(arg0), arg0);
   }
 
+  public boolean DeleteData(String s) {
+    return openbabelJNI.OBResidueAtomIter_DeleteData__SWIG_3(swigCPtr, this, s);
+  }
+
   public void SetData(OBGenericData d) {
     openbabelJNI.OBResidueAtomIter_SetData(swigCPtr, this, OBGenericData.getCPtr(d), d);
   }

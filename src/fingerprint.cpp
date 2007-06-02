@@ -92,13 +92,12 @@ namespace OpenBabel
         for(;orfp;orfp=orfp<<1)
           if(orfp<0) ++orbits;
       }
+    if(orbits==0)
+      return 0.0;
     return((double)andbits/(double)orbits);
   }
 
-  //*****************************************************************8
-  /*!
-	  
-  */
+  //*****************************************************************
   bool FastSearch::Find(OBBase* pOb, vector<unsigned int>& SeekPositions,
                         unsigned int MaxCandidates)
   {

@@ -49,6 +49,8 @@ sub this {
 
 package Chemistry::OpenBabel;
 
+*toPairData = *Chemistry::OpenBabelc::toPairData;
+*toUnitCell = *Chemistry::OpenBabelc::toUnitCell;
 *OpenDatafile = *Chemistry::OpenBabelc::OpenDatafile;
 *DoubleMultiply = *Chemistry::OpenBabelc::DoubleMultiply;
 *DoubleAdd = *Chemistry::OpenBabelc::DoubleAdd;
@@ -236,6 +238,50 @@ sub DESTROY {
     delete $ITERATORS{$self};
     if (exists $OWNER{$self}) {
         Chemistry::OpenBabelc::delete_vectorDouble($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::vectorString ##############
+
+package Chemistry::OpenBabel::vectorString;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_vectorString(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*size = *Chemistry::OpenBabelc::vectorString_size;
+*empty = *Chemistry::OpenBabelc::vectorString_empty;
+*clear = *Chemistry::OpenBabelc::vectorString_clear;
+*push = *Chemistry::OpenBabelc::vectorString_push;
+*pop = *Chemistry::OpenBabelc::vectorString_pop;
+*get = *Chemistry::OpenBabelc::vectorString_get;
+*set = *Chemistry::OpenBabelc::vectorString_set;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_vectorString($self);
         delete $OWNER{$self};
     }
 }
@@ -456,6 +502,50 @@ sub DESTROY {
     delete $ITERATORS{$self};
     if (exists $OWNER{$self}) {
         Chemistry::OpenBabelc::delete_vectorRing($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::vectorpRing ##############
+
+package Chemistry::OpenBabel::vectorpRing;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_vectorpRing(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*size = *Chemistry::OpenBabelc::vectorpRing_size;
+*empty = *Chemistry::OpenBabelc::vectorpRing_empty;
+*clear = *Chemistry::OpenBabelc::vectorpRing_clear;
+*push = *Chemistry::OpenBabelc::vectorpRing_push;
+*pop = *Chemistry::OpenBabelc::vectorpRing_pop;
+*get = *Chemistry::OpenBabelc::vectorpRing_get;
+*set = *Chemistry::OpenBabelc::vectorpRing_set;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_vectorpRing($self);
         delete $OWNER{$self};
     }
 }
@@ -3492,6 +3582,157 @@ sub DESTROY {
 *VectorAngleDerivative = *Chemistry::OpenBabelc::OBForceField_VectorAngleDerivative;
 *VectorTorsionDerivative = *Chemistry::OpenBabelc::OBForceField_VectorTorsionDerivative;
 *kludge = *Chemistry::OpenBabelc::OBForceField_kludge;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBGroupContrib ##############
+
+package Chemistry::OpenBabel::OBGroupContrib;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBGroupContrib(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBGroupContrib($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBLogP ##############
+
+package Chemistry::OpenBabel::OBLogP;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel::OBGroupContrib Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBLogP(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBLogP($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Predict = *Chemistry::OpenBabelc::OBLogP_Predict;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBPSA ##############
+
+package Chemistry::OpenBabel::OBPSA;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel::OBGroupContrib Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBPSA(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBPSA($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Predict = *Chemistry::OpenBabelc::OBPSA_Predict;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBMR ##############
+
+package Chemistry::OpenBabel::OBMR;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel::OBGroupContrib Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBMR(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBMR($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Predict = *Chemistry::OpenBabelc::OBMR_Predict;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);

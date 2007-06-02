@@ -269,8 +269,8 @@ public class OBMol extends OBBase {
     return (cPtr == 0) ? null : new SWIGTYPE_p_double(cPtr, false);
   }
 
-  public SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t GetSSSR() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t(openbabelJNI.OBMol_GetSSSR(swigCPtr, this), false);
+  public vectorpRing GetSSSR() {
+    return new vectorpRing(openbabelJNI.OBMol_GetSSSR(swigCPtr, this), false);
   }
 
   public boolean AutomaticFormalCharge() {

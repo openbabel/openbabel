@@ -2,13 +2,11 @@
 from distutils.core import *
 import os, shutil, glob
 
-about = """The Open Babel package provides a Python wrapper
-to the Open Babel C++ chemistry library. Open Babel is a project
-designed to pick up where Babel left off, as a cross-platform program
-and library designed to interconvert between many file formats used in
-molecular modeling, computational chemistry, and many related
-areas. It provides a broad base of chemical functionality for custom
-development.
+about = """Open Babel is a chemical toolbox designed to speak the
+many languages of chemical data. It's an open, collaborative project
+allowing anyone to search, convert, analyze, or store data from
+molecular modeling, chemistry, solid-state materials, biochemistry,
+or related areas.
 """
 
 # The following line is necessary because only one 'root package' location
@@ -17,7 +15,7 @@ development.
 shutil.copy("../../scripts/python/pybel.py", ".")
 
 setup(name='openbabel-python',
-      version='1.0',
+      version='1.2',
       author='The Open Babel development team',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/wiki/Python',

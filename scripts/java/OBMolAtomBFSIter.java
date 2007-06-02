@@ -627,6 +627,10 @@ public class OBMolAtomBFSIter {
     openbabelJNI.OBMolAtomBFSIter_DeleteData__SWIG_2(swigCPtr, this, vectorData.getCPtr(arg0), arg0);
   }
 
+  public boolean DeleteData(String s) {
+    return openbabelJNI.OBMolAtomBFSIter_DeleteData__SWIG_3(swigCPtr, this, s);
+  }
+
   public void SetData(OBGenericData d) {
     openbabelJNI.OBMolAtomBFSIter_SetData(swigCPtr, this, OBGenericData.getCPtr(d), d);
   }

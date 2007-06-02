@@ -201,12 +201,12 @@ public class OBConversion {
     return openbabelJNI.OBConversion_GetOptionParams(name, typ.swigValue());
   }
 
-  public SWIGTYPE_p_std__vectorTstd__string_t GetSupportedInputFormat() {
-    return new SWIGTYPE_p_std__vectorTstd__string_t(openbabelJNI.OBConversion_GetSupportedInputFormat(swigCPtr, this), true);
+  public vectorString GetSupportedInputFormat() {
+    return new vectorString(openbabelJNI.OBConversion_GetSupportedInputFormat(swigCPtr, this), true);
   }
 
-  public SWIGTYPE_p_std__vectorTstd__string_t GetSupportedOutputFormat() {
-    return new SWIGTYPE_p_std__vectorTstd__string_t(openbabelJNI.OBConversion_GetSupportedOutputFormat(swigCPtr, this), true);
+  public vectorString GetSupportedOutputFormat() {
+    return new vectorString(openbabelJNI.OBConversion_GetSupportedOutputFormat(swigCPtr, this), true);
   }
 
   public int Convert(SWIGTYPE_p_std__istream is, SWIGTYPE_p_std__ostream os) {
@@ -217,8 +217,8 @@ public class OBConversion {
     return openbabelJNI.OBConversion_Convert__SWIG_1(swigCPtr, this);
   }
 
-  public int FullConvert(SWIGTYPE_p_std__vectorTstd__string_t FileList, SWIGTYPE_p_std__string OutputFileName, SWIGTYPE_p_std__vectorTstd__string_t OutputFileList) {
-    return openbabelJNI.OBConversion_FullConvert(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(FileList), SWIGTYPE_p_std__string.getCPtr(OutputFileName), SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(OutputFileList));
+  public int FullConvert(vectorString FileList, SWIGTYPE_p_std__string OutputFileName, vectorString OutputFileList) {
+    return openbabelJNI.OBConversion_FullConvert(swigCPtr, this, vectorString.getCPtr(FileList), FileList, SWIGTYPE_p_std__string.getCPtr(OutputFileName), vectorString.getCPtr(OutputFileList), OutputFileList);
   }
 
   public boolean AddChemObject(OBBase pOb) {

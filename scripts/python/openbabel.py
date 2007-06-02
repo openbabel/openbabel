@@ -251,6 +251,47 @@ class vectorDouble(object):
 vectorDouble_swigregister = _openbabel.vectorDouble_swigregister
 vectorDouble_swigregister(vectorDouble)
 
+class vectorString(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorString_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorString___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorString___len__(*args)
+    def pop(*args): return _openbabel.vectorString_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorString___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorString___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorString___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorString___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorString___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorString___setitem__(*args)
+    def append(*args): return _openbabel.vectorString_append(*args)
+    def empty(*args): return _openbabel.vectorString_empty(*args)
+    def size(*args): return _openbabel.vectorString_size(*args)
+    def clear(*args): return _openbabel.vectorString_clear(*args)
+    def swap(*args): return _openbabel.vectorString_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorString_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorString_begin(*args)
+    def end(*args): return _openbabel.vectorString_end(*args)
+    def rbegin(*args): return _openbabel.vectorString_rbegin(*args)
+    def rend(*args): return _openbabel.vectorString_rend(*args)
+    def pop_back(*args): return _openbabel.vectorString_pop_back(*args)
+    def erase(*args): return _openbabel.vectorString_erase(*args)
+    def __init__(self, *args): 
+        _openbabel.vectorString_swiginit(self,_openbabel.new_vectorString(*args))
+    def push_back(*args): return _openbabel.vectorString_push_back(*args)
+    def front(*args): return _openbabel.vectorString_front(*args)
+    def back(*args): return _openbabel.vectorString_back(*args)
+    def assign(*args): return _openbabel.vectorString_assign(*args)
+    def resize(*args): return _openbabel.vectorString_resize(*args)
+    def insert(*args): return _openbabel.vectorString_insert(*args)
+    def reserve(*args): return _openbabel.vectorString_reserve(*args)
+    def capacity(*args): return _openbabel.vectorString_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorString
+    __del__ = lambda self : None;
+vectorString_swigregister = _openbabel.vectorString_swigregister
+vectorString_swigregister(vectorString)
+
 class vVector3(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -456,6 +497,47 @@ class vectorRing(object):
 vectorRing_swigregister = _openbabel.vectorRing_swigregister
 vectorRing_swigregister(vectorRing)
 
+class vectorpRing(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorpRing_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorpRing___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorpRing___len__(*args)
+    def pop(*args): return _openbabel.vectorpRing_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorpRing___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorpRing___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorpRing___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorpRing___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorpRing___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorpRing___setitem__(*args)
+    def append(*args): return _openbabel.vectorpRing_append(*args)
+    def empty(*args): return _openbabel.vectorpRing_empty(*args)
+    def size(*args): return _openbabel.vectorpRing_size(*args)
+    def clear(*args): return _openbabel.vectorpRing_clear(*args)
+    def swap(*args): return _openbabel.vectorpRing_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorpRing_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorpRing_begin(*args)
+    def end(*args): return _openbabel.vectorpRing_end(*args)
+    def rbegin(*args): return _openbabel.vectorpRing_rbegin(*args)
+    def rend(*args): return _openbabel.vectorpRing_rend(*args)
+    def pop_back(*args): return _openbabel.vectorpRing_pop_back(*args)
+    def erase(*args): return _openbabel.vectorpRing_erase(*args)
+    def __init__(self, *args): 
+        _openbabel.vectorpRing_swiginit(self,_openbabel.new_vectorpRing(*args))
+    def push_back(*args): return _openbabel.vectorpRing_push_back(*args)
+    def front(*args): return _openbabel.vectorpRing_front(*args)
+    def back(*args): return _openbabel.vectorpRing_back(*args)
+    def assign(*args): return _openbabel.vectorpRing_assign(*args)
+    def resize(*args): return _openbabel.vectorpRing_resize(*args)
+    def insert(*args): return _openbabel.vectorpRing_insert(*args)
+    def reserve(*args): return _openbabel.vectorpRing_reserve(*args)
+    def capacity(*args): return _openbabel.vectorpRing_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorpRing
+    __del__ = lambda self : None;
+vectorpRing_swigregister = _openbabel.vectorpRing_swigregister
+vectorpRing_swigregister(vectorpRing)
+
 class vectorData(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -497,6 +579,8 @@ class vectorData(object):
 vectorData_swigregister = _openbabel.vectorData_swigregister
 vectorData_swigregister(vectorData)
 
+toPairData = _openbabel.toPairData
+toUnitCell = _openbabel.toUnitCell
 class OBGlobalDataBase(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -1093,6 +1177,7 @@ class OBBase(object):
         _openbabel.OBBase_swiginit(self,_openbabel.new_OBBase(*args))
 OBBase_swigregister = _openbabel.OBBase_swigregister
 OBBase_swigregister(OBBase)
+tokenize = _openbabel.tokenize
 OBBase_ClassDescription = _openbabel.OBBase_ClassDescription
 
 class pluginiterFingerprint(object):
@@ -1961,7 +2046,6 @@ class OBRing(object):
     __del__ = lambda self : None;
 OBRing_swigregister = _openbabel.OBRing_swigregister
 OBRing_swigregister(OBRing)
-tokenize = _openbabel.tokenize
 ThrowError = _openbabel.ThrowError
 
 CompareRingSize = _openbabel.CompareRingSize
