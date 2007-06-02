@@ -2,11 +2,15 @@
 
 	* Doxyfile: Bump to 2.1.1 and add search engine support.
 
+	* src/formats/smilesformat.cpp: Fix bug reported by Craig with
+	un-matched ring closures. These should now always be rejected,
+	since _rclose will not be empty.
+
 	* test/files/invalid-smiles.txt: Add ring closure tests from
 	Craig.
 
-	* test/mol.cpp: Add H-H deletion bug reported by Donald.
-	PR#1704551
+	* test/mol.cpp: Add test for H-H deletion bug reported by Donald,
+	PR#1704551.
 
 2007-06-01  Noel O'Boyle <baoilleach@gmail.com>
 

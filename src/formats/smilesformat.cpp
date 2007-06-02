@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -375,6 +375,14 @@ namespace OpenBabel
     // place dummy atoms for each unfilled external bond
     if(!_extbond.empty())
       CapExternalBonds(mol);
+
+    // Check to see if we've balanced out all ring closures
+    // They are removed from _rclose when matched
+    if ( _rclose.size() != 0) {
+      mol.EndModify();
+      mol.Clear();
+      return false; // invalid SMILES since rings aren't properly closed
+    }
 
     //set aromatic bond orders
     mol.SetAromaticPerceived();
