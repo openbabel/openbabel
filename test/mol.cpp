@@ -167,9 +167,33 @@ int main(int argc,char *argv[])
     cout << "not ok 11" << endl;
   }
   
+  // test "h3" remove hydrogens case -- PR#1704551
+  OBMol testMolH3;
+  OBAtom *testAtom3 = testMolH3.NewAtom();
+  testAtom3->SetAtomicNum(1);
+  testAtom3 = testMolH3.NewAtom();
+  testAtom3->SetAtomicNum(1);
+  testAtom3 = testMolH3.NewAtom();
+  testAtom3->SetAtomicNum(1);
+  testMolH3.AddBond(1,2,1);
+  testMolH3.AddBond(2,3,1);
+  // OK, we now have 3 hydrogen atoms, 2 bonds
+  testMolH3.DeleteHydrogens();
+  // should have 0 atoms, 0 bonds
+  if (testMolH3.NumAtoms() == 0) {
+    cout << "ok 12" << endl;
+  } else {
+    cout << "not ok 12" << endl;
+  }
+  if (testMolH3.NumBonds() == 0) {
+    cout << "ok 13" << endl;
+  } else {
+    cout << "not ok 13 # should delete all H-H bonds" << endl;
+  }  
+
   // the total number of tests for "prove"
   // update when you add more tests!
-  cout << "1..11\n";
+  cout << "1..13\n";
 
   return(0);
 }

@@ -1,3 +1,13 @@
+2007-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Doxyfile: Bump to 2.1.1 and add search engine support.
+
+	* test/files/invalid-smiles.txt: Add ring closure tests from
+	Craig.
+
+	* test/mol.cpp: Add H-H deletion bug reported by Donald.
+	PR#1704551
+
 2007-05-25  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/xml/cdxmlformat.cpp: don't clear the molecule
