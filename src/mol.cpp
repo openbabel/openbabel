@@ -1641,8 +1641,6 @@ namespace OpenBabel
       return(true);
 
     /*
-      
-     
       int idx1,idx2;
       vector<double*>::iterator j;
       for (idx1=0,idx2=0,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx1)
@@ -1689,50 +1687,16 @@ namespace OpenBabel
        _flags &= (~(OB_IMPVAL_MOL));
     */
 
-    //find bonds to delete
-    vector<OBBond*> delbonds;
-    vector<OBBond*>::iterator j;
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (!atom->IsHydrogen())
-        for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
-          if (nbr->IsHydrogen())
-            delbonds.push_back(*j);
-
     IncrementMod();
-    for (j = delbonds.begin();j != delbonds.end();++j)
-      DeleteBond((OBBond *)*j); //delete bonds
-    DecrementMod();
 
-    int idx1,idx2;
-    vector<double*>::iterator k;
-    for (idx1=0,idx2=0,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx1)
-      if (!atom->IsHydrogen())
-        {
-          //Update conformer coordinates
-          for (k = _vconf.begin();k != _vconf.end();++k)
-            memcpy((char*)&((*k)[idx2*3]),(char*)&((*k)[idx1*3]),sizeof(double)*3);
-
-          idx2++;
-          va.push_back(atom);
-        }
-
-    _vatom.clear();
-    for (i = va.begin();i != va.end();++i)
-      _vatom.push_back((OBAtom*)*i);
-
-    //_atom = va;
-    //_atom.resize(_atom.size()+1);
-    //_atom[_atom.size()-1] = NULL;
-    _natoms = va.size();
-
-    //reset all the indices to the atoms
-    for (idx1=1,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx1)
-      atom->SetIdx(idx1);
-
+    // This is slow -- we need methods to delete a set of atoms
+    //  and to delete a set of bonds
+    // Calling this sequentially does result in correct behavior
+    //  (e.g., fixing PR# 1704551)
     for (i = delatoms.begin();i != delatoms.end();++i)
-      {
-        DestroyAtom(*i);
-      }
+      DeleteAtom((OBAtom *)*i);
+
+    DecrementMod();
 
     return(true);
   }

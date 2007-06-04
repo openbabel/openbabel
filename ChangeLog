@@ -1,3 +1,13 @@
+2007-06-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.cpp (DeleteHydrogens): Update to fix PR#1704551 with H-H
+	bonds not deleted.
+
+	* src/formats/smilesformat.cpp: Add warning message for unmatched
+	ring closures described below.
+
+	* configure, configure.in: Bump to 2.1.1 version.
+
 2007-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Doxyfile: Bump to 2.1.1 and add search engine support.
