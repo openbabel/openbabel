@@ -4,6 +4,9 @@
 	Fix PR#1700301. Never attempt to create atoms while iterating
 	through the molecule. Safer technique -- keep a list of atoms to
 	add hydrogens, add in a separate step.
+	(AtomIsChiral): Fix PR#1699418. When determining chiral
+	information for canonical SMILES, make sure to check if the atom
+	is 3D. Otherwise it will never have wedge/hash bond flags.
 
 	* src/mol.cpp (DeleteHydrogens): Update to fix PR#1704551 with H-H
 	bonds not deleted. 

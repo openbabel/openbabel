@@ -736,6 +736,11 @@ namespace OpenBabel
       return false;
     if (atom->IsNitrogen())
       return false;
+    // Added by ghutchis 2007-06-04 -- make sure to check for 3D molecules
+    // Fixes PR#1699418
+    if (atom->GetParent()->GetDimension() == 3)
+      return true; // no hash/wedge for 3D molecules
+
     vector<int> symclass;
     FOR_BONDS_OF_ATOM(bond, atom) {
       if (bond->IsHash() || bond->IsWedge())
@@ -1309,7 +1314,7 @@ namespace OpenBabel
       {
         if (!frag_atoms[atom->GetIdx()] || !AtomIsChiral(&*atom))
           continue;
-      
+
         if (GetSmilesValence(&*atom) == 3 && atom->GetValence() == 3) {       // implicit H?
           atomList.push_back(&*atom);
         }
