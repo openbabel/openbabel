@@ -1302,43 +1302,48 @@ namespace OpenBabel
   void OBMol2Cansmi::AddHydrogenToChiralCenters(OBMol &mol, OBBitVec &frag_atoms)
   {
     bool is_modified = false;
+    vector <OBAtom *> atomList;
 
+    // Find all appropriate atoms to add hydrogens
     FOR_ATOMS_OF_MOL(atom, mol)
       {
-
         if (!frag_atoms[atom->GetIdx()] || !AtomIsChiral(&*atom))
           continue;
       
         if (GetSmilesValence(&*atom) == 3 && atom->GetValence() == 3) {       // implicit H?
-        
-          // Get the (x,y,z) coordinates where best to put the H
-          vector3 v;
-          atom->GetNewBondVector(v, 1.0);   // Returns (x,y,z) of the "empty" area, for a new bond
-        
-          // If we haven't put the molecule into "modify" mode yet, do so now
-          if (!is_modified) {
-            is_modified = true;
-            mol.BeginModify();
-          }
-        
-#if DEBUG
-          cout << "AddHydrogenToChiralCenters: Adding H to atom " << atom->GetIdx() << "\n";
-#endif
-        
-          // Add the H atom
-          OBAtom *h = mol.NewAtom();
-          h->SetAtomicNum(1);
-          h->SetType("H");
-          mol.AddBond(atom->GetIdx(), h->GetIdx(), 1, 0, -1);
-        
-          // Set its (x,y,z) coordinates
-          h->SetVector(v);
-        
-          frag_atoms.SetBitOn(h->GetIdx());
+          atomList.push_back(&*atom);
         }
       }
-    if (is_modified)
+
+    // Now add hyrdogens to the list
+    if (atomList.size() > 0) {
+      mol.BeginModify();
+      
+      vector<OBAtom*>::iterator i;
+      OBAtom *atom;
+      for (i = atomList.begin(); i != atomList.end(); ++i) {
+        // Get the (x,y,z) coordinates where best to put the H
+        vector3 v;
+        (*i)->GetNewBondVector(v, 1.0);   // Returns (x,y,z) of the "empty" area, for a new bond
+      
+#if DEBUG
+        cout << "AddHydrogenToChiralCenters: Adding H to atom " << atom->GetIdx() << "\n";
+#endif
+      
+        // Add the H atom
+        OBAtom *h = mol.NewAtom();
+        h->SetAtomicNum(1);
+        h->SetType("H");
+        mol.AddBond((*i)->GetIdx(), h->GetIdx(), 1, 0, -1);
+        
+        // Set its (x,y,z) coordinates
+        h->SetVector(v);
+        
+        frag_atoms.SetBitOn(h->GetIdx());
+      }
+
       mol.EndModify();
+    }
   }
 
   /*----------------------------------------------------------------------

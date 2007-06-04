@@ -1,7 +1,12 @@
 2007-06-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/formats/cansmilesformat.cpp (AddHydrogenToChiralCenters):
+	Fix PR#1700301. Never attempt to create atoms while iterating
+	through the molecule. Safer technique -- keep a list of atoms to
+	add hydrogens, add in a separate step.
+
 	* src/mol.cpp (DeleteHydrogens): Update to fix PR#1704551 with H-H
-	bonds not deleted.
+	bonds not deleted. 
 
 	* src/formats/smilesformat.cpp: Add warning message for unmatched
 	ring closures described below.
