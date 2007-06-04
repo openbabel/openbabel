@@ -381,6 +381,11 @@ namespace OpenBabel
     if ( _rclose.size() != 0) {
       mol.EndModify();
       mol.Clear();
+      
+      stringstream errorMsg;
+      errorMsg << "Invalid SMILES string: " << _rclose.size() << " unmatched "
+               << "ring bonds." << endl;
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false; // invalid SMILES since rings aren't properly closed
     }
 
