@@ -308,7 +308,7 @@ namespace OpenBabel
     
     for (_ptr=_buffer;*_ptr;_ptr++)
       {
-        if (isspace(*_ptr))
+        if (*_ptr<0 || isspace(*_ptr))
           continue;
         else if (isdigit(*_ptr) || *_ptr == '%') //ring open/close
           {

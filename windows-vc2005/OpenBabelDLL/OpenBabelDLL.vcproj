@@ -248,18 +248,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\forcefields\forcefieldmm2.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\src\generic.cpp"
 				>
 			</File>

@@ -1,9 +1,0 @@
-<molecule title="methanol" id="m1">
-    <atom id="a1" elementType="C" x3="5.3378" y3="-4.9602" z3="0.8583">
-    </atom>
-    <atom id="a2" elementType="O" x3="4.6263" y3="-5.5868" z3="-0.1988">
-    </atom>
-  <bondArray>
-    <bond atomRefs2="a2 a1" order="1"/>
-  </bondArray>
-</molecule>
