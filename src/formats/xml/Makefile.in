@@ -245,23 +245,23 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-INCLUDES = -I$(top_srcdir)/include
+INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/include
 AM_CPPFLAGS = @XML_CPPFLAGS@
-AM_LDFLAGS = @LIBS@ @XML_LIBS@
+AM_LDFLAGS = ../../libopenbabel.la @LIBS@ @XML_LIBS@
 @BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
 @BUILD_SHARED_TRUE@  cmlreactlformat.la cmlformat.la \
 @BUILD_SHARED_TRUE@	pubchem.la xmlformat.la cdxmlformat.la
 
 @BUILD_SHARED_TRUE@cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cdxmlformat_la_LDFLAGS = -module -avoid-version $(AM_LDFLAGS)
+@BUILD_SHARED_TRUE@cdxmlformat_la_LDFLAGS = -module -avoid-version -no-undefined $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
+@BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version -no-undefined  $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@cmlreactlformat_la_SOURCES = cmlreactlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cmlreactlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
+@BUILD_SHARED_TRUE@cmlreactlformat_la_LDFLAGS = -module -avoid-version -no-undefined  $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@pubchem_la_SOURCES = pubchem.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@pubchem_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
+@BUILD_SHARED_TRUE@pubchem_la_LDFLAGS = -module -avoid-version -no-undefined  $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@xmlformat_la_SOURCES = xmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@xmlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
+@BUILD_SHARED_TRUE@xmlformat_la_LDFLAGS = -module -avoid-version -no-undefined  $(AM_LDFLAGS)
 all: all-am
 
 .SUFFIXES:

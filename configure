@@ -20257,9 +20257,6 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 
 
 case $host in
-     *-*-cygwin*)
-        dynamic_modules="no"
-        ;;
      *-*-mingw*)
         dynamic_modules="no"
         ;;

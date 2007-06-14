@@ -28,4 +28,4 @@ obrotate_LDADD = ../src/libopenbabel.la @LIBDL@
 obrotamer_SOURCES = obrotamer.cpp
 obrotamer_LDADD = ../src/libopenbabel.la @LIBDL@
 
-AM_CPPFLAGS = -I$(top_srcdir)/include
+AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/include

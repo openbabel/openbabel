@@ -114,7 +114,7 @@ RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = math formats fingerprints forcefields GUI
+DIST_SUBDIRS = math fingerprints forcefields . formats GUI
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -242,8 +242,10 @@ EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
 	dlhandler_win32.cpp
 
-SUBDIRS = math formats fingerprints forcefields $(am__append_1)
-INCLUDES = -I$(top_srcdir)/data/ -I$(top_srcdir)/include
+@BUILD_SHARED_TRUE@thisdir = .
+SUBDIRS = math fingerprints forcefields $(thisdir) formats \
+	$(am__append_1)
+INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data/ -I$(top_srcdir)/include
 lib_LTLIBRARIES = libopenbabel.la
 @BUILD_SHARED_FALSE@dlhandler = 
 @BUILD_SHARED_TRUE@dlhandler = dlhandler_unix.cpp

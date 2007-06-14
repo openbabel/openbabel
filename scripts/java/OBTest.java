@@ -2,7 +2,7 @@ public class OBTest
 {
   public OBTest()
   {
-    System.loadLibrary("openbabel");
+    System.loadLibrary("openbabeljni");
   }
 
   public void run()

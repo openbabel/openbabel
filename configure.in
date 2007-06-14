@@ -189,9 +189,6 @@ AC_LIBTOOL_DLOPEN
 AM_PROG_LIBTOOL
 
 case $host in
-     *-*-cygwin*)
-        dynamic_modules="no"
-        ;;
      *-*-mingw*)
         dynamic_modules="no"
         ;;

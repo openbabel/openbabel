@@ -92,7 +92,7 @@ int main(int argc,char *argv[])
         cout << "not ok " << ++currentTest << " # invalid SMILES was parsed "
              << " but should have been rejected" << endl;
       else
-        cout << "ok " << ++currentTest << endl;
+        cout << "ok " << ++currentTest << " # invalid SMILES rejected" << endl;
     }
 
   mifs.close();
@@ -110,7 +110,7 @@ int main(int argc,char *argv[])
     cout << "not ok " << ++currentTest << " # random data was parsed "
          << " but should have been rejected\n";
   else
-    cout << "ok " << ++currentTest << "\n";
+    cout << "ok " << ++currentTest << " # random data 1\n";
   
   mifs.close();
   mifs.clear();
@@ -127,7 +127,7 @@ int main(int argc,char *argv[])
     cout << "not ok " << ++currentTest << " # random data #2 was parsed "
          << " but should have been rejected\n";
   else
-    cout << "ok " << ++currentTest << "\n";
+    cout << "ok " << ++currentTest << " # random data 2\n";
 
   mifs.close();
   mifs.clear();
@@ -144,7 +144,7 @@ int main(int argc,char *argv[])
     cout << "not ok " << ++currentTest << " # random data #3 was parsed "
          << " but should have been rejected\n";
   else
-    cout << "ok " << ++currentTest << "\n";
+    cout << "ok " << ++currentTest << " # random data 3\n";
 
   // return number of tests run
   cout << "1.." << currentTest << endl;

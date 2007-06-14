@@ -1,3 +1,9 @@
+2007-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, Makefile.*: Updates from the Cygwin
+	ports project for better compatibility (e.g., shared format
+	modules on Cygwin). Thanks to Yaakov of Cygwin ports and Noel.
+
 2007-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/chemdrawcdx.cpp: Fix a Universal binary problem on
