@@ -75,7 +75,7 @@ bool SmartsFilter::Compare(OBBase* pOb, istream& optionText, bool noEval)
     return false;
   OBSmartsPattern sp;
   sp.Init(smarts);
-  bool ret = sp.Match(*pmol);
+  bool ret = sp.Match(*pmol,true);//single match  
   if(!matchornegate)
     ret = !ret;
   return ret;

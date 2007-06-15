@@ -769,7 +769,7 @@ public:
 "Test format\n"
 "Does a round trip conversion and compares before and after using InChI.\n"
 "Uses the input format unless -xO set\n"
-"Option e.g. -xOsmi\n"
+"Read/Write Option e.g. -xOsmi\n"
 " O<ext> Test the format that has the specified ID\n"
 " m      Output message for each successful molecule\n"
 " X <Option string> List of InChI options:\n\n"

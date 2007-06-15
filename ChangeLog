@@ -1,3 +1,20 @@
+2007-06-15  Chris Morley
+	
+	* src/smartsdescriptors.cpp: Added SmartsDescriptor class to 
+	allow filters based on SMARTStest (like Number of Hydrogen
+	Bond Acceptors) to be defined in a single line.
+	A few (SMARTS from JoelLib) are defined: HBA1 HBA2 HBD nF
+	
+	* src/filters.cpp: in SMARTS filter only look for single match.
+	
+	* src/formats/inchiformat.cpp: small change in Description()
+
+2007-06-05  Chris Morley
+
+	* src/formats/smilesformat.cpp(ParseSmiles):ignore any char<0
+	Caused crash in isspace() in Visual C++8. Probably solves bug
+	#1730132.
+	
 2007-06-01  Noel O'Boyle <baoilleach@gmail.com>
 
 	Final changes for Windows release of OBPython 1.2
