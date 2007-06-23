@@ -105,7 +105,14 @@ class Test_readfile(unittest.TestCase):
     def testformaterror(self):
         """Test that invalid formats raise an error"""
         self.assertRaises(ValueError, self.formaterror)
+
+    def unitcellerror(self):
+        unitcell = self.mols[0].unitcell
     
+    def testunitcellerror(self):
+        """Test that accessing the unitcell raises an error"""
+        self.assertRaises(AttributeError, self.unitcellerror)
+
     def testconversion(self):
         """Convert to smiles"""
         as_smi = [mol.write("smi").split("\t")[0] for mol in self.mols]
@@ -137,6 +144,17 @@ class Test_readfile(unittest.TestCase):
         test = ['O=C1C=CC(=O)C=C1C\tNSC 1\n', 'c1cccc2c1nc(SSc1nc3ccccc3s1)s2\tNSC 2\n']
         self.assertEqual(filecontents, test)
 
+    def desctest(self):
+        # Should raise ValueError
+        self.mols[0].calcdesc("BadDescName")
+
+    def testdesc(self):
+        """Test the descriptors"""
+        desc = self.mols[0].calcdesc()
+        self.assertEqual(len(desc), 3)
+        self.assertAlmostEqual(desc['LogP'], 0.64, 2)
+        self.assertRaises(ValueError, self.desctest)
+
 class Test_data(unittest.TestCase):
     def setUp(self):
         self.mol = pybel.readfile("sdf", "head.sdf").next()
@@ -158,14 +176,36 @@ class Test_data(unittest.TestCase):
         self.assertRaises(KeyError, self.accesstest)
         self.data['noel'] = 'testvalue'
         self.assertEqual(self.data['noel'], 'testvalue')
+        newvalues = {'hey':'there', 'yo':1}
+        self.data.update(newvalues)
+        self.assertEqual(self.data['yo'], '1')
+        self.assertTrue('there' in self.data.values())
 
     def testglobalaccess(self):
         """Check out the keys"""
-        self.assertEqual(self.data.has_key('Comment'), True)
-        self.assertEqual(self.data.has_key('Noel'), False)
+        self.assertTrue(self.data.has_key('Comment'))
+        self.assertFalse(self.data.has_key('Noel'))
         self.assertEqual(len(self.data), 2)
         for key in self.data:
             self.assertEqual(key in ['Comment', 'NSC'], True)
+        self.assertEqual(repr(self.data), "{'Comment': 'CORINA 2.61 0041  25.10.2001', 'NSC': '1'}")
+
+    def testdelete(self):
+        """Delete some keys"""
+        self.assertTrue(self.data.has_key('NSC'))
+        del self.data['NSC']
+        self.assertFalse(self.data.has_key('NSC'))
+        self.data.clear()
+        self.assertFalse(len(self.data))
+
+class Test_Crystal(unittest.TestCase):
+    """Read in and test a cif file"""
+    def setUp(self):
+        self.mol = pybel.readfile("cif", "hashizume.cif").next()
+
+    def testunitcell(self):
+        cell = self.mol.unitcell
+        self.assertAlmostEqual(cell.GetAlpha(), 92.9, 1)
 
 class Test_atoms(unittest.TestCase):
     """Testing some of the atom code"""

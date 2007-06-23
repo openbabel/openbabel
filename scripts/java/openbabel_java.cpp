@@ -210,6 +210,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #include <openbabel/fingerprint.h>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/groupcontrib.h>
 
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
@@ -26778,6 +26779,164 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBForceField_1kludge(JNIEnv *jenv, jcl
 }
 
 
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1OBGroupContrib(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  OpenBabel::OBGroupContrib *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (OpenBabel::OBGroupContrib *)new OpenBabel::OBGroupContrib();
+  *(OpenBabel::OBGroupContrib **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1OBGroupContrib(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  OpenBabel::OBGroupContrib *arg1 = (OpenBabel::OBGroupContrib *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(OpenBabel::OBGroupContrib **)&jarg1; 
+  delete arg1;
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1OBLogP(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  OpenBabel::OBLogP *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (OpenBabel::OBLogP *)new OpenBabel::OBLogP();
+  *(OpenBabel::OBLogP **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1OBLogP(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  OpenBabel::OBLogP *arg1 = (OpenBabel::OBLogP *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(OpenBabel::OBLogP **)&jarg1; 
+  delete arg1;
+  
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBLogP_1Predict(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  OpenBabel::OBLogP *arg1 = (OpenBabel::OBLogP *) 0 ;
+  OpenBabel::OBMol *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::OBLogP **)&jarg1; 
+  arg2 = *(OpenBabel::OBMol **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::OBMol & reference is null");
+    return 0;
+  } 
+  result = (double)(arg1)->Predict(*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1OBPSA(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  OpenBabel::OBPSA *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (OpenBabel::OBPSA *)new OpenBabel::OBPSA();
+  *(OpenBabel::OBPSA **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1OBPSA(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  OpenBabel::OBPSA *arg1 = (OpenBabel::OBPSA *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(OpenBabel::OBPSA **)&jarg1; 
+  delete arg1;
+  
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBPSA_1Predict(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  OpenBabel::OBPSA *arg1 = (OpenBabel::OBPSA *) 0 ;
+  OpenBabel::OBMol *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::OBPSA **)&jarg1; 
+  arg2 = *(OpenBabel::OBMol **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::OBMol & reference is null");
+    return 0;
+  } 
+  result = (double)(arg1)->Predict(*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1OBMR(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  OpenBabel::OBMR *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (OpenBabel::OBMR *)new OpenBabel::OBMR();
+  *(OpenBabel::OBMR **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1OBMR(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  OpenBabel::OBMR *arg1 = (OpenBabel::OBMR *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(OpenBabel::OBMR **)&jarg1; 
+  delete arg1;
+  
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBMR_1Predict(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  OpenBabel::OBMR *arg1 = (OpenBabel::OBMR *) 0 ;
+  OpenBabel::OBMol *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::OBMR **)&jarg1; 
+  arg2 = *(OpenBabel::OBMol **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::OBMol & reference is null");
+    return 0;
+  } 
+  result = (double)(arg1)->Predict(*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1OBMolAtomIter_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   OpenBabel::OBMolAtomIter *result = 0 ;
@@ -42489,6 +42648,30 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_SWIGOBMolUpcast(JNIEnv *jenv, jclass 
     (void)jenv;
     (void)jcls;
     *(OpenBabel::OBBase **)&baseptr = *(OpenBabel::OBMol **)&jarg1;
+    return baseptr;
+}
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_SWIGOBLogPUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+    jlong baseptr = 0;
+    (void)jenv;
+    (void)jcls;
+    *(OpenBabel::OBGroupContrib **)&baseptr = *(OpenBabel::OBLogP **)&jarg1;
+    return baseptr;
+}
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_SWIGOBPSAUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+    jlong baseptr = 0;
+    (void)jenv;
+    (void)jcls;
+    *(OpenBabel::OBGroupContrib **)&baseptr = *(OpenBabel::OBPSA **)&jarg1;
+    return baseptr;
+}
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_SWIGOBMRUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+    jlong baseptr = 0;
+    (void)jenv;
+    (void)jcls;
+    *(OpenBabel::OBGroupContrib **)&baseptr = *(OpenBabel::OBMR **)&jarg1;
     return baseptr;
 }
 

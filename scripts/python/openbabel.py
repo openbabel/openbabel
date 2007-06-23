@@ -2321,6 +2321,49 @@ OBForceField_VectorLengthDerivative = _openbabel.OBForceField_VectorLengthDeriva
 OBForceField_VectorAngleDerivative = _openbabel.OBForceField_VectorAngleDerivative
 OBForceField_VectorTorsionDerivative = _openbabel.OBForceField_VectorTorsionDerivative
 
+class OBGroupContrib(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBGroupContrib_swiginit(self,_openbabel.new_OBGroupContrib(*args))
+    __swig_destroy__ = _openbabel.delete_OBGroupContrib
+    __del__ = lambda self : None;
+OBGroupContrib_swigregister = _openbabel.OBGroupContrib_swigregister
+OBGroupContrib_swigregister(OBGroupContrib)
+
+class OBLogP(OBGroupContrib):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBLogP_swiginit(self,_openbabel.new_OBLogP(*args))
+    __swig_destroy__ = _openbabel.delete_OBLogP
+    __del__ = lambda self : None;
+    def Predict(*args): return _openbabel.OBLogP_Predict(*args)
+OBLogP_swigregister = _openbabel.OBLogP_swigregister
+OBLogP_swigregister(OBLogP)
+
+class OBPSA(OBGroupContrib):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBPSA_swiginit(self,_openbabel.new_OBPSA(*args))
+    __swig_destroy__ = _openbabel.delete_OBPSA
+    __del__ = lambda self : None;
+    def Predict(*args): return _openbabel.OBPSA_Predict(*args)
+OBPSA_swigregister = _openbabel.OBPSA_swigregister
+OBPSA_swigregister(OBPSA)
+
+class OBMR(OBGroupContrib):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBMR_swiginit(self,_openbabel.new_OBMR(*args))
+    __swig_destroy__ = _openbabel.delete_OBMR
+    __del__ = lambda self : None;
+    def Predict(*args): return _openbabel.OBMR_Predict(*args)
+OBMR_swigregister = _openbabel.OBMR_swigregister
+OBMR_swigregister(OBMR)
+
 class _OBMolAtomIter(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr

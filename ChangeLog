@@ -1,3 +1,13 @@
+2007-06-23  Noel O'Boyle <baoilleach@gmail.com>
+	
+	* scripts/*.i (except Perl, which was already done): Added
+	groupcontrib.h and updated wrapper code
+	* scripts/python/Pybel stuff:
+	Added calcdesc() method to Molecules for descriptor calculation 
+	Added update() method to MoleculeData
+	Convert to string before setting a value in MoleculeData
+	Updated tests, and API docs
+
 2007-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure, Makefile.*: Updates from the Cygwin

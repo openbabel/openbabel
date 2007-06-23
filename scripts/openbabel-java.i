@@ -22,6 +22,7 @@
 #include <openbabel/fingerprint.h>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/groupcontrib.h>
 
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
@@ -91,6 +92,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/fingerprint.h>
 
 %include <openbabel/forcefield.h>
+%include <openbabel/groupcontrib.h>
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)

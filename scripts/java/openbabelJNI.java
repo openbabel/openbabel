@@ -1653,6 +1653,17 @@ class openbabelJNI {
   public final static native double OBForceField_VectorAngleDerivative(long jarg1, vector3 jarg1_, long jarg2, vector3 jarg2_, long jarg3, vector3 jarg3_);
   public final static native double OBForceField_VectorTorsionDerivative(long jarg1, vector3 jarg1_, long jarg2, vector3 jarg2_, long jarg3, vector3 jarg3_, long jarg4, vector3 jarg4_);
   public final static native void OBForceField_kludge(long jarg1, OBForceField jarg1_);
+  public final static native long new_OBGroupContrib();
+  public final static native void delete_OBGroupContrib(long jarg1);
+  public final static native long new_OBLogP();
+  public final static native void delete_OBLogP(long jarg1);
+  public final static native double OBLogP_Predict(long jarg1, OBLogP jarg1_, long jarg2, OBMol jarg2_);
+  public final static native long new_OBPSA();
+  public final static native void delete_OBPSA(long jarg1);
+  public final static native double OBPSA_Predict(long jarg1, OBPSA jarg1_, long jarg2, OBMol jarg2_);
+  public final static native long new_OBMR();
+  public final static native void delete_OBMR(long jarg1);
+  public final static native double OBMR_Predict(long jarg1, OBMR jarg1_, long jarg2, OBMol jarg2_);
   public final static native long new_OBMolAtomIter__SWIG_0();
   public final static native long new_OBMolAtomIter__SWIG_1(long jarg1, OBMol jarg1_);
   public final static native long new_OBMolAtomIter__SWIG_2(long jarg1, OBMolAtomIter jarg1_);
@@ -2701,4 +2712,7 @@ class openbabelJNI {
   public final static native long SWIGOBAtomUpcast(long jarg1);
   public final static native long SWIGOBBondUpcast(long jarg1);
   public final static native long SWIGOBMolUpcast(long jarg1);
+  public final static native long SWIGOBLogPUpcast(long jarg1);
+  public final static native long SWIGOBPSAUpcast(long jarg1);
+  public final static native long SWIGOBMRUpcast(long jarg1);
 }
