@@ -1,4 +1,3 @@
-%module openbabel
 %module OpenBabel
 
 // These fields are renamed to valid constant names
