@@ -179,6 +179,7 @@ namespace OpenBabel
         ttab.SetToType("ATN");
         ttab.Translate(str1,str);
         elemno = atoi(str1.c_str());
+        ttab.SetToType("IDX");
 
         // We might have missed some SI or FE type things above, so here's
         // another check
@@ -189,6 +190,17 @@ namespace OpenBabel
             ttab.Translate(str1,str);
             elemno = atoi(str1.c_str());
           }
+        // One last check if there isn't a period in the type,
+        // it's a malformed atom type, but it may be the element symbol
+        // GaussView does this (PR#1739905)
+        if ( !elemno ) {
+          obErrorLog.ThrowError(__FUNCTION__, "This Mol2 file is non-standard. Cannot interpret atom types correctly, instead attempting to interpret as elements instead.", obWarning);
+
+          string::size_type dotPos = str.find('.');
+          if (dotPos == string::npos) {
+            elemno = etab.GetAtomicNum(str.c_str());
+          }
+        }
 
         atom.SetAtomicNum(elemno);
         ttab.SetToType("INT");

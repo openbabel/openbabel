@@ -1,3 +1,12 @@
+2007-06-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mol2format.cpp: Fix PR#1739905. Add warning if
+	elements cannot be interpreted as atom types correctly (e.g., this
+	GaussView file). Instead, attempt to interpret as element names.
+
+	* data/types.txt: Fix two HO typing errors, which masked this
+	bug.
+
 2007-06-23  Noel O'Boyle <baoilleach@gmail.com>
 	
 	* scripts/*.i (except Perl, which was already done): Added
