@@ -7,6 +7,14 @@
 	* data/types.txt: Fix two HO typing errors, which masked this
 	bug.
 
+	* scripts/openbabel-ruby.i: Fix module declaration -- really
+	OpenBabel.
+
+	* tools/obminimize.cpp: Minor fix requested by Chris Swain --
+	allow setting output format using -o flag.
+
+	* tools/obfit.cpp: Add RMS output to standard error.
+
 2007-06-23  Noel O'Boyle <baoilleach@gmail.com>
 	
 	* scripts/*.i (except Perl, which was already done): Added
