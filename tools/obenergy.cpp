@@ -36,6 +36,7 @@ int main(int argc,char **argv)
   char *program_name= argv[0];
   int c;
   int verbose = 0;
+  bool hydrogens = false;
   string basename, filename = "", option, option2, ff = "";
 
   if (argc < 2) {
@@ -44,6 +45,8 @@ int main(int argc,char **argv)
     cout << "options:      description:" << endl;
     cout << endl;
     cout << "  -v          verbose: print out indivual energy interactions" << endl;
+    cout << endl;
+    cout << "  -h          add hydrogens before calculating energy" << endl;
     cout << endl;
     cout << "  -ff ffid    select a forcefield" << endl;
     cout << endl;
@@ -63,6 +66,11 @@ int main(int argc,char **argv)
         verbose = 1;
         ifile++;
         break;
+      }
+
+      if (option == "-h") {
+        hydrogens = true;
+        ifile++;
       }
 
       if ((option == "-ff") && (argc > (i+1))) {
@@ -108,6 +116,9 @@ int main(int argc,char **argv)
       break;
     if (mol.Empty())
       break;
+
+    if (hydrogens)
+      mol.AddHydrogens();
 
     OBForceField* pFF = OBForceField::FindForceField(ff);
     if (!pFF) {

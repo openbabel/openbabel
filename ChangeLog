@@ -1,3 +1,9 @@
+2007-06-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/obenergy.cpp, tools/obminimize.cpp: Minor feature request
+	1722878 to add hydrogens before running force field
+	calculations for Chris Swain.
+
 2007-06-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* NEWS: Update for upcoming 2.1.1 release.

@@ -21,6 +21,7 @@ encouraged to upgrade.
 - Correctly rejects SMILES with incorrect ring closures. Thanks to
    Craig James for the report.
 - Fixed a crash when output to canonical SMILES.
+- Fixed a crash when converting from SMILES to InChI.
 - Fixed a problem when reading ChemDraw CDX files on Mac OS X.
 - A large number of additional fixes, including some crashes.
 

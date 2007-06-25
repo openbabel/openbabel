@@ -39,6 +39,7 @@ int main(int argc,char **argv)
   int steps = 2500;
   double crit = 1e-6;
   bool sd = false;
+  bool hydrogens = false;
   string basename, filename = "", option, option2, ff = "Ghemical";
   char *oext;
   OBConversion conv;
@@ -54,6 +55,8 @@ int main(int argc,char **argv)
     cout << "  -cg         use conjugate gradients algorithm (default)" << endl;
     cout << endl;
     cout << "  -ff ffid    select a forcefield:" << endl;
+    cout << endl;
+    cout << "  -h          add hydrogen atoms" << endl;
     cout << endl;
     cout << "  -n steps    specify the maximum numer of steps (default=2500)" << endl;
     cout << endl;
@@ -89,6 +92,11 @@ int main(int argc,char **argv)
         }
 
         format_out = conv.FindFormat(oext);
+        ifile++;
+      }
+
+      if (option == "-h") {
+        hydrogens = true;
         ifile++;
       }
 
@@ -140,6 +148,9 @@ int main(int argc,char **argv)
       break;
     if (mol.Empty())
       break;
+
+    if (hydrogens)
+      mol.AddHydrogens();
 
     OBForceField* pFF = OBForceField::FindForceField(ff);
     if (!pFF) {
