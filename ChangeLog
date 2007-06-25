@@ -1,5 +1,9 @@
 2007-06-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/formats/pdbformat.cpp (ReadMolecule): Add a new OBPairData
+	for any record we don't currently parse. This way all data is
+	preserved.
+
 	* src/formats/mol2format.cpp: Fix PR#1739905. Add warning if
 	elements cannot be interpreted as atom types correctly (e.g., this
 	GaussView file). Instead, attempt to interpret as element names.
