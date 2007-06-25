@@ -1,5 +1,7 @@
 2007-06-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* NEWS: Update for upcoming 2.1.1 release.
+
 	* src/formats/pdbformat.cpp (ReadMolecule): Add a new OBPairData
 	for any record we don't currently parse. This way all data is
 	preserved.
@@ -102,7 +104,7 @@
 2007-05-30  Chris Morley
 
 	* include/openbabel/base.h(tokenize): Add \r to default
-	delimiters in the two functions. Now Windows or MAC files
+	delimiters in the two functions. Now Windows or old Mac files
 	(esp data files) should be read properly. 
 	Cures bug #1727333, I hope.
 	
