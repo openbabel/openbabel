@@ -263,10 +263,12 @@ namespace OpenBabel
           {
             if (isalpha(atmid[0])) {
               
-              if (atmid[2] == '\0' || atmid[2] == ' ') type = atmid.substr(0,2);
+              if (atmid.size() > 2 && (atmid[2] == '\0' || atmid[2] == ' '))
+                type = atmid.substr(0,2);
               else if (atmid[0] == 'A') // alpha prefix
                 type = atmid.substr(1, atmid.size() - 1);
-              else type = atmid.substr(0,1);
+              else
+                type = atmid.substr(0,1);
             }
             else if (atmid[0] == ' ')
               type = atmid.substr(1,1); // one char element
