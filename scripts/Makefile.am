@@ -52,7 +52,7 @@ BUILT_SOURCES += ruby/openbabel_ruby.cpp
 
 ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
 	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include $<;
-	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
+	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
 	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
 	mv ruby/openbabel_ruby.new ruby/openbabel_ruby.cpp
 endif # BUILD_RUBY
