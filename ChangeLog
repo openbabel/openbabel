@@ -6,6 +6,10 @@
 
 	* scripts/Makefile.*: Fix for change in Ruby build script.
 
+	* src/formats/gaussformat.cpp (and others): Fix for
+	PR#1737209. Return false for reading a molecule with no atoms. In
+	these formats, empty molecules are invalid.
+
 2007-06-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/obenergy.cpp, tools/obminimize.cpp: Minor feature request

@@ -389,6 +389,11 @@ namespace OpenBabel
       }
     // cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
 
+    if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
+      mol.EndModify();
+      return false;
+    }
+
     const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
 
     if(keywordsEnable)
