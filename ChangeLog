@@ -1,3 +1,10 @@
+2007-06-30  Chris Morley
+	* src/formats/smiles format.cpp(GetSmilesElement):do not always
+	output atoms in 2D molecules in bracket form if the chirality
+	is not specified (fix for bug #1738355)
+	
+	* src/GUI/OBGUI.cpp: small change to About text
+
 2007-06-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp: Fix for PR#1705895 -- check for

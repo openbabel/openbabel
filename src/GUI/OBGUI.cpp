@@ -419,7 +419,6 @@ For more detailed information see:\n\
 http://openbabel.sourceforge.net/wiki/Windows_GUI\n\n \
 OpenBabel version "));
 	 msg << BABEL_VERSION;
-	msg << " development snapshot March 2005";
     wxMessageBox(msg, _T("About OpenBabelGUI"), wxOK | wxICON_INFORMATION | wxCENTER, this);
 }
 ///////////////////////////////////////////

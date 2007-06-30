@@ -2380,7 +2380,9 @@ namespace OpenBabel
       }
 
     if (atom->GetHvyValence() > 2 && atom->IsChiral())
-      if (((OBMol*)atom->GetParent())->HasNonZeroCoords() || atom->HasChiralitySpecified())
+      if (/*((OBMol*)atom->GetParent())->HasNonZeroCoords() ||*/ atom->HasChiralitySpecified())
+        //first test removed because the chirality of some potentially chiral 2D molecules is unspecified
+        //leading to spurious chirlity #1738355
         bracketElement = true;
 
     if (atom->GetFormalCharge() != 0) //bracket charged elements
