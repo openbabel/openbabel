@@ -802,7 +802,7 @@ namespace OpenBabel {
     //Deleting any old LErdbuf before contructing a new one ensures there is 
     //only one for each OBConversion object. It is deleted in the destructor.
 
-    if(!(pInFormat->Flags() & (READBINARY | READXML)) && pInStream->rdbuf()!=pLineEndBuf)
+    if(pInFormat && !(pInFormat->Flags() & (READBINARY | READXML)) && pInStream->rdbuf()!=pLineEndBuf)
     {
       delete pLineEndBuf;
       pLineEndBuf = new LErdbuf(pInStream->rdbuf());
