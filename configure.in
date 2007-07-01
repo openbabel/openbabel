@@ -203,6 +203,18 @@ module=$oldmodule
 
 AM_CONDITIONAL(BUILD_PCH, test "$precompiled_headers" = "yes")
 
+pkglibdir='$(libdir)/$(PACKAGE)'
+AC_ARG_WITH(
+	[pkglibdir],
+	[AC_HELP_STRING(
+		[--with-pkglibdir=DIR],
+		[path to plugins installation directory [default=$(libdir)/openbabel]]
+	)],
+	[pkglibdir=$withval]
+)
+
+AC_SUBST(pkglibdir)
+
 AC_C_BIGENDIAN
 
 AC_LANG_CPLUSPLUS
