@@ -349,7 +349,7 @@ namespace OpenBabel
                         gmsset->AddData(curset);
                       }
 
-                    for(unsigned int i=1; vs[i] != "$END" && i < vs.size(); i++) {
+                    for(unsigned int i=1;i < vs.size() &&  vs[i].substr(0,4) != "$END"; i++) {
                       string::size_type loc = vs[i].find("=",0);
                       if(loc != string::npos)
                         {

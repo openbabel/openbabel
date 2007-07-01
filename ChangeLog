@@ -1,3 +1,10 @@
+2007-07-01  Chris Morley
+
+	* src/formats/gamessformat.cpp: Test for "$END" now works on $END$.
+	Put size test first. Fixes bug #1738005 and probably #1745066.
+	
+	* INSTALL.Windows: deleted obsolete file
+	
 2007-06-30  Chris Morley
 	* src/formats/smiles format.cpp(GetSmilesElement):do not always
 	output atoms in 2D molecules in bracket form if the chirality
