@@ -1,15 +1,21 @@
+2007-07-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, */Makefile.in: Updated with patch from
+	Jean Brefort. Adds new --with-pkglibdir flag to facilitate
+	packaging with versioned format directories.
+
 2007-07-01  Chris Morley
+
 	* src/obconversion.cpp(InstallStreamFilter): test for non-zero
 	pInFormat to avoid crash with no input.
 	
-2007-07-01  Chris Morley
-
 	* src/formats/gamessformat.cpp: Test for "$END" now works on $END$.
 	Put size test first. Fixes bug #1738005 and probably #1745066.
 	
 	* INSTALL.Windows: deleted obsolete file
 	
 2007-06-30  Chris Morley
+
 	* src/formats/smiles format.cpp(GetSmilesElement):do not always
 	output atoms in 2D molecules in bracket form if the chirality
 	is not specified (fix for bug #1738355)
