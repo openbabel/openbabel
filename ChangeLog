@@ -1,3 +1,7 @@
+2007-07-02  Noel O'Boyle <baoilleach@gmail.com>
+
+	* include/oberrors.h: Fixed typo in Doxygen
+
 2007-07-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure, */Makefile.in: Updated with patch from

@@ -190,7 +190,7 @@ namespace OpenBabel
       cerr << " This is error 1" << endl; // flush output, create a new error
       cerr << " Error 2" << endl;
       cerr << " Error 3: Done with output wrapping." << endl;
-      obErrorLog.StopErrorWrao(); // return to default behavior
+      obErrorLog.StopErrorWrap(); // return to default behavior
       \endcode
   **/
   class OBERROR obLogBuf : public std::stringbuf
