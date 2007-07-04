@@ -1,5 +1,11 @@
 2007-07-04  Chris Morley
 
+	* src/finger3.cpp: Trim firts line which decided format of
+	patterns.txt. In Windows there was trailing \r which caused
+	none of the patterns to be read, as found by Noel.
+	
+2007-07-04  Chris Morley
+
 	* src/formats/smilesformat.cpp(CreateSmiString): call
 	FindClosureBonds even when all atoms are chiral.
 	(GetSmilesElement): only call GetChiralStereo when

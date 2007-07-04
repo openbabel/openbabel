@@ -110,7 +110,8 @@ public:
 		string smarts, formatline;
 
 		if(!getline(ifs, formatline)) return false;
-		if(formatline=="#Comments after SMARTS")
+
+		if(Trim(formatline)=="#Comments after SMARTS")
 		{
 			while(ifs.good())
 			{
