@@ -1923,6 +1923,7 @@ namespace OpenBabel
       {
         root = new OBSmiNode(mol.GetFirstAtom());
         BuildTree(root);
+        FindClosureBonds(mol); //Jun07 was missing closures if all atoms chiral
         ToSmilesString(root,buffer);
         delete root;
       }
@@ -2499,7 +2500,7 @@ namespace OpenBabel
     strcat(element,symbol);
 
     //if (atom->IsCarbon() && atom->GetHvyValence() > 2 && atom->IsChiral())
-    if (atom->GetHvyValence() > 2 && atom->IsChiral())
+    if (atom->GetHvyValence() > 2 && atom->IsChiral() && (atom->IsClockwise() || atom->IsAntiClockwise()))
       {
         char stereo[5];
         if (GetChiralStereo(node,stereo))

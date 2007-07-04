@@ -1,3 +1,10 @@
+2007-07-04  Chris Morley
+
+	* src/formats/smilesformat.cpp(CreateSmiString): call
+	FindClosureBonds even when all atoms are chiral.
+	(GetSmilesElement): only call GetChiralStereo when
+	atom has is specified clockwise or anticlockwise, not just chiral.
+	
 2007-07-02  Noel O'Boyle <baoilleach@gmail.com>
 
 	* include/oberrors.h: Fixed typo in Doxygen
