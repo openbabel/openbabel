@@ -1,3 +1,13 @@
+2007-07-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mdlformat.cpp (MDLFormat::ReadMolecule): Add
+	additional error and warning messages, including a check if the
+	atom/bond block doesn't work. Fixes crash reported by Joe Bedell,
+	Sigma-Aldrich.
+
+	* Makefile.am, Makefile.in: Skip INSTALL.Windows, deleted by
+	Chris.
+
 2007-07-04  Chris Morley
 
 	* src/finger3.cpp: Trim firts line which decided format of

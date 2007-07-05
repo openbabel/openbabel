@@ -143,6 +143,8 @@ public:
     _mapcd.clear();
     bool chiralWatch=false;
     bool setDimension = false;
+    stringstream errorMsg;
+    string clearError; // empty string to clear the warning buffer
 
     // Allows addition of further disconnected atoms to an existing molecule
     int offset = mol.NumAtoms(); 
@@ -152,10 +154,21 @@ public:
     string comment;
     string r1,r2;
 
-    if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
+    if (!ifs.getline(buffer,BUFF_SIZE)) {
+      errorMsg << "WARNING: Problems reading a MDL file\n";
+      errorMsg << "Cannot read title line\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+      return(false);
+    }
     mol.SetTitle(buffer);
   
-    if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //creator
+    if (!ifs.getline(buffer,BUFF_SIZE)) {
+      errorMsg << "WARNING: Problems reading a MDL file\n";
+      errorMsg << "Cannot read creator/dimension line line\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+      return(false);
+    }
+    
     if (strlen(buffer) > 20) {
       char* dimension = buffer+20;
       dimension[2]='\0'; //truncate after 2D
@@ -166,13 +179,33 @@ public:
         }
     }
 
-    if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //comment
+    if (!ifs.getline(buffer,BUFF_SIZE)) {
+      errorMsg << "WARNING: Problems reading a MDL file\n";
+      errorMsg << "Cannot read comment line\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+      return(false);
+    }
+
     if (strlen(buffer) > 0) {
       comment = buffer;
     }
 
-    if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //atoms and bonds
+    if (!ifs.getline(buffer,BUFF_SIZE)) {
+      errorMsg << "WARNING: Problems reading a MDL file\n";
+      errorMsg << "Cannot read atom and bond count\n";
+      errorMsg << "File ended prematurely\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+      return(false);
+    }
     r1 = buffer;
+    if (r1.size() < 6) { // error from Joe Bedell, Sigma-Aldrich
+      errorMsg << "WARNING: Problems reading a MDL file\n";
+      errorMsg << "Cannot read atom and bond count\n";
+      errorMsg << "Expected standard 6 character atom and bond count\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+      return(false);
+    }
+
     natoms = atoi((r1.substr(0,3)).c_str());
     nbonds = atoi((r1.substr(3,3)).c_str());
 
