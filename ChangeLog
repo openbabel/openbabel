@@ -1,3 +1,15 @@
+2007-07-05  Chris Morley
+
+	* src/formats/inchiformat(WriteMolecule): downgraded the InChI
+	message "Tetrahedral stereo info not available" to obInfo, 
+	since it arises from the workings of the the opaque OB chirality
+	system. Also added the molecule number for identification.
+	
+	* src/GUI/OBGUI.cpp, tool/babel.cpp: added &std::cout to the
+	call to OBConversion::Write() for the APIInterface, because the
+	previous NULL value was causing it to be ignored. This meant
+	that ---errorlevel wasn't working,  as again found by Noel.
+	
 2007-07-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mdlformat.cpp (MDLFormat::ReadMolecule): Add

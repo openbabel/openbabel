@@ -788,7 +788,7 @@ void OBGUIFrame::DoOptions(OpenBabel::OBConversion& Conv)
 		if(m_pAPIOptsPanel->SetOptions(apiConv, OBConversion::GENOPTIONS))
 		{
 			apiConv.SetOutFormat(pAPI);
-			apiConv.Write(NULL);
+      apiConv.Write(NULL, &std::cout);
 		}
 	}
 	m_pGenOptsPanel->SetOptions(Conv, OBConversion::GENOPTIONS);

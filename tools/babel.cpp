@@ -220,7 +220,7 @@ int main(int argc,char *argv[])
                               {
                                 apiConv.SetOutFormat(pAPI);
                                 apiConv.AddOption(nam+1, OBConversion::GENOPTIONS, txt.c_str());
-                                apiConv.Write(NULL);
+                                apiConv.Write(NULL, &std::cout);
                               }
                           }
                         else
