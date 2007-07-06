@@ -121,13 +121,23 @@ namespace OpenBabel
           }
       }
 
-    itr = pOptions->find("add");
+    itr = pOptions->find("add");  //adds new properties from descriptors in list
     if(itr!=pOptions->end())
       OBDescriptor::AddProperties(this, itr->second);
     
-    itr = pOptions->find("delete");
+    itr = pOptions->find("delete"); //deletes the specified properties
     if(itr!=pOptions->end())
       OBDescriptor::DeleteProperties(this, itr->second);
+
+    itr = pOptions->find("append"); //Appends values of descriptors or properties to title
+    if(itr!=pOptions->end())
+      {
+        string title(GetTitle());
+        title += OBDescriptor::GetValues(this, itr->second);
+        SetTitle(Trim(title).c_str());
+      }
+
+
     
       //Filter using OBDescriptor comparison and (older) SMARTS tests
     //Continue only if previous test was true.
@@ -194,6 +204,7 @@ namespace OpenBabel
 "--filter <filterstring> Filter: convert only when tests are true:\n"
 "--add <list> Add properties from descriptors:\n"
 "--delete <list> Delete properties in list:\n"
+"--append <list> Appends properties or descriptors in list to title:\n"
 "-s\"smarts\" Convert only molecules matching SMARTS:\n"
 "-v\"smarts\" Convert only molecules NOT matching SMARTS:\n"
 "--join Join all input molecules into a single output molecule\n"

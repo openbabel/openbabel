@@ -132,7 +132,7 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
       }
       
       //If there is existing OBPairData use that
-      if(pOb->HasData(descID))
+      if(MatchPairData(pOb, descID))
       {
         retFromCompare = GenericDataCompare(descID, pOb, optionText, noEval);
       }
@@ -231,12 +231,12 @@ bool OBDescriptor::GenericDataCompare(string& ID, OBBase* pOb, istream& optionTe
   }
   stringstream ss(sval);
   double val;
-  if((ss >> val) && IsNan(filterval))
-    //Do a string comparison if either the filter or the OBPair value is not a number
-    return DoComparison(ch1, ch2, sval, sfilterval);
-  else
+  if((ss >> val) && !IsNan(filterval))
     //Do a numerical comparison if both values are numbers
     return DoComparison(ch1, ch2, val, filterval);
+  else
+    //Do a string comparison if either the filter or the OBPair value is not a number
+    return DoComparison(ch1, ch2, sval, sfilterval);
 }
 
 ///Reads comparison operator and the following string. Return its value if possible else NaN
@@ -399,8 +399,69 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
   tokenize(vs, DescrList.c_str(), " \t\r\n,/-*&;:|%+");
   vector<string>::iterator itr;
   for(itr=vs.begin();itr!=vs.end();++itr)
-    pOb->DeleteData(*itr);
+  {
+    if(MatchPairData(pOb, *itr))
+      pOb->DeleteData(*itr);
+  }
 }
+
+  //Reads list of descriptor IDs and OBPairData names and returns a list of values
+  //each precede by a space or the first character in the list if it is whitespace or punctuation.
+  //Used in OBMol::Transform() to append to title , but that is not done here to avoid
+  //having to #include mol.h in this file.
+  string OBDescriptor::GetValues(OBBase* pOb, const std::string& DescrList)
+  {
+    vector<string> vs;
+    char delim = DescrList[0];
+    delim = isspace(delim)||ispunctU(delim) ? delim : ' ';
+
+    tokenize(vs, DescrList.c_str(), " \t\r\n,/-*&;:|%+");
+    vector<string>::iterator itr;
+    string values;
+    for(itr=vs.begin();itr!=vs.end();++itr)
+    {
+      string thisvalue;
+      //If there is existing OBPairData use that
+      if(MatchPairData(pOb,*itr))
+        thisvalue = pOb->GetData(*itr)->GetValue();
+      else
+      {
+        //if it is an OBDescriptor
+        OBDescriptor* pDesc = OBDescriptor::FindType(itr->c_str());
+        if(!pDesc) 
+        {
+          obErrorLog.ThrowError(__FUNCTION__, 
+            *itr + " not recognized as either a property or a descriptor", obError);
+          return values;
+        }
+        pDesc->GetStringValue(pOb, thisvalue);
+      }
+      values += delim + thisvalue;
+    }
+    return values;
+  }
+
+  bool OBDescriptor::MatchPairData(OBBase* pOb, string& s)
+  {
+    //If s matches a PairData attribute return true
+    //else if s with all '_' replaced by spaces matches return true and s is nowthw form with spaces
+    //else return false.
+    if(pOb->HasData(s))
+      return true;
+    if(s.find('_')==string::npos)
+      return false;
+    string temp(s);
+    string::size_type pos=-1;
+    //replace all underscores by spaces
+    while((pos=temp.find('_', ++pos))!=string::npos)
+      temp[pos]=' ';
+    if(pOb->HasData(temp))
+    {
+      s = temp;
+      return true;
+    }
+    return false;
+  }
 
 }//namespace
 

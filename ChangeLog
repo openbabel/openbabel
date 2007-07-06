@@ -1,3 +1,15 @@
+2007-07-06  Chris Morley
+
+	* src/descriptor.cpp, src/include/openbabel/descriptor.h:
+	Add MatchPairData() so that Property names with spaces can be
+	searched for by replacing them with underscores in the filter,
+	append or delete strings, as suggested by Noel.
+	(GenericDataCompare): fix test for two numbers
+	Added GetValues() to implement --append
+	
+	*src/transform.cpp: Extra option: --append (to mol title).
+	Does what Joey Bedell wanted.
+	
 2007-06-15  Chris Morley
 	
 	* src/smartsdescriptors.cpp: Added SmartsDescriptor class to 

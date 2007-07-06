@@ -57,6 +57,10 @@ class OBERROR OBDescriptor : public OBPlugin
   ///Deletes all the OBPairDatas whose attribute names are in the list (if they exist).
   static void DeleteProperties(OBBase* pOb, const std::string& DescrList);
 
+  ///Reads list of descriptor IDs and OBPairData names and returns a list of values,
+  ///each precede by a space or the first character in the list if it is whitespace or punctuation.
+  static std::string GetValues(OBBase* pOb, const std::string& DescrList);
+
 protected:
   ///Read an identifier from the filter string
   static std::string GetIdentifier(std::istream& optionText);
@@ -65,7 +69,7 @@ protected:
 
   static bool GenericDataCompare(std::string& ID, OBBase* pOb, std::istream& optionText, bool noEval);
 
-    ///Reads a string from the filter stream, optionally preceded by = or !=
+  ///Reads a string from the filter stream, optionally preceded by = or !=
   ///Returns false if != operator found, and true otherwise.
   static bool ReadStringFromFilter(std::istream& ss, std::string& result);
 
@@ -73,11 +77,15 @@ protected:
   ///Returns the result of the comparison.
   static bool CompareStringWithFilter(std::istream& optionText, std::string& s, bool noEval);
 
-  //Treats _ as not a punctuation chaarcter
+  // Treats _ as not a punctuation character
   static bool ispunctU(char ch)
   {
     return ispunct(ch) && ch!='_';
   }
+
+  ///Returns true if s (with or without _ replaced by spaces) is a PairData attribute. On return s is the form which matches.
+  static bool MatchPairData(OBBase* pOb, std::string& s);
+
 };
 
 template <class T>
