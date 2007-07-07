@@ -71,7 +71,9 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval)
 /**
     The string has the form:
     PropertyID1 predicate1 [booleanOp] PropertyID2 predicate2 ...
-    The propertyIDs are the ID of OBDescriptor classes and contain only letters and numbers.
+    The propertyIDs are the ID of OBDescriptor classes or the Attributes of OBPairData
+    and contain only letters, numbers and underscores.
+    If they match an OBPairData
     The predicates must start with a punctuation character and are interpreted by
     the Compare function of the OBDescriptor class. The default implementation expects
     a comparison operator and a number, e.g. >=1.3  Whitespace is optional and is ignored.
@@ -134,7 +136,8 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
       //If there is existing OBPairData use that
       if(MatchPairData(pOb, descID))
       {
-        retFromCompare = GenericDataCompare(descID, pOb, optionText, noEval);
+        string value = pOb->GetData(descID)->GetValue();
+        retFromCompare = CompareStringWithFilter(optionText, value, noEval, true);
       }
       else
       {
@@ -214,30 +217,6 @@ string OBDescriptor::GetIdentifier(istream& optionText)
   return descID;
 }
 
-///Read the comparison operator and number/string from the filter string 
-///and return the comparison with the value in OBPairData
-//Returns true if no comparison operator found.
-//The comparison is numeric if both values can be converted to numbers, and a string compare otherwise.
-bool OBDescriptor::GenericDataCompare(string& ID, OBBase* pOb, istream& optionText, bool noEval)
-{
-  string sval(pOb->GetData(ID.c_str())->GetValue());
-  char ch1, ch2;
-  string sfilterval;
-  double filterval = ParsePredicate(optionText, ch1, ch2, sfilterval);
-  if(ch1==0)
-  {
-    // there is no comparison operator
-    return true; // means that the identifier exists
-  }
-  stringstream ss(sval);
-  double val;
-  if((ss >> val) && !IsNan(filterval))
-    //Do a numerical comparison if both values are numbers
-    return DoComparison(ch1, ch2, val, filterval);
-  else
-    //Do a string comparison if either the filter or the OBPair value is not a number
-    return DoComparison(ch1, ch2, sval, sfilterval);
-}
 
 ///Reads comparison operator and the following string. Return its value if possible else NaN
 //The comparison operator characters in ch1 and ch2 if found, 0 otherwise.
@@ -362,20 +341,54 @@ double OBDescriptor::GetStringValue(OBBase* pOb, string& svalue)
   return val;
 }
 
-bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bool noEval)
+bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bool noEval, bool NoCompOK)
 {
   char ch1=0, ch2=0;
   string sfilterval;
   double filterval = ParsePredicate(optionText, ch1, ch2, sfilterval);
-
+  if(ch1==0 && NoCompOK)
+  {
+    // there is no comparison operator
+    return true; // means that the identifier exists
+  }
+  
   stringstream ss(sval);
   double val;
   if((ss >> val) && !IsNan(filterval))
     //Do a numerical comparison if both values are numbers
     return DoComparison(ch1, ch2, val, filterval);
   else
+  {
     //Do a string comparison if either the filter or the OBPair value is not a number
+    string::size_type pos = sfilterval.find('*');
+    if(pos!=string::npos)
+    {
+      //filter string contains an asterisk
+      //cannot match if string is too small
+      if(sval.size() < sfilterval.size())
+        return false;
+
+      if(pos==sfilterval.size()-1)
+      {
+        // '*' is last char; delete it and subsequent chars
+        sfilterval.erase(pos);
+        sval.erase(pos);
+      }
+      else if(pos==0)
+      {
+        // '*' is first char; delete up to it
+        sfilterval.erase(0,1);
+        sval.erase(0,sval.size()-sfilterval.size());
+      }
+      else
+      {
+        // '*' is some other character. Not not currently supported.
+        obErrorLog.ThrowError("--filter option", "Wild card * can only be the first or last character.", obError);
+        return false;
+      }
+    }
     return DoComparison(ch1, ch2, sval, sfilterval);
+  }
 }
 
 void OBDescriptor::AddProperties(OBBase* pOb, const string& DescrList)

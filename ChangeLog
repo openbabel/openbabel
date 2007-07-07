@@ -1,3 +1,8 @@
+2007-07-07  Chris Morley
+
+	*src/descriptor.cpp, src/include/openbabel/descriptor.h:
+	Add wildcard * facility and simplify - remove GenericDataCompare.
+	
 2007-07-06  Chris Morley
 
 	* src/descriptor.cpp, src/include/openbabel/descriptor.h:

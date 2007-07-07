@@ -67,15 +67,13 @@ protected:
 
   static double ParsePredicate(std::istream& optionText, char& ch1, char& ch2, std::string& svalue);
 
-  static bool GenericDataCompare(std::string& ID, OBBase* pOb, std::istream& optionText, bool noEval);
-
   ///Reads a string from the filter stream, optionally preceded by = or !=
   ///Returns false if != operator found, and true otherwise.
   static bool ReadStringFromFilter(std::istream& ss, std::string& result);
 
   ///Makes a comparison using the operator and a string read from the filter stream with a provided string.
-  ///Returns the result of the comparison.
-  static bool CompareStringWithFilter(std::istream& optionText, std::string& s, bool noEval);
+  ///Returns the result of the comparison and true if NoCompOK==true and there is no comparison operator.
+  static bool CompareStringWithFilter(std::istream& optionText, std::string& s, bool noEval, bool NoCompOK=false);
 
   // Treats _ as not a punctuation character
   static bool ispunctU(char ch)
