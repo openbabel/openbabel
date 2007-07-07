@@ -27,6 +27,7 @@ are encouraged to upgrade.
 - Fixed a crash when output to canonical SMILES.
 - Fixed a crash when converting from SMILES to InChI.
 - Fixed a crash when reading some PDB files on Windows.
+- Fixed a crash when reading invalid MDL/SDF files.
 - Fixed a bug which made it impossible to read some GAMESS files.
 - Fixed a problem when reading ChemDraw CDX files on Mac OS X.
 - A large number of additional fixes, including some rare crashes.
