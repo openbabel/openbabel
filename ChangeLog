@@ -1,3 +1,8 @@
+2007-07-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/Makefile.am, src/Makefile.in: Bump library version for 2.1.1
+	release.
+
 2007-07-05  Chris Morley
 
 	* src/formats/inchiformat(WriteMolecule): downgraded the InChI
