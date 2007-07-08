@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<cml xmlns="http://www.xml-cml.org/schema/cml2/core">
+ <molecule id="ethanol">
+  <atomArray>
+   <atom id="a1" elementType="C"/>
+   <atom id="a2" elementType="C"/>
+   <atom id="a3" elementType="O"/>
+  </atomArray>
+  <bondArray>
+   <bond atomRefs2="a1 a2" order="1"/>
+   <bond atomRefs2="a2 a3" order="1"/>
+  </bondArray>
+ </molecule>
+ <molecule id="dimethyl ether">
+  <atomArray>
+   <atom id="a1" elementType="C"/>
+   <atom id="a2" elementType="O"/>
+   <atom id="a3" elementType="C"/>
+  </atomArray>
+  <bondArray>
+   <bond atomRefs2="a1 a2" order="1"/>
+   <bond atomRefs2="a2 a3" order="1"/>
+  </bondArray>
+ </molecule>
+ <molecule id="benzyl radical">
+  <atomArray>
+   <atom id="a1" elementType="C"/>
+   <atom id="a2" elementType="C"/>
+   <atom id="a3" elementType="C"/>
+   <atom id="a4" elementType="C"/>
+   <atom id="a5" elementType="C"/>
+   <atom id="a6" elementType="C"/>
+   <atom id="a7" elementType="C" spinMultiplicity="2"/>
+  </atomArray>
+  <bondArray>
+   <bond atomRefs2="a1 a2" order="1"/>
+   <bond atomRefs2="a2 a3" order="2"/>
+   <bond atomRefs2="a3 a4" order="1"/>
+   <bond atomRefs2="a4 a5" order="2"/>
+   <bond atomRefs2="a5 a6" order="1"/>
+   <bond atomRefs2="a1 a6" order="2"/>
+   <bond atomRefs2="a6 a7" order="1"/>
+  </bondArray>
+ </molecule>
+ <molecule id="trans difluoroethene">
+  <atomArray>
+   <atom id="a1" elementType="F"/>
+   <atom id="a2" elementType="C"/>
+   <atom id="a3" elementType="C"/>
+   <atom id="a4" elementType="F"/>
+  </atomArray>
+  <bondArray>
+   <bond atomRefs2="a1 a2" order="1"/>
+   <bond atomRefs2="a2 a3" order="2">
+    <bondStereo atomRefs4="a1 a2 a3 a4">T</bondStereo>
+   </bond>
+   <bond atomRefs2="a3 a4" order="1"/>
+  </bondArray>
+ </molecule>
+</cml>
