@@ -1,3 +1,9 @@
+2007-07-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/math/vector3.h, include/openbabel/base.h,
+	include/openbabel/generic.h, include/openbabel/residue.h: Fix GCC
+	compiler warnings with -pedantic. Thanks to Carsten Neihaus.
+
 2007-07-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/Makefile.am, src/Makefile.in: Bump library version for 2.1.1

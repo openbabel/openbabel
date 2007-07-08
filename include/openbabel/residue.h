@@ -267,7 +267,7 @@ namespace OpenBabel {
       POLAR       = 13,
       POSITIVE    = 14,
       SMALL       = 15,
-      SURFACE     = 16,
+      SURFACE     = 16
     };
   }
 
@@ -285,7 +285,7 @@ namespace OpenBabel {
       SHAPELY_BACKBONE = 6,
       SHAPELY_SPECIAL  = 7,
       SIDECHAIN        = 8,
-      SUGAR_PHOSPHATE  = 9,
+      SUGAR_PHOSPHATE  = 9
     };
   }
 
@@ -352,7 +352,7 @@ namespace OpenBabel {
       NAD   = 50,
       COA   = 51,
       NAP   = 52,
-      NDP   = 53,
+      NDP   = 53
     };
   }
 
@@ -370,7 +370,7 @@ namespace OpenBabel {
       PURINE       = 6,
       PYRIMIDINE   = 7,
       SOLVENT      = 8,
-      WATER        = 9,
+      WATER        = 9
     };
   }
 

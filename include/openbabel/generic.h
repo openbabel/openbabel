@@ -144,7 +144,7 @@ namespace OpenBabel
       CustomData12 = 16396,
       CustomData13 = 16397,
       CustomData14 = 16398,
-      CustomData15 = 16399,
+      CustomData15 = 16399
     };
   } // end namespace
 

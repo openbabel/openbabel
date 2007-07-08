@@ -86,7 +86,7 @@ namespace OpenBabel
           if(pOb && clear)// Clear only if this is of target class
             Clear();
           return pOb;
-        };
+        }
 
 
       //! \name Generic data handling methods (via OBGenericData)

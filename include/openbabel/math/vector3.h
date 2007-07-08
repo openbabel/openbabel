@@ -273,32 +273,32 @@ namespace OpenBabel
   inline OBAPI vector3 operator+ ( const vector3& v1, const vector3& v2)
   {
     return vector3(v1.x()+v2.x(), v1.y()+v2.y(), v1.z()+v2.z());
-  };
+  }
   //! Vector subtraction
   inline OBAPI vector3 operator- ( const vector3& v1, const vector3& v2)
   {
     return vector3(v1.x()-v2.x(), v1.y()-v2.y(), v1.z()-v2.z());
-  };
+  }
   //! Unary minus
   inline OBAPI vector3 operator- ( const vector3& v)
   {
     return vector3(-v.x(), -v.y(), -v.z());
-  };
+  }
   //! Multiplication with a scalar
   inline OBAPI vector3 operator* ( const double& c, const vector3& v)
     {
       return vector3( c*v.x(), c*v.y(), c*v.z());
-    };
+    }
   //! Multiplication with a scalar
   inline OBAPI vector3 operator* ( const vector3& v, const double& c)
     {
       return vector3( c*v.x(), c*v.y(), c*v.z());
-    };
+    }
   //! Division by a scalar
   inline OBAPI vector3 operator/ ( const vector3& v, const double& c)
   {
     return vector3( v.x()/c, v.y()/c, v.z()/c);
-  };
+  }
   // @removed@ misleading operation
   // friend vector3 operator* ( const vector3 &,const vector3 &);
 
