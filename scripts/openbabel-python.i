@@ -74,6 +74,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %rename(inc)   *::operator++;
 %rename(good)  *::operator bool;
 %rename(deref) *::operator->;
+%rename(__getitem__) *::operator[];
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>

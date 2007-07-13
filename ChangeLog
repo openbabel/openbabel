@@ -1,3 +1,10 @@
+2007-07-13  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-python.i: Renamed index operator to __getitem__. I
+	didn't do this for the other programming languages as I have no idea
+	whether this is a valid name, or whether there is an equivalent 'magic
+	attribute name' in other languages
+
 2007-07-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/math/vector3.h, include/openbabel/base.h,
