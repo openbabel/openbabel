@@ -323,13 +323,22 @@ public:
               continue;
             r1 = buffer;
             int n = atoi((r1.substr(6,3)).c_str()); //entries on this line
-            if(n==0) break;
+            if(n<=0 || n>8 || 6+n*8>r1.size()) //catch ill-formed line
+            {
+              obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + r1, obError);
+                return false;
+            }
             int pos = 10;
             for(;n>0;n--,pos+=8)
               {
                 int atomnumber = atoi((r1.substr(pos,3)).c_str());
-                if (atomnumber==0) break;
                 OBAtom* at;
+                if (atomnumber==0 || (at=mol.GetAtom(atomnumber+offset))==NULL)
+                {
+                  obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + r1, obError);
+                    return false;
+                }
+
                 at=mol.GetAtom(atomnumber+offset); //atom numbers start at 1
                 int value = atoi((r1.substr(pos+4,3)).c_str());
                 if(r1.substr(3,3)=="RAD")

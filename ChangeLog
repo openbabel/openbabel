@@ -1,3 +1,10 @@
+2007-07-25  Chris Morley
+
+	* src/formats/mdlformat.cpp(MDLFormat::ReadMolecule):
+	Added more tests to prevent ill-formed lines in M RAD, CHG and ISO
+	lines from causing a crash. Added informative error message.
+	Deficiency pointed out by Andrew Dalke.
+	
 2007-07-07  Chris Morley
 
 	*src/descriptor.cpp, src/include/openbabel/descriptor.h:
