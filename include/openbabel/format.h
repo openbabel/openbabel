@@ -146,7 +146,7 @@ class OBCONV OBFormat : public OBPlugin
     static OBFormat* FormatFromMIME(const char* MIME);
 
 private:
-    static PluginMapType FormatsMIMEMap()
+    static PluginMapType &FormatsMIMEMap()
     {
       static PluginMapType m;
       return m;

@@ -1,3 +1,9 @@
+2007-08-03  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* include/openbabel/format.h: Format::FormatsMIMEMap() must
+	return a reference, otherwise, a new copy is used each time
+	and no mime type is usable.
+
 2007-07-25  Chris Morley
 
 	* src/formats/mdlformat.cpp(MDLFormat::ReadMolecule):
