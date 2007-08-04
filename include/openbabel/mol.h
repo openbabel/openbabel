@@ -561,11 +561,11 @@ namespace OpenBabel
     //! \return An atom iterator pointing to the beginning of the atom list
     OBAtomIterator BeginAtoms()   { return _vatom.begin(); }
     //! \return An atom iterator pointing to the end of the atom list
-    OBAtomIterator EndAtoms()     { return _vatom.end();   }
+     OBAtomIterator EndAtoms()    { return _vatom.begin() + NumAtoms() ; }
     //! \return A bond iterator pointing to the beginning of the bond list
     OBBondIterator BeginBonds()   { return _vbond.begin(); }
     //! \return A bond iterator pointing to the end of the bond list
-    OBBondIterator EndBonds()     { return _vbond.end();   }
+    OBBondIterator EndBonds()     { return _vbond.begin() + NumBonds() ; }
     //! \return A residue iterator pointing to the beginning of the residue list
     OBResidueIterator BeginResidues() { return _residue.begin(); }
     //! \return A residue iterator pointing to the end of the residue list

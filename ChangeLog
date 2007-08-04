@@ -1,3 +1,12 @@
+2007-08-04  Chris Morley
+	* include/OB_BGL/ :Added interface with Boost Graph Library
+	written by Gerde Menche.
+	
+	* include/openbabel/mol.h: modified EndAtoms() and EndBonds()
+	to return after the atomas and bonds in _vatom and _vbond
+	rather than the overallocated end of the vectors. Needed for
+	the above.
+
 2007-08-03  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* include/openbabel/format.h: Format::FormatsMIMEMap() must
