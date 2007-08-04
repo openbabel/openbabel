@@ -1,4 +1,11 @@
 2007-08-04  Chris Morley
+
+	* src/formats/mdlformat.cpp: Add ReadCollectionBlock(),
+	which currently just issues a warning that COLLECTION blocks
+	are not implemented. The rest of the molecule in the example
+	in bug #1753217 is now read ok.
+	
+2007-08-04  Chris Morley
 	* include/OB_BGL/ :Added interface with Boost Graph Library
 	written by Gerde Menche.
 	

@@ -86,6 +86,7 @@ Write Options, e.g. -x3\n \
     bool ReadV3000Line(istream& ifs, vector<string>& vs);
     bool ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
     bool ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
+    bool ReadCollectionBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
     bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
   private:
     bool  HasProperties;
@@ -624,16 +625,17 @@ public:
           ReadAtomBlock(ifs,mol,pConv);
         else if(vs[3]=="BOND")
           ReadBondBlock(ifs,mol,pConv);
+        else if(vs[3]=="COLLECTION")
+          ReadCollectionBlock(ifs,mol,pConv);
+          
         /*
-          else if(vs[3]=="COLLECTION")
-          //not currently implemented
           else if(vs[3]=="3D")
           //not currently implemented
           else if(vs[3]=="SGROUP")
           //not currently implemented
           else if(vs[3]=="RGROUP")
           //not currently implemented
-          */
+        */
       }while(DoMany && ifs.good());
     //  if(is3D){mol.SetDimension(3);cout<<"SetDim to 3"<<endl;}
     //  else if(is2D){mol.SetDimension(2);cout<<"SetDim to 2"<<endl;}
@@ -780,6 +782,22 @@ public:
             (ChiralSearch->second)->AddAtomRef(obstart, input);
           }
       }
+    return true;
+  }
+
+////////////////////////////////////////////////////////////
+  bool MDLFormat::ReadCollectionBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
+  {
+    //Not currently implemented
+    obErrorLog.ThrowError(__FUNCTION__, 
+      "COLLECTION blocks are not currently implemented and their contents ae ignored.", obWarning);
+    for(;;)
+    {
+      if(!ReadV3000Line(ifs,vs))
+        return false;
+      if(vs[2]=="END")
+        break;
+    }
     return true;
   }
 
