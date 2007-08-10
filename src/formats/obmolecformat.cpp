@@ -19,12 +19,6 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 #include <openbabel/obiter.h>
 
-#ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
-#define new DEBUG_NEW
-#endif
-
 using namespace std;
 namespace OpenBabel
 {
@@ -73,6 +67,9 @@ namespace OpenBabel
        }
        reverse(MolArray.begin(),MolArray.end());
        StoredMolsReady = true;
+       //Clear the flags of the input stream(which may have found eof) to ensure will
+       //try to read anothe molecule and allow the stored ones to be sent for output.
+       pConv->GetInStream()->clear();
      }
 
      if(MolArray.empty()) //normal end of fragments
@@ -275,6 +272,7 @@ namespace OpenBabel
   */
   OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
   {
+    //Decide on which OBMol provides the new title
     string title("No title");
     if(*pFirst->GetTitle()!=0)
       title = pFirst->GetTitle();
@@ -286,6 +284,7 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__,"Combined molecule has no title", obWarning);
       }
 
+    //Decide on which OBMol provides the new structure
     bool swap=false;
     if(pFirst->NumAtoms()==0 && pSecond->NumAtoms()!=0)
       swap=true;
@@ -431,7 +430,7 @@ namespace OpenBabel
         if(!datastream)
           {
             obErrorLog.ThrowError(__FUNCTION__, 
-                                  datafilepath + " was not found or could not be opened",  obError);
+                                  datafilename + " was not found or could not be opened",  obError);
             return false;
           }
 

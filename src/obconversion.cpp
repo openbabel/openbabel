@@ -153,7 +153,7 @@ namespace OpenBabel {
       OBConversion conv(&is,&os);
       if(conv.SetInAndOutFormats("SMI","MOL"))
       {
-         conv.SetOptions("h"); //Optional; (h adds expicit hydrogens)
+         conv.AddOption("h",OBConversion::GENOPTIONS); //Optional; (h adds expicit hydrogens)
          conv.Convert();
       }
       @endcode
@@ -162,7 +162,7 @@ namespace OpenBabel {
 
       The existing program inputs from the file identified by the 
       const char* filename into the istream is. The file is assumed to have
-      a format ORIG, but otherformats, identified by their file extensions,
+      a format ORIG, but other formats, identified by their file extensions,
       can now be used.
 
       @code
@@ -184,8 +184,8 @@ namespace OpenBabel {
       ...Carry on with original code using pIn
       @endcode
 
-      In Windows a degree of independence from OpenBabel can be achieved using DLLs.
-      This code would be linked with obconv.lib.
+      In certain Windows builds, a degree of independence from OpenBabel can be
+      achieved using DLLs. This code would be linked with obconv.lib.
       At runtime the following DLLs would be in the executable directory:
       obconv.dll, obdll.dll, one or more *.obf format files.
   */
@@ -486,6 +486,9 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
     pOb1=NULL;
     wInlen=0;
 
+    if(pInFormat->Flags() & READONEONLY)
+      OneObjectOnly=true;
+
     //Input loop
     while(ReadyToInput && pInStream->good()) //Possible to omit? && pInStream->peek() != EOF 
       {
@@ -757,7 +760,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
     //Deleting any old LErdbuf before contructing a new one ensures there is 
     //only one for each OBConversion object. It is deleted in the destructor.
 
-    if(!(pInFormat->Flags() & (READBINARY | READXML)) && pInStream->rdbuf()!=pLineEndBuf)
+    if(pInFormat && !(pInFormat->Flags() & (READBINARY | READXML)) && pInStream->rdbuf()!=pLineEndBuf)
     {
       delete pLineEndBuf;
       pLineEndBuf = new LErdbuf(pInStream->rdbuf());
@@ -1395,6 +1398,33 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
     vector<string> vlist;
     OBPlugin::ListAsVector("formats", "out", vlist);
     return vlist;
+  }
+
+  void OBConversion::ReportNumberConverted(int count, OBFormat* pFormat)
+  {
+    //Send info message to clog. This constructed from the TargetClassDescription
+    //of the specified class (or the output format if not specified).
+    //Get the last word on the first line of the description which should
+    //be "molecules", "reactions", etc and remove the s if only one object converted
+    if(!pFormat)
+      pFormat = pOutFormat;
+    string objectname(pFormat->TargetClassDescription());
+    string::size_type pos = objectname.find('\n');
+    if(count==1) --pos;
+    objectname.erase(pos);
+    pos = objectname.rfind(' ');
+    if(pos==std::string::npos)
+      pos=0;
+    std::clog << count << objectname.substr(pos) << " converted" << endl;
+  }
+
+  void OBConversion::CopyOptions(OBConversion* pSourceConv, Option_type typ)
+  {
+    if(typ==ALL)
+    for(int i=0;i<3;++i)
+     OptionsArray[i]=pSourceConv->OptionsArray[i];
+    else
+     OptionsArray[typ]=pSourceConv->OptionsArray[typ];
   }
 
 }//namespace OpenBabel

@@ -423,8 +423,7 @@ See: http://openbabel.sourceforge.net/wiki/Main_Page\n\n\
 For more detailed information see:\n\
 http://openbabel.sourceforge.net/wiki/Windows_GUI\n\n \
 OpenBabel version "));
-   msg << BABEL_VERSION;
-  msg << " development snapshot March 2005";
+    msg << BABEL_VERSION;
     wxMessageBox(msg, _T("About OpenBabelGUI"), wxOK | wxICON_INFORMATION | wxCENTER, this);
 }
 ///////////////////////////////////////////
@@ -509,16 +508,8 @@ with the output format.\nDo you wish to continue the conversion?",
   
 //	m_pOutText->Thaw();
 
-  //Get the last word on the first line of the description which should
-  //be "molecules", "reactions", etc and remove the s if only one object converted
-  std::string objectname(pOutFormat->TargetClassDescription());
-  int pos = objectname.find('\n');
-  if(count==1) --pos;
-  objectname.erase(pos);
-  pos = objectname.rfind(' ');
-  if(pos==std::string::npos)
-    pos=0;
-  std::clog << count << objectname.substr(pos) << " converted";
+  Conv.ReportNumberConverted(count);
+
   if(OutputFileList.size()>1)
   {
     std::clog << '\n' << OutputFileList.size() 
@@ -692,7 +683,7 @@ void OBGUIFrame::OnChangeFormat(wxCommandEvent& WXUNUSED(event))
   if(viewMenu->IsChecked(ID_SHOWOUTOPTIONS))
   {
     if(pOutFormat && !m_pOutOptsPanel->Construct(pOutFormat->Description(),"output"))
-      m_pOutOptsPanel->Construct(pOutFormat->Description());//try again without the "output"
+      m_pOutOptsPanel->Construct(pOutFormat->Description(), "write");//try again
   }
   topSizer->Layout();
 }
@@ -794,7 +785,7 @@ void OBGUIFrame::DoOptions(OpenBabel::OBConversion& Conv)
     if(m_pAPIOptsPanel->SetOptions(apiConv, OBConversion::GENOPTIONS))
     {
       apiConv.SetOutFormat(pAPI);
-      apiConv.Write(NULL);
+      apiConv.Write(NULL, &std::cout);
     }
   }
   m_pGenOptsPanel->SetOptions(Conv, OBConversion::GENOPTIONS);

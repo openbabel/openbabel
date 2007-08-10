@@ -132,7 +132,7 @@ namespace OpenBabel {
       /// @name Option handling
       //@{
       ///@brief Three types of options set on the the command line by -a? , -x? , or -?
-      enum Option_type { INOPTIONS, OUTOPTIONS, GENOPTIONS };
+      enum Option_type { INOPTIONS, OUTOPTIONS, GENOPTIONS, ALL };
 
       ///@brief Determine whether an option is set. \return NULL if option not and a pointer to the associated text if it is 
       const char* IsOption(const char* opt,Option_type opttyp=OUTOPTIONS);
@@ -156,6 +156,9 @@ namespace OpenBabel {
       /// \return the number of parameters registered for the option, or 0 if not found
       static int GetOptionParams(std::string name, Option_type typ);
       //@}
+
+      ///@brief Copies the options (by default of all types) from one OBConversion Object to another.
+      void CopyOptions(OBConversion* pSourceConv, Option_type typ=ALL);
 
       /// @name Supported file format 
       //@{
@@ -181,15 +184,16 @@ namespace OpenBabel {
 
       /// @name Conversion loop control
       //@{
-      bool				AddChemObject(OBBase* pOb);///< @brief Adds to internal array during input
-      OBBase*			GetChemObject(); ///< @brief Retrieve from internal array during output
-      bool				IsLast();///< @brief True if no more objects to be output
-      bool				IsFirstInput();///< @brief True if the first input object is being processed
-      int         GetOutputIndex() const ;///< @brief Retrieves number of ChemObjects that have been actually output
-      void				SetOutputIndex(int indx);///< @brief Sets ouput index (maybe to control whether seen as first object)
-      void				SetMoreFilesToCome();///<@brief Used with multiple input files. Off by default.
-      void				SetOneObjectOnly(bool b=true);///<@brief Used with multiple input files. Off by default.
-      void        SetLast(bool b){SetOneObjectOnly(b);}///@brief.Synonym for SetOneObjectOnly()
+      bool     AddChemObject(OBBase* pOb);///< @brief Adds to internal array during input
+      OBBase*  GetChemObject(); ///< @brief Retrieve from internal array during output
+      bool     IsLast();///< @brief True if no more objects to be output
+      bool     IsFirstInput();///< @brief True if the first input object is being processed
+      int      GetOutputIndex() const ;///< @brief Retrieves number of ChemObjects that have been actually output
+      void     SetOutputIndex(int indx);///< @brief Sets ouput index (maybe to control whether seen as first object)
+      void     SetMoreFilesToCome();///<@brief Used with multiple input files. Off by default.
+      void     SetOneObjectOnly(bool b=true);///< @brief Used with multiple input files. Off by default.
+      void     SetLast(bool b){SetOneObjectOnly(b);}///< @brief Synonym for SetOneObjectOnly()
+      bool     IsLastFile(){ return !MoreFilesToCome;}///< @brief True if no more files to be read
       //@}
       /// @name Convenience functions
       //@{
@@ -247,6 +251,13 @@ namespace OpenBabel {
       /// \return false and pOb=NULL on error 
       /// This method is primarily intended for scripting languages without "stream" classes
       bool	ReadFile(OBBase* pOb, std::string filePath);
+
+      /// @brief Sends a message like "2 molecules converted" to clog
+      /// The type of object is taken from the TargetClassDescription
+      /// of the specified class (or the output format if not specified)and
+      /// is appropriately singular or plural.
+      void OBConversion::ReportNumberConverted(int count, OBFormat* pFormat=NULL);
+
 
 protected:
       ///Replaces * in BaseName by InFile without extension and path

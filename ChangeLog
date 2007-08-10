@@ -1,3 +1,21 @@
+2007-08-10  Chris Morley
+
+	* src/obconversion.h,.cpp: Added ALL to Option_Type enum.
+	Added CopyOptions() and IsLastFile() and 
+	ReportNumberConverted() functions.
+	
+	* src/GUI/OBGUI.cpp, tools/babel: use ReportNumberConverted
+	instead of explicit code.
+
+	* include/openbabel/obmolecformat.h: Added RegisterOptionParam
+	for "append".
+	
+	* src/formats/obmolecformat.cpp(ReadChemObjectImpl): clear
+	stream flags to prevent stalling when eof set in previous file.
+	Remove some debugging code.
+
+	* src/GUI/optswx.cpp: untabify
+
 2007-08-04  Chris Morley
 
 	* src/formats/mdlformat.cpp: Add ReadCollectionBlock(),

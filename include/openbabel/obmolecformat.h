@@ -89,6 +89,7 @@ public:
       OBConversion::RegisterOptionParam("filter", NULL, 1,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("add", NULL, 1,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("delete", NULL, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("append", NULL, 1,OBConversion::GENOPTIONS);
     }
   }
 

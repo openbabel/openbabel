@@ -215,7 +215,7 @@ int main(int argc,char *argv[])
                               {
                                 apiConv.SetOutFormat(pAPI);
                                 apiConv.AddOption(nam+1, OBConversion::GENOPTIONS, txt.c_str());
-                                apiConv.Write(NULL);
+                                apiConv.Write(NULL, &std::cout);
                               }
                           }
                         else
@@ -321,17 +321,8 @@ int main(int argc,char *argv[])
 
   int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
  
-  // send info message to clog -- don't mess up cerr or cout for user programs
-  //Get the last word on the first line of the description which should
-  //be "molecules", "reactions", etc and remove the s if only one object converted
-  std::string objectname(pOutFormat->TargetClassDescription());
-  pos = objectname.find('\n');
-  if(count==1) --pos;
-  objectname.erase(pos);
-  pos = objectname.rfind(' ');
-  if(pos==std::string::npos)
-    pos=0;
-  std::clog << count << objectname.substr(pos) << " converted" << endl;
+  Conv.ReportNumberConverted(count);
+
   if(OutputFileList.size()>1)
     {
       clog << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;
