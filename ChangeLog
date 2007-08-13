@@ -1,3 +1,8 @@
+2007-08-13  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* include/openbabel/obconversion.h:b removed extra
+	OBConversion:: which made compilation fail.
+
 2007-08-10  Chris Morley
 
 	* src/obconversion.h,.cpp: Added ALL to Option_Type enum.

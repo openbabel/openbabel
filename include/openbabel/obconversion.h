@@ -256,7 +256,7 @@ namespace OpenBabel {
       /// The type of object is taken from the TargetClassDescription
       /// of the specified class (or the output format if not specified)and
       /// is appropriately singular or plural.
-      void OBConversion::ReportNumberConverted(int count, OBFormat* pFormat=NULL);
+      void ReportNumberConverted(int count, OBFormat* pFormat=NULL);
 
 
 protected:
