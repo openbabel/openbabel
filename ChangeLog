@@ -1,3 +1,31 @@
+2007-08-18  Chris Morley
+
+	* src/format/copyformat: Copy whole input stream if a 
+	length is not found.
+	
+	* src/formats/getinchi.cpp: test for negative chars to avoid
+	isspace() failing.
+	
+	* include/openbabel/plugin.h: small documentation changes
+	
+	* src/GUI/optswx.cpp: remove some debugging code
+	
+	* src/obconversion.cpp: re-enable Compressed input for Windows. 
+	Add macro to deactivate compressed output which still has 
+	problems.
+	Use USE_OBF rather than USING_DYNAMIC_LIBS which was ambiguous.
+	Zero wInpos and wInlen in itialization list - needed for mod
+	to copy format.
+	ReportNumberConverted(): allow text from TargetClassDescription
+	to have only a single line.
+	
+	* windows-vc2005/babelconfig.h: enable compression but
+	deactivate compression on write. 
+	Rationalize the macros 	controlling the build in Visual Studio.
+	Now define SINGLE_DLL for current OpenBabelDLL build.
+	For future multiDLL builds USE_OBF with macros, like OBCONV 
+	appropriate for the DLL being built.
+
 2007-08-18  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* data/Makefile.am: add space groups descriptions.

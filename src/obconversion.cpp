@@ -199,7 +199,7 @@ namespace OpenBabel {
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), CheckedForGzip(false),
     NeedToFreeInStream(false), NeedToFreeOutStream(false), 
-    pOb1(NULL), pAuxConv(NULL),pLineEndBuf(NULL)
+    pOb1(NULL), pAuxConv(NULL),pLineEndBuf(NULL),wInpos(0),wInlen(0)
   {
     pInStream=is;
     pOutStream=os;
@@ -277,7 +277,7 @@ namespace OpenBabel {
     int count=0;
     //	if(FormatFilesLoaded) return 0;
     //	FormatFilesLoaded=true; //so will load files only once
-#ifdef USING_DYNAMIC_LIBS
+#ifdef USE_OBF
     //Depending on availablilty, look successively in 
     //FORMATFILE_DIR, executable directory,or current directory
     string TargetDir;
@@ -300,7 +300,7 @@ namespace OpenBabel {
       }
 #else
     count = 1; //avoid calling this function several times
-#endif //USING_DYNAMIC_LIBS
+#endif //USE_OBF
     return count;
   }
 
@@ -424,7 +424,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
       else
         delete zIn;
     }
-
+#ifndef DISABLE_WRITE_COMPRESSION //Unsolved problem with compression under Windows
     zlib_stream::zip_ostream zOut(*pOutStream);
     if(IsOption("z",GENOPTIONS))
       {
@@ -432,6 +432,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
         zOut.make_gzip();
         pOutStream = &zOut;
       }
+#endif
 #endif
 
     //The FilteringInputStreambuf delivers characters to the istream, pInStream,
@@ -780,7 +781,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
 
     ostream* pOrigOutStream = pOutStream;
 #ifdef HAVE_LIBZ
-#ifndef _WIN32
+#ifndef DISABLE_WRITE_COMPRESSION
     zlib_stream::zip_ostream zOut(*pOutStream);
     if(IsOption("z",GENOPTIONS))
       {
@@ -908,7 +909,9 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
       "-l <#> End import at molecule # specified\n"
       "-e Continue with next object after error, if possible\n"
       #ifdef HAVE_LIBZ
+      #ifndef DISABLE_WRITE_COMPRESSION //Unsolved problem with compression under Windows
       "-z Compress the output with gzip\n"
+      #endif
       #endif
       "-k Attempt to translate keywords\n";
       // -t All input files describe a single molecule
@@ -1219,6 +1222,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
 						
                         OutputFileList.push_back(incrfile);
 #ifdef HAVE_LIBZ
+#ifndef DISABLE_WRITE_COMPRESSION
                         if(IsOption("z",GENOPTIONS))
                           {
                             zlib_stream::zip_ostream zOut(ofs);
@@ -1227,6 +1231,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
                             zOut << ss.rdbuf();
                           }
                         else
+#endif
 #endif
                           ofs << ss.rdbuf();
 
@@ -1410,6 +1415,8 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
       pFormat = pOutFormat;
     string objectname(pFormat->TargetClassDescription());
     string::size_type pos = objectname.find('\n');
+    if(pos==std::string::npos)
+      pos=objectname.size();
     if(count==1) --pos;
     objectname.erase(pos);
     pos = objectname.rfind(' ');

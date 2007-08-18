@@ -21,13 +21,6 @@ GNU General Public License for more details.
 #include <utility>
 #include <optswx.h>
 
-
-#ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
-#define new DEBUG_NEW
-#endif
-
 /*
 The string returned by OBFormat::Description() gives information about the
 format and the commandline options that can be used with it. More general

@@ -26,7 +26,7 @@ bool inline isnic(char ch)
 {
   //This set of characters could be extended
   static string nic("\"\'\\@<>!$%&{}[]");
-  return nic.find(ch)!=string::npos;
+  return ch<0 || nic.find(ch)!=string::npos;
 }
 
 /// @brief Reads an InChI (possibly split) from an input stream and returns it as unsplit text.
@@ -134,7 +134,7 @@ string GetInChI(istream& is)
   {
     if(state==before_inchi)
     {
-      if(!isspace(ch))
+      if(ch>=0 && !isspace(ch))
       {
         if(ch==prefix[0])
         {
@@ -146,7 +146,7 @@ string GetInChI(istream& is)
       }
     }
 
-    else if(isspace(ch))
+    else if(ch>=0 && isspace(ch))
     {
       if(state==unquoted)
         return result;

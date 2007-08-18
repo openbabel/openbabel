@@ -9,7 +9,8 @@
 #define HAVE_SSTREAM 1
 #define HAVE_SNPRINTF 1
 #define HAVE_STRNCASECMP 1
-//#define HAVE_LIBZ 1 Causes DLL builds to not work with any file input!
+#define HAVE_LIBZ 1 //Compression enabled...
+#define DISABLE_WRITE_COMPRESSION 1 //...but not for output
 #define BABEL_VERSION  "2.2"
 
 #define BABEL_DATADIR "."
@@ -17,6 +18,8 @@
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
 #define rindex(a,b) strrchr((a),(b))
+
+#define TESTDATADIR "../../test/files/"
 
 // Supress warning on deprecated functions
 #pragma warning(disable : 4996)
@@ -37,98 +40,73 @@
 //Do not use newlinebuf. (All varieties of line endings seem to be handled ok anyway)
 #define NO_NEWLINEBUF
 
+// Visual Studio Express does not have the classes in namespace std::tr1, particularly
+// shared_ptr. Use the Boost library instead. It is necessary to have download Boost
+// and put its top level folder in the Include section of Visual Studio's VC++ Directories.
+#define USE_BOOST
+
 /* Export of functions and global variables from DLLs
-In the header files for the OB core, mol.h etc, exported classes and variables 
-have an OBAPI declaration specifiers.
-When building any OBDLL.dll: define OBDLL_EXPORTS.
-When building an application that links with OBDLL.lib and so uses OBDLL.dll:
-define USING_DYNAMIC_LIBS.
-
-In obconversion.h the exported classes have OBCONV declaration specifiers.
-When building OBConv.dll: define OBCONV_EXPORTS.
-
-When building Format dlls: no need for any defines since no exported functions.
-  
-In non-Windows systems OBAPI and OBCONV need to be defined as empty.
 */
-#if defined(USING_DYNAMIC_LIBS)
- #if defined(OBDLL_EXPORTS) //OBDLL being built
+
+#if defined (SINGLE_DLL) 
+  //builds with a single DLL OpenBabel.dll
+  // Supress warning on wrong dll-interface
+  /*Exporting templated classes and classes with templated member variable
+  requires some care. See http://support.microsoft.com/kb/168958*/
+  #pragma warning(disable : 4251)
   #define OBAPI __declspec(dllexport)
- #else
-  #define OBAPI __declspec(dllimport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBAPI
-#endif
-
-#if defined(USING_DYNAMIC_LIBS)
- #if defined(OBFPRT_EXPORTS) //OBFPRT being built
-  #define OBFPRT __declspec(dllexport)
- #else
-  #define OBFPRT __declspec(dllimport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBFPRT
-#endif
-
-
-#if defined(USING_DYNAMIC_LIBS)
- #pragma warning (disable : 4251) //no dll interface for some templated classes
- #ifdef OBCONV_EXPORTS
   #define OBCONV __declspec(dllexport)
- #else
-  #define OBCONV __declspec(dllimport)
- #endif
-#else
-	#define OBCONV //as nothing in non-Windows system
-#endif
-
-#if defined(USING_DYNAMIC_LIBS)
- #if defined(OBCOMMON_EXPORTS) //OBCommonFormats being built
-  #define OBCOMMON __declspec(dllexport)
- #else
-  #define OBCOMMON __declspec(dllimport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBCOMMON
-#endif
-
-#if defined(USING_DYNAMIC_LIBS)
- #if defined(OBERROR_EXPORTS) //OBError being built
   #define OBERROR __declspec(dllexport)
- #else
-  #define OBERROR __declspec(dllimport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBERROR
-#endif
+  #define OBCOMMON __declspec(dllexport)
+  #define OBFPRT __declspec(dllexport)
+  #define EXTERN __declspec(dllexport) extern
+#elif defined(USE_OBF)
+  //builds with multiple DLLs like OBDLL.dll, OBConv.dll , *.obf
+  #pragma warning (disable : 4251) //no dll interface for some templated classes
 
-#if defined(OBDLL_EXPORTS) //OBDLL being built
-#  define EXTERN __declspec(dllexport) extern
-#elif defined(USING_OBDLL) //program using OBDLL.dll being built
-#  define EXTERN __declspec(dllimport) extern
-#else //Everything else (behaviour as original)
-#  define EXTERN extern
-#endif
+  #if defined(OBDLL_EXPORTS)
+    //OBDLL being built
+    #define OBAPI __declspec(dllexport)
+    #define EXTERN __declspec(dllexport) extern
+  #else
+    #define OBAPI __declspec(dllimport)
+    #define EXTERN __declspec(dllimport) extern
+  #endif
 
-/*
-#ifdef _DEBUG
-void* __cdecl operator new(size_t nSize, const char* lpszFileName, int nLine);
-void __cdecl operator delete(void* p, const char* lpszFileName, int nLine);
-#define DEBUG_NEW new(THIS_FILE, __LINE__)
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
-#define new DEBUG_NEW
-#endif
-*/
+  #ifdef OBCONV_EXPORTS
+    #define OBCONV __declspec(dllexport)
+  #else
+    #define OBCONV __declspec(dllimport)
+  #endif
 
-#include <crtdbg.h>
+  #if defined(OBFPRT_EXPORTS)
+    //OBFPRT being built
+    #define OBFPRT __declspec(dllexport)
+  #else
+    #define OBFPRT __declspec(dllimport)
+  #endif
 
-#ifdef _DEBUG
-#define DEBUG_NEW new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+  #if defined(OBCOMMON_EXPORTS)
+   //OBCommonFormats being built
+    #define OBCOMMON __declspec(dllexport)
+  #else
+    #define OBCOMMON __declspec(dllimport)
+  #endif
+
+  #if defined(OBERROR_EXPORTS)
+    //OBError being built
+    #define OBERROR __declspec(dllexport)
+  #else
+    #define OBERROR __declspec(dllimport)
+  #endif
 #else
- #define DEBUG_NEW new
+  //builds without DLLs
+  #define EXTERN extern
+  #define OBAPI
+  #define OBCONV
+  #define OBERROR
+  #define OBCOMMON
+  #define OBFPRT
+
 #endif
-
-
 #endif //OB_BCONFIG_H

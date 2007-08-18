@@ -21,13 +21,13 @@ class CopyFormat : public OBFormat
 {
 public:
   CopyFormat()
-	{
-		OBConversion::RegisterFormat("copy",this);
-	}
+  {
+    OBConversion::RegisterFormat("copy",this);
+  }
 
-	virtual const char* Description() //required
-	{
-		return
+  virtual const char* Description() //required
+  {
+    return
 "Copies raw text\n \
 Objects can be chemically filtered without the risk\n \
 of losing any additional information they contain,\n \
@@ -41,32 +41,42 @@ at the start or end and so may no longer be well formed.";
       return NOTREADABLE;
   };
 
-	/////////////////////////////////////////////////////////////////
-	virtual bool WriteChemObject(OBConversion* pConv)
-	{
-		pConv->GetChemObject();//needed to increment pConv->Index
+  /////////////////////////////////////////////////////////////////
+  virtual bool WriteChemObject(OBConversion* pConv)
+  {
+    pConv->GetChemObject();//needed to increment pConv->Index
 
-		istream& ifs = *pConv->GetInStream();
-		ostream& ofs = *pConv->GetOutStream();
+    istream& ifs = *pConv->GetInStream();
+    ostream& ofs = *pConv->GetOutStream();
 
-		streampos startpos = pConv->GetInPos();
-		int len = pConv->GetInLen();
-		if(len>0)
-		{
-			streampos curpos = ifs.tellg();
-			if(ifs.eof())
-				ifs.clear();
-			ifs.seekg(startpos);
-			
-			char* buf = new char[len];
-			ifs.read(buf,len);
-			ofs.write(buf,len);
-			delete[] buf;
+    streampos startpos = pConv->GetInPos();
+    int len = pConv->GetInLen();
+    if(len>0)
+    {
+      streampos curpos = ifs.tellg();
+      if(ifs.eof())
+        ifs.clear();
+      ifs.seekg(startpos);
+      
+      char* buf = new char[len];
+      ifs.read(buf,len);
+      ofs.write(buf,len);
+      delete[] buf;
 
-			ifs.seekg(curpos);
-		}
-		return true;
-	};
+      ifs.seekg(curpos);
+    }
+    else
+    {
+      //When no length recorded, copy the whole input stream
+      //Seem to need to treat stringstreams differently
+      stringstream* pss = dynamic_cast<stringstream*>(&ifs);
+      if(pss)
+        ofs << pss->str() << flush;
+      else
+        ofs << ifs.rdbuf() << flush;
+    }
+    return true;
+  };
 
 };  
 

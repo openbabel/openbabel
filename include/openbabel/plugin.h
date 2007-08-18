@@ -72,10 +72,10 @@ public:
   ///If PluginID is not recognized or is NULL, the base types are output and the return is false.
   static bool ListAsVector(const char* PluginID, const char* param, std::vector<std::string>& vlist);
 
-  ///As ListAsList but sent to an ostream with a default of cout if not specified
+  ///As ListAsVector but sent to an ostream with a default of cout if not specified
   static void List(const char* PluginID, const char* param=NULL, std::ostream* os=&std::cout);
 
-  ///As ListAs List but returns a string containing the list
+  ///As ListAsVector but returns a string containing the list
   static std::string ListAsString(const char* PluginID, const char* param=NULL);
 
   ///Utility function to return only the first line of a string
@@ -195,7 +195,7 @@ YourSubType1 theType1("whatsit2",true);
 
 4) The following functions are available:
 
-YourBaseClass* YourBaseClass::Find(const char* ID);
+YourBaseClass* YourBaseClass::FindType(const char* ID);
 This returns the default type when ID is NULL or empty.
 
 To list the sub-types of any plugin class use the List which sends to cout 
@@ -203,7 +203,7 @@ by default (or any other ostream if specified).
 \code
   OBPlugin::List("whatsits")
 \endcode
-The ListToString and ListToVector functions are alternatives, usable with scripting.
+The ListAsString and ListAsVector functions are alternatives, usable with scripting.
 
 It is also possible to iterate through each sub-type by the following code:
 \code
