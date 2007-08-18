@@ -1,5 +1,10 @@
 2007-08-18  Chris Morley
 
+	* src/formats/pngformat.cpp: add format for extracting  chemical
+	structure data from PNG files.
+	
+2007-08-18  Chris Morley
+
 	* src/format/copyformat: Copy whole input stream if a 
 	length is not found.
 	
