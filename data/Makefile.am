@@ -3,7 +3,7 @@ tabledir     = $(pkgdatadir)/$(VERSION)
 table_DATA = \
 		aromatic.txt bondtyp.txt isotope.txt resdata.txt \
 		atomtyp.txt element.txt isotope-small.txt phmodel.txt \
-		patterns.txt torlib.txt types.txt \
+		patterns.txt torlib.txt types.txt space-groups.txt \
 		SMARTS_InteLigand.txt \
 		mm2.prm ghemical.prm \
 		mmffoop.par mmffarom.par mmffchg.par mmfftor.par mmffang.par \

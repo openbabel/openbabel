@@ -1,3 +1,9 @@
+2007-08-18  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* data/Makefile.am: add space groups descriptions.
+	* data/space-groups.txt: ditto.
+	* data/space-groups.xsl: ditto.
+
 2007-08-13  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* include/openbabel/obconversion.h:b removed extra
