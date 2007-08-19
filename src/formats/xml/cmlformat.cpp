@@ -189,6 +189,7 @@ namespace OpenBabel
           ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "molID");//Marvin
         if(ptitle)
           _pmol->SetTitle((const char*)ptitle);
+        //delete[] ptitle;//libxml2 doc says "The string must be deallocated by the caller." But doesn't work.
       }
     else if(name=="atomArray")
       {
@@ -237,7 +238,10 @@ namespace OpenBabel
         //Only concise form is currently supported
         const xmlChar* pformula = xmlTextReaderGetAttribute(reader(), BAD_CAST "concise");
         if(pformula)
+        {
           RawFormula = (const char*)pformula;
+          //delete pformula;
+        }
       }
     else if(name=="crystal")
       {
@@ -268,15 +272,20 @@ namespace OpenBabel
             const xmlChar* pattr  = xmlTextReaderGetAttribute(reader(), BAD_CAST "title");
             if(!pattr)
               pattr  = xmlTextReaderGetAttribute(reader(), BAD_CAST "id");
-            if(!pattr)
-              pattr = BAD_CAST titleonproperty.c_str();
+            
+            string attr;
+            if(pattr)
+              attr = (const char*)pattr;
+            else
+              attr = titleonproperty;
+            delete pattr;
 
             xmlTextReaderRead(reader());
             const xmlChar* pvalue = xmlTextReaderConstValue(reader());
-            if(pvalue && pattr)
+            if(pvalue && !attr.empty())
               {
                 OBPairData *dp = new OBPairData;
-                dp->SetAttribute((const char*)pattr);
+                dp->SetAttribute(attr);
                 string val((const char*)pvalue);
                 dp->SetValue(Trim(val));
                 dp->SetOrigin(fileformatInput);
@@ -287,6 +296,7 @@ namespace OpenBabel
       }
     else if(name=="property")
       {
+        //***pattr need to be deleted***
         const char* pattr  = (const char*)xmlTextReaderGetAttribute(reader(), BAD_CAST "dictRef");
         if(pattr && !strcmp(pattr,"Thermo_OldNasa"))
           ReadNasaThermo();
@@ -1225,6 +1235,8 @@ namespace OpenBabel
                               {
                                 //UseAtom4Refs from OBChiralData
                                 vector<unsigned int> ref = cd->GetAtom4Refs(input);
+                                while (ref.size()<4)
+                                  ref.push_back(patom->GetIdx());
                                 xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
                                 xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
                                                                   "a%d a%d a%d a%d", ref[0], ref[1], ref[2], ref[3]);														

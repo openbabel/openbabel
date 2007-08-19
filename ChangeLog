@@ -1,3 +1,25 @@
+2007-08-19  Chris Morley
+
+	Add chemical kinetics formats. These used std::tr1::shared_ptr
+	and if this is not provided as such, the USE_BOOST macro needs to be
+	defined and the Boost library installed.
+	
+	* include/openbabel/reaction.h: modified
+	* src/formats/chemkinformat.cpp: added
+	* src/formats/rxnformat.cpp: modified
+	* src/formats/xml/cmlreactlformat.cpp: deleted
+	
+	* src/formats/xml/cmlformat.cpp(WriteMolecule):Handle when 
+	OBChiralData::Atom4Ref has <4 items.
+	(ReadMolecule): in <property> be more flexible in where the
+	title attribute can be.
+	Failed attempt to delete C strings from libxml2 to solve memory
+	leak bug. Still unresolved.
+
+	* src/formats/thermoformat.cpp: add option to terminate on END,
+	rather than end of file. 
+	For Windows use 2 digit exponents in output.
+ 
 2007-08-18  Chris Morley
 
 	* src/formats/pngformat.cpp: add format for extracting  chemical
