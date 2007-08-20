@@ -5,7 +5,7 @@ AM_LDFLAGS = @LIBS@ @XML_LIBS@
 if BUILD_SHARED
 
 pkglib_LTLIBRARIES = \
-  cmlreactlformat.la cmlformat.la \
+  cmlformat.la \
 	pubchem.la xmlformat.la cdxmlformat.la
 
 cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
@@ -13,9 +13,6 @@ cdxmlformat_la_LDFLAGS = -module -avoid-version $(AM_LDFLAGS)
 
 cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
 cmlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
-
-cmlreactlformat_la_SOURCES = cmlreactlformat.cpp xml.cpp ../obmolecformat.cpp
-cmlreactlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
 
 pubchem_la_SOURCES    = pubchem.cpp xml.cpp ../obmolecformat.cpp
 pubchem_la_LDFLAGS    = -module -avoid-version  $(AM_LDFLAGS)

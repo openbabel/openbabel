@@ -277,7 +277,7 @@ namespace OpenBabel {
     int count=0;
     //	if(FormatFilesLoaded) return 0;
     //	FormatFilesLoaded=true; //so will load files only once
-#ifdef USE_OBF
+#if defined(USE_OBF) || defined(USING_DYNAMIC_LIBS)
     //Depending on availablilty, look successively in 
     //FORMATFILE_DIR, executable directory,or current directory
     string TargetDir;

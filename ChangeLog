@@ -1,3 +1,8 @@
+2007-08-20  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/xml/Makefile.am: removed obsolete cmlreactlformat stuff.
+	* src/obconversion.cpp: fix dynamic libraries use on unix.
+
 2007-08-19  Chris Morley
 
 	Add chemical kinetics formats. These used std::tr1::shared_ptr
