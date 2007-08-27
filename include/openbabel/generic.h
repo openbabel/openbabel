@@ -26,7 +26,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <map>
 
-#include <openbabel/math/vector3.h>
+#include <openbabel/math/spacegroup.h>
 #include <openbabel/obutil.h>
 
 namespace OpenBabel
@@ -467,8 +467,8 @@ namespace OpenBabel
     double _a, _b, _c, _alpha, _beta, _gamma;
     vector3 _offset; //!< offset for origin
     vector3 _v1, _v2, _v3; //!< translation vectors
-    std::string _spaceGroup;
-    int _numericSpaceGroup;
+    std::string _spaceGroupName;
+    const SpaceGroup* _spaceGroup;
     LatticeType _lattice;
   public:
     //! public constructor
@@ -498,17 +498,22 @@ namespace OpenBabel
     //! Set the offset to the origin to @p v1
     void SetOffset(const vector3 v1) { _offset = v1; }
 
+    //! Set the space group for this unit cell.
+    //! Does not create an OBSymmetryData entry
+    void SetSpaceGroup(const SpaceGroup* sg) { _spaceGroup = sg; }
+
     //! Set the space group symbol for this unit cell.
     //! Does not create an OBSymmetryData entry or attempt to convert
     //!  between different symbol notations
-    void SetSpaceGroup(const std::string sg) { _spaceGroup = sg; }
+    void SetSpaceGroup(const std::string sg) { _spaceGroup = SpaceGroup::GetSpaceGroup (sg); 
+                                               _spaceGroupName = sg; }
     
     //! Set the space group for this unit cell. Each spacegroup-symbol
     //! has a numeric equivalent which is easier to use to convert between
     //! notations.
     //! Does not create an OBSymmetryData entry or attempt to convert
     //!  between different symbol notations
-    void SetSpaceGroup(const int sg) { _numericSpaceGroup = sg; }
+    void SetSpaceGroup(const int sg) { _spaceGroup = SpaceGroup::GetSpaceGroup (sg); }
     
     //! Set the Bravais lattice type for this unit cell
     void SetLatticeType(const LatticeType lt) { _lattice = lt; }
@@ -529,8 +534,11 @@ namespace OpenBabel
     vector3 GetOffset() { return(_offset); }
 
     //! \return the text representation of the space group for this unit cell
-    const std::string GetSpaceGroup() { return(_spaceGroup); }
+    const SpaceGroup* GetSpaceGroup() { return(_spaceGroup); }
 		
+    //! \return the text representation of the space group for this unit cell
+    const std::string GetSpaceGroupName() { return(_spaceGroupName); }
+
     //! \return lattice type (based on the @p spacegroup)
     LatticeType GetLatticeType( int spacegroup );
     
@@ -547,7 +555,7 @@ namespace OpenBabel
     matrix3x3 GetFractionalMatrix();
 
     //! \return The numeric value of the given spacegroup
-    int GetSpaceGroupNumber( std::string name );
+    int GetSpaceGroupNumber( std::string name = "" );
     //! \return The cell volume (in Angstroms^3)
     double GetCellVolume();
   };

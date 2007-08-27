@@ -18,6 +18,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/math/spacegroup.h>
 
 #include <sstream>
 #include <vector>
@@ -34,7 +35,7 @@ namespace OpenBabel
     //Register this format type ID
     CIFFormat()
     {
-      OBConversion::RegisterFormat("cif", this, "chemical/x-cif");
+      RegisterFormat("cif", "chemical/x-cif");
     }
 
     virtual const char* Description() //required
@@ -45,9 +46,6 @@ namespace OpenBabel
 
     virtual const char* SpecificationURL()
     {return "http://www.iucr.org/iucr-top/cif/spec/";}; //optional
-
-    virtual const char* GetMIMEType() 
-    { return "chemical/x-cif"; };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
@@ -212,6 +210,7 @@ namespace OpenBabel
     float mOrthMatrix[3][3];
     /// Cartesian2Fractionnal matrix
     float mOrthMatrixInvert[3][3];
+    const SpaceGroup *mSpaceGroup;
   };
   /** Main CIF class - parses the stream and separates data blocks, comments, items, loops.
    * All values are stored as string, and Each CIF block is stored in a separate CIFData object.
@@ -306,6 +305,8 @@ namespace OpenBabel
             mSpacegroupNumberIT=CIFNumeric2Int(positem->second);
             if(verbose) cout<<"Found spacegroup IT number (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupNumberIT<<endl;
           }
+        else
+          mSpacegroupNumberIT=0;
       }
       
     positem=mvItem.find("_space_group_name_Hall");
@@ -338,6 +339,45 @@ namespace OpenBabel
             mSpacegroupHermannMauguin=positem->second;
             if(verbose) cout<<"Found spacegroup Hall Hermann-Mauguin (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupHermannMauguin<<endl;
           }
+      }
+    if (mSpacegroupSymbolHall.length() > 0)
+      mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupSymbolHall);
+    else
+      mSpaceGroup=NULL;
+    if (!mSpaceGroup && mSpacegroupHermannMauguin.length() > 0)
+      mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupHermannMauguin);
+    if (!mSpaceGroup)
+      mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupNumberIT);
+    SpaceGroup *sg = new SpaceGroup();
+    if (mSpacegroupSymbolHall.length() > 0)
+      sg->SetHallName(mSpacegroupSymbolHall);
+    if (mSpacegroupHermannMauguin.length() > 0)
+      sg->SetHMName(mSpacegroupHermannMauguin);
+    if (mSpacegroupNumberIT > 0)
+      sg->SetId(mSpacegroupNumberIT);
+    positem=mvItem.find("_symmetry_equiv_pos_as_xyz");
+    if(positem!=mvItem.end())
+      sg->AddTransform (positem->second);
+    else for(map<set<ci_string>,map<ci_string,vector<string> > >::const_iterator loop=mvLoop.begin();
+      loop!=mvLoop.end();++loop)
+      {
+        map<ci_string,vector<string> >::const_iterator pos;
+        unsigned i, nb;
+        pos=loop->second.find("_symmetry_equiv_pos_as_xyz");
+        if (pos!=loop->second.end())
+          {
+            nb=pos->second.size();
+            for (i = 0; i < nb; i++)
+              sg->AddTransform(pos->second[i]);
+            break; // found the transforms, so we have done with them
+          }
+    }
+    mSpaceGroup = SpaceGroup::Find(sg);
+    if (mSpaceGroup != NULL)
+      {
+        // set the space group name to Hall symbol
+        mSpacegroupSymbolHall = mSpaceGroup->GetHallName();
+        delete sg;
       }
   }
    
@@ -875,6 +915,7 @@ namespace OpenBabel
                              pos->second.mvLatticePar[4]/DEG_TO_RAD,
                              pos->second.mvLatticePar[5]/DEG_TO_RAD);
               pCell->SetSpaceGroup(spg);
+              pCell->SetSpaceGroup(pos->second.mSpaceGroup);
               pmol->SetData(pCell);
             }
           if(pos->second.mName!="") pmol->SetTitle(pos->second.mName);

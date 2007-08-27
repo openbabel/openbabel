@@ -1,3 +1,19 @@
+2007-08-27  Jean Brefort  <jean@acer>
+
+	* include/openbabel/generic.h: make OBUnitCell use SpaceGroup.
+	* include/openbabel/math/Makefile.am: add space groups.
+	* include/openbabel/math/spacegroup.h: new SpaceGroup class.
+	* include/openbabel/math/transform3d.h: new transform3d class (for
+	use in space groups).
+	* include/openbabel/math/vector3.h: add a new constructor and fix
+	a const issue. 
+	* src/formats/cifformat.cpp: use space groups.
+	* src/generic.cpp: make OBUnitCell use SpaceGroup.
+	* src/math/Makefile.am: add space groups.
+	* src/math/spacegroup.cpp: new SpaceGroup class.
+	* src/math/transform3d.cpp: new transform3d class.
+	* src/math/vector3.cpp: fix a const issue.
+
 2007-08-20  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/xml/Makefile.am: removed obsolete cmlreactlformat stuff.

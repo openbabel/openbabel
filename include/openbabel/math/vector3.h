@@ -51,6 +51,9 @@ namespace OpenBabel
     vector3 (const double inX=0.0, const double inY=0.0, const double inZ=0.0):
       _vx(inX), _vy(inY), _vz(inZ)
       {}
+    vector3 (double inV[3]):
+      _vx(inV[0]), _vy(inV[1]), _vz(inV[2])
+      {}
     //! Copy Constructor
     vector3 (const vector3& v):
       _vx(v._vx), _vy(v._vy), _vz(v._vz)
@@ -94,7 +97,7 @@ namespace OpenBabel
       c[2]=_vz;
     }
     //! Access function to x: [0], y: [1], and z[2]
-    double operator[] ( unsigned int i);
+    double operator[] ( unsigned int i) const;
 
     //! Assignment
     vector3& operator= ( const vector3& v)

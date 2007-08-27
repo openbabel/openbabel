@@ -244,7 +244,7 @@ namespace OpenBabel
   OBUnitCell::OBUnitCell():
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
     _a(0.0), _b(0.0), _c(0.0), _alpha(0.0), _beta(0.0), _gamma(0.0),
-    _numericSpaceGroup( -1 ), _lattice(Undefined)
+    _spaceGroup( NULL ), _lattice(Undefined)
   {  }
 
   OBUnitCell::OBUnitCell(const OBUnitCell &src) :
@@ -253,8 +253,8 @@ namespace OpenBabel
     _alpha(src._alpha), _beta(src._beta), _gamma(src._gamma),
     _offset(src._offset),
     _v1(src._v1), _v2(src._v2), _v3(src._v3),
+    _spaceGroupName(src._spaceGroupName),
     _spaceGroup(src._spaceGroup),
-    _numericSpaceGroup( -1 ),
     _lattice(src._lattice)
   {  }
 
@@ -276,6 +276,7 @@ namespace OpenBabel
     _v3 = src._v3;
 
     _spaceGroup = src._spaceGroup;
+    _spaceGroupName = src._spaceGroupName;
     _lattice = src._lattice;
 
     return(*this);
@@ -409,8 +410,11 @@ namespace OpenBabel
 	  //	143-167 Rhombohedral
 	  //	168-194 Hexagonal
 	  //	195-230 Cubic
+
+      if ( spacegroup == 0  && _spaceGroup)
+          spacegroup = _spaceGroup->GetId();
 	  
-	  if ( spacegroup < 0 )
+	  if ( spacegroup <= 0 )
 		  return OBUnitCell::Undefined;
 
 	  else if ( spacegroup == 1 ||
@@ -450,6 +454,8 @@ namespace OpenBabel
   {
     if (_lattice != Undefined)
       return _lattice;
+    else if (_spaceGroup != NULL)
+      return LatticeType(_spaceGroup->GetId());
 
     unsigned int rightAngles = 0;
     if (IsApprox(_alpha, 90.0, 1.0e-3)) rightAngles++;
@@ -484,6 +490,7 @@ namespace OpenBabel
 
     return _lattice;
   }
+
   int OBUnitCell::GetSpaceGroupNumber( std::string name)
   {
     static const char * const spacegroups[] = { 
@@ -520,6 +527,13 @@ namespace OpenBabel
       "Fd-3m", "Fd-3c", "Im-3m", "Ia-3d"
     };
 
+    if (name.length () == 0)
+	  {
+        if (_spaceGroup != NULL)
+          return _spaceGroup->GetId();
+        else
+          name = _spaceGroupName;
+      }
     static const int numStrings = sizeof( spacegroups ) / sizeof( spacegroups[0] );
     for ( int i = 0; i < numStrings; ++i ) {
       if (name == spacegroups[i] ) {
