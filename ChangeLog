@@ -1,6 +1,21 @@
 2007-08-30  Chris Morley
 
+	* data/SMARTS_InteLigand.txt: Replaced with slightly modified
+	version. I think the existing file was not based on a version
+	which had been modified to work within OB's SMARTS implementation.
 	
+	* include/openbabel/fingerprint.h and src/fingerprint.cpp: 
+	added GetBit() and virtual DescribeBits()
+	
+	* src/fingerprints/finger3.cpp: added PatternFP::DescribeBits
+	Added various Trim()s to remove CRs, which is why FP3 had not
+	been working, (as Noel noticed).
+
+	* src/formats/fingerprintformat.cpp: added options to output
+	description of functional groups in a molecule (esp when using FP4)
+	
+	* src/math/spacegroup.cpp: included <stdarg.h>
+
 2007-08-27  Jean Brefort  <jean@acer>
 
 	* include/openbabel/generic.h: make OBUnitCell use SpaceGroup.
