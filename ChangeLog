@@ -1,3 +1,6 @@
+2007-08-30  Chris Morley
+
+	
 2007-08-27  Jean Brefort  <jean@acer>
 
 	* include/openbabel/generic.h: make OBUnitCell use SpaceGroup.

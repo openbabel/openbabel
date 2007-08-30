@@ -32,15 +32,16 @@ namespace OpenBabel
 
     virtual const char* Description() //required
     { return
-        "Fingerprint format\n \
-Constructs and displays fingerprints and (for multiple input objects)\n \
-the Tanimoto coefficient and whether a superstructure of the first object\n \
-Options e.g. -xfFP3 -xn128\n \
- f<id> fingerprint type\n \
- N# fold to specified number of bits, 32, 64, 128, etc.\n \
- h  hex output when multiple molecules\n \
- F  displays the available fingerprint types\n \
-";
+      "Fingerprint format\n"
+      "Constructs and displays fingerprints and (for multiple input objects)\n"
+      "the Tanimoto coefficient and whether a superstructure of the first object\n"
+      "Output options e.g. -xfFP3 -xN128\n"
+      " f<id> fingerprint type\n"
+      " N# fold to specified number of bits, 32, 64, 128, etc.\n"
+      " h  hex output when multiple molecules\n"
+      " s  describe each set bit\n"
+      " u  describe each unset bit\n"
+;
     };
 
     virtual unsigned int Flags(){return NOTREADABLE;};
@@ -60,13 +61,6 @@ Options e.g. -xfFP3 -xn128\n \
   bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     ostream &ofs = *pConv->GetOutStream();
-/*    if(pConv->IsOption("F"))
-      {
-        FOR_EACH(OBFingerprint, iter)
-          ofs << iter.ID() << " -- " << iter->Description() << endl;
-        return true;
-      }
-*/
 
     bool hexoutput=false;
     if(pConv->IsOption("h") || (pConv->GetOutputIndex()==1 && pConv->IsLast()))
@@ -111,7 +105,7 @@ Options e.g. -xfFP3 -xn128\n \
             for(;wd;wd=wd<<1)//count bits set by shifting into sign bit until word==0
               if(wd<0) ++bitsset;
           }
-        ofs  << "   " << bitsset << " bits set. "; 
+        ofs  << "   " << bitsset << " bits set "; 
       }
 
     if(pConv->GetOutputIndex()==1)
@@ -122,7 +116,13 @@ Options e.g. -xfFP3 -xn128\n \
           firstname=pmol->GetTitle();
         if(firstname.empty())
           firstname = "first mol";
-      }
+
+        if(pConv->IsOption("s"))
+          ofs << pFP->DescribeBits(fptvec);
+        if(pConv->IsOption("u"))
+          ofs << pFP->DescribeBits(fptvec, false);
+
+    }
     else
       {
         ofs << "   Tanimoto from " << firstname << " = " << OBFingerprint::Tanimoto(firstfp, fptvec);

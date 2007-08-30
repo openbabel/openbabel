@@ -33,9 +33,15 @@ namespace OpenBabel
 
   const unsigned int OBFingerprint::bitsperint = 8 * sizeof(unsigned int);
 
-  void OBFingerprint::SetBit(vector<unsigned int>& vec, unsigned int n)
+  void OBFingerprint::SetBit(vector<unsigned int>& vec, const unsigned int n)
   {
     vec[n/Getbitsperint()] |= (1 << (n % Getbitsperint()));
+  }
+
+  bool OBFingerprint::GetBit(const vector<unsigned int>& vec, const unsigned int n)
+  {
+    unsigned int word =vec[n/Getbitsperint()];
+    return (word &= (1 << (n % Getbitsperint())))!=0;
   }
 
   ////////////////////////////////////////	

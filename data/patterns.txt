@@ -12,7 +12,9 @@
 # SMARTS Patterns are used by finger3.cpp:PatternFP                          #
 # Format of each line is a SMARTS pattern, then optionally                   #
 #   followed by a tab character and a pattern number and/or description      #
-#   (everything after the tab will be ignored by the code                    #
+#   (everything after the tab will be ignored by the code)                   #
+# A file of this format needs the same first line as this one.               #
+# An alternative format, as in SMARTS_InteLigand.txt, can also be used       #
 #                                                                            #
 #  INCOMPLETE!! Really only useful to test the fingerprint FP3               #
 ##############################################################################

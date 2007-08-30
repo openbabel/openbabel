@@ -31,65 +31,65 @@ namespace OpenBabel
 class PatternFP  : public OBFingerprint
 {
 private:
-	vector<string> smartsStrings;
+  vector<string> smartsStrings;
 protected:
-	string _patternsfile;
+  string _patternsfile;
 
 public:
-	PatternFP(const char* ID, const char* filename=NULL, 
-			bool IsDefault=false) : OBFingerprint(ID, IsDefault)
-	{
-		if(filename==NULL)
-			_patternsfile="patterns.txt";
-		else
-			_patternsfile = filename;
-	};
-	
-	virtual const char* Description()
-	{
-		static string desc;
+  PatternFP(const char* ID, const char* filename=NULL, 
+      bool IsDefault=false) : OBFingerprint(ID, IsDefault)
+  {
+    if(filename==NULL)
+      _patternsfile="patterns.txt";
+    else
+      _patternsfile = filename;
+  };
+  
+  virtual const char* Description()
+  {
+    static string desc;
     desc = "SMARTS patterns specified in the file " + _patternsfile;
     return (desc.c_str());
-	};
+  };
 
-	//Each bits represents a single substructure; no need for confirmation when substructure searching
-	virtual unsigned int Flags() { return FPT_UNIQUEBITS;}; 
+  //Each bit represents a single substructure; no need for confirmation when substructure searching
+  virtual unsigned int Flags() { return FPT_UNIQUEBITS;}; 
 
-	bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits) 
-	{
-		OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-		if(!pmol)
-			return false;
-		
-		//Read patterns file if it has not been done already
-		if(smartsStrings.empty())
-			ReadPatternFile(_patternsfile, smartsStrings);
+  bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits) 
+  {
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    if(!pmol)
+      return false;
+    
+    //Read patterns file if it has not been done already
+    if(smartsStrings.empty())
+      ReadPatternFile(_patternsfile, smartsStrings);
 
-		//Make fp size the smallest power of two to contain the patterns
-		unsigned int n=Getbitsperint();
-		while(n<smartsStrings.size())n*=2;
-		fp.resize(n/Getbitsperint());
+    //Make fp size the smallest power of two to contain the patterns
+    unsigned int n=Getbitsperint();
+    while(n<smartsStrings.size())n*=2;
+    fp.resize(n/Getbitsperint());
 
-		for(n=0;n<smartsStrings.size();++n)
-		{
-			OBSmartsPattern sp;
-			sp.Init(smartsStrings[n]);
-			if(sp.Match(*pmol))
-				SetBit(fp, n);
-		}
+    for(n=0;n<smartsStrings.size();++n)
+    {
+      OBSmartsPattern sp;
+      sp.Init(smartsStrings[n]);
+      if(sp.Match(*pmol))
+        SetBit(fp, n);
+    }
 
-		if(nbits)
-			Fold(fp, nbits);
-		return true;
-	};
+    if(nbits)
+      Fold(fp, nbits);
+    return true;
+  };
 
-	bool ReadPatternFile(const string& filename, vector<string>& lines)
-	{	
-		//Reads two types of file: SMARTS + comments and vice versa
-		//depending on whether the first line is #Comments after SMARTS
-		//Output strings in vector are SMARTS + comments
-		string file = filename;
-		ifstream ifs;
+  bool ReadPatternFile(const string& filename, vector<string>& lines)
+  {
+    //Reads two types of file: SMARTS + comments and vice versa
+    //depending on whether the first line is #Comments after SMARTS
+    //Output strings in vector are SMARTS + comments
+    string file = filename;
+    ifstream ifs;
 #ifdef HAVE_SSTREAM 
 	  stringstream errorMsg; 
 #else 
@@ -102,49 +102,66 @@ public:
       return false;
     }
 
-		if(!(ifs))
-		  {
-		    errorMsg << "Cannot open " << filename << endl; 
-		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError); 
-		    return false;
-		  }
-		string smarts, formatline;
+    if(!(ifs))
+      {
+        errorMsg << "Cannot open " << filename << endl; 
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError); 
+        return false;
+      }
+    string smarts, formatline;
 
-		if(!getline(ifs, formatline)) return false;
-		if(formatline=="#Comments after SMARTS")
-		{
-			while(ifs.good())
-			{
-				if( getline(ifs,smarts) 
-						&& smarts.size() > 0 
-						&& smarts[0] != '#')
-					lines.push_back(smarts); //leave the comments in
-			}
-		}
-		else
-		{
-			// Christian Laggner's format: SMARTS at end of line
-			while(ifs.good())
-			{
-				if( getline(ifs,smarts) && smarts[0]!='#')
-				{
+    if(!getline(ifs, formatline)) return false;
+    if(Trim(formatline)=="#Comments after SMARTS")
+    {
+      while(ifs.good())
+      {
+        if( getline(ifs,smarts) 
+            && Trim(smarts).size() > 0 
+            && smarts[0] != '#')
+          lines.push_back(smarts); //leave the comments in
+      }
+    }
+    else
+    {
+      // Christian Laggner's format: SMARTS at end of line
+      while(ifs.good())
+      {
+        if( getline(ifs,smarts) && smarts[0]!='#')
+        {
           string::size_type pos = smarts.find(':');
-					if(pos!=string::npos)
-					{
-						pos = smarts.find_first_not_of(" \t", pos+1);
-						if(pos!=string::npos)
-							lines.push_back(smarts.substr(pos) + ' ' + smarts.substr(0,pos));
-					}
-				}
-			}
-		}
+          if(pos!=string::npos)
+          {
+            pos = smarts.find_first_not_of(" \t", pos+1);
+            if(pos!=string::npos)
+              lines.push_back(Trim(smarts.substr(pos)) + ' ' + smarts.substr(0,pos));
+          }
+        }
+      }
+    }
 
     if (ifs)
       ifs.close();
-		return true;
-	}
-};
+    return true;
+  }
 
+
+virtual string DescribeBits(const vector<unsigned int> fp, bool bSet=true)
+{
+  stringstream ss; 
+  ss << "out of possible " << smartsStrings.size();
+  for(int i=0; i<smartsStrings.size(); ++i)
+  {
+    if(GetBit(fp, i)==bSet)
+    {
+      string::size_type pos = smartsStrings[i].find(' ');
+      if(pos!=string::npos)
+        ss << '\n' << smartsStrings[i].substr(pos+1);
+    }
+  }
+  return ss.str();
+}
+
+};
 //***********************************************
 //Make a global instance
 PatternFP thePatternFP("FP3");

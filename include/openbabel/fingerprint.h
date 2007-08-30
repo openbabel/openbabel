@@ -53,9 +53,12 @@ public:
   virtual ~OBFingerprint(){}
 
   /// Sets the nth bit
-  void SetBit(std::vector<unsigned int>& vec, unsigned int n);	
+  void SetBit(std::vector<unsigned int>& vec, const unsigned int n);
 
-  /// Repeatedly ORs the top half with the bottom half until no smaller than nbits 
+  ///return true if the nth bit is set;
+  bool GetBit(const std::vector<unsigned int>& vec, const unsigned int n);
+
+    /// Repeatedly ORs the top half with the bottom half until no smaller than nbits 
   void Fold(std::vector<unsigned int>& vec, unsigned int nbits); 
 
   /// \return fingerprint in vector, which may be resized, folded to nbits (if nbits!=0)
@@ -64,6 +67,13 @@ public:
   /// Optional flags
   enum FptFlag{FPT_UNIQUEBITS=1};
   virtual unsigned int Flags() { return 0;}; 
+
+  /// Returns a description of each bit that is set (or unset, if bSet=false)
+  virtual std::string DescribeBits(const std::  vector<unsigned int> fp, bool bSet=true)
+  {
+    std::string txt("Bit descriptions are not available for this fingerprint type");
+    return txt;
+  }
 
   /// \return the Tanimoto coefficient between two vectors (vector<unsigned int>& SeekPositions)
   static double Tanimoto(const std::vector<unsigned int>& vec1, const std::vector<unsigned int>& vec2);
