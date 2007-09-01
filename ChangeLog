@@ -1,3 +1,6 @@
+2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
+	* configure.in: applied patch from Klaus Heinz fixes #1786288.
+
 2007-07-13  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/openbabel-python.i: Renamed index operator to __getitem__. I

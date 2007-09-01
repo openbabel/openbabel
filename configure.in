@@ -227,7 +227,7 @@ AM_PATH_XML2(2.6.5)
 AM_CONDITIONAL(BUILD_XML, test x"$XML_LIBS" != "x")
 
 AC_CHECK_LIB(inchi, GetINCHI, LIBINCHI="-linchi", LIBINCHI="")
-AM_CONDITIONAL(BUILD_INCHI, test x"$LIBINCHI" == "x" -o "$inchi" = "yes")
+AM_CONDITIONAL(BUILD_INCHI, test x"$LIBINCHI" = "x" -o "$inchi" = "yes")
 
 CHECK_ZLIB
 AC_CHECK_LIB(z, inflateEnd)
