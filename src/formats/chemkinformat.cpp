@@ -573,7 +573,7 @@ bool ChemKinFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(pConv->IsLast())
   {
     ostream& ofs = *pConv->GetOutStream();
-    if(!pConv->IsOption("s"))
+    if(!pConv->IsOption("s")) //Simple output option - reactions only
     {
       if(!WriteHeader(pConv))
         return false;
@@ -671,7 +671,8 @@ bool ChemKinFormat::WriteReactionLine(OBReaction* pReact, OBConversion* pConv)
 
   ss << pReact->GetTitle() << '\t';
 
-  if(!pRD)obErrorLog.ThrowError(__FUNCTION__, "Reaction " + pReact->GetTitle()
+  if(!pRD && !pConv->IsOption("s"))
+    obErrorLog.ThrowError(__FUNCTION__, "Reaction " + pReact->GetTitle()
      + " has no rate data", obWarning);
 
   int i;
@@ -765,6 +766,9 @@ bool ChemKinFormat::WriteReactionLine(OBReaction* pReact, OBConversion* pConv)
         ss << endl;
     }
   }
+  else //simple option
+    ss << pReact->GetComment() << endl;
+
   return true;
 }
 

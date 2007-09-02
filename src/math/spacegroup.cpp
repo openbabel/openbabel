@@ -24,7 +24,7 @@ GNU General Public License for more details.
 #include <map>
 #include <set>
 #include <vector>
-#include <stdarg.h>
+#include <cstdarg>
 
 using namespace std;
 

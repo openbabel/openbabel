@@ -3695,6 +3695,23 @@ namespace OpenBabel
           if (newAtom == NULL) continue; // shouldn't happen, but be defensive
 
           OBChiralData *newCD = new OBChiralData;
+          //Code to work round Atom4Refs having < 4 members sometimes
+          for(int i=0; i<oldCD->GetSize(input); ++i)
+          {
+            OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
+            newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
+          }
+          for(int i=0; i<oldCD->GetSize(output); ++i)
+          {
+            OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
+            newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
+          }
+          for(int i=0; i<oldCD->GetSize(calcvolume); ++i)
+          {
+            OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
+            newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
+          }
+/*
           OBAtom *a0, *a1, *a2, *a3; // old atom references
           if (oldCD->GetSize(input)) {
             a0 = this->GetAtom(oldCD->GetAtomRef(0, input));
@@ -3728,7 +3745,7 @@ namespace OpenBabel
             newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
             newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
           }
-
+*/
           newAtom->SetData(newCD);
         }
 

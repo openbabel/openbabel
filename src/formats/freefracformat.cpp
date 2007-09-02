@@ -52,7 +52,7 @@ namespace OpenBabel
   //Make an instance of the format class
   FreeFormFractionalFormat theFreeFormFractionalFormat;
 
-  const char * TrimErrors(const std::string data)
+/*  const char * TrimErrors(const std::string data)
   {
     string temp = data;
     size_t stdErr = temp.rfind("(");
@@ -62,7 +62,7 @@ namespace OpenBabel
   
     return temp.c_str();
   }
-
+*/
   /////////////////////////////////////////////////////////////////
   bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -105,12 +105,12 @@ namespace OpenBabel
     double A, B, C, Alpha, Beta, Gamma;
     string temp; // used to trim ending (xx) data from strings
     
-    A = atof(TrimErrors(vs[0]));
-    B = atof(TrimErrors(vs[1]));
-    C = atof(TrimErrors(vs[2]));
-    Alpha = atof(TrimErrors(vs[3]));
-    Beta  = atof(TrimErrors(vs[4]));
-    Gamma = atof(TrimErrors(vs[5]));
+    A = atof(vs[0].c_str());
+    B = atof(vs[1].c_str());
+    C = atof(vs[2].c_str());
+    Alpha = atof(vs[3].c_str());
+    Beta  = atof(vs[4].c_str());
+    Gamma = atof(vs[5].c_str());
     OBUnitCell *uc = new OBUnitCell;
     uc->SetOrigin(fileformatInput);
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
@@ -142,16 +142,16 @@ namespace OpenBabel
         atomicNum = etab.GetAtomicNum(vs[0].c_str());
         if (atomicNum == 0 && (isdigit(vs[0][0]) || ispunct(vs[0][0])))
           {
-            x = atof(TrimErrors(vs[0]));
-            y = atof(TrimErrors(vs[1]));
-            z = atof(TrimErrors(vs[2]));
+            x = atof(vs[0].c_str());
+            y = atof(vs[1].c_str());
+            z = atof(vs[2].c_str());
             atomicNum = etab.GetAtomicNum(vs[3].c_str());
           }
         else
           {
-            x = atof(TrimErrors(vs[1]));
-            y = atof(TrimErrors(vs[2]));
-            z = atof(TrimErrors(vs[3]));
+            x = atof(vs[1].c_str());
+            y = atof(vs[2].c_str());
+            z = atof(vs[3].c_str());
           }
         v.Set(x, y, z);
         v *= m;	// get cartesian coordinates -- multiply by orthogonalization matrix

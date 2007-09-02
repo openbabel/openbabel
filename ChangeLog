@@ -1,3 +1,18 @@
+2007-09-02  Chris Morley
+	
+	* src/formats/chemkinformat.cpp: removed warning and improved
+	when writing with the simple option.
+
+	* src/formats/freefracformat.cpp:no longer use TrimErrors which
+	caused errors on Windows.
+
+	* src/math/spacegroup.cpp: replace stdargs.h by more modern 
+	cstdarg
+
+	* src/mol.cpp(Separate): use code which does not crash when
+	Atom4Refs from OBChiralData unaccountably has fewer than 4 
+	elements.
+
 2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/fingerprints/finger3.cpp: fixed compilation with g++.
