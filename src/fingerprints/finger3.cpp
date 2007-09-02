@@ -133,7 +133,10 @@ public:
           {
             pos = smarts.find_first_not_of(" \t", pos+1);
             if(pos!=string::npos)
-              lines.push_back(Trim(smarts.substr(pos)) + ' ' + smarts.substr(0,pos));
+            {
+              string buf = smarts.substr(pos);
+              lines.push_back(Trim(buf) + ' ' + smarts.substr(0,pos));
+            }
           }
         }
       }

@@ -1,4 +1,8 @@
 2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/fingerprints/finger3.cpp: fixed compilation with g++.
+
+2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
 	* configure.in: applied patch from Klaus Heinz fixes #1786288.
 
 2007-08-30  Chris Morley
