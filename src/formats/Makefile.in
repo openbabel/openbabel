@@ -16,7 +16,6 @@
 
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
-pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
@@ -410,7 +409,7 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 	mdlformat.cpp mmodformat.cpp mol2format.cpp molreport.cpp \
 	mopacformat.cpp mpdformat.cpp mpqcformat.cpp nwchemformat.cpp \
 	pcmodelformat.cpp pdbformat.cpp povrayformat.cpp \
-	qchemformat.cpp reportformat.cpp rxnformat.cpp shelxformat.cpp \
+	qchemformat.cpp reportformat.cpp shelxformat.cpp \
 	smilesformat.cpp thermoformat.cpp tinkerformat.cpp \
 	titleformat.cpp turbomoleformat.cpp unichemformat.cpp \
 	viewmolformat.cpp xedformat.cpp xyzformat.cpp yasaraformat.cpp \
@@ -436,13 +435,12 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 @BUILD_SHARED_FALSE@	mpqcformat.lo nwchemformat.lo \
 @BUILD_SHARED_FALSE@	pcmodelformat.lo pdbformat.lo \
 @BUILD_SHARED_FALSE@	povrayformat.lo qchemformat.lo \
-@BUILD_SHARED_FALSE@	reportformat.lo rxnformat.lo \
-@BUILD_SHARED_FALSE@	shelxformat.lo smilesformat.lo \
-@BUILD_SHARED_FALSE@	thermoformat.lo tinkerformat.lo \
-@BUILD_SHARED_FALSE@	titleformat.lo turbomoleformat.lo \
-@BUILD_SHARED_FALSE@	unichemformat.lo viewmolformat.lo \
-@BUILD_SHARED_FALSE@	xedformat.lo xyzformat.lo yasaraformat.lo \
-@BUILD_SHARED_FALSE@	zindoformat.lo
+@BUILD_SHARED_FALSE@	reportformat.lo shelxformat.lo \
+@BUILD_SHARED_FALSE@	smilesformat.lo thermoformat.lo \
+@BUILD_SHARED_FALSE@	tinkerformat.lo titleformat.lo \
+@BUILD_SHARED_FALSE@	turbomoleformat.lo unichemformat.lo \
+@BUILD_SHARED_FALSE@	viewmolformat.lo xedformat.lo xyzformat.lo \
+@BUILD_SHARED_FALSE@	yasaraformat.lo zindoformat.lo
 libformats_la_OBJECTS = $(am_libformats_la_OBJECTS)
 @BUILD_SHARED_FALSE@am_libformats_la_rpath =
 mdlformat_la_LIBADD =
@@ -563,14 +561,6 @@ reportformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(reportformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_reportformat_la_rpath = -rpath $(pkglibdir)
-rxnformat_la_LIBADD =
-am__rxnformat_la_SOURCES_DIST = rxnformat.cpp
-@BUILD_SHARED_TRUE@am_rxnformat_la_OBJECTS = rxnformat.lo
-rxnformat_la_OBJECTS = $(am_rxnformat_la_OBJECTS)
-rxnformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(rxnformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_rxnformat_la_rpath = -rpath $(pkglibdir)
 shelxformat_la_LIBADD =
 am__shelxformat_la_SOURCES_DIST = shelxformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@am_shelxformat_la_OBJECTS = shelxformat.lo \
@@ -719,13 +709,13 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) \
 	$(pcmodelformat_la_SOURCES) $(pdbformat_la_SOURCES) \
 	$(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) \
-	$(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) \
-	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
-	$(thermoformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
-	$(titleformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
-	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
-	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
-	$(yasaraformat_la_SOURCES) $(zindoformat_la_SOURCES)
+	$(reportformat_la_SOURCES) $(shelxformat_la_SOURCES) \
+	$(smilesformat_la_SOURCES) $(thermoformat_la_SOURCES) \
+	$(tinkerformat_la_SOURCES) $(titleformat_la_SOURCES) \
+	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
+	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
+	$(xyzformat_la_SOURCES) $(yasaraformat_la_SOURCES) \
+	$(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__PQSformat_la_SOURCES_DIST) \
@@ -777,7 +767,6 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__povrayformat_la_SOURCES_DIST) \
 	$(am__qchemformat_la_SOURCES_DIST) \
 	$(am__reportformat_la_SOURCES_DIST) \
-	$(am__rxnformat_la_SOURCES_DIST) \
 	$(am__shelxformat_la_SOURCES_DIST) \
 	$(am__smilesformat_la_SOURCES_DIST) \
 	$(am__thermoformat_la_SOURCES_DIST) \
@@ -803,6 +792,7 @@ ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = xml inchi
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+pkglibdir = @pkglibdir@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AR = @AR@
@@ -925,7 +915,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-INCLUDES = -I$(top_srcdir)/data -I$(top_srcdir)/include
+INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data -I$(top_srcdir)/include
 EXTRA_DIST = exampleformat.cpp 
 SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
@@ -956,11 +946,12 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	mol2format.cpp molreport.cpp mopacformat.cpp \
 @BUILD_SHARED_FALSE@	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
 @BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
-@BUILD_SHARED_FALSE@	rxnformat.cpp shelxformat.cpp smilesformat.cpp thermoformat.cpp \
+@BUILD_SHARED_FALSE@	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
 @BUILD_SHARED_FALSE@	tinkerformat.cpp titleformat.cpp \
 @BUILD_SHARED_FALSE@	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
 @BUILD_SHARED_FALSE@	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp
 
+#	rxnformat.cpp
 @BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
 @BUILD_SHARED_TRUE@	APIInterface.la \
 @BUILD_SHARED_TRUE@	CSRformat.la PQSformat.la alchemyformat.la \
@@ -980,139 +971,141 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	mol2format.la molreportformat.la mopacformat.la mpqcformat.la \
 @BUILD_SHARED_TRUE@	nwchemformat.la pcmodelformat.la \
 @BUILD_SHARED_TRUE@	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
-@BUILD_SHARED_TRUE@	rxnformat.la shelxformat.la smilesformat.la thermoformat.la \
+@BUILD_SHARED_TRUE@	shelxformat.la smilesformat.la thermoformat.la \
 @BUILD_SHARED_TRUE@	tinkerformat.la titleformat.la \
 @BUILD_SHARED_TRUE@	turbomoleformat.la unichemformat.la viewmolformat.la \
 @BUILD_SHARED_TRUE@	xedformat.la xyzformat.la yasaraformat.la zindoformat.la
 
+#rxnformat.la
 @BUILD_SHARED_TRUE@APIInterface_la_SOURCES = APIInterface.cpp
-@BUILD_SHARED_TRUE@APIInterface_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 @BUILD_SHARED_TRUE@CSRformat_la_SOURCES = CSRformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@CSRformat_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@CSRformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 @BUILD_SHARED_TRUE@PQSformat_la_SOURCES = PQSformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@PQSformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@acrformat_la_SOURCES = acrformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@acrformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@acrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@alchemyformat_la_SOURCES = alchemyformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@alchemyformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@alchemyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@amberformat_la_SOURCES = amberformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@amberformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@amberformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@balstformat_la_SOURCES = balstformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@balstformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@balstformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@bgfformat_la_SOURCES = bgfformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@bgfformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@bgfformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@boxformat_la_SOURCES = boxformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@boxformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@boxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cacaoformat_la_SOURCES = cacaoformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@cacaoformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cacaoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cacheformat_la_SOURCES = cacheformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@cacheformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cacheformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cansmilesformat_la_SOURCES = cansmilesformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@cansmilesformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cansmilesformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@carformat_la_SOURCES = carformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@carformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@carformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cccformat_la_SOURCES = cccformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@cccformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cccformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@chem3dformat_la_SOURCES = chem3dformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@chem3dformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@chem3dformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@chemdrawctformat_la_SOURCES = chemdrawct.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@chemdrawctformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@chemdrawctformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@chemdrawcdxformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@chemtoolformat_la_SOURCES = chemtoolformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@chemtoolformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@chemtoolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cifformat_la_SOURCES = cifformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@cifformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@copyformat_la_SOURCES = copyformat.cpp 
-@BUILD_SHARED_TRUE@copyformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@copyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@crkformat_la_SOURCES = crkformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@crkformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@crkformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cssrformat_la_SOURCES = cssrformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@cssrformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cssrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@dmolformat_la_SOURCES = dmolformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@dmolformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@dmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@fastsearchformat_la_SOURCES = fastsearchformat.cpp
-@BUILD_SHARED_TRUE@fastsearchformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@fastsearchformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@fastaformat_la_SOURCES = fastaformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@fastaformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@fastaformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@fchkformat_la_SOURCES = fchkformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@fchkformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@fchkformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@featformat_la_SOURCES = featformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@featformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@featformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@fhformat_la_SOURCES = fhformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@fhformat_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@fhformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 @BUILD_SHARED_TRUE@fingerprintformat_la_SOURCES = fingerprintformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@fingerprintformat_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@fingerprintformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 @BUILD_SHARED_TRUE@freefracformat_la_SOURCES = freefracformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@freefracformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@freefracformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gamessformat_la_SOURCES = gamessformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@gamessformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gaussformat_la_SOURCES = gaussformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@gaussformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@ghemicalformat_la_SOURCES = ghemicalformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@ghemicalformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@ghemicalformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gromos96format_la_SOURCES = gromos96format.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@gromos96format_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@gromos96format_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@hinformat_la_SOURCES = hinformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@hinformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@hinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@inchiformat_la_SOURCES = inchiformat.cpp obmolecformat.cpp getinchi.cpp
-@BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
+@BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la inchi/libinchi.la
 @BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LIBADD = -linchi
 @BUILD_SHARED_TRUE@jaguarformat_la_SOURCES = jaguarformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mdlformat_la_SOURCES = mdlformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@mdlformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@mdlformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mmodformat_la_SOURCES = mmodformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@mmodformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@mmodformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mol2format_la_SOURCES = mol2format.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@mol2format_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@mol2format_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@molreportformat_la_SOURCES = molreport.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@molreportformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@molreportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mopacformat_la_SOURCES = mopacformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@mopacformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@mopacformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mpdformat_la_SOURCES = mpdformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@mpdformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@mpdformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mpqcformat_la_SOURCES = mpqcformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@mpqcformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@mpqcformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@nwchemformat_la_SOURCES = nwchemformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@nwchemformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@pcmodelformat_la_SOURCES = pcmodelformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@pcmodelformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@pcmodelformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@pdbformat_la_SOURCES = pdbformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@pdbformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@pdbformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@povrayformat_la_SOURCES = povrayformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@povrayformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@qchemformat_la_SOURCES = qchemformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@qchemformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@reportformat_la_SOURCES = reportformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@reportformat_la_LDFLAGS = -module -avoid-version 
-@BUILD_SHARED_TRUE@rxnformat_la_SOURCES = rxnformat.cpp
-@BUILD_SHARED_TRUE@rxnformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@reportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+# rxnformat_la_SOURCES = rxnformat.cpp
+# rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@shelxformat_la_SOURCES = shelxformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@shelxformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@shelxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@smilesformat_la_SOURCES = smilesformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@smilesformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@smilesformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@thermoformat_la_SOURCES = thermoformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@thermoformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@thermoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@tinkerformat_la_SOURCES = tinkerformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@tinkerformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@tinkerformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@titleformat_la_SOURCES = titleformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@titleformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@titleformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@turbomoleformat_la_SOURCES = turbomoleformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@turbomoleformat_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@turbomoleformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 @BUILD_SHARED_TRUE@unichemformat_la_SOURCES = unichemformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@unichemformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@unichemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@viewmolformat_la_SOURCES = viewmolformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@viewmolformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@viewmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@xedformat_la_SOURCES = xedformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@xedformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@xedformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@xyzformat_la_SOURCES = xyzformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@xyzformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@xyzformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@yasaraformat_la_SOURCES = yasaraformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@yasaraformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@yasaraformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@zindoformat_la_SOURCES = zindoformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@zindoformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@zindoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -1285,8 +1278,6 @@ qchemformat.la: $(qchemformat_la_OBJECTS) $(qchemformat_la_DEPENDENCIES)
 	$(qchemformat_la_LINK) $(am_qchemformat_la_rpath) $(qchemformat_la_OBJECTS) $(qchemformat_la_LIBADD) $(LIBS)
 reportformat.la: $(reportformat_la_OBJECTS) $(reportformat_la_DEPENDENCIES) 
 	$(reportformat_la_LINK) $(am_reportformat_la_rpath) $(reportformat_la_OBJECTS) $(reportformat_la_LIBADD) $(LIBS)
-rxnformat.la: $(rxnformat_la_OBJECTS) $(rxnformat_la_DEPENDENCIES) 
-	$(rxnformat_la_LINK) $(am_rxnformat_la_rpath) $(rxnformat_la_OBJECTS) $(rxnformat_la_LIBADD) $(LIBS)
 shelxformat.la: $(shelxformat_la_OBJECTS) $(shelxformat_la_DEPENDENCIES) 
 	$(shelxformat_la_LINK) $(am_shelxformat_la_rpath) $(shelxformat_la_OBJECTS) $(shelxformat_la_LIBADD) $(LIBS)
 smilesformat.la: $(smilesformat_la_OBJECTS) $(smilesformat_la_DEPENDENCIES) 
@@ -1370,7 +1361,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/povrayformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qchemformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reportformat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rxnformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shelxformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smilesformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thermoformat.Plo@am__quote@

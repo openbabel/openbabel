@@ -93,6 +93,8 @@ namespace OpenBabel
     int chainNum = 1;
     char buffer[BUFF_SIZE];
     OBBitVec bs;
+    string line, key, value;
+    OBPairData *dp;
 
     mol.SetTitle(title);
     mol.SetChainsPerceived(); // It's a PDB file, we read all chain/res info.
@@ -100,17 +102,45 @@ namespace OpenBabel
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"END",3))
       {
-        if (EQn(buffer,"TER",3))
+        if (EQn(buffer,"TER",3)) {
           chainNum++;
+          continue;
+        }
         if (EQn(buffer,"ATOM",4) || EQn(buffer,"HETATM",6))
           {
             ParseAtomRecord(buffer,mol,chainNum);
             if (EQn(buffer,"ATOM",4))
               bs.SetBitOn(mol.NumAtoms());
+            continue;
           }
 
-        if (EQn(buffer,"CONECT",6))
+        if (EQn(buffer,"CONECT",6)) {
           ParseConectRecord(buffer,mol);
+          continue;
+        }
+
+        // another record type, add it as an OBPairData entry
+        line = buffer;
+        key = line.substr(0,6); // the first 6 characters are the record name
+        Trim(key);
+        value = line.substr(6);
+        
+        // We haven't found this record yet
+        if (!mol.HasData(key)) {
+          dp = new OBPairData;
+          dp->SetAttribute(key);
+          dp->SetValue(value);
+          dp->SetOrigin(fileformatInput);
+          mol.SetData(dp);
+        } 
+        // Add on additional lines
+        else {
+          dp = static_cast<OBPairData*>(mol.GetData(key));
+          line = dp->GetValue();
+          line += '\n';
+          line += value;
+          dp->SetValue(line);
+        }
       }
 
     if (!mol.NumAtoms()) { // skip the rest of this processing
@@ -233,10 +263,12 @@ namespace OpenBabel
           {
             if (isalpha(atmid[0])) {
               
-              if (atmid[2] == '\0' || atmid[2] == ' ') type = atmid.substr(0,2);
+              if (atmid.size() > 2 && (atmid[2] == '\0' || atmid[2] == ' '))
+                type = atmid.substr(0,2);
               else if (atmid[0] == 'A') // alpha prefix
                 type = atmid.substr(1, atmid.size() - 1);
-              else type = atmid.substr(0,1);
+              else
+                type = atmid.substr(0,1);
             }
             else if (atmid[0] == ' ')
               type = atmid.substr(1,1); // one char element

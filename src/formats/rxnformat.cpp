@@ -1,3 +1,4 @@
+bg
 /**********************************************************************
 Copyright (C) 2004 by Chris Morley
  
@@ -20,8 +21,10 @@ GNU General Public License for more details.
 #include "openbabel/obconversion.h"
 #include "openbabel/reaction.h"
 
+#include <tr1/memory>
+
 using namespace std;
-using std::tr1::shared_ptr;
+using namespace std::tr1;
 
 namespace OpenBabel
 {

@@ -16,7 +16,6 @@
 
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
-pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
@@ -82,6 +81,7 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
+pkglibdir = @pkglibdir@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AR = @AR@
@@ -208,7 +208,7 @@ top_srcdir = @top_srcdir@
 # only build in the scripts subdirectory if possible (perl, python, swig, etc.)
 @BUILD_SCRIPTS_TRUE@SCRIPT_DIR = scripts
 SUBDIRS = data src test tools doc include $(SCRIPT_DIR)
-EXTRA_DIST = Doxyfile windows windows-vc2005 INSTALL.Windows
+EXTRA_DIST = Doxyfile windows-vc2005
 AUTOMAKE_OPTIONS = foreign
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = openbabel-2.0.pc

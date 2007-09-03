@@ -16,7 +16,6 @@
 
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
-pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
@@ -116,8 +115,9 @@ RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = math formats fingerprints forcefields GUI
+DIST_SUBDIRS = math fingerprints forcefields . formats GUI
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+pkglibdir = @pkglibdir@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AR = @AR@
@@ -244,8 +244,10 @@ EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
 	dlhandler_win32.cpp
 
-SUBDIRS = math formats fingerprints forcefields $(am__append_1)
-INCLUDES = -I$(top_srcdir)/data/ -I$(top_srcdir)/include
+@BUILD_SHARED_TRUE@thisdir = .
+SUBDIRS = math fingerprints forcefields $(thisdir) formats \
+	$(am__append_1)
+INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data/ -I$(top_srcdir)/include
 lib_LTLIBRARIES = libopenbabel.la
 @BUILD_SHARED_FALSE@dlhandler = 
 @BUILD_SHARED_TRUE@dlhandler = dlhandler_unix.cpp
@@ -263,7 +265,7 @@ libopenbabel_la_SOURCES = \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp groupcontrib.cpp $(dlhandler)
 
-libopenbabel_la_LDFLAGS = -version-info 3:0:1 -no-undefined
+libopenbabel_la_LDFLAGS = -version-info 3:1:1 -no-undefined
 @BUILD_SHARED_TRUE@AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 @BUILD_SHARED_FALSE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 @BUILD_SHARED_FALSE@			formats/libformats.la forcefields/libforcefields.la @LTLIBOBJS@

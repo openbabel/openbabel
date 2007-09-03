@@ -17,7 +17,7 @@ WriteMakefile(
     'VERSION'   => '1.2.1',
     'LDFROM'    => $ldfrom,
     'CC'        => $CC,
-    'LD'        => '$(CC)',
+    'LD'        => '$(CC) -shared',
     'INC'       => '-I../../include',
     'OBJECT'    => 'openbabel_perl.o'
 );

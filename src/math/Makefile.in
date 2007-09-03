@@ -16,7 +16,6 @@
 
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
-pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
@@ -44,7 +43,8 @@ CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libmath_la_LIBADD =
-am_libmath_la_OBJECTS = matrix3x3.lo vector3.lo
+am_libmath_la_OBJECTS = matrix3x3.lo vector3.lo transform3d.lo \
+	spacegroup.lo
 libmath_la_OBJECTS = $(am_libmath_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)/src@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -63,6 +63,7 @@ DIST_SOURCES = $(libmath_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+pkglibdir = @pkglibdir@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AR = @AR@
@@ -186,8 +187,8 @@ target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LTLIBRARIES = libmath.la
-libmath_la_SOURCES = matrix3x3.cpp vector3.cpp
-AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/include
+libmath_la_SOURCES = matrix3x3.cpp vector3.cpp transform3d.cpp spacegroup.cpp
+AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/src -I$(top_srcdir)/include
 all: all-am
 
 .SUFFIXES:
@@ -240,6 +241,8 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrix3x3.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spacegroup.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/transform3d.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vector3.Plo@am__quote@
 
 .cpp.o:

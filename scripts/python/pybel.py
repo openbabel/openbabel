@@ -128,7 +128,7 @@ class Molecule(object):
     (refer to the Open Babel library documentation for more info).
     
     Methods:
-       write(), calcfp()
+       write(), calcfp(), calcdesc()
       
     The original Open Babel molecule can be accessed using the attribute:
        OBMol
@@ -192,6 +192,26 @@ class Molecule(object):
         """
         for atom in self.atoms:
             yield atom
+
+    def calcdesc(self, descnames=[]):
+        """Calculate descriptor values.
+
+        Optional parameter:
+           descnames -- a list of names of descriptors
+
+        If descnames is not specified, the full list of Open Babel
+        descriptors is calculated: LogP, PSA and MR.
+        """
+        names = {'LogP': ob.OBLogP, 'PSA': ob.OBPSA, 
+                 'MR': ob.OBMR}
+        if not descnames:
+            descnames = names.keys()
+        ans = {}
+        for descname in descnames:
+            if descname not in names.keys():
+                raise ValueError, "%s is not a recognised Open Babel descriptor type" % descname
+            ans[descname] = names[descname]().Predict(self.OBMol)
+        return ans
     
     def calcfp(self, fptype=""):
         """Calculate a molecular fingerprint.
@@ -439,17 +459,20 @@ class MoleculeData(object):
             del self[key]
     def has_key(self, key):
         return key in self
+    def update(self, dictionary):
+        for k, v in dictionary.iteritems():
+            self[k] = v
     def __getitem__(self, key):
         self._testforkey(key)
         return ob.toPairData(self._mol.GetData(key)).GetValue()
     def __setitem__(self, key, value):
         if key in self:
             pairdata = ob.toPairData(self._mol.GetData(key))
-            pairdata.SetValue(value)
+            pairdata.SetValue(str(value))
         else:
             pairdata = ob.OBPairData()
             pairdata.SetAttribute(key)
-            pairdata.SetValue(value)
+            pairdata.SetValue(str(value))
             pairdata.thisown = 0 # So that SWIG Proxy will not delete pairdata
             self._mol.SetData(pairdata)
     def __repr__(self):

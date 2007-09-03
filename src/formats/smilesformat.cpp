@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -375,6 +375,19 @@ namespace OpenBabel
     // place dummy atoms for each unfilled external bond
     if(!_extbond.empty())
       CapExternalBonds(mol);
+
+    // Check to see if we've balanced out all ring closures
+    // They are removed from _rclose when matched
+    if ( _rclose.size() != 0) {
+      mol.EndModify();
+      mol.Clear();
+      
+      stringstream errorMsg;
+      errorMsg << "Invalid SMILES string: " << _rclose.size() << " unmatched "
+               << "ring bonds." << endl;
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      return false; // invalid SMILES since rings aren't properly closed
+    }
 
     //set aromatic bond orders
     mol.SetAromaticPerceived();
@@ -1910,6 +1923,7 @@ namespace OpenBabel
       {
         root = new OBSmiNode(mol.GetFirstAtom());
         BuildTree(root);
+        FindClosureBonds(mol); //Jun07 was missing closures if all atoms chiral
         ToSmilesString(root,buffer);
         delete root;
       }
@@ -2365,7 +2379,9 @@ namespace OpenBabel
       }
 
     if (atom->GetHvyValence() > 2 && atom->IsChiral())
-      if (((OBMol*)atom->GetParent())->HasNonZeroCoords() || atom->HasChiralitySpecified())
+      if (/*((OBMol*)atom->GetParent())->HasNonZeroCoords() ||*/ atom->HasChiralitySpecified())
+        //first test removed because the chirality of some potentially chiral 2D molecules is unspecified
+        //leading to spurious chirlity #1738355
         bracketElement = true;
 
     if (atom->GetFormalCharge() != 0) //bracket charged elements
@@ -2482,7 +2498,7 @@ namespace OpenBabel
     strcat(element,symbol);
 
     //if (atom->IsCarbon() && atom->GetHvyValence() > 2 && atom->IsChiral())
-    if (atom->GetHvyValence() > 2 && atom->IsChiral())
+    if (atom->GetHvyValence() > 2 && atom->IsChiral() && (atom->IsClockwise() || atom->IsAntiClockwise()))
       {
         char stereo[5];
         if (GetChiralStereo(node,stereo))

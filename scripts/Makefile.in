@@ -15,7 +15,6 @@
 @SET_MAKE@
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
-pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
@@ -45,6 +44,7 @@ CONFIG_CLEAN_FILES =
 SOURCES =
 DIST_SOURCES =
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+pkglibdir = @pkglibdir@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AR = @AR@
@@ -392,7 +392,7 @@ dist-hook:
 
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include $<;
-@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv ruby/openbabel_ruby.new ruby/openbabel_ruby.cpp
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

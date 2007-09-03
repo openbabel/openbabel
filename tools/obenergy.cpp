@@ -36,6 +36,7 @@ int main(int argc,char **argv)
   char *program_name= argv[0];
   int c;
   int verbose = 0;
+  bool hydrogens = false;
   string basename, filename = "", option, option2, ff = "";
 
   if (argc < 2) {
@@ -44,6 +45,8 @@ int main(int argc,char **argv)
     cout << "options:      description:" << endl;
     cout << endl;
     cout << "  -v          verbose: print out indivual energy interactions" << endl;
+    cout << endl;
+    cout << "  -h          add hydrogens before calculating energy" << endl;
     cout << endl;
     cout << "  -ff ffid    select a forcefield" << endl;
     cout << endl;
@@ -58,13 +61,18 @@ int main(int argc,char **argv)
       
       if (option == "-v") {
         verbose = 1;
-	ifile++;
-	break;
+        ifile++;
+        break;
+      }
+
+      if (option == "-h") {
+        hydrogens = true;
+        ifile++;
       }
 
       if ((option == "-ff") && (argc > (i+1))) {
         ff = argv[i+1];
-	ifile += 2;
+        ifile += 2;
       }
     }
     
@@ -100,30 +108,33 @@ int main(int argc,char **argv)
   OBMol mol;
 
   for (c=1;;c++) {
-      mol.Clear();
-      if (!conv.Read(&mol, &ifs))
-        break;
-      if (mol.Empty())
-        break;
+    mol.Clear();
+    if (!conv.Read(&mol, &ifs))
+      break;
+    if (mol.Empty())
+      break;
 
-      OBForceField* pFF = OBForceField::FindForceField(ff);
-      if (!pFF) {
-        cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
-        exit (-1);
-      }
+    if (hydrogens)
+      mol.AddHydrogens();
+
+    OBForceField* pFF = OBForceField::FindForceField(ff);
+    if (!pFF) {
+      cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
+      exit (-1);
+    }
  
-      pFF->SetLogFile(&cout);
-      if (verbose)
-        pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
-      else
-        pFF->SetLogLevel(OBFF_LOGLVL_MEDIUM);
+    pFF->SetLogFile(&cout);
+    if (verbose)
+      pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
+    else
+      pFF->SetLogLevel(OBFF_LOGLVL_MEDIUM);
       
-      if (!pFF->Setup(mol)) {
-        cerr << program_name << ": could not setup force field." << endl;
-        exit (-1);
-      }
+    if (!pFF->Setup(mol)) {
+      cerr << program_name << ": could not setup force field." << endl;
+      exit (-1);
+    }
       
-      pFF->Energy(false);
+    pFF->Energy(false);
 
   } // end for loop
 

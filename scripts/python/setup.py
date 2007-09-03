@@ -60,8 +60,8 @@ obExtension = Extension('_openbabel',
                         )
 
 setup(name='openbabel',
-      version='1.2.0',
-      author='Geoff Hutchison',
+      version='1.2.1',
+      author='Noel O\'Boyle',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/',
       license='http://www.gnu.org/copyleft/gpl.html',

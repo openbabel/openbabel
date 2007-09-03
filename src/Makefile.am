@@ -2,12 +2,15 @@ EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
 	dlhandler_win32.cpp
 
-SUBDIRS = math formats fingerprints forcefields
+if BUILD_SHARED
+thisdir = .
+endif
+SUBDIRS = math fingerprints forcefields $(thisdir) formats
 if BUILD_WXGUI
 SUBDIRS += GUI
 endif
 
-INCLUDES = -I$(top_srcdir)/data/ -I$(top_srcdir)/include
+INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data/ -I$(top_srcdir)/include
 
 lib_LTLIBRARIES = libopenbabel.la
 
@@ -31,7 +34,7 @@ libopenbabel_la_SOURCES = \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp groupcontrib.cpp $(dlhandler)
 
-libopenbabel_la_LDFLAGS = -version-info 3:0:1 -no-undefined
+libopenbabel_la_LDFLAGS = -version-info 3:1:1 -no-undefined
 
 if BUILD_SHARED
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS

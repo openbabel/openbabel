@@ -321,6 +321,8 @@ int main(int argc,char **argv)
           dp->SetOrigin(external);
           molmv.SetData(dp);
 
+          cerr << "RMSD: " << rmsd_string << endl;
+
           //translate the rotated molecule
           molmv.Translate(tvref);
 

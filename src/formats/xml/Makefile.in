@@ -16,7 +16,6 @@
 
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
-pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
@@ -71,16 +70,6 @@ cmlformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cmlformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_cmlformat_la_rpath = -rpath $(pkglibdir)
-cmlreactlformat_la_LIBADD =
-am__cmlreactlformat_la_SOURCES_DIST = cmlreactlformat.cpp xml.cpp \
-	../obmolecformat.cpp
-@BUILD_SHARED_TRUE@am_cmlreactlformat_la_OBJECTS = cmlreactlformat.lo \
-@BUILD_SHARED_TRUE@	xml.lo obmolecformat.lo
-cmlreactlformat_la_OBJECTS = $(am_cmlreactlformat_la_OBJECTS)
-cmlreactlformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(cmlreactlformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_cmlreactlformat_la_rpath = -rpath $(pkglibdir)
 pubchem_la_LIBADD =
 am__pubchem_la_SOURCES_DIST = pubchem.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@am_pubchem_la_OBJECTS = pubchem.lo xml.lo \
@@ -113,16 +102,15 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(cdxmlformat_la_SOURCES) $(cmlformat_la_SOURCES) \
-	$(cmlreactlformat_la_SOURCES) $(pubchem_la_SOURCES) \
-	$(xmlformat_la_SOURCES)
+	$(pubchem_la_SOURCES) $(xmlformat_la_SOURCES)
 DIST_SOURCES = $(am__cdxmlformat_la_SOURCES_DIST) \
 	$(am__cmlformat_la_SOURCES_DIST) \
-	$(am__cmlreactlformat_la_SOURCES_DIST) \
 	$(am__pubchem_la_SOURCES_DIST) \
 	$(am__xmlformat_la_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+pkglibdir = @pkglibdir@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AR = @AR@
@@ -249,15 +237,13 @@ INCLUDES = -I$(top_srcdir)/include
 AM_CPPFLAGS = @XML_CPPFLAGS@
 AM_LDFLAGS = @LIBS@ @XML_LIBS@
 @BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
-@BUILD_SHARED_TRUE@  cmlreactlformat.la cmlformat.la \
+@BUILD_SHARED_TRUE@  cmlformat.la \
 @BUILD_SHARED_TRUE@	pubchem.la xmlformat.la cdxmlformat.la
 
 @BUILD_SHARED_TRUE@cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@cdxmlformat_la_LDFLAGS = -module -avoid-version $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
-@BUILD_SHARED_TRUE@cmlreactlformat_la_SOURCES = cmlreactlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cmlreactlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@pubchem_la_SOURCES = pubchem.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@pubchem_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@xmlformat_la_SOURCES = xmlformat.cpp xml.cpp ../obmolecformat.cpp
@@ -326,8 +312,6 @@ cdxmlformat.la: $(cdxmlformat_la_OBJECTS) $(cdxmlformat_la_DEPENDENCIES)
 	$(cdxmlformat_la_LINK) $(am_cdxmlformat_la_rpath) $(cdxmlformat_la_OBJECTS) $(cdxmlformat_la_LIBADD) $(LIBS)
 cmlformat.la: $(cmlformat_la_OBJECTS) $(cmlformat_la_DEPENDENCIES) 
 	$(cmlformat_la_LINK) $(am_cmlformat_la_rpath) $(cmlformat_la_OBJECTS) $(cmlformat_la_LIBADD) $(LIBS)
-cmlreactlformat.la: $(cmlreactlformat_la_OBJECTS) $(cmlreactlformat_la_DEPENDENCIES) 
-	$(cmlreactlformat_la_LINK) $(am_cmlreactlformat_la_rpath) $(cmlreactlformat_la_OBJECTS) $(cmlreactlformat_la_LIBADD) $(LIBS)
 pubchem.la: $(pubchem_la_OBJECTS) $(pubchem_la_DEPENDENCIES) 
 	$(pubchem_la_LINK) $(am_pubchem_la_rpath) $(pubchem_la_OBJECTS) $(pubchem_la_LIBADD) $(LIBS)
 xmlformat.la: $(xmlformat_la_OBJECTS) $(xmlformat_la_DEPENDENCIES) 
@@ -341,7 +325,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cdxmlformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmlformat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmlreactlformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obmolecformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pubchem.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xml.Plo@am__quote@

@@ -130,6 +130,11 @@ namespace OpenBabel
           }
       }
 
+    if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
+      mol.EndModify();
+      return false;
+    }
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))

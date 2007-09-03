@@ -8,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>pybel</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/vmware/Tools/exportedTags/scripts/python/pybel.py">/home/vmware/Tools/exportedTags/scripts/python/pybel.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/user/Tools/openbabel-2-1-xz/scripts/python/pybel.py">/home/user/Tools/openbabel-2-1-xz/scripts/python/pybel.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -138,7 +138,7 @@ Attributes:<br>
 (refer&nbsp;to&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;library&nbsp;documentation&nbsp;for&nbsp;more&nbsp;info).<br>
 &nbsp;<br>
 Methods:<br>
-&nbsp;&nbsp;&nbsp;<a href="#Molecule-write">write</a>(),&nbsp;<a href="#Molecule-calcfp">calcfp</a>()<br>
+&nbsp;&nbsp;&nbsp;<a href="#Molecule-write">write</a>(),&nbsp;<a href="#Molecule-calcfp">calcfp</a>(),&nbsp;<a href="#Molecule-calcdesc">calcdesc</a>()<br>
 &nbsp;&nbsp;<br>
 The&nbsp;original&nbsp;Open&nbsp;Babel&nbsp;molecule&nbsp;can&nbsp;be&nbsp;accessed&nbsp;using&nbsp;the&nbsp;attribute:<br>
 &nbsp;&nbsp;&nbsp;OBMol<br>&nbsp;</tt></td></tr>
@@ -158,6 +158,14 @@ This&nbsp;allows&nbsp;constructions&nbsp;such&nbsp;as&nbsp;the&nbsp;following:<b
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;atom</tt></dd></dl>
 
 <dl><dt><a name="Molecule-__str__"><strong>__str__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Molecule-calcdesc"><strong>calcdesc</strong></a>(self, descnames<font color="#909090">=[]</font>)</dt><dd><tt>Calculate&nbsp;descriptor&nbsp;values.<br>
+&nbsp;<br>
+Optional&nbsp;parameter:<br>
+&nbsp;&nbsp;&nbsp;descnames&nbsp;--&nbsp;a&nbsp;list&nbsp;of&nbsp;names&nbsp;of&nbsp;descriptors<br>
+&nbsp;<br>
+If&nbsp;descnames&nbsp;is&nbsp;not&nbsp;specified,&nbsp;the&nbsp;full&nbsp;list&nbsp;of&nbsp;Open&nbsp;Babel<br>
+descriptors&nbsp;is&nbsp;calculated:&nbsp;LogP,&nbsp;PSA&nbsp;and&nbsp;MR.</tt></dd></dl>
 
 <dl><dt><a name="Molecule-calcfp"><strong>calcfp</strong></a>(self, fptype<font color="#909090">=''</font>)</dt><dd><tt>Calculate&nbsp;a&nbsp;molecular&nbsp;fingerprint.<br>
 &nbsp;<br>
@@ -245,6 +253,8 @@ NSC&nbsp;--&gt;&nbsp;1<br>
 <dl><dt><a name="MoleculeData-iteritems"><strong>iteritems</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="MoleculeData-keys"><strong>keys</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MoleculeData-update"><strong>update</strong></a>(self, dictionary)</dt></dl>
 
 <dl><dt><a name="MoleculeData-values"><strong>values</strong></a>(self)</dt></dl>
 

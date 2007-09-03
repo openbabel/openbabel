@@ -39,22 +39,26 @@ int main(int argc,char **argv)
   int steps = 2500;
   double crit = 1e-6;
   bool sd = false;
+  bool hydrogens = false;
   string basename, filename = "", option, option2, ff = "Ghemical";
+  char *oext;
+  OBConversion conv;
+  OBFormat *format_out = conv.FindFormat("pdb"); // default output format
 
   if (argc < 2) {
     cout << "Usage: obminimize [options] <filename>" << endl;
     cout << endl;
     cout << "options:      description:" << endl;
     cout << endl;
-    cout << "  -n steps    specify the maximum numer of steps (default=2500)" << endl;
+    cout << "  -c crit     set convergence criteria (default=1e-6)" << endl;
     cout << endl;
     cout << "  -cg         use conjugate gradients algorithm (default)" << endl;
     cout << endl;
-    cout << "  -sd         use steepest descent algorithm" << endl;
-    cout << endl;
-    cout << "  -c crit     set convergence criteria (default=1e-6)" << endl;
-    cout << endl;
     cout << "  -ff ffid    select a forcefield:" << endl;
+    cout << endl;
+    cout << "  -h          add hydrogen atoms" << endl;
+    cout << endl;
+    cout << "  -n steps    specify the maximum numer of steps (default=2500)" << endl;
     cout << endl;
     OBPlugin::List("forcefields", "verbose");
     exit(-1);
@@ -65,25 +69,41 @@ int main(int argc,char **argv)
       
       if ((option == "-n") && (argc > (i+1))) {
         steps = atoi(argv[i+1]);
-	ifile += 2;
+        ifile += 2;
       }
 
       if (option == "-sd") {
         sd = true;
-	ifile++;
+        ifile++;
       }
       
+      if (strncmp(option.c_str(), "-o", 2) == 0) {
+        oext = argv[i] + 2;
+        if(!*oext) {
+          oext = argv[++i]; //space left after -o: use next argument
+          ifile++;
+        }
+
+        format_out = conv.FindFormat(oext);
+        ifile++;
+      }
+
+      if (option == "-h") {
+        hydrogens = true;
+        ifile++;
+      }
+
       if (option == "-cg")
-	ifile++;
+        ifile++;
 
       if ((option == "-c") && (argc > (i+1))) {
         crit = atof(argv[i+1]);
-	ifile += 2;
+        ifile += 2;
       }
  
       if ((option == "-ff") && (argc > (i+1))) {
         ff = argv[i+1];
-	ifile += 2;
+        ifile += 2;
       }
     }
     
@@ -96,9 +116,7 @@ int main(int argc,char **argv)
   }
 
   // Find Input filetype
-  OBConversion conv;
-  OBFormat *format_in = conv.FormatFromExt(filename.c_str());
-  OBFormat *format_out = conv.FindFormat("pdb");
+  OBFormat *format_in = conv.FormatFromExt(filename.c_str());    
     
   if (!format_in || !format_out || !conv.SetInAndOutFormats(format_in, format_out)) {
     cerr << program_name << ": cannot read input/output format!" << endl;
@@ -118,39 +136,37 @@ int main(int argc,char **argv)
   OBMol mol;
 
   for (c=1;;c++) {
-      mol.Clear();
-      if (!conv.Read(&mol, &ifs))
-        break;
-      if (mol.Empty())
-        break;
+    mol.Clear();
+    if (!conv.Read(&mol, &ifs))
+      break;
+    if (mol.Empty())
+      break;
 
-      OBForceField* pFF = OBForceField::FindForceField(ff);
-      if (!pFF) {
-        cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
-        exit (-1);
-      }
+    if (hydrogens)
+      mol.AddHydrogens();
+
+    OBForceField* pFF = OBForceField::FindForceField(ff);
+    if (!pFF) {
+      cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
+      exit (-1);
+    }
  
-      pFF->SetLogFile(&cout);
-      pFF->SetLogLevel(OBFF_LOGLVL_LOW);
+    pFF->SetLogFile(&cout);
+    pFF->SetLogLevel(OBFF_LOGLVL_LOW);
       
-      if (!pFF->Setup(mol)) {
-        cerr << program_name << ": could not setup force field." << endl;
-        exit (-1);
-      }
+    if (!pFF->Setup(mol)) {
+      cerr << program_name << ": could not setup force field." << endl;
+      exit (-1);
+    }
       
-      if (sd)
-        pFF->SteepestDescent(steps, crit);
-      else
-        pFF->ConjugateGradients(steps, crit);
+    if (sd)
+      pFF->SteepestDescent(steps, crit);
+    else
+      pFF->ConjugateGradients(steps, crit);
 
-      pFF->UpdateCoordinates(mol);
+    pFF->UpdateCoordinates(mol);
 
-      //char FileOut[32];
-      //sprintf(FileOut, "%s_obgen.pdb", basename.c_str());
-      //ofs.open(FileOut);
-      //conv.Write(&mol, &ofs);
-      //ofs.close();
-      conv.Write(&mol, &cout);
+    conv.Write(&mol, &cout);
   } // end for loop
 
   return(1);

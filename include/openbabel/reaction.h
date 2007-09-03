@@ -27,6 +27,8 @@ GNU General Public License for more details.
   namespace std{ namespace tr1=::boost; }
 #endif
 
+#include <tr1/memory>
+
 namespace OpenBabel
 {
 

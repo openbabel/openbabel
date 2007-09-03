@@ -36,20 +36,42 @@ static inline unsigned long long bswap_64(unsigned long long x) {
   return (((unsigned long long)bswap_32(x&0xffffffffull))<<32) | (bswap_32(x>>32));
 }
 
+// Macs -- need to use Apple macros to deal with Universal binaries correctly
+#ifdef __APPLE__
+#include <machine/endian.h>
+#if BYTE_ORDER == BIG_ENDIAN
+#    define READ_INT16(stream,data) \
+(stream).read ((char*)&data, sizeof(data)); \
+data = bswap_16 (data);
+#    define READ_INT32(stream,data) \
+(stream).read ((char*)&data, sizeof(data)); \
+data = bswap_32 (data);
+#else BYTE_ORDER == LITTLE_ENDIAN
+#    define READ_INT16(stream,data) \
+(stream).read ((char*)&data, sizeof(data));
+#    define READ_INT32(stream,data) \
+(stream).read ((char*)&data, sizeof(data));
+#endif
+#else
+
+// Non-Apple systems
 // defined in babelconfig.h by autoconf (portable to Solaris, BSD, Linux)
 #ifdef WORDS_BIGENDIAN
 #    define READ_INT16(stream,data) \
-       (stream).read ((char*)&data, sizeof(data)); \
-	   data = bswap_16 (data);
+(stream).read ((char*)&data, sizeof(data)); \
+data = bswap_16 (data);
 #    define READ_INT32(stream,data) \
-       (stream).read ((char*)&data, sizeof(data)); \
-	   data = bswap_32 (data);
+(stream).read ((char*)&data, sizeof(data)); \
+data = bswap_32 (data);
 #else
 #    define READ_INT16(stream,data) \
-       (stream).read ((char*)&data, sizeof(data));
+(stream).read ((char*)&data, sizeof(data));
 #    define READ_INT32(stream,data) \
-       (stream).read ((char*)&data, sizeof(data));
+(stream).read ((char*)&data, sizeof(data));
 #endif
+// end endian / bigendian issues (on non-Mac systems)
+#endif 
+// end Apple/non-Apple systems
 
 using namespace std;
 namespace OpenBabel

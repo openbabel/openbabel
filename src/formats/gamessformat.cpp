@@ -349,7 +349,7 @@ namespace OpenBabel
                         gmsset->AddData(curset);
                       }
 
-                    for(unsigned int i=1; vs[i] != "$END" && i < vs.size(); i++) {
+                    for(unsigned int i=1;i < vs.size() &&  vs[i].substr(0,4) != "$END"; i++) {
                       string::size_type loc = vs[i].find("=",0);
                       if(loc != string::npos)
                         {
@@ -388,6 +388,11 @@ namespace OpenBabel
         */
       }
     // cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
+
+    if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
+      mol.EndModify();
+      return false;
+    }
 
     const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
 

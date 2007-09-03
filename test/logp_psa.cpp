@@ -52,8 +52,9 @@ int main(int argc,char *argv[])
   OBConversion obConversion;
   obConversion.SetInAndOutFormats("smi", "mdl");
   OBMol obMol;
-  OBLogP obLogP;
-  OBPSA obPSA;
+  
+  OBDescriptor* obLogP = OBDescriptor::FindType("logP");
+  OBDescriptor* obPSA  = OBDescriptor::FindType("TPSA");
   double logP, psa;
 
   cout << "ok 1\n"; // for loading tests
@@ -61,14 +62,14 @@ int main(int argc,char *argv[])
   obConversion.ReadString(&obMol, "Oc1ccccc1OC");
   obMol.AddHydrogens();
   
-  logP = obLogP.Predict(obMol);
+  logP = obLogP->Predict(&obMol);
   if (IsNear(logP , 1.4008)) { // value from JOELib2
     cout << "ok 2 # " << logP << '\n';
   } else {
     cout << "not ok 2 # " << logP << '\n';
   }
   
-  psa = obPSA.Predict(obMol);
+  psa = obPSA->Predict(&obMol);
   if (IsNear(psa , 29.46)) { // value from JOELib2
     cout << "ok 3 # " << psa << '\n';
   } else {
@@ -78,14 +79,14 @@ int main(int argc,char *argv[])
   obConversion.ReadString(&obMol, "c1ccccc1CBr");
   obMol.AddHydrogens();
   
-  logP = obLogP.Predict(obMol);
+  logP = obLogP->Predict(&obMol);
   if (IsNear(logP, 2.5815)) { // Value from JOELib2
     cout << "ok 4 # " << logP << '\n';
   } else {
     cout << "not ok 4 # " << logP << '\n';
   }
   
-  psa = obPSA.Predict(obMol);
+  psa = obPSA->Predict(&obMol);
   if (IsNear(psa, 0.0)) { // Value from JOELib2
     cout << "ok 5 # " << psa << '\n';
   } else {
@@ -95,14 +96,14 @@ int main(int argc,char *argv[])
   obConversion.ReadString(&obMol, "Cc1ccccc1NC(=O)C");
   obMol.AddHydrogens();
   
-  logP = obLogP.Predict(obMol);
+  logP = obLogP->Predict(&obMol);
   if (IsNear(logP, 2.0264)) { // JOELib2 = 1.9534, more H added on N
     cout << "ok 6 # " << logP << '\n';
   } else {
     cout << "not ok 6 # " << logP << '\n';
   }
   
-  psa = obPSA.Predict(obMol);
+  psa = obPSA->Predict(&obMol);
   if (IsNear(psa, 29.1)) { // Value from JOELib2
     cout << "ok 7 # " << psa << '\n';
   } else {
