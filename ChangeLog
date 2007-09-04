@@ -1,3 +1,16 @@
+2007-09-02  Chris Morley
+
+	* src/formats/rxnformat.cpp: removed spurious first line of file
+	which gave misleading comiler error messages. Make references to
+	tr1 etc consistent with other reaction formats
+	
+	* include/openbabel/reaction.h: make #include "tr1/memory"
+	conditional.
+	
+	* src/formats/pngformat.cpp: Make independent of compiler and
+	platform, esp size of int. Add WriteMolecule to embed into a
+	PNG file. Would be better in a program that also wrote PNG files!
+	
 2007-09-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Merged in changes from 2.1.x branch.

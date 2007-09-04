@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #include <openbabel/format.h>
 #include <openbabel/obconversion.h>
 #include <zlib.h>
+#include "intsizes.h"
 
 using namespace std;
 namespace OpenBabel
@@ -28,24 +29,29 @@ class PNGFormat : public OBFormat
 public:
   PNGFormat()
   {
-    OBConversion::RegisterFormat("PNG",this);
-    OBConversion::RegisterOptionParam("a", this, 0, OBConversion::INOPTIONS);
+    OBConversion::RegisterFormat("png",this);
+    OBConversion::RegisterOptionParam("y", this, 1, OBConversion::INOPTIONS);
+    OBConversion::RegisterOptionParam("y", this, 1, OBConversion::OUTOPTIONS);
   }
 
   virtual const char* Description()
   {
     return
-    "PNG format\n"
+    "PNG files with embedded data\n"
     "Extract chemical structure data embedded in PNG image files\n"
-    "Read Options e.g. -aa\n"
-    " a <additional chunk ID>Look also in chunks with specified ID\n\n";
+    "Read Options e.g. -ay\n"
+    " y <additional chunk ID> Look also in chunks with specified ID\n\n"
+
+    "Write Options e.g. -xO cml\n"
+    " O <format ID> Format of embedded text\n"
+    " y <additional chunk ID> Write to a chunk with specified ID\n\n";
   };
 
   virtual const char* TargetClassDescription(){return " PNG_files";}
 
   virtual unsigned int Flags()
   {
-      return NOTWRITABLE | READONEONLY | READBINARY;
+      return READONEONLY | READBINARY | WRITEBINARY;
   };
 
   virtual bool ReadChemObject(OBConversion* pConv)
@@ -54,16 +60,47 @@ public:
     pConv->GetChemObject(); //increments output index
     return ret;
   };
+  virtual bool WriteChemObject(OBConversion* pConv)
+  {
+    OBBase* pOb = pConv->GetChemObject();
+    bool ret = WriteMolecule(pOb, pConv);
+    return ret;
+  };
 
 virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+virtual bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
 private:
   int count; //number of chemical objects converted
-  struct chunkheader
+  vector<char> CopyOfInput;
+  unsigned bytesToIEND; //number of bytes upto but not including the IEND chunk.
+  unsigned origBytesToIEND; //saved between WriteMolecule calls
+
+  //Read and write number consisting of 4 bytes with most significant bytes first.
+  //Should be independent of compiler and platform.
+  unsigned long Read32(istream& ifs)
   {
-    long length;
-    char type[4];
-  };
+    char ch;
+    unsigned long val=0;
+    for(int i=0; i<4; ++i)
+    {
+      if(!ifs.get(ch))
+        return 0;
+      val = val * 0x100 + (unsigned char)ch;
+    }
+    return val;
+  }
+
+  void Write32(unsigned long val, ostream& ofs)
+  {
+    char p[4];
+    for(int i=0; i<4; ++i)
+    {
+      p[3-i] = (char)val % 0x100;
+      val /= 0x100;
+    }
+    ofs.write(p, 4);
+  }
 };  
   ////////////////////////////////////////////////////
 
@@ -78,11 +115,11 @@ bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   if(pConv->IsFirstInput())
     count=0;
 
-  char pngheader[] = {-119,80,78,71,13,10,26,10};
+  const char pngheader[] = {-119,80,78,71,13,10,26,10,0};
   char readbytes[9];
   ifs.read(readbytes, 8);
   
-  if(!equal(pngheader, pngheader+8, readbytes)) //This gives a warning about a "MS deprecated" function, in spite of the warning being supressed.
+  if(!equal(pngheader, pngheader+8, readbytes))
   {
     obErrorLog.ThrowError("PNG Format","Not a PNG file", obError);
      return false;
@@ -91,24 +128,23 @@ bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   //Loop through all the chunks
   while(ifs)
   {
-    chunkheader chh;
-    ifs.read((char*)&chh, 8);
-    char* p = (char*)&chh.length;
-    #ifndef WORDS_BIGENDIAN
-      swap(p[0], p[3]);
-      swap(p[1], p[2]);
-    #endif
-    string chunkid(p+4, p+8);
+    unsigned int len = Read32(ifs);
+    ifs.read(readbytes,4);
+    string chunkid(readbytes, readbytes+4);
     if(chunkid=="IEND")
+    {
+      bytesToIEND = ifs.tellg();
+      bytesToIEND -= 8;
       break;
+    }
     streampos pos = ifs.tellg();
 
-    const char* altid = pConv->IsOption("a",OBConversion::INOPTIONS);
+    const char* altid = pConv->IsOption("y",OBConversion::INOPTIONS);
     if(chunkid=="tEXt" || chunkid=="zTXt" || (altid && chunkid==altid))
     {
       string keyword;
       getline(ifs, keyword, '\0');
-      int datalength = chh.length - keyword.size()-1;
+      unsigned int datalength = len - keyword.size()-1;
 
       //remove "file" from end of keyword
       transform(keyword.begin(),keyword.end(),keyword.begin(),::tolower);
@@ -162,7 +198,16 @@ bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
     //Move to end of chunk
     ifs.seekg(pos);
-    ifs.ignore(chh.length+4); //data + CRC
+    ifs.ignore(len+4); //data + CRC
+  }
+
+
+  //if we will be writing a png file, read and save the whole input file.
+  CopyOfInput.clear();
+  if(pConv->GetOutFormat()==this)
+  {
+    ifs.seekg(0);
+    copy(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>(),back_inserter(CopyOfInput));
   }
 
   if(pConv->IsLastFile())
@@ -170,11 +215,121 @@ bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     pConv->ReportNumberConverted(count); //report the number of chemical objects
     pConv->SetOutFormat(this); //so that number of files is reported as "PNG_files"
   }
+
   return true;
 }
 
-////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+{
+  ostream& ofs = *pConv->GetOutStream();
 
+  //Copy the saved input, except the IEND chunk, to the output
+  if(!CopyOfInput.empty() && bytesToIEND>0)//check for input PNG not yet written
+  {
+    ostreambuf_iterator<char> outiter(pConv->GetOutStream()->rdbuf());
+    //In Windows the output stream needs to be in binary mode to avoid extra CRs here
+    copy(CopyOfInput.begin(), CopyOfInput.begin()+bytesToIEND, outiter);
+    origBytesToIEND = bytesToIEND;
+    bytesToIEND=0;//to ensure not copied again
+  }
 
+  //Convert pOb and write it to a tEXt chunk
+  const char* formatID = pConv->IsOption("O", OBConversion::OUTOPTIONS);
+  OBConversion conv2;
+  conv2.CopyOptions(pConv); //So that can use commandline options in this conversion
+  if(!formatID)
+  {
+    formatID="inchi";
+    obErrorLog.ThrowError("PNG Format","Embedding in InChI format.\n"
+      "Use the -xO (uppercase O) option for a different format", obWarning);
+  }
+  if(!conv2.SetOutFormat(OBConversion::FindFormat(formatID)))
+  {
+    obErrorLog.ThrowError("PNG Format","Format not found", obError);
+    return false;
+  
+  }
+  //Write new chunk
+  stringstream ss;
+  ss.str("");
+  const char* pid = pConv->IsOption("y");
+  if(pid && strlen(pid)==4)
+    ss << pid;
+  else
+    ss  << "tEXt";
+  ss  << formatID  << '\0'; 
+  bool ret = conv2.Write(pOb, &ss);
+  if(ret)
+  {
+    unsigned long len = ss.str().size() - 4; //don't count length of tEXt
+    Write32(len, ofs);
+    ofs << ss.str();
+
+    //ss has type, keyword and data 
+    uLong crc = crc32(0L, Z_NULL, 0);
+    crc       = crc32(crc, (unsigned char*)ss.str().c_str(), ss.str().size());
+    Write32(crc, ofs);
+
+  }
+  else
+    obErrorLog.ThrowError("PNG Format","Failed when converting the molecule", obError);
+    
+  if(pConv->IsLast())
+  {
+    //Write the IEND chunk
+    ostreambuf_iterator<char> outiter(pConv->GetOutStream()->rdbuf());
+    copy(CopyOfInput.begin()+origBytesToIEND, CopyOfInput.end(), outiter);
+    CopyOfInput.clear();
+
+    // Decrement output index to not count the PNG file
+    pConv->SetOutputIndex(pConv->GetOutputIndex()-1);
+    // and report as output objects, not "PNG_files"
+    pConv->SetOutFormat(formatID);
+  }
+
+  return ret;
+}
+
+/*
+Reading
+PNGFormat extracts chemical information that is embedded in PNG files.
+The data can be in chunks of types tEXt, zTXt or, if in any type specified
+with the -aa option. If the first letter of the type is 'z' the data is
+decompressed.
+The keyword in the chunk should be an OpenBabel Format ID, optionally with file added,
+e.g. cml, InChI, molfile.
+There can be multiple molecules in each chunk, multiple chunks with
+chemical info and multiple png files can be read together.
+  babel 
+
+Writing
+This embeds chemical information into an existing PNG file.
+A PNG file should be the first input file, followed by one or more chemical
+files in any format. Each can contain multiple molecules. Each molecule is output
+in a separate chunk in a format specified by the -O option. The chunk ID is 
+normally tEXt but can be specified in the -xa option.
+For example
+  babel OrigImg.png Firstmol.smi Secondmol.mol2 OutImg.png -O "inchi" -xa "chEm"
+
+It should be possible to embed into png filesusing the API.
+The following is simplified and UNTESTED:
+
+OBConversion conv;
+conv.SetInAndOutFormats("png","png");
+stringstream ss;
+ifstream ifs("img.png");
+ofstream ofs("img_with_chem.png");
+OBMol mol;
+conv.Read(&mol, &ifs); //Reads the embedded molecule
+...manipulate mol
+Note that the content of the PNG file is stored in PNGFormat, so do
+not input from another PNG file until this one is written.
+
+//Set the format of the embedded molecule on output
+conv.AddOption("O",OBConversion::OUTOPTIONS,"smi"); 
+conv.Write(&mol, ofs);
+
+*/
 } //namespace OpenBabel
 

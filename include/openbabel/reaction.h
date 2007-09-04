@@ -25,9 +25,9 @@ GNU General Public License for more details.
 #ifdef USE_BOOST
   #include <boost/shared_ptr.hpp>
   namespace std{ namespace tr1=::boost; }
+#else
+  #include <tr1/memory>
 #endif
-
-#include <tr1/memory>
 
 namespace OpenBabel
 {
