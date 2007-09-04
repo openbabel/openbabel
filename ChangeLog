@@ -1,4 +1,20 @@
-2007-09-02  Chris Morley
+2007-09-04  Chris Morley
+
+	* include/zlib.h, iconv.h, zconf.h: Added.
+	Needed for Windows build. I hope they do not interfere 
+	with unix builds
+	
+	* src/formats/xml/cmlreactformat.cpp: Added
+	
+	* src/formats/pngformat.cpp: remove include to insizes.h
+	
+	Update Windows project files
+	* windows-vc2005/OBComLn/OBComLn.vcproj
+	* windows-vc2005/openbabel.sln
+	* windows-vc2005/OpenBabelDLL/OpenBabelDLL.vcproj
+
+	
+2007-09-03  Chris Morley
 
 	* src/formats/rxnformat.cpp: removed spurious first line of file
 	which gave misleading comiler error messages. Make references to

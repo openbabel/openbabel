@@ -18,7 +18,6 @@ GNU General Public License for more details.
 #include <openbabel/format.h>
 #include <openbabel/obconversion.h>
 #include <zlib.h>
-#include "intsizes.h"
 
 using namespace std;
 namespace OpenBabel
