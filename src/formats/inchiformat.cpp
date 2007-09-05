@@ -40,6 +40,7 @@ public:
     OBConversion::RegisterOptionParam("n", this, 0, OBConversion::INOPTIONS);
     OBConversion::RegisterOptionParam("t", this);
     OBConversion::RegisterOptionParam("X", this, 1, OBConversion::OUTOPTIONS);
+    OBConversion::RegisterOptionParam("k", this, 0, OBConversion::OUTOPTIONS);
     OBConversion::RegisterOptionParam("X", this, 1, OBConversion::INOPTIONS);
   }
 
@@ -52,6 +53,7 @@ public:
     " X <Option string> List of InChI options:\n"
     " t add molecule name\n"
     " a output auxilliary information\n"
+    " k output InChIKey\n"
     " u output only unique molecules\n"
     " U output only unique molecules and sort them\n"
     " e compare first molecule to others\n"
@@ -583,6 +585,15 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   
   string ostring = inout.szInChI;
+#ifdef _WIN32 //temporary until UNIX build has InChI 1.02 beta
+  if(pConv->IsOption("k")) //Generate InChIKey and add after InChI on same line
+  {
+    char szINCHIKey[26];
+    GetINCHIKeyFromINCHI(inout.szInChI, szINCHIKey);
+    ostring += ' ';
+    ostring += szINCHIKey;
+  }
+#endif
   if(pConv->IsOption("t"))
   {
     ostring += ' ';

@@ -1,5 +1,13 @@
 2007-09-04  Chris Morley
 
+	* include/inchi_api.h, windows-vc2005/libinchi.dll,
+	windows-vc2005/libinchi.lib: updated to v1.02 beta
+	
+	* src/formats/inchiformat.cpp: added option to output InChIKey.
+	Windows only until the appropriate files for UNIX are installed.
+
+2007-09-03  Chris Morley
+
 	* include/zlib.h, iconv.h, zconf.h: Added.
 	Needed for Windows build. I hope they do not interfere 
 	with unix builds
@@ -13,7 +21,6 @@
 	* windows-vc2005/openbabel.sln
 	* windows-vc2005/OpenBabelDLL/OpenBabelDLL.vcproj
 
-	
 2007-09-03  Chris Morley
 
 	* src/formats/rxnformat.cpp: removed spurious first line of file
