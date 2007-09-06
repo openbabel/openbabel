@@ -1,4 +1,16 @@
+2007-09-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefield.cpp: Small improvements to LineSearch and
+	ConjugateGradientsTakeNSteps for performance improvement. In
+	particular, reset the CG direction periodically and only print
+	output every 10 steps.
+
+	* src/forcefields/forcefieldghemical.cpp: Smarter VDW calculation
+	-- minimize the number of multiplies. Not much of an improvement,
+	unfortunately.
+
 2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
+
 	* configure.in: applied patch from Klaus Heinz fixes #1786288.
 
 2007-07-13  Noel O'Boyle <baoilleach@gmail.com>

@@ -241,16 +241,11 @@ namespace OpenBabel
     } else
       rab = a->GetDistance(b);
     
-    term12 = rab / ka;
-    term6 = rab / kb;
-    term13 = term12;
-    term7 = term6;
+    term7 = term13 = term6 = rab / ka;
 
-    term12 = term12 * term12 * term12; // ^3
-    term12 = term12 * term12; // ^6
-    term12 = term12 * term12; // ^12
     term6 = term6 * term6 * term6; // ^3
     term6 = term6 * term6; // ^6
+    term12 = term6 * term6; // ^12
    
     energy = (1.0 / term12) - (1.0 / term6);
     
