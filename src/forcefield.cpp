@@ -805,6 +805,13 @@ namespace OpenBabel
     double e_n1, e_n2, step;
     vector3 old_xyz, orig_xyz, xyz_k, dir(0.0, 0.0, 0.0);
 
+    // This needs several enhancements
+    // 1) Switch to smarter line search method (e.g., Newton's method in 1D)
+    //  x(n+1) = x(n) - F(x) / F'(x)   -- can be done numerically
+    // 2) Switch to line search for one step of the entire molecule!
+    //   This dramatically cuts down on the number of Energy() calls.
+    //  (and is more correct anyway)
+
     step = 0.2;
     direction.normalize();
     orig_xyz = atom->GetVector();
@@ -820,19 +827,18 @@ namespace OpenBabel
     
       e_n2 = Energy(false); // calculate e_k+1
       
-      // convergence criteria, this is 10 times the default convergence
-      // of SteepestDescent or ConjugateGradients. A higher precision here 
+      // convergence criteria: A higher precision here 
       // only takes longer with the same result.
-      if (IsNear(e_n2, e_n1, 1.0e-7))
+      if (IsNear(e_n2, e_n1, 1.0e-3))
         break;
 
       if (e_n2 > e_n1) { // decrease stepsize
-        step *= 0.5;
+        step *= 0.1;
         atom->SetVector(old_xyz);
       }
       if (e_n2 < e_n1) {  // increase stepsize
         e_n1 = e_n2;
-        step *= 1.2;
+        step *= 2.15;
         if (step > 1.0)
           step = 1.0;
       }
@@ -1121,6 +1127,8 @@ namespace OpenBabel
     double g2g2, g1g1, g2g1;
     vector3 grad2, dir2;
     
+    int printStep = min(n, 10); // print results every 10 steps, or fewer
+
     if (_grad1.size() != (_mol.NumAtoms()+1))
       return false;
 
@@ -1135,10 +1143,18 @@ namespace OpenBabel
         else
           grad2 = NumericalDerivative(&*a);
         
+        // Fletcher-Reeves formula for Beta
+        // http://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method
+        // NOTE: We make sure to reset and use the steepest descent direction
+        //   after NumAtoms steps
+        if (_cstep % _mol.NumAtoms() != 0) {
         g2g2 = dot(grad2, grad2);
         g1g1 = dot(_grad1[a->GetIdx()], _grad1[a->GetIdx()]);
         g2g1 = g2g2 / g1g1;
         dir2 = grad2 + g2g1 * _dir1[a->GetIdx()];
+        } else { // reset conj. direction
+          dir2 = grad2;
+        }
 
         dir2 = LineSearch(&*a, dir2);
         a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
@@ -1151,8 +1167,10 @@ namespace OpenBabel
       e_n2 = Energy();
 	
       IF_OBFF_LOGLVL_LOW {
+        if (_cstep % 10 == 0) {
         sprintf(logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
         OBFFLog(logbuf);
+      }
       }
  
       if (IsNear(e_n2, _e_n1, _econv)) {
