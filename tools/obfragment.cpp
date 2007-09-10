@@ -46,6 +46,7 @@ int main(int argc,char *argv[])
   OBMol mol;
   ifstream ifs;
   vector<OBMol> fragments;
+  unsigned int fragmentCount = 0; // track how many in library -- give a running count
   map<string, int> index; // index of cansmi
   string currentCAN;
   unsigned int size;
@@ -77,7 +78,7 @@ int main(int argc,char *argv[])
     
     if (!ifs)
       {
-        cout << "Cannot read input file: " << argv[i] << endl;
+        cerr << "Cannot read input file: " << argv[i] << endl;
         continue;
       }
     
@@ -131,27 +132,55 @@ int main(int argc,char *argv[])
               continue;
 
             currentCAN = conv.WriteString(&fragments[i], true);
-            if (index.find(currentCAN) != index.end()) // already got this
+            if (index.find(currentCAN) != index.end()) { // already got this
+              index[currentCAN] += 1; // add to the count for bookkeeping
               continue;
+            }
 
             index[currentCAN] = 1; // don't ever write this ring fragment again
 
+            // OK, now retrieve the canonical ordering for the fragment
+            vector<string> canonical_order;
+            if (fragments[i].HasData("canonical order")) {
+              OBPairData *data = (OBPairData*)fragments[i].GetData("canonical order");
+              tokenize(canonical_order, data->GetValue().c_str());
+            }
+
+            // Write out an XYZ-style file with the CANSMI as the title
+            cout << fragments[i].NumAtoms() << '\n';
             cout << "INDEX " << currentCAN << '\n'; // endl causes a flush
 
-            FOR_ATOMS_OF_MOL (atom, fragments[i]) {
-              snprintf(buffer, BUFF_SIZE, "%9.3f %9.3f %9.3f\n",
+            vector<string>::iterator can_iter;
+            unsigned int order;
+            OBAtom *atom;
+
+            for (unsigned int index = 0; index < canonical_order.size(); 
+                 ++index) {
+              order = atoi(canonical_order[index].c_str());
+              atom = fragments[i].GetAtom(order);
+              
+              snprintf(buffer, BUFF_SIZE, "C %9.3f %9.3f %9.3f\n",
                        atom->x(), atom->y(), atom->z());
               cout << buffer;
             }
-            
 
           }
         fragments.clear();
-	
+        if (index.size() > fragmentCount) {
+          fragmentCount = index.size();
+          cerr << " Fragments: " << fragmentCount << endl;
+        }
+
       } // while reading molecules (in this file)
     ifs.close();
     ifs.clear();
   } // while reading files
+
+  // loop through the map and output frequencies
+  map<string, int>::const_iterator indexItr;
+  for (indexItr = index.begin(); indexItr != index.end(); ++indexItr) {
+    cerr << (*indexItr).second << " INDEX " << (*indexItr).first << "\n";
+  }
     
   return(0);
 }
