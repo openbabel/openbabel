@@ -156,6 +156,7 @@ namespace OpenBabel
     std::vector<bool> _aromNH;
     OBBitVec _uatoms,_ubonds;
     std::vector<OBBondClosureInfo> _vopen;
+    std::string       _canorder;
 
     OBConversion* _pconv;
 
@@ -198,9 +199,9 @@ namespace OpenBabel
                                    vector<unsigned int> &symmetry_classes,
                                    vector<unsigned int> &canonical_order);
   
-    std::vector<int> &GetOutputOrder()
+    std::string &GetOutputOrder()
     {
-      return(_atmorder);
+      return _canorder;
     }
   };
 
@@ -223,6 +224,7 @@ namespace OpenBabel
     _uatoms.Clear();
     _ubonds.Clear();
     _vopen.clear();
+    _canorder.clear();
 
     _pconv = pconv;
   }
@@ -906,7 +908,6 @@ namespace OpenBabel
     }
 
     _uatoms.SetBitOn(atom->GetIdx());     //mark the atom as visited
-    _atmorder.push_back(atom->GetIdx());  //store the atom ordering
 
     // Build the next layer of nodes, in canonical order
     for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ai++) {
@@ -1184,6 +1185,8 @@ namespace OpenBabel
     // Write the current atom to the string
     GetSmilesElement(node, chiral_neighbors, symmetry_classes, buffer+strlen(buffer));
 
+    _atmorder.push_back(atom->GetIdx());  //store the atom ordering
+
     // Write ring-closure digits
     if (!vclose_bonds.empty()) {
       vector<OBBondClosureInfo>::iterator bci;
@@ -1282,7 +1285,7 @@ namespace OpenBabel
         break;
 
       // Clear out closures in case structure is dot disconnected
-      _atmorder.clear();
+      //      _atmorder.clear();
       _vopen.clear();
 
       // Dot disconnected structure?
@@ -1293,6 +1296,19 @@ namespace OpenBabel
       ToCansmilesString(root, buffer, frag_atoms, symmetry_classes, canonical_order);
       delete root;
     }
+
+    // save the canonical order as a space-separated string
+    // which will be returned by GetOutputOrder() for incorporation
+    // into an OBPairData keyed "canonical order"
+    stringstream temp;
+    vector<int>::iterator can_iter = _atmorder.begin();
+    temp << (*can_iter++);
+
+    for (; can_iter != _atmorder.end(); ++can_iter) {
+      if (*can_iter <= mol.NumAtoms())
+        temp << " " << (*can_iter);
+    }
+    _canorder = temp.str(); // returned by GetOutputOrder()
   }
 
   /***************************************************************************
@@ -1495,6 +1511,13 @@ namespace OpenBabel
     if (iso) {
       pmol->Clear();
       delete pmol;
+    }
+    
+    if (!mol.HasData("canonical order")) {
+      OBPairData *canData = new OBPairData;
+      canData->SetAttribute("canonical order");
+      canData->SetValue(m2s.GetOutputOrder());
+      mol.SetData(canData);
     }
   }
 
