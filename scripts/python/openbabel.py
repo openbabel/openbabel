@@ -760,6 +760,7 @@ class vector3(object):
     def SetY(*args): return _openbabel.vector3_SetY(*args)
     def SetZ(*args): return _openbabel.vector3_SetZ(*args)
     def Get(*args): return _openbabel.vector3_Get(*args)
+    def __getitem__(*args): return _openbabel.vector3___getitem__(*args)
     def AsArray(*args): return _openbabel.vector3_AsArray(*args)
     def __iadd__(*args): return _openbabel.vector3___iadd__(*args)
     def __isub__(*args): return _openbabel.vector3___isub__(*args)

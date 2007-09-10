@@ -1,3 +1,15 @@
+2007-09-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.cpp (Separate): More defensive programming to prevent
+	crashing with incomplete OBChiralData.
+
+	* src/formats/cansmilesformat.cpp: Add support for new OBPairData
+	"canonical order" -- space terminated string of canonical atom
+	labels.
+
+	* configure, Makefile.in, *: Rebuild from latest libtool,
+	autotools, etc.
+
 2007-09-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp: Small improvements to LineSearch and
