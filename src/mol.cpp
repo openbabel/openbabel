@@ -3662,38 +3662,25 @@ namespace OpenBabel
 
           OBChiralData *newCD = new OBChiralData;
           OBAtom *a0, *a1, *a2, *a3; // old atom references
-          if (oldCD->GetSize(input)) {
-            a0 = this->GetAtom(oldCD->GetAtomRef(0, input));
-            a1 = this->GetAtom(oldCD->GetAtomRef(1, input));
-            a2 = this->GetAtom(oldCD->GetAtomRef(2, input));
-            a3 = this->GetAtom(oldCD->GetAtomRef(3, input));
-            newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
-            newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
-            newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
-            newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
-          }
-          
-          if (oldCD->GetSize(output)) {
-            a0 = this->GetAtom(oldCD->GetAtomRef(0, output));
-            a1 = this->GetAtom(oldCD->GetAtomRef(1, output));
-            a2 = this->GetAtom(oldCD->GetAtomRef(2, output));
-            a3 = this->GetAtom(oldCD->GetAtomRef(3, output));
-            newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
-            newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
-            newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
-            newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
-          }
-          
-          if (oldCD->GetSize(calcvolume)) {
-            a0 = this->GetAtom(oldCD->GetAtomRef(0, calcvolume));
-            a1 = this->GetAtom(oldCD->GetAtomRef(1, calcvolume));
-            a2 = this->GetAtom(oldCD->GetAtomRef(2, calcvolume));
-            a3 = this->GetAtom(oldCD->GetAtomRef(3, calcvolume));
-            newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
-            newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
-            newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
-            newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
-          }
+          //Code to work round Atom4Refs having < 4 members sometimes
+          for(int i=0; i< min((unsigned)4, oldCD->GetSize(input)); ++i)
+            {
+              OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
+              if (at == NULL || AtomMap[at] == NULL) break;
+              newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
+            }
+          for(int i=0; i< min((unsigned)4,oldCD->GetSize(output)); ++i)
+            {
+              OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
+              if (at == NULL || AtomMap[at] == NULL) break;
+              newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
+            }
+          for(int i=0; i < min((unsigned)4,oldCD->GetSize(calcvolume)); ++i)
+            {
+              OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
+              if (at == NULL || AtomMap[at] == NULL) break;
+              newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
+            }
 
           newAtom->SetData(newCD);
         }
@@ -3701,9 +3688,10 @@ namespace OpenBabel
         FOR_BONDS_OF_MOL(b, this) {
             map<OBAtom*, OBAtom*>::iterator pos;
             pos = AtomMap.find(b->GetBeginAtom());
-            if(pos!=AtomMap.end())
+            if(pos!=AtomMap.end() && AtomMap[b->GetEndAtom()] != NULL)
               //if bond belongs to current fragment make a similar one in new molecule
-              newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
+              newmol.AddBond((pos->second)->GetIdx(), 
+                             AtomMap[b->GetEndAtom()]->GetIdx(),
                              b->GetBO(), b->GetFlags());
           }
 
