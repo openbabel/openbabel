@@ -1,3 +1,15 @@
+2007-09-15  Chris Morley
+
+	* src/mol.cpp(GetTotalSpinMultiplicity): now returns correct value
+	(1 for normal molecule). Improve documentation. Fixes bug
+	#1793980.
+	
+	* include/openbabel/atom.h, mol.h: improve documentation to emphasize
+	OBAtom::GetSpinMultiplicity returns 0 for normal atoms.
+	
+	* tools/nbabel.cpp: alternative commandline, with explicit -O option
+	for output file, less flexible option placing.
+	
 2007-09-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp (Separate): More defensive programming to prevent

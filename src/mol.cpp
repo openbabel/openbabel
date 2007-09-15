@@ -1105,12 +1105,9 @@ namespace OpenBabel
   }
 
   //! Returns the total spin multiplicity -- if it has not previously been set
-  //!  it is calculated from the atomic spin multiplicity information
-  //!  assuming the high-spin case (i.e. it simply sums the atomic spins,
-  //!  making no attempt to pair spins).
-  //!  However, if you set atomic spins with OBAtom::SetSpinMultiplicity()
-  //!   you really should set the molecular spin with
-  //!   OBMol::SetTotalSpinMultiplicity()
+  //!  It is calculated from the atomic spin multiplicity information
+  //!  assuming the high-spin case (i.e. it simply sums the number of unpaired
+  //!  electrons assuming no further pairing of spins.
   unsigned int OBMol::GetTotalSpinMultiplicity()
   {
     if (HasFlag(OB_TSPIN_MOL))
@@ -1118,19 +1115,19 @@ namespace OpenBabel
     else // calculate from atomic spin information (assuming high-spin case)
       {
         obErrorLog.ThrowError(__FUNCTION__,
-                              "Ran OpenBabel::GetTotalSpinMultiplicity -- calculating from atomic spins and high spin",
-                              obAuditMsg);
+           "Ran OpenBabel::GetTotalSpinMultiplicity -- calculating from atomic spins assuming high spin case",
+            obAuditMsg);
 
         OBAtom *atom;
         vector<OBAtom*>::iterator i;
-        unsigned int spin = 1;
+        unsigned int unpaired_electrons = 0;
 
         for (atom = BeginAtom(i);atom;atom = NextAtom(i))
           {
             if (atom->GetSpinMultiplicity() > 1)
-              spin += atom->GetSpinMultiplicity() - 1;
+              unpaired_electrons += (atom->GetSpinMultiplicity() - 1);
           }
-        return (spin);
+        return (unpaired_electrons + 1);
       }
   }
 
@@ -1662,7 +1659,7 @@ namespace OpenBabel
 
   bool OBMol::DeleteHydrogens()
   {
-    OBAtom *atom,*nbr;
+    OBAtom *atom;//,*nbr;
     vector<OBAtom*>::iterator i;
     vector<OBAtom*> delatoms,va;
 

@@ -193,7 +193,7 @@ namespace OpenBabel
       unsigned int GetAtomicNum()     const { return((unsigned int)_ele); }
       //! \return the isotope for this atom, if specified, or 0 for unspecified
       unsigned short int GetIsotope() const { return(_isotope);    }
-      //! \return the atomic spin, e.g., 0 (default) for singlet,
+      //! \return the atomic spin, e.g., 0 (default) for normal atoms - note that this value is a convention,
       //!   2 for radical  1 or 3 for carbene
       int          GetSpinMultiplicity() const { return(_spinmultiplicity); }
       //! \return the atomic mass of this atom given by standard IUPAC

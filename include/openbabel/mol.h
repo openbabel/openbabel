@@ -319,9 +319,9 @@ namespace OpenBabel
     void   SetDimension(unsigned short int d) { _dimension = d; }
     //! Set the total charge of this molecule to @p charge
     void   SetTotalCharge(int charge);
-    //! Set the total spin multiplicity of this molecule to @p spin
-    //! (i.e., 0 = singlet (default), 1 = doublet, 2 = triplet, etc.)
-    void   SetTotalSpinMultiplicity(unsigned int spin);
+    //! Set the total spin multiplicity of this molecule to @p spinMultiplicity
+    //! Overrides the calculation from spin multiplicity of OBAtoms
+    void   SetTotalSpinMultiplicity(unsigned int spinMultiplicity);
     //! Set the internal coordinates to @p int_coord
     //! (Does not call InternalToCartesian to update the 3D cartesian coordinates)
     void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord)
