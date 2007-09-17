@@ -203,7 +203,7 @@ namespace OpenBabel
     return( fabs(a) <= precision * fabs(b) );
   }
   /*! Safe comparison for floats/doubles: true if
-   * fabs(a - b) <= precision * min( fabs(a), fabs(b) )
+   * fabs(a - b) <= precision * std::min( fabs(a), fabs(b) )
    * The parameter precision plays the role of 10^-N where N is the number of
    * significant digits to consider.
    * This is the correct way to replace operator== for doubles. For new code,
@@ -222,13 +222,13 @@ namespace OpenBabel
   OBAPI inline bool IsApprox(const double & a, const double & b,
                              const double precision = 1e-11)
   {
-    return( fabs(a - b) <= precision * min( fabs(a), fabs(b) ) );
+    return( fabs(a - b) <= precision * std::min( fabs(a), fabs(b) ) );
   }
   //! Same as IsApprox(), but only for positive numbers. Faster.
   OBAPI inline bool IsApprox_pos(const double &a, const double &b,
                                  const double precision = 1e-11)
   {
-    return( fabs(a - b) <= precision * min( a, b ) );
+    return( fabs(a - b) <= precision * std::min( a, b ) );
   }
   /*! \brief Tests whether its argument can be squared without triggering
     an overflow or underflow.
