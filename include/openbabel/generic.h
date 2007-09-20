@@ -908,10 +908,13 @@ namespace OpenBabel
     //! Infrared absorption intensities in KM/Mole
     std::vector<double>  _vIntensities;
     
+
   public:
     OBVibrationData();
     OBVibrationData(const OBVibrationData &);
     ~OBVibrationData() {}
+    virtual OBGenericData* Clone(OBBase* parent) const
+         {return new OBVibrationData(*this);}
     
     OBVibrationData & operator=(const OBVibrationData &);
     
@@ -929,7 +932,36 @@ namespace OpenBabel
     unsigned int GetNumberOfFrequencies() const;
 };
 
-  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
+  //! \class OBRotationData generic.h <openbabel/generic.h>
+  //! \brief Used to hold the rotational constants and symmetry numbers
+ class OBAPI OBRotationData: public OBGenericData
+ {
+ public:
+   enum RType{UNKNOWN, ASYMMETRIC, SYMMETRIC, LINEAR};
+   OBRotationData(): OBGenericData("RotationData", OBGenericDataType::RotationData){}
+   virtual ~OBRotationData(){};
+   virtual OBGenericData* Clone(OBBase* parent) const
+         {return new OBRotationData(*this);}
+   void SetData(RType RotorType, std::vector<double> RotationalConstants, int SymmetryNumber)
+   {
+     RotConsts = RotationalConstants;
+     type = RotorType;
+     SymNum = SymmetryNumber;
+   }
+
+   /// \return Rotational constants in GHz
+   std::vector<double> GetRotConsts()const{ return RotConsts; }
+
+   int GetSymmetryNumber()const{ return SymNum; }
+   RType GetRotorType()const   { return type; }
+
+ protected:
+   std::vector<double> RotConsts;//Rotational constants in GHz
+   int                 SymNum;   //Rotational Symmetry Number
+   RType               type;     //linear, symmetric or asymmetric top
+ };
+
+ //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
   typedef std::vector<OBGenericData*>::iterator OBDataIterator;
 
 } //end namespace OpenBabel

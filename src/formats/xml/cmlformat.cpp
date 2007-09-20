@@ -109,6 +109,8 @@ namespace OpenBabel
     void WriteThermo(OBMol& mol, bool& propertyListWritten);
     string GetMolID();//for error mesaages
     bool WriteInChI(OBMol& mol);
+    bool WriteVibrationData(OBMol& mol);
+    bool WriteRotationData(OBMol& mol);
 
   private:
     map<string,int> AtomMap; //key=atom id, value= ob atom index
@@ -1100,7 +1102,18 @@ namespace OpenBabel
     if(*id)
       {
         string name(id);
-        if(!isalpha(*id)) //since ids have to start with a letter, add "id" to those that don't...
+        //If name is a filename with a path, remove path and extension
+        string::size_type pos;
+        pos = name.find_last_of("/\\:");
+        if(pos!=string::npos)
+        {
+          name.erase(0, pos+1);
+          pos = name.rfind('.');
+          if(pos!=string::npos)
+            name.erase(pos);
+        }
+
+        if(!isalpha(name[0])) //since ids have to start with a letter, add "id" to those that don't...
           name = "id" + name;
         xmlTextWriterWriteAttribute(writer(), C_ID, BAD_CAST name.c_str());
         if(!isalpha(*id)) //...and write <name> orig title </name>
@@ -1651,6 +1664,11 @@ namespace OpenBabel
             xmlTextWriterEndElement(writer());//property
           }
       }
+    if(mol.HasData(OBGenericDataType::VibrationData))
+      WriteVibrationData(mol);
+    if(mol.HasData(OBGenericDataType::RotationData))
+      WriteRotationData(mol);
+
   }
 
   void CMLFormat::WriteThermo(OBMol& mol, bool& propertyListWritten)
@@ -1740,4 +1758,65 @@ namespace OpenBabel
     }
     return false; //not written
   }
+
+  bool CMLFormat::WriteVibrationData(OBMol& mol)
+  {
+    static const xmlChar C_PROPERTY[]     = "property";
+    static const xmlChar C_SCALAR[]       = "scalar";
+    static const xmlChar C_ARRAY[]        = "array";
+    static const xmlChar C_DICTREF[]      = "dictRef";
+    static const xmlChar C_UNITS[]        = "units";
+    static const xmlChar C_TITLE[]        = "title";
+
+    OBVibrationData* vd = (OBVibrationData*)mol.GetData(OBGenericDataType::VibrationData);
+
+    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
+    xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Vibrational Frequncies");
+    xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","me:vibFreqs");
+
+    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
+    xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s","cm-1");
+    for(int i=0; i<vd->GetNumberOfFrequencies(); ++i)
+      xmlTextWriterWriteFormatString(writer(),"%.lf ", vd->GetFrequencies()[i]);
+    xmlTextWriterEndElement(writer());//array
+    xmlTextWriterEndElement(writer());//property
+    return true;
+  }
+
+  bool CMLFormat::WriteRotationData(OBMol& mol)
+  {
+    static const xmlChar C_PROPERTY[]     = "property";
+    static const xmlChar C_SCALAR[]       = "scalar";
+    static const xmlChar C_ARRAY[]        = "array";
+    static const xmlChar C_DICTREF[]      = "dictRef";
+    static const xmlChar C_UNITS[]        = "units";
+    static const xmlChar C_TITLE[]        = "title";
+
+    OBRotationData* rd = (OBRotationData*)mol.GetData(OBGenericDataType::RotationData);
+
+    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
+    xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Rotational Constants");
+    xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","me:rotConsts");
+
+    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
+    xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s","cm-1");
+    const double WAVENUM_TO_GHZ=30.0;
+    for(int i=0; i<3; ++i)
+      if(rd->GetRotConsts()[i]!=0.0)
+        xmlTextWriterWriteFormatString(writer(),"%.1f ", rd->GetRotConsts()[i]/WAVENUM_TO_GHZ);
+    xmlTextWriterEndElement(writer());//array
+    xmlTextWriterEndElement(writer());//property
+    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
+    xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Rotational Constants");
+    xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","me:rotConsts");
+
+    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
+    xmlTextWriterWriteFormatString(writer(),"%d ", rd->GetSymmetryNumber());
+    xmlTextWriterEndElement(writer());//array
+    xmlTextWriterEndElement(writer());//property
+    return true;
+  }
+
+
+
 }//namespace

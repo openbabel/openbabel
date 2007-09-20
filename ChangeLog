@@ -1,3 +1,14 @@
+2007-09-20  Chris Morley
+
+	* include/openbabel/generic.h: add new class OBRotationData
+	
+	* src/formats/gaussformat.cpp: (GaussianOutputFormat::ReadMolecule)
+	read in vibrational and rotational data to OBGenericData classes
+	
+	* src/formats/xml/cmlformat.cpp:(WriteMolecule) if mol title is a
+	filename, remove path and extension before outputing to id attribute
+	Add WriteRotationData and WriteVibrationData (mainly for MESMER)
+	
 2007-09-15  Chris Morley
 
 	* src/mol.cpp(GetTotalSpinMultiplicity): now returns correct value

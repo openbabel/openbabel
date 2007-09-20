@@ -264,7 +264,15 @@ namespace OpenBabel
     int charge = 0;
     unsigned int spin = 1;
     bool hasPartialCharges = false;
-    
+
+    //Vibrational data
+    std::vector< std::vector< vector3 > > Lx;
+    std::vector<double> Frequencies, Intensities;;
+    //Rotational data
+    std::vector<double> RotConsts(3);
+    int RotSymNum;
+    OBRotationData::RType RotorType;
+
     mol.BeginModify();
     
     while (ifs.getline(buffer,BUFF_SIZE))
@@ -324,6 +332,43 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
+
+        else if(strstr(buffer, " Frequencies --")) //vibrational frequencies
+        {
+          //The info should appear only once as several blocks starting with this line
+          tokenize(vs, buffer);
+          for(int i=2; i<vs.size(); ++i)
+            Frequencies.push_back(atof(vs[i].c_str()));
+          ifs.getline(buffer,BUFF_SIZE); //Red. masses
+          ifs.getline(buffer,BUFF_SIZE); //Frc consts
+          ifs.getline(buffer,BUFF_SIZE); //IR Inten
+          tokenize(vs, buffer);
+          for(int i=3; i<vs.size(); ++i)
+            Intensities.push_back(atof(vs[i].c_str()));
+          //** Lx yet to be done **
+        }
+
+        else if(strstr(buffer, " This molecule is "))//rotational data
+        {
+          if(strstr(buffer, "asymmetric"))
+            RotorType = OBRotationData::ASYMMETRIC;
+          else if(strstr(buffer, "symmetric"))
+            RotorType = OBRotationData::SYMMETRIC;
+          else if(strstr(buffer, "linear"))
+            RotorType = OBRotationData::LINEAR;
+          else
+             RotorType = OBRotationData::UNKNOWN;
+          ifs.getline(buffer,BUFF_SIZE); //symmetry number
+          tokenize(vs, buffer);
+          RotSymNum = atoi(vs[3].c_str());
+          ifs.getline(buffer,BUFF_SIZE); //Rot temperatures
+          ifs.getline(buffer,BUFF_SIZE); //Rot consts
+          tokenize(vs, buffer);
+          for(int i=3; i<vs.size(); ++i)
+            RotConsts[i-3] = atof(vs[i].c_str());
+         
+        }
+
         else if(strstr(buffer,"SCF Done:") != NULL)
           {
 #define HARTREE_TO_KCAL 627.509
@@ -335,6 +380,21 @@ namespace OpenBabel
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
       mol.EndModify();
       return false;
+    }
+    
+    //Attach vibrational data, if there is any, to molecule
+    if(Frequencies.size()>0)
+    {
+      OBVibrationData* vd = new OBVibrationData;
+      vd->SetData(Lx, Frequencies, Intensities);
+      mol.SetData(vd);
+    }
+    //Attach rotational data, if there is any, to molecule
+    if(RotConsts[0]!=0.0)
+    {
+      OBRotationData* rd = new OBRotationData;
+      rd->SetData(RotorType, RotConsts, RotSymNum);
+      mol.SetData(rd);
     }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
