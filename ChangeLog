@@ -1,3 +1,8 @@
+2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/chemdrawcdx.cpp: fixed bond order for triple and
+	aromatic bonds.
+
 2007-09-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp (Separate): More defensive programming to prevent

@@ -768,6 +768,23 @@ namespace OpenBabel
                 break;
               case kCDXProp_Bond_Order:
                 order = getBondOrder(ifs, size); 
+                switch (order)
+                  {
+                  case 0xFFFF: // undefined, keep 1 for now
+                    order = 1;
+                  case 0x0001:
+                  case 0x0002:
+                    break;
+                  case 0x0004:
+                    order = 3;
+                    break;
+                  case 0x0080: // aromatic bond
+                    order = 5;
+                    break;
+                  default: // other cases are just not supported, keep 1
+                    order = 1;
+                    break;
+                  }
                 break;
               case kCDXProp_Bond_Display:
                 stereo = getBondDisplay(ifs, size); 
