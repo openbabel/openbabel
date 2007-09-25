@@ -103,7 +103,7 @@ namespace OpenBabel
 
   // Class OBForceFieldMMFF94
   // class introduction in forcefieldmmff94.cpp
-  class OBAPI OBForceFieldMMFF94: public OBForceField
+  class OBForceFieldMMFF94: public OBForceField
   {
     protected:
       //! \return Parses the parameter file

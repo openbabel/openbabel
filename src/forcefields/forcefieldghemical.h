@@ -72,7 +72,7 @@ namespace OpenBabel
 
   // Class OBForceFieldGhemical
   // class introduction in forcefieldghemical.cpp
-  class OBAPI OBForceFieldGhemical: public OBForceField
+  class OBForceFieldGhemical: public OBForceField
   {
     protected:
       //!  Parses the parameter file

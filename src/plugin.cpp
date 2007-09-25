@@ -98,12 +98,16 @@ string OBPlugin::FirstLine(const char* txt)
 //Default version
 bool OBPlugin::Display(string& txt, const char* param, const char* ID)
 {
-  //Use the provided ID if possible. If more than one ID has been registedThe ID stored 
+  //Use the provided ID if possible.
   if(ID)
     txt = ID;
   else
     txt = GetID();
-  txt += '\t'+ FirstLine(Description());
+  txt += '\t';
+  if(param && !strcasecmp(param, "verbose"))
+    txt += Description();
+  else
+    txt += FirstLine(Description());
   return true;
 }
 

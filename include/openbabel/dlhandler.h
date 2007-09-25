@@ -26,8 +26,8 @@ GNU General Public License for more details.
 
 // These macros are used in DLL builds. If they have not
 // been set in babelconfig.h, define them as nothing.
-#ifndef OBCONV
-	#define OBCONV
+#ifndef OBERROR
+	#define OBERROR
 #endif
 #ifndef OBDLL
 	#define OBDLL
@@ -43,7 +43,7 @@ GNU General Public License for more details.
     general purpose. Internally, it is used for dynamic loading and unloading
     OBFormat file translation modules.
 **/
-class OBCONV DLHandler
+class OBERROR DLHandler
 {
 public:
 

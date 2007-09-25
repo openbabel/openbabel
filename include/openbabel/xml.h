@@ -23,11 +23,6 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-  // This macro is used in DLL builds. If it has not
-  // been set in babelconfig.h, define it as nothing.
-#ifndef OBCOMMON
-#define OBCOMMON
-#endif
 
   //forward declaration
   class XMLBaseFormat;
@@ -49,7 +44,7 @@ namespace OpenBabel
       multiple namespaces, and the conversion should call appropriate
       XMLBaseFormat formats as needed.
   **/
-  class OBCOMMON XMLConversion : public OBConversion
+  class XMLConversion : public OBConversion
     {
     public:
       ///Existing OBConversion instance copied
@@ -143,7 +138,7 @@ namespace OpenBabel
   //*************************************************
   /// \class XMLBaseFormat xml.h <openbabel/xml.h>
   /// \brief Abstract class containing common functionality for XML formats.
-  class OBCOMMON XMLBaseFormat : public OBFormat
+  class XMLBaseFormat : public OBFormat
     {
     protected:
       XMLConversion* _pxmlConv;
@@ -155,6 +150,7 @@ namespace OpenBabel
       int _embedlevel;
 
     public:
+      ~XMLBaseFormat(){}
       virtual const char* NamespaceURI()const=0;
       virtual bool DoElement(const std::string& ElName){return false;};
       virtual bool EndElement(const std::string& ElName){return false;};
@@ -207,12 +203,13 @@ namespace OpenBabel
   //*************************************************
   /// \class XMLMoleculeFormat xml.h <openbabel/xml.h>
   /// \brief Abstract class for XML formats which represent molecules
-  class OBCOMMON XMLMoleculeFormat : public XMLBaseFormat
+  class XMLMoleculeFormat : public XMLBaseFormat
     {
     protected:
       OBMol* _pmol;
 
     public:
+      ~XMLMoleculeFormat(){}
       virtual bool ReadChemObject(OBConversion* pConv)
         {
           return OBMoleculeFormat::ReadChemObjectImpl(pConv, this);

@@ -81,9 +81,14 @@ public:
   ///Utility function to return only the first line of a string
   static std::string FirstLine(const char* txt);
 
+  ///Return an iterator at the start of the map of the plugin types PluginID or,
+  /// if there is no such map, the end of the top level plugin map.
   static PluginIterator Begin(const char* PluginID)
   {
-    return GetTypeMap(PluginID).begin();
+    if( !strcmp(PluginID, "plugins") || GetTypeMap(PluginID)!=PluginMap())
+      return GetTypeMap(PluginID).begin();
+    else
+      return PluginMap().end();
   }
 
   static PluginIterator End(const char* PluginID)

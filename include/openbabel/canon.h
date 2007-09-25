@@ -24,7 +24,7 @@ GNU General Public License for more details.
 // Return vector is indexed from zero, corresponds to "atom->GetIdx()-1"
 namespace OpenBabel {
 
-void CanonicalLabels(OBMol *pmol,
+void OBAPI CanonicalLabels(OBMol *pmol,
                      OBBitVec &frag_atoms,
                      std::vector<unsigned int> &symmetry_classes,
                      std::vector<unsigned int> &canonical_labels);

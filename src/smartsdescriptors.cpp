@@ -33,7 +33,15 @@ public:
   SmartsDescriptor(const char* ID, const char* smarts, const char* descr)
     : OBDescriptor(ID, false), _smarts(smarts), _descr(descr){}
 
-  virtual const char* Description(){ return _descr;}; 
+  virtual const char* Description()
+  {
+    //Adds the SMARTS string to the description
+    static string txt;
+    txt =  _descr;
+    txt += "\n\t SMARTS: ";
+    txt += _smarts;
+    return txt.c_str();
+  }
 
   double Predict(OBBase* pOb)
   {
@@ -56,7 +64,13 @@ private:
 
   SmartsDescriptor theHBD("HBD", "[!#6;!H0]","Number of Hydrogen Bond Donors (JoelLib)");
   SmartsDescriptor theHBA1("HBA1", "[$([!#6;+0]);!$([F,Cl,Br,I]);!$([o,s,nX3]);!$([Nv5,Pv5,Sv4,Sv6])]",
-    "Number of Hydrogen Bond Acceptors 1 (JoelLib)");
+    "Number of Hydrogen Bond Acceptors 1 (JoelLib)\n"
+    "\t Identification of Biological Activity Profiles Using Substructural\n"
+    "\t Analysis and Genetic Algorithms -- Gillet, Willett and Bradshaw,\n"
+    "\t U. of Sheffield and Glaxo Wellcome.\n"
+    "\t Presented at Random & Rational: Drug Discovery via Rational Design\n"
+    "\t and Combinitorial Chemistry, Strategic Research Institute, Princeton\n"
+    "\t NJ, Sept. 1995" );
   SmartsDescriptor theHBA2("HBA2", "[$([$([#8,#16]);!$(*=N~O);!$(*~N=O);X1,X2]),$([#7;v3;!$([nH]);!$(*(-a)-a)])]",
     "Number of Hydrogen Bond Acceptors 2 (JoelLib)");
   SmartsDescriptor thenF("nF", "F","Number of Fluorine Atoms");

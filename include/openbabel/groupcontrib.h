@@ -36,18 +36,21 @@ namespace OpenBabel
       This is the base class for calculations that use the JOELib2 contribution 
       algorithm. 
     */
-class OBAPI OBGroupContrib : public OBDescriptor
+class OBDESC OBGroupContrib : public OBDescriptor
 {
 public:
-  //! constructor. Each instance provides an ID and a datafile.
-  OBGroupContrib(const char* ID, const char* filename, const char* descr)
-    : OBDescriptor(ID, false), _filename(filename), _descr(descr){}
 
   /*! Predict the logP, MR, TPSA (each instance of OBGroupContrib 
    *  uses different parameters loaded from its own datafile) for 
    *  molecule mol using the group contributions algorithm from JOELib2.
    */
-  virtual const char* Description(){ return _descr;}; 
+
+  //! constructor. Each instance provides an ID and a datafile.
+  OBGroupContrib(const char* ID, const char* filename, const char* descr)
+    : OBDescriptor(ID, false), _filename(filename), _descr(descr){}
+
+  virtual const char* Description();
+
   virtual double Predict(OBBase* pOb); 
 
  private:

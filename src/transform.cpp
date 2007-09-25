@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <openbabel/mol.h>
 #include <openbabel/descriptor.h>
+#include <openbabel/op.h>
 
 using namespace std;
 namespace OpenBabel
@@ -44,6 +45,8 @@ namespace OpenBabel
     //Parse GeneralOptions
     if(pOptions->empty())
       return this;
+
+    OBOp::DoOps(this, pOptions); //*** experimental plugin class for general options
 
     bool ret=true;
     bool fmatch=true;
@@ -193,7 +196,8 @@ namespace OpenBabel
   ///////////////////////////////////////////////////
   const char* OBMol::ClassDescription()
   {
-    return "For conversions of molecules\n"
+    static string ret;
+    ret = "For conversions of molecules\n"
 "Additional options :\n"
 "-d Delete hydrogens (make implicit)\n"
 "-h Add hydrogens (make explicit)\n"
@@ -212,7 +216,13 @@ namespace OpenBabel
 "--property <attrib> <value> add or replace a property (SDF)\n"
 "--title <title> Add or replace molecule title\n"
 "--addtotitle <text> Append to title\n"
-"--addformula Append formula to title\n\n" ;
+"--addformula Append formula to title\n" ;
+
+    //Append lines from OBOp plugins that work with OBMol
+    OBMol dummymol; //just needed to carry class type information; messy!
+    ret += OBOp::OpOptions(&dummymol);
+
+      return ret.c_str();
   }
 
 } //namespace OpenBabel

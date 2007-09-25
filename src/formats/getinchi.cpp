@@ -119,7 +119,7 @@ h
 H
 '
 */
-string OBAPI GetInChI(istream& is);
+string OBCOMMON GetInChI(istream& is);
 
 string GetInChI(istream& is)
 {

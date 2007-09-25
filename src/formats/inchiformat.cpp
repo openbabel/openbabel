@@ -40,7 +40,7 @@ public:
     OBConversion::RegisterOptionParam("n", this, 0, OBConversion::INOPTIONS);
     OBConversion::RegisterOptionParam("t", this);
     OBConversion::RegisterOptionParam("X", this, 1, OBConversion::OUTOPTIONS);
-    OBConversion::RegisterOptionParam("k", this, 0, OBConversion::OUTOPTIONS);
+    OBConversion::RegisterOptionParam("K", this, 0, OBConversion::OUTOPTIONS);
     OBConversion::RegisterOptionParam("X", this, 1, OBConversion::INOPTIONS);
   }
 
@@ -53,7 +53,7 @@ public:
     " X <Option string> List of InChI options:\n"
     " t add molecule name\n"
     " a output auxilliary information\n"
-    " k output InChIKey\n"
+    " K output InChIKey\n"
     " u output only unique molecules\n"
     " U output only unique molecules and sort them\n"
     " e compare first molecule to others\n"

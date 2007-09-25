@@ -45,6 +45,7 @@ BEGIN_EVENT_TABLE(OBGUIFrame, wxFrame)
   EVT_MENU_RANGE(ID_SHOWCONVOPTIONS,ID_SHOWOUTOPTIONS, OBGUIFrame::OnChangeFormat)
   EVT_MENU(wxID_ABOUT, OBGUIFrame::OnAbout)
   EVT_MENU(wxID_HELP, OBGUIFrame::OnHelp)
+//  EVT_UPDATE_UI(ID_PLUGINS, OBGUIFrame::OnPlugins)
   EVT_BUTTON(ID_INGETFILES, OBGUIFrame::OnGetInputFile)
   EVT_BUTTON(ID_OUTGETFILES, OBGUIFrame::OnGetOutputFile)
   EVT_BUTTON(ID_ININFO, OBGUIFrame::OnInFormatInfo)
@@ -65,6 +66,7 @@ IMPLEMENT_APP(OBGUIApp)
 // 'Main program' equivalent: the program execution "starts" here
 bool OBGUIApp::OnInit()
 {
+  OBConversion dummy; //needed for OBConversion to load plugin classes (including formats)
   //Read in the stored window sizes and extensions previously used (or use the defaults)
   wxConfig config("OpenBabelGUI");
   wxSize size;
@@ -797,7 +799,7 @@ void OBGUIFrame::DoOptions(OpenBabel::OBConversion& Conv)
 void OBGUIFrame::GetAvailableFormats()
 {
   //Get data on available formats and add to comboboxes and to filter string
-  OBConversion dummy; //needed for OBConversion to load format classes
+  //OBConversion dummy; //needed for OBConversion to load format classes
   int nInSel=0,nOutSel=0;
   m_pInFormat->Clear();
   m_pOutFormat->Clear();
@@ -805,35 +807,39 @@ void OBGUIFrame::GetAvailableFormats()
   OutputFilterString = InputFilterString;
   m_ActiveFormats.Clear();
 
-  OBFormat::PluginIterator itr;
-  for(itr=OBFormat::Begin("formats");itr!=OBFormat::End("formats");++itr)
+  std::vector<std::string> vec;
+  if(OBPlugin::ListAsVector("formats", NULL, vec))//check that there are some formats
   {
-    OBFormat* pFormat = static_cast<OBFormat*>(itr->second);
-    if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
-      continue;
+    OBFormat::PluginIterator itr;
+    for(itr=OBFormat::Begin("formats");itr!=OBFormat::End("formats");++itr)
+    {
+      OBFormat* pFormat = static_cast<OBFormat*>(itr->second);
+      if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
+        continue;
 
-    std::string stxt;
-    itr->second->Display(stxt, NULL, itr->first);
-    wxString txt(stxt);
-    int pos = txt.find('[');
-    if(pos!=wxString::npos)
-      txt.erase(pos);
-    //Check whether is in restricted set of formats, if this is in use
-    if(!m_ActiveFormats.Add(txt) && viewMenu->IsChecked(ID_RESTRICTFORMATS))
-      continue;
-    int n;
-    if(!(pFormat->Flags() & NOTREADABLE))
-    {
-      n = m_pInFormat->Append(txt,pFormat);
-      InputFilterString+=txt.Left(txt.Find(" "));
-      InputFilterString+=";*.";
+      std::string stxt;
+      itr->second->Display(stxt, NULL, itr->first);
+      wxString txt(stxt);
+      int pos = txt.find('[');
+      if(pos!=wxString::npos)
+        txt.erase(pos);
+      //Check whether is in restricted set of formats, if this is in use
+      if(!m_ActiveFormats.Add(txt) && viewMenu->IsChecked(ID_RESTRICTFORMATS))
+        continue;
+      int n;
+      if(!(pFormat->Flags() & NOTREADABLE))
+      {
+        n = m_pInFormat->Append(txt,pFormat);
+        InputFilterString+=txt.Left(txt.Find(" "));
+        InputFilterString+=";*.";
+      }
+      if(!(pFormat->Flags() & NOTWRITABLE))
+      {
+        n = m_pOutFormat->Append(txt,pFormat);
+        OutputFilterString+=txt.Left(txt.Find(" "));
+        OutputFilterString+=";*.";
+      }
     }
-    if(!(pFormat->Flags() & NOTWRITABLE))
-    {
-      n = m_pOutFormat->Append(txt,pFormat);
-      OutputFilterString+=txt.Left(txt.Find(" "));
-      OutputFilterString+=";*.";
-    }		
   }
   if(m_pInFormat->GetCount()==0)
   {
@@ -916,35 +922,30 @@ void OBGUIFrame::OnMouseWheel(wxMouseEvent& event)
   m_pInFilename->ToNextFile(-delta); //is direction correct?
 }
 
+
 void OBGUIFrame::MakePluginsMenu()
 {
-  std::string toplist = OBPlugin::ListAsString(NULL);
-  std::string::size_type pos1=0, pos2;
   int n=0;
-  for(;;)
+  std::vector<std::string> topvec;
+  OBPlugin::ListAsVector(NULL, NULL, topvec);//get 'formats', 'fingerprints', etc
+  for(int itop=0; itop < topvec.size(); ++itop)
   {
-    pos2 = toplist.find('\n', pos1);
-    if(pos2==std::string::npos)
-      break;
-    std::string type(toplist.substr(pos1,pos2-pos1));
     wxMenu* subMenu = new wxMenu();
-    std::string sublist = OBPlugin::ListAsString(type.c_str());
-    std::string::size_type pos3=0, pos4;
-    for(;;)
+    std::vector<std::string> subvec;
+//    std::vector<std::string> verbosevec;
+    OBPlugin::ListAsVector(topvec[itop].c_str(), NULL, subvec);//get each format, etc as single line
+//    OBPlugin::ListAsVector(topvec[itop].c_str(), "verbose", verbosevec);//get full description of each format
+    for(int isub=0; isub < subvec.size(); ++isub)
     {
-      pos4 = sublist.find('\n', pos3);
-      if(pos4==std::string::npos)
-        break;
-      std::string subtype(sublist.substr(pos3,pos4-pos3));
-      subMenu->Append(ID_PLUGINS+n++, wxString(subtype.c_str()));
-      pos3=pos4+1;
+//      wxMenu* subsubMenu = new wxMenu();
+//      subsubMenu->Append(ID_PLUGINS+n++,wxString(verbosevec[isub].c_str()));
+//      subMenu->AppendSubMenu(subsubMenu, wxString(subvec[isub].c_str()));
+      subMenu->Append(ID_PLUGINS+n++,wxString(subvec[isub].c_str()));
     }
-    listMenu->AppendSubMenu(subMenu, wxString(type.c_str()),
+    listMenu->AppendSubMenu(subMenu, wxString(topvec[itop].c_str()),
       _T("Plugin Classes"));
-    pos1=pos2+1;
   }
 }
-
 void CFilenames::OnKeyPress(wxKeyEvent& event)
 {
   int delta=1;

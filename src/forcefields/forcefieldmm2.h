@@ -28,7 +28,7 @@ namespace OpenBabel
 {
   // Class OBForceFieldMM2
   // class introduction in forcefield.cpp
-  class OBAPI OBForceFieldMM2: public OBForceField
+  class OBForceFieldMM2: public OBForceField
   {
     protected:
       //! \return Parses the parameter file

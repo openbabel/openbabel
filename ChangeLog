@@ -1,3 +1,40 @@
+2007-09-25  Chris Morley
+
+	Added files:
+	include/openbabel/op.h: new OBOp class, plugin options
+	src/ops.cpp: trivial OBOp class for centering
+	src/op2d.cpp: class to add 2D coordinates using RDKit
+	src/RDKitConv.cpp: conversion OBMol to RWMol
+	
+	* include/openbabel/descriptor.h: changeprefix macro from OBERROR
+	to OBAPI.
+	
+	* src/descriptor.cpp(Display), src/groupcontrib.cpp(Display),
+	src/smartsdescriptors:
+	added form -L descriptors ID to give verbose description at runtime
+	
+	* include/openbabel dlhandler.h, forcefield.h, fingerprint .h,
+	groupcontrib.h, xml.h, src/forcefields/*.h, src/formats/getinchi.cpp,
+	canon.h: change prefix macros
+	
+	* include/openbabel/plugin.h(GetTypeMap): improve error return when
+	there are no instances, but still a mess, but should not occur.
+	
+	* src/GUI/OBGUI.cpp(MakePluginsMenu): modified to use ListAs Vector
+	rather than ListAs String.
+	
+	* src/obconversion.cpp: get rid of ill-considered USE_OBF 
+	and continue with USING_DYNAMIC_LIBS.
+	
+	* src/transform.cpp(DoTransformations): add two hooks for OBOp
+	classes
+	
+	* windows-vc2005/babelconfig.h: remove USE_OBF and add OBDESC
+	
+	* src/formats/inchiformat.cpp: change InChIKey option to -xK.
+	(-xk was already used.)
+
+
 2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/chemdrawcdx.cpp: fixed bond order for triple and

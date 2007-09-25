@@ -476,6 +476,21 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
     return false;
   }
 
+bool OBDescriptor::Display(std::string&txt, const char* param, const char* ID)
+{
+  //Use the base class version except when the parameter is a descriptor ID.
+  //For a paramater which is the matching descriptor set verbose.
+  //No display for other descriptors.
+  //Allows babel descriptors HBA1
+  if(param  && FindType(param))
+  {
+    if(strcmp(ID, param))
+      return false;
+    param = "verbose";
+  }
+  return OBPlugin::Display(txt,param,ID);
+}
+
 }//namespace
 
 /* 
@@ -552,20 +567,4 @@ representation of a numerical property like logP.
 The classes MWFilter and TitleFilter illustrate the code that has to be 
 provided for numerical and non-numerical descriptors.
 
-Rethink
-The filter string is a list of identifiers and predicates. The identifiers
-(consisting of only letters and numbers) do not need to have been declared
-anywhere before. FilterCompare parses the identifier and then
- - if it is an attribute name in OBPairData, originating from an earlier 
-   calculation or more likely input with the molecule, the value is retrieved.
-   The predicate is parsed and converted to a number if that is possible.
-   If it is the value is also converted and a numerical comaparison made.
-   If the predicate does not contain a number, the string there is compared
-   with the value as a string.
-   If there is no comparison operator return true - means the identifer exists
-   in OBPairData.
- - if the identifier is not in OBPairData, see if it is the ID of an OBDescriptor.
-   If it is, call its Compare function to parse and compare.
-   If it is not a OBDescriptor return false - the identifer does not exist.
-   If there is no comparison operator return true if 
 */ 

@@ -33,6 +33,16 @@ using namespace std;
 namespace OpenBabel
 {
 
+  const char* OBGroupContrib::Description()
+  {
+   //Adds name of datafile containing SMARTS strings to the description
+    static string txt;
+    txt =  _descr;
+    txt += "\n\t Datafile: ";
+    txt += _filename;
+    return txt.c_str();
+  } 
+
   bool OBGroupContrib::ParseFile()
   {
     OBSmartsPattern *sp;

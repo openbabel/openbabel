@@ -120,6 +120,28 @@ TitleFilter theTitleFilter("title");
 
 //**************************************************************
 
+/// Temporary class to test spin multiplicity
+class SpinFilter : public OBDescriptor
+{
+public:
+  SpinFilter(const char* ID) : OBDescriptor(ID){};
+  virtual const char* Description(){return "Total Spin Multiplicity";};
+
+  double Predict(OBBase* pOb)
+  {
+    OBMol* pmol = dynamic_cast<OBMol*> (pOb);
+    if(!pmol)
+      return 0;
+    return pmol->GetTotalSpinMultiplicity();
+  }
+};
+
+//Make a global instance
+SpinFilter theTitleSpin("spinMult");
+
+
+//**************************************************************
+
 class InChIFilter : public OBDescriptor
 {
 public:

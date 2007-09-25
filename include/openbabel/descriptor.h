@@ -29,7 +29,7 @@ namespace OpenBabel
 {
 class OBBase; //Forward declaration; used only as pointer.
 
-class OBERROR OBDescriptor : public OBPlugin
+class OBAPI OBDescriptor : public OBPlugin
 {
   MAKE_PLUGIN(OBDescriptor)
 
@@ -48,6 +48,11 @@ class OBERROR OBDescriptor : public OBPlugin
   ///Parses the filter stream for a relational expression and returns its result when applied to the chemical object
   virtual bool Compare(OBBase* pOb, std::istream& ss, bool noEval);
   
+  ///Write information on a plugin class to the string txt.
+  ///If the parameter is a descriptor ID, displays the verbose description for that descriptor only
+  /// e.g. babel -L descriptors HBA1
+  virtual bool Display(std::string&txt, const char* param, const char* ID=NULL);
+
   /// Interprets the --filter option string and returns the combined result of all the comparisons it contains  
   static bool FilterCompare(OBBase* pOb, std::istream& ss, bool noEval);
   
