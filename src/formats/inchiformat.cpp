@@ -586,7 +586,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   
   string ostring = inout.szInChI;
 #ifdef _WIN32 //temporary until UNIX build has InChI 1.02 beta
-  if(pConv->IsOption("k")) //Generate InChIKey and add after InChI on same line
+  if(pConv->IsOption("K")) //Generate InChIKey and add after InChI on same line
   {
     char szINCHIKey[26];
     GetINCHIKeyFromINCHI(inout.szInChI, szINCHIKey);

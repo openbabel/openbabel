@@ -1,3 +1,14 @@
+2007-09-26  Chris Morley
+
+	* src/formats/inchiformat.cpp: forgot to change InChIKey option
+	in code  to -xK.
+	
+	* include/zconf.h: replaced. Needed for Windows builds.
+
+	Added Windows build files for obf (multiple DLL) build
+
+	* windows-vc2005/babelconfig.h: replace USE_OBF by USING_DYNAMIC_LIBS
+
 2007-09-25  Chris Morley
 
 	Added files:

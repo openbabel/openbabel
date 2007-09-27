@@ -60,7 +60,7 @@
   #define OBCOMMON __declspec(dllexport)
   #define OBFPRT __declspec(dllexport)
   #define EXTERN __declspec(dllexport) extern
-#elif defined(USE_OBF)
+#elif defined(USING_DYNAMIC_LIBS)
   //builds with multiple DLLs like OBDLL.dll, OBConv.dll , *.obf
   #pragma warning (disable : 4251) //no dll interface for some templated classes
 
@@ -86,7 +86,14 @@
     #define OBFPRT __declspec(dllimport)
   #endif
 
-  #if defined(OBCOMMON_EXPORTS)
+  #if defined(OBDESC_EXPORTS)
+    //OBDESC being built
+    #define OBDESC __declspec(dllexport)
+  #else
+    #define OBDESC __declspec(dllimport)
+  #endif
+
+#if defined(OBCOMMON_EXPORTS)
    //OBCommonFormats being built
     #define OBCOMMON __declspec(dllexport)
   #else
