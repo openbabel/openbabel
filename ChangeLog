@@ -1,3 +1,7 @@
+2007-10-03  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* include/openbabel/forcefield.h: fixed typos.
+
 2007-09-26  Chris Morley
 
 	* src/formats/inchiformat.cpp: forgot to change InChIKey option
