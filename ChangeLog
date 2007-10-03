@@ -1,5 +1,11 @@
 2007-10-03  Jean Brefort  <jean.brefort@normalesup.org>
 
+	* include/openbabel/groupcontrib.h: removed undefined OBDESC.
+	* include/openbabel/op.h: removed OBOp:: from inside class
+	definition.
+
+2007-10-03  Jean Brefort  <jean.brefort@normalesup.org>
+
 	* include/openbabel/forcefield.h: fixed typos.
 
 2007-09-26  Chris Morley

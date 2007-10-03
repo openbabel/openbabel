@@ -43,7 +43,7 @@ public:
   virtual bool WorksWith(OBBase* pOb)const=0;
 
   /// Returns string describing options, for display with -H and to make checkboxes in GUI
-  static std::string OBOp::OpOptions(OBBase* pOb)
+  static std::string OpOptions(OBBase* pOb)
   {
     std::string s;
     OBPlugin::PluginIterator itr;

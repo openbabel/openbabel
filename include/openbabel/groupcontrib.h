@@ -36,7 +36,7 @@ namespace OpenBabel
       This is the base class for calculations that use the JOELib2 contribution 
       algorithm. 
     */
-class OBDESC OBGroupContrib : public OBDescriptor
+class OBGroupContrib : public OBDescriptor
 {
 public:
 
