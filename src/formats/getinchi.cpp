@@ -17,29 +17,62 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <fstream>
 #include <string>
+
+// This macro is used in DLL builds. If it has not
+// been set in babelconfig.h, define it as nothing.
+#ifndef OBCOMMON
+  #define OBCOMMON
+#endif
+
 using namespace std;
 namespace OpenBabel
 {
 
 ///Returns true if character is not one used in an InChI.
-bool inline isnic(char ch)
+bool isnic(char ch)
 {
   //This set of characters could be extended
-  static string nic("\"\'\\@<>!$%&{}[]");
-  return ch<0 || nic.find(ch)!=string::npos;
-}
+  static std::string nic("\"\'\\@<>!$%&{}[]");
+  return ch<0 || nic.find(ch)!=std::string::npos;
+};
 
 /// @brief Reads an InChI (possibly split) from an input stream and returns it as unsplit text.
-/*!
-  This function recovers a normal InChI from an input stream which
-  contains other arbitary text. The InChI string can have
-  extraneous characters inserted, for example because of word wrapping,
-  provided it follows certain rules.
+/// The input stream is left after the end of the extracted InChI ready to look for the next one.
+std::string OBCOMMON GetInChI(std::istream& is);
 
-  Dmitrii Tchekhovskoi made a proposal for "InChI hyphenation".
+/*!
+This function recovers a normal InChI from an input stream which
+contains other arbitary text. The InChI string can have
+extraneous characters inserted, for example because of word wrapping,
+provided it follows certain rules.
+
+When this file (getinchi.cpp) is read, 15 InChIs will be extracted, e.g.
+ babel -iinchi getinchi.cpp -osmi
+
+Inside an InChI string ignore anything between < and >
+This means that an InChI string can be split up by inserting any number of <br /> elements:
+InChI=1/C18H25NO6S/c1-14-9-11-15(12-10-14)26(22,23)19(17(21)25-18(2,3)4)13<br />-7-6-8-16(20)24-5/h6,8-12H,7,13H2,1-5H3/b8-6-
+
+Any whitespace after the > is also ignored, so that newline characters can be added:
+InChI=1/C29H33NO4Si/c1-5-32-28(31)26-25(34-27(30-26)22-15-9-6-10-16-22)<br />
+21-33-35(29(2,3)4,23-17-11-7-12-18-23)24-19-13-8-14-20-24<br /> 
+/h6-20,25-26H,5,21H2,1-4H3/t25-,26-/m0/s1
+
+A second consecutive <...> element ends an unquoted InChI string:
+<p>
+<small>InChI=1/C47H58N2O10SSi/c1-10-56-43(51)47(36(32-41(50)55-9)30-31-49(44(52)59-45<br />
+(3,4)5)60(53,54)37-28-26-34(2)27-29-37)40<br />
+(58-42(48-47)35-20-14-11-15-21-35)33-57-61(46(6,7)8,38-22-16-12-17-23-38)39-24-<br />
+18-13-19-25-39/h11-29,36,40H,10,30-33H2,1-9H3<br />
+/t36-,40-,47-/m0/s1</small>
+</p>
+
+  Dmitrii Tchekhovskoi made a proposal for "InChI hyphenation" or "quoted InChI".
   http://sourceforge.net/mailarchive/forum.php?thread_id=10200459&forum_id=45166
-  The function here is consistent with this proposal but extends
-  it, allowing a wider range of corrupted InChIs to be accepted.
+  This proposal has not been followed up probably because InChKey was introduced.
+
+  However this function GetInChI() parses quoted InChIs of this form.
+  It also extends this proposal, allowing a wider range of corrupted InChIs to be accepted.
 
 The original proposal was essentially:
 - When an InChI string is enclosed by " quote characters,
@@ -54,7 +87,9 @@ The extensions are:
   and can be any character that is not used in InChI - a NIC 
   [never miss the opportunity for a TLA!]. This means that
   conflicts in systems which have other uses for the quote character
-  can be avoided.
+  can be avoided. 
+  As a special case, '>' is not allowed as a quote character because InChI
+  strings in HTML commonly start after <...> elements.
 - As well as whitespace characters (which are ignored), a quoted
   InChI can contain an extraneous string which starts and ends with
   a NIC. This allows inserted strings like <br /> to be ignored.
@@ -65,8 +100,6 @@ The extensions are:
   width is 2.
 
 The following are some examples of split InChIs. 
-OpenBabel will find and convert 12 InChIs
-in this file, e.g. babel -iinchi getinchi.cpp -osmi
 
 First two unbroken examples, the first is unquoted
 InChI=1/CH4/h1H4 methane
@@ -119,7 +152,6 @@ h
 H
 '
 */
-string OBCOMMON GetInChI(istream& is);
 
 string GetInChI(istream& is)
 {
@@ -129,6 +161,7 @@ string GetInChI(istream& is)
   statetype state = before_inchi;
   char ch, lastch=0, qch=0;
   size_t split_pos = 0;
+  bool inelement=false, afterelement=false;
 
   while((ch=is.get())!=EOF)
   {
@@ -143,6 +176,34 @@ string GetInChI(istream& is)
           qch = lastch;
         }
         lastch = ch;
+      }
+    }
+    
+    else if(ch=='<')
+    {
+      // Ignore the content of any <...> elements
+      // But a second consecutive  <...> element terminates an unquoted InChI
+      if(afterelement && state==unquoted)
+          return result;
+      inelement=true; 
+    }
+    else if(inelement)
+    {
+      if(afterelement)
+      {
+        //Now  reading after a <...> inserted in the InChI string
+        //Neglect whitespace, but any other character reverts to normal InChI parsing
+        if(ch<0 || !isspace(ch))
+        {
+          is.unget();
+          afterelement=false;
+          inelement=false;
+        }
+      }
+      else
+      {
+        if(ch=='>')
+          afterelement=true; //look for whitespace after end of element
       }
     }
 
@@ -169,7 +230,7 @@ string GetInChI(istream& is)
         if(prefix.compare(0,result.size(),result)==0) //true if correct
         {
           if(result.size()==prefix.size())
-            state = isnic(qch) ? quoted : unquoted;
+            state = isnic(qch)&& qch!='>' ? quoted : unquoted;
         }
         else
         {

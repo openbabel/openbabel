@@ -186,7 +186,7 @@ namespace OpenBabel
   {
     vector3 da, db, dc, gradient;
     vector3 rab_da, rab_db, rbc_db, rbc_dc, theta_da, theta_db, theta_dc;
-    double dE;
+//    double dE;
 
     if ((atom->GetIdx() != a->GetIdx()) && (atom->GetIdx() != b->GetIdx()) && (atom->GetIdx() != c->GetIdx()))
       return VZero;
@@ -398,8 +398,8 @@ namespace OpenBabel
  
   double OBFFVDWCalculationMMFF94::GetEnergy()
   {
-    double rab2, rab3, rab4, rab5, rab6, rab7;
-    double erep2, erep3, erep4, erep5, erep6, erep7;
+    double rab2, /*rab3,*/ rab4, /*rab5,*/ rab6, rab7;
+    double erep2, /*erep3,*/ erep4, /*erep5,*/ erep6, erep7;
 
     rab = a->GetDistance(b);
     rab2 = rab * rab;
@@ -458,8 +458,8 @@ namespace OpenBabel
   /// \todo Currently unimplemented but needs to be here for linking
   double OBForceFieldMMFF94::E_Electrostatic()
   {
-    OBAtom *a, *b, *c, *d;
-    double e, energy = 0.0;
+//    OBAtom *a, *b, *c, *d;
+    double energy = 0.0;//, e;
     
     IF_OBFF_LOGLVL_HIGH {
       *logos << std::endl << "E L E C T R O S T A T I C   I N T E R A C T I O N S" << std::endl << std::endl;
@@ -1470,7 +1470,7 @@ namespace OpenBabel
       //these calculations only need to be done once for each pair, 
       //we do them now and save them for later use
       double R_AA, R_BB, R_AB6, g_AB, g_AB2;
-      double R_AB2, R_AB4, R_AB7, sqrt_a, sqrt_b;
+      double R_AB2, R_AB4, /*R_AB7,*/ sqrt_a, sqrt_b;
  
       R_AA = vdwcalc.Aa * pow(vdwcalc.alpha_a, 0.25);
       R_BB = vdwcalc.Ab * pow(vdwcalc.alpha_b, 0.25);
@@ -1511,7 +1511,7 @@ namespace OpenBabel
 
   bool OBForceFieldMMFF94::SetMMFF94Charges()
   {
-    OBFFParameter *parameter_a, *parameter_b, *parameter_ab;
+    OBFFParameter *parameter_a;//, *parameter_b, *parameter_ab;
     OBAtom *a;
     double q0i;
     
@@ -1536,7 +1536,7 @@ namespace OpenBabel
 
   double OBForceFieldMMFF94::Energy()
   {
-    double energy;
+    double energy=0.0;
 
     //energy = E_Bond();
     energy += E_Angle();

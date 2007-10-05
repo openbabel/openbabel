@@ -29,6 +29,10 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/plugin.h>
 
+#ifndef OBFPRT
+#define OBFPRT
+#endif
+
 namespace OpenBabel
 {
   // log levels
@@ -60,7 +64,7 @@ namespace OpenBabel
   
   //! \class OBFFParameter forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to hold forcefield parameters
-  class OBFPTR OBFFParameter {
+  class OBFPRT OBFFParameter {
   public:
     //! Used to store integer atom types
     int         a, b, c, d;
@@ -122,7 +126,7 @@ namespace OpenBabel
   // specific class introductions in forcefieldYYYY.cpp (for YYYY calculations)
   //! \class OBFFCalculation forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to hold energy and gradient calculations on specific force fields
-  class OBFPTR OBFFCalculation
+  class OBFPRT OBFFCalculation
   {
     public:
       //! Used to store the energy for this OBFFCalculation
@@ -180,7 +184,7 @@ namespace OpenBabel
 
   // Class OBForceField
   // class introduction in forcefield.cpp
-  class OBFPTR  OBForceField : public OBPlugin
+  class OBFPRT  OBForceField : public OBPlugin
   {
   
   MAKE_PLUGIN(OBForceField)

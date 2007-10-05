@@ -1,3 +1,30 @@
+2007-10-05  Chris Morley
+
+	* include/openbabel/forcefield.h: correct back to OBFPRT
+	and add default definaition as nothing.
+
+	* include/openbabel/groupcontrib.h: add back to OBDESC
+	and add default definition as nothing.
+	
+	* src/forcefields/forcefieldmmff94.cpp: add initial value for 
+	energy and comment out several unused variables to reduce compiler
+	messages.
+	
+	* src/formats/getinchi.cpp: Now reads unquoted InChIs split with
+	XML elements like <br />
+	
+	* src/formats/inchiformat.cpp: Make InChIKey output replace 
+	normal InChI rather than adding to it. Still Windows only until
+	1.02beta InChI source files added.
+	
+	* src/formats/smilesformat.cpp(ParseRingBond): ensured that atoms
+	are added to OBChiralData::Atom4Refs in the order of the ring closure
+	digits on the chiral atom rather than the atom index order. Partial
+	fix for bug #1805910
+	Added SetChiralityPerceived after reading. Avoids doing it again 
+	in FindChiralCenters() which seems not to work sometimes, e.g. for
+	CN1CCC[C@H]1c2cccnc2 and CP(O)(=O)C[C@H](O)CN
+
 2007-10-03  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* include/openbabel/groupcontrib.h: removed undefined OBDESC.

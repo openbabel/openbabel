@@ -299,6 +299,8 @@ namespace OpenBabel
 
     mol.SetAutomaticFormalCharge(false);
 
+    mol.SetChiralityPerceived(); //Avoid possibly buggy FindChiralCenters()
+
     return(true);
   }
 
@@ -797,7 +799,7 @@ namespace OpenBabel
         if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
           {
             (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
-            // cout << "Line 650: Adding "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
+             // cerr << "Line 800: Adding "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
           }
       }
 
@@ -1619,14 +1621,14 @@ namespace OpenBabel
               _mapcd[atom]= new OBChiralData;
     
             (_mapcd[atom])->AddAtomRef((unsigned int)_prev,input);
-            // cout <<"line 1405: Added atom ref "<<_prev<<" to "<<_mapcd[atom]<<endl;
+             // cerr <<"line 1622: Added atom ref "<<_prev<<" to "<<_mapcd[atom]<<endl;
           }
         map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
         ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
         if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
           {
             (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
-            // cout <<"line 1431: Added atom ref "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
+             // cerr <<"line 1629: Added atom ref "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
           }
       }          
 
@@ -1649,7 +1651,7 @@ namespace OpenBabel
           {
             if (_mapcd[mol.GetAtom(_prev)] != NULL)
               (_mapcd[mol.GetAtom(_prev)])->AddAtomRef(mol.NumAtoms(),input);
-            // cout << "line 1434: Added atom ref "<<mol.NumAtoms()<<" to "<<_mapcd[mol.GetAtom(_prev)]<<endl;
+             // cerr << "line 1652: Added atom ref "<<mol.NumAtoms()<<" to "<<_mapcd[mol.GetAtom(_prev)]<<endl;
                        
           }
       }
@@ -1766,7 +1768,7 @@ namespace OpenBabel
             if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
               {
                 (ChiralSearch->second)->AddAtomRef((*j)[1], input);
-                // cout << "Added external "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
+                 // cerr << "Added external "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
               }
             
             _extbond.erase(j);
@@ -1829,12 +1831,18 @@ namespace OpenBabel
           if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
             {
               (ChiralSearch->second)->AddAtomRef((*j)[1], input);
-              //cout << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
+              // cerr << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
             }
           if (cs2!=_mapcd.end() && cs2->second != NULL)
             {
-              (cs2->second)->AddAtomRef(_prev,input);
-              // cout <<"Added ring opening "<<_prev<<" to "<<cs2->second<<endl;
+//              (cs2->second)->AddAtomRef(_prev,input);
+              //Ensure that the closure atom index is inserted at the position
+              //decided when the ring closure digit was encountered.
+              //The order needs to be SMILES atom order, not OB atom index order.
+              vector<unsigned int> refs = (cs2->second)->GetAtom4Refs(input);
+              refs.insert(refs.begin()+(*j)[4], _prev);
+              (cs2->second)->SetAtom4Refs(refs, input);
+               // cerr <<"Added ring opening "<<_prev<<" to "<<cs2->second<<endl;
             }
             
           //CM ensure neither atoms in ring closure is a radical centre
