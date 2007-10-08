@@ -590,8 +590,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     char szINCHIKey[26];
     GetINCHIKeyFromINCHI(inout.szInChI, szINCHIKey);
-    ostring += ' ';
-    ostring += szINCHIKey;
+    ostring = szINCHIKey;
   }
 #endif
   if(pConv->IsOption("t"))

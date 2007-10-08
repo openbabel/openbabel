@@ -532,9 +532,9 @@ public:
 
         OBAtom *atom;
         vector<OBAtom*>::iterator i;
-        int charge;
+        int charge=0; //Charge is now output in a M CHG statement
         for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
-          switch (atom->GetFormalCharge()) {
+/*          switch (atom->GetFormalCharge()) {
           case 1: charge = 3; break;
           case 2: charge = 2; break;
           case 3: charge = 1; break;
@@ -544,7 +544,7 @@ public:
           default:
             charge=0; break;
           }
-
+*/
           snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
                    atom->GetX(),
                    atom->GetY(),
@@ -578,7 +578,7 @@ public:
               ofs << buff << endl;
             }
 
-        vector<OBAtom*> rads, isos;
+        vector<OBAtom*> rads, isos, chgs;
         vector<OBAtom*>::iterator itr;
         for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
           {
@@ -586,6 +586,8 @@ public:
               rads.push_back(atom);
             if(atom->GetIsotope())
               isos.push_back(atom);
+            if(atom->GetFormalCharge())
+              chgs.push_back(atom);
           }
         if(rads.size())
           {
@@ -601,6 +603,13 @@ public:
               ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetIsotope();
             ofs << endl;
           }                     
+        if(chgs.size())
+          {
+            ofs << "M  CHG" << setw(3) << rads.size();
+            for(itr=chgs.begin();itr!=chgs.end();++itr)
+              ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetFormalCharge();
+            ofs << endl;
+          }
       }
 
     ofs << "M  END" << endl;

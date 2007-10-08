@@ -1,3 +1,9 @@
+2007-10-08  Chris Morley
+
+	* src/formats/mdformat.cpp: output v2000 formal charge as M CHG
+	statement rather than in the atom block, which is in correct when
+	M RAD or M ISO apppear. Suggestion by p.mortenson bug #1796960
+
 2007-10-05  Chris Morley
 
 	* include/openbabel/forcefield.h: correct back to OBFPRT
