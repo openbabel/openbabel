@@ -1,7 +1,9 @@
-2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
+2007-10-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
-	* src/formats/chemdrawcdx.cpp: fixed bond order for triple and
-	aromatic bonds.
+	* src/forcefield.cpp, src/forcefields/forcefieldghemical.cpp:
+	Defensive programming patch contributed by Ross
+	Braithwaite. Prevents divide by zero in determining torsional
+	angles in planar rings.
 
 2007-09-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
@@ -24,7 +26,12 @@
 
 	* src/forcefields/forcefieldghemical.cpp: Smarter VDW calculation
 	-- minimize the number of multiplies. Not much of an improvement,
-	unfortunately.
+	unfortunately. (We simply calculate the energy too often.)
+
+2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/chemdrawcdx.cpp: fixed bond order for triple and
+	aromatic bonds.
 
 2007-09-02  Jean Brefort  <jean.brefort@normalesup.org>
 

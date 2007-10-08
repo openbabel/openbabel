@@ -163,6 +163,8 @@ namespace OpenBabel
       dc = c->GetVector();
       dd = d->GetVector();
       tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
+      if (IsNan(tor))
+        tor = 1.0e-7;
     } else {
       vector3 vab, vbc, vcd, abbc, bccd;
       vab = a->GetVector() - b->GetVector();
@@ -170,10 +172,16 @@ namespace OpenBabel
       vcd = c->GetVector() - d->GetVector();
       abbc = cross(vab, vbc);
       bccd = cross(vbc, vcd);
-      tor = RAD_TO_DEG * acos(dot(abbc, bccd) / (abbc.length() * bccd.length()));
-      if (dot(abbc, bccd) > 0.0)
-        tor = -tor;
-    }
+
+     double dotAbbcBccd = dot(abbc,bccd);
+     tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
+     if (IsNearZero(dotAbbcBccd)) {
+       tor = 0.0; // rather than NaN
+     }
+     else if (dotAbbcBccd > 0.0) {
+       tor = -tor;
+     }
+   }
 
     cosine = cos(DEG_TO_RAD * tor);
     cosine2 = cos(2.0 * DEG_TO_RAD * tor);

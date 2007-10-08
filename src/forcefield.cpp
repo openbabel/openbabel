@@ -291,6 +291,8 @@ namespace OpenBabel
     for (int i = 0; i < _mol.NumConformers(); i++) {
       _mol.SetConformer(i); // select conformer
 
+      // Need a minimization step here, actually
+
       energies[i] = Energy(); // calculate and store energy
       
       IF_OBFF_LOGLVL_LOW {
@@ -1032,10 +1034,18 @@ namespace OpenBabel
     vbd = b - d;
     abbc = cross(vab, vbc);
     bccd = cross(vbc, vcd);
-    
-    tor = RAD_TO_DEG * acos(dot(abbc, bccd) / (abbc.length() * bccd.length()));
-    if (dot(abbc, bccd) > 0.0)
+        
+    //    cerr << " abbc.length " << abbc.length() << " bccd length " << bccd.length()
+    //         << endl;
+
+    double dotAbbcBccd = dot(abbc,bccd);
+    tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
+    if (IsNearZero(dotAbbcBccd)) {
+      tor = 0.0;
+    }
+    else if (dotAbbcBccd > 0.0) {
       tor = -tor;
+    }
  
     bcabbc = cross(vbc, abbc);
     bcbccd = cross(vbc, bccd);
@@ -1057,7 +1067,7 @@ namespace OpenBabel
     rabbc_rbccd = abbc_bccd / (rabbc * rbccd);
     abbc_bccd2 = sqrt(1.0 - rabbc_rbccd * rabbc_rbccd);
 
-    if (IsNearZero(abbc_bccd2))
+    if (IsNearZero(abbc_bccd2) || IsNan(abbc_bccd2))
       abbc_bccd2 = 1e-7;
     
     /*
@@ -1095,7 +1105,7 @@ namespace OpenBabel
       d = -d;
     }
    
-    return tor;  
+    return tor;
   }
   
   bool OBForceField::IsInSameRing(OBAtom* a, OBAtom* b)
