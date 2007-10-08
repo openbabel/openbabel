@@ -1,5 +1,10 @@
 2007-10-08  Chris Morley
 
+	* src/formats/xml/cmlformat.cpp: removed delete statement which
+	probably is responsible for bug #1792938. See 2007-08-19
+	
+2007-10-08  Chris Morley
+
 	* src/formats/mdformat.cpp: output v2000 formal charge as M CHG
 	statement rather than in the atom block, which is in correct when
 	M RAD or M ISO apppear. Suggestion by p.mortenson bug #1796960

@@ -280,8 +280,7 @@ namespace OpenBabel
               attr = (const char*)pattr;
             else
               attr = titleonproperty;
-            delete pattr;
-
+            //delete pattr; This fails but according to the documentation "The string must be deallocated by the caller."
             xmlTextReaderRead(reader());
             const xmlChar* pvalue = xmlTextReaderConstValue(reader());
             if(pvalue && !attr.empty())
