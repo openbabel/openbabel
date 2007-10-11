@@ -1,3 +1,18 @@
+2007-10-11  Chris Morley
+
+	* src/format/mdlformat.cpp: Remove warning about incorrect title
+	line which is sometimes output when it should not be, bug#1752435
+	
+	(ParseAliasText) ignore alias blocks with just "?" Suggestion by
+	Rajarshi Guha
+	
+	* src/fingerprints/finger3.cpp, src/formats/fingerprintformat.cpp:
+	Slight change in output formatting for -xs and -xu options
+	
+	* src/formats/xml/cmlformat.cpp: still trying to deallocate
+	strings supplied by libxml2. Should be using free (not delete)
+	but still not working with my compiler so still commented out.
+
 2007-10-08  Chris Morley
 
 	* src/formats/xml/cmlformat.cpp: removed delete statement which

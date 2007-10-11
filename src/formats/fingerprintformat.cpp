@@ -96,7 +96,7 @@ namespace OpenBabel
     if(pmol)
       ofs << ">" << pmol->GetTitle();
 
-    if(hexoutput)
+    if(hexoutput || ((pConv->IsOption("s") ||pConv->IsOption("u")) && pConv->GetOutputIndex()==1))
       {
         unsigned int i, bitsset=0;
         for (i=0;i<fptvec.size();++i)

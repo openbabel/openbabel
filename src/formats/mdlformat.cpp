@@ -156,9 +156,9 @@ public:
     string r1,r2;
 
     if (!ifs.getline(buffer,BUFF_SIZE)) {
-      errorMsg << "WARNING: Problems reading a MDL file\n";
-      errorMsg << "Cannot read title line\n";
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+//      errorMsg << "WARNING: Problems reading a MDL file\n";
+//      errorMsg << "Cannot read title line\n";
+//      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
       return(false);
     }
     mol.SetTitle(buffer);
@@ -986,6 +986,8 @@ public:
     //Only single character element symbols are handled
     //Atom which replaces atomnumber is the first non-H 
     //Will parse ND2 DS CH-
+    if(*txt=='?') //Assume that it is harmless to ignore this alias
+      return true;
     if(!isalpha(*txt)) //first char is the element that replaces atomnumber
       return false;
     //Swaps any leading H isotope with the first non-H atom

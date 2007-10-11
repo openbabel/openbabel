@@ -191,7 +191,7 @@ namespace OpenBabel
           ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "molID");//Marvin
         if(ptitle)
           _pmol->SetTitle((const char*)ptitle);
-        //delete[] ptitle;//libxml2 doc says "The string must be deallocated by the caller." But doesn't work.
+        // free((void*)ptitle);//libxml2 doc says "The string must be deallocated by the caller."
       }
     else if(name=="atomArray")
       {
@@ -242,7 +242,7 @@ namespace OpenBabel
         if(pformula)
         {
           RawFormula = (const char*)pformula;
-          //delete pformula;
+          // free((void*)pformula);
         }
       }
     else if(name=="crystal")
@@ -280,7 +280,8 @@ namespace OpenBabel
               attr = (const char*)pattr;
             else
               attr = titleonproperty;
-            //delete pattr; This fails but according to the documentation "The string must be deallocated by the caller."
+            // free((void*)pattr);//"The string must be deallocated by the caller."
+
             xmlTextReaderRead(reader());
             const xmlChar* pvalue = xmlTextReaderConstValue(reader());
             if(pvalue && !attr.empty())
