@@ -1039,12 +1039,15 @@ namespace OpenBabel
       _cstep++;
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        if (_method & OBFF_ANALYTICAL_GRADIENT)
-          grad = GetGradient(&*a);
-        else
-          grad = NumericalDerivative(&*a);
-        grad = LineSearch(&*a, grad);
-        a->SetVector(a->x() + grad.x(), a->y() + grad.y(), a->z() + grad.z());
+        if (!a->IsFixed())
+        {
+          if (_method & OBFF_ANALYTICAL_GRADIENT)
+            grad = GetGradient(&*a);
+          else
+            grad = NumericalDerivative(&*a);
+          grad = LineSearch(&*a, grad);
+          a->SetVector(a->x() + grad.x(), a->y() + grad.y(), a->z() + grad.z());
+        }
       }
       e_n2 = Energy();
       
@@ -1103,15 +1106,18 @@ namespace OpenBabel
     // Take the first step (same as steepest descent because there is no 
     // gradient from the previous step.
     FOR_ATOMS_OF_MOL (a, _mol) {
-      if (_method & OBFF_ANALYTICAL_GRADIENT)
-        grad2 = GetGradient(&*a);
-      else
-        grad2 = NumericalDerivative(&*a);
-      dir2 = grad2;
-      dir2 = LineSearch(&*a, dir2);
-      a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
-      _grad1[a->GetIdx()] = grad2;
-      _dir1[a->GetIdx()] = grad2;
+      if (!a->IsFixed())
+      {
+        if (_method & OBFF_ANALYTICAL_GRADIENT)
+          grad2 = GetGradient(&*a);
+        else
+          grad2 = NumericalDerivative(&*a);
+        dir2 = grad2;
+        dir2 = LineSearch(&*a, dir2);
+        a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
+        _grad1[a->GetIdx()] = grad2;
+        _dir1[a->GetIdx()] = grad2;
+      }
     }
     e_n2 = Energy();
       
