@@ -95,8 +95,15 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol)
       ofs << ">" << pmol->GetTitle();
+    
+    // checkmol-type output
+    if(pConv->IsOption("s") || pConv->IsOption("u"))
+    {
+      ofs << pFP->DescribeBits(fptvec, pConv->IsOption("s")!=NULL);
+      return true;
+    }
 
-    if(hexoutput || ((pConv->IsOption("s") ||pConv->IsOption("u")) && pConv->GetOutputIndex()==1))
+    if(hexoutput && pConv->GetOutputIndex()==1)
       {
         unsigned int i, bitsset=0;
         for (i=0;i<fptvec.size();++i)
@@ -117,10 +124,6 @@ namespace OpenBabel
         if(firstname.empty())
           firstname = "first mol";
 
-        if(pConv->IsOption("s"))
-          ofs << pFP->DescribeBits(fptvec);
-        if(pConv->IsOption("u"))
-          ofs << pFP->DescribeBits(fptvec, false);
 
     }
     else

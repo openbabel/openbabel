@@ -150,17 +150,19 @@ public:
 
 virtual string DescribeBits(const vector<unsigned int> fp, bool bSet=true)
 {
+  //checkmol-type output with tab separated functional group names
   stringstream ss; 
-  ss << "out of possible " << smartsStrings.size();
+/*  ss << "out of possible " << smartsStrings.size();
   if(!bSet)
     ss << "\nUnset bits:";
+*/
   for(int i=0; i<smartsStrings.size(); ++i)
   {
     if(GetBit(fp, i)==bSet)
     {
       string::size_type pos = smartsStrings[i].find(' ');
       if(pos!=string::npos)
-        ss << '\n' << smartsStrings[i].substr(pos+1);
+        ss << '\t' << smartsStrings[i].substr(pos+1);
     }
   }
   ss << endl;

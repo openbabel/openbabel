@@ -1,3 +1,9 @@
+2007-10-14  Chris Morley
+
+	* src/fingerprints/finger3.cpp, src/formats/fingerprintformat.cpp
+	Change format for -xs format again: functional groups tab 
+	separated. Suggested by Chris Swain.
+
 2007-10-11  Chris Morley
 
 	* src/format/mdlformat.cpp: Remove warning about incorrect title
