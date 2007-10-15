@@ -1,7 +1,13 @@
 2007-10-15  Chris Morley
 	
-	* src/babel.cpp: Abort and error message when SetInAndOutFormats
-	fails. Fixes bug #1813493
+	* src/babel.cpp, src/nbabel.cpp: The last commit gave incorrect
+	error messages. Correct this, add Read or Write only to output
+	from Hxxx and make both Hxxx and H xxx acceptable.
+
+2007-10-15  Chris Morley
+	
+	* src/babel.cpp, src/nbabel.cpp: Abort and error message when
+	SetInAndOutFormats fails. Fixes bug #1813493
 	
 2007-10-14  Chris Morley
 

@@ -164,14 +164,20 @@ int main(int argc,char *argv[])
                   }
                 case '?':
                 case 'H':
-                  if(isalnum(argv[arg][2]))
+                  if(isalnum(argv[arg][2]) || arg==argc-2)
                     {
                       if(strncasecmp(argv[arg]+2,"all",3))
                         {
-                          OBFormat* pFormat = Conv.FindFormat(argv[arg]+2);
+                          OBFormat* pFormat
+                            = (arg==argc-2) ? Conv.FindFormat(argv[arg+1]) : Conv.FindFormat(argv[arg]+2);
                           if(pFormat)
                             {
                               cout << argv[arg]+2 << "  " << pFormat->Description() << endl;
+                              if(pFormat->Flags() & NOTWRITABLE)
+                                cout << " This format is Read-only" << endl;
+                              if(pFormat->Flags() & NOTREADABLE)
+                                cout << " This format is Write-only" << endl;
+
                               if(strlen(pFormat->SpecificationURL()))
                                 cout << "Specification at: " << pFormat->SpecificationURL() << endl;
                             }
@@ -292,14 +298,16 @@ int main(int argc,char *argv[])
         }
     }
   
-  if(!Conv.SetInAndOutFormats(pInFormat,pOutFormat))
-  {
-    if(!Conv.GetInFormat())
+    if(!Conv.SetInFormat(pInFormat))
+    {
       cerr << "Invalid input format" << endl;
-    if(!Conv.GetOutFormat())
+      usage();
+    }
+    if(!Conv.SetOutFormat(pOutFormat))
+    {
       cerr << "Invalid output format" << endl;
-    usage();
-  }
+      usage();
+    }
 
   if(SplitOrBatch)
     {
