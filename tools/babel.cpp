@@ -295,7 +295,14 @@ int main(int argc,char *argv[])
         }
     }
   
-  Conv.SetInAndOutFormats(pInFormat,pOutFormat);
+  if(!Conv.SetInAndOutFormats(pInFormat,pOutFormat))
+  {
+    if(!Conv.GetInFormat())
+      cerr << "Invalid input format" << endl;
+    if(!Conv.GetOutFormat())
+      cerr << "Invalid output format" << endl;
+    usage();
+  }
   
   if(SplitOrBatch)
     {

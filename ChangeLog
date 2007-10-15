@@ -1,3 +1,8 @@
+2007-10-15  Chris Morley
+	
+	* src/babel.cpp: Abort and error message when SetInAndOutFormats
+	fails. Fixes bug #1813493
+	
 2007-10-14  Chris Morley
 
 	* src/fingerprints/finger3.cpp, src/formats/fingerprintformat.cpp
