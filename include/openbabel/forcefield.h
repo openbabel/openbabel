@@ -288,12 +288,21 @@ namespace OpenBabel
     //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     double _econv, _e_n1;
     int _method, _cstep, _nsteps;
-    std::vector<vector3> _grad1, _dir1;
+    double *_grad1, *_dir1;
+    int _ncoords; //!< Number of coordinates for conjugate gradients
 
   public:
     //! Destructor
     virtual ~OBForceField()
       {
+        if (_grad1 != NULL) {
+          delete [] _grad1;
+          _grad1 = NULL;
+        }
+        if (_dir1 != NULL) {
+          delete [] _dir1;
+          _dir1 = NULL;
+        }
       }
     const char* TypeID()
       {
@@ -503,6 +512,21 @@ namespace OpenBabel
         OBFF_LOGLVL_HIGH:   none \n
     */
     vector3 LineSearch(OBAtom *atom, vector3 &direction);
+
+    /*! Perform a linesearch for the entire molecule in direction direction
+      \param currentCoords start coordinates
+      \param direction the search direction
+
+      \return alpha, the scale of the step we moved along the direction vector
+
+      \par Output to log:
+        OBFF_LOGLVL_NONE:   none \n
+        OBFF_LOGLVL_LOW:    none \n
+        OBFF_LOGLVL_MEDIUM: none \n
+        OBFF_LOGLVL_HIGH:   none \n
+    */
+    double LineSearch(double *currentCoords, double *direction);
+
     /*! Perform steepest descent optimalization for steps steps or until convergence criteria is reached.
       \param steps the number of steps 
       \param econv energy convergence criteria (defualt is 1e-6)

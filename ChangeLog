@@ -1,3 +1,16 @@
+2007-10-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/forcefield.h: New LineSearch() method to
+	update a step over the entire molecule's coordinates at once. Much
+	faster, since it drastically minimizes the number of energy
+	evaluations.
+
+	* src/forcefield.cpp: Implement above, plus switch SteepestDescent
+	and ConjugateGradients to use it.
+
+	* include/openbabel/mol.h, src/mol.cpp: Add SetCoordinates() call
+	to set the entire coordinate system at once.
+
 2007-10-15  Chris Morley
 	
 	* src/babel.cpp, src/nbabel.cpp: The last commit gave incorrect
@@ -29,6 +42,15 @@
 	* src/formats/xml/cmlformat.cpp: still trying to deallocate
 	strings supplied by libxml2. Should be using free (not delete)
 	but still not working with my compiler so still commented out.
+
+2007-10-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/forcefield.cpp, src/forcefields/forcefieldghemical.cpp:
+        Defensive programming patch contributed by Ross
+        Braithwaite. Prevents divide by zero in determining torsional
+        angles in planar rings.
+
+        * include/openbabel/atom.h, src/forcefield.cpp: Add "fixed atoms."
 
 2007-10-08  Chris Morley
 

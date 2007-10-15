@@ -2909,6 +2909,25 @@ namespace OpenBabel
     return(false);
   }
 
+  
+  void OBMol::SetCoordinates(double *c)
+  {
+    bool noCptr = (_c == NULL); // did we previously have a coordinate ptr
+    if (noCptr) {
+      _c = new double [NumAtoms()*3];
+    }
+
+    memcpy((char*)c,(char*)_c,sizeof(double)*3*NumAtoms());
+
+    if (noCptr) {
+      OBAtom *atom;
+      vector<OBAtom*>::iterator i;
+      for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+        atom->SetCoordPtr(&_c);
+      _vconf.push_back(c);
+    }
+  }
+
   //! Renumber the atoms in this molecule according to the order in the supplied
   //! vector. This will return without action if the supplied vector is empty or
   //! does not have the same number of atoms as the molecule.

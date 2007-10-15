@@ -17,7 +17,7 @@ GNU General Public License for more details.
 
       development status:
       - src/forcefield.cpp
-      - LineSearch(): works, but better algoritmh would be better for performance
+      - LineSearch(): finished
       - SteepestDescent(): finished
       - ConjugateGradients(): finished
       - GenerateCoordinates(): 
@@ -857,6 +857,55 @@ namespace OpenBabel
 
     return dir;
   }
+
+  double OBForceField::LineSearch(double *currentCoords, double *direction)
+  {
+    int numCoords = _mol.NumAtoms() * 3;
+    double e_n1, e_n2, step, alpha;
+    double *lastStep = new double [numCoords];
+
+    alpha = 0.0; // Scale factor along direction vector
+    step = 0.2;
+    
+    e_n1 = Energy(false); // calculate e_k (before any move)
+    
+    unsigned int i;
+    for (i=0; i < 10; ++i) {
+      // Save the current position, before we take a step
+      memcpy((char*)lastStep,(char*)currentCoords,sizeof(double)*numCoords);
+      
+      // Vectorizing this would be a big benefit
+      // Need to look up using BLAS or Eigen or whatever
+      for (unsigned int c = 0; c < numCoords; ++c) {
+        currentCoords[c] += direction[c] * step;
+      }
+    
+      e_n2 = Energy(false); // calculate e_k+1
+      
+      // convergence criteria: A higher precision here 
+      // only takes longer with the same result.
+      if (IsNear(e_n2, e_n1, 1.0e-3))
+        break;
+
+      if (e_n2 > e_n1) { // decrease stepsize
+        step *= 0.1;
+        // move back to the last step
+        memcpy((char*)currentCoords,(char*)lastStep,sizeof(double)*numCoords);
+      } else if (e_n2 < e_n1) {  // increase stepsize
+        e_n1 = e_n2;
+        alpha += step; // we've moved some distance
+        step *= 2.15;
+        if (step > 1.0)
+          step = 1.0;
+      }
+      
+    }
+    //cout << "LineSearch steps: " << i << endl;
+
+    delete [] lastStep;
+
+    return alpha;
+  }
   
   vector3 OBForceField::ValidateLineSearch(OBAtom *atom, vector3 &direction)
   {
@@ -1032,42 +1081,55 @@ namespace OpenBabel
  
   bool OBForceField::SteepestDescentTakeNSteps(int n) 
   {
-    double e_n2;
-    vector3 grad;
+    int _ncoords = _mol.NumAtoms() * 3;
+    int coordIdx;
+    double e_n2, alpha;
+    double *gradPtr = new double[_ncoords];
+    memset(gradPtr, '\0', sizeof(double)*_ncoords);
+    vector3 dir;
 
     for (int i = 1; i <= n; i++) {
       _cstep++;
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        if (!a->IsFixed())
-        {
+        if (!a->IsFixed()) {
+          coordIdx = (a->GetIdx() - 1) * 3;
           if (_method & OBFF_ANALYTICAL_GRADIENT)
-            grad = GetGradient(&*a);
+            dir = GetGradient(&*a);
           else
-            grad = NumericalDerivative(&*a);
-          grad = LineSearch(&*a, grad);
-          a->SetVector(a->x() + grad.x(), a->y() + grad.y(), a->z() + grad.z());
+            dir = NumericalDerivative(&*a);
+          
+          gradPtr[coordIdx] = dir.x();
+          gradPtr[coordIdx+1] = dir.y();
+          gradPtr[coordIdx+2] = dir.z();
         }
       }
+      alpha = LineSearch(_mol.GetCoordinates(), gradPtr);
       e_n2 = Energy();
       
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, _e_n1);
-        OBFFLog(logbuf);
+        if (_cstep % 10 == 0) {
+          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, _e_n1);
+          OBFFLog(logbuf);
+        }
       }
 
       if (IsNear(e_n2, _e_n1, _econv)) {
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
+        delete [] gradPtr;
         return false;
       }
       
-      if (_nsteps == _cstep)
+      if (_nsteps == _cstep) {
+        delete [] gradPtr;
         return false;
+      }
 
       _e_n1 = e_n2;
     }
 
+    delete [] gradPtr;
     return true;  // no convergence reached
   }
  
@@ -1080,15 +1142,18 @@ namespace OpenBabel
   void OBForceField::ConjugateGradientsInitialize(int steps, double econv, 
                                                   int method)
   {
-    double e_n2;
+    double e_n2, alpha;
     vector3 grad2, dir2;
 
     _cstep = 1;
     _nsteps = steps;
     _econv = econv;
     _method = method;
+    _ncoords = _mol.NumAtoms() * 3;
 
-    ValidateGradients();
+    IF_OBFF_LOGLVL_HIGH {
+      ValidateGradients();
+    }
 
     _e_n1 = Energy();
     
@@ -1100,8 +1165,14 @@ namespace OpenBabel
       OBFFLog("--------------------------------\n");
     }
 
-    _grad1.resize(_mol.NumAtoms() + 1);
-    _dir1.resize(_mol.NumAtoms() + 1);
+    if (_grad1 != NULL)
+      delete [] _grad1;
+    _grad1 = new double[_ncoords];
+    memset(_grad1, '\0', sizeof(double)*_ncoords);
+    if (_dir1 != NULL)
+      delete [] _dir1;
+    _dir1 = new double[_ncoords];
+    memset(_grad1, '\0', sizeof(double)*_ncoords);
 
     // Take the first step (same as steepest descent because there is no 
     // gradient from the previous step.
@@ -1113,12 +1184,18 @@ namespace OpenBabel
         else
           grad2 = NumericalDerivative(&*a);
         dir2 = grad2;
-        dir2 = LineSearch(&*a, dir2);
-        a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
-        _grad1[a->GetIdx()] = grad2;
-        _dir1[a->GetIdx()] = grad2;
+
+        int coordIdx = (a->GetIdx() - 1) * 3;
+        _grad1[coordIdx] = grad2.x();
+        _grad1[coordIdx + 1] = grad2.y();
+        _grad1[coordIdx + 2] = grad2.z();
+
+        _dir1[coordIdx] = grad2.x();
+        _dir1[coordIdx + 1] = grad2.y();
+        _dir1[coordIdx + 2] = grad2.z();
       }
     }
+    alpha = LineSearch(_mol.GetCoordinates(), _dir1);
     e_n2 = Energy();
       
     IF_OBFF_LOGLVL_LOW {
@@ -1132,12 +1209,14 @@ namespace OpenBabel
   bool OBForceField::ConjugateGradientsTakeNSteps(int n)
   {
     double e_n2;
-    double g2g2, g1g1, g2g1;
+    double g2g2, g1g1, g2g1, alpha;
     vector3 grad2, dir2;
+    vector3 grad1, dir1; // temporaries to perform dot product, etc.
+    int coordIdx;
     
     int printStep = min(n, 10); // print results every 10 steps, or fewer
 
-    if (_grad1.size() != (_mol.NumAtoms()+1))
+    if (_ncoords != _mol.NumAtoms() * 3)
       return false;
 
     e_n2 = 0.0;
@@ -1146,39 +1225,46 @@ namespace OpenBabel
       _cstep++;
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        if (_method & OBFF_ANALYTICAL_GRADIENT)
-          grad2 = GetGradient(&*a);
-        else
-          grad2 = NumericalDerivative(&*a);
-        
-        // Fletcher-Reeves formula for Beta
-        // http://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method
-        // NOTE: We make sure to reset and use the steepest descent direction
-        //   after NumAtoms steps
-        if (_cstep % _mol.NumAtoms() != 0) {
-        g2g2 = dot(grad2, grad2);
-        g1g1 = dot(_grad1[a->GetIdx()], _grad1[a->GetIdx()]);
-        g2g1 = g2g2 / g1g1;
-        dir2 = grad2 + g2g1 * _dir1[a->GetIdx()];
-        } else { // reset conj. direction
-          dir2 = grad2;
-        }
+        if (!a->IsFixed()) {
+          coordIdx = (a->GetIdx() - 1) * 3;
 
-        dir2 = LineSearch(&*a, dir2);
-        a->SetVector(a->x() + dir2.x(), a->y() + dir2.y(), a->z() + dir2.z());
-	  
-        _grad1[a->GetIdx()] = grad2;
-        _dir1[a->GetIdx()] = dir2;
-        if (e_n2)
-          _e_n1 = e_n2;
+          if (_method & OBFF_ANALYTICAL_GRADIENT)
+            grad2 = GetGradient(&*a);
+          else
+            grad2 = NumericalDerivative(&*a);
+          
+          // Fletcher-Reeves formula for Beta
+          // http://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method
+          // NOTE: We make sure to reset and use the steepest descent direction
+          //   after NumAtoms steps
+          if (_cstep % 2 != 0) {     // Somehow, the new linesearch requires this
+            g2g2 = dot(grad2, grad2);
+            grad1 = vector3(_grad1[coordIdx], _grad1[coordIdx+1], _grad1[coordIdx+2]);
+            g1g1 = dot(grad1, grad1);
+            g2g1 = g2g2 / g1g1;
+            dir1 = vector3(_dir1[coordIdx], _dir1[coordIdx+1], _dir1[coordIdx+2]);
+            dir2 = grad2 + g2g1 * dir1;
+          } else { // reset conj. direction
+            dir2 = grad2;
+          }
+                    
+          _grad1[coordIdx] = grad2.x();
+          _grad1[coordIdx + 1] = grad2.y();
+          _grad1[coordIdx + 2] = grad2.z();
+          
+          _dir1[coordIdx] = dir2.x();
+          _dir1[coordIdx + 1] = dir2.y();
+          _dir1[coordIdx + 2] = dir2.z();
+        }
       }
+      alpha = LineSearch(_mol.GetCoordinates(), _dir1);
       e_n2 = Energy();
 	
       IF_OBFF_LOGLVL_LOW {
         if (_cstep % 10 == 0) {
-        sprintf(logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
-        OBFFLog(logbuf);
-      }
+          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+          OBFFLog(logbuf);
+        }
       }
  
       if (IsNear(e_n2, _e_n1, _econv)) {

@@ -367,6 +367,7 @@ namespace OpenBabel
     void   UnsetImplicitValencePerceived(){_flags &= (~(OB_IMPVAL_MOL)); }
     void   UnsetHydrogensAdded()       { UnsetFlag(OB_H_ADDED_MOL);     }
     void   UnsetFlag(int flag)       { _flags &= (~(flag));              }
+    //@}
 
     //! \name Molecule modification methods
     //@{
@@ -378,6 +379,9 @@ namespace OpenBabel
     bool Clear();
     //! Renumber the atoms of this molecule according to the order in the supplied vector
     void RenumberAtoms(std::vector<OBAtom*>&);
+    //! Set the coordinates for all atoms in this conformer.
+    //! \sa OBMol::GetCoordinates()
+    void SetCoordinates(double *c);
     //! Translate one conformer and rotate by a rotation matrix (which is returned) to the inertial frame-of-reference
     void ToInertialFrame(int conf, double *rmat);
     //! Translate all conformers to the inertial frame-of-reference
