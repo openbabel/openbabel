@@ -1237,7 +1237,7 @@ namespace OpenBabel
           // http://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method
           // NOTE: We make sure to reset and use the steepest descent direction
           //   after NumAtoms steps
-          if (_cstep % 2 != 0) {     // Somehow, the new linesearch requires this
+          if (_cstep % _mol.NumAtoms() != 0) {
             g2g2 = dot(grad2, grad2);
             grad1 = vector3(_grad1[coordIdx], _grad1[coordIdx+1], _grad1[coordIdx+2]);
             g1g1 = dot(grad1, grad1);
@@ -1247,7 +1247,7 @@ namespace OpenBabel
           } else { // reset conj. direction
             dir2 = grad2;
           }
-                    
+ 
           _grad1[coordIdx] = grad2.x();
           _grad1[coordIdx + 1] = grad2.y();
           _grad1[coordIdx + 2] = grad2.z();
@@ -1258,6 +1258,9 @@ namespace OpenBabel
         }
       }
       alpha = LineSearch(_mol.GetCoordinates(), _dir1);
+      for (unsigned int j = 0; j < _ncoords; ++j)
+        _dir1[j] *= alpha;
+
       e_n2 = Energy();
 	
       IF_OBFF_LOGLVL_LOW {
