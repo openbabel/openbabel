@@ -38,7 +38,10 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 		-c++ -o $@ -I$(top_srcdir)/include $<;
 	echo "import sys" >python/ob.py;
 	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
-	echo "    import dl" >>python/ob.py;
+	echo "    try:" >>python/ob.py;
+	echo "        import dl" >>python/ob.py;
+	echo "    except ImportError:" >>python/ob.py;
+	echo "        import DLFCN as dl" >>python/ob.py;
 	echo "    sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >>python/ob.py;
 	echo >>python/ob.py;
 	cat python/openbabel.py >>python/ob.py;

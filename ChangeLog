@@ -1,3 +1,10 @@
+2007-10-18  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/Makefile.am: The dl Python module is not present on (many?)
+	64-bit systems, so it falls back to the DLFCN module which hopefully
+	*is* present. I would appreciate if someone could rerun the toolchain
+	and check in Makefile.in.
+
 2007-10-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/forcefield.h: New LineSearch() method to
