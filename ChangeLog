@@ -1,3 +1,11 @@
+2007-10-22  Chris Morley
+	Implement exact fastsearch option.
+	* src/transform.cpp:Add test for same number of heavy atoms if the
+	internal exactmatch option set.
+
+	* src/format/fastsearchformat.cpp: Split out ObtainTarget() to
+	make code less cumbersome. Add -ae option implementation.
+	
 2007-10-18  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/Makefile.am: The dl Python module is not present on (many?)

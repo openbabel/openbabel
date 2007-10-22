@@ -41,33 +41,37 @@ namespace OpenBabel {
       OBConversion::RegisterOptionParam("t", this, 1, OBConversion::INOPTIONS);
       OBConversion::RegisterOptionParam("l", this, 1, OBConversion::INOPTIONS);
       OBConversion::RegisterOptionParam("a", this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("e", this, 0, OBConversion::INOPTIONS);
     }
 	
     virtual const char* Description() //required
     { return
-        "FastSearching\n \
-Uses molecular fingerprints in an index file.\n \
-Writing to the fs format makes an index (a very slow process)\n \
-  babel datafile.xxx index.fs\n \
-Reading from the fs format does a fast search for:\n \
-  Substructure\n \
-    babel index.fs -sSMILES outfile.yyy   or\n \
-    babel datafile.xxx -ifs -sSMILES outfile.yyy\n \
-  Molecular similarity based on Tanimoto coefficient\n \
-    babel index.fs -sSMILES outfile.yyy -t0.7  (Tanimoto >0.7)\n \
-    babel index.fs -sSMILES outfile.yyy -t15   (best 15 molecules)\n \
-  The structure spec can be a molecule from a file: -Spatternfile.zzz\n \
-\n \
-Write Options (when making index) e.g. -xfFP3 \n \
- f# Fingerprint type\n \
- N# Fold fingerprint to # bits\n \
- u  Update an existing index\n\n \
-Read Options (when searching) e.g. -at0.7\n \
- t# Do similarity search: #mols or # as min Tanimoto\n \
- a  Add Tanimoto coeff to title in similarity search\n \
- l# Maximum number of candidates. Default<4000>\n \
- S\"filename\"  Structure spec in a file (rather than as SMARTS):\n\n \
-";
+        "FastSearching\n"
+        "Uses molecular fingerprints in an index file.\n"
+"Writing to the fs format makes an index (a very slow process)\n"
+"  babel datafile.xxx index.fs\n"
+"Reading from the fs format does a fast search for:\n"
+"  Identical molecule\n"
+"    babel index.fs -sSMILES outfile.yyy -ae  or\n"
+"    babel datafile.xxx -ifs -sSMILES outfile.yyy -ae\n"
+"  Substructure\n"
+"    babel index.fs -sSMILES outfile.yyy   or\n"
+"    babel datafile.xxx -ifs -sSMILES outfile.yyy\n"
+"  Molecular similarity based on Tanimoto coefficient\n"
+"    babel index.fs -sSMILES outfile.yyy -t0.7  (Tanimoto >0.7)\n"
+"    babel index.fs -sSMILES outfile.yyy -t15   (best 15 molecules)\n"
+"  The structure spec can be a molecule from a file: -Spatternfile.zzz\n\n"
+"Write Options (when making index) e.g. -xfFP3\n"
+" f# Fingerprint type\n"
+" N# Fold fingerprint to # bits\n"
+" u  Update an existing index\n\n"
+"Read Options (when searching) e.g. -at0.7\n"
+" t# Do similarity search: #mols or # as min Tanimoto\n"
+" a  Add Tanimoto coeff to title in similarity search\n"
+" l# Maximum number of candidates. Default<4000>\n"
+" e  Exact match\n"
+" S\"filename\"  Structure spec in a file (rather than as SMARTS):\n\n"
+;
     };
 
     virtual unsigned int Flags(){return READBINARY | READONEONLY | WRITEBINARY;};
@@ -75,6 +79,9 @@ Read Options (when searching) e.g. -at0.7\n \
   public:
     virtual bool ReadChemObject(OBConversion* pConv);
     virtual bool WriteChemObject(OBConversion* pConv);
+
+  private:
+      bool FastSearchFormat::ObtainTarget(OBConversion* pConv, OBMol& patternMol, const string& indexname);
 
   private:
     ///big data structure which will remain in memory after it is loaded
@@ -130,92 +137,17 @@ Read Options (when searching) e.g. -at0.7\n \
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
         return false;
       }
-
-    //Convert the SMARTS string to an OBMol
+    
     OBMol patternMol;
-    stringstream smiles(stringstream::out);
-    ifstream patternstream;
-    OBConversion PatternConv(&patternstream,&smiles);
-
-    const char* p = pConv->IsOption("s",OBConversion::GENOPTIONS);
-    string txt;
-    if(p) 
-      {
-        txt=p;
-        stringstream smarts(txt, stringstream::in);		
-        OBConversion Convsm(&smarts);
-        if(!Convsm.SetInFormat("smi")) return false;
-        Convsm.Read(&patternMol);
-		
-        //erase -s option in GeneralOptions since it will be rewritten
-        pConv->RemoveOption("s",OBConversion::GENOPTIONS);
-      }
-    else
-      {
-      // or Make OBMol from file in -S option or -aS option	
-      p = pConv->IsOption("S",OBConversion::GENOPTIONS);
-      if(!p)
-        p = pConv->IsOption("S",OBConversion::INOPTIONS);//for GUI mainly
-      }
-
-    if(!p)
-      {
-        //neither -s or -S options provided. Output info rather than doing search
-        const FptIndexHeader& header = fs.GetIndexHeader();
-        string id(header.fpid);
-        if(id.empty())
-          id = "default";
-        clog << indexname << " is an index of\n " << header.datafilename 
-             << ".\n It contains " << header.nEntries 
-             << " molecules. The fingerprint type is " << id << " with "
-             << OBFingerprint::Getbitsperint() * header.words << " bits.\n"
-             << "Typical usage for a substructure search:\n"
-             << "babel indexfile.fs -osmi -sSMILES" << endl;
+    bool doSubset = pConv->IsOption("s",OBConversion::INOPTIONS)!=NULL;// -as option
+    bool exactmatch = pConv->IsOption("e",OBConversion::INOPTIONS)!=NULL;// -ae option
+    if(!doSubset)
+    {
+      //Similarity or substructure
+      if(!ObtainTarget(pConv, patternMol, indexname))
         return false;
-      }
-
-    if(p && patternMol.Empty())
-      {
-        txt=p;
-        pos = txt.find_last_of('.');
-        if(pos==string::npos)
-          {
-            obErrorLog.ThrowError(__FUNCTION__, "Filename of pattern molecule in -S option must have an extension", obError);
-            return false;
-          }
-        patternstream.open(txt.c_str());
-        if(!patternstream)
-          {
-            stringstream errorMsg;
-		  
-            errorMsg << "Cannot open " << txt << endl;
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-            return false;
-          }
-
-        PatternConv.SetOneObjectOnly();
-        if(PatternConv.SetInFormat(txt.substr(pos+1).c_str()))
-          PatternConv.Read(&patternMol);
-      }
-
-    if(patternMol.Empty())
-      {
-        obErrorLog.ThrowError(__FUNCTION__, "Cannot derive a molecule from the -s or -S options", obWarning);
-        return false;
-      }
-    patternMol.ConvertDativeBonds();//use standard form for dative bonds
-
-    //Convert to SMILES and generate a -s option for use in the final filtering
-    if(!PatternConv.SetOutFormat("smi"))
-      return false;
-    PatternConv.Write(&patternMol);
-    //remove name to leave smiles string
-    string smilesstr(smiles.str());
-    pos = smilesstr.find(' ');
-    if(pos!=string::npos)
-      smilesstr = smilesstr.substr(0,pos);
-    pConv->AddOption("s", OBConversion::GENOPTIONS, smilesstr.c_str());
-
+    }
+    
     //Open the datafile and put it in pConv
     //datafile name derived from index file probably won't have a file path
     //but indexname may. Derive a full datafile name
@@ -242,12 +174,12 @@ Read Options (when searching) e.g. -at0.7\n \
 
 
     //Now do searching
-    p = pConv->IsOption("t",OBConversion::INOPTIONS);
+    const char* p = pConv->IsOption("t",OBConversion::INOPTIONS);
     if(p)
       {
         //Do a similarity search
         multimap<double, unsigned int> SeekposMap;
-        txt=p;
+        string txt=p;
         if(txt.find('.')==string::npos)
           {
             //Finds n molecules with largest Tanimoto
@@ -258,6 +190,9 @@ Read Options (when searching) e.g. -at0.7\n \
           {
             //Finds molecules with Tanimoto > MinTani
             double MinTani = atof(txt.c_str());
+//            if(doSubset)
+//              fs.FindSubset(SeekposMap, MinTani);
+//            else
             fs.FindSimilar(&patternMol, SeekposMap, MinTani);
           }
 		
@@ -287,42 +222,56 @@ Read Options (when searching) e.g. -at0.7\n \
       }
 
     else
-
       {
-        //Do a substructure search
+        //Structure search
         int MaxCandidates = 4000;
         p = pConv->IsOption("l",OBConversion::INOPTIONS);
         if(p && atoi(p))
           MaxCandidates = atoi(p);
 		
         vector<unsigned int> SeekPositions;
-        fs.Find(&patternMol, SeekPositions, MaxCandidates);
-        clog << SeekPositions.size() << " candidates from fingerprint search phase" << endl;
+        if(exactmatch)
+        {
+          //Find mols where all fingerprint bits are the same as the target
+          fs.FindMatch(&patternMol, SeekPositions, MaxCandidates);
+          // ensure that SMARTS filter in transform.cpp looks only for an exact match
+          // by setting an option with the number of heavy atoms in the pattern mol included.
+          stringstream ss;
+          ss << patternMol.NumHvyAtoms();
+          pConv->AddOption("exactmatch", OBConversion::GENOPTIONS, ss.str().c_str());
+        }
 
-        //Output the candidate molecules 
-        //filtering through s filter, unless the fingerprint type does not require it
-        if(fs.GetFingerprint()->Flags() & OBFingerprint::FPT_UNIQUEBITS)
-          pConv->RemoveOption("s",OBConversion::GENOPTIONS);
+        else
+        {
+          //Do a substructure search
+          fs.Find(&patternMol, SeekPositions, MaxCandidates);
+          clog << SeekPositions.size() << " candidates from fingerprint search phase" << endl;
+        }
 
-        vector<unsigned int>::iterator itr;
-        for(itr=SeekPositions.begin();itr!=SeekPositions.end();itr++)
-          {
-            datastream.seekg(*itr);
-            //	datastream.seekg(*itr - datastream.tellg(), ios_base::cur); //Avoid retrieving start
+          //Output the candidate molecules 
+          //filtering through s filter, unless the fingerprint type does not require it
+          if(fs.GetFingerprint()->Flags() & OBFingerprint::FPT_UNIQUEBITS)
+            pConv->RemoveOption("s",OBConversion::GENOPTIONS);
 
-            //debugging kludge to output all candidates directly
-            if(pConv->IsOption("c",OBConversion::GENOPTIONS))
-              {
-                string ln;
-                getline(datastream,ln);
-                datastream.seekg(*itr);
-                *pConv->GetOutStream() << "** " << ln << endl;
-              }
-            pConv->SetOneObjectOnly();
-            if(itr+1 != SeekPositions.end())
-              pConv->SetMoreFilesToCome();//so that not seen as last on output 
-            pConv->Convert(NULL,NULL);
-          }
+          vector<unsigned int>::iterator itr;
+          for(itr=SeekPositions.begin();itr!=SeekPositions.end();itr++)
+            {
+              datastream.seekg(*itr);
+              //	datastream.seekg(*itr - datastream.tellg(), ios_base::cur); //Avoid retrieving start
+
+              //debugging kludge to output all candidates directly
+              if(pConv->IsOption("c",OBConversion::GENOPTIONS))
+                {
+                  string ln;
+                  getline(datastream,ln);
+                  datastream.seekg(*itr);
+                  *pConv->GetOutStream() << "** " << ln << endl;
+                }
+              pConv->SetOneObjectOnly();
+              if(itr+1 != SeekPositions.end())
+                pConv->SetMoreFilesToCome();//so that not seen as last on output 
+              pConv->Convert(NULL,NULL);
+            }
       }
     return false;	//To finish	
   }
@@ -468,6 +417,101 @@ have the same name as the datafile. Use the form:\n \
           clog << "\n It took " << secs << " seconds" << endl;
       }
     delete pOb;
+    return true;
+  }
+
+///////////////////////////////////////////////////////////////
+  bool FastSearchFormat::ObtainTarget(OBConversion* pConv, OBMol& patternMol, const string& indexname)
+  {
+    //Obtains an OBMol
+    //   either from the SMARTS string in the -s option
+    //   or by converting the file in the -S option
+    //or, if neither option is provided, displays information on the index file.
+
+    stringstream smiles(stringstream::out);
+    ifstream patternstream;
+    OBConversion PatternConv(&patternstream,&smiles);
+
+    const char* p = pConv->IsOption("s",OBConversion::GENOPTIONS);
+    string txt;
+    if(p) 
+      {
+        // Use the -s option
+        txt=p;
+        stringstream smarts(txt, stringstream::in);		
+        OBConversion Convsm(&smarts);
+        if(!Convsm.SetInFormat("smi")) return false;
+        Convsm.Read(&patternMol);
+
+        //erase -s option in GeneralOptions since it will be rewritten
+        pConv->RemoveOption("s",OBConversion::GENOPTIONS);
+      }
+    else
+      {
+      // or Make OBMol from file in -S option or -aS option	
+      p = pConv->IsOption("S",OBConversion::GENOPTIONS);
+      if(!p)
+        p = pConv->IsOption("S",OBConversion::INOPTIONS);//for GUI mainly
+      }
+
+    if(!p)
+      {
+        //neither -s or -S options provided. Output info rather than doing search
+        const FptIndexHeader& header = fs.GetIndexHeader();
+        string id(header.fpid);
+        if(id.empty())
+          id = "default";
+        clog << indexname << " is an index of\n " << header.datafilename 
+             << ".\n It contains " << header.nEntries 
+             << " molecules. The fingerprint type is " << id << " with "
+             << OBFingerprint::Getbitsperint() * header.words << " bits.\n"
+             << "Typical usage for a substructure search:\n"
+             << "babel indexfile.fs -osmi -sSMILES" << endl;
+        return false;
+      }
+
+    if(p && patternMol.Empty())
+      {
+        txt=p;
+        string::size_type pos = txt.find_last_of('.');
+        if(pos==string::npos)
+          {
+            obErrorLog.ThrowError(__FUNCTION__, "Filename of pattern molecule in -S option must have an extension", obError);
+            return false;
+          }
+        patternstream.open(txt.c_str());
+        if(!patternstream)
+          {
+            stringstream errorMsg;
+		  
+            errorMsg << "Cannot open " << txt << endl;
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+            return false;
+          }
+
+        PatternConv.SetOneObjectOnly();
+        if(PatternConv.SetInFormat(txt.substr(pos+1).c_str()))
+          PatternConv.Read(&patternMol);
+      }
+
+    if(patternMol.Empty())
+      {
+        obErrorLog.ThrowError(__FUNCTION__, "Cannot derive a molecule from the -s or -S options", obWarning);
+        return false;
+      }
+    patternMol.ConvertDativeBonds();//use standard form for dative bonds
+
+    //Convert to SMILES and generate a -s option for use in the final filtering
+    if(!PatternConv.SetOutFormat("smi"))
+      return false;
+    PatternConv.Write(&patternMol);
+    //remove name to leave smiles string
+    string smilesstr(smiles.str());
+    string::size_type pos = smilesstr.find_first_of(" \t\r\n");
+    if(pos!=string::npos)
+      smilesstr = smilesstr.substr(0,pos);
+    pConv->AddOption("s", OBConversion::GENOPTIONS, smilesstr.c_str());
+
     return true;
   }
 

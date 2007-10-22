@@ -51,7 +51,7 @@ namespace OpenBabel
     bool ret=true;
     bool fmatch=true;
 
-    map<string,string>::const_iterator itr;
+    map<string,string>::const_iterator itr, itr2;
 
     if(pOptions->find("b")!=pOptions->end())
       if(!ConvertDativeBonds())
@@ -167,10 +167,20 @@ namespace OpenBabel
       itr = pOptions->find("s");
       if(itr!=pOptions->end())
         {
-          //match quoted SMARTS string which follows
-          OBSmartsPattern sp;
-          sp.Init(itr->second.c_str());
-          fmatch = sp.Match(*this); //(*pmol) ;
+          //SMARTS filter
+          //If exactmatch option set (probably in fastsearchformat) the
+          //number of atoms in the pattern (passed as a string in the option text)
+          //has to be the same as in the molecule.
+          itr2 = pOptions->find("exactmatch");
+          if(itr2!=pOptions->end() && NumHvyAtoms()!=atoi(itr2->second.c_str()))
+            fmatch=false;
+          else
+          {
+            //match quoted SMARTS string which follows
+            OBSmartsPattern sp;
+            sp.Init(itr->second.c_str());
+            fmatch = sp.Match(*this); //(*pmol) ;
+          }
         }
     }
 
