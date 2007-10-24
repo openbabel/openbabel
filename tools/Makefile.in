@@ -35,7 +35,7 @@ bin_PROGRAMS = babel$(EXEEXT) obchiral$(EXEEXT) obgrep$(EXEEXT) \
 	obrotate$(EXEEXT) obfit$(EXEEXT) obprop$(EXEEXT) \
 	obxyz$(EXEEXT) obgen$(EXEEXT) obenergy$(EXEEXT) \
 	obminimize$(EXEEXT) obmm$(EXEEXT) obrotamer$(EXEEXT) \
-	obfragment$(EXEEXT)
+	obfragment$(EXEEXT) obconformer$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -55,6 +55,9 @@ babel_DEPENDENCIES = ../src/libopenbabel.la
 am_obchiral_OBJECTS = obchiral.$(OBJEXT)
 obchiral_OBJECTS = $(am_obchiral_OBJECTS)
 obchiral_DEPENDENCIES = ../src/libopenbabel.la
+am_obconformer_OBJECTS = obconformer.$(OBJEXT)
+obconformer_OBJECTS = $(am_obconformer_OBJECTS)
+obconformer_DEPENDENCIES = ../src/libopenbabel.la
 am_obenergy_OBJECTS = obenergy.$(OBJEXT)
 obenergy_OBJECTS = $(am_obenergy_OBJECTS)
 obenergy_DEPENDENCIES = ../src/libopenbabel.la
@@ -100,16 +103,16 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obenergy_SOURCES) \
-	$(obfit_SOURCES) $(obfragment_SOURCES) $(obgen_SOURCES) \
-	$(obgrep_SOURCES) $(obminimize_SOURCES) $(obmm_SOURCES) \
-	$(obprop_SOURCES) $(obrotamer_SOURCES) $(obrotate_SOURCES) \
-	$(obxyz_SOURCES)
-DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) \
+SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obconformer_SOURCES) \
 	$(obenergy_SOURCES) $(obfit_SOURCES) $(obfragment_SOURCES) \
 	$(obgen_SOURCES) $(obgrep_SOURCES) $(obminimize_SOURCES) \
 	$(obmm_SOURCES) $(obprop_SOURCES) $(obrotamer_SOURCES) \
 	$(obrotate_SOURCES) $(obxyz_SOURCES)
+DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) \
+	$(obconformer_SOURCES) $(obenergy_SOURCES) $(obfit_SOURCES) \
+	$(obfragment_SOURCES) $(obgen_SOURCES) $(obgrep_SOURCES) \
+	$(obminimize_SOURCES) $(obmm_SOURCES) $(obprop_SOURCES) \
+	$(obrotamer_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -263,6 +266,8 @@ obrotamer_SOURCES = obrotamer.cpp
 obrotamer_LDADD = ../src/libopenbabel.la @LIBDL@
 obxyz_SOURCES = obxyz.cpp
 obxyz_LDADD = ../src/libopenbabel.la @LIBDL@
+obconformer_SOURCES = obconformer.cpp
+obconformer_LDADD = ../src/libopenbabel.la @LIBDL@
 
 # obdoc_SOURCES = obdoc.cpp
 # obdoc_LDADD = ../src/libopenbabel.la @LIBDL@
@@ -336,6 +341,9 @@ babel$(EXEEXT): $(babel_OBJECTS) $(babel_DEPENDENCIES)
 obchiral$(EXEEXT): $(obchiral_OBJECTS) $(obchiral_DEPENDENCIES) 
 	@rm -f obchiral$(EXEEXT)
 	$(CXXLINK) $(obchiral_OBJECTS) $(obchiral_LDADD) $(LIBS)
+obconformer$(EXEEXT): $(obconformer_OBJECTS) $(obconformer_DEPENDENCIES) 
+	@rm -f obconformer$(EXEEXT)
+	$(CXXLINK) $(obconformer_OBJECTS) $(obconformer_LDADD) $(LIBS)
 obenergy$(EXEEXT): $(obenergy_OBJECTS) $(obenergy_DEPENDENCIES) 
 	@rm -f obenergy$(EXEEXT)
 	$(CXXLINK) $(obenergy_OBJECTS) $(obenergy_LDADD) $(LIBS)
@@ -378,6 +386,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/babel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obchiral.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obconformer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obenergy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfragment.Po@am__quote@

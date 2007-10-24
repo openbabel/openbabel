@@ -491,7 +491,9 @@ namespace OpenBabel
      *  OBFF_LOGLVL_MEDIUM: see note above \n
      *  OBFF_LOGLVL_HIGH:   see note above \n 
      */
-    void SystematicRotorSearch();
+    void SystematicRotorSearch(unsigned int geomSteps = 2500);
+
+    void RandomRotorSearch(unsigned int weightSteps, unsigned int geomSteps);
       
     /////////////////////////////////////////////////////////////////////////
     // Energy Minimization                                                 //

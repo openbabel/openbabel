@@ -1,7 +1,7 @@
 /**********************************************************************
-obrotamer.cpp - Generate a random rotamer for a given molecule
+obconformer.cpp - Run a Monte Carlo conformer search for a molecule
 
-Copyright (C) 2005-2006 Geoffrey R. Hutchison
+Copyright (C) 2005-2007 Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -29,6 +29,8 @@ GNU General Public License for more details.
 #include <openbabel/rotor.h>
 #include <openbabel/obutil.h>
 
+#include <openbabel/forcefield.h>
+
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
@@ -36,17 +38,23 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
+OBRotorList rl;
+OBRandom generator;
+
 int main(int argc,char *argv[])
 {
-  if (argc != 2)
+  if (argc != 5)
     {
-      cout << "Usage: obrotamer <file>" << endl;
-      cout << "  Outputs the number of rotable bonds and generate a random"
-           << " rotamer" << endl;
+      cout << "Usage: obconformer NWeights NSteps GeomSteps <file>" << endl;
       return(-1);
     }
 
-  ifstream ifs(argv[1]);
+  int weightSteps, searchSteps, geomSteps;
+  weightSteps = atoi(argv[1]);
+  searchSteps = atoi(argv[2]);
+  geomSteps = atoi(argv[3]);
+
+  ifstream ifs(argv[4]);
   if (!ifs)
     {
       cerr << "Error! Cannot read input file!" << endl;
@@ -56,7 +64,7 @@ int main(int argc,char *argv[])
   OBConversion conv(&ifs, &cout);
   OBFormat* pFormat;
   
-  pFormat = conv.FormatFromExt(argv[1]);
+  pFormat = conv.FormatFromExt(argv[4]);
   if ( pFormat == NULL )
     {
       cerr << "Error! Cannot read file format!" << endl;
@@ -71,42 +79,19 @@ int main(int argc,char *argv[])
       return (-1);
     }
   
-  OBRotorList rl;
-  OBRotamerList rotamers;
-  int *rotorKey = NULL;
-  OBRandom rand;
-  rand.TimeSeed();
+  OBForceField *pFF = OBForceField::FindForceField("Ghemical");
+  pFF->SetLogFile(&cerr);
+  pFF->SetLogLevel(OBFF_LOGLVL_LOW);
 
   while(ifs.peek() != EOF && ifs.good())
     {
       mol.Clear();
       conv.Read(&mol);
 
-      rl.Setup(mol);
-      
-      cerr << " Number of rotatable bonds: " << rl.Size() << endl;
-
-      // indexed from 1, rotorKey[0] = 0
-      std::vector<int> rotorKey(rl.Size() + 1, 0);
-
-      // each entry represents the configuration of a rotor
-      // e.g. indexes into OBRotor::GetResolution()
-      //       (the different angles to sample from the OBRotorRules database)
-      OBRotorIterator ri;
-      OBRotor *rotor = rl.BeginRotor(ri);
-      for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri))
-        rotorKey[i] = rand.NextInt() % rotor->GetResolution().size();
-
-      rotamers.SetBaseCoordinateSets(mol);
-      rotamers.Setup(mol, rl);
-      rotamers.AddRotamer(rotorKey);
-
-      // This is more useful when you have added many rotamers
-      // rather than the one in this example
-      rotamers.ExpandConformerList(mol, mol.GetConformers());
-      
-      // Change the molecule conformation -- from 0 .. rotamers.NumRotamers()
-      mol.SetConformer(0);
+      pFF->Setup(mol);
+      pFF->RandomRotorSearch(weightSteps, geomSteps);
+      // pFF->SystematicRotorSearch();
+      pFF->UpdateCoordinates(mol);
       conv.Write(&mol);
     } // while reading molecules
   

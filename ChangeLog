@@ -1,4 +1,19 @@
+2007-10-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/torlib.[h,txt]: New torsional library data, improving conformer
+        searching.
+
+	* tools/obconformer.cpp: New tool to do real conformer searching,
+	using new random and Monte Carlo searching mechanisms in OBForceField.
+	
+	* tools/Makefile.*: Add above.
+
+	* include/openbabel/forcefield.h, src/forcefield.cpp: Add geometry
+	optimization steps to SystematicRotorSearch and new method
+	RandomRotorSearch.
+
 2007-10-22  Chris Morley
+
 	Implement exact fastsearch option.
 	* src/transform.cpp:Add test for same number of heavy atoms if the
 	internal exactmatch option set.

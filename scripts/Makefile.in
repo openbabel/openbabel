@@ -381,7 +381,10 @@ dist-hook:
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-c++ -o $@ -I$(top_srcdir)/include $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "import sys" >python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    import dl" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    try:" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "        import dl" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    except ImportError:" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "        import DLFCN as dl" >>python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >>python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo >>python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	cat python/openbabel.py >>python/ob.py;

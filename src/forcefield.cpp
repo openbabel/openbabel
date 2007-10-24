@@ -277,7 +277,7 @@ namespace OpenBabel
   
   bool OBForceField::SetLogLevel(int level)
   {
-    loglvl = level; 
+    loglvl = level;
 
     return true;
   }
@@ -388,10 +388,11 @@ namespace OpenBabel
     ConjugateGradients(2500);
   }
   
-  void OBForceField::SystematicRotorSearch() 
+  void OBForceField::SystematicRotorSearch(unsigned int geomSteps) 
   {
     OBRotorList rl;
     OBRotamerList rotamers;
+    int origLogLevel = loglvl;
 
     rl.Setup(_mol);
     rotamers.SetBaseCoordinateSets(_mol);
@@ -407,7 +408,7 @@ namespace OpenBabel
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
  
-      ConjugateGradients(2500); // final energy minimizatin for best conformation
+      ConjugateGradients(geomSteps); // final energy minimizatin for best conformation
       
       return;
     }
@@ -438,8 +439,107 @@ namespace OpenBabel
     for (int i = 0; i < _mol.NumConformers(); i++) {
       _mol.SetConformer(i); // select conformer
 
-      // Need a minimization step here, actually
+      loglvl = OBFF_LOGLVL_NONE;
+      ConjugateGradients(geomSteps); // energy minimization for conformer
+      loglvl = origLogLevel;
 
+      energies[i] = Energy(); // calculate and store energy
+      
+      IF_OBFF_LOGLVL_LOW {
+        sprintf(logbuf, "   %3d   %20.3f\n", (i + 1), energies[i]);
+        OBFFLog(logbuf);
+      }
+    }
+
+    // Select conformer with lowest energy
+    int best_conformer = 0;
+    for (int i = 1; i < _mol.NumConformers(); i++) {
+      if (energies[i] < energies[best_conformer])
+        best_conformer = i;
+    }
+  
+    IF_OBFF_LOGLVL_LOW {
+      sprintf(logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
+      OBFFLog(logbuf);
+    }
+
+    _mol.SetConformer(best_conformer);
+    current_conformer = best_conformer;
+  }
+
+  void OBForceField::RandomRotorSearch(unsigned int weightSteps,
+                                       unsigned int geomSteps) 
+  {
+    OBRotorList rl;
+    OBRotamerList rotamers;
+    OBRotorIterator ri;
+    OBRotor *rotor;
+
+    OBRandom generator;
+    generator.TimeSeed();
+    int origLogLevel = loglvl;
+
+    if (_mol.GetCoordinates() == NULL)
+      cerr << " oops! " << endl;
+
+    rl.Setup(_mol);
+    rotamers.SetBaseCoordinateSets(_mol);
+    rotamers.Setup(_mol, rl);
+    
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nR A N D O M   R O T O R   S E A R C H\n\n");
+      sprintf(logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
+      OBFFLog(logbuf);
+
+      int combinations = 1;
+      for (rotor = rl.BeginRotor(ri); rotor;
+           rotor = rl.NextRotor(ri)) {
+        combinations *= rotor->GetResolution().size();
+      }
+      sprintf(logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %d\n", combinations);
+      OBFFLog(logbuf);
+    }
+
+    if (!rl.Size()) { // only one conformer
+      IF_OBFF_LOGLVL_LOW
+        OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
+ 
+      loglvl = OBFF_LOGLVL_NONE;
+      ConjugateGradients(geomSteps); // energy minimization for conformer
+      loglvl = origLogLevel;
+
+      return;
+    }
+
+    std::vector<int> rotorKey(rl.Size() + 1, 0); // indexed from 1
+
+    for (int c = 0; c < weightSteps; ++c) {
+      rotor = rl.BeginRotor(ri);
+      for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+        // foreach rotor
+        rotorKey[i] = generator.NextInt() % rotor->GetResolution().size();
+      }
+      rotamers.AddRotamer(rotorKey);
+    }
+
+    rotamers.ExpandConformerList(_mol, _mol.GetConformers());
+      
+    IF_OBFF_LOGLVL_LOW {
+      sprintf(logbuf, "  GENERATED %d CONFORMERS\n\n", _mol.NumConformers());
+      OBFFLog(logbuf);
+      OBFFLog("CONFORMER     ENERGY\n");
+      OBFFLog("--------------------\n");
+    }
+    
+    // Calculate energy for all conformers
+    char logbuf[100];
+    std::vector<double> energies(_mol.NumConformers(), 0.0);
+    for (int i = 0; i < _mol.NumConformers(); i++) {
+      _mol.SetConformer(i); // select conformer
+
+      loglvl = OBFF_LOGLVL_NONE;
+      ConjugateGradients(geomSteps); // energy minimization for conformer
+      loglvl = origLogLevel;
       energies[i] = Energy(); // calculate and store energy
       
       IF_OBFF_LOGLVL_LOW {
