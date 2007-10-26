@@ -1,3 +1,9 @@
+2007-10-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/pdbformat.cpp: Fix some issues with multiple-chain
+	proteins. This is likely a minor fix until David Ogusthorpe
+	contributes his changes.
+
 2007-10-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/torlib.[h,txt]: New torsional library data, improving conformer
