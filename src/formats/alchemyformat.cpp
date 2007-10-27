@@ -74,13 +74,18 @@ namespace OpenBabel
     const char* title = pConv->GetInFilename().c_str();
 
     int i;
-    int natoms,nbonds;
+    int natoms = 0, nbonds = 0;
     char buffer[BUFF_SIZE];
 
     ifs.getline(buffer,BUFF_SIZE);
-    sscanf(buffer,"%d %*s %d", &natoms, &nbonds);
+    sscanf(buffer," %d %*s %d", &natoms, &nbonds);
     if (!natoms)
-      return(false);
+      {
+        ifs.getline(buffer,BUFF_SIZE);
+        sscanf(buffer," %d %*s %d", &natoms, &nbonds);
+        if (!natoms)
+          return(false);
+      }
 
     mol.ReserveAtoms(natoms);
     mol.BeginModify();
@@ -96,7 +101,7 @@ namespace OpenBabel
         if (!ifs.getline(buffer,BUFF_SIZE))
           return(false);
         tokenize(vs,buffer);
-        if (vs.size() != 6)
+        if (vs.size() < 5)
           return(false);
         atom = mol.NewAtom();
         x = atof((char*)vs[2].c_str());
@@ -122,7 +127,7 @@ namespace OpenBabel
       {
         if (!ifs.getline(buffer,BUFF_SIZE))
           return(false);
-        sscanf(buffer,"%*d%d%d%99s",&bgn,&end,bobuf);
+        sscanf(buffer," %*d%d%d%99s",&bgn,&end,bobuf);
         bostr = bobuf;
         order = 1;
         if      (bostr == "DOUBLE")
