@@ -1,3 +1,33 @@
+2007-11-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.*: First pass at a UFF
+	implementation. It compiles, but that's about it for now.
+
+	* data/UFF.prm: Initial parameters taken from RDKit under BSD
+	license.
+
+	* include/openbabel/forcefield.h, src/forcefields/*: Switch to
+	ipar and dpar as vectors of int and double, respectively.
+
+2007-10-31  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/residue.h, src/residue.cpp: Switch residue
+	numbers to be strings internally. Added GetNumString() to return
+	the number as a string (needed for backwards compatibility).
+
+	* src/data.cpp, src/mol.cpp: Use new residue string support. Fixes
+	problems raised by David Osguthorpe.
+
+	* src/formats/pdbformat.cpp, src/formats/*: Ditto.
+
+	* include/openbabel/rotamer.h, src/rotamer.cpp
+	(SetCurrentCoordinates): New method to set the current coordinate
+	set, rather than creating new conformers. More memory-efficient
+	with large conformer searching routines.
+
+	* configure, Makefile.in, */Makefile.in: Rebuild with current
+	autoconf, libtool, etc.
+
 2007-10-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp: Fix some issues with multiple-chain

@@ -1,7 +1,8 @@
 /**********************************************************************
-forcefieldghemical.cpp - Ghemical force field.
+forcefielduff.cpp - UFF force field.
  
-Copyright (C) 2006-2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
+Copyright (C) 2007 by Geoffrey Hutchison
+Some portions Copyright (C) 2006-2007 by Tim Vandermeersch
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -17,19 +18,17 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
-#include "forcefieldghemical.h"
+#include "forcefielduff.h"
 
 using namespace std;
 
 namespace OpenBabel
 {
-  void OBFFBondCalculationGhemical::Compute(bool gradients)
+  void OBFFBondCalculationUFF::Compute(bool gradients)
   {
     vector3 vab, da, db;
     double delta2, dE;
 
-    //cout << "compute(" << gradients << ")" << endl;
-    
     if (gradients) {
       da = a->GetVector();
       db = b->GetVector();
@@ -37,9 +36,9 @@ namespace OpenBabel
     } else
       rab = a->GetDistance(b);
 
-    delta = rab - r0;
+    delta = rab - r0; // we pre-compute the r0 below
     delta2 = delta * delta;
-    energy = kb * delta2;
+    energy = kb * delta2; // we fold the 1/2 into kb below
 
     if (gradients) {
       dE = 2.0 * kb * delta;
@@ -48,9 +47,9 @@ namespace OpenBabel
     }
   }
   
-  double OBForceFieldGhemical::E_Bond(bool gradients)
+  double OBForceFieldUFF::E_Bond(bool gradients)
   {
-    vector<OBFFBondCalculationGhemical>::iterator i;
+    vector<OBFFBondCalculationUFF>::iterator i;
     double energy = 0.0;
         
     IF_OBFF_LOGLVL_HIGH {
@@ -79,7 +78,7 @@ namespace OpenBabel
     return energy;
   }
   
-  void OBFFAngleCalculationGhemical::Compute(bool gradients)
+  void OBFFAngleCalculationUFF::Compute(bool gradients)
   {
     vector3 da, db, dc;
     double delta2, dE;
@@ -117,11 +116,15 @@ namespace OpenBabel
         gradc = dE * dc; // - dE/drab * drab/dc
       }
     }
+    energy = 0.0;
+    grada = 0.0;
+    gradb = 0.0;
+    gradc = 0.0;
   }
   
-  double OBForceFieldGhemical::E_Angle(bool gradients)
+  double OBForceFieldUFF::E_Angle(bool gradients)
   {
-    vector<OBFFAngleCalculationGhemical>::iterator i;
+    vector<OBFFAngleCalculationUFF>::iterator i;
     double energy = 0.0;
         
     IF_OBFF_LOGLVL_HIGH {
@@ -150,7 +153,7 @@ namespace OpenBabel
     return energy;
   }
   
-  void OBFFTorsionCalculationGhemical::Compute(bool gradients)
+  void OBFFTorsionCalculationUFF::Compute(bool gradients)
   {
     vector3 da, db, dc, dd;
     double cosine, cosine2, cosine3;
@@ -173,15 +176,15 @@ namespace OpenBabel
       abbc = cross(vab, vbc);
       bccd = cross(vbc, vcd);
 
-     double dotAbbcBccd = dot(abbc,bccd);
-     tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-     if (IsNearZero(dotAbbcBccd)) {
-       tor = 0.0; // rather than NaN
-     }
-     else if (dotAbbcBccd > 0.0) {
+      double dotAbbcBccd = dot(abbc,bccd);
+      tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
+      if (IsNearZero(dotAbbcBccd)) {
+        tor = 0.0; // rather than NaN
+      }
+      else if (dotAbbcBccd > 0.0) {
         tor = -tor;
+      }
     }
-   }
 
     cosine = cos(DEG_TO_RAD * tor);
     cosine2 = cos(2.0 * DEG_TO_RAD * tor);
@@ -203,11 +206,16 @@ namespace OpenBabel
       gradc = dE * dc; // - dE/drab * drab/dc
       gradd = dE * dd; // - dE/drab * drab/dd
     }
+    energy = 0.0;
+    grada = 0.0;
+    gradb = 0.0;
+    gradc = 0.0;
+    gradd = 0.0;
   }
   
-  double OBForceFieldGhemical::E_Torsion(bool gradients) 
+  double OBForceFieldUFF::E_Torsion(bool gradients) 
   {
-    vector<OBFFTorsionCalculationGhemical>::iterator i;
+    vector<OBFFTorsionCalculationUFF>::iterator i;
     double energy = 0.0;
  
     IF_OBFF_LOGLVL_HIGH {
@@ -237,7 +245,55 @@ namespace OpenBabel
     return energy;
   }
 
-  void OBFFVDWCalculationGhemical::Compute(bool gradients)
+  //
+  //  a
+  //   \
+  //    b---d      plane = a-b-c
+  //   /
+  //  c
+  //
+  void OBFFOOPCalculationUFF::Compute(bool gradients)
+  {
+    double angle2;
+
+    angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
+    angle2 = angle * angle;
+    
+    //    energy = 0.043844 * 0.5 * koop * angle2;
+    energy = 0.0;
+  }
+
+  double OBForceFieldUFF::E_OOP(bool gradients) 
+  {
+     vector<OBFFOOPCalculationUFF>::iterator i;
+     double energy = 0.0;
+    
+     IF_OBFF_LOGLVL_HIGH {
+       OBFFLog("O U T - O F - P L A N E   B E N D I N G");
+       OBFFLog("ATOM TYPES             FF       OOP     FORCE ");
+       OBFFLog(" I    J    K    L     CLASS    ANGLE   CONSTANT     ENERGY");
+       OBFFLog("----------------------------------------------------------");
+     }
+
+     for (i = _oopcalculations.begin(); i != _oopcalculations.end(); ++i) {
+      i->Compute(gradients);
+      energy += i->GetEnergy();
+      
+       IF_OBFF_LOGLVL_HIGH {
+         sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), atoi((*i).d->GetType()), 
+                 (*i).angle, (*i).koop, (*i).energy);
+         OBFFLog(logbuf);
+       }
+     }
+
+     IF_OBFF_LOGLVL_HIGH {
+       sprintf(logbuf, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.3f\n", energy);
+       OBFFLog(logbuf);
+     }
+     return energy;
+  }
+
+  void OBFFVDWCalculationUFF::Compute(bool gradients)
   {
     vector3 da, db;
     double term6, term12, dE, term7, term13;
@@ -255,20 +311,20 @@ namespace OpenBabel
     term6 = term6 * term6; // ^6
     term12 = term6 * term6; // ^12
    
-    energy = (1.0 / term12) - (1.0 / term6);
+    energy = (1.0 / term12) - (2.0 / term6);
     
     if (gradients) { 
       term13 = term13 * term12; // ^13
       term7 = term7 * term6; // ^7
-      dE = - (12.0 / ka) * (1.0 / term13) + (6.0 / kb) * (1.0 / term7);
+      dE = - (12.0 / ka) * (1.0 / term13) + (12.0 / kb) * (1.0 / term7);
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
     }
   }
   
-  double OBForceFieldGhemical::E_VDW(bool gradients)
+  double OBForceFieldUFF::E_VDW(bool gradients)
   {
-    vector<OBFFVDWCalculationGhemical>::iterator i;
+    vector<OBFFVDWCalculationUFF>::iterator i;
     double energy = 0.0;
      
     IF_OBFF_LOGLVL_HIGH {
@@ -299,7 +355,7 @@ namespace OpenBabel
     return energy;
   }
 
-  void OBFFElectrostaticCalculationGhemical::Compute(bool gradients)
+  void OBFFElectrostaticCalculationUFF::Compute(bool gradients)
   {
     vector3 da, db;
     double dE, rab2;
@@ -311,19 +367,22 @@ namespace OpenBabel
     } else
       rab = a->GetDistance(b);
 
-    energy = qq / rab;
+    //    energy = qq / rab;
+    energy = 0.0;
 
     if (gradients) {
       rab2 = rab * rab;
       dE = -qq / rab2;
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
+      //      grada = dE * da; // - dE/drab * drab/da
+      //      gradb = dE * db; // - dE/drab * drab/db
+      grada = 0.0;
+      gradb = 0.0;
     } 
   }
   
-  double OBForceFieldGhemical::E_Electrostatic(bool gradients)
+  double OBForceFieldUFF::E_Electrostatic(bool gradients)
   {
-    vector<OBFFElectrostaticCalculationGhemical>::iterator i;
+    vector<OBFFElectrostaticCalculationUFF>::iterator i;
     double energy = 0.0;
      
     IF_OBFF_LOGLVL_HIGH {
@@ -356,36 +415,34 @@ namespace OpenBabel
 
   //***********************************************
   //Make a global instance
-  OBForceFieldGhemical theForceFieldGhemical("Ghemical", true);
+  OBForceFieldUFF theForceFieldUFF("UFF", true);
   //***********************************************
 
-  OBForceFieldGhemical::~OBForceFieldGhemical()
+  OBForceFieldUFF::~OBForceFieldUFF()
   {
   }
 
-  OBForceFieldGhemical &OBForceFieldGhemical::operator=(OBForceFieldGhemical &src)
+  OBForceFieldUFF &OBForceFieldUFF::operator=(OBForceFieldUFF &src)
   {
     _mol = src._mol;
 
-    _ffbondparams    = src._ffbondparams;
-    _ffangleparams   = src._ffangleparams;
-    _fftorsionparams = src._fftorsionparams;
-    _ffvdwparams     = src._ffvdwparams;
+    _ffparams    = src._ffparams;
 
     _bondcalculations          = src._bondcalculations;
     _anglecalculations         = src._anglecalculations;
     _torsioncalculations       = src._torsioncalculations;
+    _oopcalculations           = src._oopcalculations;
     _vdwcalculations           = src._vdwcalculations;
     _electrostaticcalculations = src._electrostaticcalculations;
 
     return *this;
   }
 
-  bool OBForceFieldGhemical::Setup(OBMol &mol)
+  bool OBForceFieldUFF::Setup(OBMol &mol)
   {
     _mol = mol;
     
-    SetGhemicalTypes();
+    SetUFFTypes();
 
     if (!SetupCalculations())
       return false;
@@ -393,9 +450,9 @@ namespace OpenBabel
     return true;
   }
   
-  bool OBForceFieldGhemical::SetupCalculations()
+  bool OBForceFieldUFF::SetupCalculations()
   {
-    OBFFParameter *parameter;
+    OBFFParameter *parameterA, *parameterB, *parameterC, *parameterD;
     OBAtom *a, *b, *c, *d;
     
     IF_OBFF_LOGLVL_LOW
@@ -406,44 +463,45 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP BOND CALCULATIONS...\n");
     
-    OBFFBondCalculationGhemical bondcalc;
-    int bondtype;
+    OBFFBondCalculationUFF bondcalc;
+    double bondorder;
+    double ri, rj, rbo, ren;
+    double chiI, chiJ;
 
     _bondcalculations.clear();
     
     FOR_BONDS_OF_MOL(bond, _mol) {
       a = bond->GetBeginAtom();
-      b = bond->GetEndAtom();	
-      bondtype = bond->GetBondOrder(); 
+      b = bond->GetEndAtom();
+      bondorder = bond->GetBondOrder(); 
       if (bond->IsAromatic())
-        bondtype = 5;
-
+        bondorder = 1.5;
+      if (bond->IsAmide())
+        bondorder = 1.41;
+      
       bondcalc.a = a;
       bondcalc.b = b;
-      bondcalc.bt = bondtype;
 
-      parameter = GetParameterGhemical(bondtype, a->GetType(), b->GetType(), NULL, NULL,  _ffbondparams);
-      if (parameter == NULL) {
-        parameter = GetParameterGhemical(bondtype, "FFFF", a->GetType(), NULL, NULL, _ffbondparams);
-        if (parameter == NULL) {
-          parameter = GetParameterGhemical(bondtype, "FFFF", b->GetType(), NULL, NULL, _ffbondparams);
-          if (parameter == NULL) {
-            bondcalc.kb = KCAL_TO_KJ * 500.0;
-            bondcalc.r0 = 1.100;
+      parameterA = GetParameterUFF(a->GetType(), _ffparams);
+      parameterB = GetParameterUFF(b->GetType(), _ffparams);
+      ri = parameterA->_dpar[0];
+      rj = parameterB->_dpar[0];
+      chiI = parameterA->_dpar[8];
+      chiJ = parameterB->_dpar[8];
 
-            _bondcalculations.push_back(bondcalc);
+      // precompute the equilibrium geometry
+      // From equation 3
+      rbo = -0.1332*(ri+rj)*log(bondorder);
+      // From equation 4
+      ren = ri*rj*(pow((sqrt(chiI) - sqrt(chiJ)),2.0)) / (chiI*ri + chiJ*rj);
+      // From equation 2
+      bondcalc.r0 = ri + rj + rbo + ren;
 
-            IF_OBFF_LOGLVL_LOW {
-              sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR BOND %s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType());
-              OBFFLog(logbuf);
-            }
-
-            continue;
-          }
-        }
-      }
-      bondcalc.kb = KCAL_TO_KJ * parameter->_dpar[1];
-      bondcalc.r0 = parameter->_dpar[0];
+      // here we fold the 1/2 into the kij from equation 1a
+      // Otherwise, this is equation 6 from the UFF paper.
+      bondcalc.kb = (0.5 * KCAL_TO_KJ * 644.12 
+        * parameterA->_dpar[5] * parameterB->_dpar[5])
+        / (bondcalc.r0 * bondcalc.r0 * bondcalc.r0);
 
       _bondcalculations.push_back(bondcalc);
     }
@@ -454,7 +512,7 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP ANGLE CALCULATIONS...\n");
  
-    OBFFAngleCalculationGhemical anglecalc;
+    OBFFAngleCalculationUFF anglecalc;
  
     _anglecalculations.clear();
     
@@ -467,31 +525,12 @@ namespace OpenBabel
       anglecalc.b = b;
       anglecalc.c = c;
 
-      parameter = GetParameter(a->GetType(), b->GetType(), c->GetType(), NULL, _ffangleparams);
-      if (parameter == NULL) {
-        parameter = GetParameter("FFFF", b->GetType(), c->GetType(), NULL, _ffangleparams);
-        if (parameter == NULL) {
-          parameter = GetParameter(a->GetType(), b->GetType(), "FFFF", NULL, _ffangleparams);
-          if (parameter == NULL) {
-            parameter = GetParameter("FFFF", b->GetType(), "FFFF", NULL, _ffangleparams);
-            if (parameter == NULL) {
-              anglecalc.ka = KCAL_TO_KJ * 0.020;
-              anglecalc.theta0 = 120.0;
-            
-              _anglecalculations.push_back(anglecalc);
-            
-              IF_OBFF_LOGLVL_LOW {
-                sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR ANGLE %s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType());
-                OBFFLog(logbuf);
-              }
+      parameterA = GetParameterUFF(a->GetType(), _ffparams);
+      parameterB = GetParameterUFF(b->GetType(), _ffparams);
+      parameterC = GetParameterUFF(c->GetType(), _ffparams);
 
-              continue;
-            }
-          }
-        }
-      }
-      anglecalc.ka = KCAL_TO_KJ * parameter->_dpar[1];
-      anglecalc.theta0 = parameter->_dpar[0];
+      anglecalc.ka = KCAL_TO_KJ * parameterA->_dpar[1];
+      anglecalc.theta0 = parameterA->_dpar[0];
       
       _anglecalculations.push_back(anglecalc);
     }
@@ -502,7 +541,7 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP TORSION CALCULATIONS...\n");
  
-    OBFFTorsionCalculationGhemical torsioncalc;
+    OBFFTorsionCalculationUFF torsioncalc;
     int torsiontype;
     int s;
 
@@ -524,36 +563,14 @@ namespace OpenBabel
       torsioncalc.d = d;
       torsioncalc.tt = torsiontype;
 
-      parameter = GetParameterGhemical(torsiontype, a->GetType(), b->GetType(), c->GetType(), d->GetType(), _fftorsionparams);
-      if (parameter == NULL) {
-        parameter = GetParameterGhemical(torsiontype, "FFFF", b->GetType(), c->GetType(), d->GetType(), _fftorsionparams);
-        if (parameter == NULL) {
-          parameter = GetParameterGhemical(torsiontype, a->GetType(), b->GetType(), c->GetType(), "FFFF", _fftorsionparams);
-          if (parameter == NULL) {
-            parameter = GetParameterGhemical(torsiontype, "FFFF", b->GetType(), c->GetType(), "FFFF", _fftorsionparams);
-            if (parameter == NULL) {
-              torsioncalc.V = 0.0;
-              torsioncalc.s = 1.0;
-              torsioncalc.n = 1.0;
-              
-              torsioncalc.k1 = 0.0;
-              torsioncalc.k2 = 0.0;
-              torsioncalc.k3 = 0.0;
-              _torsioncalculations.push_back(torsioncalc);
+      parameterA = GetParameterUFF(a->GetType(), _ffparams);
+      parameterB = GetParameterUFF(b->GetType(), _ffparams);
+      parameterC = GetParameterUFF(c->GetType(), _ffparams);
+      parameterD = GetParameterUFF(d->GetType(), _ffparams);
 
-              IF_OBFF_LOGLVL_LOW {
-                sprintf(logbuf, "COULD NOT FIND PARAMETERS FOR TORSION %s-%s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType(), d->GetType());
-                OBFFLog(logbuf);
-              }
-
-              continue;
-            }
-          }
-        }
-      }
-      torsioncalc.V = KCAL_TO_KJ * parameter->_dpar[0];
-      torsioncalc.s = parameter->_dpar[1];
-      torsioncalc.n = parameter->_dpar[2];
+      torsioncalc.V = KCAL_TO_KJ * parameterA->_dpar[0];
+      torsioncalc.s = parameterA->_dpar[1];
+      torsioncalc.n = parameterA->_dpar[2];
 
       s = (int) (torsioncalc.s * torsioncalc.n);
       switch(s) {
@@ -598,8 +615,7 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP VAN DER WAALS CALCULATIONS...\n");
     
-    OBFFVDWCalculationGhemical vdwcalc;
-    OBFFParameter *parameter_a, *parameter_b;
+    OBFFVDWCalculationUFF vdwcalc;
 
     _vdwcalculations.clear();
     
@@ -607,33 +623,13 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
 
-      parameter_a = GetParameter(a->GetType(), NULL, NULL, NULL, _ffvdwparams);
-      if (parameter_a == NULL) { // no vdw parameter -> use hydrogen
-        vdwcalc.Ra = 1.5;
-        vdwcalc.ka = 0.042;
-	
-        IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", a->GetType());
-          OBFFLog(logbuf);
-        }
-      } else {
-        vdwcalc.Ra = parameter_a->_dpar[0];
-        vdwcalc.ka = parameter_a->_dpar[1];
-      }
+      parameterA = GetParameterUFF(a->GetType(), _ffparams);
+      parameterB = GetParameterUFF(b->GetType(), _ffparams);
 
-      parameter_b = GetParameter(b->GetType(), NULL, NULL, NULL, _ffvdwparams);
-      if (parameter_b == NULL) { // no vdw parameter -> use hydrogen
-        vdwcalc.Rb = 1.5;
-        vdwcalc.kb = 0.042;
-        
-        IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", b->GetType());
-          OBFFLog(logbuf);
-        }
-      } else {
-        vdwcalc.Rb = parameter_b->_dpar[0];
-        vdwcalc.kb = parameter_b->_dpar[1];
-      }
+      vdwcalc.Ra = parameterA->_dpar[2];
+      vdwcalc.ka = parameterA->_dpar[3];
+      vdwcalc.Rb = parameterB->_dpar[2];
+      vdwcalc.kb = parameterB->_dpar[3];
 
       vdwcalc.a = &*a;
       vdwcalc.b = &*b;
@@ -643,28 +639,8 @@ namespace OpenBabel
       vdwcalc.kab = KCAL_TO_KJ * sqrt(vdwcalc.ka * vdwcalc.kb);
       
       // 1-4 scaling
-      if (a->IsOneFour(b))
-        vdwcalc.kab *= 0.5;
-      /*
-        vdwcalc.is14 = false;
-        FOR_NBORS_OF_ATOM (nbr, a)
-        FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-        FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-        if (b == &*nbr3) {
-        vdwcalc.is14 = true;
-        vdwcalc.kab *= 0.5;
-        }
-      */
-
-      // not sure why this is needed, but validation showed it works...
-      /*
-        if (a->IsInRingSize(6) && b->IsInRingSize(6) && IsInSameRing(a, b))
-        vdwcalc.samering = true;
-        else if ((a->IsInRingSize(5) || a->IsInRingSize(4)) && (b->IsInRingSize(5) || b->IsInRingSize(4)))
-        vdwcalc.samering = true;
-        else
-        vdwcalc.samering = false;
-      */
+//       if (a->IsOneFour(b))
+//         vdwcalc.kab *= 0.5;
 
       vdwcalc.ka = (vdwcalc.Ra + vdwcalc.Rb) * pow(1.0 * vdwcalc.kab , 1.0 / 12.0);
       vdwcalc.kb = (vdwcalc.Ra + vdwcalc.Rb) * pow(2.0 * vdwcalc.kab , 1.0 / 6.0);
@@ -678,7 +654,7 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP ELECTROSTATIC CALCULATIONS...\n");
  
-    OBFFElectrostaticCalculationGhemical elecalc;
+    OBFFElectrostaticCalculationUFF elecalc;
 
     _electrostaticcalculations.clear();
     
@@ -686,24 +662,12 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
       
-      elecalc.qq = KCAL_TO_KJ * 332.17 * a->GetPartialCharge() * b->GetPartialCharge();
+      elecalc.qq = KCAL_TO_KJ * 332.0637 * a->GetPartialCharge() * b->GetPartialCharge();
       
       if (elecalc.qq) {
         elecalc.a = &*a;
         elecalc.b = &*b;
         
-        // 1-4 scaling
-        if (a->IsOneFour(b))
-          elecalc.qq *= 0.5;
-	  
-        /*
-          FOR_NBORS_OF_ATOM (nbr, a)
-          FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-          FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-          if (b == &*nbr3)
-          elecalc.qq *= 0.5;
-        */
-
         _electrostaticcalculations.push_back(elecalc);
       }
     }
@@ -711,92 +675,42 @@ namespace OpenBabel
     return true;
   }
 
-  bool OBForceFieldGhemical::ParseParamFile()
+  bool OBForceFieldUFF::ParseParamFile()
   {
     vector<string> vs;
     char buffer[80];
     
     OBFFParameter parameter;
 
-    // open data/ghemical.prm
+    // open data/UFF.prm
     ifstream ifs;
-    if (OpenDatafile(ifs, "ghemical.prm").length() == 0) {
-      obErrorLog.ThrowError(__FUNCTION__, "Cannot open ghemical.prm", obError);
+    if (OpenDatafile(ifs, "UFF.prm").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open UFF.prm", obError);
       return false;
     }
 
-    while (ifs.getline(buffer, 80)) {
+    while (ifs.getline(buffer, 256)) {
       tokenize(vs, buffer);
-
-      if (EQn(buffer, "bond", 4)) {
+      if (vs.size() < 13)
+        continue;
+      
+      if (EQn(buffer, "param", 5)) {
+        // set up all parameters from this
         parameter.clear();
-        parameter._a = vs[1];
-        parameter._b = vs[2];
-        parameter._dpar.push_back(atof(vs[4].c_str())); // length
-        parameter._dpar.push_back(atof(vs[5].c_str())); // force cte
-        parameter._ipar.reserve(1);
-        if (EQn(vs[3].c_str(), "S", 1))
-          parameter._ipar[0] = 1;
-        if (EQn(vs[3].c_str(), "D", 1))
-          parameter._ipar[0] = 2;
-        if (EQn(vs[3].c_str(), "T", 1))
-          parameter._ipar[0] = 3;
-        if (EQn(vs[3].c_str(), "C", 1))
-          parameter._ipar[0] = 5;
-        _ffbondparams.push_back(parameter);
-      }
-      if (EQn(buffer, "angle", 5)) {
-        parameter.clear();
-        parameter._a = vs[1];
-        parameter._b = vs[2];
-        parameter._c = vs[3];
-        parameter._dpar.push_back(atof(vs[5].c_str())); // angle
-        parameter._dpar.push_back(atof(vs[6].c_str())); // force cte
-        _ffangleparams.push_back(parameter);
-      }
-      if (EQn(buffer, "torsion", 7)) {
-        parameter.clear();
-        parameter._a = vs[1];
-        parameter._b = vs[2];
-        parameter._c = vs[3];
-        parameter._d = vs[4];
-        parameter._dpar.reserve(3);
-        parameter._dpar[0] = atof(vs[6].c_str()); // force cte
-        parameter._dpar[2] = atof(vs[8].c_str()); // n
-        if (EQn(vs[7].c_str(), "+", 1))
-          parameter._dpar[1] = +1; // s
-        else if (EQn(vs[7].c_str(), "-", 1))
-          parameter._dpar[1] = -1; // s
-
-        parameter._ipar.reserve(1);
-        if (EQn(vs[5].c_str(), "?S?", 3))
-          parameter._ipar[0] = 1;
-        else if (EQn(vs[5].c_str(), "?D?", 3))
-          parameter._ipar[0] = 2;
-        else if (EQn(vs[5].c_str(), "?T?", 3))
-          parameter._ipar[0] = 3;
-        else if (EQn(vs[5].c_str(), "?C?", 3))
-          parameter._ipar[0] = 5;
-        _fftorsionparams.push_back(parameter);
-      }
-      if (EQn(buffer, "vdw", 3)) {
-        parameter.clear();
-        parameter._a = vs[1];
-        parameter._dpar.push_back(atof(vs[2].c_str())); // r
-        parameter._dpar.push_back(atof(vs[3].c_str())); // force cte
-        _ffvdwparams.push_back(parameter);
-      }
-      if (EQn(buffer, "charge", 6)) {
-        parameter.clear();
-        parameter._a = vs[1];
-        parameter._b = vs[2];
-        parameter._ipar.reserve(1);
-        if (EQn(vs[3].c_str(), "S", 1))
-          parameter._ipar[0] = 1;
-        else if (EQn(vs[3].c_str(), "D", 1))
-          parameter._ipar[0] = 2;
-        parameter._dpar.push_back(atof(vs[4].c_str())); // charge
-        _ffchargeparams.push_back(parameter);
+        parameter._a = vs[1]; // atom type
+        parameter._dpar.push_back(atof(vs[2].c_str())); // r1
+        parameter._dpar.push_back(atof(vs[3].c_str())); // theta0
+        parameter._dpar.push_back(atof(vs[4].c_str())); // x1
+        parameter._dpar.push_back(atof(vs[5].c_str())); // D1
+        parameter._dpar.push_back(atof(vs[6].c_str())); // zeta
+        parameter._dpar.push_back(atof(vs[7].c_str())); // Z1
+        parameter._dpar.push_back(atof(vs[8].c_str())); // Vi
+        parameter._dpar.push_back(atof(vs[9].c_str())); // Uj
+        parameter._dpar.push_back(atof(vs[10].c_str())); // Xi
+        parameter._dpar.push_back(atof(vs[11].c_str())); // Hard
+        parameter._dpar.push_back(atof(vs[12].c_str())); // Radius
+        
+        _ffparams.push_back(parameter);
       }
     }
 	
@@ -806,7 +720,7 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldGhemical::SetGhemicalTypes()
+  bool OBForceFieldUFF::SetUFFTypes()
   {
     vector<vector<int> > _mlist; //!< match list for atom typing
     vector<pair<OBSmartsPattern*,string> > _vexttyp; //!< external atom type rules
@@ -818,10 +732,10 @@ namespace OpenBabel
  
     _mol.SetAtomTypesPerceived();
     
-    // open data/ghemical.prm
+    // open data/UFF.prm
     ifstream ifs;
-    if (OpenDatafile(ifs, "ghemical.prm").length() == 0) {
-      obErrorLog.ThrowError(__FUNCTION__, "Cannot open ghemical.prm", obError);
+    if (OpenDatafile(ifs, "UFF.prm").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open UFF.prm", obError);
       return false;
     }
 
@@ -835,7 +749,7 @@ namespace OpenBabel
         else {
           delete sp;
           sp = NULL;
-          obErrorLog.ThrowError(__FUNCTION__, " Could not parse atom type table from ghemical.prm", obInfo);
+          obErrorLog.ThrowError(__FUNCTION__, " Could not parse atom type table from UFF.prm", obInfo);
           return false;
         }
         
@@ -849,8 +763,6 @@ namespace OpenBabel
         }
       }
     }
-
-    SetGhemicalCharges();
  
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nA T O M   T Y P E S\n\n");
@@ -861,13 +773,6 @@ namespace OpenBabel
         OBFFLog(logbuf);
       }
 
-      OBFFLog("\nC H A R G E S\n\n");
-      OBFFLog("IDX\tCHARGE\n");
-      
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
-        OBFFLog(logbuf);
-      }
     }
     
     // DEBUG (validation)
@@ -883,41 +788,7 @@ namespace OpenBabel
     return true;
   }
   
-  bool OBForceFieldGhemical::SetGhemicalCharges()
-  {
-    OBAtom *a, *b;
-    int bondtype;
-
-    _mol.SetAutomaticPartialCharge(false);
-    _mol.SetPartialChargesPerceived();
-
-    // set all partial charges to 0.0
-    FOR_ATOMS_OF_MOL (atom, _mol)
-      atom->SetPartialCharge(0.0);
-
-    FOR_BONDS_OF_MOL (bond, _mol) {
-      a = bond->GetBeginAtom();
-      b = bond->GetEndAtom();	
-      bondtype = bond->GetBondOrder(); 
-
-      string _a(a->GetType());
-      string _b(b->GetType());
-
-      for (unsigned int idx=0; idx < _ffchargeparams.size(); ++idx) {
-        if (((_a == _ffchargeparams[idx]._a) && (_b == _ffchargeparams[idx]._b)) && (bondtype == _ffchargeparams[idx]._ipar[0])) {
-          a->SetPartialCharge(a->GetPartialCharge() - _ffchargeparams[idx]._dpar[0]);
-          b->SetPartialCharge(b->GetPartialCharge() + _ffchargeparams[idx]._dpar[0]);
-        } else if (((_a == _ffchargeparams[idx]._b) && (_b == _ffchargeparams[idx]._a)) && (bondtype == _ffchargeparams[idx]._ipar[0])) {
-          a->SetPartialCharge(a->GetPartialCharge() + _ffchargeparams[idx]._dpar[0]);
-          b->SetPartialCharge(b->GetPartialCharge() - _ffchargeparams[idx]._dpar[0]);
-        }
-      }
-    }
-
-    return true;
-  }
-
-  double OBForceFieldGhemical::Energy(bool gradients)
+  double OBForceFieldUFF::Energy(bool gradients)
   {
     double energy;
     
@@ -927,6 +798,7 @@ namespace OpenBabel
     energy = E_Bond(gradients);
     energy += E_Angle(gradients);
     energy += E_Torsion(gradients);
+    energy += E_OOP(gradients);
     energy += E_VDW(gradients);
     energy += E_Electrostatic(gradients);
 
@@ -938,72 +810,26 @@ namespace OpenBabel
     return energy;
   }
   
-  OBFFParameter* OBForceFieldGhemical::GetParameterGhemical(int type, const char* a, const char* b, const char* c, const char* d, 
-                                                            vector<OBFFParameter> &parameter)
+  OBFFParameter* OBForceFieldUFF::GetParameterUFF(std::string a, vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
-    if (a == NULL)
-      return NULL;
-
-    if (b == NULL) {
-      string _a(a);
-      for (unsigned int idx=0; idx < parameter.size(); ++idx) 
-        if ((_a == parameter[idx]._a) && (type == parameter[idx]._ipar[0])) {
-          par = &parameter[idx];
-          return par;
-        }
-      return NULL;
-    }
-    if (c == NULL) {
-      string _a(a);
-      string _b(b);
-      for (unsigned int idx=0; idx < parameter.size(); ++idx) {
-        if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b)) && (type == parameter[idx]._ipar[0]) || 
-            ((_a == parameter[idx]._b) && (_b == parameter[idx]._a)) && (type == parameter[idx]._ipar[0])) {
-          par = &parameter[idx];
-          return par;
-        }
-      }
-      return NULL;
-    }
-    if (d == NULL) {
-      string _a(a);
-      string _b(b);
-      string _c(c);
-      for (unsigned int idx=0; idx < parameter.size(); ++idx) {
-        if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c)) && (type == parameter[idx]._ipar[0])|| 
-            ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && (_c == parameter[idx]._a)) && (type == parameter[idx]._ipar[0])) {
-          par = &parameter[idx];
-          return par;
-        }
-      }
-      return NULL;
-    }
-    string _a(a);
-    string _b(b);
-    string _c(c);
-    string _d(d);
 
     for (unsigned int idx=0; idx < parameter.size(); ++idx) {
-      if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c) && 
-           (_d == parameter[idx]._d)) && (type == parameter[idx]._ipar[0]) || 
-          ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && (_c == parameter[idx]._b) && 
-           (_d == parameter[idx]._a)) && (type == parameter[idx]._ipar[0])) {
-        par = &parameter[idx];
-        return par;
+      if (a == parameter[idx]._a) {
+        return &parameter[idx];
       }
     }
-
     return NULL;
   }
   
-  vector3 OBForceFieldGhemical::GetGradient(OBAtom *a, int terms)
+  vector3 OBForceFieldUFF::GetGradient(OBAtom *a, int terms)
   {
-    vector<OBFFBondCalculationGhemical>::iterator i;
-    vector<OBFFAngleCalculationGhemical>::iterator i2;
-    vector<OBFFTorsionCalculationGhemical>::iterator i3;
-    vector<OBFFVDWCalculationGhemical>::iterator i4;
-    vector<OBFFElectrostaticCalculationGhemical>::iterator i5;
+    vector<OBFFBondCalculationUFF>::iterator i;
+    vector<OBFFAngleCalculationUFF>::iterator i2;
+    vector<OBFFTorsionCalculationUFF>::iterator i3;
+    vector<OBFFVDWCalculationUFF>::iterator i4;
+    vector<OBFFElectrostaticCalculationUFF>::iterator i5;
+    vector<OBFFOOPCalculationUFF>::iterator i6;
 
     vector3 grad(0.0, 0.0, 0.0);
     
@@ -1012,7 +838,6 @@ namespace OpenBabel
         if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx()))
           grad += i->GetGradient(&*a);
     
-
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EANGLE))
       for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); ++i2)
         if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx()))
@@ -1032,11 +857,16 @@ namespace OpenBabel
       for (i5 = _electrostaticcalculations.begin(); i5 != _electrostaticcalculations.end(); ++i5)
         if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx()))
           grad += i5->GetGradient(&*a);
-
+    
+    if ((terms & OBFF_ENERGY) || (terms & OBFF_EOOP))
+      for (i6 = _oopcalculations.begin(); i6 != _oopcalculations.end(); ++i6)
+        if (((*i6).a->GetIdx() == a->GetIdx()) || ((*i6).b->GetIdx() == a->GetIdx()) || ((*i6).c->GetIdx() == a->GetIdx()) || ((*i6).d->GetIdx() == a->GetIdx()))
+          grad += i6->GetGradient(&*a);    
+    
     return grad;
   }
 
-  bool OBForceFieldGhemical::ValidateGradients ()
+  bool OBForceFieldUFF::ValidateGradients ()
   {
     vector3 numgrad, anagrad, err;
     
@@ -1100,6 +930,15 @@ namespace OpenBabel
       sprintf(logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(logbuf);
+
+      // OBFF_EOOP
+      numgrad = NumericalDerivative(&*a, OBFF_EOOP);
+      anagrad = GetGradient(&*a, OBFF_EOOP);
+      err = ValidateGradientError(numgrad, anagrad);
+      
+      sprintf(logbuf, "    oop (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+      OBFFLog(logbuf);      
     }
     
     // For now, just return true. Should return false if validation fails.
@@ -1108,5 +947,5 @@ namespace OpenBabel
 
 } // end namespace OpenBabel
 
-//! \file forcefieldghemical.cpp
-//! \brief Ghemical force field
+//! \file forcefieldUFF.cpp
+//! \brief UFF force field

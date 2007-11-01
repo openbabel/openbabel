@@ -190,7 +190,7 @@ namespace OpenBabel
       //! Get the description for this force field
       const char* Description()
       { 
-        return "Merck Molecular Force Field. (94)";
+        return "MMFF94 force field.";
       }
 
       //! Get the unit in wich the energy is expressed

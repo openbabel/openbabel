@@ -1,5 +1,5 @@
 /*********************************************************************
-forcefieldmmff94.cpp - Merck Molecular Force Field.
+forcefieldmmff94.cpp - MMFF94 force field
 
 Copyright (C) 2006-2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
  
@@ -572,11 +572,11 @@ namespace OpenBabel
       tokenize(vs, buffer);
 
       parameter.clear();
-      parameter.ipar5 = atoi(vs[0].c_str());  // FF class
+      parameter._ipar.push_back(atoi(vs[0].c_str()));  // FF class
       parameter.a = atoi(vs[1].c_str());
       parameter.b = atoi(vs[2].c_str());
-      parameter.dpar1 = atof(vs[3].c_str());  // kb
-      parameter.dpar2 = atof(vs[4].c_str());  // r0
+      parameter._dpar.push_back(atof(vs[3].c_str()));  // kb
+      parameter._dpar.push_back(atof(vs[4].c_str()));  // r0
       _ffbondparams.push_back(parameter);
     }
 	
@@ -609,8 +609,8 @@ namespace OpenBabel
       parameter.clear();
       parameter.a = atoi(vs[1].c_str());
       parameter.b = atoi(vs[2].c_str());
-      parameter.dpar1 = atof(vs[3].c_str());  // r0-ref
-      parameter.dpar2 = atof(vs[4].c_str());  // kb-ref
+      parameter._dpar.push_back(atof(vs[3].c_str()));  // r0-ref
+      parameter._dpar.push_back(atof(vs[4].c_str()));  // kb-ref
       _ffbndkparams.push_back(parameter);
     }
 	
@@ -641,12 +641,12 @@ namespace OpenBabel
       tokenize(vs, buffer);
 
       parameter.clear();
-      parameter.ipar5 = atoi(vs[0].c_str());  // FF class
+      parameter._ipar.push_back(atoi(vs[0].c_str()));  // FF class
       parameter.a = atoi(vs[1].c_str());
       parameter.b = atoi(vs[2].c_str());
       parameter.c = atoi(vs[3].c_str());
-      parameter.dpar1 = atof(vs[4].c_str());  // ka
-      parameter.dpar2 = atof(vs[5].c_str());  // theta0
+      parameter._dpar.push_back(atof(vs[4].c_str()));  // ka
+      parameter._dpar.push_back(atof(vs[5].c_str()));  // theta0
       _ffangleparams.push_back(parameter);
     }
 	
@@ -677,12 +677,12 @@ namespace OpenBabel
       tokenize(vs, buffer);
 
       parameter.clear();
-      parameter.ipar5 = atoi(vs[0].c_str());  // FF class
+      parameter._ipar.push_back(atoi(vs[0].c_str()));  // FF class
       parameter.a = atoi(vs[1].c_str());
       parameter.b = atoi(vs[2].c_str());
       parameter.c = atoi(vs[3].c_str());
-      parameter.dpar1 = atof(vs[4].c_str());  // kbaIJK
-      parameter.dpar2 = atof(vs[5].c_str());  // kbaKJI
+      parameter._dpar.push_back(atof(vs[4].c_str()));  // kbaIJK
+      parameter._dpar.push_back(atof(vs[5].c_str()));  // kbaKJI
       _ffstrbndparams.push_back(parameter);
     }
 	
@@ -716,8 +716,8 @@ namespace OpenBabel
       parameter.a = atoi(vs[0].c_str());
       parameter.b = atoi(vs[1].c_str());
       parameter.c = atoi(vs[2].c_str());
-      parameter.dpar1 = atof(vs[3].c_str());  // kbaIJK
-      parameter.dpar2 = atof(vs[4].c_str());  // kbaKJI
+      parameter._dpar.push_back(atof(vs[3].c_str()));  // kbaIJK
+      parameter._dpar.push_back(atof(vs[4].c_str()));  // kbaKJI
       _ffdfsbparams.push_back(parameter);
     }
 	
@@ -752,7 +752,7 @@ namespace OpenBabel
       parameter.b = atoi(vs[1].c_str());
       parameter.c = atoi(vs[2].c_str());
       parameter.d = atoi(vs[3].c_str());
-      parameter.dpar1 = atof(vs[4].c_str());  // koop
+      parameter._dpar.push_back(atof(vs[4].c_str()));  // koop
       _ffoopparams.push_back(parameter);
     }
 	
@@ -783,14 +783,14 @@ namespace OpenBabel
       tokenize(vs, buffer);
 
       parameter.clear();
-      parameter.ipar5 = atoi(vs[0].c_str());  // FF class
+      parameter._ipar.push_back(atoi(vs[0].c_str()));  // FF class
       parameter.a = atoi(vs[1].c_str());
       parameter.b = atoi(vs[2].c_str());
       parameter.c = atoi(vs[3].c_str());
       parameter.d = atoi(vs[4].c_str());
-      parameter.dpar1 = atof(vs[5].c_str());  // v1
-      parameter.dpar2 = atof(vs[6].c_str());  // v2
-      parameter.dpar3 = atof(vs[7].c_str());  // v3
+      parameter._dpar.push_back(atof(vs[5].c_str()));  // v1
+      parameter._dpar.push_back(atof(vs[6].c_str()));  // v2
+      parameter._dpar.push_back(atof(vs[7].c_str()));  // v3
       _fftorsionparams.push_back(parameter);
     }
 	
@@ -822,16 +822,16 @@ namespace OpenBabel
 
       parameter.clear();
       parameter.a = atoi(vs[0].c_str());
-      parameter.dpar1 = atof(vs[1].c_str());  // alpha-i
-      parameter.dpar2 = atof(vs[2].c_str());  // N-i
-      parameter.dpar3 = atof(vs[3].c_str());  // A-i
-      parameter.dpar4 = atof(vs[4].c_str());  // G-i
+      parameter._dpar.push_back(atof(vs[1].c_str()));  // alpha-i
+      parameter._dpar.push_back(atof(vs[2].c_str()));  // N-i
+      parameter._dpar.push_back(atof(vs[3].c_str()));  // A-i
+      parameter._dpar.push_back(atof(vs[4].c_str()));  // G-i
       if (EQn(vs[5].c_str(), "-", 1))
-        parameter.ipar1 = 0;
+        parameter._ipar.push_back(0);
       else if (EQn(vs[5].c_str(), "D", 1))
-        parameter.ipar1 = 1;  // hydrogen bond donor
+        parameter._ipar.push_back(1);  // hydrogen bond donor
       else if (EQn(vs[5].c_str(), "A", 1))
-        parameter.ipar1 = 2;  // hydrogen bond acceptor
+        parameter._ipar.push_back(2);  // hydrogen bond acceptor
       _ffvdwparams.push_back(parameter);
     }
 
@@ -864,7 +864,7 @@ namespace OpenBabel
       parameter.clear();
       parameter.a = atoi(vs[1].c_str());
       parameter.b = atoi(vs[2].c_str());
-      parameter.dpar1 = atof(vs[3].c_str());  // bci
+      parameter._dpar.push_back(atof(vs[3].c_str()));  // bci
       _ffchgparams.push_back(parameter);
     }
 
@@ -896,8 +896,8 @@ namespace OpenBabel
 
       parameter.clear();
       parameter.a = atoi(vs[1].c_str());
-      parameter.dpar1 = atof(vs[2].c_str());  // pbci
-      parameter.dpar2 = atof(vs[3].c_str());  // fcadj
+      parameter._dpar.push_back(atof(vs[2].c_str()));  // pbci
+      parameter._dpar.push_back(atof(vs[3].c_str()));  // fcadj
       _ffpbciparams.push_back(parameter);
     }
 
@@ -1171,8 +1171,8 @@ namespace OpenBabel
       } else {
         bondcalc.a = a;
         bondcalc.b = b;
-        bondcalc.kb = parameter->dpar1;
-        bondcalc.r0 = parameter->dpar2;
+        bondcalc.kb = parameter->_dpar[0];
+        bondcalc.r0 = parameter->_dpar[1];
         bondcalc.bt = bondtype;
 
         _bondcalculations.push_back(bondcalc);
@@ -1215,9 +1215,9 @@ namespace OpenBabel
       anglecalc.a = a;
       anglecalc.b = b;
       anglecalc.c = c;
-      anglecalc.ka   = parameter->dpar1;
-      anglecalc.theta0 = parameter->dpar2;
-      strbndcalc.theta0 = parameter->dpar2; // **
+      anglecalc.ka   = parameter->_dpar[0];
+      anglecalc.theta0 = parameter->_dpar[1];
+      strbndcalc.theta0 = parameter->_dpar[1]; // **
       anglecalc.at = angletype;
       
       _anglecalculations.push_back(anglecalc);
@@ -1237,27 +1237,27 @@ namespace OpenBabel
         }
 
         if (rowa == parameter->a) {
-          strbndcalc.kbaABC = parameter->dpar1;
-          strbndcalc.kbaCBA = parameter->dpar2;
+          strbndcalc.kbaABC = parameter->_dpar[0];
+          strbndcalc.kbaCBA = parameter->_dpar[1];
         } else {
-          strbndcalc.kbaABC = parameter->dpar2;
-          strbndcalc.kbaCBA = parameter->dpar1;
+          strbndcalc.kbaABC = parameter->_dpar[1];
+          strbndcalc.kbaCBA = parameter->_dpar[0];
         }
       } else {
         if (atoi(a->GetType()) == parameter->a) {
-          strbndcalc.kbaABC = parameter->dpar1;
-          strbndcalc.kbaCBA = parameter->dpar2;
+          strbndcalc.kbaABC = parameter->_dpar[0];
+          strbndcalc.kbaCBA = parameter->_dpar[1];
         } else {
-          strbndcalc.kbaABC = parameter->dpar2;
-          strbndcalc.kbaCBA = parameter->dpar1;
+          strbndcalc.kbaABC = parameter->_dpar[1];
+          strbndcalc.kbaCBA = parameter->_dpar[0];
         }
       }
  
       parameter = GetParameterMMFF94(bondtype1, atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams);
-      strbndcalc.rab0 = parameter->dpar2;
+      strbndcalc.rab0 = parameter->_dpar[1];
       
       parameter = GetParameterMMFF94(bondtype2, atoi(b->GetType()), atoi(c->GetType()), 0, 0, _ffbondparams);
-      strbndcalc.rbc0 = parameter->dpar2;
+      strbndcalc.rbc0 = parameter->_dpar[1];
 
       strbndcalc.a = a;
       strbndcalc.b = b;
@@ -1292,32 +1292,32 @@ namespace OpenBabel
       parameter = GetParameterMMFF94(torsiontype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
       if (parameter == NULL) {
         for (int idx=0; idx < _fftorsionparams.size(); idx++) {  // *-XX-XX-XX 
-          if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx].ipar5) &&
+          if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx]._ipar[0]) &&
                (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
-              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx].ipar5) &&
+              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx]._ipar[0]) &&
                (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].d)) ||
-              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx].ipar5) &&
+              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) && (torsiontype == _fftorsionparams[idx]._ipar[0]) &&
                (atoi(c->GetType()) == _fftorsionparams[idx].c) && (atoi(d->GetType()) == _fftorsionparams[idx].a)) ||
-              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx].ipar5) &&
+              ((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].c) && (torsiontype == _fftorsionparams[idx]._ipar[0]) &&
                (atoi(c->GetType()) == _fftorsionparams[idx].b) && (atoi(d->GetType()) == _fftorsionparams[idx].a)))
             {
-              torsioncalc.v1 = _fftorsionparams[idx].dpar1;
-              torsioncalc.v2 = _fftorsionparams[idx].dpar2;
-              torsioncalc.v3 = _fftorsionparams[idx].dpar3;
+              torsioncalc.v1 = _fftorsionparams[idx]._dpar[0];
+              torsioncalc.v2 = _fftorsionparams[idx]._dpar[1];
+              torsioncalc.v3 = _fftorsionparams[idx]._dpar[2];
               found = true;  
             }
         }
 
         if (!found)
           for (int idx=0; idx < _fftorsionparams.size(); idx++) {  // *-XX-XX-*
-            if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
+            if (((_fftorsionparams[idx].a == 0) && (atoi(b->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx]._ipar[0]) &&
                  (atoi(c->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)) ||
-                ((_fftorsionparams[idx].a == 0) && (atoi(c->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx].ipar5) &&
+                ((_fftorsionparams[idx].a == 0) && (atoi(c->GetType()) == _fftorsionparams[idx].b) &&  (torsiontype == _fftorsionparams[idx]._ipar[0]) &&
                  (atoi(b->GetType()) == _fftorsionparams[idx].c) && (_fftorsionparams[idx].d == 0)))
               {
-                torsioncalc.v1 = _fftorsionparams[idx].dpar1;
-                torsioncalc.v2 = _fftorsionparams[idx].dpar2;
-                torsioncalc.v3 = _fftorsionparams[idx].dpar3;
+                torsioncalc.v1 = _fftorsionparams[idx]._dpar[0];
+                torsioncalc.v2 = _fftorsionparams[idx]._dpar[1];
+                torsioncalc.v3 = _fftorsionparams[idx]._dpar[2];
                 found = true;  
               }
           }
@@ -1328,9 +1328,9 @@ namespace OpenBabel
           return false;
         }
       } else {
-        torsioncalc.v1 = parameter->dpar1;
-        torsioncalc.v2 = parameter->dpar2;
-        torsioncalc.v3 = parameter->dpar3;
+        torsioncalc.v1 = parameter->_dpar[0];
+        torsioncalc.v2 = parameter->_dpar[1];
+        torsioncalc.v3 = parameter->_dpar[2];
       }
       
       torsioncalc.a = a;
@@ -1381,7 +1381,7 @@ namespace OpenBabel
             {
               found = true;
 
-              oopcalc.koop = _ffoopparams[idx].dpar1;
+              oopcalc.koop = _ffoopparams[idx]._dpar[0];
             
               // A-B-CD || C-B-AD  PLANE = ABC
               oopcalc.a = a;
@@ -1407,7 +1407,7 @@ namespace OpenBabel
 
           if ((_ffoopparams[idx].a == 0) && (_ffoopparams[idx].c == 0) && (_ffoopparams[idx].d == 0) && !found) // *-XX-*-*
             {
-              oopcalc.koop = _ffoopparams[idx].dpar1;
+              oopcalc.koop = _ffoopparams[idx]._dpar[0];
 	    
               // A-B-CD || C-B-AD  PLANE = ABC
               oopcalc.a = a;
@@ -1454,18 +1454,18 @@ namespace OpenBabel
       }
       
       vdwcalc.a = a;
-      vdwcalc.alpha_a = parameter_a->dpar1;
-      vdwcalc.Na = parameter_a->dpar2;
-      vdwcalc.Aa = parameter_a->dpar3;
-      vdwcalc.Ga = parameter_a->dpar4;
-      vdwcalc.aDA = parameter_a->ipar1;
+      vdwcalc.alpha_a = parameter_a->_dpar[0];
+      vdwcalc.Na = parameter_a->_dpar[1];
+      vdwcalc.Aa = parameter_a->_dpar[2];
+      vdwcalc.Ga = parameter_a->_dpar[3];
+      vdwcalc.aDA = parameter_a->_ipar[0];
       
       vdwcalc.b = b;
-      vdwcalc.alpha_b = parameter_b->dpar1;
-      vdwcalc.Nb = parameter_b->dpar2;
-      vdwcalc.Ab = parameter_b->dpar3;
-      vdwcalc.Gb = parameter_b->dpar4;
-      vdwcalc.bDA = parameter_b->ipar1;
+      vdwcalc.alpha_b = parameter_b->_dpar[0];
+      vdwcalc.Nb = parameter_b->_dpar[1];
+      vdwcalc.Ab = parameter_b->_dpar[2];
+      vdwcalc.Gb = parameter_b->_dpar[3];
+      vdwcalc.bDA = parameter_b->_ipar[0];
       
       //these calculations only need to be done once for each pair, 
       //we do them now and save them for later use
@@ -2234,15 +2234,15 @@ namespace OpenBabel
 
     if (!b)
       for (int idx=0; idx < parameter.size(); idx++)
-        if ((a == parameter[idx].a) && (ffclass == parameter[idx].ipar5)) {
+        if ((a == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0])) {
           par = &parameter[idx];
           return par;
         }
 
     if (!c)
       for (int idx=0; idx < parameter.size(); idx++)
-        if (((a == parameter[idx].a) && (b == parameter[idx].b) && (ffclass == parameter[idx].ipar5)) || 
-            ((a == parameter[idx].b) && (b == parameter[idx].a) && (ffclass == parameter[idx].ipar5))) 
+        if (((a == parameter[idx].a) && (b == parameter[idx].b) && (ffclass == parameter[idx]._ipar[0])) || 
+            ((a == parameter[idx].b) && (b == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0]))) 
           {
             par = &parameter[idx];
             return par;
@@ -2250,16 +2250,16 @@ namespace OpenBabel
 
     if (!d)
       for (int idx=0; idx < parameter.size(); idx++)
-        if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (ffclass == parameter[idx].ipar5)) || 
-            ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a) && (ffclass == parameter[idx].ipar5))) 
+        if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (ffclass == parameter[idx]._ipar[0])) || 
+            ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0]))) 
           {
             par = &parameter[idx];
             return par;
           }
 
     for (int idx=0; idx < parameter.size(); idx++)
-      if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (d == parameter[idx].d) && (ffclass == parameter[idx].ipar5)) || 
-          ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && (d == parameter[idx].a) && (ffclass == parameter[idx].ipar5))) 
+      if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (d == parameter[idx].d) && (ffclass == parameter[idx]._ipar[0])) || 
+          ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && (d == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0]))) 
         {
           par = &parameter[idx];
           return par;

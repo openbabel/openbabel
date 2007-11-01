@@ -51,8 +51,8 @@ namespace OpenBabel
         return 0.0;
       }
 
-      l_ref = parameter->dpar1;
-      force = parameter->dpar2;
+      l_ref = parameter->_dpar[0];
+      force = parameter->_dpar[1];
 
       delta = l - l_ref;
       delta2 = delta * delta;
@@ -103,8 +103,8 @@ namespace OpenBabel
         return 0.0;
       }
       
-      ang_ref = parameter->dpar1;
-      force   = parameter->dpar2;
+      ang_ref = parameter->_dpar[0];
+      force   = parameter->_dpar[1];
 	
       delta = ang - ang_ref;
       delta2 = delta * delta;
@@ -165,16 +165,16 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all stretch-bend parameters", obError);
         return 0.0;
       }
-      force = parameter->dpar1;
+      force = parameter->_dpar[0];
       
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffangleparams);
-      ang_ref = parameter->dpar1;
+      ang_ref = parameter->_dpar[0];
       
       parameter = GetParameter(atoi(b->GetType()), atoi(a->GetType()), 0, 0, _ffbondparams);
-      l_ref1 = parameter->dpar1;
+      l_ref1 = parameter->_dpar[0];
  
       parameter = GetParameter(atoi(b->GetType()), atoi(c->GetType()), 0, 0, _ffbondparams);
-      l_ref2 = parameter->dpar1;
+      l_ref2 = parameter->_dpar[0];
  
       delta_a = ang - ang_ref;
       delta_b1 = l1 - l_ref1;
@@ -221,9 +221,9 @@ namespace OpenBabel
         return 0.0;
       }
       
-      v1 = parameter->dpar1;
-      v2 = parameter->dpar2;
-      v3 = parameter->dpar3;
+      v1 = parameter->_dpar[0];
+      v2 = parameter->_dpar[1];
+      v3 = parameter->_dpar[2];
       
       cosine = cos(DEG_TO_RAD * tor);
       sine = sin(DEG_TO_RAD * tor);
@@ -304,7 +304,7 @@ namespace OpenBabel
           }
 	  
           if (atoi(d->GetType()) == _ffoutplanebendparams[idx].b) {
-            force = _ffoutplanebendparams[idx].dpar1;
+            force = _ffoutplanebendparams[idx]._dpar[0];
             angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
             //angle = PointPlaneAngle(a->GetVector(), b->GetVector(), c->GetVector(), d->GetVector());
             angle2 = angle * angle;
@@ -315,7 +315,7 @@ namespace OpenBabel
           }
           if (atoi(a->GetType()) == _ffoutplanebendparams[idx].b) {
             // a <-> d
-            force = _ffoutplanebendparams[idx].dpar1;
+            force = _ffoutplanebendparams[idx]._dpar[0];
             angle = Point2PlaneAngle(a->GetVector(), d->GetVector(), b->GetVector(), c->GetVector());
             //angle = PointPlaneAngle(d->GetVector(), b->GetVector(), c->GetVector(), a->GetVector());
             angle2 = angle * angle;
@@ -326,7 +326,7 @@ namespace OpenBabel
           }
           if (atoi(c->GetType()) == _ffoutplanebendparams[idx].b) {
             // c <-> d
-            force = _ffoutplanebendparams[idx].dpar1;
+            force = _ffoutplanebendparams[idx]._dpar[0];
             angle = Point2PlaneAngle(c->GetVector(), a->GetVector(), b->GetVector(), d->GetVector());
             //angle = PointPlaneAngle(a->GetVector(), b->GetVector(), d->GetVector(), c->GetVector());
             angle2 = angle * angle;
@@ -367,15 +367,15 @@ namespace OpenBabel
  
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffvdwprparams);
       if (parameter != NULL) {
-        rr = parameter->dpar1;
-        eps = parameter->dpar2;
+        rr = parameter->_dpar[0];
+        eps = parameter->_dpar[1];
       } else {
         parameter = GetParameter(atoi(a->GetType()), 0, 0, 0, _ffvdwparams);
-        ra = parameter->dpar1;
-        epsa = parameter->dpar2;
+        ra = parameter->_dpar[0];
+        epsa = parameter->_dpar[1];
         parameter = GetParameter(atoi(b->GetType()), 0, 0, 0, _ffvdwparams);
-        rb = parameter->dpar1;
-        epsb = parameter->dpar2;
+        rb = parameter->_dpar[0];
+        epsb = parameter->_dpar[1];
 	
         //sprintf(errbuf, "%s\n\n     *** v1=%f  v2=%f  v3=%f\n\n", errbuf, v1, v2, v3); // DEBUG
         rr = ra + rb;
@@ -424,7 +424,7 @@ namespace OpenBabel
       
       idx = GetParameterIdx(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffdipoleparams);
       if (idx > 0) {
-        dipole = _ffdipoleparams[idx].dpar1;
+        dipole = _ffdipoleparams[idx]._dpar[0];
 
         FOR_BONDS_OF_MOL(bond2, _mol) {
           if (&*bond == &*bond2)
@@ -437,7 +437,7 @@ namespace OpenBabel
           
           idx = GetParameterIdx(atoi(c->GetType()), atoi(d->GetType()), 0, 0, _ffdipoleparams);
           if (idx > 0) {
-            dipole2 = _ffdipoleparams[idx].dpar1;
+            dipole2 = _ffdipoleparams[idx]._dpar[0];
 
             //
             //    dipole1      dipole2
@@ -587,8 +587,9 @@ namespace OpenBabel
       if (EQn(buffer, "bond", 4)) {
         parameter.a = atoi(vs[1].c_str());
         parameter.b = atoi(vs[2].c_str());
-        parameter.dpar2 = atof(vs[3].c_str());
-        parameter.dpar1 = atof(vs[4].c_str());
+        parameter._dpar.push_back(atof(vs[4].c_str()));
+        parameter._dpar.push_back(atof(vs[3].c_str()));
+
         _ffbondparams.push_back(parameter);
         continue;
       }
@@ -600,14 +601,14 @@ namespace OpenBabel
         parameter.a = atoi(vs[1].c_str());
         parameter.b = atoi(vs[2].c_str());
         parameter.c = atoi(vs[3].c_str());
-        parameter.dpar2 = atof(vs[4].c_str());
-        parameter.dpar1 = atof(vs[5].c_str());
+        parameter._dpar.push_back(atof(vs[5].c_str()));
+        parameter._dpar.push_back(atof(vs[4].c_str()));
         _ffangleparams.push_back(parameter);
         continue;
       }
       if (EQn(buffer, "strbnd", 6)) {
         parameter.a = atoi(vs[1].c_str());	
-        parameter.dpar1 = atof(vs[2].c_str());	
+        parameter._dpar.push_back(atof(vs[2].c_str()));
         _ffstretchbendparams.push_back(parameter);
         continue;
       }
@@ -618,39 +619,39 @@ namespace OpenBabel
         parameter.b = atoi(vs[2].c_str());
         parameter.c = atoi(vs[3].c_str());
         parameter.d = atoi(vs[4].c_str());
-        parameter.dpar1 = atof(vs[5].c_str());
-        parameter.dpar2 = atof(vs[8].c_str());
-        parameter.dpar3 = atof(vs[11].c_str());
+        parameter._dpar.push_back(atof(vs[5].c_str()));
+        parameter._dpar.push_back(atof(vs[8].c_str()));
+        parameter._dpar.push_back(atof(vs[11].c_str()));
         _fftorsionparams.push_back(parameter);
         continue;
       }
       if (EQn(buffer, "opbend", 6)) {
         parameter.a = atoi(vs[1].c_str());	
         parameter.b = atoi(vs[2].c_str());	
-        parameter.dpar1 = atof(vs[3].c_str());	
+        parameter._dpar.push_back(atof(vs[3].c_str()));
         _ffoutplanebendparams.push_back(parameter);
         continue;
       }	
       if (EQn(buffer, "vdwpr", 5)) {
         parameter.a = atoi(vs[1].c_str());
         parameter.b = atoi(vs[2].c_str());
-        parameter.dpar1 = atof(vs[3].c_str());
-        parameter.dpar2 = atof(vs[4].c_str());
+        parameter._dpar.push_back(atof(vs[3].c_str()));
+        parameter._dpar.push_back(atof(vs[4].c_str()));
         _ffvdwprparams.push_back(parameter);
         continue;
       }	
       if (EQn(buffer, "vdw", 3)) {
         parameter.a = atoi(vs[1].c_str());
-        parameter.dpar1 = atof(vs[2].c_str());
-        parameter.dpar2 = atof(vs[3].c_str());
+        parameter._dpar.push_back(atof(vs[2].c_str()));
+        parameter._dpar.push_back(atof(vs[3].c_str()));
         _ffvdwparams.push_back(parameter);
         continue;
       }	
       if (EQn(buffer, "dipole", 6)) {
         parameter.a = atoi(vs[1].c_str());
         parameter.b = atoi(vs[2].c_str());
-        parameter.dpar1 = atof(vs[3].c_str());
-        parameter.dpar2 = atof(vs[4].c_str());
+        parameter._dpar.push_back(atof(vs[3].c_str()));
+        parameter._dpar.push_back(atof(vs[4].c_str()));
         _ffdipoleparams.push_back(parameter);
         continue;
       }

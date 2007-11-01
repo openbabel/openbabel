@@ -913,7 +913,7 @@ namespace OpenBabel
     OBVibrationData();
     OBVibrationData(const OBVibrationData &);
     ~OBVibrationData() {}
-    virtual OBGenericData* Clone(OBBase* parent) const
+    virtual OBGenericData* Clone(OBBase*) const
          {return new OBVibrationData(*this);}
     
     OBVibrationData & operator=(const OBVibrationData &);
@@ -940,7 +940,7 @@ namespace OpenBabel
    enum RType{UNKNOWN, ASYMMETRIC, SYMMETRIC, LINEAR};
    OBRotationData(): OBGenericData("RotationData", OBGenericDataType::RotationData){}
    virtual ~OBRotationData(){};
-   virtual OBGenericData* Clone(OBBase* parent) const
+   virtual OBGenericData* Clone(OBBase*) const
          {return new OBRotationData(*this);}
    void SetData(RType RotorType, std::vector<double> RotationalConstants, int SymmetryNumber)
    {

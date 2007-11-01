@@ -72,9 +72,9 @@ namespace OpenBabel
     std::string _a, _b, _c, _d; 
 
     //! Used to store integer type parameters (bondtypes, multiplicity, ...)
-    int       ipar1, ipar2, ipar3, ipar4, ipar5;
+    std::vector<int>    _ipar;
     //! Used to store double type parameters (force constants, bond lengths, angles, ...)
-    double    dpar1, dpar2, dpar3, dpar4, dpar5;
+    std::vector<double> _dpar;
 
     //! Assignment 
     OBFFParameter& operator=(const OBFFParameter &ai) 
@@ -88,16 +88,8 @@ namespace OpenBabel
         _b = ai._b;
         _c = ai._c;
         _d = ai._d;
-        ipar1 = ai.ipar1;
-        ipar2 = ai.ipar2;
-        ipar3 = ai.ipar3;
-        ipar4 = ai.ipar4;
-        ipar5 = ai.ipar5;
-        dpar1 = ai.dpar1;
-        dpar2 = ai.dpar2;
-        dpar3 = ai.dpar3;
-        dpar4 = ai.dpar4;
-        dpar5 = ai.dpar5;
+        _ipar = ai._ipar;
+        _dpar = ai._dpar;
       }
         
       return *this;
@@ -106,20 +98,9 @@ namespace OpenBabel
     //! Reset the atom types and set all parameters to zero
     void clear () 
     {
-      a = 0;
-      b = 0;
-      c = 0;
-      d = 0;
-      ipar1 = 0;
-      ipar2 = 0;
-      ipar3 = 0;
-      ipar4 = 0;
-      ipar5 = 0;
-      dpar1 = 0.0f;
-      dpar2 = 0.0f;
-      dpar3 = 0.0f;
-      dpar4 = 0.0f;
-      dpar5 = 0.0f;
+      a = b = c = d = 0;
+      _ipar.clear();
+      _dpar.clear();
     }
   }; // class OBFFParameter
   
@@ -481,6 +462,8 @@ namespace OpenBabel
      *  the rotatable bond in a molecule (see OBRotamerList class). This rotating generates 
      *  multiple conformers. The energy for all these conformers is then evaluated and the 
      *  lowest energy conformer is selected.
+     *
+     * \param geomSteps the number of steps to take during geometry optimization
      *        
      *	\par Output to log:
      *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
@@ -493,8 +476,51 @@ namespace OpenBabel
      */
     void SystematicRotorSearch(unsigned int geomSteps = 2500);
 
-    void RandomRotorSearch(unsigned int weightSteps, unsigned int geomSteps);
+    /*! Generate conformers for the molecule (randomly rotating torsions).
+     *  
+     *  The initial starting structure here is important, this structure should be
+     *  minimized for the best results. RandomRotorSearch works by randomly rotating around
+     *  the rotatable bonds in a molecule (see OBRotamerList class). This rotating generates 
+     *  multiple conformers. The energy for all these conformers is then evaluated and the 
+     *  lowest energy conformer is selected.
+     *
+     * \param conformers the number of random conformers to consider during the search
+     * \param geomSteps the number of steps to take during geometry optimization for each conformer
+     *        
+     *	\par Output to log:
+     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+     *	too much information about the energy calculations needed for this function will interfere with the output for
+     *	this function. \n\n
+     *  OBFF_LOGLVL_NONE:   none \n
+     *  OBFF_LOGLVL_LOW:    number of rotatable bonds, energies for the conformers, which one is the lowest, ... \n
+     *  OBFF_LOGLVL_MEDIUM: see note above \n
+     *  OBFF_LOGLVL_HIGH:   see note above \n 
+     */
+    void RandomRotorSearch(unsigned int conformers, unsigned int geomSteps);
       
+    /*! Generate conformers for the molecule (randomly rotating torsions).
+     *  
+     *  The initial starting structure here is important, this structure should be
+     *  minimized for the best results. WeightedRotorSearch works by randomly rotating around
+     *  the rotatable bonds in a molecule (see OBRotamerList class). Unlike RandomRotorSearch()
+     *  the random choice of torsions is reweighted based on the energy of the generated conformer.
+     *  Over time, the generated conformers for each step should become increasingly better.
+     *  The lowest energy conformer is selected.
+     *
+     * \param conformers the number of random conformers to consider during the search
+     * \param geomSteps the number of steps to take during geometry optimization for each conformer
+     *        
+     *	\par Output to log:
+     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+     *	too much information about the energy calculations needed for this function will interfere with the output for
+     *	this function. \n\n
+     *  OBFF_LOGLVL_NONE:   none \n
+     *  OBFF_LOGLVL_LOW:    number of rotatable bonds, energies for the conformers, which one is the lowest, ... \n
+     *  OBFF_LOGLVL_MEDIUM: see note above \n
+     *  OBFF_LOGLVL_HIGH:   see note above \n 
+     */
+    void WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps);
+
     /////////////////////////////////////////////////////////////////////////
     // Energy Minimization                                                 //
     /////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@ table_DATA = \
 		atomtyp.txt element.txt isotope-small.txt phmodel.txt \
 		patterns.txt torlib.txt types.txt space-groups.txt \
 		SMARTS_InteLigand.txt \
-		mm2.prm ghemical.prm \
+		mm2.prm ghemical.prm UFF.prm \
 		mmffoop.par mmffarom.par mmffchg.par mmfftor.par mmffang.par \
 		mmffhdef.par mmffsup.par mmffsymb.par mmffpbci.par mmffdef.par \
 		mmffvdw.par mmffstbn.par mmffbndk.par mmffprop.par mmffbond.par \

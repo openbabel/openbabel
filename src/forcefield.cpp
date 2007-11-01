@@ -467,7 +467,7 @@ namespace OpenBabel
     current_conformer = best_conformer;
   }
 
-  void OBForceField::RandomRotorSearch(unsigned int weightSteps,
+  void OBForceField::RandomRotorSearch(unsigned int conformers,
                                        unsigned int geomSteps) 
   {
     OBRotorList rl;
@@ -513,7 +513,7 @@ namespace OpenBabel
 
     std::vector<int> rotorKey(rl.Size() + 1, 0); // indexed from 1
 
-    for (int c = 0; c < weightSteps; ++c) {
+    for (int c = 0; c < conformers; ++c) {
       rotor = rl.BeginRotor(ri);
       for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
@@ -562,6 +562,12 @@ namespace OpenBabel
 
     _mol.SetConformer(best_conformer);
     current_conformer = best_conformer;
+  }
+
+  void WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps)
+  {
+    // For now, use the completely random form
+    RandomRotorSearch(conformers, geomSteps);
   }
 
   void OBForceField::DistanceGeometry() 

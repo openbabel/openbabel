@@ -44,7 +44,7 @@ CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libforcefields_la_LIBADD =
 am_libforcefields_la_OBJECTS = forcefieldmm2.lo forcefieldghemical.lo \
-	forcefieldmmff94.lo
+	forcefieldmmff94.lo forcefielduff.lo
 libforcefields_la_OBJECTS = $(am_libforcefields_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)/src@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -124,6 +124,7 @@ PROVE = @PROVE@
 PYTHON = @PYTHON@
 RANLIB = @RANLIB@
 RUBY = @RUBY@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -188,10 +189,12 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LTLIBRARIES = libforcefields.la
 libforcefields_la_SOURCES = forcefieldmm2.cpp forcefieldghemical.cpp \
-                            forcefieldmmff94.cpp
+                            forcefieldmmff94.cpp forcefielduff.cpp
 
 AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/include
-EXTRA_DIST = forcefieldmm2.h forcefieldghemical.h forcefieldmmff94.h
+EXTRA_DIST = forcefieldmm2.h forcefieldghemical.h forcefieldmmff94.h \
+							forcefielduff.h
+
 all: all-am
 
 .SUFFIXES:
@@ -246,6 +249,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefieldghemical.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefieldmm2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefieldmmff94.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefielduff.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
