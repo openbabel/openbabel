@@ -436,6 +436,39 @@ vector<double*> OBRotamerList::CreateConformerList(OBMol& mol)
 
     return tmpclist;
 }
+  
+  //! Change the current coordinate set
+  void OBRotamerList::SetCurrentCoordinates(OBMol &mol, std::vector<int> arr)
+  {
+    unsigned int i;
+    double angle;
+    
+    if (arr.size() != (_vrotor.size() + 1))
+      return; // wrong size key
+    
+    double *rot = new double [_vrotor.size()+1];
+    rot[0] = arr[0];
+    
+    for (i = 0;i < _vrotor.size();++i)
+    {
+      angle = _vres[i][arr[i+1]];
+      while (angle < 0.0)
+        angle += 360.0;
+      while (angle > 360.0)
+        angle -= 360.0;
+      rot[i+1] = angle;
+    }
+    
+    double *c = mol.GetCoordinates();
+    for (i = 0;i < _vrotor.size();++i)
+    {
+      angle = rot[i+1];
+      if (angle > 180.0)
+        angle -= 360.0;
+      SetRotorToAngle(c,_vrotor[i].first,angle,_vrotor[i].second);
+    }
+  }
+                                            
 
 //Copies the coordinates in bc, NOT the pointers, into the object
 void OBRotamerList::SetBaseCoordinateSets(vector<double*> bc, unsigned int N)
