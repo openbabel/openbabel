@@ -16,11 +16,21 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include "forcefielduff.h"
 
 using namespace std;
+
+// This implementation was created based on open code and reference websites:
+// http://towhee.sourceforge.net/forcefields/uff.html
+// http://rdkit.org/
+// http://franklin.chm.colostate.edu/mmac/uff.html
+// (for the last, use the Wayback Machine: http://www.archive.org/
+
+// As well, the main UFF paper:
+// Rappe, A. K., et. al.; J. Am. Chem. Soc. (1992) 114(25) p. 10024-10035.
 
 namespace OpenBabel
 {
@@ -367,16 +377,13 @@ namespace OpenBabel
     } else
       rab = a->GetDistance(b);
 
-    //    energy = qq / rab;
-    energy = 0.0;
+    energy = qq / rab;
 
     if (gradients) {
       rab2 = rab * rab;
       dE = -qq / rab2;
-      //      grada = dE * da; // - dE/drab * drab/da
-      //      gradb = dE * db; // - dE/drab * drab/db
-      grada = 0.0;
-      gradb = 0.0;
+      grada = dE * da; // - dE/drab * drab/da
+      gradb = dE * db; // - dE/drab * drab/db
     } 
   }
   
@@ -495,7 +502,9 @@ namespace OpenBabel
       // From equation 4
       ren = ri*rj*(pow((sqrt(chiI) - sqrt(chiJ)),2.0)) / (chiI*ri + chiJ*rj);
       // From equation 2
-      bondcalc.r0 = ri + rj + rbo + ren;
+      // NOTE: See http://towhee.sourceforge.net/forcefields/uff.html
+      // There is a typo in the published paper
+      bondcalc.r0 = ri + rj + rbo - ren;
 
       // here we fold the 1/2 into the kij from equation 1a
       // Otherwise, this is equation 6 from the UFF paper.
@@ -658,19 +667,24 @@ namespace OpenBabel
 
     _electrostaticcalculations.clear();
     
-    FOR_PAIRS_OF_MOL(p, _mol) {
-      a = _mol.GetAtom((*p)[0]);
-      b = _mol.GetAtom((*p)[1]);
+    // Note that while the UFF paper mentions an electrostatic term,
+    // it does not actually use it. Both Towhee and the UFF FAQ
+    // discourage the use of electrostatics with UFF.
+    // If you wanted to use this term, uncomment the lines below
+
+//     FOR_PAIRS_OF_MOL(p, _mol) {
+//       a = _mol.GetAtom((*p)[0]);
+//       b = _mol.GetAtom((*p)[1]);
       
-      elecalc.qq = KCAL_TO_KJ * 332.0637 * a->GetPartialCharge() * b->GetPartialCharge();
+//       elecalc.qq = KCAL_TO_KJ * 332.0637 * a->GetPartialCharge() * b->GetPartialCharge();
       
-      if (elecalc.qq) {
-        elecalc.a = &*a;
-        elecalc.b = &*b;
+//       if (elecalc.qq) {
+//         elecalc.a = &*a;
+//         elecalc.b = &*b;
         
-        _electrostaticcalculations.push_back(elecalc);
-      }
-    }
+//         _electrostaticcalculations.push_back(elecalc);
+//       }
+//     }
 
     return true;
   }
@@ -709,6 +723,32 @@ namespace OpenBabel
         parameter._dpar.push_back(atof(vs[10].c_str())); // Xi
         parameter._dpar.push_back(atof(vs[11].c_str())); // Hard
         parameter._dpar.push_back(atof(vs[12].c_str())); // Radius
+
+        char coord = vs[1][2]; // 3rd character of atom type
+        cerr << " coordination: " << coord << endl;
+        switch (coord) {
+        case '1': // linear
+          parameter._ipar.push_back(1);
+          break;
+        case '2': // trigonal planar (sp2)
+          parameter._ipar.push_back(2);
+          break;
+        case '3': // tetrahedral (sp3)
+          parameter._ipar.push_back(3);
+          break;
+        case '4': // square planar
+          parameter._ipar.push_back(4);
+          break;
+        case '5': // trigonal bipyramidal -- not actually in parameterization
+          parameter._ipar.push_back(5);
+          break;
+        case '6': // octahedral
+          parameter._ipar.push_back(6);
+          break;
+        default: // general case (unknown coordination)
+          // These atoms appear to generally be linear coordination like Cl
+          parameter._ipar.push_back(1);
+        }
         
         _ffparams.push_back(parameter);
       }
@@ -774,14 +814,7 @@ namespace OpenBabel
       }
 
     }
-    
-    // DEBUG (validation)
-    //FOR_ATOMS_OF_MOL (a, _mol)
-    //  if (atoi(a->GetType()) != 0)
-    //    cout << "ATOMTYPE " << atoi(a->GetType()) << endl;
-    //  else
-    //    cout << "ATOMTYPE " << a->GetType() << endl;
- 
+     
     if (ifs)
       ifs.close();
 

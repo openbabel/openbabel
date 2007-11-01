@@ -564,7 +564,8 @@ namespace OpenBabel
     current_conformer = best_conformer;
   }
 
-  void WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps)
+  void OBForceField::WeightedRotorSearch(unsigned int conformers, 
+                                         unsigned int geomSteps)
   {
     // For now, use the completely random form
     RandomRotorSearch(conformers, geomSteps);
