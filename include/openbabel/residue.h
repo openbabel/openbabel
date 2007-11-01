@@ -79,6 +79,7 @@ namespace OpenBabel {
     void    SetName(const std::string &resname);
     //! Set the residue number (in the sequence)
     void    SetNum(const unsigned int resnum);
+    void    SetNum(const std::string  resnum);
     //! Set the chain ID for this residue
     void    SetChain(const char chain);
     //! Set the chain number for this residue
@@ -97,7 +98,8 @@ namespace OpenBabel {
     //! \return The residue name
     std::string    GetName(void)                  const;
     //! \return The residue number (in the sequence)
-    unsigned int   GetNum(void)                   const;
+    unsigned int    GetNum(void);
+    std::string     GetNumString(void);
     //! \return The number of atoms in this residue
     unsigned int   GetNumAtoms()                  const;
     //! \return The ID of the chain which includes this residue
@@ -157,7 +159,7 @@ namespace OpenBabel {
     char                      _chain; //!< Chain ID
     unsigned int              _aakey; //!< Amino Acid key ID -- see SetResidueKeys()
     unsigned int              _reskey;//!< Residue key ID -- see SetResidueKeys()
-    unsigned int              _resnum;//!< Residue number (i.e., in file)
+    std::string               _resnum;//!< Residue number (i.e., in file) 23, 1B, etc.
     std::string               _resname;//!<Residue text name
 
     std::vector<bool>         _hetatm;//!< Is a given atom a HETAM

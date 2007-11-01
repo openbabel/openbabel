@@ -848,7 +848,7 @@ namespace OpenBabel
     _idx      = 0;
     _aakey    = 0;
     _reskey   = OBResidueIndex::UNK;
-    _resnum   = 0;
+    _resnum   = "";
     _resname  = "";
     _vdata.clear();
 
@@ -949,7 +949,7 @@ namespace OpenBabel
     _idx     = 0;
     _aakey   = 0;
     _reskey  = OBResidueIndex::UNK;
-    _resnum  = 0;
+    _resnum  = "";
     _resname = "";
 
     _atoms.clear();
@@ -981,7 +981,14 @@ namespace OpenBabel
     SetResidueKeys(_resname.c_str(), _reskey, _aakey);
   }
 
-  void OBResidue::SetNum(unsigned int resnum)
+  void OBResidue::SetNum(const unsigned int resnum)
+  {
+    stringstream temp;
+    temp << resnum;
+    _resnum = temp.str();
+  }
+
+  void OBResidue::SetNum(const string resnum)
   {
     _resnum = resnum;
   }
@@ -1050,9 +1057,14 @@ namespace OpenBabel
     return _resname;
   }
 
-  unsigned int OBResidue::GetNum(void) const
+  std::string OBResidue::GetNumString(void)
   {
     return _resnum;
+  }
+
+  unsigned int OBResidue::GetNum(void) 
+  {
+    return atoi(_resnum.c_str());
   }
 
   unsigned int OBResidue::GetNumAtoms(void) const

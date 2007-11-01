@@ -81,7 +81,7 @@ namespace OpenBabel {
     virtual bool WriteChemObject(OBConversion* pConv);
 
   private:
-      bool FastSearchFormat::ObtainTarget(OBConversion* pConv, OBMol& patternMol, const string& indexname);
+      bool ObtainTarget(OBConversion* pConv, OBMol& patternMol, const string& indexname);
 
   private:
     ///big data structure which will remain in memory after it is loaded

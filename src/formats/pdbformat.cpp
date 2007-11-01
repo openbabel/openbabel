@@ -326,16 +326,14 @@ namespace OpenBabel
 
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
-    int        rnum = atoi(resnum.c_str());
-    cerr << " Residue: " << resname << " " << rnum << endl;
     OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
     if (res == NULL || res->GetName() != resname 
-        || static_cast<int>(res->GetNum()) != rnum)
+        || res->GetNumString() != resnum)
       {
         vector<OBResidue*>::iterator ri;
         for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
           if (res->GetName() == resname 
-              && static_cast<int>(res->GetNum()) == rnum
+              && res->GetNumString() == resnum
               && static_cast<int>(res->GetChainNum()) == chainNum)
             break;
 
@@ -344,7 +342,7 @@ namespace OpenBabel
             res = mol.NewResidue();
             res->SetChainNum(chainNum);
             res->SetName(resname);
-            res->SetNum(rnum);
+            res->SetNum(resnum);
           }
       }
 

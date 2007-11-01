@@ -639,7 +639,7 @@ namespace OpenBabel
     vector3 v;
 
     int bo;
-    unsigned int skipres=0;
+    string skipres = ""; // Residue Number to skip
     string rname = "";
     //assign residue bonds
     for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
@@ -648,12 +648,12 @@ namespace OpenBabel
         if (r1 == NULL) // atoms may not have residues
           continue;
 
-        if (skipres && r1->GetNum() == skipres)
+        if (skipres.length() && r1->GetNumString() == skipres)
           continue;
 
         if (r1->GetName() != rname)
           {
-            skipres = SetResName(r1->GetName()) ? 0 : r1->GetNum();
+            skipres = SetResName(r1->GetName()) ? "" : r1->GetNumString();
             rname = r1->GetName();
           }
         //assign bonds for each atom
@@ -663,7 +663,7 @@ namespace OpenBabel
             if (r2 == NULL) // atoms may not have residues
               continue;
 
-            if (r1->GetNum() != r2->GetNum())
+            if (r1->GetNumString() != r2->GetNumString())
               break;
             if (r1->GetName() != r2->GetName())
               break;
@@ -682,7 +682,7 @@ namespace OpenBabel
 
     //types and hybridization
     rname = ""; // name of current residue
-    skipres = 0; // don't skip any residues right now
+    skipres = ""; // don't skip any residues right now
     for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
       {
         if (a1->IsOxygen() && !a1->GetValence())
@@ -717,13 +717,13 @@ namespace OpenBabel
 	
         r1 = a1->GetResidue();
         if (r1 == NULL) continue; // atoms may not have residues
-        if (skipres && r1->GetNum() == skipres)
+        if (skipres.length() && r1->GetNumString() == skipres)
           continue;
 
         if (r1->GetName() != rname)
           {
             // if SetResName fails, skip this residue
-            skipres = SetResName(r1->GetName()) ? 0 : r1->GetNum();
+            skipres = SetResName(r1->GetName()) ? "" : r1->GetNumString();
             rname = r1->GetName();
           }
 
