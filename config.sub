@@ -4,7 +4,7 @@
 #   2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation,
 #   Inc.
 
-timestamp='2006-11-07'
+timestamp='2006-09-20'
 
 # This file is (in principle) common to ALL GNU software.
 # The presence of a machine in this file suggests that SOME GNU software
@@ -924,9 +924,6 @@ case $basic_machine in
 	sh)
 		basic_machine=sh-hitachi
 		os=-hms
-		;;
-	sh5el)
-		basic_machine=sh5le-unknown
 		;;
 	sh64)
 		basic_machine=sh64-unknown

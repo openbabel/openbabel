@@ -1,5 +1,6 @@
 bin_PROGRAMS = babel obchiral obgrep obrotate obfit obprop obxyz obgen \
-		obenergy obminimize obmm obrotamer obfragment obconformer # obdoc 
+		obenergy obminimize obmm obrotamer obfragment obconformer \
+		obseq # obdoc 
 
 # obdoc is intended to be used for generating file format documentation
 # and is not a general end-user program
@@ -43,8 +44,8 @@ obxyz_LDADD = ../src/libopenbabel.la @LIBDL@
 obconformer_SOURCES = obconformer.cpp
 obconformer_LDADD = ../src/libopenbabel.la @LIBDL@
 
-# obdoc_SOURCES = obdoc.cpp
-# obdoc_LDADD = ../src/libopenbabel.la @LIBDL@
+obseq_SOURCES = obseq.cpp
+obseq_LDADD = ../src/libopenbabel.la @LIBDL@
 
 obfragment_SOURCES = obfragment.cpp
 obfragment_LDADD = ../src/libopenbabel.la @LIBDL@
