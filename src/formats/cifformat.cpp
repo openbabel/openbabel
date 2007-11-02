@@ -496,56 +496,14 @@ namespace OpenBabel
                   }
                 this->Cartesian2FractionalCoord();
               }
-            else
-              {
-                posx=loop->second.find("_atom_site.fract_x");
-                posy=loop->second.find("_atom_site.fract_y");
-                posz=loop->second.find("_atom_site.fract_z");
-                if( (posx!=loop->second.end()) && (posy!=loop->second.end()) && (posz!=loop->second.end()))
-                  {
-                    nb=posx->second.size();
-                    mvAtom.resize(nb);
-                    for(unsigned int i=0;i<nb;++i)
-                      {
-                        mvAtom[i].mCoordCart.resize(3);
-                        mvAtom[i].mCoordCart[0]=CIFNumeric2Float(posx->second[i]);
-                        mvAtom[i].mCoordCart[1]=CIFNumeric2Float(posy->second[i]);
-                        mvAtom[i].mCoordCart[2]=CIFNumeric2Float(posz->second[i]);
-                      }
-                    this->Fractional2CartesianCoord();
-                  }
-                else
-                  {
-                    posx=loop->second.find("_atom_site.Cartn_x");
-                    posy=loop->second.find("_atom_site.Cartn_y");
-                    posz=loop->second.find("_atom_site.Cartn_z");
-                    if( (posx!=loop->second.end()) && (posy!=loop->second.end()) && (posz!=loop->second.end()))
-                      {
-                        nb=posx->second.size();
-                        mvAtom.resize(nb);
-                        for(unsigned int i=0;i<nb;++i)
-                          {
-                            mvAtom[i].mCoordCart.resize(3);
-                            mvAtom[i].mCoordCart[0]=CIFNumeric2Float(posx->second[i]);
-                            mvAtom[i].mCoordCart[1]=CIFNumeric2Float(posy->second[i]);
-                            mvAtom[i].mCoordCart[2]=CIFNumeric2Float(posz->second[i]);
-                          }
-                        this->Cartesian2FractionalCoord();
-                      }
-                  }
-              }
           }
         if(mvAtom.size()>0)
           {// Got the atoms, get names and symbols
             possymbol=loop->second.find("_atom_site_type_symbol");
-            if(possymbol==loop->second.end())
-              possymbol=loop->second.find("_atom_site.type_symbol");
             if(possymbol!=loop->second.end())
               for(unsigned int i=0;i<nb;++i)
                 mvAtom[i].mSymbol=possymbol->second[i];
             poslabel=loop->second.find("_atom_site_label");
-            if(poslabel==loop->second.end())
-              poslabel=loop->second.find("_atom_site.label");
             if(poslabel!=loop->second.end())
               for(unsigned int i=0;i<nb;++i)
                 {
@@ -566,8 +524,6 @@ namespace OpenBabel
                 }
             // Occupancy ?
             posoccup=loop->second.find("atom_site_occupancy");
-            if(posoccup==loop->second.end())
-              posoccup=loop->second.find("atom_site.occupancy");
             if(posoccup!=loop->second.end())
               for(unsigned int i=0;i<nb;++i)
                 mvAtom[i].mOccupancy=CIFNumeric2Float(posoccup->second[i]);
@@ -813,6 +769,9 @@ namespace OpenBabel
           {//Tag
             string tag,value;
             in>>tag;
+            // Convert all dots to underscores to cover much of DDL2 with this DDL1 parser.
+            for (string::size_type pos = tag.find('.'); pos != string::npos; pos = tag.find('.', ++ pos))
+              tag.replace(pos, 1, 1, '_');
             value=CIFReadValue(in,lastc);
             mvData[block].mvItem[ci_string(tag.c_str())]=value;
             if(vv)cout<<"New Tag:"<<tag<<" ("<<value.size()<<"):"<<value<<endl;
@@ -849,6 +808,9 @@ namespace OpenBabel
                     break;
                   }
                 in>>tmp;
+                // Convert all dots to underscores to cover much of DDL2 with this DDL1 parser.
+                for (string::size_type pos = tmp.find('.'); pos != string::npos; pos = tmp.find('.', ++ pos))
+                  tmp.replace(pos, 1, 1, '_');
                 tit.push_back(ci_string(tmp.c_str()));
                 if(vv) cout<<" , "<<tmp;
               }
