@@ -54,8 +54,8 @@ libformats_la_SOURCES = \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
 	getinchi.cpp \
-	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
-	mol2format.cpp molreport.cpp mopacformat.cpp \
+	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmcifformat.cpp \
+	mmodformat.cpp mol2format.cpp molreport.cpp mopacformat.cpp \
 	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
@@ -81,9 +81,9 @@ pkglib_LTLIBRARIES = \
 	featformat.la fhformat.la fingerprintformat.la \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
 	gromos96format.la hinformat.la inchiformat.la \
-	jaguarformat.la mdlformat.la mmodformat.la mpdformat.la \
-	mol2format.la molreportformat.la mopacformat.la mpqcformat.la \
-	nwchemformat.la pcmodelformat.la \
+	jaguarformat.la mdlformat.la mmcifformat.la mmodformat.la \
+	mpdformat.la mol2format.la molreportformat.la mopacformat.la \
+	mpqcformat.la nwchemformat.la pcmodelformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
 	shelxformat.la smilesformat.la thermoformat.la \
 	tinkerformat.la titleformat.la \
@@ -209,6 +209,9 @@ jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.l
 
 mdlformat_la_SOURCES = mdlformat.cpp obmolecformat.cpp
 mdlformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+mmcifformat_la_SOURCES = mmcifformat.cpp obmolecformat.cpp
+mmcifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 mmodformat_la_SOURCES = mmodformat.cpp obmolecformat.cpp
 mmodformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
