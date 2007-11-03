@@ -1,10 +1,27 @@
+2007-11-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.*: Calculates full UFF energies,
+	including out-of-plane bending. Still need to finish all analytical
+	gradients.
+
+	* data/UFF.prm: Fixed atom typing rules.
+
 2007-11-02  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/inchi/inchi.sym: New file.
+
 	* src/formats/inchi/Makefile.am (libinchi_la_LDFLAGS): Use inchi.sym
 	to restrict the exported symbols via libtool's -export-symbols option.
+
 	* src/formats/inchi/Makefile.in: Regenerated.
 
+2007-11-02  Kevin Shepherd <kshepherd1@users.sourceforge.net>
+
+	* src/formats/cifformat.cpp: Further to 1821894 this patch
+	implements vincefn's suggestion i.e. "whenever reading a data name
+	(tag),replace all '.' by '_'" and rolls back the previous
+	changes.
+	
 2007-11-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.*: First pass at a UFF
@@ -35,6 +52,19 @@
 	* configure, Makefile.in, */Makefile.in: Rebuild with current
 	autoconf, libtool, etc.
 
+2007-10-28  Kevin Shepherd <kshepherd1@users.sourceforge.net>
+
+	* src/formats/cifformat.cpp: Fix for Request ID 1821894.  This
+	change allows more CIF files to be understood, allowing the
+	_atom_site.XXXX varient of the naming.
+	
+2007-10-27  Kevin Shepherd <kshepherd1@users.sourceforge.net>
+
+	* src/formats/alchemyformat.cpp: Altered the ReadMolecule function
+	to be more flexible in handling comments and whitespace.
+	This fixes Request ID 1821003, and can be tested with Test File
+	Request ID 1820997.
+	
 2007-10-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp: Fix some issues with multiple-chain

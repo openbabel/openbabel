@@ -8,59 +8,58 @@
 // Atom typing rules are based on UFF published atom descriptions
 // [SMARTS] [atomtype] [description]
 // These must be sorted according to the element and complexity of the type rule
-// (e.g., the most likely atom type for an element is listed first)
+// (i.e., the first matching rule "sticks," so generic rules go later than specific ones)
 
-atom [*]      C_3         Wildcard atom type (treat like an sp3 carbon)
-atom [#1]     H_          Generic hydrogen
 atom [#1D2]   H_b         Bridging hydrogen
+atom [#1]     H_          Generic hydrogen
 atom [#2]     He4+4       Helium
 atom [#3]     Li          Lithium
 atom [#4]     Be3+2       Generic Be
-atom [#5]     B_3         Trivalent boron
-atom [#5D2]   B_2         Divalent boron
-atom [#6]     C_3         Generic sp3 C
+atom [#5D4]   B_3         Tetrahedral boron
+atom [#5]     B_2         Trigonal planar boron
 atom [C^2]    C_2         sp2 non-aromatic C
 atom [C^1]    C_1         sp hybridized C
 atom [c]      C_R         aromatic C
-atom [#7]     N_3         Generic sp3 N
+atom [#6]     C_3         Generic sp3 C
 atom [N^2]    N_2         sp2 non-aromatic N
 atom [N^1]    N_1         sp hybridized N
 atom [n]      N_R         aromatic N
-atom [#8]     O_3         generic, sp3 hybridized O
-#atom [#3]    O_3_z       sp3 hybridized O for zeolites
+atom [#7]     N_3         Generic sp3 N
+#atom [#8]    O_3_z       sp3 hybridized O for zeolites
 atom [O^2]    O_2         sp2 hybridized O
 atom [O^1]    O_1         sp hybridized O
 atom [o]      O_R         aromatic O
+atom [#8]     O_3         generic, sp3 hybridized O
 atom [#9]     F_          generic F
 atom [#10]    Ne4+4       
 atom [#11]    Na          
 atom [#12]    Mg3+2
 atom [#13]    Al3
 atom [#14]    Si3
-atom [#15]    P_3+3       generic phosphorus
 atom [#15+5]  P_3+5       formal charge +5
 #atom [#15]   P_3+q       Organometallic phosphine ligands
-atom [#16]    S_3+2       generic S
+atom [#15]    P_3+3       generic phosphorus
 atom [#16+4]  S_3+4       S+4
 atom [#16+6]  S_3+6       S+6
 atom [S^2]    S_2         non-aromatic sp2 S
 atom [s]      S_R         aromatic S
+atom [#16]    S_3+2       generic S
 atom [#17]    Cl
 atom [#18]    Ar4+4
 atom [#19]    K_
 atom [#20]    Ca6+2
 atom [#21]    Sc3+3
-atom [#22]    Ti6+4       generic Ti (6-valent)
 atom [#22D3]  Ti3+4
+atom [#22]    Ti6+4       generic Ti (6-valent)
 atom [#23]    V_3+5
 atom [#24]    Cr6+3
-atom [#25     Mn6+2
-atom [#26]    Fe6+2       generic Fe (6-valent)
+atom [#25]    Mn6+2
 atom [#26D3]  Fe3+2
+atom [#26]    Fe6+2       generic Fe (6-valent)
 atom [#27]    Co6+3
 atom [#28]    Ni4+2
 atom [#29]    Cu3+1
-atom [#30     Zn3+2
+atom [#30]    Zn3+2
 atom [#31]    Ga3+3
 atom [#32]    Ge3
 atom [#33]    As3+3
@@ -72,8 +71,8 @@ atom [#38]    Sr6+2
 atom [#39]    Y_3+3
 atom [#40]    Zr3+4
 atom [#41]    Nb3+5
-atom [#42]    Mo6+6       generic Mo (6-valent)
 atom [#42D3]  Mo3+6       trivalent Mo
+atom [#42]    Mo6+6       generic Mo (6-valent)
 atom [#43]    Tc6+5
 atom [#44]    Ru6+2
 atom [#45]    Rh6+3
@@ -105,11 +104,11 @@ atom [#70]     Yb6+3
 atom [#71]     Lu6+3
 atom [#72]     Hf3+4
 atom [#73]     Ta3+5
-atom [#74]     W_6+6       generic W (6-valent)
 atom [#74D3+4] W_3+4
 atom [#74D3+6] W_3+6
-atom [#75]     Re6+5       generic Re (6-valent)
+atom [#74]     W_6+6       generic W (6-valent)
 atom [#75D3]   Re3+7       trivalent Re
+atom [#75]     Re6+5       generic Re (6-valent)
 atom [#76]     Os6+6
 atom [#77]     Ir6+3
 atom [#78]     Pt4+2
@@ -138,6 +137,7 @@ atom [#100]    Fm6+3
 atom [#101]    Md6+3
 atom [#102]    No6+3
 atom [#103]    Lw6+3
+#atom [*]          C_3         Wildcard atom type (treat like an sp3 carbon)
 
 //Atom	r1	theta0	x1	D1	zeta	Z1	Vi	Uj	Xi	Hard	Radius
 param H_	0.354	180	2.886	0.044	12	0.712	0	0	4.528	6.9452	0.371

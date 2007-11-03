@@ -31,7 +31,7 @@ namespace OpenBabel
   {
   public:
     double kb, r0, rab, delta;
-    int bt; // bondtype
+    double bt; // bond order (e.g., 1.41 for amide)
       
     void Compute(bool gradients = true);
   };
@@ -40,17 +40,20 @@ namespace OpenBabel
   {
   public:
     double ka, theta0, theta, delta;
-    double c1, c2, c0;
-      
+    double c0, c1, c2;
+    double zi, zk, rij, rjk, rik;
+    double cosT0; // cos theta0
+    int coord, n;
+
     void Compute(bool gradients = true);
   };
   
   class OBFFTorsionCalculationUFF : public OBFFCalculation
   {
   public:
-    double V, s, n, tor;
-    double k1, k2, k3;
-    int tt; //torsiontype
+    double V, tor, cosPhi0;
+    int n;
+    double tt; //torsiontype (i.e. b-c bond order)
       
     void Compute(bool gradients = true);
   };
@@ -59,6 +62,7 @@ namespace OpenBabel
   {
   public:
     double koop, angle;
+    double c0, c1, c2;
       
     void Compute(bool gradients = true);
   };  
@@ -89,8 +93,12 @@ namespace OpenBabel
     bool ParseParamFile();
     //!  Sets atomtypes to UFF types in _mol
     bool SetUFFTypes();
-    //! fill OBFFXXXCalculation vectors
+    //!  Fill OBFFXXXCalculation vectors
     bool SetupCalculations();
+    //!  By default, electrostatic terms are disabled
+    //!  This is discouraged, since the parameterization is not designed for it
+    //!  But if you want, we give you the option.
+    bool SetupElectrostatics();
     //! Same as OBForceField::GetParameter, but simpler
     OBFFParameter* GetParameterUFF(std::string a, std::vector<OBFFParameter> &parameter);
     //! Returns the negative gradient (force) on atom a

@@ -65,7 +65,7 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nB O N D   S T R E T C H I N G\n\n");
       OBFFLog("ATOM TYPES  BOND    BOND       IDEAL       FORCE\n");
-      OBFFLog(" I    J     TYPE   LENGTH     LENGTH     CONSTANT      DELTA      ENERGY\n");
+      OBFFLog(" I      J   TYPE   LENGTH     LENGTH     CONSTANT      DELTA      ENERGY\n");
       OBFFLog("------------------------------------------------------------------------\n");
     }
  
@@ -75,7 +75,8 @@ namespace OpenBabel
       energy += i->GetEnergy();
 
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s    %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+        sprintf(logbuf, "%-5s %-5s  %4.2f%8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n",
+                (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
         OBFFLog(logbuf);
       }
@@ -91,42 +92,44 @@ namespace OpenBabel
   void OBFFAngleCalculationUFF::Compute(bool gradients)
   {
     vector3 da, db, dc;
+    double ab, bc, ac;
     double delta2, dE;
 
     if (gradients) {
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative(da, db, dc);  
+      theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;  
     } else {
-      theta = a->GetAngle(b->GetIdx(), c->GetIdx());
-    
+      ab = a->GetDistance(b);
+      bc = b->GetDistance(c);
+      ac = a->GetDistance(c);
+      theta = a->GetAngle(b->GetIdx(), c->GetIdx()) * DEG_TO_RAD;
     }
 
-    if (theta0 > 170.0) {
-      delta = 1.0 + cos(theta * DEG_TO_RAD);
-
-      energy = ka * delta * RAD_TO_DEG * RAD_TO_DEG;
-
-      if (gradients) {
-        grada = ka * da;
-        gradb = ka * db;
-        gradc = ka * dc;
-      } 
-    } else {
-      delta = theta - theta0;
-      delta2 = delta * delta;
-    
-      energy = ka * delta2;
-
-      if (gradients) {
-        dE = 2.0 * ka * delta;
-        grada = dE * da; // - dE/drab * drab/da
-        gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
-        gradc = dE * dc; // - dE/drab * drab/dc
-      }
+    ka = (644.12 * KCAL_TO_KJ / (ab * bc)) * (zi * zk / (pow(ac, 5.0)));
+    ka *= ab * bc * (3.0 * ab * bc * (1.0 - cosT0*cosT0) - ac*ac*cosT0);
+    switch (coord) {
+    case 1:
+      energy = ka * (1.0 + cos(theta));
+      break;
+    case 2:
+      energy = ka * (1.0 + cos(3.0 * theta)) / 9.0;
+      break;
+    case 4:
+    case 6:
+      energy = ka * (1.0 + cos(4.0 * theta)) / 16.0;
+      break;
+    default:
+      energy = ka * (c0 + c1*cos(theta) + c2*cos(2.0 * theta));
     }
-    energy = 0.0;
+    
+    if (gradients) {
+      dE = 2.0 * ka * delta;
+      grada = dE * da; // - dE/drab * drab/da
+      gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
+      gradc = dE * dc; // - dE/drab * drab/dc
+    }
     grada = 0.0;
     gradb = 0.0;
     gradc = 0.0;
@@ -136,7 +139,7 @@ namespace OpenBabel
   {
     vector<OBFFAngleCalculationUFF>::iterator i;
     double energy = 0.0;
-        
+
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nA N G L E   B E N D I N G\n\n");
       OBFFLog("ATOM TYPES       VALENCE     IDEAL      FORCE\n");
@@ -150,8 +153,8 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
-                (*i).c->GetType(), (*i).theta, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
+        sprintf(logbuf, "%-5s %-5s %-5s%8.3f  %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+                (*i).c->GetType(), (*i).theta * RAD_TO_DEG, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
         OBFFLog(logbuf);
       }
     }
@@ -196,27 +199,19 @@ namespace OpenBabel
       }
     }
 
-    cosine = cos(DEG_TO_RAD * tor);
-    cosine2 = cos(2.0 * DEG_TO_RAD * tor);
-    cosine3 = cos(3.0 * DEG_TO_RAD * tor);
+    cosine = cos(DEG_TO_RAD * tor * n);
 
-    phi1 = 1.0 + cosine;
-    phi2 = 1.0 - cosine2;
-    phi3 = 1.0 + cosine3;
-
-    energy = k1 * phi1 + k2 * phi2 + k3 * phi3;
+    energy = V * (1.0 - cosPhi0*cosine);
     
     if (gradients) {
       sine = sin(DEG_TO_RAD * tor);
       sine2 = sin(2.0 * DEG_TO_RAD * tor);
       sine3 = sin(3.0 * DEG_TO_RAD * tor);
-      dE = -k1 * sine + k2 * 2.0 * sine2 - k3 * 3.0 * sine3;
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
       gradc = dE * dc; // - dE/drab * drab/dc
       gradd = dE * dd; // - dE/drab * drab/dd
     }
-    energy = 0.0;
     grada = 0.0;
     gradb = 0.0;
     gradc = 0.0;
@@ -230,8 +225,8 @@ namespace OpenBabel
  
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nT O R S I O N A L\n\n");
-      OBFFLog("----ATOM TYPES-----    FORCE              TORSION\n");
-      OBFFLog(" I    J    K    L     CONSTANT     s       ANGLE    n    ENERGY\n");
+      OBFFLog("----ATOM TYPES-----    FORCE         TORSION\n");
+      OBFFLog(" I    J    K    L     CONSTANT        ANGLE         ENERGY\n");
       OBFFLog("----------------------------------------------------------------\n");
     }
     
@@ -241,8 +236,9 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s %s %s    %6.3f    %5.0f   %8.3f   %1.0f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
-                (*i).c->GetType(), (*i).d->GetType(), (*i).V, (*i).s, (*i).tor, (*i).n, (*i).energy);
+        sprintf(logbuf, "%-5s %-5s %-5s %-5s%6.3f       %8.3f     %8.3f\n",
+                (*i).a->GetType(), (*i).b->GetType(), 
+                (*i).c->GetType(), (*i).d->GetType(), (*i).V, (*i).tor, (*i).energy);
         OBFFLog(logbuf);
       }
     }
@@ -264,13 +260,9 @@ namespace OpenBabel
   //
   void OBFFOOPCalculationUFF::Compute(bool gradients)
   {
-    double angle2;
-
     angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
-    angle2 = angle * angle;
-    
-    //    energy = 0.043844 * 0.5 * koop * angle2;
-    energy = 0.0;
+  
+    energy = koop * (c0 + c1 * cos(angle*DEG_TO_RAD) + c2 * cos(2*angle*DEG_TO_RAD));
   }
 
   double OBForceFieldUFF::E_OOP(bool gradients) 
@@ -279,10 +271,10 @@ namespace OpenBabel
      double energy = 0.0;
     
      IF_OBFF_LOGLVL_HIGH {
-       OBFFLog("O U T - O F - P L A N E   B E N D I N G");
-       OBFFLog("ATOM TYPES             FF       OOP     FORCE ");
-       OBFFLog(" I    J    K    L     CLASS    ANGLE   CONSTANT     ENERGY");
-       OBFFLog("----------------------------------------------------------");
+       OBFFLog("\nO U T - O F - P L A N E   B E N D I N G\n\n");
+       OBFFLog("ATOM TYPES                 OOP     FORCE \n");
+       OBFFLog(" I    J     K     L       ANGLE   CONSTANT     ENERGY\n");
+       OBFFLog("----------------------------------------------------------\n");
      }
 
      for (i = _oopcalculations.begin(); i != _oopcalculations.end(); ++i) {
@@ -290,7 +282,7 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
        IF_OBFF_LOGLVL_HIGH {
-         sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), atoi((*i).d->GetType()), 
+         sprintf(logbuf, "%-5s %-5s %-5s %-5s%8.3f   %8.3f     %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), (*i).c->GetType(), (*i).d->GetType(), 
                  (*i).angle, (*i).koop, (*i).energy);
          OBFFLog(logbuf);
        }
@@ -351,7 +343,7 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+        sprintf(logbuf, "%-5s %-5s %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).rab, (*i).kab, (*i).energy);
         OBFFLog(logbuf);
       }
@@ -406,7 +398,7 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+        sprintf(logbuf, "%-5s %-5s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).rab, (*i).qq, (*i).energy);
         OBFFLog(logbuf);
       }
@@ -488,6 +480,7 @@ namespace OpenBabel
       
       bondcalc.a = a;
       bondcalc.b = b;
+      bondcalc.bt = bondorder;
 
       parameterA = GetParameterUFF(a->GetType(), _ffparams);
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
@@ -525,6 +518,7 @@ namespace OpenBabel
  
     _anglecalculations.clear();
     
+    double sinT0;
     FOR_ANGLES_OF_MOL(angle, _mol) {
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
@@ -538,8 +532,16 @@ namespace OpenBabel
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
       parameterC = GetParameterUFF(c->GetType(), _ffparams);
 
-      anglecalc.ka = KCAL_TO_KJ * parameterA->_dpar[1];
-      anglecalc.theta0 = parameterA->_dpar[0];
+      anglecalc.coord = parameterB->_ipar[0]; // coordination of central atom
+
+      anglecalc.zi = parameterA->_dpar[0];
+      anglecalc.zk = parameterC->_dpar[0];
+      anglecalc.theta0 = parameterB->_dpar[1];
+      anglecalc.cosT0 = cos(anglecalc.theta0 * DEG_TO_RAD);
+      sinT0 = sin(anglecalc.theta0 * DEG_TO_RAD);
+      anglecalc.c2 = 1.0 / (4.0 * sinT0 * sinT0);
+      anglecalc.c1 = -4.0 * anglecalc.c2 * anglecalc.cosT0;
+      anglecalc.c0 = anglecalc.c2*(2.0*anglecalc.cosT0*anglecalc.cosT0 + 1.0);
       
       _anglecalculations.push_back(anglecalc);
     }
@@ -551,11 +553,12 @@ namespace OpenBabel
       OBFFLog("SETTING UP TORSION CALCULATIONS...\n");
  
     OBFFTorsionCalculationUFF torsioncalc;
-    int torsiontype;
+    double torsiontype, phi0;
     int s;
 
     _torsioncalculations.clear();
  
+    double vi, vj;
     FOR_TORSIONS_OF_MOL(t, _mol) {
       a = _mol.GetAtom((*t)[0] + 1);
       b = _mol.GetAtom((*t)[1] + 1);
@@ -564,7 +567,9 @@ namespace OpenBabel
       OBBond *bc = _mol.GetBond(b, c);
       torsiontype = bc->GetBondOrder(); 
       if (bc->IsAromatic())
-        torsiontype = 5;
+        torsiontype = 1.5;
+      if (bc->IsAmide())
+        torsiontype = 1.41;
       
       torsioncalc.a = a;
       torsioncalc.b = b;
@@ -572,52 +577,208 @@ namespace OpenBabel
       torsioncalc.d = d;
       torsioncalc.tt = torsiontype;
 
-      parameterA = GetParameterUFF(a->GetType(), _ffparams);
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
       parameterC = GetParameterUFF(c->GetType(), _ffparams);
-      parameterD = GetParameterUFF(d->GetType(), _ffparams);
 
-      torsioncalc.V = KCAL_TO_KJ * parameterA->_dpar[0];
-      torsioncalc.s = parameterA->_dpar[1];
-      torsioncalc.n = parameterA->_dpar[2];
+      if (parameterB->_ipar[0] == 3 && parameterC->_ipar[0] == 3) {
+        // two sp3 centers
+        phi0 = 60.0;
+        torsioncalc.n = 3;
+        vi = parameterB->_dpar[6];
+        vj = parameterC->_dpar[6];
 
-      s = (int) (torsioncalc.s * torsioncalc.n);
-      switch(s) {
-      case +3:
-        torsioncalc.k1 = 0.0;
-        torsioncalc.k2 = 0.0;
-        torsioncalc.k3 = torsioncalc.V;
-        break;
-      case +2:
-        torsioncalc.k1 = 0.0;
-        torsioncalc.k2 = -torsioncalc.V;
-        torsioncalc.k3 = 0.0;
-        break;
-      case +1:
-        torsioncalc.k1 = torsioncalc.V;
-        torsioncalc.k2 = 0.0;
-        torsioncalc.k3 = 0.0;
-        break;
-      case -1:
-        torsioncalc.k1 = -torsioncalc.V;
-        torsioncalc.k2 = 0.0;
-        torsioncalc.k3 = 0.0;
-        break;
-      case -2:
-        torsioncalc.k1 = 0.0;
-        torsioncalc.k2 = torsioncalc.V;
-        torsioncalc.k3 = 0.0;
-        break;
-      case -3:
-        torsioncalc.k1 = 0.0;
-        torsioncalc.k2 = 0.0;
-        torsioncalc.k3 = -torsioncalc.V;
-        break;
+        // exception for group 6 sp3 atoms
+        switch (b->GetAtomicNum()) {
+        case 8:
+          vi = 2.0;
+          torsioncalc.n = 2;
+          phi0 = 90.0;
+          break;
+        case 16:
+        case 34:
+        case 52:
+        case 84:
+          vi = 6.8;
+          torsioncalc.n = 2;
+          phi0 = 90.0;
+        }
+        switch (c->GetAtomicNum()) {
+        case 8:
+          vj = 2.0;
+          torsioncalc.n = 2;
+          phi0 = 90.0;
+          break;
+        case 16:
+        case 34:
+        case 52:
+        case 84:
+          vj = 6.8;
+          torsioncalc.n = 2;
+          phi0 = 90.0;
+        }
+
+        torsioncalc.V = 0.5 * KCAL_TO_KJ * sqrt(vi * vj);
+
+      } else if (parameterB->_ipar[0] == 2 && parameterC->_ipar[0] == 2) {
+        // two sp2 centers
+        phi0 = 60.0;
+        torsioncalc.n = 2;
+        torsioncalc.V = 0.5 * KCAL_TO_KJ * 5.0 *
+          sqrt(parameterB->_dpar[7]*parameterC->_dpar[7]) * 
+          (1.0 + 4.18 * log(torsiontype));
+      } else if ((parameterB->_ipar[0] == 2 && parameterC->_ipar[0] == 3)
+                 || (parameterB->_ipar[0] == 3 && parameterC->_ipar[0] == 2)) {
+        // one sp3, one sp2
+        phi0 = 0.0;
+        torsioncalc.n = 6;
+        torsioncalc.V = 0.5 * KCAL_TO_KJ * 1.0;
+
+        // exception for group 6 sp3
+        if (parameterC->_ipar[0] == 3) {
+          switch (c->GetAtomicNum()) {
+          case 8:
+          case 16:
+          case 34:
+          case 52:
+          case 84:
+            torsioncalc.n = 2;
+            phi0 = 90.0;
+          }
+        }
+        if (parameterB->_ipar[0] == 3) {
+          switch (b->GetAtomicNum()) {
+          case 8:
+          case 16:
+          case 34:
+          case 52:
+          case 84:
+            torsioncalc.n = 2;
+            phi0 = 90.0;
+          }
+        }
       }
 
+      if (IsNearZero(torsioncalc.V)) // don't bother calcuating this torsion
+        continue;
+
+      // still need to implement special case of sp2-sp3 with sp2-sp2
+
+      torsioncalc.cosPhi0 = cos(torsioncalc.n * DEG_TO_RAD * phi0);
       _torsioncalculations.push_back(torsioncalc);     
     }
     
+   //
+    // OOP/Inversion Calculations
+    //
+    IF_OBFF_LOGLVL_LOW
+      OBFFLog("SETTING UP OOP CALCULATIONS...\n");
+    OBFFOOPCalculationUFF oopcalc;
+
+    _oopcalculations.clear();
+ 
+    double phi;
+    // The original Rappe paper in JACS isn't very clear about the parameters
+    // The following was adapted from Towhee
+    FOR_ATOMS_OF_MOL(atom, _mol) {
+      b = (OBAtom*) &*atom;
+
+      switch (b->GetAtomicNum()) {
+      case 6: // carbon
+      case 8: // oxygen
+      case 7: // nitrogen
+      case 15: // phos.
+      case 33: // as
+      case 51: // sb
+      case 83: // bi
+        break;
+      default: // no inversion term for this element
+        continue;
+      }
+
+      a = NULL;
+      c = NULL;
+      d = NULL;
+      
+      if (EQn(b->GetType(), "N_3", 3) ||
+          EQn(b->GetType(), "N_2", 3) ||
+          EQn(b->GetType(), "N_R", 3) ||
+          EQn(b->GetType(), "O_2", 3) ||
+          EQn(b->GetType(), "O_R", 3)) {
+        oopcalc.c0 = 1.0;
+        oopcalc.c1 = -1.0;
+        oopcalc.c2 = 0.0;
+        oopcalc.koop = 6.0 * KCAL_TO_KJ;
+      }
+      else if (EQn(b->GetType(), "P_3+3", 5) ||
+               EQn(b->GetType(), "As3+3", 5) ||
+               EQn(b->GetType(), "Sb3+3", 5) ||
+               EQn(b->GetType(), "Bi3+3", 5)) {
+
+        if (EQn(b->GetType(), "P_3+3", 5))
+          phi = 84.4339 * DEG_TO_RAD;
+        else if (EQn(b->GetType(), "As3+3", 5))
+          phi = 86.9735 * DEG_TO_RAD;
+        else if (EQn(b->GetType(), "Sb3+3", 5))
+          phi = 87.7047 * DEG_TO_RAD;
+        else
+          phi = 90.0 * DEG_TO_RAD;
+
+        oopcalc.c1 = -4.0 * cos(phi);
+        oopcalc.c2 = 1.0;
+        oopcalc.c0 = -1.0*oopcalc.c1 * cos(phi) + oopcalc.c2*cos(2.0*phi);
+        oopcalc.koop = 22.0 * KCAL_TO_KJ;
+      }
+      else if (!EQn(b->GetType(), "C_2", 3) || !EQn(b->GetType(), "C_R", 3))
+        continue; // inversion not defined for this atom type
+
+      // C atoms, we should check if we're bonded to O
+      FOR_NBORS_OF_ATOM(nbr, b) {
+        if (a == NULL)
+          a = (OBAtom*) &*nbr;
+        else if (c == NULL)
+          c = (OBAtom*) &*nbr;
+        else
+          d = (OBAtom*) &*nbr;
+      }
+	  
+      if ((a == NULL) || (c == NULL) || (d == NULL))
+        continue;
+      
+      if (EQn(b->GetType(), "C_2", 3) || EQn(b->GetType(), "C_R", 3)) {
+        oopcalc.c0 = 1.0;
+        oopcalc.c1 = -1.0;
+        oopcalc.c2 = 0.0;
+        oopcalc.koop = 6.0 * KCAL_TO_KJ;
+        if (EQn(a->GetType(), "O_2", 3) ||
+            EQn(c->GetType(), "O_2", 3) ||
+            EQn(d->GetType(), "O_2", 3)) {
+          oopcalc.koop = 50.0 * KCAL_TO_KJ;
+        }
+      }
+            
+      // A-B-CD || C-B-AD  PLANE = ABC
+      oopcalc.a = a;
+      oopcalc.b = b;
+      oopcalc.c = c;
+      oopcalc.d = d;
+      oopcalc.koop /= 3.0; // three OOPs to consider
+	    
+      _oopcalculations.push_back(oopcalc);
+      
+      // C-B-DA || D-B-CA  PLANE BCD
+      oopcalc.a = d;
+      oopcalc.d = a;
+      
+      _oopcalculations.push_back(oopcalc);
+      
+      // A-B-DC || D-B-AC  PLANE ABD
+      oopcalc.a = a;
+      oopcalc.c = d;
+      oopcalc.d = c;
+	    
+      _oopcalculations.push_back(oopcalc);
+    } // for all atoms
+
     // 
     // VDW Calculations
     //
@@ -631,6 +792,15 @@ namespace OpenBabel
     FOR_PAIRS_OF_MOL(p, _mol) {
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
+
+      if (a->IsConnected(b)) {
+        cerr << " why?" << endl;
+        continue;
+      }
+      if (a->IsOneThree(b)) {
+        cerr << " why?" << endl;
+        continue;
+      }
 
       parameterA = GetParameterUFF(a->GetType(), _ffparams);
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
@@ -648,18 +818,27 @@ namespace OpenBabel
       vdwcalc.kab = KCAL_TO_KJ * sqrt(vdwcalc.ka * vdwcalc.kb);
       
       // 1-4 scaling
-//       if (a->IsOneFour(b))
-//         vdwcalc.kab *= 0.5;
+      // This isn't mentioned in the UFF paper, but is common for other methods
+      //       if (a->IsOneFour(b))
+      //         vdwcalc.kab *= 0.5;
 
-      vdwcalc.ka = (vdwcalc.Ra + vdwcalc.Rb) * pow(1.0 * vdwcalc.kab , 1.0 / 12.0);
+      // ka now represents the xij in equation 20 -- the expected vdw distance
+      vdwcalc.ka = sqrt(vdwcalc.Ra * vdwcalc.Rb);
       vdwcalc.kb = (vdwcalc.Ra + vdwcalc.Rb) * pow(2.0 * vdwcalc.kab , 1.0 / 6.0);
       
       _vdwcalculations.push_back(vdwcalc);
     }
     
+    return true;
+  }
+
+  bool OBForceFieldUFF::SetupElectrostatics()
+  {
     // 
     // Electrostatic Calculations
     //
+    OBAtom *a, *b;
+
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP ELECTROSTATIC CALCULATIONS...\n");
  
@@ -670,29 +849,27 @@ namespace OpenBabel
     // Note that while the UFF paper mentions an electrostatic term,
     // it does not actually use it. Both Towhee and the UFF FAQ
     // discourage the use of electrostatics with UFF.
-    // If you wanted to use this term, uncomment the lines below
 
-//     FOR_PAIRS_OF_MOL(p, _mol) {
-//       a = _mol.GetAtom((*p)[0]);
-//       b = _mol.GetAtom((*p)[1]);
+    FOR_PAIRS_OF_MOL(p, _mol) {
+      a = _mol.GetAtom((*p)[0]);
+      b = _mol.GetAtom((*p)[1]);
       
-//       elecalc.qq = KCAL_TO_KJ * 332.0637 * a->GetPartialCharge() * b->GetPartialCharge();
+      elecalc.qq = KCAL_TO_KJ * 332.0637 * a->GetPartialCharge() * b->GetPartialCharge();
       
-//       if (elecalc.qq) {
-//         elecalc.a = &*a;
-//         elecalc.b = &*b;
+      if (elecalc.qq) {
+        elecalc.a = &*a;
+        elecalc.b = &*b;
         
-//         _electrostaticcalculations.push_back(elecalc);
-//       }
-//     }
-
+        _electrostaticcalculations.push_back(elecalc);
+      }
+    }
     return true;
   }
 
   bool OBForceFieldUFF::ParseParamFile()
   {
     vector<string> vs;
-    char buffer[80];
+    char buffer[BUFF_SIZE];
     
     OBFFParameter parameter;
 
@@ -703,7 +880,7 @@ namespace OpenBabel
       return false;
     }
 
-    while (ifs.getline(buffer, 256)) {
+    while (ifs.getline(buffer, BUFF_SIZE)) {
       tokenize(vs, buffer);
       if (vs.size() < 13)
         continue;
@@ -725,7 +902,6 @@ namespace OpenBabel
         parameter._dpar.push_back(atof(vs[12].c_str())); // Radius
 
         char coord = vs[1][2]; // 3rd character of atom type
-        cerr << " coordination: " << coord << endl;
         switch (coord) {
         case '1': // linear
           parameter._ipar.push_back(1);
@@ -768,7 +944,7 @@ namespace OpenBabel
     vector<pair<OBSmartsPattern*,string> >::iterator i;
     OBSmartsPattern *sp;
     vector<string> vs;
-    char buffer[80];
+    char buffer[BUFF_SIZE];
  
     _mol.SetAtomTypesPerceived();
     
@@ -779,13 +955,14 @@ namespace OpenBabel
       return false;
     }
 
-    while (ifs.getline(buffer, 80)) {
+    while (ifs.getline(buffer, BUFF_SIZE)) {
       if (EQn(buffer, "atom", 4)) {
       	tokenize(vs, buffer);
 
         sp = new OBSmartsPattern;
-        if (sp->Init(vs[1]))
+        if (sp->Init(vs[1])) {
           _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
+        }
         else {
           delete sp;
           sp = NULL;
