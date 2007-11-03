@@ -168,12 +168,18 @@ namespace OpenBabel
           str = "S.O2";
         } else if (strncmp(temp_type,"S.o", 3) == 0) {
           str = "S.O";
-        } else if (strncmp(temp_type,"S.1", 3) == 0) {
-          str = "S.2"; // no idea what the best type might be here
-        } else if (strncmp(temp_type,"P", 1) == 0) {
-          str = "P.3";
         } else if (strncmp(temp_type,"SI", 2) == 0) {
           str = "Si";
+        // The following cases are entries which are not in openbabel/data/types.txt
+        // and should probably be added there
+        } else if (strncmp(temp_type,"S.1", 3) == 0) {
+          str = "S.2"; // no idea what the best type might be here
+        } else if (strncmp(temp_type,"P.", 2) == 0) {
+          str = "P.3";
+        } else if (strncasecmp(temp_type,"Ti.", 3) == 0) { // e.g. Ti.th
+          str = "Ti";
+        } else if (strncasecmp(temp_type,"Ru.", 3) == 0) { // e.g. Ru.oh
+          str = "Ru";
         }
 
         ttab.SetToType("ATN");
