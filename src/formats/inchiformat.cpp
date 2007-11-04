@@ -21,7 +21,11 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 
 #include "inchi_api.h"
+#ifdef HAVE_SSTREAM
 #include <sstream>
+#else
+#include <strstream>
+#endif
 #include <set>
 #include <vector>
 #include "openbabel/chiral.h"

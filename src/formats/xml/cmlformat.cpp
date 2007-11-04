@@ -23,6 +23,11 @@ GNU General Public License for more details.
 #ifdef WIN32
 #pragma warning (disable : 4800)
 #endif
+#ifdef HAVE_SSTREAM
+#include <sstream>
+#else
+#include <strstream>
+#endif
 
 using namespace std;
 namespace OpenBabel

@@ -18,6 +18,11 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 
+#ifdef HAVE_SSTREAM
+#include <sstream>
+#else
+#include <strstream>
+#endif
 #include <fstream>
 #include <map>
 #include <string>

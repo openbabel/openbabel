@@ -1,3 +1,8 @@
+2007-11-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* CMakeLists.txt */CMakeLists.txt: CMake build files contributed
+	via Saro Engels and Christian Ehrlicher and the KDE-Win project.
+
 2007-11-04  Chris Morley
 
 	* src/forcefields/forcefieldghemical.cpp(ParsParamFile):
