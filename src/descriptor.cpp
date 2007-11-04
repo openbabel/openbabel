@@ -509,7 +509,7 @@ is made with the value in the OBPairData. This is a numeric comparison if both
 operands can be converted to numbers (as in the example). If the 5 had been
 enclosed in single or double quotes the comparison would have been a string
 comparison, which gives a different result in some cases. OBPairData is searched
-first to match an identifier. This means that an 
+first to match an identifier.
 
 If there are no OBPair attributes that match, the identifier is taken to be the
 ID of an OBDescriptor class object. The class OBDescriptor is the base class
@@ -557,7 +557,7 @@ the object, use PredictAndSave().
 
 This facility can be called from the command line.Use the option
 --add "descriptor list", which will add the requested descriptors to the 
-molecule.  They are thenvisible as properties in SDF and CML formats. 
+molecule.  They are then visible as properties in SDF and CML formats. 
 The IDs in the list can be separated by spaces or punctuation characters.
 All Descriptors will provide an output value as a string through a  virtual
 function GetStringValue((OBBase* pOb, string& svalue)) which

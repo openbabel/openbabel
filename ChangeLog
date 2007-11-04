@@ -1,3 +1,26 @@
+2007-11-04  Chris Morley
+
+	* src/forcefields/forcefieldghemical.cpp(ParsParamFile):
+	replaced 4 instances of reserve by resize (on ipar etc).
+	Was previously crashing for me.
+	
+	* include/openbabel/base.h, generic.h: Moved the declaration of
+	the OBGenericData base class from generic.h to base.h. This
+	potentially reduces dependencies. Most of the derived classes are
+	still declared in generic.h. New OBGenericData classes would be
+	better with their own header files.
+	
+	* include/openbabel/atom.h: consequent extra #include.
+	
+	* src/generic.cpp: OBVibrationData wasn't copying properly. 
+	Simplify so uses implicit copy constructor and assignment, which 
+	are more reliable.
+	
+	* src/mol.cpp: remove calculation of _totalSpin from 
+	AssignSpinMultiplicity. Done on demand in GetTotalSpinMultiplicity.
+	
+	* src/descriptor.cpp: minor edit in comment
+	
 2007-11-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.*: Calculates full UFF energies,

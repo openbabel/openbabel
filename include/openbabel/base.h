@@ -1,5 +1,5 @@
 /**********************************************************************
-base.h - Base classes to build a graph
+base.h - Base class for OpenBabel objects
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
@@ -24,21 +24,187 @@ GNU General Public License for more details.
 
 #include <vector>
 #include <map>
+#include <string>
 
 #include <iostream>
 
-// Needed for the OBGenericData handling in this class
-// (can't just forward declare it.)
-#include <openbabel/generic.h>
-
 namespace OpenBabel
 {
+
+  //Forward declaration of the base class for OBMol OBReaction, OBAtom, etc.
+  //Declaration later in this file.
+class OBBase;
 
   // Utility function prototypes
   OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n\r");
   OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n\r", int limit=-1);
   // Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
   OBAPI std::string& Trim(std::string& txt);
+
+  //! \brief Classification of data stored via OBGenericData class and subclasses.
+  //!
+  //! OBGenericDataType can be used as a faster, direct access to a particular category
+  //! instead of the slower access via GetData(std::string), which must loop
+  //! through all data to find a match with the supplied key. It is implemented
+  //! as a set of unsigned integer constants for maximum flexibility and future
+  //! expansion.
+  //! 
+  //! CustomData0 through CustomData15 are data slots that are not used in 
+  //! OpenBabel directly and are meant for use in derivative programs.
+  //! Macro definitions can be used to define what each data slot is used in your code.
+  namespace OBGenericDataType
+  {
+    enum
+    {
+      //! Unknown data type (default)
+      UndefinedData =      0,
+
+      //! Arbitrary key/value data, i.e., OBPairData
+      PairData      =      1,
+
+      //! Energetics data (e.g., total energy, heat of formation, etc.)
+      EnergyData    =      2,
+
+      //! Storing text comments (one per molecule, atom, bond, etc.) (for other data, e.g., author, keyword, ... use OBPairData)
+      CommentData   =      3,
+
+      //! Arbitrary information about conformers, i.e., OBConformerData
+      ConformerData =      4,
+
+      //! Bond data external to OpenBabel, i.e., OBExternalBond, OBExternalBondData
+      ExternalBondData =   5,
+
+      //! Information for generating & manipulating rotamers, i.e. OBRotamerList
+      RotamerList =        6,
+
+      //! Info. for storing bonds to atoms yet to be added, i.e. OBVirtualBond
+      VirtualBondData =    7,
+
+      //! Information on rings in a molecule, i.e., OBRingData
+      RingData =           8,
+
+      //! Information about torsion/dihedral angles, i.e., OBTorsionData and OBTorsion
+      TorsionData =        9,
+
+      //! Bond angles in a molecule, i.e., OBAngle, OBAngleData
+      AngleData =         10,
+
+      //! Residue serial numbers
+      SerialNums =        11,
+
+      //! Crystallographic unit cell data, i.e., OBUnitCell
+      UnitCell =          12,
+
+      //! Spin data, including NMR, atomic and molecular spin, etc.
+      SpinData =          13,
+
+      //! Arbitrary partial and total charges, dipole moments, etc.
+      ChargeData =        14,
+
+      //! Symmetry data -- point and space groups, transforms, etc. i.e., OBSymmetryData
+      SymmetryData =      15,
+
+      //! Arbitrary chiral information (atom, bond, molecule, etc.) i.e., OBChiralData
+      ChiralData =        16,
+
+      //! Atomic and molecular occupation data
+      OccupationData =    17,
+
+      //! Density (cube) data and surfaces
+       DensityData =       18,
+
+      //! Electronic levels, redox states, orbitals, etc.
+      ElectronicData =    19,
+
+      //! Vibrational modes, frequencies, etc.
+      VibrationData =     20,
+
+      //! Rotational energy information
+      RotationData =      21,
+
+      //! Nuclear transitions (e.g., decay, fission, fusion)
+      NuclearData =       22,
+
+      //! Set Data (a set of OBGenericData)
+      SetData =           23,
+
+      // space for up to 2^14 more entries...
+
+      //! Custom (user-defined data)
+      CustomData0 = 16384,
+      CustomData1 = 16385,
+      CustomData2 = 16386,
+      CustomData3 = 16387,
+      CustomData4 = 16388,
+      CustomData5 = 16389,
+      CustomData6 = 16390,
+      CustomData7 = 16391,
+      CustomData8 = 16392,
+      CustomData9 = 16393,
+      CustomData10 = 16394,
+      CustomData11 = 16395,
+      CustomData12 = 16396,
+      CustomData13 = 16397,
+      CustomData14 = 16398,
+      CustomData15 = 16399,
+    };
+  } // end namespace
+  enum DataOrigin {
+    any,                 //!< Undefined or unspecified (default) 
+    fileformatInput,     //!< Read from an input file
+    userInput,           //!< Added by the user
+    perceived,           //!< Perceived by Open Babel library methods
+    external             //!< Added by an external program
+  };
+
+  //! \brief Base class for generic data
+  // Class introduction in generic.cpp
+  // This base class declaration  has no dependence on mol.h
+  class OBAPI OBGenericData
+  {
+  protected:
+    std::string  _attr;  //!< attribute tag (e.g., "UnitCell", "Comment" or "Author")
+    unsigned int _type;  //!< attribute type -- declared for each subclass
+    DataOrigin   _source;//!< source of data for accounting
+  public:
+    OBGenericData(const std::string attr = "undefined",
+                  const unsigned int type =  OBGenericDataType::UndefinedData,
+                  const DataOrigin source = any);
+    //Use default copy constructor and assignment operators
+    //OBGenericData(const OBGenericData&);
+		
+    /* Virtual constructors added. see 
+       http://www.parashift.com/c++-faq-lite/abcs.html#faq-22.5
+       to allow copying given only a base class OBGenericData pointer.
+       It may be necessary to cast the return pointer to the derived class
+       type, since we are doing without Covariant Return Types 
+       http://www.parashift.com/c++-faq-lite/virtual-functions.html#faq-20.8
+    
+       A derived class may return NULL if copying is inappropriate */
+    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+    { return NULL; } 
+    virtual ~OBGenericData()    {}
+    //Use default copy constructor and assignment operators
+    //OBGenericData& operator=(const OBGenericData &src);
+
+    //! Set the attribute (key), which can be used to retrieve this data
+    void                      SetAttribute(const std::string &v)
+    {        _attr = v;        }
+    //! Set the origin of this data, which can be used to filter the data
+    void SetOrigin(const DataOrigin s) { _source = s; }
+    //! \return The attribute (key), which can be used to retrieve this data
+    virtual const std::string &GetAttribute()  const
+    {        return(_attr);    }
+    //! \return the data type for this object as defined in OBGenericDataType
+    unsigned int                GetDataType()    const
+    {        return(_type);    }
+    //! \brief Base class returns a default value (the attribute type) 
+    //! but should never be called
+    virtual const std::string &GetValue()  const
+    {			return _attr; }
+    virtual const DataOrigin GetOrigin() const
+    {     return _source; }
+  };
 
   //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
   typedef std::vector<OBGenericData*>::iterator OBDataIterator;

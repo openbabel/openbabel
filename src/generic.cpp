@@ -1321,36 +1321,6 @@ namespace OpenBabel
 //
 
 /*!
-**\brief OBVibrationData constructor
-*/
-OBVibrationData::OBVibrationData()
-{
-  this->_type = OBGenericDataType::VibrationData;
-  this->_attr = "VibrationData";
-}
-
-/*!
-**\brief OBVibrationData copy constructor
-*/
-OBVibrationData::OBVibrationData(const OBVibrationData & src)
-{
-  this->SetData(src._vLx, src._vFrequencies, src._vIntensities);
-}
-
-/*!
-**\brief OBVibrationData assignment operator
-*/
-OBVibrationData & OBVibrationData::operator=(const OBVibrationData & src)
-{
-  if (this == &src)
-    return *this;
-
-  this->SetData(src._vLx, src._vFrequencies, src._vIntensities);
-
-  return *this;
-}
-
-/*!
 **\brief Assign the data
 **\param vLx Normal modes in 1/sqrt(a.u.)
 **\param vFrequencies Harmonic frequencies in inverse centimeters

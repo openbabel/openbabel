@@ -734,7 +734,7 @@ namespace OpenBabel
         parameter._b = vs[2];
         parameter._dpar.push_back(atof(vs[4].c_str())); // length
         parameter._dpar.push_back(atof(vs[5].c_str())); // force cte
-        parameter._ipar.reserve(1);
+        parameter._ipar.resize(1);
         if (EQn(vs[3].c_str(), "S", 1))
           parameter._ipar[0] = 1;
         if (EQn(vs[3].c_str(), "D", 1))
@@ -760,7 +760,7 @@ namespace OpenBabel
         parameter._b = vs[2];
         parameter._c = vs[3];
         parameter._d = vs[4];
-        parameter._dpar.reserve(3);
+        parameter._dpar.resize(3);
         parameter._dpar[0] = atof(vs[6].c_str()); // force cte
         parameter._dpar[2] = atof(vs[8].c_str()); // n
         if (EQn(vs[7].c_str(), "+", 1))
@@ -768,7 +768,7 @@ namespace OpenBabel
         else if (EQn(vs[7].c_str(), "-", 1))
           parameter._dpar[1] = -1; // s
 
-        parameter._ipar.reserve(1);
+        parameter._ipar.resize(1);
         if (EQn(vs[5].c_str(), "?S?", 3))
           parameter._ipar[0] = 1;
         else if (EQn(vs[5].c_str(), "?D?", 3))
@@ -790,7 +790,7 @@ namespace OpenBabel
         parameter.clear();
         parameter._a = vs[1];
         parameter._b = vs[2];
-        parameter._ipar.reserve(1);
+        parameter._ipar.resize(1);
         if (EQn(vs[3].c_str(), "S", 1))
           parameter._ipar[0] = 1;
         else if (EQn(vs[3].c_str(), "D", 1))

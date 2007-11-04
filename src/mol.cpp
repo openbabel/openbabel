@@ -2030,6 +2030,7 @@ namespace OpenBabel
           }
       }
 
+/*  Now done on demand in GetTotalSouinMultiplicity
     vector<OBAtom*>::iterator i;
     unsigned int spin = 1;
 
@@ -2039,7 +2040,7 @@ namespace OpenBabel
           spin += atom->GetSpinMultiplicity() - 1;
       }
     _totalSpin = spin;
-
+*/
     return (true);
   }
 
