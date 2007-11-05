@@ -495,11 +495,17 @@ namespace OpenBabel
   OBForceFieldMM2 &OBForceFieldMM2::operator=(OBForceFieldMM2 &src)
   {
     _mol = src._mol;
+    _init = src._init;
     return src;
   }
 
   bool OBForceFieldMM2::Setup(OBMol &mol)
   {
+    if (!_init) {
+      ParseParamFile();
+      _init = true;
+    }
+    
     _mol = mol;
     SetMM2Types();
     return true;

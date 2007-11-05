@@ -107,32 +107,32 @@ namespace OpenBabel
       theta = a->GetAngle(b->GetIdx(), c->GetIdx()) * DEG_TO_RAD;
     }
 
-    ka = (644.12 * KCAL_TO_KJ / (ab * bc)) * (zi * zk / (pow(ac, 5.0)));
-    ka *= ab * bc * (3.0 * ab * bc * (1.0 - cosT0*cosT0) - ac*ac*cosT0);
+    ka = (644.12 * KCAL_TO_KJ) * (zi * zk / (pow(ac, 5.0)));
+    ka *= (3.0 * ab * bc * (1.0 - cosT0*cosT0) - ac*ac*cosT0);
     switch (coord) {
     case 1:
       energy = ka * (1.0 + cos(theta));
+      dE = -ka * sin(theta);
       break;
     case 2:
       energy = ka * (1.0 + cos(3.0 * theta)) / 9.0;
+      dE = -ka * sin(3.0 * theta) / 3.0;
       break;
     case 4:
     case 6:
       energy = ka * (1.0 + cos(4.0 * theta)) / 16.0;
+      dE = -ka * sin(4.0 * theta) / 4.0;
       break;
     default:
       energy = ka * (c0 + c1*cos(theta) + c2*cos(2.0 * theta));
+      dE = -ka * (c1*sin(theta) + 2.0 * c2 * sin(2.0 * theta));
     }
     
     if (gradients) {
-      dE = 2.0 * ka * delta;
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
       gradc = dE * dc; // - dE/drab * drab/dc
     }
-    grada = 0.0;
-    gradb = 0.0;
-    gradc = 0.0;
   }
   
   double OBForceFieldUFF::E_Angle(bool gradients)
@@ -181,6 +181,7 @@ namespace OpenBabel
       tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
       if (IsNan(tor))
         tor = 1.0e-7;
+      tor *= DEG_TO_RAD;
     } else {
       vector3 vab, vbc, vcd, abbc, bccd;
       vab = a->GetVector() - b->GetVector();
@@ -190,7 +191,7 @@ namespace OpenBabel
       bccd = cross(vbc, vcd);
 
       double dotAbbcBccd = dot(abbc,bccd);
-      tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
+      tor = acos(dotAbbcBccd / (abbc.length() * bccd.length()));
       if (IsNearZero(dotAbbcBccd)) {
         tor = 0.0; // rather than NaN
       }
@@ -199,23 +200,16 @@ namespace OpenBabel
       }
     }
 
-    cosine = cos(DEG_TO_RAD * tor * n);
-
+    cosine = cos(tor * n);
     energy = V * (1.0 - cosPhi0*cosine);
     
     if (gradients) {
-      sine = sin(DEG_TO_RAD * tor);
-      sine2 = sin(2.0 * DEG_TO_RAD * tor);
-      sine3 = sin(3.0 * DEG_TO_RAD * tor);
+      dE = V * n * cosPhi0 * sin(n * tor);
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
       gradc = dE * dc; // - dE/drab * drab/dc
       gradd = dE * dd; // - dE/drab * drab/dd
     }
-    grada = 0.0;
-    gradb = 0.0;
-    gradc = 0.0;
-    gradd = 0.0;
   }
   
   double OBForceFieldUFF::E_Torsion(bool gradients) 
@@ -238,7 +232,8 @@ namespace OpenBabel
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%-5s %-5s %-5s %-5s%6.3f       %8.3f     %8.3f\n",
                 (*i).a->GetType(), (*i).b->GetType(), 
-                (*i).c->GetType(), (*i).d->GetType(), (*i).V, (*i).tor, (*i).energy);
+                (*i).c->GetType(), (*i).d->GetType(), (*i).V, 
+                (*i).tor * RAD_TO_DEG, (*i).energy);
         OBFFLog(logbuf);
       }
     }
@@ -263,6 +258,8 @@ namespace OpenBabel
     angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
   
     energy = koop * (c0 + c1 * cos(angle*DEG_TO_RAD) + c2 * cos(2*angle*DEG_TO_RAD));
+
+    // TODO: Calculate gradients
   }
 
   double OBForceFieldUFF::E_OOP(bool gradients) 
@@ -313,8 +310,9 @@ namespace OpenBabel
     term6 = term6 * term6; // ^6
     term12 = term6 * term6; // ^12
    
-    energy = (1.0 / term12) - (2.0 / term6);
+    energy = kab * (1.0 / term12) - (2.0 / term6);
     
+    // TODO: check ka and kb carefully here
     if (gradients) { 
       term13 = term13 * term12; // ^13
       term7 = term7 * term6; // ^7
@@ -433,12 +431,18 @@ namespace OpenBabel
     _oopcalculations           = src._oopcalculations;
     _vdwcalculations           = src._vdwcalculations;
     _electrostaticcalculations = src._electrostaticcalculations;
+    _init                      = src._init;
 
     return *this;
   }
 
   bool OBForceFieldUFF::Setup(OBMol &mol)
   {
+    if (!_init) {
+      ParseParamFile();
+      _init = true;
+    }
+    
     _mol = mol;
     
     SetUFFTypes();
@@ -501,7 +505,7 @@ namespace OpenBabel
 
       // here we fold the 1/2 into the kij from equation 1a
       // Otherwise, this is equation 6 from the UFF paper.
-      bondcalc.kb = (0.5 * KCAL_TO_KJ * 644.12 
+      bondcalc.kb = (0.5 * KCAL_TO_KJ * 664.12 
         * parameterA->_dpar[5] * parameterB->_dpar[5])
         / (bondcalc.r0 * bondcalc.r0 * bondcalc.r0);
 

@@ -366,6 +366,7 @@ namespace OpenBabel
   OBForceFieldGhemical &OBForceFieldGhemical::operator=(OBForceFieldGhemical &src)
   {
     _mol = src._mol;
+    _init = src._init;
 
     _ffbondparams    = src._ffbondparams;
     _ffangleparams   = src._ffangleparams;
@@ -377,12 +378,17 @@ namespace OpenBabel
     _torsioncalculations       = src._torsioncalculations;
     _vdwcalculations           = src._vdwcalculations;
     _electrostaticcalculations = src._electrostaticcalculations;
-
+    
     return *this;
   }
 
   bool OBForceFieldGhemical::Setup(OBMol &mol)
   {
+    if (!_init) {
+      ParseParamFile();
+      _init = true;
+    }    
+    
     _mol = mol;
     
     SetGhemicalTypes();

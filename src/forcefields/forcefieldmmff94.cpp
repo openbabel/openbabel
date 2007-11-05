@@ -520,11 +520,17 @@ namespace OpenBabel
   OBForceFieldMMFF94 &OBForceFieldMMFF94::operator=(OBForceFieldMMFF94 &src)
   {
     _mol = src._mol;
+    _init = src._init;
     return *this;
   }
 
   bool OBForceFieldMMFF94::Setup(OBMol &mol)
   {
+    if (!_init) {
+      ParseParamFile();
+      _init = true;
+    }    
+    
     _mol = mol;
     SetMMFFTypes();
     if (!SetupCalculations())

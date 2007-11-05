@@ -31,6 +31,9 @@ namespace OpenBabel
   class OBForceFieldMM2: public OBForceField
   {
     protected:
+    
+      bool _init; //!< Used to only initialize and read parameters once
+      
       //! \return Parses the parameter file
       bool ParseParamFile();
       //! \return Sets atomtypes to MM2 in _mol
@@ -81,15 +84,13 @@ namespace OpenBabel
 
       std::vector<vector3> forces; // used to hold forces on each atom
 
-
-
     public:
       //! Setup
       bool Setup(OBMol &mol);
       //! Constructor
-      OBForceFieldMM2(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+      OBForceFieldMM2(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault), _init(false)
       {
-        ParseParamFile();
+        // ParseParamFile only called when needed
       }
       
       virtual const char* Description()

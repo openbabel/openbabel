@@ -75,6 +75,8 @@ namespace OpenBabel
   class OBForceFieldGhemical: public OBForceField
   {
     protected:
+      bool _init; //!< Used to make sure we only parse the parameter file once, when needed
+    
       //!  Parses the parameter file
       bool ParseParamFile();
       //!  Sets atomtypes to Ghemical types in _mol
@@ -101,12 +103,12 @@ namespace OpenBabel
       std::vector<OBFFTorsionCalculationGhemical>       _torsioncalculations;
       std::vector<OBFFVDWCalculationGhemical>           _vdwcalculations;
       std::vector<OBFFElectrostaticCalculationGhemical> _electrostaticcalculations;
-
+    
     public:
       //! Constructor
-      OBForceFieldGhemical(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+      OBForceFieldGhemical(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault), _init(false)
       {
-        ParseParamFile();
+          // ParseParamFile now done only when needed
       }
       
       //! Destructor

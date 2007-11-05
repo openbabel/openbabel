@@ -89,6 +89,8 @@ namespace OpenBabel
   class OBForceFieldUFF: public OBForceField
   {
   protected:
+    bool _init; //!< Used to make sure we only parse the parameter file once, when needed
+
     //!  Parses the parameter file
     bool ParseParamFile();
     //!  Sets atomtypes to UFF types in _mol
@@ -117,9 +119,9 @@ namespace OpenBabel
 
   public:
     //! Constructor
-  OBForceFieldUFF(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+  OBForceFieldUFF(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault), _init(false)
       {
-        ParseParamFile();
+        // ParseParamFile only called when needed
       }
       
     //! Destructor
