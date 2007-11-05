@@ -1,3 +1,11 @@
+2007-11-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/*: Add delayed initialization. Only parse the
+	parameter file when the force field is called by Setup on a
+	particular molecule.
+
+	* src/forcefields/forcefielduff.cpp: Bug fixes.
+
 2007-11-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* CMakeLists.txt */CMakeLists.txt: CMake build files contributed
