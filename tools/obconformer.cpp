@@ -43,18 +43,17 @@ OBRandom generator;
 
 int main(int argc,char *argv[])
 {
-  if (argc != 5)
+  if (argc != 4)
     {
-      cout << "Usage: obconformer NWeights NSteps GeomSteps <file>" << endl;
+      cout << "Usage: obconformer NSteps GeomSteps <file>" << endl;
       return(-1);
     }
 
-  int weightSteps, searchSteps, geomSteps;
+  int weightSteps, geomSteps;
   weightSteps = atoi(argv[1]);
-  searchSteps = atoi(argv[2]);
-  geomSteps = atoi(argv[3]);
+  geomSteps = atoi(argv[2]);
 
-  ifstream ifs(argv[4]);
+  ifstream ifs(argv[3]);
   if (!ifs)
     {
       cerr << "Error! Cannot read input file!" << endl;
@@ -64,7 +63,7 @@ int main(int argc,char *argv[])
   OBConversion conv(&ifs, &cout);
   OBFormat* pFormat;
   
-  pFormat = conv.FormatFromExt(argv[4]);
+  pFormat = conv.FormatFromExt(argv[3]);
   if ( pFormat == NULL )
     {
       cerr << "Error! Cannot read file format!" << endl;
@@ -89,8 +88,8 @@ int main(int argc,char *argv[])
       conv.Read(&mol);
 
       pFF->Setup(mol);
-      pFF->RandomRotorSearch(weightSteps, geomSteps);
-      // pFF->SystematicRotorSearch();
+      pFF->WeightedRotorSearch(weightSteps, geomSteps);
+      pFF->ConjugateGradients(geomSteps + 200); // final cleanup
       pFF->UpdateCoordinates(mol);
       conv.Write(&mol);
     } // while reading molecules

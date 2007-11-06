@@ -1,5 +1,14 @@
 2007-11-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/forcefield.cpp (WeightedRotorSearch): Improved conformer
+	searching. Still needs geometry optimization for each
+	rotamer. (That seems to uncover a bug in OBMol/OBForceField.)
+
+	* tools/obconformer.cpp: Switch to WeightedRotorSearch followed by
+	minimization.
+
+	* data/UFF.prm: Improved typing.
+
 	* src/forcefields/*: Add delayed initialization. Only parse the
 	parameter file when the force field is called by Setup on a
 	particular molecule.
@@ -13,7 +22,7 @@
 
 2007-11-04  Chris Morley
 
-	* src/forcefields/forcefieldghemical.cpp(ParsParamFile):
+	* src/forcefields/forcefieldghemical.cpp(ParseParamFile):
 	replaced 4 instances of reserve by resize (on ipar etc).
 	Was previously crashing for me.
 	

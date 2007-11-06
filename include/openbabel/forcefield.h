@@ -260,9 +260,9 @@ namespace OpenBabel
 
     //! Output for logfile
     std::ostream* logos;
-    char logbuf[200];
+    char logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
     int loglvl; //!< Log level for output
-
+    
     //! used to hold i for current conformer (needed by UpdateConformers)
     int current_conformer;
 
@@ -730,17 +730,6 @@ namespace OpenBabel
     static double VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
     //@}
 
-    ///Do not use.
-    ///This function contains rubbish merely to ensure the compiler instantiates
-    ///some templated functions which are needed for the Windows Python build.
-    ///TODO Find the proper way of doing this.
-/*    void kludge()
-    {
-      PluginIter<OBForceField> it;
-      (++it)->SetLogLevel(1);
-      if(it)it.ID();
-    }
-*/
   }; // class OBForceField
 
 }// namespace OpenBabel

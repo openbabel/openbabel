@@ -20,8 +20,10 @@ GNU General Public License for more details.
       - LineSearch(): finished
       - SteepestDescent(): finished
       - ConjugateGradients(): finished
-      - GenerateCoordinates(): 
-      - SystematicRotorSearch(): not all combinations are tested but works
+      - GenerateCoordinates():  NEEDS WORK
+      - SystematicRotorSearch(): finished
+      - RandomRotorSearch(): finished
+      - WeightedRotorSearch: NEEDS WORK
       - DistanceGeometry(): needs matrix operations
 
       - src/forcefields/forcefieldghemical.cpp
@@ -29,8 +31,7 @@ GNU General Public License for more details.
       - Charges: finished
       - Energy terms: finished
       - Analytical gradients: finished
-      - Validation: in progress...
-        1,4-scaling still needs some work
+      - Validation: finished
 
       - src/forcefields/forcefieldmmff94.cpp
       - Atom typing: needs work
@@ -44,6 +45,12 @@ GNU General Public License for more details.
 	    - VDW: no gradient
 	    - Electrostatic: needs charges, charges need correct atom types
       - Validation: in progress... 
+
+      - src/forcefields/forcefielduff.cpp
+      - Energy terms: finished
+      - OOP: needs validation
+      - Gradients: need careful checking
+      - Validation in progress...
 
 
 ***********************************************************************/
@@ -480,7 +487,7 @@ namespace OpenBabel
     int origLogLevel = loglvl;
 
     if (_mol.GetCoordinates() == NULL)
-      cerr << " oops! " << endl;
+      return;
 
     rl.Setup(_mol);
     rotamers.SetBaseCoordinateSets(_mol);
@@ -564,11 +571,206 @@ namespace OpenBabel
     current_conformer = best_conformer;
   }
 
+  void Reweight(std::vector< std::vector <double> > &rotorWeights,
+                std::vector<int> rotorKey,
+                double bonus)
+  {
+    double fraction, minWeight, maxWeight;
+    bool improve = (bonus > 0.0);
+
+    for (int i = 1; i < rotorWeights.size() - 1; ++i) {
+      if (improve && rotorWeights[i][rotorKey[i]] > 0.999 - bonus)
+        continue;
+      if (!improve && rotorWeights[i][rotorKey[i]] < 0.001 - bonus) // bonus < 0
+        continue;
+      
+      // Check to make sure we don't kill some poor weight
+      minWeight = maxWeight = rotorWeights[i][0];
+      for (int j = 1; j < rotorWeights[i].size(); ++j) {
+        if (j == rotorKey[i])
+          continue; // we already checked for problems with this entry
+        if (rotorWeights[i][j] < minWeight)
+          minWeight = rotorWeights[i][j];
+        if (rotorWeights[i][j] > maxWeight)
+          maxWeight = rotorWeights[i][j];
+      }
+
+      fraction = bonus / (rotorWeights[i].size() - 1);
+      if (improve && fraction > minWeight) {
+        bonus = minWeight / 2.0;
+        fraction = bonus / (rotorWeights[i].size() - 1);
+      }
+      if (!improve && fraction > maxWeight) {
+        bonus = (maxWeight - 1.0) / 2.0; // negative "bonus"
+        fraction = bonus / (rotorWeights[i].size() - 1);
+      }
+
+      for (int j = 0; j < rotorWeights[i].size(); ++j) {
+        if (j == rotorKey[i])
+          rotorWeights[i][j] += bonus;
+        else
+          rotorWeights[i][j] -= fraction;
+      }
+    }
+  }
+                
+  
   void OBForceField::WeightedRotorSearch(unsigned int conformers, 
                                          unsigned int geomSteps)
   {
-    // For now, use the completely random form
-    RandomRotorSearch(conformers, geomSteps);
+    OBRotorList rl;
+    OBRotamerList rotamers;
+    OBRotorIterator ri;
+    OBRotor *rotor;
+
+    OBRandom generator;
+    generator.TimeSeed();
+    int origLogLevel = loglvl;
+
+    if (_mol.GetCoordinates() == NULL)
+      return;
+
+    rl.Setup(_mol);
+    rotamers.SetBaseCoordinateSets(_mol);
+    rotamers.Setup(_mol, rl);
+    
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nW E I G H T E D   R O T O R   S E A R C H\n\n");
+      sprintf(logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
+      OBFFLog(logbuf);
+
+      int combinations = 1;
+      for (rotor = rl.BeginRotor(ri); rotor;
+           rotor = rl.NextRotor(ri)) {
+        combinations *= rotor->GetResolution().size();
+      }
+      sprintf(logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %d\n", combinations);
+      OBFFLog(logbuf);
+    }
+
+    if (!rl.Size()) { // only one conformer
+      IF_OBFF_LOGLVL_LOW
+        OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
+ 
+      loglvl = OBFF_LOGLVL_NONE;
+      ConjugateGradients(geomSteps); // energy minimization for conformer
+      loglvl = origLogLevel;
+
+      return;
+    }
+
+    // key for generating particular conformers
+    std::vector<int> rotorKey(rl.Size() + 1, 0); // indexed from 1
+
+    std::vector< std::vector <double> > rotorWeights;
+    std::vector< double > weightSet;
+    rotorWeights.push_back(weightSet); // empty set for unused index 0
+
+    // initialize the weights
+    double weight;
+    rotor = rl.BeginRotor(ri);
+    for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+      // foreach rotor
+      // start with equal weighting for all possible torsions
+      weight = 1.0 / rotor->GetResolution().size();
+      weightSet.clear();
+      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+        weightSet.push_back(weight);
+      }
+      rotorWeights.push_back(weightSet);
+    }
+
+    IF_OBFF_LOGLVL_LOW {
+      sprintf(logbuf, "  GENERATED %d CONFORMERS\n\n", conformers);
+      OBFFLog(logbuf);
+      OBFFLog("CONFORMER     ENERGY\n");
+      OBFFLog("--------------------\n");
+    }
+
+    int best_conformer;
+    double bestE, worstE, currentE;
+    double penalty; // for poor performance
+    double randFloat; // generated random number -- used to pick a rotor
+    double total; // used to calculate the total probability 
+    double *bestCoordPtr = new double [_mol.NumAtoms() * 3]; // coordinates for best conformer
+    double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
+    
+    // Start with the current coordinates
+    bestE = worstE = Energy();
+    // We're later going to add this back to the molecule as a new conformer
+    memcpy((char*)bestCoordPtr,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+    memcpy((char*)initialCoord,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+    
+    for (int c = 0; c < conformers; ++c) {
+      _mol.SetCoordinates(initialCoord);
+
+      // Choose the rotor key based on current weightings
+      rotor = rl.BeginRotor(ri);
+      for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+        // foreach rotor
+        randFloat = generator.NextFloat();
+        total = 0.0;
+        rotorKey[i] = 0;
+        for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+          if (randFloat > total && randFloat < (total+ rotorWeights[i][j])) {
+            rotorKey[i] = j;
+            break;      
+          }
+          else
+            total += rotorWeights[i][j];
+        }
+      }
+      rotamers.SetCurrentCoordinates(_mol, rotorKey);
+
+      //      loglvl = OBFF_LOGLVL_NONE;
+      //      SteepestDescent(geomSteps); // energy minimization for conformer
+      //      loglvl = origLogLevel;
+      currentE = Energy();
+
+      IF_OBFF_LOGLVL_LOW {
+        sprintf(logbuf, "   %3d      %8.3f\n", c + 1, currentE);
+        OBFFLog(logbuf);
+      }
+      
+      if (IsNan(currentE))
+        continue;
+
+      if (currentE < bestE) {
+        bestE = currentE;
+        memcpy((char*)bestCoordPtr,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+        best_conformer = c;
+
+        // improve this rotorKey
+        Reweight(rotorWeights, rotorKey, +0.11);
+      } else if (currentE > worstE) { // horrible!
+        worstE = currentE;
+        
+        // penalize this rotorKey
+        Reweight(rotorWeights, rotorKey, -0.11);
+      } else {
+        double slope = -0.2 / (worstE - bestE);
+        Reweight(rotorWeights, rotorKey, (currentE - bestE)*slope);
+      }
+    }
+
+    IF_OBFF_LOGLVL_LOW {
+      sprintf(logbuf, "\n  LOWEST ENERGY: %8.3f\n\n",
+              bestE);
+      OBFFLog(logbuf);
+    }
+
+    // debugging output to see final weightings of each rotor setting
+//     cerr << "Final Weights: " << endl;
+//     for (int i = 1; i < rotorWeights.size() - 1; ++i) {
+//       cerr << "Weight: " << i;
+//       for (int j = 0; j < rotorWeights[i].size(); ++j) {
+//         cerr << " " << rotorWeights[i][j];
+//       }
+//       cerr << endl;
+//     }
+
+    _mol.AddConformer(bestCoordPtr);
+    current_conformer = _mol.NumConformers() - 1;
   }
 
   void OBForceField::DistanceGeometry() 
@@ -1258,7 +1460,7 @@ namespace OpenBabel
     _method = method;
     _ncoords = _mol.NumAtoms() * 3;
 
-    IF_OBFF_LOGLVL_HIGH {
+    IF_OBFF_LOGLVL_LOW {
       ValidateGradients();
     }
 
