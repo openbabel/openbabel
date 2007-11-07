@@ -60,7 +60,7 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 @BUILD_SHARED_TRUE@	fingerprints/libfingerprints.la \
 @BUILD_SHARED_TRUE@	forcefields/libforcefields.la @LTLIBOBJS@
 am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
-	bond.cpp bondtyper.cpp canon.cpp chains.cpp chiral.cpp \
+	bond.cpp bondtyper.cpp canon.cpp builder.cpp chains.cpp chiral.cpp \
 	data.cpp descriptor.cpp filters.cpp fingerprint.cpp \
 	forcefield.cpp format.cpp generic.cpp grid.cpp kekulize.cpp \
 	matrix.cpp mol.cpp molchrg.cpp obconversion.cpp oberror.cpp \
@@ -70,7 +70,7 @@ am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
-	bondtyper.lo canon.lo chains.lo chiral.lo data.lo \
+	bondtyper.lo canon.lo builder.lo chains.lo chiral.lo data.lo \
 	descriptor.lo filters.lo fingerprint.lo forcefield.lo \
 	format.lo generic.lo grid.lo kekulize.lo matrix.lo mol.lo \
 	molchrg.lo obconversion.lo oberror.lo obiter.lo obutil.lo \
@@ -254,7 +254,7 @@ lib_LTLIBRARIES = libopenbabel.la
 @BUILD_SHARED_TRUE@dlhandler = dlhandler_unix.cpp
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
-		bondtyper.cpp canon.cpp \
+		bondtyper.cpp canon.cpp builder.cpp \
 		chains.cpp chiral.cpp data.cpp descriptor.cpp filters.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
@@ -372,6 +372,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bond.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bondtyper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/canon.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/builder.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chains.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@

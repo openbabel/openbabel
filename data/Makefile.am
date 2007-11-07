@@ -4,7 +4,7 @@ table_DATA = \
 		aromatic.txt bondtyp.txt isotope.txt resdata.txt \
 		atomtyp.txt element.txt isotope-small.txt phmodel.txt \
 		patterns.txt torlib.txt types.txt space-groups.txt \
-		SMARTS_InteLigand.txt \
+		SMARTS_InteLigand.txt fragments.txt \
 		mm2.prm ghemical.prm UFF.prm \
 		mmffoop.par mmffarom.par mmffchg.par mmfftor.par mmffang.par \
 		mmffhdef.par mmffsup.par mmffsymb.par mmffpbci.par mmffdef.par \

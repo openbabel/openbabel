@@ -22,7 +22,7 @@ endif
 
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
-		bondtyper.cpp canon.cpp \
+		bondtyper.cpp canon.cpp builder.cpp \
 		chains.cpp chiral.cpp data.cpp descriptor.cpp filters.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \

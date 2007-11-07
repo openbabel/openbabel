@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/builder.h>
 #include <unistd.h>
 
 using namespace std;
@@ -71,7 +72,7 @@ int main(int argc,char **argv)
   // Find Input filetype
   OBConversion conv;
   OBFormat *format_in = conv.FormatFromExt(filename.c_str());
-  OBFormat *format_out = conv.FindFormat("pdb");
+  OBFormat *format_out = conv.FindFormat("sdf");
     
   if (!format_in || !format_out || !conv.SetInAndOutFormats(format_in, format_out)) {
     cerr << program_name << ": cannot read input/output format!" << endl;
@@ -103,23 +104,27 @@ int main(int argc,char **argv)
         exit (-1);
       }
  
-      mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
+      //mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
       
       pFF->SetLogFile(&cerr);
       pFF->SetLogLevel(OBFF_LOGLVL_LOW);
-      
-      if (!pFF->Setup(mol)) {
-        cerr << program_name << ": could not setup force field." << endl;
-        exit (-1);
-      }
-     
-      pFF->GenerateCoordinates();
-      pFF->SystematicRotorSearch();
+   
+      //pFF->GenerateCoordinates();
+      OBBuilder builder;
+      builder.Build(mol);
+ 
+      //mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
+      //if (!pFF->Setup(mol)) {
+      //  cerr << program_name << ": could not setup force field." << endl;
+      //  exit (-1);
+      //}
+  
+      //pFF->SystematicRotorSearch();
 
-      pFF->UpdateCoordinates(mol);
+      //pFF->UpdateCoordinates(mol);
       //pFF->ValidateGradients();
-      pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
-      pFF->Energy();
+      //pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
+      //pFF->Energy();
       
 
       //char FileOut[32];
