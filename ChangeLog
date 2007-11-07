@@ -1,3 +1,7 @@
+2007-11-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp: Fix VDW gradients.
+
 2007-11-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp (WeightedRotorSearch): Improved conformer

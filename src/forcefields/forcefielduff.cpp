@@ -255,11 +255,26 @@ namespace OpenBabel
   //
   void OBFFOOPCalculationUFF::Compute(bool gradients)
   {
+    double da, db, dc, dd;
+    if (gradients) {
+      da = a->GetVector();
+      db = b->GetVector();
+      dc = c->GetVector();
+      theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;  
+    } else {
+      
     angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
   
     energy = koop * (c0 + c1 * cos(angle*DEG_TO_RAD) + c2 * cos(2*angle*DEG_TO_RAD));
 
     // TODO: Calculate gradients
+    if (gradients) {
+      dE = V * n * cosPhi0 * sin(n * tor);
+      grada = dE * da; // - dE/drab * drab/da
+      gradb = dE * db; // - dE/drab * drab/db
+      gradc = dE * dc; // - dE/drab * drab/dc
+      gradd = dE * dd; // - dE/drab * drab/dd
+    }      
   }
 
   double OBForceFieldUFF::E_OOP(bool gradients) 
@@ -304,19 +319,18 @@ namespace OpenBabel
     } else
       rab = a->GetDistance(b);
     
-    term7 = term13 = term6 = rab / ka;
+    term7 = term13 = term6 = ka / rab;
 
     term6 = term6 * term6 * term6; // ^3
     term6 = term6 * term6; // ^6
     term12 = term6 * term6; // ^12
    
-    energy = kab * (1.0 / term12) - (2.0 / term6);
+    energy = kab * ((term12) - (2.0 * term6));
     
-    // TODO: check ka and kb carefully here
     if (gradients) { 
       term13 = term13 * term12; // ^13
       term7 = term7 * term6; // ^7
-      dE = - (12.0 / ka) * (1.0 / term13) + (12.0 / kb) * (1.0 / term7);
+      dE = kab * 12.0 * (term7/ka - term13/ka);
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
     }
@@ -828,7 +842,6 @@ namespace OpenBabel
 
       // ka now represents the xij in equation 20 -- the expected vdw distance
       vdwcalc.ka = sqrt(vdwcalc.Ra * vdwcalc.Rb);
-      vdwcalc.kb = (vdwcalc.Ra + vdwcalc.Rb) * pow(2.0 * vdwcalc.kab , 1.0 / 6.0);
       
       _vdwcalculations.push_back(vdwcalc);
     }
