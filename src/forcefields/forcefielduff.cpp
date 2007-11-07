@@ -255,26 +255,27 @@ namespace OpenBabel
   //
   void OBFFOOPCalculationUFF::Compute(bool gradients)
   {
-    double da, db, dc, dd;
+    vector3 da, db, dc, dd;
+    double dE;
     if (gradients) {
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;  
-    } else {
-      
-    angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
-  
-    energy = koop * (c0 + c1 * cos(angle*DEG_TO_RAD) + c2 * cos(2*angle*DEG_TO_RAD));
+      // This is wrong -- we need a real OOP derivative here
+      angle = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;  
 
-    // TODO: Calculate gradients
-    if (gradients) {
-      dE = V * n * cosPhi0 * sin(n * tor);
+      //      dE = -koop * (c1*sin(angle) + 2.0 * c2 * sin(2*angle));
+      dE = 0.0;
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
       gradc = dE * dc; // - dE/drab * drab/dc
       gradd = dE * dd; // - dE/drab * drab/dd
-    }      
+    } else {
+      
+      angle = DEG_TO_RAD*Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
+  
+      energy = koop * (c0 + c1 * cos(angle) + c2 * cos(2*angle));
+    }
   }
 
   double OBForceFieldUFF::E_OOP(bool gradients) 
@@ -295,7 +296,7 @@ namespace OpenBabel
       
        IF_OBFF_LOGLVL_HIGH {
          sprintf(logbuf, "%-5s %-5s %-5s %-5s%8.3f   %8.3f     %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), (*i).c->GetType(), (*i).d->GetType(), 
-                 (*i).angle, (*i).koop, (*i).energy);
+                 (*i).angle * RAD_TO_DEG, (*i).koop, (*i).energy);
          OBFFLog(logbuf);
        }
      }
