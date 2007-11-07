@@ -98,131 +98,6 @@ namespace OpenBabel
     _fragments.clear();
   }
 
-  bool OBBuilder::AddFragment(OBMol &mol, int ai, OBMol &fragment, int si)
-  {
-  /* 
-    vector<int> transl_idx(mol.NumAtoms()+1, 0);
-    
-    FOR_ATOMS_OF_MOL (b, fragment) {
-      OBAtom *atom = mol.NewAtom();
-      atom->SetVector(b->GetVector());
-
-    }
-                  
-    // iterate over the bonds of fragment and add these bonds to 
-    // tmpmol with corrected atoms
-    FOR_BONDS_OF_MOL (b, fragment) {
-                    b->SetBegin(tmpmol.GetAtom(transl_idx2[b->GetBeginAtomIdx()]));
-                    b->SetEnd(tmpmol.GetAtom(transl_idx2[b->GetEndAtomIdx()]));
-                    
-		    cout << "ADD BOND: " << b->GetBeginAtomIdx() << "-" << b->GetEndAtomIdx() << endl;
-
-                    tmpmol.AddBond(*b);
-		  }
-	
-	          int index3 = 1;
-	          for (k2 = j->begin(); k2 != j->end(); ++k2) {
-		    index = *k2;
-                    transl_idx[index] = transl_idx2[index3];
-                    visit[index] = 1;
-
-                    // set the atom type for tmpmol (types from mol). Also set AtomicNum and Hyb.
-		    tmpmol.GetAtom(transl_idx[index])->SetType(mol.GetAtom(index)->GetType());
-		    tmpmol.GetAtom(transl_idx[index])->SetAtomicNum(mol.GetAtom(index)->GetAtomicNum());
-		    tmpmol.GetAtom(transl_idx[index])->SetHyb(mol.GetAtom(index)->GetHyb());
-	            index3++;
-		  }
-
-
-	          if (prev != NULL) {
-  		  // 
-		  // rotate
-		  //  
-		  matrix3x3 mat;
-		  double xyang, yzang, xzang, xyang1, yzang1, xzang1, xyang2, yzang2, xzang2;
-
-
-		  cout << "----------------" << endl;
-		  cout << " R O T A T E" << endl;
-		  cout << "----------------" << endl;
-		  cout << "  moldir = " << moldir << endl;
-		  
-		  cout << "  --- XY plane ---" << endl;
-                  fragvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(transl_idx[a->GetIdx()]));
-		  fragdir = fragvec - tmpmol.GetAtom(transl_idx[a->GetIdx()])->GetVector();
-	          xyang = GetRotationAngle(moldir.x(), moldir.y(), fragdir.x(), fragdir.y());
-		  mat.SetupRotMat(0.0, 0.0, xyang); 
-		  cout << "  fragdir = " << fragdir << endl;
-		  cout << " xyang = "  << xyang << endl;
-
-	          for (k2 = j->begin(); k2 != j->end(); ++k2) {
-		    index = *k2;
-		    vector3 tmpvec = tmpmol.GetAtom(transl_idx[index])->GetVector();
-                    tmpvec *= mat; //apply the rotation
-		    tmpmol.GetAtom(transl_idx[index])->SetVector(tmpvec);
-		  }
-	        
-		  cout << "  --- XZ plane ---" << endl;
-                  fragvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(transl_idx[a->GetIdx()]));
-		  fragdir = fragvec - tmpmol.GetAtom(transl_idx[a->GetIdx()])->GetVector();
-	          xzang = GetRotationAngle(moldir.x(), moldir.z(), fragdir.x(), fragdir.z());
-		  mat.SetupRotMat(0.0, xzang, 0.0); 
-		  cout << "  fragdir = " << fragdir << endl;
-		  cout << " xzang = "  << xzang << endl;
-	          
-		  for (k2 = j->begin(); k2 != j->end(); ++k2) {
-		    index = *k2;
-		    vector3 tmpvec = tmpmol.GetAtom(transl_idx[index])->GetVector();
-                    tmpvec *= mat; //apply the rotation
-		    tmpmol.GetAtom(transl_idx[index])->SetVector(tmpvec);
-		  }
-
-		  cout << "  --- YZ plane ---" << endl;
-                  fragvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(transl_idx[a->GetIdx()]));
-		  fragdir = fragvec - tmpmol.GetAtom(transl_idx[a->GetIdx()])->GetVector();
-		  yzang = GetRotationAngle(moldir.y(), moldir.z(), fragdir.y(), fragdir.z());
-		  mat.SetupRotMat(yzang, 0.0, 0.0); 
-		  cout << "  fragdir = " << fragdir << endl;
-		  cout << " yzang = "  << yzang << endl;
-	
-	          for (k2 = j->begin(); k2 != j->end(); ++k2) {
-		    index = *k2;
-		    vector3 tmpvec = tmpmol.GetAtom(transl_idx[index])->GetVector();
-                    tmpvec *= mat; //apply the rotation
-		    tmpmol.GetAtom(transl_idx[index])->SetVector(tmpvec);
-		  }
-		  
-		  // 
-		  // translate
-		  //
-                  rootvec = tmpmol.GetAtom(transl_idx[a->GetIdx()])->GetVector();
-		  
-		  for (k2 = j->begin(); k2 != j->end(); ++k2) {
-		    index = *k2;
-
-		    // translate the fragment
-		    vector3 tmpvec = tmpmol.GetAtom(transl_idx[index])->GetVector();
-		    tmpvec += molvec - rootvec;
-		    tmpmol.GetAtom(transl_idx[index])->SetVector(tmpvec);
-		    cout << "tmpvec = " << tmpvec << endl;
- 
-		  }
-		  } // if (prev != NULL)
-
-
-		  // add bond between previous part and added fragment
-                  if (prev != NULL) {
-                    OBBond *bond;
-                    bond = a->GetBond(prev);
-                    bond->SetBegin(tmpmol.GetAtom(transl_idx[a->GetIdx()]));
-                    bond->SetEnd(tmpmol.GetAtom(transl_idx[prev->GetIdx()]));
-                    tmpmol.AddBond(*bond);
-                  }
-
-*/
-    return false; 
-  }
-  
   vector3 OBBuilder::GetNewBondVector(OBMol &mol, OBAtom *atom)
   {
     vector3 bond1, bond2, bond3, v1, v2, newbond;
@@ -439,7 +314,7 @@ namespace OpenBabel
     
     // iterate over all atoms to place them in 3D space
     FOR_DFS_OF_MOL (a, mol) {
-      cout << "placing atom: " << a->GetIdx() << endl;
+      //cout << "placing atom: " << a->GetIdx() << endl;
       if (visit[a->GetIdx()]) // continue if the atom is already added
         continue;
 
@@ -452,7 +327,7 @@ namespace OpenBabel
      
       // get the position for the new atom, this is done with GetNewBondVector
       if (prev != NULL) {
-        cout << "prev: " << prev->GetIdx() << endl;
+        //cout << "prev: " << prev->GetIdx() << endl;
 
         molvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(prev->GetIdx()));
 	moldir = molvec - tmpmol.GetAtom(prev->GetIdx())->GetVector();
@@ -461,13 +336,15 @@ namespace OpenBabel
         moldir = VX;
       }
       
+      /*
       if (prev != NULL)
         cout << "  prev: " << prev->GetIdx() << endl;
       else
         cout << "  prev: -" << endl;
       cout << "  molvec: " << molvec << endl;
       cout << "  moldir: " << moldir << endl;
-
+      */
+      
       // check if a is in a fragment
       bool foundfrag = false;
       for (i = _fragments.begin();i != _fragments.end();++i) {
@@ -501,27 +378,107 @@ namespace OpenBabel
 	      OBAtom *atom = tmpmol.GetAtom(index);
               atom->SetVector(i->second[counter]);
 	      counter++;
-
-	      // add the bonds for the fragment
-	      for (k2 = j->begin(); k2 != j->end(); ++k2) {
-	        index = *k2;
-	        OBAtom *atom1 = mol.GetAtom(index);
+            }
+	    
+	    // add the bonds for the fragment
+	    for (k = j->begin(); k != j->end(); ++k) {
+	      index = *k;
+	      OBAtom *atom1 = mol.GetAtom(index);
 	        
-		for (k3 = j->begin(); k3 != j->end(); ++k3) {
-	          index2 = *k3;
-	          OBAtom *atom2 = mol.GetAtom(index2);
-                  OBBond *bond = atom1->GetBond(atom2);
+	      for (k2 = j->begin(); k2 != j->end(); ++k2) {
+	        index2 = *k2;
+	        OBAtom *atom2 = mol.GetAtom(index2);
+                OBBond *bond = atom1->GetBond(atom2);
 
-                  if (bond != NULL) 
-                    tmpmol.AddBond(*bond);
-		}
-              }
+                if (bond != NULL) 
+                  tmpmol.AddBond(*bond);
+	      }
+            }
+              
+	    // add bond between previous part and added fragment
+            if (prev != NULL) {
+              OBBond *bond = a->GetBond(prev);
+              tmpmol.AddBond(*bond);
+            } 
 
-                  // ADDFRAGMENT HERE
+	    // 
+	    // rotate
+	    //  
+	    matrix3x3 xymat, xzmat, yzmat;
+	    double xyang, yzang, xzang, xyang1, yzang1, xzang1, xyang2, yzang2, xzang2;
 
+  	    cout << "----------------" << endl;
+	    cout << " R O T A T E" << endl;
+	    cout << "----------------" << endl;
+	    cout << "  moldir = " << moldir << endl;
+		  
+            fragvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(a->GetIdx()));
+	    fragdir = fragvec - tmpmol.GetAtom(a->GetIdx())->GetVector();
+	    cout << "  fragdir = " << fragdir << endl;
+            
+	    xyang = GetRotationAngle(moldir.x(), moldir.y(), fragdir.x(), fragdir.y());
+            xymat.SetupRotMat(0.0, 0.0, xyang); 
+	    cout << " xyang = "  << xyang << endl;
+
+	    xzang = GetRotationAngle(moldir.x(), moldir.z(), fragdir.x(), fragdir.z());
+	    xzmat.SetupRotMat(0.0, xzang, 0.0); 
+	    cout << " xzang = "  << xzang << endl;
 	
-              //  a->GetNewBondVector(fragvec, 1.5);
+            yzang = GetRotationAngle(moldir.y(), moldir.z(), fragdir.y(), fragdir.z());
+	    yzmat.SetupRotMat(yzang, 0.0, 0.0); 
+	    cout << " yzang = "  << yzang << endl;
+	
+
+	    cout << "  --- XY plane ---" << endl;
+            for (k = j->begin(); k != j->end(); ++k) {
+	      index = *k;
+	      vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
+              tmpvec *= xymat; //apply the rotation
+	      tmpmol.GetAtom(index)->SetVector(tmpvec);
 	    }
+    
+	    cout << "  --- XZ plane ---" << endl;
+	    for (k = j->begin(); k != j->end(); ++k) {
+	      index = *k;
+	      vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
+              tmpvec *= xzmat; //apply the rotation
+	      tmpmol.GetAtom(index)->SetVector(tmpvec);
+	    }
+
+	    cout << "  --- YZ plane ---" << endl;
+	    /*
+	    for (k = j->begin(); k != j->end(); ++k) {
+	      index = *k;
+	      vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
+              tmpvec *= yzmat; //apply the rotation
+	      tmpmol.GetAtom(index)->SetVector(tmpvec);
+	    }
+	    */
+	    
+	    // 
+	    // translate
+	    //
+	    for (k = j->begin(); k != j->end(); ++k) {
+	      index = *k;
+	      
+	      if (index == a->GetIdx()) {
+	        rootvec = tmpmol.GetAtom(a->GetIdx())->GetVector();
+	    
+	        //cout << "a position: " << rootvec << endl;
+		  
+	        for (k2 = j->begin(); k2 != j->end(); ++k2) {
+	          index = *k2;
+
+                  // translate the fragment
+	          vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
+	          tmpvec += molvec - rootvec;
+                  tmpmol.GetAtom(index)->SetVector(tmpvec);
+		  //cout << "tmpvec = " << tmpvec << endl;
+     	        }
+	      }
+	    }
+	
+
 	  }
         }
       }
