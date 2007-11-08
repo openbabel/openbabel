@@ -85,7 +85,7 @@ namespace OpenBabel
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
           }
 	} else if (i <= natoms) {
-	  vector3 coord(atof(vs[0].c_str()), atof(vs[1].c_str()), atof(vs[2].c_str()));
+	  vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
 	  coords.push_back(coord);
 	} else {
 	  _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
