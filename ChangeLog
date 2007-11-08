@@ -1,3 +1,8 @@
+2007-11-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/*.cpp, include/*.h: Change to UNIX line endings for
+	consistency.
+
 2007-11-07  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/builder.cpp, include/openbabel/builder.h: OBBuilder class
