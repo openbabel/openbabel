@@ -209,87 +209,6 @@ namespace OpenBabel
     }
   }
 
-  int OBBuilder::GetQuadrant(double x, double y) {
-    if ((x > 0.0) || (y == 0.0))
-      return 1;
-    if ((x == 0.0) || (y > 0.0))
-      return 2;
-    if ((x < 0.0) || (y == 0.0))
-      return 3;
-    if ((x == 0.0) || (y < 0.0))
-      return 4;
-    
-    if ((x > 0.0) && (y > 0.0))
-      return 1;
-    if ((x < 0.0) && (y > 0.0))
-      return 2;
-    if ((x < 0.0) && (y < 0.0))
-      return 3;
-    if ((x > 0.0) && (y < 0.0))
-      return 4;
-  }
-  
-  double OBBuilder::GetRotationAngle(double x, double y, double u, double v)
-  {
-    double ang, ang1, ang2, diff, q;
-    
-    ang1 = vectorAngle(vector3(x, y, 0.0), VX);
-    ang2 = vectorAngle(vector3(u, v, 0.0), VX);
-    //angy1 = vectorAngle(vector3(x, y, 0.0), VY);
-    //angy2 = vectorAngle(vector3(u, v, 0.0), VY);
-   
-    //if (IsNan(ang1))
-    //  ang1 = 0.0;
-
-    cout << "           mol  ang1 = " << ang1 << "  quadrant = " << GetQuadrant(x, y) << endl;
-    cout << "           frag ang2 = " << ang2 << "  quadrant = " << GetQuadrant(u, v) << endl;
-    
-    // make corrections to angles so that all angles are between
-    // the vector and the x axis in anti-clockwise direction.
-    if ((GetQuadrant(x, y) == 3) || GetQuadrant(x, y) == 4)
-      ang1 = 180.0 + (180.0 - ang1);
-    if ((GetQuadrant(u, v) == 3) || GetQuadrant(u, v) == 4)
-      ang2 = 180.0 + (180.0 - ang2);
-
-    if (ang2 > ang1) {
-      ang = ang2 - ang1;
-      if (ang > 180.0)
-        ang -= 180.0;
-      else
-        ang += 180.0;
-    } else {
-      ang = ang1 - ang2;
-      if (ang > 180.0)
-        ang = 360.0 - (ang - 180.0);
-      else
-        ang = 180.0 - ang;
-    }
- 
-    
-
-
-    /*
-    // set both angles to same quadrant
-    q = 90.0 * (GetQuadrant(u, v) - GetQuadrant(x, y));
-    
-    if ((GetQuadrant(x, y) == GetQuadrant(u, v)) || ((GetQuadrant(u, v) - GetQuadrant(x, y)) == 1)) {
-      if (ang1 < ang2)
-        ang = 180.0 + ang2 + ang1 + q;
-      else
-        //ang = 90.0 + ang2 - ang1 + q;
-        ang = 90.0 + ang2 + ang1 + q;
-    }
-    if ((GetQuadrant(u, v) - GetQuadrant(x, y)) == 2) {
-      if (ang1 < ang2) 
-        ang = -ang2 + ang1 + q;
-      else
-        ang = ang2 + ang1 + q; 
-    }
-    */
-
-    return ang;
-  }
-
   bool OBBuilder::Build(OBMol &mol)
   {
     vector<int> visit(mol.NumAtoms()+1, 0);
@@ -395,12 +314,6 @@ namespace OpenBabel
 	      }
             }
               
-	    // add bond between previous part and added fragment
-            if (prev != NULL) {
-              OBBond *bond = a->GetBond(prev);
-              tmpmol.AddBond(*bond);
-            } 
-
 	    // 
 	    // rotate
 	    //  
@@ -416,27 +329,40 @@ namespace OpenBabel
 	    fragdir = fragvec - tmpmol.GetAtom(a->GetIdx())->GetVector();
 	    cout << "  fragdir = " << fragdir << endl;
             
-	    xyang = GetRotationAngle(moldir.x(), moldir.y(), fragdir.x(), fragdir.y());
+            xyang = vectorAngle(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0));
+	    if (cross(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0)).z() > 0)
+	      xyang = 180 + xyang;
+	    else
+	      xyang = 180 - xyang;
             xymat.SetupRotMat(0.0, 0.0, xyang); 
 	    cout << " xyang = "  << xyang << endl;
 
-	    xzang = GetRotationAngle(moldir.x(), moldir.z(), fragdir.x(), fragdir.z());
+	   
+	    xzang = vectorAngle(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0));
+	    if (cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)).z() > 0)
+	      xzang = 180 + xzang;
+	    else
+	      xzang = 180 + xzang;
 	    xzmat.SetupRotMat(0.0, xzang, 0.0); 
 	    cout << " xzang = "  << xzang << endl;
 	
-            yzang = GetRotationAngle(moldir.y(), moldir.z(), fragdir.y(), fragdir.z());
+	    yzang = vectorAngle(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0));
+	    if (cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)).z() > 0)
+	      yzang = 180 + yzang;
+	    else
+	      yzang = 180 + yzang;
 	    yzmat.SetupRotMat(yzang, 0.0, 0.0); 
 	    cout << " yzang = "  << yzang << endl;
 	
 
-	    cout << "  --- XY plane ---" << endl;
+            cout << "  --- XY plane ---" << endl;
             for (k = j->begin(); k != j->end(); ++k) {
 	      index = *k;
 	      vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
               tmpvec *= xymat; //apply the rotation
 	      tmpmol.GetAtom(index)->SetVector(tmpvec);
 	    }
-    
+            
 	    cout << "  --- XZ plane ---" << endl;
 	    for (k = j->begin(); k != j->end(); ++k) {
 	      index = *k;
@@ -444,17 +370,26 @@ namespace OpenBabel
               tmpvec *= xzmat; //apply the rotation
 	      tmpmol.GetAtom(index)->SetVector(tmpvec);
 	    }
-
+	    
 	    cout << "  --- YZ plane ---" << endl;
-	    /*
 	    for (k = j->begin(); k != j->end(); ++k) {
 	      index = *k;
 	      vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
               tmpvec *= yzmat; //apply the rotation
 	      tmpmol.GetAtom(index)->SetVector(tmpvec);
 	    }
-	    */
-	    
+
+
+	    fragvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(a->GetIdx()));
+	    fragdir = fragvec - tmpmol.GetAtom(a->GetIdx())->GetVector();
+	    xyang = vectorAngle(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0));
+	    xzang = vectorAngle(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0));
+	    yzang = vectorAngle(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0));
+	    cout << "xy angle after rotation: " << xyang << endl;
+	    cout << "xz angle after rotation: " << xzang << endl;
+	    cout << "yz angle after rotation: " << yzang << endl;
+    
+    
 	    // 
 	    // translate
 	    //
@@ -477,7 +412,14 @@ namespace OpenBabel
      	        }
 	      }
 	    }
-	
+	    
+	    // add bond between previous part and added fragment
+            if (prev != NULL) {
+              OBBond *bond = a->GetBond(prev);
+              tmpmol.AddBond(*bond);
+            } 
+
+
 
 	  }
         }
