@@ -89,6 +89,7 @@ namespace OpenBabel
  
         
     }
+    _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
     
   }
     
