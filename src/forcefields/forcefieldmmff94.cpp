@@ -1109,8 +1109,16 @@ namespace OpenBabel
           ringatom = _mol.GetAtom(index);
 	  
           if (ringsize == 6) {
-            if (ringatom->IsCarbon()) 
+            if (ringatom->IsCarbon()) {
+              if (EQn(ringatom->GetType(), "63", 2))
+	        continue;
+              if (EQn(ringatom->GetType(), "64", 2))
+	        continue;
+              if (EQn(ringatom->GetType(), "78", 2))
+	        continue;
+
               ringatom->SetType("37"); // CB: CARBON AS IN BENZENE, PYRROLE
+	    }
 
             if (ringatom->IsNitrogen()) {
               if (ringatom->GetValence() == 2)
@@ -1128,12 +1136,112 @@ namespace OpenBabel
             }
 
           }
+          
+          if (ringsize == 5) {
+            if (ringatom->IsOxygen())
+	      ringatom->SetType("59");
+            
+	    if (ringatom->IsSulfur())
+	      ringatom->SetType("44");
+	      
+	    bool alphaN = false;
+	    bool alphaO = false;
+	    bool alphaS = false;
+	    bool betaN = false;
+	    bool betaO = false;
+	    bool betaS = false;
+
+	    FOR_NBORS_OF_ATOM (nbr, ringatom) {
+	      if (!nbr->IsInRingSize(5))
+	        continue;
+
+	      if (IsInSameRing(ringatom, &*nbr)) {
+	        if (nbr->IsNitrogen() && (nbr->BOSum() == 3) && (nbr->GetValence() == 3))
+		  alphaN = true;
+		if (nbr->IsOxygen())
+		  alphaO = true;
+		if (nbr->IsSulfur())
+		  alphaS = true;
+	            
+		FOR_NBORS_OF_ATOM (nbr2, &*nbr) {
+                  if (!nbr2->IsInRingSize(5))
+	            continue;
+
+		  if (ringatom->GetIdx() == nbr2->GetIdx())
+		    continue;
+
+	          if (IsInSameRing(ringatom, &*nbr2)) {
+		    if (nbr2->IsNitrogen() && (nbr2->BOSum() == 3) && (nbr2->GetValence() == 3))
+		      betaN = true;
+		    if (nbr2->IsOxygen())
+		      betaO = true;
+		    if (nbr2->IsSulfur())
+		      betaS = true;
+		  }
+		}
+	      }
+	    }
+
+	    cout << "atom: " << ringatom->GetIdx() << "   alpha: N=" << alphaN << " O=" << alphaO << " S=" << alphaS;
+	    cout << "    beta: N=" << betaN << " O=" << betaO << " S=" << betaS << endl;
+
+
+            if (ringatom->IsCarbon()) {
+	      if (alphaN && !betaO && !betaS)
+	        ringatom->SetType("63");
+              if (alphaO && !betaS)
+	        ringatom->SetType("63");
+              if (alphaS)
+	        ringatom->SetType("63");
+
+	      if (!alphaO && !alphaS && betaN)
+	        ringatom->SetType("64");
+	      if (!alphaS && betaO)
+	        ringatom->SetType("64");
+	      if (betaS)
+	        ringatom->SetType("64");
+	    } 
+	  
+            if (ringatom->IsNitrogen()) {
+              if ((ringatom->BOSum() == 3) && (ringatom->GetValence() == 3))
+	        ringatom->SetType("39");
+	        
+	      if (alphaN && !betaO && !betaS)
+	        ringatom->SetType("65");
+              if (alphaO && !betaS)
+	        ringatom->SetType("65");
+              if (alphaS)
+	        ringatom->SetType("65");
+
+	      if (!alphaO && !alphaS && betaN)
+	        ringatom->SetType("66");
+	      if (!alphaS && betaO)
+	        ringatom->SetType("66");
+	      if (betaS)
+	        ringatom->SetType("66");
+	
+	    }
+	  
+	  }
+
 
         }
       } else {
         cout << " size=" << ringsize << " pi=" << pi_electrons << endl;
       }
     } // for each ring
+    
+    // set correct hydrogen types 
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      if (a->IsHydrogen()) {
+        FOR_NBORS_OF_ATOM (nbr, &*a) {
+          if (EQn(nbr->GetType(), "58", 2))
+	    a->SetType("36");
+          if (EQn(nbr->GetType(), "39", 2))
+	    a->SetType("23");
+	}
+      }
+    }
 
     IF_OBFF_LOGLVL_MEDIUM {
       *logos << "IDX\tTYPE" << std::endl;
@@ -1701,6 +1809,25 @@ namespace OpenBabel
       for (i = types.begin(); i != types.end();i++) {
         if (ni > _mol.NumAtoms())
           continue;
+	
+	if ( (atoi(_mol.GetAtom(ni)->GetType()) == 37) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 38) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 58) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 69) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 63) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 64) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 78) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 39) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 65) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 66) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 79) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 80) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 82) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 81) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 76) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 59) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 44)
+	   ) continue;
 
         if (atoi(_mol.GetAtom(ni)->GetType()) == (*i))
           sprintf(logbuf, "%2d   %3d  %4d    %3d      %3d          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
