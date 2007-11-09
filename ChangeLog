@@ -1,6 +1,25 @@
+2007-11-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/Makefile.*: Updated for new files.
+
+        * include/openbabel/base.h: New	data type for grid data.
+
+	* include/openbabel/grid.h, src/grid.cpp: Some modifications to
+	support new OBGridData class. Still needs documentation	and other
+	updates. (This code is showing some bitrot.)
+
+	* include/openbabel/griddata.h, src/gridddata.cpp: New class to
+	link an	OBFloatGrid as an OBGenericData	(e.g., to a molecule).
+
+	* src/formats/gausscubeformat.cpp: New format from Molekel project
+	to read coordinates and cube/grid data from Gaussian cube files.
+	
+	* src/formats/gromos96format.cpp: Fix typo caused by residue
+	numbers as strings.
+
 2007-11-08  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
-	* src/builder.cpp: rotation wroks! you can now create fragment based
+	* src/builder.cpp: rotation works! you can now create fragment based
 	structures such as: CCC(c1ccc(C(c2c(c3ccccc3)cccc2))cc1)
 
 2007-11-07  Geoffrey Hutchison  <babel@geoffhutchison.net>

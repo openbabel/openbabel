@@ -52,6 +52,7 @@ libformats_la_SOURCES = \
 	fchkformat.cpp \
 	featformat.cpp fhformat.cpp fingerprintformat.cpp \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
+	gausscubeformat.cpp \
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
 	getinchi.cpp \
 	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmcifformat.cpp \
@@ -80,6 +81,7 @@ pkglib_LTLIBRARIES = \
 	fchkformat.la \
 	featformat.la fhformat.la fingerprintformat.la \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
+	gausscubeformat.la \
 	gromos96format.la hinformat.la inchiformat.la \
 	jaguarformat.la mdlformat.la mmcifformat.la mmodformat.la \
 	mpdformat.la mol2format.la molreportformat.la mopacformat.la \
@@ -186,6 +188,9 @@ gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.l
 
 gaussformat_la_SOURCES = gaussformat.cpp obmolecformat.cpp
 gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+gausscubeformat_la_SOURCES = gausscubeformat.cpp obmolecformat.cpp
+gausscubeformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 ghemicalformat_la_SOURCES = ghemicalformat.cpp obmolecformat.cpp
 ghemicalformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 

@@ -91,6 +91,28 @@ namespace OpenBabel
       }
   }
 
+  void OBFloatGrid::SetNumberOfPoints(int nx, int ny, int nz)
+  {
+    _xdim = nx;
+    _ydim = ny;
+    _zdim = nz;
+  }
+  
+  void OBFloatGrid::SetXAxis(vector3 v)
+  {
+    _xAxis = v;
+  }
+  
+  void OBFloatGrid::SetYAxis(vector3 v)
+  {
+    _yAxis = v;
+  }
+
+  void OBFloatGrid::SetZAxis(vector3 v)
+  {
+    _zAxis = v;
+  }
+  
   double OBFloatGrid::Inject(double x,double y,double z)
   {
     if( x<=_xmin || x>=_xmax
@@ -186,7 +208,38 @@ namespace OpenBabel
     return(az*Az+bz*Bz);
   }
 
+  std::vector<double> OBFloatGrid::GetDataVector()
+  {
+    vector<double> v;
+    int size = _xdim*_ydim*_zdim;
 
+    v.resize(size);
+    for( int i = 0; i < size; i++)
+    {
+      v.push_back(_val[i]);
+    }
+
+    return v;
+  }
+  
+  void OBFloatGrid::SetVals(std::vector<double> vals)
+  {
+    int size = _xdim*_ydim*_zdim;
+    if (vals.size() != size)
+      return;
+    
+    if (_val != NULL)
+      delete[] _val;
+    
+    _val = new double [size];
+    double *valptr = _val;
+    for( int i = 0; i < size; i++)
+    {
+      *valptr = vals[i];
+      valptr++;
+    }
+  }
+  
   double OBFloatGrid::InterpolateDerivatives(double x,double y,double z,double *derivatives)
   {
     int n,igx,igy,igz;

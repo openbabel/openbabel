@@ -128,6 +128,9 @@ class OBBase;
       //! Set Data (a set of OBGenericData)
       SetData =           23,
 
+      //! Grid Data (e.g., 3D grids of data a.k.a. cubes)
+      GridData =          24,
+
       // space for up to 2^14 more entries...
 
       //! Custom (user-defined data)

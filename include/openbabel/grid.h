@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #define OB_GRID_H
 
 #include <openbabel/babelconfig.h>
+#include <openbabel/math/vector3.h>
 
 #include <iosfwd>
 #include <algorithm>
@@ -38,7 +39,7 @@ namespace OpenBabel
  class OBAPI OBGrid: public OBBase
   {
   protected: 
-    double _xmin,_xmax,_ymin,_ymax,_zmin,_zmax; //!< the min/max values in XYZ axes (i.e., the box)
+    double _xmin,_xmax,_ymin,_ymax,_zmin,_zmax; //!< the min/max axes in XYZ axes (i.e., the box)
 
   public:
     OBGrid() {}
@@ -48,17 +49,17 @@ namespace OpenBabel
     //! dimension of the box itself
     virtual void Init(OBMol &box);
 
-    //! \return the minimum x value of the grid
+    //! \return the minimum x point of the grid
     double GetXmin() const    { return(_xmin);    }
-    //! \return the minimum y value of the grid
+    //! \return the minimum y point of the grid
     double GetYmin() const    { return(_ymin);    }
-    //! \return the minimum z value of the grid
+    //! \return the minimum z point of the grid
     double GetZmin() const    { return(_zmin);    }
-    //! \return the maximum x value of the grid
+    //! \return the maximum x point of the grid
     double GetXmax() const    { return(_xmax);    }
-    //! \return the maximum y value of the grid
+    //! \return the maximum y point of the grid
     double GetYmax() const    { return(_ymax);    }
-    //! \return the maximum z value of the grid
+    //! \return the maximum z point of the grid
     double GetZmax() const    { return(_zmax);    }
 
     //! \return whether the supplied XYZ coordinates fall within the box
@@ -75,6 +76,14 @@ namespace OpenBabel
         (c[1]>=_ymin) && (c[1]<=_ymax) &&
         (c[2]>=_zmin) && (c[2]<=_zmax);
     }
+
+    //! \return true if the point falls within the box 
+    bool PointIsInBox(vector3 v)
+    {
+      return (v.x() >= _xmin) && (v.x() <=_xmax) &&
+      (v.y()>=_ymin) && (v.y()<=_ymax) &&
+      (v.z()>=_zmin) && (v.z()<=_zmax);
+    }
   };
 
   //! \class OBFloatGrid grid.h <openbabel/grid.h>
@@ -90,8 +99,10 @@ namespace OpenBabel
     double _midz,_midx,_midy; //!< center of grid in world coordinates
     int _ydim,_xdim,_zdim;    //!< grid dimensions
     double _spacing,_inv_spa; //!< spacing between grid points and its inverse
-    double _halfSpace;        //!< half of the grid spacing */
-
+    double _halfSpace;        //!< half of the grid spacing
+    //! Three axes (i.e., translation vectors like a unit cell)
+    vector3 _xAxis, _yAxis, _zAxis;
+    
   public:
 
   OBFloatGrid() : _val(NULL), _ival(NULL), _halfSpace(0.0) {}
@@ -133,14 +144,41 @@ namespace OpenBabel
       a[1]=_ydim;
       a[2]=_zdim;
     }
+    
+    void SetNumberOfPoints(int nx, int ny, int nz);
+    
     vector3 GetMidpointVector()
     {
       vector3 v;
       v.Set(_midx,_midy,_midz);
       return(v);
     }
+    
+    vector3 GetXAxis() const
+    {
+      return _xAxis;
+    }
+
+    vector3 GetYAxis() const
+    { 
+      return _yAxis;
+    }
+
+    vector3 GetZAxis() const
+    {
+      return _zAxis;
+    }    
+
+    void SetXAxis(vector3);
+    void SetYAxis(vector3);
+    void SetZAxis(vector3);
+    
+    std::vector<double> GetDataVector();
+    void SetVals(std::vector<double> vals);
+    
     double *GetVals()    {        return(_val);    }
     void SetVals(double *ptr)    {  _val = ptr;    }
+
     vector3 Center()
     {
       return vector3(_midx,_midy,_midz);

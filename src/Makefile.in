@@ -60,23 +60,23 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 @BUILD_SHARED_TRUE@	fingerprints/libfingerprints.la \
 @BUILD_SHARED_TRUE@	forcefields/libforcefields.la @LTLIBOBJS@
 am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
-	bond.cpp bondtyper.cpp canon.cpp builder.cpp chains.cpp chiral.cpp \
-	data.cpp descriptor.cpp filters.cpp fingerprint.cpp \
-	forcefield.cpp format.cpp generic.cpp grid.cpp kekulize.cpp \
-	matrix.cpp mol.cpp molchrg.cpp obconversion.cpp oberror.cpp \
-	obiter.cpp obutil.cpp parsmart.cpp patty.cpp phmodel.cpp \
-	plugin.cpp rand.cpp residue.cpp ring.cpp rotor.cpp rotamer.cpp \
-	tokenst.cpp typer.cpp transform.cpp groupcontrib.cpp \
-	dlhandler_unix.cpp
+	bond.cpp bondtyper.cpp canon.cpp builder.cpp chains.cpp \
+	chiral.cpp data.cpp descriptor.cpp filters.cpp fingerprint.cpp \
+	forcefield.cpp format.cpp generic.cpp griddata.cpp grid.cpp \
+	kekulize.cpp matrix.cpp mol.cpp molchrg.cpp obconversion.cpp \
+	oberror.cpp obiter.cpp obutil.cpp parsmart.cpp patty.cpp \
+	phmodel.cpp plugin.cpp rand.cpp residue.cpp ring.cpp rotor.cpp \
+	rotamer.cpp tokenst.cpp typer.cpp transform.cpp \
+	groupcontrib.cpp dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo canon.lo builder.lo chains.lo chiral.lo data.lo \
 	descriptor.lo filters.lo fingerprint.lo forcefield.lo \
-	format.lo generic.lo grid.lo kekulize.lo matrix.lo mol.lo \
-	molchrg.lo obconversion.lo oberror.lo obiter.lo obutil.lo \
-	parsmart.lo patty.lo phmodel.lo plugin.lo rand.lo residue.lo \
-	ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo transform.lo \
-	groupcontrib.lo $(am__objects_1)
+	format.lo generic.lo griddata.lo grid.lo kekulize.lo matrix.lo \
+	mol.lo molchrg.lo obconversion.lo oberror.lo obiter.lo \
+	obutil.lo parsmart.lo patty.lo phmodel.lo plugin.lo rand.lo \
+	residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo \
+	transform.lo groupcontrib.lo $(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 libopenbabel_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -257,12 +257,13 @@ libopenbabel_la_SOURCES = \
 		bondtyper.cpp canon.cpp builder.cpp \
 		chains.cpp chiral.cpp data.cpp descriptor.cpp filters.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
+    griddata.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
 		obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp plugin.cpp \
-                rand.cpp residue.cpp ring.cpp \
+    rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp groupcontrib.cpp $(dlhandler)
 
@@ -371,8 +372,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bitvec.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bond.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bondtyper.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/canon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/builder.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/canon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chains.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
@@ -384,6 +385,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generic.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/griddata.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/groupcontrib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kekulize.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrix.Plo@am__quote@
