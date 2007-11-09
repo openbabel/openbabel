@@ -139,7 +139,7 @@ namespace OpenBabel
           {
             strncpy(type_name,etab.GetSymbol(atom->GetAtomicNum()), 16);
             strcpy(res_name,"UNK");
-            res_num = 1;
+            res_num = "1";
           }
 
         snprintf(buffer, BUFF_SIZE, "%5s %5s %5s %6d %15.5f %15.5f %15.5f\n",
