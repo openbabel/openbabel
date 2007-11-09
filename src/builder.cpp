@@ -67,39 +67,34 @@ namespace OpenBabel
     vector<string> vs;
     OBSmartsPattern *sp = NULL;
     vector<vector3> coords;
-    bool nextfrag = false;
-    int natoms, i = 0;
     while (ifs.getline(buffer, 80)) {
       tokenize(vs, buffer);
       
-      if (!nextfrag) {
-        nextfrag = true;
-        natoms = atoi(vs[0].c_str());
-      } else {
-        if (i == 0) {
-          coords.clear();
-   	  sp = new OBSmartsPattern;
-          if (!sp->Init(vs[1])) {
-            delete sp;
-            sp = NULL;
-            obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
-          }
-	} else if (i <= natoms) {
-	  vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
-	  coords.push_back(coord);
-	} else {
-	  _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
-          nextfrag = false;	
-	}
-	i++;
-      }
       
+      if (vs[0] == "INDEX") {
+        if (sp != NULL)
+	  _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+	
+        coords.clear();
+	sp = new OBSmartsPattern;
+        if (!sp->Init(vs[1])) {
+          delete sp;
+          sp = NULL;
+          obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
+        }
+      } else {
+        vector3 coord(atof(vs[0].c_str()), atof(vs[1].c_str()), atof(vs[2].c_str()));
+	coords.push_back(coord);
+      }
+ 
         
     }
     _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
     
-  }
+    cerr << "_fragments.size() = " << _fragments.size() << endl;
     
+  }
+ 
   
   OBBuilder::~OBBuilder() 
   {
