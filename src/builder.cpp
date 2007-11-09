@@ -282,7 +282,7 @@ namespace OpenBabel
       */
       
       // check if a is in a fragment
-      bool foundfrag;
+      bool foundfrag = false;
       for (i = _fragments.begin();i != _fragments.end();++i) {
 	if (i->first->Match(mol)) { 
           _mlist = i->first->GetMapList();
