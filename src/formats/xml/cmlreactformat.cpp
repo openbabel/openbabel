@@ -38,21 +38,22 @@ public:
 
   const char* Description()
   {
-      return " \
-CML Reaction format\n \
-Minimal implementation\n \
-This implementation uses libxml2.\n \
-Write options (e.g. -x1a)\n \
-1  output CML V1.0  or \n \
-2  output CML V2.0 (default)\n \
-a  output array format for atoms and bonds\n \
-l  molecules in list (default)\n \
-h  use hydrogenCount for all hydrogens\n \
-x  omit XML declaration\n \
-r  omit rate constant data\n \
-N<prefix> add namespace prefix to elements\n \
-M  add obr prefix on non-CMLReact elements\n \
-\n";
+      return 
+"CML Reaction format\n"
+"Minimal implementation\n"
+"This implementation uses libxml2.\n"
+"Write options (e.g. -x1a)\n"
+"1  output CML V1.0  or\n"
+"2  output CML V2.0 (default)\n"
+"a  output array format for atoms and bonds\n"
+"l  molecules NOT in MoleculeList\n"
+"h  use hydrogenCount for all hydrogens\n"
+"x  omit XML declaration\n"
+"r  omit rate constant data\n"
+"N<prefix> add namespace prefix to elements\n"
+"M  add obr prefix on non-CMLReact elements\n"
+"p  add properties to molecules\n"
+"\n";
   }
 
   virtual const char* TargetClassDescription()
@@ -80,6 +81,7 @@ M  add obr prefix on non-CMLReact elements\n \
 private:
   typedef map<string,shared_ptr<OBMol> > MolMap;
   string AddMolToList(shared_ptr<OBMol> spmol, MolMap& mmap);
+  bool WriteRateData(OBReaction* pReact, xmlChar* altprefix);
 
 private:
   OBReaction* _preact;
@@ -122,7 +124,7 @@ bool CMLReactFormat::ReadChemObject(OBConversion* pConv)
 
    //Do transformation and return reaction, if it has either reactants or products 
   if(ret && (pReact->NumReactants()!=0 || pReact->NumProducts()!=0)) //Do transformation and return molecule
-    pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
+    return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)))!=0;
   else
   {
     delete pReact;
@@ -384,20 +386,8 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   static const xmlChar C_PRODUCTLIST[]  = "productList";
   static const xmlChar C_REF[]          = "ref";
   static const xmlChar C_TITLE[]        = "title";
-  //following not strict cml
-  static const xmlChar C_RATEPARAMS[]   = "rateParameters";
-  static const xmlChar C_A[]            = "A";
-  static const xmlChar C_N[]            = "n";
-  static const xmlChar C_E[]            = "E";
-  static const xmlChar C_LOA[]          = "loA";
-  static const xmlChar C_LON[]          = "lon";
-  static const xmlChar C_LOE[]          = "loE";
-  static const xmlChar C_TROEPARAMS[]   = "troeParams";
-  static const xmlChar C_REACTIONTYPE[] = "reactionType";
-  static const xmlChar C_REVERSIBLE[]   = "reversible";
-  static const xmlChar C_EFF[]          = "eff";
   
-  bool list = _pxmlConv->IsOption("l")!=NULL; //Output with molecules in a separate list
+  bool list = _pxmlConv->IsOption("l")==NULL; //Output with molecules in a separate list
 
   ostream* pOut = pConv->GetOutStream(); //the original output stream
 
@@ -469,9 +459,11 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   for(i=0;i<pReact->NumReactants();i++)
   {
     xmlTextWriterStartElementNS(writer(), prefix, C_REACTANT, NULL);
-    if(list) //put molecules into map and output references
+    // put molecules into map even if they are to be output immediately
+    // since the map may already have the same molecules with additional info
+    string id = AddMolToList(pReact->GetReactant(i), OMols);
+    if(list) //output references
     {
-      string id = AddMolToList(pReact->GetReactant(i), OMols);
       xmlTextWriterStartElementNS(writer(), prefix, C_MOLECULE, NULL);
       xmlTextWriterWriteFormatAttribute(writer(), C_REF,"%s", id.c_str());
       xmlTextWriterEndElement(writer());//molecule
@@ -479,7 +471,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     else
     {
       //Write reactant in CML format
-      pCMLFormat->WriteMolecule(pReact->GetReactant(i).get(), _pxmlConv);
+      pCMLFormat->WriteMolecule(OMols[id].get(), _pxmlConv);
     }
     xmlTextWriterEndElement(writer());//reactant
   }
@@ -489,25 +481,19 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   for(i=0;i<pReact->NumProducts();i++)
   {
     xmlTextWriterStartElementNS(writer(), prefix, C_PRODUCT, NULL);
-    if(list) //put molecules into map and output references
+    // put molecules into map even if they are to be output immediately
+    // since the map may already have the same molecules with additional info
+    string id = AddMolToList(pReact->GetProduct(i), OMols);
+    if(list) //output references
     {
-      string id = AddMolToList(pReact->GetProduct(i), OMols);
       xmlTextWriterStartElementNS(writer(), prefix, C_MOLECULE, NULL);
       xmlTextWriterWriteFormatAttribute(writer(), C_REF,"%s", id.c_str());
       xmlTextWriterEndElement(writer());//molecule
     }
     else
       //Write product in CML format
-      pCMLFormat->WriteMolecule(pReact->GetProduct(i).get(), _pxmlConv);
+      pCMLFormat->WriteMolecule(OMols[id].get(), _pxmlConv);
     xmlTextWriterEndElement(writer());//product
-
-/*    if(pRD->ReactionType=="threeBody"
-    {
-      //The pseudo species M is always added to the list
-      if(list)
-
-    }
-*/
  }
   xmlTextWriterEndElement(writer());//productList
 
@@ -515,86 +501,22 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(pReact->GetTransitionState().get())
   {
     xmlTextWriterStartElementNS(writer(), prefix, C_TS, NULL);
-    if(list) //put molecule into map and output a reference
+    string id = AddMolToList(pReact->GetTransitionState(), OMols);
+    if(list) //output a reference
     {
-      string id = AddMolToList(pReact->GetTransitionState(), OMols);
       xmlTextWriterStartElementNS(writer(), prefix, C_MOLECULE, NULL);
       xmlTextWriterWriteFormatAttribute(writer(), C_REF,"%s", id.c_str());
       xmlTextWriterEndElement(writer());//molecule
     }
     else
       //Write product in CML format
-      pCMLFormat->WriteMolecule(pReact->GetTransitionState().get(), _pxmlConv);
+      pCMLFormat->WriteMolecule(OMols[id].get(), _pxmlConv);
     xmlTextWriterEndElement(writer());//me:transitionState
   }
 
-  //Reaction rate data (non-standard)
-  OBRateData* pRD = static_cast<OBRateData*>(pReact->GetData(RateData));
-  if(pRD && pRD->GetRate(OBRateData::A)!=0 && !_pxmlConv->IsOption("r"))
-  {
-    string rtype("arrhenius");
-    switch(pRD->ReactionType)
-    {
-    case OBRateData::TROE:
-      rtype="troe"; break;
-    case OBRateData::SRI:
-      rtype="sri"; break;
-    case OBRateData::LINDERMANN:
-      rtype="lindermann"; break;
-    case OBRateData::THREEBODY:
-      rtype="threeBody";
-    }
-    xmlTextWriterStartElementNS(writer(), altprefix, C_RATEPARAMS, NULL);
-    xmlTextWriterWriteFormatAttribute(writer(), C_REACTIONTYPE,"%s", rtype.c_str());
-    if(pReact->IsReversible())
-      xmlTextWriterWriteFormatAttribute(writer(), C_REVERSIBLE,"%s", "true");
-
-    xmlTextWriterStartElementNS(writer(), altprefix, C_A, NULL);
-    xmlTextWriterWriteFormatString(writer(),"%.3e", pRD->GetRate(OBRateData::A));
-    xmlTextWriterEndElement(writer());//A
-
-    xmlTextWriterStartElementNS(writer(), altprefix, C_N, NULL);
-    xmlTextWriterWriteFormatString(writer(),"%g", pRD->GetRate(OBRateData::n));
-    xmlTextWriterEndElement(writer());//n
-
-    xmlTextWriterStartElementNS(writer(), altprefix, C_E, NULL);
-    xmlTextWriterWriteFormatString(writer(),"%g", pRD->GetRate(OBRateData::E));
-    xmlTextWriterEndElement(writer());//E
-
-    switch(pRD->ReactionType)
-    {
-    case OBRateData::TROE:
-      xmlTextWriterStartElementNS(writer(), altprefix, C_TROEPARAMS, NULL);
-      xmlTextWriterWriteFormatString(writer(),"%g %g %g %g", 
-        pRD->GetTroeParam(0),pRD->GetTroeParam(1),pRD->GetTroeParam(2),pRD->GetTroeParam(3));
-      xmlTextWriterEndElement(writer());
-      //fallthrough
-    case OBRateData::LINDERMANN:
-      xmlTextWriterStartElementNS(writer(), altprefix, C_LOA, NULL);
-      xmlTextWriterWriteFormatString(writer(),"%.3e", pRD->GetLoRate(OBRateData::A));
-      xmlTextWriterEndElement(writer());//loA
-
-      xmlTextWriterStartElementNS(writer(), altprefix, C_LON, NULL);
-      xmlTextWriterWriteFormatString(writer(),"%g", pRD->GetLoRate(OBRateData::n));
-      xmlTextWriterEndElement(writer());//lon
-
-      xmlTextWriterStartElementNS(writer(), altprefix, C_LOE, NULL);
-      xmlTextWriterWriteFormatString(writer(),"%g", pRD->GetLoRate(OBRateData::E));
-      xmlTextWriterEndElement(writer());//loE
-    //fallthrough
-    case OBRateData::THREEBODY:
-      string id;
-      double Eff;
-      while(pRD->GetNextEff(id,Eff))
-      {
-        xmlTextWriterStartElementNS(writer(), altprefix, C_EFF, NULL);
-        xmlTextWriterWriteFormatAttribute(writer(), C_REF,"%s", id.c_str());
-        xmlTextWriterWriteFormatString(writer(),"%g", Eff);
-        xmlTextWriterEndElement(writer());//Eff
-      }
-    }
-    xmlTextWriterEndElement(writer());//rateParams
-  }
+  //Write reaction rate data, if there is any (non-standard)
+  if(!_pxmlConv->IsOption("r"))
+    WriteRateData(pReact, altprefix);
 
   xmlTextWriterEndElement(writer());//reaction
 
@@ -658,6 +580,22 @@ string CMLReactFormat::AddMolToList(shared_ptr<OBMol> spmol, MolMap& mmap)
   }
   else
   {
+    //If id is a filename with a path or an extension, which can 
+    //happen if no explicit title given to a molecule,
+    // remove path and extension and use the filename as id
+    string::size_type pos;
+    pos = id.find_last_of("/\\:");
+    if(pos!=string::npos)
+      id.erase(0, pos+1);
+
+    pos = id.rfind('.');
+    if(pos!=string::npos)
+      id.erase(pos);
+
+    if(!isalpha(id[0])) //since ids have to start with a letter, add "id" to those that don't...
+      id = "id" + id;
+    spmol->SetTitle(id.c_str());//ensure that molecule title is the same as id
+
     mapitr = mmap.find(id);
     if(mapitr==mmap.end())
       //not in map; need to add
@@ -667,13 +605,102 @@ string CMLReactFormat::AddMolToList(shared_ptr<OBMol> spmol, MolMap& mmap)
       //already in map.
       //Get a molecule with the best bits of both old and new molecules and immediately make a shared_ ptr
       shared_ptr<OBMol> spnew(OBMoleculeFormat::MakeCombinedMolecule(mapitr->second.get(), spmol.get()));
-      spmol.swap(spnew);
-      mapitr->second = spmol; //replace with new molecule
+      if(spnew)
+      {
+        spmol.swap(spnew);
+        mapitr->second = spmol; //replace with new molecule
       //The OBMol originally in map will be deleted when local shared_ptr goes out of scope. 
+      }
     }
   }
   return id;
 }
 
+
+
+bool CMLReactFormat::WriteRateData(OBReaction* pReact, xmlChar* altprefix)
+{
+  OBRateData* pRD = static_cast<OBRateData*>(pReact->GetData(RateData));
+  if(!pRD || pRD->GetRate(OBRateData::A)==0)
+    return false; //nothing written
+
+  static const xmlChar C_REF[]          = "ref";
+  //following not strict cml
+  static const xmlChar C_RATEPARAMS[]   = "rateParameters";
+  static const xmlChar C_A[]            = "A";
+  static const xmlChar C_N[]            = "n";
+  static const xmlChar C_E[]            = "E";
+  static const xmlChar C_LOA[]          = "loA";
+  static const xmlChar C_LON[]          = "lon";
+  static const xmlChar C_LOE[]          = "loE";
+  static const xmlChar C_TROEPARAMS[]   = "troeParams";
+  static const xmlChar C_REACTIONTYPE[] = "reactionType";
+  static const xmlChar C_REVERSIBLE[]   = "reversible";
+  static const xmlChar C_EFF[]          = "eff";
+
+  string rtype("arrhenius");
+  switch(pRD->ReactionType)
+  {
+  case OBRateData::TROE:
+    rtype="troe"; break;
+  case OBRateData::SRI:
+    rtype="sri"; break;
+  case OBRateData::LINDERMANN:
+    rtype="lindermann"; break;
+  case OBRateData::THREEBODY:
+    rtype="threeBody";
+  }
+  xmlTextWriterStartElementNS(writer(), altprefix, C_RATEPARAMS, NULL);
+  xmlTextWriterWriteFormatAttribute(writer(), C_REACTIONTYPE,"%s", rtype.c_str());
+  if(pReact->IsReversible())
+    xmlTextWriterWriteFormatAttribute(writer(), C_REVERSIBLE,"%s", "true");
+
+  xmlTextWriterStartElementNS(writer(), altprefix, C_A, NULL);
+  xmlTextWriterWriteFormatString(writer(),"%.3e", pRD->GetRate(OBRateData::A));
+  xmlTextWriterEndElement(writer());//A
+
+  xmlTextWriterStartElementNS(writer(), altprefix, C_N, NULL);
+  xmlTextWriterWriteFormatString(writer(),"%g", pRD->GetRate(OBRateData::n));
+  xmlTextWriterEndElement(writer());//n
+
+  xmlTextWriterStartElementNS(writer(), altprefix, C_E, NULL);
+  xmlTextWriterWriteFormatString(writer(),"%g", pRD->GetRate(OBRateData::E));
+  xmlTextWriterEndElement(writer());//E
+
+  switch(pRD->ReactionType)
+  {
+  case OBRateData::TROE:
+    xmlTextWriterStartElementNS(writer(), altprefix, C_TROEPARAMS, NULL);
+    xmlTextWriterWriteFormatString(writer(),"%g %g %g %g", 
+      pRD->GetTroeParam(0),pRD->GetTroeParam(1),pRD->GetTroeParam(2),pRD->GetTroeParam(3));
+    xmlTextWriterEndElement(writer());
+    //fallthrough
+  case OBRateData::LINDERMANN:
+    xmlTextWriterStartElementNS(writer(), altprefix, C_LOA, NULL);
+    xmlTextWriterWriteFormatString(writer(),"%.3e", pRD->GetLoRate(OBRateData::A));
+    xmlTextWriterEndElement(writer());//loA
+
+    xmlTextWriterStartElementNS(writer(), altprefix, C_LON, NULL);
+    xmlTextWriterWriteFormatString(writer(),"%g", pRD->GetLoRate(OBRateData::n));
+    xmlTextWriterEndElement(writer());//lon
+
+    xmlTextWriterStartElementNS(writer(), altprefix, C_LOE, NULL);
+    xmlTextWriterWriteFormatString(writer(),"%g", pRD->GetLoRate(OBRateData::E));
+    xmlTextWriterEndElement(writer());//loE
+  //fallthrough
+  case OBRateData::THREEBODY:
+    string id;
+    double Eff;
+    while(pRD->GetNextEff(id,Eff))
+    {
+      xmlTextWriterStartElementNS(writer(), altprefix, C_EFF, NULL);
+      xmlTextWriterWriteFormatAttribute(writer(), C_REF,"%s", id.c_str());
+      xmlTextWriterWriteFormatString(writer(),"%g", Eff);
+      xmlTextWriterEndElement(writer());//Eff
+    }
+  }
+  xmlTextWriterEndElement(writer());//rateParams
+  return true;
+}
 
 } //namespace OpenBabel

@@ -22,10 +22,28 @@
 	* src/formats/gromos96format.cpp: Fix typo caused by residue
 	numbers as strings.
 
+2007-11-11  Chris Morley
+
+	src/formats/chemkinformat.cpp: Reading rewritten so that it
+	is like other formats - separate ReadChemObject and
+	ReadMolecule. Allows -f and -l options and, potentially,
+	filtering of reactions.
+	Many parsing changes on reading, incl allowing species names 
+	containing spaces with simple input.
+	On writing extra option to omit zero rate reactions, formatting
+	changes and correct loss of first species in list bug.
+	
+	src/formats/xml/cmlreactformat.cpp: Separate out code as
+	WriteRateData.
+	Add molecules to list even if to be immediately output, so that
+	they can benefit from being combined with other inputs.
+	If ID of a molecule is a filename, remove the path and extension.
+	
 2007-11-08  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/builder.cpp: rotation works! you can now create fragment based
 	structures such as: CCC(c1ccc(C(c2c(c3ccccc3)cccc2))cc1)
+
 
 2007-11-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
