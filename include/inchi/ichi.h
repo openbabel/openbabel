@@ -1,16 +1,23 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #ifndef __INCHI_H__
 #define __INCHI_H__
 
-#include "comdef.h"
+#include "incomdef.h"
 
 #define REQ_MODE_BASIC              0x000001    /* B include Fixed-H layer */
 #define REQ_MODE_TAUT               0x000002    /* T include Mobile-H layer */
@@ -67,7 +74,7 @@ typedef struct tagINChI_Stereo { /* [N] = allocated length */
                                * stereogenic atom or allene [nNumberOfAtoms] */
     S_CHAR     *t_parityInv;  /* tetrahedral inverted atom parities [nNumberOfAtoms] */
     /* bFlagAbsStereoIsInverted = nCompInv2Abs==-1: Abs stereo = Inverted  */
-    int         nCompInv2Abs; /* 0=>Inv = Abs stereo; -1=> Inv < Abs stereo, +1=> Inv > Abs stereo */
+    int         nCompInv2Abs; /* 0=>Inv = Abs stereo; -1=> Inv < Abs stereo, +1=> Inv > Abs stereo; +2=> in reading InChI: no /m was found and in /sN N>0 */
     int         bTrivialInv;  /* 1=> nCompInv2Abs!= 0 && Inverted = Abs stereo with inverted parities 1<-->2 */
     /* ---- possibly stereogenic bonds and tetrahedral cumuleles */
     int         nNumberOfStereoBonds;
@@ -217,6 +224,5 @@ typedef struct tagINChIforSort {
     short      n2; /* points to the original; used in structure reconstruction only */
     short      n3; /* points to the original; used in structure reconstruction only */
 }INCHI_SORT;
-
 
 #endif /* __INCHI_H__ */

@@ -1,21 +1,31 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <string.h>
 
+/*^^^ */
 #include "mode.h"
 
 #include "inpdef.h"
 #include "extr_ct.h"
 #include "ichitaut.h"
 #include "ichi_bns.h"
+/*^^^ */
+
 /*******************************************************************/
 
 #if( FIND_RING_SYSTEMS == 1 ) /* { */
@@ -84,17 +94,44 @@ typedef int CHECK_DFS_RING( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, 
 
 typedef int CHECK_CENTERPOINT ( inp_ATOM *atom, int iat );
 
-#if( REPLACE_ALT_WITH_TAUT == 1 )
-#define REPLACE_THE_BOND(X) ( (X) == BOND_SINGLE || (X) == BOND_DOUBLE || (X) == BOND_ALTERN || (X) == BOND_ALT12NS )
-#else
-#define REPLACE_THE_BOND(X) ( (X) == BOND_SINGLE || (X) == BOND_DOUBLE )
-#endif
-
-
-
 CHECK_DFS_RING Check7MembTautRing;
 CHECK_DFS_RING Check6MembTautRing;
 CHECK_DFS_RING Check5MembTautRing;
+
+#if( TAUT_15_NON_RING == 1 )  /* post v.1 feature */
+/* DFS simple alt path for 1,5 tautomerism, post v.1 feature */
+typedef int CHECK_DFS_PATH( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int jNxtNeigh, int nStartAtomNeighbor,
+                        int nStartAtomNeighbor2, int nStartAtomNeighborNeighbor,
+                        T_ENDPOINT *EndPoint, int nMaxNumEndPoint,
+                        T_BONDPOS  *BondPos, int nMaxNumBondPos,
+                        int *pnNumEndPoint, int *pnNumBondPos,
+                        struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD, int num_atoms );
+
+typedef int CHECK_DFS_CENTERPOINT( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int jNxtNeigh,
+                        struct BalancedNetworkStructure *pBNS,
+                        struct BalancedNetworkData *pBD, int num_atoms );
+
+
+CHECK_DFS_PATH        Check15TautPath;
+CHECK_DFS_CENTERPOINT Check15TautPathCenterpoint;
+
+int DFS_FindTautAltPath( inp_ATOM *atom, int nStartAtom, int nStartAtomNeighbor,
+                      int nStartAtomNeighbor2, int nStartAtomNeighborNeighbor,
+                      int nCycleLen,
+                      AT_RANK  *nDfsPathPos, DFS_PATH *DfsPath,
+                      CHECK_DFS_PATH *CheckDfsPath, CHECK_DFS_CENTERPOINT *CheckCenterPoint,
+                      T_ENDPOINT *EndPoint, int nMaxNumEndPoint,
+                      T_BONDPOS  *BondPos, int nMaxNumBondPos,
+                      int *pnNumEndPoint, int *pnNumBondPos,
+                      struct BalancedNetworkStructure *pBNS,
+                      struct BalancedNetworkData *pBD, int num_atoms );
+
+#define BOND_WRONG 64
+#define IS_ALT_OR_DBLBOND(X) (((X) == BOND_SINGLE || (X) == BOND_DOUBLE)? (X) : \
+                              ((X) == BOND_ALTERN || (X) == BOND_TAUTOM || (X) == BOND_ALT12NS)? BOND_ALTERN : \
+                              BOND_WRONG);
+
+#endif /* TAUT_15_NON_RING */
 
 int DFS_FindTautInARing( inp_ATOM *atom, int nStartAtom, int nStartAtomNeighbor,
                       int nStartAtomNeighbor2, int nStartAtomNeighborNeighbor,
@@ -105,6 +142,13 @@ int DFS_FindTautInARing( inp_ATOM *atom, int nStartAtom, int nStartAtomNeighbor,
                       T_BONDPOS  *BondPos, int nMaxNumBondPos,
                       int *pnNumEndPoint, int *pnNumBondPos,
                       struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD, int num_atoms );
+
+#if( REPLACE_ALT_WITH_TAUT == 1 )
+#define REPLACE_THE_BOND(X) ( (X) == BOND_SINGLE || (X) == BOND_DOUBLE || (X) == BOND_ALTERN || (X) == BOND_ALT12NS )
+#else
+#define REPLACE_THE_BOND(X) ( (X) == BOND_SINGLE || (X) == BOND_DOUBLE )
+#endif
+
 
 int bIsCenterPointStrict( inp_ATOM *atom, int iat )
 {
@@ -236,7 +280,8 @@ int nGet15TautIn6MembAltRing( inp_ATOM *atom, int nStartAtom, AT_RANK  *nDfsPath
         return -1; /*  path is too short */
     }
 
-    nRet = DFS_FindTautInARing( atom, nStartAtom, -1, -1, -1, 6,
+    nRet = DFS_FindTautInARing( atom, nStartAtom, -1/*nStartAtomNeighbor*/, -1/*nStartAtomNeighbor2*/,
+                                 -1/*nStartAtomNeighborNeighbor*/, 6 /* nCycleLen*/,
                                  nDfsPathPos, DfsPath,
                                  Check6MembTautRing, bIsCenterPointStrict,
                                  EndPoint, nMaxNumEndPoint,
@@ -246,6 +291,37 @@ int nGet15TautIn6MembAltRing( inp_ATOM *atom, int nStartAtom, AT_RANK  *nDfsPath
                       );
     return nRet;
 }
+#if( TAUT_15_NON_RING      == 1 ) /***** post v.1 feature *****/
+/********************************************************************************/
+int nGet15TautInAltPath( inp_ATOM *atom, int nStartAtom, AT_RANK  *nDfsPathPos,
+                              DFS_PATH *DfsPath, int nMaxLenDfsPath,
+                              T_ENDPOINT *EndPoint, int nMaxNumEndPoint,
+                              T_BONDPOS  *BondPos, int nMaxNumBondPos,
+                              int *pnNumEndPoint, int *pnNumBondPos,
+                              struct BalancedNetworkStructure *pBNS,
+                              struct BalancedNetworkData *pBD, int num_atoms )
+{
+    int nRet;
+
+    *pnNumEndPoint = 0;
+    *pnNumBondPos  = 0;
+
+    if ( nMaxLenDfsPath <= 7 ) {
+        return -1; /*  path is too short */
+    }
+
+    nRet = DFS_FindTautAltPath( atom, nStartAtom, -1/*nStartAtomNeighbor*/, -1/*nStartAtomNeighbor2*/,
+                                 -1/*nStartAtomNeighborNeighbor*/, 4 /* nCycleLen*/,
+                                 nDfsPathPos, DfsPath,
+                                 Check15TautPath, Check15TautPathCenterpoint,
+                                 EndPoint, nMaxNumEndPoint,
+                                 BondPos, nMaxNumBondPos,
+                                 pnNumEndPoint, pnNumBondPos,
+                                 pBNS, pBD, num_atoms
+                      );
+    return nRet;
+}
+#endif
 /********************************************************************************/
 /*  DFS version */
 #define MAX_DFS_DEPTH 16
@@ -366,7 +442,126 @@ clear_path:
     }
     return nNumFound;
 }
-     
+#if( TAUT_15_NON_RING      == 1 ) /***** post v.1 feature *****/
+/********************************************************************************/
+int DFS_FindTautAltPath( inp_ATOM *atom, int nStartAtom, int nStartAtomNeighbor,
+                      int nStartAtomNeighbor2, int nStartAtomNeighborNeighbor,
+                      int nCycleLen,
+                      AT_RANK  *nDfsPathPos, DFS_PATH *DfsPath,
+                      CHECK_DFS_PATH *CheckDfsPath, CHECK_DFS_CENTERPOINT *CheckCenterPointPath,
+                      T_ENDPOINT *EndPoint, int nMaxNumEndPoint,
+                      T_BONDPOS  *BondPos, int nMaxNumBondPos,
+                      int *pnNumEndPoint, int *pnNumBondPos,
+                      struct BalancedNetworkStructure *pBNS,
+                      struct BalancedNetworkData *pBD, int num_atoms )
+{
+    /*  Naive Depth First Search: same atom may be approached along different alt paths */
+    /*  Ignore all atoms not belonging to the current ring system (=biconnected component) */
+    AT_RANK      nMinLenDfsPath;
+    int          j, cur_at, nxt_at, prv_at;
+    int          nLenDfsPath, nNumFound, ret;
+    AT_RANK      nRingSystem;
+    int          nDoNotTouchAtom1 = -1, nDoNotTouchAtom2 = -1;
+
+    nLenDfsPath=0;
+    nNumFound=0;
+
+    nCycleLen --; /* indef of the last atom in the alt path, statring from 0 */
+    
+    DfsPath[nLenDfsPath].at_no         = cur_at = nStartAtom;
+    DfsPath[nLenDfsPath].bond_type     = 0;
+    DfsPath[nLenDfsPath].bond_pos      = -1;  /* initialize index of the bond to the next atom */
+    nDfsPathPos[cur_at]            = nLenDfsPath+1;  /*  mark with distance + 1 */
+    nRingSystem                    = atom[nStartAtom].nRingSystem;
+    nMinLenDfsPath                 = 0;  /* allow to restart from nStartAtom */
+    if ( nStartAtomNeighbor2 >= 0 ) {
+        nDoNotTouchAtom1 = (int)atom[cur_at].neighbor[nStartAtomNeighbor2];
+    }
+
+    
+    /*  add the first neighbor to the 2nd tree position if required */
+    if ( nStartAtomNeighbor >= 0 ) {
+        j = nStartAtomNeighbor;
+        prv_at = cur_at;
+        cur_at = atom[prv_at].neighbor[j];
+        DfsPath[nLenDfsPath].bond_type     = (atom[prv_at].bond_type[j] & ~BOND_MARK_ALL);
+#if( FIX_BOND23_IN_TAUT == 1 )
+        DfsPath[nLenDfsPath].bond_type = ACTUAL_ORDER(pBNS,prv_at,j,DfsPath[nLenDfsPath].bond_type);
+#endif
+        DfsPath[nLenDfsPath].bond_pos      = j; /* fix index of the bond to the next atom */
+
+        nLenDfsPath ++;
+
+        DfsPath[nLenDfsPath].at_no         = cur_at;
+        DfsPath[nLenDfsPath].bond_type     = 0;
+        DfsPath[nLenDfsPath].bond_pos      = -1;
+        nDfsPathPos[cur_at]                = nLenDfsPath+1; /* mark with distance + 1 */
+        nMinLenDfsPath ++;                 /* allow to restart from nStartAtom's neighbor */
+        if ( nStartAtomNeighborNeighbor >= 0 ) {
+            nDoNotTouchAtom2 = (int)atom[cur_at].neighbor[nStartAtomNeighborNeighbor];
+        }
+    }
+
+    /*  MAIN DFS CYCLE: may find one and the same t-group 2 times; saves only one instance */
+    /*  traverse *all* paths starting at atom[nStartAtom]; max. path length = (nCycleLen+1)  */
+    while ( nLenDfsPath >= nMinLenDfsPath ) {
+        j = ++DfsPath[nLenDfsPath].bond_pos;
+        if ( j < atom[cur_at=(int)DfsPath[nLenDfsPath].at_no].valence ) {
+            DfsPath[nLenDfsPath].bond_type = (atom[cur_at].bond_type[j] & ~BOND_MARK_ALL);
+#if( FIX_BOND23_IN_TAUT == 1 )
+            DfsPath[nLenDfsPath].bond_type = ACTUAL_ORDER(pBNS,cur_at,j,DfsPath[nLenDfsPath].bond_type);
+#endif
+            nxt_at = (int)atom[cur_at].neighbor[j];
+            if ( nxt_at == nDoNotTouchAtom1 || /* forbidden */
+                 nxt_at == nDoNotTouchAtom2 || /* forbidden */
+                 nDfsPathPos[nxt_at]        || /* ring closure */
+                 nLenDfsPath && nxt_at == (int)DfsPath[nLenDfsPath-1].at_no /* step backwards */
+                 ) {
+                ; /* ignore nxt_at */
+            } else
+            if ( nLenDfsPath == nCycleLen &&
+                 /* 1,5 and at least one of the endpoints is not in a ring */
+                 (atom[nxt_at].nNumAtInRingSystem == 1 || atom[nStartAtom].nNumAtInRingSystem == 1)  &&
+                /*  we have found the alt path of the requested length; check it */
+                /* calling Check15TautPath() */
+                (ret = (*CheckDfsPath)( atom, DfsPath, nLenDfsPath, j, nStartAtomNeighbor,
+                                       nStartAtomNeighbor2, nStartAtomNeighborNeighbor,
+                                       EndPoint, nMaxNumEndPoint, BondPos, nMaxNumBondPos,
+                                       pnNumEndPoint, pnNumBondPos, 
+                                       pBNS, pBD, num_atoms ) ) ) {
+                if ( ret < 0 ) {
+                    nNumFound = ret;
+                    goto clear_path; /* program error */
+                }
+                nNumFound += ret; /* success */
+            } else /* calling Check15TautPathCenterpoint() */
+            if ( !(*CheckCenterPointPath)( atom, DfsPath, nLenDfsPath, j,
+                                       pBNS, pBD, num_atoms  ) ) {
+                ; /*  cannot advance to a non-centerpoint; ignore */
+            } else
+            if ( nLenDfsPath < nCycleLen ) {
+                /*  advance */
+                nLenDfsPath ++;
+                cur_at = nxt_at;
+                DfsPath[nLenDfsPath].at_no         = cur_at;
+                DfsPath[nLenDfsPath].bond_type     = 0;
+                DfsPath[nLenDfsPath].bond_pos      = -1;
+                nDfsPathPos[cur_at]                = nLenDfsPath+1;  /*  mark */
+            }
+        } else {
+            /*  retract */
+            nDfsPathPos[(int)DfsPath[nLenDfsPath].at_no] = 0;
+            nLenDfsPath --;
+        }
+    }
+clear_path:
+    while ( 0 <= nLenDfsPath ) {
+        nDfsPathPos[(int)DfsPath[nLenDfsPath].at_no] = 0;
+        nLenDfsPath --;
+    }
+    return nNumFound;
+}
+#endif /* TAUT_15_NON_RING */     
 /*******************************************
  *      check if bonds are alternating     */
 int are_alt_bonds( U_CHAR *bonds, int len )
@@ -870,7 +1065,206 @@ int Check6MembTautRing( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int 
     
 #undef PATH_LEN
 }
+#if( TAUT_15_NON_RING == 1 )  /* post v.1 feature */
+/********************************************************************************
+Check (1,5) taut alt path centerpoint (unfinished) [add path checking]
+*********************************************************************************/
+int Check15TautPathCenterpoint( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int jNxtNeigh,
+                        struct BalancedNetworkStructure *pBNS,
+                        struct BalancedNetworkData *pBD, int num_atoms )
+{
+    int nxt_at = atom[DfsPath[nLenDfsPath].at_no].neighbor[jNxtNeigh];
+    /* atom[nxt_at].endpoint below allows for keto-enol -CH< or -CH2- endpoints  */
+    return atom[nxt_at].endpoint || bIsCenterPointStrict( atom, nxt_at );
+}
 
+/********************************************************************************/
+/* 
+  1,5 Tautomerism in general (unfinished) [just a copy from 6-memb case]
+
+  AH--B==C--D==E             C may be carbon exhibiting keto-enol tautomerism
+  0   1  2  3  4             as well as A or E may be previously detected such a carbon
+            ^   nxt_at
+            |
+            +-- = nLenDfsPath
+
+*/
+/********************************************************************************/
+/*  check if 1,5 tautomeric path has been found */
+int Check15TautPath( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int jNxtNeigh, int nStartAtomNeighbor,
+                        int nStartAtomNeighbor2, int nStartAtomNeighborNeighbor,
+                        T_ENDPOINT *EndPoint, int nMaxNumEndPoint,
+                        T_BONDPOS  *BondPos, int nMaxNumBondPos,
+                        int *pnNumEndPoint, int *pnNumBondPos,
+                        struct BalancedNetworkStructure *pBNS,
+                        struct BalancedNetworkData *pBD, int num_atoms )
+{
+#define PATH_LEN 4
+    int i, j, k, /*m,*/ nNumBondPos, nNumEndPoint, cur_at, prv_at, at1, at2 /*, at3, step_at*/;
+    int nNumEndPointTmp, nNumBondPosTmp, ret;
+    /* int num_taut_endpoints, num_H; */
+    int nMobile, endpoint, endpoint_valence, chem_bonds_valence;
+    int nMobile1, endpoint_valence1;  /* start atom, at1 */
+    int nMobile2, endpoint_valence2;  /* end atom,   at2 */
+    /*int nMobile3, endpoint_valence3=-1;*/  /* middle atom, at3 */
+    /*int nxt_at;*/
+    int alt_bonds[2];
+    U_CHAR /*path_bonds[2][PATH_LEN+1],*/ bond_type;
+    T_ENDPOINT EndPointTmp[2];
+    T_BONDPOS  BondPosTmp[4*PATH_LEN];
+    ENDPOINT_INFO eif1, eif2/*, eif3*/;
+
+    if ( nStartAtomNeighbor >= 0 || nStartAtomNeighbor2 >= 0 || nStartAtomNeighborNeighbor >= 0 )
+        return -1; /*  wrong call */
+
+    if ( nLenDfsPath != 3 )
+        return -1; /*  wrong call */
+
+    nNumBondPos  = *pnNumBondPos;
+    nNumEndPoint = *pnNumEndPoint;
+    nNumBondPosTmp  = 0;
+    nNumEndPointTmp = 0;
+    ret             = 0;
+
+/*-------add the last atom, nLenDfsPath=4 --*/
+    j = jNxtNeigh;
+    prv_at = DfsPath[nLenDfsPath].at_no;
+    cur_at = atom[prv_at].neighbor[j];
+    DfsPath[nLenDfsPath].bond_type     = (atom[prv_at].bond_type[j] & ~BOND_MARK_ALL);
+#if( FIX_BOND23_IN_TAUT == 1 )
+    DfsPath[nLenDfsPath].bond_type = ACTUAL_ORDER(pBNS,prv_at,j,DfsPath[nLenDfsPath].bond_type);
+#endif
+    DfsPath[nLenDfsPath].bond_pos      = j; /* fix index of the bond to the next atom */
+
+    nLenDfsPath ++;
+
+    DfsPath[nLenDfsPath].at_no         = cur_at;
+    DfsPath[nLenDfsPath].bond_type     = 0;
+    DfsPath[nLenDfsPath].bond_pos      = -1;
+    /*nDfsPathPos[cur_at]                = nLenDfsPath+1;*/ /* mark with distance + 1 */
+/*------------------------------------------*/
+    at1 = (int)DfsPath[0].at_no;
+    at2 = (int)DfsPath[nLenDfsPath].at_no;
+    /*at3 = (int)DfsPath[2].at_no;*/
+    if ( atom[at1].endpoint && atom[at1].endpoint == atom[at2].endpoint ) {
+        /* start & end already belong to the same taut group */
+        goto exit_function;  /* nothing to do */
+    }
+
+    /* check bond types along alt path */
+    alt_bonds[0] =  alt_bonds[1] = 0;
+    for( i = 0; i < nLenDfsPath; i ++ ) {
+        alt_bonds[i%2] |= IS_ALT_OR_DBLBOND(DfsPath[i].bond_type);
+    }
+    if ( (alt_bonds[0] & alt_bonds[1] & (BOND_SINGLE | BOND_DOUBLE)) ||
+         (alt_bonds[0] & BOND_WRONG) || (alt_bonds[1] & BOND_WRONG ) ) {
+        goto exit_function; /* incompatible with alt path or wrong bonds */\
+    }
+    /* check possibly tautomeric endpoints at the ends */
+    endpoint_valence1 = nGetEndpointInfo( atom, at1, &eif1 );
+    endpoint_valence2 = nGetEndpointInfo( atom, at2, &eif2 );
+#ifdef NEVER   /* do not use C-endpoint of keto-enol tautomer to find 1,5 the taut path */
+    if ( !endpoint_valence1 && !atom[at1].endpoint ||
+         !endpoint_valence2 && !atom[at2].endpoint )
+        goto exit_function; /* at least one of the end atoms cannot be an endpoint */
+#endif
+    if ( !endpoint_valence1 || !endpoint_valence2 )
+        goto exit_function;  /* require both endpoints be heteroatoms */
+    /*  check hydrogens/endpoints */
+    nMobile1 = atom[at1].num_H + (atom[at1].charge==-1);
+    if ( !atom[at1].endpoint ) {
+        if ( (alt_bonds[0] & BOND_SINGLE) && !eif1.cDonor )
+            goto exit_function;
+        if ( (alt_bonds[0] & BOND_DOUBLE) && !eif1.cAcceptor )
+            goto exit_function;
+    }
+    nMobile2 = atom[at2].num_H + (atom[at2].charge==-1);
+    if ( !atom[at2].endpoint ) {
+        if ( (alt_bonds[1] & BOND_SINGLE) && !eif2.cDonor )
+            goto exit_function;
+        if ( (alt_bonds[1] & BOND_DOUBLE) && !eif2.cAcceptor )
+            goto exit_function;
+    }
+
+    nMobile = 0;
+
+    /*  can mobile group move from at1=o_at to at2=n_at? */
+    nMobile += (atom[at1].endpoint || eif1.cDonor) &&  /*  from o_at */
+               !(alt_bonds[0] & BOND_DOUBLE)   &&
+               ( atom[at2].endpoint ||                   /*  to n_at */
+                 eif2.cNeutralBondsValence > atom[at2].valence );
+    /*  can mobile group move from at2=n_at to at1=o_at? */
+    nMobile += (atom[at2].endpoint || eif2.cDonor)  && /*  from n_at */
+               !(alt_bonds[1] & BOND_DOUBLE)   &&
+               ( atom[at1].endpoint ||          /*  to o_at */
+                 eif1.cNeutralBondsValence > atom[at1].valence ); 
+
+
+    if ( !nMobile )
+        goto exit_function;
+
+    /* check whether the bonds allow moving the hydrogens between at1 and at2 */
+    if ( (atom[at1].endpoint != atom[at2].endpoint || !atom[at1].endpoint) ) {
+        int nErr;
+        nErr = bExistsAnyAltPath( pBNS, pBD, atom, num_atoms, at1, at2, ALT_PATH_MODE_TAUTOM );
+        if ( nErr <= 0 ) {
+            ret = nErr;
+            goto exit_function;
+        }
+    }
+
+    /* save tautomeric bonds */
+    nNumBondPosTmp = 0;
+    for ( k = 0; k < nLenDfsPath; k ++ ) {
+        bond_type = DfsPath[k].bond_type;
+        if ( REPLACE_THE_BOND( bond_type ) ) {
+            BondPosTmp[nNumBondPosTmp].nAtomNumber = DfsPath[k].at_no;     /*  accumulate bonds to be */
+            BondPosTmp[nNumBondPosTmp].neighbor_index = DfsPath[k].bond_pos;  /*  marked as tautomeric */
+            nNumBondPosTmp += 2; /*  leave room for the same bond in opposite direction */
+        }
+    }
+    /*  save endpoints */
+    for ( j = 0; j < 2; j ++ ) {
+        endpoint = j? at2 : at1;
+        if ( !atom[endpoint].endpoint ) { /* not a known endpoint */
+            endpoint_valence   = j? endpoint_valence2 : endpoint_valence1;
+            chem_bonds_valence = j? eif2.cNeutralBondsValence : eif1.cNeutralBondsValence;
+            /* endpoint_valence = get_endpoint_valence( atom[endpoint].el_number ); */
+            nMobile  = j? nMobile2 : nMobile1;
+            /* nMobile  = (atom[endpoint].charge == -1) + atom[endpoint].num_H; */
+            /* if ( nMobile + atom[endpoint].chem_bonds_valence != endpoint_valence ) -- fixed 02-06-2003*/
+            if ( nMobile + chem_bonds_valence != endpoint_valence )
+                goto exit_function; /*  abnormal endpoint valence; ignore. */
+            AddAtom2num( EndPointTmp[nNumEndPointTmp].num, atom, endpoint, 2 ); /* fill out */
+            AddAtom2DA( EndPointTmp[nNumEndPointTmp].num_DA, atom, endpoint, 2 );
+        } else { /* already an endpoint */ /* **now it is wrong:** no mobile atom/charge at this endpoint */
+            memset( EndPointTmp + nNumEndPointTmp, 0, sizeof(EndPointTmp[0]) );
+        }
+        EndPointTmp[nNumEndPointTmp].nAtomNumber  = endpoint;
+        EndPointTmp[nNumEndPointTmp].nGroupNumber = atom[endpoint].endpoint;
+        EndPointTmp[nNumEndPointTmp].nEquNumber   = 0;
+
+        nNumEndPointTmp ++;
+    }
+    /*  add collected tautomeric bonds and endpoints to the input/output data */
+    nNumBondPos  = AddBondsPos( atom, BondPosTmp, nNumBondPosTmp, BondPos, nMaxNumBondPos, nNumBondPos );
+    nNumEndPoint = AddEndPoints( EndPointTmp, nNumEndPointTmp, EndPoint, nMaxNumEndPoint, nNumEndPoint);
+
+    if ( nNumBondPos >= 0 && nNumEndPoint >= 0 ) {
+        if (ret = (nNumBondPos > *pnNumBondPos) || (nNumEndPoint > *pnNumEndPoint)) {
+            *pnNumBondPos  = nNumBondPos  ;
+            *pnNumEndPoint = nNumEndPoint ;
+        }
+    }
+
+exit_function:
+    /*nDfsPathPos[DfsPath[nLenDfsPath].at_no] = 0;*/
+
+    return ret;
+    
+#undef PATH_LEN
+}
+#endif  /* TAUT_15_NON_RING */
 
 /********************************************************************************/
 /* 

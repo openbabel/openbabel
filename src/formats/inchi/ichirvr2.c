@@ -1,16 +1,24 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+/*^^^ */
 /*#define CHECK_WIN32_VC_HEAP*/
 #include "mode.h"
 
@@ -22,7 +30,7 @@
 #include "inpdef.h"
 #include "ichimain.h"
 #include "ichierr.h"
-#include "comdef.h"
+#include "incomdef.h" 
 #include "ichiring.h"
 #include "extr_ct.h"
 #include "ichitaut.h"
@@ -5185,7 +5193,7 @@ int MoveMobileHToAvoidFixedBonds(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pS
             goto exit_function;
         }
 #if( FIND_RING_SYSTEMS == 1 )
-        ret2 = MarkRingSystemsInp( at2, num_at );
+        ret2 = MarkRingSystemsInp( at2, num_at, 0 );
         if ( ret2 < 0 ) {
             ret = ret2;
             goto exit_function;

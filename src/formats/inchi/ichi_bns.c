@@ -1,20 +1,28 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+
 #include "mode.h"
 
 #include "ichierr.h"
-#include "comdef.h"
+#include "incomdef.h" 
 #include "inpdef.h"
 #include "extr_ct.h"
 #include "ichitaut.h"
@@ -25,6 +33,7 @@
 #include "ichister.h"
 
 #include "ichi_bns.h"
+
 
 #define BNS_MARK_ONLY_BLOCKS        1  /* 1 => find only blocks, do not search for ring systems */
 #define ALLOW_ONLY_SIMPLE_ALT_PATH  0  /* 0 => allow alt. path to contain same bond 2 times (in opposite directions) */
@@ -4511,7 +4520,6 @@ exit_function:
     return bError? bError : num_atoms;  /* ret = 0 => success, any other => error */
 
 }
-
 /*********************************************************************************/
 int nMaxFlow2Check( BN_STRUCT *pBNS, int iedge )
 {
@@ -6419,6 +6427,9 @@ int bExistsAltPath( BN_STRUCT *pBNS, BN_DATA *pBD, BN_AATG *pAATG, inp_ATOM *at,
     AT_NUMB          type;
     BNS_FLOW_CHANGES fcd[4*BNS_MAX_NUM_FLOW_CHANGES+1];
     ENDPOINT_INFO    eif;
+#if( KETO_ENOL_TAUT == 1 )
+    ENDPOINT_INFO    eif2;
+#endif
 
     /* initialize */
     switch( path_type ) {
@@ -6434,6 +6445,25 @@ int bExistsAltPath( BN_STRUCT *pBNS, BN_DATA *pBD, BN_AATG *pAATG, inp_ATOM *at,
             return 0;
         break;
 
+#if( KETO_ENOL_TAUT == 1 )
+    case ALT_PATH_MODE_TAUTOM_KET:
+        /* Check for alt path allowing to move H and (-). Purpose: confirm possible tautomerism */
+        type        = BNS_VERT_TYPE_ENDPOINT;
+        bChangeFlow = BNS_EF_CHNG_RSTR;
+
+        if ( !at[nVertSingleBond].endpoint &&
+             (!nGetEndpointInfo_KET( at, nVertSingleBond, &eif ) || !eif.cDonor ) )
+            return 0;
+        if ( !at[nVertDoubleBond].endpoint &&
+             (!nGetEndpointInfo_KET( at, nVertDoubleBond, &eif2 ) || !eif2.cAcceptor ) )
+            return 0;
+        /*
+        if ( eif.cKetoEnolCode + eif2.cKetoEnolCode != 3 )
+            return 0;
+        */
+        break;
+
+#endif
     case ALT_PATH_MODE_CHARGE:
         /* Find alt path allowing to move (+). Purpose: establish "charge groups",
            mark alt. bonds due to (+) charge movement */
@@ -6544,6 +6574,7 @@ int bExistsAltPath( BN_STRUCT *pBNS, BN_DATA *pBD, BN_AATG *pAATG, inp_ATOM *at,
      */
 
     /* run BNS */
+
     ret = RunBalancedNetworkSearch( pBNS, pBD, bChangeFlow );
     if ( IS_BNS_ERROR( ret ) ) {
         bError = ret;
@@ -6774,7 +6805,11 @@ BN_STRUCT* AllocateAndInitBnStruct( inp_ATOM *at, int num_atoms, int nMaxAddAtom
                     edge_flow = 0;  /* BNS will determine flows (that is, bonds) */
                     edge_cap  = AROM_BOND_EDGE_CAP;
                 } else {
+#if ( 0 && KETO_ENOL_TAUT == 1 )  /* ????? */
+                    edge_cap  = inchi_max(f1, f2);
+#else
                     edge_cap  = inchi_min(f1, f2);
+#endif
                     edge_cap  = inchi_min(edge_cap, MAX_BOND_EDGE_CAP); /* max capacity = 2 means up to triple bond */
                 }
                 pBNS->edge[n_edges].neighbor1    = (AT_NUMB)i;
@@ -7045,8 +7080,14 @@ int AddTGroups2BnStruct( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, T_GROUP_I
             }
             /* obtain donor/acceptor info */
             if ( !nGetEndpointInfo( at, endpoint, &eif ) ) {
-                ret = BNS_BOND_ERR;
-                break;
+#if( KETO_ENOL_TAUT == 1 )
+                if ( !((tgi->bTautFlags & TG_FLAG_KETO_ENOL_TAUT ) &&
+                        nGetEndpointInfo_KET( at, endpoint, &eif )) )
+#endif
+                {
+                    ret = BNS_BOND_ERR;
+                    break;
+                }
             }
 
             vert_endpoint->type |= BNS_VERT_TYPE_ENDPOINT;
@@ -8653,7 +8694,7 @@ int FindPathCap( BN_STRUCT* pBNS, Edge *SwitchEdge, Vertex x, Vertex y, int delt
 #ifdef _DEBUG
         int stop = 1;
 #else
-	;
+    ;
 #endif
     }
 

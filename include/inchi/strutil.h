@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #ifndef __STRUTIL_H__
 #define __STRUTIL_H__
@@ -39,6 +46,9 @@ int FillOutInfAtom(inp_ATOM *norm_at, INF_ATOM_DATA *inf_norm_at_data, int init_
 int FillOutCompositeCanonInfAtom(COMP_ATOM_DATA *composite_norm_data, INF_ATOM_DATA *inf_norm_at_data,
                                  int bIsotopic, int bTautomeric,
                                  PINChI2 *pINChI2, PINChI_Aux2 *pINChI_Aux2, int bAbcNumbers, INCHI_MODE nMode);
+#if( FIX_DALKE_BUGS == 1 )
+char *AllocateAndFillHillFormula( INChI *pINChI );
+#endif
 
 typedef enum tagInchiDiffBits {
     IDIF_PROBLEM       = 0x00000001, /* severe: at least one InChI does not exist */

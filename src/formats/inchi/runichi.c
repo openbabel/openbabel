@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,6 +22,8 @@
 /* #include <varargs.h> */
 #include <errno.h>
 #include <limits.h>
+
+
 
 #include "mode.h"       /* moved from below, suggestion by David Mosenkis */
 
@@ -32,6 +41,7 @@
 #include "ichierr.h"
 #include "ichimain.h"
 #include "extr_ct.h"
+#include "ichitaut.h"
 
 #ifdef INCHI_LIB
 #include "ichi_lib.h"
@@ -44,6 +54,7 @@
 #include "debug.h"
 #endif
 
+
 /* for DisplayTheWholeStructure() */
 
 #define COMP_ORIG_0_MAIN  0x0001
@@ -52,6 +63,8 @@
 #define COMP_PREP_0_RECN  0x0008
 #define COMP_ORIG_1_MAIN  0x0010
 #define COMP_ORIG_1_RECN  0x0020
+
+
 
 
 /* local prototypes */
@@ -117,7 +130,10 @@ int RenumberingTest( INChI *pINChI[][TAUT_NUM], INChI_Aux *pINChI_Aux[][TAUT_NUM
 #endif /* } TEST_RENUMB_ATOMS */
 
 
-#ifdef INCHI_LIBRARY
+/*^^^ */
+/*#ifdef INCHI_LIBRARY*/
+#if ( defined(INCHI_LIBRARY) || defined(BUILD_CINCHI_WITH_INCHIKEY) )
+
 /*****************************************************************
  *
  *  Estimate printf string length
@@ -359,7 +375,9 @@ exit_error:
 #define INCHI_ADD_STR_LEN   32768
 #endif /* INCHI_LIBRARY */
 
-#ifdef INCHI_LIBRARY
+/*^^^ */
+/*#ifdef INCHI_LIBRARY*/
+#if ( defined(INCHI_LIBRARY) || defined(BUILD_CINCHI_WITH_INCHIKEY) )
 /*****************************************************************/
 int inchi_print( INCHI_FILE* f, const char* lpszFormat, ... )
 {
@@ -434,7 +452,10 @@ int inchi_print( INCHI_FILE* f, const char* lpszFormat, ... )
 #endif
 
 
-#ifdef INCHI_LIBRARY
+/*^^^ */
+/*#ifdef INCHI_LIBRARY*/
+#if ( defined(INCHI_LIBRARY) || defined(BUILD_CINCHI_WITH_INCHIKEY) )
+
 /**********************************************************************/
 /* This function's output should not be displayed in the output pane  */
 /**********************************************************************/
@@ -503,7 +524,9 @@ int inchi_print_nodisplay( INCHI_FILE* f, const char* lpszFormat, ... )
     return ret? ret : ret2;
 }
 #endif
-#ifdef INCHI_LIBRARY
+
+/*^^^ #ifdef INCHI_LIBRARY */
+#if ( defined(INCHI_LIBRARY) || defined(BUILD_CINCHI_WITH_INCHIKEY) )
 /*****************************************************************/
 int my_fprintf( INCHI_FILE* f, const char* lpszFormat, ... )
 {
@@ -553,7 +576,10 @@ int my_fprintf( INCHI_FILE* f, const char* lpszFormat, ... )
     int ret=0, ret2=0;
     va_list argList;
 
-#ifndef INCHI_LIB
+
+/*#ifndef INCHI_LIB*/
+/*^^^ */
+#if ( !defined(INCHI_LIB) && !defined(BUILD_CINCHI_WITH_INCHIKEY) )
     if ( f ) {
         if ( f == stderr && lpszFormat && lpszFormat[0] && '\r' == lpszFormat[strlen(lpszFormat)-1] ) {
 #define CONSOLE_LINE_LEN 80
@@ -585,6 +611,9 @@ int my_fprintf( INCHI_FILE* f, const char* lpszFormat, ... )
         va_end( argList );
     }
 #else
+
+/*^^^ */
+#if ( !defined(BUILD_CINCHI_WITH_INCHIKEY) )
     if ( f ) {
         my_va_start( argList, lpszFormat );
         ret = vfprintf( f, lpszFormat, argList );
@@ -592,9 +621,61 @@ int my_fprintf( INCHI_FILE* f, const char* lpszFormat, ... )
     }
 #endif
 
+
+#endif
+
     return ret? ret : ret2;
 }
 #endif
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+int my_fileprintf( FILE* f, const char* lpszFormat, ... )
+{
+    int ret=0, ret2=0;
+    va_list argList;
+
+
+
+
+    if ( f ) {
+        if ( f == stderr && lpszFormat && lpszFormat[0] && '\r' == lpszFormat[strlen(lpszFormat)-1] ) {
+#define CONSOLE_LINE_LEN 80
+
+#ifndef INCHI_ANSI_ONLY
+            char szLine[CONSOLE_LINE_LEN];
+            my_va_start( argList, lpszFormat );
+            ret = _vsnprintf( szLine, CONSOLE_LINE_LEN-1, lpszFormat, argList );
+            va_end( argList );
+            if ( ret < 0 ) {
+                /*  output is longer than the console line */
+                strcpy(szLine+CONSOLE_LINE_LEN-4, "...\r");
+            }
+            fputs( szLine, f );
+#else
+            my_va_start( argList, lpszFormat );
+            ret = vfprintf( f, lpszFormat, argList );
+            va_end( argList );
+#endif
+
+#undef CONSOLE_LINE_LEN
+        } else {
+            my_va_start( argList, lpszFormat );
+            ret = vfprintf( f, lpszFormat, argList );
+            va_end( argList );
+        }
+    }
+    if ( f && f != stderr ) { /* disabled stderr output in case f == NULL. 11-23-2005 */
+        my_va_start( argList, lpszFormat );
+        ret2 = vfprintf( stderr, lpszFormat, argList );
+        va_end( argList );
+    }
+
+
+    return ret? ret : ret2;
+}
+
 #ifndef INCHI_ANSI_ONLY
 /********************************************************************/
 void FillTableParms( SET_DRAW_PARMS *sdp, INChI **cur_INChI, INChI_Aux **cur_INChI_Aux,
@@ -1284,7 +1365,12 @@ int SortAndPrintINChI( INCHI_FILE *output_file, char *pStr, int nStrLen, INCHI_F
 #ifndef INCHI_ANSI_ONLY
 /* find equivalent and wINChI display order; use requested in ip->bCompareComponents comparison */
         ret = SaveEquComponentsInfoAndSortOrder ( iINChI, pINChISort[j], num_components, orig_inp_data, prep_inp_data,
-                                                  composite_norm_data[j], ip->bCompareComponents );
+#if( FIX_DALKE_BUGS == 1 )
+                                                  composite_norm_data? composite_norm_data[j]:NULL,
+#else
+                                                  composite_norm_data[j],
+#endif
+                                                  ip->bCompareComponents );
         if ( RETURNED_ERROR( ret ) ) {
             ret = 0;
             goto exit_function;
@@ -1328,6 +1414,7 @@ int SortAndPrintINChI( INCHI_FILE *output_file, char *pStr, int nStrLen, INCHI_F
     } else {
         
         /* print inchi string(s) */
+
 
         bINChIOutputOptions0 = ip->bINChIOutputOptions & ~INCHI_OUT_PRINT_OPTIONS;
 
@@ -1415,6 +1502,9 @@ exit_function:
         }
     }
     ret = ret? 0 : _IS_FATAL;
+
+
+
     return ret;
 }
 /**********************************************************************************/
@@ -1691,7 +1781,8 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
 #endif
 /*****************************************************************************************************/
 int TreatReadTheStructureErrors(  STRUCT_DATA *sd, INPUT_PARMS *ip, int nLogMask,
-                                  FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                                  FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                                  FILE *prb_file, /*^^^ was: INCHI_FILE */
                                   ORIG_ATOM_DATA *orig_inp_data, long *num_inp, char *pStr, int nStrLen )
 {
     int nRet = _IS_OKAY;
@@ -1709,7 +1800,9 @@ int TreatReadTheStructureErrors(  STRUCT_DATA *sd, INPUT_PARMS *ip, int nLogMask
 
     /*  Skipping the structures */
     if ( *num_inp < ip->first_struct_number ) {
-#ifndef INCHI_LIBRARY
+
+#if ( !defined(INCHI_LIBRARY) && !defined(BUILD_CINCHI_WITH_INCHIKEY) )
+/*^^^ #ifndef INCHI_LIBRARY */
         if ( log_file != stderr ) {
             my_fprintf( stderr, "\rSkipping structure #%ld.%s%s%s%s...", *num_inp, SDF_LBL_VAL(ip->pSdfLabel,ip->pSdfValue));
         }
@@ -1753,7 +1846,8 @@ int TreatReadTheStructureErrors(  STRUCT_DATA *sd, INPUT_PARMS *ip, int nLogMask
     if ( sd->nErrorType == _IS_ERROR ) {  /*  70 => too many atoms */
         if ( nLogMask & LOG_MASK_ERR )
             my_fprintf( log_file, "Error %d (no %s; %s) inp structure #%ld.%s%s%s%s\n",
-                    sd->nStructReadError, INCHI_NAME, sd->pStrErrStruct, *num_inp, SDF_LBL_VAL(ip->pSdfLabel,ip->pSdfValue) );
+                    sd->nStructReadError, (ip->bINChIOutputOptions & INCHI_OUT_SDFILE_ONLY)?"Molfile":INCHI_NAME,
+                    sd->pStrErrStruct, *num_inp, SDF_LBL_VAL(ip->pSdfLabel,ip->pSdfValue) );
 #if( bRELEASE_VERSION == 1 || EXTR_FLAGS == 0 )
         if ( prb_file && 0L <= sd->fPtrStart && sd->fPtrStart < sd->fPtrEnd && !ip->bSaveAllGoodStructsAsProblem) {
             CopyMOLfile(inp_file, sd->fPtrStart, sd->fPtrEnd, prb_file, *num_inp);
@@ -1911,7 +2005,8 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
     sd->ulStructTime += lElapsedTime;
 
 
-#if( !defined( INCHI_LIB ) && !defined( INCHI_LIBRARY ) )
+/*^^^#if( !defined( INCHI_LIB ) && !defined( INCHI_LIBRARY ) ) */
+#if( !defined( INCHI_LIB ) && !defined( INCHI_LIBRARY ) && !defined(BUILD_CINCHI_WITH_INCHIKEY) )
 #if( TEST_RENUMB_ATOMS != 1 )
     /*  log file / console output */
     if ( log_file && log_file != stderr ) { /* NULL log_file now ignored. 11-23-2005 */
@@ -2062,7 +2157,8 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
 /****************************************************************************************************/
 int TreatCreateOneComponentINChIError(STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *orig_inp_data,
                                      int i, long num_inp,
-                                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                                     FILE *prb_file, /*^^^ was: INCHI_FILE */
                                      char *pStr, int nStrLen )
 {
     if ( sd->nErrorCode ) {
@@ -2088,7 +2184,8 @@ int TreatCreateOneComponentINChIError(STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATO
             }
         }
     }
-#ifndef INCHI_LIBRARY
+/*^^^ #ifndef INCHI_LIBRARY */
+#if( !defined( INCHI_LIBRARY ) && !defined(BUILD_CINCHI_WITH_INCHIKEY) )
     /*  print the logfile record */
     if ( log_file && log_file != stderr && (sd->ulStructTime >= 1000 || sd->nErrorCode) ) {
         fprintf( log_file, "%10lu msec structure #%ld.%s%s%s%s (%d component%s, %d atom%s, error=%d).\n",
@@ -2101,7 +2198,8 @@ int TreatCreateOneComponentINChIError(STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATO
 }
 /****************************************************************************************************/
 int TreatCreateINChIWarning(STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *orig_inp_data, long num_inp,
-                                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                                     FILE *prb_file, /*^^^ was: INCHI_FILE */
                                      char *pStr, int nStrLen )
 {
 #if( bRELEASE_VERSION == 0 && (EXTR_FLAGS || EXTR_MASK) )
@@ -2223,7 +2321,8 @@ int DuplicateOrigAtom( ORIG_ATOM_DATA *new_orig_atom, ORIG_ATOM_DATA *orig_atom 
 #ifndef INCHI_LIBRARY
 /*******************************************************************************************/
 int GetOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
-                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                     FILE *prb_file, /*^^^ was: INCHI_FILE */
                      ORIG_ATOM_DATA *orig_inp_data, long *num_inp, char *pStr, int nStrLen, STRUCT_FPTRS *struct_fptrs )
 {
     int nRet, inp_index, out_index, bUseFptr = (NULL != struct_fptrs);
@@ -2963,7 +3062,8 @@ int DisplayTheWholeStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle, F
     /******************************************************
      * Display the whole input structure in console app
      */
-#ifndef INCHI_LIB
+/*^^^ #ifndef INCHI_LIB */
+#if( !defined( INCHI_LIB ) && !defined(BUILD_CINCHI_WITH_INCHIKEY) )
     if ( bShowStruct && ip->bDisplay ) {
         if ( bDisplayEqu ) {
             sprintf( szTitle, " Equ Set %d of %d, Input Structure #%ld.%s%s%s%s%s",
@@ -3072,7 +3172,8 @@ exit_function:
 /************************************************************************************************/
 int ProcessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                          PINChI2 *pINChI[INCHI_NUM], PINChI_Aux2 *pINChI_Aux[INCHI_NUM],
-                         FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                         FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                         FILE *prb_file, /*^^^ was: INCHI_FILE */
                          ORIG_ATOM_DATA *orig_inp_data, ORIG_ATOM_DATA *prep_inp_data,
                          long num_inp, char *pStr, int nStrLen )
 {
@@ -3083,7 +3184,9 @@ int ProcessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
         ORIG_STRUCT      OrigStruct;
         ORIG_STRUCT      *pOrigStruct = NULL;
         int bSortPrintINChIFlags   = 0;
-
+#if ( RING2CHAIN == 1 || UNDERIVATIZE == 1 )
+        int ret1=0, ret2=0;
+#endif
         sd->bUserQuitComponent = 0;
         sd->bUserQuitComponentDisplay = 0;
         memset( composite_norm_data, 0, sizeof(composite_norm_data) );
@@ -3095,10 +3198,43 @@ int ProcessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
         fix_odd_things( orig_inp_data->num_inp_atoms, orig_inp_data->at, 0 );
 #endif
 
+#if( UNDERIVATIZE == 1 )  /***** post v.1 feature *****/
+        if ( ip->bUnderivatize && 0 > (ret2=underivatize( orig_inp_data )) ) {
+            long num_inp2 = num_inp;
+            AddMOLfileError(sd->pStrErrStruct, "Underivatization error");
+            sd->nStructReadError =  99;
+            sd->nErrorType = _IS_ERROR;
+            nRet = _IS_ERROR;
+            TreatReadTheStructureErrors( sd, ip, LOG_MASK_ALL, inp_file, log_file, output_file, prb_file,
+                                        prep_inp_data, &num_inp2, pStr, nStrLen );
+            goto exit_function; /* output only if derivatives found */
+        }
+#endif /* UNDERIVATIZE == 1 */
+#if( RING2CHAIN == 1 )  /***** post v.1 feature *****/
+        if ( ip->bRing2Chain && 0 > (ret1 = Ring2Chain( orig_inp_data )) ) {
+            long num_inp2 = num_inp;
+            AddMOLfileError(sd->pStrErrStruct, "Ring to chain error");
+            sd->nStructReadError =  99;
+            sd->nErrorType = _IS_ERROR;
+            nRet = _IS_ERROR;
+            TreatReadTheStructureErrors( sd, ip, LOG_MASK_ALL, inp_file, log_file, output_file, prb_file,
+                                        prep_inp_data, &num_inp2, pStr, nStrLen );
+            goto exit_function; /* output only if derivatives found */
+        }
+#endif /* RING2CHAIN == 1 */
+#if ( RING2CHAIN == 1 || UNDERIVATIZE == 1 )  /***** post v.1 feature *****/
+        if ( ip->bIngnoreUnchanged && !ret1 && !ret2 ) {
+            goto exit_function; /* output only if derivatives or ring/chain found */
+        }
+#endif /* RING2CHAIN == 1 || UNDERIVATIZE == 1 */
+
+
         /***** output MOLfile ***************/
         if ( ip->bINChIOutputOptions & INCHI_OUT_SDFILE_ONLY  ) {
             char szNumber[32];
-#if ( !defined( INCHI_LIB ) && !defined( INCHI_LIBRARY ) )
+            int ret1a=0, ret2a=0; /* for derivatives and ring-chain */
+/*^^^ #if ( !defined( INCHI_LIB ) && !defined( INCHI_LIBRARY ) ) */
+#if( !defined( INCHI_LIB ) && !defined( INCHI_LIBRARY ) && !defined(BUILD_CINCHI_WITH_INCHIKEY) )
 #if( TEST_RENUMB_ATOMS != 1 )
             /*  log file / console output */
             if ( log_file != stderr ) {
@@ -3109,8 +3245,8 @@ int ProcessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
             }
 #endif
 #endif
-            sprintf( szNumber, "Structure #%ld", num_inp );
-            WriteOrigAtomDataToSDfile( orig_inp_data, output_file, szNumber, NULL,
+            ret1a = sprintf( szNumber, "Structure #%ld", num_inp );
+            ret2a = WriteOrigAtomDataToSDfile( orig_inp_data, output_file, szNumber, NULL,
                 (sd->bChiralFlag & FLAG_INP_AT_CHIRAL)? 1:0,
                 (ip->bINChIOutputOptions & INCHI_OUT_SDFILE_ATOMS_DT)? 1:0, ip->pSdfLabel, ip->pSdfValue );
             goto exit_function;
@@ -3348,7 +3484,8 @@ int bIsStructChiral( PINChI2 *pINChI2[INCHI_NUM], int num_components[] )
 /************************************************************************************************/
 int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                          PINChI2 *pINChI2[INCHI_NUM], PINChI_Aux2 *pINChI_Aux2[INCHI_NUM], int iINChI,
-                         FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                         FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                         FILE *prb_file, /*^^^ was: INCHI_FILE */
                          ORIG_ATOM_DATA *orig_inp_data, ORIG_ATOM_DATA *prep_inp_data,
                          COMP_ATOM_DATA composite_norm_data2[][TAUT_NUM+1],
                          long num_inp, char *pStr, int nStrLen, NORM_CANON_FLAGS *pncFlags )
@@ -3759,7 +3896,9 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                                     ip->bAbcNumbers, &ip->dp, ip->nMode, szTitle );
             sd->bUserQuitComponentDisplay = (err==ESC_KEY);
             if ( !err ) {
+#if( !defined(BUILD_CINCHI_WITH_INCHIKEY) )
                 my_fprintf( stderr, "Cannot display the structure\n");
+#endif
             }
 #else
             if(DRAWDATA && DRAWDATA_EXISTS)
@@ -4251,3 +4390,5 @@ exit_error:
     return ret;
 }
 #endif /* } INCHI_ANSI_ONLY */
+
+

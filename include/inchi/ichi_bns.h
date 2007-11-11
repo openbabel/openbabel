@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #ifndef __INCHI_BNS_H___
 #define __INCHI_BNS_H___
@@ -310,6 +317,9 @@ typedef struct tagBNS_FLOW_CHANGES {
 #define ALT_PATH_MODE_REM2H_TST  7   /* test-remove 2 H along alt. path AH-=-BH => A=-=B; restore changed bonds */
 #define ALT_PATH_MODE_ADD2H_TST  8   /* test-add 2 H along alt. path A=-=B => AH-=-BH; restore changed bonds */
 #define ALT_PATH_MODE_REM_PROTON 9   /* remove proton, adjust bonds, charges, H-counts 2004-03-05 */
+#if( KETO_ENOL_TAUT == 1 )
+#define ALT_PATH_MODE_TAUTOM_KET 10  /* same as ALT_PATH_MODE_TAUTOM, applies to C=-OH or CH-=O; H may be (-) */
+#endif
 
 typedef U_SHORT  bitWord;
 #define BIT_WORD_MASK  ((bitWord)~0)

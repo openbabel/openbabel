@@ -1,17 +1,25 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #ifndef __INCHITAUT_H__
 #define __INCHITAUT_H__
 
 #include "inpdef.h"
 #include "ichi_bns.h"
+
 
 /*******************************************************
   ---     Header of tautomers groups      ---
@@ -246,6 +254,7 @@ typedef struct tagEndpointInfo {
     S_CHAR cMobile;
     S_CHAR cDonor;
     S_CHAR cAcceptor;
+    S_CHAR cKetoEnolCode; /* 1 => carbon, 2 => oxygen */ /* post v.1 feature */
 } ENDPOINT_INFO;
 
 
@@ -321,7 +330,7 @@ typedef struct tagAtomSizes {
 
 typedef struct tagDfsPath {
     AT_RANK       at_no;
-    AT_RANK       nDfsLevel;
+    /*AT_RANK       nDfsLevel;*/
     U_CHAR        bond_type;
     S_CHAR        bond_pos;
 } DFS_PATH;
@@ -335,10 +344,15 @@ extern "C" {
 
 int is_centerpoint_elem( U_CHAR el_number );
 int is_centerpoint_elem_strict( U_CHAR el_number );
-
+#if ( KETO_ENOL_TAUT == 1 )
+int is_centerpoint_elem_KET( U_CHAR el_number );
+#endif
 int bIsCenterPointStrict( inp_ATOM *atom, int iat );
 
 int nGetEndpointInfo( inp_ATOM *atom, int iat, ENDPOINT_INFO *eif );
+#if ( KETO_ENOL_TAUT == 1 )
+int nGetEndpointInfo_KET( inp_ATOM *atom, int iat, ENDPOINT_INFO *eif );
+#endif
 void AddAtom2DA( AT_RANK num_DA[], inp_ATOM *atom, int at_no, int bSubtract );
 int AddAtom2num(  AT_RANK num[], inp_ATOM *atom, int at_no, int bSubtract );
 int AddEndPoint( T_ENDPOINT *pEndPoint, inp_ATOM *at, int iat );
@@ -378,6 +392,23 @@ int nGet14TautIn5MembAltRing( inp_ATOM *atom, int nStartAtom, int nStartAtomNeig
                               int *pnNumEndPoint, int *pnNumBondPos,
                               struct BalancedNetworkStructure *pBNS,
                               struct BalancedNetworkData *pBD, int num_atoms );
+
+int nGet15TautInAltPath( inp_ATOM *atom, int nStartAtom, AT_RANK  *nDfsPathPos,
+                              DFS_PATH *DfsPath, int nMaxLenDfsPath,
+                              T_ENDPOINT *EndPoint, int nMaxNumEndPoint,
+                              T_BONDPOS  *BondPos, int nMaxNumBondPos,
+                              int *pnNumEndPoint, int *pnNumBondPos,
+                              struct BalancedNetworkStructure *pBNS,
+                              struct BalancedNetworkData *pBD, int num_atoms );
+
+
+#if( RING2CHAIN == 1 )
+int Ring2Chain( ORIG_ATOM_DATA *orig_inp_data );
+#endif
+
+#if( UNDERIVATIZE == 1 )
+int underivatize( ORIG_ATOM_DATA *orig_inp_data );
+#endif
 
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus

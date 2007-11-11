@@ -164,6 +164,7 @@ int main(int argc,char **argv)
     else
       pFF->ConjugateGradients(steps, crit);
 
+
     pFF->UpdateCoordinates(mol);
 
     conv.Write(&mol, &cout);

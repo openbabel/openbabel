@@ -1,16 +1,24 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+/*^^^ */
 /*#define CHECK_WIN32_VC_HEAP*/
 #include "mode.h"
 
@@ -22,7 +30,7 @@
 #include "inpdef.h"
 #include "ichimain.h"
 #include "ichierr.h"
-#include "comdef.h"
+#include "incomdef.h" 
 #include "ichiring.h"
 #include "extr_ct.h"
 #include "ichitaut.h"
@@ -37,7 +45,7 @@
 #include "strutil.h"
 
 #include "ichirvrs.h"
-
+/*^^^ */
 
 /********************** Forbid carbon charge edges ***********************************/
 int ForbidCarbonChargeEdges( BN_STRUCT *pBNS, ALL_TC_GROUPS *pTCGroups, EDGE_LIST *pCarbonChargeEdges, int forbidden_edge_mask  )
@@ -1511,7 +1519,7 @@ int MoveChargeToRemoveCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *p
         goto exit_function;
     }
 #if( FIND_RING_SYSTEMS == 1 )
-    ret2 = MarkRingSystemsInp( at2, num_at );
+    ret2 = MarkRingSystemsInp( at2, num_at, 0 );
     if ( ret2 < 0 ) {
         ret = ret2;
         goto exit_function;
@@ -2895,7 +2903,7 @@ int AddRemProtonsInRestrStruct( ICHICONST INPUT_PARMS *ip_inp,  STRUCT_DATA *sd,
                                 StrFromINChI *pStruct, int num_components,
                                 StrFromINChI *pStructR, int num_componentsR,
                                 NUM_H *nProtonsToBeRemovedByNormFromRevrs, int *recmet_change_balance )
-{
+{   /* on entry and exit, all at[i].num_H do not include isotopic H  and explicit terminal H are connected */
     int  iComp, q, ret = 0;
     int      num_atoms, tot_num_at, num_deleted_H, num_tg, num_changed, num_deleted_components;
     inp_ATOM *at;
@@ -2967,6 +2975,7 @@ int AddRemProtonsInRestrStruct( ICHICONST INPUT_PARMS *ip_inp,  STRUCT_DATA *sd,
         num_tg               = pINChI_Aux->nNumberOfTGroups;
 
 
+        /* disconnect all explicit H and add the number of implicit iso H and all explicit terminal H to the number of implicit H */
         if ( 0 > ( ret = DisconnectedConnectedH( at, num_atoms, num_deleted_H ) ) ) {
             goto exit_function;
         }
@@ -2992,12 +3001,14 @@ int AddRemProtonsInRestrStruct( ICHICONST INPUT_PARMS *ip_inp,  STRUCT_DATA *sd,
                 /* reconnected components without Fixed-H layer may produce 'tautomeric' fragments like Cl(-) */
                 ip->nMode |= REQ_MODE_BASIC;
             }
+            /* calls ConnectDisconnectedH(...): subtracts number of implicit iso H from implicit H */
             ret = MakeInChIOutOfStrFromINChI2( ip, sd, pStruct1, 0, 0, num_inp );
             ip->nMode = nMode;
             if ( ret < 0 ) {
                 goto exit_function;
             }
         } else {
+            /* reconnect disconnected terminal H and subtracts number of implicit iso H from implicit H */
             if ( 0 > ( ret = ConnectDisconnectedH( at, num_atoms, num_deleted_H ) ) ) {
                 goto exit_function;
             }
@@ -3029,6 +3040,9 @@ int AddRemProtonsInRestrStruct( ICHICONST INPUT_PARMS *ip_inp,  STRUCT_DATA *sd,
                 /* reconnected components without Fixed-H layer may produce 'tautomeric' fragments like Cl(-) */
                 ip->nMode |= REQ_MODE_BASIC;
             }
+            /* Although MakeInChIOutOfStrFromINChI2() calls ConnectDisconnectedH(...) */
+            /* to subtracts number of implicit iso H from implicit H */
+            /* this CANNOT have any effect on the deleted H component */
             ret = MakeInChIOutOfStrFromINChI2( ip, sd, pStruct1, 0, 0, num_inp );
             ip->nMode = nMode;
             if ( ret < 0 ) {
@@ -3053,7 +3067,7 @@ int AddRemIsoProtonsInRestrStruct( ICHICONST INPUT_PARMS *ip_inp,  STRUCT_DATA *
                                 StrFromINChI *pStruct, int num_components,
                                 StrFromINChI *pStructR, int num_componentsR,
                                 NUM_H pProtonBalance[], NUM_H recmet_change_balance[] )
-{
+{   /* on entry and exit, all at[i].num_H do not include isotopic H and explicit terminal H are connected */
     int  iComp, q, k, ret = 0, bNotEmpty;
     int      num_atoms, tot_num_at, num_deleted_H, num_tg, num_changed;
     inp_ATOM *at;
@@ -3136,6 +3150,7 @@ int AddRemIsoProtonsInRestrStruct( ICHICONST INPUT_PARMS *ip_inp,  STRUCT_DATA *
             StrFromINChI *pStruct1 = pStruct+iComp;
             INCHI_MODE    nMode = ip->nMode;
             /* recalculate InChI; MakeInChIOutOfStrFromINChI2() will reconnect explicit H */
+            /* disconnect all explicit H and add the number of implicit iso H and all explicit terminal H to the number of implicit H */
             if ( 0 > ( ret = DisconnectedConnectedH( at, num_atoms, num_deleted_H ) ) ) {
                 goto exit_function;
             }
@@ -3153,11 +3168,13 @@ int AddRemIsoProtonsInRestrStruct( ICHICONST INPUT_PARMS *ip_inp,  STRUCT_DATA *
             if ( ret < 0 ) {
                 goto exit_function;
             }
-        } else {
+        }
+        /* the following was commented out 2007-08-28 by DT. Reason: it's a bug since H must be already connected */
+        /* else {
             if ( 0 > ( ret = ConnectDisconnectedH( at, num_atoms, num_deleted_H ) ) ) {
                 goto exit_function;
             }
-        }
+        } */
         if ( bAccumulateChanges ) {
             /* processed Reconnected layer component that is also present in Disconnected layer */
             for ( k = 0; k < NUM_H_ISOTOPES; k ++ ) {

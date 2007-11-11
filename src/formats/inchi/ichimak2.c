@@ -1,17 +1,25 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+
 
 #include "mode.h"
 
@@ -30,13 +38,17 @@
 #include "ichimain.h"
 #include "ichimake.h"
 
+
 int GetHillFormulaCounts( U_CHAR *nAtom, S_CHAR *nNum_H, int num_atoms,
                           AT_NUMB *nTautomer, int lenTautomer,
                           int *pnum_C, int *pnum_H, int *pnLen, int *pnNumNonHAtoms );
 int MakeHillFormula( U_CHAR *nAtom, int num_atoms,
                   char *szLinearCT, int nLen_szLinearCT, int num_C, int num_H, int *bOverflow );
 
+#if( FIX_DALKE_BUGS == 1 )
+#else
 char *AllocateAndFillHillFormula( INChI *pINChI );
+#endif
 
 int AddElementAndCount( const char *szElement, int mult, char *szLinearCT, int nLenLinearCT, int *bOverflow );
 

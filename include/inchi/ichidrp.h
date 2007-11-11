@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #ifndef __INCHIDRP_H__
 #define __INCHIDRP_H__
@@ -80,7 +87,7 @@ typedef struct tagInputParms {
   ip->path[1] => Output (INChI)
   ip->path[2] => Log
   ip->path[3] => Problem structures
-  ip->path[4] => Errors file (ACD(
+  ip->path[4] => Errors file (ACD)
 
 */
     const char     *path[MAX_NUM_PATHS];
@@ -113,11 +120,27 @@ typedef struct tagInputParms {
     int             bNoStructLabels;
     int             bChiralFlag;
     int             bAllowEmptyStructure;
+	/*^^^ */
+    int             bCalcInChIKey;
+	/*^^^ */
     INCHI_MODE      bTautFlags;
     INCHI_MODE      bTautFlagsDone;
+
 #if( READ_INCHI_STRING == 1 )
     int             bReadInChIOptions;
 #endif
+
+/* post v.1 features */
+#if( UNDERIVATIZE == 1 )
+    int             bUnderivatize;
+#endif
+#if( RING2CHAIN == 1 )
+    int             bRing2Chain;
+#endif
+#if ( RING2CHAIN == 1 || UNDERIVATIZE == 1 )
+    int             bIngnoreUnchanged;
+#endif
+
 } INPUT_PARMS;
 
 #endif /* __INCHIDRP_H__ */

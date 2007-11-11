@@ -1,13 +1,21 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
 
+
 int DetectInputINChIFileType( FILE **inp_file, INPUT_PARMS *ip, const char *fmode );
+void HelpCommandLineParmsReduced( INCHI_FILE *f );
 
 /*****************************************************************************************/
 int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *szSdfDataValue,
@@ -88,6 +96,9 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
     int bAddArsineStereo = 0;
 #endif
     int bFixSp3bug        = 0;
+    /* post v.1 features */
+    int bKetoEnolTaut     = 0;
+    int b15TautNonRing    = 0;
 
 
     ext[0] = ".mol";
@@ -119,6 +130,7 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
 #else
     ip->msec_MaxTime = 60000;  /*  milliseconds, default = 60 sec */
 #endif
+
 
     if ( bReleaseVersion ) {
 
@@ -392,6 +404,10 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             if ( !stricmp( pArg, "FB" ) ) {
                  bFixSp3bug = 1; /* fix all known v1 bugs */
             } else
+            /*^^^ */
+            if ( !stricmp( pArg, "Key" ) ) {
+                ip->bCalcInChIKey = 1;
+            } else
 #ifdef STEREO_WEDGE_ONLY
             if ( !stricmp( pArg, "NEWPS" ) ) {
                  bPointedEdgeStereo = 1;
@@ -554,6 +570,10 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             } else
             if ( !stricmp( pArg, "FB" ) ) {
                  bFixSp3bug = 1; /* fix all known v1 bugs */
+            } else
+            /*^^^ */
+            if ( !stricmp( pArg, "Key" ) ) {
+                ip->bCalcInChIKey = 1;
             } else
 #ifdef STEREO_WEDGE_ONLY
             if ( !stricmp( pArg, "NEWPS" ) ) {
@@ -785,7 +805,35 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             } else
             if ( !memicmp( pArg, "F", 1 ) && (c =  (int)strtol( pArg+1, (char**)&q, 10 ), q > pArg+1) ) {
                 nFontSize = -c;                      /* struct. display font size */
-            } else {
+            } else
+            /* in-house options */
+#if( UNDERIVATIZE == 1 )
+            if ( !stricmp( pArg, "DoDRV" ) ) {
+                ip->bUnderivatize = 1;
+            } else
+#endif
+#if( RING2CHAIN == 1 )
+            if ( !stricmp( pArg, "DoR2C" ) ) {
+                ip->bRing2Chain = 1;
+            } else
+#endif
+#if ( RING2CHAIN == 1 || UNDERIVATIZE == 1 )
+            if ( !stricmp( pArg, "DoneOnly" ) ) {
+                ip->bIngnoreUnchanged = 1;
+            } else
+#endif
+#if ( KETO_ENOL_TAUT == 1 )
+            if ( !stricmp( pArg, "KET" ) ) {
+                bKetoEnolTaut = 1;
+            } else
+#endif
+#if ( TAUT_15_NON_RING == 1 )
+            if ( !stricmp( pArg, "15T" ) ) {
+                b15TautNonRing = 1;
+            } else
+#endif
+            /* Display unrecognized option */
+            {
                 bRecognizedOption = 0;
 #ifndef INCHI_LIB
                 my_fprintf(log_file, "Unrecognized option: \"%s\".\n", pArg);
@@ -1003,6 +1051,9 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
     ip->bTautFlags |= bDisconnectCoordChkVal?   TG_FLAG_CHECK_VALENCE_COORD : 0;
     ip->bTautFlags |= bTgFlagVariableProtons?   TG_FLAG_VARIABLE_PROTONS     : 0;
     ip->bTautFlags |= bTgFlagHardAddRenProtons? TG_FLAG_HARD_ADD_REM_PROTONS : 0;
+    ip->bTautFlags |= bKetoEnolTaut?            TG_FLAG_KETO_ENOL_TAUT : 0;
+    ip->bTautFlags |= b15TautNonRing?           TG_FLAG_1_5_TAUT : 0;
+
 #ifdef STEREO_WEDGE_ONLY
     ip->bTautFlags  |= bPointedEdgeStereo?      TG_FLAG_POINTED_EDGE_STEREO  : 0;
 #endif
@@ -1020,6 +1071,9 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
     if ( !ip->nInputType ) {
         ip->nInputType = INPUT_MOLFILE;
     }
+
+
+
     return 0;
 }
 /*******************************************************************/
@@ -1173,6 +1227,17 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
         my_fprintf( log_file, "%sFull Aux. info", i?"; ":"");
         i ++;
     }
+
+    /*^^^ */
+    if ( ip->bCalcInChIKey) 
+    {
+        my_fprintf( log_file, "%sCalculate InChIKey", i?"; ":"");
+        i ++;
+    }
+    /*^^^ */
+
+
+
     if ( ip->bDoNotAddH ) {
         my_fprintf( log_file, "%sDo not add H", i?"; ":"");
     }
@@ -1209,6 +1274,7 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
         }
         my_fprintf( log_file, "\n");
     }
+
     /*  output format */
     my_fprintf( log_file, "Output format: %s%s\n", 
         (ip->bINChIOutputOptions & INCHI_OUT_PLAIN_TEXT)?  "Plain text" :
@@ -1254,6 +1320,7 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
     i ++;
 #endif
 
+
 #if( TRACE_MEMORY_LEAKS == 1 && defined(_DEBUG) )
     my_fprintf( log_file, "%sTracing memory leaks (SLOW)", i?"; ":"");
     i ++;
@@ -1262,6 +1329,8 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
     if ( i ) {
         my_fprintf( log_file, "\n" );
     }
+
+
 
 #if( bRELEASE_VERSION != 1 )
 
@@ -1309,7 +1378,14 @@ void HelpCommandLineParms( INCHI_FILE *f )
 
 #if ( bRELEASE_VERSION == 1 )
 
-    inchi_print_nodisplay( f, "%s ver %s%s.\n\nUsage:\nc%s-%s inputFile [outputFile [logFile [problemFile]]] [%coption[ %coption...]]\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, INCHI_NAME, INCHI_VERSION, INCHI_OPTION_PREFX, INCHI_OPTION_PREFX);
+    /*^^^ */
+     inchi_print_nodisplay( f, 
+         "%s ver %s%s.\n\nUsage:\nc%s-%s inputFile [outputFile [logFile [problemFile]]] [%coption[ %coption...]]\n", 
+         INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, 
+         INCHI_NAME, INCHI_VERSION, INCHI_OPTION_PREFX, INCHI_OPTION_PREFX); 
+     /*  inchi_print_nodisplay( f, "%s ver %s%s.\n\nUsage:\nInChI_MAIN inputFile [outputFile [logFile [problemFile]]] [%coption[ %coption...]]\n", 
+        INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, INCHI_OPTION_PREFX, INCHI_OPTION_PREFX); */
+    /*^^^ */    
     inchi_print_nodisplay( f, "\nOptions:\n");
     inchi_print_nodisplay( f, "  SNon        Exclude stereo (Default: Include Absolute stereo)\n");
     inchi_print_nodisplay( f, "  SRel        Relative stereo\n");
@@ -1360,6 +1436,11 @@ void HelpCommandLineParms( INCHI_FILE *f )
     inchi_print_nodisplay( f, "  STDIO       Use standard input/output streams\n");
     inchi_print_nodisplay( f, "  FB          (or FixSp3Bug) Fix bug leading to missing or undefined sp3 parity\n" );
     inchi_print_nodisplay( f, "  WarnOnEmptyStructure Warn and produce empty %s for empty structure\n", INCHI_NAME);
+    
+    /*^^^ */
+    inchi_print_nodisplay( f, "  Key         Calculate InChIKey\n");
+    /*^^^ */
+
 #if( FIX_ADJ_RAD == 1 )
     inchi_print_nodisplay( f, "  FixRad      Fix Adjacent Radicals\n");
 #endif
@@ -1415,6 +1496,90 @@ void HelpCommandLineParms( INCHI_FILE *f )
 }
 
 
+
+
+/*^^^ */
+/************************************************************************************/
+void HelpCommandLineParmsReduced( INCHI_FILE *f )
+{
+    if ( !f )
+        return;
+
+#if ( bRELEASE_VERSION == 1 )
+
+    /*
+    inchi_print_nodisplay( f, "%s ver %s%s.\n\nUsage:\nInChI_MAIN inputFile [outputFile [logFile [problemFile]]] [%coption[ %coption...]]\n", 
+        INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, INCHI_OPTION_PREFX, INCHI_OPTION_PREFX); 
+    */    
+
+    /*^^^ */
+     inchi_print_nodisplay( f, 
+         "%s ver %s%s.\n\nUsage:\nc%s-%s inputFile [outputFile [logFile [problemFile]]] [%coption[ %coption...]]\n", 
+         INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, 
+         INCHI_NAME, INCHI_VERSION, INCHI_OPTION_PREFX, INCHI_OPTION_PREFX); 
+     /*  inchi_print_nodisplay( f, "%s ver %s%s.\n\nUsage:\nInChI_MAIN inputFile [outputFile [logFile [problemFile]]] [%coption[ %coption...]]\n", 
+        INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, INCHI_OPTION_PREFX, INCHI_OPTION_PREFX); */
+    /*^^^ */    
+
+    inchi_print_nodisplay( f, "\nOptions:\n");
+    inchi_print_nodisplay( f, "  SNon        Exclude stereo (Default: Include Absolute stereo)\n");
+    inchi_print_nodisplay( f, "  SRel        Relative stereo\n");
+    inchi_print_nodisplay( f, "  SRac        Racemic stereo\n");
+    inchi_print_nodisplay( f, "  SUCF        Use Chiral Flag: On means Absolute stereo, Off - Relative\n"); 
+    inchi_print_nodisplay( f, "  SUU         Include omitted unknown/undefined stereo\n");
+    inchi_print_nodisplay( f, "  NEWPS       Narrow end of wedge points to stereocenter (default: both)\n");
+#if( ADD_PHOSPHINE_STEREO == 1 )
+    inchi_print_nodisplay( f, "  SPXYZ       Include Phosphines Stereochemistry\n");
+#endif
+#if( ADD_ARSINE_STEREO == 1 )
+    inchi_print_nodisplay( f, "  SAsXYZ      Include Arsines Stereochemistry\n");
+#endif
+    inchi_print_nodisplay( f, "  RecMet      Include reconnected metals results\n");
+    inchi_print_nodisplay( f, "  FixedH      Mobile H Perception Off (Default: On)\n");
+    inchi_print_nodisplay( f, "  AuxNone     Omit auxiliary information (default: Include)\n");
+    inchi_print_nodisplay( f, "  NoADP       Disable Aggressive Deprotonation (for testing only)\n");
+    inchi_print_nodisplay( f, "  Compress    Compressed output\n");
+    inchi_print_nodisplay( f, "  DoNotAddH   Don't add H according to usual valences: all H are explicit\n");
+#if( defined(_WIN32) && defined(_MSC_VER) && !defined(INCHI_ANSI_ONLY) && !defined(INCHI_LIBRARY) )
+    inchi_print_nodisplay( f, "  D           Display the structures\n");
+    inchi_print_nodisplay( f, "  EQU         Display sets of identical components\n");
+    inchi_print_nodisplay( f, "  Fnumber     Set display Font size in number of points\n");
+#endif
+    inchi_print_nodisplay( f, "  Wnumber     Set time-out per structure in seconds; W0 means unlimited\n");
+    inchi_print_nodisplay( f, "  SDF:DataHeader Read from the input SDfile the ID under this DataHeader\n");
+#if( ADD_CMLPP == 1 )
+    inchi_print_nodisplay( f, "  CML         Input in CML format (default for input file .CML extension)\n");
+#endif
+    inchi_print_nodisplay( f, "  NoLabels    Omit structure number, DataHeader and ID from %s output\n", INCHI_NAME);
+    inchi_print_nodisplay( f, "  Tabbed      Separate structure number, %s, and AuxIndo with tabs\n", INCHI_NAME);
+    inchi_print_nodisplay( f, "  OutputSDF   Convert %s created with default aux. info to SDfile\n", INCHI_NAME);
+#if ( SDF_OUTPUT_DT == 1 )
+    inchi_print_nodisplay( f, "  SdfAtomsDT  Output Hydrogen Isotopes to SDfile as Atoms D and T\n");
+#endif
+    inchi_print_nodisplay( f, "  STDIO       Use standard input/output streams\n");
+    inchi_print_nodisplay( f, "  FB          (or FixSp3Bug) Fix bug leading to missing or undefined sp3 parity\n" );
+    inchi_print_nodisplay( f, "  WarnOnEmptyStructure Warn and produce empty %s for empty structure\n", INCHI_NAME);
+    
+    /*^^^ */
+    inchi_print_nodisplay( f, "  Key         Calculate InChIKey\n");
+    /*^^^ */
+
+#if( FIX_ADJ_RAD == 1 )
+    inchi_print_nodisplay( f, "  FixRad      Fix Adjacent Radicals\n");
+#endif
+       
+#endif /* #if ( bRELEASE_VERSION == 1 ) */
+}
+
+
+
+/*^^^ */
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
+#define fprintf2 my_fprintf
+#else
+#define fprintf2 my_fileprintf
+#endif
+
 #ifndef INCHI_LIBRARY
 /************************************************************************************/
 int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_file, INPUT_PARMS *ip )
@@ -1430,17 +1595,17 @@ int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_
 */
     /*  logfile -- open es early as possible */
     if ( !ip->path[2] || !ip->path[2][0] ) {
-        my_fprintf( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, bRELEASE_VERSION? "":" (For pre-release testing)" );
-        my_fprintf( stderr, "Log file not specified. Using standard error output.\n");
+        fprintf2( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, bRELEASE_VERSION? "":" (For pre-release testing)" );
+        fprintf2( stderr, "Log file not specified. Using standard error output.\n");
         *log_file = stderr;
     } else
     if ( !(*log_file = fopen( ip->path[2], "w" ) ) ) {
-        my_fprintf( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, bRELEASE_VERSION? "":" (For pre-release testing)" );
-        my_fprintf( stderr, "Cannot open log file '%s'. Using standard error output.\n", ip->path[2] );
+        fprintf2( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, bRELEASE_VERSION? "":" (For pre-release testing)" );
+        fprintf2( stderr, "Cannot open log file '%s'. Using standard error output.\n", ip->path[2] );
         *log_file = stderr;
     } else {
-        my_fprintf( *log_file, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, bRELEASE_VERSION? "":" (For pre-release testing)" );
-        my_fprintf( *log_file, "Opened log file '%s'\n", ip->path[2] );
+        fprintf2( *log_file, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, bRELEASE_VERSION? "":" (For pre-release testing)" );
+        fprintf2( *log_file, "Opened log file '%s'\n", ip->path[2] );
     }
     /* input file */
     if ( (ip->nInputType == INPUT_MOLFILE || ip->nInputType == INPUT_SDFILE ||
@@ -1450,7 +1615,7 @@ int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_
         /* compilers that definitely allow fopen "rb" (binary read) mode */
         fmode = "rb";
         if ( !ip->path[0] || !ip->path[0][0] || !(*inp_file = fopen( ip->path[0], "rb" ) ) ) {
-            my_fprintf( *log_file, "Cannot open input file '%s'. Terminating.\n", ip->path[0]? ip->path[0] : "<No name>" );
+            fprintf2( *log_file, "Cannot open input file '%s'. Terminating.\n", ip->path[0]? ip->path[0] : "<No name>" );
             goto exit_function;
         } else
         if ( ip->nInputType == INPUT_CMLFILE ) {
@@ -1465,50 +1630,50 @@ int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_
                 /* text file contains CR; close and reopen as "text" */
                 fclose( *inp_file );
                 if ( !(*inp_file = fopen( ip->path[0], "r" ) ) ) {
-                    my_fprintf( *log_file, "Cannot open input file '%s' (2nd attempt). Terminating.\n", ip->path[0] );
+                    fprintf2( *log_file, "Cannot open input file '%s' (2nd attempt). Terminating.\n", ip->path[0] );
                     goto exit_function;
                 }
-                my_fprintf( *log_file, "Opened input file '%s'\n", ip->path[0] );
+                fprintf2( *log_file, "Opened input file '%s'\n", ip->path[0] );
                 fmode = "r";
             } else {
                 fclose( *inp_file );
                 if ( !(*inp_file = fopen( ip->path[0], "rb" ) ) ) {
-                    my_fprintf( *log_file, "Cannot open input file '%s' (2nd attempt). Terminating.\n", ip->path[0] );
+                    fprintf2( *log_file, "Cannot open input file '%s' (2nd attempt). Terminating.\n", ip->path[0] );
                     goto exit_function;
                 }
-                my_fprintf( *log_file, "Opened input file '%s': no CR.\n", ip->path[0] );
+                fprintf2( *log_file, "Opened input file '%s': no CR.\n", ip->path[0] );
                 fmode = "rb";
             }
         }
 #else
         if ( !ip->path[0] || !ip->path[0][0] || !(*inp_file = fopen( ip->path[0], "r" ) ) ) {
-            my_fprintf( *log_file, "Cannot open input file '%s'. Terminating.\n", ip->path[0]? ip->path[0] : "<No Name>" );
+            fprintf2( *log_file, "Cannot open input file '%s'. Terminating.\n", ip->path[0]? ip->path[0] : "<No Name>" );
             goto exit_function;
         } else {
-            my_fprintf( *log_file, "Opened input file '%s'\n", ip->path[0] );
+            fprintf2( *log_file, "Opened input file '%s'\n", ip->path[0] );
         }
         fmode = "r";
 #endif
         DetectInputINChIFileType( inp_file, ip, fmode );
     } else
     if ( (ip->nInputType != INPUT_MOLFILE && ip->nInputType != INPUT_SDFILE && ip->nInputType != INPUT_CMLFILE && ip->nInputType != INPUT_INCHI) ) {
-        my_fprintf( *log_file, "Input file type not specified. Terminating.\n");
+        fprintf2( *log_file, "Input file type not specified. Terminating.\n");
         goto exit_function;
     } else {
-        my_fprintf( *log_file, "Input file not specified. Using standard input.\n");
+        fprintf2( *log_file, "Input file not specified. Using standard input.\n");
         *inp_file = stdin;
     }
     /*  output file */
     if ( !ip->path[1] || !ip->path[1][0] ) {
-        my_fprintf( *log_file, "Output file not specified. Using standard output.\n");
+        fprintf2( *log_file, "Output file not specified. Using standard output.\n");
         *output_file = stdout;
     } else {
         if ( !(*output_file = fopen( ip->path[1], "w" ) ) ) {
-            my_fprintf( *log_file, "Cannot open output file '%s'. Terminating.\n", ip->path[1] );
+            fprintf2( *log_file, "Cannot open output file '%s'. Terminating.\n", ip->path[1] );
             goto exit_function;
         } else {
-             my_fprintf( *log_file, "Opened output file '%s'\n", ip->path[1] );
-             if ( (ip->bINChIOutputOptions & (INCHI_OUT_PLAIN_TEXT)) &&
+             fprintf2( *log_file, "Opened output file '%s'\n", ip->path[1] );
+            if ( (ip->bINChIOutputOptions & (INCHI_OUT_PLAIN_TEXT)) &&
                   *inp_file != stdin &&
                   !(ip->bINChIOutputOptions & INCHI_OUT_SDFILE_ONLY) &&
                   !ip->bNoStructLabels &&
@@ -1526,10 +1691,10 @@ int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_
         }
 #endif
         if (  !(*prb_file = fopen( ip->path[3], fmode ) ) ) {
-            my_fprintf( *log_file, "Cannot open problem file '%s'. Terminating.\n", ip->path[3] );
+            fprintf2( *log_file, "Cannot open problem file '%s'. Terminating.\n", ip->path[3] );
             goto exit_function;
         } else {
-             my_fprintf( *log_file, "Opened problem file '%s'\n", ip->path[3] );
+             fprintf2( *log_file, "Opened problem file '%s'\n", ip->path[3] );
         }
     }
     return 1;  /*  success */
@@ -1607,6 +1772,9 @@ int DetectInputINChIFileType( FILE **inp_file, INPUT_PARMS *ip, const char *fmod
         lenXmlMsgError    = sprintf( szXmlMsgError,    "<message type=\"error (no %s)\"", INCHI_NAME );
         lenXmlStruct      = strlen(szXmlStruct);
         lenXmlMsgFatal    = strlen(szXmlMsgFatal);
+#if ( FIX_DALKE_BUGS == 1 )
+        bInitilized = 1;
+#endif
     }
     for ( i = 0; i < 4; i ++ ) {
         len = my_fgetsUpToLfOrTab( szLine, sizeof(szLine)-1, *inp_file );

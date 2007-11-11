@@ -1,17 +1,26 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #ifndef __INCHINORM_H__
 #define __INCHINORM_H__
 
+
 #include "mode.h"
 #include "ichi_bns.h"
+
 
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus
@@ -42,7 +51,7 @@ int MakeIsotopicHGroup( inp_ATOM *at, int num_atoms, S_GROUP_INFO *s_group_info,
 int remove_terminal_HDT( int num_atoms, inp_ATOM *at );
 int RemoveExcessiveImplicitH( int num_atoms, int num_removed_H, inp_ATOM *at );
 int add_DT_to_num_H( int num_atoms, inp_ATOM *at );
-int MarkRingSystemsInp( inp_ATOM *at, int num_atoms );
+int MarkRingSystemsInp( inp_ATOM *at, int num_atoms, int start );
 int free_t_group_info( T_GROUP_INFO *t_group_info );
 int make_a_copy_of_t_group_info( T_GROUP_INFO *t_group_info, T_GROUP_INFO *t_group_info_orig );
 int set_tautomer_iso_sort_keys( T_GROUP_INFO *t_group_info );
@@ -58,6 +67,7 @@ int FillTautLinearCT2( int num_atoms, int num_at_tg, int bIsoTaut,
         AT_TAUTOMER   *LinearCTTautomer, int nMaxLenLinearCTTautomer, int *pnLenLinearCTTautomer,
         AT_ISO_TGROUP *LinearCTIsotopicTautomer, int nMaxLenLinearCTIsotopicTautomer, int *pnLenLinearCTIsotopicTautomer,
         T_GROUP_INFO *t_group_info );
+
 
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus

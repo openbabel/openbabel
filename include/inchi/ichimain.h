@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #ifndef __INCHIMAIN_H__
 #define __INCHIMAIN_H__
@@ -75,7 +82,8 @@ void SplitTime( unsigned long ulTotalTime, int *hours, int *minutes, int *second
 int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATOM_DATA *orig_inp_data,
                      int inp_index, int *out_index );
 int TreatReadTheStructureErrors(  STRUCT_DATA *sd, INPUT_PARMS *ip, int nLogMask, 
-                                  FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                                  FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                                  FILE *prb_file, /*^^^ was: INCHI_FILE */
                                   ORIG_ATOM_DATA *orig_inp_data, long *num_inp, char *pStr, int nStrLen );
 
 int GetOneComponent( STRUCT_DATA *sd, INPUT_PARMS *ip, INCHI_FILE *log_file, INCHI_FILE *output_file,
@@ -87,10 +95,12 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
                             NORM_CANON_FLAGS *pncFlags, INCHI_FILE *log_file );
 int TreatCreateOneComponentINChIError(STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *orig_inp_data,
                                      int i, long num_inp,
-                                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                                     FILE *prb_file, /*^^^ was: INCHI_FILE */
                                      char *pStr, int nStrLen );
 int TreatCreateINChIWarning(STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *orig_inp_data, long num_inp,
-                                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                                     FILE *prb_file, /*^^^ was: INCHI_FILE */
                                      char *pStr, int nStrLen );
 
 #if( TEST_RENUMB_ATOMS == 1 || READ_INCHI_STRING == 1 ) /*  { */
@@ -101,17 +111,20 @@ void eat_keyboard_input( void );
 int user_quit( const char *msg, unsigned long ulMaxTime );
 
 int GetOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
-                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                     FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                     FILE *prb_file, /*^^^ was: INCHI_FILE */
                      ORIG_ATOM_DATA *orig_inp_data, long *num_inp, char *pStr, int nStrLen, STRUCT_FPTRS *struct_fptrs );
 int ProcessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                          PINChI2 *pINChI2[INCHI_NUM], PINChI_Aux2 *pINChI_Aux2[INCHI_NUM],
-                         FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                         FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                         FILE *prb_file, /*^^^ was: INCHI_FILE */
                          ORIG_ATOM_DATA *orig_inp_data, ORIG_ATOM_DATA *prep_inp_data,
                          long num_inp, char *pStr, int nStrLen ); 
 
 int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                          PINChI2 *pINChI2[INCHI_NUM], PINChI_Aux2 *pINChI_Aux2[INCHI_NUM], int iINChI,
-                         FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+                         FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+                         FILE *prb_file, /*^^^ was: INCHI_FILE */
                          ORIG_ATOM_DATA *orig_inp_data, ORIG_ATOM_DATA *prep_inp_data,
                          COMP_ATOM_DATA composite_norm_data2[][TAUT_NUM+1],
                          long num_inp, char *pStr, int nStrLen, NORM_CANON_FLAGS *pncFlags );
@@ -123,9 +136,16 @@ int PreprocessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *or
 int FillOutOrigStruct( ORIG_ATOM_DATA *orig_inp_data, ORIG_STRUCT *pOrigStruct, STRUCT_DATA *sd );
 void FreeOrigStruct(  ORIG_STRUCT *pOrigStruct);
 
-int ReadWriteInChI( INCHI_FILE *pInp, INCHI_FILE *pOut, INCHI_FILE *pLog,
-                    INPUT_PARMS *ip,  STRUCT_DATA *sd, inp_ATOM **at, int *num_at,
-                    char *szMsg, int nMsgLen, unsigned long WarningFlags[2][2] );
+
+int ReadWriteInChI(
+#if ( defined(BUILD_CINCHI_WITH_INCHIKEY) && !defined(INCHI_LIB) )                   
+                   FILE *pInp, FILE *output_file, FILE *log_file,
+#else
+                   INCHI_FILE *pInp, 
+#endif
+                   INCHI_FILE *pOut, INCHI_FILE *pLog,
+                   INPUT_PARMS *ip,  STRUCT_DATA *sd, inp_ATOM **at, int *num_at,
+                   char *szMsg, int nMsgLen, unsigned long WarningFlags[2][2] );
 
 int CompareHillFormulasNoH( const char *f1, const char *f2, int *num_H1, int *num_H2 );
 

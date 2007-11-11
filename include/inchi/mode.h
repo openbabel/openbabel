@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #ifndef __MODE_H__
 #define __MODE_H__
@@ -192,6 +199,7 @@ extern "C" {
 #define FIX_NUM_TG                    0  /* increase number of t-groups for isothiocyanate */
 /* changes InChI for isothiocyanate */
 #define FIX_CPOINT_BOND_CAP2          0
+#define FIX_DALKE_BUGS                1
 
 #endif
 
@@ -226,6 +234,14 @@ extern "C" {
 /**************************/
 /* Normalization settings */
 /**************************/
+
+/* post version 1 features */
+#define KETO_ENOL_TAUT             1 /* include keto-enol tautomerism */
+#define TAUT_15_NON_RING           1 /* 1,5 tautomerism with endpoints not in ring */
+
+/* for in-house use */
+#define UNDERIVATIZE               0 /* split to possible underivatized fragments */
+#define RING2CHAIN                 0 /* open rings R-C(-OH)-O-R => R-C(=O) OH-R   */
 
 /* post-2004-04-27 features */
 #define HAL_ACID_H_XCHG            1 /* allow iso H exchange to HX (X=halogen) and H2Y (Y=halcogen) */
@@ -735,6 +751,9 @@ extern "C" {
 #define TG_FLAG_ARSINE_STEREO            0x00010000   /* add arsine sp3 stereo */
 #define TG_FLAG_H_ALREADY_REMOVED        0x00020000   /* processing structure restored from InChI */
 #define TG_FLAG_FIX_SP3_BUG              0x00040000   /* fix sp3 stereo bug: overlapping 2D stereo bond & coordinate scaling */
+
+#define TG_FLAG_KETO_ENOL_TAUT           0x00080000   /* turn on keto-enol tautomerism detection */
+#define TG_FLAG_1_5_TAUT                 0x00100000   /* turn on 1,5 tautomerism detection */
                                        
 /* output bTautFlags flags */          
                                        

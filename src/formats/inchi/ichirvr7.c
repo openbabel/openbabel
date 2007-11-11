@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,6 +20,7 @@
 #include <ctype.h>
 #include <math.h>
 
+/*^^^ */
 /* #define CHECK_WIN32_VC_HEAP */
 #include "mode.h"
 
@@ -1012,7 +1020,7 @@ void FreeInpInChI( InpInChI *pOneInput )
 int CompareAllOrigInchiToRevInChI(StrFromINChI *pStruct[INCHI_NUM][TAUT_NUM], InpInChI *pOneInput, int bReqNonTaut,
                                   long num_inp, char *szCurHdr)
 {
-    int i, iInchiRec, iMobileH, iMobileHpStruct, num_components, iComponent, ret;
+    int i, iInchiRec, iMobileH, iMobileHpStruct, num_components, iComponent, ret=0;
     COMPONENT_REM_PROTONS nCurRemovedProtons, nNumRemovedProtons;
     INChI     *pInChI[TAUT_NUM];
     INCHI_MODE  CompareInchiFlags[TAUT_NUM];
@@ -1753,8 +1761,9 @@ INCHI_MODE CompareReversedStereoINChI3( INChI_Stereo *s1/* InChI from reversed s
             }
         }
     }
-    if ( s1 && s2 && s1->nCompInv2Abs != s2->nCompInv2Abs && s1->nCompInv2Abs && s2->nCompInv2Abs ) {
-        ret |= INCHIDIFF_SC_INV;
+    if ( s1 && s2 && (s2->nCompInv2Abs != 2) && s1->nCompInv2Abs != s2->nCompInv2Abs && s1->nCompInv2Abs && s2->nCompInv2Abs ) {
+        ret |= INCHIDIFF_SC_INV; /* 2007-07-13 DT: added (s2->nCompInv2Abs != 2) to fix bug reoprted by Yerin on 2007/02/28 */
+                                 /* Bug description: falsely reported "Stereo centers/allenes: Falsely inverted" for /S2 or /S3 */
     }
 
     if ( (nNumSb1 || nNumSb2 ) &&

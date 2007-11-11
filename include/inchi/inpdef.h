@@ -1,20 +1,28 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 /* input/output format */
 #ifndef __INPDEF_H__
 #define __INPDEF_H__
 
+/*^^^ */
 #include "mode.h"
-#include "comdef.h"
+#include "incomdef.h" 
 #include "ichidrp.h"
-
+/*^^^ */
 
 #define bDrawingLabelLeftShift endpoint    /* for drawing only */
 typedef S_SHORT ST_CAP_FLOW;
@@ -280,7 +288,9 @@ int post_fix_odd_things( int num_atoms, inp_ATOM *at );
 int remove_ion_pairs( int num_atoms, inp_ATOM *at );
 
 int bFoundFeature( inp_ATOM *at, int num_atoms );
-int CopyMOLfile(FILE *inp_file, long fPtrStart, long fPtrEnd, INCHI_FILE *prb_file, long nNumb);
+int CopyMOLfile(FILE *inp_file, long fPtrStart, long fPtrEnd, 
+                FILE *prb_file, /*^^^ was: INCHI_FILE */
+                long nNumb);
 
 void FreeInpAtom( inp_ATOM **at );
 void FreeInfAtom( inf_ATOM **at );
@@ -302,7 +312,9 @@ int CreateCompAtomData( COMP_ATOM_DATA *inp_at_data, int num_atoms, int num_comp
 #ifndef INCHI_ANSI_ONLY
 int DisplayInputStructure( char *szOutputString, inp_ATOM  *at, INF_ATOM_DATA *inf_at_data, int num_at, DRAW_PARMS *dp );
 #endif
-void PrintFileName( const char *fmt, INCHI_FILE *output_file, const char *szFname );
+void PrintFileName( const char *fmt, 
+                   FILE *output_file, /*^^^ was: INCHI_FILE */
+                   const char *szFname );
 void MySleep( unsigned long ms );
 
 #ifndef __ICHITIME_H__
@@ -311,6 +323,9 @@ int bInchiTimeIsOver( struct tagInchiTime *TickEnd );
 #endif
 
 int get_endpoint_valence( U_CHAR el_number );
+#if( KETO_ENOL_TAUT == 1 )
+int get_endpoint_valence_KET( U_CHAR el_number );
+#endif
 
 #if( TEST_RENUMB_ATOMS == 1 )  /*  { */
 int CopyInpAtomData( INP_ATOM_DATA *dest_inp_at_data, INP_ATOM_DATA *src_inp_at_data );

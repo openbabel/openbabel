@@ -10,4 +10,6 @@ libinchi_la_SOURCES = \
 	ichiprt3.c ichiqueu.c ichiread.c ichiring.c ichirvr1.c \
 	ichirvr2.c ichirvr3.c ichirvr4.c ichirvr5.c ichirvr6.c \
 	ichirvr7.c ichisort.c ichister.c ichitaut.c inchi_dll.c \
-	inchi_dll_main.c runichi.c strutil.c util.c
+	inchi_dll_main.c runichi.c strutil.c util.c \
+	ikey_base26.c inchi_dll_a2.c inchi_dll_a.c ikey_dll.c \
+	sha2.c

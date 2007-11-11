@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include "mode.h"
 
@@ -51,7 +58,8 @@ int InpAtom0DToInchiAtom( inp_ATOM *at, int num_atoms, inchi_OutputStruct *outSt
 
 
 int ExtractOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
-         inchi_Input *inp, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+         inchi_Input *inp, INCHI_FILE *log_file, INCHI_FILE *output_file, 
+         FILE *prb_file, /*^^^ was: INCHI_FILE */
          ORIG_ATOM_DATA *orig_inp_data, long *num_inp, char *pStr, int nStrLen );
 
 /*************************************************************************/
@@ -109,7 +117,8 @@ int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out )
     STRUCT_DATA *sd = &struct_data;
     FILE *inp_file = NULL;
     INCHI_FILE inchi_file[3];
-    INCHI_FILE *output_file = inchi_file, *log_file = inchi_file+1, *prb_file = inchi_file+2;
+    INCHI_FILE *output_file = inchi_file, *log_file = inchi_file+1;
+    FILE *prb_file = NULL; /*^^^ was: INCHI_FILE */
     char szTitle[MAX_SDF_HEADER+MAX_SDF_VALUE+256];
 
     int i;
@@ -485,7 +494,9 @@ int AddMOLfileError( char *pStrErr, const char *szMsg )
     return 0;
 }
 /****************************************************************/
-int CopyMOLfile(FILE *inp_file, long fPtrStart, long fPtrEnd, INCHI_FILE *prb_file, long lNumb)
+int CopyMOLfile(FILE *inp_file, long fPtrStart, long fPtrEnd, 
+                FILE *prb_file, /*^^^ was: INCHI_FILE */
+                long lNumb)
 {
     return 0; /* dummy */
 }
@@ -1319,7 +1330,8 @@ exit_function:
 /****************************************************************************************/
 int ExtractOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
          inchi_Input *inp, INCHI_FILE *log_file, INCHI_FILE *output_file,
-         INCHI_FILE *prb_file, ORIG_ATOM_DATA *orig_inp_data, long *num_inp,
+         FILE *prb_file, /*^^^ was: INCHI_FILE */
+         ORIG_ATOM_DATA *orig_inp_data, long *num_inp,
          char *pStr, int nStrLen )
 {
     int         *err           = &sd->nStructReadError;

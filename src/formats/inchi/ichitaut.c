@@ -1,15 +1,23 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 
 #include "mode.h"
 
@@ -26,6 +34,8 @@
 #include "util.h"
 
 #include "ichi_bns.h"
+
+
 /* local prototypes */
 int SetTautomericBonds( inp_ATOM *at, int nNumBondPos, T_BONDPOS *BondPos );
 int CompRankTautomer(const void* a1, const void* a2 );
@@ -39,7 +49,7 @@ int MoveEndpoint( inp_ATOM *at, S_CANDIDATE *s_candidate, AT_NUMB endpoint, AT_N
 
 int FindAccessibleEndPoints( T_ENDPOINT *EndPoint, int *nNumEndPoints, T_BONDPOS *BondPos, int *nNumBondPos,
                          struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD,
-                         inp_ATOM *at, int num_atoms, C_GROUP_INFO *cgi );
+                         inp_ATOM *at, int num_atoms, C_GROUP_INFO *cgi, int taut_mode );
 
 /* bits for GetChargeType */
 
@@ -105,6 +115,24 @@ int is_centerpoint_elem( U_CHAR el_number )
     }
     return 0;
 }
+#if ( KETO_ENOL_TAUT == 1 )  /* post v.1 feature */
+/*************************************************************************************/
+int is_centerpoint_elem_KET( U_CHAR el_number )
+{
+    static U_CHAR el_numb[1];
+    static int len;
+    int i;
+    if ( !el_numb[0] && !len ) {
+        el_numb[len++] = (U_CHAR)get_periodic_table_number( "C" );
+    }
+    for ( i = 0; i < len; i ++ ) {
+        if ( el_numb[i] == el_number ) {
+            return 1;
+        }
+    }
+    return 0;
+}
+#endif
 /*************************************************************************************/
 int is_centerpoint_elem_strict( U_CHAR el_number )
 {
@@ -146,6 +174,26 @@ int get_endpoint_valence( U_CHAR el_number )
     }
     return 0;
 }
+#if( KETO_ENOL_TAUT == 1 )  /* post v.1 feature */
+/*************************************************************************************/
+int get_endpoint_valence_KET( U_CHAR el_number )
+{
+    static U_CHAR el_numb[2];
+    static int len, len2;
+    int i;
+    if ( !el_numb[0] && !len ) {
+        el_numb[len++] = (U_CHAR)get_periodic_table_number( "O" );
+        len2 = len;
+        el_numb[len++] = (U_CHAR)get_periodic_table_number( "C" );
+    }
+    for ( i = 0; i < len; i ++ ) {
+        if ( el_numb[i] == el_number ) {
+            return i < len2? 2 : 4;
+        }
+    }
+    return 0;
+}
+#endif
 /********************************************************************************************************/
 int AddAtom2num(  AT_RANK num[], inp_ATOM *atom, int at_no, int bSubtract )
 {  /*  bSubtract: 0=> add, 1=>subtract, 2=> fill */
@@ -285,6 +333,9 @@ int nGetEndpointInfo( inp_ATOM *atom, int iat, ENDPOINT_INFO *eif )
         eif->cMobile = nMobile;
         eif->cNeutralBondsValence = nEndpointValence-nMobile;
         eif->cMoveableCharge = 0;
+#if ( KETO_ENOL_TAUT == 1 )
+        eif->cKetoEnolCode = 0;
+#endif
         return nEndpointValence;
     } else
     if ( atom[iat].c_point &&
@@ -305,10 +356,89 @@ int nGetEndpointInfo( inp_ATOM *atom, int iat, ENDPOINT_INFO *eif )
         eif->cMobile = atom[iat].num_H;
         eif->cNeutralBondsValence = nEndpointValence-atom[iat].num_H;
         eif->cMoveableCharge = atom[iat].charge;
+#if ( KETO_ENOL_TAUT == 1 )
+        eif->cKetoEnolCode = 0;
+#endif
         return nEndpointValence;
     }
     return 0;
 }
+#if ( KETO_ENOL_TAUT == 1 )  /* post v.1 feature */
+/********************************************************************************************************/
+int nGetEndpointInfo_KET( inp_ATOM *atom, int iat, ENDPOINT_INFO *eif )
+{
+    int  nEndpointValence;
+    int  nMobile;
+    S_CHAR cChargeSubtype;
+
+    /*
+    static U_CHAR el_number_O, el_number_C;
+
+    if ( !el_number_O ) {
+        el_number_O = (U_CHAR)get_periodic_table_number( "O" );
+        el_number_C = (U_CHAR)get_periodic_table_number( "C" );
+    }
+    */
+    if ( atom[iat].radical && atom[iat].radical != RADICAL_SINGLET )
+        return 0; /* a radical */
+    if ( !(nEndpointValence = get_endpoint_valence_KET( atom[iat].el_number )) )
+        return 0; /* not an endpoint; only O and C can be an endpoint for keto-enol tautomerism */
+    if ( nEndpointValence <= atom[iat].valence )
+        return 0; /* not an endpoint, for example >N(+)< or >N<  or >O(+)- or >O- or >N- or -O- */
+    if ( nEndpointValence == 4 && atom[iat].valence < 2 )
+        return 0; /* exclude O==C--CH3  <=> HO--C==CH2 */
+    if ( nEndpointValence == 2 && atom[iat].valence > 1 )
+        return 0; /* exclude --O--C==CH-- */
+
+    if ( atom[iat].charge == -1 || atom[iat].charge == 0 ) {
+        /* not a positive charge-point */
+        if ( nEndpointValence < atom[iat].chem_bonds_valence )
+            return 0; /* abnormal valence > standard endpoint valence */
+        nMobile = atom[iat].num_H + (atom[iat].charge == -1);
+        if ( nMobile + atom[iat].chem_bonds_valence != nEndpointValence )
+            return 0; /* non-standard endpoint valence */
+        switch ( atom[iat].chem_bonds_valence - atom[iat].valence ) {
+        case 0:
+            eif->cDonor    = 1;
+            eif->cAcceptor = 0;
+            break;
+        case 1:
+            eif->cDonor    = 0;
+            eif->cAcceptor = 1;
+            break;
+        default:
+            return 0;
+        }
+        eif->cMobile = nMobile;
+        eif->cNeutralBondsValence = nEndpointValence-nMobile;
+        eif->cMoveableCharge = 0;
+        eif->cKetoEnolCode   = (nEndpointValence == 2)? 1 : (nEndpointValence == 4)? 2 : 0;
+        return nEndpointValence;
+    } else
+    if ( atom[iat].c_point &&
+         0 <= GetChargeType( atom, iat, &cChargeSubtype ) &&
+         ((int)cChargeSubtype & (C_SUBTYPE_H_ACCEPT|C_SUBTYPE_H_DONOR))
+        ) {
+        /* charge-point; currently only O for keto-enol tautomerism */
+        if ( cChargeSubtype & C_SUBTYPE_H_ACCEPT ) {
+            eif->cDonor    = 0;
+            eif->cAcceptor = 1;
+        } else
+        if ( cChargeSubtype & C_SUBTYPE_H_DONOR ) {
+            eif->cDonor    = 1;
+            eif->cAcceptor = 0;
+        } else {
+            return 0;
+        }
+        eif->cMobile = atom[iat].num_H;
+        eif->cNeutralBondsValence = nEndpointValence-atom[iat].num_H;
+        eif->cMoveableCharge = atom[iat].charge;
+        eif->cKetoEnolCode   = (nEndpointValence == 2)? 1 : (nEndpointValence == 4)? 2 : 0;
+        return nEndpointValence;
+    }
+    return 0;
+}
+#endif
 /********************************************************************************************************/
 /*  RegisterEndPoints ret>0 => new registration happened, 0 => no changes, -1 => program error (debug) */
 int RegisterEndPoints( T_GROUP_INFO *t_group_info, /* T_GROUP *t_group, int *pnum_t, int max_num_t,*/
@@ -641,6 +771,9 @@ int RegisterEndPoints( T_GROUP_INFO *t_group_info, /* T_GROUP *t_group, int *pnu
         memset( &tgi, 0, sizeof(tgi) );
         tgi.num_t_groups = num_t;
         tgi.t_group = t_group;
+#if( KETO_ENOL_TAUT == 1 )
+        tgi.bTautFlags |= (t_group_info->bTautFlags & TG_FLAG_KETO_ENOL_TAUT); /* needed in AddTGroups2BnStruct() */
+#endif
         /* reinitialize BN Structure */
         ret_bns = ReInitBnStruct( pBNS, at, num_atoms, 0 );
         if ( IS_BNS_ERROR( ret_bns ) ) {
@@ -819,7 +952,7 @@ int GetNeutralRepsIfNeeded( AT_NUMB *pri, AT_NUMB *prj, inp_ATOM *at, int num_at
 /********************************************************************************************************/
 int FindAccessibleEndPoints( T_ENDPOINT *EndPoint, int *nNumEndPoints, T_BONDPOS *BondPos, int *nNumBondPos,
                          struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD,
-                         inp_ATOM *at, int num_atoms, C_GROUP_INFO *cgi )
+                         inp_ATOM *at, int num_atoms, C_GROUP_INFO *cgi, int taut_mode )
 {
     AT_NUMB nTGroupRepresenative[MAXVAL], nTGroupEqu[MAXVAL], nTGEndPointNo[MAXVAL], ri, rj;
     AT_NUMB nCurTGroupNumber, nMaxTGroupNumber, nNumTgroupNumbers, nMaxEquNumber;
@@ -853,7 +986,7 @@ int FindAccessibleEndPoints( T_ENDPOINT *EndPoint, int *nNumEndPoints, T_BONDPOS
             rj = nTGroupRepresenative[j];
             /* both at[ri] and at[rj] are known to belong to tautomeric groups */
             GetNeutralRepsIfNeeded( &ri, &rj, at, num_atoms, EndPoint, *nNumEndPoints, cgi );
-            nErr = bExistsAnyAltPath( pBNS, pBD, at, num_atoms, ri, rj, ALT_PATH_MODE_TAUTOM );
+            nErr = bExistsAnyAltPath( pBNS, pBD, at, num_atoms, ri, rj, taut_mode );
             if ( IS_BNS_ERROR(nErr) )
                 return nErr;
             if ( 0 == nErr )
@@ -939,7 +1072,7 @@ int FindAccessibleEndPoints( T_ENDPOINT *EndPoint, int *nNumEndPoints, T_BONDPOS
                  -----------------------------------------------------------------------------*/
                 GetNeutralRepsIfNeeded( &ri, &rj, at, num_atoms, EndPoint, *nNumEndPoints, cgi );
                 
-                nErr = bExistsAnyAltPath( pBNS, pBD, at, num_atoms, ri, rj, ALT_PATH_MODE_TAUTOM );
+                nErr = bExistsAnyAltPath( pBNS, pBD, at, num_atoms, ri, rj, taut_mode );
                 if ( IS_BNS_ERROR(nErr) )
                     return nErr;
                 if ( nErr <= 0 )
@@ -3093,7 +3226,7 @@ int MarkTautomerGroups( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info,
                          */
 
                         nErr=FindAccessibleEndPoints( EndPoint, &nNumEndPoints, BondPos, &nNumBondPos,
-                                                 pBNS, pBD, at, num_atoms, c_group_info );
+                                                 pBNS, pBD, at, num_atoms, c_group_info, ALT_PATH_MODE_TAUTOM );
                         if ( IS_BNS_ERROR(nErr) ) {
                             return nErr;
                         }
@@ -3123,6 +3256,167 @@ int MarkTautomerGroups( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info,
             }
         }
     }
+#if ( KETO_ENOL_TAUT == 1 )  /***** post v.1 feature *****/
+    if ( t_group_info->bTautFlags & TG_FLAG_KETO_ENOL_TAUT ) {
+        /* 1,3 keto-enol tautomerism */
+        for ( i = 0; i < num_atoms; i ++ ) {
+            /*  find possible endpoint Z = at[i] */
+            if ( endpoint_valence = nGetEndpointInfo_KET( at, i, &eif1 ) ) {
+                /*  1st endpoint candidate found. Find centerpoint candidate */
+                for ( j = 0; j < at[i].valence; j ++ ) {
+                    bond_type   = (int)at[i].bond_type[j] & ~BOND_MARK_ALL;
+#if( FIX_BOND23_IN_TAUT == 1 )
+                    bond_type = ACTUAL_ORDER(pBNS,i,j,bond_type);
+#endif
+                    centerpoint = (int)at[i].neighbor[j];  /*  a centerpoint candidate */
+                    if ( (bond_type == BOND_DOUBLE ||
+                          bond_type == BOND_ALTERN ||
+                          bond_type == BOND_ALT12NS ||
+                          bond_type == BOND_TAUTOM) &&
+                          is_centerpoint_elem_KET( at[centerpoint].el_number ) &&
+                          !at[centerpoint].charge && !at[centerpoint].radical &&
+                          /* only normal carbon is allowed */
+                          4 == at[centerpoint].chem_bonds_valence + at[centerpoint].num_H
+                          && ALLOWED_EDGE(pBNS, i, j)
+                          ) {
+                        int num_O = 0;
+                        int num_C = 0;
+                        /*  test a centerpoint candidate. */
+                        /*  find all endpoints including at[i] and store them into EndPoint[] */
+                        nNumPossibleMobile =  0;
+                        nGroupNumber       =  (AT_NUMB)num_atoms; /*  greater than any tautomeric group number */
+                        bDiffGroups        = -1;         /*  ignore the first difference */
+                        nNumDonor = nNumAcceptor = 0;
+                        for ( k = 0, nNumEndPoints = 0, nNumBondPos = 0; k < at[centerpoint].valence; k ++ ) {
+                            endpoint = at[centerpoint].neighbor[k]; /*  endpoint candidate */
+                            bond_type    = (int)at[centerpoint].bond_type[k] & ~BOND_MARK_ALL;
+#if( FIX_BOND23_IN_TAUT == 1 )
+                            bond_type = ACTUAL_ORDER(pBNS,centerpoint,k,bond_type);
+#endif
+                            bTautBond    =
+                            bNonTautBond =
+                            bAltBond     =
+                            bPossiblyEndpoint = 0;
+                            if ( !ALLOWED_EDGE(pBNS, centerpoint, k) ) {
+                                continue;
+                            } else
+                            if ( bond_type == BOND_ALTERN || bond_type == BOND_ALT12NS || bond_type == BOND_TAUTOM ) {
+                                bTautBond = 1;
+#if( REPLACE_ALT_WITH_TAUT == 1 )
+                                bAltBond  = (bond_type == BOND_ALTERN || bond_type == BOND_ALT12NS);
+#endif
+                            } else
+                            if ( bond_type == BOND_SINGLE || bond_type == BOND_DOUBLE )
+                                bNonTautBond = 1;
+                            else
+                                continue;
+
+                            if ( !(endpoint_valence = nGetEndpointInfo_KET( at, endpoint, &eif2 )) ) {
+                                continue;
+                            }
+                            /*
+                            if ( 3 != eif1.cKetoEnolCode + eif2.cKetoEnolCode && endpoint != i )
+                                continue;
+                            */
+                            /*  save information about the found possible tautomeric endpoint */
+                            /*  2 = T_NUM_NO_ISOTOPIC non-isotopic values */
+                            nMobile  =
+                            AddAtom2num( EndPoint[nNumEndPoints].num, at, endpoint, 2 ); /* fill out */
+                            AddAtom2DA( EndPoint[nNumEndPoints].num_DA, at, endpoint, 2 );
+                            /* --- why is isitopic info missing ? -- see below
+                            nMobile  = EndPoint[nNumEndPoints].num[1] = (at[endpoint].charge == -1);
+                            nMobile  = EndPoint[nNumEndPoints].num[0] = at[endpoint].num_H + nMobile;
+                            */
+                            if ( bNonTautBond ) {
+                                m = (bond_type == BOND_SINGLE && (nMobile || at[endpoint].endpoint));
+                                nNumDonor         += m;
+                                bPossiblyEndpoint += m;
+                                m = (bond_type == BOND_DOUBLE );
+                                nNumAcceptor      += m;
+                                bPossiblyEndpoint += m;
+                            } else {
+                                /*  tautomeric or alternating bond */
+                                m = (0 != at[endpoint].endpoint || eif1.cDonor );
+                                nNumDonor         += m;
+                                bPossiblyEndpoint += m;
+                                m = ( at[endpoint].endpoint ||
+                                      eif1.cNeutralBondsValence > at[endpoint].valence );
+                                nNumAcceptor      += m;
+                                bPossiblyEndpoint += m;
+                            }
+                            if ( !bPossiblyEndpoint )
+                                continue;
+
+                            num_O += (endpoint_valence == 2);
+                            num_C += (endpoint_valence == 4);
+
+                            EndPoint[nNumEndPoints].nGroupNumber  = at[endpoint].endpoint; /* =0 if it is an endpoint for the 1st time */
+                            EndPoint[nNumEndPoints].nEquNumber    = 0;
+                            EndPoint[nNumEndPoints].nAtomNumber   = (AT_NUMB)endpoint;
+                            if ( nGroupNumber != at[endpoint].endpoint ) {
+                                bDiffGroups ++;
+                                nGroupNumber  = at[endpoint].endpoint;
+                            }
+                            
+                            /*  save positions of all, not only possibly tautomeric bonds */
+#if( REPLACE_ALT_WITH_TAUT != 1 )
+                            if ( bNonTautBond || bAltBond ) {
+#endif
+                                BondPos[nNumBondPos].nAtomNumber    = (AT_NUMB)centerpoint;
+                                BondPos[nNumBondPos].neighbor_index = (AT_NUMB)k; /* bond ordering number; used to change bonds to tautomeric only  */
+                                nNumBondPos ++;
+#if( REPLACE_ALT_WITH_TAUT != 1 )
+                            }
+#endif
+                            /*  mobile group is possible if (a) the endpoint has a mobile group or */
+                            /*                              (b) the centerpoint is adjacent to another endpoint */
+                            nNumPossibleMobile += (nMobile>0 || at[endpoint].endpoint);
+                            nNumEndPoints ++;
+                        }
+                        if ( nNumEndPoints > 1 && nNumPossibleMobile && nNumDonor && nNumAcceptor && num_O==1 && num_C ) {
+                            /*
+                             * a tautomeric group has been found
+                             *
+                             * at this point:
+                             * nGroupNumber = 0 if all endpoints belong to a newly discovered tautomeric group
+                             * bDiffGroups  > 0 if at least 2 tautomeric groups are to be merged (one of them can be new)
+                             * case (nGroupNumber != 0 && bDiffGroups = 0 ) ignored because all endpoints belong to the same known t-group
+                             * case (nGroupNumber != 0 && bDiffGroups < 0 ) cannot happen
+                             */
+
+                            nErr=FindAccessibleEndPoints( EndPoint, &nNumEndPoints, BondPos, &nNumBondPos,
+                                                     pBNS, pBD, at, num_atoms, c_group_info, ALT_PATH_MODE_TAUTOM_KET );
+                            if ( IS_BNS_ERROR(nErr) ) {
+                                return nErr;
+                            }
+                            nErr = 0;
+
+                            if ( nNumEndPoints > 0 ) {
+                                if ( !nGroupNumber || bDiffGroups > 0 ) {
+                                    num_changes = RegisterEndPoints( t_group_info, EndPoint, nNumEndPoints, at, num_atoms, c_group_info, pBNS );
+                                    if ( num_changes == -1 ) {
+                                        nErr = CT_TAUCOUNT_ERR;
+                                    }
+                                    if ( num_changes < 0 ) {
+                                        nErr = num_changes;
+                                    }
+                                    if ( nErr )
+                                        goto exit_function;
+                                    tot_changes += (num_changes>0);
+                                }
+                                if ( nNumBondPos > 0 ) {
+                                    /*  some of the bonds have not been marked as tautomeric yet */
+                                    num_changes = SetTautomericBonds( at, nNumBondPos, BondPos );
+                                    tot_changes += (num_changes>0);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+#endif  /* KETO_ENOL_TAUT */
 
 #if( TAUT_OTHER == 1 ) /* { */
     if ( !tot_changes ) {
@@ -3136,6 +3430,64 @@ int MarkTautomerGroups( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info,
             tot_changes = CT_OUT_OF_RAM;  /*   <BRKPT> */
             goto free_memory;
         }
+#if( TAUT_15_NON_RING      == 1 ) /***** post v.1 feature *****/
+        if ( t_group_info->bTautFlags & TG_FLAG_1_5_TAUT ) {
+            /*  1,5 tautomerism; one of the endpoints should no be on a ring  */
+            /*
+                  O                OH                 O      
+                  ||               |                  ||     
+                  A--pos-          A--pos-            A--pos-
+                 /   sib-        //   sib-     ?     /   sib-
+                C    ly          C    ly            CH   ly
+                \\   a     <-->   \   a       <-->   \   a   
+                  B--ring          B--ring            B--ring
+                  |                ||                 ||     
+                  NH               N                  N
+
+               Note: few recent modifications now allow the terminal N be in a ring, too
+             */
+            for ( i1 = 0; i1 < num_atoms; i1 ++ ) {
+                /*  find possible endpoint Z = at[i1] */
+                if ( !(endpoint_valence = nGetEndpointInfo( at, i1, &eif1 ) ) /*||
+                     at[i1].nNumAtInRingSystem > 1*/ ) {
+                    continue; /*  not a possibly endpoint */
+                }
+
+                if ( 1 ) {
+                    nNumEndPoints = 0;
+                    nNumBondPos   = 0;
+
+                    ret = nGet15TautInAltPath( at, i1, nDfsPathPos,
+                                                  DfsPath,  nMaxLenDfsPath,
+                                                  EndPoint, sizeof(EndPoint)/sizeof(EndPoint[0]),
+                                                  BondPos, sizeof(BondPos)/sizeof(BondPos[0]),
+                                                  &nNumEndPoints, &nNumBondPos, 
+                                                  pBNS, pBD, num_atoms);
+                    if ( ret > 0 ) {
+                        if ( nNumEndPoints ) {
+                            num_changes = RegisterEndPoints( t_group_info, EndPoint, nNumEndPoints, at, num_atoms, c_group_info, pBNS);
+                            if ( num_changes == -1 ) {
+                                nErr = CT_TAUCOUNT_ERR;
+                            }
+                            if ( num_changes < 0 ) {
+                                nErr = num_changes;
+                            }
+                            if ( nErr )
+                                goto free_memory;
+                            tot_changes += (num_changes > 0);
+                        }
+                        if ( nNumBondPos ) {
+                            tot_changes += ( 0 < SetTautomericBonds( at, nNumBondPos, BondPos ) );
+                        }
+                    } else
+                    if ( IS_BNS_ERROR( ret ) ) {
+                        nErr = ret;
+                        goto free_memory;
+                    }
+                }
+            }
+        }
+#endif
 #if( TAUT_4PYRIDINOL_RINGS == 1 )
         /*  6-member rings */
         /*

@@ -58,7 +58,8 @@ am_libinchi_la_OBJECTS = ichi_bns.lo ichican2.lo ichicano.lo \
 	ichiring.lo ichirvr1.lo ichirvr2.lo ichirvr3.lo ichirvr4.lo \
 	ichirvr5.lo ichirvr6.lo ichirvr7.lo ichisort.lo ichister.lo \
 	ichitaut.lo inchi_dll.lo inchi_dll_main.lo runichi.lo \
-	strutil.lo util.lo
+	strutil.lo util.lo ikey_base26.lo inchi_dll_a2.lo \
+	inchi_dll_a.lo ikey_dll.lo sha2.lo
 libinchi_la_OBJECTS = $(am_libinchi_la_OBJECTS)
 libinchi_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -214,7 +215,9 @@ libinchi_la_SOURCES = \
 	ichiprt3.c ichiqueu.c ichiread.c ichiring.c ichirvr1.c \
 	ichirvr2.c ichirvr3.c ichirvr4.c ichirvr5.c ichirvr6.c \
 	ichirvr7.c ichisort.c ichister.c ichitaut.c inchi_dll.c \
-	inchi_dll_main.c runichi.c strutil.c util.c
+	inchi_dll_main.c runichi.c strutil.c util.c \
+	ikey_base26.c inchi_dll_a2.c inchi_dll_a.c ikey_dll.c \
+	sha2.c
 
 all: all-am
 
@@ -314,9 +317,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichisort.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichister.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichitaut.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ikey_base26.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ikey_dll.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchi_dll.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchi_dll_a.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchi_dll_a2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchi_dll_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runichi.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sha2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strutil.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Plo@am__quote@
 

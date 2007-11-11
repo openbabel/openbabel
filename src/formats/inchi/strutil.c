@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,6 +31,7 @@
 #include "ichicomp.h"
 #include "extr_ct.h"
 #include "ichister.h"
+
 
 /* local prototypes */
 int cmp_components( const void *a1, const void *a2 );
@@ -1247,21 +1255,20 @@ int remove_ion_pairs( int num_atoms, inp_ATOM *at )
                     }
                     
                     for ( k = 0; k < 2; k ++ ) {
-                      n  = k? n_Cp : n_Cm;
-                      i3 = k? i_Cp : i_Cm; /* added to fix the bug */
-                      /*i1 = k? j[i_Cp] : j[i_Cm];*/ /* replaced with next line */
-                      i1 = j[i3];
-                      if ( v[i3 /*was i1*/] < 4 ) { /* line 1252, WDI found a bug here: bounds violation */
-                        int delta = 4 - v[i3 /*was i1*/];
-                        i2 = is_in_the_list( at[n].neighbor, (AT_NUMB)i, 
-                                             at[n].valence ) - at[n].neighbor;
-                        at[i].bond_type[i1] += delta;
-                        at[n].bond_type[i2] += delta;
-                        at[i].chem_bonds_valence += delta;
-                        at[n].chem_bonds_valence += delta;
-                        at[n].charge = 0;
-                        at[n].radical = 0;
-                      }
+                        n  = k? n_Cp : n_Cm;
+                        i3 = k? i_Cp : i_Cm; /* added to fix the bug */
+                        /*i1 = k? j[i_Cp] : j[i_Cm];*/ /* replaced with next line */
+                        i1 = j[i3];
+                        if ( v[i3 /*was i1*/] < 4 ) { /* WDI found a bug here: bounds violation */
+                            int delta = 4 - v[i3 /*was i1*/];
+                            i2 = is_in_the_list( at[n].neighbor, (AT_NUMB)i, at[n].valence ) - at[n].neighbor;
+                            at[i].bond_type[i1] += delta;
+                            at[n].bond_type[i2] += delta;
+                            at[i].chem_bonds_valence += delta;
+                            at[n].chem_bonds_valence += delta;
+                            at[n].charge = 0;
+                            at[n].radical = 0;
+                        }
                     }
                     at[i].charge = 0;
                     at[i].radical = 0;
@@ -4061,9 +4068,15 @@ int FixAdjacentRadicals( int num_inp_atoms, inp_ATOM *at )
 #include <stdio.h>
 #include "inpdef.h"
 */
-void PrintFileName( const char *fmt, INCHI_FILE *output_file, const char *szFname )
+void PrintFileName( const char *fmt, 
+                   FILE *output_file, /*^^^ was: INCHI_FILE */
+                   const char *szFname )
 {
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
     inchi_print_nodisplay( output_file, fmt, szFname );
+#else
+    my_fileprintf( output_file, fmt, szFname );
+#endif
 }
 #endif
 #endif

@@ -1,16 +1,24 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
 
 #include "mode.h"
 
@@ -2817,7 +2825,7 @@ int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *ori
     }
     /*fix_odd_things( num_atoms, out_at );*/
 #if( FIND_RING_SYSTEMS == 1 )
-    MarkRingSystemsInp( out_at, num_atoms );
+    MarkRingSystemsInp( out_at, num_atoms, 0 );
 #endif
     /*  duplicate the preprocessed structure so that all supplied out_norm_data[]->at buffers are filled */
     if ( out_at != out_norm_data[TAUT_YES]->at && out_norm_data[TAUT_YES]->at ) {
