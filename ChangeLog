@@ -1,3 +1,12 @@
+2007-11-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/chemkinformat.cpp
+	(ChemKinFormat::ParseReactionLine): Added some compilation fixes
+	for GCC.
+
+	* src/formats/Makefile.* : Enable compilation of png, rxn, and
+	chemkin formats.
+
 2007-11-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/inchi/*.c, include/inchi/*.h: Import InChI v1.02b

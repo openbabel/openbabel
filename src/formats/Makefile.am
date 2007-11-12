@@ -46,6 +46,7 @@ libformats_la_SOURCES = \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawct.cpp chemdrawcdx.cpp \
+	chemkinformat.cpp \
 	chemtoolformat.cpp cifformat.cpp \
 	copyformat.cpp crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp fastaformat.cpp \
@@ -58,6 +59,7 @@ libformats_la_SOURCES = \
 	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmcifformat.cpp \
 	mmodformat.cpp mol2format.cpp molreport.cpp mopacformat.cpp \
 	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
+	pngformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
 	tinkerformat.cpp titleformat.cpp \
@@ -75,6 +77,7 @@ pkglib_LTLIBRARIES = \
 	cacaoformat.la cacheformat.la cansmilesformat.la \
 	carformat.la cccformat.la \
 	chem3dformat.la chemdrawctformat.la chemdrawcdxformat.la \
+	chemkinformat.la \
 	chemtoolformat.la cifformat.la \
 	copyformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la fastaformat.la \
@@ -86,12 +89,13 @@ pkglib_LTLIBRARIES = \
 	jaguarformat.la mdlformat.la mmcifformat.la mmodformat.la \
 	mpdformat.la mol2format.la molreportformat.la mopacformat.la \
 	mpqcformat.la nwchemformat.la pcmodelformat.la \
+	pngformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
+  rxnformat.la \
 	shelxformat.la smilesformat.la thermoformat.la \
 	tinkerformat.la titleformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
 	xedformat.la xyzformat.la yasaraformat.la zindoformat.la
-#rxnformat.la
 
 APIInterface_la_SOURCES = APIInterface.cpp
 APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
@@ -146,6 +150,9 @@ chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenba
 
 chemtoolformat_la_SOURCES = chemtoolformat.cpp obmolecformat.cpp
 chemtoolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+chemkinformat_la_SOURCES = chemkinformat.cpp obmolecformat.cpp
+chemkinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 cifformat_la_SOURCES = cifformat.cpp obmolecformat.cpp
 cifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
@@ -251,11 +258,14 @@ povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.l
 qchemformat_la_SOURCES = qchemformat.cpp obmolecformat.cpp
 qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
+pngformat_la_SOURCES = pngformat.cpp obmolecformat.cpp
+pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
 reportformat_la_SOURCES = reportformat.cpp obmolecformat.cpp
 reportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-# rxnformat_la_SOURCES = rxnformat.cpp
-# rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+rxnformat_la_SOURCES = rxnformat.cpp
+rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 shelxformat_la_SOURCES = shelxformat.cpp obmolecformat.cpp
 shelxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 

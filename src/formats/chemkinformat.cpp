@@ -14,10 +14,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include "openbabel/babelconfig.h"
+
 #include <string>
 #include <iomanip>
 #include <map>
 #include <set>
+#include <iterator>
+
 #include "openbabel/mol.h"
 #include "openbabel/oberror.h"
 #include "openbabel/obconversion.h"
@@ -369,7 +372,8 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
   //Do reactants
   vector<string> toks;
   vector<string>::iterator itr;
-  tokenize(toks, ln.substr(0,eqpos), "+");
+  string temp = ln.substr(0, eqpos);
+  tokenize(toks, temp, "+");
   //(ln is cleared later)
 
   for(itr=toks.begin();itr!=toks.end();++itr)
@@ -431,7 +435,8 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
       {
         //species multiplier (single digit)
         unsigned mult = atoi(itr->c_str());
-        sp = CheckSpecies(itr->substr(1), ln, SpeciesListed);
+        string temp = itr->substr(1);
+        sp = CheckSpecies(temp, ln, SpeciesListed);
         if(!sp.get())
         {
           ln.clear();
@@ -454,7 +459,8 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
   }
 
   //Do products
-  tokenize(toks, ln.substr(eqpos+1), "+");
+  temp = ln.substr(eqpos+1);
+  tokenize(toks, temp, "+");
   if(toks.size()>0)
   {
     /*
@@ -546,7 +552,8 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
         {
           //species multiplier (single digit)
           unsigned mult = atoi(itr->c_str());
-          sp = CheckSpecies(itr->substr(1), ln, SpeciesListed);
+          string temp = itr->substr(1);
+          sp = CheckSpecies(temp, ln, SpeciesListed);
           if(!sp.get())
           {
             ln.clear();
