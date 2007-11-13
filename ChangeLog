@@ -1,3 +1,9 @@
+2007-11-13  Chris Morley
+
+	* src/formats/pngformat.cpp: Remove class name in declaration
+	as patch #1830826 from LI Daobing. I haven't yet found how to
+	get a warning on this in Visual C++.
+
 2007-11-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/chemkinformat.cpp
@@ -7,6 +13,27 @@
 	* src/formats/Makefile.* : Enable compilation of png, rxn, and
 	chemkin formats.
 
+2007-11-11  Chris Morley
+
+	Added gen3D.cpp, a wrapper for OBBuilder to make plugin option.
+	
+2007-11-11  Chris Morley
+
+	* src/formats/chemkinformat.cpp: Reading rewritten so that it
+	is like other formats - separate ReadChemObject and
+	ReadMolecule. Allows -f and -l options and, potentially,
+	filtering of reactions.
+	Many parsing changes on reading, incl allowing species names 
+	containing spaces with simple input.
+	On writing extra option to omit zero rate reactions, formatting
+	changes and correct loss of first species in list bug.
+	
+	* src/formats/xml/cmlreactformat.cpp: Separate out code as
+	WriteRateData.
+	Add molecules to list even if to be immediately output, so that
+	they can benefit from being combined with other inputs.
+	If ID of a molecule is a filename, remove the path and extension.
+	
 2007-11-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/inchi/*.c, include/inchi/*.h: Import InChI v1.02b
@@ -30,27 +57,6 @@
 	
 	* src/formats/gromos96format.cpp: Fix typo caused by residue
 	numbers as strings.
-2007-11-11  Chris Morley
-
-	Added gen3D.cpp, a wrapper for OBBuilder to make plugin option.
-	
-2007-11-11  Chris Morley
-
-	* src/formats/chemkinformat.cpp: Reading rewritten so that it
-	is like other formats - separate ReadChemObject and
-	ReadMolecule. Allows -f and -l options and, potentially,
-	filtering of reactions.
-	Many parsing changes on reading, incl allowing species names 
-	containing spaces with simple input.
-	On writing extra option to omit zero rate reactions, formatting
-	changes and correct loss of first species in list bug.
-	
-	* src/formats/xml/cmlreactformat.cpp: Separate out code as
-	WriteRateData.
-	Add molecules to list even if to be immediately output, so that
-	they can benefit from being combined with other inputs.
-	If ID of a molecule is a filename, remove the path and extension.
-	
 2007-11-08  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/builder.cpp: rotation works! you can now create fragment based

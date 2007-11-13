@@ -67,7 +67,7 @@ public:
   };
 
 virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-virtual bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv);
+virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
 private:
   int count; //number of chemical objects converted
