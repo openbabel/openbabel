@@ -7,12 +7,13 @@ libopenbabelinclude_HEADERS = \
 		bondtyper.h canon.h \
 		chains.h chiral.h data.h descriptor.h \
 		dlhandler.h fingerprint.h forcefield.h format.h \
-		generic.h grid.h internalcoord.h kinetics.h \
+		generic.h grid.h griddata.h groupcontrib.h \
+		internalcoord.h kinetics.h \
 		lineend.h  matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \
 		obmolecformat.h obutil.h \
+		op.h \
 		parsmart.h patty.h phmodel.h plugin.h \
-		groupcontrib.h \
 		rand.h reaction.h \
 		residue.h ring.h rotamer.h rotor.h typer.h \
 		xml.h

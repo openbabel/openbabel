@@ -83,8 +83,9 @@ namespace OpenBabel {
     //@{
     /// Set number of points along the three axes.
     void SetNumberOfPoints( int nx, int ny, int nz );
-    /// Set grid axes.
-    void SetAxes( double x[ 3 ], double y[ 3 ], double z[ 3 ] );
+    /// Set the limits (i.e., the origin point and the axes)
+    /// NOTE: You must set the number of points first, so the grid spacing can be calculated
+    void SetLimits( double origin[ 3 ], double x[ 3 ], double y[ 3 ], double z[ 3 ] );
     /// Set the values
     void SetValues( const std::vector< double >& v );
     /// Set the unit of measure

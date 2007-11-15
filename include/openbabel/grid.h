@@ -173,6 +173,8 @@ namespace OpenBabel
     void SetYAxis(vector3);
     void SetZAxis(vector3);
     
+    void SetLimits(double origin[3], double x[3], double y[3], double z[3]);
+    
     std::vector<double> GetDataVector();
     void SetVals(std::vector<double> vals);
     
