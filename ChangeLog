@@ -1,3 +1,10 @@
+2007-11-15  Chris Morley
+
+	Update Windows build files.
+	
+	* src/formats/pngformat.cpp(TargetClassDescription): modify so 
+	that options for OBMol appears in GUI.
+	
 2007-11-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/griddata.cpp, src/grid.cpp: Change to new SetLimits method

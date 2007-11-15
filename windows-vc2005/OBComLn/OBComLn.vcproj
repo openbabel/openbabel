@@ -22,7 +22,7 @@
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
+			CharacterSet="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -48,7 +48,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\..\include;..\OBConversion,.."
-				PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;USE_OBF;HAVE_CONFIG_H"
+				PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;HAVE_CONFIG_H;USING_DYNAMIC_LIBS"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -143,7 +143,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include;..\OBConversion,.."
-				PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;HAVE_CONFIG_H;USE_OBF"
+				PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;HAVE_CONFIG_H;USING_DYNAMIC_LIBS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

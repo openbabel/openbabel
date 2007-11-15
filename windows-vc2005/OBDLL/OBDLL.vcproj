@@ -899,6 +899,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\canon.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\chains.h"
 				>
 			</File>
@@ -1023,10 +1027,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\include\openbabel\canon.h"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -46,7 +46,13 @@ public:
     " y <additional chunk ID> Write to a chunk with specified ID\n\n";
   };
 
-  virtual const char* TargetClassDescription(){return " PNG_files";}
+  virtual const char* TargetClassDescription()
+  {
+    static string txt;
+    txt = " PNG_files\n"; //so reports "n PNG_files converted"
+    txt += OBFormat::TargetClassDescription(); //to display OBMol options in GUI
+    return txt.c_str();
+  }
 
   virtual unsigned int Flags()
   {
@@ -300,14 +306,13 @@ The keyword in the chunk should be an OpenBabel Format ID, optionally with file 
 e.g. cml, InChI, molfile.
 There can be multiple molecules in each chunk, multiple chunks with
 chemical info and multiple png files can be read together.
-  babel 
 
 Writing
 This embeds chemical information into an existing PNG file.
 A PNG file should be the first input file, followed by one or more chemical
 files in any format. Each can contain multiple molecules. Each molecule is output
-in a separate chunk in a format specified by the -O option. The chunk ID is 
-normally tEXt but can be specified in the -xa option.
+in a separate chunk in a format specified by the -O option. the default with no
+option is InChI. The chunk ID is normally tEXt but can be specified in the -xa option.
 For example
   babel OrigImg.png Firstmol.smi Secondmol.mol2 OutImg.png -O "inchi" -xa "chEm"
 

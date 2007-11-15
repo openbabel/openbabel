@@ -64,8 +64,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="GraphMol.lib RDGeneral.lib boost_log-vc80-mt-gd-1_33_1.lib RDDepictor.lib RDGeometry.lib"
 				OutputFile="$(OutDir)\$(ProjectName)D.dll"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;$(RDBASE)\Code\GraphMol\Debug&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -141,8 +143,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="GraphMol.lib RDGeneral.lib boost_log-vc80-mt-1_33_1.lib RDDepictor.lib RDGeometry.lib"
 				OutputFile="$(ProjectName).dll"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(RDBASE)\Code\GraphMol\Release&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -204,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\builder.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\canon.cpp"
 				>
 			</File>
@@ -254,6 +262,14 @@
 			<File
 				RelativePath="..\..\src\forcefields\forcefieldmm2.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\forcefields\forcefieldmmff94.cpp"
@@ -261,6 +277,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\format.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\gen3d.cpp"
 				>
 			</File>
 			<File
@@ -316,6 +336,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\op2d.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\parsmart.cpp"
 				>
 			</File>
@@ -334,6 +358,18 @@
 			<File
 				RelativePath="..\..\src\rand.cpp"
 				>
+			</File>
+			<File
+				RelativePath="..\..\src\RDKitConv.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\residue.cpp"
@@ -414,6 +450,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\builder.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\canon.h"
 				>
 			</File>
@@ -478,10 +518,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\inchi_api.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\include\openbabel\internalcoord.h"
 				>
 			</File>
@@ -534,6 +570,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\op.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\parsmart.h"
 				>
 			</File>
@@ -573,7 +613,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
@@ -772,14 +811,6 @@
 			<File
 				RelativePath="..\..\src\formats\chemdrawcdx.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\chemdrawct.cpp"
@@ -956,14 +987,6 @@
 			<File
 				RelativePath="..\..\src\formats\gaussformat.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\ghemicalformat.cpp"
@@ -1184,14 +1207,6 @@
 			<File
 				RelativePath="..\..\src\formats\tinkerformat.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\titleformat.cpp"
