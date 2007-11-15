@@ -323,11 +323,10 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->SetNumberOfPoints( gc.numPoints[ 0 ],
                            gc.numPoints[ 1 ],
                            gc.numPoints[ 2 ] );
-    gd->SetAxes( gc.xAxis, gc.yAxis, gc.zAxis );
-    gd->SetValues( gc.values );
+    gd->SetLimits( gc.origin, gc.xAxis, gc.yAxis, gc.zAxis );
     gd->SetUnit( gc.unit == GaussianCube::BOHR ? OBGridData::BOHR : OBGridData::ANGSTROM );
-    //    gd->SetOriginVector( gc.origin );
-    gd->SetOrigin(fileformatInput);
+    gd->SetValues( gc.values );
+    gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
     pmol->SetData( gd );
 
     if( !pConv->IsOption( "b", OBConversion::INOPTIONS ) ) pmol->ConnectTheDots();

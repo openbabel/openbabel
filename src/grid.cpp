@@ -91,6 +91,43 @@ namespace OpenBabel
       }
   }
 
+  void OBFloatGrid::SetLimits(double origin[3], double v1[3], double v2[3], double v3[3])
+  {
+    // Set the minimum points first from the origin
+    _xmin = origin[0];
+    _ymin = origin[1];
+    _zmin = origin[2];
+    
+    vector3 v;
+    // x-axis
+    v.Set(v1[0], v1[1], v1[2]);
+    SetXAxis(v);
+    // now y
+    v.Set(v2[0], v2[1], v2[2]);
+    SetYAxis(v);
+    // and z
+    v.Set(v3[0], v3[1], v3[2]);
+    SetZAxis(v);
+    
+    // Now we can set the max limits
+    // The v1, v2, v3 are not necessarily orthogonal
+    _xmax = _xmin + _xdim * v1[0] + _xdim * v2[0] + _xdim * v3[0];
+    _ymax = _ymin + _ydim * v1[1] + _ydim * v2[1] + _ydim * v3[1];
+    _zmax = _zmin + _zdim * v1[2] + _zdim * v2[2] + _zdim * v3[2];
+    
+    /* store in Grid */
+    _midx=0.5*(_xmax+_xmin);
+    _midy=0.5*(_ymax+_ymin);
+    _midz=0.5*(_zmax+_zmin);
+        
+    // Calculate the average spacing
+    _spacing = (_xmax - _xmin)/_xdim + (_ymax - _ymin)/_ydim + (_zmax - _zmin)/_zdim;
+    _spacing /= 3.0;
+    
+    _halfSpace= _spacing/2.0;
+    _inv_spa=1.0/_spacing;    
+  }
+  
   void OBFloatGrid::SetNumberOfPoints(int nx, int ny, int nz)
   {
     _xdim = nx;

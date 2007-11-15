@@ -146,19 +146,10 @@ namespace OpenBabel {
     d->_floatGrid.SetNumberOfPoints(nx, ny, nz);
   }
 
-  void OBGridData::SetAxes( double x[ 3 ], double y[ 3 ], double z[ 3 ] )
+  void OBGridData::SetLimits(double origin [ 3 ], double x[ 3 ], double y[ 3 ], double z[ 3 ] )
   {
-    vector3 v;
-    // x-axis
-    v.Set(x[0], x[1], x[2]);
-    d->_floatGrid.SetXAxis(v);
-    // now y
-    v.Set(y[0], y[1], y[2]);
-    d->_floatGrid.SetYAxis(v);
-    // and z
-    v.Set(z[0], z[1], z[2]);
-    d->_floatGrid.SetZAxis(v);
-}
+    d->_floatGrid.SetLimits(origin, x, y, z);
+  }
 
   void OBGridData::SetValues( const std::vector< double >& v )
   {

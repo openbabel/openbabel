@@ -1,3 +1,13 @@
+2007-11-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/griddata.cpp, src/grid.cpp: Change to new SetLimits method
+	for assigning axes, origin -- everything required by OBFloatGrid.
+
+	* src/formats/gausscubeformat.cpp: Use it.
+
+	* include/openbabel/Makefile.am: Make sure to install new headers
+	griddata.h, op.h.
+
 2007-11-13  Chris Morley
 
 	* src/formats/pngformat.cpp: Remove class name in declaration
@@ -5,6 +15,9 @@
 	get a warning on this in Visual C++.
 
 2007-11-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/Makefile.am: Add "ops" code introduced by Chris, including
+	gen3d coordinate generation.
 
 	* src/formats/chemkinformat.cpp
 	(ChemKinFormat::ParseReactionLine): Added some compilation fixes
@@ -50,7 +63,7 @@
 	updates. (This code is showing some bitrot.)
 
 	* include/openbabel/griddata.h, src/gridddata.cpp: New class to
-	link an	OBFloatGrid as an OBGenericData	(e.g., to a molecule).
+	link a OBFloatGrid as an OBGenericData	(e.g., to a molecule).
 
 	* src/formats/gausscubeformat.cpp: New format from Molekel project
 	to read coordinates and cube/grid data from Gaussian cube files.
