@@ -64,10 +64,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="GraphMol.lib RDGeneral.lib boost_log-vc80-mt-gd-1_33_1.lib RDDepictor.lib RDGeometry.lib"
 				OutputFile="$(OutDir)\$(ProjectName)D.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(RDBASE)\Code\GraphMol\Debug&quot;"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -143,10 +142,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="GraphMol.lib RDGeneral.lib boost_log-vc80-mt-1_33_1.lib RDDepictor.lib RDGeometry.lib"
 				OutputFile="$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(RDBASE)\Code\GraphMol\Release&quot;"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -336,10 +334,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\op2d.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\parsmart.cpp"
 				>
 			</File>
@@ -358,18 +352,6 @@
 			<File
 				RelativePath="..\..\src\rand.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\..\src\RDKitConv.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\residue.cpp"

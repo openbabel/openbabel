@@ -1,3 +1,18 @@
+2007-11-16  Chris Morley
+
+	* include/openbabel/atomclass.h: New file with OBAtomClassData
+	class, derived from OBGenericData and that attaches to OBMol.
+	
+	* src/formats/smilesformat.cpp: Added capability to reads and 
+	optionally write atom class e.g [CH3:1].
+	
+	* src/format/cmlformat.cpp: Read and write atom classes (embedded
+	in atom ids, with care that they remain unique, even when atom
+	classes ar not.
+	
+	* windows-vc2005/OpenBabelDLL/OpenBabelDLL.vcproj: updated to
+	remove RDKit references.
+
 2007-11-16  Michael Banck  <mbanck@gmx.net>
 
 	Make libinchi.la a convenience library.

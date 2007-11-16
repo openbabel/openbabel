@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/chiral.h>
+#include <openbabel/atomclass.h>
 
 using namespace std;
 
@@ -56,7 +57,9 @@ namespace OpenBabel
         "Write Options e.g. -xt\n"
         "  n no molecule name\n"
         "  t molecule name only\n"
-        "  r radicals lower case eg ethyl is Cc\n\n";
+        "  r radicals lower case eg ethyl is Cc\n"
+        "  c output atomclass like [C:2], if available\n"
+        "\n";
     };
 
     virtual unsigned int Flags() { return DEFAULTFORMAT;};
@@ -129,6 +132,7 @@ namespace OpenBabel
     std::vector<OBBond*> _vclose;
     std::vector<std::pair<OBAtom*,std::pair<int,int> > > _vopen;
     OBConversion* _pconv;
+    OBAtomClassData* _pac;
   public:
     OBMol2Smi()
     {
@@ -175,6 +179,7 @@ namespace OpenBabel
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
     bool chiralWatch; // set when a chiral atom is read
     map<OBAtom*,OBChiralData*> _mapcd; // map of ChiralAtoms and their data
+    OBAtomClassData _classdata; // to hold atom class data like [C:2]
   public:
 
     OBSmilesParser() { }
@@ -267,6 +272,7 @@ namespace OpenBabel
       {
         OBMol2Smi m2s;
         m2s.Init(pConv);
+
         m2s.CorrectAromaticAmineCharge(mol);
         m2s.CreateSmiString(mol,buffer);
       }
@@ -377,6 +383,10 @@ namespace OpenBabel
     // place dummy atoms for each unfilled external bond
     if(!_extbond.empty())
       CapExternalBonds(mol);
+
+    //Save atom class values in OBGenericData object if there are any
+    if(_classdata.size()>0)
+      mol.SetData(new OBAtomClassData(_classdata));
 
     // Check to see if we've balanced out all ring closures
     // They are removed from _rclose when matched
@@ -1528,6 +1538,7 @@ namespace OpenBabel
     int hcount = 0;
     int charge=0;
     int rad=0;
+    int clval=0;
     char tmpc[2];
     tmpc[1] = '\0';
     for (_ptr++;*_ptr && *_ptr != ']';_ptr++)
@@ -1592,6 +1603,18 @@ namespace OpenBabel
               rad=3;
             else
               _ptr--;
+            break;
+
+          case ':':
+            if(!isdigit(*(++_ptr)))
+            {
+              obErrorLog.ThrowError(__FUNCTION__,"The atom class following : must be a number", obError);
+              return false;
+            }
+            while( isdigit(*_ptr) )
+              clval = clval*10 + ((*_ptr++)-'0');
+            --_ptr;
+            _classdata.Add(atom->GetIdx(), clval);
             break;
 
           default:
@@ -1899,8 +1922,12 @@ namespace OpenBabel
     OBAtom *atom;
     OBSmiNode *root =NULL;
     buffer[0] = '\0';
-    vector<OBAtom*>::iterator i;
 
+    //Pointer to Atom Class data set if -xc option and the molecule has any; NULL otherwise.
+    if(_pconv->IsOption("c"))
+      _pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
+
+    vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       // don't use a hydrogen as the root node unless it's not bonded
       // or it's involved in a cis/trans '/' or '\' specification
@@ -1935,6 +1962,7 @@ namespace OpenBabel
         ToSmilesString(root,buffer);
         delete root;
       }
+
   }
 
   bool OBMol2Smi::BuildTree(OBSmiNode *node)
@@ -2336,6 +2364,7 @@ namespace OpenBabel
     _ubonds.Clear();
     _vopen.clear();
     _pconv = pconv;
+    _pac = NULL;
   }
 
   bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
@@ -2396,6 +2425,10 @@ namespace OpenBabel
       bracketElement = true;
 
     if(atom->GetIsotope()) //CM 19Mar05
+      bracketElement = true;
+
+    //If the molecule has Atom Class data and -xc option set and atom has data
+    if(_pac && _pac->HasClass(atom->GetIdx()))
       bracketElement = true;
 
     //CM begin 18 Sept 2003
@@ -2546,6 +2579,10 @@ namespace OpenBabel
             strcat(element,tcharge);
           }
       }
+
+    //atom class e.g. [C:2]
+    if(_pac)
+      strcat(element, _pac->GetClassString(atom->GetIdx()).c_str());
 
     strcat(element,"]");
 

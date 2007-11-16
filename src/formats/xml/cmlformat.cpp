@@ -18,6 +18,7 @@ GNU General Public License for more details.
 
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/kinetics.h>
+#include <openbabel/atomclass.h>
 #include <openbabel/xml.h>
 
 #ifdef WIN32
@@ -105,6 +106,7 @@ namespace OpenBabel
     bool ParseFormula(string& formula, OBMol* pmol);
     void ReadNasaThermo();
 
+    void MakeAtomIds(OBMol& mol, vector<string>& atomIDs);
     void WriteFormula(OBMol mol); //passes copy of mol
     void WriteMetadataList();
     string getTimestr();
@@ -196,7 +198,13 @@ namespace OpenBabel
           ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "molID");//Marvin
         if(ptitle)
           _pmol->SetTitle((const char*)ptitle);
+
+        ptitle = xmlTextReaderGetAttribute(reader(), BAD_CAST "spinMultiplicity");
+        if(ptitle)
+          _pmol->SetTotalSpinMultiplicity(atoi((const char*)ptitle));
+
         // free((void*)ptitle);//libxml2 doc says "The string must be deallocated by the caller."
+
       }
     else if(name=="atomArray")
       {
@@ -404,7 +412,8 @@ namespace OpenBabel
 
   ///Interprets atoms from AtomArray and writes then to an OBMol
   bool CMLFormat::DoAtoms()
-  {	
+  {
+    OBAtomClassData aclass;
     int dim=0; //dimension of molecule
     bool use2d = _pxmlConv->IsOption("2", OBConversion::INOPTIONS);
 
@@ -429,7 +438,13 @@ namespace OpenBabel
             if(attrname=="id" || attrname=="atomId" || attrname=="atomID")//which one correct? 
               {
                 Trim(value);
+                if(AtomMap.count(value)>0)
+                  obErrorLog.ThrowError(GetMolID(),"The atom id " + value + " is not unique", obWarning);
                 AtomMap[value] = nhvy;//nAtoms;
+
+                //If the id begins with "aa", "ab", etc, the number that follows  is taken as an atom class
+                if(value[0]=='a' && value[1]>='a' && value[1]<='z')
+                  aclass.Add(nAtoms, atoi(value.c_str()+2));
               }
             else if(attrname=="elementType")
               {
@@ -439,7 +454,7 @@ namespace OpenBabel
                 if(iso)
                   pAtom->SetIsotope(iso);
               }
-			
+
             else if(attrname=="x2" && (dim!=3 || use2d))//ignore 2D dimensions if 3D also provided
               x=strtod(value.c_str(),NULL);
 
@@ -558,7 +573,10 @@ namespace OpenBabel
           } //each attribute
 		
       }//each atom
-	
+    
+    if(aclass.size()>0)
+      _pmol->SetData((new OBAtomClassData(aclass)));
+
     _pmol->SetDimension(dim);
     return true;
   }
@@ -601,8 +619,8 @@ namespace OpenBabel
                   {
                     if(pos!=string::npos)
                       {
-                        indx1 = AtomMap[value.substr(0,pos)];	
-                        indx2 = AtomMap[value.substr(pos+1)];
+                        indx1 = AtomMap[value.substr(0,pos)];
+                        indx2 = AtomMap[Trim(value.substr(pos+1))];
                       }
                     else
                       indx1 = AtomMap[value];
@@ -1060,7 +1078,7 @@ namespace OpenBabel
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-			return false;
+      return false;
     OBMol &mol = *pmol;
 
     int numbonds = mol.NumBonds(); //Capture this before deleting Hs
@@ -1070,18 +1088,18 @@ namespace OpenBabel
         pmol->DeleteHydrogens();
         UseHydrogenCount=true;
       }
-	
+
     bool UseFormulaWithNoBonds=true;
 
     bool cml1 = _pxmlConv->IsOption("1");
     bool arrayform = _pxmlConv->IsOption("a");
     bool WriteAromaticBonds =  _pxmlConv->IsOption("A");
     int dim = mol.GetDimension();
-	
+
     prefix = BAD_CAST _pxmlConv->IsOption("N");
-	
+
     xmlChar* uri=NULL;
-	
+
     if(!_pxmlConv->IsOption("MolsNotStandalone") && _pxmlConv->GetOutputIndex()==1)
       {
         if(!_pxmlConv->IsOption("x"))
@@ -1128,6 +1146,12 @@ namespace OpenBabel
             xmlTextWriterEndElement(writer());//name
           }
       }
+
+    //spinMultiplicity is written as an attribute of <molecule> only when it is not 1 and the molecule has bonds
+    int smult = mol.GetTotalSpinMultiplicity();
+    if(smult!=1 && numbonds!=0)
+      xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%d", smult);
+
     if(_pxmlConv->IsOption("m") && _pxmlConv->GetOutputIndex()==1) //only on first molecule
       WriteMetadataList();
 
@@ -1140,6 +1164,8 @@ namespace OpenBabel
 
     WriteInChI(mol);
 
+    vector<string> atomIds; 
+
     if(mol.NumAtoms()>0)
       {
         //if molecule has no bonds and atoms doesn't have coordinates, just output formula
@@ -1148,6 +1174,9 @@ namespace OpenBabel
         else
           {
             xmlTextWriterStartElementNS(writer(), prefix, C_ATOMARRAY, NULL);
+
+            MakeAtomIds(mol, atomIds);//Pre-construct to take into account atom class data
+
 #ifdef HAVE_SSTREAM
             stringstream id, eltyp, iso, chg, spn, hct, x, y, z;
 #else
@@ -1163,7 +1192,7 @@ namespace OpenBabel
             vector<OBAtom*>::iterator i;
             for (patom = mol.BeginAtom(i);patom;patom = mol.NextAtom(i))
               {
-                string el(etab.GetSymbol(patom->GetAtomicNum()));
+               string el(etab.GetSymbol(patom->GetAtomicNum()));
                 if(el=="Xx")
                   el="R";
 
@@ -1198,7 +1227,7 @@ namespace OpenBabel
                       anySpin = true;
                     if(isotope)
                       anyIsotope = true;
-                    id << " " << "a" << patom->GetIdx();
+                    id << " " << atomIds[patom->GetIdx()];
                     eltyp << " " << el;
                     iso << " " << isotope;
                     chg << " " << charge;
@@ -1213,8 +1242,8 @@ namespace OpenBabel
                   {
                     //Non-array form
                     xmlTextWriterStartElementNS(writer(), prefix, C_ATOM, NULL);
-                    xmlTextWriterWriteFormatAttribute(writer(), C_ID,"a%d", patom->GetIdx());
-					
+                      xmlTextWriterWriteFormatAttribute(writer(), C_ID,"%s", atomIds[patom->GetIdx()].c_str());
+
                     if(!cml1)
                       {	
                         xmlTextWriterWriteFormatAttribute(writer(), C_ELEMENTTYPE,"%s", el.c_str());
@@ -1403,36 +1432,34 @@ namespace OpenBabel
         xmlTextWriterStartElementNS(writer(), prefix, C_BONDARRAY, NULL);
 
 #ifdef HAVE_SSTREAM
-        stringstream ref1, ref2, ord;
+        stringstream ord;
 #else
         strstream ref1, ref2, ord;
 #endif
+        
+        string ref1, ref2;
         OBBond *pbond;
         vector<OBBond*>::iterator ib;
         for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
           {
             int bo = pbond->GetBO();
-            if(arrayform)
-              {
-                ref1 << " a" << pbond->GetBeginAtomIdx();
-                ref2 << " a" << pbond->GetEndAtomIdx();
-                if(bo==5) //aromatic
-                  ord << " " << 'A';
-                else
-                  ord << " " << bo;
-              }
+            if(bo==5) //aromatic
+              ord << " " << 'A';
             else
+              ord << " " << bo;
+
+            ref1 += ' ' + atomIds[pbond->GetBeginAtomIdx()];
+            ref2 += ' ' + atomIds[pbond->GetEndAtomIdx()];
+
+            if(!arrayform)
               {
                 xmlTextWriterStartElementNS(writer(), prefix, C_BOND, NULL);
                 //				xmlTextWriterWriteFormatAttribute(writer(), C_ID,"b%d", pbond->GetIdx()); remove bond id
                 if(!cml1)
                   {
-                    xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS2,"a%d a%d",
-                                                      pbond->GetBeginAtomIdx(), pbond->GetEndAtomIdx() );
-                    if(bo==5 || (WriteAromaticBonds && pbond->IsAromatic())) //aromatic
-                      xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%c", 'A');
-                    else
-                      xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%d", bo);
+                    xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS2,"%s %s",
+                          ref1.c_str(), ref2.c_str());
+                    xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%s", ord.str().c_str());
 					
                     if(bo==2 || pbond->IsWedge() || pbond->IsHash())
                       WriteBondStereo(pbond);
@@ -1442,12 +1469,12 @@ namespace OpenBabel
                     //CML1
                     xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
                     xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
-                    xmlTextWriterWriteFormatString(writer(),"a%d", pbond->GetBeginAtomIdx());
+                    xmlTextWriterWriteFormatString(writer(),"%s", ref1.c_str());
                     xmlTextWriterEndElement(writer());
 
                     xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
                     xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
-                    xmlTextWriterWriteFormatString(writer(),"a%d", pbond->GetEndAtomIdx());
+                    xmlTextWriterWriteFormatString(writer(),"%s", ref2.c_str());
                     xmlTextWriterEndElement(writer());
 
                     xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
@@ -1456,14 +1483,17 @@ namespace OpenBabel
                     xmlTextWriterEndElement(writer());
                   }
                 xmlTextWriterEndElement(writer());//bond
+                ord.str(""); //clear (For array form it accumulates.)
+                ref1.clear();
+                ref2.clear();
               }
           }
         if(arrayform)
           {
             if(!cml1)
               {
-                xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREF1, "%s", ref1.str().c_str());
-                xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREF2, "%s", ref2.str().c_str());
+                xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREF1, "%s", ref1.c_str());
+                xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREF2, "%s", ref2.c_str());
                 xmlTextWriterWriteFormatAttribute(writer(), C_ORDER, "%s", ord.str().c_str());
               }
             else
@@ -1471,12 +1501,12 @@ namespace OpenBabel
                 //CML1
                 xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
                 xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
-                xmlTextWriterWriteFormatString(writer(),"%s", ref1.str().c_str());
+                xmlTextWriterWriteFormatString(writer(),"%s", ref1.c_str());
                 xmlTextWriterEndElement(writer());
 
                 xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
                 xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
-                xmlTextWriterWriteFormatString(writer(),"%s", ref2.str().c_str());
+                xmlTextWriterWriteFormatString(writer(),"%s", ref2.c_str());
                 xmlTextWriterEndElement(writer());
 
                 xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
@@ -1516,6 +1546,39 @@ namespace OpenBabel
         OutputToStream();
       }
     return true;
+  }
+
+  ///Constructs a unique id for each atom.
+  void CMLFormat::MakeAtomIds(OBMol& mol, vector<string>& atomIDs)
+  {
+    /* If there is no atom class data for the atom, the id is a followed by the atom index.
+       If there is atom class data then it is aa followed by the atom class. 
+       If a subsequent atom has the same atom class, its id is ab followed
+       by the atom class, and so on. */
+
+    stringstream ss;
+    map<int,char> acmap; //key=atom calss; value=last letter used as second in id
+    OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
+    atomIDs.push_back("Error"); //atom idex stats at 1. atomIDs[0] is not used
+    for (int idx=1; idx<=mol.NumAtoms(); ++idx)
+    {
+      ss.str("");
+      ss << 'a';
+      if(pac && pac->HasClass(idx))
+      {
+        int ac = pac->GetClass(idx);
+        char ch2='a'; //default 2nd char
+        if(acmap.count(ac)>0)
+          ch2 = acmap[ac]+1;
+        if(ch2>'z')
+          obErrorLog.ThrowError(_pmol->GetTitle(),"CML: too many atoms with same atom class." , obError);
+        ss << ch2 << ac;
+        acmap[ac] = ch2;
+      }
+      else
+        ss << idx;
+      atomIDs.push_back(ss.str());
+    }
   }
 
   void CMLFormat::WriteFormula(OBMol mol)
@@ -1776,7 +1839,7 @@ namespace OpenBabel
     OBVibrationData* vd = (OBVibrationData*)mol.GetData(OBGenericDataType::VibrationData);
 
     xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
-    xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Vibrational Frequncies");
+    xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Vibrational Frequencies");
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","me:vibFreqs");
 
     xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
@@ -1812,12 +1875,12 @@ namespace OpenBabel
     xmlTextWriterEndElement(writer());//array
     xmlTextWriterEndElement(writer());//property
     xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
-    xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Rotational Constants");
-    xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","me:rotConsts");
+    xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Symmetry Number");
+    xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","me:symmetryNumber");
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
     xmlTextWriterWriteFormatString(writer(),"%d ", rd->GetSymmetryNumber());
-    xmlTextWriterEndElement(writer());//array
+    xmlTextWriterEndElement(writer());//scalar
     xmlTextWriterEndElement(writer());//property
     return true;
   }
