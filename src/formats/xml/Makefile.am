@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/include
+INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/include 
 AM_CPPFLAGS =  @XML_CPPFLAGS@
 AM_LDFLAGS = @LIBS@ @XML_LIBS@
 

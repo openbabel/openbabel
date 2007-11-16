@@ -1,3 +1,9 @@
+2007-11-16  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/xml/Makefile.am (INCLUDES): Added
+	-I$(top_builddir)/include.
+	* src/formats/xml/Makefile.in: Regenerated.
+
 2007-11-15  Chris Morley
 
 	Update Windows build files.
