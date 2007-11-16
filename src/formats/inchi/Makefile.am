@@ -1,8 +1,7 @@
 INCLUDES = -I$(top_srcdir)/include/inchi
 
-lib_LTLIBRARIES = libinchi.la
+noinst_LTLIBRARIES = libinchi.la
 
-libinchi_la_LDFLAGS = -no-undefined -version-info 0:1:0 -export-symbols $(srcdir)/inchi.sym
 libinchi_la_SOURCES = \
 	ichi_bns.c ichican2.c ichicano.c ichicans.c ichiisot.c \
 	ichilnct.c ichimak2.c ichimake.c ichimap1.c ichimap2.c \

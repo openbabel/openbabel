@@ -1,5 +1,13 @@
 2007-11-16  Michael Banck  <mbanck@gmx.net>
 
+	Make libinchi.la a convenience library.
+
+	* src/formats/inchi/Makefile.am (lib_LTLIBRARIES): Renamed to ...
+	* (noinst_LTLIBRARIES): ... this.
+	* src/formats/inchi/Makefile.in: Regenerated.
+
+2007-11-16  Michael Banck  <mbanck@gmx.net>
+
 	* src/formats/xml/Makefile.am (INCLUDES): Added
 	-I$(top_builddir)/include.
 	* src/formats/xml/Makefile.in: Regenerated.
