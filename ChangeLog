@@ -1,3 +1,16 @@
+2007-11-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/builder.cpp: Added some documentation. Now uses OpenDataFile().
+
+	* src/typer.cpp, include/openbabel/typer.h, data/ringtyp.txt: Added
+	OBRingTyper class. Brief doxygen documentation included on use.
+
+	* src/ring.cpp, include/openbabel/ring.h: Added GetType() and
+	SetType() (see OBRingTyper)
+
+	* include/openbabel/mol.h: Added SetRingTypesPerceived() and
+	HasRingTypesPerceived() (see OBRingTyper) 
+
 2007-11-16  Chris Morley
 
 	* include/openbabel/atomclass.h: New file with OBAtomClassData
@@ -106,6 +119,7 @@
 	
 	* src/formats/gromos96format.cpp: Fix typo caused by residue
 	numbers as strings.
+
 2007-11-08  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/builder.cpp: rotation works! you can now create fragment based

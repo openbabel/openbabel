@@ -88,6 +88,25 @@ public:
                        std::pair<int,int> &er,int depth);
 };
 
+// class introduction in typer.cpp
+class OBAPI OBRingTyper : public OBGlobalDataBase
+{
+  std::vector<std::vector<int> >                           _mlist; //!< match list for atom typing
+  std::vector<std::pair<OBSmartsPattern*,std::string> >    _ringtyp; //!< ring type rules
+
+public:
+    OBRingTyper();
+    ~OBRingTyper();
+
+    void ParseLine(const char*);
+    //! \return the number of SMARTS patterns
+    unsigned int GetSize()                 { return _ringtyp.size();}
+
+    //! Assign external atomic types (ringtyp.txt)
+    void AssignTypes(OBMol&);
+};
+
+
 } //namespace OpenBabel
 
 #endif // OB_TYPER_H

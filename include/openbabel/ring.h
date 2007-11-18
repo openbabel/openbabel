@@ -26,6 +26,7 @@ GNU General Public License for more details.
 // TODO: Make this work as a free-standing header
 // Currently only used in ring.cpp which imports mol.h beforehand
 #include <openbabel/bitvec.h>
+#include <openbabel/typer.h>
 
 namespace OpenBabel
 {
@@ -48,7 +49,7 @@ namespace OpenBabel
     OBRing()    {}
     //! Initialize a ring from a set of atom indexes @p path and with @p size
     OBRing(std::vector<int>& path, int size);
-  OBRing(std::vector<int>& path, OBBitVec set) : _path(path), _pathset(set) {}
+    OBRing(std::vector<int>& path, OBBitVec set) : _path(path), _pathset(set) {}
     OBRing(const OBRing &src);
     OBRing& operator=(const OBRing &src);
     //@}
@@ -65,6 +66,14 @@ namespace OpenBabel
     //! If all atoms in this ring are aromatic, the ring will be considered aromatic
     //! \todo This method uses implicit bonding -- bond info is not stored in OBRing
     bool   IsAromatic();
+
+    //! Set the ring type (see OBRingTyper for more)
+    void SetType(char *type);
+    //! Set the ring type (see OBRingTyper for more)
+    void SetType(std::string &type);
+    //! \return the ring type
+    char *GetType();
+
 
     //! \return Whether atom @p a is a member of this ring
     bool   IsMember(OBAtom *a);
@@ -89,6 +98,8 @@ namespace OpenBabel
     //! \param norm2 -1 * norm1 (i.e., the opposite direction of norm1)
     //! \return True (success)
     bool findCenterAndNormal(vector3 & center, vector3 &norm1, vector3 &norm2);
+  private:
+    char _type[30];   //!< ring type
   };
 
   //! Comparison function for rings, used by OBRingSearch::SortRings()

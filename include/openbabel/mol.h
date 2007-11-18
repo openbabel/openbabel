@@ -94,6 +94,8 @@ namespace OpenBabel
 #define OB_TCHARGE_MOL		       (1<<16)
   //! Total spin on this molecule has been set. See OBMol::SetTotalSpinMultiplicity
 #define OB_TSPIN_MOL             (1<<17)
+  //! Ring typing has been performed. See OBRingTyper
+#define OB_RINGTYPES_MOL         (1<<18)
   // flags 18-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
@@ -341,6 +343,8 @@ namespace OpenBabel
     void   SetRingAtomsAndBondsPerceived(){SetFlag(OB_RINGFLAGS_MOL);}
     //! Mark that atom types have been perceived (see OBAtomTyper for details)
     void   SetAtomTypesPerceived()   { SetFlag(OB_ATOMTYPES_MOL);   }
+    //! Mark that ring types have been perceived (see OBRingTyper for details)
+    void   SetRingTypesPerceived()   { SetFlag(OB_RINGTYPES_MOL);   }
     //! Mark that chains and residues have been perceived (see OBChainsParser)
     void   SetChainsPerceived()      { SetFlag(OB_CHAINS_MOL);      }
     //! Mark that chirality has been perceived
@@ -500,6 +504,8 @@ namespace OpenBabel
     bool HasRingAtomsAndBondsPerceived(){return(HasFlag(OB_RINGFLAGS_MOL));}
     //! Have atom types been assigned by OBAtomTyper?
     bool HasAtomTypesPerceived()    { return(HasFlag(OB_ATOMTYPES_MOL));}
+    //! Have ring types been assigned by OBRingTyper?
+    bool HasRingTypesPerceived()    { return(HasFlag(OB_RINGTYPES_MOL));}
     //! Has atom chirality been assigned?
     bool HasChiralityPerceived()    { return(HasFlag(OB_CHIRALITY_MOL));}
     //! Have atomic Gasteiger partial charges been assigned by OBGastChrg?

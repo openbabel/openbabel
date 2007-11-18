@@ -262,6 +262,107 @@ namespace OpenBabel
 
     return;
   }
+  
+  /*! \class OBRingTyper typer.h <openbabel/typer.h>
+    \brief Assigns ring types
+
+    The OBRingTyper class is designed to read in a list of ring typing
+    rules and apply them to molecules. The code that performs ring
+    typing is not usually used directly as ring typing is done
+    automatically when the ring type is requested of rings:
+    \code
+      vector<OBRing*>::iterator i;
+      vector<OBRing*> rlist = mol.GetSSSR();
+      
+      for (i = rlist.begin();i != rlist.end();++i)
+        cout << "ring type = " << (*i)->GetType() << endl;
+    \endcode
+  */
+  OBRingTyper::OBRingTyper()
+  {
+    _init = false;
+    _dir = BABEL_DATADIR;
+    _envvar = "BABEL_DATADIR";
+    _filename = "ringtyp.txt";
+    _subdir = "data";
+    //_dataptr = RingTypeData;
+  }
+
+  void OBRingTyper::ParseLine(const char *buffer)
+  {
+    vector<string> vs;
+    OBSmartsPattern *sp;
+
+    if (EQn(buffer,"RINGTYP",7)) {
+      tokenize(vs,buffer);
+      if (vs.empty() || vs.size() < 3) {
+        obErrorLog.ThrowError(__FUNCTION__, " Could not parse RING line in ring type table from ringtyp.txt", obInfo);
+        return;
+      }
+      sp = new OBSmartsPattern;
+      if (sp->Init(vs[2]))
+        _ringtyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[1]));
+      else {
+        delete sp;
+        sp = NULL;
+        obErrorLog.ThrowError(__FUNCTION__, " Could not parse RING line in ring type table from ringtyp.txt", obInfo);
+        return;
+      }
+    }
+  }
+
+  OBRingTyper::~OBRingTyper()
+  {
+    vector<pair<OBSmartsPattern*,string> >::iterator i;
+    for (i = _ringtyp.begin();i != _ringtyp.end();++i) {
+        delete i->first;
+        i->first = NULL;
+    }
+  }
+
+  void OBRingTyper::AssignTypes(OBMol &mol)
+  {
+    if (!_init)
+      Init();
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OBRing::AssignTypes", obAuditMsg);
+
+    mol.SetAtomTypesPerceived();
+
+    vector<vector<int> >::iterator j2;
+    vector<pair<OBSmartsPattern*,string> >::iterator i2;
+
+    vector<OBRing*>::iterator i;
+    vector<int>::iterator j, j3;
+    vector<OBRing*> rlist = mol.GetSSSR();
+
+    int member_count;
+      
+    // check if the atoms of the found matches are the same as the atoms from
+    // one of the OBRing objects
+    for (i = rlist.begin();i != rlist.end();++i) { // for each ring
+      member_count = 0;
+      for(j = (*i)->_path.begin(); j != (*i)->_path.end(); ++j) {// for each ring atom
+        for (i2 = _ringtyp.begin();i2 != _ringtyp.end();++i2) { // for each ring type
+          if (i2->first->Match(mol)) {
+            _mlist = i2->first->GetMapList();
+            for (j2 = _mlist.begin();j2 != _mlist.end();++j2) { // for each found match
+              for(j3 = j2->begin(); j3 != j2->end(); ++j3) // for each atom in the match
+	        if ((*j) == (*j3))
+	          member_count++;
+                if ((*i)->Size() == member_count) {
+                  (*i)->SetType(i2->second);
+		  member_count = 0;
+	        }
+	    }
+          }
+        }
+      }
+    }
+
+  }
+
 
   /*! \class OBAromaticTyper typer.h <openbabel/typer.h>
     \brief Assigns aromatic typing to atoms and bonds

@@ -26,6 +26,7 @@ using namespace std;
 
 namespace OpenBabel
 {
+  OBRingTyper      ringtyper;
 
   /*! \class OBRing ring.h <openbabel/ring.h>
     \brief Stores information on rings in a molecule from SSSR perception.
@@ -404,6 +405,30 @@ namespace OpenBabel
 
     return(true);
   }
+  
+  void OBRing::SetType(char *type)
+  {
+    strncpy(_type,type, sizeof(_type) - 1);
+    _type[sizeof(_type) - 1] = '\0';
+  }
+  
+  void OBRing::SetType(std::string &type)
+  {
+     strncpy(_type,type.c_str(), sizeof(_type) - 1);
+    _type[sizeof(_type) - 1] = '\0';
+  }
+
+  char* OBRing::GetType()
+  {
+    OBMol *mol = (OBMol*)GetParent();
+    if (mol && !mol->HasRingTypesPerceived())
+      ringtyper.AssignTypes(*((OBMol*)GetParent()));
+
+    return(_type);
+  }
+
+
+
 
   bool OBRing::IsMember(OBAtom *a)
   {
@@ -419,6 +444,7 @@ namespace OpenBabel
   {
     _pathset.FromVecInt(_path);
     _pathset.Resize(size);
+    _type[0] = '\0';
   }
 
   /*!
@@ -431,6 +457,7 @@ namespace OpenBabel
   {
     //member data
     _parent = src._parent;  //this may not be what you want, but it's a default
+    _type[0] = '\0';
   }
 
   /*!
@@ -450,6 +477,7 @@ namespace OpenBabel
     _path = src._path;
     _pathset = src._pathset;
     _parent = src._parent; //note, this may not be what you want
+    _type[0] = '\0';
 
     return(*this);
   }

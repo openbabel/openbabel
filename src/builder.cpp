@@ -41,25 +41,33 @@ using namespace std;
 
 namespace OpenBabel
 {
+  /** \class OBBuilder builder.h <openbabel/builder.h>
+      \brief Class for 3D structure generation
+
+      The OBBuilder class is used for generating 3D structures.
+
+      Below is and example which explain the basics. 
+      
+      \code
+      //
+      // code to read molecule from smiles goes here...
+      //
+      OBBuilder builder;
+      builder.Build(mol);
+      //
+      // code to write molecule to 3D file format goes here...
+      //
+ 
+      \endcode
+  **/
+
+
   OBBuilder::OBBuilder() 
   {
     // open data/fragments.txt
-    string buffer2, subbuffer;
     ifstream ifs;
-    buffer2 = BABEL_DATADIR;
-    buffer2 += FILE_SEP_CHAR;
-    subbuffer = buffer2;
-    subbuffer += BABEL_VERSION;
-    subbuffer += FILE_SEP_CHAR;
-    subbuffer += "fragments.txt";
-    buffer2 += "fragments.txt";
-
-    ifs.open(subbuffer.c_str());
-    if (!ifs) {
-      ifs.open(buffer2.c_str());
-    }
-    if (!ifs) {
-      cerr << "cannot find fragments.txt!" << endl;
+    if (OpenDatafile(ifs, "fragments.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open fragments.txt", obError);
       return;
     }
 

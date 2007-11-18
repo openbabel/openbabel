@@ -1,0 +1,30 @@
+##############################################################################
+#                                                                            #
+#	                Open Babel file: atomtyp.txt                         #
+#                                                                            #
+#  Copyright (c) 2007 Tim Vandermeersch                                      #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# SMARTS patterns for ring typing (used by typer.cpp:OBRingTyper)            #
+#                                                                            #
+# RINGTYP: used to assign the ring types                                     #
+#                                                                            #
+##############################################################################
+
+#	ring name		smarts pattern
+RINGTYP	benzene			c1ccccc1
+RINGTYP	pyridine		n1ccccc1
+RINGTYP	pyridazine		n1ncccc1
+RINGTYP	pyrimidine		n1cnccc1
+RINGTYP	pyrazine		n1ccncc1
+RINGTYP	furan			o1cccc1
+RINGTYP	thiophene		s1cccc1
+RINGTYP	pyrrole			n1cccc1
+RINGTYP	oxazole			o1cncc1
+RINGTYP	thiazole		s1cncc1
+RINGTYP	imidazole		n1cncc1
+RINGTYP	pyrazole		n1nccc1
+RINGTYP	isoxazole		o1nccc1
+RINGTYP	isothiazole		s1nccc1
+RINGTYP	oxadiazole		o1nncc1
+RINGTYP	triazole		n1nncc1
