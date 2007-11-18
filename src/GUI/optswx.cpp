@@ -155,7 +155,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
         continue;
       }
 
-      while(isspace(*p++));//skip white space
+      while(*p>=0 && isspace(*p++));//skip white space
       while(ispunct(*(--p)) && *p != '-')
       {
         //If first non-white space character after option char is punctuation(except for '-')

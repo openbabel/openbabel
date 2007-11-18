@@ -1,3 +1,22 @@
+2007-11-18  Chris Morley
+
+	* include/openbabel/alias.h: New File with OBGenericData derived
+	class to hold aliases of placeholder atoms.
+	
+	* src/formats/mdlformat.cpp: When reading an alias block put the
+	data into the AliasData class above, without trying to interpret it.
+	Write alias block is the atom has unexpanded AliasData.
+	
+	* src/format/xmlformats/cmlformat.cpp: had forgotten Atom4Refs
+	whem doing mods for atomclasses.
+	
+	* src/GUI/optswx.cpp:added a test for >0 to a parameter of isspace()
+	
+	* include/openbabel/plugin.h: Moved CharPtrLess to be a free
+	standing struct rather than embedded in OBPlugin. Less to go wrong
+	with SWIG.
+	
+
 2007-11-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/builder.cpp: Added some documentation. Now uses OpenDataFile().

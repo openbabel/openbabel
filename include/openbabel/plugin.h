@@ -33,17 +33,18 @@ General Public License for more details.
 namespace OpenBabel
 {
 
+/// @brief Case insensitive string comparison for PluginMapType key.
+struct OBERROR CharPtrLess : public std::binary_function<const char*,const char*, bool>
+{
+  bool operator()(const char* p1,const char* p2) const
+  { return strcasecmp(p1,p2)<0; }
+};
+
 //! \class Plugin plugin.h <openbabel/plugin.h>
 //! \brief Base class for all types of dynamic classes discovered at runtime
 class OBERROR OBPlugin
 {
 public:
-  /// @brief Case insensitive string comparison for PluginMapType key.
-  struct CharPtrLess : public std::binary_function<const char*,const char*, bool>
-  {
-    bool operator()(const char* p1,const char* p2) const
-    { return strcasecmp(p1,p2)<0; }
-  };
 
   //Maps of thistype are used to store 
   // (a)a list of the plugin types in OBPlugin, and

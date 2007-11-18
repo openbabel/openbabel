@@ -110,7 +110,7 @@ namespace OpenBabel
     void WriteFormula(OBMol mol); //passes copy of mol
     void WriteMetadataList();
     string getTimestr();
-    void WriteBondStereo(OBBond* pbond);
+    void WriteBondStereo(OBBond* pbond, vector<string>& atomIDs);
     void WriteCrystal(OBMol& mol);
     void WriteProperties(OBMol& mol, bool& propertyListWritten);
     void WriteThermo(OBMol& mol, bool& propertyListWritten);
@@ -1285,8 +1285,10 @@ namespace OpenBabel
                                 while (ref.size()<4)
                                   ref.push_back(patom->GetIdx());
                                 xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
-                                xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
-                                                                  "a%d a%d a%d a%d", ref[0], ref[1], ref[2], ref[3]);														
+                                xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4, "%s %s %s %s",
+//                                                     "a%d a%d a%d a%d", ref[0], ref[1], ref[2], ref[3]);
+                                    atomIds[ref[0]].c_str(), atomIds[ref[1]].c_str(),
+                                    atomIds[ref[2]].c_str(), atomIds[ref[3]].c_str());
                                 xmlTextWriterWriteFormatString(writer(),"%d", cfg);
                                 xmlTextWriterEndElement(writer());//atomParity
                               }
@@ -1462,7 +1464,7 @@ namespace OpenBabel
                     xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%s", ord.str().c_str());
 					
                     if(bo==2 || pbond->IsWedge() || pbond->IsHash())
-                      WriteBondStereo(pbond);
+                      WriteBondStereo(pbond, atomIds);
                   }
                 else
                   {
@@ -1524,7 +1526,7 @@ namespace OpenBabel
             for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
               {
                 if(pbond->GetBO()==2 || pbond->IsWedge() || pbond->IsHash())
-                  WriteBondStereo(pbond);
+                  WriteBondStereo(pbond, atomIds);
               }
           }
       }
@@ -1593,7 +1595,7 @@ namespace OpenBabel
     xmlTextWriterEndElement(writer());//formula
   }
 
-  void CMLFormat::WriteBondStereo(OBBond* pbond)
+  void CMLFormat::WriteBondStereo(OBBond* pbond, vector<string>& atomIDs)
   {
     static const xmlChar C_ATOMREFS4[]  = "atomRefs4";
     static const xmlChar C_BONDSTEREO[] = "bondStereo";
@@ -1640,8 +1642,10 @@ namespace OpenBabel
         return;
   	
       xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
-      xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
-                                        "a%d a%d a%d a%d", idx1, patomA->GetIdx(), patomB->GetIdx(), idx2);
+      xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4, "%s %s %s %s",
+//                        "a%d a%d a%d a%d", idx1, patomA->GetIdx(), patomB->GetIdx(), idx2);
+            atomIDs[idx1].c_str(), atomIDs[patomA->GetIdx()].c_str(),
+            atomIDs[patomB->GetIdx()].c_str(), atomIDs[idx2].c_str());
       ch = (ud1==ud2) ? 'C' : 'T';
     }
 

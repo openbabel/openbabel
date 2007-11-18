@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <map>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/chiral.h>
+#include <openbabel/alias.h>
 
 using namespace std;
 namespace OpenBabel
@@ -91,7 +92,6 @@ Write Options, e.g. -x3\n \
   private:
     bool  HasProperties;
     char* GetTimeDate(char* td);
-    bool  ParseAliasText(OBMol& mol, char* txt, int atomnumber);
 
     map<int,int> indexmap; //relates index in file to index in OBMol
     vector<string> vs;
@@ -341,15 +341,16 @@ public:
               }
             if(buffer[0]=='A') //alias
             {
-              //Parses entries like 
-              //A  6
-              //CD2
               int atomnum = atoi(buffer+2);
               ifs.getline(buffer,BUFF_SIZE);
-              if(!ParseAliasText(mol, buffer, atomnum))
+              if(*buffer!='?' && *buffer!='*')
               {
-                obErrorLog.ThrowError(__FUNCTION__, "Error in alias block", obError);
-                return false;
+                AliasData* ad = new AliasData();
+                ad->SetAlias(buffer);
+                ad->SetOrigin(fileformatInput);
+                OBAtom* at = mol.GetAtom(atomnum);
+                at->SetData(ad);
+                at->SetAtomicNum(0);
               }
               continue;
             }
@@ -549,7 +550,7 @@ public:
                    atom->GetX(),
                    atom->GetY(),
                    atom->GetZ(),
-                   (etab.GetSymbol(atom->GetAtomicNum())),
+                   atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
                    0,charge,0,0,0);    
           ofs << buff << endl;
         }
@@ -588,6 +589,14 @@ public:
               isos.push_back(atom);
             if(atom->GetFormalCharge())
               chgs.push_back(atom);
+
+            if(atom->HasData(AliasDataType))
+            {
+              AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
+              if(!ad->IsExpanded()) //do nothing with an expanded alias
+                ofs << "A  " << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
+            }
+
           }
         if(rads.size())
           {
@@ -980,70 +989,5 @@ public:
     return td;
   }
 
-  bool MDLFormat::ParseAliasText(OBMol& mol, char* txt, int atomnumber)
-  {
-    //Crude implementation
-    //Only single character element symbols are handled
-    //Atom which replaces atomnumber is the first non-H 
-    //Will parse ND2 DS CH-
-    if(*txt=='?') //Assume that it is harmless to ignore this alias
-      return true;
-    if(!isalpha(*txt)) //first char is the element that replaces atomnumber
-      return false;
-    //Swaps any leading H isotope with the first non-H atom
-    if(*txt=='H' || *txt=='D' || *txt=='T')
-    {
-      char* p =txt+1;
-      while(*p && *p=='H' && *p=='D' && *p=='T')p++;
-      if(*p)
-        std::swap(*p, *txt);
-    }
-    char symb[2];
-    symb[0]=*(txt++);
-    symb[1]='\0';
-    OBAtom* pAtom = mol.GetAtom(atomnumber);
-    if(!pAtom)
-      return false;
-    int iso = 0;
-    pAtom->SetAtomicNum(etab.GetAtomicNum(symb,iso));
-    if(iso)
-      pAtom->SetIsotope(iso);
-
-    while(*txt)
-    {
-      if(isspace(*txt)) {
-        ++txt;
-        continue;
-      }
-      int chg=0;
-      if(*txt=='-')
-        chg = -1;
-      else if(*txt=='+')
-        chg = 1;
-      if(chg)
-      {
-        pAtom->SetFormalCharge(pAtom->GetFormalCharge()+chg);//put on central atom e.g. CH-
-        ++txt;
-        continue;
-      }
-      if(!isalpha(*txt))
-        return false;
-      symb[0]=*txt;
-      int rep = atoi(++txt);
-      if(rep)
-        ++txt;
-      do //for each rep
-      {
-        OBAtom* newAtom = mol.NewAtom();
-        iso = 0;
-        newAtom->SetAtomicNum(etab.GetAtomicNum(symb,iso));
-        if(iso)
-          newAtom->SetIsotope(iso);
-
-        if (!mol.AddBond(atomnumber,mol.NumAtoms(),1,0)) return false;
-      }while(--rep>0);
-    }
-    return true;
-  }
 
 }
