@@ -620,7 +620,8 @@ namespace OpenBabel
                     if(pos!=string::npos)
                       {
                         indx1 = AtomMap[value.substr(0,pos)];
-                        indx2 = AtomMap[Trim(value.substr(pos+1))];
+                        string temp =value.substr(pos+1);
+                        indx2 = AtomMap[Trim(temp)];
                       }
                     else
                       indx1 = AtomMap[value];
@@ -717,8 +718,8 @@ namespace OpenBabel
               }
             else //bondStereo
               {
-                OBBond* pbond1;
-                OBBond* pbond2;
+                OBBond* pbond1=NULL;
+                OBBond* pbond2=NULL;
                 if(atrefsvalue.empty())
                   {
                     OBBond* pDBond = _pmol->GetBond(Idx);

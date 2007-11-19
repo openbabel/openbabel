@@ -1,3 +1,11 @@
+2007-11-19  Chris Morley
+
+	* src/formats/xml/cmlformat.cpp: extra string temp variable so
+	that it will compile on gcc
+	
+	* src/formats/xml/cmlreactformat.cpp: minor changesfrom compiler
+	warnings
+	
 2007-11-18  Chris Morley
 
 	* include/openbabel/alias.h: New File with OBGenericData derived
@@ -7,7 +15,7 @@
 	data into the AliasData class above, without trying to interpret it.
 	Write alias block is the atom has unexpanded AliasData.
 	
-	* src/format/xmlformats/cmlformat.cpp: had forgotten Atom4Refs
+	* src/format/xml/cmlformat.cpp: had forgotten Atom4Refs
 	whem doing mods for atomclasses.
 	
 	* src/GUI/optswx.cpp:added a test for >0 to a parameter of isspace()

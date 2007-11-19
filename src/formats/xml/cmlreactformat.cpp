@@ -131,7 +131,6 @@ bool CMLReactFormat::ReadChemObject(OBConversion* pConv)
     pConv->AddChemObject(NULL);
     return false;//don't continue after empty reaction
   }
-  return ret;
 }
 
 bool CMLReactFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -196,7 +195,7 @@ bool CMLReactFormat::DoElement(const string& name)
    _preact->SetData(_pRD);
 
     string rt = _pxmlConv->GetAttribute("reactionType");
-    OBRateData::reaction_type enumrt;
+    OBRateData::reaction_type enumrt=OBRateData::ARRHENIUS;
     if(rt=="arrhenius")       enumrt=OBRateData::ARRHENIUS;
     else if(rt=="lindermann") enumrt=OBRateData::LINDERMANN;
     else if(rt=="troe")       enumrt=OBRateData::TROE;
@@ -327,7 +326,7 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
           "CML format for molecules is needed by CMLReactformat and is not available\n",obError);
           return false;
       }
-      int n=0;
+      unsigned int n=0;
       MolMap::iterator mapitr;
       for(mapitr=OMols.begin();mapitr!=OMols.end() && ret; ++mapitr)
       {
@@ -542,7 +541,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
       //Send to real output stream with the moleculeList first
       string::size_type reaclistPos, mollistPos, footerPos;
-      string& s = ssout.str();
+      const string& s = ssout.str();
       reaclistPos = s.find("<reactionList");
       if(reaclistPos!=string::npos)
         mollistPos = s.find("<moleculeList",reaclistPos+1);
