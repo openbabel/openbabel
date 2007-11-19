@@ -45,21 +45,15 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    { return "http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html";};
+    { return "http://www.wwpdb.org/docs.html";};
 
     virtual const char* GetMIMEType() 
     { return "chemical/x-pdb"; };
 
-    //Flags() can return be any the following combined by | or be omitted if none apply
-    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
-    {
-      return READONEONLY;
-    };
-
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
+  	virtual int SkipObjects(int n, OBConversion* pConv);
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
@@ -77,6 +71,21 @@ namespace OpenBabel
 
   //extern OBResidueData    resdat; now in mol.h
 
+  /////////////////////////////////////////////////////////////////
+ 	int PDBFormat::SkipObjects(int n, OBConversion* pConv)
+  {
+    if (n == 0)
+      ++ n;
+    istream &ifs = *pConv->GetInStream();
+    char buffer[BUFF_SIZE];
+    while (n && ifs.getline(buffer,BUFF_SIZE))
+      {
+        if (EQn(buffer,"ENDMDL",6))
+          -- n;
+      }
+      
+    return ifs.good() ? 1 : -1;       
+  }
   /////////////////////////////////////////////////////////////////
   bool PDBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -100,8 +109,15 @@ namespace OpenBabel
     mol.SetChainsPerceived(); // It's a PDB file, we read all chain/res info.
 
     mol.BeginModify();
-    while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"END",3))
+    while (ifs.good() && ifs.getline(buffer,BUFF_SIZE))
       {
+        if (EQn(buffer,"ENDMDL",6))
+          break;
+        if (EQn(buffer,"END",3)) {
+          // eat anything until the next ENDMDL
+          while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"ENDMDL",6));
+          break;
+        }
         if (EQn(buffer,"TER",3)) {
           chainNum++;
           continue;
@@ -604,6 +620,13 @@ namespace OpenBabel
     char *element_name;
     int res_num;
     bool het=true;
+    int model_num = 0;
+    if (!pConv->IsLast() || pConv->GetOutputIndex() > 1)
+      { // More than one molecule record
+      model_num = pConv->GetOutputIndex(); // MODEL 1-based index
+      snprintf(buffer, BUFF_SIZE, "MODEL %8d", model_num);
+      ofs << buffer << endl;
+      }
 
     if (strlen(mol.GetTitle()) > 0)
       snprintf(buffer, BUFF_SIZE, "COMPND    %s ",mol.GetTitle());
@@ -658,7 +681,7 @@ namespace OpenBabel
             snprintf(type_name, sizeof(type_name), " %-3s", tmp);
           }
 
-        if ( (res = atom->GetResidue()) )
+        if ( (res = atom->GetResidue()) != 0 )
           {
             het = res->IsHetAtom(atom);
             snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
@@ -740,6 +763,10 @@ namespace OpenBabel
     snprintf(buffer, BUFF_SIZE, "%4d    0 %4d    0\n",mol.NumAtoms(),mol.NumAtoms());
     ofs << buffer;
     ofs << "END\n";
+    if (model_num)
+      {
+      ofs << "ENDMDL" << endl;
+      }
     return(true);
   }
 
