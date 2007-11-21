@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/kinetics.h>
 #include <openbabel/atomclass.h>
+#include <openbabel/reaction.h>
 #include <openbabel/xml.h>
 
 #ifdef WIN32
@@ -91,6 +92,7 @@ namespace OpenBabel
       return READXML | ZEROATOMSOK;
     };
 
+    virtual bool WriteChemObject(OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
   protected:
     virtual bool DoElement(const string& name);
@@ -622,6 +624,8 @@ namespace OpenBabel
                         indx1 = AtomMap[value.substr(0,pos)];
                         string temp =value.substr(pos+1);
                         indx2 = AtomMap[Trim(temp)];
+//C4239                        indx2 = AtomMap[Trim(value.substr(pos+1))];
+
                       }
                     else
                       indx1 = AtomMap[value];
@@ -1077,9 +1081,53 @@ namespace OpenBabel
     if(!_pxmlConv)
       return false;
 
+    bool cml1 = _pxmlConv->IsOption("1");
+    bool arrayform = _pxmlConv->IsOption("a");
+    bool WriteAromaticBonds =  _pxmlConv->IsOption("A");
+    prefix = BAD_CAST _pxmlConv->IsOption("N");
+    xmlChar* uri=NULL;
+
+    //Write the header on the first object (incl OBReaction)
+    //unless x option set or if has been called from elsewhere (e.g. CMLReact)
+    if(!_pxmlConv->IsOption("MolsNotStandalone") && _pxmlConv->GetOutputIndex()==1)
+      {
+        if(!_pxmlConv->IsOption("x"))
+          {
+            xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
+            if(cml1)
+              uri = BAD_CAST CML1NamespaceURI();
+            else
+              uri=BAD_CAST NamespaceURI();// not the old CML2NamespaceURI();
+          }
+        //If more than one molecule to be output, write <cml> at start and </cml> at end.
+        if(!_pxmlConv->IsLast())
+          {
+            xmlTextWriterStartElementNS(writer(), prefix, C_CML, uri);
+            uri=NULL;
+          }
+      }
+	
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-      return false;
+    {
+      OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
+      if(!pReact)
+        return false;
+      //Use CMLReact to convert OBReaction object
+      OBFormat* pCMLRFormat = pConv->FindFormat("cmlr");
+      if(!pCMLRFormat)
+      {
+        obErrorLog.ThrowError(__FUNCTION__, "Cannot find CMLReact format", obError);
+        return false;
+      }
+      //Disable list option and supress topping and tailing in CMLReactFormat.
+      _pxmlConv->AddOption("l", OBConversion::OUTOPTIONS);
+      _pxmlConv->AddOption("ReactionsNotStandalone", OBConversion::OUTOPTIONS);
+      bool ret = pCMLRFormat->WriteMolecule(pOb,_pxmlConv);
+      _pxmlConv->RemoveOption("ReactionsNotStandalone", OBConversion::OUTOPTIONS);
+      return ret;
+    }
+
     OBMol &mol = *pmol;
 
     int numbonds = mol.NumBonds(); //Capture this before deleting Hs
@@ -1092,34 +1140,9 @@ namespace OpenBabel
 
     bool UseFormulaWithNoBonds=true;
 
-    bool cml1 = _pxmlConv->IsOption("1");
-    bool arrayform = _pxmlConv->IsOption("a");
-    bool WriteAromaticBonds =  _pxmlConv->IsOption("A");
     int dim = mol.GetDimension();
 
-    prefix = BAD_CAST _pxmlConv->IsOption("N");
 
-    xmlChar* uri=NULL;
-
-    if(!_pxmlConv->IsOption("MolsNotStandalone") && _pxmlConv->GetOutputIndex()==1)
-      {
-        if(!_pxmlConv->IsOption("x"))
-          {
-            xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
-            if(cml1)
-              uri = BAD_CAST CML1NamespaceURI();
-            else
-              uri=BAD_CAST NamespaceURI();// not the old CML2NamespaceURI();
-          }
-        //If more than one molecule to be output, write <cml> at start and </cml> at end.
-        //Except if Option "0" set, e.g. by CMLReactFormat
-        if(!_pxmlConv->IsLast())
-          {
-            xmlTextWriterStartElementNS(writer(), prefix, C_CML, uri);
-            uri=NULL;
-          }
-      }
-	
     xmlTextWriterStartElementNS(writer(), prefix, C_MOLECULE, uri);
 	
     const char* id = mol.GetTitle();
@@ -1446,7 +1469,7 @@ namespace OpenBabel
         for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
           {
             int bo = pbond->GetBO();
-            if(bo==5) //aromatic
+            if(bo==5 || (WriteAromaticBonds && pbond->IsAromatic())) //aromatic
               ord << " " << 'A';
             else
               ord << " " << bo;
@@ -1614,7 +1637,7 @@ namespace OpenBabel
     {
       //double bond stereo
       int ud1=0, ud2=0;
-      int idx1, idx2;
+      int idx1=0, idx2=0;
       OBAtom* patomA = pbond->GetBeginAtom();
       FOR_BONDS_OF_ATOM(b1,patomA)
         {
@@ -1890,6 +1913,25 @@ namespace OpenBabel
     return true;
   }
 
+  bool CMLFormat::WriteChemObject(OBConversion* pConv)
+  {
+    int OIndex = pConv->GetOutputIndex();
+    OBBase* pOb = pConv->GetChemObject();
+    if(dynamic_cast<OBMol*> (pOb))
+    {
+      //With an OBMol object, do the same as if this function wasn't defined,
+      //i.e.access the functionality in OBMoleculeFormat
+
+      //restore output index which is (unhelpfully) incremented by GetChemObject
+      pConv->SetOutputIndex(OIndex);
+      return XMLMoleculeFormat::WriteChemObject(pConv);
+    }
+
+    //With OBReaction object, handle directly in CMLFormat::WriteMolecule
+    bool ret = WriteMolecule(pOb,pConv);
+    delete pOb;
+    return ret;
+  }
 
 
 }//namespace

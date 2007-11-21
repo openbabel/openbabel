@@ -26,6 +26,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler-specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -128,6 +130,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler-specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -238,11 +242,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\xml\iconv.h"
+				RelativePath="..\..\src\formats\xml\pubchem.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\xml\pubchem.cpp"
+				RelativePath="..\..\src\formats\rxnformat.cpp"
 				>
 			</File>
 			<File
@@ -264,6 +268,14 @@
 			>
 			<File
 				RelativePath="..\..\include\openbabel\babelconfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\xml\iconv.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\kinetics.h"
 				>
 			</File>
 			<File

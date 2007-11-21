@@ -26,6 +26,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler-specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -87,7 +89,7 @@
 				ProgramDatabaseFile=".\Debug/OBFPRT.pdb"
 				GenerateMapFile="false"
 				MapFileName=""
-				ImportLibrary="..\Debug/OBFRTD.lib"
+				ImportLibrary="..\Debug/OBFPRTD.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -129,6 +131,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler-specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"

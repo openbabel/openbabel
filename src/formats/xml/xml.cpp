@@ -144,8 +144,10 @@ namespace OpenBabel
           }
       }
     else
+    {
       pxmlConv->SetupWriter();
-
+      pxmlConv->SetLast(pConv->IsLast()); //Copy IsLast flag to the extended object
+    }
     return pxmlConv;
   }
 

@@ -1,3 +1,22 @@
+2007-11-20  Chris Morley
+
+	* src/formats/xml/cmlformat.cpp: Now Has own WriteChemObject
+	so OBReaction object can bypass OBMoleculeFormat functionality
+	and be passed directly to WriteMolecule.
+	WriteMolecule passes OBReaction objects to CMLReactFormat.
+	Restore handling of WriteAromaticBonds which somehow got deleted. 
+	
+	* src/formats/xml/cmlreactformat.cpp: Changes to handling of
+	options MolsNotStandalone and ReactionsNotStandalone.
+	
+	* src/formats/xml/xml.cpp(GetDerived): transfer IsLast flag to
+	extended object when writing.
+	
+	* src/formats/thermoformat.cpp: Replace changes made for cmake
+	by _MSC_VER as macro indicating Visual C++ compiler
+	
+	Update Windows VS OBF build files.
+
 2007-11-19  Chris Morley
 
 	* src/formats/xml/cmlformat.cpp: extra string temp variable so

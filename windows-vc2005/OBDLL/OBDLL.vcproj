@@ -25,6 +25,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler-specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -126,6 +128,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler-specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"

@@ -429,7 +429,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
       _pxmlConv->SetOutStream(&ssout);
     }
-    if(!_pxmlConv->IsOption("x"))
+    if(!_pxmlConv->IsOption("x") && !_pxmlConv->IsOption("ReactionsNotStandalone"))
     {
       xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
       uri=BAD_CAST NamespaceURI();
@@ -444,7 +444,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
       xmlTextWriterStartElementNS(writer(), prefix, C_REACTIONLIST, NULL);
     }
-    else if(!_pxmlConv->IsLast())
+    else if(!_pxmlConv->IsLast() && !_pxmlConv->IsOption("ReactionsNotStandalone"))
       xmlTextWriterStartElementNS(writer(), prefix, C_WRAPPER, uri);
     uri=NULL; //not needed again
   }
@@ -552,14 +552,15 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             << s.substr(reaclistPos, mollistPos-reaclistPos) //reactionList
             << s.substr(footerPos) << endl;                  //footer
     }
-    else if(_pxmlConv->GetOutputIndex()>1)
+    else if(_pxmlConv->GetOutputIndex()>1 && !_pxmlConv->IsOption("ReactionsNotStandalone"))
       xmlTextWriterEndElement(writer());//WRAPPER
 
     xmlTextWriterEndDocument(writer());
     OutputToStream();
-    
-    OMols.clear(); //clean up, delete molecules		
+
+    OMols.clear(); //clean up, delete molecules
   }
+  _pxmlConv->RemoveOption("MolsNotStandalone",OBConversion::OUTOPTIONS);
   return true;
 }
 

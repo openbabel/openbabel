@@ -21,6 +21,8 @@
 
 #define TESTDATADIR "../../test/files/"
 
+// A non-const reference may only be bound to an lvalue. VS extension but error in gcc
+#pragma warning(3 : 4239)
 // Supress warning on deprecated functions
 #pragma warning(disable : 4996)
 // Supress warning that compiler is ignoring C++ exception specification

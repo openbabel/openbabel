@@ -26,6 +26,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler-specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -128,6 +130,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copying compiler-specific babelconfig.h (if out of date)"
+				CommandLine="xcopy /Y /D ..\babelconfig.h ..\..\include\openbabel\"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -278,6 +282,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\copyformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\crkformat.cpp"
 				>
 			</File>
@@ -364,6 +372,15 @@
 			<File
 				RelativePath="..\..\src\formats\pngformat.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WarningLevel="3"
+						WarnAsError="false"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\povrayformat.cpp"
