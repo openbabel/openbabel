@@ -14,7 +14,7 @@
   #define EXTERN __declspec(dllexport) extern
  #endif
 #else //Everything else (behaviour as original)
- #define EXTERN extern 
+ #define EXTERN extern
 #endif
 
 /* The file extension used for shared modules */
@@ -28,7 +28,7 @@
   #define OBAPI __declspec(dllexport)
  #endif
 #else //Everything else (behaviour as original)
- #define OBAPI 
+ #define OBAPI
 #endif
 
 
@@ -40,7 +40,7 @@
   #define OBCOMMON __declspec(dllexport)
  #endif
 #else //Everything else (behaviour as original)
- #define OBCOMMON 
+ #define OBCOMMON
 #endif
 
 
@@ -64,7 +64,18 @@
   #define OBERROR __declspec(dllexport)
  #endif
 #else //Everything else (behaviour as original)
- #define OBERROR 
+ #define OBERROR
+#endif
+
+/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBFPRT __declspec(dllimport)
+ #else
+  #define OBFPRT __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBFPRT
 #endif
 
 
@@ -76,7 +87,7 @@
   #define OBFPTR __declspec(dllexport)
  #endif
 #else //Everything else (behaviour as original)
- #define OBFPTR 
+ #define OBFPTR
 #endif
 
 #ifdef _MSC_VER
@@ -88,7 +99,7 @@
  #pragma warning( disable : 4018 )
  // Supress warning on unreferenced formal parameter
  #pragma warning( disable : 4100 )
- // 
+ //
  #pragma warning( disable : 4251 )
 
 
@@ -149,3 +160,12 @@
   #define HAVE_STRNCASECMP 1
  #endif
 #endif  // WIN32
+
+#cmakedefine SCANDIR_NEEDS_CONST 1
+#ifdef SCANDIR_NEEDS_CONST
+ #define SCANDIR_CONST const
+#else
+ #define SCANDIR_CONST
+#endif
+
+#define OB_MODULE_PATH "@OB_MODULE_PATH@"

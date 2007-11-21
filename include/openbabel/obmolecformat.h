@@ -19,7 +19,7 @@ GNU General Public License for more details.
 #ifndef OB_MOLECULEFORMAT_H
 #define OB_MOLECULEFORMAT_H
 
-#ifdef _WIN32
+#ifdef _MSC_VER
   #include <hash_map>
 #endif
 
@@ -119,7 +119,7 @@ public:
   static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
   //@}
 
-#ifdef _WIN32
+#ifdef _MSC_VER
   typedef stdext::hash_map<std::string, unsigned> NameIndexType;
 #else
   typedef std::map<std::string, unsigned> NameIndexType;

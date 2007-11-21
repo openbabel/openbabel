@@ -28,7 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/parsmart.h>
 
-#ifdef _WIN32
+#ifdef MSC_VER
 	typedef char TCHAR;
 	#include "XGetOpt.h"
 #else

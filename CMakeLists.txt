@@ -2,8 +2,14 @@ project(openabel)
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   1)
 set(BABEL_PATCH_VER 1)
+if(WIN32)
+  set(BABEL_LIBRARY   openbabel-2)
+else(WIN32)
+  set(BABEL_LIBRARY   openbabel)
+endif(WIN32)
 set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 set(BABEL_DATADIR  "{CMAKE_INSTALL_PREFIX}/share/openbabel")
+set(LIB            "lib")   ## FIXME: add lib suffix!
 
 option(WITH_INCHI   "build inchi lib" ON)
 option(BUILD_SHARED "enable static build support" ON)
@@ -31,6 +37,7 @@ include(CheckIncludeFile)
 include(CheckIncludeFileCXX)
 include(CheckSymbolExists)
 include(CheckTypeSize)
+include(CheckCSourceCompiles)
 
 check_include_file(conio.h      HAVE_CONIO_H)
 check_include_file(sys/time.h   HAVE_SYS_TIME_H)
@@ -46,15 +53,36 @@ check_symbol_exists(strncasecmp   "string.h"   HAVE_STRNCASECMP)
 set(CMAKE_EXTRA_INCLUDE_FILES time.h)
 check_type_size(clock_t CLOCK_T)
 
+if(NOT WIN32)
+  SET(CMAKE_REQUIRED_FLAGS -Werror)
+  check_c_source_compiles("
+   #include <sys/types.h>
+   #include <dirent.h>
+    int main(){
+     extern int matchFiles (struct dirent *entry_p);
+     struct dirent **entries_pp;
+     int count = scandir (\"./\", &entries_pp, matchFiles, 0);
+     return 0;
+    }
+   " SCANDIR_NEEDS_CONST)
+
+   set(OB_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${LIB}/openbabel)
+endif(NOT WIN32)
+
 configure_file(${CMAKE_SOURCE_DIR}/src/config.h.cmake ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION include/openbabel-2.0/openbabel)
+configure_file(${CMAKE_SOURCE_DIR}/openbabel-2.0.pc.cmake ${CMAKE_BINARY_DIR}/openbabel-2.0.pc @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB}/pkgconfig)
 
 include_directories(${CMAKE_SOURCE_DIR}/include
-                    ${CMAKE_SOURCE_DIR}/data
-                    ${CMAKE_BINARY_DIR}/include
+                         ${CMAKE_SOURCE_DIR}/data
+                         ${CMAKE_BINARY_DIR}/include
 )
 
 add_subdirectory(include)
 add_subdirectory(data)
+add_subdirectory(doc)
 add_subdirectory(src)
+add_subdirectory(test)
+add_subdirectory(tools)
 

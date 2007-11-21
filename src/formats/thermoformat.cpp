@@ -165,7 +165,8 @@ bool ThermoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   ostream &ofs = *pConv->GetOutStream();
   unsigned int i;
-#ifdef _WIN32
+#if 0
+//#ifdef _WIN32
   unsigned oldf = _set_output_format(_TWO_DIGIT_EXPONENT);
 #endif
   string formula = pmol->GetSpacedFormula();
@@ -206,7 +207,8 @@ bool ThermoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << setw(15) << pND->GetCoeff(i);
   ofs << "                   4\n";
 
-#ifdef _WIN32
+#if 0
+//#ifdef _WIN32
   _set_output_format(oldf);
 #endif
 
