@@ -427,8 +427,32 @@ namespace OpenBabel
     return(_type);
   }
 
+  int OBRing::GetRootAtom()
+  {
+    vector<int>::iterator i;
+    OBMol *mol = (OBMol*)GetParent();
 
+    //if (!IsAromatic())
+    //  return 0;
 
+    if (Size() == 6)
+      for (i = _path.begin();i != _path.end();++i)
+        if (!(mol->GetAtom(*i))->IsCarbon())
+	  return (*i);
+    
+    if (Size() == 5)
+      for (i = _path.begin();i != _path.end();++i) {
+        OBAtom *atom = mol->GetAtom(*i);
+        if (atom->IsSulfur() && (atom->GetValence() == 2))
+	  return (*i);
+        if (atom->IsOxygen() && (atom->GetValence() == 2))
+	  return (*i);
+        if (atom->IsNitrogen() && (atom->BOSum() == atom->GetValence()))
+	  return (*i);
+      }
+      
+    return 0;
+  }
 
   bool OBRing::IsMember(OBAtom *a)
   {

@@ -1,3 +1,18 @@
+2007-11-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefieldmmff94.*, data/mmffsymb.par: Atom typing 
+	works!!
+	
+	* src/forcefield.cpp, include/openbabel/forcefield.h,
+	tools/obminimize.cpp: Added DetectExplosion() to aid in debugging the
+	problem with planar molecules.
+
+	* src/typer.cpp, data/ringtyp.txt, include/openbabel/mol.h: Fixed some
+	bugs and added more ringtypes.
+
+	* src/ring.cpp, include/openbabel/ring.h: Added GetRootAtom(), returns
+	the index of the root atom (e.g. O in furan, ...)
+
 2007-11-20  Chris Morley
 
 	* src/formats/xml/cmlformat.cpp: Now Has own WriteChemObject

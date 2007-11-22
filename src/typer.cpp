@@ -328,39 +328,35 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OBRing::AssignTypes", obAuditMsg);
 
-    mol.SetAtomTypesPerceived();
+    mol.SetRingTypesPerceived();
 
     vector<vector<int> >::iterator j2;
     vector<pair<OBSmartsPattern*,string> >::iterator i2;
 
     vector<OBRing*>::iterator i;
-    vector<int>::iterator j, j3;
+    vector<int>::iterator j;
     vector<OBRing*> rlist = mol.GetSSSR();
 
     int member_count;
-      
-    // check if the atoms of the found matches are the same as the atoms from
-    // one of the OBRing objects
-    for (i = rlist.begin();i != rlist.end();++i) { // for each ring
-      member_count = 0;
-      for(j = (*i)->_path.begin(); j != (*i)->_path.end(); ++j) {// for each ring atom
-        for (i2 = _ringtyp.begin();i2 != _ringtyp.end();++i2) { // for each ring type
-          if (i2->first->Match(mol)) {
-            _mlist = i2->first->GetMapList();
-            for (j2 = _mlist.begin();j2 != _mlist.end();++j2) { // for each found match
-              for(j3 = j2->begin(); j3 != j2->end(); ++j3) // for each atom in the match
-	        if ((*j) == (*j3))
-	          member_count++;
-                if ((*i)->Size() == member_count) {
-                  (*i)->SetType(i2->second);
-		  member_count = 0;
-	        }
+    for (i2 = _ringtyp.begin();i2 != _ringtyp.end();++i2) { // for each ring type
+      if (i2->first->Match(mol)) {
+        _mlist = i2->first->GetMapList();
+        for (j2 = _mlist.begin();j2 != _mlist.end();++j2) { // for each found match
+
+          for (i = rlist.begin();i != rlist.end();++i) { // for each ring
+            member_count = 0;
+            
+            for(j = j2->begin(); j != j2->end(); ++j) { // for each atom in the match
+	      if ((*i)->IsMember(mol.GetAtom(*j))) 
+	        member_count++;
 	    }
-          }
-        }
+	    
+	    if ((*i)->Size() == member_count)
+              (*i)->SetType(i2->second);
+	  }
+	}
       }
     }
-
   }
 
 

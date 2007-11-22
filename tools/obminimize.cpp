@@ -159,11 +159,26 @@ int main(int argc,char **argv)
       exit (-1);
     }
       
+    bool done = true;
     if (sd)
-      pFF->SteepestDescent(steps, crit);
+      pFF->SteepestDescentInitialize(steps, crit);
     else
-      pFF->ConjugateGradients(steps, crit);
-
+      pFF->ConjugateGradientsInitialize(steps, crit);
+    
+    while (done) {
+      if (sd)
+        done = pFF->SteepestDescentTakeNSteps(1);
+      else
+        done = pFF->SteepestDescentTakeNSteps(1);
+ 
+      if (pFF->DetectExplosion()) {
+        cerr << "explosion has occured!" << endl;
+        conv.Write(&mol, &cout);
+        return(1);
+      } else
+        pFF->UpdateCoordinates(mol);
+    }
+    
 
     pFF->UpdateCoordinates(mol);
 

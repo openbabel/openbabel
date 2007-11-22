@@ -949,7 +949,98 @@ namespace OpenBabel
  
     return 0;
   }
+  
+  bool OBForceFieldMMFF94::PerceiveAromatic()
+  {
+    bool done = false; // not done actually....
+    OBAtom *ringatom;
+    OBBond *ringbond;
+    vector<OBRing*> vr;
+    vr = _mol.GetSSSR();
+    
+    vector<OBRing*>::iterator ri;
+    vector<int>::iterator rj;
+    int n, index, ringsize, first_rj, prev_rj, pi_electrons;
+    for (ri = vr.begin();ri != vr.end();++ri) { // for each ring
+      ringsize = (*ri)->Size();
+      
+      n = 1;
+      pi_electrons = 0;
+      for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) { // for each ring atom
+        index = *rj;
+        ringatom = _mol.GetAtom(index);
+        //cout << index << ": " << ringatom << endl; 
+        
+        // is the bond to the previous ring atom double?
+        if (n > 1) {
+          ringbond = _mol.GetBond(prev_rj, index);
+          if (ringbond->GetBO() == 2) {
+            pi_electrons += 2;
+            //cout << "=" << index;
+            prev_rj = index;
+            n++;
+            continue;
+          }
+	  //} else 
+            //cout << "-" << index;
+          prev_rj = index;
+        } else {
+          //cout << index;
+          prev_rj = index;
+          first_rj = index;
+        }
+	
+        // does the current ring atom have a exocyclic double bond?
+        FOR_NBORS_OF_ATOM (nbr, ringatom) {
+          if ((*ri)->IsInRing(nbr->GetIdx()))
+            continue;
 
+	  if (!nbr->IsAromatic())
+	    continue;
+
+          ringbond = _mol.GetBond(nbr->GetIdx(), index);
+          if (ringbond->GetBO() == 2) {
+            pi_electrons++;
+            //cout << "(=*)";
+          }
+        }
+
+        // is the atom N, O or S in 5 rings
+        if (ringsize == 5) {
+          if (ringatom->GetIdx() == (*ri)->GetRootAtom()) {
+	    pi_electrons += 2;
+            //cout << "(:)";
+	  }
+	}
+
+        n++;
+      
+      } // for each ring atom
+      
+      // is the bond from the first to the last atom double?
+      ringbond = _mol.GetBond(first_rj, index);
+      if (ringbond->GetBO() == 2) {
+        pi_electrons += 2;
+        //cout << "=";
+      }
+
+      if (pi_electrons == 6) {
+	// mark ring atoms as aromatic
+	for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) {
+          if (!_mol.GetAtom(*rj)->IsAromatic())
+	    done = true;
+          _mol.GetAtom(*rj)->SetAromatic();
+	}
+	// mark all ring bonds as aromatic
+        FOR_BONDS_OF_MOL (bond, _mol)
+	  if((*ri)->IsMember(&*bond))
+	    bond->SetAromatic();
+      }
+    }
+
+    return done;
+  }
+  
   bool OBForceFieldMMFF94::SetMMFFTypes()
   {
     std::vector<std::vector<int> > _mlist; //!< match list for atom typing
@@ -960,29 +1051,32 @@ namespace OpenBabel
     vector<string> vs;
     char buffer[150];
  
-    *logos << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
     _mol.SetAtomTypesPerceived();
-    
-    // DEBUG
-    FOR_BONDS_OF_MOL (bond, _mol)
-      if (bond->IsDouble())
-        cout << bond->GetBeginAtom()->GetIdx() << "=" << bond->GetEndAtom()->GetIdx() << endl;
 
-    cout << "kekulize..." << endl;
-    _mol.Kekulize();
-    _mol.UnsetAromaticPerceived();
+    // mark all atoms and bonds as non-aromatic, this is needed for the first 
+    // phase in the atom type assigning
+    _mol.SetAromaticPerceived();
+    FOR_BONDS_OF_MOL (bond, _mol)
+      bond->UnsetAromatic();
+    FOR_ATOMS_OF_MOL (atom, _mol)
+      atom->UnsetAromatic();
     
+ 
+    /*
     cout << endl << "B O N D S" << endl << endl;
     cout << " I    J     BO     AR" << endl;
     cout << "---------------------" << endl;
-    //      "XX   XX     XX     XX
     
     FOR_BONDS_OF_MOL (bond, _mol) {
       sprintf(buffer, "%2d   %2d     %d     %d", bond->GetBeginAtom()->GetIdx(), bond->GetEndAtom()->GetIdx(), bond->GetBO(), bond->IsAromatic());
       cout  << buffer << endl;
     }
+    */
    
     ////////////////////////////////////////////////////////////////////////////
+    // 
+    // phase 1
+    //
     // read smarts from mmfsymb.par, assign atom types
     // this is for non-aromatic atom types only!!!
     ////////////////////////////////////////////////////////////////////////////
@@ -1006,7 +1100,7 @@ namespace OpenBabel
       } else {
         delete sp;
         sp = NULL;
-        obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
+        obErrorLog.ThrowError(__FUNCTION__, " Could not parse line from mmffsymb.par", obInfo);
         return false;
       }
  
@@ -1023,98 +1117,41 @@ namespace OpenBabel
     if (ifs)
       ifs.close();
     
+
     ////////////////////////////////////////////////////////////////////////////
+    // 
+    // phase 2 
+    //
     // find aromatic rings and assign atom types
     ////////////////////////////////////////////////////////////////////////////
 
-    cout << endl << "R I N G S" << endl << endl;
-    //      "XX   XX     XX     XX
+    // It might be needed to runthis function more than once...
+    bool done = true;
+    while (done)
+      done = PerceiveAromatic();
     
     OBAtom *ringatom;
-    OBBond *ringbond;
     vector<OBRing*> vr;
     vr = _mol.GetSSSR();
     
+       
     vector<OBRing*>::iterator ri;
     vector<int>::iterator rj;
-    int n, index, ringsize, first_rj, prev_rj, pi_electrons;
-    for (ri = vr.begin();ri != vr.end();++ri) { // for each ring
+    int index, ringsize;
+    for (ri = vr.begin();ri != vr.end();ri++) { // for each ring
       ringsize = (*ri)->Size();
-      cout << "RING: ";
-      
-      n = 1;
-      pi_electrons = 0;
-      for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) { // for each ring atom
-        index = *rj;
-        ringatom = _mol.GetAtom(index);
-        //cout << index << ": " << ringatom << endl; 
-        
-        // is the bond to the previous ring atom double?
-        if (n > 1) {
-          ringbond = _mol.GetBond(prev_rj, index);
-          if (ringbond->GetBO() == 2) {
-            pi_electrons += 2;
-            cout << "=" << index;
-            prev_rj = index;
-            n++;
-            continue;
-          } else 
-            cout << "-" << index;
-          prev_rj = index;
-        } else {
-          cout << index;
-          prev_rj = index;
-          first_rj = index;
-        }
-	
-        // does the current ring atom have a exocyclic double bond?
-        FOR_NBORS_OF_ATOM (nbr, ringatom) {
-          if ((*ri)->IsInRing(nbr->GetIdx()))
-            continue;
-          ringbond = _mol.GetBond(nbr->GetIdx(), index);
-          if (ringbond->GetBO() == 2) {
-            pi_electrons++;
-            cout << "(=*)";
-          }
-        }
-
-        // is the atom N, O or S in 5 rings
-        if (ringsize == 5) {
-          if (ringatom->IsNitrogen() && !(ringatom->BOSum() - ringatom->GetValence())) {
-            pi_electrons += 2;
-            cout << "(:)";
-          }
-          if ((ringatom->IsOxygen() || ringatom->IsSulfur()) && ringatom->IsAromatic()) {
-            pi_electrons += 2;
-            cout << "(:)";
-          }
-        }
-
-        n++;
-      
-      } // for each ring atom
-      
-      // is the bond from the first to the last atom double?
-      ringbond = _mol.GetBond(first_rj, index);
-      if (ringbond->GetBO() == 2) {
-        pi_electrons += 2;
-        cout << "=";
-      }
-
-      // check if the ring is aromatic
-      if (pi_electrons == 6) {
-        cout << " size=" << ringsize << " pi=" << pi_electrons << "    AROMATIC!" << endl;
+      if ((*ri)->IsAromatic()) {
         for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) { // for each ring atom
           index = *rj;
           ringatom = _mol.GetAtom(index);
 	  
           if (ringsize == 6) {
             if (ringatom->IsCarbon()) {
-              if (EQn(ringatom->GetType(), "63", 2))
+              if (atoi(ringatom->GetType()) == 63)
 	        continue;
-              if (EQn(ringatom->GetType(), "64", 2))
+              if (atoi(ringatom->GetType()) == 64)
 	        continue;
-              if (EQn(ringatom->GetType(), "78", 2))
+              if (atoi(ringatom->GetType()) == 78)
 	        continue;
 
               ringatom->SetType("37"); // CB: CARBON AS IN BENZENE, PYRROLE
@@ -1129,7 +1166,7 @@ namespace OpenBabel
                 FOR_NBORS_OF_ATOM (nbr, ringatom) {
                   if ((*ri)->IsInRing(nbr->GetIdx()))
                     continue;
-                  if (nbr->IsOxygen())
+                  if (nbr->IsOxygen() && (nbr->GetValence() == 1))
                     ringatom->SetType("69"); // NPOX: PYRIDINE N-OXIDE NITROGEN
                 }
               }
@@ -1138,111 +1175,270 @@ namespace OpenBabel
           }
           
           if (ringsize == 5) {
-            if (ringatom->IsOxygen())
-	      ringatom->SetType("59");
+            // oxygen in furan
+	    if (ringatom->IsOxygen())
+	      ringatom->SetType("59"); // OFUR
             
+	    // sulphur in thiophene
 	    if (ringatom->IsSulfur())
-	      ringatom->SetType("44");
-	      
-	    bool alphaN = false;
-	    bool alphaO = false;
-	    bool alphaS = false;
-	    bool betaN = false;
-	    bool betaO = false;
-	    bool betaS = false;
+	      ringatom->SetType("44"); // STHI
 
-	    FOR_NBORS_OF_ATOM (nbr, ringatom) {
-	      if (!nbr->IsInRingSize(5))
-	        continue;
-
-	      if (IsInSameRing(ringatom, &*nbr)) {
-	        if (nbr->IsNitrogen() && (nbr->BOSum() == 3) && (nbr->GetValence() == 3))
-		  alphaN = true;
-		if (nbr->IsOxygen())
-		  alphaO = true;
-		if (nbr->IsSulfur())
-		  alphaS = true;
-	            
-		FOR_NBORS_OF_ATOM (nbr2, &*nbr) {
-                  if (!nbr2->IsInRingSize(5))
-	            continue;
-
-		  if (ringatom->GetIdx() == nbr2->GetIdx())
-		    continue;
-
-	          if (IsInSameRing(ringatom, &*nbr2)) {
-		    if (nbr2->IsNitrogen() && (nbr2->BOSum() == 3) && (nbr2->GetValence() == 3))
-		      betaN = true;
-		    if (nbr2->IsOxygen())
-		      betaO = true;
-		    if (nbr2->IsSulfur())
-		      betaS = true;
-		  }
-		}
-	      }
-	    }
-
-	    cout << "atom: " << ringatom->GetIdx() << "   alpha: N=" << alphaN << " O=" << alphaO << " S=" << alphaS;
-	    cout << "    beta: N=" << betaN << " O=" << betaO << " S=" << betaS << endl;
-
-
+            // general alpha/beta carbon
+            OBAtom *rootatom = _mol.GetAtom((*ri)->GetRootAtom());
             if (ringatom->IsCarbon()) {
-	      if (alphaN && !betaO && !betaS)
-	        ringatom->SetType("63");
-              if (alphaO && !betaS)
-	        ringatom->SetType("63");
-              if (alphaS)
-	        ringatom->SetType("63");
+              if (rootatom->IsConnected(ringatom))
+                if (atoi(ringatom->GetType()) != 64)
+	          ringatom->SetType("63"); // C5A
+		else
+	          ringatom->SetType("78"); // C5
 
-	      if (!alphaO && !alphaS && betaN)
-	        ringatom->SetType("64");
-	      if (!alphaS && betaO)
-	        ringatom->SetType("64");
-	      if (betaS)
-	        ringatom->SetType("64");
+	      if (rootatom->IsOneThree(ringatom))
+                if (atoi(ringatom->GetType()) != 63)
+	          ringatom->SetType("64"); // C5B
+		else
+	          ringatom->SetType("78"); // C5
 	    } 
-	  
-            if (ringatom->IsNitrogen()) {
-              if ((ringatom->BOSum() == 3) && (ringatom->GetValence() == 3))
-	        ringatom->SetType("39");
-	        
-	      if (alphaN && !betaO && !betaS)
-	        ringatom->SetType("65");
-              if (alphaO && !betaS)
-	        ringatom->SetType("65");
-              if (alphaS)
-	        ringatom->SetType("65");
+	    
+            // general alpha/beta nitrogen + pyrrole nitrogen
+	    if (ringatom->IsNitrogen()) {
+	      if (ringatom->GetIdx() == rootatom->GetIdx())
+	        ringatom->SetType("39"); // NPYL
+              else {
+                if (rootatom->IsConnected(ringatom))
+	          ringatom->SetType("65"); // N5A
+	        if (rootatom->IsOneThree(ringatom))
+	          ringatom->SetType("66"); // N5B
+              }
+	    }
+            
+	    //
+	    // specific rings start here
+	    //
+    
+	    if (EQn((*ri)->GetType(), "1,2,4-triazole_anion", 20)) {
+  	      if (ringatom->IsNitrogen())
+	        ringatom->SetType("76"); // N5M
+  	      if (ringatom->IsCarbon())
+	          ringatom->SetType("78"); // C5
+            }
+        
+	    if (EQn((*ri)->GetType(), "1,3,4-triazole_cation", 21)) {
+  	      if (ringatom->IsNitrogen())
+	        if (ringatom->GetValence() == 3)
+	          ringatom->SetType("81"); // NIM+
+		else
+	          ringatom->SetType("79"); // N5 
+	       
+              if (ringatom->IsCarbon()) {
+	        int hetero_count = 0;
+		FOR_NBORS_OF_ATOM (nbr, ringatom)
+		  if (nbr->IsNitrogen() && (*ri)->IsMember(&*nbr) && (nbr->GetValence() == 3))
+		    hetero_count++;
+		if (hetero_count == 2)
+	          ringatom->SetType("80"); // CIM+
+		else
+	          ringatom->SetType("78"); // C5
+	      }
+ 
+	    }
+           
+	    if (EQn((*ri)->GetType(), "imidazole_cation", 16)) {
+  	      if (ringatom->IsNitrogen())
+	        ringatom->SetType("81"); // NIM+
+	      
+  	      if (ringatom->IsCarbon()) {
+	        int hetero_count = 0;
+		FOR_NBORS_OF_ATOM (nbr, ringatom)
+		  if (nbr->IsNitrogen() && (*ri)->IsMember(&*nbr))
+		    hetero_count++;
+		if (hetero_count == 2)
+	          ringatom->SetType("80"); // CIM+
+		else
+	          ringatom->SetType("78"); // C5
+	      }
+            }
+	    
+	    if (EQn((*ri)->GetType(), "pyrazole_anion", 14)) {
+  	      if (ringatom->IsNitrogen())
+	        ringatom->SetType("76"); // N5M
+	      
+  	      if (ringatom->IsCarbon())
+	          ringatom->SetType("78"); // C5
+            }
 
-	      if (!alphaO && !alphaS && betaN)
-	        ringatom->SetType("66");
-	      if (!alphaS && betaO)
-	        ringatom->SetType("66");
-	      if (betaS)
-	        ringatom->SetType("66");
+	    if (EQn((*ri)->GetType(), "thiazole_cation", 15) || EQn((*ri)->GetType(), "oxazole_cation", 14)) {
+  	      if (ringatom->IsNitrogen())
+	        ringatom->SetType("81"); // NIM+
+	
+	      if (ringatom->IsCarbon()) {
+	        int hetero_count = 0;
+		FOR_NBORS_OF_ATOM (nbr, ringatom)
+		  //if ((nbr->IsSulfur() || nbr->IsOxygen() || nbr->IsNitrogen()) && (*ri)->IsMember(&*nbr))
+		  if (nbr->IsOxygen() || nbr->IsNitrogen())
+		    hetero_count++;
+		if (hetero_count >= 2)
+	          ringatom->SetType("80"); // CIM+
+	      }
+            }
+
+            if (EQn((*ri)->GetType(), "1,2,4-thiadiazole_cation", 24) || 
+	        EQn((*ri)->GetType(), "1,3,4-thiadiazole_cation", 24) ||
+	        EQn((*ri)->GetType(), "1,2,3-oxadiazole_cation", 23) ||
+	        EQn((*ri)->GetType(), "1,2,4-oxadiazole_cation", 23)) {
+  	      if (ringatom->IsNitrogen() && (ringatom->BOSum() == 4))
+	        ringatom->SetType("81"); // NIM+
+	
+	      if (ringatom->IsCarbon()) {
+	        int hetero_count = 0;
+	        int n_count = 0;
+		FOR_NBORS_OF_ATOM (nbr, ringatom)
+		  if ((nbr->IsSulfur() || nbr->IsOxygen()) && (*ri)->IsMember(&*nbr))
+		    hetero_count++;
+		  else if (nbr->IsNitrogen() && (nbr->BOSum() == 4) && (*ri)->IsMember(&*nbr))
+                    n_count++;
+		if (hetero_count && n_count)
+	          ringatom->SetType("80"); // CIM+
+	      }
+            }
+   
+            if (EQn((*ri)->GetType(), "1,2,3,4-tetrazole_cation", 24)) {
+  	      if (ringatom->IsNitrogen()) {
+	        int carbon_count = 0;
+		FOR_NBORS_OF_ATOM (nbr, ringatom)
+		  if (nbr->IsCarbon() && (*ri)->IsMember(&*nbr))
+		    carbon_count++;
+		if (carbon_count)
+	          ringatom->SetType("81"); // NIM+
+		else
+	          ringatom->SetType("79"); // N5
+	      }
+            
+	      if (ringatom->IsCarbon())
+	        ringatom->SetType("80"); // NIM+
 	
 	    }
-	  
-	  }
+	     
+            if (EQn((*ri)->GetType(), "1,2,3,5-tetrazole_anion", 23)) {
+  	      if (ringatom->IsNitrogen())
+	        ringatom->SetType("76"); // N5M
+            
+	      if (ringatom->IsCarbon())
+	        ringatom->SetType("78"); // C5
+	
+	    }
+	
+
+            
+	    // correction for N-oxides
+	    if (ringatom->IsNitrogen())
+              FOR_NBORS_OF_ATOM (nbr, ringatom) {
+                if ((*ri)->IsInRing(nbr->GetIdx()))
+                  continue;
+                if (nbr->IsOxygen() && (nbr->GetValence() == 1))
+                  ringatom->SetType("82"); // N5OX, N5AX, N5BX
+              }
+
+	  } // 5 rings
 
 
         }
-      } else {
-        cout << " size=" << ringsize << " pi=" << pi_electrons << endl;
-      }
+      } 
     } // for each ring
     
-    // set correct hydrogen types 
-    FOR_ATOMS_OF_MOL (a, _mol) {
-      if (a->IsHydrogen()) {
-        FOR_NBORS_OF_ATOM (nbr, &*a) {
-          if (EQn(nbr->GetType(), "58", 2))
-	    a->SetType("36");
-          if (EQn(nbr->GetType(), "39", 2))
-	    a->SetType("23");
-	}
+    ////////////////////////////////////////////////////////////////////////////
+    // 
+    // phase 3
+    //
+    // perform some corrections needed after assigning aromatic types
+    ////////////////////////////////////////////////////////////////////////////
+
+
+    // nitro - needed for GAFNUW
+    FOR_ATOMS_OF_MOL (atom, _mol) {
+      int nitrogen_count = 0;
+      if (atom->IsNitrogen())
+        FOR_NBORS_OF_ATOM (nbr, &*atom) 
+	  if (nbr->IsOxygen() && (nbr->GetValence() == 1))
+	    nitrogen_count++;
+      if (nitrogen_count == 2)
+        atom->SetType("45"); 
+    }
+    
+    // divalent nitrogen
+    FOR_ATOMS_OF_MOL (atom, _mol) {
+      int oxygen_count = 0;
+      if (atom->IsNitrogen() && !atom->IsAromatic() && (atom->GetValence() == 2) && (atom->BOSum() == 2)) {
+        FOR_NBORS_OF_ATOM (nbr, &*atom) 
+	  if (nbr->IsSulfur())
+            FOR_NBORS_OF_ATOM (nbr2, &*nbr) 
+	      if (nbr2->IsOxygen())
+	        oxygen_count++;
+
+        if (oxygen_count == 1)
+          atom->SetType("48");
+        else
+          atom->SetType("62");
       }
     }
 
+    // more corrections
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      if (atoi(a->GetType()) == 55)
+        FOR_NBORS_OF_ATOM (nbr, &*a) {
+	  if (nbr->IsAromatic() && nbr->IsInRingSize(6) && !IsInSameRing(&*a, &*nbr)) {
+            int nitrogen_count = 0;
+            FOR_NBORS_OF_ATOM (nbr2, &*nbr) {
+	      if (nbr2->IsNitrogen() && IsInSameRing(&*nbr, &*nbr2))
+	        nitrogen_count++;
+	    }
+	    if (nitrogen_count >=1)
+	      a->SetType("40");
+	  }
+	  
+	  if (nbr->IsAromatic() && nbr->IsInRingSize(5) && !IsInSameRing(&*a, &*nbr))
+            FOR_NBORS_OF_ATOM (nbr2, &*nbr)
+	      if (nbr2->IsAromatic() && nbr2->IsInRingSize(5) && IsInSameRing(&*nbr, &*nbr2))
+                FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
+		  if (nbr3->IsOxygen() && (nbr3->GetValence() == 1)) {
+	            a->SetType("40");
+                      FOR_NBORS_OF_ATOM (nbr4, &*a) 
+		        if (nbr4->IsHydrogen())
+	                  nbr4->SetType("28");
+		  }
+        }
+    
+      // set correct hydrogen types 
+      if (a->IsHydrogen()) {
+        FOR_NBORS_OF_ATOM (nbr, &*a) {
+          if (atoi(nbr->GetType()) == 81)
+	    a->SetType("36");
+          if (atoi(nbr->GetType()) == 68)
+	    a->SetType("23");
+          if (atoi(nbr->GetType()) == 67)
+	    a->SetType("23");
+          if (atoi(nbr->GetType()) == 62)
+	    a->SetType("23");
+          if (atoi(nbr->GetType()) == 58)
+	    a->SetType("36");
+          if (atoi(nbr->GetType()) == 56)
+	    a->SetType("36");
+          if (atoi(nbr->GetType()) == 55)
+	    a->SetType("36");
+          if (atoi(nbr->GetType()) == 40)
+	    a->SetType("28");
+          if (atoi(nbr->GetType()) == 39)
+	    a->SetType("23");
+          if (atoi(nbr->GetType()) == 8)
+	    a->SetType("23");
+	}
+      }
+
+
+    
+    
+    }
+
+    *logos << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
     IF_OBFF_LOGLVL_MEDIUM {
       *logos << "IDX\tTYPE" << std::endl;
       FOR_ATOMS_OF_MOL (a, _mol)
@@ -1794,8 +1990,8 @@ namespace OpenBabel
       int ni;
       bool failed;
 
-      for (di = bond_lengths.begin(); di != bond_lengths.end(); di++)
-        cout << "rab = " << *di << endl;
+      //for (di = bond_lengths.begin(); di != bond_lengths.end(); di++)
+      //  cout << "rab = " << *di << endl;
 
       cout << "--------------------------------------------------------------------------------" << endl;
       cout << "                                                                                " << endl;
@@ -1810,23 +2006,8 @@ namespace OpenBabel
         if (ni > _mol.NumAtoms())
           continue;
 	
-	if ( (atoi(_mol.GetAtom(ni)->GetType()) == 37) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 38) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 58) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 69) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 63) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 64) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 78) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 39) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 65) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 66) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 79) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 80) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 82) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 81) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 76) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 59) ||
-	     (atoi(_mol.GetAtom(ni)->GetType()) == 44)
+	if ( (atoi(_mol.GetAtom(ni)->GetType()) == 87) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 97) 
 	   ) continue;
 
         if (atoi(_mol.GetAtom(ni)->GetType()) == (*i))
@@ -1845,8 +2026,8 @@ namespace OpenBabel
 
       if (failed) {
         cout << "Could not succesfully assign atom types" << endl;
-        //return false;
-        continue;
+        return false;
+        //continue;
       }
 
       if (!SetupCalculations()) {

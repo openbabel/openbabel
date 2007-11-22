@@ -448,8 +448,9 @@ namespace OpenBabel
   char *OBAtom::GetType()
   {
     OBMol *mol = (OBMol*)GetParent();
-    if (mol && !mol->HasAtomTypesPerceived())
-      atomtyper.AssignTypes(*((OBMol*)GetParent()));
+    if (mol)
+      if (!mol->HasAtomTypesPerceived())
+        atomtyper.AssignTypes(*((OBMol*)GetParent()));
 
     if (strlen(_type) == 0) // Somehow we still don't have a type!
       {

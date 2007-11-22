@@ -1216,6 +1216,25 @@ namespace OpenBabel
     return alpha;
   }
   
+  bool OBForceField::DetectExplosion()
+  {
+    FOR_ATOMS_OF_MOL (atom, _mol) {
+      if (IsNan(atom->GetX()))
+        return true;
+      if (IsNan(atom->GetY()))
+        return true;
+      if (IsNan(atom->GetZ()))
+        return true;
+    }
+    
+    FOR_BONDS_OF_MOL (bond, _mol) {
+      if (bond->GetLength() > 30.0)
+        return true;
+    }
+        
+    return false;
+  }
+  
   vector3 OBForceField::ValidateLineSearch(OBAtom *atom, vector3 &direction)
   {
     double e_n1, e_n2, step;
@@ -1454,7 +1473,8 @@ namespace OpenBabel
     double e_n2, alpha;
     vector3 grad2, dir2;
 
-    _cstep = 1;
+    //_cstep = 0;
+    _cstep = 0;
     _nsteps = steps;
     _econv = econv;
     _method = method;
@@ -2041,6 +2061,11 @@ namespace OpenBabel
     return theta;
   }
  
+  double OBForceField::VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
+  {
+  
+  }
+
   double OBForceField::VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
   {
     vector3 vab, vbc, vcd, vac, vbd, grada, gradb, gradc, gradd;

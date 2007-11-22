@@ -121,6 +121,8 @@ namespace OpenBabel
       bool ParseParamVDW();
       bool ParseParamCharge();
       bool ParseParamPbci();
+      //! detect which rings are aromatic
+      bool PerceiveAromatic();
       //! \return Sets atomtypes to MMFF94 in _mol
       bool SetMMFFTypes();
       //! fill OBFFXXXCalculation vectors
