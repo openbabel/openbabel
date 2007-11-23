@@ -111,6 +111,7 @@ namespace OpenBabel
       //! \return Parses the parameter file
       bool ParseParamFile();
       bool ParseParamProp();
+      bool ParseParamDef();
       bool ParseParamBond();
       bool ParseParamBndk();
       bool ParseParamAngle();
@@ -139,14 +140,34 @@ namespace OpenBabel
       int GetStrBndType(OBAtom* a, OBAtom* b, OBAtom *c);
       //! \return The torsion type (TTIJKL)
       int GetTorsionType(OBAtom* a, OBAtom* b, OBAtom *c, OBAtom *d);
-      //! \return true if atom a and b are in the same ring
-      //bool IsInSameRing(OBAtom* a, OBAtom* b);
       //! \return true if atomtype has sbmb set in mmffprop.par
       bool HasSbmbSet(int atomtype);
+      //! \return true if atomtype has pilp set in mmffprop.par
+      bool HasPilpSet(int atomtype);
       //! \return true if atomtype has arom set in mmffprop.par
       bool HasAromSet(int atomtype);
       //! \return true if atomtype has lin set in mmffprop.par
       bool HasLinSet(int atomtype);
+      //! \return the crd value for the atomtype in mmffprop.par
+      int GetCrd(int atomtype);
+      //! \return the val value for the atomtype in mmffprop.par
+      int GetVal(int atomtype);
+      //! \return the mltb value for the atomtype in mmffprop.par
+      int GetMltb(int atomtype);
+      //! \return the level 2 equivalent atom type for type (mmffdef.par)
+      int EqLvl2(int type);
+      //! \return the level 3 equivalent atom type for type (mmffdef.par)
+      int EqLvl3(int type);
+      //! \return the level 4 equivalent atom type for type (mmffdef.par)
+      int EqLvl4(int type);
+      //! \return the level 5 equivalent atom type for type (mmffdef.par)
+      int EqLvl5(int type);
+      //! \return the U value for the atom from table X page 631
+      double GetUParam(OBAtom* atom);
+      //! \return the U value for the atom from table X page 631
+      double GetVParam(OBAtom* atom);
+      //! return the bond length calculated with a modified version of the Schomaker-Stevenson rule
+      double GetBondLength(OBAtom* a, OBAtom* b);
       //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
       OBFFParameter* GetParameterMMFF94(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
       //! Returns the negative gradient (force) on atom a
@@ -163,6 +184,8 @@ namespace OpenBabel
       std::vector<OBFFParameter> _ffvdwparams;
       std::vector<OBFFParameter> _ffchgparams;
       std::vector<OBFFParameter> _ffpbciparams;
+      std::vector<OBFFParameter> _ffdefparams;
+      std::vector<OBFFParameter> _ffpropparams;
 
       // OBFFXXXCalculationYYY vectors to contain the calculations
       std::vector<OBFFBondCalculationMMFF94>          _bondcalculations;
@@ -173,11 +196,6 @@ namespace OpenBabel
       std::vector<OBFFVDWCalculationMMFF94>           _vdwcalculations;
       std::vector<OBFFElectrostaticCalculationMMFF94> _electrostaticcalculations;
       
-      // parameters from mmffprop.par
-      std::vector<int> _sbmb; // single bond - multiple bond
-      std::vector<int> _arom; // aromatic
-      std::vector<int> _lin; // lineair
-
     public:
       //! Constructor
       OBForceFieldMMFF94(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault), _init(false)
