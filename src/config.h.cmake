@@ -6,88 +6,66 @@
 /* The version of Open Babel */
 #define BABEL_VERSION "@BABEL_VERSION@"
 
-/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define EXTERN __declspec(dllimport) extern
- #else
-  #define EXTERN __declspec(dllexport) extern
- #endif
-#else //Everything else (behaviour as original)
- #define EXTERN extern
-#endif
-
 /* The file extension used for shared modules */
 #define MODULE_EXTENSION "@MODULE_EXTENSION@"
 
-/* Used to export symbols for DLL / shared library builds */
 #if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBAPI __declspec(dllimport)
- #else
-  #define OBAPI __declspec(dllexport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBAPI
-#endif
-
-
-/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBCOMMON __declspec(dllimport)
- #else
-  #define OBCOMMON __declspec(dllexport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBCOMMON
-#endif
-
-
-/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBCONV __declspec(dllimport)
- #else
-  #define OBCONV __declspec(dllexport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBCONV
-#endif
-
-
-/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBERROR __declspec(dllimport)
- #else
-  #define OBERROR __declspec(dllexport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBERROR
+ #define OB_EXPORT __declspec(dllexport)
+ #define OB_IMPORT __declspec(dllimport)
+#else
+ /* TODO: gcc 4.x supports visibility - enable it */
+ #define OB_EXPORT
+ #define OB_IMPORT
 #endif
 
 /* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBFPRT __declspec(dllimport)
- #else
-  #define OBFPRT __declspec(dllexport)
+#if defined(MAKE_OBDLL) // e.g. in src/main.cpp
+ #ifndef EXTERN
+  #define EXTERN   OB_EXPORT extern
  #endif
-#else //Everything else (behaviour as original)
- #define OBFPRT
-#endif
-
-
-/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBFPTR __declspec(dllimport)
- #else
-  #define OBFPTR __declspec(dllexport)
+ #ifndef OBAPI
+  #define OBAPI    OB_EXPORT
  #endif
-#else //Everything else (behaviour as original)
- #define OBFPTR
+ #ifndef OBCOMMON
+  #define OBCOMMON OB_EXPORT
+ #endif
+ #ifndef OBCONV
+  #define OBCONV   OB_EXPORT
+ #endif
+ #ifndef OBERROR
+  #define OBERROR  OB_EXPORT
+ #endif
+ #ifndef OBFPRT
+  #define OBFPRT   OB_EXPORT
+ #endif
+ #ifndef OBFPTR
+  #define OBFPTR   OB_EXPORT
+ #endif
+
+#else   // defined(MAKE_OBDLL)
+
+ #ifndef EXTERN
+  #define EXTERN   OB_IMPORT extern
+ #endif
+ #ifndef OBCOMMON
+  #define OBCOMMON OB_IMPORT
+ #endif
+ #ifndef OBCONV
+  #define OBCONV   OB_IMPORT
+ #endif
+ #ifndef OBERROR
+  #define OBERROR  OB_IMPORT
+ #endif
+ #ifndef OBFPRT
+  #define OBFPRT   OB_IMPORT
+ #endif
+ #ifndef OBFPTR
+  #define OBFPTR   OB_IMPORT
+ #endif
+ #ifndef OBAPI
+  #define OBAPI    OB_IMPORT
+ #endif
+
 #endif
 
 #ifdef _MSC_VER

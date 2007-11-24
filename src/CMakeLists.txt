@@ -53,6 +53,7 @@ set(openbabel_srcs
     typer.cpp
     transform.cpp
     groupcontrib.cpp
+    formats/obmolecformat.cpp
 )
 
 if(BUILD_SHARED)
@@ -72,6 +73,8 @@ add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
                 ${fingerprints_srcs}
                 ${forcefields_srcs}
                 ${math_srcs}
+                ${headers}
+                ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h
 )
 
 if(NOT WIN32)
@@ -80,8 +83,10 @@ endif(NOT WIN32)
 
 target_link_libraries(${BABEL_LIBRARY} ${libs} ${LIBXML2_LIBRARIES} ${ZLIB_LIBRARY})
 set_target_properties(${BABEL_LIBRARY} PROPERTIES
-                                            VERSION ${BABEL_VERSION}
-                                            SOVERSION ${BABEL_MAJ_VER})
+                                       VERSION ${BABEL_VERSION}
+                                       SOVERSION ${BABEL_MAJ_VER}
+                                       DEFINE_SYMBOL MAKE_OBDLL
+                      )
 install(TARGETS ${BABEL_LIBRARY}
                 RUNTIME DESTINATION bin
                 LIBRARY DESTINATION ${LIB}

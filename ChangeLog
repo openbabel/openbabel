@@ -1,3 +1,15 @@
+2007-11-24  Patrick Spendrin, Christian Ehrlicher
+    * include/openbabel/atomclass.h: adding support for sstream
+    
+    * src/config.h.cmake: cleanup
+    
+    * src/dlhandler_win32.cpp: improvements for msvc
+    
+    * */CMakeLists.txt: improving CMake based buildsystem esp. for win32
+    and mingw32 - it builds now again, though there will come more improvements
+    next
+    
+    
 2007-11-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefieldmmff94.*, data/mmffsymb.par: Atom typing 

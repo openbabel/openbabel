@@ -15,18 +15,26 @@ option(WITH_INCHI   "build inchi lib" ON)
 option(BUILD_SHARED "enable static build support" ON)
 if(BUILD_SHARED)
   set(BUILD_TYPE SHARED)
+  add_definitions(-Wno-import)
+  #add_definitions(-DUSING_DYNAMIC_LIBS)
 else(BUILD_SHARED)
   set(BUILD_TYPE STATIC)
 endif(BUILD_SHARED)
 
 if(WIN32)
-  set(MODULE_EXTENSION ".dll")
+  # FIXME: not used on windows... - inconsistency
+  set(MODULE_EXTENSION ".obf")
 else(WIN32)
   set(MODULE_EXTENSION ".so")
 endif(WIN32)
 
 # configure checks
 find_package(LibXml2)
+find_package(Boost)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+  add_definitions(-DUSE_BOOST)
+endif(Boost_FOUND)
 find_package(ZLIB)
 if(ZLIB_FOUND)
   add_definitions(-DHAVE_LIBZ)
@@ -69,14 +77,15 @@ if(NOT WIN32)
    set(OB_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${LIB}/openbabel)
 endif(NOT WIN32)
 
+file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${CMAKE_SOURCE_DIR}/src/config.h.cmake ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION include/openbabel-2.0/openbabel)
 configure_file(${CMAKE_SOURCE_DIR}/openbabel-2.0.pc.cmake ${CMAKE_BINARY_DIR}/openbabel-2.0.pc @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB}/pkgconfig)
 
 include_directories(${CMAKE_SOURCE_DIR}/include
-                         ${CMAKE_SOURCE_DIR}/data
-                         ${CMAKE_BINARY_DIR}/include
+                    ${CMAKE_SOURCE_DIR}/data
+                    ${CMAKE_BINARY_DIR}/include
 )
 
 add_subdirectory(include)

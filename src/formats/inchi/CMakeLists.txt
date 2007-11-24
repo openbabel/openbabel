@@ -11,13 +11,15 @@ set(inchi_srcs
   ichirvr2.c ichirvr3.c ichirvr4.c ichirvr5.c ichirvr6.c
   ichirvr7.c ichisort.c ichister.c ichitaut.c inchi_dll.c
   inchi_dll_main.c runichi.c strutil.c util.c
+  ikey_dll.c ikey_base26.c sha2.c
 )
 include_directories(${CMAKE_SOURCE_DIR}/include/inchi)
 add_library(inchi SHARED ${inchi_srcs})
-set_target_properties(inchi PROPERTIES DEFINE_SYMBOL _USRDLL)
 set_target_properties(inchi PROPERTIES
-                                 VERSION ${INCHI_MAJ_VER}.${INCHI_MIN_VER}.${INCHI_PATCH_VER}
-                                 SOVERSION ${INCHI_MAJ_VER})
+                            VERSION ${INCHI_MAJ_VER}.${INCHI_MIN_VER}.${INCHI_PATCH_VER}
+                            SOVERSION ${INCHI_MAJ_VER}
+                            DEFINE_SYMBOL _USRDLL
+)
 install(TARGETS inchi
                 inchi DESTINATION bin
                 LIBRARY DESTINATION lib

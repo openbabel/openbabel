@@ -2063,7 +2063,7 @@ namespace OpenBabel
  
   double OBForceField::VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
   {
-  
+    return 0;
   }
 
   double OBForceField::VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
