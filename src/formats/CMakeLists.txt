@@ -1,9 +1,6 @@
 if(WITH_INCHI)
   add_definitions(-DINCHI_LINK_AS_DLL)
   add_subdirectory(inchi)
-  set(formats ${formats} inchiformat )
-  set(libs ${libs} inchi)
-  set(inchiformat_additional_sources getinchi.cpp)
 endif(WITH_INCHI)
 
 set(formats
@@ -68,10 +65,21 @@ set(formats
     yasaraformat
     zindoformat
 )
-if(BOOST_FOUND)
-  # FIXME: USE_BOOST & boost check
-  set(formats ${formats} rxnformat )
-endif(BOOST_FOUND)
+if(Boost_FOUND)
+  set(formats
+    ${formats}
+    rxnformat
+  )
+endif(Boost_FOUND)
+
+if(WITH_INCHI)
+  set(formats
+    ${formats}
+    inchiformat
+  )
+  set(libs ${libs} inchi)
+  set(inchiformat_additional_sources getinchi.cpp)
+endif(WITH_INCHI)
 
 if(LIBXML2_FOUND)
   include_directories(${LIBXML2_INCLUDE_DIR})
@@ -81,13 +89,12 @@ if(LIBXML2_FOUND)
     pubchem
     xmlformat
   )
-  if(BOOST_FOUND)
-    # FIXME: USE_BOOST & boost check
+  if(Boost_FOUND)
     set(xml_formats
         ${xml_formats}
         cmlreactformat
     )
-  endif(BOOST_FOUND)
+  endif(Boost_FOUND)
 endif(LIBXML2_FOUND)
 
 if(NOT WIN32)
@@ -104,26 +111,32 @@ if(BUILD_SHARED)
         dlhandler_unix
         )
   endif(WIN32)
-  add_definitions( -DMAKE_OBDLL )
 endif(BUILD_SHARED)
 
 foreach(format ${formats})
-  add_library(${format} ${BUILD_TYPE} ${format}.cpp obmolecformat.cpp)
+  add_library(${format} ${BUILD_TYPE} ${format}.cpp ${${format}_additional_sources})
+  endif("${format}" STREQUAL "inchiformat")
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION bin
                   LIBRARY DESTINATION ${LIB}/openbabel
                   ARCHIVE DESTINATION ${LIB}/openbabel)
-  set_target_properties(${format} PROPERTIES OUTPUT_NAME ${format} PREFIX "")
+  set_target_properties(${format} PROPERTIES
+                        OUTPUT_NAME ${format}
+                        PREFIX ""
+                        SUFFIX ${MODULE_EXTENSION})
 endforeach(format)
 
 foreach(format ${xml_formats})
-  add_library(${format} ${BUILD_TYPE} xml/${format}.cpp xml/xml.cpp obmolecformat.cpp)
+  add_library(${format} ${BUILD_TYPE} xml/${format}.cpp xml/xml.cpp)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION bin
                   LIBRARY DESTINATION ${LIB}/openbabel
                   ARCHIVE DESTINATION ${LIB}/openbabel
   )
-  set_target_properties(${format} PROPERTIES OUTPUT_NAME ${format} PREFIX "")
+  set_target_properties(${format} PROPERTIES
+                        OUTPUT_NAME ${format}
+                        PREFIX ""
+                        SUFFIX ${MODULE_EXTENSION})
 endforeach(format)

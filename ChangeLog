@@ -1,3 +1,6 @@
+2007-11-25  Patrick Spendrin, Christian Ehrlicher
+    * */CMakeLists.txt: some improvements to get it running under win32
+    
 2007-11-25 Chris Morley
 
 	* src/dlhandler_win32.cpp, generic.cpp,
