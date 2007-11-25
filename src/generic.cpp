@@ -24,6 +24,11 @@ GNU General Public License for more details.
 #include <openbabel/generic.h>
 #include <openbabel/math/matrix3x3.h>
 
+// needed for msvc to have at least one reference to AtomClass, AliasData in openbabel library
+#include <openbabel/atomclass.h>
+#include <openbabel/alias.h>
+
+
 using namespace std;
 
 namespace OpenBabel

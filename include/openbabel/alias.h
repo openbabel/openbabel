@@ -11,6 +11,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include <vector>
 #include <openbabel/atom.h>
 
@@ -18,8 +19,8 @@ namespace OpenBabel
 {
 // This macro is used in DLL builds. If it has not
 // been set in babelconfig.h, define it as nothing.
-#ifndef OBCOMMON
-  #define OBCOMMON
+#ifndef OBAPI
+  #define OBAPI
 #endif
 
 /*! An object of this class can be attached to an OBAtom if it is considered
@@ -36,7 +37,7 @@ the indices of the atoms to which the alias is an alternative.
 */
 const unsigned int AliasDataType = 0x7883;
 
-class OBCOMMON AliasData : public OBGenericData
+class OBAPI AliasData : public OBGenericData
 {
 protected:
   std::string _alias;

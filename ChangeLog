@@ -1,3 +1,13 @@
+2007-11-25 Chris Morley
+
+	* src/dlhandler_win32.cpp, generic.cpp,
+	* include/openbabel/atomclass.h, alias.h:
+	Including atomclass.h and alias.h into dlhandler_win32.cpp breaks
+	code segregation (OBConversion and user interfaces do not know
+	about the chemistry.) Include in generic.cpp instead and change
+	the build macros used by 'native' MSVC8 build from OBCOMMON to OBAPI
+	I hope this fits ok with CMake.
+	
 2007-11-24  Patrick Spendrin, Christian Ehrlicher
     * include/openbabel/atomclass.h: adding support for sstream
     

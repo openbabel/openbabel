@@ -879,7 +879,15 @@
 			Name="Header Files"
 			>
 			<File
+				RelativePath="..\..\include\openbabel\alias.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\atom.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\atomclass.h"
 				>
 			</File>
 			<File

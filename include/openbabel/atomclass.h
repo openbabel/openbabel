@@ -20,15 +20,15 @@ namespace OpenBabel
 {
 // This macro is used in DLL builds. If it has not
 // been set in babelconfig.h, define it as nothing.
-#ifndef OBCOMMON
-  #define OBCOMMON
+#ifndef OBAPI
+  #define OBAPI
 #endif
 
 ///Class for attaching to OBMol to hold the info from SMILES like [C:2]
 /// Useful for reaction SMILES (SMIRKS). It influences the atom id attribute in CML.
 /// Not all atoms need have an atom class. 
 /// The atom class can be any positive or negative integer.
-class OBCOMMON OBAtomClassData : public OBGenericData
+class OBAPI OBAtomClassData : public OBGenericData
 {
 protected:
   std::map<int,int> _map; //index is atom index; value is class
