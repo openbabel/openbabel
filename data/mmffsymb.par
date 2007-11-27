@@ -10,7 +10,7 @@
 * ---------- CARBON ----------
 *
 [#6D4]                    			 1  ALKYL CARBON, SP3
-[#6]=[#6]                 			 2  VINYLIC CARBON, SP2
+[#6D3]=[#6]                 			 2  VINYLIC CARBON, SP2
 [#6D3]                    			 2  GENERIC SP2 CARBON
 [#6r4D3]                  			30  OLEFINIC CARBON IN 4-MEMBERED RINGS
 [#6]=[#8]                 			 3  GENERAL CARBONYL CARBON
@@ -155,9 +155,9 @@
 * ---------- SULFUR ----------
 *
 [#16D2]                   			15  SULFUR IN THIOETHERS AND MERCAPTANS
-[#16]=[#6]                			16  TERMINAL SULFUR DOUBLY BONDED TO CARBON
-[#16]=[#8]                			17  SULFUR IN SULFOXIDES
-[#16]=[#7]                			17  SULFUR, TRICOORD, DOUBLY BONDED TO N
+[#16D1]=[#6]                			16  TERMINAL SULFUR DOUBLY BONDED TO CARBON
+[#16D3]=[#8]                			17  SULFUR IN SULFOXIDES
+[#16D3]=[#7]                			17  SULFUR, TRICOORD, DOUBLY BONDED TO N
 [#16](~[#8D1])~[#8D1]     			18  SULFUR IN SULFONES 
 [#16]([#7])[#8]           			18  SULFUR IN SULFONAMIDES
 [#16](=[#7])=[#8]         			18  SULFUR IN NITROGEN ANALOG OF A SULFONE
@@ -172,7 +172,7 @@
 *
 * --------- PHOSPHORUS ----------
 *
-[#15]                     			25  PHOSPHOROUS IN PHOSPHATES AND PHOSPHODIESTERS
+[#15D4]                     			25  PHOSPHOROUS IN PHOSPHATES AND PHOSPHODIESTERS
 [#15D3]                   			26  TRICOORDINATE P, AS IN PHOSPHINES
 [#15]=[#6]                			75  PHOSPHOROUS DOUBLY BONDED TO CARBON
 $

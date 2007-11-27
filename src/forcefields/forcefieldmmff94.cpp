@@ -38,70 +38,58 @@ namespace OpenBabel
   //
   // cs		cubic stretch constant = -2 A^(-1)
   //
-  double OBFFBondCalculationMMFF94::GetEnergy()
+  void OBFFBondCalculationMMFF94::Compute(bool gradients)
   {
-    double delta2;
-    vector3 vab;
+    vector3 da, db;
+    double delta2, dE;
      
-    vab = a->GetVector() - b->GetVector();
-    rab = vab.length();
+    if (gradients) {
+      da = a->GetVector();
+      db = b->GetVector();
+      rab = OBForceField::VectorLengthDerivative(da, db);
+    } else
+      rab = a->GetDistance(b);
+
     delta = rab - r0;
     delta2 = delta * delta;
  
     energy = 143.9325 * 0.5 * kb * delta2 * (1.0 - 2.0 * delta + 7.0/12.0 * 4.0 * delta2);
-
-    return energy;
-  }
-  
-  vector3 OBFFBondCalculationMMFF94::GetGradient(OBAtom *atom) 
-  {
-    vector3 da, db, gradient;
-    double dE;
-
-    if ((atom != a) && (atom != b))
-      return  VZero;
-     
-    da = a->GetVector();
-    db = b->GetVector();
-    rab = OBForceField::VectorLengthDerivative(da, db);
-    delta = rab - r0;
- 
-    dE = 143.9325 * kb * delta * (1.0 - 2.0 * delta + 7.0/12.0 * 8.0 * delta);
-
-    if (atom == a) {
-      gradient = dE * da; // - dE/drab * drab/da
-      return gradient;
-    } else {
-      gradient = dE * db; // - dE/drab * drab/db
-      return gradient;
+    
+    if (gradients) {
+      dE = 143.9325 * kb * delta * (1.0 - 2.0 * delta + 7.0/12.0 * 8.0 * delta);
+      grada = dE * da; // - dE/drab * drab/da
+      gradb = dE * db; // - dE/drab * drab/db
     }
   }
-
-  double OBForceFieldMMFF94::E_Bond()
+  
+  double OBForceFieldMMFF94::E_Bond(bool gradients)
   {
     vector<OBFFBondCalculationMMFF94>::iterator i;
     double energy = 0.0;
 
     IF_OBFF_LOGLVL_HIGH {
-      *logos << std::endl << "B O N D   S T R E T C H I N G" << endl << endl;
-      *logos << "ATOM TYPES   FF    BOND       IDEAL       FORCE" << endl;
-      *logos << " I    J     CLASS  LENGTH     LENGTH     CONSTANT      DELTA      ENERGY" << endl;
-      *logos << "------------------------------------------------------------------------" << endl;
+      OBFFLog("\nB O N D   S T R E T C H I N G\n\n");
+      OBFFLog("ATOM TYPES   FF    BOND       IDEAL       FORCE\n");
+      OBFFLog(" I    J     CLASS  LENGTH     LENGTH     CONSTANT      DELTA      ENERGY\n");
+      OBFFLog("------------------------------------------------------------------------\n");
     }
     
     for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i) {
-
+      i->Compute(gradients);
       energy += i->GetEnergy();
 
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
+        sprintf(logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
                 (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
-        *logos  << logbuf << std::endl;
+        OBFFLog(logbuf);
       }
     }
     
-    IF_OBFF_LOGLVL_MEDIUM
-      *logos << endl << "     TOTAL BOND STRETCHING ENERGY = " << energy << endl << endl;
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(logbuf, "     TOTAL BOND STRETCHING ENERGY = %8.3f %s\n",  energy, GetUnit().c_str());
+      OBFFLog(logbuf);
+    }
+    
     return energy;
   }
   
@@ -118,73 +106,62 @@ namespace OpenBabel
   //
   // cs		cubic bend constant = -0.007 deg^-1 = -0.4 rad^-1
   //
-  double OBFFAngleCalculationMMFF94::GetEnergy()
+  void OBFFAngleCalculationMMFF94::Compute(bool gradients) 
   {
-    double delta2;
+    vector3 da, db, dc;
+    double delta2, dE;
 
-    theta = a->GetAngle(b->GetIdx(), c->GetIdx());
+    if (gradients) {
+      da = a->GetVector();
+      db = b->GetVector();
+      dc = c->GetVector();
+      theta = OBForceField::VectorAngleDerivative(da, db, dc);  
+    } else
+      theta = a->GetAngle(b->GetIdx(), c->GetIdx());
     
     delta = theta - theta0;
     delta2 = delta * delta;
     
     energy = 0.043844 * 0.5 * ka * delta2 * (1.0 - 0.007 * delta);
-     
-    return energy;
-  }
-  
-  vector3 OBFFAngleCalculationMMFF94::GetGradient(OBAtom *atom) 
-  {
-    vector3 da, db, dc, gradient;
-    double dE;
 
-    if ((atom->GetIdx() != a->GetIdx()) && (atom->GetIdx() != b->GetIdx()) && (atom->GetIdx() != c->GetIdx()))
-      return VZero;
-    
-    da = a->GetVector();
-    db = b->GetVector();
-    dc = c->GetVector();
-    theta = OBForceField::VectorAngleDerivative(da, db, dc);
-    delta = theta - theta0;
- 
-    dE = 0.043844 * ka * delta * (1.0 - 1.5 * 0.007 * delta);
-
-    if (atom == a) {
-      gradient = dE * da; // - dE/drab * drab/da
-      return gradient;
-    } else if (atom == b) {
-      gradient = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
-      return gradient;
-    } else {
-      gradient = dE * dc; // - dE/drab * drab/dc
-      return gradient;
+    if (gradients) {
+      dE = 0.043844 * ka * delta * (1.0 - 1.5 * 0.007 * delta);
+      grada = dE * da; // - dE/drab * drab/da
+      gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
+      gradc = dE * dc; // - dE/drab * drab/dc
     }
   }
  
-  double OBForceFieldMMFF94::E_Angle()
+  double OBForceFieldMMFF94::E_Angle(bool gradients)
   {
     vector<OBFFAngleCalculationMMFF94>::iterator i;
     double energy = 0.0;
  
     IF_OBFF_LOGLVL_HIGH {
-      *logos << endl << "A N G L E   B E N D I N G" << endl << endl;
-      *logos << "ATOM TYPES        FF    VALENCE     IDEAL      FORCE" << endl;
-      *logos << " I    J    K     CLASS   ANGLE      ANGLE     CONSTANT      DELTA      ENERGY" << endl;
-      *logos << "-----------------------------------------------------------------------------" << endl;
+      OBFFLog("\nA N G L E   B E N D I N G\n\n");
+      OBFFLog("ATOM TYPES        FF    VALENCE     IDEAL      FORCE\n");
+      OBFFLog(" I    J    K     CLASS   ANGLE      ANGLE     CONSTANT      DELTA      ENERGY\n");
+      OBFFLog("-----------------------------------------------------------------------------\n");
     }
     
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); ++i) {
 
+      i->Compute(gradients);
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f", atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), 
+        sprintf(logbuf, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
+	        atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), 
                 (*i).at, (*i).theta, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
-        *logos  << logbuf << endl;
+        OBFFLog(logbuf);
       }
     }
  
-    IF_OBFF_LOGLVL_MEDIUM
-      *logos << endl << "     TOTAL ANGLE BENDING ENERGY = " << energy << endl << endl;
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(logbuf);
+    }
+    
     return energy;
   }
   
@@ -534,15 +511,14 @@ namespace OpenBabel
     if (!SetupCalculations())
       return false;
 
-    //SetMMFF94Charges();
+    SetMMFFFormalCharges();
+    SetMMFFPartialCharges();
     
     return true;
   }
  
   bool OBForceFieldMMFF94::ParseParamFile()
   {
-    cout << "ParseParamFile()" << endl;
-    
     ParseParamProp();
     ParseParamDef();
     ParseParamBond();
@@ -869,6 +845,7 @@ namespace OpenBabel
       tokenize(vs, buffer);
 
       parameter.clear();
+      parameter._ipar.push_back(atoi(vs[0].c_str()));  // FF class
       parameter.a = atoi(vs[1].c_str());
       parameter.b = atoi(vs[2].c_str());
       parameter._dpar.push_back(atof(vs[3].c_str()));  // bci
@@ -1007,23 +984,18 @@ namespace OpenBabel
       for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) { // for each ring atom
         index = *rj;
         ringatom = _mol.GetAtom(index);
-        //cout << index << ": " << ringatom << endl; 
         
         // is the bond to the previous ring atom double?
         if (n > 1) {
           ringbond = _mol.GetBond(prev_rj, index);
           if (ringbond->GetBO() == 2) {
             pi_electrons += 2;
-            //cout << "=" << index;
             prev_rj = index;
             n++;
             continue;
           }
-	  //} else 
-            //cout << "-" << index;
           prev_rj = index;
         } else {
-          //cout << index;
           prev_rj = index;
           first_rj = index;
         }
@@ -1037,19 +1009,14 @@ namespace OpenBabel
 	    continue;
 
           ringbond = _mol.GetBond(nbr->GetIdx(), index);
-          if (ringbond->GetBO() == 2) {
+          if (ringbond->GetBO() == 2)
             pi_electrons++;
-            //cout << "(=*)";
-          }
         }
 
         // is the atom N, O or S in 5 rings
-        if (ringsize == 5) {
-          if (ringatom->GetIdx() == (*ri)->GetRootAtom()) {
+        if (ringsize == 5)
+          if (ringatom->GetIdx() == (*ri)->GetRootAtom()) 
 	    pi_electrons += 2;
-            //cout << "(:)";
-	  }
-	}
 
         n++;
       
@@ -1057,12 +1024,10 @@ namespace OpenBabel
       
       // is the bond from the first to the last atom double?
       ringbond = _mol.GetBond(first_rj, index);
-      if (ringbond->GetBO() == 2) {
+      if (ringbond->GetBO() == 2) 
         pi_electrons += 2;
-        //cout << "=";
-      }
 
-      if (pi_electrons == 6) {
+      if ((pi_electrons == 6) && ((ringsize == 5) || (ringsize == 6))) {
 	// mark ring atoms as aromatic
 	for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) {
           if (!_mol.GetAtom(*rj)->IsAromatic())
@@ -1192,20 +1157,20 @@ namespace OpenBabel
               if (atoi(ringatom->GetType()) == 78)
 	        continue;
 
-              ringatom->SetType("37"); // CB: CARBON AS IN BENZENE, PYRROLE
+              ringatom->SetType((char*)"37"); // CB: CARBON AS IN BENZENE, PYRROLE
 	    }
 
             if (ringatom->IsNitrogen()) {
               if (ringatom->GetValence() == 2)
-                ringatom->SetType("38"); // NPYD: NITROGEN, AS IN PYRIDINE
+                ringatom->SetType((char*)"38"); // NPYD: NITROGEN, AS IN PYRIDINE
               if (ringatom->GetValence() == 3) {
-                ringatom->SetType("58"); // NPD+: PYRIDINIUM-TYPE NITROGEN - FORMAL CHARGE=1
+                ringatom->SetType((char*)"58"); // NPD+: PYRIDINIUM-TYPE NITROGEN - FORMAL CHARGE=1
 	
                 FOR_NBORS_OF_ATOM (nbr, ringatom) {
                   if ((*ri)->IsInRing(nbr->GetIdx()))
                     continue;
                   if (nbr->IsOxygen() && (nbr->GetValence() == 1))
-                    ringatom->SetType("69"); // NPOX: PYRIDINE N-OXIDE NITROGEN
+                    ringatom->SetType((char*)"69"); // NPOX: PYRIDINE N-OXIDE NITROGEN
                 }
               }
             }
@@ -1215,37 +1180,37 @@ namespace OpenBabel
           if (ringsize == 5) {
             // oxygen in furan
 	    if (ringatom->IsOxygen())
-	      ringatom->SetType("59"); // OFUR
+	      ringatom->SetType((char*)"59"); // OFUR
             
 	    // sulphur in thiophene
 	    if (ringatom->IsSulfur())
-	      ringatom->SetType("44"); // STHI
+	      ringatom->SetType((char*)"44"); // STHI
 
             // general alpha/beta carbon
             OBAtom *rootatom = _mol.GetAtom((*ri)->GetRootAtom());
             if (ringatom->IsCarbon()) {
               if (rootatom->IsConnected(ringatom))
                 if (atoi(ringatom->GetType()) != 64)
-	          ringatom->SetType("63"); // C5A
+	          ringatom->SetType((char*)"63"); // C5A
 		else
-	          ringatom->SetType("78"); // C5
+	          ringatom->SetType((char*)"78"); // C5
 
 	      if (rootatom->IsOneThree(ringatom))
                 if (atoi(ringatom->GetType()) != 63)
-	          ringatom->SetType("64"); // C5B
+	          ringatom->SetType((char*)"64"); // C5B
 		else
-	          ringatom->SetType("78"); // C5
+	          ringatom->SetType((char*)"78"); // C5
 	    } 
 	    
             // general alpha/beta nitrogen + pyrrole nitrogen
 	    if (ringatom->IsNitrogen()) {
 	      if (ringatom->GetIdx() == rootatom->GetIdx())
-	        ringatom->SetType("39"); // NPYL
+	        ringatom->SetType((char*)"39"); // NPYL
               else {
                 if (rootatom->IsConnected(ringatom))
-	          ringatom->SetType("65"); // N5A
+	          ringatom->SetType((char*)"65"); // N5A
 	        if (rootatom->IsOneThree(ringatom))
-	          ringatom->SetType("66"); // N5B
+	          ringatom->SetType((char*)"66"); // N5B
               }
 	    }
             
@@ -1255,17 +1220,17 @@ namespace OpenBabel
     
 	    if (EQn((*ri)->GetType(), "1,2,4-triazole_anion", 20)) {
   	      if (ringatom->IsNitrogen())
-	        ringatom->SetType("76"); // N5M
+	        ringatom->SetType((char*)"76"); // N5M
   	      if (ringatom->IsCarbon())
-	          ringatom->SetType("78"); // C5
+	          ringatom->SetType((char*)"78"); // C5
             }
         
 	    if (EQn((*ri)->GetType(), "1,3,4-triazole_cation", 21)) {
   	      if (ringatom->IsNitrogen())
 	        if (ringatom->GetValence() == 3)
-	          ringatom->SetType("81"); // NIM+
+	          ringatom->SetType((char*)"81"); // NIM+
 		else
-	          ringatom->SetType("79"); // N5 
+	          ringatom->SetType((char*)"79"); // N5 
 	       
               if (ringatom->IsCarbon()) {
 	        int hetero_count = 0;
@@ -1273,16 +1238,16 @@ namespace OpenBabel
 		  if (nbr->IsNitrogen() && (*ri)->IsMember(&*nbr) && (nbr->GetValence() == 3))
 		    hetero_count++;
 		if (hetero_count == 2)
-	          ringatom->SetType("80"); // CIM+
+	          ringatom->SetType((char*)"80"); // CIM+
 		else
-	          ringatom->SetType("78"); // C5
+	          ringatom->SetType((char*)"78"); // C5
 	      }
  
 	    }
            
 	    if (EQn((*ri)->GetType(), "imidazole_cation", 16)) {
   	      if (ringatom->IsNitrogen())
-	        ringatom->SetType("81"); // NIM+
+	        ringatom->SetType((char*)"81"); // NIM+
 	      
   	      if (ringatom->IsCarbon()) {
 	        int hetero_count = 0;
@@ -1290,23 +1255,23 @@ namespace OpenBabel
 		  if (nbr->IsNitrogen() && (*ri)->IsMember(&*nbr))
 		    hetero_count++;
 		if (hetero_count == 2)
-	          ringatom->SetType("80"); // CIM+
+	          ringatom->SetType((char*)"80"); // CIM+
 		else
-	          ringatom->SetType("78"); // C5
+	          ringatom->SetType((char*)"78"); // C5
 	      }
             }
 	    
 	    if (EQn((*ri)->GetType(), "pyrazole_anion", 14)) {
   	      if (ringatom->IsNitrogen())
-	        ringatom->SetType("76"); // N5M
+	        ringatom->SetType((char*)"76"); // N5M
 	      
   	      if (ringatom->IsCarbon())
-	          ringatom->SetType("78"); // C5
+	          ringatom->SetType((char*)"78"); // C5
             }
 
 	    if (EQn((*ri)->GetType(), "thiazole_cation", 15) || EQn((*ri)->GetType(), "oxazole_cation", 14)) {
   	      if (ringatom->IsNitrogen())
-	        ringatom->SetType("81"); // NIM+
+	        ringatom->SetType((char*)"81"); // NIM+
 	
 	      if (ringatom->IsCarbon()) {
 	        int hetero_count = 0;
@@ -1315,7 +1280,7 @@ namespace OpenBabel
 		  if (nbr->IsOxygen() || nbr->IsNitrogen())
 		    hetero_count++;
 		if (hetero_count >= 2)
-	          ringatom->SetType("80"); // CIM+
+	          ringatom->SetType((char*)"80"); // CIM+
 	      }
             }
 
@@ -1324,7 +1289,7 @@ namespace OpenBabel
 	        EQn((*ri)->GetType(), "1,2,3-oxadiazole_cation", 23) ||
 	        EQn((*ri)->GetType(), "1,2,4-oxadiazole_cation", 23)) {
   	      if (ringatom->IsNitrogen() && (ringatom->BOSum() == 4))
-	        ringatom->SetType("81"); // NIM+
+	        ringatom->SetType((char*)"81"); // NIM+
 	
 	      if (ringatom->IsCarbon()) {
 	        int hetero_count = 0;
@@ -1335,7 +1300,7 @@ namespace OpenBabel
 		  else if (nbr->IsNitrogen() && (nbr->BOSum() == 4) && (*ri)->IsMember(&*nbr))
                     n_count++;
 		if (hetero_count && n_count)
-	          ringatom->SetType("80"); // CIM+
+	          ringatom->SetType((char*)"80"); // CIM+
 	      }
             }
    
@@ -1346,22 +1311,22 @@ namespace OpenBabel
 		  if (nbr->IsCarbon() && (*ri)->IsMember(&*nbr))
 		    carbon_count++;
 		if (carbon_count)
-	          ringatom->SetType("81"); // NIM+
+	          ringatom->SetType((char*)"81"); // NIM+
 		else
-	          ringatom->SetType("79"); // N5
+	          ringatom->SetType((char*)"79"); // N5
 	      }
             
 	      if (ringatom->IsCarbon())
-	        ringatom->SetType("80"); // NIM+
+	        ringatom->SetType((char*)"80"); // NIM+
 	
 	    }
 	     
             if (EQn((*ri)->GetType(), "1,2,3,5-tetrazole_anion", 23)) {
   	      if (ringatom->IsNitrogen())
-	        ringatom->SetType("76"); // N5M
+	        ringatom->SetType((char*)"76"); // N5M
             
 	      if (ringatom->IsCarbon())
-	        ringatom->SetType("78"); // C5
+	        ringatom->SetType((char*)"78"); // C5
 	
 	    }
 	
@@ -1373,7 +1338,7 @@ namespace OpenBabel
                 if ((*ri)->IsInRing(nbr->GetIdx()))
                   continue;
                 if (nbr->IsOxygen() && (nbr->GetValence() == 1))
-                  ringatom->SetType("82"); // N5OX, N5AX, N5BX
+                  ringatom->SetType((char*)"82"); // N5OX, N5AX, N5BX
               }
 
 	  } // 5 rings
@@ -1399,7 +1364,7 @@ namespace OpenBabel
 	  if (nbr->IsOxygen() && (nbr->GetValence() == 1))
 	    nitrogen_count++;
       if (nitrogen_count == 2)
-        atom->SetType("45"); 
+        atom->SetType((char*)"45"); 
     }
     
     // divalent nitrogen
@@ -1413,9 +1378,9 @@ namespace OpenBabel
 	        oxygen_count++;
 
         if (oxygen_count == 1)
-          atom->SetType("48");
+          atom->SetType((char*)"48");
         else
-          atom->SetType("62");
+          atom->SetType((char*)"62");
       }
     }
 
@@ -1430,7 +1395,7 @@ namespace OpenBabel
 	        nitrogen_count++;
 	    }
 	    if (nitrogen_count >=1)
-	      a->SetType("40");
+	      a->SetType((char*)"40");
 	  }
 	  
 	  if (nbr->IsAromatic() && nbr->IsInRingSize(5) && !IsInSameRing(&*a, &*nbr))
@@ -1438,10 +1403,10 @@ namespace OpenBabel
 	      if (nbr2->IsAromatic() && nbr2->IsInRingSize(5) && IsInSameRing(&*nbr, &*nbr2))
                 FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
 		  if (nbr3->IsOxygen() && (nbr3->GetValence() == 1)) {
-	            a->SetType("40");
+	            a->SetType((char*)"40");
                       FOR_NBORS_OF_ATOM (nbr4, &*a) 
 		        if (nbr4->IsHydrogen())
-	                  nbr4->SetType("28");
+	                  nbr4->SetType((char*)"28");
 		  }
         }
     
@@ -1449,25 +1414,25 @@ namespace OpenBabel
       if (a->IsHydrogen()) {
         FOR_NBORS_OF_ATOM (nbr, &*a) {
           if (atoi(nbr->GetType()) == 81)
-	    a->SetType("36");
+	    a->SetType((char*)"36");
           if (atoi(nbr->GetType()) == 68)
-	    a->SetType("23");
+	    a->SetType((char*)"23");
           if (atoi(nbr->GetType()) == 67)
-	    a->SetType("23");
+	    a->SetType((char*)"23");
           if (atoi(nbr->GetType()) == 62)
-	    a->SetType("23");
+	    a->SetType((char*)"23");
           if (atoi(nbr->GetType()) == 58)
-	    a->SetType("36");
+	    a->SetType((char*)"36");
           if (atoi(nbr->GetType()) == 56)
-	    a->SetType("36");
+	    a->SetType((char*)"36");
           if (atoi(nbr->GetType()) == 55)
-	    a->SetType("36");
+	    a->SetType((char*)"36");
           if (atoi(nbr->GetType()) == 40)
-	    a->SetType("28");
+	    a->SetType((char*)"28");
           if (atoi(nbr->GetType()) == 39)
-	    a->SetType("23");
+	    a->SetType((char*)"23");
           if (atoi(nbr->GetType()) == 8)
-	    a->SetType("23");
+	    a->SetType((char*)"23");
 	}
       }
 
@@ -1508,21 +1473,24 @@ namespace OpenBabel
 
       parameter = GetParameterMMFF94(bondtype, atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams); // from mmffbond.par
       if (parameter == NULL) {
-        cout << "atomic nums: " << a->GetAtomicNum() << "-" << b->GetAtomicNum() << endl;
 	parameter = GetParameter(a->GetAtomicNum(), b->GetAtomicNum(), 0, 0, _ffbndkparams); // from mmffbndk.par - emperical rules
-	if (parameter == NULL) {
+	if (parameter == NULL) { 
           cout << bondtype << " idx: " << a->GetIdx() << "-" << b->GetIdx() << " types: " << a->GetType() << "-" << b->GetType() << endl;
           obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters", obError);
           return false;
         } else {
-          // parameter->_dpar[0]  = r0-ref
-          // parameter->_dpar[1]  = kb-ref
+          double rr, rr2, rr4, rr6;
           bondcalc.a = a;
           bondcalc.b = b;
-          bondcalc.kb = parameter->_dpar[0]; // this is wrong -- rule not yet applied
-          bondcalc.r0 = parameter->_dpar[1]; // idem
+          bondcalc.r0 = GetRuleBondLength(a, b); 
+	  
+	  rr = parameter->_dpar[0] / bondcalc.r0; // parameter->_dpar[0]  = r0-ref
+	  rr2 = rr * rr;
+	  rr4 = rr2 * rr2;
+	  rr6 = rr4 * rr2;
+	  
+	  bondcalc.kb = parameter->_dpar[1] * rr6; // parameter->_dpar[1]  = kb-ref
           bondcalc.bt = bondtype;
-
           _bondcalculations.push_back(bondcalc);
 	}
       } else {
@@ -1564,9 +1532,6 @@ namespace OpenBabel
       bondtype1 = GetBondType(a, b);
       bondtype2 = GetBondType(b, c);
       
-      //if (HasLinSet(atoi(b->GetType())))
-      //  continue;
-
       // try exact match 
       parameter = GetParameterMMFF94(angletype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffangleparams);
       if (parameter == NULL) // try 3-2-3
@@ -1602,13 +1567,38 @@ namespace OpenBabel
           else
 	    anglecalc.theta0 = 92.0;
 
-	if (a->IsInRingSize(3) && b->IsInRingSize(3) && c->IsInRingSize(3))
+	if (a->IsInRingSize(3) && b->IsInRingSize(3) && c->IsInRingSize(3) && IsInSameRing(a, c))
 	  anglecalc.theta0 = 60.0;
 	
-	if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4))
+	if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && IsInSameRing(a, c))
 	  anglecalc.theta0 = 90.0;
 	
         strbndcalc.theta0 = anglecalc.theta0; // **
+      }
+      
+      // empirical rule for 0-b-0 and standard angles
+      if (anglecalc.ka == 0.0) {
+        double beta, Za, Zc, Cb, r0ab, r0bc, theta, theta2, D, rr, rr2;
+        Za = GetZParam(a);
+        Cb = GetZParam(b);
+        Zc = GetZParam(c);
+	
+	r0ab = GetBondLength(a, b);
+        r0bc = GetBondLength(b, c);
+	rr = r0ab + r0bc;
+	rr2 = rr * rr;
+	D = (r0ab - r0bc) / rr2;
+
+	theta = anglecalc.theta0;
+	theta2 = theta * theta;
+
+	beta = 1.75;
+	if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && IsInSameRing(a, c))
+	  beta = 0.85 * beta;
+	if (a->IsInRingSize(3) && b->IsInRingSize(3) && c->IsInRingSize(3) && IsInSameRing(a, c))
+	  beta = 0.05 * beta;
+        
+	anglecalc.ka = (beta * Za * Cb * Zc * exp(-2 * D)) / (rr * theta2);
       }
       
       anglecalc.a = a;
@@ -1649,28 +1639,8 @@ namespace OpenBabel
         }
       }
  
-      parameter = GetParameterMMFF94(bondtype1, atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams);
-      if (parameter == NULL) {
-	parameter = GetParameter(a->GetAtomicNum(), b->GetAtomicNum(), 0, 0, _ffbndkparams);
-	if (parameter == NULL) {
-          obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond lengths for stretch-bend interaction", obError);
-          return false;
-        } else {
-          strbndcalc.rab0 = parameter->_dpar[0]; // this is wrong -- rule not yet applied
-	}
-      } 
-      
-      parameter = GetParameterMMFF94(bondtype2, atoi(b->GetType()), atoi(c->GetType()), 0, 0, _ffbondparams);
-      if (parameter == NULL) {
-	parameter = GetParameter(b->GetAtomicNum(), c->GetAtomicNum(), 0, 0, _ffbndkparams);
-	if (parameter == NULL) {
-          obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond lengths for stretch-bend interaction", obError);
-          return false;
-        } else {
-          strbndcalc.rbc0 = parameter->_dpar[0]; // this is wrong -- rule not yet applied
-	}
-      } 
- 
+      strbndcalc.rab0 = GetBondLength(a, b);
+      strbndcalc.rbc0 = GetBondLength(b ,c); 
       strbndcalc.a = a;
       strbndcalc.b = b;
       strbndcalc.c = c;
@@ -2063,42 +2033,266 @@ namespace OpenBabel
     return true;
   }
 
-  bool OBForceFieldMMFF94::SetMMFF94Charges()
+  // we set the the formal charge with SetPartialCharge because formal charges 
+  // in MMFF94 are not always and integer
+  bool OBForceFieldMMFF94::SetMMFFFormalCharges()
   {
-    OBFFParameter *parameter_a;//, *parameter_b, *parameter_ab;
-    OBAtom *a;
-    double q0i;
+    _mol.SetAutomaticPartialCharge(false);
     
     FOR_ATOMS_OF_MOL (atom, _mol) {
-      a = (OBAtom*) &*atom;
-      parameter_a = GetParameter(atoi(atom->GetType()), 0, 0, 0, _ffpbciparams);
+      atom->SetPartialCharge(0.0);
 
-      if (atom->IsCarboxylOxygen())
-        q0i = -0.500;
-      else if (atom->IsPhosphateOxygen() && atom->GetHvyValence() == 1)
-        q0i = -0.666;
-      else if (atom->IsSulfateOxygen())
-        q0i = -0.500;
- 
-      *logos << "fcharge = " << q0i << std::endl;
-      //FOR_NBORS_OF_ATOM (nbr, a) {
-      // q =  
-      //}
+      if (atoi(atom->GetType()) == 32) {
+        int o_count = 0;
+        bool sulfonamide = false;
+        int s_count = 0;
+
+	FOR_NBORS_OF_ATOM(nbr, &*atom) {
+  	  FOR_NBORS_OF_ATOM(nbr2, &*nbr) {
+	    if (nbr2->IsOxygen() && (nbr2->GetValence() == 1))
+	      o_count++;
+	    if (nbr2->IsSulfur() && (nbr2->GetValence() == 1))
+	      s_count++;
+	    if (nbr2->IsNitrogen() && !nbr2->IsAromatic())
+	      sulfonamide = true;
+	  }
+	
+	  if (nbr->IsCarbon())
+	    atom->SetPartialCharge(-0.5); // O2CM
+	  
+	  if (nbr->IsNitrogen() && (o_count == 3))
+	    atom->SetPartialCharge(-1.0 / o_count);  // O3N
+	  
+	  if (nbr->IsSulfur() && !sulfonamide)
+	    if (((o_count + s_count) == 2) && (nbr->GetValence() == 3) && (nbr->BOSum() == 3))
+	      atom->SetPartialCharge(-0.5); // O2S
+	    else if ((o_count + s_count) == 3)
+	      atom->SetPartialCharge(-1.0 / 3.0); // O3S
+	    else if ((o_count + s_count) == 4)
+	      atom->SetPartialCharge(-0.5); // O4S
+	  
+	  if (nbr->IsPhosphorus())
+	    if ((o_count + s_count) == 2)
+	      atom->SetPartialCharge(-0.5); // O2P
+	    else if ((o_count + s_count) == 3)
+	      atom->SetPartialCharge(-2.0 / 3.0); // O3P
+	    else if ((o_count + s_count) == 4)
+	      atom->SetPartialCharge(-0.25); // O4P
+	  
+	  if (atoi(nbr->GetType()) == 77)
+	    atom->SetPartialCharge(-0.25); // O4CL
+	}
+      } else if (atoi(atom->GetType()) == 34)
+        atom->SetPartialCharge(1.0);
+      else if (atoi(atom->GetType()) == 35)
+        atom->SetPartialCharge(-1.0);
+      else if (atoi(atom->GetType()) == 49)
+        atom->SetPartialCharge(1.0);
+      else if (atoi(atom->GetType()) == 51)
+        atom->SetPartialCharge(1.0);
+      else if (atoi(atom->GetType()) == 54)
+        atom->SetPartialCharge(1.0);
+      else if (atoi(atom->GetType()) == 55)
+        atom->SetPartialCharge(0.5);
+      else if (atoi(atom->GetType()) == 56)
+        atom->SetPartialCharge(1.0/3.0);
+      else if (atoi(atom->GetType()) == 58)
+        atom->SetPartialCharge(1.0);
+      else if (atoi(atom->GetType()) == 61) {
+	FOR_NBORS_OF_ATOM(nbr, &*atom)
+	  if (atom->GetBond(&*nbr)->IsTriple() && nbr->IsNitrogen())
+            atom->SetPartialCharge(1.0);
+      } else if (atoi(atom->GetType()) == 62)
+        atom->SetPartialCharge(-1.0);
+      else if (atoi(atom->GetType()) == 72) {
+        int s_count = 0;
+
+	FOR_NBORS_OF_ATOM(nbr, &*atom) {
+	  if (nbr->IsSulfur())
+	    s_count++;
+	  
+	  if (nbr->IsPhosphorus() || nbr->IsSulfur()) {
+	    FOR_NBORS_OF_ATOM(nbr2, &*nbr)
+	      if ((nbr2->IsSulfur() || nbr2->IsOxygen()) && (nbr2->GetValence() == 1) && (atom->GetIdx() != nbr2->GetIdx()))
+	        atom->SetPartialCharge(-0.5);
+          } else
+	    atom->SetPartialCharge(-1.0);
+
+  	  if (nbr->IsCarbon())
+	    FOR_NBORS_OF_ATOM(nbr2, &*nbr)
+	      if (nbr2->IsSulfur() && (nbr2->GetValence() == 1) && (atom->GetIdx() != nbr2->GetIdx()))
+                atom->SetPartialCharge(-0.5); // SSMO
+	
+	  if (s_count >= 2)      
+            atom->SetPartialCharge(-0.5); // SSMO
+	}
+      } else if (atoi(atom->GetType()) == 76) {
+       	vector<OBRing*> vr;
+        vr = _mol.GetSSSR();
+        vector<OBRing*>::iterator ri;
+        vector<int>::iterator rj;
+	int n_count;
+
+        for (ri = vr.begin();ri != vr.end();ri++) { // for each ring
+	  n_count = 0;
+
+          if ((*ri)->IsAromatic() && (*ri)->IsMember(&*atom) && ((*ri)->Size() == 5)) {
+            for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) // for each ring atom
+	      if (_mol.GetAtom(*rj)->IsNitrogen())
+	        n_count++;
+	    
+	    if (n_count > 1)
+	      atom->SetPartialCharge(-1.0 / n_count);
+	  }
+	}
+      } else if (atoi(atom->GetType()) == 81) {
+        atom->SetPartialCharge(1.0);
+        
+	vector<OBRing*> vr;
+        vr = _mol.GetSSSR();
+        vector<OBRing*>::iterator ri;
+        vector<int>::iterator rj;
+        for (ri = vr.begin();ri != vr.end();ri++) // for each ring
+          if ((*ri)->IsAromatic() && (*ri)->IsMember(&*atom) && ((*ri)->Size() == 5)) {
+	    int n_count = 0;
+            for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) // for each ring atom
+	      if (_mol.GetAtom(*rj)->IsNitrogen() && (_mol.GetAtom(*rj)->GetValence() == 3))
+	        n_count++;
+
+            atom->SetPartialCharge(1.0 / n_count); // NIM+
+	    
+	    FOR_NBORS_OF_ATOM(nbr, &*atom)
+	      FOR_NBORS_OF_ATOM(nbr2, &*nbr)
+  	        if (atoi(nbr2->GetType()) == 56)
+	          atom->SetPartialCharge(1.0 / 3.0);
+  	  
+	    FOR_NBORS_OF_ATOM(nbr, &*atom)
+	      FOR_NBORS_OF_ATOM(nbr2, &*nbr)
+  	        if (atoi(nbr2->GetType()) == 55)
+	          atom->SetPartialCharge(1.0 / (1.0 + n_count));
+	  }
+      } else if (atoi(atom->GetType()) == 87)
+        atom->SetPartialCharge(2.0);
+      else if (atoi(atom->GetType()) == 98)
+        atom->SetPartialCharge(3.0);
+      else if (atoi(atom->GetType()) == 89)
+        atom->SetPartialCharge(-1.0);
+      else if (atoi(atom->GetType()) == 90)
+        atom->SetPartialCharge(-1.0);
+      else if (atoi(atom->GetType()) == 91)
+        atom->SetPartialCharge(-1.0);
+      else if (atoi(atom->GetType()) == 92)
+        atom->SetPartialCharge(1.0);
+      else if (atoi(atom->GetType()) == 93)
+        atom->SetPartialCharge(1.0);
+      else if (atoi(atom->GetType()) == 94)
+        atom->SetPartialCharge(1.0);
+      else if (atoi(atom->GetType()) == 95)
+        atom->SetPartialCharge(2.0);
+      else if (atoi(atom->GetType()) == 96)
+        atom->SetPartialCharge(2.0);
+      else if (atoi(atom->GetType()) == 97)
+        atom->SetPartialCharge(1.0);
+      else if (atoi(atom->GetType()) == 98)
+        atom->SetPartialCharge(2.0);
+      else if (atoi(atom->GetType()) == 99)
+        atom->SetPartialCharge(2.0);
+
     }
     return true;
   }
 
-  double OBForceFieldMMFF94::Energy()
+  bool OBForceFieldMMFF94::SetMMFFPartialCharges()
   {
-    double energy=0.0;
+    vector<double> charges(_mol.NumAtoms()+1, 0);
+    double M, Wab, factor, q0a, q0b, Pa, Pb;
 
-    //energy = E_Bond();
-    energy += E_Angle();
-    //energy += E_StrBnd();
-    //energy += E_OOP();
-    //energy += E_Torsion();
-    //energy += E_VDW();
-    //energy += E_Electrostatic();
+    //cout << " size = " << _ffchgparams.size() << endl;
+    
+    FOR_ATOMS_OF_MOL (atom, _mol) {
+      if ((atoi(atom->GetType()) == 32) || (atoi(atom->GetType()) == 35) || (atoi(atom->GetType()) == 72))
+        factor = 0.5;
+      else if ((atoi(atom->GetType()) == 62) || (atoi(atom->GetType()) == 77))
+        factor = 0.25;
+      else
+        factor = 0.0;
+      
+      M = GetCrd(atoi(atom->GetType()));
+      q0a = atom->GetPartialCharge();
+
+      if (!q0a)
+        FOR_NBORS_OF_ATOM (nbr, &*atom)
+          if (nbr->GetPartialCharge() < 0.0)
+	    q0a += nbr->GetPartialCharge() / (2.0 * nbr->GetValence());
+      
+      q0b = 0.0;
+      Wab = 0.0;
+      FOR_NBORS_OF_ATOM (nbr, &*atom) {
+        q0b += nbr->GetPartialCharge();
+    
+        bool bci_found = false;
+	for (int idx=0; idx < _ffchgparams.size(); idx++)
+          if (GetBondType(&*atom, &*nbr) == _ffchgparams[idx]._ipar[0]) 
+            if ((atoi(atom->GetType()) == _ffchgparams[idx].a) && (atoi(nbr->GetType()) == _ffchgparams[idx].b)) {
+	      Wab += -_ffchgparams[idx]._dpar[0];
+	      cout << "bci=" << -_ffchgparams[idx]._dpar[0] << endl;
+              bci_found = true;
+            } else if  ((atoi(atom->GetType()) == _ffchgparams[idx].b) && (atoi(nbr->GetType()) == _ffchgparams[idx].a)) {
+	      Wab += _ffchgparams[idx]._dpar[0];
+	      cout << "bci=" << _ffchgparams[idx]._dpar[0] << endl;
+              bci_found = true;
+	    }
+        
+	if (!bci_found) {
+	  cout << "no bci found" << endl;
+	  for (int idx=0; idx < _ffpbciparams.size(); idx++)
+            if (atoi(atom->GetType()) == _ffpbciparams[idx].a) {
+	      Pa = _ffpbciparams[idx]._dpar[0];
+	      cout << "Pa=" << Pa << endl;
+	    } else if (atoi(nbr->GetType()) == _ffpbciparams[idx].a) {
+	      Pb = _ffpbciparams[idx]._dpar[0];
+	      cout << "Pb=" << Pb << endl;
+            } 
+          Wab += Pb - Pa;
+	}
+      }
+      
+      cout << atom->GetIdx() << ":  factor=" << factor << "  Wab=" << Wab << "  q0a=" << q0a << "  q0b=" << q0b << "  M=" << M << endl;
+      
+      if (factor)
+        charges[atom->GetIdx()] = (1.0 - M * factor) * q0a + factor * q0b + Wab;
+      else if (atoi(atom->GetType()) == 41)
+        charges[atom->GetIdx()] = -0.5 + Wab;
+      else 
+        charges[atom->GetIdx()] = q0a + Wab;
+    }
+    
+    FOR_ATOMS_OF_MOL (atom, _mol)
+      atom->SetPartialCharge(charges[atom->GetIdx()]);
+
+    return true;
+  
+  }
+
+  double OBForceFieldMMFF94::Energy(bool gradients)
+  {
+    double energy;
+
+    IF_OBFF_LOGLVL_MEDIUM
+      OBFFLog("\nE N E R G Y\n\n");
+    
+    energy = E_Bond(gradients);
+    energy += E_Angle(gradients);
+    //energy += E_StrBnd(gradients);
+    //energy += E_Torsion(gradients);
+    //energy += E_OOP(gradients);
+    //energy += E_VDW(gradients);
+    //energy += E_Electrostatic(gradients);
+
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(logbuf);
+    }
 
     return energy;
   }
@@ -2110,9 +2304,10 @@ namespace OpenBabel
     OBFormat *format_in = conv.FindFormat("mol2");
     vector<string> vs;
     vector<int> types;
+    vector<double> fcharges, pcharges;
     vector<double> bond_lengths;
     char buffer[150], logbuf[100];
-    bool molfound, atomfound, bondfound;
+    bool molfound, atomfound, bondfound, fchgfound, pchgfound;
     double etot, ebond, eangle, eoop, estbn, etor, evdw, eeq;
     double termcount; //1=bond, 2=angle, 3=strbnd, 4=torsion, 5=oop
     int n;
@@ -2143,12 +2338,20 @@ namespace OpenBabel
       return false;
     }
     
+    if (!_init) {
+      ParseParamFile();
+      _init = true;
+    }    
+ 
+    
     SetLogFile(&ofs);
     SetLogLevel(OBFF_LOGLVL_HIGH);
    
     for (unsigned int c=1;; c++) {
       _mol.Clear();
       types.clear();
+      fcharges.clear();
+      pcharges.clear();
       bond_lengths.clear();
 
       if (!conv.Read(&_mol, &ifs))
@@ -2158,11 +2361,12 @@ namespace OpenBabel
       
       SetMMFFTypes();
       
-      n = _mol.NumAtoms() / 4;
       termcount = 0;
       molfound = false;
       atomfound = false;
       bondfound = false;
+      fchgfound = false;
+      pchgfound = false;
 
       while (ifs2.getline(buffer, 150)) {
         tokenize(vs, buffer);
@@ -2194,9 +2398,57 @@ namespace OpenBabel
           n--;
         }
         
-        if (molfound && EQn(buffer, " ATOM NAME  TYPE", 16))
+        if (fchgfound) {
+          if (n) {
+            fcharges.push_back(atof(vs[2].c_str()));
+            fcharges.push_back(atof(vs[5].c_str()));
+            fcharges.push_back(atof(vs[8].c_str()));
+            fcharges.push_back(atof(vs[11].c_str()));
+          } else {
+            if (vs.size() > 2)
+              fcharges.push_back(atof(vs[2].c_str()));
+            if (vs.size() > 5)
+              fcharges.push_back(atof(vs[5].c_str()));
+            if (vs.size() > 8)
+              fcharges.push_back(atof(vs[8].c_str()));
+	    
+            fchgfound = false;
+          }
+          n--;
+        }
+ 
+	if (pchgfound) {
+          if (n) {
+            pcharges.push_back(atof(vs[2].c_str()));
+            pcharges.push_back(atof(vs[5].c_str()));
+            pcharges.push_back(atof(vs[8].c_str()));
+            pcharges.push_back(atof(vs[11].c_str()));
+          } else {
+            if (vs.size() > 2)
+              pcharges.push_back(atof(vs[2].c_str()));
+            if (vs.size() > 5)
+              pcharges.push_back(atof(vs[5].c_str()));
+            if (vs.size() > 8)
+              pcharges.push_back(atof(vs[8].c_str()));
+	    
+            pchgfound = false;
+          }
+          n--;
+        }
+ 
+	if (molfound && EQn(buffer, " ATOM NAME  TYPE", 16)) {
           atomfound = true;
-	
+          n = _mol.NumAtoms() / 4;
+        }
+	if (molfound && EQn(buffer, "   ATOM   FCHARGE", 17)) {
+          fchgfound = true;
+          n = _mol.NumAtoms() / 4;
+	}
+	if (molfound && EQn(buffer, "   ATOM    CHARGE", 17)) {
+          pchgfound = true;
+          n = _mol.NumAtoms() / 4;
+	}
+
         if (bondfound)
           bond_lengths.push_back(atof(vs[7].c_str()));
 	
@@ -2234,15 +2486,12 @@ namespace OpenBabel
       int ni;
       bool failed;
 
-      //for (di = bond_lengths.begin(); di != bond_lengths.end(); di++)
-      //  cout << "rab = " << *di << endl;
-
       cout << "--------------------------------------------------------------------------------" << endl;
       cout << "                                                                                " << endl;
-      cout << "  VALIDATE MOLECULE : " << _mol.GetTitle() << endl;
+      cout << "  VALIDATE MOLECULE " << c << ": " << _mol.GetTitle() << endl;
       cout << "                                                                                " << endl;
-      cout << "IDX  HYB  AROM  OB_TYPE  LOG_TYPE      RESULT                                              " << endl;
-      cout << "---------------------------------------                                              " << endl;
+      cout << "IDX  HYB  AROM  OB_TYPE  LOG_TYPE       RESULT                                  " << endl;
+      cout << "----------------------------------------------                                  " << endl;
             
       ni = 1;
       failed = false;
@@ -2274,11 +2523,80 @@ namespace OpenBabel
         //continue;
       }
 
-      if (!_init) {
-        ParseParamFile();
-        _init = true;
-      }    
- 
+      SetMMFFFormalCharges();
+      cout << endl;
+      cout << "IDX  OB_FCARGE  LOG_FCHARGE       RESULT" << endl;
+      cout << "----------------------------------------" << endl;
+            
+      ni = 1;
+      for (di = fcharges.begin(); di != fcharges.end(); di++) {
+	if (ni > _mol.NumAtoms())
+          continue;
+	
+	if ( (atoi(_mol.GetAtom(ni)->GetType()) == 87) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 97) 
+	   ) continue;
+
+        if (fabs((*di) - _mol.GetAtom(ni)->GetPartialCharge()) <= 0.001)
+          sprintf(logbuf, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+        else {
+          sprintf(logbuf, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          failed = true;
+        }
+      
+        cout << logbuf << endl;
+        
+        ni++;
+      }
+
+      if (failed) {
+        cout << "Could not succesfully assign formal charges" << endl;
+        return false;
+        //continue;
+      }
+
+      SetMMFFPartialCharges();
+      cout << endl;
+      cout << "IDX  OB_PCARGE  LOG_PCHARGE       RESULT" << endl;
+      cout << "----------------------------------------" << endl;
+            
+      ni = 1;
+      for (di = pcharges.begin(); di != pcharges.end(); di++) {
+	if (ni > _mol.NumAtoms())
+          continue;
+	
+	if ( (atoi(_mol.GetAtom(ni)->GetType()) == 87) ||
+	     (atoi(_mol.GetAtom(ni)->GetType()) == 97) 
+	   ) continue;
+
+        if (fabs((*di) - _mol.GetAtom(ni)->GetPartialCharge()) <= 0.001)
+          sprintf(logbuf, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+        else {
+          sprintf(logbuf, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          failed = true;
+        }
+      
+        cout << logbuf << endl;
+        
+        ni++;
+      }
+
+      if (failed) {
+        cout << "Could not succesfully assign partial charges" << endl;
+        
+	//if (c == 9)
+        //  continue;
+	if (c == 224)
+          continue;
+	
+	return false;
+        //continue;
+      }
+
+
+      
+      
+
       if (!SetupCalculations()) {
         cout << "Could not setup calculations (missing parameters...)" << endl;
         return false;
@@ -2482,13 +2800,25 @@ namespace OpenBabel
   //
   int OBForceFieldMMFF94::GetBondType(OBAtom* a, OBAtom* b)
   {
-    if (_mol.GetBond(a,b)->IsSingle() && !_mol.GetBond(a,b)->IsAromatic()) {
+    /*
+    if ((atoi(a->GetType()) == 2) && (atoi(b->GetType()) ==2)) {
+      cout << "GetBondType(" << a->GetType() << ", " << b->GetType() << ")" << endl;
+      cout << " bond is single? " << _mol.GetBond(a,b)->IsSingle() << endl;
+      cout << " bond is double? " << _mol.GetBond(a,b)->IsSingle() << endl;
+      cout << " bond is arom? " << _mol.GetBond(a,b)->IsAromatic() << endl;
+      cout << " Sbmb_a? " << HasSbmbSet(atoi(a->GetType())) << endl;
+      cout << " Sbmb_b? " << HasSbmbSet(atoi(b->GetType())) << endl;
+    }
+    */
+    if (!_mol.GetBond(a,b)->IsSingle())
+      return 0;
+    
+    if (!_mol.GetBond(a,b)->IsAromatic())
       if (HasAromSet(atoi(a->GetType())) && HasAromSet(atoi(b->GetType())))
         return 1;
       
-      if (HasSbmbSet(atoi(a->GetType())) && HasSbmbSet(atoi(b->GetType())) && (!HasAromSet(atoi(a->GetType())) || !HasAromSet(atoi(b->GetType()))))
-        return 1;
-    }
+    if (HasSbmbSet(atoi(a->GetType())) && HasSbmbSet(atoi(b->GetType())))
+      return 1;
     
     return 0;
   }
@@ -2499,7 +2829,7 @@ namespace OpenBabel
 
     sumbondtypes = GetBondType(a,b) + GetBondType(b, c);
 
-    if (a->IsInRingSize(3) && b->IsInRingSize(3) && c->IsInRingSize(3)) {
+    if (a->IsInRingSize(3) && b->IsInRingSize(3) && c->IsInRingSize(3) && IsInSameRing(a, c)) {
       switch (sumbondtypes) {
       case 0:
         return 3; 
@@ -2510,7 +2840,7 @@ namespace OpenBabel
       }
     }
     
-    if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4)) {
+    if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && IsInSameRing(a, c)) {
       switch (sumbondtypes) {
       case 0:
         return 4; 
@@ -2651,7 +2981,7 @@ namespace OpenBabel
     par = GetParameter(atomtype, 0, 0, 0, _ffpropparams); // from mmffprop.par
     if (par)
       if (par->_ipar[6])
-      return true;
+        return true;
 
     return false;
   }
@@ -2663,7 +2993,7 @@ namespace OpenBabel
     par = GetParameter(atomtype, 0, 0, 0, _ffpropparams); // from mmffprop.par
     if (par)
       if (par->_ipar[3])
-      return true;
+        return true;
 
     return false;
   }
@@ -2675,7 +3005,7 @@ namespace OpenBabel
     par = GetParameter(atomtype, 0, 0, 0, _ffpropparams); // from mmffprop.par
     if (par)
       if (par->_ipar[5])
-      return true;
+        return true;
 
     return false;
   }
@@ -2687,7 +3017,7 @@ namespace OpenBabel
     par = GetParameter(atomtype, 0, 0, 0, _ffpropparams); // from mmffprop.par
     if (par)
       if (par->_ipar[7])
-      return true;
+        return true;
 
     return false;
   }
@@ -2761,6 +3091,60 @@ namespace OpenBabel
     return type; 
   }
 
+  // MMFF part V - TABLE VI
+  double OBForceFieldMMFF94::GetZParam(OBAtom* atom)
+  {
+    if (atom->IsHydrogen())
+      return 1.395;
+    if (atom->IsCarbon())
+      return 2.494;
+    if (atom->IsNitrogen())
+      return 2.711;
+    if (atom->IsOxygen())
+      return 3.045;
+    if (atom->GetAtomicNum() == 9) // F
+      return 2.847;
+    if (atom->GetAtomicNum() == 14) // Si
+      return 2.350;
+    if (atom->IsPhosphorus())
+      return 2.350;
+    if (atom->IsSulfur())
+      return 2.980;
+    if (atom->GetAtomicNum() == 17) // Cl
+      return 2.909;
+    if (atom->GetAtomicNum() == 35) // Br
+      return 3.017;
+    if (atom->GetAtomicNum() == 53) // I
+      return 3.086;
+
+    return 0.0;
+  }
+ 
+  // MMFF part V - TABLE VI
+  double OBForceFieldMMFF94::GetCParam(OBAtom* atom)
+  {
+    if (atom->GetAtomicNum() == 5) // B
+      return 0.704;
+    if (atom->IsCarbon())
+      return 1.016;
+    if (atom->IsNitrogen())
+      return 1.113;
+    if (atom->IsOxygen())
+      return 1.337;
+    if (atom->GetAtomicNum() == 14) // Si
+      return 0.811;
+    if (atom->IsPhosphorus())
+      return 1.068;
+    if (atom->IsSulfur())
+      return 1.249;
+    if (atom->GetAtomicNum() == 17) // Cl
+      return 1.078;
+    if (atom->GetAtomicNum() == 33) // As
+      return 0.825;
+
+    return 0.0;
+  }
+ 
   // MMFF part V - TABLE X
   double OBForceFieldMMFF94::GetUParam(OBAtom* atom)
   {
@@ -2798,28 +3182,107 @@ namespace OpenBabel
     
     return 0.0;
   }
+   
+  double OBForceFieldMMFF94::GetBondLength(OBAtom* a, OBAtom* b)
+  {
+    OBFFParameter *parameter;
+    double rab;
 
+    parameter = GetParameterMMFF94(GetBondType(a, b), atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams);
+    if (parameter == NULL)
+      rab = GetRuleBondLength(a, b); 
+    else 
+      rab = parameter->_dpar[1];
+  
+    return rab;
+  }
+  
   // MMFF part V - page 625
-  double GetBondLength(OBAtom* a, OBAtom* b)
+  double OBForceFieldMMFF94::GetRuleBondLength(OBAtom* a, OBAtom* b)
   {
     double r0ab, r0a, r0b, c, Xa, Xb;
+    int Ha, Hb, BOab;
     r0a = etab.GetCovalentRad(a->GetAtomicNum());
     r0b = etab.GetCovalentRad(b->GetAtomicNum());
     Xa = etab.GetElectroNeg(a->GetAtomicNum());
     Xb = etab.GetElectroNeg(b->GetAtomicNum());
     
+   
     if (a->IsHydrogen())
       r0a = 0.33;
     if (b->IsHydrogen())
       r0b = 0.33;
     
     if (a->IsHydrogen() || b->IsHydrogen())
-      c = 0.50;
+      c = 0.050;
     else
-      0.085;
+      c = 0.085;
 
-  
-    r0ab = r0a + r0b - c * pow((Xa - Xb), 1.4) - 0.008; 
+    if (GetMltb(atoi(a->GetType()) == 3))
+      Ha = 1;
+    else if ((GetMltb(atoi(a->GetType())) == 1) || (GetMltb(atoi(a->GetType())) == 2))
+      Ha = 2;
+    else
+      Ha = 3;
+
+    if (GetMltb(atoi(b->GetType()) == 3))
+      Hb = 1;
+    else if ((GetMltb(atoi(b->GetType())) == 1) || (GetMltb(atoi(b->GetType())) == 2))
+      Hb = 2;
+    else
+      Hb = 3;
+
+    BOab = a->GetBond(b)->GetBondOrder();
+    if ((GetMltb(atoi(a->GetType())) == 1) && (GetMltb(atoi(b->GetType())) == 1))
+      BOab = 4;
+    if ((GetMltb(atoi(a->GetType())) == 1) && (GetMltb(atoi(b->GetType())) == 2))
+      BOab = 5;
+    if ((GetMltb(atoi(a->GetType())) == 2) && (GetMltb(atoi(b->GetType())) == 1))
+      BOab = 5;
+    if (a->GetBond(b)->IsAromatic())
+      if (!HasPilpSet(atoi(a->GetType())) && !HasPilpSet(atoi(b->GetType())))
+        BOab = 4;
+      else
+        BOab = 5;
+     
+    switch (BOab) {
+      case 5:
+        r0a -= 0.04;
+	r0b -= 0.04;
+	break;
+      case 4:
+        r0a -= 0.075;
+	r0b -= 0.075;
+	break;
+      case 3:
+        r0a -= 0.17;
+	r0b -= 0.17;
+	break;
+      case 2:
+        r0a -= 0.10;
+	r0b -= 0.10;
+	break;
+      case 1:
+        if (Ha == 1)
+	  r0a -= 0.08;
+        if (Ha == 2)
+	  r0a -= 0.03;
+        if (Hb == 1)
+	  r0b -= 0.08;
+        if (Hb == 2)
+	  r0b -= 0.03;
+    }
+    
+    /*
+    cout << "Ha=" << Ha << "  Hb=" << Hb << "  BOab=" << BOab << endl;
+    cout << "r0a=" << r0a << "  Xa=" << Xa << endl;
+    cout << "r0b=" << r0b << "  Xb=" << Xb << endl;
+    cout << "r0a + r0b=" << r0a +r0b << endl;
+    cout << "c=" << c << "  |Xa-Xb|=" << fabs(Xa-Xb) << "  |Xa-Xb|^1.4=" << pow(fabs(Xa-Xb), 1.4) << endl;
+    */
+    r0ab = r0a + r0b - c * pow(fabs(Xa - Xb), 1.4) - 0.008; 
+
+    return r0ab;
   }
 
   OBFFParameter* OBForceFieldMMFF94::GetParameterMMFF94(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)

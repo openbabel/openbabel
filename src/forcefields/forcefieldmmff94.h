@@ -30,23 +30,19 @@ namespace OpenBabel
   class OBFFBondCalculationMMFF94 : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b; // atoms of the bond
       double kb, r0, rab, delta;
       int bt; // bondtype (BTIJ)
       
-      double GetEnergy();
-      vector3 GetGradient(OBAtom *atom);
+      void Compute(bool gradients = true);
   };
   
   class OBFFAngleCalculationMMFF94 : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b, *c; // atoms of the angle
       double ka, theta0, theta, delta;
       int at; //angletype (ATIJK)
       
-      double GetEnergy();
-      vector3 GetGradient(OBAtom *atom);
+      void Compute(bool gradients = true);
   };
   
   class OBFFStrBndCalculationMMFF94 : public OBFFCalculation
@@ -128,8 +124,10 @@ namespace OpenBabel
       bool SetMMFFTypes();
       //! fill OBFFXXXCalculation vectors
       bool SetupCalculations();
-      //!  Sets charges to MMFF94 charges in _mol
-      bool SetMMFF94Charges();
+      //!  Sets formal charges
+      bool SetMMFFFormalCharges();
+      //!  Sets partial charges
+      bool SetMMFFPartialCharges();
       //! \return The row of the element atom in the periodic table
       int GetElementRow(OBAtom *atom);
       //! \return The bond type (BTIJ)
@@ -164,9 +162,15 @@ namespace OpenBabel
       int EqLvl5(int type);
       //! \return the U value for the atom from table X page 631
       double GetUParam(OBAtom* atom);
-      //! \return the U value for the atom from table X page 631
+      //! \return the Z value for the atom from table VI page 628
+      double GetZParam(OBAtom* atom);
+      //! \return the C value for the atom from table VI page 628
+      double GetCParam(OBAtom* atom);
+      //! \return the V value for the atom from table X page 631
       double GetVParam(OBAtom* atom);
       //! return the bond length calculated with a modified version of the Schomaker-Stevenson rule
+      double GetRuleBondLength(OBAtom* a, OBAtom* b);
+      //! return the bond length from mmffbond.par, if not found, one is calculated with a modified version of the Schomaker-Stevenson rule
       double GetBondLength(OBAtom* a, OBAtom* b);
       //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
       OBFFParameter* GetParameterMMFF94(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
@@ -224,11 +228,11 @@ namespace OpenBabel
       bool Setup(OBMol &mol);
  
       //! Returns total energy
-      double Energy();
+      double Energy(bool gradients = true);
       //! Returns the bond stretching energy
-      double E_Bond();
+      double E_Bond(bool gradients = true);
       //! Returns the angle bending energy
-      double E_Angle();
+      double E_Angle(bool gradients = true);
       //! Returns the stretch-bend energy
       double E_StrBnd();
       //! Returns the torsional energy

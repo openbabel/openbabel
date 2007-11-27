@@ -1,9 +1,16 @@
+2007-11-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefieldmmff94.*, data/mmffsymb.par: Formal
+	charges are now assigned correctly.
+
 2007-11-25  Patrick Spendrin, Christian Ehrlicher
-    * */CMakeLists.txt: some improvements to get it running under win32
-    
+	
+	* */CMakeLists.txt: some improvements to get it running under win32
+
 2007-11-25 Chris Morley
 
 	* src/dlhandler_win32.cpp, generic.cpp,
+	
 	* include/openbabel/atomclass.h, alias.h:
 	Including atomclass.h and alias.h into dlhandler_win32.cpp breaks
 	code segregation (OBConversion and user interfaces do not know
@@ -12,17 +19,17 @@
 	I hope this fits ok with CMake.
 	
 2007-11-24  Patrick Spendrin, Christian Ehrlicher
-    * include/openbabel/atomclass.h: adding support for sstream
-    
-    * src/config.h.cmake: cleanup
-    
-    * src/dlhandler_win32.cpp: improvements for msvc
-    
-    * */CMakeLists.txt: improving CMake based buildsystem esp. for win32
-    and mingw32 - it builds now again, though there will come more improvements
-    next
-    
-    
+	
+	* include/openbabel/atomclass.h: adding support for sstream
+	
+	* src/config.h.cmake: cleanup
+	
+	* src/dlhandler_win32.cpp: improvements for msvc
+	
+	* */CMakeLists.txt: improving CMake based buildsystem esp. for win32
+	and mingw32 - it builds now again, though there will come more improvements
+	next
+
 2007-11-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefieldmmff94.*, data/mmffsymb.par: Atom typing 
