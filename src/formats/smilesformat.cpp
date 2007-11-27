@@ -80,7 +80,7 @@ namespace OpenBabel
     }
 
   private:
-    bool SMIFormat::isNotSmiles(char ch);
+    bool isNotSmiles(char ch);
 
   };
 

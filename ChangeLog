@@ -1,6 +1,13 @@
+2007-11-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/smilesformat.cpp: fixed compile error on gcc.
+
+	* src/forcefields/forcefieldmmff94.*: Partial charges are now assigned
+	correctly. 
+
 2007-11-27 Chris Morley
 
-	src/formats/smilesformat.cpp: Replace ReadMolecule and add
+	* src/formats/smilesformat.cpp: Replace ReadMolecule and add
 	isNotSmiles(). Lines starting with non-SMILES characters are ignored.
 	Input stream left at first non-SMILES char unless a whitespace.
 	(WriteMolecule) Add options smilesonly and nonewline to ease

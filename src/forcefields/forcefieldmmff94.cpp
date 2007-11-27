@@ -452,31 +452,59 @@ namespace OpenBabel
     return energy;
   }
 
-  /// \todo Currently unimplemented but needs to be here for linking
-  double OBFFElectrostaticCalculationMMFF94::GetEnergy()
+  void OBFFElectrostaticCalculationMMFF94::Compute(bool gradients)
   {
-    return 0.0;
+    vector3 da, db;
+    double dE, rab2;
+
+    if (gradients) {
+      da = a->GetVector();
+      db = b->GetVector();
+      rab = OBForceField::VectorLengthDerivative(da, db);
+    } else
+      rab = a->GetDistance(b);
+
+    energy = qq / (rab + 0.05);
+
+    if (gradients) {
+      rab2 = rab * rab;
+      dE = -qq / rab2;
+      grada = dE * da; // - dE/drab * drab/da
+      gradb = dE * db; // - dE/drab * drab/db
+    } 
   }
 
   /// \todo Currently unimplemented but needs to be here for linking
-  double OBForceFieldMMFF94::E_Electrostatic()
+  double OBForceFieldMMFF94::E_Electrostatic(bool gradients)
   {
-//    OBAtom *a, *b, *c, *d;
-    double energy = 0.0;//, e;
+    vector<OBFFElectrostaticCalculationMMFF94>::iterator i;
+    double energy = 0.0;
     
     IF_OBFF_LOGLVL_HIGH {
-      *logos << std::endl << "E L E C T R O S T A T I C   I N T E R A C T I O N S" << std::endl << std::endl;
-      *logos << "ATOM TYPES          " << std::endl;
-      *logos << " I    J        Rij       R*IJ    EPSILON    E_REP     E_ATTR    ENERGY" << std::endl;
-      *logos << "----------------------------------------------------------------------" << std::endl;
+      OBFFLog("\nE L E C T R O S T A T I C   I N T E R A C T I O N S\n\n");
+      OBFFLog("ATOM TYPES\n");
+      OBFFLog(" I    J        Rij       R*IJ    EPSILON    E_REP     E_ATTR    ENERGY\n");
+      OBFFLog("----------------------------------------------------------------------\n");
       //            XX   XX     -000.000  -000.000  -000.000  -000.000  -000.000  -000.000
     }
     
-    FOR_PAIRS_OF_MOL(p, _mol) {
+    for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i) {
+      
+      i->Compute(gradients);
+      energy += i->GetEnergy();
+      
+      IF_OBFF_LOGLVL_HIGH {
+        sprintf(logbuf, "%s %s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+                (*i).rab, (*i).qq, (*i).energy);
+        OBFFLog(logbuf);
+      }
+    }
+    
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(logbuf, "     TOTAL ELECTROSTATIC ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(logbuf);
     }
 
-    IF_OBFF_LOGLVL_MEDIUM
-      *logos << std::endl << "     TOTAL ELECTROSTATIC ENERGY = " << energy << std::endl << std::endl;
     return energy;
   }
   
@@ -530,6 +558,7 @@ namespace OpenBabel
     ParseParamTorsion();
     ParseParamVDW();
     ParseParamCharge();
+    ParseParamPbci();
     return true;
   }
   
@@ -1457,9 +1486,15 @@ namespace OpenBabel
     OBAtom *a, *b, *c, *d;
     bool found;
     
+    IF_OBFF_LOGLVL_LOW
+      OBFFLog("\nS E T T I N G   U P   C A L C U L A T I O N S\n\n");
+ 
     // 
     // Bond Calculations
     //
+    IF_OBFF_LOGLVL_LOW
+      OBFFLog("SETTING UP BOND CALCULATIONS...\n");
+ 
     OBFFBondCalculationMMFF94 bondcalc;
     int bondtype;
 
@@ -1475,10 +1510,19 @@ namespace OpenBabel
       if (parameter == NULL) {
 	parameter = GetParameter(a->GetAtomicNum(), b->GetAtomicNum(), 0, 0, _ffbndkparams); // from mmffbndk.par - emperical rules
 	if (parameter == NULL) { 
-          cout << bondtype << " idx: " << a->GetIdx() << "-" << b->GetIdx() << " types: " << a->GetType() << "-" << b->GetType() << endl;
-          obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters", obError);
+          IF_OBFF_LOGLVL_LOW {
+            sprintf(logbuf, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d\n", a->GetIdx(), b->GetIdx());
+            OBFFLog(logbuf);
+          }
+          
+	  obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters", obError);
           return false;
         } else {
+          IF_OBFF_LOGLVL_LOW {
+            sprintf(logbuf, "   USING EMPIRICAL RULE FOR BOND STRETCHING %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
+            OBFFLog(logbuf);
+          }
+
           double rr, rr2, rr4, rr6;
           bondcalc.a = a;
           bondcalc.b = b;
@@ -1516,6 +1560,9 @@ namespace OpenBabel
     // If this fails, use empirical rules
     // Since 1-1-1 = 2-2-2, we will only try 1-1-1 before going to 3-2-3
     //
+    IF_OBFF_LOGLVL_LOW
+      OBFFLog("SETTING UP ANGLE CALCULATIONS...\n");
+ 
     OBFFAngleCalculationMMFF94 anglecalc;
     OBFFStrBndCalculationMMFF94 strbndcalc;
     int angletype, strbndtype, bondtype1, bondtype2;
@@ -1546,7 +1593,13 @@ namespace OpenBabel
         anglecalc.theta0 = parameter->_dpar[1];
         strbndcalc.theta0 = parameter->_dpar[1]; // **
       } else {
-        anglecalc.ka = 0.0;
+        IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, "   USING DEFAULT ANGLE FOR %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          sprintf(logbuf, "   USING EMPIRICAL RULE FOR ANGLE BENDING %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          OBFFLog(logbuf);
+        }
+
+	anglecalc.ka = 0.0;
         anglecalc.theta0 = 120.0;
 
 	if (GetCrd(atoi(b->GetType())) == 4)
@@ -1578,7 +1631,12 @@ namespace OpenBabel
       
       // empirical rule for 0-b-0 and standard angles
       if (anglecalc.ka == 0.0) {
-        double beta, Za, Zc, Cb, r0ab, r0bc, theta, theta2, D, rr, rr2;
+        IF_OBFF_LOGLVL_LOW {
+          sprintf(logbuf, "   USING EMPIRICAL RULE FOR ANGLE BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          OBFFLog(logbuf);
+        }
+
+	double beta, Za, Zc, Cb, r0ab, r0bc, theta, theta2, D, rr, rr2;
         Za = GetZParam(a);
         Cb = GetZParam(b);
         Zc = GetZParam(c);
@@ -2029,6 +2087,34 @@ namespace OpenBabel
  
       _vdwcalculations.push_back(vdwcalc);
     }
+    
+    // 
+    // Electrostatic Calculations
+    //
+    IF_OBFF_LOGLVL_LOW
+      OBFFLog("SETTING UP ELECTROSTATIC CALCULATIONS...\n");
+ 
+    OBFFElectrostaticCalculationMMFF94 elecalc;
+
+    _electrostaticcalculations.clear();
+    
+    FOR_PAIRS_OF_MOL(p, _mol) {
+      a = _mol.GetAtom((*p)[0]);
+      b = _mol.GetAtom((*p)[1]);
+      
+      elecalc.qq = 332.0716 * a->GetPartialCharge() * b->GetPartialCharge();
+      
+      if (elecalc.qq) {
+        elecalc.a = &*a;
+        elecalc.b = &*b;
+        
+        // 1-4 scaling
+        if (a->IsOneFour(b))
+          elecalc.qq *= 0.75;
+	  
+        _electrostaticcalculations.push_back(elecalc);
+      }
+    }
 
     return true;
   }
@@ -2207,12 +2293,10 @@ namespace OpenBabel
     vector<double> charges(_mol.NumAtoms()+1, 0);
     double M, Wab, factor, q0a, q0b, Pa, Pb;
 
-    //cout << " size = " << _ffchgparams.size() << endl;
-    
     FOR_ATOMS_OF_MOL (atom, _mol) {
       if ((atoi(atom->GetType()) == 32) || (atoi(atom->GetType()) == 35) || (atoi(atom->GetType()) == 72))
         factor = 0.5;
-      else if ((atoi(atom->GetType()) == 62) || (atoi(atom->GetType()) == 77))
+      else if ((atoi(atom->GetType()) == 62) || (atoi(atom->GetType()) == 76))
         factor = 0.25;
       else
         factor = 0.0;
@@ -2220,11 +2304,18 @@ namespace OpenBabel
       M = GetCrd(atoi(atom->GetType()));
       q0a = atom->GetPartialCharge();
 
-      if (!q0a)
+      // charge sharing
+      if (!factor)
         FOR_NBORS_OF_ATOM (nbr, &*atom)
           if (nbr->GetPartialCharge() < 0.0)
 	    q0a += nbr->GetPartialCharge() / (2.0 * nbr->GetValence());
       
+     // needed for SEYWUO, positive charge sharing?
+     if (atoi(atom->GetType()) == 62)
+        FOR_NBORS_OF_ATOM (nbr, &*atom)
+          if (nbr->GetPartialCharge() > 0.0)
+	    q0a -= nbr->GetPartialCharge() / 2.0;
+     
       q0b = 0.0;
       Wab = 0.0;
       FOR_NBORS_OF_ATOM (nbr, &*atom) {
@@ -2235,34 +2326,25 @@ namespace OpenBabel
           if (GetBondType(&*atom, &*nbr) == _ffchgparams[idx]._ipar[0]) 
             if ((atoi(atom->GetType()) == _ffchgparams[idx].a) && (atoi(nbr->GetType()) == _ffchgparams[idx].b)) {
 	      Wab += -_ffchgparams[idx]._dpar[0];
-	      cout << "bci=" << -_ffchgparams[idx]._dpar[0] << endl;
               bci_found = true;
             } else if  ((atoi(atom->GetType()) == _ffchgparams[idx].b) && (atoi(nbr->GetType()) == _ffchgparams[idx].a)) {
 	      Wab += _ffchgparams[idx]._dpar[0];
-	      cout << "bci=" << _ffchgparams[idx]._dpar[0] << endl;
               bci_found = true;
 	    }
         
 	if (!bci_found) {
-	  cout << "no bci found" << endl;
-	  for (int idx=0; idx < _ffpbciparams.size(); idx++)
-            if (atoi(atom->GetType()) == _ffpbciparams[idx].a) {
+	  for (int idx=0; idx < _ffpbciparams.size(); idx++) {
+            if (atoi(atom->GetType()) == _ffpbciparams[idx].a)
 	      Pa = _ffpbciparams[idx]._dpar[0];
-	      cout << "Pa=" << Pa << endl;
-	    } else if (atoi(nbr->GetType()) == _ffpbciparams[idx].a) {
+	    if (atoi(nbr->GetType()) == _ffpbciparams[idx].a)
 	      Pb = _ffpbciparams[idx]._dpar[0];
-	      cout << "Pb=" << Pb << endl;
-            } 
-          Wab += Pb - Pa;
+	  }
+          Wab += Pa - Pb;
 	}
       }
       
-      cout << atom->GetIdx() << ":  factor=" << factor << "  Wab=" << Wab << "  q0a=" << q0a << "  q0b=" << q0b << "  M=" << M << endl;
-      
       if (factor)
         charges[atom->GetIdx()] = (1.0 - M * factor) * q0a + factor * q0b + Wab;
-      else if (atoi(atom->GetType()) == 41)
-        charges[atom->GetIdx()] = -0.5 + Wab;
       else 
         charges[atom->GetIdx()] = q0a + Wab;
     }
@@ -2287,7 +2369,7 @@ namespace OpenBabel
     //energy += E_Torsion(gradients);
     //energy += E_OOP(gradients);
     //energy += E_VDW(gradients);
-    //energy += E_Electrostatic(gradients);
+    energy += E_Electrostatic(gradients);
 
     IF_OBFF_LOGLVL_MEDIUM {
       sprintf(logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
@@ -2583,12 +2665,6 @@ namespace OpenBabel
 
       if (failed) {
         cout << "Could not succesfully assign partial charges" << endl;
-        
-	//if (c == 9)
-        //  continue;
-	if (c == 224)
-          continue;
-	
 	return false;
         //continue;
       }
@@ -3197,13 +3273,70 @@ namespace OpenBabel
     return rab;
   }
   
+  // R Blom and A Haaland, J. Mol. Struct., 128, 21-27 (1985)
+  double OBForceFieldMMFF94::GetCovalentRadius(OBAtom* a) {
+
+    switch (a->GetAtomicNum()) {
+      case 1:
+        return 0.33; // corrected value from MMFF part V
+      case 5:
+        return 0.81;
+      case 6:
+        return 0.77; // corrected value from MMFF part V
+      case 7:
+        return 0.73;
+      case 8:
+        return 0.72;
+      case 9:
+        return 0.74;
+      case 13:
+        return 1.22;
+      case 14:
+        return 1.15;
+      case 15:
+        return 1.09;
+      case 16:
+        return 1.03;
+      case 17:
+        return 1.01;
+      case 31:
+        return 1.19;
+      case 32:
+        return 1.20;
+      case 33:
+        return 1.20;
+      case 34:
+        return 1.16;
+      case 35:
+        return 1.15;
+      case 44:
+        return 1.46;
+      case 50:
+        return 1.40;
+      case 51:
+        return 1.41;
+      case 52:
+        return 1.35;
+      case 53:
+        return 1.33;
+      case 81:
+        return 1.51;
+      case 82:
+        return 1.53;
+      case 83:
+        return 1.55;
+      default:
+        return etab.GetCovalentRad(a->GetAtomicNum());
+    }
+  }
+  
   // MMFF part V - page 625
   double OBForceFieldMMFF94::GetRuleBondLength(OBAtom* a, OBAtom* b)
   {
     double r0ab, r0a, r0b, c, Xa, Xb;
     int Ha, Hb, BOab;
-    r0a = etab.GetCovalentRad(a->GetAtomicNum());
-    r0b = etab.GetCovalentRad(b->GetAtomicNum());
+    r0a = GetCovalentRadius(a);
+    r0b = GetCovalentRadius(b);
     Xa = etab.GetElectroNeg(a->GetAtomicNum());
     Xb = etab.GetElectroNeg(b->GetAtomicNum());
     
@@ -3273,13 +3406,12 @@ namespace OpenBabel
 	  r0b -= 0.03;
     }
     
-    /*
     cout << "Ha=" << Ha << "  Hb=" << Hb << "  BOab=" << BOab << endl;
     cout << "r0a=" << r0a << "  Xa=" << Xa << endl;
     cout << "r0b=" << r0b << "  Xb=" << Xb << endl;
     cout << "r0a + r0b=" << r0a +r0b << endl;
     cout << "c=" << c << "  |Xa-Xb|=" << fabs(Xa-Xb) << "  |Xa-Xb|^1.4=" << pow(fabs(Xa-Xb), 1.4) << endl;
-    */
+    
     r0ab = r0a + r0b - c * pow(fabs(Xa - Xb), 1.4) - 0.008; 
 
     return r0ab;

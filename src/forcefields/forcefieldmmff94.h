@@ -90,11 +90,9 @@ namespace OpenBabel
   class OBFFElectrostaticCalculationMMFF94 : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b, *c; // atoms of the angle
-      double ka, theta0, thetaabc, delta, delta2;
-      int sbt; //strbndtype (SBTIJK)
+      double qq, rab;
       
-      double GetEnergy();
+      void Compute(bool gradients = true);
   };
 
   // Class OBForceFieldMMFF94
@@ -168,6 +166,8 @@ namespace OpenBabel
       double GetCParam(OBAtom* atom);
       //! \return the V value for the atom from table X page 631
       double GetVParam(OBAtom* atom);
+      //! return the covalent radius from Blom and Haaland, value from etab if not available
+      double GetCovalentRadius(OBAtom* a);
       //! return the bond length calculated with a modified version of the Schomaker-Stevenson rule
       double GetRuleBondLength(OBAtom* a, OBAtom* b);
       //! return the bond length from mmffbond.par, if not found, one is calculated with a modified version of the Schomaker-Stevenson rule
@@ -242,7 +242,7 @@ namespace OpenBabel
       //! Returns the Van der Waals energy (Buckingham potential)
       double E_VDW();
       //! Returns the dipole-dipole interaction energy
-      double E_Electrostatic();
+      double E_Electrostatic(bool gradients = true);
       
       
       //! Validate MMFF94 using validation suite
