@@ -60,7 +60,7 @@ namespace OpenBabel
         "  r radicals lower case eg ethyl is Cc\n"
         "  c output atomclass like [C:2], if available\n"
         "\n";
-    };
+    }
 
     virtual unsigned int Flags() { return DEFAULTFORMAT;};
     virtual const char* TargetClassDescription(){return OBMol::ClassDescription();};
@@ -77,7 +77,11 @@ namespace OpenBabel
       for(i=0;i<n && ifs.good();i++)
         getline(ifs, temp);
       return ifs.good() ? 1 : -1; 
-    };  
+    }
+
+  private:
+    bool SMIFormat::isNotSmiles(char ch);
+
   };
 
   //Make an instance of the format class
@@ -199,47 +203,70 @@ namespace OpenBabel
     void CorrectUpDownMarks(OBBond *, OBAtom *);
   };
 
-  /////////////////////////////////////////////////////////////////
-  bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-  {
-    OBMol* pmol = pOb->CastAndClear<OBMol>();
+/////////////////////////////////////////////////////////////////
+/*
+There is a set of characters which do not occur in SMILES strings.
+If the first char is one of this set, then line is read and discarded and
+parsing starts again with the next line.
+SMILES strings are terminated by characters from this set. If the
+terminating character is whitespace, the rest of the line is used as
+the title of the molecule and the input stream left at the start of the
+next line. If the terminating character is not whitespace, the input
+stream is left so that it will be the next character be read.
+*/
 
-    //Define some references so we can use the old parameter names
-    istream &ifs = *pConv->GetInStream();
-    OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
+///Returns true if character is not one used in a SMILES string.
+bool SMIFormat::isNotSmiles(char ch)
+{
+  static std::string notsmileschars(",<>\"\'!^&_|{}");
+  return ch<=0x20 || notsmileschars.find(ch)!=string::npos;
+}
 
-    //Taken unchanged from ReadSmiles
-    char buffer[BUFF_SIZE];
+//////////////////////////////////////////////////////////////////
+bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+{
+  OBMol* pmol = pOb->CastAndClear<OBMol>();
 
-    if (!ifs.getline(buffer,BUFF_SIZE))
-      return(false);
-    vector<string> vs;
-    tokenize(vs,buffer);
+  istream &ifs = *pConv->GetInStream();
+//    const char* title = pConv->GetTitle();
 
-    // Essentially everything after the first space on a SMILES file line
-    // is treated as the name.
-    if (vs.size() > 2)
-      {
-        for (unsigned int i=2;i<vs.size(); i++)
-          {
-            vs[1]=vs[1]+" "+vs[i];
-          }
-      }
-
-    if (vs.empty())
+  string ln;
+  //Ignore lines that start with non-SMILES characters, including whitespace
+  while(ifs && isNotSmiles(ifs.peek()))
+    if(!getline(ifs, ln))
       return false;
-    mol.SetDimension(0);
 
-    if (vs.size() >= 2)
-      mol.SetTitle(vs[1].c_str());
-    else
-      mol.SetTitle(title);
-
-    OBSmilesParser sp;
-    return sp.SmiToMol(mol,vs[0]);
+  //Copy the input up to the first non-SMILES character
+  string smiles;
+  char ch=0;
+  for(;ifs.good();ch=0) //exits with ch=0 at eof or failure
+  {
+    ifs.get(ch);
+    if(isNotSmiles(ch))
+      break;
+    smiles.push_back(ch);
   }
 
+  //when terminating char is...
+  if(ch!=0 && ch!='\n') //...end of line: no title; stream ready for next line 
+  {
+    if(ch>0 && isspace(ch))
+    {
+      //...other whitespace: use the rest of the line as title
+      getline(ifs, ln);
+      Trim(ln);
+      pmol->SetTitle(ln);
+    }
+    else
+      //leave istream at any other terminating character
+      ifs.unget();
+  }
+
+  pmol->SetDimension(0);
+  OBSmilesParser sp;
+  return sp.SmiToMol(*pmol, smiles);
+
+}
   //////////////////////////////////////////////////
   bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
   {
@@ -278,10 +305,13 @@ namespace OpenBabel
       }
 
     ofs << buffer ;
-    if(!pConv->IsOption("n"))
-      ofs << '\t' <<  mol.GetTitle();
-    ofs << endl;
-
+    if(!pConv->IsOption("smilesonly"))
+    {
+      if(!pConv->IsOption("n"))
+        ofs << '\t' <<  mol.GetTitle();
+      if(!pConv->IsOption("nonewline"))
+       ofs << endl;
+    }
     return true;
   }
 
@@ -2894,4 +2924,6 @@ namespace OpenBabel
     return(true);
 
   }
+
+
 }

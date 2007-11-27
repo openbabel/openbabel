@@ -1,3 +1,13 @@
+2007-11-27 Chris Morley
+
+	src/formats/smilesformat.cpp: Replace ReadMolecule and add
+	isNotSmiles(). Lines starting with non-SMILES characters are ignored.
+	Input stream left at first non-SMILES char unless a whitespace.
+	(WriteMolecule) Add options smilesonly and nonewline to ease
+	rsmiformat. Not intended to be public.
+	
+	* src/formats/rsmiformat.cpp: New file for Reaction SMILES format
+
 2007-11-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp (VectorOOPDerivative): Calculate forces, as
