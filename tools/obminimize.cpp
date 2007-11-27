@@ -93,8 +93,10 @@ int main(int argc,char **argv)
         ifile++;
       }
 
-      if (option == "-cg")
+      if (option == "-cg") {
+        sd = false;
         ifile++;
+      }
 
       if ((option == "-c") && (argc > (i+1))) {
         crit = atof(argv[i+1]);
@@ -169,7 +171,7 @@ int main(int argc,char **argv)
       if (sd)
         done = pFF->SteepestDescentTakeNSteps(1);
       else
-        done = pFF->SteepestDescentTakeNSteps(1);
+        done = pFF->ConjugateGradientsTakeNSteps(1);
  
       if (pFF->DetectExplosion()) {
         cerr << "explosion has occured!" << endl;
