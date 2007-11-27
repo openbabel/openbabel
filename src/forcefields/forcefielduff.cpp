@@ -261,11 +261,11 @@ namespace OpenBabel
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
+      dd = d->GetVector();
       // This is wrong -- we need a real OOP derivative here
-      angle = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;  
+      angle = OBForceField::VectorOOPDerivative(da, db, dc, dd) * DEG_TO_RAD;  
 
-      //      dE = -koop * (c1*sin(angle) + 2.0 * c2 * sin(2*angle));
-      dE = 0.0;
+      dE = -koop * (c1*sin(angle) + 2.0 * c2 * sin(2*angle));
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
       gradc = dE * dc; // - dE/drab * drab/dc

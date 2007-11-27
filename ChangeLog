@@ -1,3 +1,13 @@
+2007-11-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefield.cpp (VectorOOPDerivative): Calculate forces, as
+	per Tim's reference.
+
+	* src/forcefields/forcefielduff.cpp: Use it.
+
+	* tools/obminimize.cpp: Fix a bug to use conjugate gradients when
+	-cg is specified. (Explosions seem to occur more often with CG for me.)
+
 2007-11-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefieldmmff94.*, data/mmffsymb.par: Formal

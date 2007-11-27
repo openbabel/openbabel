@@ -49,7 +49,7 @@ GNU General Public License for more details.
       - src/forcefields/forcefielduff.cpp
       - Energy terms: finished
       - OOP: needs validation
-      - Gradients: need careful checking
+      - Gradients: need OOP gradient
       - Validation in progress...
 
 
@@ -1437,7 +1437,7 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_LOW {
         if (_cstep % 10 == 0) {
-          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, _e_n1);
+          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
           OBFFLog(logbuf);
         }
       }
@@ -2016,7 +2016,7 @@ namespace OpenBabel
     if (rab < 0.1) // atoms are too close to each other
       {
         vab.randomUnitVector();
-        vab *= 0.1; // move the atoms a small distance apart
+        vab *= 0.1; // move the atoms a small, random distance apart
         rab = 0.1;
       }
     drab = vab / rab;
@@ -2063,7 +2063,45 @@ namespace OpenBabel
  
   double OBForceField::VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
   {
-    return 0;
+    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
+    // Many thanks to Andreas Moll and the BALLView developers for this
+
+    double angle = Point2PlaneAngle(d, a, b, c) * DEG_TO_RAD; // in the reference, this is x_ijk;l
+
+    vector3 vbc, vbd, vba; // normalized vectors between the atoms
+    double rbc, rbd, rba; // distances between the atoms
+    double angleABC; // angle between abc (in the reference, this is phi_ijk
+    
+    // We should add some double-checks for small values here to make sure we don't "explode" the gradient    
+    vbc = b - c;
+    vbd = b - d;
+    vba = b - a;
+    rbc = vbc.length();
+    rbd = vbd.length();
+    rba = vba.length();
+    vbc.normalize();
+    vbd.normalize();
+    vba.normalize();
+    
+    angleABC = vectorAngle(vbc, vba) * DEG_TO_RAD;
+    
+    // A few shortcuts
+    double sinChi, sinABC, cosABC;
+    sinChi = sin(angle);
+    sinABC = sin(angleABC);
+    cosABC = cos(angleABC);
+    vector3 bcbd = cross(vbc, vbd);
+    vector3 bdba = cross(vbd, vba);
+    vector3 babd = cross(vba, vbd);
+    
+    // These terms lack the dE term (or Oijkl in the reference)
+    a = (bcbd + (-1.0*vba + (vbc * cosABC*sinChi/sinABC))) / (rba * sinABC);
+    c = (bdba + (-1.0*vbc + (vbc * cosABC*sinChi/sinABC))) / (rbc * sinABC);
+    d = ((babd / sinABC) - vbd * sinChi) / rbd;
+    
+    b = -1.0 * (a + c + d);
+    
+    return angle;
   }
 
   double OBForceField::VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
