@@ -1,5 +1,5 @@
 /**********************************************************************
-forcefieldmmff94.h - Merck Molecular Force Field (94).
+forcefieldmmff94.h - MMFF94
  
 Copyright (C) 2006 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
  
@@ -48,43 +48,37 @@ namespace OpenBabel
   class OBFFStrBndCalculationMMFF94 : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b, *c; // atoms of the angle
       double kbaABC, kbaCBA, theta0, theta, rab0, rbc0, rab, rbc, delta_theta, delta_rab, delta_rbc;
       int sbt; //strbndtype (SBTIJK)
       
-      double GetEnergy();
-      vector3 GetGradient(OBAtom *atom);
+      void Compute(bool gradients = true);
   };
 
   class OBFFTorsionCalculationMMFF94 : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b, *c, *d; // atoms of the torsion
       double v1, v2, v3, tor, cosine;
       int tt; //torsiontype (TTIJKL)
       
-      double GetEnergy();
-      vector3 GetGradient(OBAtom *atom);
+      void Compute(bool gradients = true);
   };
 
  class OBFFOOPCalculationMMFF94 : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b, *c, *d; // atoms of the oop angle
       double koop, angle;
       
-      double GetEnergy();
+      void Compute(bool gradients = true);
   };
 
   class OBFFVDWCalculationMMFF94 : public OBFFCalculation
   {
     public:
-      OBAtom *a, *b; // atoms of the pair
       double rab, epsilon, alpha_a, alpha_b, Na, Nb, Aa, Ab, Ga, Gb;
       double R_AB, R_AB7, erep, eattr, escale;
       int aDA, bDA; // hydrogen donor/acceptor (A=1, D=2, neither=0)
 
-      double GetEnergy();
+      void Compute(bool gradients = true);
   };
 
   class OBFFElectrostaticCalculationMMFF94 : public OBFFCalculation
@@ -172,8 +166,18 @@ namespace OpenBabel
       double GetRuleBondLength(OBAtom* a, OBAtom* b);
       //! return the bond length from mmffbond.par, if not found, one is calculated with a modified version of the Schomaker-Stevenson rule
       double GetBondLength(OBAtom* a, OBAtom* b);
-      //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
-      OBFFParameter* GetParameterMMFF94(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
+      
+      //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account and takes 0 as wildcart.
+      OBFFParameter* GetParameter1Atom(int a, std::vector<OBFFParameter> &parameter);
+      OBFFParameter* GetParameter2Atom(int a, int b, std::vector<OBFFParameter> &parameter);
+      OBFFParameter* GetParameter3Atom(int a, int b, int c, std::vector<OBFFParameter> &parameter);
+      
+      //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account and takes 0 as wildcart.
+      OBFFParameter* GetTypedParameter2Atom(int ffclass, int a, int b, std::vector<OBFFParameter> &parameter);
+      OBFFParameter* GetTypedParameter3Atom(int ffclass, int a, int b, int c, std::vector<OBFFParameter> &parameter);
+      OBFFParameter* GetTypedParameter4Atom(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
+      
+      
       //! Returns the negative gradient (force) on atom a
       vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY);
       
@@ -234,13 +238,13 @@ namespace OpenBabel
       //! Returns the angle bending energy
       double E_Angle(bool gradients = true);
       //! Returns the stretch-bend energy
-      double E_StrBnd();
+      double E_StrBnd(bool gradients = true);
       //! Returns the torsional energy
-      double E_Torsion();
+      double E_Torsion(bool gradients = true);
       //! Returns the out-of-plane bending energy
-      double E_OOP();
+      double E_OOP(bool gradients = true);
       //! Returns the Van der Waals energy (Buckingham potential)
-      double E_VDW();
+      double E_VDW(bool gradients = true);
       //! Returns the dipole-dipole interaction energy
       double E_Electrostatic(bool gradients = true);
       

@@ -193,7 +193,7 @@ namespace OpenBabel
       double dotAbbcBccd = dot(abbc,bccd);
       tor = acos(dotAbbcBccd / (abbc.length() * bccd.length()));
       if (IsNearZero(dotAbbcBccd)) {
-        tor = 0.0; // rather than NaN
+        tor = 180.0; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
         tor = -tor;
@@ -257,6 +257,7 @@ namespace OpenBabel
   {
     vector3 da, db, dc, dd;
     double dE;
+    
     if (gradients) {
       da = a->GetVector();
       db = b->GetVector();
@@ -271,11 +272,10 @@ namespace OpenBabel
       gradc = dE * dc; // - dE/drab * drab/dc
       gradd = dE * dd; // - dE/drab * drab/dd
     } else {
-      
       angle = DEG_TO_RAD*Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
-  
-      energy = koop * (c0 + c1 * cos(angle) + c2 * cos(2*angle));
     }
+    
+    energy = koop * (c0 + c1 * cos(angle) + c2 * cos(2*angle));
   }
 
   double OBForceFieldUFF::E_OOP(bool gradients) 
@@ -1063,34 +1063,43 @@ namespace OpenBabel
     
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EBOND))
       for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i)
-        if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx()))
+        if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
+          i->Compute(true);
           grad += i->GetGradient(&*a);
-    
+        }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EANGLE))
       for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); ++i2)
-        if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx()))
+        if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
+          i2->Compute(true);
           grad += i2->GetGradient(&*a);
-      
+        }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_ETORSION))
       for (i3 = _torsioncalculations.begin(); i3 != _torsioncalculations.end(); ++i3)
-        if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || ((*i3).c->GetIdx() == a->GetIdx()) || ((*i3).d->GetIdx() == a->GetIdx()))
+        if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || 
+	    ((*i3).c->GetIdx() == a->GetIdx()) || ((*i3).d->GetIdx() == a->GetIdx())) {
+          i3->Compute(true);
           grad += i3->GetGradient(&*a);
-      
+        }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EVDW))
       for (i4 = _vdwcalculations.begin(); i4 != _vdwcalculations.end(); ++i4)
-        if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx()))
+        if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx())) {
+          i4->Compute(true);
           grad += i4->GetGradient(&*a);
-    
+        } 
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EELECTROSTATIC))
       for (i5 = _electrostaticcalculations.begin(); i5 != _electrostaticcalculations.end(); ++i5)
-        if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx()))
+        if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx())) {
+          i5->Compute(true);
           grad += i5->GetGradient(&*a);
-    
+        }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EOOP))
       for (i6 = _oopcalculations.begin(); i6 != _oopcalculations.end(); ++i6)
-        if (((*i6).a->GetIdx() == a->GetIdx()) || ((*i6).b->GetIdx() == a->GetIdx()) || ((*i6).c->GetIdx() == a->GetIdx()) || ((*i6).d->GetIdx() == a->GetIdx()))
+        if (((*i6).a->GetIdx() == a->GetIdx()) || ((*i6).b->GetIdx() == a->GetIdx()) || 
+	    ((*i6).c->GetIdx() == a->GetIdx()) || ((*i6).d->GetIdx() == a->GetIdx())) {
+          i6->Compute(true);
           grad += i6->GetGradient(&*a);    
-    
+        }
+
     return grad;
   }
 

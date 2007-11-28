@@ -25,7 +25,7 @@ namespace OpenBabel
 {
   void OBFFBondCalculationGhemical::Compute(bool gradients)
   {
-    vector3 vab, da, db;
+    vector3 da, db;
     double delta2, dE;
 
     //cout << "compute(" << gradients << ")" << endl;
@@ -111,7 +111,7 @@ namespace OpenBabel
       energy = ka * delta2;
 
       if (gradients) {
-        dE = 2.0 * ka * delta;
+        dE = 2.0 * ka * delta * RAD_TO_DEG;
         grada = dE * da; // - dE/drab * drab/da
         gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
         gradc = dE * dc; // - dE/drab * drab/dc
@@ -173,15 +173,15 @@ namespace OpenBabel
       abbc = cross(vab, vbc);
       bccd = cross(vbc, vcd);
 
-     double dotAbbcBccd = dot(abbc,bccd);
-     tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-     if (IsNearZero(dotAbbcBccd)) {
-       tor = 0.0; // rather than NaN
-     }
-     else if (dotAbbcBccd > 0.0) {
+      double dotAbbcBccd = dot(abbc,bccd);
+      tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
+      if (IsNearZero(dotAbbcBccd)) {
+        tor = 180.0; // rather than NaN
+      }
+      else if (dotAbbcBccd > 0.0) {
         tor = -tor;
+      }
     }
-   }
 
     cosine = cos(DEG_TO_RAD * tor);
     cosine2 = cos(2.0 * DEG_TO_RAD * tor);
@@ -702,14 +702,6 @@ namespace OpenBabel
         if (a->IsOneFour(b))
           elecalc.qq *= 0.5;
 	  
-        /*
-          FOR_NBORS_OF_ATOM (nbr, a)
-          FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-          FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-          if (b == &*nbr3)
-          elecalc.qq *= 0.5;
-        */
-
         _electrostaticcalculations.push_back(elecalc);
       }
     }
@@ -1015,29 +1007,36 @@ namespace OpenBabel
     
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EBOND))
       for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i)
-        if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx()))
-          grad += i->GetGradient(&*a);
-    
-
+        if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
+          i->Compute(true);
+	  grad += i->GetGradient(&*a);
+        }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EANGLE))
       for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); ++i2)
-        if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx()))
+        if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
+          i2->Compute(true);
           grad += i2->GetGradient(&*a);
-      
+        }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_ETORSION))
       for (i3 = _torsioncalculations.begin(); i3 != _torsioncalculations.end(); ++i3)
-        if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || ((*i3).c->GetIdx() == a->GetIdx()) || ((*i3).d->GetIdx() == a->GetIdx()))
+        if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || 
+	    ((*i3).c->GetIdx() == a->GetIdx()) || ((*i3).d->GetIdx() == a->GetIdx())) {
+          i3->Compute(true);
           grad += i3->GetGradient(&*a);
-      
+        }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EVDW))
-      for (i4 = _vdwcalculations.begin(); i4 != _vdwcalculations.end(); ++i4)
-        if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx()))
+      for (i4 = _vdwcalculations.begin(); i4 != _vdwcalculations.end(); ++i4) 
+        if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx())) {
+          i4->Compute(true);
           grad += i4->GetGradient(&*a);
     
+        }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EELECTROSTATIC))
       for (i5 = _electrostaticcalculations.begin(); i5 != _electrostaticcalculations.end(); ++i5)
-        if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx()))
+        if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx())) {
+          i5->Compute(true);
           grad += i5->GetGradient(&*a);
+        }
 
     return grad;
   }

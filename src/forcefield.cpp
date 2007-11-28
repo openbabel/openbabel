@@ -2047,7 +2047,8 @@ namespace OpenBabel
       a = VZero;
       b = VZero;
       c = VZero;
-      return 0.0;
+      return 180.0;
+      //return 0.0;
     }
 
     a = (vcb * rab * rcb - (vab / rab) * dot(vab, vcb) * rcb) / (sqrt(abcb2) * rab2 * rcb2);
