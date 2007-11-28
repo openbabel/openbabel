@@ -83,7 +83,7 @@ namespace OpenBabel
       int _num;
       char _symbol[3];
       std::string _name;
-      double _Rcov,_Rvdw,_mass,_elNeg,_ionize,_elAffinity;
+      double _Rcov,_Rvdw,_mass,_elNeg,_ARENeg,_ionize,_elAffinity;
       double _red, _green, _blue;
       int _maxbonds;
     public:
@@ -92,6 +92,7 @@ namespace OpenBabel
       /** Constructor
           @param num     Atomic number
           @param sym     Elemental symbol (maximum 3 characters)
+          @param rcov    Allred-Rochow electronegativity
           @param rcov    Covalent radius (in Angstrom)
           @param rvdw    van der Waals radius (in Angstrom)
           @param maxbo   Maximum bonding valence
@@ -104,11 +105,11 @@ namespace OpenBabel
           @param blue    RGB value for a suggest visualization color (0 .. 1)
           @param name Full IUPAC name
       **/
-      OBElement(int num, const char *sym, double rcov, double rvdw,
-                int maxbo, double mass, double elNeg, double ionize,
+      OBElement(int num, const char *sym, double ARENeg, double rcov, 
+      		double rvdw, int maxbo, double mass, double elNeg, double ionize,
                 double elAffin, double red, double green, double blue,
                 std::string name) :
-        _num(num), _name(name), _Rcov(rcov), _Rvdw(rvdw), _mass(mass), 
+        _num(num), _name(name), _ARENeg(ARENeg), _Rcov(rcov), _Rvdw(rvdw), _mass(mass), 
         _elNeg(elNeg), _ionize(ionize), _elAffinity(elAffin), 
         _red(red), _green(green), _blue(blue),
         _maxbonds(maxbo)
@@ -130,6 +131,8 @@ namespace OpenBabel
       int GetMaxBonds()          {       return(_maxbonds);}
       //! \return the Pauling electronegativity for this element
       double GetElectroNeg()     {       return(_elNeg);  }
+      //! \return the Allred-Rochow electronegativity for this element
+      double GetAllredRochowElectroNeg() { return(_ARENeg); }
       //! \return the ionization potential (in eV) of this element
       double GetIonization()     {       return(_ionize);  }
       //! \return the electron affinity (in eV) of this element
@@ -186,6 +189,8 @@ namespace OpenBabel
       int	GetMaxBonds(int);
       //! \return the Pauling electronegativity for this element
       double GetElectroNeg(int);
+      //! \return the Allred-Rochow electronegativity for this element
+      double GetAllredRochowElectroNeg(int);
       //! \return the ionization potential (in eV) for this element
       double GetIonization(int);
       //! \return the electron affinity (in eV) for this element

@@ -69,7 +69,7 @@ namespace OpenBabel
       - van der Waal radii
       - expected maximum bonding valence
       - molar mass (by IUPAC recommended atomic masses)
-      - electronegativity
+      - electronegativity (Pauling and Allred-Rochow)
       - ionization potential
       - electron affinity
       - RGB colors for visualization programs
@@ -98,14 +98,15 @@ namespace OpenBabel
     int num,maxbonds;
     char symbol[5];
     char name[256];
-    double Rcov,Rvdw,mass, elNeg, ionize, elAffin;
+    double Rcov,Rvdw,mass, elNeg, ARENeg, ionize, elAffin;
     double red, green, blue;
 
     if (buffer[0] != '#') // skip comment line (at the top)
       {
-        sscanf(buffer,"%d %5s %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %255s",
+        sscanf(buffer,"%d %5s %lf %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %255s",
                &num,
                symbol,
+               &ARENeg,
                &Rcov,
                &Rvdw,
                &maxbonds,
@@ -118,7 +119,7 @@ namespace OpenBabel
                &blue,
                name);
 
-        OBElement *ele = new OBElement(num,symbol,Rcov,Rvdw,maxbonds,mass,elNeg,
+        OBElement *ele = new OBElement(num,symbol,ARENeg,Rcov,Rvdw,maxbonds,mass,elNeg,
                                        ionize, elAffin, red, green, blue, name);
         _element.push_back(ele);
       }
@@ -164,6 +165,18 @@ namespace OpenBabel
 
     return(_element[atomicnum]->GetElectroNeg());
   }
+
+  double OBElementTable::GetAllredRochowElectroNeg(int atomicnum)
+  {
+    if (!_init)
+      Init();
+
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+      return(0.0);
+
+    return(_element[atomicnum]->GetAllredRochowElectroNeg());
+  }
+
 
   double OBElementTable::GetIonization(int atomicnum)
   {
