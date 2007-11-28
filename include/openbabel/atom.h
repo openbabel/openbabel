@@ -70,11 +70,13 @@ namespace OpenBabel
 #define OB_POS_CHIRAL_ATOM (1<<10)
   //! Atom has - chiral volume
 #define OB_NEG_CHIRAL_ATOM (1<<11)
-  //! Atom has no hydrogen attached. Temporary use only during SMILES input
+  //! Atom has no hydrogen attached. Temporary use only during input of some formats
 #define OB_ATOM_HAS_NO_H   (1<<12)
   //! Atom is fixed during forcefield manipulation
 #define OB_FIXED_ATOM      (1<<13)
-// 14-16 currently unused
+  //! Atom is not hydrogen deficient. (for SMILES input)
+#define OB_ATOM_NOT_H_DEFICIENT (1<<14)
+// 15-16 currently unused
 
   // Class OBAtom
   // class introduction in atom.cpp
@@ -362,6 +364,11 @@ namespace OpenBabel
       void ForceNoH() {SetFlag(OB_ATOM_HAS_NO_H);}
       //! \return if atom has been marked as having no hydrogens attached
       bool HasNoHForced() {return HasFlag(OB_ATOM_HAS_NO_H);}
+
+      //! Mark that atom is not hydrogen deficient (For SMILES input)
+      void ForceImplH() {SetFlag(OB_ATOM_NOT_H_DEFICIENT);}
+      //! \return if atom has been marked as having no hydrogens attached
+      bool HasImplHForced() {return HasFlag(OB_ATOM_NOT_H_DEFICIENT);}
       //@}
 
       //! \name Property information

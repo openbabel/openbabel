@@ -782,11 +782,15 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     OBAtom *atom = mol.NewAtom();
     atom->SetAtomicNum(element);
     atom->SetType(symbol);
+
     if (arom)
       {
         atom->SetAromatic();
         atom->SetSpinMultiplicity(2); // CM 18 Sept 2003
       }
+    else
+        atom->ForceImplH();//ensures atom is never hydrogen deficient
+
     
     // Untrue, but necessary to avoid perception being called in OBAtom::IsAromatic()
     // on incomplete molecule. Undone at end of function. 

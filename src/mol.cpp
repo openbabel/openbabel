@@ -935,8 +935,8 @@ namespace OpenBabel
   //! \since version 2.1
   string OBMol::GetSpacedFormula(int ones, const char* sp)
   {
-    //Default ones=0, sp=' '. 
-    //Using ones=1 and sp='' will give unspaced formula (and no pair data entry)
+    //Default ones=0, sp=" ". 
+    //Using ones=1 and sp="" will give unspaced formula (and no pair data entry)
     // These are the atomic numbers of the elements in alphabetical order.
     const int NumElements = 112;
     const int alphabetical[NumElements] = {
@@ -2008,6 +2008,7 @@ namespace OpenBabel
 
     SetSpinMultiplicityAssigned();
 
+
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::AssignSpinMultiplicity",
                           obAuditMsg);
@@ -2020,7 +2021,9 @@ namespace OpenBabel
     //Any discrepancy with the expected atom valency is because it is a radical of some sort.
     //So SMILES CC[2H] is interpreted as CH3CH2D; CC[H] is methyl carbene.
     for (atom = BeginAtom(k);atom;atom = NextAtom(k))
-      {    
+      {
+        if(atom->HasImplHForced()) //Probably unbracketed atoms in SMILES, which are never H deficient
+            continue;
         if ((!atom->IsHydrogen() && atom->ExplicitHydrogenCount(true)!=0)//exclude D,T
             || atom->HasNoHForced()) 
           {

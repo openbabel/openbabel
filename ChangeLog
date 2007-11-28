@@ -1,3 +1,14 @@
+2007-11-28 Chris Morley
+
+	* src/formats/smilesformat.cpp(ParseSimple): Add ForceImplH()
+	to fix bug #1839589
+	
+	* src/mol.cpp(AssignSpinMultiplicities): Leave spinMultiplicity
+	at zero (not hydrogen deficient) for atoms labelled as above.
+	
+	* include/openbabel/atom.h: newflag OB_ATOM_NOT_H_DEFICIENT
+	with set and read functions the above.
+
 2007-11-28  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: OBForceField::VectorTorsionDerivative() now
