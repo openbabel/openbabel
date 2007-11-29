@@ -29,13 +29,13 @@ script_headers = $(script_includes)/mol.h $(script_includes)/obconversion.h \
 
 perl/openbabel_perl.cpp: openbabel-perl.i $(script_headers)
 	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
-		-I$(top_srcdir)/include $<;
+		-I$(top_srcdir)/include -I$(top_builddir)/include $<;
 	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
 python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 	$(SWIG) -python -modern -naturalvar -fastinit \
-		-c++ -o $@ -I$(top_srcdir)/include $<;
+		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
 	echo "import sys" >python/ob.py;
 	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
 	echo "    try:" >>python/ob.py;
@@ -48,14 +48,18 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 	mv python/ob.py python/openbabel.py;
 
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
-	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include $<;
+	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include \
+  -I$(top_builddir)/include $<;
 
 if BUILD_RUBY
 BUILT_SOURCES += ruby/openbabel_ruby.cpp
 
 ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
-	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include $<;
-	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
+	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include \
+  -I$(top_builddir)/include $<;
+	(cd ruby; ruby extconf.rb \
+  --with-openbabel-include=$(includedir)/openbabel-2.0 \
+  --with-openbabel-lib=$(libdir) )
 	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
 	mv ruby/openbabel_ruby.new ruby/openbabel_ruby.cpp
 endif # BUILD_RUBY

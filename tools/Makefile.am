@@ -50,4 +50,4 @@ obseq_LDADD = ../src/libopenbabel.la @LIBDL@
 obfragment_SOURCES = obfragment.cpp
 obfragment_LDADD = ../src/libopenbabel.la @LIBDL@
 
-AM_CPPFLAGS = -I$(top_srcdir)/include
+AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include

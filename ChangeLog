@@ -1,3 +1,8 @@
+2007-11-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/Makefile.am, tools/Makefile.am: Fixes for building
+	outside of the source tree.
+
 2007-11-28  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/data.h, src/data.cpp: Added Allred-Rochow

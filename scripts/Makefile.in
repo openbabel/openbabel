@@ -373,13 +373,13 @@ dist-hook:
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@perl/openbabel_perl.cpp: openbabel-perl.i $(script_headers)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-I$(top_srcdir)/include $<;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-I$(top_srcdir)/include -I$(top_builddir)/include $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -python -modern -naturalvar -fastinit \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-c++ -o $@ -I$(top_srcdir)/include $<;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "import sys" >python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    try:" >>python/ob.py;
@@ -392,11 +392,15 @@ dist-hook:
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv python/ob.py python/openbabel.py;
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@java/openbabel_java.cpp: openbabel-java.i $(script_headers)
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include $<;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@  -I$(top_builddir)/include $<;
 
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
-@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include $<;
-@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include \
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@  -I$(top_builddir)/include $<;
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd ruby; ruby extconf.rb \
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@  --with-openbabel-include=$(includedir)/openbabel-2.0 \
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@  --with-openbabel-lib=$(libdir) )
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv ruby/openbabel_ruby.new ruby/openbabel_ruby.cpp
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
