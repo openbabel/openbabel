@@ -3,6 +3,8 @@
 	* scripts/Makefile.am, tools/Makefile.am: Fixes for building
 	outside of the source tree.
 
+	* test/iterators.cpp: Fix #include for OBRing. Now compiles cleanly.
+
 2007-11-28  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/data.h, src/data.cpp: Added Allred-Rochow

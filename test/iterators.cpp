@@ -26,8 +26,8 @@
 
 #include <fstream>
 
-#include <openbabel/obiter.h>
 #include <openbabel/mol.h>
+#include <openbabel/obiter.h>
 #include <openbabel/obconversion.h>
 
 namespace OpenBabel
