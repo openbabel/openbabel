@@ -379,10 +379,10 @@ namespace OpenBabel
     double energy = 0.0;
     
     IF_OBFF_LOGLVL_HIGH {
-      *logos << std::endl << "O U T - O F - P L A N E   B E N D I N G" << std::endl << std::endl;
-      *logos << "ATOM TYPES             FF       OOP     FORCE " << std::endl;
-      *logos << " I    J    K    L     CLASS    ANGLE   CONSTANT     ENERGY" << std::endl;
-      *logos << "----------------------------------------------------------" << std::endl;
+      OBFFLog("\nO U T - O F - P L A N E   B E N D I N G\n\n");
+      OBFFLog("ATOM TYPES             FF       OOP     FORCE\n");
+      OBFFLog(" I    J    K    L     CLASS    ANGLE   CONSTANT     ENERGY\n");
+      OBFFLog("----------------------------------------------------------\n");
     }
 
     for (i = _oopcalculations.begin(); i != _oopcalculations.end(); ++i) {
@@ -559,7 +559,38 @@ namespace OpenBabel
     _mol = mol;
     SetMMFFTypes();
     SetMMFFFormalCharges();
+    
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nA T O M   T Y P E S\n\n");
+      OBFFLog("IDX\tTYPE\n");
+      
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        sprintf(logbuf, "%d\t%s\n", a->GetIdx(), a->GetType());
+        OBFFLog(logbuf);
+      }
+
+      OBFFLog("\nF O R M A L   C H A R G E S\n\n");
+      OBFFLog("IDX\tCHARGE\n");
+      
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
+        OBFFLog(logbuf);
+      }
+    }
+ 
+    
     SetMMFFPartialCharges();
+    
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nP A R T I A L   C H A R G E S\n\n");
+      OBFFLog("IDX\tCHARGE\n");
+      
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
+        OBFFLog(logbuf);
+      }
+    }
+    
     if (!SetupCalculations())
       return false;
    
@@ -1491,11 +1522,13 @@ namespace OpenBabel
     
     }
 
-    *logos << std::endl << "A T O M   T Y P E S" << std::endl << std::endl;
+    OBFFLog("\nA T O M   T Y P E S\n\n");
     IF_OBFF_LOGLVL_MEDIUM {
-      *logos << "IDX\tTYPE" << std::endl;
-      FOR_ATOMS_OF_MOL (a, _mol)
-        *logos << a->GetIdx() << "\t" << a->GetType() << std::endl;
+      OBFFLog("IDX\tTYPE\n");
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        sprintf(logbuf, "%d\t%s\n", a->GetIdx(), a->GetType());
+        OBFFLog(logbuf);
+      }
     }
     
     return true;
