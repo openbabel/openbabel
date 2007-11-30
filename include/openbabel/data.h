@@ -109,8 +109,8 @@ namespace OpenBabel
       		double rvdw, int maxbo, double mass, double elNeg, double ionize,
                 double elAffin, double red, double green, double blue,
                 std::string name) :
-        _num(num), _name(name), _ARENeg(ARENeg), _Rcov(rcov), _Rvdw(rvdw), _mass(mass), 
-        _elNeg(elNeg), _ionize(ionize), _elAffinity(elAffin), 
+        _num(num), _name(name), _Rcov(rcov), _Rvdw(rvdw), _mass(mass), 
+        _elNeg(elNeg), _ARENeg(ARENeg), _ionize(ionize), _elAffinity(elAffin), 
         _red(red), _green(green), _blue(blue),
         _maxbonds(maxbo)
         {
