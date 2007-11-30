@@ -879,6 +879,9 @@ namespace OpenBabel
     vector<OBResidue*> residues;
     vector<OBResidue*>::iterator r;
 
+    if (mol.NumResidues() == 0)
+      return; // Done!
+
     for (residue = mol.BeginResidue(r) ; residue ; residue = mol.NextResidue(r))
       residues.push_back(residue);
 
