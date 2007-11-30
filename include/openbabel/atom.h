@@ -273,6 +273,9 @@ namespace OpenBabel
       double     GetPartialCharge();
       //! \return the residue which contains this atom, or NULL if none exists
       OBResidue *GetResidue();
+      //! \param perception implies whether chain perception should occur
+      //! \return the residue which contains this atom, or NULL if none exists
+      OBResidue *GetResidue(bool perception);
       //! \return the molecule which contains this atom, or NULL if none exists
       OBMol     *GetParent()        {return((OBMol*)_parent);}
       //! Create a vector for a new bond from this atom, with length given by the supplied parameter

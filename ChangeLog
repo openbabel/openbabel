@@ -1,3 +1,12 @@
+2007-11-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/chains.cpp: Improve speed when clearing residue info in
+	molecules with no residues.
+
+	* include/openbabel/atom.h, src/atom.cpp: New method GetResidue()
+	to optionally request no chain perception. Useful in
+	builders/editors (e.g., Avogadro).
+
 2007-11-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/Makefile.am, tools/Makefile.am: Fixes for building
