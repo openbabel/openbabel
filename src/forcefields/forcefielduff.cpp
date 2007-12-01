@@ -193,7 +193,7 @@ namespace OpenBabel
       double dotAbbcBccd = dot(abbc,bccd);
       tor = acos(dotAbbcBccd / (abbc.length() * bccd.length()));
       if (IsNearZero(dotAbbcBccd)) {
-        tor = 180.0; // rather than NaN
+        tor = 0.0; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
         tor = -tor;

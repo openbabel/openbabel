@@ -111,7 +111,7 @@ namespace OpenBabel
       energy = ka * delta2;
 
       if (gradients) {
-        dE = 2.0 * ka * delta * RAD_TO_DEG;
+        dE = 2.0 * ka * delta;
         grada = dE * da; // - dE/drab * drab/da
         gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
         gradc = dE * dc; // - dE/drab * drab/dc
@@ -176,7 +176,7 @@ namespace OpenBabel
       double dotAbbcBccd = dot(abbc,bccd);
       tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
       if (IsNearZero(dotAbbcBccd)) {
-        tor = 180.0; // rather than NaN
+        tor = 0.0; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
         tor = -tor;
