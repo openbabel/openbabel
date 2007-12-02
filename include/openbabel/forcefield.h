@@ -264,7 +264,9 @@ namespace OpenBabel
     int loglvl; //!< Log level for output
     
     //! used to hold i for current conformer (needed by UpdateConformers)
-    int current_conformer;
+    int _current_conformer;
+    //! used to hold the energies for all conformers
+    std::vector<double> _energies;
 
     //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     double _econv, _e_n1;
@@ -475,6 +477,10 @@ namespace OpenBabel
      *  OBFF_LOGLVL_HIGH:   see note above \n 
      */
     void SystematicRotorSearch(unsigned int geomSteps = 2500);
+    //! \return the number of conformers
+    int SystematicRotorSearchInitialize(unsigned int geomSteps = 2500);
+    //! \return true if there are more conformers
+    bool SystematicRotorSearchNextConformer(unsigned int geomSteps = 2500);
 
     /*! Generate conformers for the molecule (randomly rotating torsions).
      *  

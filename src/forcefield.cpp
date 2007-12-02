@@ -395,11 +395,11 @@ namespace OpenBabel
     ConjugateGradients(2500);
   }
   
-  void OBForceField::SystematicRotorSearch(unsigned int geomSteps) 
+  int OBForceField::SystematicRotorSearchInitialize(unsigned int geomSteps)
   {
     OBRotorList rl;
     OBRotamerList rotamers;
-    int origLogLevel = loglvl;
+    //int origLogLevel = loglvl;
 
     rl.Setup(_mol);
     rotamers.SetBaseCoordinateSets(_mol);
@@ -417,7 +417,7 @@ namespace OpenBabel
  
       ConjugateGradients(geomSteps); // final energy minimizatin for best conformation
       
-      return;
+      return 1; // there are no more conformers
     }
 
     std::vector<int> rotorKey(rl.Size() + 1, 0); // indexed from 1
@@ -439,39 +439,52 @@ namespace OpenBabel
       OBFFLog("CONFORMER     ENERGY\n");
       OBFFLog("--------------------\n");
     }
-    
-    // Calculate energy for all conformers
-    char logbuf[100];
-    std::vector<double> energies(_mol.NumConformers(), 0.0);
-    for (int i = 0; i < _mol.NumConformers(); i++) {
-      _mol.SetConformer(i); // select conformer
 
-      loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
-      loglvl = origLogLevel;
-
-      energies[i] = Energy(); // calculate and store energy
+    _current_conformer = 0;
+    _energies.clear();
       
+    return _mol.NumConformers();
+  }
+  
+  bool OBForceField::SystematicRotorSearchNextConformer(unsigned int geomSteps) 
+  {
+    char logbuf[100];
+    
+    if (_current_conformer >=  _mol.NumConformers()) { // done
+      // Select conformer with lowest energy
+      int best_conformer = 0;
+      for (int i = 0; i < _mol.NumConformers(); i++) {
+        if (_energies[i] < _energies[best_conformer])
+          best_conformer = i;
+      }
+  
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, "   %3d   %20.3f\n", (i + 1), energies[i]);
+        sprintf(logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
         OBFFLog(logbuf);
       }
+
+      _mol.SetConformer(best_conformer);
+      _current_conformer = best_conformer;
+    
+      return false;
     }
 
-    // Select conformer with lowest energy
-    int best_conformer = 0;
-    for (int i = 1; i < _mol.NumConformers(); i++) {
-      if (energies[i] < energies[best_conformer])
-        best_conformer = i;
-    }
-  
+    _mol.SetConformer(_current_conformer); // select conformer
+    ConjugateGradients(geomSteps); // energy minimization for conformer
+    _energies.push_back(Energy()); // calculate and store energy
+      
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
+      sprintf(logbuf, "   %3d   %20.3f\n", (_current_conformer + 1), _energies[_current_conformer]);
       OBFFLog(logbuf);
     }
+    
+    _current_conformer++;
+  }
 
-    _mol.SetConformer(best_conformer);
-    current_conformer = best_conformer;
+  void OBForceField::SystematicRotorSearch(unsigned int geomSteps) 
+  {
+    if (SystematicRotorSearchInitialize(geomSteps))
+      while (SystematicRotorSearchNextConformer(geomSteps)) {}
   }
 
   void OBForceField::RandomRotorSearch(unsigned int conformers,
@@ -568,7 +581,7 @@ namespace OpenBabel
     }
 
     _mol.SetConformer(best_conformer);
-    current_conformer = best_conformer;
+    _current_conformer = best_conformer;
   }
 
   void Reweight(std::vector< std::vector <double> > &rotorWeights,
@@ -770,7 +783,7 @@ namespace OpenBabel
 //     }
 
     _mol.AddConformer(bestCoordPtr);
-    current_conformer = _mol.NumConformers() - 1;
+    _current_conformer = _mol.NumConformers() - 1;
   }
 
   void OBForceField::DistanceGeometry() 
@@ -1974,7 +1987,7 @@ namespace OpenBabel
         conf.push_back(xyz);
       }
       mol.SetConformers(conf);
-      mol.SetConformer(current_conformer);
+      mol.SetConformer(_current_conformer);
     }
     
     return true;
@@ -2047,7 +2060,7 @@ namespace OpenBabel
       a = VZero;
       b = VZero;
       c = VZero;
-      return 0.0;
+      return 180.0;
     }
 
     a = (vcb * rab * rcb - (vab / rab) * dot(vab, vcb) * rcb) / (sqrt(abcb2) * rab2 * rcb2);
@@ -2213,7 +2226,7 @@ namespace OpenBabel
       if (a_in && b_in)
         return true;
     }
-
+    
     return false;
   }
  

@@ -91,9 +91,9 @@ namespace OpenBabel
       theta = OBForceField::VectorAngleDerivative(da, db, dc);  
     } else {
       theta = a->GetAngle(b->GetIdx(), c->GetIdx());
-    
     }
 
+    /*
     if (theta0 > 170.0) {
       delta = 1.0 + cos(theta * DEG_TO_RAD);
 
@@ -105,6 +105,7 @@ namespace OpenBabel
         gradc = ka * dc;
       } 
     } else {
+    */
       delta = theta - theta0;
       delta2 = delta * delta;
     
@@ -116,7 +117,9 @@ namespace OpenBabel
         gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
         gradc = dE * dc; // - dE/drab * drab/dc
       }
+    /*
     }
+    */
   }
   
   double OBForceFieldGhemical::E_Angle(bool gradients)
