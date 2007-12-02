@@ -272,6 +272,48 @@ namespace OpenBabel
     return NULL;
   }
   
+  void OBForceField::SetIgnoreAtom(int index)
+  {
+    _ignore.push_back(index);
+  }
+  
+  bool OBForceField::GetIgnoreAtom(int index)
+  {
+    vector<int>::iterator i;
+
+    for (i = _ignore.begin(); i != _ignore.end(); i++)
+      if ((*i) == index)
+        return true;
+    
+    return false;
+  }
+  
+  void OBForceField::ClearIgnoreAtom()
+  {
+    _ignore.clear();
+  }
+  
+  void OBForceField::SetFixAtom(int index)
+  {
+    _fix.push_back(index);
+  }
+  
+  bool OBForceField::GetFixAtom(int index)
+  {
+    vector<int>::iterator i;
+
+    for (i = _fix.begin(); i != _fix.end(); i++)
+      if ((*i) == index)
+        return true;
+    
+    return false;
+  }
+  
+  void OBForceField::ClearFixAtom()
+  {
+    _fix.clear();
+  }
+  
   bool OBForceField::SetLogFile(ostream* pos)
   {
     if(pos)

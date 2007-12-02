@@ -256,6 +256,8 @@ namespace OpenBabel
     //    bool is14(OBAtom *a, OBAtom *b);
     // use OBAtom::IsOneFour(b)
       
+    std::vector<int> _ignore; //!< List of atoms that are ignored while setting up calculations
+    std::vector<int> _fix; //!< List of atoms that are fixed while minimizing
     OBMol _mol; //!< Molecule to be evaluated or minimized
 
     //! Output for logfile
@@ -309,6 +311,34 @@ namespace OpenBabel
     }
     //! \return The unit (kcal/mol, kJ/mol, ...) in which the energy is expressed as std::string
     virtual std::string GetUnit() { return std::string("au"); }
+    /*! Ignore this atom and any term in which this atom participates while 
+     *  setting up the calculations. This can be used for docking where you 
+     *  only want to calculate the non-bonded interactions between the ligand
+     *  and the binding pocket, not the whole protein. This function should be
+     *  called for all atoms which need to be ignored (=atoms that are not in 
+     *  the binding pocket) before calling OBForceField::Setup(OBMol &mol)!
+     *  \param index index of the atom to ignore
+     */
+    void SetIgnoreAtom(int index);
+    //! \return true if this atom should be ignored
+    bool GetIgnoreAtom(int index);
+    //! Clear the list of ignored atoms 
+    void ClearIgnoreAtom();
+    /*! Fixing an atom means that it will not be ignored while setting up the
+     *  calculations. However, when minimizing the energy using steepest 
+     *  descent or conjugate gradients, the positions of these atoms will not
+     *  be changed. In other words, their position in 3D space is fixed. This
+     *  is can be used for docking where you want to minimize the geometry of 
+     *  your ligand inside a fixed binding pocket. This function should be
+     *  called for all atoms which need to be fixed (=atoms that are part of 
+     *  the binding pocket) before calling OBForceField::Setup(OBMol &mol)!
+     *  \param index index of the atom to fix
+     */
+    void SetFixAtom(int index);
+    //! \return true if this atom should be fixed
+    bool GetFixAtom(int index);
+    //! Clear the list of ignored atoms 
+    void ClearFixAtom();
     /*! Setup the forcefield for mol (assigns atom types, charges, etc.) 
      *  \param mol the OBMol object that contains the atoms and bonds
      *  \return True if succesfull

@@ -1,5 +1,10 @@
 2007-12-02  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/forcefield.cpp, include/openbabel/forcefield.h: Added support
+	to ignore and fix atoms. see doxygen documentation for more info.
+
+2007-12-02  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* src/forcefield.cpp, include/openbabel/forcefield.h: Split 
 	SystematicRotorSearch into ...Initialize and ...NextConformer. This 
 	alows a progress bar to be displayed in avogadro.
