@@ -399,7 +399,7 @@ namespace OpenBabel
   {
     OBRotorList rl;
     OBRotamerList rotamers;
-    //int origLogLevel = loglvl;
+    _origLogLevel = loglvl;
 
     rl.Setup(_mol);
     rotamers.SetBaseCoordinateSets(_mol);
@@ -470,7 +470,11 @@ namespace OpenBabel
     }
 
     _mol.SetConformer(_current_conformer); // select conformer
+    
+    loglvl = OBFF_LOGLVL_NONE;
     ConjugateGradients(geomSteps); // energy minimization for conformer
+    loglvl = _origLogLevel;
+    
     _energies.push_back(Energy()); // calculate and store energy
       
     IF_OBFF_LOGLVL_LOW {
@@ -479,6 +483,7 @@ namespace OpenBabel
     }
     
     _current_conformer++;
+    return true;
   }
 
   void OBForceField::SystematicRotorSearch(unsigned int geomSteps) 
@@ -487,8 +492,7 @@ namespace OpenBabel
       while (SystematicRotorSearchNextConformer(geomSteps)) {}
   }
 
-  void OBForceField::RandomRotorSearch(unsigned int conformers,
-                                       unsigned int geomSteps) 
+  void OBForceField::RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps) 
   {
     OBRotorList rl;
     OBRotamerList rotamers;
@@ -497,7 +501,7 @@ namespace OpenBabel
 
     OBRandom generator;
     generator.TimeSeed();
-    int origLogLevel = loglvl;
+    _origLogLevel = loglvl;
 
     if (_mol.GetCoordinates() == NULL)
       return;
@@ -526,7 +530,7 @@ namespace OpenBabel
  
       loglvl = OBFF_LOGLVL_NONE;
       ConjugateGradients(geomSteps); // energy minimization for conformer
-      loglvl = origLogLevel;
+      loglvl = _origLogLevel;
 
       return;
     }
@@ -550,38 +554,55 @@ namespace OpenBabel
       OBFFLog("CONFORMER     ENERGY\n");
       OBFFLog("--------------------\n");
     }
-    
-    // Calculate energy for all conformers
-    char logbuf[100];
-    std::vector<double> energies(_mol.NumConformers(), 0.0);
-    for (int i = 0; i < _mol.NumConformers(); i++) {
-      _mol.SetConformer(i); // select conformer
+  
+    _current_conformer = 0;
+    _energies.clear();
+  }
 
-      loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
-      loglvl = origLogLevel;
-      energies[i] = Energy(); // calculate and store energy
-      
+  bool OBForceField::RandomRotorSearchNextConformer(unsigned int geomSteps) 
+  {
+    char logbuf[100];
+    
+    if (_current_conformer >=  _mol.NumConformers()) { // done
+      // Select conformer with lowest energy
+      int best_conformer = 0;
+      for (int i = 0; i < _mol.NumConformers(); i++) {
+        if (_energies[i] < _energies[best_conformer])
+          best_conformer = i;
+      }
+  
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, "   %3d      %8.3f\n", (i + 1), energies[i]);
+        sprintf(logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
         OBFFLog(logbuf);
       }
-    }
 
-    // Select conformer with lowest energy
-    int best_conformer = 0;
-    for (int i = 1; i < _mol.NumConformers(); i++) {
-      if (energies[i] < energies[best_conformer])
-        best_conformer = i;
+      _mol.SetConformer(best_conformer);
+      _current_conformer = best_conformer;
+      
+      return false;
     }
-  
+    
+    _mol.SetConformer(_current_conformer); // select conformer
+
+    loglvl = OBFF_LOGLVL_NONE;
+    ConjugateGradients(geomSteps); // energy minimization for conformer
+    loglvl = _origLogLevel;
+    
+    _energies.push_back(Energy()); // calculate and store energy
+      
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
+      sprintf(logbuf, "   %3d      %8.3f\n", (_current_conformer + 1), _energies[_current_conformer]);
       OBFFLog(logbuf);
     }
-
-    _mol.SetConformer(best_conformer);
-    _current_conformer = best_conformer;
+    
+    _current_conformer++;
+    return true;
+  } 
+    
+  void OBForceField::RandomRotorSearch(unsigned int conformers, unsigned int geomSteps) 
+  {
+    RandomRotorSearchInitialize(conformers, geomSteps);
+    while (RandomRotorSearchNextConformer(geomSteps)) {}
   }
 
   void Reweight(std::vector< std::vector <double> > &rotorWeights,

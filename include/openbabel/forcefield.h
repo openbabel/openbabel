@@ -262,6 +262,7 @@ namespace OpenBabel
     std::ostream* logos;
     char logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
     int loglvl; //!< Log level for output
+    int _origLogLevel;
     
     //! used to hold i for current conformer (needed by UpdateConformers)
     int _current_conformer;
@@ -502,8 +503,12 @@ namespace OpenBabel
      *  OBFF_LOGLVL_MEDIUM: see note above \n
      *  OBFF_LOGLVL_HIGH:   see note above \n 
      */
-    void RandomRotorSearch(unsigned int conformers, unsigned int geomSteps);
-      
+    void RandomRotorSearch(unsigned int conformers, unsigned int geomSteps = 2500);
+    //! Initialize Random Rotor Search
+    void RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps = 2500);
+    //! \return true if there are more conformers
+    bool RandomRotorSearchNextConformer(unsigned int geomSteps = 2500);
+     
     /*! Generate conformers for the molecule (randomly rotating torsions).
      *  
      *  The initial starting structure here is important, this structure should be
