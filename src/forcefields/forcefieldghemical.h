@@ -75,6 +75,7 @@ namespace OpenBabel
   class OBForceFieldGhemical: public OBForceField
   {
     protected:
+
       bool _init; //!< Used to make sure we only parse the parameter file once, when needed
     
       //!  Parses the parameter file
@@ -122,7 +123,10 @@ namespace OpenBabel
       { 
         return "Ghemical force field.";
       }
-      
+
+      //!Clone the current instance. May be desirable in multithreaded environments
+      virtual OBForceFieldGhemical* MakeNewInstance(){ return new OBForceFieldGhemical(*this); }
+
       //! Get the unit in wich the energy is expressed
       std::string GetUnit() 
       { 

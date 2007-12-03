@@ -93,6 +93,10 @@ namespace OpenBabel
         // ParseParamFile only called when needed
       }
       
+      //!Clone the current instance. May be desirable in multithreaded environments
+      virtual OBForceFieldMMFF94* MakeNewInstance(){ return new OBForceFieldMMFF94(*this); }
+
+
       virtual const char* Description()
 	{ return "MM2 force field.";};
 

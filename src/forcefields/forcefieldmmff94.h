@@ -216,6 +216,9 @@ namespace OpenBabel
       
       //! Assignment
       OBForceFieldMMFF94 &operator = (OBForceFieldMMFF94 &);
+      
+      //!Clone the current instance. May be desirable in multithreaded environments
+      virtual OBForceFieldMMFF94* MakeNewInstance(){ return new OBForceFieldMMFF94(*this); }
 
       //! Get the description for this force field
       const char* Description()

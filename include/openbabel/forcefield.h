@@ -168,9 +168,15 @@ namespace OpenBabel
   class OBFPRT  OBForceField : public OBPlugin
   {
   
-  MAKE_PLUGIN(OBForceField)
+    MAKE_PLUGIN(OBForceField)
   
+    public:
+    //!Clone the current instance. May be desirable in multithreaded environments,
+    //!Should be deleted after use
+    virtual OBForceField* MakeNewInstance()=0;
+
     protected:
+
     /*! 
       Get the correct OBFFParameter from a OBFFParameter vector.
        

@@ -1,3 +1,10 @@
+2007-12-02 Chris Morley
+
+	* src/forcefield.cpp, include/openbabel/forcefield.h,
+	forcefieldghemical.h, forcefieldmm2.h, forcefieldmmff94.h
+	MakeNewInstance as pure virtual function to OBForceField
+	for use in multithreaded environments.
+
 2007-12-02  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp, include/openbabel/forcefield.h: Added support
