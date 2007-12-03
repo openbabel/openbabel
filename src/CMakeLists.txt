@@ -1,5 +1,4 @@
 
-
 set(fingerprints_srcs
     fingerprints/finger2.cpp
     fingerprints/finger3.cpp
@@ -7,6 +6,8 @@ set(fingerprints_srcs
 
 set(forcefields_srcs
     forcefields/forcefieldghemical.cpp
+    forcefields/forcefieldmmff94.cpp
+    forcefields/forcefielduff.cpp
 )
 
 set(math_srcs
