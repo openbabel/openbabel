@@ -35,7 +35,8 @@ bin_PROGRAMS = babel$(EXEEXT) obchiral$(EXEEXT) obgrep$(EXEEXT) \
 	obrotate$(EXEEXT) obfit$(EXEEXT) obprop$(EXEEXT) \
 	obxyz$(EXEEXT) obgen$(EXEEXT) obenergy$(EXEEXT) \
 	obminimize$(EXEEXT) obmm$(EXEEXT) obrotamer$(EXEEXT) \
-	obfragment$(EXEEXT) obconformer$(EXEEXT) obseq$(EXEEXT)
+	obfragment$(EXEEXT) obconformer$(EXEEXT) obseq$(EXEEXT) \
+	obsym$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -91,6 +92,9 @@ obrotate_DEPENDENCIES = ../src/libopenbabel.la
 am_obseq_OBJECTS = obseq.$(OBJEXT)
 obseq_OBJECTS = $(am_obseq_OBJECTS)
 obseq_DEPENDENCIES = ../src/libopenbabel.la
+am_obsym_OBJECTS = obsym.$(OBJEXT)
+obsym_OBJECTS = $(am_obsym_OBJECTS)
+obsym_DEPENDENCIES = ../src/libopenbabel.la
 am_obxyz_OBJECTS = obxyz.$(OBJEXT)
 obxyz_OBJECTS = $(am_obxyz_OBJECTS)
 obxyz_DEPENDENCIES = ../src/libopenbabel.la
@@ -110,13 +114,14 @@ SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obconformer_SOURCES) \
 	$(obenergy_SOURCES) $(obfit_SOURCES) $(obfragment_SOURCES) \
 	$(obgen_SOURCES) $(obgrep_SOURCES) $(obminimize_SOURCES) \
 	$(obmm_SOURCES) $(obprop_SOURCES) $(obrotamer_SOURCES) \
-	$(obrotate_SOURCES) $(obseq_SOURCES) $(obxyz_SOURCES)
+	$(obrotate_SOURCES) $(obseq_SOURCES) $(obsym_SOURCES) \
+	$(obxyz_SOURCES)
 DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) \
 	$(obconformer_SOURCES) $(obenergy_SOURCES) $(obfit_SOURCES) \
 	$(obfragment_SOURCES) $(obgen_SOURCES) $(obgrep_SOURCES) \
 	$(obminimize_SOURCES) $(obmm_SOURCES) $(obprop_SOURCES) \
 	$(obrotamer_SOURCES) $(obrotate_SOURCES) $(obseq_SOURCES) \
-	$(obxyz_SOURCES)
+	$(obsym_SOURCES) $(obxyz_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -275,6 +280,8 @@ obconformer_SOURCES = obconformer.cpp
 obconformer_LDADD = ../src/libopenbabel.la @LIBDL@
 obseq_SOURCES = obseq.cpp
 obseq_LDADD = ../src/libopenbabel.la @LIBDL@
+obsym_SOURCES = obsym.cpp
+obsym_LDADD = ../src/libopenbabel.la @LIBDL@
 obfragment_SOURCES = obfragment.cpp
 obfragment_LDADD = ../src/libopenbabel.la @LIBDL@
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include
@@ -381,6 +388,9 @@ obrotate$(EXEEXT): $(obrotate_OBJECTS) $(obrotate_DEPENDENCIES)
 obseq$(EXEEXT): $(obseq_OBJECTS) $(obseq_DEPENDENCIES) 
 	@rm -f obseq$(EXEEXT)
 	$(CXXLINK) $(obseq_OBJECTS) $(obseq_LDADD) $(LIBS)
+obsym$(EXEEXT): $(obsym_OBJECTS) $(obsym_DEPENDENCIES) 
+	@rm -f obsym$(EXEEXT)
+	$(CXXLINK) $(obsym_OBJECTS) $(obsym_LDADD) $(LIBS)
 obxyz$(EXEEXT): $(obxyz_OBJECTS) $(obxyz_DEPENDENCIES) 
 	@rm -f obxyz$(EXEEXT)
 	$(CXXLINK) $(obxyz_OBJECTS) $(obxyz_LDADD) $(LIBS)
@@ -405,6 +415,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotamer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obseq.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obsym.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obxyz.Po@am__quote@
 
 .cpp.o:
