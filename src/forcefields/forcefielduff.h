@@ -126,7 +126,10 @@ namespace OpenBabel
       
     //! Destructor
     virtual ~OBForceFieldUFF();
-      
+     
+     //!Clone the current instance. May be desirable in multithreaded environments
+     virtual OBForceFieldUFF* MakeNewInstance(){ return new OBForceFieldUFF(*this); }
+ 
     //! Assignment
     OBForceFieldUFF &operator = (OBForceFieldUFF &);
       

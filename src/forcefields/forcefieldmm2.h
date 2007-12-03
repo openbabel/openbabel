@@ -94,7 +94,7 @@ namespace OpenBabel
       }
       
       //!Clone the current instance. May be desirable in multithreaded environments
-      virtual OBForceFieldMMFF94* MakeNewInstance(){ return new OBForceFieldMMFF94(*this); }
+      virtual OBForceFieldMM2* MakeNewInstance(){ return new OBForceFieldMM2(*this); }
 
 
       virtual const char* Description()
