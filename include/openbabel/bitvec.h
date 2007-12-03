@@ -22,135 +22,231 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#ifdef WIN32
-#pragma warning (disable : 4786)
-#endif
-
 #include <vector>
 #include <string>
 
-#ifndef SETWORD
+#ifndef USE_64BIT_INTEGER
+// For 32-bit architecture
 #define SETWORD 32
-#endif
+// SETWORD = 2 ^ WORDROLL
+#define WORDROLL 5
+// WORDMASK = SETWORD - 1
+#define WORDMASK 31
+#else 
+// For 64-bit architecture
+#define SETWORD 64
+// SETWORD = 2 ^ WORDROLL
+#define WORDROLL 6
+// WORDMASK = SETWORD - 1
+#define WORDMASK 63
+#endif // 64 bit
+
+#define WORDSIZE_OF_BITSIZE( bit_size ) ( ( bit_size >> WORDROLL ) + (( bit_size & WORDMASK ) ? 1 : 0) )
 
 #ifndef STARTWORDS
 #define STARTWORDS 10
-#endif //STARTBITS
+#endif // STARTWORDS
 
 namespace OpenBabel
-{
-
-  // class introduction in bitvec.cpp
+  {
+  /// A speed-optimized vector of bits
+  /** This class implements a fast vector of bits
+      using internally a vector of processor native
+	  unsigned words.
+	  Any bits which are out of reach of the current
+	  size are considered to be zero.
+	  Streamlined, corrected and documented 
+	   by kshepherd1@users.sourceforge.net
+  */
   class OBAPI OBBitVec
     {
-      int _size;
-      std::vector<int> _set;
     public:
+	  typedef std::vector<unsigned> word_vector;
+	  
+	private:
+	  /// The number of <b>words</b> currently stored ( NOT bit count )
+      unsigned		_size;
+	  /// A vector of words used to store the bit values
+      word_vector	_set;
+	  
+    public:
+	  /// Construct a bit vector of the default size
+	  /** Construct a bit vector of STARTWORDS size, 
+	      cleared to all zero bits.
+	  */
       OBBitVec()
-        {
-          _set.resize(STARTWORDS);
-          _size=_set.size();
-          Clear();
-        }
-      OBBitVec(int bits)
-        {
-          _set.resize(bits/SETWORD);
-          _size=_set.size();
-          Clear();
-        }
+	  :_set(STARTWORDS, 0)
+        { _size = _set.size(); }
+	  /// Construct a bit vector of maxbits bits
+	  /** Construct a bit vector with a size in bits 
+	      of \p size_in_bits rounded up to the nearest word 
+		  and cleared to all zero bits.
+		  \param[in]	size_in_bits The number of bits for which to reserve space
+	  */
+      OBBitVec(unsigned size_in_bits)
+	  :_set(WORDSIZE_OF_BITSIZE(size_in_bits), 0)
+        { _size = _set.size(); }
       /// Copy constructor (result has same number of bits)
-      OBBitVec(const OBBitVec&);
-      void SetBitOn(int);
-      void SetBitOff(int);
-      void SetRangeOn(int, int);
-      void SetRangeOff(int, int);
-      void Fold(int);
-
-      //! \return the index of the first bit past @p index that is set to true
-      //! \param index the first bit to consider
-      int FirstBit(int index = 0)
+	  /** Construct a bit vector which is an exact
+	      duplicate of \p bv.
+		  \param[in]	bv The other bit vector to copy to this
+	  */
+      OBBitVec(const OBBitVec & bv)
+	  :_size(0)
+	  	{ (*this) = bv; }
+	  /// Set the \p bit_offset 'th bit to 1
+      void SetBitOn(unsigned bit_offset);
+	  /// Set the \p bit_offset 'th bit to 0
+      void SetBitOff(unsigned bit_offset);
+	  /// Set the range of bits from \p lo_bit_offset to \p hi_bit_offset to 1
+      void SetRangeOn(unsigned lo_bit_offset, unsigned hi_bit_offset);
+	  /// Set the range of bits from \p lo_bit_offset to \p hi_bit_offset to 0
+      void SetRangeOff(unsigned lo_bit_offset, unsigned hi_bit_offset);
+	  /// Reduce the size of the vector by or-ing the excess bits over the start
+      void Fold(unsigned new_bit_size);
+      /// Find the first true bit at or after \p bit_offset
+      /** Searches the vector for the first true value, starting at the \p bit_offset 'th bit
+          \param[in] bit_offset the first bit to consider
+		  \return the bit offset of the first true bit at or after \p bit_offset, or -1 if there is none
+	  */
+      int FirstBit(unsigned bit_offset = 0) const
         {
-          return (BitIsSet(index) ? 0  : NextBit(index));
+          return (BitIsSet(bit_offset) ? 0  : NextBit(bit_offset));
         }
-      int NextBit(int);
-      //! \return the index of the last bit (for iterating)
-      int EndBit()    {        return(-1);    }
-      /// \return number of 32 bit words. NOT number of bits.
-      int GetSize() const    { return(_size);    }
-      /// \return the number of bits
-      int CountBits();
+      /// Find the next true bit after \p last_bit_offset
+      int NextBit(int last_bit_offset) const;
+      /// Return the bit offset of the last bit (for iterating) i.e. -1
+      int EndBit() const {  return -1; }
+      /// Return the number of words ( NOT the number of bits ).
+      unsigned GetSize() const    { return(_size);    }
+      /// Return the number of bits which are set to 1 in the vector
+      unsigned CountBits() const;
 
       /// \deprecated Use IsEmpty() instead.
-      bool Empty()   { return(IsEmpty()); }
-      bool IsEmpty();
-      ///Number of bits increased if necessary but never decreased
-      bool Resize(int maxbits);
-
-      bool BitIsSet(int bit)
+      bool Empty() const   { return(IsEmpty()); }
+	  /// Are there no bits set to 1 in this vector?
+      bool IsEmpty() const;
+      /// Reserve space for \p size_in_bits bits
+	  /** Reserve space for \p size_in_bits bits rounded up
+	      \param[in] size_in_bits the number of bits
+	      \return true if enlargement was necessary, false otherwise
+	  */
+      bool Resize(unsigned size_in_bits)
+	  	{
+		return ResizeWords( WORDSIZE_OF_BITSIZE(size_in_bits) );
+		}
+      /// Reserve space for \p size_in_words words
+	  /** Reserve space for \p size_in_words words
+	      \param[in] size_in_words the number of words
+	      \return true if enlargement was necessary, false otherwise
+	  */
+	  bool ResizeWords(unsigned size_in_words)
+	  	{
+		if (size_in_words <= _size)
+		  return false;
+		_set.resize(size_in_words, 0); // increase the vector with zeroed bits
+		_size = _set.size();
+		return true;
+		}
+      /// Asks if the \p bit_offset 'th bit is set
+	  /** Is the \p bit_offset 'th bit set ?
+          \param[in] bit_offset a zero based offset into the bit vector
+		  \return true if it is set, false otherwise
+	  */
+      bool BitIsSet(unsigned bit_offset) const
         {
-          return((bit/SETWORD >= GetSize()) ?
-                 false : _set[bit/SETWORD]>>(bit%SETWORD)&1);
+		  bool rtn = false;
+		  unsigned word_offset = bit_offset >> WORDROLL;
+		  if (word_offset < GetSize())
+		  	{
+			  bit_offset &= WORDMASK;
+			  rtn = (( _set[word_offset] >> bit_offset ) & 1);
+			}
+          return rtn;
         }
-      bool BitIsOn(int bit)
-        {
-          return((bit/SETWORD >= GetSize()) ?
-                 false : _set[bit/SETWORD]>>(bit%SETWORD)&1);
-        }
+      /// \deprecated Use BitIsSet(unsigned bit_offset) instead.
+      bool BitIsOn(int bit_offset) const
+        { return BitIsSet((unsigned)bit_offset); }
 
-      void FromVecInt(std::vector<int>&);
-      void FromString(std::string&,int);
-      void ToVecInt(std::vector<int>&);
-      void Clear(void);
-      //! Inverts every bit in the vector
+      /// Sets the bits listed as bit offsets
+	  void FromVecInt(const std::vector<int> & bit_offsets);
+      /// Sets the bits listed as a string of integers
+	  void FromString(const std::string & line, int bits);
+      /// List the offsets of the bits which are set 
+	  void ToVecInt(std::vector<int> & bit_offsets) const;
+	  /// Set all bits to zero
+      void Clear();
+      /// Inverts every bit in the vector
+	  /** Inverts the entire vector.
+	      Note that this may give unexpected results, as the vector 
+		  can be considered to end in an arbitrary number of zero bits. 
+	  */
       void Negate()
         {
-          for (int i= 0; i != _size; ++i)
-            {
-              _set[i] = ~_set[i];
-            }
+		  for (word_vector::iterator wx = _set.begin(), wy = _set.end(); wx != wy; ++wx)
+		    * wx = ~(* wx);
+        }
+      /// Return a copy of the internal vector of words, at the end of \p vec
+	  /** Copy the internal word vector.
+	      The copy is appended to \p vec.
+		  \param[out] vec a vector of words to which to append the data 
+	  */
+      void GetWords(word_vector & vec)
+        {
+		vec.insert(vec.end(), _set.begin(),_set.end());
         }
 
-      ///Assignment operator but number of bits is not reduced 
-      OBBitVec &operator= (const OBBitVec &);
-      OBBitVec &operator&= (OBBitVec &);
-      OBBitVec &operator|= (OBBitVec &);
-      OBBitVec &operator|= (const int i)
+      /// Assignment operator  
+      OBBitVec & operator= (const OBBitVec & bv);
+      /// And-equals operator 
+      OBBitVec & operator&= (const OBBitVec & bv);
+      /// Or-equals operator 
+      OBBitVec & operator|= (const OBBitVec & bv);
+      /// Or-equals operator for integer
+	  /** Or the bit at offset \p bit_offset with 1
+	  */ 
+      OBBitVec & operator|= (int bit_offset)
         {
-          SetBitOn(i);
+          SetBitOn(bit_offset);
           return(*this);
         }
-      OBBitVec &operator^= (OBBitVec &);
-      OBBitVec &operator-= (OBBitVec &);
-      OBBitVec &operator+= (OBBitVec &bv);
-      bool operator[] (int bit)
-        {
-          return((bit/SETWORD >= GetSize()) ?
-                 false : _set[bit/SETWORD]>>(bit%SETWORD)&1);
-        }
+      /// Exclusive-or-equals operator 
+      OBBitVec & operator^= (const OBBitVec & bv);
+      /// Minus-equals operator 
+      OBBitVec & operator-= (const OBBitVec & bv);
+      /// Plus-equals operator 
+      OBBitVec & operator+= (const OBBitVec & bv);
+      /// Asks if the \p bit_offset 'th bit is set
+	  /** Is the \p bit_offset 'th bit set ?
+          \param[in] bit_offset a zero based offset into the bit vector
+		  \return true if it is set, false otherwise
+	  */
+      bool operator[] (int bit_offset) const
+        { return BitIsSet(bit_offset); }
 
-      friend OBBitVec operator| (OBBitVec &, OBBitVec &);
-      friend OBBitVec operator& (OBBitVec &,OBBitVec &);
-      friend OBBitVec operator^ (OBBitVec &,OBBitVec &);
-      friend OBBitVec operator- (OBBitVec &,OBBitVec &);
-      friend bool operator== (const OBBitVec &,const OBBitVec &);
-      friend bool operator< (const OBBitVec &bv1, const OBBitVec &bv2);
+      /// Or operator 
+      friend OBBitVec operator| (const OBBitVec & bv1, const OBBitVec & bv2);
+      /// And operator 
+      friend OBBitVec operator& (const OBBitVec & bv1,const OBBitVec & bv2);
+      /// Exclusive-or operator 
+      friend OBBitVec operator^ (const OBBitVec & bv1,const OBBitVec & bv2);
+      /// Minus operator 
+      friend OBBitVec operator- (const OBBitVec & bv1,const OBBitVec & bv2);
+      /// Equivalency operator 
+      friend bool operator== (const OBBitVec & bv1,const OBBitVec & bv2);
+      /// Smaller-than operator 
+      friend bool operator< (const OBBitVec & bv1, const OBBitVec & bv2);
 
-      friend std::istream& operator>> ( std::istream&, OBBitVec& );
-      friend std::ostream& operator<< ( std::ostream&, const OBBitVec& ) ;
-	
-      ///Access to data in word size pieces CM
-      void GetWords(std::vector<unsigned int>& vec)
-        {
-          std::vector<int>::iterator itr;
-          for(itr=_set.begin();itr!=_set.end();itr++)
-            vec.push_back(*itr);
-        }
+      /// Input from a stream 
+      friend std::istream& operator>> ( std::istream & is, OBBitVec & bv );
+      /// Output to a stream 
+      friend std::ostream& operator<< ( std::ostream & os, const OBBitVec & bv ) ;
     };
 
-  ///This function can change the size of second parameter. There is an alternative with different parameters.
-  OBAPI double Tanimoto(OBBitVec&,OBBitVec&);
+  /// The Tanimoto coefficient, which may be regarded as the proportion of the "on-bits" which are shared.
+  OBAPI double Tanimoto(const OBBitVec & bv1, const OBBitVec & bv2);
 
-}
+  } // end namespace OpenBabel
 
 #endif // OB_BITVEC_H
 
