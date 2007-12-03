@@ -1,3 +1,13 @@
+2007-12-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/pointgroup.h, src/pointgroup.cpp: New class to
+	wrap  S. Patchkovskii's brute-force 3D point group symmetry
+	code. Still needs some updates from original C code, particularly
+	to make it "less chatty."
+
+	* tools/Makefile.am, tools/obsym.cpp: New tool to detect point
+	group symmetry and eventually write newly "symmetrized" coordinates.
+
 2007-12-03  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp, include/openbabel/forcefield.h: Added

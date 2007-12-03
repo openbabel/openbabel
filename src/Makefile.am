@@ -33,6 +33,7 @@ libopenbabel_la_SOURCES = \
 		ops.cpp \
 		parsmart.cpp \
 		patty.cpp phmodel.cpp plugin.cpp \
+		pointgroup.cpp \
     rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp \
 		smartsdescriptors.cpp \
