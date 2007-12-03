@@ -2010,7 +2010,29 @@ namespace OpenBabel
     return (grad);
   }
 
-  bool OBForceField::UpdateCoordinates(OBMol &mol)
+  // This function might need expanding, bu could really increase performance for
+  // avogadro's AutoOpt tool
+  bool OBForceField::IsSetupNeeded(OBMol &mol)
+  {
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return true;
+      
+    if (_mol.NumBonds() != mol.NumBonds())
+      return true;
+
+    FOR_ATOMS_OF_MOL (atom, _mol) {
+      if (atom->GetAtomicNum() != (mol.GetAtom(atom->GetIdx()))->GetAtomicNum())
+        return true;
+      if (atom->GetValence() != (mol.GetAtom(atom->GetIdx()))->GetValence())
+        return true;
+      if (atom->BOSum() != (mol.GetAtom(atom->GetIdx()))->BOSum())
+        return true;
+    }
+
+    return false;
+  }
+
+  bool OBForceField::GetCoordinates(OBMol &mol)
   { 
     OBAtom *atom;
     
@@ -2026,7 +2048,7 @@ namespace OpenBabel
     return true;
   }
   
-  bool OBForceField::UpdateConformers(OBMol &mol)
+  bool OBForceField::GetConformers(OBMol &mol)
   { 
     OBAtom *atom;
 
@@ -2055,7 +2077,53 @@ namespace OpenBabel
     
     return true;
   }
+  
+  bool OBForceField::SetCoordinates(OBMol &mol)
+  { 
+    OBAtom *atom;
+    
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
+    
+    // Copy coordinates for current conformer only
+    FOR_ATOMS_OF_MOL (a, mol) {
+      atom = _mol.GetAtom(a->GetIdx());
+      atom->SetVector(a->GetVector());
+    }
 
+    return true;
+  }
+ 
+  bool OBForceField::SetConformers(OBMol &mol)
+  { 
+    OBAtom *atom;
+
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
+    
+    FOR_ATOMS_OF_MOL (a, mol) {
+      atom = _mol.GetAtom(a->GetIdx());
+      atom->SetVector(a->GetVector());
+    }
+
+    //Copy conformer information
+    if (mol.NumConformers() > 1) {
+      int k,l;
+      vector<double*> conf;
+      double* xyz = NULL;
+      for (k=0 ; k<mol.NumConformers() ; ++k) {
+        xyz = new double [3*mol.NumAtoms()];
+        for (l=0 ; l<(int) (3*mol.NumAtoms()) ; ++l)
+          xyz[l] = mol.GetConformer(k)[l];
+        conf.push_back(xyz);
+      }
+      _mol.SetConformers(conf);
+      _mol.SetConformer(_current_conformer);
+    }
+    
+    return true;
+  }
+  
   vector3 OBForceField::ValidateGradientError(vector3 &numgrad, vector3 &anagrad)
   {
     double errx, erry, errz;

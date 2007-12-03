@@ -350,16 +350,34 @@ namespace OpenBabel
      *  \return True if succesfull
      */
     virtual bool Setup(OBMol &mol) { return false; }
-    /*! Update coordinates for current conformer
-     *  \param mol the OBMol object to copy the coordinates to
+    /*! Compare the internal forcefield OBMol object to mol. If the two have the
+     *  same number of atoms and bonds, and all atomic numbers are the same, 
+     *  this function returns false, and no call to Setup is needed.
+     *  \return true if Setup needs to be called
+     */
+    bool IsSetupNeeded(OBMol &mol);
+    /*! Get coordinates for current conformer
+     *  \param mol the OBMol object to copy the coordinates to (from OBForceField::_mol)
      *  \return true if succesfull
      */
-    bool UpdateCoordinates(OBMol &mol);
-    /*! Update coordinates for all conformers
-     *  \param mol the OBMol object to copy the coordinates to
+    bool GetCoordinates(OBMol &mol);
+    bool UpdateCoordinates(OBMol &mol) {GetCoordinates(mol); } // = GetCoordinates, depricated
+    /*! Get coordinates for all conformers
+     *  \param mol the OBMol object to copy the coordinates to (from OBForceField::_mol)
      *  \return true if succesfull
      */
-    bool UpdateConformers(OBMol &mol);
+    bool GetConformers(OBMol &mol);
+    bool UpdateConformers(OBMol &mol) { GetConformers(mol); } // = GetConformers, depricated
+    /*! Set coordinates for current conformer
+     *  \param mol the OBMol object to copy the coordinates from (to OBForceField::_mol)
+     *  \return true if succesfull
+     */
+    bool SetCoordinates(OBMol &mol);
+    /*! Set coordinates for all conformers
+     *  \param mol the OBMol object to copy the coordinates from (to OBForceField::_mol)
+     *  \return true if succesfull
+     */
+    bool SetConformers(OBMol &mol);
     /*! Print msg to the logfile
      *  \param msg the message
      */

@@ -1,3 +1,9 @@
+2007-12-03  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp, include/openbabel/forcefield.h: Added
+	IsSetupNeeded to limit the number of calls to Setup, this improves
+	performance for applications like avogadro (AutoOpt tool)
+
 2007-12-02 Chris Morley
 
 	* src/forcefield.cpp, include/openbabel/forcefield.h,
