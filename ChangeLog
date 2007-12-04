@@ -1,3 +1,8 @@
+2007-12-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp, include/openbabel/forcefield.h: Updated support
+	for constraints by added OBFFConstraints class.
+
 2007-12-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/pointgroup.h, src/pointgroup.cpp: New class to

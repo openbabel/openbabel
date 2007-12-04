@@ -51,6 +51,16 @@ namespace OpenBabel
 #define OBFF_EVDW		(1 << 6)     //!< vdw term
 #define OBFF_EELECTROSTATIC	(1 << 7) //!< electrostatic term
 
+  // constraint types
+#define OBFF_CONST_IGNORE	(1 << 0)   //!< ignore the atom while setting up calculations
+#define OBFF_CONST_ATOM		(1 << 1)   //!< fix the atom position
+#define OBFF_CONST_ATOM_X	(1 << 2)   //!< fix the x coordinate of the atom position
+#define OBFF_CONST_ATOM_Y	(1 << 3)   //!< fix the y coordinate of the atom position
+#define OBFF_CONST_ATOM_Z	(1 << 4)   //!< fix the z coordinate of the atom position
+#define OBFF_CONST_BOND		(1 << 5)   //!< constrain bond length
+#define OBFF_CONST_ANGLE	(1 << 6)   //!< constrain angle
+#define OBFF_CONST_TORSION	(1 << 7)   //!< constrain torsion
+
   // mode arguments for SteepestDescent, ConjugateGradients, ...
 #define OBFF_NUMERICAL_GRADIENT   (1 << 0)  //!< use numerical gradients
 #define OBFF_ANALYTICAL_GRADIENT	(1 << 1)  //!< use analytical gradients
@@ -162,7 +172,149 @@ namespace OpenBabel
           return  VZero;
       }
   };
+  
+ //! \class OBFFConstraint forcefield.h <openbabel/forcefield.h>
+  //! \brief Internal class for OBForceField to hold constraints
+  class OBFPRT OBFFConstraint
+  {
+    public:
+      //! Used to store the contraint energy for this OBFFConstraint
+      double constraint_energy, constraint_value;
+      //! Used to store the contraint type for this OBFFConstraint
+      int type;
+      //! Used to store the atoms for this OBFFCostraint
+      OBAtom *a, *b, *c, *d;
+      //! Used to store the gradients for this OBFFCalculation
+      vector3 grada, gradb, gradc, gradd;
 
+      //! Constructor
+      OBFFConstraint() 
+      {
+	a = NULL;
+	b = NULL;
+	c = NULL;
+        d = NULL;
+        constraint_energy = 0.0f;
+      }
+      //! Destructor
+      ~OBFFConstraint()
+      {
+      }
+      
+      //! Compute the constraint energy for this OBFFConstraint
+      void Compute();
+      //! \return Constraint energy for this OBFFConstraint (call Compute() first)
+      double GetConstraintEnergy() 
+      {
+        if (!constraint_energy)
+	  Compute();
+
+        return constraint_energy; 
+      }
+  };
+
+  //! \class OBFFConstraints forcefield.h <openbabel/forcefield.h>
+  //! \brief Internal class for OBForceField to handle constraints
+  class OBFPRT OBFFConstraints
+  {
+    public:
+      //! Constructor
+      OBFFConstraints()
+      {
+      }
+      //! Destructor
+      ~OBFFConstraints()
+      {
+        _constraints.clear();
+      }
+      //! Clear all constraints
+      void Clear();
+      //! Get the constrain energy
+      double GetConstraintEnergy();
+      //! Get the constrain gradient for the atom
+      //GetConstraintGradient(); isn't need I think??? only testing will tell :s
+      OBFFConstraints& operator=(const OBFFConstraints &ai) 
+      {
+        if (this != &ai) {
+          _constraints = ai._constraints;
+        }
+        return *this;
+      }
+
+      /////////////////////////////////////////////////////////////////////////
+      // Set Constraints                                                     //
+      /////////////////////////////////////////////////////////////////////////
+      //! \name Methods to set constraints
+      //@{
+      //! Fix the position of an atom
+      void AddAtomConstraint(OBAtom *atom);
+      //! Fix the x coordinate of the atom position
+      void AddAtomXConstraint(OBAtom *atom);
+      //! Fix the y coordinate of the atom position
+      void AddAtomYConstraint(OBAtom *atom);
+      //! Fix the z coordinate of the atom position
+      void AddAtomZConstraint(OBAtom *atom);
+      //! Constrain the bond length a-b
+      void AddBondConstraint(OBAtom *a, OBAtom *b, double length);
+      //! Constrain the angle a-b-c
+      void AddAngleConstraint(OBAtom *a, OBAtom *b, OBAtom *c, double angle);
+      //! Constrain the torsion angle a-b-c-d
+      void AddTorsionConstraint(OBAtom *a, OBAtom *b, OBAtom *c, OBAtom *d, double torsion);
+      //@}
+      /////////////////////////////////////////////////////////////////////////
+      // Get Constraints                                                     //
+      /////////////////////////////////////////////////////////////////////////
+      //! \name Methods to get information about set constraints
+      //@{
+      //! \returns the number of set constraints
+      int Size() const;
+      /*! The following constraint types are known: OBFF_CONST_IGNORE (ignore 
+       *  the atom while setting up calculations, forcefield implementations 
+       *  need to check this value in their setup function), OBFF_CONST_ATOM
+       *  (fix atom position), OBFF_CONST_ATOM_X (fix x coordinate), 
+       *  OBFF_CONST_ATOM_Y (fix y coordinate), OBFF_CONST_ATOM_Z (fix z 
+       *  coordinate), OBFF_CONST_BOND (constrain bond length), OBFF_CONST_ANGLE
+       *  (constrain angle), OBFF_CONST_TORSION (constrain torsion angle)
+       *  \return the constraint type
+       */
+      int GetConstraintType(int index) const;
+      /*! \return The constraint value, this can be a bond length, angle or 
+       *   torsion angle depending on the constraint type.
+       */
+      double GetConstraintValue(int index);
+      //! \return The constraint atom a (or fixed atom)
+      //! \par index constraint index
+      OBAtom* GetConstraintAtomA(int index);
+      //! \return The constraint atom b
+      //! \par index constraint index
+      OBAtom* GetConstraintAtomB(int index);
+      //! \return The constraint atom c
+      //! \par index constraint index
+      OBAtom* GetConstraintAtomC(int index);
+      //! \return The constraint atom d
+      //! \par index constraint index
+      OBAtom* GetConstraintAtomD(int index);
+      //! \return true if this atom is ignored
+      //! \par index atom index
+      bool IsIgnored(int index);
+      //! \return true if this atom is fixed
+      //! \par index atom index
+      bool IsFixed(int index);
+      //! \return true if the x coordinate for this atom is fixed
+      //! \par index atom index
+      bool IsXFixed(int index);
+      //! \return true if the y coordinate for this atom is fixed
+      //! \par index atom index
+      bool IsYFixed(int index);
+      //! \return true if the z coordinate for this atom is fixed
+      //! \par index atom index
+      bool IsZFixed(int index);
+      //@}
+ 
+    private:
+      std::vector<OBFFConstraint> _constraints;
+  };
+ 
   // Class OBForceField
   // class introduction in forcefield.cpp
   class OBFPRT  OBForceField : public OBPlugin
@@ -266,6 +418,8 @@ namespace OpenBabel
     std::vector<int> _fix; //!< List of atoms that are fixed while minimizing
     OBMol _mol; //!< Molecule to be evaluated or minimized
 
+    OBFFConstraints _constraints; //!< Constraints
+
     //! Output for logfile
     std::ostream* logos;
     char logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
@@ -317,34 +471,6 @@ namespace OpenBabel
     }
     //! \return The unit (kcal/mol, kJ/mol, ...) in which the energy is expressed as std::string
     virtual std::string GetUnit() { return std::string("au"); }
-    /*! Ignore this atom and any term in which this atom participates while 
-     *  setting up the calculations. This can be used for docking where you 
-     *  only want to calculate the non-bonded interactions between the ligand
-     *  and the binding pocket, not the whole protein. This function should be
-     *  called for all atoms which need to be ignored (=atoms that are not in 
-     *  the binding pocket) before calling OBForceField::Setup(OBMol &mol)!
-     *  \param index index of the atom to ignore
-     */
-    void SetIgnoreAtom(int index);
-    //! \return true if this atom should be ignored
-    bool GetIgnoreAtom(int index);
-    //! Clear the list of ignored atoms 
-    void ClearIgnoreAtom();
-    /*! Fixing an atom means that it will not be ignored while setting up the
-     *  calculations. However, when minimizing the energy using steepest 
-     *  descent or conjugate gradients, the positions of these atoms will not
-     *  be changed. In other words, their position in 3D space is fixed. This
-     *  is can be used for docking where you want to minimize the geometry of 
-     *  your ligand inside a fixed binding pocket. This function should be
-     *  called for all atoms which need to be fixed (=atoms that are part of 
-     *  the binding pocket) before calling OBForceField::Setup(OBMol &mol)!
-     *  \param index index of the atom to fix
-     */
-    void SetFixAtom(int index);
-    //! \return true if this atom should be fixed
-    bool GetFixAtom(int index);
-    //! Clear the list of ignored atoms 
-    void ClearFixAtom();
     /*! Setup the forcefield for mol (assigns atom types, charges, etc.) 
      *  \param mol the OBMol object that contains the atoms and bonds
      *  \return True if succesfull

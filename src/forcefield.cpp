@@ -272,47 +272,250 @@ namespace OpenBabel
     return NULL;
   }
   
-  void OBForceField::SetIgnoreAtom(int index)
+  void OBFFConstraint::Compute()
   {
-    _ignore.push_back(index);
+    vector3 da, db;
+    double rab, rab2, dE;
+ 
+    switch (type) {
+      case OBFF_CONST_BOND:
+       
+	da = a->GetVector();
+        db = b->GetVector();
+        
+	rab = OBForceField::VectorLengthDerivative(da, db);
+        rab = rab - constraint_value;
+        rab2 = rab * rab;
+        constraint_energy = 5.0 * rab2;
+        dE = 10.0 * rab;
+        
+	grada = dE * da;
+        gradb = dE * db; 
+        break;
+      case OBFF_CONST_ANGLE:
+        /*
+	vector3 da, db, dc;
+        double rab, rab2, dE;
+        
+	// a-b
+	da = a->GetVector();
+        db = b->GetVector();
+	rab = OBForceField::VectorLengthDerivative(da, db);
+        rab = rab - _rab;
+        rab2 = rab * rab;
+        constraint_energy = 5.0 * rab2;
+        dE = 10.0 * rab;
+	grada = dE * da;
+        gradb = dE * db; 
+ 	// b-c
+	da = b->GetVector();
+        db = c->GetVector();
+	rbc = OBForceField::VectorLengthDerivative(db, dc);
+        rbc = rbc - _rbc;
+        rbc2 = rbc * rbc;
+        constraint_energy += 5.0 * rbc2;
+        dE = 10.0 * rab;
+	gradb += dE * db;
+        gradc = dE * dc; 
+        // a-c
+	da = a->GetVector();
+        dc = c->GetVector();
+	rac = OBForceField::VectorLengthDerivative(da, dc);
+        rac = rac - _rac;
+        rac2 = rac * rac;
+        constraint_energy += 5.0 * rac2;
+        dE = 10.0 * rac;
+	grada += dE * da;
+        gradc += dE * dc; 
+        break;
+      */
+      case OBFF_CONST_TORSION:
+      case OBFF_CONST_IGNORE:
+      default:
+        constraint_energy = 0.0;
+	break;
+    }
   }
   
-  bool OBForceField::GetIgnoreAtom(int index)
+  void OBFFConstraints::Clear()
   {
-    vector<int>::iterator i;
+    _constraints.clear();
+  }
+  
+  int OBFFConstraints::Size() const
+  {
+    return _constraints.size();
+  }
+  
+  double OBFFConstraints::GetConstraintEnergy()
+  {
+    vector<OBFFConstraint>::iterator i;
+    double constraint_energy = 0.0;
+        
+    for (i = _constraints.begin(); i != _constraints.end(); ++i)
+      constraint_energy += i->GetConstraintEnergy();
+   
+    return constraint_energy;
+  }
+  
+  void OBFFConstraints::AddAtomConstraint(OBAtom *atom)
+  {
+    OBFFConstraint constraint;
+    constraint.type = OBFF_CONST_ATOM; // constraint type
+    constraint.a    = atom; // atom to fix
+    _constraints.push_back(constraint);
+  }
+  
+  void OBFFConstraints::AddAtomXConstraint(OBAtom *atom)
+  {
+    OBFFConstraint constraint;
+    constraint.type = OBFF_CONST_ATOM_X; // constraint type
+    constraint.a    = atom; // atom to fix
+    _constraints.push_back(constraint);
+  }
+  
+  void OBFFConstraints::AddAtomYConstraint(OBAtom *atom)
+  {
+    OBFFConstraint constraint;
+    constraint.type = OBFF_CONST_ATOM_Y; // constraint type
+    constraint.a    = atom; // atom to fix
+    _constraints.push_back(constraint);
+  } 
+  
+  void OBFFConstraints::AddAtomZConstraint(OBAtom *atom)
+  {
+    OBFFConstraint constraint;
+    constraint.type = OBFF_CONST_ATOM_Z; // constraint type
+    constraint.a    = atom; // atom to fix
+    _constraints.push_back(constraint);
+  }
+  
+  void OBFFConstraints::AddBondConstraint(OBAtom *a, OBAtom *b, double length)
+  {
+    OBFFConstraint constraint;
+    constraint.type = OBFF_CONST_BOND; // constraint type
+    constraint.a    = a; // atom a
+    constraint.b    = b; // atom b
+    constraint.constraint_value = length; // bond length
+    _constraints.push_back(constraint);
+  }
+  
+  void AddAngleConstraint(OBAtom *a, OBAtom *b, OBAtom *c, double angle)
+  {
+  }
+  
+  void AddTorsionConstraint(OBAtom *a, OBAtom *b, OBAtom *c, OBAtom *d, double torsion)
+  {
+  }
+  
+  int OBFFConstraints::GetConstraintType(int index) const
+  {
+    if (index > _constraints.size())
+      return 0;
 
-    for (i = _ignore.begin(); i != _ignore.end(); i++)
-      if ((*i) == index)
-        return true;
+    return _constraints[index].type; 
+  }
+  
+  double OBFFConstraints::GetConstraintValue(int index) 
+  {
+    if (index > _constraints.size())
+      return 0;
+
+    return _constraints[index].constraint_value; 
+  }
+  
+  OBAtom* OBFFConstraints::GetConstraintAtomA(int index) 
+  {
+    if (index > _constraints.size())
+      return 0;
+
+    return _constraints[index].a; 
+  }
+  
+  OBAtom* OBFFConstraints::GetConstraintAtomB(int index) 
+  {
+    if (index > _constraints.size())
+      return 0;
+
+    return _constraints[index].b; 
+  }
+  
+  OBAtom* OBFFConstraints::GetConstraintAtomC(int index) 
+  {
+    if (index > _constraints.size())
+      return 0;
+
+    return _constraints[index].c; 
+  }
+  
+  OBAtom* OBFFConstraints::GetConstraintAtomD(int index) 
+  {
+    if (index > _constraints.size())
+      return 0;
+
+    return _constraints[index].d; 
+  }
+  
+  bool OBFFConstraints::IsIgnored(int index)
+  {
+    vector<OBFFConstraint>::iterator i;
+        
+    for (i = _constraints.begin(); i != _constraints.end(); ++i)
+      if (i->type == OBFF_CONST_IGNORE)
+        if ((i->a)->GetIdx() == index)
+	  return true;
     
     return false;
   }
   
-  void OBForceField::ClearIgnoreAtom()
+  bool OBFFConstraints::IsFixed(int index)
   {
-    _ignore.clear();
-  }
-  
-  void OBForceField::SetFixAtom(int index)
-  {
-    _fix.push_back(index);
-  }
-  
-  bool OBForceField::GetFixAtom(int index)
-  {
-    vector<int>::iterator i;
-
-    for (i = _fix.begin(); i != _fix.end(); i++)
-      if ((*i) == index)
-        return true;
+    vector<OBFFConstraint>::iterator i;
+        
+    for (i = _constraints.begin(); i != _constraints.end(); ++i)
+      if (i->type == OBFF_CONST_ATOM)
+        if ((i->a)->GetIdx() == index)
+	  return true;
     
     return false;
   }
   
-  void OBForceField::ClearFixAtom()
+  bool OBFFConstraints::IsXFixed(int index)
   {
-    _fix.clear();
+    vector<OBFFConstraint>::iterator i;
+        
+    for (i = _constraints.begin(); i != _constraints.end(); ++i)
+      if (i->type == OBFF_CONST_ATOM_X)
+        if ((i->a)->GetIdx() == index)
+	  return true;
+    
+    return false;
   }
+  
+  bool OBFFConstraints::IsYFixed(int index)
+  {
+    vector<OBFFConstraint>::iterator i;
+        
+    for (i = _constraints.begin(); i != _constraints.end(); ++i)
+      if (i->type == OBFF_CONST_ATOM_Y)
+        if ((i->a)->GetIdx() == index)
+	  return true;
+    
+    return false;
+  }
+  
+  bool OBFFConstraints::IsZFixed(int index)
+  {
+     vector<OBFFConstraint>::iterator i;
+        
+    for (i = _constraints.begin(); i != _constraints.end(); ++i)
+      if (i->type == OBFF_CONST_ATOM_Z)
+        if ((i->a)->GetIdx() == index)
+	  return true;
+    
+    return false;
+  }
+ 
   
   bool OBForceField::SetLogFile(ostream* pos)
   {
