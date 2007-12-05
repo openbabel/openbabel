@@ -1,3 +1,14 @@
+2007-12-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp, include/openbabel/forcefield.h: OBForceField now
+	defines Setup() itself. It calls the needed virtual setup functions
+	which FF implementations can overwrite.
+	Continue work on constraints implementation.
+
+	* src/forcefields/*: Changes for new Setup system.
+	
+	* include/openbabel/atom.h: Removed old Ignore/Fixed functions.
+
 2007-12-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp, include/openbabel/forcefield.h: Updated support

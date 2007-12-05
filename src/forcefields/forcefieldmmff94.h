@@ -94,8 +94,6 @@ namespace OpenBabel
   class OBForceFieldMMFF94: public OBForceField
   {
     protected:
-      bool _init; //!< Used to make sure we only parse the parameter file once, when needed
-
       //! \return Parses the parameter file
       bool ParseParamFile();
       bool ParseParamProp();
@@ -113,13 +111,13 @@ namespace OpenBabel
       //! detect which rings are aromatic
       bool PerceiveAromatic();
       //! \return Sets atomtypes to MMFF94 in _mol
-      bool SetMMFFTypes();
+      bool SetTypes();
       //! fill OBFFXXXCalculation vectors
       bool SetupCalculations();
       //!  Sets formal charges
-      bool SetMMFFFormalCharges();
+      bool SetFormalCharges();
       //!  Sets partial charges
-      bool SetMMFFPartialCharges();
+      bool SetPartialCharges();
       //! \return The row of the element atom in the periodic table
       int GetElementRow(OBAtom *atom);
       //! \return The bond type (BTIJ)
@@ -206,9 +204,9 @@ namespace OpenBabel
       
     public:
       //! Constructor
-      OBForceFieldMMFF94(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault), _init(false)
+      OBForceFieldMMFF94(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
-        // ParseParamFile now only called when needed
+        _init = false;
       }
       
       //! Destructor

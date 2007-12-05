@@ -451,23 +451,6 @@ namespace OpenBabel
     return *this;
   }
 
-  bool OBForceFieldUFF::Setup(OBMol &mol)
-  {
-    if (!_init) {
-      ParseParamFile();
-      _init = true;
-    }
-    
-    _mol = mol;
-    
-    SetUFFTypes();
-
-    if (!SetupCalculations())
-      return false;
-    
-    return true;
-  }
-  
   bool OBForceFieldUFF::SetupCalculations()
   {
     OBFFParameter *parameterA, *parameterB, *parameterC, *parameterD;
@@ -954,7 +937,7 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldUFF::SetUFFTypes()
+  bool OBForceFieldUFF::SetTypes()
   {
     vector<vector<int> > _mlist; //!< match list for atom typing
     vector<pair<OBSmartsPattern*,string> > _vexttyp; //!< external atom type rules

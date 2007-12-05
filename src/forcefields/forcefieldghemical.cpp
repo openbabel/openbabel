@@ -385,23 +385,6 @@ namespace OpenBabel
     return *this;
   }
 
-  bool OBForceFieldGhemical::Setup(OBMol &mol)
-  {
-    if (!_init) {
-      ParseParamFile();
-      _init = true;
-    }    
-    
-    _mol = mol;
-    
-    SetGhemicalTypes();
-
-    if (!SetupCalculations())
-      return false;
-    
-    return true;
-  }
-  
   bool OBForceFieldGhemical::SetupCalculations()
   {
     OBFFParameter *parameter;
@@ -807,7 +790,7 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldGhemical::SetGhemicalTypes()
+  bool OBForceFieldGhemical::SetTypes()
   {
     vector<vector<int> > _mlist; //!< match list for atom typing
     vector<pair<OBSmartsPattern*,string> > _vexttyp; //!< external atom type rules
@@ -851,7 +834,7 @@ namespace OpenBabel
       }
     }
 
-    SetGhemicalCharges();
+    SetPartialCharges();
  
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nA T O M   T Y P E S\n\n");
@@ -884,7 +867,7 @@ namespace OpenBabel
     return true;
   }
   
-  bool OBForceFieldGhemical::SetGhemicalCharges()
+  bool OBForceFieldGhemical::SetPartialCharges()
   {
     OBAtom *a, *b;
     int bondtype;

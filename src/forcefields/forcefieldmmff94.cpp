@@ -549,54 +549,6 @@ namespace OpenBabel
     return *this;
   }
 
-  bool OBForceFieldMMFF94::Setup(OBMol &mol)
-  {
-    if (!_init) {
-      ParseParamFile();
-      _init = true;
-    }    
-    
-    _mol = mol;
-    SetMMFFTypes();
-    SetMMFFFormalCharges();
-    
-    IF_OBFF_LOGLVL_LOW {
-      OBFFLog("\nA T O M   T Y P E S\n\n");
-      OBFFLog("IDX\tTYPE\n");
-      
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%s\n", a->GetIdx(), a->GetType());
-        OBFFLog(logbuf);
-      }
-
-      OBFFLog("\nF O R M A L   C H A R G E S\n\n");
-      OBFFLog("IDX\tCHARGE\n");
-      
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
-        OBFFLog(logbuf);
-      }
-    }
- 
-    
-    SetMMFFPartialCharges();
-    
-    IF_OBFF_LOGLVL_LOW {
-      OBFFLog("\nP A R T I A L   C H A R G E S\n\n");
-      OBFFLog("IDX\tCHARGE\n");
-      
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
-        OBFFLog(logbuf);
-      }
-    }
-    
-    if (!SetupCalculations())
-      return false;
-   
-    return true;
-  }
- 
   bool OBForceFieldMMFF94::ParseParamFile()
   {
     ParseParamProp();
@@ -1125,7 +1077,7 @@ namespace OpenBabel
     return done;
   }
   
-  bool OBForceFieldMMFF94::SetMMFFTypes()
+  bool OBForceFieldMMFF94::SetTypes()
   {
     std::vector<std::vector<int> > _mlist; //!< match list for atom typing
     std::vector<std::pair<OBSmartsPattern*,std::string> > _vexttyp; //!< external atom type rules
@@ -1521,16 +1473,17 @@ namespace OpenBabel
     
     
     }
-
-    OBFFLog("\nA T O M   T Y P E S\n\n");
-    IF_OBFF_LOGLVL_MEDIUM {
+    
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nA T O M   T Y P E S\n\n");
       OBFFLog("IDX\tTYPE\n");
+      
       FOR_ATOMS_OF_MOL (a, _mol) {
         sprintf(logbuf, "%d\t%s\n", a->GetIdx(), a->GetType());
         OBFFLog(logbuf);
       }
     }
-    
+ 
     return true;
   }
   
@@ -1557,9 +1510,12 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(bond, _mol) {
       a = bond->GetBeginAtom();
       b = bond->GetEndAtom();	
+      
+      //if (a->IsIgnored() || b->IsIgnored())
+      //  continue;
+      
       bondtype = GetBondType(a, b);
       
-
       parameter = GetTypedParameter2Atom(bondtype, atoi(a->GetType()), atoi(b->GetType()), _ffbondparams); // from mmffbond.par
       if (parameter == NULL) {
 	parameter = GetParameter2Atom(a->GetAtomicNum(), b->GetAtomicNum(), _ffbndkparams); // from mmffbndk.par - emperical rules
@@ -1626,6 +1582,10 @@ namespace OpenBabel
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
+      
+      //if (a->IsIgnored() || b->IsIgnored() || c->IsIgnored())
+      //  continue;
+ 
       angletype = GetAngleType(a, b, c);
       strbndtype = GetStrBndType(a, b, c);
       bondtype1 = GetBondType(a, b);
@@ -1794,6 +1754,10 @@ namespace OpenBabel
       b = _mol.GetAtom((*t)[1] + 1);
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
+      
+      //if (a->IsIgnored() || b->IsIgnored() || c->IsIgnored() || d->IsIgnored())
+      //  continue;
+ 
       torsiontype = GetTorsionType(a, b, c, d);
       
       // try exact match 
@@ -2026,7 +1990,10 @@ namespace OpenBabel
 	  
           if ((a == NULL) || (c == NULL) || (d == NULL))
             break;
-
+          
+          //if (a->IsIgnored() || b->IsIgnored() || c->IsIgnored() || d->IsIgnored())
+          //  continue;
+ 
           if (((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
               ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
               ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
@@ -2102,7 +2069,10 @@ namespace OpenBabel
     FOR_PAIRS_OF_MOL(p, _mol) {
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
-
+      
+      //if (a->IsIgnored() || b->IsIgnored())
+      //  continue;
+ 
       OBFFParameter *parameter_a, *parameter_b;
       parameter_a = GetParameter1Atom(atoi(a->GetType()), _ffvdwparams);
       parameter_b = GetParameter1Atom(atoi(b->GetType()), _ffvdwparams);
@@ -2182,6 +2152,9 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
       
+      //if (a->IsIgnored() || b->IsIgnored())
+      //  continue;
+ 
       elecalc.qq = 332.0716 * a->GetPartialCharge() * b->GetPartialCharge();
       
       if (elecalc.qq) {
@@ -2201,7 +2174,7 @@ namespace OpenBabel
 
   // we set the the formal charge with SetPartialCharge because formal charges 
   // in MMFF94 are not always and integer
-  bool OBForceFieldMMFF94::SetMMFFFormalCharges()
+  bool OBForceFieldMMFF94::SetFormalCharges()
   {
     _mol.SetAutomaticPartialCharge(false);
     
@@ -2365,10 +2338,21 @@ namespace OpenBabel
         atom->SetPartialCharge(2.0);
 
     }
+
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nF O R M A L   C H A R G E S\n\n");
+      OBFFLog("IDX\tCHARGE\n");
+      
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
+        OBFFLog(logbuf);
+      }
+    }
+   
     return true;
   }
 
-  bool OBForceFieldMMFF94::SetMMFFPartialCharges()
+  bool OBForceFieldMMFF94::SetPartialCharges()
   {
     vector<double> charges(_mol.NumAtoms()+1, 0);
     double M, Wab, factor, q0a, q0b, Pa, Pb;
@@ -2432,8 +2416,17 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL (atom, _mol)
       atom->SetPartialCharge(charges[atom->GetIdx()]);
 
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nP A R T I A L   C H A R G E S\n\n");
+      OBFFLog("IDX\tCHARGE\n");
+      
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
+        OBFFLog(logbuf);
+      }
+    }
+ 
     return true;
-  
   }
 
   double OBForceFieldMMFF94::Energy(bool gradients)
@@ -2521,7 +2514,7 @@ namespace OpenBabel
       if (_mol.Empty())
         break;
       
-      SetMMFFTypes();
+      SetTypes();
       
       termcount = 0;
       molfound = false;
@@ -2685,7 +2678,7 @@ namespace OpenBabel
         //continue;
       }
 
-      SetMMFFFormalCharges();
+      SetFormalCharges();
       cout << endl;
       cout << "IDX  OB_FCARGE  LOG_FCHARGE       RESULT" << endl;
       cout << "----------------------------------------" << endl;
@@ -2717,7 +2710,7 @@ namespace OpenBabel
         //continue;
       }
 
-      SetMMFFPartialCharges();
+      SetPartialCharges();
       cout << endl;
       cout << "IDX  OB_PCARGE  LOG_PCHARGE       RESULT" << endl;
       cout << "----------------------------------------" << endl;
@@ -3006,7 +2999,8 @@ namespace OpenBabel
       }
     }
     
-    if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && IsInSameRing(a, b) && IsInSameRing(b, c)) {
+    //if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && IsInSameRing(a, b) && IsInSameRing(b, c)) {
+    if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && IsInSameRing(a, c)) {
       switch (sumbondtypes) {
       case 0:
         return 4; 

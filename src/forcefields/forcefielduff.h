@@ -89,12 +89,10 @@ namespace OpenBabel
   class OBForceFieldUFF: public OBForceField
   {
   protected:
-    bool _init; //!< Used to make sure we only parse the parameter file once, when needed
-
     //!  Parses the parameter file
     bool ParseParamFile();
     //!  Sets atomtypes to UFF types in _mol
-    bool SetUFFTypes();
+    bool SetTypes();
     //!  Fill OBFFXXXCalculation vectors
     bool SetupCalculations();
     //!  By default, electrostatic terms are disabled
@@ -118,10 +116,10 @@ namespace OpenBabel
     std::vector<OBFFElectrostaticCalculationUFF> _electrostaticcalculations;
 
   public:
-    //! Constructor
-  OBForceFieldUFF(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault), _init(false)
+      //! Constructor
+      OBForceFieldUFF(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
-        // ParseParamFile only called when needed
+        _init = false;
       }
       
     //! Destructor
@@ -145,9 +143,6 @@ namespace OpenBabel
         return std::string("kJ/mol");  // Note that we convert from kcal/mol internally
       }
 
-    //! Setup
-    bool Setup(OBMol &mol);
-      
     //! Returns total energy
     double Energy(bool gradients = true);
     //! Returns the bond stretching energy

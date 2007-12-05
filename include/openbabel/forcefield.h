@@ -134,7 +134,7 @@ namespace OpenBabel
 	  b = NULL;
 	  c = NULL;
 	  d = NULL;
-	  energy = 0.0f;
+	  energy = 0.0;
           grada = VZero;
           gradb = VZero;
           gradc = VZero;
@@ -181,7 +181,7 @@ namespace OpenBabel
       //! Used to store the contraint energy for this OBFFConstraint
       double constraint_energy, constraint_value;
       //! Used to store the contraint type for this OBFFConstraint
-      int type;
+      int type, ia, ib, ic, id;
       //! Used to store the atoms for this OBFFCostraint
       OBAtom *a, *b, *c, *d;
       //! Used to store the gradients for this OBFFCalculation
@@ -190,11 +190,9 @@ namespace OpenBabel
       //! Constructor
       OBFFConstraint() 
       {
-	a = NULL;
-	b = NULL;
-	c = NULL;
-        d = NULL;
-        constraint_energy = 0.0f;
+	a = b = c = d = NULL;
+	ia = ib = ic = id = 0;
+        constraint_value = constraint_energy = 0.0;
       }
       //! Destructor
       ~OBFFConstraint()
@@ -241,25 +239,33 @@ namespace OpenBabel
         return *this;
       }
 
+      /*! Translate indices to OBAtom* objects, this function is called from OBForceField::Setup,
+       *  this function doesn't have to be called from anywhere else.
+       */
+      void Setup(OBMol &mol);
+
       /////////////////////////////////////////////////////////////////////////
       // Set Constraints                                                     //
       /////////////////////////////////////////////////////////////////////////
       //! \name Methods to set constraints
       //@{
       //! Fix the position of an atom
-      void AddAtomConstraint(OBAtom *atom);
+      void AddAtomConstraint(int a);
       //! Fix the x coordinate of the atom position
-      void AddAtomXConstraint(OBAtom *atom);
+      void AddAtomXConstraint(int a);
       //! Fix the y coordinate of the atom position
-      void AddAtomYConstraint(OBAtom *atom);
+      void AddAtomYConstraint(int a);
       //! Fix the z coordinate of the atom position
-      void AddAtomZConstraint(OBAtom *atom);
+      void AddAtomZConstraint(int a);
       //! Constrain the bond length a-b
-      void AddBondConstraint(OBAtom *a, OBAtom *b, double length);
+      void AddBondConstraint(int a, int b, double length);
       //! Constrain the angle a-b-c
-      void AddAngleConstraint(OBAtom *a, OBAtom *b, OBAtom *c, double angle);
+      void AddAngleConstraint(int a, int b, int c, double angle);
       //! Constrain the torsion angle a-b-c-d
-      void AddTorsionConstraint(OBAtom *a, OBAtom *b, OBAtom *c, OBAtom *d, double torsion);
+      void AddTorsionConstraint(int a, int b, int c, int d, double torsion);
+      //! Delete a constraint
+      //! \par index constraint index
+      void DeleteConstraint(int index) const;
       //@}
       /////////////////////////////////////////////////////////////////////////
       // Get Constraints                                                     //
@@ -281,34 +287,34 @@ namespace OpenBabel
       /*! \return The constraint value, this can be a bond length, angle or 
        *   torsion angle depending on the constraint type.
        */
-      double GetConstraintValue(int index);
+      double GetConstraintValue(int index) const;
       //! \return The constraint atom a (or fixed atom)
       //! \par index constraint index
-      OBAtom* GetConstraintAtomA(int index);
+      int GetConstraintAtomA(int index) const;
       //! \return The constraint atom b
       //! \par index constraint index
-      OBAtom* GetConstraintAtomB(int index);
+      int GetConstraintAtomB(int index) const;
       //! \return The constraint atom c
       //! \par index constraint index
-      OBAtom* GetConstraintAtomC(int index);
+      int GetConstraintAtomC(int index) const;
       //! \return The constraint atom d
       //! \par index constraint index
-      OBAtom* GetConstraintAtomD(int index);
+      int GetConstraintAtomD(int index) const;
       //! \return true if this atom is ignored
-      //! \par index atom index
-      bool IsIgnored(int index);
+      //! \par a atom index
+      bool IsIgnored(int a);
       //! \return true if this atom is fixed
-      //! \par index atom index
-      bool IsFixed(int index);
+      //! \par a atom index
+      bool IsFixed(int a);
       //! \return true if the x coordinate for this atom is fixed
-      //! \par index atom index
-      bool IsXFixed(int index);
+      //! \par a atom index
+      bool IsXFixed(int a);
       //! \return true if the y coordinate for this atom is fixed
-      //! \par index atom index
-      bool IsYFixed(int index);
+      //! \par a atom index
+      bool IsYFixed(int a);
       //! \return true if the z coordinate for this atom is fixed
-      //! \par index atom index
-      bool IsZFixed(int index);
+      //! \par a atom index
+      bool IsZFixed(int a);
       //@}
  
     private:
@@ -417,6 +423,7 @@ namespace OpenBabel
     std::vector<int> _ignore; //!< List of atoms that are ignored while setting up calculations
     std::vector<int> _fix; //!< List of atoms that are fixed while minimizing
     OBMol _mol; //!< Molecule to be evaluated or minimized
+    bool _init; //!< Used to make sure we only parse the parameter file once, when needed
 
     OBFFConstraints _constraints; //!< Constraints
 
@@ -475,7 +482,14 @@ namespace OpenBabel
      *  \param mol the OBMol object that contains the atoms and bonds
      *  \return True if succesfull
      */
-    virtual bool Setup(OBMol &mol) { return false; }
+    bool Setup(OBMol &mol); 
+    bool Setup(OBMol &mol, OBFFConstraints &constraints); 
+    virtual bool SetupTypes() { return false; }
+    virtual bool ParseParamFile() { return false; }
+    virtual bool SetTypes() { return false; }
+    virtual bool SetFormalCharges() { return false; }
+    virtual bool SetPartialCharges() { return false; }
+    virtual bool SetupCalculations() { return false; }
     /*! Compare the internal forcefield OBMol object to mol. If the two have the
      *  same number of atoms and bonds, and all atomic numbers are the same, 
      *  this function returns false, and no call to Setup is needed.
@@ -524,7 +538,10 @@ namespace OpenBabel
       
       *logos << msg;
     }
-
+    
+    OBFFConstraints& GetConstraints() { return _constraints; }
+    void SetConstraints(OBFFConstraints& constraints) { _constraints = constraints; }
+ 
     /////////////////////////////////////////////////////////////////////////
     // Energy Evaluation                                                   //
     /////////////////////////////////////////////////////////////////////////

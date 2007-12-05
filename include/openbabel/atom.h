@@ -72,11 +72,8 @@ namespace OpenBabel
 #define OB_NEG_CHIRAL_ATOM (1<<11)
   //! Atom has no hydrogen attached. Temporary use only during input of some formats
 #define OB_ATOM_HAS_NO_H   (1<<12)
-  //! Atom is fixed during forcefield manipulation
-#define OB_FIXED_ATOM      (1<<13)
   //! Atom is not hydrogen deficient. (for SMILES input)
-#define OB_ATOM_NOT_H_DEFICIENT (1<<14)
-// 15-16 currently unused
+#define OB_ATOM_NOT_H_DEFICIENT (1<<13)
 
   // Class OBAtom
   // class introduction in atom.cpp
@@ -165,10 +162,6 @@ namespace OpenBabel
       void SetAromatic()                  { SetFlag(OB_AROMATIC_ATOM); }
       //! Clear aromatic information from the atom
       void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
-      //! Set atom to be fixed during forcefield application
-      void SetFixed()                     { SetFlag(OB_FIXED_ATOM); }
-      //! Unset atom to be fixed during forcefield application
-      void UnsetFixed()                   { _flags &= (~(OB_FIXED_ATOM)); }
       //! Mark atom as having SMILES clockwise stereochemistry (i.e., "@@")
       void SetClockwiseStereo()           { SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM); }
       //! Mark atom as having SMILES anticlockwise stereochemistry (i.e., "@")
@@ -461,8 +454,6 @@ namespace OpenBabel
       bool IsPositiveStereo() { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
       //! \return Does this atom have a negative chiral volume?
       bool IsNegativeStereo() { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
-      //! \return Is this atom fixed during forcefield
-      bool IsFixed() { return(HasFlag(OB_FIXED_ATOM)); }
       //! \return Does this atom have SMILES-specified stereochemistry?
       bool HasChiralitySpecified()
         { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }

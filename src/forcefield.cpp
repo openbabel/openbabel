@@ -337,6 +337,18 @@ namespace OpenBabel
     }
   }
   
+  void OBFFConstraints::Setup(OBMol& mol)
+  {
+    vector<OBFFConstraint>::iterator i;
+    
+    for (i = _constraints.begin(); i != _constraints.end(); ++i) {
+      i->a = mol.GetAtom(i->ia);
+      i->b = mol.GetAtom(i->ib);
+      i->c = mol.GetAtom(i->ic);
+      i->d = mol.GetAtom(i->id);
+    }
+  }
+
   void OBFFConstraints::Clear()
   {
     _constraints.clear();
@@ -358,54 +370,84 @@ namespace OpenBabel
     return constraint_energy;
   }
   
-  void OBFFConstraints::AddAtomConstraint(OBAtom *atom)
+  void OBFFConstraints::DeleteConstraint(int index) const
+  {
+    /*
+    vector<OBFFConstraint>::iterator i;
+    int n = 0;
+
+    for (i = _constraints.begin(); i != _constraints.end(); i++) {
+      if (n != index)
+        _constraints.erase(_constraints.begin() + index);
+     
+      n++;   
+    }
+    */
+  }
+  
+  void OBFFConstraints::AddAtomConstraint(int a)
   {
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM; // constraint type
-    constraint.a    = atom; // atom to fix
+    constraint.ia    = a; // atom to fix
     _constraints.push_back(constraint);
   }
   
-  void OBFFConstraints::AddAtomXConstraint(OBAtom *atom)
+  void OBFFConstraints::AddAtomXConstraint(int a)
   {
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM_X; // constraint type
-    constraint.a    = atom; // atom to fix
+    constraint.ia    = a; // atom to fix
     _constraints.push_back(constraint);
   }
   
-  void OBFFConstraints::AddAtomYConstraint(OBAtom *atom)
+  void OBFFConstraints::AddAtomYConstraint(int a)
   {
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM_Y; // constraint type
-    constraint.a    = atom; // atom to fix
+    constraint.ia    = a; // atom to fix
     _constraints.push_back(constraint);
   } 
   
-  void OBFFConstraints::AddAtomZConstraint(OBAtom *atom)
+  void OBFFConstraints::AddAtomZConstraint(int a)
   {
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM_Z; // constraint type
-    constraint.a    = atom; // atom to fix
+    constraint.ia    = a; // atom to fix
     _constraints.push_back(constraint);
   }
   
-  void OBFFConstraints::AddBondConstraint(OBAtom *a, OBAtom *b, double length)
+  void OBFFConstraints::AddBondConstraint(int a, int b, double length)
   {
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_BOND; // constraint type
-    constraint.a    = a; // atom a
-    constraint.b    = b; // atom b
+    constraint.ia    = a; // atom a
+    constraint.ib    = b; // atom b
     constraint.constraint_value = length; // bond length
     _constraints.push_back(constraint);
   }
   
-  void AddAngleConstraint(OBAtom *a, OBAtom *b, OBAtom *c, double angle)
+  void OBFFConstraints::AddAngleConstraint(int a, int b, int c, double angle)
   {
+    OBFFConstraint constraint;
+    constraint.type = OBFF_CONST_ANGLE; // constraint type
+    constraint.ia    = a; // atom a
+    constraint.ib    = b; // atom b
+    constraint.ic    = c; // atom c
+    constraint.constraint_value = angle; // angle
+    _constraints.push_back(constraint);
   }
   
-  void AddTorsionConstraint(OBAtom *a, OBAtom *b, OBAtom *c, OBAtom *d, double torsion)
+  void OBFFConstraints::AddTorsionConstraint(int a, int b, int c, int d, double torsion)
   {
+    OBFFConstraint constraint;
+    constraint.type = OBFF_CONST_BOND; // constraint type
+    constraint.ia    = a; // atom a
+    constraint.ib    = b; // atom b
+    constraint.ic    = c; // atom c
+    constraint.id    = d; // atom d
+    constraint.constraint_value = torsion; // torsion
+    _constraints.push_back(constraint);
   }
   
   int OBFFConstraints::GetConstraintType(int index) const
@@ -416,7 +458,7 @@ namespace OpenBabel
     return _constraints[index].type; 
   }
   
-  double OBFFConstraints::GetConstraintValue(int index) 
+  double OBFFConstraints::GetConstraintValue(int index) const 
   {
     if (index > _constraints.size())
       return 0;
@@ -424,36 +466,36 @@ namespace OpenBabel
     return _constraints[index].constraint_value; 
   }
   
-  OBAtom* OBFFConstraints::GetConstraintAtomA(int index) 
+  int OBFFConstraints::GetConstraintAtomA(int index) const
   {
     if (index > _constraints.size())
       return 0;
 
-    return _constraints[index].a; 
+    return _constraints[index].ia; 
   }
   
-  OBAtom* OBFFConstraints::GetConstraintAtomB(int index) 
+  int OBFFConstraints::GetConstraintAtomB(int index) const
   {
     if (index > _constraints.size())
       return 0;
 
-    return _constraints[index].b; 
+    return _constraints[index].ib; 
   }
   
-  OBAtom* OBFFConstraints::GetConstraintAtomC(int index) 
+  int OBFFConstraints::GetConstraintAtomC(int index) const
   {
     if (index > _constraints.size())
       return 0;
 
-    return _constraints[index].c; 
+    return _constraints[index].ic; 
   }
   
-  OBAtom* OBFFConstraints::GetConstraintAtomD(int index) 
+  int OBFFConstraints::GetConstraintAtomD(int index) const
   {
     if (index > _constraints.size())
       return 0;
 
-    return _constraints[index].d; 
+    return _constraints[index].id; 
   }
   
   bool OBFFConstraints::IsIgnored(int index)
@@ -462,7 +504,7 @@ namespace OpenBabel
         
     for (i = _constraints.begin(); i != _constraints.end(); ++i)
       if (i->type == OBFF_CONST_IGNORE)
-        if ((i->a)->GetIdx() == index)
+        if (i->ia == index)
 	  return true;
     
     return false;
@@ -474,7 +516,7 @@ namespace OpenBabel
         
     for (i = _constraints.begin(); i != _constraints.end(); ++i)
       if (i->type == OBFF_CONST_ATOM)
-        if ((i->a)->GetIdx() == index)
+        if (i->ia == index)
 	  return true;
     
     return false;
@@ -498,7 +540,7 @@ namespace OpenBabel
         
     for (i = _constraints.begin(); i != _constraints.end(); ++i)
       if (i->type == OBFF_CONST_ATOM_Y)
-        if ((i->a)->GetIdx() == index)
+        if (i->ia == index)
 	  return true;
     
     return false;
@@ -510,7 +552,7 @@ namespace OpenBabel
         
     for (i = _constraints.begin(); i != _constraints.end(); ++i)
       if (i->type == OBFF_CONST_ATOM_Z)
-        if ((i->a)->GetIdx() == index)
+        if (i->ia == index)
 	  return true;
     
     return false;
@@ -527,6 +569,56 @@ namespace OpenBabel
     return true;
   }
   
+  bool OBForceField::Setup(OBMol &mol)
+  {
+    if (!_init) {
+      ParseParamFile();
+      _init = true;
+    }    
+    
+    _mol = mol;
+    _constraints.Clear();
+
+    if (!SetTypes())
+      return false;
+
+    SetFormalCharges();
+    SetPartialCharges();
+
+    if (!SetupCalculations())
+      return false;
+   
+    return true;
+  }
+  
+  bool OBForceField::Setup(OBMol &mol, OBFFConstraints &constraints)
+  {
+    if (!_init) {
+      ParseParamFile();
+      _init = true;
+    }    
+    
+    _mol = mol;
+    _constraints = constraints;
+    _constraints.Setup(_mol);
+
+    
+    cout << "------------------------" << endl;
+    cout << "  size=" << _constraints.Size() << endl;
+    cout << "------------------------" << endl;
+    
+    if (!SetTypes())
+      return false;
+
+    SetFormalCharges();
+    SetPartialCharges();
+
+    if (!SetupCalculations())
+      return false;
+   
+    return true;
+  }
+ 
   bool OBForceField::SetLogLevel(int level)
   {
     loglvl = level;
@@ -1699,7 +1791,8 @@ namespace OpenBabel
       _cstep++;
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        if (!a->IsFixed()) {
+        //if (!a->IsFixed()) {
+        if (!_constraints.IsFixed(a->GetIdx())) {
           coordIdx = (a->GetIdx() - 1) * 3;
           if (_method & OBFF_ANALYTICAL_GRADIENT)
             dir = GetGradient(&*a);
@@ -1785,7 +1878,8 @@ namespace OpenBabel
     // Take the first step (same as steepest descent because there is no 
     // gradient from the previous step.
     FOR_ATOMS_OF_MOL (a, _mol) {
-      if (!a->IsFixed())
+      //if (!a->IsFixed())
+      if (!_constraints.IsFixed(a->GetIdx())) 
       {
         if (_method & OBFF_ANALYTICAL_GRADIENT)
           grad2 = GetGradient(&*a);
@@ -1833,7 +1927,8 @@ namespace OpenBabel
       _cstep++;
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        if (!a->IsFixed()) {
+        //if (!a->IsFixed()) {
+        if (!_constraints.IsFixed(a->GetIdx())) {
           coordIdx = (a->GetIdx() - 1) * 3;
 
           if (_method & OBFF_ANALYTICAL_GRADIENT)
