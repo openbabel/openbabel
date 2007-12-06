@@ -74,6 +74,9 @@ namespace OpenBabel
 
     unsigned int natoms;	// [ejk] assumed natoms could not be -ve
 
+    if (!ifs)
+      return false; // we're attempting to read past the end of the file
+
     if (!ifs.getline(buffer,BUFF_SIZE))
       {
         obErrorLog.ThrowError(__FUNCTION__,
