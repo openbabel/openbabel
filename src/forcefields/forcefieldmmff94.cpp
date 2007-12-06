@@ -1474,16 +1474,8 @@ namespace OpenBabel
     
     }
     
-    IF_OBFF_LOGLVL_LOW {
-      OBFFLog("\nA T O M   T Y P E S\n\n");
-      OBFFLog("IDX\tTYPE\n");
-      
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%s\n", a->GetIdx(), a->GetType());
-        OBFFLog(logbuf);
-      }
-    }
- 
+    PrintTypes();
+    
     return true;
   }
   
@@ -1511,8 +1503,8 @@ namespace OpenBabel
       a = bond->GetBeginAtom();
       b = bond->GetEndAtom();	
       
-      //if (a->IsIgnored() || b->IsIgnored())
-      //  continue;
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
+        continue;
       
       bondtype = GetBondType(a, b);
       
@@ -1583,8 +1575,8 @@ namespace OpenBabel
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
       
-      //if (a->IsIgnored() || b->IsIgnored() || c->IsIgnored())
-      //  continue;
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) || _constraints.IsIgnored(c->GetIdx()) ) 
+        continue;
  
       angletype = GetAngleType(a, b, c);
       strbndtype = GetStrBndType(a, b, c);
@@ -1755,8 +1747,9 @@ namespace OpenBabel
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
       
-      //if (a->IsIgnored() || b->IsIgnored() || c->IsIgnored() || d->IsIgnored())
-      //  continue;
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
+           _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
+        continue;
  
       torsiontype = GetTorsionType(a, b, c, d);
       
@@ -1991,8 +1984,9 @@ namespace OpenBabel
           if ((a == NULL) || (c == NULL) || (d == NULL))
             break;
           
-          //if (a->IsIgnored() || b->IsIgnored() || c->IsIgnored() || d->IsIgnored())
-          //  continue;
+	  if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
+               _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
+            continue;
  
           if (((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
               ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
@@ -2070,8 +2064,8 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
       
-      //if (a->IsIgnored() || b->IsIgnored())
-      //  continue;
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
+        continue;
  
       OBFFParameter *parameter_a, *parameter_b;
       parameter_a = GetParameter1Atom(atoi(a->GetType()), _ffvdwparams);
@@ -2152,8 +2146,8 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
       
-      //if (a->IsIgnored() || b->IsIgnored())
-      //  continue;
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
+        continue;
  
       elecalc.qq = 332.0716 * a->GetPartialCharge() * b->GetPartialCharge();
       
@@ -2339,16 +2333,8 @@ namespace OpenBabel
 
     }
 
-    IF_OBFF_LOGLVL_LOW {
-      OBFFLog("\nF O R M A L   C H A R G E S\n\n");
-      OBFFLog("IDX\tCHARGE\n");
-      
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
-        OBFFLog(logbuf);
-      }
-    }
-   
+    PrintFormalCharges();
+
     return true;
   }
 
@@ -2416,15 +2402,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL (atom, _mol)
       atom->SetPartialCharge(charges[atom->GetIdx()]);
 
-    IF_OBFF_LOGLVL_LOW {
-      OBFFLog("\nP A R T I A L   C H A R G E S\n\n");
-      OBFFLog("IDX\tCHARGE\n");
-      
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
-        OBFFLog(logbuf);
-      }
-    }
+    PrintPartialCharges();
  
     return true;
   }

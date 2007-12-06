@@ -173,13 +173,13 @@ namespace OpenBabel
       }
   };
   
- //! \class OBFFConstraint forcefield.h <openbabel/forcefield.h>
+  //! \class OBFFConstraint forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to hold constraints
   class OBFPRT OBFFConstraint
   {
     public:
       //! Used to store the contraint energy for this OBFFConstraint
-      double constraint_energy, constraint_value;
+      double factor, constraint_energy, constraint_value;
       //! Used to store the contraint type for this OBFFConstraint
       int type, ia, ib, ic, id;
       //! Used to store the atoms for this OBFFCostraint
@@ -193,6 +193,7 @@ namespace OpenBabel
 	a = b = c = d = NULL;
 	ia = ib = ic = id = 0;
         constraint_value = constraint_energy = 0.0;
+	factor = 0.0;
       }
       //! Destructor
       ~OBFFConstraint()
@@ -204,10 +205,22 @@ namespace OpenBabel
       //! \return Constraint energy for this OBFFConstraint (call Compute() first)
       double GetConstraintEnergy() 
       {
-        if (!constraint_energy)
-	  Compute();
-
+	Compute();
         return constraint_energy; 
+      }
+      
+      vector3 GetGradient(int a) 
+      {
+        if (a == ia)
+          return grada;
+        else if (a == ib)
+          return gradb;
+        else if (a == ic)
+          return gradc;
+        else if (a == id)
+          return gradd;
+        else 
+          return  VZero;
       }
   };
 
@@ -219,6 +232,7 @@ namespace OpenBabel
       //! Constructor
       OBFFConstraints()
       {
+        _factor = 10000.0;
       }
       //! Destructor
       ~OBFFConstraints()
@@ -227,10 +241,11 @@ namespace OpenBabel
       }
       //! Clear all constraints
       void Clear();
-      //! Get the constrain energy
+      //! Get the constraint energy
       double GetConstraintEnergy();
+      //! Get the constraint gradient for atom with index a
+      vector3 GetGradient(int a);
       //! Get the constrain gradient for the atom
-      //GetConstraintGradient(); isn't need I think??? only testing will tell :s
       OBFFConstraints& operator=(const OBFFConstraints &ai) 
       {
         if (this != &ai) {
@@ -249,6 +264,10 @@ namespace OpenBabel
       /////////////////////////////////////////////////////////////////////////
       //! \name Methods to set constraints
       //@{
+      //! Set Constraint factor
+      void SetFactor(double factor);
+      //! Ignore the atom while setting up calculations
+      void AddIgnore(int a);
       //! Fix the position of an atom
       void AddAtomConstraint(int a);
       //! Fix the x coordinate of the atom position
@@ -265,13 +284,15 @@ namespace OpenBabel
       void AddTorsionConstraint(int a, int b, int c, int d, double torsion);
       //! Delete a constraint
       //! \par index constraint index
-      void DeleteConstraint(int index) const;
+      void DeleteConstraint(int index);
       //@}
       /////////////////////////////////////////////////////////////////////////
       // Get Constraints                                                     //
       /////////////////////////////////////////////////////////////////////////
       //! \name Methods to get information about set constraints
       //@{
+      //! Get Constraint factor
+      double GetFactor();
       //! \returns the number of set constraints
       int Size() const;
       /*! The following constraint types are known: OBFF_CONST_IGNORE (ignore 
@@ -319,6 +340,7 @@ namespace OpenBabel
  
     private:
       std::vector<OBFFConstraint> _constraints;
+      double _factor;
   };
  
   // Class OBForceField
@@ -411,15 +433,6 @@ namespace OpenBabel
      */
     bool IsInSameRing(OBAtom* a, OBAtom* b);
  
-    /*! Find the first arom in a 1-(level+1) relationship
-     *  \param atom atom 1
-     *  \param level the 1-(level+1) relationship (1, 2 or 3)
-     *  \return index for the atom with 1-(level+1) relationship
-     */
-    int get_nbr (OBAtom* atom, int level);
-    //    bool is14(OBAtom *a, OBAtom *b);
-    // use OBAtom::IsOneFour(b)
-      
     std::vector<int> _ignore; //!< List of atoms that are ignored while setting up calculations
     std::vector<int> _fix; //!< List of atoms that are fixed while minimizing
     OBMol _mol; //!< Molecule to be evaluated or minimized
@@ -478,17 +491,36 @@ namespace OpenBabel
     }
     //! \return The unit (kcal/mol, kJ/mol, ...) in which the energy is expressed as std::string
     virtual std::string GetUnit() { return std::string("au"); }
-    /*! Setup the forcefield for mol (assigns atom types, charges, etc.) 
+    /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Reset constraints 
      *  \param mol the OBMol object that contains the atoms and bonds
      *  \return True if succesfull
      */
     bool Setup(OBMol &mol); 
-    bool Setup(OBMol &mol, OBFFConstraints &constraints); 
-    virtual bool SetupTypes() { return false; }
+    /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Use constraints 
+     *  \param mol the OBMol object that contains the atoms and bonds
+     *  \param constraints the OBFFConstraints object that contains the constraints
+     *  \return True if succesfull
+     */
+    bool Setup(OBMol &mol, OBFFConstraints &constraints);
+    /*! Load the parameters (this function is overloaded by the individual forcefields,
+     *  and is called autoamically from OBForceField::Setup())
+     */
     virtual bool ParseParamFile() { return false; }
+    /*! Set the atom types (this function is overloaded by the individual forcefields,
+     *  and is called autoamically from OBForceField::Setup())
+     */
     virtual bool SetTypes() { return false; }
+    /*! Set the formal charges (this function is overloaded by the individual forcefields,
+     *  and is called autoamically from OBForceField::Setup())
+     */
     virtual bool SetFormalCharges() { return false; }
+    /*! Set the partial charges (this function is overloaded by the individual forcefields,
+     *  and is called autoamically from OBForceField::Setup())
+     */
     virtual bool SetPartialCharges() { return false; }
+    /*! Setup the calculations (this function is overloaded by the individual forcefields,
+     *  and is called autoamically from OBForceField::Setup())
+     */
     virtual bool SetupCalculations() { return false; }
     /*! Compare the internal forcefield OBMol object to mol. If the two have the
      *  same number of atoms and bonds, and all atomic numbers are the same, 
@@ -539,8 +571,14 @@ namespace OpenBabel
       *logos << msg;
     }
     
+    //! Get the constraints 
     OBFFConstraints& GetConstraints() { return _constraints; }
-    void SetConstraints(OBFFConstraints& constraints) { _constraints = constraints; }
+    //! Set the constraints 
+    void SetConstraints(OBFFConstraints& constraints) 
+    { 
+      _constraints = constraints; 
+      _constraints.Setup(_mol);
+    }
  
     /////////////////////////////////////////////////////////////////////////
     // Energy Evaluation                                                   //
@@ -607,6 +645,12 @@ namespace OpenBabel
       
     //! \name Methods for logging
     //@{
+    //! Print the atom types 
+    void PrintTypes();
+    //! Print the formal charges (atom.GetPartialCharge(), MMFF94 FC's are not always int) 
+    void PrintFormalCharges();
+    //! Print the partial charges
+    void PrintPartialCharges();
     /*! Set the stream for logging (can also be &cout for logging to screen)
      *  \param pos stream
      *  \return True if succesfull
@@ -653,8 +697,6 @@ namespace OpenBabel
     //@{
     //! Generate coordinates for the molecule (distance geometry). (OB 3.0)
     void DistanceGeometry();
-    //! Generate coordinates for the molecule (knowledge based, energy minimization). (OB 3.0)
-    void GenerateCoordinates();
     /*! Generate conformers for the molecule (systematicaly rotating torsions).
      *  
      *  The initial starting structure here is important, this structure should be

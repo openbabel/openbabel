@@ -1,4 +1,9 @@
 2007-12-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+	
+	* src/forcefield.cpp, include/openbabel/forcefield.h: Added some log
+	functions, documentation update and bond length constraints.
+
+2007-12-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp, include/openbabel/forcefield.h: OBForceField now
 	defines Setup() itself. It calls the needed virtual setup functions
