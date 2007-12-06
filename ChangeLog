@@ -1,4 +1,12 @@
-2007-12-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2007-12-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/xyzformat.cpp: Fix bogus warning about titles when
+	reading past the end of the file.
+
+	* data/element.*: Fix atom colors to match Jmol standard. (Changes
+	in Fe, Co, Ni, Cu only.)
+
+2007-12-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 	
 	* src/forcefield.cpp, include/openbabel/forcefield.h: Added some log
 	functions, documentation update and bond length constraints.
