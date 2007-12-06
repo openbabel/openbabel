@@ -226,7 +226,7 @@ int main(int argc,char **argv)
     }
     
     if (EQn(commandline, "gen", 3)) {
-      pFF->GenerateCoordinates();
+      //pFF->GenerateCoordinates();
       pFF->UpdateCoordinates(mol);
       continue;
     }
