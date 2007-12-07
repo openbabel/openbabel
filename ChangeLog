@@ -1,3 +1,11 @@
+2007-12-07  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/mol.cpp, include/openbabel/forcefield.h: replaced double _energy
+	with vector<double> _energies.
+
+	* src/forcefield.cpp, include/openbabel/forcefield.h: update for
+	restraint code.
+
 2007-12-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/xyzformat.cpp: Fix bogus warning about titles when

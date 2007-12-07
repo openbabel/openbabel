@@ -892,6 +892,14 @@ namespace OpenBabel
     return(rd->GetData());
   }
 
+  double OBMol::GetEnergy() const 
+  { 
+    if (!_energies.size()) 
+      return 0.0;
+    
+    return(_energies[0]); 
+  }
+  
   double OBMol::GetMolWt()
   {
     double molwt=0.0;
@@ -1023,6 +1031,14 @@ namespace OpenBabel
     return (formula.str());
   }
 
+  void OBMol::SetEnergy(double energy) 
+  { 
+    if (_energies.size())
+      _energies[0] = energy; 
+    else
+      _energies.push_back(energy);
+  }
+  
   //! Stochoimetric formula (e.g., C4H6O).
   //!   This is either set by OBMol::SetFormula() or generated on-the-fly
   //!   using the "Hill order" -- i.e., C first if present, then H if present
@@ -1155,7 +1171,7 @@ namespace OpenBabel
       AddBond(*bond);
 
     this->_title  = src.GetTitle();
-    this->_energy = src.GetEnergy();
+    this->_energies = src.GetEnergies();
     this->_dimension = src.GetDimension();
     
     EndModify();
@@ -2790,7 +2806,6 @@ namespace OpenBabel
   {
     _natoms = _nbonds = 0;
     _mod = 0;
-    _energy = 0.0;
     _totalCharge = 0;
     _dimension = 3;
     _vatom.clear();
@@ -3536,7 +3551,22 @@ namespace OpenBabel
       }
   }
 
+  void OBMol::SetEnergies(std::vector<double> &energies)
+  {
+    _energies = energies;
+  }
 
+  double OBMol::GetEnergy(int ci)
+  {
+    if ((ci >= NumConformers()) || (ci < 0))
+      return 0.0;
+    
+    if (_energies.size() == 0)
+      return 0.0;
+
+    return _energies[ci];
+  }
+  
   void OBMol::SetConformers(vector<double*> &v)
   {
     vector<double*>::iterator i;

@@ -274,8 +274,8 @@ namespace OpenBabel
   
   void OBFFConstraint::Compute()
   {
-    vector3 da, db;
-    double rab, rab2, dE;
+    vector3 da, db, dc;
+    double delta, delta2, rab, rbc, rac, rab2, rbc2, length, dE;
  
     switch (type) {
       case OBFF_CONST_BOND:
@@ -292,42 +292,37 @@ namespace OpenBabel
         gradb = dE * db; 
         break;
       case OBFF_CONST_ANGLE:
-        /*
-	vector3 da, db, dc;
-        double rab, rab2, dE;
-        
-	// a-b
-	da = a->GetVector();
-        db = b->GetVector();
-	rab = OBForceField::VectorLengthDerivative(da, db);
-        rab = rab - _rab;
-        rab2 = rab * rab;
-        constraint_energy = 5.0 * rab2;
-        dE = 10.0 * rab;
-	grada = dE * da;
-        gradb = dE * db; 
- 	// b-c
-	da = b->GetVector();
-        db = c->GetVector();
-	rbc = OBForceField::VectorLengthDerivative(db, dc);
-        rbc = rbc - _rbc;
-        rbc2 = rbc * rbc;
-        constraint_energy += 5.0 * rbc2;
-        dE = 10.0 * rab;
-	gradb += dE * db;
-        gradc = dE * dc; 
-        // a-c
 	da = a->GetVector();
         dc = c->GetVector();
+	
+	rab = OBForceField::VectorLengthDerivative(da, db);
+        rab2 = rab * rab;
+	delta = rab - rab0;
+	delta2 = delta * delta;
+        constraint_energy = factor * delta;
+        dE = 2.0 * factor * delta;
+	grada = dE * da;
+        gradb = dE * db; 
+	
+	rbc = OBForceField::VectorLengthDerivative(db, dc);
+        rbc2 = rbc * rbc;
+	delta = rbc - rbc0;
+	delta2 = delta * delta;
+        constraint_energy = factor * delta2;
+        dE = 2.0 * factor * delta;
+	gradb += dE * db;
+        gradc = dE * dc; 
+        
 	rac = OBForceField::VectorLengthDerivative(da, dc);
-        rac = rac - _rac;
-        rac2 = rac * rac;
-        constraint_energy += 5.0 * rac2;
-        dE = 10.0 * rac;
+	// cosine rule
+        length = sqrt( rab2 * rbc2 - 2.0 * rab * rbc * cos(DEG_TO_RAD * constraint_value) );
+	delta = rac - length;
+        delta2 = delta * delta;
+        constraint_energy = factor * delta2;
+        dE = 2.0 * factor * delta;
 	grada += dE * da;
         gradc += dE * dc; 
         break;
-      */
       case OBFF_CONST_TORSION:
       case OBFF_CONST_IGNORE:
       default:
@@ -336,6 +331,11 @@ namespace OpenBabel
     }
   }
   
+  OBFFConstraints::OBFFConstraints()
+  {
+    _factor = 50000.0;
+  }
+ 
   void OBFFConstraints::Setup(OBMol& mol)
   {
     vector<OBFFConstraint>::iterator i;
@@ -345,6 +345,11 @@ namespace OpenBabel
       i->b = mol.GetAtom(i->ib);
       i->c = mol.GetAtom(i->ic);
       i->d = mol.GetAtom(i->id);
+    
+      if (i->type == OBFF_CONST_ANGLE) {
+        i->rab0 = (i->a)->GetDistance(i->b); 
+        i->rbc0 = (i->b)->GetDistance(i->c); 
+      }
     }
   }
 
@@ -2326,6 +2331,7 @@ namespace OpenBabel
         conf.push_back(xyz);
       }
       mol.SetConformers(conf);
+      mol.SetEnergies(_energies);
       mol.SetConformer(_current_conformer);
     }
     

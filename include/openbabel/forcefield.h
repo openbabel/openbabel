@@ -180,6 +180,7 @@ namespace OpenBabel
     public:
       //! Used to store the contraint energy for this OBFFConstraint
       double factor, constraint_energy, constraint_value;
+      double rab0, rbc0;
       //! Used to store the contraint type for this OBFFConstraint
       int type, ia, ib, ic, id;
       //! Used to store the atoms for this OBFFCostraint
@@ -230,10 +231,7 @@ namespace OpenBabel
   {
     public:
       //! Constructor
-      OBFFConstraints()
-      {
-        _factor = 10000.0;
-      }
+      OBFFConstraints();
       //! Destructor
       ~OBFFConstraints()
       {
@@ -433,8 +431,6 @@ namespace OpenBabel
      */
     bool IsInSameRing(OBAtom* a, OBAtom* b);
  
-    std::vector<int> _ignore; //!< List of atoms that are ignored while setting up calculations
-    std::vector<int> _fix; //!< List of atoms that are fixed while minimizing
     OBMol _mol; //!< Molecule to be evaluated or minimized
     bool _init; //!< Used to make sure we only parse the parameter file once, when needed
 

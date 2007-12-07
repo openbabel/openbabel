@@ -110,11 +110,11 @@ namespace OpenBabel
     std::vector<OBAtom*>          _vatom;      	//!< vector of atoms
     std::vector<OBBond*>          _vbond;      	//!< vector of bonds
     unsigned short int            _dimension;   //!< Dimensionality of coordinates
-    double                        _energy;      //!< Molecular heat of formation (if applicable)
     int				  _totalCharge; //!< Total charge on the molecule
     unsigned int                  _totalSpin;   //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
-    double                       *_c;	          //!< coordinate array
+    double                        *_c;	        //!< coordinate array
     std::vector<double*>          _vconf;       //!< vector of conformers
+    std::vector<double>           _energies;    //!< energies of conformers
     unsigned int                  _natoms;      //!< Number of atoms
     unsigned int                  _nbonds;      //!< Number of bonds
     std::vector<OBResidue*>       _residue;     //!< Residue information (if applicable)
@@ -285,7 +285,7 @@ namespace OpenBabel
     //! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
     std::string  GetSpacedFormula(int ones=0, const char* sp=" ");
     //! \return the heat of formation for this molecule (in kcal/mol)
-    double       GetEnergy() const { return(_energy); }
+    double       GetEnergy() const;
     //! \return the standard molar mass given by IUPAC atomic masses (amu)
     double       GetMolWt();
     //! \return the mass given by isotopes (or most abundant isotope, if not specified)
@@ -316,7 +316,7 @@ namespace OpenBabel
     //! Set the stochiometric formula for this molecule
     void   SetFormula(std::string molFormula);
     //! Set the heat of formation for this molecule (in kcal/mol)
-    void   SetEnergy(double energy) { _energy = energy; }
+    void   SetEnergy(double energy);
     //! Set the dimension of this molecule (i.e., 0, 1 , 2, 3)
     void   SetDimension(unsigned short int d) { _dimension = d; }
     //! Set the total charge of this molecule to @p charge
@@ -553,6 +553,13 @@ namespace OpenBabel
     void    DeleteConformer(int nconf);
     //! \return the coordinates to conformer @p i
     double  *GetConformer(int i)       {  return(_vconf[i]);      }
+    //! Set the entire set of conformer energies
+    void    SetEnergies(std::vector<double> &energies);
+    //! Set the entire set of conformer energies
+    std::vector<double> GetEnergies() { return _energies; }
+    //! Get the energy for conformer ci
+    //! \par ci conformer index
+    double  GetEnergy(int ci);
     //! Set the iterator to the beginning of the conformer list
     //! \return the array of coordinates for the first conformer
     double  *BeginConformer(std::vector<double*>::iterator&i)
