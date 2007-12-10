@@ -25,7 +25,7 @@ libopenbabel_la_SOURCES = \
 		bondtyper.cpp canon.cpp builder.cpp \
 		chains.cpp chiral.cpp data.cpp descriptor.cpp filters.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
-    gen3d.cpp griddata.cpp \
+    gen3d.cpp griddata.cpp dock.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \

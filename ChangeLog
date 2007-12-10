@@ -1,5 +1,13 @@
 2007-12-07  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* include/openbabel/dock.h, src/dock.cpp: Added docking class.
+
+	* src/forcefield.cpp: Implemented X, Y, Z atom constraints.
+
+
+
+2007-12-07  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* src/mol.cpp, include/openbabel/forcefield.h: replaced double _energy
 	with vector<double> _energies.
 

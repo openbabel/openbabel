@@ -391,14 +391,15 @@ namespace OpenBabel
   
   void OBFFConstraints::DeleteConstraint(int index)
   {
+    vector<OBFFConstraint> constraints;
     vector<OBFFConstraint>::iterator i;
     int n = 0;
 
-    for (i = _constraints.begin(); i != _constraints.end(); ++i) {
-      if (n == index)
+    for (i = _constraints.begin(); i != _constraints.end(); ++n, ++i) {
+      if (n == index) {
         _constraints.erase(i);
-      
-      n++;   
+        break;
+      }
     }
   }
   
@@ -412,6 +413,14 @@ namespace OpenBabel
     return _factor;
   }
 
+  void OBFFConstraints::AddIgnore(int a)
+  {
+    OBFFConstraint constraint;
+    constraint.type = OBFF_CONST_IGNORE; // constraint type
+    constraint.ia   = a; // atom to fix
+    _constraints.push_back(constraint);
+  }
+  
   void OBFFConstraints::AddAtomConstraint(int a)
   {
     OBFFConstraint constraint;
@@ -474,7 +483,7 @@ namespace OpenBabel
   void OBFFConstraints::AddTorsionConstraint(int a, int b, int c, int d, double torsion)
   {
     OBFFConstraint constraint;
-    constraint.type = OBFF_CONST_BOND; // constraint type
+    constraint.type = OBFF_CONST_TORSION; // constraint type
     constraint.ia   = a; // atom a
     constraint.ib   = b; // atom b
     constraint.ic   = c; // atom c
@@ -1762,9 +1771,12 @@ namespace OpenBabel
           else
             dir = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
           
-	  gradPtr[coordIdx] = dir.x();
-          gradPtr[coordIdx+1] = dir.y();
-          gradPtr[coordIdx+2] = dir.z();
+          if (!_constraints.IsXFixed(a->GetIdx()))
+	    gradPtr[coordIdx] = dir.x();
+          if (!_constraints.IsYFixed(a->GetIdx()))
+            gradPtr[coordIdx+1] = dir.y();
+          if (!_constraints.IsZFixed(a->GetIdx()))
+            gradPtr[coordIdx+2] = dir.z();
         }
       }
       alpha = LineSearch(_mol.GetCoordinates(), gradPtr);
@@ -1850,13 +1862,18 @@ namespace OpenBabel
         dir2 = grad2;
 
         int coordIdx = (a->GetIdx() - 1) * 3;
-        _grad1[coordIdx] = grad2.x();
-        _grad1[coordIdx + 1] = grad2.y();
-        _grad1[coordIdx + 2] = grad2.z();
-
-        _dir1[coordIdx] = grad2.x();
-        _dir1[coordIdx + 1] = grad2.y();
-        _dir1[coordIdx + 2] = grad2.z();
+        if (!_constraints.IsXFixed(a->GetIdx())) {
+          _grad1[coordIdx] = grad2.x();
+          _dir1[coordIdx] = grad2.x();
+        }
+	if (!_constraints.IsYFixed(a->GetIdx())) {
+          _grad1[coordIdx + 1] = grad2.y();
+          _dir1[coordIdx + 1] = grad2.y();
+        }
+	if (!_constraints.IsZFixed(a->GetIdx())) {
+	  _grad1[coordIdx + 2] = grad2.z();
+          _dir1[coordIdx + 2] = grad2.z();
+	}
       }
     }
     alpha = LineSearch(_mol.GetCoordinates(), _dir1);
@@ -1912,13 +1929,19 @@ namespace OpenBabel
             dir2 = grad2;
           }
  
-          _grad1[coordIdx] = grad2.x();
-          _grad1[coordIdx + 1] = grad2.y();
-          _grad1[coordIdx + 2] = grad2.z();
           
-          _dir1[coordIdx] = dir2.x();
-          _dir1[coordIdx + 1] = dir2.y();
-          _dir1[coordIdx + 2] = dir2.z();
+          if (!_constraints.IsXFixed(a->GetIdx())) {
+            _grad1[coordIdx] = grad2.x();
+            _dir1[coordIdx] = dir2.x();
+          }
+          if (!_constraints.IsYFixed(a->GetIdx())) {
+   	    _grad1[coordIdx + 1] = grad2.y();
+            _dir1[coordIdx + 1] = dir2.y();
+          }
+          if (!_constraints.IsZFixed(a->GetIdx())) {
+            _dir1[coordIdx + 2] = dir2.z();
+            _grad1[coordIdx + 2] = grad2.z();
+          }
         }
       }
       alpha = LineSearch(_mol.GetCoordinates(), _dir1);

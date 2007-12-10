@@ -66,7 +66,7 @@ am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	grid.cpp kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
 	obconversion.cpp oberror.cpp obiter.cpp obutil.cpp ops.cpp \
 	parsmart.cpp patty.cpp phmodel.cpp plugin.cpp pointgroup.cpp \
-	rand.cpp residue.cpp ring.cpp rotor.cpp rotamer.cpp \
+	rand.cpp residue.cpp ring.cpp rotor.cpp rotamer.cpp dock.cpp \
 	smartsdescriptors.cpp tokenst.cpp typer.cpp transform.cpp \
 	groupcontrib.cpp dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
@@ -78,7 +78,7 @@ am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	obiter.lo obutil.lo ops.lo parsmart.lo patty.lo phmodel.lo \
 	plugin.lo pointgroup.lo rand.lo residue.lo ring.lo rotor.lo \
 	rotamer.lo smartsdescriptors.lo tokenst.lo typer.lo \
-	transform.lo groupcontrib.lo $(am__objects_1)
+	transform.lo groupcontrib.lo dock.lo $(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 libopenbabel_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -259,7 +259,7 @@ libopenbabel_la_SOURCES = \
 		bondtyper.cpp canon.cpp builder.cpp \
 		chains.cpp chiral.cpp data.cpp descriptor.cpp filters.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
-    gen3d.cpp griddata.cpp \
+    gen3d.cpp griddata.cpp dock.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
@@ -418,6 +418,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tokenst.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/transform.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/typer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dock.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
