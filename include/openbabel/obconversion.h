@@ -235,6 +235,11 @@ namespace OpenBabel {
       /// The input stream can be specified and the change is retained in the OBConversion instance
       /// \return false and pOb=NULL on error 
       bool	Read(OBBase* pOb, std::istream* pin=NULL);
+	
+      /// Part of "API" interface. 
+      /// The input stream can be specified and the change is retained in the OBConversion instance
+      /// \return NULL on error 
+      OBBase*	ReadObject(std::istream* pin=NULL);
 
       /// @brief Reads an object of a class derived from OBBase into pOb from the supplied string
 	

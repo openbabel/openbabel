@@ -20,6 +20,7 @@ GNU General Public License for more details.
 
 #include <openbabel/bitvec.h>
 #include <openbabel/oberror.h>
+#include <cstdlib>
 
 namespace OpenBabel
 {

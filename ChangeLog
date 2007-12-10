@@ -1,3 +1,22 @@
+2007-12-10  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* include/openbabel/base.h: add missing headers, see debian bug #455170.
+	* include/openbabel/data.h: ditto.
+	* include/openbabel/lineend.h: ditto.
+	* include/openbabel/mol.h: ditto.
+	* include/openbabel/obconversion.h: ditto.
+	* include/openbabel/obmolecformat.h: ditto.
+	* include/openbabel/plugin.h: ditto.
+	* include/openbabel/xml.h: ditto.
+	* src/bitvec.cpp: ditto.
+	* src/dlhandler_unix.cpp: ditto.
+	* src/format.cpp: ditto.
+	* src/math/spacegroup.cpp: ditto.
+	* src/matrix.cpp: ditto.
+	* src/residue.cpp: ditto.
+	* src/tokenst.cpp: ditto.
+	* tools/babel.cpp: ditto.
+
 2007-12-07  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/dock.h, src/dock.cpp: Added docking class.

@@ -24,6 +24,8 @@ GNU General Public License for more details.
 #include <dirent.h>
 #include <sys/stat.h>
 #include <dlfcn.h>
+#include <cstring>
+#include <cstdlib>
 
 using namespace std;
 

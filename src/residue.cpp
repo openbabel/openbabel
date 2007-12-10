@@ -33,6 +33,8 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 #include <openbabel/oberror.h>
 #include <openbabel/bitvec.h>
 #include <openbabel/bond.h>
+#include <cstring>
+#include <cstdlib>
 
 using namespace std;
 

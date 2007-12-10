@@ -41,6 +41,7 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 
 #include <openbabel/obconversion.h>
 #include <openbabel/plugin.h>
+#include <cstdlib>
 
 using namespace std;
 using namespace OpenBabel;
@@ -311,7 +312,7 @@ int main(int argc,char *argv[])
       cerr << "Invalid output format" << endl;
       usage();
     }
-  
+
   if(SplitOrBatch)
     {
       //Put * into output file name before extension (or ext.gz)
