@@ -272,65 +272,6 @@ namespace OpenBabel
     return NULL;
   }
   
-  void OBFFConstraint::Compute()
-  {
-    vector3 da, db, dc;
-    double delta, delta2, rab, rbc, rac, rab2, rbc2, length, dE;
- 
-    switch (type) {
-      case OBFF_CONST_BOND:
-	da = a->GetVector();
-        db = b->GetVector();
-	
-	rab = OBForceField::VectorLengthDerivative(da, db);
-        rab = rab - constraint_value;
-        rab2 = rab * rab;
-        constraint_energy = factor * rab2;
-        dE = 2.0 * factor * rab;
-
-	grada = dE * da;
-        gradb = dE * db; 
-        break;
-      case OBFF_CONST_ANGLE:
-	da = a->GetVector();
-        dc = c->GetVector();
-	
-	rab = OBForceField::VectorLengthDerivative(da, db);
-        rab2 = rab * rab;
-	delta = rab - rab0;
-	delta2 = delta * delta;
-        constraint_energy = factor * delta;
-        dE = 2.0 * factor * delta;
-	grada = dE * da;
-        gradb = dE * db; 
-	
-	rbc = OBForceField::VectorLengthDerivative(db, dc);
-        rbc2 = rbc * rbc;
-	delta = rbc - rbc0;
-	delta2 = delta * delta;
-        constraint_energy = factor * delta2;
-        dE = 2.0 * factor * delta;
-	gradb += dE * db;
-        gradc = dE * dc; 
-        
-	rac = OBForceField::VectorLengthDerivative(da, dc);
-	// cosine rule
-        length = sqrt( rab2 * rbc2 - 2.0 * rab * rbc * cos(DEG_TO_RAD * constraint_value) );
-	delta = rac - length;
-        delta2 = delta * delta;
-        constraint_energy = factor * delta2;
-        dE = 2.0 * factor * delta;
-	grada += dE * da;
-        gradc += dE * dc; 
-        break;
-      case OBFF_CONST_TORSION:
-      case OBFF_CONST_IGNORE:
-      default:
-        constraint_energy = 0.0;
-	break;
-    }
-  }
-  
   OBFFConstraints::OBFFConstraints()
   {
     _factor = 50000.0;
@@ -383,9 +324,32 @@ namespace OpenBabel
     double constraint_energy = 0.0;
         
     for (i = _constraints.begin(); i != _constraints.end(); ++i)
-      if ( (i->type == OBFF_CONST_BOND) || (i->type == OBFF_CONST_ANGLE) || (i->type == OBFF_CONST_TORSION) )
-        constraint_energy += i->GetConstraintEnergy();
-   
+      if ( (i->type == OBFF_CONST_BOND) || (i->type == OBFF_CONST_ANGLE) || (i->type == OBFF_CONST_TORSION) ) {
+	vector3 da, db, dc;
+        double delta, delta2, rab, rbc, rac, rab2, rbc2, length, dE;
+ 
+        switch (i->type) {
+          case OBFF_CONST_BOND:
+	    da = (i->a)->GetVector();
+            db = (i->b)->GetVector();
+	
+ 	    rab = OBForceField::VectorLengthDerivative(da, db);
+            rab = rab - i->constraint_value;
+            rab2 = rab * rab;
+            constraint_energy += i->factor * rab2;
+            dE = 2.0 * i->factor * rab;
+
+	    i->grada = dE * da;
+            i->gradb = dE * db; 
+            break;
+          case OBFF_CONST_ANGLE:
+          case OBFF_CONST_TORSION:
+          case OBFF_CONST_IGNORE:
+          default:
+            constraint_energy = 0.0;
+	    break;
+        }
+      }
     return constraint_energy;
   }
   
@@ -656,19 +620,22 @@ namespace OpenBabel
       ParseParamFile();
       _init = true;
     }    
-    
-    _mol = mol;
-    _constraints.Clear();
-
-    if (!SetTypes())
-      return false;
-
-    SetFormalCharges();
-    SetPartialCharges();
-
-    if (!SetupCalculations())
-      return false;
    
+    if (IsSetupNeeded(mol)) {
+      _mol = mol;
+      if (_mol.NumAtoms() && _constraints.Size())
+        _constraints.Setup(_mol);
+
+      if (!SetTypes())
+        return false;
+
+      SetFormalCharges();
+      SetPartialCharges();
+
+      if (!SetupCalculations())
+        return false;
+    }
+
     return true;
   }
   
@@ -679,18 +646,21 @@ namespace OpenBabel
       _init = true;
     }    
     
-    _mol = mol;
-    _constraints = constraints;
-    _constraints.Setup(_mol);
+    if (IsSetupNeeded(mol)) {
+      _mol = mol;
+      _constraints = constraints;
+      if (_mol.NumAtoms() && _constraints.Size())
+        _constraints.Setup(_mol);
 
-    if (!SetTypes())
-      return false;
+      if (!SetTypes())
+        return false;
 
-    SetFormalCharges();
-    SetPartialCharges();
+      SetFormalCharges();
+      SetPartialCharges();
 
-    if (!SetupCalculations())
-      return false;
+      if (!SetupCalculations())
+        return false;
+    }
    
     return true;
   }

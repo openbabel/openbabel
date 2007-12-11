@@ -1,3 +1,9 @@
+2007-12-11  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp, include/openbabel/forcefield.h: Setup now checks
+	if the molecule actually needs to be set up by calling IsSetupNeeded()
+	itself.
+
 2007-12-10  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* include/openbabel/base.h: add missing headers, see debian bug #455170.

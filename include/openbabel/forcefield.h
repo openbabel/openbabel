@@ -179,7 +179,7 @@ namespace OpenBabel
   {
     public:
       //! Used to store the contraint energy for this OBFFConstraint
-      double factor, constraint_energy, constraint_value;
+      double factor, constraint_value;
       double rab0, rbc0;
       //! Used to store the contraint type for this OBFFConstraint
       int type, ia, ib, ic, id;
@@ -193,21 +193,12 @@ namespace OpenBabel
       {
 	a = b = c = d = NULL;
 	ia = ib = ic = id = 0;
-        constraint_value = constraint_energy = 0.0;
+        constraint_value = 0.0;
 	factor = 0.0;
       }
       //! Destructor
       ~OBFFConstraint()
       {
-      }
-      
-      //! Compute the constraint energy for this OBFFConstraint
-      void Compute();
-      //! \return Constraint energy for this OBFFConstraint (call Compute() first)
-      double GetConstraintEnergy() 
-      {
-	Compute();
-        return constraint_energy; 
       }
       
       vector3 GetGradient(int a) 
@@ -573,7 +564,8 @@ namespace OpenBabel
     void SetConstraints(OBFFConstraints& constraints) 
     { 
       _constraints = constraints; 
-      _constraints.Setup(_mol);
+      if (_mol.NumAtoms())
+        _constraints.Setup(_mol); 
     }
  
     /////////////////////////////////////////////////////////////////////////
