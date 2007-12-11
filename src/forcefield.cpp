@@ -328,8 +328,12 @@ namespace OpenBabel
 	vector3 da, db, dc;
         double delta, delta2, rab, rbc, rac, rab2, rbc2, length, dE;
  
-        switch (i->type) {
+	
+	switch (i->type) {
           case OBFF_CONST_BOND:
+	    if ((i->a == NULL) || (i->b) == NULL)
+	      return 0.0;
+
 	    da = (i->a)->GetVector();
             db = (i->b)->GetVector();
 	
@@ -346,7 +350,7 @@ namespace OpenBabel
           case OBFF_CONST_TORSION:
           case OBFF_CONST_IGNORE:
           default:
-            constraint_energy = 0.0;
+            return 0.0;
 	    break;
         }
       }
