@@ -32,6 +32,7 @@ GNU General Public License for more details.
 #include <openbabel/dlhandler.h>
 #include <openbabel/oberror.h>
 #include <openbabel/lineend.h>
+#include <cstring>
 
 // These macros are used in DLL builds. If they have not
 // been set in babelconfig.h, define them as nothing.

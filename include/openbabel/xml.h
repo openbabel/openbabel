@@ -19,6 +19,7 @@ GNU General Public License for more details.
 
 #include <libxml/xmlreader.h>
 #include <libxml/xmlwriter.h>
+#include <typeinfo>
 
 namespace OpenBabel
 {

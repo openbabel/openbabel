@@ -26,6 +26,7 @@ GNU General Public License for more details.
 
 #include <openbabel/fingerprint.h>
 #include <openbabel/oberror.h>
+#include <cstring>
 
 using namespace std;
 namespace OpenBabel

@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <sys/stat.h>
 #include <dlfcn.h>
 #include <cstdlib>
+#include <cstring>
 
 using namespace std;
 

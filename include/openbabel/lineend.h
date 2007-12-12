@@ -21,6 +21,7 @@ General Public License for more details.
 #define OB_LINEEND_H
 
 #include <streambuf>
+#include <climits>
 
 #ifndef OBCONV
 #define OBCONV

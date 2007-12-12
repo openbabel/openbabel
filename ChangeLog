@@ -1,3 +1,17 @@
+2007-12-12  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* include/openbabel/data.h: add missing headers, see debian bug #455170.
+	* include/openbabel/lineend.h: ditto.
+	* include/openbabel/obconversion.h: ditto.
+	* include/openbabel/obmolecformat.h: ditto.
+	* include/openbabel/xml.h: ditto.
+	* src/dlhandler_unix.cpp: ditto.
+	* src/fingerprint.cpp: ditto.
+	* src/formats/rxnformat.cpp: ditto.
+	* src/obconversion.cpp: ditto.
+	* src/residue.cpp: ditto.
+	* src/tokenst.cpp: ditto.
+
 2007-10-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp, src/forcefields/forcefieldghemical.cpp:

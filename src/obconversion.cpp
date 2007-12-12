@@ -37,6 +37,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <map>
+#include <typeinfo>
 
 #include <openbabel/obconversion.h>
 

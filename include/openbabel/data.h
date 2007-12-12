@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <fstream>
 #include <vector>
 #include <string>
+#include <cstring>
 
 namespace OpenBabel
 {
