@@ -280,7 +280,8 @@ namespace OpenBabel
       double dotAbbcBccd = dot(abbc,bccd);
       tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
       if (IsNearZero(dotAbbcBccd)) {
-        tor = 0.0; // rather than NaN
+        //tor = 0.0; // rather than NaN
+        tor = 180.0; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
         tor = -tor;
@@ -359,12 +360,13 @@ namespace OpenBabel
       db = b->GetVector();
       dc = c->GetVector();
       dd = d->GetVector();
-      angle = OBForceField::VectorOOPDerivative(da, db, dc, dd);
-      dE =  (0.043844 * angle * koop) / cos(angle);
+      angle = OBForceField::VectorOOPDerivative(da, db, dc, dd) * RAD_TO_DEG;
+      dE =  (0.043844 * angle * koop) / cos(angle * DEG_TO_RAD);
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
       gradc = dE * dc; // - dE/drab * drab/dc
-      gradd = dE * dd; // - dE/drab * drab/dd
+      //gradd = dE * dd; // - dE/drab * drab/dd
+      gradd = -1.0*(grada + gradb + gradc);
     } else {
       angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
     }
@@ -399,7 +401,7 @@ namespace OpenBabel
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "     TOTAL TORSIONAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      sprintf(logbuf, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
       OBFFLog(logbuf);
     }
 
@@ -1482,8 +1484,9 @@ namespace OpenBabel
   bool OBForceFieldMMFF94::SetupCalculations()
   {
     OBFFParameter *parameter;
-    OBAtom *a, *b, *c, *d;
+    OBAtom *a, *b, *c, *d, *tmp;
     bool found;
+    int order;
     
     IF_OBFF_LOGLVL_LOW
       OBFFLog("\nS E T T I N G   U P   C A L C U L A T I O N S\n\n");
@@ -1501,7 +1504,7 @@ namespace OpenBabel
     
     FOR_BONDS_OF_MOL(bond, _mol) {
       a = bond->GetBeginAtom();
-      b = bond->GetEndAtom();	
+      b = bond->GetEndAtom();
       
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
         continue;
@@ -1752,19 +1755,36 @@ namespace OpenBabel
         continue;
  
       torsiontype = GetTorsionType(a, b, c, d);
-      
-      // try exact match 
-      parameter = GetTypedParameter4Atom(torsiontype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
-      if (parameter == NULL) // try 3-2-2-5
-	parameter = GetTypedParameter4Atom(torsiontype, EqLvl3(atoi(a->GetType())), atoi(b->GetType()), 
-	                                            atoi(c->GetType()), EqLvl5(atoi(d->GetType())), _fftorsionparams);
-      if (parameter == NULL) // try 5-2-2-3
-  	parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(a->GetType())), atoi(b->GetType()), 
-	                                            atoi(c->GetType()), EqLvl3(atoi(d->GetType())), _fftorsionparams);
-      if (parameter == NULL) // try 5-2-2-5
-  	parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(a->GetType())), atoi(b->GetType()), 
-	                                            atoi(c->GetType()), EqLvl5(atoi(d->GetType())), _fftorsionparams);
+      // CXT = MC*(J*MA**3 + K*MA**2 + I*MA + L) + TTijkl  MC = 6, MA = 136
+      order = (atoi(c->GetType())*2515456 + atoi(b->GetType())*18496 + atoi(d->GetType())*136 + atoi(a->GetType())) 
+            - (atoi(b->GetType())*2515456 + atoi(c->GetType())*18496 + atoi(a->GetType())*136 + atoi(d->GetType()));
 
+      if (order >= 0) {
+        // try exact match 
+        parameter = GetTypedParameter4Atom(torsiontype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
+        if (parameter == NULL) // try 3-2-2-5
+  	  parameter = GetTypedParameter4Atom(torsiontype, EqLvl3(atoi(a->GetType())), atoi(b->GetType()), 
+	                                            atoi(c->GetType()), EqLvl5(atoi(d->GetType())), _fftorsionparams);
+        if (parameter == NULL) // try 5-2-2-3
+  	  parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(a->GetType())), atoi(b->GetType()), 
+	                                            atoi(c->GetType()), EqLvl3(atoi(d->GetType())), _fftorsionparams);
+        if (parameter == NULL) // try 5-2-2-5
+  	  parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(a->GetType())), atoi(b->GetType()), 
+	                                            atoi(c->GetType()), EqLvl5(atoi(d->GetType())), _fftorsionparams);
+      } else {
+        // try exact match 
+        parameter = GetTypedParameter4Atom(torsiontype, atoi(d->GetType()), atoi(c->GetType()), atoi(b->GetType()), atoi(a->GetType()), _fftorsionparams);
+        if (parameter == NULL) // try 3-2-2-5
+  	  parameter = GetTypedParameter4Atom(torsiontype, EqLvl3(atoi(d->GetType())), atoi(c->GetType()), 
+	                                            atoi(b->GetType()), EqLvl5(atoi(a->GetType())), _fftorsionparams);
+        if (parameter == NULL) // try 5-2-2-3
+  	  parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(d->GetType())), atoi(c->GetType()), 
+	                                            atoi(b->GetType()), EqLvl3(atoi(a->GetType())), _fftorsionparams);
+        if (parameter == NULL) // try 5-2-2-5
+  	  parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(d->GetType())), atoi(c->GetType()), 
+	                                            atoi(b->GetType()), EqLvl5(atoi(a->GetType())), _fftorsionparams);
+      }
+      
       if (parameter) {
         torsioncalc.v1 = parameter->_dpar[0];
         torsioncalc.v2 = parameter->_dpar[1];
@@ -1774,7 +1794,7 @@ namespace OpenBabel
 	
 	IF_OBFF_LOGLVL_LOW {
           sprintf(logbuf, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
-	    a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetType());
+	    a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
           OBFFLog(logbuf);
         }
 
@@ -2732,40 +2752,40 @@ namespace OpenBabel
 
       double delta, err;
       cout << endl;
-      cout << "TERM                   OB ENERGY    LOG ENERGY      DELTA" << endl;
-      cout << "-----------------------------------------------------------" << endl;
+      cout << "TERM                   OB ENERGY   LOG ENERGY      DELTA" << endl;
+      cout << "-------------------------------------------------------------" << endl;
     
       delta = (E_Bond() - ebond);
-      sprintf(logbuf, "Bond Stretching        %8.3f      %8.3f     %8.3f", E_Bond(), ebond, delta);
+      sprintf(logbuf, "Bond Stretching        %8.5f    %8.5f   %8.5f", E_Bond(), ebond, delta);
       cout << logbuf << endl;
     
       delta = (E_Angle() - eangle);
-      sprintf(logbuf, "Angle Bending          %8.3f      %8.3f     %8.3f", E_Angle(), eangle, delta);
+      sprintf(logbuf, "Angle Bending          %8.5f    %8.5f   %8.5f", E_Angle(), eangle, delta);
       cout << logbuf << endl;
     
       delta = (E_StrBnd() - estbn);
-      sprintf(logbuf, "Stretch-Bending        %8.3f      %8.3f     %8.3f", E_StrBnd(), estbn, delta);
+      sprintf(logbuf, "Stretch-Bending        %8.5f    %8.5f   %8.5f", E_StrBnd(), estbn, delta);
       cout << logbuf << endl;
     
       delta = (E_OOP() - eoop);
-      sprintf(logbuf, "Out-Of-Plane Bending   %8.3f      %8.3f     %8.3f", E_OOP(), eoop, delta);
+      sprintf(logbuf, "Out-Of-Plane Bending   %8.5f    %8.5f   %8.5f", E_OOP(), eoop, delta);
       cout << logbuf << endl;
     
       delta = (E_Torsion() - etor);
-      sprintf(logbuf, "Torsional              %8.3f      %8.3f     %8.3f", E_Torsion(), etor, delta);
+      sprintf(logbuf, "Torsional              %8.5f    %8.5f   %8.5f", E_Torsion(), etor, delta);
       cout << logbuf << endl;
     
       delta = (E_VDW() - evdw);
-      sprintf(logbuf, "Van der Waals          %8.3f      %8.3f     %8.3f", E_VDW(), evdw, delta);
+      sprintf(logbuf, "Van der Waals          %8.5f    %8.5f   %8.5f", E_VDW(), evdw, delta);
       cout << logbuf << endl;
       
       delta = (E_Electrostatic() - eeq);
-      sprintf(logbuf, "Electrostatic          %8.3f      %8.3f     %8.3f", E_Electrostatic(), eeq, delta);
+      sprintf(logbuf, "Electrostatic          %8.5f    %8.5f   %8.5f", E_Electrostatic(), eeq, delta);
       cout << logbuf << endl;
 
       cout << endl;
       delta = (Energy() - etot);
-      sprintf(logbuf, "Total ENERGY           %8.3f      %8.3f     %8.3f", Energy(), etot, delta);
+      sprintf(logbuf, "Total ENERGY           %8.5f    %8.5f   %8.5f", Energy(), etot, delta);
       cout << logbuf << endl;
 
     } // for (unsigned int c;; c++ )
@@ -2966,7 +2986,7 @@ namespace OpenBabel
 
     sumbondtypes = GetBondType(a,b) + GetBondType(b, c);
 
-    if (a->IsInRingSize(3) && b->IsInRingSize(3) && c->IsInRingSize(3) && IsInSameRing(a, c)) {
+    if (a->IsInRingSize(3) && b->IsInRingSize(3) && c->IsInRingSize(3) && IsInSameRing(a, c))
       switch (sumbondtypes) {
       case 0:
         return 3; 
@@ -2975,10 +2995,8 @@ namespace OpenBabel
       case 2:
         return 6; 
       }
-    }
     
-    //if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && IsInSameRing(a, b) && IsInSameRing(b, c)) {
-    if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && IsInSameRing(a, c)) {
+    if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && IsInSameRing(a, c))
       switch (sumbondtypes) {
       case 0:
         return 4; 
@@ -2987,8 +3005,7 @@ namespace OpenBabel
       case 2:
         return 8; 
       }
-    }
-
+    
     return sumbondtypes;
   }
   
@@ -3064,6 +3081,12 @@ namespace OpenBabel
     return -1; //???
   }
   
+  //
+  // MMFF part V - page 609
+  //
+  // TTijkl = 1 when BTjk = 1
+  // TTijkl = 2 when BTjk = 0 but BTij and/or BTkl = 1
+  //
   int OBForceFieldMMFF94::GetTorsionType(OBAtom* a, OBAtom* b, OBAtom *c, OBAtom *d)
   {
     int btab, btbc, btcd;
@@ -3074,9 +3097,17 @@ namespace OpenBabel
     
     if (btbc == 1)
       return 1;
+    
+    //if (!btbc && (btab || btcd))
+    int order = (atoi(d->GetType())*2515456 + atoi(c->GetType())*18496 + atoi(b->GetType())*136 + atoi(a->GetType())) 
+            - (atoi(a->GetType())*2515456 + atoi(b->GetType())*18496 + atoi(c->GetType())*136 + atoi(d->GetType()));
 
-    if (btbc && (btab || btcd))
-      return 2;
+    if (order >= 0)
+      if (!btbc && (btab))
+        return 2;
+    else
+      if (!btbc && (btcd))
+        return 2;
 
     if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && d->IsInRingSize(4))
       if (IsInSameRing(a,b) && IsInSameRing(b,c) && IsInSameRing(c,d))
@@ -3086,7 +3117,9 @@ namespace OpenBabel
       vector<OBRing*> vr;
       vr = _mol.GetSSSR();
     
-      if (!b->IsCarbon() && !c->IsCarbon())
+      //if ( !(b->IsCarbon() && (b->GetValence() == 4)) || (c->IsCarbon() && (c->GetValence() == 4)) )
+
+      if( !((atoi(a->GetType()) == 1) || (atoi(b->GetType()) == 1) || (atoi(c->GetType()) == 1) || (atoi(d->GetType()) == 1)) )
         return 0;
 
       vector<OBRing*>::iterator ri;
@@ -3101,9 +3134,13 @@ namespace OpenBabel
 	if (!(*ri)->IsMember(a) || !(*ri)->IsMember(b) || !(*ri)->IsMember(c) || !(*ri)->IsMember(d))
 	  continue;
 	
-        for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) // for each ring atom
-	  if (_mol.GetAtom(*rj)->GetValence() != _mol.GetAtom(*rj)->BOSum())
-	    return 0;
+        //for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) // for each ring atom
+	//  if (_mol.GetAtom(*rj)->GetValence() != _mol.GetAtom(*rj)->BOSum())
+	// check for saturation WITHIN the torsion and not the whole ring
+	//if (b->GetValence() != c->BOSum())
+	//  return 0;
+	//if (c->GetValence() != c->BOSum())
+	//  return 0;
 	
 	return 5;
       }
@@ -3543,7 +3580,7 @@ namespace OpenBabel
     
     for (int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (ffclass == parameter[idx]._ipar[0])) || 
-          ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0]))) 
+          ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0])) ) 
         {
           par = &parameter[idx];
           return par;
@@ -3558,9 +3595,9 @@ namespace OpenBabel
     
     for (int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && 
-           (d == parameter[idx].d) && (ffclass == parameter[idx]._ipar[0])) || 
-           ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && 
-	   (d == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0]))) 
+           (d == parameter[idx].d) && (ffclass == parameter[idx]._ipar[0])) 
+          /* || ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && 
+	   (d == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0])) */ ) 
         {
           par = &parameter[idx];
           return par;

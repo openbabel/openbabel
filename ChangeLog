@@ -1,3 +1,11 @@
+2007-12-12  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* srd/mol.cpp: Bugfix for FindTorsion. Now checkes to make sure the
+	wing atoms are not the same atom. This occurs in 3-membered rings.
+
+	* src/forcefields/forcefieldmmff94.cpp: Improved torsion and OOP
+	energies.
+
 2007-12-11  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp, include/openbabel/forcefield.h: Setup now checks

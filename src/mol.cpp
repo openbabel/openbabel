@@ -440,7 +440,7 @@ namespace OpenBabel
 
             for(d = c->BeginNbrAtom(bi3);d;d = c->NextNbrAtom(bi3))
               {
-                if(d == b)
+                if ((d == b) || (d == a))
                   continue;
                 torsion.AddTorsion(a,b,c,d);
               }
