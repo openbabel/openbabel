@@ -1,5 +1,11 @@
 2007-12-12  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/forcefields/forcefieldmmff94.[h,cpp]: Solved problem with VDW
+	interactions. H-Bond donor/acceptor reactions were not handled
+	correctly.
+
+2007-12-12  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* srd/mol.cpp: Bugfix for FindTorsion. Now checkes to make sure the
 	wing atoms are not the same atom. This occurs in 3-membered rings.
 

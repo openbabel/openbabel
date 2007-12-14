@@ -412,7 +412,7 @@ namespace OpenBabel
   {
     vector3 da, db;
     double rab2, /*rab3,*/ rab4, /*rab5,*/ rab6, rab7;
-    double erep2, /*erep3,*/ erep4, /*erep5,*/ erep6, erep7;
+    double erep2, /*erep3,*/ erep4, /*erep5,*/ erep6; /*, erep7;*/
     double dE;
 
     if (gradients) {
@@ -435,7 +435,7 @@ namespace OpenBabel
       
     eattr = (((1.12 * R_AB7) / (rab7 + 0.12 * R_AB7)) - 2.0);
       
-    energy = escale * epsilon * erep7 * eattr;
+    energy = epsilon * erep7 * eattr;
     
     if (gradients) { 
       //dE = ...
@@ -464,7 +464,7 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f  %8.3f  %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
-                (*i).rab, (*i).R_AB, (*i).epsilon, (*i).erep, (*i).eattr, (*i).energy);
+                (*i).rab, (*i).R_AB, (*i).epsilon, (*i).epsilon * (*i).erep7, (*i).epsilon * (*i).eattr, (*i).energy);
         OBFFLog(logbuf);
       }
     }
@@ -2120,35 +2120,55 @@ namespace OpenBabel
  
       R_AA = vdwcalc.Aa * pow(vdwcalc.alpha_a, 0.25);
       R_BB = vdwcalc.Ab * pow(vdwcalc.alpha_b, 0.25);
+      sqrt_a = sqrt(vdwcalc.alpha_a / vdwcalc.Na);
+      sqrt_b = sqrt(vdwcalc.alpha_b / vdwcalc.Nb);
       
-      vdwcalc.escale = 1.0;
       if (vdwcalc.aDA == 1) { // hydrogen bond donor
         vdwcalc.R_AB = 0.5 * (R_AA + R_BB);
-        if (vdwcalc.bDA == 2) { // hydrogen bond acceptor
+	R_AB2 = vdwcalc.R_AB * vdwcalc.R_AB;
+        R_AB4 = R_AB2 * R_AB2;
+        R_AB6 = R_AB4 * R_AB2;
+        
+	if (vdwcalc.bDA == 2) { // hydrogen bond acceptor
+	  vdwcalc.epsilon = 0.5 * (181.16 * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0 / R_AB6);
+          // R_AB is scaled to 0.8 for D-A interactions. The value used in the calculation of epsilon is not scaled. 
           vdwcalc.R_AB = 0.8 * vdwcalc.R_AB;
-          vdwcalc.escale = 0.5;
-        }
+        } else
+	  vdwcalc.epsilon = (181.16 * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0 / R_AB6);
+	
+	R_AB2 = vdwcalc.R_AB * vdwcalc.R_AB;
+        R_AB4 = R_AB2 * R_AB2;
+        R_AB6 = R_AB4 * R_AB2;
+        vdwcalc.R_AB7 = R_AB6 * vdwcalc.R_AB;
       } else if (vdwcalc.bDA == 1) { // hydrogen bond donor
         vdwcalc.R_AB = 0.5 * (R_AA + R_BB);
-        if (vdwcalc.aDA == 2) { // hydrogen bond acceptor
+       	R_AB2 = vdwcalc.R_AB * vdwcalc.R_AB;
+        R_AB4 = R_AB2 * R_AB2;
+        R_AB6 = R_AB4 * R_AB2;
+        
+	if (vdwcalc.aDA == 2) { // hydrogen bond acceptor
+	  vdwcalc.epsilon = 0.5 * (181.16 * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0 / R_AB6);
+          // R_AB is scaled to 0.8 for D-A interactions. The value used in the calculation of epsilon is not scaled. 
           vdwcalc.R_AB = 0.8 * vdwcalc.R_AB;
-          vdwcalc.escale = 0.5;
-        }
+        } else
+	  vdwcalc.epsilon = (181.16 * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0 / R_AB6);
+	
+	R_AB2 = vdwcalc.R_AB * vdwcalc.R_AB;
+	R_AB4 = R_AB2 * R_AB2;
+	R_AB6 = R_AB4 * R_AB2;
+	vdwcalc.R_AB7 = R_AB6 * vdwcalc.R_AB;
       } else {
         g_AB = (R_AA - R_BB) / ( R_AA + R_BB);
         g_AB2 = g_AB * g_AB;
         vdwcalc.R_AB =  0.5 * (R_AA + R_BB) * (1.0 + 0.2 * (1.0 - exp(-12.0 * g_AB2)));
+        R_AB2 = vdwcalc.R_AB * vdwcalc.R_AB;
+        R_AB4 = R_AB2 * R_AB2;
+        R_AB6 = R_AB4 * R_AB2;
+        vdwcalc.R_AB7 = R_AB6 * vdwcalc.R_AB;
+	vdwcalc.epsilon = (181.16 * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0 / R_AB6);
       }
       
-      R_AB2 = vdwcalc.R_AB * vdwcalc.R_AB;
-      R_AB4 = R_AB2 * R_AB2;
-      R_AB6 = R_AB4 * R_AB2;
-      vdwcalc.R_AB7 = R_AB6 * vdwcalc.R_AB;
 
-      sqrt_a = sqrt(vdwcalc.alpha_a / vdwcalc.Na);
-      sqrt_b = sqrt(vdwcalc.alpha_b / vdwcalc.Nb);
-      vdwcalc.epsilon = (181.16 * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0 / R_AB6);
- 
       _vdwcalculations.push_back(vdwcalc);
     }
     
@@ -2752,40 +2772,40 @@ namespace OpenBabel
 
       double delta, err;
       cout << endl;
-      cout << "TERM                   OB ENERGY   LOG ENERGY      DELTA" << endl;
-      cout << "-------------------------------------------------------------" << endl;
+      cout << "TERM                         OB ENERGY         LOG ENERGY            DELTA" << endl;
+      cout << "--------------------------------------------------------------------------" << endl;
     
       delta = (E_Bond() - ebond);
-      sprintf(logbuf, "Bond Stretching        %8.5f    %8.5f   %8.5f", E_Bond(), ebond, delta);
+      sprintf(logbuf, "Bond Stretching        %11.5f    %11.5f   %11.5f", E_Bond(), ebond, delta);
       cout << logbuf << endl;
     
       delta = (E_Angle() - eangle);
-      sprintf(logbuf, "Angle Bending          %8.5f    %8.5f   %8.5f", E_Angle(), eangle, delta);
+      sprintf(logbuf, "Angle Bending          %11.5f    %11.5f   %11.5f", E_Angle(), eangle, delta);
       cout << logbuf << endl;
     
       delta = (E_StrBnd() - estbn);
-      sprintf(logbuf, "Stretch-Bending        %8.5f    %8.5f   %8.5f", E_StrBnd(), estbn, delta);
+      sprintf(logbuf, "Stretch-Bending        %11.5f    %11.5f   %11.5f", E_StrBnd(), estbn, delta);
       cout << logbuf << endl;
     
       delta = (E_OOP() - eoop);
-      sprintf(logbuf, "Out-Of-Plane Bending   %8.5f    %8.5f   %8.5f", E_OOP(), eoop, delta);
+      sprintf(logbuf, "Out-Of-Plane Bending   %11.5f    %11.5f   %11.5f", E_OOP(), eoop, delta);
       cout << logbuf << endl;
     
       delta = (E_Torsion() - etor);
-      sprintf(logbuf, "Torsional              %8.5f    %8.5f   %8.5f", E_Torsion(), etor, delta);
+      sprintf(logbuf, "Torsional              %11.5f    %11.5f   %11.5f", E_Torsion(), etor, delta);
       cout << logbuf << endl;
     
       delta = (E_VDW() - evdw);
-      sprintf(logbuf, "Van der Waals          %8.5f    %8.5f   %8.5f", E_VDW(), evdw, delta);
+      sprintf(logbuf, "Van der Waals          %11.5f    %11.5f   %11.5f", E_VDW(), evdw, delta);
       cout << logbuf << endl;
       
       delta = (E_Electrostatic() - eeq);
-      sprintf(logbuf, "Electrostatic          %8.5f    %8.5f   %8.5f", E_Electrostatic(), eeq, delta);
+      sprintf(logbuf, "Electrostatic          %11.5f    %11.5f   %11.5f", E_Electrostatic(), eeq, delta);
       cout << logbuf << endl;
 
       cout << endl;
       delta = (Energy() - etot);
-      sprintf(logbuf, "Total ENERGY           %8.5f    %8.5f   %8.5f", Energy(), etot, delta);
+      sprintf(logbuf, "Total ENERGY           %11.5f    %11.5f   %11.5f", Energy(), etot, delta);
       cout << logbuf << endl;
 
     } // for (unsigned int c;; c++ )
