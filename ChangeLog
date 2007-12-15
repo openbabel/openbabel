@@ -1,4 +1,9 @@
-2007-12-12  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2007-12-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefieldmmff94.cpp: Analytical gradients for all
+	interactions except OOP.
+
+2007-12-14  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefieldmmff94.[h,cpp]: Solved problem with VDW
 	interactions. H-Bond donor/acceptor reactions were not handled

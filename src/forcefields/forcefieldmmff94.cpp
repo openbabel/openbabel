@@ -56,12 +56,9 @@ namespace OpenBabel
     energy = 143.9325 * 0.5 * kb * delta2 * (1.0 - 2.0 * delta + 7.0/12.0 * 4.0 * delta2);
     
     if (gradients) {
-      //dE = 143.9325 * kb * delta * (1.0 - 2.0 * delta + 7.0/12.0 * 8.0 * delta);
-      dE = 143.9325 * 0.5 * kb * delta * (2.0 - 6.0 * delta + 28.0/3.0 * delta2);
-      da.normalize();
-      db.normalize();
-      grada = dE * da / rab; // - dE/drab * drab/da
-      gradb = dE * db / rab; // - dE/drab * drab/db
+      dE = 143.9325 * kb * delta * (1.0 - 3.0 * delta + 14.0/3.0 * delta2);
+      grada = dE * da; // - dE/drab * drab/da
+      gradb = dE * db; // - dE/drab * drab/db
     }
   }
   
@@ -302,7 +299,6 @@ namespace OpenBabel
       sine = sin(DEG_TO_RAD * tor);
       sine2 = sin(2.0 * DEG_TO_RAD * tor);
       sine3 = sin(3.0 * DEG_TO_RAD * tor);
-      //dE = -k1 * sine + k2 * 2.0 * sine2 - k3 * 3.0 * sine3; ghemical
       dE = -0.5 * (v1 * sine - 2.0 * v2 * sine2 + 3.0 * v3 * sine3); // MMFF
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
@@ -363,10 +359,9 @@ namespace OpenBabel
       angle = OBForceField::VectorOOPDerivative(da, db, dc, dd) * RAD_TO_DEG;
       dE =  (0.043844 * angle * koop) / cos(angle * DEG_TO_RAD);
       grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
       gradc = dE * dc; // - dE/drab * drab/dc
-      //gradd = dE * dd; // - dE/drab * drab/dd
-      gradd = -1.0*(grada + gradb + gradc);
+      gradd = dE * dd; // - dE/drab * drab/dd
+      gradb = -1.0*(grada + gradc + gradd);
     } else {
       angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
     }
@@ -438,7 +433,23 @@ namespace OpenBabel
     energy = epsilon * erep7 * eattr;
     
     if (gradients) { 
-      //dE = ...
+      double q, q2, q4, q6, q7, term, term2;
+      q = rab / R_AB;
+      q2 = q * q;
+      q4 = q2 * q2;
+      q6 = q4 * q2;
+      q7 = q6 * q;
+      erep = 1.07 / (q + 0.07); 
+      erep2 = erep * erep;
+      erep4 = erep2 * erep2;
+      erep6 = erep4 * erep2;
+      erep7 = erep6 * erep;
+      term = q7 + 0.12;
+      term2 = term * term;
+      eattr = (-7.84 * q6) / term2 + ((-7.84 / term) + 14) / (q + 0.07);
+      dE = (epsilon / R_AB) * erep7 * eattr;
+      da.normalize();
+      db.normalize();
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
     }
@@ -452,9 +463,9 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nV A N   D E R   W A A L S\n\n");
       OBFFLog("ATOM TYPES\n");
-      OBFFLog(" I    J        Rij       R*IJ    EPSILON    E_REP     E_ATTR    ENERGY\n");
-      OBFFLog("----------------------------------------------------------------------\n");
-      //       XX   XX     -000.000  -000.000  -000.000  -000.000  -000.000  -000.000
+      OBFFLog(" I    J        Rij       R*IJ    EPSILON    ENERGY\n");
+      OBFFLog("--------------------------------------------------\n");
+      //       XX   XX     -000.000  -000.000  -000.000  -000.000
     }
     
     for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i) {
@@ -463,8 +474,8 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f  %8.3f  %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
-                (*i).rab, (*i).R_AB, (*i).epsilon, (*i).epsilon * (*i).erep7, (*i).epsilon * (*i).eattr, (*i).energy);
+        sprintf(logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
+                (*i).rab, (*i).R_AB, (*i).epsilon, (*i).energy);
         OBFFLog(logbuf);
       }
     }
@@ -489,7 +500,8 @@ namespace OpenBabel
     } else
       rab = a->GetDistance(b);
 
-    energy = qq / (rab + 0.05);
+    rab += 0.05;
+    energy = qq / rab;
 
     if (gradients) {
       rab2 = rab * rab;
@@ -2772,8 +2784,8 @@ namespace OpenBabel
 
       double delta, err;
       cout << endl;
-      cout << "TERM                         OB ENERGY         LOG ENERGY            DELTA" << endl;
-      cout << "--------------------------------------------------------------------------" << endl;
+      cout << "TERM                     OB ENERGY     LOG ENERGY         DELTA" << endl;
+      cout << "---------------------------------------------------------------" << endl;
     
       delta = (E_Bond() - ebond);
       sprintf(logbuf, "Bond Stretching        %11.5f    %11.5f   %11.5f", E_Bond(), ebond, delta);
