@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2006 Chris Morley
+Copyright (C) 2006 Chris Morley 
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -38,7 +38,7 @@ bool isnic(char ch)
 
 /// @brief Reads an InChI (possibly split) from an input stream and returns it as unsplit text.
 /// The input stream is left after the end of the extracted InChI ready to look for the next one.
-std::string OBCOMMON GetInChI(std::istream& is);
+std::string GetInChI(std::istream& is);
 
 /*!
 This function recovers a normal InChI from an input stream which

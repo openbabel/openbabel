@@ -293,7 +293,7 @@ namespace OpenBabel
     //       }
     //     }
     //   }
-    bool expand_successful;
+    bool expand_successful=true;//was previously not initialized. true works but may not be correct
     atom = cycle[0];
     for (nbr = atom->BeginNbrAtom(b);nbr;nbr = atom->NextNbrAtom(b)) {
       if(initState[nbr->GetIdx()] == -1) //neighbor atom not in the cycle, try next one

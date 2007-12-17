@@ -46,10 +46,13 @@ namespace OpenBabel
     if(pOptions->empty())
       return this;
 
-    OBOp::DoOps(this, pOptions); //*** experimental plugin class for general options
+    // DoOps calls Do() for each of the plugin options in the map
+    // It normally returns true, even if there are no options but
+    // can return false if one of the options decides that the 
+    // molecule should not be output
+    bool fmatch = OBOp::DoOps(this, pOptions); 
 
     bool ret=true;
-    bool fmatch=true;
 
     map<string,string>::const_iterator itr, itr2;
 

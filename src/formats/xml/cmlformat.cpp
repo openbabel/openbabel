@@ -1566,6 +1566,8 @@ namespace OpenBabel
 
     xmlTextWriterEndElement(writer());//molecule
 
+    //Note that nothing will be written unless the next block is executed
+    //IsLast() MUST return true for the last molecule.
     if(!_pxmlConv->IsOption("MolsNotStandalone") && _pxmlConv->IsLast())
       {
         xmlTextWriterEndDocument(writer());

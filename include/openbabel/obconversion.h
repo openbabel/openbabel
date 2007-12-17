@@ -184,10 +184,11 @@ namespace OpenBabel {
 
       /// @name Conversion loop control
       //@{
-      bool     AddChemObject(OBBase* pOb);///< @brief Adds to internal array during input
+      int     AddChemObject(OBBase* pOb);///< @brief Adds to internal array during input
       OBBase*  GetChemObject(); ///< @brief Retrieve from internal array during output
       bool     IsLast();///< @brief True if no more objects to be output
       bool     IsFirstInput();///< @brief True if the first input object is being processed
+      void     SetFirstInput(bool b=true);///< @brief Setwhether or not is the first input
       int      GetOutputIndex() const ;///< @brief Retrieves number of ChemObjects that have been actually output
       void     SetOutputIndex(int indx);///< @brief Sets ouput index (maybe to control whether seen as first object)
       void     SetMoreFilesToCome();///<@brief Used with multiple input files. Off by default.

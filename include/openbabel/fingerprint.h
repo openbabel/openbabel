@@ -126,9 +126,13 @@ struct OBFPRT FptIndexHeader
 {
   unsigned int headerlength;///<offset to data: sizeof(FptIndexHeader)
   unsigned int nEntries;    ///<number of fingerprints
-  unsigned int words;				///<number 32bit words per fingerprint
+  unsigned int words;       ///<number 32bit words per fingerprint
   char fpid[16];            ///<ID of the fingerprint type
   char datafilename[256];   ///<the data that this is an index to
+
+  FptIndexHeader(){ memset(this, 0, sizeof(FptIndexHeader));}//fill with 0
+  void WriteASCII(std::ostream& ofs)const;
+  bool ReadASCII(std::istream& ifs);
 };
 
 /// \struct FptIndex fingerprint.h <openbabel/fingerprint.h>

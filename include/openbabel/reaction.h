@@ -44,6 +44,7 @@ private:
   std::vector<std::tr1::shared_ptr<OBMol> > _reactants;
   std::vector<std::tr1::shared_ptr<OBMol> > _products;
   std::tr1::shared_ptr<OBMol> _ts; 
+  std::tr1::shared_ptr<OBMol> _agent; 
   std::string _title;
   std::string _comment;
   bool _reversible;
@@ -65,6 +66,9 @@ public:
 
   void SetTransitionState(const std::tr1::shared_ptr<OBMol> sp)
   { _ts = sp; }
+
+  void AddAgent(const std::tr1::shared_ptr<OBMol> sp)
+  { _agent = sp; }
   
   std::tr1::shared_ptr<OBMol> GetReactant(const unsigned i)
   {
@@ -83,6 +87,9 @@ public:
 
   std::tr1::shared_ptr<OBMol> GetTransitionState()const
   { return _ts; }
+
+  std::tr1::shared_ptr<OBMol> GetAgent()const
+  { return _agent; }
 
   std::string GetTitle()	const { return _title; }
   std::string GetComment()	const { return _comment; }

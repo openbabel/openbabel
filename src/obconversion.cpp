@@ -304,59 +304,6 @@ namespace OpenBabel {
     return count;
   }
 
-  /**
-   *Returns the ID + the first line of the description in str 
-   *and a pointer to the format in pFormat.
-   *If called with str==NULL the first format is returned;
-   *subsequent formats are returned by calling with str!=NULL and the previous value of itr
-   *returns false, and str and pFormat NULL, when there are no more formats.
-   *Use like:
-   *@code
-   *	const char* str=NULL;
-   *	Formatpos pos;
-   *	OBConversion conv; // dummy to make sure static data is available
-   *	while(OBConversion::GetNextFormat(pos,str,pFormat))
-   *	{
-   *		// use str and pFormat
-   *	}
-   *@endcode
-   *
-   * NOTE: Because of dynamic loading problems, it is usually necessary to 
-   *  declare a "dummy" OBConversion object to access this static method.
-   *  (Not elegant, but will hopefully be fixed in the future.)
-   */
-
-/*
-bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat)
-  {
-
-    pFormat = NULL;
-    if(str==NULL) 
-      itr = FormatsMap().begin();
-    else
-      itr++;
-    if(itr == FormatsMap().end())
-      {
-        str=NULL; pFormat=NULL;
-        return false;
-      }
-    static string s;
-    s =itr->first;
-    pFormat = itr->second;
-    if(pFormat)
-      {
-        string description(pFormat->Description());
-        s += " -- ";
-        s += description.substr(0,description.find('\n'));
-      }
-
-    if(pFormat->Flags() & NOTWRITABLE) s+=" [Read-only]";
-    if(pFormat->Flags() & NOTREADABLE) s+=" [Write-only]";
-
-    str = s.c_str();
-    return true;
-  }
-*/
   //////////////////////////////////////////////////////
   /// Sets the formats from their ids, e g CML.
   /// If inID is NULL, the input format is left unchanged. Similarly for outID
@@ -505,7 +452,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
         try
           {
             ret = pInFormat->ReadChemObject(this);
-            m_IsFirstInput=false;
+            SetFirstInput(false);
           }		
         catch(...)
           {
@@ -600,13 +547,13 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
   ///    Count is incremented with each call, even if pOb=NULL. 
   ///    Objects are not added to the queue if the count is outside the range  
   ///    StartNumber to EndNumber. There is no upper limit if EndNumber is zero. 
-  ///    The return value is the return code from WriteChemObject - false on error.
-  bool OBConversion::AddChemObject(OBBase* pOb)
+  ///    The return value is Count ((>0) or 0 if WriteChemObject returned false.
+  int OBConversion::AddChemObject(OBBase* pOb)
   {
     if(Count<0) 
       {
         pOb1=pOb;
-        return Count!=0;
+        return Count; // <0
       }
     Count++;
     if(Count>=(int)StartNumber)//keeps reading objects but does nothing with them
@@ -627,7 +574,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
                     --Index;
                     //ReadyToInput=false;
                     pOb1=NULL;
-                    return false;
+                    return 0;
                   }
                 //Stop after writing with single object output files
                 if(pOutFormat->Flags() & WRITEONEONLY)
@@ -651,7 +598,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
 
                     ReadyToInput = false;
                     pOb1 = NULL;
-                    return true;
+                    return Count; // >0
                   }
               }
             pOb1=pOb;
@@ -659,7 +606,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
             wInlen = rInlen;
           }
       }
-    return true;
+    return Count; // >0
   }
   //////////////////////////////////////////////////////
   ///Returns the number of objects which have been output or are currently being output.
@@ -791,7 +738,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
       }
 #endif
 #endif
-
+    SetOneObjectOnly(); //So that IsLast() returns true, which is important for XML formats
     bool ret = pOutFormat->WriteMolecule(pOb,this);
     pOutStream = pOrigOutStream;
     return ret;
@@ -927,6 +874,16 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
   {
     return m_IsFirstInput;
   }
+  void OBConversion::SetFirstInput(bool b)
+  {
+    m_IsFirstInput = b;
+/*    //Also set or clear a general option
+    if(b)
+      AddOption("firstinput",GENOPTIONS);
+    else
+      RemoveOption("firstinput",GENOPTIONS);
+  */
+  }
 
   /////////////////////////////////////////////////
   string OBConversion::BatchFileName(string& BaseName, string& InFile)
@@ -1045,7 +1002,7 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
     stringstream ssOut;
     bool HasMultipleOutputFiles=false;
     int Count=0;
-    m_IsFirstInput=true;
+    SetFirstInput();
     bool CommonInFormat = pInFormat ? true:false; //whether set in calling routine
     ios_base::openmode omode = 
       pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;

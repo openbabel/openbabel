@@ -134,7 +134,7 @@ namespace OpenBabel
   
   bool OBDock::GridDockNextPose()
   {
-  
+    return true;
   }
   
   vector3 OBDock::GetDimentions(vector<int> &selection)

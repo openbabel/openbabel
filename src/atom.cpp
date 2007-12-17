@@ -411,7 +411,7 @@ namespace OpenBabel
 
   OBResidue *OBAtom::GetResidue()
   {
-    GetResidue(true); // default is to always perceive chains
+    return GetResidue(true); // default is to always perceive chains
   }
 
   OBResidue *OBAtom::GetResidue(bool perception)

@@ -225,6 +225,10 @@ It is also possible to iterate through each sub-type by the following code:
 Since this is not the most beautiful code, it is probably better to use the
 List methods if possible.
 
+YourBaseClass* MakeNewInstance();
+
+
+
 <h2>How it works</h2>
 
 MAKE_PLUGIN(YourBaseClass) inserts the following code into YourBaseClass:

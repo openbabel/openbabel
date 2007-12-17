@@ -42,6 +42,31 @@ public:
     return true;
   }
 };
+
+//////////////////////////////////////////////////////
 OpCenter theOpCenter("center"); //Global instance
+
+//*************************************************************
+
+class OpFrog : public OBOp
+{
+public:
+  OpFrog(const char* ID) : OBOp(ID, false){};
+  virtual const char* Description(){ return "Adds 3D coordinates using the FROG code"; }
+  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
+
+  virtual bool Do(OBBase* pOb, OpMap*, const char*);
+};
+
+///////////////////////////////////////////////////////
+//Global instance with option name used e.g. babel infile.xxx -O outfile.yyy --3Dfrog
+OpFrog theOpFrog("3Dfrog"); 
+
+//////////////////////////////////////////////////////
+bool Do(OBBase* pOb, OpMap*, const char*)
+{
+
+}
+
 
 }//namespace

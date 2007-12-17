@@ -35,8 +35,10 @@ class OBAPI OBOp : public OBPlugin
 public:
   typedef const std::map<std::string, std::string> OpMap ;
 
+  ///Provides the name of this kind of plugin. Use -L "ops" to list from commandline.
   virtual const char* TypeID(){ return "ops"; }
 
+  ///Required function that does the work. Normally return true, unless object is not to be output.
   virtual bool Do(OBBase* pOb, OpMap* pOptions=NULL, const char* OptionText=NULL)=0;
 
   ///Returns true if this op is designed to work with the class of pOb, e.g. OBMol
@@ -66,15 +68,18 @@ public:
   ///Called from Transform(). The map has general options like -x or --multicharoption
   ///The key is the option name and the value, if any, is text which follows the option name.
   /// In some cases, there may be several parameters, space separated)
-  static void DoOps(OBBase* pOb, OpMap* pOptions)
+  ///Returns false indicating object should not be output, if any Do() returns false
+  static bool DoOps(OBBase* pOb, OpMap* pOptions)
   {
     OpMap::const_iterator itr;
     for(itr=pOptions->begin();itr!=pOptions->end();++itr)
     {
       OBOp* pOp = FindType(itr->first.c_str());
       if(pOp)
-        pOp->Do(pOb, pOptions, itr->second.c_str());
+        if(!pOp->Do(pOb, pOptions, itr->second.c_str()))
+          return false; //Op has decided molecule should not be output
     }
+    return true;
   }
 };
 }//namespace

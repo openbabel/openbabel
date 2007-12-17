@@ -49,9 +49,12 @@ bool OpGen3D::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
   if(!pmol)
     return false;
 
+  obErrorLog.StartErrorWrap(); //make output to cerr into obInfo messages
+
   OBBuilder builder;
   builder.Build(*pmol);
 
+  obErrorLog.StopErrorWrap();
   return true;
 }
 }//namespace

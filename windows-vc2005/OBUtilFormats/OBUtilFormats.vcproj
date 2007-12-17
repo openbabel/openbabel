@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="OBFPRT"
-	ProjectGUID="{78F0CF7D-CABB-40FA-BD2A-4D2992232E5E}"
-	RootNamespace="OBFRT"
+	Name="OBUtilFormats"
+	ProjectGUID="{B76458D3-9486-4C7A-9F95-18DB50E46CE6}"
+	RootNamespace="OBUtilFormats"
 	>
 	<Platforms>
 		<Platform
@@ -44,7 +44,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug/OBDLL.tlb"
+				TypeLibraryName=".\Debug/OBUtilFormats.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -52,12 +52,12 @@
 				UseUnicodeResponseFiles="false"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../include"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_USRDLL;USING_DYNAMIC_LIBS;OBFPRT_EXPORTS;HAVE_CONFIG_H"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_USRDLL;INCHI_LINK_AS_DLL;USING_OBDLL;HAVE_CONFIG_H;USING_DYNAMIC_LIBS;OBUTIL_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Debug/OBFPRT.pch"
+				PrecompiledHeaderFile=""
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -79,17 +79,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="oberrorD.lib OBDLLD.lib obconvD.lib"
-				OutputFile="..\Debug/OBFPRTD.obf"
+				IgnoreImportLibrary="false"
+				AdditionalDependencies="obconvD.lib obdllD.lib OBErrorD.lib obcommonD.lib zdll.lib"
+				OutputFile="..\Debug/OBUtilD.obf"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\debug"
-				IgnoreAllDefaultLibraries="false"
+				AdditionalLibraryDirectories="..\debug,.."
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/OBFPRT.pdb"
-				GenerateMapFile="false"
-				MapFileName=""
-				ImportLibrary="..\Debug/OBFPRTD.lib"
+				ProgramDatabaseFile=".\Debug/OBUtilD.pdb"
+				ImportLibrary="..\Debug/OBTilD.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -104,7 +102,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Debug/OBDLL.bsc"
+				OutputFile=".\Debug/OBTil.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -117,6 +115,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -127,7 +126,7 @@
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
+			CharacterSet="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -149,17 +148,19 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release/OBDLL.tlb"
+				TypeLibraryName=".\Release/OBUtilFormats.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="4"
+				Optimization="2"
+				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="../../include"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_USRDLL;USING_DYNAMIC_LIBS;OBFPRT_EXPORTS;HAVE_CONFIG_H"
+				PreprocessorDefinitions="NDEBUG;USING_DYNAMIC_LIBS;WIN32;_WINDOWS;_USRDLL;INCHI_LINK_AS_DLL;HAVE_CONFIG_H;OBUTIL_EXPORTS"
+				StringPooling="true"
 				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=""
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -179,13 +180,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OBError.lib OBDLL.lib obconv.lib"
-				OutputFile="..\OBFPRT.obf"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="obconv.lib obdll.lib oberror.lib obcommon.lib zdll.lib"
+				OutputFile="..\OBUtil.obf"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".."
-				ProgramDatabaseFile=".\Release/OBFPRT.pdb"
-				ImportLibrary="../OBFPRT.lib"
+				ProgramDatabaseFile=".\Release/OBUtil.pdb"
+				ImportLibrary="../OBUtil.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -200,7 +202,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Release/OBDLL.bsc"
+				OutputFile=".\Release/OBUtil.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -224,103 +226,64 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\..\src\dock.cpp"
+				RelativePath="..\..\src\formats\copyformat.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\fingerprints\finger2.cpp"
+				RelativePath="..\..\src\formats\molreport.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\fingerprints\finger3.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\fingerprint.cpp"
+				RelativePath="..\..\src\formats\pngformat.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
+						WarningLevel="3"
+						WarnAsError="false"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\forcefield.cpp"
+				RelativePath="..\..\src\formats\povrayformat.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\forcefields\forcefieldghemical.cpp"
+				RelativePath="..\..\src\formats\reportformat.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\forcefields\forcefieldmmff94.cpp"
+				RelativePath="..\..\src\formats\sortformat.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\titleformat.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
 				RelativePath="..\..\include\openbabel\babelconfig.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\openbabel\fingerprint.h"
+				RelativePath="..\..\include\openbabel\mol.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\openbabel\forcefield.h"
+				RelativePath="..\..\include\openbabel\obconversion.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\forcefields\forcefieldghemical.h"
+				RelativePath="..\..\include\openbabel\obmolecformat.h"
 				>
-			</File>
-			<File
-				RelativePath="..\..\src\forcefields\forcefieldmmff94.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\include\openbabel\dock.h"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

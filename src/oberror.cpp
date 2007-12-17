@@ -220,10 +220,12 @@ namespace OpenBabel
     if (_inWrapStreamBuf == NULL)
       return true; // never wrapped cerr
 
-    // don't free the filter streambuf yet -- we might start wrapping later
+    cerr.rdbuf(_inWrapStreamBuf);
+    _inWrapStreamBuf=NULL;//shows not wrapped
+
+    // don't delete the filter streambuf yet -- we might start wrapping later
     // it's freed in the dtor
 
-    cerr.rdbuf(_inWrapStreamBuf);
     return true;
   }
 

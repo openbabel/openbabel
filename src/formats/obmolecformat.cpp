@@ -81,7 +81,7 @@ namespace OpenBabel
        OBMol* pMolCopy = new OBMol( MolArray.back());
        MolArray.pop_back();
        ret = pConv->AddChemObject(
-           pMolCopy->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
+           pMolCopy->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)))!=0;
      }
      if(!ret)
        StoredMolsReady = false;
@@ -117,7 +117,7 @@ namespace OpenBabel
       delete pmol;
 
     // Normal operation - send molecule to be written
-    ret = ret && pConv->AddChemObject(ptmol); //success of both writing and reading
+    ret = ret && (pConv->AddChemObject(ptmol)!=0); //success of both writing and reading
     return ret;
   }
 
@@ -288,7 +288,7 @@ namespace OpenBabel
     bool swap=false;
     if(pFirst->NumAtoms()==0 && pSecond->NumAtoms()!=0)
       swap=true;
-    else
+    else if(pSecond->NumAtoms()!=0)
       {
         if(pFirst->GetSpacedFormula()!=pSecond->GetSpacedFormula())
           {

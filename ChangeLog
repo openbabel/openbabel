@@ -1,3 +1,55 @@
+2007-12-17 Chris Morley
+
+	Try to resynchronize.
+	
+	* src/obconversion.cpp, /include/openbabel/obconversion.h:
+	Change return type of AddChemObject from bool to int. 
+	This allows the modes with and without a queue of 2 to be
+	distinguished. It is backward compatible and in fact has been
+	this way previously. Consequential changes in GetChemObject() in
+	obmolecformat.cpp, rxnformat.cpp, 
+	
+	* include/openbabel/forcefield.h(UpdateConformers, UpdateCoordinates):
+	return values.
+	
+	* src/dock.cpp(GridDockNextPose): add return value.
+
+	* src/atom.cpp(GetResidue): return a value
+	
+	* src/transform.cpp: filter mol if DoOps returns false. 
+
+	* include/openbabel/op.h(DoOps) return false if Do() does,
+	to aid filtering. Minor documentaion.
+	
+	* include/openbabel/plugin.h: Minor documentation.
+	
+	* include/openbabel/reaction.h: Add support for an Agent molecule.
+
+	* src/gen3d.cpp: Add start and stop ErrorWrap so OBBuilder diagnostic
+	code to cerr is demoted to obInfo messages.
+	
+	* src/oberror.cpp(StopErrorWrap):Set _inWrapStreamBuf to NULL.
+	so can handle multiple molecules.
+	
+	* src/builder.cpp: Set dimension of molecule to 3 (CML needs this).
+	Replace tabs.
+	
+	* src/formats/getinchi.cpp: remove OBCOMMON macro. Not needed in a format.
+	
+	* src/kekulize.cpp: initialize expand_ successful to supress
+	compiler warning.
+
+	* src/formats/xml/cmlformat.cpp: Minor documentation
+	
+	* src/formats/chemkinformat.cpp(WriteReactionLine): if molecule has
+	no title use its formula.
+	
+	* src/formats/xml/xml.cpp(~XMLConversion):check that document has
+	been terminated.
+	
+	Update Windows OBF build files incl some new projects making OBF files.
+
+
 2007-12-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefieldmmff94.cpp: Analytical gradients for all

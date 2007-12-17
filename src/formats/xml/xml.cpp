@@ -98,8 +98,9 @@ namespace OpenBabel
   {
     if(_reader)
       xmlFreeTextReader(_reader);
-    //  if(_writer)
-    //    xmlFreeTextWriter(_writer); was crashing
+    if(_writer)
+//      xmlTextWriterEndDocument(_writer); //if hasn't been called ealier
+        xmlFreeTextWriter(_writer);// was crashing
     //xmlBufferFree(_buf);
   }
 

@@ -520,13 +520,13 @@ namespace OpenBabel
      *  \return true if succesfull
      */
     bool GetCoordinates(OBMol &mol);
-    bool UpdateCoordinates(OBMol &mol) {GetCoordinates(mol); } // = GetCoordinates, depricated
+    bool UpdateCoordinates(OBMol &mol) {return GetCoordinates(mol); } // = GetCoordinates, depricated
     /*! Get coordinates for all conformers
      *  \param mol the OBMol object to copy the coordinates to (from OBForceField::_mol)
      *  \return true if succesfull
      */
     bool GetConformers(OBMol &mol);
-    bool UpdateConformers(OBMol &mol) { GetConformers(mol); } // = GetConformers, depricated
+    bool UpdateConformers(OBMol &mol) { return GetConformers(mol); } // = GetConformers, depricated
     /*! Set coordinates for current conformer
      *  \param mol the OBMol object to copy the coordinates from (to OBForceField::_mol)
      *  \return true if succesfull

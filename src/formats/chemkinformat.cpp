@@ -828,7 +828,7 @@ bool ChemKinFormat::WriteHeader(OBConversion* pConv)
   int n=0;
   for(sitr=species.begin();sitr!=species.end();++sitr, ++n)
   {
-    if(n > 80 / maxlen)
+    if(maxlen>0 && n > 80 / maxlen)
     {
       ofs << '\n';
       n=0;
@@ -906,6 +906,10 @@ bool ChemKinFormat::WriteReactionLine(OBReaction* pReact, OBConversion* pConv)
     shared_ptr<OBMol> psMol = pReact->GetReactant(i);
 //    if(strcasecmp(psMol->GetTitle(),"M"))
     OMols.insert(psMol);
+
+    //If reactant has no title use its formula
+    if(*psMol->GetTitle()=='\0')
+      psMol->SetTitle(psMol->GetSpacedFormula(1,"").c_str());
     
     //write species name but, if M, only if (+M) is not going to be output
     if(mstring.empty() || strcasecmp(psMol->GetTitle(),"M"))
@@ -941,6 +945,11 @@ bool ChemKinFormat::WriteReactionLine(OBReaction* pReact, OBConversion* pConv)
     shared_ptr<OBMol> psMol = pReact->GetProduct(i);
     if(strcasecmp(psMol->GetTitle(),"M"))
       OMols.insert(psMol);
+
+    //If product has no title use its formula
+    if(*psMol->GetTitle()=='\0')
+      psMol->SetTitle(psMol->GetSpacedFormula(1,"").c_str());
+
     //write species name but, if M, only if (+M) is not going to be output
     if(mstring.empty() || strcasecmp(psMol->GetTitle(),"M"))
     {

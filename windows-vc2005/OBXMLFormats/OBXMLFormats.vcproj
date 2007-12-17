@@ -246,6 +246,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\rsmiformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\rxnformat.cpp"
 				>
 			</File>
@@ -288,6 +292,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\obmolecformat.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\reaction.h"
 				>
 			</File>
 			<File
