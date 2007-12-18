@@ -37,19 +37,19 @@ namespace OpenBabel
 {
   // log levels
 #define OBFF_LOGLVL_NONE	0   //!< no output
-#define OBFF_LOGLVL_LOW	1     //!< SteepestDescent progress... (no output from Energy())
-#define OBFF_LOGLVL_MEDIUM	2 //!< individual energy terms
+#define OBFF_LOGLVL_LOW		1   //!< SteepestDescent progress... (no output from Energy())
+#define OBFF_LOGLVL_MEDIUM	2   //!< individual energy terms
 #define OBFF_LOGLVL_HIGH	3   //!< individual calculations and parameters
 
   // terms
 #define OBFF_ENERGY		(1 << 0)   //!< all terms
 #define OBFF_EBOND		(1 << 1)   //!< bond term
 #define OBFF_EANGLE		(1 << 2)   //!< angle term
-#define OBFF_ESTRBND		(1 << 3) //!< strbnd term
-#define OBFF_ETORSION		(1 << 4) //!< torsion term
-#define OBFF_EOOP		(1 << 5)     //!< oop term
-#define OBFF_EVDW		(1 << 6)     //!< vdw term
-#define OBFF_EELECTROSTATIC	(1 << 7) //!< electrostatic term
+#define OBFF_ESTRBND		(1 << 3)   //!< strbnd term
+#define OBFF_ETORSION		(1 << 4)   //!< torsion term
+#define OBFF_EOOP		(1 << 5)   //!< oop term
+#define OBFF_EVDW		(1 << 6)   //!< vdw term
+#define OBFF_EELECTROSTATIC	(1 << 7)   //!< electrostatic term
 
   // constraint types
 #define OBFF_CONST_IGNORE	(1 << 0)   //!< ignore the atom while setting up calculations
@@ -57,7 +57,7 @@ namespace OpenBabel
 #define OBFF_CONST_ATOM_X	(1 << 2)   //!< fix the x coordinate of the atom position
 #define OBFF_CONST_ATOM_Y	(1 << 3)   //!< fix the y coordinate of the atom position
 #define OBFF_CONST_ATOM_Z	(1 << 4)   //!< fix the z coordinate of the atom position
-#define OBFF_CONST_BOND		(1 << 5)   //!< constrain bond length
+#define OBFF_CONST_DISTANCE	(1 << 5)   //!< constrain distance length
 #define OBFF_CONST_ANGLE	(1 << 6)   //!< constrain angle
 #define OBFF_CONST_TORSION	(1 << 7)   //!< constrain torsion
 
@@ -68,9 +68,9 @@ namespace OpenBabel
 #define KCAL_TO_KJ	4.1868
 
   // inline if statements for logging.
-#define IF_OBFF_LOGLVL_LOW    if(loglvl >= OBFF_LOGLVL_LOW)
-#define IF_OBFF_LOGLVL_MEDIUM if(loglvl >= OBFF_LOGLVL_MEDIUM)
-#define IF_OBFF_LOGLVL_HIGH   if(loglvl >= OBFF_LOGLVL_HIGH)
+#define IF_OBFF_LOGLVL_LOW    if(_loglvl >= OBFF_LOGLVL_LOW)
+#define IF_OBFF_LOGLVL_MEDIUM if(_loglvl >= OBFF_LOGLVL_MEDIUM)
+#define IF_OBFF_LOGLVL_HIGH   if(_loglvl >= OBFF_LOGLVL_HIGH)
   
   //! \class OBFFParameter forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to hold forcefield parameters
@@ -415,7 +415,9 @@ namespace OpenBabel
     { 
       return -NumericalDerivative(a, terms); 
     }
-    /*! Check if two atoms are in the same ring
+    /*! Check if two atoms are in the same ring. [NOTE: this function uses SSSR, 
+     *  this means that not all rings are found for bridged rings. This causes 
+     *  some problems with the MMFF94 validation.]
      *  \param a atom a
      *  \param b atom b
      *  \return true if atom a and b are in the same ring
@@ -427,23 +429,24 @@ namespace OpenBabel
 
     OBFFConstraints _constraints; //!< Constraints
 
-    //! Output for logfile
-    std::ostream* logos;
-    char logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
-    int loglvl; //!< Log level for output
+    std::ostream* _logos; //! Output for logfile
+    char _logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
+    int _loglvl; //!< Log level for output
     int _origLogLevel;
     
-    //! used to hold i for current conformer (needed by UpdateConformers)
-    int _current_conformer;
-    //! used to hold the energies for all conformers
-    std::vector<double> _energies;
+    
+    int _current_conformer; //! used to hold i for current conformer (needed by UpdateConformers)
+    std::vector<double> _energies; //! used to hold the energies for all conformers
 
-    //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    double _econv, _e_n1;
-    int _method, _cstep, _nsteps;
-    double *_grad1, *_dir1;
+    double _econv, _e_n1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    int _method, _cstep, _nsteps; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    double *_grad1, *_dir1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     int _ncoords; //!< Number of coordinates for conjugate gradients
 
+    double _timestep; //! Molecular dynamics time step in picoseconds
+    double _T; //! Molecular dynamics temperature in Kelvin
+    double *_velocityPtr; //! pointer to the velocities
+  
   public:
     //! Destructor
     virtual ~OBForceField()
@@ -478,12 +481,12 @@ namespace OpenBabel
     }
     //! \return The unit (kcal/mol, kJ/mol, ...) in which the energy is expressed as std::string
     virtual std::string GetUnit() { return std::string("au"); }
-    /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Reset constraints 
+    /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Keep current constraints.
      *  \param mol the OBMol object that contains the atoms and bonds
      *  \return True if succesfull
      */
     bool Setup(OBMol &mol); 
-    /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Use constraints 
+    /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Use new constraints. 
      *  \param mol the OBMol object that contains the atoms and bonds
      *  \param constraints the OBFFConstraints object that contains the constraints
      *  \return True if succesfull
@@ -537,37 +540,7 @@ namespace OpenBabel
      *  \return true if succesfull
      */
     bool SetConformers(OBMol &mol);
-    /*! Print msg to the logfile
-     *  \param msg the message
-     */
-    void OBFFLog(std::string msg)
-    {
-      if (!logos)
-        return;
-      
-      *logos << msg;
-    }
-    /*! Print msg to the logfile
-     *  \param msg the message
-     */
-    void OBFFLog(const char *msg)
-    {
-      if (!logos)
-        return;
-      
-      *logos << msg;
-    }
     
-    //! Get the constraints 
-    OBFFConstraints& GetConstraints() { return _constraints; }
-    //! Set the constraints 
-    void SetConstraints(OBFFConstraints& constraints) 
-    { 
-      _constraints = constraints; 
-      if (_mol.NumAtoms())
-        _constraints.Setup(_mol); 
-    }
- 
     /////////////////////////////////////////////////////////////////////////
     // Energy Evaluation                                                   //
     /////////////////////////////////////////////////////////////////////////
@@ -639,6 +612,8 @@ namespace OpenBabel
     void PrintFormalCharges();
     //! Print the partial charges
     void PrintPartialCharges();
+    //! Print the velocities
+    void PrintVelocities();
     /*! Set the stream for logging (can also be &cout for logging to screen)
      *  \param pos stream
      *  \return True if succesfull
@@ -650,9 +625,9 @@ namespace OpenBabel
       Inline if statements for logging are available: 
 	
       \code
-      #define IF_OBFF_LOGLVL_LOW    if(loglvl >= OBFF_LOGLVL_LOW)
-      #define IF_OBFF_LOGLVL_MEDIUM if(loglvl >= OBFF_LOGLVL_MEDIUM)
-      #define IF_OBFF_LOGLVL_HIGH   if(loglvl >= OBFF_LOGLVL_HIGH)
+      #define IF_OBFF_LOGLVL_LOW    if(_loglvl >= OBFF_LOGLVL_LOW)
+      #define IF_OBFF_LOGLVL_MEDIUM if(_loglvl >= OBFF_LOGLVL_MEDIUM)
+      #define IF_OBFF_LOGLVL_HIGH   if(_loglvl >= OBFF_LOGLVL_HIGH)
       \endcode
 
       example:
@@ -660,21 +635,41 @@ namespace OpenBabel
       SetLogLevel(OBFF_LOGLVL_MEDIUM);
   
       IF_OBFF_LOGLVL_HIGH {
-      *logos << "this text will NOT be logged..." << endl
+        OBFFLog("this text will NOT be logged...\n");
       }
    
       IF_OBFF_LOGLVL_LOW {
-      *logos << "this text will be logged..." << endl
+        OBFFLog"this text will be logged...\n");
       }
   
       IF_OBFF_LOGLVL_MEDIUM {
-      *logos << "this text will also be logged..." << endl
+        OBFFLog("this text will also be logged...\n");
       }
       \endcode
     */
     bool SetLogLevel(int level);
     //! \return log level
-    int GetLogLevel() { return loglvl; }
+    int GetLogLevel() { return _loglvl; }
+    /*! Print msg to the logfile
+     *  \param msg the message
+     */
+    void OBFFLog(std::string msg)
+    {
+      if (!_logos)
+        return;
+      
+      *_logos << msg;
+    }
+    /*! Print msg to the logfile
+     *  \param msg the message
+     */
+    void OBFFLog(const char *msg)
+    {
+      if (!_logos)
+        return;
+      
+      *_logos << msg;
+    }
     //@}
      
     /////////////////////////////////////////////////////////////////////////
@@ -705,11 +700,26 @@ namespace OpenBabel
      *  OBFF_LOGLVL_HIGH:   see note above \n 
      */
     void SystematicRotorSearch(unsigned int geomSteps = 2500);
-    //! \return the number of conformers
+    /*! Generate conformers for the molecule by systematicaly rotating torsions. To be used in combination with 
+     *  SystematicRotorSearchNexConformer().
+     *
+     *  example:
+     *  \code
+     *  // pFF is a pointer to a OBForceField class 
+     *  pFF->SystematicRotorSearchInitialize(300);
+     *  while (pFF->SystematicRotorSearchNextConformer(300)) {
+     *    // do some updating in your program (show last generated conformer, ...)
+     *  }
+     *  \endcode
+     * 
+     *  If you don't need any updating in your program, SystematicRotorSearch() is recommended.
+     *
+     *  \param geomSteps the number of steps to take during geometry optimization
+     *  \return the number of conformers
+     */
     int SystematicRotorSearchInitialize(unsigned int geomSteps = 2500);
     //! \return true if there are more conformers
     bool SystematicRotorSearchNextConformer(unsigned int geomSteps = 2500);
-
     /*! Generate conformers for the molecule (randomly rotating torsions).
      *  
      *  The initial starting structure here is important, this structure should be
@@ -731,11 +741,27 @@ namespace OpenBabel
      *  OBFF_LOGLVL_HIGH:   see note above \n 
      */
     void RandomRotorSearch(unsigned int conformers, unsigned int geomSteps = 2500);
-    //! Initialize Random Rotor Search
+    /*! Generate conformers for the molecule by randomly rotating torsions. To be used in combination with 
+     *  RandomRotorSearchNexConformer().
+     *
+     *  example:
+     *  \code
+     *  // pFF is a pointer to a OBForceField class 
+     *  pFF->RandomRotorSearchInitialize(300);
+     *  while (pFF->RandomRotorSearchNextConformer(300)) {
+     *    // do some updating in your program (show last generated conformer, ...)
+     *  }
+     *  \endcode
+     * 
+     *  If you don't need any updating in your program, RandomRotorSearch() is recommended.
+     *
+     *  \param conformers the number of random conformers to consider during the search
+     *  \param geomSteps the number of steps to take during geometry optimization
+     *  \return the number of conformers
+     */
     void RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps = 2500);
     //! \return true if there are more conformers
     bool RandomRotorSearchNextConformer(unsigned int geomSteps = 2500);
-     
     /*! Generate conformers for the molecule (randomly rotating torsions).
      *  
      *  The initial starting structure here is important, this structure should be
@@ -911,7 +937,71 @@ namespace OpenBabel
     */
     bool ConjugateGradientsTakeNSteps(int n);
     //@}
+    
+    /////////////////////////////////////////////////////////////////////////
+    // Molecular Dynamics                                                  //
+    /////////////////////////////////////////////////////////////////////////
       
+    //! \name Methods for molecular dynamics
+    //@{
+    /*! Generate starting velocities with a Maxwellian distribution.
+     */
+    void GenerateVelocities();
+    /*! Correct the velocities so that the following is true:
+     *  
+     *  \code
+     *        3N
+     *       ----
+     *  0.5  \    m_i * v_i^2 = 0.5 * Ndf * kB * T = E_kin
+     *       /
+     *       ----
+     *       i=1
+     *  
+     *  E_kin : kinetic energy
+     *  m_i : mass of atom i
+     *  v_i : velocity of atom i
+     *  Ndf : number of degrees of freedom (3 * number of atoms)
+     *  kB : Boltzmann's constant
+     *  T : temperature
+     *  \endcode
+     *  
+     */
+    void CorrectVelocities();
+    /*! Take n steps at tempetature T. If no velocities are set, they will be generated.
+     *
+     *  example:
+     *  \code
+     *  // pFF is a pointer to a OBForceField class 
+     *  while (pFF->MolecularDynamicsTakeNSteps(5, 300)) {
+     *    // do some updating in your program (redraw structure, ...)
+     *  }
+     * \endcode
+     *
+     *  \param T absolute temperature in Kelvin
+     *  \param timestep the time step in picoseconds (10e-12)
+        \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+     */
+    void MolecularDynamicsTakeNSteps(int n, double T, double timestep = 0.001, int method = OBFF_ANALYTICAL_GRADIENT);
+    //@}
+
+    /////////////////////////////////////////////////////////////////////////
+    // Constraints                                                         //
+    /////////////////////////////////////////////////////////////////////////
+      
+    //! \name Methods for constraints
+    //@{
+    //! Get the constraints 
+    OBFFConstraints& GetConstraints() { return _constraints; }
+    //! Set the constraints 
+    void SetConstraints(OBFFConstraints& constraints) 
+    { 
+      _constraints = constraints; 
+      if (_mol.NumAtoms())
+        _constraints.Setup(_mol); 
+    }
+    //@}
+
+ 
     /////////////////////////////////////////////////////////////////////////
     // Validation                                                          //
     /////////////////////////////////////////////////////////////////////////

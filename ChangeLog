@@ -1,3 +1,11 @@
+2007-12-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp, include/openbabel/forcefield.h: Cleaned up
+	header file and documentation. All private variables now start with
+	"_". Added support for Molecular Dynamics.
+
+	* src/ops.cpp: fix compiler error.
+
 2007-12-17 Chris Morley
 
 	Try to resynchronize.

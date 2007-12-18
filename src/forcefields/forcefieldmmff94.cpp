@@ -79,15 +79,15 @@ namespace OpenBabel
       energy += i->GetEnergy();
 
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
+        sprintf(_logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
                 (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
-        OBFFLog(logbuf);
+        OBFFLog(_logbuf);
       }
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "     TOTAL BOND STRETCHING ENERGY = %8.3f %s\n",  energy, GetUnit().c_str());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "     TOTAL BOND STRETCHING ENERGY = %8.3f %s\n",  energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
     }
     
     return energy;
@@ -150,16 +150,16 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
+        sprintf(_logbuf, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
 	        atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), 
                 (*i).at, (*i).theta, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
-        OBFFLog(logbuf);
+        OBFFLog(_logbuf);
       }
     }
  
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
     }
     
     return energy;
@@ -214,16 +214,16 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d   %2d     %2d   %8.3f   %8.3f   %8.3f   %8.3f   %8.3f\n", 
+        sprintf(_logbuf, "%2d   %2d   %2d     %2d   %8.3f   %8.3f   %8.3f   %8.3f   %8.3f\n", 
 	        atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), 
                 (*i).sbt, (*i).theta, (*i).delta_theta, (*i).kbaABC, (*i).kbaCBA, (*i).energy);
-        OBFFLog(logbuf);
+        OBFFLog(_logbuf);
       }
     }
 	
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
     }
  
     return energy;
@@ -325,15 +325,15 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f\n",  atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
+        sprintf(_logbuf, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f\n",  atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
                 atoi((*i).c->GetType()), atoi((*i).d->GetType()), (*i).tt, (*i).tor, (*i).v1, (*i).v2, (*i).v3, (*i).energy);
-        OBFFLog(logbuf);
+        OBFFLog(_logbuf);
       }
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "     TOTAL TORSIONAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "     TOTAL TORSIONAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
     }
 
     return energy;
@@ -388,16 +388,16 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f\n", 
+        sprintf(_logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f\n", 
 	        atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), atoi((*i).d->GetType()), 
                 (*i).angle, (*i).koop, (*i).energy);
-        OBFFLog(logbuf);
+        OBFFLog(_logbuf);
       }
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
     }
 
     return energy;
@@ -474,15 +474,15 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
+        sprintf(_logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
                 (*i).rab, (*i).R_AB, (*i).epsilon, (*i).energy);
-        OBFFLog(logbuf);
+        OBFFLog(_logbuf);
       }
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "     TOTAL VAN DER WAALS ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "     TOTAL VAN DER WAALS ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
     }
 
     return energy;
@@ -530,15 +530,15 @@ namespace OpenBabel
       energy += i->GetEnergy();
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(logbuf, "%2d   %2d   %8.3f  %8.3f  %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
+        sprintf(_logbuf, "%2d   %2d   %8.3f  %8.3f  %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
                 (*i).rab, (*i).a->GetPartialCharge(), (*i).b->GetPartialCharge(), (*i).energy);
-        OBFFLog(logbuf);
+        OBFFLog(_logbuf);
       }
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "     TOTAL ELECTROSTATIC ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "     TOTAL ELECTROSTATIC ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
     }
 
     return energy;
@@ -1528,14 +1528,14 @@ namespace OpenBabel
 	parameter = GetParameter2Atom(a->GetAtomicNum(), b->GetAtomicNum(), _ffbndkparams); // from mmffbndk.par - emperical rules
 	if (parameter == NULL) { 
           IF_OBFF_LOGLVL_LOW {
-            sprintf(logbuf, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
-            OBFFLog(logbuf);
+            sprintf(_logbuf, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
+            OBFFLog(_logbuf);
           }
           return false;
         } else {
           IF_OBFF_LOGLVL_LOW {
-            sprintf(logbuf, "   USING EMPIRICAL RULE FOR BOND STRETCHING %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
-            OBFFLog(logbuf);
+            sprintf(_logbuf, "   USING EMPIRICAL RULE FOR BOND STRETCHING %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
+            OBFFLog(_logbuf);
           }
 
           double rr, rr2, rr4, rr6;
@@ -1613,9 +1613,9 @@ namespace OpenBabel
         strbndcalc.theta0 = parameter->_dpar[1]; // **
       } else {
         IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, "   USING DEFAULT ANGLE FOR %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
-          sprintf(logbuf, "   USING EMPIRICAL RULE FOR ANGLE BENDING %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
-          OBFFLog(logbuf);
+          sprintf(_logbuf, "   USING DEFAULT ANGLE FOR %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          sprintf(_logbuf, "   USING EMPIRICAL RULE FOR ANGLE BENDING %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          OBFFLog(_logbuf);
         }
 
 	anglecalc.ka = 0.0;
@@ -1651,8 +1651,8 @@ namespace OpenBabel
       // empirical rule for 0-b-0 and standard angles
       if (anglecalc.ka == 0.0) {
         IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, "   USING EMPIRICAL RULE FOR ANGLE BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
-          OBFFLog(logbuf);
+          sprintf(_logbuf, "   USING EMPIRICAL RULE FOR ANGLE BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          OBFFLog(_logbuf);
         }
 
 	double beta, Za, Zc, Cb, r0ab, r0bc, theta, theta2, D, rr, rr2;
@@ -1690,8 +1690,8 @@ namespace OpenBabel
         int rowa, rowb, rowc;
         
 	IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, "   USING EMPIRICAL RULE FOR STRETCH-BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
-          OBFFLog(logbuf);
+          sprintf(_logbuf, "   USING EMPIRICAL RULE FOR STRETCH-BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          OBFFLog(_logbuf);
         }
     
         rowa = GetElementRow(a);
@@ -1702,8 +1702,8 @@ namespace OpenBabel
         
 	if (parameter == NULL) {
 	  IF_OBFF_LOGLVL_LOW {
-            sprintf(logbuf, "    COULD NOT FIND PARAMETERS FOR STRETCH-BEND %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
-            OBFFLog(logbuf);
+            sprintf(_logbuf, "    COULD NOT FIND PARAMETERS FOR STRETCH-BEND %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+            OBFFLog(_logbuf);
           }
 	  return false;
         }
@@ -1805,9 +1805,9 @@ namespace OpenBabel
         bool found_rule = false;
 	
 	IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
+          sprintf(_logbuf, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
 	    a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
-          OBFFLog(logbuf);
+          OBFFLog(_logbuf);
         }
 
 	// rule (a) page 631
@@ -2104,8 +2104,8 @@ namespace OpenBabel
       parameter_b = GetParameter1Atom(atoi(b->GetType()), _ffvdwparams);
       if ((parameter_a == NULL) || (parameter_b == NULL)) {
         IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, "   COULD NOT FIND VAN DER WAALS PARAMETERS FOR %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
-          OBFFLog(logbuf);
+          sprintf(_logbuf, "   COULD NOT FIND VAN DER WAALS PARAMETERS FOR %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
+          OBFFLog(_logbuf);
         }
 
         return false;
@@ -2475,8 +2475,8 @@ namespace OpenBabel
     energy += E_Electrostatic(gradients);
 
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
     }
 
     return energy;
@@ -2491,7 +2491,7 @@ namespace OpenBabel
     vector<int> types;
     vector<double> fcharges, pcharges;
     vector<double> bond_lengths;
-    char buffer[150], logbuf[100];
+    char buffer[150], _logbuf[100];
     bool molfound, atomfound, bondfound, fchgfound, pchgfound;
     double etot, ebond, eangle, eoop, estbn, etor, evdw, eeq;
     double termcount; //1=bond, 2=angle, 3=strbnd, 4=torsion, 5=oop
@@ -2689,15 +2689,15 @@ namespace OpenBabel
 	   ) continue;
 
         if (atoi(_mol.GetAtom(ni)->GetType()) == (*i))
-          sprintf(logbuf, "%2d   %3d  %4d    %3d      %3d          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
+          sprintf(_logbuf, "%2d   %3d  %4d    %3d      %3d          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
                   _mol.GetAtom(ni)->IsAromatic(), atoi(_mol.GetAtom(ni)->GetType()), *i);
         else {
-          sprintf(logbuf, "%2d   %3d  %4d    %3d      %3d      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
+          sprintf(_logbuf, "%2d   %3d  %4d    %3d      %3d      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
                   _mol.GetAtom(ni)->IsAromatic(), atoi(_mol.GetAtom(ni)->GetType()), *i);
           failed = true;
         }
       
-        cout << logbuf << endl;
+        cout << _logbuf << endl;
         
         ni++;
       }
@@ -2723,13 +2723,13 @@ namespace OpenBabel
 	   ) continue;
 
         if (fabs((*di) - _mol.GetAtom(ni)->GetPartialCharge()) <= 0.001)
-          sprintf(logbuf, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          sprintf(_logbuf, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
         else {
-          sprintf(logbuf, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          sprintf(_logbuf, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
           failed = true;
         }
       
-        cout << logbuf << endl;
+        cout << _logbuf << endl;
         
         ni++;
       }
@@ -2755,13 +2755,13 @@ namespace OpenBabel
 	   ) continue;
 
         if (fabs((*di) - _mol.GetAtom(ni)->GetPartialCharge()) <= 0.001)
-          sprintf(logbuf, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          sprintf(_logbuf, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
         else {
-          sprintf(logbuf, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          sprintf(_logbuf, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
           failed = true;
         }
       
-        cout << logbuf << endl;
+        cout << _logbuf << endl;
         
         ni++;
       }
@@ -2788,37 +2788,37 @@ namespace OpenBabel
       cout << "---------------------------------------------------------------" << endl;
     
       delta = (E_Bond() - ebond);
-      sprintf(logbuf, "Bond Stretching        %11.5f    %11.5f   %11.5f", E_Bond(), ebond, delta);
-      cout << logbuf << endl;
+      sprintf(_logbuf, "Bond Stretching        %11.5f    %11.5f   %11.5f", E_Bond(), ebond, delta);
+      cout << _logbuf << endl;
     
       delta = (E_Angle() - eangle);
-      sprintf(logbuf, "Angle Bending          %11.5f    %11.5f   %11.5f", E_Angle(), eangle, delta);
-      cout << logbuf << endl;
+      sprintf(_logbuf, "Angle Bending          %11.5f    %11.5f   %11.5f", E_Angle(), eangle, delta);
+      cout << _logbuf << endl;
     
       delta = (E_StrBnd() - estbn);
-      sprintf(logbuf, "Stretch-Bending        %11.5f    %11.5f   %11.5f", E_StrBnd(), estbn, delta);
-      cout << logbuf << endl;
+      sprintf(_logbuf, "Stretch-Bending        %11.5f    %11.5f   %11.5f", E_StrBnd(), estbn, delta);
+      cout << _logbuf << endl;
     
       delta = (E_OOP() - eoop);
-      sprintf(logbuf, "Out-Of-Plane Bending   %11.5f    %11.5f   %11.5f", E_OOP(), eoop, delta);
-      cout << logbuf << endl;
+      sprintf(_logbuf, "Out-Of-Plane Bending   %11.5f    %11.5f   %11.5f", E_OOP(), eoop, delta);
+      cout << _logbuf << endl;
     
       delta = (E_Torsion() - etor);
-      sprintf(logbuf, "Torsional              %11.5f    %11.5f   %11.5f", E_Torsion(), etor, delta);
-      cout << logbuf << endl;
+      sprintf(_logbuf, "Torsional              %11.5f    %11.5f   %11.5f", E_Torsion(), etor, delta);
+      cout << _logbuf << endl;
     
       delta = (E_VDW() - evdw);
-      sprintf(logbuf, "Van der Waals          %11.5f    %11.5f   %11.5f", E_VDW(), evdw, delta);
-      cout << logbuf << endl;
+      sprintf(_logbuf, "Van der Waals          %11.5f    %11.5f   %11.5f", E_VDW(), evdw, delta);
+      cout << _logbuf << endl;
       
       delta = (E_Electrostatic() - eeq);
-      sprintf(logbuf, "Electrostatic          %11.5f    %11.5f   %11.5f", E_Electrostatic(), eeq, delta);
-      cout << logbuf << endl;
+      sprintf(_logbuf, "Electrostatic          %11.5f    %11.5f   %11.5f", E_Electrostatic(), eeq, delta);
+      cout << _logbuf << endl;
 
       cout << endl;
       delta = (Energy() - etot);
-      sprintf(logbuf, "Total ENERGY           %11.5f    %11.5f   %11.5f", Energy(), etot, delta);
-      cout << logbuf << endl;
+      sprintf(_logbuf, "Total ENERGY           %11.5f    %11.5f   %11.5f", Energy(), etot, delta);
+      cout << _logbuf << endl;
 
     } // for (unsigned int c;; c++ )
    
@@ -2910,72 +2910,72 @@ namespace OpenBabel
       anagrad = GetGradient(&*a, OBFF_ENERGY);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << logbuf << endl;
+      cout << _logbuf << endl;
 
       // OBFF_EBOND
       numgrad = NumericalDerivative(&*a, OBFF_EBOND);
       anagrad = GetGradient(&*a, OBFF_EBOND);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << logbuf << endl;
+      cout << _logbuf << endl;
       
       // OBFF_EANGLE
       numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
       anagrad = GetGradient(&*a, OBFF_EANGLE);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << logbuf << endl;
+      cout << _logbuf << endl;
       
       // OBFF_ESTRBND
       numgrad = NumericalDerivative(&*a, OBFF_ESTRBND);
       anagrad = GetGradient(&*a, OBFF_ESTRBND);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    strbnd  (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    strbnd  (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << logbuf << endl;
+      cout << _logbuf << endl;
 
       // OBFF_ETORSION
       numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
       anagrad = GetGradient(&*a, OBFF_ETORSION);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << logbuf << endl;
+      cout << _logbuf << endl;
       
       // OBFF_EOOP
       numgrad = NumericalDerivative(&*a, OBFF_EOOP);
       anagrad = GetGradient(&*a, OBFF_EOOP);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << logbuf << endl;
+      cout << _logbuf << endl;
 
       // OBFF_EVDW
       numgrad = NumericalDerivative(&*a, OBFF_EVDW);
       anagrad = GetGradient(&*a, OBFF_EVDW);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << logbuf << endl;
+      cout << _logbuf << endl;
 
       // OBFF_EELECTROSTATIC
       numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
       anagrad = GetGradient(&*a, OBFF_EELECTROSTATIC);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << logbuf << endl;
+      cout << _logbuf << endl;
     }
     return true;
   }

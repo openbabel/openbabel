@@ -63,10 +63,11 @@ public:
 OpFrog theOpFrog("3Dfrog"); 
 
 //////////////////////////////////////////////////////
-bool Do(OBBase* pOb, OpMap*, const char*)
+bool OpFrog::Do(OBBase* pOb, OpMap*, const char*)
 {
 
 }
 
 
 }//namespace
+

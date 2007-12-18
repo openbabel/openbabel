@@ -20,7 +20,7 @@ GNU General Public License for more details.
       - LineSearch(): finished
       - SteepestDescent(): finished
       - ConjugateGradients(): finished
-      - GenerateCoordinates():  NEEDS WORK
+      - GenerateCoordinates():  removed, use OBBuilder
       - SystematicRotorSearch(): finished
       - RandomRotorSearch(): finished
       - WeightedRotorSearch: NEEDS WORK
@@ -34,17 +34,18 @@ GNU General Public License for more details.
       - Validation: finished
 
       - src/forcefields/forcefieldmmff94.cpp
-      - Atom typing: needs work
-      - Charges: 0%
+      - Atom typing: done.
+      - Charges: done.
       - Energy terms:
 	    - Bond: finished
 	    - Angle: finished
-	    - StrBnd: finished
+	    - StrBnd: small errors
 	    - Torsion: finished
-	    - OOP: no gradient
-	    - VDW: no gradient
-	    - Electrostatic: needs charges, charges need correct atom types
-      - Validation: in progress... 
+	    - OOP: no analytical gradient
+	    - VDW: finished
+	    - Electrostatic: finished
+      - Analytical gradients: finished (except OOP)
+      - Validation: http://home.scarlet.be/timvdm/MMFF94_validation_output.gz
 
       - src/forcefields/forcefielduff.cpp
       - Energy terms: finished
@@ -74,13 +75,13 @@ namespace OpenBabel
       \brief Base class for molecular mechanics force fields
 
       The OBForceField class is the base class for molecular mechanics in Open Babel.
-      Classes derived from the OBForceField implement specific force fields (Ghemical, MMFF94, ...).
-      Other classes such as OBFFParameter, OBFFCalculation and its derived classes are 
-      only for internal use. As a user interested in using the available force fields 
-      in Open Babel, you don't need these classes. The rest of this short introduction
-      is aimed at these users. For information on how to implement additional force
-      fields, see the wiki pages or post your questions to the openbabel-devel mailing
-      list.
+      Classes derived from the OBForceField implement specific force fields (Ghemical, 
+      MMFF94, UFF, ...).Other classes such as OBFFParameter, OBFFConstraint, 
+      OBFFCalculation and its derived classes are only for internal use. As a user 
+      interested in using the available force fields in Open Babel, you don't need 
+      these classes. The rest of this short introduction is aimed at these users. For 
+      information on how to implement additional force fields, see the wiki pages or 
+      post your questions to the openbabel-devel mailing list.
 
       Before we can start using a force field, we must first select it and set it up.
       This is illustrated in the first example below. The Setup procedure assigns atom
@@ -126,7 +127,7 @@ namespace OpenBabel
       // We need to setup the forcefield before we can use it. Setup()
       // returns false if it failes to find the atom types, parameters, ...
       if (!pFF->Setup(mol)) {
-      cerr << "ERROR: could not setup force field." << endl;
+        cerr << "ERROR: could not setup force field." << endl;
       }
       
       // Calculate the energy. The output will be written to the
@@ -149,12 +150,41 @@ namespace OpenBabel
       pFF->SetLogFile(&cerr);
       pFF->SetLogLevel(OBFF_LOGLVL_LOW);
       if (!pFF->Setup(mol)) {
-      cerr << "ERROR: could not setup force field." << endl;
+        cerr << "ERROR: could not setup force field." << endl;
       }
       
       // Perform the actual minimization, maximum 1000 steps 
       pFF->ConjugateGradients(1000);
       \endcode
+      
+      Minimize the structure in mol using steepest descent and fix the position of atom with index 1.
+      \code
+      #include <openbabel/forcefield.h>
+      #include <openbabel/mol.h>
+
+      OBMol mol;
+      OBForceField* pFF = OBForceField::FindForceField("Ghemical");
+
+      // Make sure we have a valid pointer
+      if (!pFF)
+        // exit...
+      
+      pFF->SetLogFile(&cerr);
+      pFF->SetLogLevel(OBFF_LOGLVL_LOW);
+      
+      // Set the constraints
+      OBFFConstraints constraints;
+      constraints.AddAtomConstraint(1);
+
+      // We pass the constraints as argument for Setup()
+      if (!pFF->Setup(mol, constraints)) {
+        cerr << "ERROR: could not setup force field." << endl;
+      }
+      
+      // Perform the actual minimization, maximum 1000 steps 
+      pFF->SteepestDescent(1000);
+      \endcode
+ 
   **/
 
   int OBForceField::GetParameterIdx(int a, int b, int c, int d, vector<OBFFParameter> &parameter)
@@ -272,6 +302,12 @@ namespace OpenBabel
     return NULL;
   }
   
+  //////////////////////////////////////////////////////////////////////////////////
+  //
+  // Constraints
+  //
+  //////////////////////////////////////////////////////////////////////////////////
+ 
   OBFFConstraints::OBFFConstraints()
   {
     _factor = 50000.0;
@@ -324,13 +360,13 @@ namespace OpenBabel
     double constraint_energy = 0.0;
         
     for (i = _constraints.begin(); i != _constraints.end(); ++i)
-      if ( (i->type == OBFF_CONST_BOND) || (i->type == OBFF_CONST_ANGLE) || (i->type == OBFF_CONST_TORSION) ) {
+      if ( (i->type == OBFF_CONST_DISTANCE) || (i->type == OBFF_CONST_ANGLE) || (i->type == OBFF_CONST_TORSION) ) {
 	vector3 da, db, dc;
         double delta, delta2, rab, rbc, rac, rab2, rbc2, length, dE;
  
 	
 	switch (i->type) {
-          case OBFF_CONST_BOND:
+          case OBFF_CONST_DISTANCE:
 	    if ((i->a == NULL) || (i->b) == NULL)
 	      return 0.0;
 
@@ -428,7 +464,7 @@ namespace OpenBabel
   void OBFFConstraints::AddBondConstraint(int a, int b, double length)
   {
     OBFFConstraint constraint;
-    constraint.type = OBFF_CONST_BOND; // constraint type
+    constraint.type = OBFF_CONST_DISTANCE; // constraint type
     constraint.ia   = a; // atom a
     constraint.ib   = b; // atom b
     constraint.constraint_value = length; // bond length
@@ -569,6 +605,12 @@ namespace OpenBabel
     return false;
   }
   
+  //////////////////////////////////////////////////////////////////////////////////
+  //
+  // Methods for logging
+  //
+  //////////////////////////////////////////////////////////////////////////////////
+  
   void OBForceField::PrintTypes()
   {
     IF_OBFF_LOGLVL_LOW {
@@ -576,8 +618,8 @@ namespace OpenBabel
       OBFFLog("IDX\tTYPE\n");
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%s\n", a->GetIdx(), a->GetType());
-        OBFFLog(logbuf);
+        sprintf(_logbuf, "%d\t%s\n", a->GetIdx(), a->GetType());
+        OBFFLog(_logbuf);
       }
     }
   }
@@ -589,8 +631,8 @@ namespace OpenBabel
       OBFFLog("IDX\tCHARGE\n");
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
-        OBFFLog(logbuf);
+        sprintf(_logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
+        OBFFLog(_logbuf);
       }
     }
   }
@@ -602,30 +644,54 @@ namespace OpenBabel
       OBFFLog("IDX\tCHARGE\n");
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
-        OBFFLog(logbuf);
+        sprintf(_logbuf, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
+        OBFFLog(_logbuf);
       }
     }
   }
-
+  
+  void OBForceField::PrintVelocities()
+  {
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nA T O M   V E L O C I T I E S\n\n");
+      OBFFLog("IDX\tVELOCITY\n");
+      
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        sprintf(_logbuf, "%d\t<%8.3f, %8.3f, %8.3f>\n", a->GetIdx(), _velocityPtr[a->GetIdx()], _velocityPtr[a->GetIdx()+1], _velocityPtr[a->GetIdx()+2]);
+        OBFFLog(_logbuf);
+      }
+    }
+  }
+ 
   bool OBForceField::SetLogFile(ostream* pos)
   {
     if(pos)
-      logos = pos;
+      _logos = pos;
     else
-      logos = &cout;
+      _logos = &cout;
     
     return true;
   }
   
+  //////////////////////////////////////////////////////////////////////////////////
+  //
+  // General
+  //
+  //////////////////////////////////////////////////////////////////////////////////
+ 
   bool OBForceField::Setup(OBMol &mol)
   {
     if (!_init) {
       ParseParamFile();
       _init = true;
+      _velocityPtr = NULL;       
     }    
    
     if (IsSetupNeeded(mol)) {
+      if (_velocityPtr)
+        delete [] _velocityPtr;
+      _velocityPtr = NULL;       
+      
       _mol = mol;
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
@@ -648,9 +714,14 @@ namespace OpenBabel
     if (!_init) {
       ParseParamFile();
       _init = true;
+      _velocityPtr = NULL;       
     }    
     
     if (IsSetupNeeded(mol)) {
+      if (_velocityPtr)
+        delete [] _velocityPtr;
+      _velocityPtr = NULL;       
+ 
       _mol = mol;
       _constraints = constraints;
       if (_mol.NumAtoms() && _constraints.Size())
@@ -671,16 +742,163 @@ namespace OpenBabel
  
   bool OBForceField::SetLogLevel(int level)
   {
-    loglvl = level;
+    _loglvl = level;
+
+    return true;
+  }
+  
+  // This function might need expanding, bu could really increase performance for
+  // avogadro's AutoOpt tool
+  bool OBForceField::IsSetupNeeded(OBMol &mol)
+  {
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return true;
+      
+    if (_mol.NumBonds() != mol.NumBonds())
+      return true;
+
+    FOR_ATOMS_OF_MOL (atom, _mol) {
+      if (atom->GetAtomicNum() != (mol.GetAtom(atom->GetIdx()))->GetAtomicNum())
+        return true;
+      if (atom->GetValence() != (mol.GetAtom(atom->GetIdx()))->GetValence())
+        return true;
+      if (atom->BOSum() != (mol.GetAtom(atom->GetIdx()))->BOSum())
+        return true;
+    }
+
+    return false;
+  }
+
+  bool OBForceField::GetCoordinates(OBMol &mol)
+  { 
+    OBAtom *atom;
+    
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
+    
+    // Copy coordinates for current conformer only
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      atom = mol.GetAtom(a->GetIdx());
+      atom->SetVector(a->GetVector());
+    }
+
+    return true;
+  }
+  
+  bool OBForceField::GetConformers(OBMol &mol)
+  { 
+    OBAtom *atom;
+
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
+    
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      atom = mol.GetAtom(a->GetIdx());
+      atom->SetVector(a->GetVector());
+    }
+
+    //Copy conformer information
+    if (_mol.NumConformers() > 1) {
+      int k,l;
+      vector<double*> conf;
+      double* xyz = NULL;
+      for (k=0 ; k<_mol.NumConformers() ; ++k) {
+        xyz = new double [3*_mol.NumAtoms()];
+        for (l=0 ; l<(int) (3*_mol.NumAtoms()) ; ++l)
+          xyz[l] = _mol.GetConformer(k)[l];
+        conf.push_back(xyz);
+      }
+      mol.SetConformers(conf);
+      mol.SetEnergies(_energies);
+      mol.SetConformer(_current_conformer);
+    }
+    
+    return true;
+  }
+  
+  bool OBForceField::SetCoordinates(OBMol &mol)
+  { 
+    OBAtom *atom;
+    
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
+    
+    // Copy coordinates for current conformer only
+    FOR_ATOMS_OF_MOL (a, mol) {
+      atom = _mol.GetAtom(a->GetIdx());
+      atom->SetVector(a->GetVector());
+    }
 
     return true;
   }
  
+  bool OBForceField::SetConformers(OBMol &mol)
+  { 
+    OBAtom *atom;
+
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
+    
+    FOR_ATOMS_OF_MOL (a, mol) {
+      atom = _mol.GetAtom(a->GetIdx());
+      atom->SetVector(a->GetVector());
+    }
+
+    //Copy conformer information
+    if (mol.NumConformers() > 1) {
+      int k,l;
+      vector<double*> conf;
+      double* xyz = NULL;
+      for (k=0 ; k<mol.NumConformers() ; ++k) {
+        xyz = new double [3*mol.NumAtoms()];
+        for (l=0 ; l<(int) (3*mol.NumAtoms()) ; ++l)
+          xyz[l] = mol.GetConformer(k)[l];
+        conf.push_back(xyz);
+      }
+      _mol.SetConformers(conf);
+      _mol.SetConformer(_current_conformer);
+    }
+    
+    return true;
+  }
+  
+  vector3 OBForceField::ValidateGradientError(vector3 &numgrad, vector3 &anagrad)
+  {
+    double errx, erry, errz;
+
+    if (fabs(numgrad.x()) < 1.0)
+      errx = numgrad.x() * fabs(numgrad.x() - anagrad.x()) * 100;
+    else
+      errx = fabs((numgrad.x() - anagrad.x()) / numgrad.x()) * 100;
+
+    if (fabs(numgrad.y()) < 1.0)
+      erry = numgrad.y() * fabs(numgrad.y() - anagrad.y()) * 100;
+    else
+      erry = fabs((numgrad.y() - anagrad.y()) / numgrad.y()) * 100;
+    
+    if (fabs(numgrad.z()) < 1.0)
+      errz = numgrad.z() * fabs(numgrad.z() - anagrad.z()) * 100;
+    else
+      errz = fabs((numgrad.z() - anagrad.z()) / numgrad.z()) * 100;
+    
+    errx = fabs(errx);
+    erry = fabs(erry);
+    errz = fabs(errz);
+
+    return vector3(errx, erry, errz);
+  }
+ 
+  //////////////////////////////////////////////////////////////////////////////////
+  //
+  // Structure generation
+  //
+  //////////////////////////////////////////////////////////////////////////////////
+
   int OBForceField::SystematicRotorSearchInitialize(unsigned int geomSteps)
   {
     OBRotorList rl;
     OBRotamerList rotamers;
-    _origLogLevel = loglvl;
+    _origLogLevel = _loglvl;
 
     rl.Setup(_mol);
     rotamers.SetBaseCoordinateSets(_mol);
@@ -688,8 +906,8 @@ namespace OpenBabel
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nS Y S T E M A T I C   R O T O R   S E A R C H\n\n");
-      sprintf(logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
+      OBFFLog(_logbuf);
     }
 
     if (!rl.Size()) { // only one conformer
@@ -715,8 +933,8 @@ namespace OpenBabel
     rotamers.ExpandConformerList(_mol, _mol.GetConformers());
       
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, "  GENERATED %d CONFORMERS\n\n", _mol.NumConformers());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "  GENERATED %d CONFORMERS\n\n", _mol.NumConformers());
+      OBFFLog(_logbuf);
       OBFFLog("CONFORMER     ENERGY\n");
       OBFFLog("--------------------\n");
     }
@@ -729,7 +947,7 @@ namespace OpenBabel
   
   bool OBForceField::SystematicRotorSearchNextConformer(unsigned int geomSteps) 
   {
-    char logbuf[100];
+    char _logbuf[100];
     
     if (_current_conformer >=  _mol.NumConformers()) { // done
       // Select conformer with lowest energy
@@ -740,8 +958,8 @@ namespace OpenBabel
       }
   
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
-        OBFFLog(logbuf);
+        sprintf(_logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
+        OBFFLog(_logbuf);
       }
 
       _mol.SetConformer(best_conformer);
@@ -752,15 +970,15 @@ namespace OpenBabel
 
     _mol.SetConformer(_current_conformer); // select conformer
     
-    loglvl = OBFF_LOGLVL_NONE;
+    _loglvl = OBFF_LOGLVL_NONE;
     ConjugateGradients(geomSteps); // energy minimization for conformer
-    loglvl = _origLogLevel;
+    _loglvl = _origLogLevel;
     
     _energies.push_back(Energy()); // calculate and store energy
       
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, "   %3d   %20.3f\n", (_current_conformer + 1), _energies[_current_conformer]);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "   %3d   %20.3f\n", (_current_conformer + 1), _energies[_current_conformer]);
+      OBFFLog(_logbuf);
     }
     
     _current_conformer++;
@@ -782,7 +1000,7 @@ namespace OpenBabel
 
     OBRandom generator;
     generator.TimeSeed();
-    _origLogLevel = loglvl;
+    _origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == NULL)
       return;
@@ -793,25 +1011,25 @@ namespace OpenBabel
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nR A N D O M   R O T O R   S E A R C H\n\n");
-      sprintf(logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
+      OBFFLog(_logbuf);
 
       int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
         combinations *= rotor->GetResolution().size();
       }
-      sprintf(logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %d\n", combinations);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %d\n", combinations);
+      OBFFLog(_logbuf);
     }
 
     if (!rl.Size()) { // only one conformer
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
  
-      loglvl = OBFF_LOGLVL_NONE;
+      _loglvl = OBFF_LOGLVL_NONE;
       ConjugateGradients(geomSteps); // energy minimization for conformer
-      loglvl = _origLogLevel;
+      _loglvl = _origLogLevel;
 
       return;
     }
@@ -830,8 +1048,8 @@ namespace OpenBabel
     rotamers.ExpandConformerList(_mol, _mol.GetConformers());
       
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, "  GENERATED %d CONFORMERS\n\n", _mol.NumConformers());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "  GENERATED %d CONFORMERS\n\n", _mol.NumConformers());
+      OBFFLog(_logbuf);
       OBFFLog("CONFORMER     ENERGY\n");
       OBFFLog("--------------------\n");
     }
@@ -842,7 +1060,7 @@ namespace OpenBabel
 
   bool OBForceField::RandomRotorSearchNextConformer(unsigned int geomSteps) 
   {
-    char logbuf[100];
+    char _logbuf[100];
     
     if (_current_conformer >=  _mol.NumConformers()) { // done
       // Select conformer with lowest energy
@@ -853,8 +1071,8 @@ namespace OpenBabel
       }
   
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
-        OBFFLog(logbuf);
+        sprintf(_logbuf, "\n  CONFORMER %d HAS THE LOWEST ENERGY\n\n",  best_conformer + 1);
+        OBFFLog(_logbuf);
       }
 
       _mol.SetConformer(best_conformer);
@@ -865,15 +1083,15 @@ namespace OpenBabel
     
     _mol.SetConformer(_current_conformer); // select conformer
 
-    loglvl = OBFF_LOGLVL_NONE;
+    _loglvl = OBFF_LOGLVL_NONE;
     ConjugateGradients(geomSteps); // energy minimization for conformer
-    loglvl = _origLogLevel;
+    _loglvl = _origLogLevel;
     
     _energies.push_back(Energy()); // calculate and store energy
       
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, "   %3d      %8.3f\n", (_current_conformer + 1), _energies[_current_conformer]);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "   %3d      %8.3f\n", (_current_conformer + 1), _energies[_current_conformer]);
+      OBFFLog(_logbuf);
     }
     
     _current_conformer++;
@@ -940,7 +1158,7 @@ namespace OpenBabel
 
     OBRandom generator;
     generator.TimeSeed();
-    int origLogLevel = loglvl;
+    int origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == NULL)
       return;
@@ -951,25 +1169,25 @@ namespace OpenBabel
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nW E I G H T E D   R O T O R   S E A R C H\n\n");
-      sprintf(logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
+      OBFFLog(_logbuf);
 
       int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
         combinations *= rotor->GetResolution().size();
       }
-      sprintf(logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %d\n", combinations);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %d\n", combinations);
+      OBFFLog(_logbuf);
     }
 
     if (!rl.Size()) { // only one conformer
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
  
-      loglvl = OBFF_LOGLVL_NONE;
+      _loglvl = OBFF_LOGLVL_NONE;
       ConjugateGradients(geomSteps); // energy minimization for conformer
-      loglvl = origLogLevel;
+      _loglvl = origLogLevel;
 
       return;
     }
@@ -996,8 +1214,8 @@ namespace OpenBabel
     }
 
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, "  GENERATED %d CONFORMERS\n\n", conformers);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "  GENERATED %d CONFORMERS\n\n", conformers);
+      OBFFLog(_logbuf);
       OBFFLog("CONFORMER     ENERGY\n");
       OBFFLog("--------------------\n");
     }
@@ -1037,14 +1255,14 @@ namespace OpenBabel
       }
       rotamers.SetCurrentCoordinates(_mol, rotorKey);
 
-      //      loglvl = OBFF_LOGLVL_NONE;
+      //      _loglvl = OBFF_LOGLVL_NONE;
       //      SteepestDescent(geomSteps); // energy minimization for conformer
-      //      loglvl = origLogLevel;
+      //      _loglvl = origLogLevel;
       currentE = Energy();
 
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, "   %3d      %8.3f\n", c + 1, currentE);
-        OBFFLog(logbuf);
+        sprintf(_logbuf, "   %3d      %8.3f\n", c + 1, currentE);
+        OBFFLog(_logbuf);
       }
       
       if (IsNan(currentE))
@@ -1069,9 +1287,9 @@ namespace OpenBabel
     }
 
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, "\n  LOWEST ENERGY: %8.3f\n\n",
+      sprintf(_logbuf, "\n  LOWEST ENERGY: %8.3f\n\n",
               bestE);
-      OBFFLog(logbuf);
+      OBFFLog(_logbuf);
     }
 
     // debugging output to see final weightings of each rotor setting
@@ -1188,8 +1406,8 @@ namespace OpenBabel
       for (i=0; i<N; i++) {
         OBFFLog("[");
         for (j=0; j<N; j++) {
-          sprintf(logbuf, " %8.4f ", matrix[i][j]);
-          OBFFLog(logbuf);
+          sprintf(_logbuf, " %8.4f ", matrix[i][j]);
+          OBFFLog(_logbuf);
         }
         OBFFLog("]\n");
       }
@@ -1270,8 +1488,8 @@ namespace OpenBabel
       for (i=0; i<N; i++) {
         OBFFLog("[");
         for (j=0; j<N; j++) {
-          sprintf(logbuf, " %8.4f ", matrix[i][j]);
-          OBFFLog(logbuf);
+          sprintf(_logbuf, " %8.4f ", matrix[i][j]);
+          OBFFLog(_logbuf);
         }
         OBFFLog("]\n");
       }
@@ -1309,14 +1527,14 @@ namespace OpenBabel
  
     // output result of triangle smoothing
     IF_OBFF_LOGLVL_LOW {
-      char logbuf[100];
+      char _logbuf[100];
 
       OBFFLog("RANDOM DISTANCE MATRIX BETWEEN LIMITS\n\n");
       for (i=0; i<N; i++) {
         OBFFLog("[");
         for (j=0; j<N; j++) {
-          sprintf(logbuf, " %8.4f ", matrix[i][j]);
-          OBFFLog(logbuf);
+          sprintf(_logbuf, " %8.4f ", matrix[i][j]);
+          OBFFLog(_logbuf);
         }
         OBFFLog("]\n");
       }
@@ -1333,14 +1551,14 @@ namespace OpenBabel
     
     // output metric matrix
     IF_OBFF_LOGLVL_LOW {
-      char logbuf[100];
+      char _logbuf[100];
 
       OBFFLog("METRIC MATRIX\n\n");
       for (i=0; i<N; i++) {
         OBFFLog("[");
         for (j=0; j<N; j++) {
-          sprintf(logbuf, " %8.4f ", G[i][j]);
-          OBFFLog(logbuf);
+          sprintf(_logbuf, " %8.4f ", G[i][j]);
+          OBFFLog(_logbuf);
         }
         OBFFLog("]\n");
       }
@@ -1362,8 +1580,8 @@ namespace OpenBabel
 
       OBFFLog("EIGENVALUES OF METRIC MATRIX\n\n");
       for (i=0; i<N; i++) {
-        sprintf(logbuf, "%8.4f ", eigenvalues[i]);
-        OBFFLog(logbuf);
+        sprintf(_logbuf, "%8.4f ", eigenvalues[i]);
+        OBFFLog(_logbuf);
       }
       OBFFLog("\n");
 
@@ -1371,8 +1589,8 @@ namespace OpenBabel
       for (i=0; i<N; i++) {
         OBFFLog("[");
         for (j=0; j<N; j++) {
-          sprintf(logbuf, " %8.4f ", eigenvectors[i][j]);
-          OBFFLog(logbuf);
+          sprintf(_logbuf, " %8.4f ", eigenvectors[i][j]);
+          OBFFLog(_logbuf);
         }
         OBFFLog("]\n");
       }
@@ -1403,7 +1621,13 @@ namespace OpenBabel
     }
 
   }
-
+  
+  //////////////////////////////////////////////////////////////////////////////////
+  //
+  // Energy Minimization
+  //
+  //////////////////////////////////////////////////////////////////////////////////
+  
   // LineSearch 
   //
   // atom: coordinates of atom at iteration k (x_k)
@@ -1605,15 +1829,15 @@ namespace OpenBabel
     OBAtom *atom = new OBAtom;
     vector3 grad;
     double e_n1, e_n2;
-    char logbuf[100];
+    char _logbuf[100];
     
     atom->SetVector(9.0, 9.0, 0.0);
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nV A L I D A T E   S T E E P E S T   D E S C E N T\n\n");
-      sprintf(logbuf, "STEPS = %d\n\n",  steps);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "STEPS = %d\n\n",  steps);
+      OBFFLog(_logbuf);
       OBFFLog("STEP n     E(n)       E(n-1)    \n");
       OBFFLog("--------------------------------\n");
     }
@@ -1625,8 +1849,8 @@ namespace OpenBabel
       e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
       
       IF_OBFF_LOGLVL_LOW {
-        sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
-        OBFFLog(logbuf);
+        sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+        OBFFLog(_logbuf);
       }
 
       if (IsNear(e_n2, e_n1, 1.0e-7)) {
@@ -1649,7 +1873,7 @@ namespace OpenBabel
     double e_n1, e_n2;
     double g2g2, g1g1, g2g1;
     bool firststep;
-    char logbuf[100];
+    char _logbuf[100];
 
     firststep = true;
     atom->SetVector(9.0, 9.0, 0.0);
@@ -1657,8 +1881,8 @@ namespace OpenBabel
  
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nV A L I D A T E   C O N J U G A T E   G R A D I E N T S\n\n");
-      sprintf(logbuf, "STEPS = %d\n\n",  steps);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "STEPS = %d\n\n",  steps);
+      OBFFLog(_logbuf);
       OBFFLog("STEP n     E(n)       E(n-1)    \n");
       OBFFLog("--------------------------------\n");
     }
@@ -1672,8 +1896,8 @@ namespace OpenBabel
         e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
       
         IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
-          OBFFLog(logbuf);
+          sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+          OBFFLog(_logbuf);
         }
         
         e_n1 = e_n2;
@@ -1692,8 +1916,8 @@ namespace OpenBabel
         e_n2 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
 	  
         IF_OBFF_LOGLVL_LOW {
-          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
-          OBFFLog(logbuf);
+          sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", i, e_n2, e_n1);
+          OBFFLog(_logbuf);
         }
         
         if (IsNear(e_n2, e_n1, 1.0e-7)) {
@@ -1718,8 +1942,8 @@ namespace OpenBabel
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nS T E E P E S T   D E S C E N T\n\n");
-      sprintf(logbuf, "STEPS = %d\n\n",  steps);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "STEPS = %d\n\n",  steps);
+      OBFFLog(_logbuf);
       OBFFLog("STEP n     E(n)       E(n-1)    \n");
       OBFFLog("--------------------------------\n");
     }
@@ -1758,8 +1982,8 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_LOW {
         if (_cstep % 10 == 0) {
-          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
-          OBFFLog(logbuf);
+          sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+          OBFFLog(_logbuf);
         }
       }
 
@@ -1809,8 +2033,8 @@ namespace OpenBabel
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nC O N J U G A T E   G R A D I E N T S\n\n");
-      sprintf(logbuf, "STEPS = %d\n\n",  steps);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, "STEPS = %d\n\n",  steps);
+      OBFFLog(_logbuf);
       OBFFLog("STEP n     E(n)       E(n-1)    \n");
       OBFFLog("--------------------------------\n");
     }
@@ -1854,8 +2078,8 @@ namespace OpenBabel
     e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
     IF_OBFF_LOGLVL_LOW {
-      sprintf(logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
-      OBFFLog(logbuf);
+      sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+      OBFFLog(_logbuf);
     }
  
     _e_n1 = e_n2;
@@ -1926,8 +2150,8 @@ namespace OpenBabel
 	
       IF_OBFF_LOGLVL_LOW {
         if (_cstep % 10 == 0) {
-          sprintf(logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
-          OBFFLog(logbuf);
+          sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+          OBFFLog(_logbuf);
         }
       }
  
@@ -2265,148 +2489,204 @@ namespace OpenBabel
     grad.Set(-dx, -dy, -dz);
     return (grad);
   }
-
-  // This function might need expanding, bu could really increase performance for
-  // avogadro's AutoOpt tool
-  bool OBForceField::IsSetupNeeded(OBMol &mol)
+  
+  //////////////////////////////////////////////////////////////////////////////////
+  //
+  // Molecular Dynamics
+  //
+  //////////////////////////////////////////////////////////////////////////////////
+  // Most OpenBabel MD alogrithms are based on:
+  // GROMACS, Groningen Machine for Chemical Simulations, USER MANUAL, version 3.3
+  //
+  // Quantity:		Symbol:		Unit:
+  // length		r		A = 10e-10m
+  // mass		m 		amu = 1.6605402 10e-27kg
+  // time		t		ps = 10e-12s
+  // temperature	T		K
+  //
+  // force		F		kcal mol^-1 A^-1
+  // acceleration	a		kcal mol^-1 A^-1 1000x amu-1 = A ps^-2 (*)
+  // velocity		v		A ps^-1
+  //
+  // The force we calculate comes from the force field. Currently this functions 
+  // only works for MMFF94 and so the unit for energy is kcal, but this does not 
+  // affect what is explained below. (note: A isn't a SI unit either)
+  //
+  //     [   kcal   ]          F    [     kcal    ]   [       kcal       ]   [      A      ]   [   A    ]
+  // F = [ -------- ]     a = --- = [ ----------- ] = [ ---------------- ] = [ ----------- ] = [ ------ ]
+  //     [  mol  A  ]          m    [  mol A amu  ]   [  mol A 10^-27kg  ]   [  10^-24s^2  ]   [  ps^2  ]
+  //
+  // This means that if we devide the force (comming from the FF) by 1000x its mass in amu, 
+  // we get the acceleration in A ps^-2.
+  
+  // gromacs user manual page 17
+  void OBForceField::GenerateVelocities() 
   {
-    if (_mol.NumAtoms() != mol.NumAtoms())
-      return true;
+    cout << "OBForceField::GenerateVelocities()" << endl;
+    OBRandom generator;
+    generator.TimeSeed();
+    _ncoords = _mol.NumAtoms() * 3;
+    int velocityIdx;
+    double velocity, kB;
+    kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
+    
+    _velocityPtr = new double[_ncoords];
+    memset(_velocityPtr, '\0', sizeof(double)*_ncoords);
+    
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      if (!_constraints.IsFixed(a->GetIdx())) {
+        velocityIdx = (a->GetIdx() - 1) * 3;
       
-    if (_mol.NumBonds() != mol.NumBonds())
-      return true;
+        // add twelve random numbers between 0.0 and 1.0,
+        // subtract 6.0 from their sum, multiply with sqrt(kT/m)
+	if (!_constraints.IsXFixed(a->GetIdx())) {
+          velocity = 0.0;
+          for (int i=0; i < 12; ++i) 
+            velocity += generator.NextFloat();
+          velocity -= 6.0;
+          velocity *= sqrt((kB * _T)/ (1000 * a->GetAtomicMass()));
+          _velocityPtr[velocityIdx] = velocity; // x10: gromacs uses nm instead of A
+        }
+        
+	if (!_constraints.IsYFixed(a->GetIdx())) {
+	  velocity = 0.0;
+          for (int i=0; i < 12; ++i)
+            velocity += generator.NextFloat();
+          velocity -= 6.0;
+          velocity *= sqrt((kB * _T)/ (1000 * a->GetAtomicMass()));
+          _velocityPtr[velocityIdx+1] = velocity; // idem
+        }
 
-    FOR_ATOMS_OF_MOL (atom, _mol) {
-      if (atom->GetAtomicNum() != (mol.GetAtom(atom->GetIdx()))->GetAtomicNum())
-        return true;
-      if (atom->GetValence() != (mol.GetAtom(atom->GetIdx()))->GetValence())
-        return true;
-      if (atom->BOSum() != (mol.GetAtom(atom->GetIdx()))->BOSum())
-        return true;
-    }
-
-    return false;
-  }
-
-  bool OBForceField::GetCoordinates(OBMol &mol)
-  { 
-    OBAtom *atom;
-    
-    if (_mol.NumAtoms() != mol.NumAtoms())
-      return false;
-    
-    // Copy coordinates for current conformer only
-    FOR_ATOMS_OF_MOL (a, _mol) {
-      atom = mol.GetAtom(a->GetIdx());
-      atom->SetVector(a->GetVector());
-    }
-
-    return true;
-  }
-  
-  bool OBForceField::GetConformers(OBMol &mol)
-  { 
-    OBAtom *atom;
-
-    if (_mol.NumAtoms() != mol.NumAtoms())
-      return false;
-    
-    FOR_ATOMS_OF_MOL (a, _mol) {
-      atom = mol.GetAtom(a->GetIdx());
-      atom->SetVector(a->GetVector());
-    }
-
-    //Copy conformer information
-    if (_mol.NumConformers() > 1) {
-      int k,l;
-      vector<double*> conf;
-      double* xyz = NULL;
-      for (k=0 ; k<_mol.NumConformers() ; ++k) {
-        xyz = new double [3*_mol.NumAtoms()];
-        for (l=0 ; l<(int) (3*_mol.NumAtoms()) ; ++l)
-          xyz[l] = _mol.GetConformer(k)[l];
-        conf.push_back(xyz);
+	if (!_constraints.IsZFixed(a->GetIdx())) {
+	  velocity = 0.0;
+          for (int i=0; i < 12; ++i)
+	    velocity += generator.NextFloat();
+          velocity -= 6.0;
+          velocity *= sqrt((kB * _T)/ (1000 * a->GetAtomicMass()));
+          _velocityPtr[velocityIdx+2] = velocity; // idem
+        }
       }
-      mol.SetConformers(conf);
-      mol.SetEnergies(_energies);
-      mol.SetConformer(_current_conformer);
-    }
-    
-    return true;
-  }
-  
-  bool OBForceField::SetCoordinates(OBMol &mol)
-  { 
-    OBAtom *atom;
-    
-    if (_mol.NumAtoms() != mol.NumAtoms())
-      return false;
-    
-    // Copy coordinates for current conformer only
-    FOR_ATOMS_OF_MOL (a, mol) {
-      atom = _mol.GetAtom(a->GetIdx());
-      atom->SetVector(a->GetVector());
     }
 
-    return true;
+    CorrectVelocities();
+  }
+
+  void OBForceField::CorrectVelocities()
+  {
+    _ncoords = _mol.NumAtoms() * 3;
+    int velocityIdx;
+    double velocity, kB, E_kin, E_kin2, factor;
+    kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
+ 
+    // E_kin = 0.5 * Ndf * kB * T
+    E_kin = _ncoords * kB * _T;
+    //cout << "E_{kin} = Ndf * kB * T = " << E_kin << endl;
+    
+    // E_kin = 0.5 * sum( m_i * v_i^2 )
+    E_kin2 = 0.0;
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      velocityIdx = (a->GetIdx() - 1) * 3;
+      
+      velocity = sqrt( _velocityPtr[velocityIdx] * _velocityPtr[velocityIdx] + 
+                       _velocityPtr[velocityIdx+1] * _velocityPtr[velocityIdx+1] + 
+                       _velocityPtr[velocityIdx+2] * _velocityPtr[velocityIdx+2] );
+
+      E_kin2 += 1000 * a->GetAtomicMass() * velocity * velocity;
+    }
+    //cout << "E_{kin} = sum( m_i * v_i^2 ) = " << E_kin2 << endl;
+
+    // correct
+    factor = sqrt(E_kin / E_kin2);
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      velocityIdx = (a->GetIdx() - 1) * 3;
+      _velocityPtr[velocityIdx] *= factor; 
+      _velocityPtr[velocityIdx+1] *= factor; 
+      _velocityPtr[velocityIdx+2] *= factor; 
+    }
+    
+    // E_kin = 0.5 * sum( m_i * v_i^2 )
+    E_kin2 = 0.0;
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      velocityIdx = (a->GetIdx() - 1) * 3;
+      
+      velocity = sqrt( _velocityPtr[velocityIdx] * _velocityPtr[velocityIdx] + 
+                       _velocityPtr[velocityIdx+1] * _velocityPtr[velocityIdx+1] + 
+                       _velocityPtr[velocityIdx+2] * _velocityPtr[velocityIdx+2] );
+
+      E_kin2 += 1000 * a->GetAtomicMass() * velocity * velocity;
+    }
+    //cout << "E_{kin_corr} = sum( m_i * v_i^2 ) = " << E_kin2 << endl;
+  }
+  
+  void OBForceField::MolecularDynamicsTakeNSteps(int n, double T, double timestep, int method)
+  {
+    int coordIdx;
+    double timestep2;
+    vector3 force, pos, accel;
+    double kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
+    _method = method;
+    _timestep = timestep;
+    _T = T;
+
+
+    timestep2 = 0.5 * _timestep * _timestep;
+    
+    if (!_velocityPtr)
+      GenerateVelocities();
+    Energy(true); // compute gradients
+ 
+    for (int i = 1; i <= n; i++) {
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        if (!_constraints.IsFixed(a->GetIdx())) {
+          if (_method & OBFF_ANALYTICAL_GRADIENT)
+            force = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+          else
+            force = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+
+          pos = a->GetVector();
+          coordIdx = (a->GetIdx() - 1) * 3;
+	  
+	  // a(i) = F(i) / m
+	  accel = force / (1000 * a->GetAtomicMass());
+
+	  // x(i+1) = x(i) + v(i) /\t + 0.5 a(i) /\t^2
+	  pos.SetX(pos.x() + _velocityPtr[coordIdx]   * _timestep + accel.x() * timestep2);
+	  pos.SetY(pos.y() + _velocityPtr[coordIdx+1] * _timestep + accel.y() * timestep2);
+	  pos.SetZ(pos.z() + _velocityPtr[coordIdx+2] * _timestep + accel.z() * timestep2);
+	  a->SetVector(pos);
+	  
+          // v(i+.5) = v(i) + 0.5 a(i) /\t
+	  _velocityPtr[coordIdx]   += 0.5 * accel.x() * _timestep;
+	  _velocityPtr[coordIdx+1] += 0.5 * accel.y() * _timestep;
+	  _velocityPtr[coordIdx+2] += 0.5 * accel.z() * _timestep;
+
+	  Energy(true); // compute gradients
+          
+	  if (_method & OBFF_ANALYTICAL_GRADIENT)
+            force = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+          else
+            force = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+          
+	  // a(i+1) = F(i+1) / m
+	  accel = force / (1000 * a->GetAtomicMass());
+
+	  _velocityPtr[coordIdx]   += 0.5 * accel.x() * _timestep;
+	  _velocityPtr[coordIdx+1] += 0.5 * accel.y() * _timestep;
+	  _velocityPtr[coordIdx+2] += 0.5 * accel.z() * _timestep;
+
+	}
+      }
+      if (i % 10 == 0) 
+        CorrectVelocities();
+    }
   }
  
-  bool OBForceField::SetConformers(OBMol &mol)
-  { 
-    OBAtom *atom;
-
-    if (_mol.NumAtoms() != mol.NumAtoms())
-      return false;
-    
-    FOR_ATOMS_OF_MOL (a, mol) {
-      atom = _mol.GetAtom(a->GetIdx());
-      atom->SetVector(a->GetVector());
-    }
-
-    //Copy conformer information
-    if (mol.NumConformers() > 1) {
-      int k,l;
-      vector<double*> conf;
-      double* xyz = NULL;
-      for (k=0 ; k<mol.NumConformers() ; ++k) {
-        xyz = new double [3*mol.NumAtoms()];
-        for (l=0 ; l<(int) (3*mol.NumAtoms()) ; ++l)
-          xyz[l] = mol.GetConformer(k)[l];
-        conf.push_back(xyz);
-      }
-      _mol.SetConformers(conf);
-      _mol.SetConformer(_current_conformer);
-    }
-    
-    return true;
-  }
-  
-  vector3 OBForceField::ValidateGradientError(vector3 &numgrad, vector3 &anagrad)
-  {
-    double errx, erry, errz;
-
-    if (fabs(numgrad.x()) < 1.0)
-      errx = numgrad.x() * fabs(numgrad.x() - anagrad.x()) * 100;
-    else
-      errx = fabs((numgrad.x() - anagrad.x()) / numgrad.x()) * 100;
-
-    if (fabs(numgrad.y()) < 1.0)
-      erry = numgrad.y() * fabs(numgrad.y() - anagrad.y()) * 100;
-    else
-      erry = fabs((numgrad.y() - anagrad.y()) / numgrad.y()) * 100;
-    
-    if (fabs(numgrad.z()) < 1.0)
-      errz = numgrad.z() * fabs(numgrad.z() - anagrad.z()) * 100;
-    else
-      errz = fabs((numgrad.z() - anagrad.z()) / numgrad.z()) * 100;
-    
-    errx = fabs(errx);
-    erry = fabs(erry);
-    errz = fabs(errz);
-
-    return vector3(errx, erry, errz);
-  }
-  
+  //////////////////////////////////////////////////////////////////////////////////
+  //
+  // Vector analyse
+  //
+  //////////////////////////////////////////////////////////////////////////////////
+ 
   double OBForceField::VectorLengthDerivative(vector3 &a, vector3 &b)
   {
     vector3 vab, drab;
