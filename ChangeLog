@@ -1,3 +1,8 @@
+2007-12-20  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/pdbformat.cpp: fix crash [#1846728].
+	* src/math/spacegroup.cpp: add missing header.
+
 2007-12-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/forcefield.h (HasAnalyticalGradients): New

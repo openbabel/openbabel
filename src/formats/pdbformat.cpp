@@ -137,7 +137,15 @@ namespace OpenBabel
 
         // another record type, add it as an OBPairData entry
         line = buffer;
-        key = line.substr(0,6); // the first 6 characters are the record name
+        // if the file is valid, all lines should have more than 6 characters
+        if (line.length() < 6)
+		  {
+            stringstream errorMsg;
+            errorMsg << "ERROR: not a valid PDB file" << endl;
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
+            return false;
+          }
+       key = line.substr(0,6); // the first 6 characters are the record name
         Trim(key);
         value = line.substr(6);
         
