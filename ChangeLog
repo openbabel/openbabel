@@ -1,3 +1,15 @@
+2007-12-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/forcefield.h (HasAnalyticalGradients): New
+	method to define if full analytical gradients are implemented for
+	a force field. Allows code to choose analytical vs. numeric based
+	on implementation. Defaults to false (i.e., implement analytical
+	later).
+	
+	* src/forcefields/forcefieldghemical.h,
+	src/forcefields/forcefielduff.h: Define that analytical gradients
+	are implemented.
+
 2007-12-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp, include/openbabel/forcefield.h: Cleaned up

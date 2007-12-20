@@ -130,20 +130,23 @@ namespace OpenBabel
         return std::string("kJ/mol"); 
       }
 
+      //! \return that analytical gradients are implemented for Ghemical
+      bool HasAnalyticalGradients() { return true; }
+
       //! Setup
       bool Setup(OBMol &mol);
       
-      //! Returns total energy
+      //! \return total energy
       double Energy(bool gradients = true);
-     //! Returns the bond stretching energy
+     //! \return the bond stretching energy
       double E_Bond(bool gradients = true);
-      //! Returns the angle bending energy
+      //! \return the angle bending energy
       double E_Angle(bool gradients = true);
-      //! Returns the torsional energy
+      //! \return the torsional energy
       double E_Torsion(bool gradients = true);
-      //! Returns energy due to Van der Waals interactions
+      //! \return energy due to Van der Waals interactions
       double E_VDW(bool gradients = true);
-      //! Returns energy due to electrostatic interactions
+      //! \return energy due to electrostatic interactions
       double E_Electrostatic(bool gradients = true);
       
       //! Compare and print the numerical and analytical gradients

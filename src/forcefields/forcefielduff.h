@@ -143,19 +143,22 @@ namespace OpenBabel
         return std::string("kJ/mol");  // Note that we convert from kcal/mol internally
       }
 
-    //! Returns total energy
+    //! \return that analytical gradients are implemented for Ghemical
+    bool HasAnalyticalGradients() { return true; }
+
+    //! \return total energy
     double Energy(bool gradients = true);
-    //! Returns the bond stretching energy
+    //! \return the bond stretching energy
     double E_Bond(bool gradients = true);
-    //! Returns the angle bending energy
+    //! \return the angle bending energy
     double E_Angle(bool gradients = true);
-    //! Returns the torsional energy
+    //! \return the torsional energy
     double E_Torsion(bool gradients = true);
-    //! Returns the out-of-plane (inversion) energy
+    //! \return the out-of-plane (inversion) energy
     double E_OOP(bool gradients = true);
-    //! Returns energy due to Van der Waals interactions
+    //! \return energy due to Van der Waals interactions
     double E_VDW(bool gradients = true);
-    //! Returns energy due to electrostatic interactions
+    //! \return energy due to electrostatic interactions
     double E_Electrostatic(bool gradients = true);
       
     //! Compare and print the numerical and analytical gradients

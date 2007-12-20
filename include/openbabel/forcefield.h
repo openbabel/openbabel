@@ -481,6 +481,13 @@ namespace OpenBabel
     }
     //! \return The unit (kcal/mol, kJ/mol, ...) in which the energy is expressed as std::string
     virtual std::string GetUnit() { return std::string("au"); }
+    /* Does this force field have analytical gradients defined for all
+     * calculation components (bonds, angles, non-bonded, etc.)
+     * If this is true, code should default to using OBFF_ANALYTICAL_GRADIENT
+     * for SteepestDescent() or ConjugateGradients()
+     * \return true if all analytical gradients are implemented.
+     */
+    virtual bool HasAnalyticalGradients() { return false; }
     /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Keep current constraints.
      *  \param mol the OBMol object that contains the atoms and bonds
      *  \return True if succesfull
@@ -792,6 +799,7 @@ namespace OpenBabel
     //! \name Methods for energy minimization
     //@{
     /*! Perform a linesearch starting at atom in direction direction
+      \deprecated Current code should use LineSearch(double *, double*) instead
       \param atom start coordinates
       \param direction the search direction
 
