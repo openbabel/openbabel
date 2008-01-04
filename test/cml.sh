@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # test Open Babel with CML, if the CML test suite exists
 
 builddir=`pwd`
