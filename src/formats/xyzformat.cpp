@@ -152,9 +152,18 @@ namespace OpenBabel
         // type manually, assuming that the author of the xyz-file had
         // something "special" in mind.
         OBAtom *atom  = mol.NewAtom();
+
         int atomicNum = etab.GetAtomicNum(vs[0].c_str());
-        atom->SetAtomicNum(atomicNum); //set atomic number, or '0' if the atom type is not recognized
-        if (atomicNum == 0)
+        //set atomic number, or '0' if the atom type is not recognized
+        if (atomicNum == 0) {
+          // Sometimes people call this an XYZ file, but it's actually Unichem
+          // i.e., the first column is the atomic number, not a symbol
+          // so we'll first check if we can convert this to an element number
+          atomicNum = atoi(vs[0].c_str());
+        }
+
+        atom->SetAtomicNum(atomicNum);
+        if (atomicNum == 0) // still strange
           atom->SetType(vs[0]);
 
         // Read the atom coordinates
