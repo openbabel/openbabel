@@ -562,7 +562,7 @@ namespace OpenBabel
     for (i = _rotor.begin();i != _rotor.end();++i)
       delete *i;
     _rotor.clear();
-    _fix.Clear();
+    //_fix.Clear();
   }
 
   bool CompareRotor(const pair<OBBond*,int> &a,const pair<OBBond*,int> &b)

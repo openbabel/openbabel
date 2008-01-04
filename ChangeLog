@@ -1,3 +1,7 @@
+2008-01-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/rotor.cpp: remove _fix.Clear() from OBRotorList::Clear()
+
 2008-01-04  Michael Banck  <mbanck@gmx.net>
 
 	* test/cml.sh: Use /bin/bash to run, not /bin/sh as "source" is a
