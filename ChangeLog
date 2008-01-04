@@ -1,5 +1,10 @@
 2008-01-04  Michael Banck  <mbanck@gmx.net>
 
+	* test/cml.sh: Use /bin/bash to run, not /bin/sh as "source" is a
+	bashism.
+
+2008-01-04  Michael Banck  <mbanck@gmx.net>
+
 	* src/formats/inchi/inchi.sym: New file.
 	* src/formats/inchi/Makefile.am (libinchi_la_LDFLAGS): Use inchi.sym
 	to restrict the exported symbols via libtool's -export-symbols option.
