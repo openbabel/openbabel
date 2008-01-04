@@ -1,3 +1,10 @@
+2008-01-04  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/inchi/inchi.sym: New file.
+	* src/formats/inchi/Makefile.am (libinchi_la_LDFLAGS): Use inchi.sym
+	to restrict the exported symbols via libtool's -export-symbols option.
+	* src/formats/inchi/Makefile.in: Regenerated.
+
 2007-12-12  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* include/openbabel/data.h: add missing headers, see debian bug #455170.
