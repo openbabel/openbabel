@@ -967,15 +967,11 @@ namespace OpenBabel
     OBRotorKeys rotorKeys;
     OBRotorIterator ri;
     OBRotor *rotor = rl.BeginRotor(ri);
-    for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) { // foreach rotor
+    for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) // foreach rotor
       rotorKeys.AddRotor(rotor->GetResolution().size());
-    }
     
-    while (rotorKeys.Next()) {
-      std::vector<int> rotorKey = rotorKeys.GetKey();
-      cout << "rotorKey = " << rotorKey[1] << " " << rotorKey[2] << endl;
-      rotamers.AddRotamer(rotorKey);
-    }
+    while (rotorKeys.Next()) 
+      rotamers.AddRotamer(rotorKeys.GetKey());
 
     rotamers.ExpandConformerList(_mol, _mol.GetConformers());
       
