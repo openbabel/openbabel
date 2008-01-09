@@ -1,3 +1,12 @@
+2008-01-09  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/rotor.h: Added Yongjin Xu's rotorKeyList class as
+	OBRotorKeys, added documentation and NumKeys().
+
+	* src/forcefield.cpp, include/openbabel/forcefield.h: Use the new
+	OBRotorKeys class in SystematicRotorSearch, angle constaints work and
+	renamed BondConstraint to DistanceConstraint.
+
 2008-01-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/rotor.cpp: remove _fix.Clear() from OBRotorList::Clear()

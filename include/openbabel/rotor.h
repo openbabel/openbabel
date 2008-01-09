@@ -355,6 +355,177 @@ namespace OpenBabel
     bool   IdentifyEvalAtoms(OBMol &mol) { return SetEvalAtoms(mol); } 
   };
 
+  /// @cond DEV
+  class rotor_digit {
+    public:
+      rotor_digit(unsigned int rs)
+      {
+        resolution_size = rs;
+        state = 0;
+      }
+      
+      rotor_digit()
+      {
+        resolution_size = 0;
+        state = 0;
+      }
+
+      void set_size(unsigned int rs)
+      {
+        resolution_size = rs;
+        state = 0;
+      }
+      
+      void set_state(int st)
+      {
+        state = st;
+      }
+      
+      int get_state()
+      {
+        return state;
+      }
+      
+      unsigned int size()
+      {
+        return resolution_size;
+      }
+      
+      bool next()
+      {
+        if (state<resolution_size - 1) {
+          state++;
+          return false;
+        } else
+          state = 0;
+        
+	return true;
+      }
+    private:
+      unsigned int resolution_size;
+      int state;
+  } typedef rotor_digit;
+  /// @endcond 
+  
+  //! \class OBRotorKeys
+  //! \brief A class to generate all possible rotorKeys
+  class OBAPI OBRotorKeys
+  {
+      /** \class OBForceField forcefield.h <openbabel/forcefield.h>
+      \brief A class to generate all possible rotorKeys
+
+      This class can generate all possible rotor keys for a set of OBRotors 
+      which can all have their own resolution. Thanks to Yongjin Xu for this
+      patch. 
+
+      the code blow is taken from  OBForceField::SystematicRotorSearch():
+      \code
+      #include <openbabel/rotor.h>
+      #include <openbabel/mol.h>
+
+      // See OBConversion class to fill the mol object.
+      OBMol mol;
+      OBRotorList rl;
+      OBRotamerList rotamers;
+
+      rl.Setup(_mol);
+      rotamers.SetBaseCoordinateSets(_mol);
+      rotamers.Setup(_mol, rl);
+    
+      cout << "number of rotatable bonds: " <<  rl.Size() << endl;
+
+      if (!rl.Size()) { // only one conformer
+        cout << "generated only one conformer" << endl;
+        // exit here 
+      }
+
+      OBRotorKeys rotorKeys;
+      OBRotorIterator ri;
+      OBRotor *rotor = rl.BeginRotor(ri);
+      for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) { // foreach rotor
+        rotorKeys.AddRotor(rotor->GetResolution().size());
+      }
+    
+      while (rotorKeys.Next()) {
+        std::vector<int> rotorKey = rotorKeys.GetKey();
+        cout << "rotorKey = " << rotorKey[1] << " " << rotorKey[2] << endl;
+        rotamers.AddRotamer(rotorKey);
+      }
+
+      rotamers.ExpandConformerList(_mol, _mol.GetConformers());
+      \endcode 
+      **/
+    
+    public:
+      //! Constructor
+      OBRotorKeys()
+      {
+        _vr.clear();
+      }
+      
+      //! Clear all rotors
+      void Clear(){
+        _vr.clear();
+      }
+      
+      //! Number of rotor keys (= number of possible conformers)
+      unsigned int NumKeys()
+      {
+	unsigned int numKeys = 0;
+	
+	while (Next())
+	  numKeys++;
+	
+	return numKeys;        
+      }
+
+      //! Add a rotor
+      //! \param size the rotor resolution
+      void AddRotor(unsigned int size)
+      {
+        rotor_digit *rd;
+        rd = new rotor_digit(size);
+        _vr.push_back(*rd);
+      }
+      
+      //! Select the next rotor key
+      //! \return true if there are more rotor keys
+      bool Next()
+      {
+        if(_vr.size() == 0)
+          return false;
+        
+	bool carry = _vr[0].next();
+        unsigned int i = 1;
+        while (carry) {
+          if(i == _vr.size())
+            return false;
+          
+	  carry = _vr[i].next();
+          i++;
+        }
+        return true;
+      }
+      
+      //! Get the currently selected rotor key
+      //! \return current rotor key
+      std::vector<int> GetKey()
+      {
+        std::vector<int> rt;
+        rt.clear();
+        rt.push_back(0);
+        for(unsigned int i = 0; i < _vr.size(); i++){
+          rt.push_back(_vr[i].get_state());
+        }
+        
+	return rt;
+      }
+    
+    private:
+      std::vector<rotor_digit> _vr;
+  };
+
+
 } // end namespace OpenBabel
 
 #endif // OB_ROTOR_H

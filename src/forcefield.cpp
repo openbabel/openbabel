@@ -322,14 +322,9 @@ namespace OpenBabel
       i->b = mol.GetAtom(i->ib);
       i->c = mol.GetAtom(i->ic);
       i->d = mol.GetAtom(i->id);
-    
-      if (i->type == OBFF_CONST_ANGLE) {
-        i->rab0 = (i->a)->GetDistance(i->b); 
-        i->rbc0 = (i->b)->GetDistance(i->c); 
-      }
     }
   }
-
+  
   vector3 OBFFConstraints::GetGradient(int a)
   {
     vector<OBFFConstraint>::iterator i;
@@ -361,32 +356,82 @@ namespace OpenBabel
         
     for (i = _constraints.begin(); i != _constraints.end(); ++i)
       if ( (i->type == OBFF_CONST_DISTANCE) || (i->type == OBFF_CONST_ANGLE) || (i->type == OBFF_CONST_TORSION) ) {
-	vector3 da, db, dc;
-        double delta, delta2, rab, rbc, rac, rab2, rbc2, length, dE;
+	vector3 da, db, dc, dd;
+        double delta, delta2, rab, theta, phi, sine, dE;
  
 	
 	switch (i->type) {
           case OBFF_CONST_DISTANCE:
-	    if ((i->a == NULL) || (i->b) == NULL)
-	      return 0.0;
+	    if ((i->a == NULL) || ((i->b) == NULL))
+	      break;
 
 	    da = (i->a)->GetVector();
             db = (i->b)->GetVector();
 	
  	    rab = OBForceField::VectorLengthDerivative(da, db);
-            rab = rab - i->constraint_value;
-            rab2 = rab * rab;
-            constraint_energy += i->factor * rab2;
-            dE = 2.0 * i->factor * rab;
+            delta = rab - i->constraint_value;
+            delta2 = delta * delta;
+            constraint_energy += i->factor * delta2;
+            dE = 2.0 * i->factor * delta;
 
 	    i->grada = dE * da;
             i->gradb = dE * db; 
             break;
           case OBFF_CONST_ANGLE:
+	    if ((i->a == NULL) || ((i->b) == NULL) || ((i->c) == NULL))
+	      break;
+
+	    da = (i->a)->GetVector();
+            db = (i->b)->GetVector();
+            dc = (i->c)->GetVector();
+	
+ 	    theta = OBForceField::VectorAngleDerivative(da, db, dc);
+            delta = theta - i->constraint_value;
+            delta2 = delta * delta;
+            constraint_energy += 0.0002 * i->factor * delta2;
+            dE = 0.0004 * i->factor * delta;
+
+	    i->grada = dE * da;
+            i->gradb = dE * db;
+            i->gradc = dE * dc;
+            break;
           case OBFF_CONST_TORSION:
-          case OBFF_CONST_IGNORE:
-          default:
-            return 0.0;
+            if ((i->a == NULL) || ((i->b) == NULL) || ((i->c) == NULL) || ((i->d) == NULL))
+	      break;
+
+	    /*
+	    da = (i->a)->GetVector();
+            db = (i->b)->GetVector();
+            dc = (i->c)->GetVector();
+            dd = (i->d)->GetVector();
+	
+ 	    theta = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
+            if (IsNan(theta))
+              theta = 1.0e-7;
+            
+	    if (theta >= 0)
+              delta = theta - i->constraint_value;
+	    else
+              delta = theta + i->constraint_value;
+            delta2 = delta * delta;
+            constraint_energy += 0.00025 * delta2;
+            dE = 0.000125 * delta;
+
+	    if (theta >= 0) {
+	      i->grada = dE * da;
+              i->gradb = dE * db;
+              i->gradc = dE * dc;
+              i->gradd = dE * dd;
+	    } else {
+	      i->grada = -dE * da;
+              i->gradb = -dE * db;
+              i->gradc = -dE * dc;
+              i->gradd = -dE * dd;
+	    }
+            */
+	    break;
+        
+	  default:
 	    break;
         }
       }
@@ -461,7 +506,7 @@ namespace OpenBabel
     _constraints.push_back(constraint);
   }
   
-  void OBFFConstraints::AddBondConstraint(int a, int b, double length)
+  void OBFFConstraints::AddDistanceConstraint(int a, int b, double length)
   {
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_DISTANCE; // constraint type
@@ -919,15 +964,17 @@ namespace OpenBabel
       return 1; // there are no more conformers
     }
 
-    std::vector<int> rotorKey(rl.Size() + 1, 0); // indexed from 1
-
+    OBRotorKeys rotorKeys;
     OBRotorIterator ri;
     OBRotor *rotor = rl.BeginRotor(ri);
     for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) { // foreach rotor
-      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) { // foreach torsion
-        rotorKey[i] = j;
-        rotamers.AddRotamer(rotorKey);
-      }
+      rotorKeys.AddRotor(rotor->GetResolution().size());
+    }
+    
+    while (rotorKeys.Next()) {
+      std::vector<int> rotorKey = rotorKeys.GetKey();
+      cout << "rotorKey = " << rotorKey[1] << " " << rotorKey[2] << endl;
+      rotamers.AddRotamer(rotorKey);
     }
 
     rotamers.ExpandConformerList(_mol, _mol.GetConformers());

@@ -266,7 +266,7 @@ namespace OpenBabel
       //! Fix the z coordinate of the atom position
       void AddAtomZConstraint(int a);
       //! Constrain the bond length a-b
-      void AddBondConstraint(int a, int b, double length);
+      void AddDistanceConstraint(int a, int b, double length);
       //! Constrain the angle a-b-c
       void AddAngleConstraint(int a, int b, int c, double angle);
       //! Constrain the torsion angle a-b-c-d
