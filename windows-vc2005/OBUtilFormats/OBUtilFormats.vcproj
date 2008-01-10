@@ -255,10 +255,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\sortformat.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\formats\titleformat.cpp"
 				>
 			</File>
