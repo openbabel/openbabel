@@ -223,15 +223,23 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\..\src\filters.cpp"
+				RelativePath="..\..\src\descriptors\cmpdfilter.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\groupcontrib.cpp"
+				RelativePath="..\..\src\descriptors\filters.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\smartsdescriptors.cpp"
+				RelativePath="..\..\src\descriptors\groupcontrib.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ops\optransform.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\descriptors\smartsdescriptors.cpp"
 				>
 			</File>
 		</Filter>
@@ -259,6 +267,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath="..\..\include\openbabel\optransform.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -265,28 +265,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\bitvec.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\src\bond.cpp"
 				>
 				<FileConfiguration
@@ -783,28 +761,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tokenst.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\src\transform.cpp"
 				>
 				<FileConfiguration
@@ -896,10 +852,6 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\base.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\openbabel\bitvec.h"
 				>
 			</File>
 			<File

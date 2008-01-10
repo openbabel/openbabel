@@ -192,7 +192,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\gen3d.cpp"
+				RelativePath="..\..\src\ops\gen3d.cpp"
 				>
 			</File>
 		</Filter>

@@ -301,6 +301,18 @@ namespace OpenBabel {
 #else
     count = 1; //avoid calling this function several times
 #endif //USING_DYNAMIC_LIBS
+
+    //Make instances for plugin classes defined in the data file
+    //This is hook for OBDefine, but does nothing if it is not loaded
+    //or if plugindefines.txt is not found.
+    OBPlugin* pdef = OBPlugin::GetPlugin("loaders","define");
+    if(pdef)
+    {
+      static vector<string> vec(3);
+      vec[1] = string("define");
+      vec[2] = string("plugindefines.txt"); 
+      pdef->MakeInstance(vec);
+    }
     return count;
   }
 

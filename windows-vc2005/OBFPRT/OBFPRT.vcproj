@@ -286,6 +286,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\dock.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\fingerprint.h"
 				>
 			</File>
@@ -317,10 +321,6 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\include\openbabel\dock.h"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

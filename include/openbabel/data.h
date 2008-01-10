@@ -303,19 +303,6 @@ namespace OpenBabel
       bool AssignBonds(OBMol &,OBBitVec &);
     };
 
-  //! Opens a datafile in a directory where OpenBabel expects to find it.
-  // full documentation in data.cpp
-  OBAPI std::string OpenDatafile(std::ifstream& fs, 
-                                 const std::string& filename,
-                                 const std::string& envvar = "BABEL_DATADIR");
-
-  // Used by other code for reading files
-#ifdef WIN32
-#define FILE_SEP_CHAR "\\"
-#else
-#define FILE_SEP_CHAR "/"
-#endif
-
 } // end namespace OpenBabel
 
 #endif //DATA_H

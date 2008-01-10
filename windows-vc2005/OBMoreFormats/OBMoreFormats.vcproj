@@ -270,6 +270,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\chemdrawcdx.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\chemdrawct.cpp"
 				>
 			</File>
@@ -279,10 +283,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\cifformat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\copyformat.cpp"
 				>
 			</File>
 			<File
@@ -326,6 +326,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\gaussformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\ghemicalformat.cpp"
 				>
 			</File>
@@ -343,10 +347,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\mmodformat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\molreport.cpp"
 				>
 			</File>
 			<File
@@ -370,23 +370,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\pngformat.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						WarningLevel="3"
-						WarnAsError="false"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\povrayformat.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\formats\PQSformat.cpp"
 				>
 			</File>
@@ -395,19 +378,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\reportformat.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\formats\shelxformat.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\tinkerformat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\titleformat.cpp"
 				>
 			</File>
 			<File

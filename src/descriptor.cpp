@@ -71,9 +71,8 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval)
 /**
     The string has the form:
     PropertyID1 predicate1 [booleanOp] PropertyID2 predicate2 ...
-    The propertyIDs are the ID of OBDescriptor classes or the Attributes of OBPairData
-    and contain only letters, numbers and underscores.
-    If they match an OBPairData
+    The propertyIDs are the ID of instances of a OBDescriptor class or
+    the Attributes of OBPairData, and contain only letters, numbers and underscores.
     The predicates must start with a punctuation character and are interpreted by
     the Compare function of the OBDescriptor class. The default implementation expects
     a comparison operator and a number, e.g. >=1.3  Whitespace is optional and is ignored.
@@ -162,8 +161,6 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
 
     if(!noEval)
       ret = retFromCompare;
-    if(!optionText)
-      return false; // error
 
     //Look for boolean operator
     ch=0;
@@ -457,7 +454,7 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
   bool OBDescriptor::MatchPairData(OBBase* pOb, string& s)
   {
     //If s matches a PairData attribute return true
-    //else if s with all '_' replaced by spaces matches return true and s is nowthw form with spaces
+    //else if s with all '_' replaced by spaces matches return true and s is now the form with spaces
     //else return false.
     if(pOb->HasData(s))
       return true;

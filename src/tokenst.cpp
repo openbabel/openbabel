@@ -18,14 +18,11 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
-#ifdef WIN32
-#pragma warning (disable : 4786)
-#endif
-
 #include <algorithm>
 #include <vector>
 #include <string>
 #include <cstring>
+#include <openbabel/tokenst.h>
 
 using namespace std;
 
@@ -35,7 +32,7 @@ namespace OpenBabel
   //! Break a string (supplied as the second argument) into tokens, returned 
   //! in the first argument. Tokens are determined by the delimiters supplied
   //! (defaults to whitespace (i.e., spaces, tabs, newlines)
-  OBAPI bool tokenize(std::vector<std::string> &vcr, const char *buf, 
+  bool tokenize(std::vector<std::string> &vcr, const char *buf, 
                       const char *delimstr)
   {
     vcr.clear();
@@ -63,7 +60,7 @@ namespace OpenBabel
   }
 
   //! Trim any trailing spaces at the end of the supplied string.
-  OBAPI char *trim_spaces(char *string)
+  char *trim_spaces(char *string)
   {
     if (!string)
       return(NULL);
@@ -97,7 +94,7 @@ namespace OpenBabel
   //! (defaults to whitespace (i.e., spaces, tabs, newlines)
   //! Only breaks at most 'limit' tokens and the last item in the vector may
   //! include un-parsed tokens.
-  OBAPI bool tokenize(std::vector<std::string> &vcr, std::string &s, 
+  bool tokenize(std::vector<std::string> &vcr, std::string &s, 
                       const char *delimstr, int limit)
   {
     vcr.clear();
@@ -134,7 +131,7 @@ namespace OpenBabel
   }
 
   //! Removes white space from front and back of string
-  OBAPI std::string& Trim(std::string& txt)
+  std::string& Trim(std::string& txt)
   {
     string::size_type pos = txt.find_last_not_of(" \t\n\r");
     if(pos!=string::npos)
@@ -149,6 +146,73 @@ namespace OpenBabel
       txt.erase();
     return txt;
   }
+
+    /** Opens the filestream with the first file called @p filename
+     found by looking 
+     successively in the following directories:
+     - the current directory
+     - in a subdirectory (of the directory below) with the version of 
+     OpenBabel as its name
+     - the parent directory specified by the environment variable 
+     named @p envvar 
+     or "BABEL_DATADIR" if @p envvar is not specified, or the compiled-in
+     macro BABEL_DATADIR if the environment variable is not set
+
+     \param ifs        Stream to load
+     \param filename   Name of the data file to load
+     \param envvar     Name of the environment variable 
+
+     \return the name of the file that was opened. This includes the path
+     unless it is in current directory
+
+  **/
+  std::string OpenDatafile(std::ifstream& ifs, const std::string& filename, 
+                           const std::string& envvar)
+  {
+    ios_base::openmode imode = ios_base::in;
+    #ifdef ALL_READS_BINARY //Makes unix files compatible with VC++6
+      imode = ios_base::in|ios_base::binary;
+    #endif
+
+    // check the current directory
+    ifs.close();
+    ifs.clear();
+    ifs.open(filename.c_str(),imode);
+    if(ifs)
+      return filename;
+
+    string file;
+    char* datadir = getenv(envvar.c_str());
+    if(!datadir)
+      datadir = BABEL_DATADIR;
+
+    // check the subdirectory for this version number
+    file = datadir;
+    file += FILE_SEP_CHAR;
+    file += BABEL_VERSION;
+    file += FILE_SEP_CHAR + filename;
+
+    ifs.clear();
+    ifs.open(file.c_str(),imode);
+    if(ifs)
+      return file;
+
+    // couldn't find it with the version built in, so try the parent
+    file = datadir;
+    file += FILE_SEP_CHAR;
+    file += filename;
+
+    ifs.clear();
+    ifs.open(file.c_str(),imode);
+
+    if (ifs)
+      return file;
+
+    ifs.clear();
+    ifs.close();
+    return(""); // error
+  }
+
 
 } // end namespace OpenBabel
 

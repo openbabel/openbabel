@@ -1,3 +1,36 @@
+2008-01-10 Chris Morley
+
+	* src/tokenst.cpp, data.cpp, include/openbabel/base.h, data.h:
+	Move OpenDataFile from data.cpp to tokenst.cpp. Move declarations
+	of tokenize and Trim to a new header file tokenst.h, so that
+	these utility functions can be use in modules which do not
+	include the main chemistry API. Other similar utilities should
+	probably be treated in the same way.
+	
+	* src/descriptors/cmpdfilter.cpp: NEW FILE. plugin to combine
+	descriptors in --filter and similiar options.
+	
+	* src/ops: NEW DIRECTORY. Move src/gen3d.cpp, op2d.cpp to there.
+	
+	* src/ops/loader.cpp: NEW FILE for plugin to make new
+	plugins from text file.
+	
+	* src/obconversion(LoadFormatFiles):hook for OBDefine.
+	
+	* include/openbabel/plugin.h: add MakeNewInstance and GetPlugin.
+	In MAKE_PLUGIN check for empty ID before registering.
+
+	* src/plugin.cpp(ListAsVector), include/openbabel/op.h(OpOptions):
+	no listing if ID starts with _  Allows dummy instances.
+
+	* src/filters.cpp, smartsfilters.cpp, groupcontrib.cpp: Moved to
+	src/descriptors
+	
+	* include/openbabel/bitvec.h: modify Windows build macros
+	
+	* src/descriptor.cpp:remove an unnecessary zero check and minor
+	doc changes
+
 2008-01-09  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/rotor.h: Added Yongjin Xu's rotorKeyList class as

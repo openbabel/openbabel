@@ -51,6 +51,8 @@ public:
     OBPlugin::PluginIterator itr;
     for(itr=OBPlugin::Begin("ops");itr!=OBPlugin::End("ops");++itr)
     {
+      if(*(itr->first)=='_')//ignore ops with IDs that begin with '_'
+        continue;
       OBOp* pOp = dynamic_cast<OBOp*>(itr->second);
       if(pOp && pOp->WorksWith(pOb))
       {

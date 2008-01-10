@@ -25,8 +25,8 @@ GNU General Public License for more details.
 #include <vector>
 #include <map>
 #include <string>
-
 #include <iostream>
+#include <openbabel/tokenst.h>
 
 namespace OpenBabel
 {
@@ -34,12 +34,6 @@ namespace OpenBabel
   //Forward declaration of the base class for OBMol OBReaction, OBAtom, etc.
   //Declaration later in this file.
 class OBBase;
-
-  // Utility function prototypes
-  OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n\r");
-  OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n\r", int limit=-1);
-  // Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
-  OBAPI std::string& Trim(std::string& txt);
 
   //! \brief Classification of data stored via OBGenericData class and subclasses.
   //!

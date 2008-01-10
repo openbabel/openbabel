@@ -57,6 +57,12 @@ public:
 
   virtual const char* Description();
 
+  virtual OBGroupContrib* MakeInstance(const std::vector<std::string>& textlines)
+  {
+    return new OBGroupContrib(textlines[1].c_str(),textlines[2].c_str(),textlines[3].c_str());
+  }
+
+
   virtual double Predict(OBBase* pOb); 
 
  private:

@@ -186,7 +186,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\src\bitvec.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\dlhandler_win32.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ops\loader.cpp"
 				>
 			</File>
 			<File
@@ -197,6 +205,10 @@
 				RelativePath="..\..\src\plugin.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\tokenst.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -205,6 +217,10 @@
 			>
 			<File
 				RelativePath="..\..\include\openbabel\babelconfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\bitvec.h"
 				>
 			</File>
 			<File

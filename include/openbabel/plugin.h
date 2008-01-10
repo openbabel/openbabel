@@ -66,6 +66,16 @@ public:
   ///The param string can be used in derived types to provide different outputs.
   virtual bool Display(std::string&txt, const char* param, const char* ID=NULL);
 
+  ///Make a new instance of the class.
+  ///See OpTransform, OBGroupContrib, SmartsDescriptor classes for derived versions.
+  ///Usually, the first parameter is the classname, the next three are
+  ///parameters(ID, filename, description) for a constructor, and the rest data.
+  virtual OBPlugin* MakeInstance(const std::vector<std::string>& textlines){return NULL;}
+
+  ///Get a pointer to a plugin from its type and ID. Return NULL if not found. Not cast to Type*
+  static OBPlugin* GetPlugin(const char* Type, const char* ID)
+  { return BaseFindType(GetTypeMap(Type), ID); }
+
   ///Return the ID of the sub-type instance.
   const char* GetID()const{return _id;};
 
@@ -98,6 +108,9 @@ public:
     return GetTypeMap(PluginID).end();
   }
 
+  ///Returns the map of the subtypes
+  virtual PluginMapType& GetMap() const =0;
+
 protected:
   ///\brief Returns a reference to the map of the plugin types.
   /// Is a function rather than a static member variable to avoid initialization problems. 
@@ -105,11 +118,7 @@ protected:
   {
     static PluginMapType m;
     return m;
-  };
-
-  ///Returns the map of the subtypes
-  virtual PluginMapType& GetMap() const =0;
-
+  }
 
   ///Returns the map of a particular plugin type, e.g. GetMapType("fingerprints")
   static PluginMapType& GetTypeMap(const char* PluginID);
@@ -124,6 +133,7 @@ protected:
     else
       return itr->second;
   }
+
 protected:
   const char* _id;
 };
@@ -136,8 +146,8 @@ static PluginMapType& Map(){static PluginMapType m;return m;}\
 public:\
 static BaseClass*& Default(){static BaseClass* d;return d;}\
   BaseClass(const char* ID, bool IsDefault=false)\
- {_id=ID;if(IsDefault || Map().empty()) Default() = this;\
- Map()[ID]=this;PluginMap()[TypeID()] =this;}\
+ {_id=ID;if(ID&&*ID){if(IsDefault || Map().empty()) Default() = this;\
+ Map()[ID]=this;PluginMap()[TypeID()] =this;}}\
 static BaseClass* FindType(const char* ID)\
  {if(!ID || *ID==0) return Default();\
  return static_cast<BaseClass*>(BaseFindType(Map(),ID));}
@@ -163,7 +173,7 @@ and in its definition add
   the MAKE_PLUGIN macro 
   and a function TypeID() containing a simple descriptor of the type
 \code
-#include <openbabel/plugininter.h>
+#include <openbabel/plugin.h>
 class YourBaseClass : public OBPlugin
 {
   MAKE_PLUGIN(YourBaseClass)
@@ -259,11 +269,15 @@ public:
   //Constructor registers the sub-type 
   YourBaseClass(const char* ID, bool IsDefault=false)
   {
-    if(IsDefault || Map().empty())
-      Default() = this;
-    Map()[ID]=this;
-    //Ensure YourBaseClass is registered in OBPlugin so it can be accessed from the commandline
-    PluginMap()[TypeID()] =this;
+    _id = ID;
+    if(ID && *ID) //do not register if ID is empty
+    {
+      if(IsDefault || Map().empty())
+        Default() = this;
+      Map()[ID]=this;
+      //Ensure YourBaseClass is registered in OBPlugin so it can be accessed from the commandline
+      PluginMap()[TypeID()] =this;
+    }
   }
    
   ///Returns the sub-type associated with the ID, or the default subtype if ID NULL or empty.
