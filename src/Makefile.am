@@ -5,7 +5,7 @@ EXTRA_DIST = \
 if BUILD_SHARED
 thisdir = .
 endif
-SUBDIRS = math fingerprints forcefields $(thisdir) formats
+SUBDIRS = math fingerprints forcefields descriptors ops $(thisdir) formats 
 if BUILD_WXGUI
 SUBDIRS += GUI
 endif
@@ -23,9 +23,9 @@ endif
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp canon.cpp builder.cpp \
-		chains.cpp chiral.cpp data.cpp descriptor.cpp filters.cpp \
+		chains.cpp chiral.cpp data.cpp descriptor.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
-    gen3d.cpp griddata.cpp dock.cpp \
+    		griddata.cpp dock.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
@@ -36,9 +36,8 @@ libopenbabel_la_SOURCES = \
 		pointgroup.cpp \
     rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp \
-		smartsdescriptors.cpp \
 		tokenst.cpp typer.cpp \
-		transform.cpp groupcontrib.cpp $(dlhandler)
+		transform.cpp $(dlhandler)
 
 libopenbabel_la_LDFLAGS = -version-info 3:1:1 -no-undefined
 
@@ -46,10 +45,12 @@ if BUILD_SHARED
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 
 libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-			forcefields/libforcefields.la @LTLIBOBJS@ @LIBDL@
+			forcefields/libforcefields.la ops/libops.la \
+			descriptors/libdescriptors.la @LTLIBOBJS@ @LIBDL@
 else !BUILD_SHARED
 libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-			formats/libformats.la forcefields/libforcefields.la @LTLIBOBJS@
+			formats/libformats.la forcefields/libforcefields.la \
+			ops/libops.la descriptors/libdescriptors.la @LTLIBOBJS@
 endif
 
 if BUILD_PCH

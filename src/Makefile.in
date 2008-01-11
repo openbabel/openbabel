@@ -55,30 +55,31 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 @BUILD_SHARED_FALSE@libopenbabel_la_DEPENDENCIES = math/libmath.la \
 @BUILD_SHARED_FALSE@	fingerprints/libfingerprints.la \
 @BUILD_SHARED_FALSE@	formats/libformats.la \
-@BUILD_SHARED_FALSE@	forcefields/libforcefields.la @LTLIBOBJS@
+@BUILD_SHARED_FALSE@	forcefields/libforcefields.la \
+@BUILD_SHARED_FALSE@	ops/libops.la \
+@BUILD_SHARED_FALSE@	descriptors/libdescriptors.la @LTLIBOBJS@
 @BUILD_SHARED_TRUE@libopenbabel_la_DEPENDENCIES = math/libmath.la \
 @BUILD_SHARED_TRUE@	fingerprints/libfingerprints.la \
-@BUILD_SHARED_TRUE@	forcefields/libforcefields.la @LTLIBOBJS@
+@BUILD_SHARED_TRUE@	forcefields/libforcefields.la ops/libops.la \
+@BUILD_SHARED_TRUE@	descriptors/libdescriptors.la @LTLIBOBJS@
 am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	bond.cpp bondtyper.cpp canon.cpp builder.cpp chains.cpp \
-	chiral.cpp data.cpp descriptor.cpp filters.cpp fingerprint.cpp \
-	forcefield.cpp format.cpp generic.cpp gen3d.cpp griddata.cpp \
+	chiral.cpp data.cpp descriptor.cpp fingerprint.cpp \
+	forcefield.cpp format.cpp generic.cpp griddata.cpp dock.cpp \
 	grid.cpp kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
 	obconversion.cpp oberror.cpp obiter.cpp obutil.cpp ops.cpp \
 	parsmart.cpp patty.cpp phmodel.cpp plugin.cpp pointgroup.cpp \
-	rand.cpp residue.cpp ring.cpp rotor.cpp rotamer.cpp dock.cpp \
-	smartsdescriptors.cpp tokenst.cpp typer.cpp transform.cpp \
-	groupcontrib.cpp dlhandler_unix.cpp
+	rand.cpp residue.cpp ring.cpp rotor.cpp rotamer.cpp \
+	tokenst.cpp typer.cpp transform.cpp dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo canon.lo builder.lo chains.lo chiral.lo data.lo \
-	descriptor.lo filters.lo fingerprint.lo forcefield.lo \
-	format.lo generic.lo gen3d.lo griddata.lo grid.lo kekulize.lo \
-	matrix.lo mol.lo molchrg.lo obconversion.lo oberror.lo \
-	obiter.lo obutil.lo ops.lo parsmart.lo patty.lo phmodel.lo \
-	plugin.lo pointgroup.lo rand.lo residue.lo ring.lo rotor.lo \
-	rotamer.lo smartsdescriptors.lo tokenst.lo typer.lo \
-	transform.lo groupcontrib.lo dock.lo $(am__objects_1)
+	descriptor.lo fingerprint.lo forcefield.lo format.lo \
+	generic.lo griddata.lo dock.lo grid.lo kekulize.lo matrix.lo \
+	mol.lo molchrg.lo obconversion.lo oberror.lo obiter.lo \
+	obutil.lo ops.lo parsmart.lo patty.lo phmodel.lo plugin.lo \
+	pointgroup.lo rand.lo residue.lo ring.lo rotor.lo rotamer.lo \
+	tokenst.lo typer.lo transform.lo $(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 libopenbabel_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -117,7 +118,8 @@ RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = math fingerprints forcefields . formats GUI
+DIST_SUBDIRS = math fingerprints forcefields descriptors ops . formats \
+	GUI
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 pkglibdir = @pkglibdir@
 ACLOCAL = @ACLOCAL@
@@ -248,8 +250,8 @@ EXTRA_DIST = \
 	dlhandler_win32.cpp
 
 @BUILD_SHARED_TRUE@thisdir = .
-SUBDIRS = math fingerprints forcefields $(thisdir) formats \
-	$(am__append_1)
+SUBDIRS = math fingerprints forcefields descriptors ops $(thisdir) \
+	formats $(am__append_1)
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data/ -I$(top_srcdir)/include
 lib_LTLIBRARIES = libopenbabel.la
 @BUILD_SHARED_FALSE@dlhandler = 
@@ -257,9 +259,9 @@ lib_LTLIBRARIES = libopenbabel.la
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp canon.cpp builder.cpp \
-		chains.cpp chiral.cpp data.cpp descriptor.cpp filters.cpp \
+		chains.cpp chiral.cpp data.cpp descriptor.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
-    gen3d.cpp griddata.cpp dock.cpp \
+    		griddata.cpp dock.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
@@ -270,17 +272,18 @@ libopenbabel_la_SOURCES = \
 		pointgroup.cpp \
     rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp \
-		smartsdescriptors.cpp \
 		tokenst.cpp typer.cpp \
-		transform.cpp groupcontrib.cpp $(dlhandler)
+		transform.cpp $(dlhandler)
 
 libopenbabel_la_LDFLAGS = -version-info 3:1:1 -no-undefined
 @BUILD_SHARED_TRUE@AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 @BUILD_SHARED_FALSE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-@BUILD_SHARED_FALSE@			formats/libformats.la forcefields/libforcefields.la @LTLIBOBJS@
+@BUILD_SHARED_FALSE@			formats/libformats.la forcefields/libforcefields.la \
+@BUILD_SHARED_FALSE@			ops/libops.la descriptors/libdescriptors.la @LTLIBOBJS@
 
 @BUILD_SHARED_TRUE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-@BUILD_SHARED_TRUE@			forcefields/libforcefields.la @LTLIBOBJS@ @LIBDL@
+@BUILD_SHARED_TRUE@			forcefields/libforcefields.la ops/libops.la \
+@BUILD_SHARED_TRUE@			descriptors/libdescriptors.la @LTLIBOBJS@ @LIBDL@
 
 @BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
 @BUILD_PCH_TRUE@PCHFLAGS = -Winvalid-pch -x c++-header $(CPPFLAGS) $(INCLUDES)
@@ -386,15 +389,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/descriptor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_unix.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filters.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dock.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefield.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gen3d.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generic.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/griddata.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/groupcontrib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kekulize.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrix.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Plo@am__quote@
@@ -414,11 +415,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ring.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rotamer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rotor.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smartsdescriptors.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tokenst.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/transform.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/typer.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dock.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

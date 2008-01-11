@@ -281,6 +281,7 @@ AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
 		   src/formats/Makefile src/fingerprints/Makefile \
 		   src/formats/xml/Makefile src/formats/inchi/Makefile \
        src/forcefields/Makefile src/GUI/Makefile \
+       src/descriptors/Makefile src/ops/Makefile \
        include/Makefile include/openbabel/Makefile \
        include/openbabel/math/Makefile \
 		   test/Makefile test/cmltest/Makefile tools/Makefile \

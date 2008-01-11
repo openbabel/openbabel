@@ -1,5 +1,22 @@
 2008-01-11  Michael Banck  <mbanck@gmx.net>
 
+	* src/Makefile.am (SUBDIRS): Added descriptors and ops.
+	(libopenbabel_la_SOURCES): Removed filters.cpp, gen3d.cpp,
+	smartsdescriptors.cpp and groupcontrib.cpp.
+	(libopenbabel_la_LIBADD [BUILD_SHARED]): Added ops/libops.la and
+	descriptors/libdescriptors.la.
+	(libopenbabel_la_LIBADD [!BUILD_SHARED]): Likewise.
+	* src/Makefile.in: Regenerated.
+	* src/descriptors/Makefile.am: New file.
+	* src/descriptors/Makefile.in: Generated.
+	* src/ops/Makefile.am: New file, skipping op2d.cpp for now.
+	* src/ops/Makefile.in: Generated.
+	* configure.in (AC_OUTPUT): Added src/descriptors/Makefile and
+	src/ops/Makefile.
+	* configure: Regenerated.
+
+2008-01-11  Michael Banck  <mbanck@gmx.net>
+
 	* include/openbabel/tokenst.h: Add newline at end of file.
 
 2008-01-10 Chris Morley
