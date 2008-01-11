@@ -14,7 +14,7 @@ libopenbabelinclude_HEADERS = \
 		obmolecformat.h obutil.h \
 		op.h dock.h \
 		parsmart.h patty.h phmodel.h plugin.h \
-		rand.h reaction.h \
+		rand.h reaction.h tokenst.h \
 		residue.h ring.h rotamer.h rotor.h typer.h \
 		xml.h
 
