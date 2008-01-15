@@ -442,12 +442,14 @@ namespace OpenBabel
           strcpy(label,"am");
         else
           snprintf(label,BUFF_SIZE,"%d",bond->GetBO());
+
         snprintf(buffer, BUFF_SIZE,"%6d%6d%6d%3s%2s",
                  bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),
                  "",label);
         ofs << buffer << endl;
       }
-    ofs << endl;
+    // NO trailing blank line (PR#1868929).
+    //    ofs << endl;
 
     return(true);
   }

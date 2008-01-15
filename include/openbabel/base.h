@@ -105,7 +105,7 @@ class OBBase;
       OccupationData =    17,
 
       //! Density (cube) data and surfaces
-       DensityData =       18,
+      DensityData =       18,
 
       //! Electronic levels, redox states, orbitals, etc.
       ElectronicData =    19,
@@ -116,7 +116,7 @@ class OBBase;
       //! Rotational energy information
       RotationData =      21,
 
-      //! Nuclear transitions (e.g., decay, fission, fusion)
+      //! Nuclear transitions (e.g., decay, capture, fission, fusion)
       NuclearData =       22,
 
       //! Set Data (a set of OBGenericData)
@@ -124,6 +124,9 @@ class OBBase;
 
       //! Grid Data (e.g., 3D grids of data a.k.a. cubes)
       GridData =          24,
+
+      //! Vector Data (i.e., one vector like a dipole moment)
+      VectorData =        25,
 
       // space for up to 2^14 more entries...
 

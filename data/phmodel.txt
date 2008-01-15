@@ -21,6 +21,9 @@
 TRANSFORM O=CO[#1:1] >> O=CO
 TRANSFORM O=C[OD1-0:1] >> O=C[O-:1]
 
+#uncomment for vinylogous carboxylic acids (e.g. ascorbic acid)
+#TRANSFORM [O:1]=[C:2][C:3]=[C:4][O:5] >> [O-:1][C:2]=[C:3][C:4]=[O:5]
+
 #charged amine
 TRANSFORM [N^3;!$(N~[!#6;!#1]):1] >> [N+:1]
 

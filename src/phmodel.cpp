@@ -150,10 +150,7 @@ void OBPhModel::CorrectForPH(OBMol &mol)
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::CorrectForPH", obAuditMsg);
 
-    OBAtom *atom;
-    vector<OBAtom*>::iterator j;
-    for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
-        atom->SetFormalCharge(0);
+    mol.DeleteHydrogens();
 
     vector<OBChemTsfm*>::iterator i;
     for (i = _vtsfm.begin();i != _vtsfm.end();++i)

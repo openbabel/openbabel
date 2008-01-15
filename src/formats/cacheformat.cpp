@@ -26,7 +26,7 @@ namespace OpenBabel
     CacheFormat()
     {
       OBConversion::RegisterFormat("cac",this);
-      OBConversion::RegisterFormat("cache",this, "chemical/x-alchemy");
+      OBConversion::RegisterFormat("cache",this);
     }
 
     virtual const char* Description() //required

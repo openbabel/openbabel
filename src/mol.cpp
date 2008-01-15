@@ -2756,13 +2756,17 @@ namespace OpenBabel
         m[0][0] += mi*(y*y+z*z);
         m[0][1] -= mi*x*y;
         m[0][2] -= mi*x*z;
-        m[1][0] -= mi*x*y;
+        //        m[1][0] -= mi*x*y;
         m[1][1] += mi*(x*x+z*z);
         m[1][2] -= mi*y*z;
-        m[2][0] -= mi*x*z;
-        m[2][1] -= mi*y*z;
+        //        m[2][0] -= mi*x*z;
+        //        m[2][1] -= mi*y*z;
         m[2][2] += mi*(x*x+y*y);
       }
+    // Fill in the lower triangle using symmetry across the diagonal
+    m[1][0] = m[0][1];
+    m[2][0] = m[0][2];
+    m[2][1] = m[1][2];
 
     /* find rotation matrix for moment of inertia */
     ob_make_rmat(m,rmat);

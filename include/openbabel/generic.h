@@ -131,9 +131,9 @@ namespace OpenBabel
     ValueT _value; //!< The data for this key/value pair
   public:
   OBPairTemplate():
-    OBGenericData("PairData", OBGenericDataType::PairData), ValueT() {};
+    OBGenericData("PairData", OBGenericDataType::PairData) {};
     void SetValue(const ValueT t)             { _value = t;     }
-    virtual const ValueT &GetValue() const    { return(_value); }
+    virtual const ValueT &GetGenericValue() const    { return(_value); }
   };
 
   //! Store arbitrary key/value integer data like OBPairData

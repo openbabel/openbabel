@@ -334,7 +334,7 @@ namespace OpenBabel
             // Write SMILES to the standard output
             conv->Write(&mol);
          }
-         return(1); // exit with success
+         return 0; // exit with success
       }
   \endcode
 

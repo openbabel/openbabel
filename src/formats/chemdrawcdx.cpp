@@ -164,6 +164,8 @@ namespace OpenBabel
     //    OBPairData *pd;
     int iInt=0, depth=1;
 
+    if (!ifs.good() || ifs.peek() == EOF)
+      return false;
 
     pmol->BeginModify();
 

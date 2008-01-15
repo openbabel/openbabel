@@ -260,6 +260,19 @@ namespace OpenBabel
       return;
     mol.SetAromaticCorrected();
 
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      if (atom->IsNitrogen() && atom->IsAromatic()) {
+        atom->SetHyb(2);
+        atom->SetType("Nar");
+        if (atom->HasDoubleBond()) {
+          atom->SetImplicitValence(2 + atom->GetFormalCharge());
+        } else {
+          if (atom->GetImplicitValence() == 2)
+          atom->SetImplicitValence(3 + atom->GetFormalCharge());
+        }
+      }
+    }
+
     return;
   }
   

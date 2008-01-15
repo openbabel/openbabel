@@ -1,3 +1,31 @@
+2008-01-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/base.cpp: Fix API documentation for return(1), as mentioned
+	by Andrew Dalke. PR#1827795.
+
+	* src/formats/cacheformat.cpp: Fix incorrect chemical/x-alchemy
+	MIME type. PR#1822511.
+
+	* src/formats/mol2format.cpp: Fix trailing newline
+	issue. PR#1868929.
+
+	* src/formats/chemdrawcdx.cpp: Return false when attempting to
+	read past the end of the file. This solves PR#1856016.
+
+	* include/openbabel/generic.h: Fix template issue with
+	OBPairTemplate, PR#1830110.
+
+	* src/mol.cpp (OpenBabel): Add patch from Noel PR#1840908 for
+	inertial matrix speedup.
+
+	* data/phmodel.txt, src/phmodel.cpp: Fixes from Stephen Constable,
+	related to PR#1838943.
+
+	* src/typer.cpp: Ditto. (Re-enables CorrectAromaticNitrogen to
+	handle tryptophan.)
+
+	* configure.in: Bump for 2.2.0b2 snapshot.
+
 2008-01-11  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/Makefile.*: Add tokenst.h
