@@ -584,7 +584,7 @@ namespace OpenBabel
       The square brackets are optional.
       The whitespace can be SPACE or HTAB
       For example "[ 1 5 6 9 ]"
-     \param[in][out] is The input stream
+     \param[in,out] is The input stream
      \param[out] bv The bit vector to contain the result
   */
   std::istream & operator>> ( std::istream & is, OBBitVec & bv )
@@ -652,7 +652,7 @@ namespace OpenBabel
 
   /** The Tanimoto coefficient may be regarded as the proportion of the "on-bits" which are shared.
       \param[in] bv1 the first bit vector
-      \param[in] bv1 the second bit vector
+      \param[in] bv2 the second bit vector
       \return the ratio of shared bits to bits which either vector has set.
   */
   double Tanimoto(const OBBitVec & bv1, const OBBitVec & bv2)

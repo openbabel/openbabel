@@ -1,5 +1,10 @@
 2008-01-16  Noel O'Boyle <baoilleach@gmail.com>
 
+	* include/openbabel/forcefield.h, plugin.h: Documentation fixes
+	* src/bitvec.cpp: Documentation fixes
+
+2008-01-16  Noel O'Boyle <baoilleach@gmail.com>
+
 	* scripts/openbabel-python.i: Updated to allow compilation
 
 2008-01-15  Geoffrey Hutchison  <babel@geoffhutchison.net>

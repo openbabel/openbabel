@@ -123,7 +123,7 @@ protected:
   ///Returns the map of a particular plugin type, e.g. GetMapType("fingerprints")
   static PluginMapType& GetTypeMap(const char* PluginID);
 
-  ///\briefReturns the type with the specified ID, or NULL if not found.
+  ///\brief Returns the type with the specified ID, or NULL if not found.
   ///Will be cast to the appropriate class in the calling routine.
   static OBPlugin* BaseFindType(PluginMapType& Map, const char* ID)
   {

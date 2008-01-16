@@ -975,7 +975,7 @@ namespace OpenBabel
      *  
      */
     void CorrectVelocities();
-    /*! Take n steps at tempetature T. If no velocities are set, they will be generated.
+    /*! Take n steps at temperature T. If no velocities are set, they will be generated.
      *
      *  example:
      *  \code
@@ -985,6 +985,7 @@ namespace OpenBabel
      *  }
      * \endcode
      *
+     *  \param n number of steps to take
      *  \param T absolute temperature in Kelvin
      *  \param timestep the time step in picoseconds (10e-12)
         \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
