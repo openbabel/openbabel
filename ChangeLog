@@ -1,3 +1,16 @@
+2008-01-16 Chris Morley
+
+	* include/openbabel/obconversion.h(ReadObject),
+	* include/openbabel/mol.h(CreateMolecule):
+	These declarations were added by Jean, but do not seem to
+	have definitions currently, which causes problems with SWIG.
+	Comment them out for the time being.
+	
+	* include/openbabel/fingerprint.h: last commit was mistake;revert. 
+	* scripts/openbabel-python.i: do not include groupcontrib.h
+	* windows-vc2005/OpenBabelDLL/OpenBabelDLL.vcproj: updated
+	for extra files etc.
+
 2008-01-16  Noel O'Boyle <baoilleach@gmail.com>
 
 	* include/openbabel/forcefield.h, plugin.h: Documentation fixes

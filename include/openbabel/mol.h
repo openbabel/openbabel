@@ -705,7 +705,7 @@ namespace OpenBabel
   OBAPI double superimpose(double*,double*,int);
 #endif // __KCC
 
-  extern OBMol* (*CreateMolecule) (void);
+//  extern OBMol* (*CreateMolecule) (void);
 
 } // end namespace OpenBabel
 

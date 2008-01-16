@@ -222,6 +222,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\descriptors\cmpdfilter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\data.cpp"
 				>
 			</File>
@@ -234,7 +238,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\filters.cpp"
+				RelativePath="..\..\src\descriptors\filters.cpp"
 				>
 			</File>
 			<File
@@ -258,19 +262,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\forcefields\forcefieldmm2.cpp"
+				RelativePath="..\..\src\forcefields\forcefieldmmff94.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\forcefields\forcefieldmmff94.cpp"
+				RelativePath="..\..\src\forcefields\forcefielduff.cpp"
 				>
 			</File>
 			<File
@@ -278,8 +274,26 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\gen3d.cpp"
+				RelativePath="..\..\src\ops\gen3d.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\generic.cpp"
@@ -294,11 +308,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\groupcontrib.cpp"
+				RelativePath="..\..\src\griddata.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\descriptors\groupcontrib.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\kekulize.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ops\loader.cpp"
 				>
 			</File>
 			<File
@@ -331,6 +353,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\obutil.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ops\optransform.cpp"
 				>
 			</File>
 			<File
@@ -370,7 +396,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\smartsdescriptors.cpp"
+				RelativePath="..\..\src\descriptors\smartsdescriptors.cpp"
 				>
 			</File>
 			<File
@@ -480,6 +506,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\forcefields\forcefielduff.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\format.h"
 				>
 			</File>
@@ -556,6 +586,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\optransform.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\parsmart.h"
 				>
 			</File>
@@ -573,6 +607,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\pluginiter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\pointgroup.h"
 				>
 			</File>
 			<File
@@ -619,6 +657,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\math\spacegroup.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\tokenst.h"
 				>
 			</File>
 			<File

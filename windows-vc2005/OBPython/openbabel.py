@@ -260,6 +260,52 @@ class vectorDouble(_object):
 vectorDouble_swigregister = _openbabel.vectorDouble_swigregister
 vectorDouble_swigregister(vectorDouble)
 
+class vectorString(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, vectorString, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, vectorString, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorString_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorString___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorString___len__(*args)
+    def pop(*args): return _openbabel.vectorString_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorString___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorString___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorString___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorString___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorString___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorString___setitem__(*args)
+    def append(*args): return _openbabel.vectorString_append(*args)
+    def empty(*args): return _openbabel.vectorString_empty(*args)
+    def size(*args): return _openbabel.vectorString_size(*args)
+    def clear(*args): return _openbabel.vectorString_clear(*args)
+    def swap(*args): return _openbabel.vectorString_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorString_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorString_begin(*args)
+    def end(*args): return _openbabel.vectorString_end(*args)
+    def rbegin(*args): return _openbabel.vectorString_rbegin(*args)
+    def rend(*args): return _openbabel.vectorString_rend(*args)
+    def pop_back(*args): return _openbabel.vectorString_pop_back(*args)
+    def erase(*args): return _openbabel.vectorString_erase(*args)
+    def __init__(self, *args): 
+        this = _openbabel.new_vectorString(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vectorString_push_back(*args)
+    def front(*args): return _openbabel.vectorString_front(*args)
+    def back(*args): return _openbabel.vectorString_back(*args)
+    def assign(*args): return _openbabel.vectorString_assign(*args)
+    def resize(*args): return _openbabel.vectorString_resize(*args)
+    def insert(*args): return _openbabel.vectorString_insert(*args)
+    def reserve(*args): return _openbabel.vectorString_reserve(*args)
+    def capacity(*args): return _openbabel.vectorString_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorString
+    __del__ = lambda self : None;
+vectorString_swigregister = _openbabel.vectorString_swigregister
+vectorString_swigregister(vectorString)
+
 class vVector3(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, vVector3, name, value)
@@ -490,6 +536,52 @@ class vectorRing(_object):
 vectorRing_swigregister = _openbabel.vectorRing_swigregister
 vectorRing_swigregister(vectorRing)
 
+class vectorpRing(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, vectorpRing, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, vectorpRing, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorpRing_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorpRing___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorpRing___len__(*args)
+    def pop(*args): return _openbabel.vectorpRing_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorpRing___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorpRing___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorpRing___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorpRing___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorpRing___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorpRing___setitem__(*args)
+    def append(*args): return _openbabel.vectorpRing_append(*args)
+    def empty(*args): return _openbabel.vectorpRing_empty(*args)
+    def size(*args): return _openbabel.vectorpRing_size(*args)
+    def clear(*args): return _openbabel.vectorpRing_clear(*args)
+    def swap(*args): return _openbabel.vectorpRing_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorpRing_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorpRing_begin(*args)
+    def end(*args): return _openbabel.vectorpRing_end(*args)
+    def rbegin(*args): return _openbabel.vectorpRing_rbegin(*args)
+    def rend(*args): return _openbabel.vectorpRing_rend(*args)
+    def pop_back(*args): return _openbabel.vectorpRing_pop_back(*args)
+    def erase(*args): return _openbabel.vectorpRing_erase(*args)
+    def __init__(self, *args): 
+        this = _openbabel.new_vectorpRing(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vectorpRing_push_back(*args)
+    def front(*args): return _openbabel.vectorpRing_front(*args)
+    def back(*args): return _openbabel.vectorpRing_back(*args)
+    def assign(*args): return _openbabel.vectorpRing_assign(*args)
+    def resize(*args): return _openbabel.vectorpRing_resize(*args)
+    def insert(*args): return _openbabel.vectorpRing_insert(*args)
+    def reserve(*args): return _openbabel.vectorpRing_reserve(*args)
+    def capacity(*args): return _openbabel.vectorpRing_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorpRing
+    __del__ = lambda self : None;
+vectorpRing_swigregister = _openbabel.vectorpRing_swigregister
+vectorpRing_swigregister(vectorpRing)
+
 class vectorData(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, vectorData, name, value)
@@ -536,6 +628,8 @@ class vectorData(_object):
 vectorData_swigregister = _openbabel.vectorData_swigregister
 vectorData_swigregister(vectorData)
 
+toPairData = _openbabel.toPairData
+toUnitCell = _openbabel.toUnitCell
 class OBGlobalDataBase(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, OBGlobalDataBase, name, value)
@@ -573,6 +667,7 @@ class OBElement(_object):
     def GetMass(*args): return _openbabel.OBElement_GetMass(*args)
     def GetMaxBonds(*args): return _openbabel.OBElement_GetMaxBonds(*args)
     def GetElectroNeg(*args): return _openbabel.OBElement_GetElectroNeg(*args)
+    def GetAllredRochowElectroNeg(*args): return _openbabel.OBElement_GetAllredRochowElectroNeg(*args)
     def GetIonization(*args): return _openbabel.OBElement_GetIonization(*args)
     def GetElectronAffinity(*args): return _openbabel.OBElement_GetElectronAffinity(*args)
     def GetName(*args): return _openbabel.OBElement_GetName(*args)
@@ -610,6 +705,7 @@ class OBElementTable(OBGlobalDataBase):
     def CorrectedVdwRad(*args): return _openbabel.OBElementTable_CorrectedVdwRad(*args)
     def GetMaxBonds(*args): return _openbabel.OBElementTable_GetMaxBonds(*args)
     def GetElectroNeg(*args): return _openbabel.OBElementTable_GetElectroNeg(*args)
+    def GetAllredRochowElectroNeg(*args): return _openbabel.OBElementTable_GetAllredRochowElectroNeg(*args)
     def GetIonization(*args): return _openbabel.OBElementTable_GetIonization(*args)
     def GetElectronAffinity(*args): return _openbabel.OBElementTable_GetElectronAffinity(*args)
     def GetRGB(*args): return _openbabel.OBElementTable_GetRGB(*args)
@@ -684,7 +780,6 @@ class OBResidueData(OBGlobalDataBase):
 OBResidueData_swigregister = _openbabel.OBResidueData_swigregister
 OBResidueData_swigregister(OBResidueData)
 
-FILE_SEP_CHAR = _openbabel.FILE_SEP_CHAR
 class DoubleType(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, DoubleType, name, value)
@@ -705,7 +800,6 @@ class DoubleType(_object):
     __del__ = lambda self : None;
 DoubleType_swigregister = _openbabel.DoubleType_swigregister
 DoubleType_swigregister(DoubleType)
-OpenDatafile = _openbabel.OpenDatafile
 
 DoubleMultiply = _openbabel.DoubleMultiply
 DoubleAdd = _openbabel.DoubleAdd
@@ -814,7 +908,6 @@ vectorAngle = _openbabel.vectorAngle
 CalcTorsionAngle = _openbabel.CalcTorsionAngle
 Point2Plane = _openbabel.Point2Plane
 Point2PlaneAngle = _openbabel.Point2PlaneAngle
-Trim = _openbabel.Trim
 UndefinedData = _openbabel.UndefinedData
 PairData = _openbabel.PairData
 EnergyData = _openbabel.EnergyData
@@ -839,6 +932,8 @@ VibrationData = _openbabel.VibrationData
 RotationData = _openbabel.RotationData
 NuclearData = _openbabel.NuclearData
 SetData = _openbabel.SetData
+GridData = _openbabel.GridData
+VectorData = _openbabel.VectorData
 CustomData0 = _openbabel.CustomData0
 CustomData1 = _openbabel.CustomData1
 CustomData2 = _openbabel.CustomData2
@@ -888,6 +983,33 @@ VZero = cvar.VZero
 VX = cvar.VX
 VY = cvar.VY
 VZ = cvar.VZ
+
+class OBBase(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBBase, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, OBBase, name)
+    __repr__ = _swig_repr
+    __swig_destroy__ = _openbabel.delete_OBBase
+    __del__ = lambda self : None;
+    def Clear(*args): return _openbabel.OBBase_Clear(*args)
+    def DoTransformations(*args): return _openbabel.OBBase_DoTransformations(*args)
+    __swig_getmethods__["ClassDescription"] = lambda x: _openbabel.OBBase_ClassDescription
+    if _newclass:ClassDescription = staticmethod(_openbabel.OBBase_ClassDescription)
+    def HasData(*args): return _openbabel.OBBase_HasData(*args)
+    def DeleteData(*args): return _openbabel.OBBase_DeleteData(*args)
+    def SetData(*args): return _openbabel.OBBase_SetData(*args)
+    def DataSize(*args): return _openbabel.OBBase_DataSize(*args)
+    def GetData(*args): return _openbabel.OBBase_GetData(*args)
+    def BeginData(*args): return _openbabel.OBBase_BeginData(*args)
+    def EndData(*args): return _openbabel.OBBase_EndData(*args)
+    def __init__(self, *args): 
+        this = _openbabel.new_OBBase(*args)
+        try: self.this.append(this)
+        except: self.this = this
+OBBase_swigregister = _openbabel.OBBase_swigregister
+OBBase_swigregister(OBBase)
+OBBase_ClassDescription = _openbabel.OBBase_ClassDescription
 
 class OBCommentData(OBGenericData):
     __swig_setmethods__ = {}
@@ -1077,6 +1199,7 @@ class OBUnitCell(OBGenericData):
     def GetGamma(*args): return _openbabel.OBUnitCell_GetGamma(*args)
     def GetOffset(*args): return _openbabel.OBUnitCell_GetOffset(*args)
     def GetSpaceGroup(*args): return _openbabel.OBUnitCell_GetSpaceGroup(*args)
+    def GetSpaceGroupName(*args): return _openbabel.OBUnitCell_GetSpaceGroupName(*args)
     def GetLatticeType(*args): return _openbabel.OBUnitCell_GetLatticeType(*args)
     def GetCellVectors(*args): return _openbabel.OBUnitCell_GetCellVectors(*args)
     def GetCellMatrix(*args): return _openbabel.OBUnitCell_GetCellMatrix(*args)
@@ -1236,8 +1359,6 @@ class OBChiralData(OBGenericData):
     for _s in [OBGenericData]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, OBChiralData, name)
     __repr__ = _swig_repr
-    def GetAtom4Refs(*args): return _openbabel.OBChiralData_GetAtom4Refs(*args)
-    def GetAtomRef(*args): return _openbabel.OBChiralData_GetAtomRef(*args)
     def __init__(self, *args): 
         this = _openbabel.new_OBChiralData(*args)
         try: self.this.append(this)
@@ -1246,6 +1367,8 @@ class OBChiralData(OBGenericData):
     __swig_destroy__ = _openbabel.delete_OBChiralData
     __del__ = lambda self : None;
     def Clear(*args): return _openbabel.OBChiralData_Clear(*args)
+    def GetAtom4Refs(*args): return _openbabel.OBChiralData_GetAtom4Refs(*args)
+    def GetAtomRef(*args): return _openbabel.OBChiralData_GetAtomRef(*args)
     def SetAtom4Refs(*args): return _openbabel.OBChiralData_SetAtom4Refs(*args)
     def AddAtomRef(*args): return _openbabel.OBChiralData_AddAtomRef(*args)
     def GetSize(*args): return _openbabel.OBChiralData_GetSize(*args)
@@ -1286,6 +1409,7 @@ class OBVibrationData(OBGenericData):
         except: self.this = this
     __swig_destroy__ = _openbabel.delete_OBVibrationData
     __del__ = lambda self : None;
+    def Clone(*args): return _openbabel.OBVibrationData_Clone(*args)
     def SetData(*args): return _openbabel.OBVibrationData_SetData(*args)
     def GetLx(*args): return _openbabel.OBVibrationData_GetLx(*args)
     def GetFrequencies(*args): return _openbabel.OBVibrationData_GetFrequencies(*args)
@@ -1294,125 +1418,85 @@ class OBVibrationData(OBGenericData):
 OBVibrationData_swigregister = _openbabel.OBVibrationData_swigregister
 OBVibrationData_swigregister(OBVibrationData)
 
-class OBBase(_object):
+class OBRotationData(OBGenericData):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBBase, name, value)
+    for _s in [OBGenericData]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBRotationData, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBBase, name)
+    for _s in [OBGenericData]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, OBRotationData, name)
     __repr__ = _swig_repr
-    __swig_destroy__ = _openbabel.delete_OBBase
-    __del__ = lambda self : None;
-    def Clear(*args): return _openbabel.OBBase_Clear(*args)
-    def DoTransformations(*args): return _openbabel.OBBase_DoTransformations(*args)
-    __swig_getmethods__["ClassDescription"] = lambda x: _openbabel.OBBase_ClassDescription
-    if _newclass:ClassDescription = staticmethod(_openbabel.OBBase_ClassDescription)
-    def HasData(*args): return _openbabel.OBBase_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBBase_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBBase_SetData(*args)
-    def DataSize(*args): return _openbabel.OBBase_DataSize(*args)
-    def GetData(*args): return _openbabel.OBBase_GetData(*args)
-    def BeginData(*args): return _openbabel.OBBase_BeginData(*args)
-    def EndData(*args): return _openbabel.OBBase_EndData(*args)
+    UNKNOWN = _openbabel.OBRotationData_UNKNOWN
+    ASYMMETRIC = _openbabel.OBRotationData_ASYMMETRIC
+    SYMMETRIC = _openbabel.OBRotationData_SYMMETRIC
+    LINEAR = _openbabel.OBRotationData_LINEAR
     def __init__(self, *args): 
-        this = _openbabel.new_OBBase(*args)
+        this = _openbabel.new_OBRotationData(*args)
         try: self.this.append(this)
         except: self.this = this
-OBBase_swigregister = _openbabel.OBBase_swigregister
-OBBase_swigregister(OBBase)
-OBBase_ClassDescription = _openbabel.OBBase_ClassDescription
+    __swig_destroy__ = _openbabel.delete_OBRotationData
+    __del__ = lambda self : None;
+    def Clone(*args): return _openbabel.OBRotationData_Clone(*args)
+    def SetData(*args): return _openbabel.OBRotationData_SetData(*args)
+    def GetRotConsts(*args): return _openbabel.OBRotationData_GetRotConsts(*args)
+    def GetSymmetryNumber(*args): return _openbabel.OBRotationData_GetSymmetryNumber(*args)
+    def GetRotorType(*args): return _openbabel.OBRotationData_GetRotorType(*args)
+OBRotationData_swigregister = _openbabel.OBRotationData_swigregister
+OBRotationData_swigregister(OBRotationData)
 
-class pluginiterFingerprint(_object):
+class CharPtrLess(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, pluginiterFingerprint, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, CharPtrLess, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, pluginiterFingerprint, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, CharPtrLess, name)
     __repr__ = _swig_repr
-    def Register(*args): return _openbabel.pluginiterFingerprint_Register(*args)
-    def FindType(*args): return _openbabel.pluginiterFingerprint_FindType(*args)
-    def FindDefaultType(*args): return _openbabel.pluginiterFingerprint_FindDefaultType(*args)
-    def ID(*args): return _openbabel.pluginiterFingerprint_ID(*args)
-    def ToStart(*args): return _openbabel.pluginiterFingerprint_ToStart(*args)
-    def inc(*args): return _openbabel.pluginiterFingerprint_inc(*args)
-    def good(*args): return _openbabel.pluginiterFingerprint_good(*args)
-    def deref(*args): return _openbabel.pluginiterFingerprint_deref(*args)
+    def __call__(*args): return _openbabel.CharPtrLess___call__(*args)
     def __init__(self, *args): 
-        this = _openbabel.new_pluginiterFingerprint(*args)
+        this = _openbabel.new_CharPtrLess(*args)
         try: self.this.append(this)
         except: self.this = this
-    __swig_destroy__ = _openbabel.delete_pluginiterFingerprint
+    __swig_destroy__ = _openbabel.delete_CharPtrLess
     __del__ = lambda self : None;
-    def Iter(*args): return _openbabel.pluginiterFingerprint_Iter(*args)
-    def SetBit(*args): return _openbabel.pluginiterFingerprint_SetBit(*args)
-    def Fold(*args): return _openbabel.pluginiterFingerprint_Fold(*args)
-    def GetFingerprint(*args): return _openbabel.pluginiterFingerprint_GetFingerprint(*args)
-    def Description(*args): return _openbabel.pluginiterFingerprint_Description(*args)
-    def Flags(*args): return _openbabel.pluginiterFingerprint_Flags(*args)
-    def Tanimoto(*args): return _openbabel.pluginiterFingerprint_Tanimoto(*args)
-    def Getbitsperint(*args): return _openbabel.pluginiterFingerprint_Getbitsperint(*args)
-    def FindFingerprint(*args): return _openbabel.pluginiterFingerprint_FindFingerprint(*args)
-pluginiterFingerprint_swigregister = _openbabel.pluginiterFingerprint_swigregister
-pluginiterFingerprint_swigregister(pluginiterFingerprint)
+CharPtrLess_swigregister = _openbabel.CharPtrLess_swigregister
+CharPtrLess_swigregister(CharPtrLess)
 
-class pluginiterForceField(_object):
+class OBPlugin(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, pluginiterForceField, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBPlugin, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, pluginiterForceField, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, OBPlugin, name)
+    def __init__(self): raise AttributeError, "No constructor defined"
     __repr__ = _swig_repr
-    def Register(*args): return _openbabel.pluginiterForceField_Register(*args)
-    def FindType(*args): return _openbabel.pluginiterForceField_FindType(*args)
-    def FindDefaultType(*args): return _openbabel.pluginiterForceField_FindDefaultType(*args)
-    def ID(*args): return _openbabel.pluginiterForceField_ID(*args)
-    def ToStart(*args): return _openbabel.pluginiterForceField_ToStart(*args)
-    def inc(*args): return _openbabel.pluginiterForceField_inc(*args)
-    def good(*args): return _openbabel.pluginiterForceField_good(*args)
-    def deref(*args): return _openbabel.pluginiterForceField_deref(*args)
-    def __init__(self, *args): 
-        this = _openbabel.new_pluginiterForceField(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _openbabel.delete_pluginiterForceField
+    __swig_destroy__ = _openbabel.delete_OBPlugin
     __del__ = lambda self : None;
-    def Iter(*args): return _openbabel.pluginiterForceField_Iter(*args)
-    def FindForceField(*args): return _openbabel.pluginiterForceField_FindForceField(*args)
-    def GetUnit(*args): return _openbabel.pluginiterForceField_GetUnit(*args)
-    def Setup(*args): return _openbabel.pluginiterForceField_Setup(*args)
-    def UpdateCoordinates(*args): return _openbabel.pluginiterForceField_UpdateCoordinates(*args)
-    def UpdateConformers(*args): return _openbabel.pluginiterForceField_UpdateConformers(*args)
-    def OBFFLog(*args): return _openbabel.pluginiterForceField_OBFFLog(*args)
-    def Energy(*args): return _openbabel.pluginiterForceField_Energy(*args)
-    def E_Bond(*args): return _openbabel.pluginiterForceField_E_Bond(*args)
-    def E_Angle(*args): return _openbabel.pluginiterForceField_E_Angle(*args)
-    def E_StrBnd(*args): return _openbabel.pluginiterForceField_E_StrBnd(*args)
-    def E_Torsion(*args): return _openbabel.pluginiterForceField_E_Torsion(*args)
-    def E_OOP(*args): return _openbabel.pluginiterForceField_E_OOP(*args)
-    def E_VDW(*args): return _openbabel.pluginiterForceField_E_VDW(*args)
-    def E_Electrostatic(*args): return _openbabel.pluginiterForceField_E_Electrostatic(*args)
-    def SetLogFile(*args): return _openbabel.pluginiterForceField_SetLogFile(*args)
-    def SetLogLevel(*args): return _openbabel.pluginiterForceField_SetLogLevel(*args)
-    def GetLogLevel(*args): return _openbabel.pluginiterForceField_GetLogLevel(*args)
-    def DistanceGeometry(*args): return _openbabel.pluginiterForceField_DistanceGeometry(*args)
-    def GenerateCoordinates(*args): return _openbabel.pluginiterForceField_GenerateCoordinates(*args)
-    def SystematicRotorSearch(*args): return _openbabel.pluginiterForceField_SystematicRotorSearch(*args)
-    def LineSearch(*args): return _openbabel.pluginiterForceField_LineSearch(*args)
-    def SteepestDescent(*args): return _openbabel.pluginiterForceField_SteepestDescent(*args)
-    def SteepestDescentInitialize(*args): return _openbabel.pluginiterForceField_SteepestDescentInitialize(*args)
-    def SteepestDescentTakeNSteps(*args): return _openbabel.pluginiterForceField_SteepestDescentTakeNSteps(*args)
-    def ConjugateGradients(*args): return _openbabel.pluginiterForceField_ConjugateGradients(*args)
-    def ConjugateGradientsInitialize(*args): return _openbabel.pluginiterForceField_ConjugateGradientsInitialize(*args)
-    def ConjugateGradientsTakeNSteps(*args): return _openbabel.pluginiterForceField_ConjugateGradientsTakeNSteps(*args)
-    def ValidateLineSearch(*args): return _openbabel.pluginiterForceField_ValidateLineSearch(*args)
-    def ValidateSteepestDescent(*args): return _openbabel.pluginiterForceField_ValidateSteepestDescent(*args)
-    def ValidateConjugateGradients(*args): return _openbabel.pluginiterForceField_ValidateConjugateGradients(*args)
-    def Validate(*args): return _openbabel.pluginiterForceField_Validate(*args)
-    def ValidateGradients(*args): return _openbabel.pluginiterForceField_ValidateGradients(*args)
-    def ValidateGradientError(*args): return _openbabel.pluginiterForceField_ValidateGradientError(*args)
-    def VectorLengthDerivative(*args): return _openbabel.pluginiterForceField_VectorLengthDerivative(*args)
-    def VectorAngleDerivative(*args): return _openbabel.pluginiterForceField_VectorAngleDerivative(*args)
-    def VectorTorsionDerivative(*args): return _openbabel.pluginiterForceField_VectorTorsionDerivative(*args)
-    def kludge(*args): return _openbabel.pluginiterForceField_kludge(*args)
-pluginiterForceField_swigregister = _openbabel.pluginiterForceField_swigregister
-pluginiterForceField_swigregister(pluginiterForceField)
+    def Description(*args): return _openbabel.OBPlugin_Description(*args)
+    def Display(*args): return _openbabel.OBPlugin_Display(*args)
+    def MakeInstance(*args): return _openbabel.OBPlugin_MakeInstance(*args)
+    __swig_getmethods__["GetPlugin"] = lambda x: _openbabel.OBPlugin_GetPlugin
+    if _newclass:GetPlugin = staticmethod(_openbabel.OBPlugin_GetPlugin)
+    def GetID(*args): return _openbabel.OBPlugin_GetID(*args)
+    __swig_getmethods__["ListAsVector"] = lambda x: _openbabel.OBPlugin_ListAsVector
+    if _newclass:ListAsVector = staticmethod(_openbabel.OBPlugin_ListAsVector)
+    __swig_getmethods__["List"] = lambda x: _openbabel.OBPlugin_List
+    if _newclass:List = staticmethod(_openbabel.OBPlugin_List)
+    __swig_getmethods__["ListAsString"] = lambda x: _openbabel.OBPlugin_ListAsString
+    if _newclass:ListAsString = staticmethod(_openbabel.OBPlugin_ListAsString)
+    __swig_getmethods__["FirstLine"] = lambda x: _openbabel.OBPlugin_FirstLine
+    if _newclass:FirstLine = staticmethod(_openbabel.OBPlugin_FirstLine)
+    __swig_getmethods__["Begin"] = lambda x: _openbabel.OBPlugin_Begin
+    if _newclass:Begin = staticmethod(_openbabel.OBPlugin_Begin)
+    __swig_getmethods__["End"] = lambda x: _openbabel.OBPlugin_End
+    if _newclass:End = staticmethod(_openbabel.OBPlugin_End)
+    def GetMap(*args): return _openbabel.OBPlugin_GetMap(*args)
+OBPlugin_swigregister = _openbabel.OBPlugin_swigregister
+OBPlugin_swigregister(OBPlugin)
+OBPlugin_GetPlugin = _openbabel.OBPlugin_GetPlugin
+OBPlugin_ListAsVector = _openbabel.OBPlugin_ListAsVector
+OBPlugin_List = _openbabel.OBPlugin_List
+OBPlugin_ListAsString = _openbabel.OBPlugin_ListAsString
+OBPlugin_FirstLine = _openbabel.OBPlugin_FirstLine
+OBPlugin_Begin = _openbabel.OBPlugin_Begin
+OBPlugin_End = _openbabel.OBPlugin_End
 
 obError = _openbabel.obError
 obWarning = _openbabel.obWarning
@@ -1490,13 +1574,29 @@ class obLogBuf(_object):
 obLogBuf_swigregister = _openbabel.obLogBuf_swigregister
 obLogBuf_swigregister(obLogBuf)
 
-class OBFormat(_object):
+NOTREADABLE = _openbabel.NOTREADABLE
+READONEONLY = _openbabel.READONEONLY
+READBINARY = _openbabel.READBINARY
+ZEROATOMSOK = _openbabel.ZEROATOMSOK
+NOTWRITABLE = _openbabel.NOTWRITABLE
+WRITEONEONLY = _openbabel.WRITEONEONLY
+WRITEBINARY = _openbabel.WRITEBINARY
+READXML = _openbabel.READXML
+DEFAULTFORMAT = _openbabel.DEFAULTFORMAT
+class OBFormat(OBPlugin):
     __swig_setmethods__ = {}
+    for _s in [OBPlugin]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, OBFormat, name, value)
     __swig_getmethods__ = {}
+    for _s in [OBPlugin]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, OBFormat, name)
     def __init__(self): raise AttributeError, "No constructor defined"
     __repr__ = _swig_repr
+    __swig_getmethods__["Default"] = lambda x: _openbabel.OBFormat_Default
+    if _newclass:Default = staticmethod(_openbabel.OBFormat_Default)
+    __swig_getmethods__["FindType"] = lambda x: _openbabel.OBFormat_FindType
+    if _newclass:FindType = staticmethod(_openbabel.OBFormat_FindType)
+    def TypeID(*args): return _openbabel.OBFormat_TypeID(*args)
     def ReadMolecule(*args): return _openbabel.OBFormat_ReadMolecule(*args)
     def ReadChemObject(*args): return _openbabel.OBFormat_ReadChemObject(*args)
     def WriteMolecule(*args): return _openbabel.OBFormat_WriteMolecule(*args)
@@ -1509,26 +1609,17 @@ class OBFormat(_object):
     def Flags(*args): return _openbabel.OBFormat_Flags(*args)
     def SkipObjects(*args): return _openbabel.OBFormat_SkipObjects(*args)
     def MakeNewInstance(*args): return _openbabel.OBFormat_MakeNewInstance(*args)
+    def RegisterFormat(*args): return _openbabel.OBFormat_RegisterFormat(*args)
+    def Display(*args): return _openbabel.OBFormat_Display(*args)
+    __swig_getmethods__["FormatFromMIME"] = lambda x: _openbabel.OBFormat_FormatFromMIME
+    if _newclass:FormatFromMIME = staticmethod(_openbabel.OBFormat_FormatFromMIME)
     __swig_destroy__ = _openbabel.delete_OBFormat
     __del__ = lambda self : None;
 OBFormat_swigregister = _openbabel.OBFormat_swigregister
 OBFormat_swigregister(OBFormat)
-
-class CharPtrLess(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, CharPtrLess, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, CharPtrLess, name)
-    __repr__ = _swig_repr
-    def __call__(*args): return _openbabel.CharPtrLess___call__(*args)
-    def __init__(self, *args): 
-        this = _openbabel.new_CharPtrLess(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _openbabel.delete_CharPtrLess
-    __del__ = lambda self : None;
-CharPtrLess_swigregister = _openbabel.CharPtrLess_swigregister
-CharPtrLess_swigregister(CharPtrLess)
+OBFormat_Default = _openbabel.OBFormat_Default
+OBFormat_FindType = _openbabel.OBFormat_FindType
+OBFormat_FormatFromMIME = _openbabel.OBFormat_FormatFromMIME
 
 class OBConversion(_object):
     __swig_setmethods__ = {}
@@ -1550,8 +1641,6 @@ class OBConversion(_object):
     if _newclass:FormatFromExt = staticmethod(_openbabel.OBConversion_FormatFromExt)
     __swig_getmethods__["FormatFromMIME"] = lambda x: _openbabel.OBConversion_FormatFromMIME
     if _newclass:FormatFromMIME = staticmethod(_openbabel.OBConversion_FormatFromMIME)
-    __swig_getmethods__["GetNextFormat"] = lambda x: _openbabel.OBConversion_GetNextFormat
-    if _newclass:GetNextFormat = staticmethod(_openbabel.OBConversion_GetNextFormat)
     __swig_getmethods__["Description"] = lambda x: _openbabel.OBConversion_Description
     if _newclass:Description = staticmethod(_openbabel.OBConversion_Description)
     def GetInStream(*args): return _openbabel.OBConversion_GetInStream(*args)
@@ -1572,6 +1661,7 @@ class OBConversion(_object):
     INOPTIONS = _openbabel.OBConversion_INOPTIONS
     OUTOPTIONS = _openbabel.OBConversion_OUTOPTIONS
     GENOPTIONS = _openbabel.OBConversion_GENOPTIONS
+    ALL = _openbabel.OBConversion_ALL
     def IsOption(*args): return _openbabel.OBConversion_IsOption(*args)
     def GetOptions(*args): return _openbabel.OBConversion_GetOptions(*args)
     def AddOption(*args): return _openbabel.OBConversion_AddOption(*args)
@@ -1581,6 +1671,7 @@ class OBConversion(_object):
     if _newclass:RegisterOptionParam = staticmethod(_openbabel.OBConversion_RegisterOptionParam)
     __swig_getmethods__["GetOptionParams"] = lambda x: _openbabel.OBConversion_GetOptionParams
     if _newclass:GetOptionParams = staticmethod(_openbabel.OBConversion_GetOptionParams)
+    def CopyOptions(*args): return _openbabel.OBConversion_CopyOptions(*args)
     def GetSupportedInputFormat(*args): return _openbabel.OBConversion_GetSupportedInputFormat(*args)
     def GetSupportedOutputFormat(*args): return _openbabel.OBConversion_GetSupportedOutputFormat(*args)
     def Convert(*args): return _openbabel.OBConversion_Convert(*args)
@@ -1589,11 +1680,13 @@ class OBConversion(_object):
     def GetChemObject(*args): return _openbabel.OBConversion_GetChemObject(*args)
     def IsLast(*args): return _openbabel.OBConversion_IsLast(*args)
     def IsFirstInput(*args): return _openbabel.OBConversion_IsFirstInput(*args)
+    def SetFirstInput(*args): return _openbabel.OBConversion_SetFirstInput(*args)
     def GetOutputIndex(*args): return _openbabel.OBConversion_GetOutputIndex(*args)
     def SetOutputIndex(*args): return _openbabel.OBConversion_SetOutputIndex(*args)
     def SetMoreFilesToCome(*args): return _openbabel.OBConversion_SetMoreFilesToCome(*args)
     def SetOneObjectOnly(*args): return _openbabel.OBConversion_SetOneObjectOnly(*args)
     def SetLast(*args): return _openbabel.OBConversion_SetLast(*args)
+    def IsLastFile(*args): return _openbabel.OBConversion_IsLastFile(*args)
     __swig_getmethods__["GetDefaultFormat"] = lambda x: _openbabel.OBConversion_GetDefaultFormat
     if _newclass:GetDefaultFormat = staticmethod(_openbabel.OBConversion_GetDefaultFormat)
     def Write(*args): return _openbabel.OBConversion_Write(*args)
@@ -1603,27 +1696,18 @@ class OBConversion(_object):
     def Read(*args): return _openbabel.OBConversion_Read(*args)
     def ReadString(*args): return _openbabel.OBConversion_ReadString(*args)
     def ReadFile(*args): return _openbabel.OBConversion_ReadFile(*args)
+    def ReportNumberConverted(*args): return _openbabel.OBConversion_ReportNumberConverted(*args)
 OBConversion_swigregister = _openbabel.OBConversion_swigregister
 OBConversion_swigregister(OBConversion)
 OBConversion_RegisterFormat = _openbabel.OBConversion_RegisterFormat
 OBConversion_FindFormat = _openbabel.OBConversion_FindFormat
 OBConversion_FormatFromExt = _openbabel.OBConversion_FormatFromExt
 OBConversion_FormatFromMIME = _openbabel.OBConversion_FormatFromMIME
-OBConversion_GetNextFormat = _openbabel.OBConversion_GetNextFormat
 OBConversion_Description = _openbabel.OBConversion_Description
 OBConversion_RegisterOptionParam = _openbabel.OBConversion_RegisterOptionParam
 OBConversion_GetOptionParams = _openbabel.OBConversion_GetOptionParams
 OBConversion_GetDefaultFormat = _openbabel.OBConversion_GetDefaultFormat
 
-NOTREADABLE = _openbabel.NOTREADABLE
-READONEONLY = _openbabel.READONEONLY
-READBINARY = _openbabel.READBINARY
-ZEROATOMSOK = _openbabel.ZEROATOMSOK
-NOTWRITABLE = _openbabel.NOTWRITABLE
-WRITEONEONLY = _openbabel.WRITEONEONLY
-WRITEBINARY = _openbabel.WRITEBINARY
-READXML = _openbabel.READXML
-DEFAULTFORMAT = _openbabel.DEFAULTFORMAT
 class OBResidue(OBBase):
     __swig_setmethods__ = {}
     for _s in [OBBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -1652,6 +1736,7 @@ class OBResidue(OBBase):
     def SetSerialNum(*args): return _openbabel.OBResidue_SetSerialNum(*args)
     def GetName(*args): return _openbabel.OBResidue_GetName(*args)
     def GetNum(*args): return _openbabel.OBResidue_GetNum(*args)
+    def GetNumString(*args): return _openbabel.OBResidue_GetNumString(*args)
     def GetNumAtoms(*args): return _openbabel.OBResidue_GetNumAtoms(*args)
     def GetChain(*args): return _openbabel.OBResidue_GetChain(*args)
     def GetChainNum(*args): return _openbabel.OBResidue_GetChainNum(*args)
@@ -1834,6 +1919,7 @@ OB_CHIRAL_ATOM = _openbabel.OB_CHIRAL_ATOM
 OB_POS_CHIRAL_ATOM = _openbabel.OB_POS_CHIRAL_ATOM
 OB_NEG_CHIRAL_ATOM = _openbabel.OB_NEG_CHIRAL_ATOM
 OB_ATOM_HAS_NO_H = _openbabel.OB_ATOM_HAS_NO_H
+OB_ATOM_NOT_H_DEFICIENT = _openbabel.OB_ATOM_NOT_H_DEFICIENT
 class OBAtom(OBBase):
     __swig_setmethods__ = {}
     for _s in [OBBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -1925,6 +2011,8 @@ class OBAtom(OBBase):
     def SetHybAndGeom(*args): return _openbabel.OBAtom_SetHybAndGeom(*args)
     def ForceNoH(*args): return _openbabel.OBAtom_ForceNoH(*args)
     def HasNoHForced(*args): return _openbabel.OBAtom_HasNoHForced(*args)
+    def ForceImplH(*args): return _openbabel.OBAtom_ForceImplH(*args)
+    def HasImplHForced(*args): return _openbabel.OBAtom_HasImplHForced(*args)
     def CountFreeOxygens(*args): return _openbabel.OBAtom_CountFreeOxygens(*args)
     def ImplicitHydrogenCount(*args): return _openbabel.OBAtom_ImplicitHydrogenCount(*args)
     def ExplicitHydrogenCount(*args): return _openbabel.OBAtom_ExplicitHydrogenCount(*args)
@@ -2083,6 +2171,7 @@ OB_AROM_CORRECTED_MOL = _openbabel.OB_AROM_CORRECTED_MOL
 OB_CHAINS_MOL = _openbabel.OB_CHAINS_MOL
 OB_TCHARGE_MOL = _openbabel.OB_TCHARGE_MOL
 OB_TSPIN_MOL = _openbabel.OB_TSPIN_MOL
+OB_RINGTYPES_MOL = _openbabel.OB_RINGTYPES_MOL
 OB_CURRENT_CONFORMER = _openbabel.OB_CURRENT_CONFORMER
 class OBMol(OBBase):
     __swig_setmethods__ = {}
@@ -2137,7 +2226,6 @@ class OBMol(OBBase):
     def GetAngle(*args): return _openbabel.OBMol_GetAngle(*args)
     def GetFormula(*args): return _openbabel.OBMol_GetFormula(*args)
     def GetSpacedFormula(*args): return _openbabel.OBMol_GetSpacedFormula(*args)
-    def GetEnergy(*args): return _openbabel.OBMol_GetEnergy(*args)
     def GetMolWt(*args): return _openbabel.OBMol_GetMolWt(*args)
     def GetExactMass(*args): return _openbabel.OBMol_GetExactMass(*args)
     def GetTotalCharge(*args): return _openbabel.OBMol_GetTotalCharge(*args)
@@ -2160,6 +2248,7 @@ class OBMol(OBBase):
     def SetSSSRPerceived(*args): return _openbabel.OBMol_SetSSSRPerceived(*args)
     def SetRingAtomsAndBondsPerceived(*args): return _openbabel.OBMol_SetRingAtomsAndBondsPerceived(*args)
     def SetAtomTypesPerceived(*args): return _openbabel.OBMol_SetAtomTypesPerceived(*args)
+    def SetRingTypesPerceived(*args): return _openbabel.OBMol_SetRingTypesPerceived(*args)
     def SetChainsPerceived(*args): return _openbabel.OBMol_SetChainsPerceived(*args)
     def SetChiralityPerceived(*args): return _openbabel.OBMol_SetChiralityPerceived(*args)
     def SetPartialChargesPerceived(*args): return _openbabel.OBMol_SetPartialChargesPerceived(*args)
@@ -2173,6 +2262,7 @@ class OBMol(OBBase):
     def SetSpinMultiplicityAssigned(*args): return _openbabel.OBMol_SetSpinMultiplicityAssigned(*args)
     def SetFlags(*args): return _openbabel.OBMol_SetFlags(*args)
     def UnsetAromaticPerceived(*args): return _openbabel.OBMol_UnsetAromaticPerceived(*args)
+    def UnsetRingTypesPerceived(*args): return _openbabel.OBMol_UnsetRingTypesPerceived(*args)
     def UnsetPartialChargesPerceived(*args): return _openbabel.OBMol_UnsetPartialChargesPerceived(*args)
     def UnsetImplicitValencePerceived(*args): return _openbabel.OBMol_UnsetImplicitValencePerceived(*args)
     def UnsetHydrogensAdded(*args): return _openbabel.OBMol_UnsetHydrogensAdded(*args)
@@ -2182,6 +2272,7 @@ class OBMol(OBBase):
     if _newclass:ClassDescription = staticmethod(_openbabel.OBMol_ClassDescription)
     def Clear(*args): return _openbabel.OBMol_Clear(*args)
     def RenumberAtoms(*args): return _openbabel.OBMol_RenumberAtoms(*args)
+    def SetCoordinates(*args): return _openbabel.OBMol_SetCoordinates(*args)
     def ToInertialFrame(*args): return _openbabel.OBMol_ToInertialFrame(*args)
     def Translate(*args): return _openbabel.OBMol_Translate(*args)
     def Rotate(*args): return _openbabel.OBMol_Rotate(*args)
@@ -2221,6 +2312,7 @@ class OBMol(OBBase):
     def HasSSSRPerceived(*args): return _openbabel.OBMol_HasSSSRPerceived(*args)
     def HasRingAtomsAndBondsPerceived(*args): return _openbabel.OBMol_HasRingAtomsAndBondsPerceived(*args)
     def HasAtomTypesPerceived(*args): return _openbabel.OBMol_HasAtomTypesPerceived(*args)
+    def HasRingTypesPerceived(*args): return _openbabel.OBMol_HasRingTypesPerceived(*args)
     def HasChiralityPerceived(*args): return _openbabel.OBMol_HasChiralityPerceived(*args)
     def HasPartialChargesPerceived(*args): return _openbabel.OBMol_HasPartialChargesPerceived(*args)
     def HasHybridizationPerceived(*args): return _openbabel.OBMol_HasHybridizationPerceived(*args)
@@ -2241,6 +2333,9 @@ class OBMol(OBBase):
     def CopyConformer(*args): return _openbabel.OBMol_CopyConformer(*args)
     def DeleteConformer(*args): return _openbabel.OBMol_DeleteConformer(*args)
     def GetConformer(*args): return _openbabel.OBMol_GetConformer(*args)
+    def SetEnergies(*args): return _openbabel.OBMol_SetEnergies(*args)
+    def GetEnergies(*args): return _openbabel.OBMol_GetEnergies(*args)
+    def GetEnergy(*args): return _openbabel.OBMol_GetEnergy(*args)
     def BeginConformer(*args): return _openbabel.OBMol_BeginConformer(*args)
     def NextConformer(*args): return _openbabel.OBMol_NextConformer(*args)
     def GetConformers(*args): return _openbabel.OBMol_GetConformers(*args)
@@ -2289,6 +2384,9 @@ class OBRing(_object):
     def Size(*args): return _openbabel.OBRing_Size(*args)
     def PathSize(*args): return _openbabel.OBRing_PathSize(*args)
     def IsAromatic(*args): return _openbabel.OBRing_IsAromatic(*args)
+    def SetType(*args): return _openbabel.OBRing_SetType(*args)
+    def GetType(*args): return _openbabel.OBRing_GetType(*args)
+    def GetRootAtom(*args): return _openbabel.OBRing_GetRootAtom(*args)
     def IsMember(*args): return _openbabel.OBRing_IsMember(*args)
     def IsInRing(*args): return _openbabel.OBRing_IsInRing(*args)
     def SetParent(*args): return _openbabel.OBRing_SetParent(*args)
@@ -2298,7 +2396,6 @@ class OBRing(_object):
     __del__ = lambda self : None;
 OBRing_swigregister = _openbabel.OBRing_swigregister
 OBRing_swigregister(OBRing)
-tokenize = _openbabel.tokenize
 ThrowError = _openbabel.ThrowError
 
 CompareRingSize = _openbabel.CompareRingSize
@@ -2391,27 +2488,29 @@ OBSSMatch_swigregister = _openbabel.OBSSMatch_swigregister
 OBSSMatch_swigregister(OBSSMatch)
 
 SmartsLexReplace = _openbabel.SmartsLexReplace
-class OBFingerprint(_object):
+class OBFingerprint(OBPlugin):
     __swig_setmethods__ = {}
+    for _s in [OBPlugin]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, OBFingerprint, name, value)
     __swig_getmethods__ = {}
+    for _s in [OBPlugin]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, OBFingerprint, name)
     def __init__(self): raise AttributeError, "No constructor defined"
     __repr__ = _swig_repr
-    __swig_getmethods__["Iter"] = lambda x: _openbabel.OBFingerprint_Iter
-    if _newclass:Iter = staticmethod(_openbabel.OBFingerprint_Iter)
-    __swig_getmethods__["FindDefaultType"] = lambda x: _openbabel.OBFingerprint_FindDefaultType
-    if _newclass:FindDefaultType = staticmethod(_openbabel.OBFingerprint_FindDefaultType)
+    __swig_getmethods__["Default"] = lambda x: _openbabel.OBFingerprint_Default
+    if _newclass:Default = staticmethod(_openbabel.OBFingerprint_Default)
     __swig_getmethods__["FindType"] = lambda x: _openbabel.OBFingerprint_FindType
     if _newclass:FindType = staticmethod(_openbabel.OBFingerprint_FindType)
+    def TypeID(*args): return _openbabel.OBFingerprint_TypeID(*args)
     __swig_destroy__ = _openbabel.delete_OBFingerprint
     __del__ = lambda self : None;
     def SetBit(*args): return _openbabel.OBFingerprint_SetBit(*args)
+    def GetBit(*args): return _openbabel.OBFingerprint_GetBit(*args)
     def Fold(*args): return _openbabel.OBFingerprint_Fold(*args)
     def GetFingerprint(*args): return _openbabel.OBFingerprint_GetFingerprint(*args)
-    def Description(*args): return _openbabel.OBFingerprint_Description(*args)
     FPT_UNIQUEBITS = _openbabel.OBFingerprint_FPT_UNIQUEBITS
     def Flags(*args): return _openbabel.OBFingerprint_Flags(*args)
+    def DescribeBits(*args): return _openbabel.OBFingerprint_DescribeBits(*args)
     __swig_getmethods__["Tanimoto"] = lambda x: _openbabel.OBFingerprint_Tanimoto
     if _newclass:Tanimoto = staticmethod(_openbabel.OBFingerprint_Tanimoto)
     __swig_getmethods__["Getbitsperint"] = lambda x: _openbabel.OBFingerprint_Getbitsperint
@@ -2420,8 +2519,7 @@ class OBFingerprint(_object):
     if _newclass:FindFingerprint = staticmethod(_openbabel.OBFingerprint_FindFingerprint)
 OBFingerprint_swigregister = _openbabel.OBFingerprint_swigregister
 OBFingerprint_swigregister(OBFingerprint)
-OBFingerprint_Iter = _openbabel.OBFingerprint_Iter
-OBFingerprint_FindDefaultType = _openbabel.OBFingerprint_FindDefaultType
+OBFingerprint_Default = _openbabel.OBFingerprint_Default
 OBFingerprint_FindType = _openbabel.OBFingerprint_FindType
 OBFingerprint_Tanimoto = _openbabel.OBFingerprint_Tanimoto
 OBFingerprint_Getbitsperint = _openbabel.OBFingerprint_Getbitsperint
@@ -2521,6 +2619,44 @@ class FastSearchIndexer(_object):
 FastSearchIndexer_swigregister = _openbabel.FastSearchIndexer_swigregister
 FastSearchIndexer_swigregister(FastSearchIndexer)
 
+class OBDescriptor(OBPlugin):
+    __swig_setmethods__ = {}
+    for _s in [OBPlugin]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBDescriptor, name, value)
+    __swig_getmethods__ = {}
+    for _s in [OBPlugin]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, OBDescriptor, name)
+    def __init__(self): raise AttributeError, "No constructor defined"
+    __repr__ = _swig_repr
+    __swig_getmethods__["Default"] = lambda x: _openbabel.OBDescriptor_Default
+    if _newclass:Default = staticmethod(_openbabel.OBDescriptor_Default)
+    __swig_getmethods__["FindType"] = lambda x: _openbabel.OBDescriptor_FindType
+    if _newclass:FindType = staticmethod(_openbabel.OBDescriptor_FindType)
+    def TypeID(*args): return _openbabel.OBDescriptor_TypeID(*args)
+    def Predict(*args): return _openbabel.OBDescriptor_Predict(*args)
+    def PredictAndSave(*args): return _openbabel.OBDescriptor_PredictAndSave(*args)
+    def GetStringValue(*args): return _openbabel.OBDescriptor_GetStringValue(*args)
+    def Compare(*args): return _openbabel.OBDescriptor_Compare(*args)
+    def Display(*args): return _openbabel.OBDescriptor_Display(*args)
+    __swig_getmethods__["FilterCompare"] = lambda x: _openbabel.OBDescriptor_FilterCompare
+    if _newclass:FilterCompare = staticmethod(_openbabel.OBDescriptor_FilterCompare)
+    __swig_getmethods__["AddProperties"] = lambda x: _openbabel.OBDescriptor_AddProperties
+    if _newclass:AddProperties = staticmethod(_openbabel.OBDescriptor_AddProperties)
+    __swig_getmethods__["DeleteProperties"] = lambda x: _openbabel.OBDescriptor_DeleteProperties
+    if _newclass:DeleteProperties = staticmethod(_openbabel.OBDescriptor_DeleteProperties)
+    __swig_getmethods__["GetValues"] = lambda x: _openbabel.OBDescriptor_GetValues
+    if _newclass:GetValues = staticmethod(_openbabel.OBDescriptor_GetValues)
+    __swig_destroy__ = _openbabel.delete_OBDescriptor
+    __del__ = lambda self : None;
+OBDescriptor_swigregister = _openbabel.OBDescriptor_swigregister
+OBDescriptor_swigregister(OBDescriptor)
+OBDescriptor_Default = _openbabel.OBDescriptor_Default
+OBDescriptor_FindType = _openbabel.OBDescriptor_FindType
+OBDescriptor_FilterCompare = _openbabel.OBDescriptor_FilterCompare
+OBDescriptor_AddProperties = _openbabel.OBDescriptor_AddProperties
+OBDescriptor_DeleteProperties = _openbabel.OBDescriptor_DeleteProperties
+OBDescriptor_GetValues = _openbabel.OBDescriptor_GetValues
+
 OBFF_LOGLVL_NONE = _openbabel.OBFF_LOGLVL_NONE
 OBFF_LOGLVL_LOW = _openbabel.OBFF_LOGLVL_LOW
 OBFF_LOGLVL_MEDIUM = _openbabel.OBFF_LOGLVL_MEDIUM
@@ -2533,6 +2669,14 @@ OBFF_ETORSION = _openbabel.OBFF_ETORSION
 OBFF_EOOP = _openbabel.OBFF_EOOP
 OBFF_EVDW = _openbabel.OBFF_EVDW
 OBFF_EELECTROSTATIC = _openbabel.OBFF_EELECTROSTATIC
+OBFF_CONST_IGNORE = _openbabel.OBFF_CONST_IGNORE
+OBFF_CONST_ATOM = _openbabel.OBFF_CONST_ATOM
+OBFF_CONST_ATOM_X = _openbabel.OBFF_CONST_ATOM_X
+OBFF_CONST_ATOM_Y = _openbabel.OBFF_CONST_ATOM_Y
+OBFF_CONST_ATOM_Z = _openbabel.OBFF_CONST_ATOM_Z
+OBFF_CONST_DISTANCE = _openbabel.OBFF_CONST_DISTANCE
+OBFF_CONST_ANGLE = _openbabel.OBFF_CONST_ANGLE
+OBFF_CONST_TORSION = _openbabel.OBFF_CONST_TORSION
 OBFF_NUMERICAL_GRADIENT = _openbabel.OBFF_NUMERICAL_GRADIENT
 OBFF_ANALYTICAL_GRADIENT = _openbabel.OBFF_ANALYTICAL_GRADIENT
 KCAL_TO_KJ = _openbabel.KCAL_TO_KJ
@@ -2566,36 +2710,12 @@ class OBFFParameter(_object):
     __swig_setmethods__["_d"] = _openbabel.OBFFParameter__d_set
     __swig_getmethods__["_d"] = _openbabel.OBFFParameter__d_get
     if _newclass:_d = _swig_property(_openbabel.OBFFParameter__d_get, _openbabel.OBFFParameter__d_set)
-    __swig_setmethods__["ipar1"] = _openbabel.OBFFParameter_ipar1_set
-    __swig_getmethods__["ipar1"] = _openbabel.OBFFParameter_ipar1_get
-    if _newclass:ipar1 = _swig_property(_openbabel.OBFFParameter_ipar1_get, _openbabel.OBFFParameter_ipar1_set)
-    __swig_setmethods__["ipar2"] = _openbabel.OBFFParameter_ipar2_set
-    __swig_getmethods__["ipar2"] = _openbabel.OBFFParameter_ipar2_get
-    if _newclass:ipar2 = _swig_property(_openbabel.OBFFParameter_ipar2_get, _openbabel.OBFFParameter_ipar2_set)
-    __swig_setmethods__["ipar3"] = _openbabel.OBFFParameter_ipar3_set
-    __swig_getmethods__["ipar3"] = _openbabel.OBFFParameter_ipar3_get
-    if _newclass:ipar3 = _swig_property(_openbabel.OBFFParameter_ipar3_get, _openbabel.OBFFParameter_ipar3_set)
-    __swig_setmethods__["ipar4"] = _openbabel.OBFFParameter_ipar4_set
-    __swig_getmethods__["ipar4"] = _openbabel.OBFFParameter_ipar4_get
-    if _newclass:ipar4 = _swig_property(_openbabel.OBFFParameter_ipar4_get, _openbabel.OBFFParameter_ipar4_set)
-    __swig_setmethods__["ipar5"] = _openbabel.OBFFParameter_ipar5_set
-    __swig_getmethods__["ipar5"] = _openbabel.OBFFParameter_ipar5_get
-    if _newclass:ipar5 = _swig_property(_openbabel.OBFFParameter_ipar5_get, _openbabel.OBFFParameter_ipar5_set)
-    __swig_setmethods__["dpar1"] = _openbabel.OBFFParameter_dpar1_set
-    __swig_getmethods__["dpar1"] = _openbabel.OBFFParameter_dpar1_get
-    if _newclass:dpar1 = _swig_property(_openbabel.OBFFParameter_dpar1_get, _openbabel.OBFFParameter_dpar1_set)
-    __swig_setmethods__["dpar2"] = _openbabel.OBFFParameter_dpar2_set
-    __swig_getmethods__["dpar2"] = _openbabel.OBFFParameter_dpar2_get
-    if _newclass:dpar2 = _swig_property(_openbabel.OBFFParameter_dpar2_get, _openbabel.OBFFParameter_dpar2_set)
-    __swig_setmethods__["dpar3"] = _openbabel.OBFFParameter_dpar3_set
-    __swig_getmethods__["dpar3"] = _openbabel.OBFFParameter_dpar3_get
-    if _newclass:dpar3 = _swig_property(_openbabel.OBFFParameter_dpar3_get, _openbabel.OBFFParameter_dpar3_set)
-    __swig_setmethods__["dpar4"] = _openbabel.OBFFParameter_dpar4_set
-    __swig_getmethods__["dpar4"] = _openbabel.OBFFParameter_dpar4_get
-    if _newclass:dpar4 = _swig_property(_openbabel.OBFFParameter_dpar4_get, _openbabel.OBFFParameter_dpar4_set)
-    __swig_setmethods__["dpar5"] = _openbabel.OBFFParameter_dpar5_set
-    __swig_getmethods__["dpar5"] = _openbabel.OBFFParameter_dpar5_get
-    if _newclass:dpar5 = _swig_property(_openbabel.OBFFParameter_dpar5_get, _openbabel.OBFFParameter_dpar5_set)
+    __swig_setmethods__["_ipar"] = _openbabel.OBFFParameter__ipar_set
+    __swig_getmethods__["_ipar"] = _openbabel.OBFFParameter__ipar_get
+    if _newclass:_ipar = _swig_property(_openbabel.OBFFParameter__ipar_get, _openbabel.OBFFParameter__ipar_set)
+    __swig_setmethods__["_dpar"] = _openbabel.OBFFParameter__dpar_set
+    __swig_getmethods__["_dpar"] = _openbabel.OBFFParameter__dpar_get
+    if _newclass:_dpar = _swig_property(_openbabel.OBFFParameter__dpar_get, _openbabel.OBFFParameter__dpar_set)
     def clear(*args): return _openbabel.OBFFParameter_clear(*args)
     def __init__(self, *args): 
         this = _openbabel.new_OBFFParameter(*args)
@@ -2651,31 +2771,149 @@ class OBFFCalculation(_object):
 OBFFCalculation_swigregister = _openbabel.OBFFCalculation_swigregister
 OBFFCalculation_swigregister(OBFFCalculation)
 
-class OBForceField(_object):
+class OBFFConstraint(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBForceField, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBFFConstraint, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBForceField, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, OBFFConstraint, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["factor"] = _openbabel.OBFFConstraint_factor_set
+    __swig_getmethods__["factor"] = _openbabel.OBFFConstraint_factor_get
+    if _newclass:factor = _swig_property(_openbabel.OBFFConstraint_factor_get, _openbabel.OBFFConstraint_factor_set)
+    __swig_setmethods__["constraint_value"] = _openbabel.OBFFConstraint_constraint_value_set
+    __swig_getmethods__["constraint_value"] = _openbabel.OBFFConstraint_constraint_value_get
+    if _newclass:constraint_value = _swig_property(_openbabel.OBFFConstraint_constraint_value_get, _openbabel.OBFFConstraint_constraint_value_set)
+    __swig_setmethods__["rab0"] = _openbabel.OBFFConstraint_rab0_set
+    __swig_getmethods__["rab0"] = _openbabel.OBFFConstraint_rab0_get
+    if _newclass:rab0 = _swig_property(_openbabel.OBFFConstraint_rab0_get, _openbabel.OBFFConstraint_rab0_set)
+    __swig_setmethods__["rbc0"] = _openbabel.OBFFConstraint_rbc0_set
+    __swig_getmethods__["rbc0"] = _openbabel.OBFFConstraint_rbc0_get
+    if _newclass:rbc0 = _swig_property(_openbabel.OBFFConstraint_rbc0_get, _openbabel.OBFFConstraint_rbc0_set)
+    __swig_setmethods__["type"] = _openbabel.OBFFConstraint_type_set
+    __swig_getmethods__["type"] = _openbabel.OBFFConstraint_type_get
+    if _newclass:type = _swig_property(_openbabel.OBFFConstraint_type_get, _openbabel.OBFFConstraint_type_set)
+    __swig_setmethods__["ia"] = _openbabel.OBFFConstraint_ia_set
+    __swig_getmethods__["ia"] = _openbabel.OBFFConstraint_ia_get
+    if _newclass:ia = _swig_property(_openbabel.OBFFConstraint_ia_get, _openbabel.OBFFConstraint_ia_set)
+    __swig_setmethods__["ib"] = _openbabel.OBFFConstraint_ib_set
+    __swig_getmethods__["ib"] = _openbabel.OBFFConstraint_ib_get
+    if _newclass:ib = _swig_property(_openbabel.OBFFConstraint_ib_get, _openbabel.OBFFConstraint_ib_set)
+    __swig_setmethods__["ic"] = _openbabel.OBFFConstraint_ic_set
+    __swig_getmethods__["ic"] = _openbabel.OBFFConstraint_ic_get
+    if _newclass:ic = _swig_property(_openbabel.OBFFConstraint_ic_get, _openbabel.OBFFConstraint_ic_set)
+    __swig_setmethods__["id"] = _openbabel.OBFFConstraint_id_set
+    __swig_getmethods__["id"] = _openbabel.OBFFConstraint_id_get
+    if _newclass:id = _swig_property(_openbabel.OBFFConstraint_id_get, _openbabel.OBFFConstraint_id_set)
+    __swig_setmethods__["a"] = _openbabel.OBFFConstraint_a_set
+    __swig_getmethods__["a"] = _openbabel.OBFFConstraint_a_get
+    if _newclass:a = _swig_property(_openbabel.OBFFConstraint_a_get, _openbabel.OBFFConstraint_a_set)
+    __swig_setmethods__["b"] = _openbabel.OBFFConstraint_b_set
+    __swig_getmethods__["b"] = _openbabel.OBFFConstraint_b_get
+    if _newclass:b = _swig_property(_openbabel.OBFFConstraint_b_get, _openbabel.OBFFConstraint_b_set)
+    __swig_setmethods__["c"] = _openbabel.OBFFConstraint_c_set
+    __swig_getmethods__["c"] = _openbabel.OBFFConstraint_c_get
+    if _newclass:c = _swig_property(_openbabel.OBFFConstraint_c_get, _openbabel.OBFFConstraint_c_set)
+    __swig_setmethods__["d"] = _openbabel.OBFFConstraint_d_set
+    __swig_getmethods__["d"] = _openbabel.OBFFConstraint_d_get
+    if _newclass:d = _swig_property(_openbabel.OBFFConstraint_d_get, _openbabel.OBFFConstraint_d_set)
+    __swig_setmethods__["grada"] = _openbabel.OBFFConstraint_grada_set
+    __swig_getmethods__["grada"] = _openbabel.OBFFConstraint_grada_get
+    if _newclass:grada = _swig_property(_openbabel.OBFFConstraint_grada_get, _openbabel.OBFFConstraint_grada_set)
+    __swig_setmethods__["gradb"] = _openbabel.OBFFConstraint_gradb_set
+    __swig_getmethods__["gradb"] = _openbabel.OBFFConstraint_gradb_get
+    if _newclass:gradb = _swig_property(_openbabel.OBFFConstraint_gradb_get, _openbabel.OBFFConstraint_gradb_set)
+    __swig_setmethods__["gradc"] = _openbabel.OBFFConstraint_gradc_set
+    __swig_getmethods__["gradc"] = _openbabel.OBFFConstraint_gradc_get
+    if _newclass:gradc = _swig_property(_openbabel.OBFFConstraint_gradc_get, _openbabel.OBFFConstraint_gradc_set)
+    __swig_setmethods__["gradd"] = _openbabel.OBFFConstraint_gradd_set
+    __swig_getmethods__["gradd"] = _openbabel.OBFFConstraint_gradd_get
+    if _newclass:gradd = _swig_property(_openbabel.OBFFConstraint_gradd_get, _openbabel.OBFFConstraint_gradd_set)
     def __init__(self, *args): 
-        this = _openbabel.new_OBForceField(*args)
+        this = _openbabel.new_OBFFConstraint(*args)
         try: self.this.append(this)
         except: self.this = this
-    __swig_getmethods__["Iter"] = lambda x: _openbabel.OBForceField_Iter
-    if _newclass:Iter = staticmethod(_openbabel.OBForceField_Iter)
-    __swig_getmethods__["FindDefaultType"] = lambda x: _openbabel.OBForceField_FindDefaultType
-    if _newclass:FindDefaultType = staticmethod(_openbabel.OBForceField_FindDefaultType)
+    __swig_destroy__ = _openbabel.delete_OBFFConstraint
+    __del__ = lambda self : None;
+    def GetGradient(*args): return _openbabel.OBFFConstraint_GetGradient(*args)
+OBFFConstraint_swigregister = _openbabel.OBFFConstraint_swigregister
+OBFFConstraint_swigregister(OBFFConstraint)
+
+class OBFFConstraints(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBFFConstraints, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, OBFFConstraints, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _openbabel.new_OBFFConstraints(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBFFConstraints
+    __del__ = lambda self : None;
+    def Clear(*args): return _openbabel.OBFFConstraints_Clear(*args)
+    def GetConstraintEnergy(*args): return _openbabel.OBFFConstraints_GetConstraintEnergy(*args)
+    def GetGradient(*args): return _openbabel.OBFFConstraints_GetGradient(*args)
+    def Setup(*args): return _openbabel.OBFFConstraints_Setup(*args)
+    def SetFactor(*args): return _openbabel.OBFFConstraints_SetFactor(*args)
+    def AddIgnore(*args): return _openbabel.OBFFConstraints_AddIgnore(*args)
+    def AddAtomConstraint(*args): return _openbabel.OBFFConstraints_AddAtomConstraint(*args)
+    def AddAtomXConstraint(*args): return _openbabel.OBFFConstraints_AddAtomXConstraint(*args)
+    def AddAtomYConstraint(*args): return _openbabel.OBFFConstraints_AddAtomYConstraint(*args)
+    def AddAtomZConstraint(*args): return _openbabel.OBFFConstraints_AddAtomZConstraint(*args)
+    def AddDistanceConstraint(*args): return _openbabel.OBFFConstraints_AddDistanceConstraint(*args)
+    def AddAngleConstraint(*args): return _openbabel.OBFFConstraints_AddAngleConstraint(*args)
+    def AddTorsionConstraint(*args): return _openbabel.OBFFConstraints_AddTorsionConstraint(*args)
+    def DeleteConstraint(*args): return _openbabel.OBFFConstraints_DeleteConstraint(*args)
+    def GetFactor(*args): return _openbabel.OBFFConstraints_GetFactor(*args)
+    def Size(*args): return _openbabel.OBFFConstraints_Size(*args)
+    def GetConstraintType(*args): return _openbabel.OBFFConstraints_GetConstraintType(*args)
+    def GetConstraintValue(*args): return _openbabel.OBFFConstraints_GetConstraintValue(*args)
+    def GetConstraintAtomA(*args): return _openbabel.OBFFConstraints_GetConstraintAtomA(*args)
+    def GetConstraintAtomB(*args): return _openbabel.OBFFConstraints_GetConstraintAtomB(*args)
+    def GetConstraintAtomC(*args): return _openbabel.OBFFConstraints_GetConstraintAtomC(*args)
+    def GetConstraintAtomD(*args): return _openbabel.OBFFConstraints_GetConstraintAtomD(*args)
+    def IsIgnored(*args): return _openbabel.OBFFConstraints_IsIgnored(*args)
+    def IsFixed(*args): return _openbabel.OBFFConstraints_IsFixed(*args)
+    def IsXFixed(*args): return _openbabel.OBFFConstraints_IsXFixed(*args)
+    def IsYFixed(*args): return _openbabel.OBFFConstraints_IsYFixed(*args)
+    def IsZFixed(*args): return _openbabel.OBFFConstraints_IsZFixed(*args)
+OBFFConstraints_swigregister = _openbabel.OBFFConstraints_swigregister
+OBFFConstraints_swigregister(OBFFConstraints)
+
+class OBForceField(OBPlugin):
+    __swig_setmethods__ = {}
+    for _s in [OBPlugin]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBForceField, name, value)
+    __swig_getmethods__ = {}
+    for _s in [OBPlugin]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, OBForceField, name)
+    def __init__(self): raise AttributeError, "No constructor defined"
+    __repr__ = _swig_repr
+    __swig_getmethods__["Default"] = lambda x: _openbabel.OBForceField_Default
+    if _newclass:Default = staticmethod(_openbabel.OBForceField_Default)
     __swig_getmethods__["FindType"] = lambda x: _openbabel.OBForceField_FindType
     if _newclass:FindType = staticmethod(_openbabel.OBForceField_FindType)
+    def MakeNewInstance(*args): return _openbabel.OBForceField_MakeNewInstance(*args)
     __swig_destroy__ = _openbabel.delete_OBForceField
     __del__ = lambda self : None;
+    def TypeID(*args): return _openbabel.OBForceField_TypeID(*args)
     __swig_getmethods__["FindForceField"] = lambda x: _openbabel.OBForceField_FindForceField
     if _newclass:FindForceField = staticmethod(_openbabel.OBForceField_FindForceField)
     def GetUnit(*args): return _openbabel.OBForceField_GetUnit(*args)
+    def HasAnalyticalGradients(*args): return _openbabel.OBForceField_HasAnalyticalGradients(*args)
     def Setup(*args): return _openbabel.OBForceField_Setup(*args)
+    def ParseParamFile(*args): return _openbabel.OBForceField_ParseParamFile(*args)
+    def SetTypes(*args): return _openbabel.OBForceField_SetTypes(*args)
+    def SetFormalCharges(*args): return _openbabel.OBForceField_SetFormalCharges(*args)
+    def SetPartialCharges(*args): return _openbabel.OBForceField_SetPartialCharges(*args)
+    def SetupCalculations(*args): return _openbabel.OBForceField_SetupCalculations(*args)
+    def IsSetupNeeded(*args): return _openbabel.OBForceField_IsSetupNeeded(*args)
+    def GetCoordinates(*args): return _openbabel.OBForceField_GetCoordinates(*args)
     def UpdateCoordinates(*args): return _openbabel.OBForceField_UpdateCoordinates(*args)
+    def GetConformers(*args): return _openbabel.OBForceField_GetConformers(*args)
     def UpdateConformers(*args): return _openbabel.OBForceField_UpdateConformers(*args)
-    def OBFFLog(*args): return _openbabel.OBForceField_OBFFLog(*args)
+    def SetCoordinates(*args): return _openbabel.OBForceField_SetCoordinates(*args)
+    def SetConformers(*args): return _openbabel.OBForceField_SetConformers(*args)
     def Energy(*args): return _openbabel.OBForceField_Energy(*args)
     def E_Bond(*args): return _openbabel.OBForceField_E_Bond(*args)
     def E_Angle(*args): return _openbabel.OBForceField_E_Angle(*args)
@@ -2684,12 +2922,22 @@ class OBForceField(_object):
     def E_OOP(*args): return _openbabel.OBForceField_E_OOP(*args)
     def E_VDW(*args): return _openbabel.OBForceField_E_VDW(*args)
     def E_Electrostatic(*args): return _openbabel.OBForceField_E_Electrostatic(*args)
+    def PrintTypes(*args): return _openbabel.OBForceField_PrintTypes(*args)
+    def PrintFormalCharges(*args): return _openbabel.OBForceField_PrintFormalCharges(*args)
+    def PrintPartialCharges(*args): return _openbabel.OBForceField_PrintPartialCharges(*args)
+    def PrintVelocities(*args): return _openbabel.OBForceField_PrintVelocities(*args)
     def SetLogFile(*args): return _openbabel.OBForceField_SetLogFile(*args)
     def SetLogLevel(*args): return _openbabel.OBForceField_SetLogLevel(*args)
     def GetLogLevel(*args): return _openbabel.OBForceField_GetLogLevel(*args)
+    def OBFFLog(*args): return _openbabel.OBForceField_OBFFLog(*args)
     def DistanceGeometry(*args): return _openbabel.OBForceField_DistanceGeometry(*args)
-    def GenerateCoordinates(*args): return _openbabel.OBForceField_GenerateCoordinates(*args)
     def SystematicRotorSearch(*args): return _openbabel.OBForceField_SystematicRotorSearch(*args)
+    def SystematicRotorSearchInitialize(*args): return _openbabel.OBForceField_SystematicRotorSearchInitialize(*args)
+    def SystematicRotorSearchNextConformer(*args): return _openbabel.OBForceField_SystematicRotorSearchNextConformer(*args)
+    def RandomRotorSearch(*args): return _openbabel.OBForceField_RandomRotorSearch(*args)
+    def RandomRotorSearchInitialize(*args): return _openbabel.OBForceField_RandomRotorSearchInitialize(*args)
+    def RandomRotorSearchNextConformer(*args): return _openbabel.OBForceField_RandomRotorSearchNextConformer(*args)
+    def WeightedRotorSearch(*args): return _openbabel.OBForceField_WeightedRotorSearch(*args)
     def LineSearch(*args): return _openbabel.OBForceField_LineSearch(*args)
     def SteepestDescent(*args): return _openbabel.OBForceField_SteepestDescent(*args)
     def SteepestDescentInitialize(*args): return _openbabel.OBForceField_SteepestDescentInitialize(*args)
@@ -2697,6 +2945,12 @@ class OBForceField(_object):
     def ConjugateGradients(*args): return _openbabel.OBForceField_ConjugateGradients(*args)
     def ConjugateGradientsInitialize(*args): return _openbabel.OBForceField_ConjugateGradientsInitialize(*args)
     def ConjugateGradientsTakeNSteps(*args): return _openbabel.OBForceField_ConjugateGradientsTakeNSteps(*args)
+    def GenerateVelocities(*args): return _openbabel.OBForceField_GenerateVelocities(*args)
+    def CorrectVelocities(*args): return _openbabel.OBForceField_CorrectVelocities(*args)
+    def MolecularDynamicsTakeNSteps(*args): return _openbabel.OBForceField_MolecularDynamicsTakeNSteps(*args)
+    def GetConstraints(*args): return _openbabel.OBForceField_GetConstraints(*args)
+    def SetConstraints(*args): return _openbabel.OBForceField_SetConstraints(*args)
+    def DetectExplosion(*args): return _openbabel.OBForceField_DetectExplosion(*args)
     def ValidateLineSearch(*args): return _openbabel.OBForceField_ValidateLineSearch(*args)
     def ValidateSteepestDescent(*args): return _openbabel.OBForceField_ValidateSteepestDescent(*args)
     def ValidateConjugateGradients(*args): return _openbabel.OBForceField_ValidateConjugateGradients(*args)
@@ -2707,17 +2961,18 @@ class OBForceField(_object):
     if _newclass:VectorLengthDerivative = staticmethod(_openbabel.OBForceField_VectorLengthDerivative)
     __swig_getmethods__["VectorAngleDerivative"] = lambda x: _openbabel.OBForceField_VectorAngleDerivative
     if _newclass:VectorAngleDerivative = staticmethod(_openbabel.OBForceField_VectorAngleDerivative)
+    __swig_getmethods__["VectorOOPDerivative"] = lambda x: _openbabel.OBForceField_VectorOOPDerivative
+    if _newclass:VectorOOPDerivative = staticmethod(_openbabel.OBForceField_VectorOOPDerivative)
     __swig_getmethods__["VectorTorsionDerivative"] = lambda x: _openbabel.OBForceField_VectorTorsionDerivative
     if _newclass:VectorTorsionDerivative = staticmethod(_openbabel.OBForceField_VectorTorsionDerivative)
-    def kludge(*args): return _openbabel.OBForceField_kludge(*args)
 OBForceField_swigregister = _openbabel.OBForceField_swigregister
 OBForceField_swigregister(OBForceField)
-OBForceField_Iter = _openbabel.OBForceField_Iter
-OBForceField_FindDefaultType = _openbabel.OBForceField_FindDefaultType
+OBForceField_Default = _openbabel.OBForceField_Default
 OBForceField_FindType = _openbabel.OBForceField_FindType
 OBForceField_FindForceField = _openbabel.OBForceField_FindForceField
 OBForceField_VectorLengthDerivative = _openbabel.OBForceField_VectorLengthDerivative
 OBForceField_VectorAngleDerivative = _openbabel.OBForceField_VectorAngleDerivative
+OBForceField_VectorOOPDerivative = _openbabel.OBForceField_VectorOOPDerivative
 OBForceField_VectorTorsionDerivative = _openbabel.OBForceField_VectorTorsionDerivative
 
 class _OBMolAtomIter(_object):
@@ -2813,6 +3068,8 @@ class _OBMolAtomIter(_object):
     def SetHybAndGeom(*args): return _openbabel._OBMolAtomIter_SetHybAndGeom(*args)
     def ForceNoH(*args): return _openbabel._OBMolAtomIter_ForceNoH(*args)
     def HasNoHForced(*args): return _openbabel._OBMolAtomIter_HasNoHForced(*args)
+    def ForceImplH(*args): return _openbabel._OBMolAtomIter_ForceImplH(*args)
+    def HasImplHForced(*args): return _openbabel._OBMolAtomIter_HasImplHForced(*args)
     def CountFreeOxygens(*args): return _openbabel._OBMolAtomIter_CountFreeOxygens(*args)
     def ImplicitHydrogenCount(*args): return _openbabel._OBMolAtomIter_ImplicitHydrogenCount(*args)
     def ExplicitHydrogenCount(*args): return _openbabel._OBMolAtomIter_ExplicitHydrogenCount(*args)
@@ -2971,6 +3228,8 @@ class _OBMolAtomDFSIter(_object):
     def SetHybAndGeom(*args): return _openbabel._OBMolAtomDFSIter_SetHybAndGeom(*args)
     def ForceNoH(*args): return _openbabel._OBMolAtomDFSIter_ForceNoH(*args)
     def HasNoHForced(*args): return _openbabel._OBMolAtomDFSIter_HasNoHForced(*args)
+    def ForceImplH(*args): return _openbabel._OBMolAtomDFSIter_ForceImplH(*args)
+    def HasImplHForced(*args): return _openbabel._OBMolAtomDFSIter_HasImplHForced(*args)
     def CountFreeOxygens(*args): return _openbabel._OBMolAtomDFSIter_CountFreeOxygens(*args)
     def ImplicitHydrogenCount(*args): return _openbabel._OBMolAtomDFSIter_ImplicitHydrogenCount(*args)
     def ExplicitHydrogenCount(*args): return _openbabel._OBMolAtomDFSIter_ExplicitHydrogenCount(*args)
@@ -3128,6 +3387,8 @@ class _OBMolAtomBFSIter(_object):
     def SetHybAndGeom(*args): return _openbabel._OBMolAtomBFSIter_SetHybAndGeom(*args)
     def ForceNoH(*args): return _openbabel._OBMolAtomBFSIter_ForceNoH(*args)
     def HasNoHForced(*args): return _openbabel._OBMolAtomBFSIter_HasNoHForced(*args)
+    def ForceImplH(*args): return _openbabel._OBMolAtomBFSIter_ForceImplH(*args)
+    def HasImplHForced(*args): return _openbabel._OBMolAtomBFSIter_HasImplHForced(*args)
     def CountFreeOxygens(*args): return _openbabel._OBMolAtomBFSIter_CountFreeOxygens(*args)
     def ImplicitHydrogenCount(*args): return _openbabel._OBMolAtomBFSIter_ImplicitHydrogenCount(*args)
     def ExplicitHydrogenCount(*args): return _openbabel._OBMolAtomBFSIter_ExplicitHydrogenCount(*args)
@@ -3374,6 +3635,8 @@ class _OBAtomAtomIter(_object):
     def SetHybAndGeom(*args): return _openbabel._OBAtomAtomIter_SetHybAndGeom(*args)
     def ForceNoH(*args): return _openbabel._OBAtomAtomIter_ForceNoH(*args)
     def HasNoHForced(*args): return _openbabel._OBAtomAtomIter_HasNoHForced(*args)
+    def ForceImplH(*args): return _openbabel._OBAtomAtomIter_ForceImplH(*args)
+    def HasImplHForced(*args): return _openbabel._OBAtomAtomIter_HasImplHForced(*args)
     def CountFreeOxygens(*args): return _openbabel._OBAtomAtomIter_CountFreeOxygens(*args)
     def ImplicitHydrogenCount(*args): return _openbabel._OBAtomAtomIter_ImplicitHydrogenCount(*args)
     def ExplicitHydrogenCount(*args): return _openbabel._OBAtomAtomIter_ExplicitHydrogenCount(*args)
@@ -3557,6 +3820,7 @@ class _OBResidueIter(_object):
     def SetSerialNum(*args): return _openbabel._OBResidueIter_SetSerialNum(*args)
     def GetName(*args): return _openbabel._OBResidueIter_GetName(*args)
     def GetNum(*args): return _openbabel._OBResidueIter_GetNum(*args)
+    def GetNumString(*args): return _openbabel._OBResidueIter_GetNumString(*args)
     def GetNumAtoms(*args): return _openbabel._OBResidueIter_GetNumAtoms(*args)
     def GetChain(*args): return _openbabel._OBResidueIter_GetChain(*args)
     def GetChainNum(*args): return _openbabel._OBResidueIter_GetChainNum(*args)
@@ -3680,6 +3944,8 @@ class _OBResidueAtomIter(_object):
     def SetHybAndGeom(*args): return _openbabel._OBResidueAtomIter_SetHybAndGeom(*args)
     def ForceNoH(*args): return _openbabel._OBResidueAtomIter_ForceNoH(*args)
     def HasNoHForced(*args): return _openbabel._OBResidueAtomIter_HasNoHForced(*args)
+    def ForceImplH(*args): return _openbabel._OBResidueAtomIter_ForceImplH(*args)
+    def HasImplHForced(*args): return _openbabel._OBResidueAtomIter_HasImplHForced(*args)
     def CountFreeOxygens(*args): return _openbabel._OBResidueAtomIter_CountFreeOxygens(*args)
     def ImplicitHydrogenCount(*args): return _openbabel._OBResidueAtomIter_ImplicitHydrogenCount(*args)
     def ExplicitHydrogenCount(*args): return _openbabel._OBResidueAtomIter_ExplicitHydrogenCount(*args)
@@ -3823,6 +4089,9 @@ class _OBMolRingIter(_object):
     def Size(*args): return _openbabel._OBMolRingIter_Size(*args)
     def PathSize(*args): return _openbabel._OBMolRingIter_PathSize(*args)
     def IsAromatic(*args): return _openbabel._OBMolRingIter_IsAromatic(*args)
+    def SetType(*args): return _openbabel._OBMolRingIter_SetType(*args)
+    def GetType(*args): return _openbabel._OBMolRingIter_GetType(*args)
+    def GetRootAtom(*args): return _openbabel._OBMolRingIter_GetRootAtom(*args)
     def IsMember(*args): return _openbabel._OBMolRingIter_IsMember(*args)
     def IsInRing(*args): return _openbabel._OBMolRingIter_IsInRing(*args)
     def SetParent(*args): return _openbabel._OBMolRingIter_SetParent(*args)
