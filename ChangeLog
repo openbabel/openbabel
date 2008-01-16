@@ -1,3 +1,7 @@
+2007-10-18  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-python.i: Updated to allow compilation
+
 2008-01-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/base.cpp: Fix API documentation for return(1), as mentioned
