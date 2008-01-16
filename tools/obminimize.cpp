@@ -135,6 +135,15 @@ int main(int argc,char **argv)
     exit (-1);
   }
 
+  OBForceField* pFF = OBForceField::FindForceField(ff);
+  if (!pFF) {
+    cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
+    exit (-1);
+  }
+ 
+  pFF->SetLogFile(&cout);
+  pFF->SetLogLevel(OBFF_LOGLVL_LOW);
+
   OBMol mol;
 
   for (c=1;;c++) {
@@ -146,15 +155,6 @@ int main(int argc,char **argv)
 
     if (hydrogens)
       mol.AddHydrogens();
-
-    OBForceField* pFF = OBForceField::FindForceField(ff);
-    if (!pFF) {
-      cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
-      exit (-1);
-    }
- 
-    pFF->SetLogFile(&cout);
-    pFF->SetLogLevel(OBFF_LOGLVL_LOW);
       
     if (!pFF->Setup(mol)) {
       cerr << program_name << ": could not setup force field." << endl;
