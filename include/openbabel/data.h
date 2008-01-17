@@ -93,7 +93,7 @@ namespace OpenBabel
       /** Constructor
           @param num     Atomic number
           @param sym     Elemental symbol (maximum 3 characters)
-          @param rcov    Allred-Rochow electronegativity
+          @param ARENeg  Allred-Rochow electronegativity
           @param rcov    Covalent radius (in Angstrom)
           @param rvdw    van der Waals radius (in Angstrom)
           @param maxbo   Maximum bonding valence
