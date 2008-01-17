@@ -12,7 +12,7 @@ libopenbabelinclude_HEADERS = \
 		lineend.h  matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \
 		obmolecformat.h obutil.h \
-		op.h dock.h \
+		op.h \
 		parsmart.h patty.h phmodel.h plugin.h \
 		rand.h reaction.h tokenst.h \
 		residue.h ring.h rotamer.h rotor.h typer.h \

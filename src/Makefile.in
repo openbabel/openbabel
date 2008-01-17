@@ -65,21 +65,21 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	bond.cpp bondtyper.cpp canon.cpp builder.cpp chains.cpp \
 	chiral.cpp data.cpp descriptor.cpp fingerprint.cpp \
-	forcefield.cpp format.cpp generic.cpp griddata.cpp dock.cpp \
-	grid.cpp kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
-	obconversion.cpp oberror.cpp obiter.cpp obutil.cpp ops.cpp \
-	parsmart.cpp patty.cpp phmodel.cpp plugin.cpp pointgroup.cpp \
-	rand.cpp residue.cpp ring.cpp rotor.cpp rotamer.cpp \
-	tokenst.cpp typer.cpp transform.cpp dlhandler_unix.cpp
+	forcefield.cpp format.cpp generic.cpp griddata.cpp grid.cpp \
+	kekulize.cpp matrix.cpp mol.cpp molchrg.cpp obconversion.cpp \
+	oberror.cpp obiter.cpp obutil.cpp ops.cpp parsmart.cpp \
+	patty.cpp phmodel.cpp plugin.cpp pointgroup.cpp rand.cpp \
+	residue.cpp ring.cpp rotor.cpp rotamer.cpp tokenst.cpp \
+	typer.cpp transform.cpp dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo canon.lo builder.lo chains.lo chiral.lo data.lo \
 	descriptor.lo fingerprint.lo forcefield.lo format.lo \
-	generic.lo griddata.lo dock.lo grid.lo kekulize.lo matrix.lo \
-	mol.lo molchrg.lo obconversion.lo oberror.lo obiter.lo \
-	obutil.lo ops.lo parsmart.lo patty.lo phmodel.lo plugin.lo \
-	pointgroup.lo rand.lo residue.lo ring.lo rotor.lo rotamer.lo \
-	tokenst.lo typer.lo transform.lo $(am__objects_1)
+	generic.lo griddata.lo grid.lo kekulize.lo matrix.lo mol.lo \
+	molchrg.lo obconversion.lo oberror.lo obiter.lo obutil.lo \
+	ops.lo parsmart.lo patty.lo phmodel.lo plugin.lo pointgroup.lo \
+	rand.lo residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo \
+	typer.lo transform.lo $(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 libopenbabel_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -261,7 +261,7 @@ libopenbabel_la_SOURCES = \
 		bondtyper.cpp canon.cpp builder.cpp \
 		chains.cpp chiral.cpp data.cpp descriptor.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
-    		griddata.cpp dock.cpp \
+    griddata.cpp \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
@@ -389,7 +389,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/descriptor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_unix.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dock.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefield.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Plo@am__quote@

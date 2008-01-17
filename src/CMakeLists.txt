@@ -28,7 +28,6 @@ set(openbabel_srcs
     chiral.cpp
     data.cpp
     descriptor.cpp
-    dock.cpp
     fingerprint.cpp
     forcefield.cpp
     format.cpp
