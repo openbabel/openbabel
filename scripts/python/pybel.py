@@ -9,6 +9,12 @@ _obconv = ob.OBConversion()
 informats = _formatstodict(_obconv.GetSupportedInputFormat())
 outformats = _formatstodict(_obconv.GetSupportedOutputFormat())
 
+def _getplugins(findplugin, names):
+    plugins = dict([(x, findplugin(x)) for x in names if findplugin(x)])
+    return plugins
+descriptors = _getplugins(ob.OBDescriptor.FindType, ['LogP', 'MR', 'TPSA'])
+fingerprinters = _getplugins(ob.OBFingerprint.FindFingerprint, ['FP2', 'FP3', 'FP4'])
+
 def readfile(format, filename):
     """Iterate over the molecules in a file.
 
@@ -36,7 +42,8 @@ def readfile(format, filename):
     formatok = obconversion.SetInFormat(format)
     if not formatok:
         raise ValueError,"%s is not a recognised OpenBabel format" % format
-
+    if not os.path.isfile(filename):
+        raise IOError, "No such file: '%s'" % filename
     obmol = ob.OBMol()
     notatend = obconversion.ReadFile(obmol,filename)
     while notatend:
@@ -202,30 +209,31 @@ class Molecule(object):
         If descnames is not specified, the full list of Open Babel
         descriptors is calculated: LogP, PSA and MR.
         """
-        names = {'LogP': ob.OBLogP, 'PSA': ob.OBPSA, 
-                 'MR': ob.OBMR}
         if not descnames:
-            descnames = names.keys()
+            descnames = descriptors.keys()
         ans = {}
         for descname in descnames:
-            if descname not in names.keys():
+            try:
+                desc = descriptors[descname]
+            except KeyError:
                 raise ValueError, "%s is not a recognised Open Babel descriptor type" % descname
-            ans[descname] = names[descname]().Predict(self.OBMol)
+            ans[descname] = desc.Predict(self.OBMol)
         return ans
     
-    def calcfp(self, fptype=""):
+    def calcfp(self, fptype="FP2"):
         """Calculate a molecular fingerprint.
         
         Optional parameters:
            fptype -- the name of the Open Babel fingerprint type.
 
-        If fptype is not specified, the default Open Babel fingerprint
-        type is used. See the Open Babel library documentation for more
+        If fptype is not specified, the FP2 fingerprint type
+        is used. See the Open Babel library documentation for more
         details.
         """
         fp = ob.vectorUnsignedInt()
-        fingerprinter = ob.OBFingerprint.FindFingerprint(fptype)
-        if fingerprinter is None:
+        try:
+            fingerprinter = fingerprinters[fptype]
+        except KeyError:
             raise ValueError, "%s is not a recognised Open Babel Fingerprint type" % fptype
         fingerprinter.GetFingerprint(self.OBMol, fp)
         return Fingerprint(fp)
@@ -478,6 +486,6 @@ class MoleculeData(object):
     def __repr__(self):
         return dict(self.iteritems()).__repr__()
  
-if __name__=="__main__":
+if __name__=="__main__": #pragma: no cover
     import doctest
     doctest.testmod(verbose=True)

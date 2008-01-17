@@ -82,7 +82,6 @@ Energy = 0
      1     1     2    1
      2     2     3    1
      3     3     4    1
-
 """
         self.assertEqual(as_mol2, test)
 
@@ -98,6 +97,13 @@ class Test_readfile(unittest.TestCase):
     def testread(self):
         """Is the right number of molecules read from the file?"""
         self.assertEqual(len(self.mols), 2)
+
+    def readerror(self):
+        mol = pybel.readfile("sdf", "nosuchfile.sdf").next()
+
+    def testmissingfile(self):
+        """Test that reading from a non-existent file raises an error."""
+        self.assertRaises(IOError, self.readerror)
 
     def formaterror(self):
         mol = pybel.readfile("noel", "head.sdf").next()
