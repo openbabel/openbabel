@@ -1,3 +1,19 @@
+2008-01-19 Chris Morley
+
+	* scripts/openbabel-python.i: include op.h
+	* windows-vc2005/OBPython/openbabel.py: updated
+
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:
+	add installer script for  obf (multi DLL) build
+	
+	* windows-vc2005/OBPython/_openbabel.pyd,
+	windows-vc2005/OBPython/OpenBabelDLL.dll: remove compiled files
+	
+	* src/plugin.cpp(ListAsVector):correct message when listing
+	"plugins"
+	
+	* data/plugindefines.txt: remove some of the trivial examples
+	
 2008-01-19  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/math/spacegroup.cpp: accept white spaces in transforms

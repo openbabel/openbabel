@@ -39,7 +39,7 @@ bool OBPlugin::ListAsVector(const char* PluginID, const char* param, vector<stri
   bool ret=true;
   if(PluginID)
   {
-    if(*PluginID!=0 || strcmp(PluginID, "plugins"))
+    if(*PluginID!=0 && strcmp(PluginID, "plugins"))
     {
       //List the sub classes of the specified type
       itr = PluginMap().find(PluginID);

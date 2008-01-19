@@ -2975,6 +2975,35 @@ OBForceField_VectorAngleDerivative = _openbabel.OBForceField_VectorAngleDerivati
 OBForceField_VectorOOPDerivative = _openbabel.OBForceField_VectorOOPDerivative
 OBForceField_VectorTorsionDerivative = _openbabel.OBForceField_VectorTorsionDerivative
 
+class OBOp(OBPlugin):
+    __swig_setmethods__ = {}
+    for _s in [OBPlugin]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, OBOp, name, value)
+    __swig_getmethods__ = {}
+    for _s in [OBPlugin]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, OBOp, name)
+    def __init__(self): raise AttributeError, "No constructor defined"
+    __repr__ = _swig_repr
+    __swig_getmethods__["Default"] = lambda x: _openbabel.OBOp_Default
+    if _newclass:Default = staticmethod(_openbabel.OBOp_Default)
+    __swig_getmethods__["FindType"] = lambda x: _openbabel.OBOp_FindType
+    if _newclass:FindType = staticmethod(_openbabel.OBOp_FindType)
+    def TypeID(*args): return _openbabel.OBOp_TypeID(*args)
+    def Do(*args): return _openbabel.OBOp_Do(*args)
+    def WorksWith(*args): return _openbabel.OBOp_WorksWith(*args)
+    __swig_getmethods__["OpOptions"] = lambda x: _openbabel.OBOp_OpOptions
+    if _newclass:OpOptions = staticmethod(_openbabel.OBOp_OpOptions)
+    __swig_getmethods__["DoOps"] = lambda x: _openbabel.OBOp_DoOps
+    if _newclass:DoOps = staticmethod(_openbabel.OBOp_DoOps)
+    __swig_destroy__ = _openbabel.delete_OBOp
+    __del__ = lambda self : None;
+OBOp_swigregister = _openbabel.OBOp_swigregister
+OBOp_swigregister(OBOp)
+OBOp_Default = _openbabel.OBOp_Default
+OBOp_FindType = _openbabel.OBOp_FindType
+OBOp_OpOptions = _openbabel.OBOp_OpOptions
+OBOp_DoOps = _openbabel.OBOp_DoOps
+
 class _OBMolAtomIter(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, _OBMolAtomIter, name, value)
