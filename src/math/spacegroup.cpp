@@ -138,16 +138,7 @@ namespace OpenBabel
     {
       matrix3x3 m;
       vector3 v;
-      if (s.find(' ') != -1)
-        {
-          /* supposing the string is a list of at least 12 float values. If there are
-            16, the last four are 0., 0., 0. and 1. and are not needed */
-          istringstream iss(s);
-          iss >> m(0,1) >> m(0,2) >> m(0,3) >> v.x();
-          iss >> m(1,1) >> m(1,2) >> m(1,3) >> v.y();
-          iss >> m(2,1) >> m(2,2) >> m(2,3) >> v.z();
-        }
-      else if (s.find(',') != -1)
+      if (s.find(',') != -1)
         {
           istringstream iss(s);
           string row;
@@ -205,6 +196,15 @@ namespace OpenBabel
                   j++;
                 }
             }
+        }
+      else if (s.find(' ') != -1)
+        {
+          /* supposing the string is a list of at least 12 float values. If there are
+            16, the last four are 0., 0., 0. and 1. and are not needed */
+          istringstream iss(s);
+          iss >> m(0,1) >> m(0,2) >> m(0,3) >> v.x();
+          iss >> m(1,1) >> m(1,2) >> m(1,3) >> v.y();
+          iss >> m(2,1) >> m(2,2) >> m(2,3) >> v.z();
         }
 		if (v.x() < 0)
 			v.x() += 1.;
@@ -345,8 +345,8 @@ namespace OpenBabel
         return false;
       set<string>::iterator j, jend = s0.end();
       for (j = s0.begin(); j != jend; j++)
-        if (s1.find(*j) == s1.end()){printf("did not find %s\n",(*j).c_str());
-          return false;}
+        if (s1.find(*j) == s1.end())
+          return false;
       return true;
     }
 
