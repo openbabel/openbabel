@@ -193,21 +193,55 @@ top_srcdir = @top_srcdir@
 SUBDIRS = math
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
 libopenbabelinclude_HEADERS = \
-		atom.h \
-		babelconfig.h base.h bitvec.h bond.h \
-		bondtyper.h canon.h builder.h \
-		chains.h chiral.h data.h descriptor.h \
-		dlhandler.h fingerprint.h forcefield.h format.h \
-		generic.h grid.h griddata.h groupcontrib.h \
-		internalcoord.h kinetics.h \
-		lineend.h  matrix.h mol.h molchrg.h \
-		obconversion.h oberror.h obiter.h \
-		obmolecformat.h obutil.h \
-		op.h \
-		parsmart.h patty.h phmodel.h plugin.h \
-		rand.h reaction.h tokenst.h \
-		residue.h ring.h rotamer.h rotor.h typer.h \
-		xml.h
+	alias.h \
+	atom.h \
+	atomclass.h \
+	babelconfig.h \
+	base.h \
+	bitvec.h \
+	bond.h \
+	bondtyper.h \
+	builder.h \
+	canon.h \
+	chains.h \
+	chiral.h \
+	data.h \
+	descriptor.h \
+	dlhandler.h \
+	fingerprint.h \
+	forcefield.h \
+	format.h \
+	generic.h \
+	grid.h \
+	griddata.h \
+	groupcontrib.h \
+	internalcoord.h \
+	kinetics.h \
+	lineend.h \
+	matrix.h \
+	mol.h \
+	molchrg.h \
+	obconversion.h \
+	oberror.h \
+	obiter.h \
+	obmolecformat.h \
+	obutil.h \
+	op.h \
+	optransform.h \
+	parsmart.h \
+	patty.h \
+	phmodel.h \
+	plugin.h \
+	pointgroup.h \
+	rand.h \
+	reaction.h \
+	residue.h \
+	ring.h \
+	rotamer.h \
+	rotor.h \
+	tokenst.h \
+	typer.h \
+	xml.h
 
 all: all-recursive
 
