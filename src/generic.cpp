@@ -460,7 +460,7 @@ namespace OpenBabel
     if (_lattice != Undefined)
       return _lattice;
     else if (_spaceGroup != NULL)
-      return LatticeType(_spaceGroup->GetId());
+      return GetLatticeType(_spaceGroup->GetId());
 
     unsigned int rightAngles = 0;
     if (IsApprox(_alpha, 90.0, 1.0e-3)) rightAngles++;

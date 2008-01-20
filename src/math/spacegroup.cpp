@@ -457,7 +457,10 @@ namespace OpenBabel
         }
       // If we are there, we need to make a hard search through the whole collection
       if (!group->IsValid())
-        obErrorLog.ThrowError(__FUNCTION__, "Unknown space group with incomplete or wrong definition.", obWarning);
+        {
+          obErrorLog.ThrowError(__FUNCTION__, "Unknown space group with incomplete or wrong definition.", obWarning);
+          return NULL;
+        }
       set<SpaceGroup*>::iterator i, end = _SpaceGroups.sgs.end();
       for (i = _SpaceGroups.sgs.begin(); i != end; i++)
         if (**i == *group)
