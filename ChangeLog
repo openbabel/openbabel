@@ -1,3 +1,8 @@
+2008-01-20  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-perl,ruby,java.i: Merged in changes to
+	openbabel-python.i.
+
 2008-01-20  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* include/openbabel/atom.h: replace char* by const char* where

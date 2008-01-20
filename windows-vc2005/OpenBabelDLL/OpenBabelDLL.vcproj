@@ -123,7 +123,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\include;..\..\src;..;../../data;..\..\src\formats;..\..\src\formats\xml"
+				AdditionalIncludeDirectories="..\..\include;..\..\src;..;../../data;..\..\src\formats;..\..\src\formats\xml;C:\Program Files\boost\boost_1_34_1"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;INCHI_LINK_AS_DLL;HAVE_CONFIG_H;SINGLE_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"

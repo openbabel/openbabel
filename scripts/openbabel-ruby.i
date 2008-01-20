@@ -36,7 +36,7 @@
 #include <openbabel/fingerprint.h>
 
 #include <openbabel/forcefield.h>
-#include <openbabel/groupcontrib.h>
+#include <openbabel/op.h>
 
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
@@ -84,9 +84,10 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
 %import <openbabel/math/matrix3x3.h>
-%include <openbabel/generic.h>
 
+%import <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
+%include <openbabel/generic.h>
 
 %import <openbabel/chains.h>
 %import <openbabel/bitvec.h>
@@ -95,6 +96,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/plugin.h>
 
 %include <openbabel/oberror.h>
+%include <openbabel/format.h>
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
@@ -106,7 +108,8 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/fingerprint.h>
 
 %include <openbabel/forcefield.h>
-%include <openbabel/groupcontrib.h>
+
+%include <openbabel/op.h>
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)
