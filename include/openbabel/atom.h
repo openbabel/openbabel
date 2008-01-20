@@ -141,7 +141,7 @@ namespace OpenBabel
       //! Set the atomic spin to @p spin. See _spinmultiplicity
       void SetSpinMultiplicity(short spin){ _spinmultiplicity = spin; }
       //! Set the atomic type symbol (see OBTypeTable and OBAtomTyper for more)
-      void SetType(char *type);
+      void SetType(const char *type);
       //! Set the atomic type symbol (see OBTypeTable and OBAtomTyper for more)
       void SetType(std::string &type);
       //! Set the partial charge to @p pcharge

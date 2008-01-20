@@ -84,12 +84,12 @@ int main(int argc,char *argv[])
 
   if (! conv1.SetInAndOutFormats(pFormat1, pFormat2))
     {
-      ThrowError("File format #1 isn't loaded");
+      obErrorLog.ThrowError("", "File format #1 isn't loaded", obInfo);
       return (-1);
     }
   if (! conv2.SetInAndOutFormats(pFormat2, pFormat1))
     {
-      ThrowError("File format #2 isn't loaded");
+      obErrorLog.ThrowError("", "File format #2 isn't loaded", obInfo);
       return (-1);
     }
 

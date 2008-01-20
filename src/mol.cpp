@@ -1011,7 +1011,7 @@ namespace OpenBabel
     for (int j = 0; j < NumElements; ++j)
       {
         char DT[4] = {'D',0,'T',0};
-        char* symb;
+        const char* symb;
         int alph = alphabetical[j]-1;
         if (atomicCount[ alph ])
           {

@@ -39,7 +39,7 @@ namespace OpenBabel
 
       void Setup(OBMol *);
       
-      char *IdentifyPointGroup();
+      const char *IdentifyPointGroup();
 
       /*! Update coordinates based on perceived symmetry
        *  \param mol the OBMol object to copy the coordinates to

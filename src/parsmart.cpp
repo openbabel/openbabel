@@ -185,7 +185,7 @@ namespace OpenBabel
   /*  Standard Utility Routines  */
   /*=============================*/
 
-  static void FatalAllocationError( char *ptr )
+  static void FatalAllocationError( const char *ptr )
   {
     stringstream errorMsg;
     errorMsg << "Error: Unable to allocate" << ptr << endl;

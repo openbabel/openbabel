@@ -53,8 +53,8 @@ namespace OpenBabel
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-    static bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key);
-    static bool WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ);
+    static bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,const char *type_key);
+    static bool WriteChem3d(ostream &ofs,OBMol &mol, const char *mol_typ);
 
   };
   //***
@@ -164,7 +164,7 @@ namespace OpenBabel
 
   //****************************************************************
 
-  bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
+  bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,const char *type_key)
   {
     char buffer[BUFF_SIZE];
     int natoms,i;
@@ -263,7 +263,7 @@ namespace OpenBabel
     return(true);
   }
 
-  bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
+  bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, const char *mol_typ)
   {
     int atnum;
     int type_num;

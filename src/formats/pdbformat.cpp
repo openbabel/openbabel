@@ -625,7 +625,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     char type_name[10], padded_name[10];
     char the_res[10];
-    char *element_name;
+    const char *element_name;
     int res_num;
     bool het=true;
     int model_num = 0;
@@ -728,8 +728,6 @@ namespace OpenBabel
           }
 
         element_name = etab.GetSymbol(atom->GetAtomicNum());
-        if (strlen(element_name) == 2)
-          element_name[1] = toupper(element_name[1]);
         snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
                  het?"HETATM":"ATOM  ",
                  i,

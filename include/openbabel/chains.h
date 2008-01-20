@@ -79,7 +79,7 @@ namespace OpenBabel
       void  AssignResidue(OBMol &, int, int, int);
       int   IdentifyResidue(void *, OBMol &, int, int); // ByteCode *
 
-      void  DefineMonomer(void **, int, char *); // ByteCode **
+      void  DefineMonomer(void **, int, const char *); // ByteCode **
       int   IdentifyElement(char *);
 
       bool  MatchConstraint(OBAtom *, int);
@@ -93,7 +93,7 @@ namespace OpenBabel
       void  TraceNucleicChain(OBMol &, int, int);
       void  TracePeptideChain(OBMol &, int, int);
 
-      char *ParseSmiles(char *, int);
+      const char *ParseSmiles(const char *, int);
 
     private: // members
 

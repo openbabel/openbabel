@@ -133,7 +133,7 @@ namespace OpenBabel
     return _element.size();
   }
 
-  char *OBElementTable::GetSymbol(int atomicnum)
+  const char *OBElementTable::GetSymbol(int atomicnum)
   {
     if (!_init)
       Init();

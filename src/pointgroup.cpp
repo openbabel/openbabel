@@ -62,9 +62,9 @@ namespace OpenBabel {
    */
 
   typedef struct {
-    char *  group_name ;        /* Canonical group name                              */
-    char *  symmetry_code ;     /* Group symmetry code                               */
-    int     (*check)( void ) ;  /* Additional verification routine, not used         */
+    const char *  group_name ;        /* Canonical group name                        */
+    const char *  symmetry_code ;     /* Group symmetry code                         */
+    int     (*check)( void ) ;        /* Additional verification routine, not use    */
   } POINT_GROUP ;
 
   /*
@@ -212,7 +212,7 @@ namespace OpenBabel {
     int *                  NormalAxesCounts      ;
     int *                  ImproperAxesCounts    ;
     int                    BadOptimization       ;
-    char *                 SymmetryCode          ;
+    const char *                 SymmetryCode          ;
     char *                 PointGroupRejectionReason;
 
     /*
@@ -1762,7 +1762,7 @@ namespace OpenBabel {
     SymmetryCode = symmetry_code ;
   }
 
-  char *identify_point_group( void )
+  const char *identify_point_group( void )
   {
     int            i;
     int            last_matching = -1;
@@ -1811,7 +1811,7 @@ namespace OpenBabel {
     d->_mol = mol;
   }
 
-  char* OBPointGroup::IdentifyPointGroup()
+  const char* OBPointGroup::IdentifyPointGroup()
   {
     d->find_symmetry_elements();
     d->sort_symmetry_elements();

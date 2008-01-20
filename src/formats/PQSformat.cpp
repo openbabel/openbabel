@@ -96,7 +96,7 @@ namespace OpenBabel
   bool card_found(char *s)
   {
     int i;
-    char *input_cards[] ={"titl","file","cpu ","text","calc", // 0-4
+    const char *input_cards[] ={"titl","file","cpu ","text","calc", // 0-4
                           "geom","basi","inte","gues","scf ", // 5-9
                           "forc","intc","freq","nbo ","pop ", //10-14
                           "pop=","semi","opti","mass","nmr ", //15-19

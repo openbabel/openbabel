@@ -377,7 +377,7 @@ namespace OpenBabel
       }
   }
 
-  void OBAtom::SetType(char *type)
+  void OBAtom::SetType(const char *type)
   {
     strncpy(_type,type, sizeof(_type) - 1);
     _type[sizeof(_type) - 1] = '\0';

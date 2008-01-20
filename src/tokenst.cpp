@@ -182,7 +182,7 @@ namespace OpenBabel
       return filename;
 
     string file;
-    char* datadir = getenv(envvar.c_str());
+    const char* datadir = getenv(envvar.c_str());
     if(!datadir)
       datadir = BABEL_DATADIR;
 

@@ -275,8 +275,8 @@ namespace OpenBabel
   //!  the pseudo-SMILES pattern
   typedef struct
   {
-    char *name; //!< Residue name, standardized by PDB
-    char *data; //!< pseudo-SMILES definition of side-chain
+    const char *name; //!< Residue name, standardized by PDB
+    const char *data; //!< pseudo-SMILES definition of side-chain
   }
   ResidType;
 
@@ -894,7 +894,7 @@ namespace OpenBabel
   void OBChainsParser::SetResidueInformation(OBMol &mol, bool nukeSingleResidue)
   {
     char buffer[BUFF_SIZE];
-    char *symbol;
+    const char *symbol;
     string atomid, name;
 
     OBAtom    *atom;
@@ -1779,7 +1779,7 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////////////////////////
 
   // validated
-  void OBChainsParser::DefineMonomer(void **tree, int resid, char *smiles)
+  void OBChainsParser::DefineMonomer(void **tree, int resid, const char *smiles)
   {
     int i;
 
@@ -2102,7 +2102,7 @@ namespace OpenBabel
     return( 0 );
   }
 
-  char *OBChainsParser::ParseSmiles(char *ptr, int prev)
+  const char *OBChainsParser::ParseSmiles(const char *ptr, int prev)
   {
     char *name;
     int atomid;

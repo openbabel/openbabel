@@ -1,5 +1,31 @@
 2008-01-20  Jean Brefort  <jean.brefort@normalesup.org>
 
+	* include/openbabel/atom.h: replace char* by const char* where
+	appropriate to get rid of the deprecated conversion from
+	const char* to char* gcc message.
+	* include/openbabel/chains.h: ditto.
+	* include/openbabel/data.h: ditto.
+	* include/openbabel/pointgroup.h: ditto.
+	* src/atom.cpp: ditto.
+	* src/chains.cpp: ditto.
+	* src/data.cpp: ditto.
+	* src/formats/PQSformat.cpp: ditto.
+	* src/formats/chem3dformat.cpp: ditto.
+	* src/formats/chemdrawcdx.cpp: ditto.
+	* src/formats/crkformat.cpp: ditto.
+	* src/formats/fastaformat.cpp: ditto.
+	* src/formats/gromos96format.cpp: ditto.
+	* src/formats/pdbformat.cpp: ditto. (don't let this format to
+	modify etab).
+	* src/formats/yasaraformat.cpp: ditto.
+	* src/mol.cpp: ditto.
+	* src/parsmart.cpp: ditto.
+	* src/pointgroup.cpp: ditto.
+	* src/tokenst.cpp: ditto.
+	* test/roundtrip.cpp: ditto.
+
+2008-01-20  Jean Brefort  <jean.brefort@normalesup.org>
+
 	* src/formats/cifformat.cpp: don't try to find he group when there
 	is no symmetry related data in the data block.
 	* src/generic.cpp: fixed a typo (bug).

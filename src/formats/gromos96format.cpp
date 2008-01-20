@@ -143,7 +143,7 @@ namespace OpenBabel
           }
 
         snprintf(buffer, BUFF_SIZE, "%5s %5s %5s %6d %15.5f %15.5f %15.5f\n",
-                res_num,res_name,type_name,atom->GetIdx(),
+                res_num.c_str(),res_name,type_name,atom->GetIdx(),
                 atom->x()*fac,atom->y()*fac,atom->z()*fac);
         ofs << buffer;
 
