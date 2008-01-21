@@ -666,7 +666,7 @@ namespace OpenBabel {
       {
         // only do this if we actually can read .gz files
 #ifdef HAVE_LIBZ
-        if (file.substr(extPos,3) == ".gz")
+        if (file.substr(extPos) == ".gz")
           {
             file.erase(extPos);
             extPos = file.rfind('.');
@@ -911,7 +911,7 @@ namespace OpenBabel {
           posdot = InFile.size();
         else {
 #ifdef HAVE_LIBZ
-          if (InFile.substr(posdot,3) == ".gz")
+          if (InFile.substr(posdot) == ".gz")
             {
               InFile.erase(posdot);
               posdot = InFile.rfind('.');
