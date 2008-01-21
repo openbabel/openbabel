@@ -143,7 +143,7 @@ namespace OpenBabel
       //! Set the atomic type symbol (see OBTypeTable and OBAtomTyper for more)
       void SetType(const char *type);
       //! Set the atomic type symbol (see OBTypeTable and OBAtomTyper for more)
-      void SetType(std::string &type);
+      void SetType(const std::string &type);
       //! Set the partial charge to @p pcharge
       void SetPartialCharge(double pcharge){ _pcharge = pcharge; }
       //! Set the coordinate vector for this atom to @p v as a vector3

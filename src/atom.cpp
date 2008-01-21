@@ -385,7 +385,7 @@ namespace OpenBabel
       _isotope = 2;
   }
 
-  void OBAtom::SetType(string &type)
+  void OBAtom::SetType(const string &type)
   {
     strncpy(_type,type.c_str(), sizeof(_type) - 1);
     _type[sizeof(_type) - 1] = '\0';
