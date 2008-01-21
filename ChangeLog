@@ -7,6 +7,9 @@
 	substrings go to the end of the string. This prevents problems on
 	extensions like ".gzmat."
 
+	* src/formats/gausszmatformat.cpp: New format. Supports
+	reading/writing to Gaussian Z-matrix files. PR#1863673 and #1696776.
+
 2008-01-21  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/math/spacegroup.cpp: fixed all g++ warnings.
