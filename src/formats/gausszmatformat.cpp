@@ -277,15 +277,17 @@ namespace OpenBabel
 			if (strlen(buffer) == 0)
 				break;
 				
-			if (strncasecmp(buffer, "VARIABLE", 8) == 0) {
+			if (strcasestr(buffer, "VARIABLE") != NULL) {
 				readVariables = true;
         continue;
 			}
 			
 			if (readVariables) {
 			  tokenize(vs, buffer, "= \t\n");
-			  if (vs.size() >= 2)
+			  if (vs.size() >= 2) {
           variables[vs[0]] = atof(vs[1].c_str());
+//          cerr << "var: " << vs[0] << " " << vs[1] << endl;
+        }
 			}
 			else {
         atomLines.push_back(buffer);
