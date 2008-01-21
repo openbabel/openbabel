@@ -1,3 +1,7 @@
+2008-01-21  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/math/spacegroup.cpp: fixed all g++ warnings.
+
 2008-01-20  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/openbabel-perl,ruby,java.i: Merged in changes to
@@ -31,7 +35,7 @@
 
 2008-01-20  Jean Brefort  <jean.brefort@normalesup.org>
 
-	* src/formats/cifformat.cpp: don't try to find he group when there
+	* src/formats/cifformat.cpp: don't try to find the group when there
 	is no symmetry related data in the data block.
 	* src/generic.cpp: fixed a typo (bug).
 	* src/math/spacegroup.cpp: return after throwing an error.

@@ -138,11 +138,11 @@ namespace OpenBabel
     {
       matrix3x3 m;
       vector3 v;
-      if (s.find(',') != -1)
+      if (s.find(',') != string::npos)
         {
           istringstream iss(s);
           string row;
-          int i, j, k;
+          size_t i, j;
           bool neg;
           for (i = 0; i < 3; i++)
             {
@@ -160,7 +160,7 @@ namespace OpenBabel
                       case '5':
                         if (row[j+1] == '/')
 						  {
-                            double *t;
+                            double *t = NULL;
                             switch (i)
                               {
                                 case 0:
@@ -197,7 +197,7 @@ namespace OpenBabel
                 }
             }
         }
-      else if (s.find(' ') != -1)
+      else if (s.find(' ') != string::npos)
         {
           /* supposing the string is a list of at least 12 float values. If there are
             16, the last four are 0., 0., 0. and 1. and are not needed */
