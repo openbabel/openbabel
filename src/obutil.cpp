@@ -22,7 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obutil.h>
 
-#if HAVE_CONIO_H
+#ifdef HAVE_CONIO_H
 #include <conio.h>
 #endif
 

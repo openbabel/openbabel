@@ -2823,7 +2823,7 @@ namespace OpenBabel
     _autoFormalCharge = true;
   }
 
-  OBMol::OBMol(const OBMol &mol)
+  OBMol::OBMol(const OBMol &mol) : OBBase(mol)
   {
     _natoms = _nbonds = 0;
     _mod = 0;

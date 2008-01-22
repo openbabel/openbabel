@@ -380,20 +380,20 @@ namespace OpenBabel
       //std::cout << "bond " << Idx1 << " " << Idx2 << " double\n";
       bcurrentState[bIdx]=DOUBLE;
     }
-    else if (currentState[Idx1] == 0 && currentState[Idx2] == 1 ||
-             currentState[Idx1] == 2 && currentState[Idx2] == 1 ||
-             currentState[Idx1] == 2 && currentState[Idx2] == 2) {
+    else if ((currentState[Idx1] == 0 && currentState[Idx2] == 1) ||
+             (currentState[Idx1] == 2 && currentState[Idx2] == 1) ||
+             (currentState[Idx1] == 2 && currentState[Idx2] == 2)) {
       //std::cout << "bond " << Idx1 << " " << Idx2 << " single\n";
       // leave bond to single
     }  
-    else if (currentState[Idx1] == 1 && currentState[Idx2] == 0 ||
-             currentState[Idx1] == 1 && currentState[Idx2] == 2) {
+    else if ((currentState[Idx1] == 1 && currentState[Idx2] == 0) ||
+             (currentState[Idx1] == 1 && currentState[Idx2] == 2)) {
       mark[Idx1]=false;
       //std::cout << "bond " << Idx1 << " " << Idx2 << " error\n";
       return (0); // error
     }
-    else if (currentState[Idx1] == 0 && currentState[Idx2] == 0
-             || currentState[Idx1] == 2 && currentState[Idx2] == 0) { 
+    else if ((currentState[Idx1] == 0 && currentState[Idx2] == 0)
+             || (currentState[Idx1] == 2 && currentState[Idx2] == 0)) { 
       //std::cout << "bond " << Idx1 << " " << Idx2 << " done\n";
       mark[Idx2]=true;
       return (1); //done

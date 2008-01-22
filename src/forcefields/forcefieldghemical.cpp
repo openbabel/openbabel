@@ -942,8 +942,10 @@ namespace OpenBabel
       string _a(a);
       string _b(b);
       for (unsigned int idx=0; idx < parameter.size(); ++idx) {
-        if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b)) && (type == parameter[idx]._ipar[0]) || 
-            ((_a == parameter[idx]._b) && (_b == parameter[idx]._a)) && (type == parameter[idx]._ipar[0])) {
+        if ( ((_a == parameter[idx]._a) && (_b == parameter[idx]._b) &&
+              (type == parameter[idx]._ipar[0])) || 
+             ((_a == parameter[idx]._b) && (_b == parameter[idx]._a)) &&
+             (type == parameter[idx]._ipar[0]) ) {
           par = &parameter[idx];
           return par;
         }
@@ -955,8 +957,11 @@ namespace OpenBabel
       string _b(b);
       string _c(c);
       for (unsigned int idx=0; idx < parameter.size(); ++idx) {
-        if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c)) && (type == parameter[idx]._ipar[0])|| 
-            ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && (_c == parameter[idx]._a)) && (type == parameter[idx]._ipar[0])) {
+        if ( ((_a == parameter[idx]._a) && (_b == parameter[idx]._b) &&
+              (_c == parameter[idx]._c) && 
+              (type == parameter[idx]._ipar[0]))|| 
+             ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) &&
+              (_c == parameter[idx]._a) && (type == parameter[idx]._ipar[0])) ) {
           par = &parameter[idx];
           return par;
         }
@@ -969,10 +974,12 @@ namespace OpenBabel
     string _d(d);
 
     for (unsigned int idx=0; idx < parameter.size(); ++idx) {
-      if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c) && 
-           (_d == parameter[idx]._d)) && (type == parameter[idx]._ipar[0]) || 
-          ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && (_c == parameter[idx]._b) && 
-           (_d == parameter[idx]._a)) && (type == parameter[idx]._ipar[0])) {
+      if ( ((_a == parameter[idx]._a) && (_b == parameter[idx]._b) &&
+             (_c == parameter[idx]._c) && (_d == parameter[idx]._d) &&
+             (type == parameter[idx]._ipar[0])) || 
+            ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && 
+             (_c == parameter[idx]._b) && (_d == parameter[idx]._a) &&
+             (type == parameter[idx]._ipar[0])) ) {
         par = &parameter[idx];
         return par;
       }

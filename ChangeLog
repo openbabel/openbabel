@@ -1,3 +1,20 @@
+2008-01-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/ops.cpp, src/pointgroup.cpp, src/kekulize.cpp, src/mol.cpp,
+	src/obutil.cpp, src/ring.cpp, src/atom.cpp,
+	src/forcefields/forcefielduff.cpp,
+	src/forcefields/forcefieldmmff94.cpp,
+	src/forcefields/forcefieldghemical.cpp,
+	src/formats/cansmilesformat.cpp: Fix GCC warnings, adding explicit
+	braces for if/else statements, explicit () around logic
+	statements, etc.
+
+	* include/openbabel/ring.h (GetRootAtom): Return unsigned int for
+	comparison with atom indexes.
+
+	* include/openbabel/plugin.h: Remove unused parameter for warning
+	reduction.
+
 2008-01-22  Chris Morley
 
 	* src/formats/mdlformat.cpp(WriteMolecule): CHG line output

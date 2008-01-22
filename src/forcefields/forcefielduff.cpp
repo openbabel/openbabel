@@ -93,17 +93,18 @@ namespace OpenBabel
   {
     vector3 da, db, dc;
     double ab, bc, ac;
-    double delta2, dE;
+    double dE;
 
+    ab = a->GetDistance(b);
+    bc = b->GetDistance(c);
+    ac = a->GetDistance(c);
+    
     if (gradients) {
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
       theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;  
     } else {
-      ab = a->GetDistance(b);
-      bc = b->GetDistance(c);
-      ac = a->GetDistance(c);
       theta = a->GetAngle(b->GetIdx(), c->GetIdx()) * DEG_TO_RAD;
     }
 
@@ -169,9 +170,8 @@ namespace OpenBabel
   void OBFFTorsionCalculationUFF::Compute(bool gradients)
   {
     vector3 da, db, dc, dd;
-    double cosine, cosine2, cosine3;
-    double phi1, phi2, phi3;
-    double dE, sine, sine2, sine3;
+    double cosine;
+    double dE;
     
     if (gradients) {
       da = a->GetVector();
@@ -248,9 +248,9 @@ namespace OpenBabel
 
   //
   //  a
-  //   \
+  //   \ 
   //    b---d      plane = a-b-c
-  //   /
+  //   / 
   //  c
   //
   void OBFFOOPCalculationUFF::Compute(bool gradients)
@@ -555,7 +555,8 @@ namespace OpenBabel
       OBFFLog("SETTING UP TORSION CALCULATIONS...\n");
  
     OBFFTorsionCalculationUFF torsioncalc;
-    double torsiontype, phi0;
+    double torsiontype;
+    double phi0 = 0.0;
     int s;
 
     _torsioncalculations.clear();

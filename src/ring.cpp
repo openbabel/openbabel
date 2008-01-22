@@ -427,7 +427,7 @@ namespace OpenBabel
     return(_type);
   }
 
-  int OBRing::GetRootAtom()
+  unsigned int OBRing::GetRootAtom()
   {
     vector<int>::iterator i;
     OBMol *mol = (OBMol*)GetParent();

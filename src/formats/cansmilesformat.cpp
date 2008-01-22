@@ -777,9 +777,9 @@ namespace OpenBabel
     // appearing sequentially in the input SMILES, then A[X@](B)(C)D is
     //              
     //             B
-    //            /
+    //            / 
     //      A -- X
-    //           |\ 
+    //           |\  
     //           C D (up wedge bond on D)
     //
     // and "@@" would be the opposite (with C and D switched).

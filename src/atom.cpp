@@ -1364,25 +1364,34 @@ namespace OpenBabel
 
         //find ring atoms first
         for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
-          if ((*i)->IsInRing())
-            if (!r1)
+          if ((*i)->IsInRing()) {
+            if (!r1) {
               r1 = nbr;
-            else if (!r2)
+            }
+            else if (!r2) {
               r2 = nbr;
-            else if (!r3)
+            }
+            else if (!r3) {
               r3 = nbr;
+            }
+          }
 
         //find non-ring atoms
         for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
-          if (!(*i)->IsInRing())
-            if (!a1)
+          if (!(*i)->IsInRing()) {
+            if (!a1) {
               a1 = nbr;
-            else if (!a2)
+            }
+            else if (!a2) {
               a2 = nbr;
-            else if (!a3)
+            }
+            else if (!a3) {
               a3 = nbr;
-            else if (!a4)
+            }
+            else if (!a4) {
               a4 = nbr;
+            }
+          }
 
         //adjust geometries of heavy atoms according to hybridization
         if (hyb == 1)
