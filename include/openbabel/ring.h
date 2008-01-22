@@ -76,7 +76,7 @@ namespace OpenBabel
     //! \return the index for the root atom. O for furan, S for thiazole, N for pyrrole.
     //! For 6 membered aromatic rings, the first non carbon atom is used for root.
     //! For 5 members rings the O, S or N (BOSum=3, valence=3) will be used for root
-    int GetRootAtom();
+    unsigned int GetRootAtom();
 
     //! \return Whether atom @p a is a member of this ring
     bool   IsMember(OBAtom *a);

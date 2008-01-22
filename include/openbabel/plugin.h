@@ -70,7 +70,7 @@ public:
   ///See OpTransform, OBGroupContrib, SmartsDescriptor classes for derived versions.
   ///Usually, the first parameter is the classname, the next three are
   ///parameters(ID, filename, description) for a constructor, and the rest data.
-  virtual OBPlugin* MakeInstance(const std::vector<std::string>& textlines){return NULL;}
+  virtual OBPlugin* MakeInstance(const std::vector<std::string>&){return NULL;}
 
   ///Get a pointer to a plugin from its type and ID. Return NULL if not found. Not cast to Type*
   static OBPlugin* GetPlugin(const char* Type, const char* ID)
