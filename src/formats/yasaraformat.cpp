@@ -363,7 +363,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   bool hetatom;
   char buffer[8],resname[4],atomname[5];
-  const char *str;
+  string str;
   unsigned int i,j/*,m,q*/;
   unsigned int /*resno,chainNum,*/link,linked,linktype,atoms,element,links,chain;
   int /*samenames,*/reslen,charged;

@@ -1,3 +1,7 @@
+2008-01-22  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/yasaraformat.cpp: replaced const char* by string.
+
 2008-01-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/atom.h, src/atom.cpp: Handle SetType(string)
