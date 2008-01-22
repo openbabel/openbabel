@@ -1,3 +1,8 @@
+2008-01-22  Chris Morley
+
+	* src/formats/mdlformat.cpp(WriteMolecule): CHG line output
+	corrected.
+
 2008-01-22  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/yasaraformat.cpp: replaced const char* by string.

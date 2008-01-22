@@ -614,7 +614,7 @@ public:
           }                     
         if(chgs.size())
           {
-            ofs << "M  CHG" << setw(3) << rads.size();
+            ofs << "M  CHG" << setw(3) << chgs.size();
             for(itr=chgs.begin();itr!=chgs.end();++itr)
               ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetFormalCharge();
             ofs << endl;
