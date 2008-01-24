@@ -1,3 +1,8 @@
+2008-01-24  Chris Morley
+	
+	* src/formats/inchiformat.cpp(WriteMolecule): remove #ifdef _WIN32
+	from InChIKey code.
+
 2008-01-24  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/Makefile.am,Makefile.in: Incorporated Rich Apodaca's fix
