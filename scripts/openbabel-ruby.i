@@ -14,7 +14,6 @@
 #define USING_OBDLL
 #endif
 
-#include <math.h>
 
 #include <openbabel/obutil.h>
 #include <openbabel/rand.h>
@@ -34,6 +33,8 @@
 #include <openbabel/oberror.h>
 #include <openbabel/plugin.h>
 #include <openbabel/fingerprint.h>
+#include <openbabel/descriptor.h>
+#include <openbabel/format.h>
 
 #include <openbabel/forcefield.h>
 #include <openbabel/op.h>
@@ -47,19 +48,19 @@
 %include "std_string.i"
 
 namespace std {
-%template (vectorInt)		  vector<int>;
-%template (vectorUnsignedInt)     vector<unsigned int>;
-%template (vvInt)		      vector< vector<int> >;
-%template (vectorDouble) 	vector<double>;
-%template (vectorString)		  vector<std::string>;
-%template (vVector3)		  vector<OpenBabel::vector3>;
+%template (VectorInt)		  vector<int>;
+%template (VectorUnsignedInt)     vector<unsigned int>;
+%template (VVInt)		      vector< vector<int> >;
+%template (VectorDouble) 	vector<double>;
+%template (VectorString)		  vector<std::string>;
+%template (VVector3)		  vector<OpenBabel::vector3>;
 
-%template (vectorMol)		  vector<OpenBabel::OBMol>;
-%template (vectorBond)		vector<OpenBabel::OBBond>;
-%template (vectorResidue)	vector<OpenBabel::OBResidue>;
-%template (vectorRing)		vector<OpenBabel::OBRing>;
-%template (vectorpRing)		vector<OpenBabel::OBRing*>;
-%template (vectorData)    vector<OpenBabel::OBGenericData*>;
+%template (VectorMol)		  vector<OpenBabel::OBMol>;
+%template (VectorBond)		vector<OpenBabel::OBBond>;
+%template (VectorResidue)	vector<OpenBabel::OBResidue>;
+%template (VectorRing)		vector<OpenBabel::OBRing>;
+%template (VectorpRing)		vector<OpenBabel::OBRing*>;
+%template (VectorGenericData)    vector<OpenBabel::OBGenericData*>;
 }
 
 
@@ -105,8 +106,9 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
-%include <openbabel/fingerprint.h>
 
+#%include <openbabel/fingerprint.h>
+%include <openbabel/descriptor.h>
 %include <openbabel/forcefield.h>
 
 %include <openbabel/op.h>

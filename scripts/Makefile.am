@@ -60,7 +60,7 @@ ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
 	(cd ruby; ruby extconf.rb \
   --with-openbabel-include=$(includedir)/openbabel-2.0 \
   --with-openbabel-lib=$(libdir) )
-	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
+	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' -e 's/void Init_OpenBabel/void Init_openbabel/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
 	mv ruby/openbabel_ruby.new ruby/openbabel_ruby.cpp
 endif # BUILD_RUBY
 

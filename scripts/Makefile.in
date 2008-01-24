@@ -401,7 +401,7 @@ dist-hook:
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd ruby; ruby extconf.rb \
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@  --with-openbabel-include=$(includedir)/openbabel-2.0 \
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@  --with-openbabel-lib=$(libdir) )
-@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e 's/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/' -e 's/void Init_OpenBabel/void Init_openbabel/' <ruby/openbabel_ruby.cpp >ruby/openbabel_ruby.new 
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv ruby/openbabel_ruby.new ruby/openbabel_ruby.cpp
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

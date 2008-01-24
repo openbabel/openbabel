@@ -1,3 +1,14 @@
+2008-01-24  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/Makefile.am,Makefile.in: Incorporated Rich Apodaca's fix
+	for Ruby OpenBabel error message "undefined symbol: Init_openbabel"
+	* scripts/openbabel-ruby.i: Updated to include same header files as
+	openbabel-python, but commented out problematic obfingerprint.h. Also
+	upper-cased the first letter of the templates to avoid warning
+	messages, and then needed to rename template VectorData to
+	VectorGenericData to avoid a conflict with another object of the same
+	name in OpenBabel.
+
 2008-01-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/ops.cpp, src/pointgroup.cpp, src/kekulize.cpp, src/mol.cpp,
