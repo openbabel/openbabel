@@ -26,6 +26,8 @@
 #include <openbabel/oberror.h>
 #include <openbabel/plugin.h>
 #include <openbabel/fingerprint.h>
+#include <openbabel/descriptor.h>
+#include <openbabel/format.h>
 
 #include <openbabel/forcefield.h>
 #include <openbabel/op.h>
@@ -97,8 +99,9 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
-%include <openbabel/fingerprint.h>
 
+%include <openbabel/fingerprint.h>
+%include <openbabel/descriptor.h>
 %include <openbabel/forcefield.h>
 
 %include <openbabel/op.h>

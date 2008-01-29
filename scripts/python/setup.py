@@ -17,35 +17,43 @@ def find_likely_directory():
     Order of precedence is:
       $OPENBABEL_INSTALL > ../../src > /usr/local > /usr
     """
+    includedir, libdir = None, None
     name = os.environ.get("OPENBABEL_INSTALL")
     if name: # OPENBABEL_INSTALL is set
         sys.stderr.write("INFO: Using the value of $OPENBABEL_INSTALL (%s)\n" % name)
         if not os.path.isdir(name):
             sys.stderr.write("ERROR: $OPENBABEL_INSTALL (%s) is not a directory\n" % name)
         else:
-            return ([name+"/include/openbabel-2.0",name+"/include/openbabel-2.0/openbabel"],
-                    [name+"/lib"])
+            includedir = [name+"/include/openbabel-2.0",
+                          name+"/include/openbabel-2.0/openbabel"]
+            libdir = [name+"/lib"]
 
     else: # OPENBABEL_INSTALL is not set
         sys.stderr.write("WARNING: Environment variable OPENBABEL_INSTALL is not set\n")
-	sys.stderr.write("INFO: Looking for library and include files in ../../src\n")
-        if os.path.isfile("../../src/atom.o"):
-            return ["../../include"],["../../src"]
-        else:
-            if os.path.isfile("../../src/atom.lo"):
-                   return ["../../include"],["../../src/.libs"]
+        sys.stderr.write("INFO: Looking for library and include files in ../../src and ../../include\n")
+        if os.path.isfile("../../include/openbabel/atom.h"):
+            includedir = ["../../include"]
+        if os.path.isfile("../../src/.libs/libopenbabel.so"):
+            libdir = ["../../src/.libs"]
+        elif os.path.isfile("../../src/libopenbabel.so"):
+            libdir = ["../../src"]
 
-        for dirname in ["/usr/local","/usr"]:
-            # Look for each of these directories in turn for the directory include/openbabel-2.0
-            # (This is version specific, so I may do as Andrew Dalke did for PyDaylight and use
-            #  a regular expression to find the latest version of openbabel)
-            if os.path.isdir(dirname+"/include/openbabel-2.0"):
-                sys.stderr.write("INFO: Setting OPENBABEL_INSTALL to %s\n" % dirname)
-                return ([dirname+"/include/openbabel-2.0",dirname+"/include/openbabel-2.0"],
-                        [dirname+"/lib"])
+        if not (libdir and includedir):
+            for dirname in ["/usr/local","/usr"]:
+# Look for each of these directories in turn
+# for the directory include/openbabel-2.0
+# (This is version specific, so I may do as
+# Andrew Dalke did for PyDaylight and use
+# a regular expression to find the latest version of openbabel)
+                if os.path.isdir(dirname+"/include/openbabel-2.0"):
+                    sys.stderr.write("INFO: Setting OPENBABEL_INSTALL to %s\n" % dirname)
+                    includedir = [dirname+"/include/openbabel-2.0"]
+                    libdir = [dirname+"/lib"]
+                    break
                 
-    sys.stderr.write("ERROR: Cannot find Open Babel library directory\n")
-    return (None,None)
+    if not (libdir and includedir):
+        sys.stderr.write("ERROR: Cannot find Open Babel include or library directory\n")
+    return (includedir, libdir)
 
 
 

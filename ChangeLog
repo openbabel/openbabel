@@ -1,3 +1,10 @@
+2008-01-24  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/python/setup.py: Changed search method to find openbabel.so
+	(may need testing on other platforms)
+	* scripts/openbabel-perl.i: Updated to make identical (in terms of
+	includes and header files) to python wrapper.
+
 2008-01-24  Chris Morley
 	
 	* src/formats/inchiformat.cpp(WriteMolecule): remove #ifdef _WIN32
