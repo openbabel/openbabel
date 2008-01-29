@@ -1,3 +1,9 @@
+2008-01-29  Joshua Ballanco <jballanc@gmail.com>
+
+	* scripts/ruby/extconf.rb: Fixed an error that had Ruby 1.8.6
+	using gcc to compile and link the C++ extension file. Also updated
+	the method of finding the correct include directories.
+
 2008-01-24  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/python/setup.py: Changed search method to find openbabel.so
