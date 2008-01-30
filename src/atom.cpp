@@ -2,7 +2,7 @@
 atom.cpp - Handle OBAtom class.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2008 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
  
 This file is part of the Open Babel project.
@@ -1766,7 +1766,16 @@ namespace OpenBabel
 
   bool OBAtom::IsHbondAcceptor()
   {
-    return _ele == 7 || _ele == 8 || _ele == 9 ;
+    // Changes from Liu Zhiguo
+    if (_ele == 8 || _ele == 9)
+      return true;
+    if (_ele == 7) {
+      // N+ ions and sp2 hybrid N with 3 valences should not be Hbond acceptors
+      if (!((GetValence() == 4 && GetHyb() == 3) 
+            || (GetValence() == 3 && GetHyb() == 2)))
+            return true;
+    }
+    return false;
   }
 
   bool OBAtom::IsHbondDonor()
@@ -1778,15 +1787,15 @@ namespace OpenBabel
   {
     if (!IsHydrogen()) return(false);
 
+    // Recursive definition -- this atom is an H atom
+    // are any neighbors HbondDonors?
+
     OBAtom *atom;
     OBBond *bond;
     OBBondIterator i;
-    for (bond = BeginBond(i);bond;bond = NextBond(i))
-      {
+    for (bond = BeginBond(i);bond;bond = NextBond(i)) {
         atom = bond->GetNbrAtom(this);
-        if (atom->GetAtomicNum() == 7) return(true);
-        if (atom->GetAtomicNum() == 8) return(true);
-        if (atom->GetAtomicNum() == 9) return(true);
+      if (atom->IsHbondDonor()) return(true);
       }
 
     return(false);

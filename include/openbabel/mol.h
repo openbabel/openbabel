@@ -271,7 +271,7 @@ namespace OpenBabel
     OBBond      *GetBond(OBAtom* bgn, OBAtom* end);
     //! \return the residue indexed by @p idx, or NULL if none exists
     //! \warning Residue indexing may change. Use iterator methods instead.
-    OBResidue   *GetResidue(int);
+    OBResidue   *GetResidue(int idx);
     std::vector<OBInternalCoord*> GetInternalCoord();
     //! \return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
     double       GetTorsion(int,int,int,int);

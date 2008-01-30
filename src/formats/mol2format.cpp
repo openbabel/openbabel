@@ -294,6 +294,9 @@ namespace OpenBabel
           }
       }
 
+    // Suggestion by Liu Zhiguo 2008-01-26
+    // Mol2 files define atom types -- there is no need to re-perceive
+    mol.SetAtomTypesPerceived();
     mol.EndModify();
 
     //must add generic data after end modify - otherwise it will be blown away

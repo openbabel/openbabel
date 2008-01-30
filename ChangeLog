@@ -1,3 +1,23 @@
+2008-01-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	Fixes contributed by Liu Zhiguo via e-mail.
+	* src/data.cpp (OBResidueData::AssignBonds): For pre-defined
+	residues, do not check distances. (PDB files should be fairly
+	clean.)
+	(OBGlobalDataBase::Init): Make sure to check return value from
+	OpenDatafile.
+
+	* src/mol.cpp (operator +=): Make sure to preserve residue
+	information when appending.
+	(ConnectTheDots): Make sure to preserve existing bonds, e.g. from
+	PDB files.
+
+	* src/atom.cpp: (IsHBondAcceptor, IsHBondDonorH): Improvements for
+	more accurate description of h-bonding. IsHBondDonorH now cleanly
+	checks neighbors for IsHBondDonor rather than duplicating logic.
+
+	* src/formats/mol2format.cpp: Don't attempt to re-perceive atom types.
+
 2008-01-30  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/openbabel-java.i: Updated to make identical (in terms of

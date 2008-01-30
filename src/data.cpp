@@ -2,7 +2,7 @@
 data.cpp - Global data and resource file parsers.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2008 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -683,8 +683,11 @@ namespace OpenBabel
 
             if ((bo = LookupBO(r1->GetAtomID(a1),r2->GetAtomID(a2))))
               {
-                v = a1->GetVector() - a2->GetVector();
-                if (v.length_2() < 3.5) //check by distance
+                // Suggested by Liu Zhiguo 2007-08-13
+                // for predefined residues, don't perceive connection
+                // by distance
+                //                v = a1->GetVector() - a2->GetVector();
+                //                if (v.length_2() < 3.5) //check by distance
                   mol.AddBond(a1->GetIdx(),a2->GetIdx(),bo);
               }
           }
@@ -869,9 +872,11 @@ namespace OpenBabel
     ifstream ifs;
     char charBuffer[BUFF_SIZE];
 
-    OpenDatafile(ifs, _filename, _envvar);
+    // Check return value from OpenDatafile
+    // Suggestion from Zhiguo Liu
+    string fn_open = OpenDatafile(ifs, _filename, _envvar);
      
-    if ((ifs))
+    if (fn_open != "" && (ifs))
       {
         while(ifs.getline(charBuffer,BUFF_SIZE))
           ParseLine(charBuffer);

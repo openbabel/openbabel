@@ -2,7 +2,7 @@
 mol.cpp - Handle molecules.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2008 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
  
 This file is part of the Open Babel project.
@@ -1239,8 +1239,10 @@ namespace OpenBabel
     OBMol &src = (OBMol &)source;
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;
+    vector<OBResidue*>::iterator k;
     OBAtom *atom;
     OBBond *bond;
+    OBResidue *residue;
 
     BeginModify();
 
@@ -1248,12 +1250,35 @@ namespace OpenBabel
 
     _title += "_" + string(src.GetTitle());
 
-    for (atom = src.BeginAtom(i) ; atom ; atom = src.NextAtom(i))
+    // First, handle atoms and bonds
+    for (atom = src.BeginAtom(i) ; atom ; atom = src.NextAtom(i)) {
       AddAtom(*atom);
-    for (bond = src.BeginBond(j) ; bond ; bond = src.NextBond(j))
-      AddBond(bond->GetBeginAtomIdx() + prevatms, bond->GetEndAtomIdx() + prevatms, bond->GetBO(), bond->GetFlags());
+    }
+    for (bond = src.BeginBond(j) ; bond ; bond = src.NextBond(j)) {
+      AddBond(bond->GetBeginAtomIdx() + prevatms, 
+              bond->GetEndAtomIdx() + prevatms, 
+              bond->GetBO(), bond->GetFlags());
+    }
+
+    // Now update all copied residues too
+    for (residue = src.BeginResidue(k); residue; residue = src.NextResidue(k)) {
+      AddResidue(*residue);
+
+      FOR_ATOMS_OF_RESIDUE(resAtom, residue)
+        {
+          // This is the equivalent atom in our combined molecule
+          atom = GetAtom(resAtom->GetIdx() + prevatms);
+          // So we add this to the last-added residue
+          // (i.e., what we just copied)
+          (_residue[_residue.size() - 1])->AddAtom(atom);
+        }
+    }
+
+    // TODO: This is actually a weird situation (e.g., adding a 2D mol to 3D one)
+    // We should do something to update the src coordinates if they're not 3D
     if(src.GetDimension()<_dimension)
       _dimension = src.GetDimension();
+
     EndModify();
 
     return(*this);
@@ -3031,6 +3056,7 @@ namespace OpenBabel
     vector<pair<OBAtom*,double> > zsortedAtoms;
     vector<double> rad;
     vector<int> zsorted;
+    vector<int> bondCount; // existing bonds (e.g., from residues in PDB)
 
     double *c = new double [NumAtoms()*3];
     rad.resize(_natoms);
@@ -3040,6 +3066,7 @@ namespace OpenBabel
         (atom->GetVector()).Get(&c[j*3]);
         pair<OBAtom*,double> entry(atom, atom->GetVector().z());
         zsortedAtoms.push_back(entry);
+        bondCount.push_back(atom->GetValence());
       }
     sort(zsortedAtoms.begin(), zsortedAtoms.end(), SortAtomZ);
 
@@ -3105,12 +3132,26 @@ namespace OpenBabel
     OBBond *maxbond, *bond;
     double maxlength;
     vector<OBBond*>::iterator l;
+    int valCount;
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
         while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))
                || atom->SmallestBondAngle() < 45.0)
           {
             maxbond = atom->BeginBond(l);
+            // Fix from Liu Zhiguo 2008-01-26
+            // loop past any bonds
+            // which existed before ConnectTheDots was called
+            // (e.g., from PDB resdata.txt)
+            valCount = 0;
+            while (valCount < bondCount[atom->GetIdx() - 1]) {
+              maxbond = atom->NextBond(l);
+              valCount++;
+            }
+            if (!maxbond) // no new bonds added for this atom, just skip it
+              break;
+
             maxlength = maxbond->GetLength();
             for (bond = atom->BeginBond(l);bond;bond = atom->NextBond(l))
               {
@@ -3120,7 +3161,7 @@ namespace OpenBabel
                     maxlength = bond->GetLength();
                   }
               }
-            DeleteBond(maxbond);
+            DeleteBond(maxbond); // delete the new bond with the longest length
           }
       }
 
