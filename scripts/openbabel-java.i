@@ -6,20 +6,27 @@
 #define USING_OBDLL
 #endif
 
-#include <math.h>
 
 #include <openbabel/obutil.h>
+#include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/generic.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/residue.h>
+#include <openbabel/internalcoord.h>
+
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/oberror.h>
 #include <openbabel/plugin.h>
 #include <openbabel/fingerprint.h>
+#include <openbabel/descriptor.h>
+#include <openbabel/format.h>
 
 #include <openbabel/forcefield.h>
 #include <openbabel/op.h>
@@ -27,9 +34,9 @@
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 
-#include <openbabel/bitvec.h>
-#include <openbabel/chains.h>
-#include <openbabel/typer.h>
+
+
+
 %}
 
 %include "std_map.i"
@@ -63,20 +70,34 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 }
 %}
 
+%ignore *::operator=;
+%ignore *::operator*;
+%ignore *::operator*=;
+%ignore *::operator+;
+%ignore *::operator+=;
+%ignore *::operator-;
+%ignore *::operator-=;
+%ignore *::operator++;
+%ignore *::operator--;
+%ignore *::operator/;
+%ignore *::operator/=;
+%ignore *::operator bool;
+
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
+%include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
-%include <openbabel/math/matrix3x3.h>
+%import <openbabel/math/matrix3x3.h>
 
 %import <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
 
-%include <openbabel/chains.h>
-%include <openbabel/bitvec.h>
-%include <openbabel/typer.h>
+%import <openbabel/chains.h>
+%import <openbabel/bitvec.h>
+%import <openbabel/typer.h>
 
 %include <openbabel/plugin.h>
 
@@ -84,13 +105,15 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/format.h>
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
+%include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
-%include <openbabel/fingerprint.h>
 
+%include <openbabel/fingerprint.h>
+%include <openbabel/descriptor.h>
 %include <openbabel/forcefield.h>
 
 %include <openbabel/op.h>
@@ -117,6 +140,5 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %ignore OBResidueAtomIter(OBResidue &);
 
 
-%ignore *::operator=;
 
 %include <openbabel/obiter.h>

@@ -1,3 +1,9 @@
+2008-01-30  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-java.i: Updated to make identical (in terms of
+	includes and header files) to python wrapper. Added ignore statements
+	for operators as there are just too many warnings about these.
+
 2008-01-29  Joshua Ballanco <jballanc@gmail.com>
 
 	* scripts/ruby/extconf.rb: Fixed an error that had Ruby 1.8.6
