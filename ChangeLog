@@ -1,3 +1,8 @@
+2008-01-30	Joshua Ballanco	<jballanc@gmail.com>
+
+	* scripts/ruby/extconf.rb: Reworked the mkmf fix to be more
+	generally applicable to *nix platforms.
+
 2008-01-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	Fixes contributed by Liu Zhiguo via e-mail.
