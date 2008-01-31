@@ -17,11 +17,17 @@ More details can also be found at the Open Babel website:
 
 INSTALLATION
 
-To install this module, first install Open Babel. Then invoke the following commands:
+To install this module globally, first install Open Babel. Then invoke the following commands:
 
-$ ruby extconf.rb
 $ make
 # make install
+
+To install this module locally in ~/myroot, first install Open Babel. Then invoke the following commands:
+
+$ make
+$ export DESTDIR=~/myroot
+$ make install
+$ export RUBYLIB=~/myroot/usr/local/lib/site_ruby/1.8/i486-linux/
 
 USE
 

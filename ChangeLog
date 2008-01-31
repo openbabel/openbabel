@@ -1,3 +1,9 @@
+2008-01-31 Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/ruby/README: Updated as follows...
+	(1) it's no longer necessary for the user to run ruby extconf.rb
+	(2) added info on performing a local installation
+
 2008-01-30	Joshua Ballanco	<jballanc@gmail.com>
 
 	* scripts/ruby/extconf.rb: Reworked the mkmf fix to be more
