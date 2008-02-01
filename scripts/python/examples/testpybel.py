@@ -2,6 +2,12 @@ import os
 import unittest
 import pybel
 
+# For compatability with Python2.3
+try:
+    from sets import Set as set
+except ImportError:
+    pass
+
 class Test_fingerprint(unittest.TestCase):
     """Test the Fingerprint class"""
     def setUp(self):
@@ -185,12 +191,12 @@ class Test_data(unittest.TestCase):
         newvalues = {'hey':'there', 'yo':1}
         self.data.update(newvalues)
         self.assertEqual(self.data['yo'], '1')
-        self.assertTrue('there' in self.data.values())
+        self.assert_('there' in self.data.values())
 
     def testglobalaccess(self):
         """Check out the keys"""
-        self.assertTrue(self.data.has_key('Comment'))
-        self.assertFalse(self.data.has_key('Noel'))
+        self.assert_(self.data.has_key('Comment'))
+        self.assert_(not self.data.has_key('Noel'))
         self.assertEqual(len(self.data), 2)
         for key in self.data:
             self.assertEqual(key in ['Comment', 'NSC'], True)
@@ -198,11 +204,11 @@ class Test_data(unittest.TestCase):
 
     def testdelete(self):
         """Delete some keys"""
-        self.assertTrue(self.data.has_key('NSC'))
+        self.assert_(self.data.has_key('NSC'))
         del self.data['NSC']
-        self.assertFalse(self.data.has_key('NSC'))
+        self.assert_(not self.data.has_key('NSC'))
         self.data.clear()
-        self.assertFalse(len(self.data))
+        self.assertEqual(len(self.data), 0)
 
 class Test_Crystal(unittest.TestCase):
     """Read in and test a cif file"""
