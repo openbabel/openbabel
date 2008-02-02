@@ -2578,8 +2578,7 @@ namespace OpenBabel
     _residue.erase(_residue.begin() + idx);
 
     for ( unsigned short i = idx ; i < _residue.size() ; i++ )
-      _residue[i]->SetIdx(i-1);
-
+      _residue[i]->SetIdx(i);
 
     DestroyResidue(residue);
 

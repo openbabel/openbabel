@@ -1,3 +1,7 @@
+2008-02-02  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/mol.cpp: Bugfix for DeleteResidue()
+
 2008-02-01 Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/python/examples/testpybel.py: Made test suite
