@@ -1,7 +1,7 @@
 /*********************************************************************
 forcefieldmmff94.cpp - MMFF94 force field
 
-Copyright (C) 2006-2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
+Copyright (C) 2006-2008 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -15,6 +15,18 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
+/*
+ * Source code layout:
+ * - Functions to calculate the actual interactions
+ * - Parse parameter files
+ * - Setup Functions
+ * - Validation functions
+ * - Calculate bond type, angle type, stretch-bend type, torsion type
+ * - Various tables & misc. functions
+ *
+ */
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/mol.h>
@@ -25,6 +37,37 @@ using namespace std;
 
 namespace OpenBabel
 {
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//
+//  Functions to calculate the actual interactions
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+  
+  double OBForceFieldMMFF94::Energy(bool gradients)
+  {
+    double energy;
+
+    IF_OBFF_LOGLVL_MEDIUM
+      OBFFLog("\nE N E R G Y\n\n");
+    
+    energy = E_Bond(gradients);
+    energy += E_Angle(gradients);
+    energy += E_StrBnd(gradients);
+    energy += E_Torsion(gradients);
+    energy += E_OOP(gradients);
+    energy += E_VDW(gradients);
+    energy += E_Electrostatic(gradients);
+
+    IF_OBFF_LOGLVL_MEDIUM {
+      sprintf(_logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
+    }
+
+    return energy;
+  }
+ 
   // 
   // MMFF part I - page 494
   //      
@@ -97,12 +140,12 @@ namespace OpenBabel
   // MMFF part I - page 495
   //      
   //                       ka_ijk                       
-  // EA_ijk = 0.438449325 -------- /\0_ij^2 (1 + cs /\0_ij)
+  // EA_ijk = 0.438449325 -------- /\0_ijk^2 (1 + cs /\0_ijk)
   //                         2                          
   //
   // ka_ijk	force constant (md A/rad^2)
   //
-  // /\0_ij 	0_ij - 00_ij (degrees)
+  // /\0_ijk 	0_ijk - 00_ijk (degrees)
   //
   // cs		cubic bend constant = -0.007 deg^-1 = -0.4 rad^-1
   //
@@ -165,6 +208,17 @@ namespace OpenBabel
     return energy;
   }
   
+  // 
+  // MMFF part I - page 495
+  //      
+  // EBA_ijk = 2.51210 (kba_ijk /\r_ij + kba_kji /\r_kj) /\0_ijk
+  //
+  // kba_ijk	force constant (md/rad)
+  // kba_kji	force constant (md/rad)
+  //
+  // /\r_xx 	see above
+  // /\0_ijk 	see above
+  //
   void OBFFStrBndCalculationMMFF94::Compute(bool gradients)
   {
     vector3 rab_da, rab_db, rbc_db, rbc_dc, theta_da, theta_db, theta_dc;
@@ -339,13 +393,13 @@ namespace OpenBabel
     return energy;
   }
  
-  //
-  //  a
-  //   \
-  //    b---d      plane = a-b-c
-  //   /
-  //  c
-  //
+  //						//
+  //  a						//
+  //   \  					//
+  //    b---d      plane = a-b-c		//
+  //   / 					//
+  //  c						//
+  //						//
   void OBFFOOPCalculationMMFF94::Compute(bool gradients)
   {
     vector3 da, db, dc, dd;
@@ -564,7 +618,15 @@ namespace OpenBabel
     _init = src._init;
     return *this;
   }
-
+  
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//
+//  Parse parameter files
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+ 
   bool OBForceFieldMMFF94::ParseParamFile()
   {
     ParseParamProp();
@@ -590,7 +652,6 @@ namespace OpenBabel
     OBFFParameter parameter;
     
     // open data/mmffbond.par
-
     ifstream ifs;
     if (OpenDatafile(ifs, "mmffbond.par").length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffbond.par", obError);
@@ -1014,6 +1075,19 @@ namespace OpenBabel
     return 0;
   }
   
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//
+//  Setup Functions
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+ 
+  // The MMFF94 article doesn't seem to include information about how 
+  // aromaticity is perceived. This function was written by studying the 
+  // MMFF_opti.log file, trail-and-error and using the MMFF94 validation
+  // set to check the results (If all atom types are assigned correctly, 
+  // aromatic rings are probably detected correctly)
   bool OBForceFieldMMFF94::PerceiveAromatic()
   {
     bool done = false; // not done actually....
@@ -1093,410 +1167,1145 @@ namespace OpenBabel
     return done;
   }
   
+  // Symbolic atom typing is skipped
+  // 
+  // atom typing is based on:
+  //   MMFF94 I - Table III
+  //   MMFF94 V - Table I
+  //
+  int OBForceFieldMMFF94::GetType(OBAtom *atom)
+  {
+    OBBond *bond;
+    int oxygenCount, nitrogenCount, sulphurCount, doubleBondTo;
+    ////////////////////////////////
+    // Aromatic Atoms
+    ////////////////////////////////
+    if (atom->IsAromatic()) {
+      if (atom->IsInRingSize(5)) {
+        bool IsAromatic = false;
+        vector<OBAtom*> alphaPos, betaPos;
+        vector<OBAtom*> alphaAtoms, betaAtoms;
+
+	if (atom->IsSulfur()) {
+	  return 44; // Aromatic 5-ring sulfur with pi lone pair (STHI)
+	}
+	if (atom->IsOxygen()) {
+	  return 59; // Aromatic 5-ring oxygen with pi lone pair (OFUR)
+	}
+	if (atom->IsNitrogen()) {
+          FOR_NBORS_OF_ATOM (nbr, atom) {
+	    if (nbr->IsOxygen() && (nbr->GetValence() == 1)) {
+	      return 82; // N-oxide nitrogen in 5-ring alpha position, 
+	                 // N-oxide nitrogen in 5-ring beta position, 
+			 // N-oxide nitrogen in other 5-ring  position, 
+			 // (N5AX, N5BX, N5OX) 
+	    }
+	  }
+	}
+        FOR_NBORS_OF_ATOM (nbr, atom) {
+          if (!((_mol.GetBond(atom, &*nbr))->IsAromatic()) || !nbr->IsInRingSize(5))
+            continue;
+   
+	  if (IsInSameRing(atom, &*nbr)) {
+	    alphaPos.push_back(&*nbr);
+	  }
+          
+	  FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+            if (nbrNbr->GetIdx() == atom->GetIdx())
+              continue;
+            if (!((_mol.GetBond(&*nbr, &*nbrNbr))->IsAromatic()) || !nbrNbr->IsInRingSize(5))
+              continue;
+             
+            IsAromatic = true;
+	    
+	    if (IsInSameRing(atom, &*nbrNbr)) {
+              betaPos.push_back(&*nbrNbr);
+	    }
+          }
+        }
+	
+	if (IsAromatic) {
+          
+	  
+	  for (unsigned int i = 0; i < alphaPos.size(); i++) {
+  	    if (alphaPos[i]->IsSulfur()) {
+              alphaAtoms.push_back(alphaPos[i]);
+	    } else if (alphaPos[i]->IsOxygen()) {
+              alphaAtoms.push_back(alphaPos[i]);
+	    } else if (alphaPos[i]->IsNitrogen() && (alphaPos[i]->GetValence() == 3)) {
+	      bool IsNOxide = false;
+	      FOR_NBORS_OF_ATOM (nbr, alphaPos[i]) {
+	        if (nbr->IsOxygen() && (nbr->GetValence() == 1)) {
+		  IsNOxide = true;
+		}
+	      }
+
+	      if (!IsNOxide) {
+                alphaAtoms.push_back(alphaPos[i]);
+	      }
+	    }
+          }
+          for (unsigned int i = 0; i < betaPos.size(); i++) {
+            if (betaPos[i]->IsSulfur()) {
+              betaAtoms.push_back(betaPos[i]);
+            } else if (betaPos[i]->IsOxygen()) {
+              betaAtoms.push_back(betaPos[i]);
+            } else if (betaPos[i]->IsNitrogen() && (betaPos[i]->GetValence() == 3)) {
+	      bool IsNOxide = false;
+              FOR_NBORS_OF_ATOM (nbr, betaPos[i]) {
+	        if (nbr->IsOxygen() && (nbr->GetValence() == 1)) {
+		  IsNOxide = true;
+		}
+	      }
+
+	      if (!IsNOxide) {
+                betaAtoms.push_back(betaPos[i]);
+	      }
+            }
+          }
+	  if (!betaAtoms.size()) {
+	    nitrogenCount = 0;
+	    FOR_NBORS_OF_ATOM (nbr, atom) {
+	      cout << "BOSum=" << nbr->BOSum() << endl;
+	      if (nbr->IsNitrogen() && (nbr->GetValence() == 3)) {
+	        if ((nbr->BOSum() == 4) && nbr->IsAromatic()) {
+	          nitrogenCount++;
+	        } else if ((nbr->BOSum() == 3) && !nbr->IsAromatic()) {
+	          nitrogenCount++;
+	        }
+	      }
+	    }
+	    if (nitrogenCount >= 2) {
+	      return 80; // Aromatic carbon between N's in imidazolium (CIM+)
+	    }
+          }
+	  if (!alphaAtoms.size() && !betaAtoms.size()) {
+            if (atom->IsCarbon()) {
+	      // there is no S:, O:, or N:
+              // this is the case for anions with only carbon and nitrogen in the ring
+              return 78; // General carbon in 5-membered aromatic ring (C5)
+	    } else if (atom->IsNitrogen()) {
+	      if (atom->GetValence() == 3) {
+	        // this is the N: atom
+	        return 39; // Aromatic 5 ring nitrogen with pi lone pair (NPYL)
+	      } else {
+	        // again, no S:, O:, or N:
+	        return 76; // Nitrogen in 5-ring aromatic anion (N5M)
+	      }
+	    }
+          }
+	  if (alphaAtoms.size() == 2) {
+	    if (atom->IsCarbon() && IsInSameRing(alphaAtoms[0], alphaAtoms[1])) {
+	      if (alphaAtoms[0]->IsNitrogen() && alphaAtoms[1]->IsNitrogen()) {
+	        if ((alphaAtoms[0]->GetValence() == 3) && (alphaAtoms[1]->GetValence() == 3)) {
+	          return 80; // Aromatic carbon between N's in imidazolium (CIM+)
+		}
+	      }
+	    }
+	  }
+	  if (alphaAtoms.size() && !betaAtoms.size()) {
+	    if (atom->IsCarbon()) {
+	      return 63; // Aromatic 5-ring C, alpha to N:, O:, or S: (C5A)
+	    } else if (atom->IsNitrogen()) {
+	      if (atom->GetValence() == 3) {
+	        return 81; // Posivite nitrogen in 5-ring alpha position (N5A+)
+	      } else {
+	        return 65; // Aromatic 5-ring N, alpha to N:, O:, or S: (N5A)
+	      }
+	    }
+	  }
+	  if (!alphaAtoms.size() && betaAtoms.size()) {
+	    if (atom->IsCarbon()) {
+	      return 64; // Aromatic 5-ring C, beta to N:, O:, or S: (C5B)
+	    } else if (atom->IsNitrogen()) {
+	      if (atom->GetValence() == 3) {
+	        return 81; // Posivite nitrogen in 5-ring beta position (N5B+)
+	      } else {
+	        return 66; // Aromatic 5-ring N, beta to N:, O:, or S: (N5B)
+	      }
+	    }
+	  }
+	  if (alphaAtoms.size() && betaAtoms.size()) {
+	    for (unsigned int i = 0; i < alphaAtoms.size(); i++) {
+	      for (unsigned int j = 0; j < betaAtoms.size(); j++) {
+	        if (!IsInSameRing(alphaAtoms[i], betaAtoms[j])) {
+		  if (atom->IsCarbon()) {
+                    return 78; // General carbon in 5-membered aromatic ring (C5)
+	          } else if (atom->IsNitrogen()) {
+	            return 79; // General nitrogen in 5-membered aromatic ring (N5)
+		  }
+		}
+	      }
+	    }
+	    for (unsigned int i = 0; i < alphaAtoms.size(); i++) {
+              if (alphaAtoms[i]->IsSulfur() || alphaAtoms[i]->IsOxygen()) {
+	        if (atom->IsCarbon()) {
+	          return 63; // Aromatic 5-ring C, alpha to N:, O:, or S: (C5A)
+	        } else if (atom->IsNitrogen()) {
+	          return 65; // Aromatic 5-ring N, alpha to N:, O:, or S: (N5A)
+		}
+              }
+	    }
+	    for (unsigned int i = 0; i < betaAtoms.size(); i++) {
+              if (betaAtoms[i]->IsSulfur() || betaAtoms[i]->IsOxygen()) {
+	        if (atom->IsCarbon()) {
+	          return 64; // Aromatic 5-ring C, beta to N:, O:, or S: (C5B)
+	        } else if (atom->IsNitrogen()) {
+	          return 66; // Aromatic 5-ring N, beta to N:, O:, or S: (N5B)
+		}
+              }
+	    }
+	    
+	    if (atom->IsCarbon()) {
+              return 78; // General carbon in 5-membered aromatic ring (C5)
+	    } else if (atom->IsNitrogen()) {
+	      return 79; // General nitrogen in 5-membered aromatic ring (N5)
+	    }
+	  }
+        }
+      }
+    
+      if (atom->IsInRingSize(6)) {
+	
+	if (atom->IsCarbon()) {
+          return 37; // Aromatic carbon, e.g., in benzene (CB)
+	} else if (atom->IsNitrogen()) {
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    if (nbr->IsOxygen() && (nbr->GetValence() == 1)) {
+	      return 69; // Pyridinium N-oxide nitrogen (NPOX)
+	    }
+	  }
+	  
+	  if (atom->GetValence() == 3) {
+	    return 58; // Aromatic nitrogen in pyridinium (NPD+)
+	  } else {
+	    return 38; // Aromatic nitrogen with sigma lone pair (NPYD)
+	  }
+	}
+      }
+    }
+    
+    ////////////////////////////////
+    // Hydrogen
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 1) {
+      FOR_NBORS_OF_ATOM (nbr, atom) {
+        if (nbr->IsCarbon()) {
+	  return 5; // Hydrogen attatched to carbon (HC)
+	}
+        if (nbr->GetAtomicNum() == 14) {
+	  return 5; // Hydrogen attatched to silicon (HSI)
+	}
+        if (nbr->IsOxygen()) {
+	  if (nbr->BOSum() == 3) {
+	    if (nbr->GetValence() == 3) {
+	      return 50; // Hydrogen on oxonium oxygen (HO+)
+	    } else {
+	      return 52; // Hydrogen on oxenium oxygen (HO=+)
+	    }
+	  }
+	  
+	  int hydrogenCount = 0;
+          FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	    if (nbrNbr->IsHydrogen()) {
+	      hydrogenCount++;
+	      continue;
+	    }
+	    if (nbrNbr->IsCarbon()) {
+              if (nbrNbr->IsAromatic()) {
+		return 29; // phenol
+              }
+                     
+	      FOR_NBORS_OF_ATOM (nbrNbrNbr, &*nbrNbr) {
+	        if (nbrNbrNbr->GetIdx() == nbr->GetIdx())
+		  continue;
+
+		bond = _mol.GetBond(&*nbrNbr, &*nbrNbrNbr);
+	        if (bond->IsDouble()) {
+		  if (nbrNbrNbr->IsOxygen()) {
+		    return 24; // Hydroxyl hydrogen in carboxylic acids (HOCO)
+		  }
+		  if (nbrNbrNbr->IsCarbon() || nbrNbrNbr->IsNitrogen()) {
+		    return 29; // Enolic or phenolic hydroxyl hydrogen,
+		               // Hydroxyl hydrogen in HO-C=N moiety (HOCC, HOCN)
+		  }
+		}
+	      }
+	    }
+	    if (nbrNbr->IsPhosphorus()) {
+	      return 24; // Hydroxyl hydrogen in H-O-P moiety (HOP)
+	    }
+	    if (nbrNbr->IsSulfur()) {
+	      return 33; // Hydrogen on oxygen attached to sulfur (HOS)
+	    }
+	  
+	  }
+	  if (hydrogenCount == 2) {
+	    return 31; // Hydroxyl hydrogen in water (HOH)
+	  }
+
+	  return 21; // Hydroxyl hydrogen in alcohols, Generic hydroxyl hydrogen (HOR, HO)
+	}
+        if (nbr->IsNitrogen()) {
+	  switch (GetType(&*nbr)) {
+	    case 81:
+	      return 36; // Hydrogen on imidazolium nitrogen (HIM+)
+	    case 68:
+	      return 23; // Hydrogen on N in N-oxide (HNOX)
+	    case 67:
+	      return 23; // Hydrogen on N in N-oxide (HNOX)
+	    case 62:
+	      return 23; // Generic hydrogen on sp3 nitrogen, e.g., in amines (HNR)
+	    case 56:
+	      return 36; // Hydrogen on guanimdinium nitrogen (HGD+)
+	    case 55:
+	      return 36; // Hydrogen on amidinium nitrogen (HNN+)
+	    case 43:
+	      return 28; // Hydrogen on NSO, NSO2, or NSO3 nitrogen, Hydrogen on N triply bonded to C (HNSO, HNC%)
+	    case 39:
+	      return 23; // Hydrogen on nitrogen in pyrrole (HPYL)
+	    case 8:
+	      return 23; // Generic hydrogen on sp3 nitrogen, e.g., in amines, Hydrogen on nitrogen in ammonia (HNR, H3N)
+	  }
+
+	  if (nbr->BOSum() == 4) {
+	    if (nbr->GetValence() == 2) {
+	      return 28; // Hydrogen on N triply bonded to C (HNC%)
+	    } else {
+	      return 36; // Hydrogen on pyridinium nitrogen, Hydrogen on protonated imine nitrogen (HPD+, HNC+)
+	    }
+	  }
+
+	  if (nbr->GetValence() == 2) {
+	    FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	      if (nbrNbr->IsHydrogen())
+	        continue;
+              
+	      bond = _mol.GetBond(&*nbr, &*nbrNbr);
+	      if (bond->IsDouble()) {
+	        if (nbrNbr->IsCarbon() || nbrNbr->IsNitrogen()) {
+	          return 27; // Hydrogen on imine nitrogen, Hydrogen on azo nitrogen (HN=C, HN=N) 
+	        }
+
+		return 28; // Generic hydrogen on sp2 nitrogen (HSP2)
+	      }
+	    }
+	  }
+	  
+	  FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	    if (nbrNbr->IsHydrogen())
+	      continue;
+	    
+	    if (nbrNbr->IsCarbon()) {
+	      if (nbrNbr->IsAromatic()) {
+	        return 28; // deloc. lp pair
+	      }
+	      
+	      FOR_NBORS_OF_ATOM (nbrNbrNbr, &*nbrNbr) {
+	        if (nbrNbrNbr->GetIdx() == nbr->GetIdx())
+	          continue;
+              
+	        bond = _mol.GetBond(&*nbrNbr, &*nbrNbrNbr);
+	        if (bond->IsDouble()) {
+	          if (nbrNbrNbr->IsCarbon() || nbrNbrNbr->IsNitrogen() || nbrNbrNbr->IsOxygen() || nbrNbrNbr->IsSulfur()) {
+	            return 28; // Hydrogen on amide nitrogen, Hydrogen on thioamide nitrogen,
+		               // Hydrogen on enamine nitrogen, Hydrogen in H-N-C=N moiety (HNCO, HNCS, HNCC, HNCN)
+	          }
+	        }
+	      }
+	    }
+	    if (nbrNbr->IsNitrogen()) {
+              FOR_NBORS_OF_ATOM (nbrNbrNbr, &*nbrNbr) {
+	        if (nbrNbrNbr->GetIdx() == nbr->GetIdx())
+	          continue;
+              
+	        bond = _mol.GetBond(&*nbrNbr, &*nbrNbrNbr);
+	        if (bond->IsDouble()) {
+	          if (nbrNbrNbr->IsCarbon() || nbrNbrNbr->IsNitrogen()) {
+	            return 28; // Hydrogen in H-N-N=C moiety, Hydrogen in H-N-N=N moiety (HNNC, HNNN)
+	          }
+	        }
+	      }
+	    }
+	    if (nbrNbr->IsSulfur()) {
+              FOR_NBORS_OF_ATOM (nbrNbrNbr, &*nbrNbr) {
+	        if (nbrNbrNbr->GetIdx() == nbr->GetIdx())
+	          continue;
+              
+	        if (nbrNbrNbr->IsOxygen() || (nbrNbrNbr->GetValence() == 1)) {
+	          return 28; // Hydrogen on NSO, NSO2 or NSO3 nitrogen (HNSO)
+	        }
+	      }
+	    }
+	  }
+              
+	  return 23; // Generic hydrogen on sp3 nitrogen e.g., in amines,
+	             // Hydrogen on nitrogen in pyrrole, Hydrogen in ammonia,
+		     // Hydrogen on N in N-oxide (HNR, HPYL, H3N, HNOX)
+	}
+        if (nbr->IsSulfur() || nbr->IsPhosphorus()) {
+	  return 71; // Hydrogen attached to sulfur, Hydrogen attached to >S= sulfur doubly bonded to N,
+	             // Hydrogen attached to phosphorus (HS, HS=N, HP)
+	}
+      }
+    }
+
+    ////////////////////////////////
+    // Lithium
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 3) {
+      // 0 neighbours
+      if (atom->GetValence() == 0) {
+        return 92; // Lithium cation (LI+)
+      }
+    }
+ 
+    ////////////////////////////////
+    // Carbon
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 6) {
+      // 4 neighbours
+      if (atom->GetValence() == 4) {
+        if (atom->IsInRingSize(3)) {
+          return 22; // Aliphatic carbon in 3-membered ring (CR3R)
+	} 
+	
+	if (atom->IsInRingSize(4)) {
+          return 20; // Aliphatic carbon in 4-membered ring (CR4R)
+	}
+        
+	return 1; // Alkyl carbon (CR)
+      }
+      // 3 neighbours
+      if (atom->GetValence() == 3) {
+        int N2count = 0;
+	int N3count = 0;
+        oxygenCount = sulphurCount = doubleBondTo = 0;
+
+	FOR_NBORS_OF_ATOM (nbr, atom) {
+	  bond = _mol.GetBond(&*nbr, atom);
+	  if (bond->IsDouble()) {
+	    doubleBondTo = nbr->GetAtomicNum();
+          }
+
+	  if (nbr->GetValence() == 1) {
+	    if (nbr->IsOxygen()) {
+	      oxygenCount++;
+	    } else if (nbr->IsSulfur()) {
+	      sulphurCount++;
+	    }
+	  } else if (nbr->GetValence() == 3) {
+	    if (nbr->IsNitrogen()) {
+	      N3count++;
+	    }
+	  } else if ((nbr->GetValence() == 2) && bond->IsDouble()) {
+	    if (nbr->IsNitrogen()) {
+	      N2count++;
+	    }
+	  }
+	}
+	if ((N3count >= 2) && (doubleBondTo == 7) && !N2count) {
+	  // N3==C--N3
+	  return 57; // Guanidinium carbon, Carbon in +N=C-N: resonance structures (CGD+, CNN+)
+	}
+	if ((oxygenCount == 2) || (sulphurCount == 2)) {
+	  // O1-?-C-?-O1 or S1-?-C-?-S1
+	  return 41; // Carbon in carboxylate anion, Carbon in thiocarboxylate anion (CO2M, CS2M)
+        }
+	if (atom->IsInRingSize(4) && (doubleBondTo == 6)) {
+	        return 30; // Olefinic carbon in 4-membered ring (CR4E)
+        }
+        if ((doubleBondTo ==  7) || (doubleBondTo ==  8) || 
+	    (doubleBondTo == 15) || (doubleBondTo == 16)) {
+	  // C==N, C==O, C==P, C==S
+	  return 3; // Generic carbonyl carbon, Imine-type carbon, Guanidine carbon,
+	            // Ketone or aldehyde carbonyl carbon, Amide carbonyl carbon,
+		    // Carboxylic acid or ester carbonyl carbon, Carbamate carbonyl carbon,
+		    // Carbonic acid or ester carbonyl carbon, Thioester carbonyl (double
+		    // bonded to O or S), Thioamide carbon (double bonded to S), Carbon
+		    // in >C=SO2, Sulfinyl carbon in >C=S=O, Thiocarboxylic acid or ester 
+		    // carbon, Carbon doubly bonded to P (C=O, C=N, CGD, C=OR, C=ON, COO,
+		    // COON, COOO, C=OS, C=S, C=SN, CSO2, CS=O, CSS, C=P)
+        }
+	
+	return 2; // Vinylic Carbon, Generic sp2 carbon (C=C, CSP2)
+	
+      }
+      // 2 neighbours
+      if (atom->GetValence() == 2) {
+        return 4; // Acetylenic carbon, Allenic caron (CSP, =C=)
+      }
+      // 1 neighbours
+      if (atom->GetValence() == 1) {
+        return 60; // Isonitrile carbon (C%-)
+      }
+    }
+
+    ////////////////////////////////
+    // Nitrogen
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 7) {
+      // 4 neighbours
+      if (atom->GetValence() == 4) {
+	FOR_NBORS_OF_ATOM (nbr, atom) {
+	  if (nbr->IsOxygen() && (nbr->GetValence() == 1)) {
+	    return 68; // sp3-hybridized N-oxide nitrogen (N3OX)
+          }
+	}
+
+	return 34; // Quaternary nitrogen (NR+)
+      }
+      // 3 neighbours
+      if (atom->GetValence() == 3) {
+        if (atom->BOSum() == 4) {
+	  oxygenCount = nitrogenCount = doubleBondTo = 0;
+	  
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    if (nbr->IsOxygen() && (nbr->GetValence() == 1)) {
+	      oxygenCount++;
+	    }
+	    if (nbr->IsNitrogen()) {
+	      bond = _mol.GetBond(&*nbr, atom);
+	      if (bond->IsDouble()) {
+	        doubleBondTo = 7;
+              }
+	    }
+	    if (nbr->IsCarbon()) {
+	      bond = _mol.GetBond(&*nbr, atom);
+	      if (bond->IsDouble()) {
+	        FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	          if (nbrNbr->IsNitrogen() && (nbrNbr->GetValence() == 3)) {
+		    nitrogenCount++;
+		  }
+	        }
+              }
+	    }
+	  }
+
+	  if (oxygenCount == 1) {
+	    return 67; // sp2-hybridized N-oxide nitrogen (N2OX)
+	  }
+	  if (oxygenCount >= 2) {
+	    return 45; // Nitrogen in nitro group, Nitrogen in nitrate group (NO2, NO3)
+	  }
+
+          if (nitrogenCount == 1) {
+	    return 54; // Iminium nitrogen (N+=C)
+	  }
+          if (nitrogenCount == 2) {
+	    return 55; // Either nitrogen in N+=C-N: (NCN+)
+	  }
+          if (nitrogenCount == 3) {
+	    return 56; // Guanidinium nitrogen (NGD+)
+	  }
+	  
+	  if (doubleBondTo == 7) {
+	    return 54; // Positivly charged nitrogen doubly bonded to nitrogen (N+=N)
+	  }
+	}
+	
+	if (atom->BOSum() == 3) {
+	  bool IsAmide = false;
+	  bool IsSulfonAmide = false;
+	  bool IsNNNorNNC = false;
+	  int tripleBondTo = 0;
+	  doubleBondTo = 0;
+	  
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    if (nbr->IsSulfur() || nbr->IsPhosphorus()) {
+	      oxygenCount = 0;
+	      
+	      FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+		if (nbrNbr->IsOxygen() && (nbrNbr->GetValence() == 1)) {
+		  oxygenCount++;
+		}
+	      }
+              if (oxygenCount >= 2) {
+	        IsSulfonAmide = true;
+		//return 43; // Sulfonamide nitrogen (NSO2, NSO3)
+	      }
+	    }
+	  }
+	
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    if (nbr->IsCarbon()) {
+	      FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	        bond = _mol.GetBond(&*nbr, &*nbrNbr);
+		if (bond->IsDouble() && (nbrNbr->IsOxygen() || nbrNbr->IsSulfur())) {
+	          IsAmide = true;
+		  //return 10; // Amide nitrogen, Thioamide nitrogen (NC=O, NC=S)
+		}
+	      }
+	    }
+	  }
+	  
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    if (nbr->IsCarbon()) {
+	      int N2count = 0;
+	      int N3count = 0;
+	      oxygenCount = sulphurCount = 0;
+
+	      FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	        bond = _mol.GetBond(&*nbr, &*nbrNbr);
+		if (bond->IsDouble()) {
+		  doubleBondTo = nbrNbr->GetAtomicNum();
+		}
+		if (bond->IsAromatic()) {
+		  if ((nbrNbr->GetAtomicNum() == 7) || (nbrNbr->GetAtomicNum() == 6)) {
+		    doubleBondTo = nbrNbr->GetAtomicNum();
+		  }
+		}
+		if (bond->IsTriple()) {
+		  tripleBondTo = nbrNbr->GetAtomicNum();
+		}
+		if (nbrNbr->IsNitrogen() && (nbrNbr->GetValence() == 3)) {
+	          int nbrOxygen = 0;
+		  FOR_NBORS_OF_ATOM (nbrNbrNbr, &*nbrNbr) {
+		    if (nbrNbrNbr->IsOxygen()) {
+		      nbrOxygen++;
+		    }
+		  }
+		  if (nbrOxygen < 2) {
+		    N3count++;
+		  }
+		}
+		if (nbrNbr->IsNitrogen() && (nbrNbr->GetValence() == 2) && (bond->IsDouble() || bond->IsAromatic())) {
+		  N2count++;
+		}
+		if (nbrNbr->IsAromatic()) {
+		  if (nbrNbr->IsOxygen()) {
+		    oxygenCount++;
+		  }
+		  if (nbrNbr->IsSulfur()) {
+		    sulphurCount++;
+		  }
+                }
+	      }
+	      if (N3count == 3) {
+	       return 56; // Guanidinium nitrogen (NGD+)
+	      }
+	
+	      if (!IsAmide && !IsSulfonAmide && !oxygenCount && !sulphurCount && nbr->IsAromatic()) {
+	        return 40;
+	      }
+
+	      if ((N3count == 2) && (doubleBondTo == 7) && !N2count) {
+	        return 55; // Either nitrogen in N+=C-N: (NCN+)
+	      }
+            }
+
+	    if (nbr->IsNitrogen()) {
+	      nitrogenCount = 0;
+	      FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	        bond = _mol.GetBond(&*nbr, &*nbrNbr);
+		if (bond->IsDouble()) {
+		  if (nbrNbr->IsCarbon()) {
+		    oxygenCount = sulphurCount = 0;
+		    FOR_NBORS_OF_ATOM (nbrNbrNbr, &*nbrNbr) {
+		      if (nbrNbrNbr->IsOxygen()) {
+		        oxygenCount++;
+		      }
+		      if (nbrNbrNbr->IsSulfur()) {
+		        sulphurCount++;
+		      }
+		      if (nbrNbrNbr->IsSulfur()) {
+		        nitrogenCount++;
+	              }
+		    }
+		    if (!oxygenCount && !sulphurCount && (nitrogenCount == 1)) {
+		      bool bondToAromC = false;
+	              FOR_NBORS_OF_ATOM (nbr2, atom) {
+		        if (nbr2->IsAromatic() && nbr2->IsCarbon() && nbr2->IsInRingSize(6)) {
+			  bondToAromC = true;
+			}
+		      }
+		      if (!bondToAromC) {
+		        IsNNNorNNC = true;
+		      }
+		    }
+		  }
+		  if (nbrNbr->IsNitrogen()) {
+    	            bool bondToAromC = false;
+	            FOR_NBORS_OF_ATOM (nbr2, atom) {
+	              if (nbr2->IsAromatic() && nbr2->IsCarbon() && nbr2->IsInRingSize(6)) {
+			bondToAromC = true;
+		      }
+		    }
+		    if (!bondToAromC) {
+	              IsNNNorNNC = true;
+		    }
+		  }
+		}
+	      }
+	    }	    
+          }
+          
+          if (IsSulfonAmide) {
+	    return 43; // Sulfonamide nitrogen (NSO2, NSO3)
+	  }
+	  if (IsAmide) {
+	    return 10; // Amide nitrogen, Thioamide nitrogen (NC=O, NC=S)
+	  }
+ 
+	  if ((doubleBondTo ==  6) || (doubleBondTo == 7) ||(doubleBondTo == 15) || (tripleBondTo == 6)) {
+	    return 40; // Enamine or aniline nitrogen (deloc. lp), Nitrogen in N-C=N with deloc. lp,
+	               // Nitrogen in N-C=N with deloc. lp, Nitrogen attached to C-C triple bond
+	               // (NC=C, NC=N, NC=P, NC%C)
+	  }
+	  if (tripleBondTo == 7) {
+	    return 43; // Nitrogen attached to cyano group (NC%N)
+	  }
+	  if (IsNNNorNNC) {
+	    return 10; // Nitrogen in N-N=C moiety with deloc. lp
+		       // Nitrogen in N-N=N moiety with deloc. lp (NN=C, NN=N)
+	  }
+	
+	  return 8; // Amine nitrogen (NR)
+	}
+      }
+      // 2 neighbours
+      if (atom->GetValence() == 2) {
+        if (atom->BOSum() == 4) {
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    bond = _mol.GetBond(&*nbr, atom);
+	    if (bond->IsTriple()) {
+	      return 61; // Isonitrile nitrogen (NR%)
+	    }
+	  }
+
+	  return 53; // Central nitrogen in C=N=N or N=N=N (=N=)
+	} 
+	
+	if (atom->BOSum() == 3) {
+	  doubleBondTo = 0;
+
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    bond = _mol.GetBond(&*nbr, atom);
+	    if (nbr->IsOxygen() && bond->IsDouble() && (nbr->GetValence() == 1)) {
+	      return 46; // Nitrogen in nitroso group (N=O)
+	    }
+	    if ((nbr->IsCarbon() || nbr->IsNitrogen()) && bond->IsDouble()) {
+	      return 9; // Iminie nitrogen, Azo-group nitrogen (N=C, N=N)
+	    }
+          }
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    if (nbr->IsSulfur()) {
+	      oxygenCount = 0;
+	      
+	      FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+		if (nbrNbr->IsOxygen() && (nbrNbr->GetValence() == 1)) {
+		  oxygenCount++;
+		}
+	      }
+              if (oxygenCount >= 2) {
+	        return 43; // Sulfonamide nitrogen (NSO2, NSO3)
+	      }
+            }
+          }	
+	} 
+	
+	if (atom->BOSum() == 2) {
+	  oxygenCount = sulphurCount = 0;
+
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    if (nbr->IsSulfur()) {
+	      FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	        if (nbrNbr->IsOxygen() && (nbrNbr->GetValence() == 1)) {
+		  oxygenCount++;
+		}
+	      }
+              if (oxygenCount == 1) {
+	        return 48; // Divalent nitrogen replacing monovalent O in SO2 group (NSO)
+	      }
+	    }
+	  }
+
+	  return 62; // Anionic divalent nitrogen (NM)
+	} 
+      }
+      // 1 neighbours
+      if (atom->GetValence() == 1) {
+       	FOR_NBORS_OF_ATOM (nbr, atom) {
+	  bond = _mol.GetBond(&*nbr, atom);
+	  if (bond->IsTriple()) {
+	    return 42; // Triply bonded nitrogen (NSP)
+	  }
+	  if (nbr->IsNitrogen() && (nbr->GetValence() == 2)) {
+	    return 47; // Terminal nitrogen in azido or diazo group (NAZT)
+          }
+	}
+      }
+    }
+
+    ////////////////////////////////
+    // Oxygen
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 8) {
+      // 3 neighbours
+      if (atom->GetValence() == 3) {
+	return 49; // Oxonium oxygen (O+)
+      }
+      // 2 neighbours
+      if (atom->GetValence() == 2) {
+        int hydrogenCount = 0;
+	FOR_NBORS_OF_ATOM (nbr, atom) {
+	  if (nbr->IsHydrogen()) {
+	    hydrogenCount++;
+	  }
+	}
+
+	if (hydrogenCount == 2) {
+	  // H--O--H
+	  return 70; // Oxygen in water (OH2)
+	}
+	if (atom->BOSum() == 3) {
+	  return 51; // Oxenium oxygen (O=+)
+	}
+        
+	return 6; // Generic divalent oxygen, Ether oxygen, Carboxylic acid or ester oxygen,
+	          // Enolic or phenolic oxygen, Oxygen in -O-C=N- moiety, Divalent oxygen in
+		  // thioacid or ester, Divalent nitrate "ether" oxygen, Divalent oxygen in
+		  // sulfate group, Divalent oxygen in sulfite group, One of two divalent
+		  // oxygens attached to sulfur, Divalent oxygen in R(RO)S=O, Other divalent
+		  // oxygen attached to sulfur, Divalent oxygen in phosphate group, Divalent
+		  // oxygen in phosphite group, Divalent oxygen (one of two oxygens attached
+		  // to P), Other divalent oxygen (-O-, OR, OC=O, OC=C, OC=N, OC=S, ONO2, 
+		  // ON=O, OSO3, OSO2, OSO, OS=O, -OS, OPO3, OPO2, OPO, -OP)
+
+	// 59 ar
+      }
+      // 1 neighbour
+      if (atom->GetValence() == 1) {
+        oxygenCount = sulphurCount = 0;
+        
+	FOR_NBORS_OF_ATOM (nbr, atom) {
+	  bond = _mol.GetBond(&*nbr, atom);
+
+	  if (nbr->IsCarbon() || nbr->IsNitrogen()) {
+            FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	      if (nbrNbr->IsOxygen() && (nbrNbr->GetValence() == 1)) {
+	        oxygenCount++;
+              }
+	      if (nbrNbr->IsSulfur() && (nbrNbr->GetValence() == 1)) {
+	        sulphurCount++;
+	      }
+	    }
+	  }
+          // O---H
+	  if (nbr->IsHydrogen()) {
+	    return 35;
+	  }
+          // O-?-C
+	  if (nbr->IsCarbon()) {
+	    if (oxygenCount == 2) {
+	      // O-?-C-?-O
+	      return 32; // Oxygen in carboxylate group (O2CM)
+            }
+	    if (bond->IsSingle()) { 
+	      // O--C
+	      return 35; // Oxide oxygen on sp3 carbon, Oxide oxygen on sp2 carbon (OM, OM2)
+	    } else { 
+	      // O==C
+	      return 7; // Generic carbonyl oxygen, Carbonyl oxygen in amides,
+	                // Carbonyl oxygen in aldehydes and ketones, Carbonyl
+			// oxygen in acids or esters (O=C, O=CN, O=CR, O=CO)
+	    }
+	  }
+          // O-?-N
+	  if (nbr->IsNitrogen()) {
+	    if (oxygenCount >= 2) { 
+	      // O-?-N-?-O
+	      return 32; // Oxygen in nitro group, Nitro-group oxygen in nitrate,
+	                 // Nitrate anion oxygen (O2N, O2NO, O3N)
+            }
+	    if (bond->IsSingle()) { 
+	      // O--N
+	      return 32; // Oxygen in N-oxides (ONX)
+	    } else { 
+	      // O==N
+	      return 7; // Nitroso oxygen (O=N)
+	    }
+	  }
+          // O-?-S
+	  if (nbr->IsSulfur()) {
+	    if (sulphurCount == 1) { 
+	      // O1-?-S-?-S1
+	      return 32; // Terminal oxygen in thiosulfinate anion (OSMS)
+            }
+	    if (bond->IsSingle()) { 
+	      // O--S
+	      return 32; // Single terminal oxygen on sulfur, One of 2 terminal O's on sulfur, 
+	                 // One of 3 terminal O's on sulfur, Terminal O in sulfate anion, 
+			 // (O-S, O2S, O3S, O4S)
+	    } else { 
+	      // O==S
+	      return 7; // Doubly bonded sulfoxide oxygen, O=S on sulfur doubly bonded 
+	                // to, e.g., C (O=S, O=S=)
+	    }
+	  }
+
+	  return 32; // Oxygen in phosphine oxide, One of 2 terminal O's on sulfur, 
+	             // One of 3 terminal O's on sulfur, One of 4 terminal O's on sulfur, 
+                     // Oxygen in perchlorate anion (OP, O2P, O3P, O4P, O4Cl)
+	}
+      }
+    }
+    
+    ////////////////////////////////
+    // Flourine
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 9) {
+      // 1 neighbour
+      if (atom->GetValence() == 1) {
+        return 11; // Fluorine (F)
+      }
+      // 0 neighbours
+      if (atom->GetValence() == 0) {
+        return 89; // Fluoride anion (F-)
+      }
+    }
+    
+    ////////////////////////////////
+    // Sodium
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 11) {
+      return 93; // Sodium cation (NA+)
+    }
+    
+    ////////////////////////////////
+    // Magnesium
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 12) {
+      return 99; // Dipositive magnesium cation (MG+2)
+    }
+ 
+    ////////////////////////////////
+    // Silicon
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 14) {
+      return 19; // Silicon (SI)
+    }
+ 
+    ////////////////////////////////
+    // Phosphorus
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 15) {
+      if (atom->GetValence() == 4) {
+        return 25; // Phosphate group phosphorus, Phosphorus with 3 attached oxygens,
+	           // Phosphorus with 2 attached oxygens, Phosphine oxide phosphorus,
+		   // General tetracoordinate phosphorus (PO4, PO3, PO2, PO, PTET)
+      }
+      if (atom->GetValence() == 3) {
+        return 26; // Phosphorus in phosphines (P)
+      }
+      if (atom->GetValence() == 2) {
+        return 75; // Phosphorus doubly bonded to C (-P=C)
+      }
+    }
+    
+    ////////////////////////////////
+    // Sulfur
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 16) {
+      // 4 neighbours
+      if (atom->GetValence() == 4) {
+        return 18; // Sulfone sulfur, Sulfonamide sulfur, Sulfonate group sulfur,
+	           // Sulfate group sulfur, Sulfur in nitrogen analog of sulfone 
+		   // (SO2, SO2N, SO3, SO4, SNO)
+      }
+      // 3 neighbours
+      if (atom->GetValence() == 3) {
+        oxygenCount = sulphurCount = doubleBondTo = 0;
+
+	FOR_NBORS_OF_ATOM (nbr, atom) {
+	  bond = _mol.GetBond(&*nbr, atom);
+	  if (bond->IsDouble()) {
+	    doubleBondTo = nbr->GetAtomicNum();
+          }
+
+	  if (nbr->GetValence() == 1) {
+	    if (nbr->IsOxygen()) {
+	      oxygenCount++;
+	    } else if (nbr->IsSulfur()) {
+	      sulphurCount++;
+	    }
+	  } 
+	}
+
+	if (oxygenCount == 2) {
+	  if (doubleBondTo == 6) {
+	    return 18; // Sulfone sulfur, doubly bonded to carbon (=SO2)
+	  }
+	  return 73; // Sulfur in anionic sulfinate group (SO2M)
+	}
+	if (oxygenCount && sulphurCount)
+	  return 73; // Tricoordinate sulfur in anionic thiosulfinate group (SSOM)
+  
+	//if ((doubleBondTo == 6) || (doubleBondTo == 8))
+	  return 17; // Sulfur doubly bonded to carbon, Sulfoxide sulfur (S=C, S=O)
+      }
+      // 2 neighbours
+      if (atom->GetValence() == 2) {
+        doubleBondTo = 0;
+
+	FOR_NBORS_OF_ATOM (nbr, atom) {
+	  if (nbr->IsOxygen()) {
+	    bond = _mol.GetBond(&*nbr, atom);
+	    if (bond->IsDouble()) {
+	      doubleBondTo = 8;
+            }
+	  }
+	}
+
+        if (doubleBondTo == 8)
+	  return 74; // Sulfinyl sulfur, e.g., in C=S=O (=S=O)
+	
+	return 15; // Thiol, sulfide, or disulfide sulfor (S)
+      }
+      // 1 neighbour
+      if (atom->GetValence() == 1) {
+        sulphurCount = doubleBondTo = 0;
+
+	FOR_NBORS_OF_ATOM (nbr, atom) {
+	  FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+	    if (nbrNbr->IsSulfur() && (nbrNbr->GetValence() == 1)) {
+	      sulphurCount++;
+	    }
+	  }
+	  bond = _mol.GetBond(&*nbr, atom);
+	  if (bond->IsDouble()) {
+	    doubleBondTo = nbr->GetAtomicNum();
+          }
+	}
+
+	if ((doubleBondTo == 6) && (sulphurCount != 2)) {
+	  return 16; // Sulfur doubly bonded to carbon (S=C)
+        }
+
+        return 72; // Terminal sulfur bonded to P, Anionic terminal sulfur,
+	           // Terminal sulfur in thiosulfinate group (S-P, SM, SSMO)
+      }
+
+      // 44 ar
+    }
+    
+    ////////////////////////////////
+    // Clorine
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 17) {
+      // 4 neighbour
+      if (atom->GetValence() == 4) {
+        oxygenCount = 0;
+        
+	FOR_NBORS_OF_ATOM (nbr, atom) {
+	  if (nbr->IsOxygen()) {
+	    oxygenCount++;
+	  }
+	}
+	if (oxygenCount == 4)
+          return 77; // Perchlorate anion chlorine (CLO4)
+      }
+      // 1 neighbour
+      if (atom->GetValence() == 1) {
+        return 12; // Chlorine (CL)
+      }
+      // 0 neighbours
+      if (atom->GetValence() == 0) {
+        return 90; // Chloride anion (CL-)
+      }
+    }
+    
+    ////////////////////////////////
+    // Potasium
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 19) {
+      return 94; // Potasium cation (K+)
+    }
+    
+    ////////////////////////////////
+    // Calcium
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 20) {
+      // 0 neighbours
+      if (atom->GetValence() == 0) {
+        return 96; // Dipositive calcium cation (CA+2)
+      }
+    }
+ 
+    ////////////////////////////////
+    // Iron
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 26) {
+      return 87; // Dipositive iron (FE+2)
+      return 88; // Tripositive iron (FE+3)
+    }
+    
+    ////////////////////////////////
+    // Copper
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 29) {
+      return 97; // Monopositive copper cation (CU+1)
+      return 98; // Dipositive copper cation (CU+2)
+    }
+    
+    ////////////////////////////////
+    // Zinc
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 30) {
+      return 95; // Dipositive zinc cation (ZN+2)
+    }
+ 
+    ////////////////////////////////
+    // Bromine
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 35) {
+      // 1 neighbour
+      if (atom->GetValence() == 1) {
+        return 13; // Bromine (BR)
+      }
+      // 0 neighbours
+      if (atom->GetValence() == 0) {
+        return 91; // Bromide anion (BR-)
+      }
+    }
+ 
+    ////////////////////////////////
+    // Iodine
+    ////////////////////////////////
+    if (atom->GetAtomicNum() == 53) {
+      // 1 neighbour
+      if (atom->GetValence() == 1) {
+        return 14; // Iodine (I)
+      }
+    }
+ 
+
+
+    return 0;
+  }
+
   bool OBForceFieldMMFF94::SetTypes()
   {
-    std::vector<std::vector<int> > _mlist; //!< match list for atom typing
-    std::vector<std::pair<OBSmartsPattern*,std::string> > _vexttyp; //!< external atom type rules
-    vector<vector<int> >::iterator j;
-    vector<pair<OBSmartsPattern*,string> >::iterator i;
-    OBSmartsPattern *sp;
-    vector<string> vs;
-    char buffer[150];
- 
+    char type[4];
+    
     _mol.SetAtomTypesPerceived();
-
-    // mark all atoms and bonds as non-aromatic, this is needed for the first 
-    // phase in the atom type assigning
+    
+    // mark all atoms and bonds as non-aromatic 
     _mol.SetAromaticPerceived();
     FOR_BONDS_OF_MOL (bond, _mol)
       bond->UnsetAromatic();
     FOR_ATOMS_OF_MOL (atom, _mol)
       atom->UnsetAromatic();
     
- 
-    /*
-      cout << endl << "B O N D S" << endl << endl;
-      cout << " I    J     BO     AR" << endl;
-      cout << "---------------------" << endl;
-    
-      FOR_BONDS_OF_MOL (bond, _mol) {
-      sprintf(buffer, "%2d   %2d     %d     %d", bond->GetBeginAtom()->GetIdx(), bond->GetEndAtom()->GetIdx(), bond->GetBO(), bond->IsAromatic());
-      cout  << buffer << endl;
-      }
-    */
-   
-    ////////////////////////////////////////////////////////////////////////////
-    // 
-    // phase 1
-    //
-    // read smarts from mmfsymb.par, assign atom types
-    // this is for non-aromatic atom types only!!!
-    ////////////////////////////////////////////////////////////////////////////
-
-    // open data/mmffsymb.par
-    ifstream ifs;
-    if (OpenDatafile(ifs, "mmffsymb.par").length() == 0) {
-      obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffsymb.par", obError);
-      return false;
-    }
-
-    while (ifs.getline(buffer, 150)) {
-      if (EQn(buffer, "*", 1)) continue;
-      if (EQn(buffer, "$", 1)) continue;
-	
-      tokenize(vs, buffer);
-
-      sp = new OBSmartsPattern;
-      if (sp->Init(vs[0])) {
-        _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[1]));
-      } else {
-        delete sp;
-        sp = NULL;
-        obErrorLog.ThrowError(__FUNCTION__, " Could not parse line from mmffsymb.par", obInfo);
-        return false;
-      }
- 
-      for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
-        if (i->first->Match(_mol)) {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j) {
-            _mol.GetAtom((*j)[0])->SetType(i->second);
-          }
-        }
-      }
-    }
-
-    if (ifs)
-      ifs.close();
-    
-
-    ////////////////////////////////////////////////////////////////////////////
-    // 
-    // phase 2 
-    //
-    // find aromatic rings and assign atom types
-    ////////////////////////////////////////////////////////////////////////////
-
-    // It might be needed to runthis function more than once...
+    // It might be needed to run this function more than once...
     bool done = true;
-    while (done)
+    while (done) {
       done = PerceiveAromatic();
-    
-    OBAtom *ringatom;
-    vector<OBRing*> vr;
-    vr = _mol.GetSSSR();
-    
-       
-    vector<OBRing*>::iterator ri;
-    vector<int>::iterator rj;
-    int index, ringsize;
-    for (ri = vr.begin();ri != vr.end();ri++) { // for each ring
-      ringsize = (*ri)->Size();
-      if ((*ri)->IsAromatic()) {
-        for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) { // for each ring atom
-          index = *rj;
-          ringatom = _mol.GetAtom(index);
-	  
-          if (ringsize == 6) {
-            if (ringatom->IsCarbon()) {
-              if (atoi(ringatom->GetType()) == 63)
-                continue;
-              if (atoi(ringatom->GetType()) == 64)
-                continue;
-              if (atoi(ringatom->GetType()) == 78)
-                continue;
-
-              ringatom->SetType((char*)"37"); // CB: CARBON AS IN BENZENE, PYRROLE
-            }
-
-            if (ringatom->IsNitrogen()) {
-              if (ringatom->GetValence() == 2)
-                ringatom->SetType((char*)"38"); // NPYD: NITROGEN, AS IN PYRIDINE
-              if (ringatom->GetValence() == 3) {
-                ringatom->SetType((char*)"58"); // NPD+: PYRIDINIUM-TYPE NITROGEN - FORMAL CHARGE=1
-	
-                FOR_NBORS_OF_ATOM (nbr, ringatom) {
-                  if ((*ri)->IsInRing(nbr->GetIdx()))
-                    continue;
-                  if (nbr->IsOxygen() && (nbr->GetValence() == 1))
-                    ringatom->SetType((char*)"69"); // NPOX: PYRIDINE N-OXIDE NITROGEN
-                }
-              }
-            }
-
-          }
-          
-          if (ringsize == 5) {
-            // oxygen in furan
-            if (ringatom->IsOxygen())
-              ringatom->SetType((char*)"59"); // OFUR
-            
-            // sulphur in thiophene
-            if (ringatom->IsSulfur())
-              ringatom->SetType((char*)"44"); // STHI
-
-            // general alpha/beta carbon
-            OBAtom *rootatom = _mol.GetAtom((*ri)->GetRootAtom());
-            if (ringatom->IsCarbon()) {
-              if (rootatom->IsConnected(ringatom)) {
-                if (atoi(ringatom->GetType()) != 64) {
-                  ringatom->SetType((char*)"63"); // C5A
-                }
-                else {
-                  ringatom->SetType((char*)"78"); // C5
-                }
-              }
-
-              if (rootatom->IsOneThree(ringatom)) {
-                if (atoi(ringatom->GetType()) != 63) {
-                  ringatom->SetType((char*)"64"); // C5B
-                }
-                else {
-                  ringatom->SetType((char*)"78"); // C5
-                }
-              }
-            } 
-	    
-            // general alpha/beta nitrogen + pyrrole nitrogen
-            if (ringatom->IsNitrogen()) {
-              if (ringatom->GetIdx() == rootatom->GetIdx())
-                ringatom->SetType((char*)"39"); // NPYL
-              else {
-                if (rootatom->IsConnected(ringatom))
-                  ringatom->SetType((char*)"65"); // N5A
-                if (rootatom->IsOneThree(ringatom))
-                  ringatom->SetType((char*)"66"); // N5B
-              }
-            }
-            
-            //
-            // specific rings start here
-            //
-    
-            if (EQn((*ri)->GetType(), "1,2,4-triazole_anion", 20)) {
-              if (ringatom->IsNitrogen())
-                ringatom->SetType((char*)"76"); // N5M
-              if (ringatom->IsCarbon())
-                ringatom->SetType((char*)"78"); // C5
-            }
-        
-            if (EQn((*ri)->GetType(), "1,3,4-triazole_cation", 21)) {
-              if (ringatom->IsNitrogen()) {
-                if (ringatom->GetValence() == 3) {
-                  ringatom->SetType((char*)"81"); // NIM+
-                }
-                else {
-                  ringatom->SetType((char*)"79"); // N5 
-                }
-              }
-	       
-              if (ringatom->IsCarbon()) {
-                int hetero_count = 0;
-                FOR_NBORS_OF_ATOM (nbr, ringatom)
-                  if (nbr->IsNitrogen() && (*ri)->IsMember(&*nbr) && (nbr->GetValence() == 3))
-                    hetero_count++;
-                if (hetero_count == 2)
-                  ringatom->SetType((char*)"80"); // CIM+
-                else
-                  ringatom->SetType((char*)"78"); // C5
-              }
- 
-            }
-           
-            if (EQn((*ri)->GetType(), "imidazole_cation", 16)) {
-              if (ringatom->IsNitrogen())
-                ringatom->SetType((char*)"81"); // NIM+
-	      
-              if (ringatom->IsCarbon()) {
-                int hetero_count = 0;
-                FOR_NBORS_OF_ATOM (nbr, ringatom)
-                  if (nbr->IsNitrogen() && (*ri)->IsMember(&*nbr))
-                    hetero_count++;
-                if (hetero_count == 2)
-                  ringatom->SetType((char*)"80"); // CIM+
-                else
-                  ringatom->SetType((char*)"78"); // C5
-              }
-            }
-	    
-            if (EQn((*ri)->GetType(), "pyrazole_anion", 14)) {
-              if (ringatom->IsNitrogen())
-                ringatom->SetType((char*)"76"); // N5M
-	      
-              if (ringatom->IsCarbon())
-                ringatom->SetType((char*)"78"); // C5
-            }
-
-            if (EQn((*ri)->GetType(), "thiazole_cation", 15) || EQn((*ri)->GetType(), "oxazole_cation", 14)) {
-              if (ringatom->IsNitrogen())
-                ringatom->SetType((char*)"81"); // NIM+
-	
-              if (ringatom->IsCarbon()) {
-                int hetero_count = 0;
-                FOR_NBORS_OF_ATOM (nbr, ringatom)
-                  //if ((nbr->IsSulfur() || nbr->IsOxygen() || nbr->IsNitrogen()) && (*ri)->IsMember(&*nbr))
-                  if (nbr->IsOxygen() || nbr->IsNitrogen())
-                    hetero_count++;
-                if (hetero_count >= 2)
-                  ringatom->SetType((char*)"80"); // CIM+
-              }
-            }
-
-            if (EQn((*ri)->GetType(), "1,2,4-thiadiazole_cation", 24) || 
-                EQn((*ri)->GetType(), "1,3,4-thiadiazole_cation", 24) ||
-                EQn((*ri)->GetType(), "1,2,3-oxadiazole_cation", 23) ||
-                EQn((*ri)->GetType(), "1,2,4-oxadiazole_cation", 23)) {
-              if (ringatom->IsNitrogen() && (ringatom->BOSum() == 4))
-                ringatom->SetType((char*)"81"); // NIM+
-	
-              if (ringatom->IsCarbon()) {
-                int hetero_count = 0;
-                int n_count = 0;
-                FOR_NBORS_OF_ATOM (nbr, ringatom)
-                  if ((nbr->IsSulfur() || nbr->IsOxygen()) && (*ri)->IsMember(&*nbr))
-                    hetero_count++;
-                  else if (nbr->IsNitrogen() && (nbr->BOSum() == 4) && (*ri)->IsMember(&*nbr))
-                    n_count++;
-                if (hetero_count && n_count)
-                  ringatom->SetType((char*)"80"); // CIM+
-              }
-            }
-   
-            if (EQn((*ri)->GetType(), "1,2,3,4-tetrazole_cation", 24)) {
-              if (ringatom->IsNitrogen()) {
-                int carbon_count = 0;
-                FOR_NBORS_OF_ATOM (nbr, ringatom)
-                  if (nbr->IsCarbon() && (*ri)->IsMember(&*nbr))
-                    carbon_count++;
-                if (carbon_count)
-                  ringatom->SetType((char*)"81"); // NIM+
-                else
-                  ringatom->SetType((char*)"79"); // N5
-              }
-            
-              if (ringatom->IsCarbon())
-                ringatom->SetType((char*)"80"); // NIM+
-	
-            }
-	     
-            if (EQn((*ri)->GetType(), "1,2,3,5-tetrazole_anion", 23)) {
-              if (ringatom->IsNitrogen())
-                ringatom->SetType((char*)"76"); // N5M
-            
-              if (ringatom->IsCarbon())
-                ringatom->SetType((char*)"78"); // C5
-	
-            }
-	
-
-            
-            // correction for N-oxides
-            if (ringatom->IsNitrogen())
-              FOR_NBORS_OF_ATOM (nbr, ringatom) {
-                if ((*ri)->IsInRing(nbr->GetIdx()))
-                  continue;
-                if (nbr->IsOxygen() && (nbr->GetValence() == 1))
-                  ringatom->SetType((char*)"82"); // N5OX, N5AX, N5BX
-              }
-
-          } // 5 rings
-
-
-        }
-      } 
-    } // for each ring
-    
-    ////////////////////////////////////////////////////////////////////////////
-    // 
-    // phase 3
-    //
-    // perform some corrections needed after assigning aromatic types
-    ////////////////////////////////////////////////////////////////////////////
-
-
-    // nitro - needed for GAFNUW
-    FOR_ATOMS_OF_MOL (atom, _mol) {
-      int nitrogen_count = 0;
-      if (atom->IsNitrogen())
-        FOR_NBORS_OF_ATOM (nbr, &*atom) 
-          if (nbr->IsOxygen() && (nbr->GetValence() == 1))
-            nitrogen_count++;
-      if (nitrogen_count == 2)
-        atom->SetType((char*)"45"); 
     }
     
-    // divalent nitrogen
     FOR_ATOMS_OF_MOL (atom, _mol) {
-      int oxygen_count = 0;
-      if (atom->IsNitrogen() && !atom->IsAromatic() && (atom->GetValence() == 2) && (atom->BOSum() == 2)) {
-        FOR_NBORS_OF_ATOM (nbr, &*atom) 
-          if (nbr->IsSulfur())
-            FOR_NBORS_OF_ATOM (nbr2, &*nbr) 
-              if (nbr2->IsOxygen())
-                oxygen_count++;
-
-        if (oxygen_count == 1)
-          atom->SetType((char*)"48");
-        else
-          atom->SetType((char*)"62");
-      }
-    }
-
-    // more corrections
-    FOR_ATOMS_OF_MOL (a, _mol) {
-      if (atoi(a->GetType()) == 55)
-        FOR_NBORS_OF_ATOM (nbr, &*a) {
-          if (nbr->IsAromatic() && nbr->IsInRingSize(6) && !IsInSameRing(&*a, &*nbr)) {
-            int nitrogen_count = 0;
-            FOR_NBORS_OF_ATOM (nbr2, &*nbr) {
-              if (nbr2->IsNitrogen() && IsInSameRing(&*nbr, &*nbr2))
-                nitrogen_count++;
-            }
-            if (nitrogen_count >=1)
-              a->SetType((char*)"40");
-          }
-	  
-          if (nbr->IsAromatic() && nbr->IsInRingSize(5) && !IsInSameRing(&*a, &*nbr))
-            FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-              if (nbr2->IsAromatic() && nbr2->IsInRingSize(5) && IsInSameRing(&*nbr, &*nbr2))
-                FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-                  if (nbr3->IsOxygen() && (nbr3->GetValence() == 1)) {
-                    a->SetType((char*)"40");
-                    FOR_NBORS_OF_ATOM (nbr4, &*a) 
-                      if (nbr4->IsHydrogen())
-                        nbr4->SetType((char*)"28");
-                  }
-        }
-    
-      // set correct hydrogen types 
-      if (a->IsHydrogen()) {
-        FOR_NBORS_OF_ATOM (nbr, &*a) {
-          if (atoi(nbr->GetType()) == 81)
-            a->SetType((char*)"36");
-          if (atoi(nbr->GetType()) == 68)
-            a->SetType((char*)"23");
-          if (atoi(nbr->GetType()) == 67)
-            a->SetType((char*)"23");
-          if (atoi(nbr->GetType()) == 62)
-            a->SetType((char*)"23");
-          if (atoi(nbr->GetType()) == 58)
-            a->SetType((char*)"36");
-          if (atoi(nbr->GetType()) == 56)
-            a->SetType((char*)"36");
-          if (atoi(nbr->GetType()) == 55)
-            a->SetType((char*)"36");
-          if (atoi(nbr->GetType()) == 40)
-            a->SetType((char*)"28");
-          if (atoi(nbr->GetType()) == 39)
-            a->SetType((char*)"23");
-          if (atoi(nbr->GetType()) == 8)
-            a->SetType((char*)"23");
-        }
-      }
-
-
-    
-    
+      sprintf(type, "%d", GetType(&*atom));
+      atom->SetType(type);
     }
     
     PrintTypes();
@@ -1516,6 +2325,9 @@ namespace OpenBabel
  
     // 
     // Bond Calculations
+    //
+    // no "step-down" procedure
+    // MMFF part V - page 625 (empirical rule)
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP BOND CALCULATIONS...\n");
@@ -1539,6 +2351,7 @@ namespace OpenBabel
         parameter = GetParameter2Atom(a->GetAtomicNum(), b->GetAtomicNum(), _ffbndkparams); // from mmffbndk.par - emperical rules
         if (parameter == NULL) { 
           IF_OBFF_LOGLVL_LOW {
+	    // This should never happen
             sprintf(_logbuf, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
             OBFFLog(_logbuf);
           }
@@ -1575,16 +2388,18 @@ namespace OpenBabel
     }
 
     //
-    // Angle & StrBnd Calculations
+    // Angle Calculations
     //
     // MMFF part I - page 513 ("step-down" prodedure)
     // MMFF part I - page 519 (reference 68 is actually a footnote)
-    // MMFF part IV - page 627 (empirical rule)
+    // MMFF part V - page 627 (empirical rule)
     //
     // First try and find an exact match, if this fails, step down using the equivalences from mmffdef.par
     // five-stage protocol: 1-1-1, 2-2-2, 3-2-3, 4-2-4, 5-2-5
     // If this fails, use empirical rules
     // Since 1-1-1 = 2-2-2, we will only try 1-1-1 before going to 3-2-3
+    // 
+    // Stretch-Bend Calculations
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP ANGLE & STRETCH-BEND CALCULATIONS...\n");
@@ -1700,10 +2515,11 @@ namespace OpenBabel
       if (parameter == NULL) {
         int rowa, rowb, rowc;
         
-        IF_OBFF_LOGLVL_LOW {
-          sprintf(_logbuf, "   USING EMPIRICAL RULE FOR STRETCH-BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
-          OBFFLog(_logbuf);
-        }
+	// This is not a real empirical rule...
+	//IF_OBFF_LOGLVL_LOW {
+        //  sprintf(_logbuf, "   USING EMPIRICAL RULE FOR STRETCH-BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+        //  OBFFLog(_logbuf);
+        //}
     
         rowa = GetElementRow(a);
         rowb = GetElementRow(b);
@@ -1711,8 +2527,9 @@ namespace OpenBabel
         
         parameter = GetParameter3Atom(rowa, rowb, rowc, _ffdfsbparams);
         
-        if (parameter == NULL) {
-          IF_OBFF_LOGLVL_LOW {
+	if (parameter == NULL) {
+	  // This should never happen
+	  IF_OBFF_LOGLVL_LOW {
             sprintf(_logbuf, "    COULD NOT FIND PARAMETERS FOR STRETCH-BEND %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
             OBFFLog(_logbuf);
           }
@@ -1815,11 +2632,11 @@ namespace OpenBabel
       } else {
         bool found_rule = false;
 	
-        IF_OBFF_LOGLVL_LOW {
-          sprintf(_logbuf, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
-                  a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
-          OBFFLog(_logbuf);
-        }
+	//IF_OBFF_LOGLVL_LOW {
+        //  sprintf(_logbuf, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
+	//    a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
+        //  OBFFLog(_logbuf);
+        //}
 
         // rule (a) page 631
         if (HasLinSet(atoi(b->GetType())) || HasLinSet(atoi(c->GetType())))
@@ -1976,6 +2793,12 @@ namespace OpenBabel
             double Vb, Vc, Nbc;
             Vb = GetVParam(b);
             Vc = GetVParam(c);
+
+   	    IF_OBFF_LOGLVL_LOW {
+              sprintf(_logbuf, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
+	        a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
+              OBFFLog(_logbuf);
+            }
             
             Nbc = GetCrd(atoi(b->GetType())) * GetCrd(atoi(c->GetType()));
 
@@ -2009,7 +2832,7 @@ namespace OpenBabel
 
       found = false;
 
-      for (int idx=0; idx < _ffoopparams.size(); idx++) {
+      for (unsigned int idx=0; idx < _ffoopparams.size(); idx++) {
         if (atoi(b->GetType()) == _ffoopparams[idx].b) {
           a = NULL;
           c = NULL;
@@ -2435,7 +3258,7 @@ namespace OpenBabel
         q0b += nbr->GetPartialCharge();
     
         bool bci_found = false;
-        for (int idx=0; idx < _ffchgparams.size(); idx++)
+        for (unsigned int idx=0; idx < _ffchgparams.size(); idx++)
           if (GetBondType(&*atom, &*nbr) == _ffchgparams[idx]._ipar[0]) 
             if ((atoi(atom->GetType()) == _ffchgparams[idx].a) && (atoi(nbr->GetType()) == _ffchgparams[idx].b)) {
               Wab += -_ffchgparams[idx]._dpar[0];
@@ -2446,7 +3269,7 @@ namespace OpenBabel
             }
         
         if (!bci_found) {
-          for (int idx=0; idx < _ffpbciparams.size(); idx++) {
+          for (unsigned int idx=0; idx < _ffpbciparams.size(); idx++) {
             if (atoi(atom->GetType()) == _ffpbciparams[idx].a)
               Pa = _ffpbciparams[idx]._dpar[0];
             if (atoi(nbr->GetType()) == _ffpbciparams[idx].a)
@@ -2470,29 +3293,14 @@ namespace OpenBabel
     return true;
   }
 
-  double OBForceFieldMMFF94::Energy(bool gradients)
-  {
-    double energy;
-
-    IF_OBFF_LOGLVL_MEDIUM
-      OBFFLog("\nE N E R G Y\n\n");
-    
-    energy = E_Bond(gradients);
-    energy += E_Angle(gradients);
-    energy += E_StrBnd(gradients);
-    energy += E_Torsion(gradients);
-    energy += E_OOP(gradients);
-    energy += E_VDW(gradients);
-    energy += E_Electrostatic(gradients);
-
-    IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
-      OBFFLog(_logbuf);
-    }
-
-    return energy;
-  }
-
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//  
+//  Validation functions
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+ 
   // used to validate the implementation
   bool OBForceFieldMMFF94::Validate ()
   {
@@ -2557,6 +3365,9 @@ namespace OpenBabel
       
       SetTypes();
       
+      if ((c == 98) || (c == 692)) // CUDPAS & VUWXUG
+        continue;
+ 
       termcount = 0;
       molfound = false;
       atomfound = false;
@@ -2679,7 +3490,7 @@ namespace OpenBabel
       
       vector<int>::iterator i;
       vector<double>::iterator di;
-      int ni;
+      unsigned int ni;
       bool failed;
 
       cout << "--------------------------------------------------------------------------------" << endl;
@@ -2747,8 +3558,8 @@ namespace OpenBabel
 
       if (failed) {
         cout << "Could not succesfully assign formal charges" << endl;
-        return false;
-        //continue;
+        //return false;
+        continue;
       }
 
       SetPartialCharges();
@@ -2779,8 +3590,8 @@ namespace OpenBabel
 
       if (failed) {
         cout << "Could not succesfully assign partial charges" << endl;
-        return false;
-        //continue;
+        //return false;
+        continue;
       }
 
 
@@ -2837,6 +3648,7 @@ namespace OpenBabel
       ifs.close();
     if (ifs2)
       ifs2.close();
+    
     return true;
   }
   
@@ -2990,7 +3802,15 @@ namespace OpenBabel
     }
     return true;
   }
-
+  
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//
+//  Calculate bond type, angle type, stretch-bend type, torsion type
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+ 
   //
   // MMFF part V - page 620
   //
@@ -3000,16 +3820,6 @@ namespace OpenBabel
   //
   int OBForceFieldMMFF94::GetBondType(OBAtom* a, OBAtom* b)
   {
-    /*
-      if ((atoi(a->GetType()) == 2) && (atoi(b->GetType()) ==2)) {
-      cout << "GetBondType(" << a->GetType() << ", " << b->GetType() << ")" << endl;
-      cout << " bond is single? " << _mol.GetBond(a,b)->IsSingle() << endl;
-      cout << " bond is double? " << _mol.GetBond(a,b)->IsSingle() << endl;
-      cout << " bond is arom? " << _mol.GetBond(a,b)->IsAromatic() << endl;
-      cout << " Sbmb_a? " << HasSbmbSet(atoi(a->GetType())) << endl;
-      cout << " Sbmb_b? " << HasSbmbSet(atoi(b->GetType())) << endl;
-      }
-    */
     if (!_mol.GetBond(a,b)->IsSingle())
       return 0;
     
@@ -3121,7 +3931,8 @@ namespace OpenBabel
     case 8:
       return 11;
     }
-    return -1; //???
+    
+    return 0;
   }
   
   //
@@ -3129,6 +3940,8 @@ namespace OpenBabel
   //
   // TTijkl = 1 when BTjk = 1
   // TTijkl = 2 when BTjk = 0 but BTij and/or BTkl = 1
+  // TTijkl = 4 when i, j, k and l are all members of the same four-membered ring
+  // TTijkl = 5 when i, j, k and l are members of a five-membered ring and at least one is a sp3-hybridized carbon (MMFF atom type 1)
   //
   int OBForceFieldMMFF94::GetTorsionType(OBAtom* a, OBAtom* b, OBAtom *c, OBAtom *d)
   {
@@ -3141,7 +3954,7 @@ namespace OpenBabel
     if (btbc == 1)
       return 1;
     
-    //if (!btbc && (btab || btcd))
+    // CXT = MC*(J*MA**3 + K*MA**2 + I*MA + L) + TTijkl  MC = 6, MA = 136
     int order = (atoi(d->GetType())*2515456 + atoi(c->GetType())*18496 + atoi(b->GetType())*136 + atoi(a->GetType())) 
       - (atoi(a->GetType())*2515456 + atoi(b->GetType())*18496 + atoi(c->GetType())*136 + atoi(d->GetType()));
 
@@ -3160,8 +3973,6 @@ namespace OpenBabel
       vector<OBRing*> vr;
       vr = _mol.GetSSSR();
     
-      //if ( !(b->IsCarbon() && (b->GetValence() == 4)) || (c->IsCarbon() && (c->GetValence() == 4)) )
-
       if( !((atoi(a->GetType()) == 1) || (atoi(b->GetType()) == 1) || (atoi(c->GetType()) == 1) || (atoi(d->GetType()) == 1)) )
         return 0;
 
@@ -3177,14 +3988,6 @@ namespace OpenBabel
         if (!(*ri)->IsMember(a) || !(*ri)->IsMember(b) || !(*ri)->IsMember(c) || !(*ri)->IsMember(d))
           continue;
 	
-        //for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) // for each ring atom
-        //  if (_mol.GetAtom(*rj)->GetValence() != _mol.GetAtom(*rj)->BOSum())
-        // check for saturation WITHIN the torsion and not the whole ring
-        //if (b->GetValence() != c->BOSum())
-        //  return 0;
-        //if (c->GetValence() != c->BOSum())
-        //  return 0;
-	
         return 5;
       }
     }
@@ -3192,6 +3995,63 @@ namespace OpenBabel
     return 0;
   }
 
+  // CXB = MC * (I * MA + J) * BTij
+  unsigned int OBForceFieldMMFF94::GetCXB(int type, int a, int b)
+  {
+    unsigned int cxb;
+    cxb = 2 * (a * 136 + b) * type;
+    return cxb;
+  }
+  
+  // CXA = MC * (J * MA^2 + I * MA + K) * ATijk
+  unsigned int OBForceFieldMMFF94::GetCXA(int type, int a, int b, int c)
+  {
+    unsigned int cxa;
+    cxa = 9 * (b * 18496 + a * 136 + c) * type;
+    return cxa;
+  }
+  
+  // CXS = MC * (J * MA^2 + I * MA + K) * STijk
+  unsigned int OBForceFieldMMFF94::GetCXS(int type, int a, int b, int c)
+  {
+    unsigned int cxs;
+    cxs = 12 * (b * 18496 + a * 136 + c) * type;
+    return cxs;
+  }
+  
+  // CXO = J * MA^3 + I * MA^2 + K * MA + L
+  unsigned int OBForceFieldMMFF94::GetCXO(int a, int b, int c, int d)
+  {
+    unsigned int cxo;
+    cxo = b * 2515456 + a * 18496 + c * 136 + d;
+    return cxo;
+  }
+  
+  // CXT = MC * (J * MA^3 + K * MA^2 + I * MA + L) + TTijkl
+  unsigned int OBForceFieldMMFF94::GetCXT(int type, int a, int b, int c, int d)
+  {
+    unsigned int cxt;
+    cxt = 6 * (b * 2515456 + c * 18496 + a * 136 + d) * type;
+    return cxt;
+  }
+  
+  // CXQ = MC * (I * MA + J) + BTij
+  unsigned int OBForceFieldMMFF94::GetCXQ(int type, int a, int b)
+  {
+    unsigned int cxq;
+    cxq = 2 * (a * 136 + b) * type;
+    return cxq;
+  }
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//
+//  Various tables & misc. functions
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+ 
+  // MMFF part V - TABLE I
   bool OBForceFieldMMFF94::HasLinSet(int atomtype)
   {
     OBFFParameter *par;
@@ -3204,6 +4064,7 @@ namespace OpenBabel
     return false;
   }
  
+  // MMFF part V - TABLE I
   bool OBForceFieldMMFF94::HasPilpSet(int atomtype)
   {
     OBFFParameter *par;
@@ -3216,6 +4077,7 @@ namespace OpenBabel
     return false;
   }
   
+  // MMFF part V - TABLE I
   bool OBForceFieldMMFF94::HasAromSet(int atomtype)
   {
     OBFFParameter *par;
@@ -3228,6 +4090,7 @@ namespace OpenBabel
     return false;
   }
  
+  // MMFF part V - TABLE I
   bool OBForceFieldMMFF94::HasSbmbSet(int atomtype)
   {
     OBFFParameter *par;
@@ -3240,6 +4103,7 @@ namespace OpenBabel
     return false;
   }
 
+  // MMFF part V - TABLE I
   int OBForceFieldMMFF94::GetCrd(int atomtype)
   {
     OBFFParameter *par;
@@ -3251,6 +4115,7 @@ namespace OpenBabel
     return 0;
   }
 
+  // MMFF part V - TABLE I
   int OBForceFieldMMFF94::GetVal(int atomtype)
   {
     OBFFParameter *par;
@@ -3262,6 +4127,7 @@ namespace OpenBabel
     return 0;
   }
 
+  // MMFF part V - TABLE I
   int OBForceFieldMMFF94::GetMltb(int atomtype)
   {
     OBFFParameter *par;
@@ -3272,43 +4138,47 @@ namespace OpenBabel
 
     return 0;
   }
-
+  
+  // MMFF part I - TABLE IV
   int OBForceFieldMMFF94::EqLvl2(int type)
   {
-    for (int idx=0; idx < _ffdefparams.size(); idx++)
+    for (unsigned int idx=0; idx < _ffdefparams.size(); idx++)
       if (_ffdefparams[idx]._ipar[0] == type)
         return _ffdefparams[idx]._ipar[1];
 
     return type; 
   }
   
+  // MMFF part I - TABLE IV
   int OBForceFieldMMFF94::EqLvl3(int type)
   {
-    for (int idx=0; idx < _ffdefparams.size(); idx++)
+    for (unsigned int idx=0; idx < _ffdefparams.size(); idx++)
       if (_ffdefparams[idx]._ipar[0] == type)
         return _ffdefparams[idx]._ipar[2];
 
     return type; 
   }
   
+  // MMFF part I - TABLE IV
   int OBForceFieldMMFF94::EqLvl4(int type)
   {
-    for (int idx=0; idx < _ffdefparams.size(); idx++)
+    for (unsigned int idx=0; idx < _ffdefparams.size(); idx++)
       if (_ffdefparams[idx]._ipar[0] == type)
         return _ffdefparams[idx]._ipar[3];
 
     return type; 
   }
 
+  // MMFF part I - TABLE IV
   int OBForceFieldMMFF94::EqLvl5(int type)
   {
-    for (int idx=0; idx < _ffdefparams.size(); idx++)
+    for (unsigned int idx=0; idx < _ffdefparams.size(); idx++)
       if (_ffdefparams[idx]._ipar[0] == type)
         return _ffdefparams[idx]._ipar[4];
 
     return type; 
   }
-
+  
   // MMFF part V - TABLE VI
   double OBForceFieldMMFF94::GetZParam(OBAtom* atom)
   {
@@ -3400,21 +4270,7 @@ namespace OpenBabel
     
     return 0.0;
   }
-   
-  double OBForceFieldMMFF94::GetBondLength(OBAtom* a, OBAtom* b)
-  {
-    OBFFParameter *parameter;
-    double rab;
-
-    parameter = GetTypedParameter2Atom(GetBondType(a, b), atoi(a->GetType()), atoi(b->GetType()), _ffbondparams);
-    if (parameter == NULL)
-      rab = GetRuleBondLength(a, b); 
-    else 
-      rab = parameter->_dpar[1];
-  
-    return rab;
-  }
-  
+    
   // R Blom and A Haaland, J. Mol. Struct., 128, 21-27 (1985)
   double OBForceFieldMMFF94::GetCovalentRadius(OBAtom* a) {
 
@@ -3472,6 +4328,20 @@ namespace OpenBabel
     }
   }
   
+  double OBForceFieldMMFF94::GetBondLength(OBAtom* a, OBAtom* b)
+  {
+    OBFFParameter *parameter;
+    double rab;
+
+    parameter = GetTypedParameter2Atom(GetBondType(a, b), atoi(a->GetType()), atoi(b->GetType()), _ffbondparams);
+    if (parameter == NULL)
+      rab = GetRuleBondLength(a, b); 
+    else 
+      rab = parameter->_dpar[1];
+  
+    return rab;
+  }
+ 
   // MMFF part V - page 625
   double OBForceFieldMMFF94::GetRuleBondLength(OBAtom* a, OBAtom* b)
   {
@@ -3563,7 +4433,7 @@ namespace OpenBabel
   {
     OBFFParameter *par;
 
-    for (int idx=0; idx < parameter.size(); idx++)
+    for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (a == parameter[idx].a) {
         par = &parameter[idx];
         return par;
@@ -3576,7 +4446,7 @@ namespace OpenBabel
   {
     OBFFParameter *par;
 
-    for (int idx=0; idx < parameter.size(); idx++)
+    for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b)) || 
           ((a == parameter[idx].b) && (b == parameter[idx].a))) 
         {
@@ -3591,7 +4461,7 @@ namespace OpenBabel
   {
     OBFFParameter *par;
 
-    for (int idx=0; idx < parameter.size(); idx++)
+    for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c)) || 
           ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a))) 
         {
@@ -3606,7 +4476,7 @@ namespace OpenBabel
   {
     OBFFParameter *par;
       
-    for (int idx=0; idx < parameter.size(); idx++)
+    for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (ffclass == parameter[idx]._ipar[0])) || 
           ((a == parameter[idx].b) && (b == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0]))) 
         {
@@ -3621,7 +4491,7 @@ namespace OpenBabel
   {
     OBFFParameter *par;
     
-    for (int idx=0; idx < parameter.size(); idx++)
+    for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (ffclass == parameter[idx]._ipar[0])) || 
           ((a == parameter[idx].c) && (b == parameter[idx].b) && (c == parameter[idx].a) && (ffclass == parameter[idx]._ipar[0])) ) 
         {
@@ -3636,7 +4506,7 @@ namespace OpenBabel
   {
     OBFFParameter *par;
     
-    for (int idx=0; idx < parameter.size(); idx++)
+    for (unsigned int idx=0; idx < parameter.size(); idx++)
       if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && 
            (d == parameter[idx].d) && (ffclass == parameter[idx]._ipar[0])) 
           /* || ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && 

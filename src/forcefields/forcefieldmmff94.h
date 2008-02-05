@@ -110,6 +110,8 @@ namespace OpenBabel
       bool ParseParamPbci();
       //! detect which rings are aromatic
       bool PerceiveAromatic();
+      //! \return Get the MMFF94 atom type for atom
+      int GetType(OBAtom *atom);
       //! \return Sets atomtypes to MMFF94 in _mol
       bool SetTypes();
       //! fill OBFFXXXCalculation vectors
@@ -150,6 +152,18 @@ namespace OpenBabel
       int EqLvl4(int type);
       //! \return the level 5 equivalent atom type for type (mmffdef.par)
       int EqLvl5(int type);
+      //! \return the canonical bond index
+      unsigned int GetCXB(int type, int a, int b);
+      //! \return the canonical angle index
+      unsigned int GetCXA(int type, int a, int b, int c);
+      //! \return the canonical stretch-bend index
+      unsigned int GetCXS(int type, int a, int b, int c);
+      //! \return the canonical out-of-plane index
+      unsigned int GetCXO(int a, int b, int c, int d);
+      //! \return the canonical torsion index
+      unsigned int GetCXT(int type, int a, int b, int c, int d);
+      //! \return the canonical bond-charge-increment index
+      unsigned int GetCXQ(int type, int a, int b);
       //! \return the U value for the atom from table X page 631
       double GetUParam(OBAtom* atom);
       //! \return the Z value for the atom from table VI page 628
@@ -216,7 +230,10 @@ namespace OpenBabel
       OBForceFieldMMFF94 &operator = (OBForceFieldMMFF94 &);
       
       //!Clone the current instance. May be desirable in multithreaded environments
-      virtual OBForceFieldMMFF94* MakeNewInstance(){ return new OBForceFieldMMFF94(*this); }
+      virtual OBForceFieldMMFF94* MakeNewInstance()
+      { 
+        return new OBForceFieldMMFF94(*this); 
+      }
 
       //! Get the description for this force field
       const char* Description()

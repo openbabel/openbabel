@@ -1,3 +1,26 @@
+2008-02-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefieldmmff94.*: New GetType(OBAtom *)
+	function. This new function improves atom assignment times. This
+	per atom method is also better suited for programs which allow
+	interactive editing while running force field optimalization (e.g.
+	Avogadro). This also allows to assign atom types to large
+	molecules such as proteins.
+	- Replaced old SetTypes() function with new one that makes use of the
+	GetType(OBAtom*) function.
+	- Added functions to calculate canonical parameter indices. (Not used
+	yet)
+	- Added "unsigned" where needed to get rid of compiler warnings.
+
+	* data/mmffsup.par, data/mmffarom.par, data/mmffhdef.par,
+	data/mmffsymb.par: Removed unneeded files.
+
+	* data/Makefile.*: Removed unneeded files.
+
+	* data/CMakeList.txt: Should MMFF94 and UFF parameter files be in
+	here?
+
+
 2008-02-02  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/mol.cpp: Bugfix for DeleteResidue()
