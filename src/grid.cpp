@@ -152,6 +152,9 @@ namespace OpenBabel
   
   double OBFloatGrid::Inject(double x,double y,double z)
   {
+    if (_val == NULL)
+      return 0.0;
+
     if( x<=_xmin || x>=_xmax
         || y<=_ymin || y>=_ymax
         || z<=_zmin || z>=_zmax ) return 0.0;
@@ -194,6 +197,9 @@ namespace OpenBabel
 
   double OBFloatGrid::Interpolate(double x,double y,double z)
   {
+    if (_val == NULL)
+      return 0.0;
+
     int n,igx,igy,igz;
     double xydim;
     double gx,gy,gz,fgx,fgy,fgz;
@@ -249,19 +255,23 @@ namespace OpenBabel
   {
     vector<double> v;
     int size = _xdim*_ydim*_zdim;
-
-    v.resize(size);
+    
+    if (_val == NULL)
+      return v;
+    
+    //v.resize(size);
     for( int i = 0; i < size; i++)
     {
       v.push_back(_val[i]);
     }
-
+    
     return v;
   }
   
   void OBFloatGrid::SetVals(std::vector<double> vals)
   {
     int size = _xdim*_ydim*_zdim;
+    
     if (vals.size() != size)
       return;
     
