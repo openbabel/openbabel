@@ -13,7 +13,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <vector>
-#include <openbabel/atom.h>
+#include <openbabel/mol.h>
 
 namespace OpenBabel
 {
@@ -62,6 +62,9 @@ public:
   std::vector<unsigned int> GetExpandedAtoms()const { return _expandedatoms; }
 
   bool IsExpanded()const { return !_expandedatoms.empty(); }
+
+  
+  bool Expand(OBMol& mol, const unsigned int atomindex);
 
 };
 } //namespace

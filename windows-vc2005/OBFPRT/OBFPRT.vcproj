@@ -224,10 +224,6 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\..\src\dock.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\fingerprints\finger2.cpp"
 				>
 			</File>
@@ -268,13 +264,6 @@
 			<File
 				RelativePath="..\..\src\forcefields\forcefieldmmff94.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter

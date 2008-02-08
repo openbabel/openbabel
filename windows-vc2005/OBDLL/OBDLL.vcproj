@@ -221,6 +221,10 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
+				RelativePath="..\..\src\alias.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\atom.cpp"
 				>
 				<FileConfiguration

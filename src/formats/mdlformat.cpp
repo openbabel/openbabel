@@ -351,6 +351,8 @@ public:
                 OBAtom* at = mol.GetAtom(atomnum);
                 at->SetData(ad);
                 at->SetAtomicNum(0);
+                //The alias has now been added as a dummy atom with a AliasData object.
+                ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
               }
               continue;
             }

@@ -261,6 +261,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\lineend.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\obconversion.h"
 				>
 			</File>
