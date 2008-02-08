@@ -1,6 +1,19 @@
+2008-02-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/Makefile.am: Make sure to link src/alias.cpp with
+	mdlformat.
+
+	* src/Makefile.am: Build alias.cpp with main libopenbabel.
+
+	* src/formats/smilesformat.cpp: Reject SMILES molecules with 0
+	atoms. Fixes bug on test suite.
+
+	* test/files/smartsresults.txt: Update for recent SMARTS and atom
+	typing changes.
+
 2008-02-08 Chris Morley
 
-	* src/alias.cpp: NEW FILE with AliasData::Expand().Currently
+	* src/alias.cpp: NEW FILE with AliasData::Expand(). Currently
 	just a crude parsing, rather than an alias look up.
 	
 	* include/openbabel/alias.h: Add AliasData::Expand()
@@ -9,7 +22,7 @@
 	more A lines have chemical meaning. Probably puts writeinchi
 	test back ok.
 	
-	Update Windows builds
+	Update Windows builds.
 
 2008-02-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
@@ -33,7 +46,6 @@
 	* data/CMakeList.txt: Should MMFF94 and UFF parameter files be in
 	here?
 
-
 2008-02-02  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/mol.cpp: Bugfix for DeleteResidue()
@@ -49,7 +61,7 @@
 	(1) it's no longer necessary for the user to run ruby extconf.rb
 	(2) added info on performing a local installation
 
-2008-01-30	Joshua Ballanco	<jballanc@gmail.com>
+2008-01-30 Joshua Ballanco <jballanc@gmail.com>
 
 	* scripts/ruby/extconf.rb: Reworked the mkmf fix to be more
 	generally applicable to *nix platforms.

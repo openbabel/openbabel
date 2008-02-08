@@ -62,9 +62,9 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 @BUILD_SHARED_TRUE@	fingerprints/libfingerprints.la \
 @BUILD_SHARED_TRUE@	forcefields/libforcefields.la ops/libops.la \
 @BUILD_SHARED_TRUE@	descriptors/libdescriptors.la @LTLIBOBJS@
-am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
-	bond.cpp bondtyper.cpp canon.cpp builder.cpp chains.cpp \
-	chiral.cpp data.cpp descriptor.cpp fingerprint.cpp \
+am__libopenbabel_la_SOURCES_DIST = atom.cpp alias.cpp base.cpp \
+	bitvec.cpp bond.cpp bondtyper.cpp canon.cpp builder.cpp \
+	chains.cpp chiral.cpp data.cpp descriptor.cpp fingerprint.cpp \
 	forcefield.cpp format.cpp generic.cpp griddata.cpp grid.cpp \
 	kekulize.cpp matrix.cpp mol.cpp molchrg.cpp obconversion.cpp \
 	oberror.cpp obiter.cpp obutil.cpp ops.cpp parsmart.cpp \
@@ -72,9 +72,9 @@ am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	residue.cpp ring.cpp rotor.cpp rotamer.cpp tokenst.cpp \
 	typer.cpp transform.cpp dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
-am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
-	bondtyper.lo canon.lo builder.lo chains.lo chiral.lo data.lo \
-	descriptor.lo fingerprint.lo forcefield.lo format.lo \
+am_libopenbabel_la_OBJECTS = atom.lo alias.lo base.lo bitvec.lo \
+	bond.lo bondtyper.lo canon.lo builder.lo chains.lo chiral.lo \
+	data.lo descriptor.lo fingerprint.lo forcefield.lo format.lo \
 	generic.lo griddata.lo grid.lo kekulize.lo matrix.lo mol.lo \
 	molchrg.lo obconversion.lo oberror.lo obiter.lo obutil.lo \
 	ops.lo parsmart.lo patty.lo phmodel.lo plugin.lo pointgroup.lo \
@@ -257,7 +257,7 @@ lib_LTLIBRARIES = libopenbabel.la
 @BUILD_SHARED_FALSE@dlhandler = 
 @BUILD_SHARED_TRUE@dlhandler = dlhandler_unix.cpp
 libopenbabel_la_SOURCES = \
-		atom.cpp base.cpp bitvec.cpp bond.cpp \
+		atom.cpp alias.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp canon.cpp builder.cpp \
 		chains.cpp chiral.cpp data.cpp descriptor.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
@@ -377,6 +377,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/snprintf.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/strncasecmp.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alias.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atom.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bitvec.Plo@am__quote@

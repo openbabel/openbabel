@@ -222,7 +222,7 @@ endif
 jaguarformat_la_SOURCES = jaguarformat.cpp obmolecformat.cpp
 jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-mdlformat_la_SOURCES = mdlformat.cpp obmolecformat.cpp
+mdlformat_la_SOURCES = mdlformat.cpp obmolecformat.cpp ../alias.cpp
 mdlformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 mmcifformat_la_SOURCES = mmcifformat.cpp obmolecformat.cpp

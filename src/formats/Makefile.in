@@ -477,9 +477,10 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 libformats_la_OBJECTS = $(am_libformats_la_OBJECTS)
 @BUILD_SHARED_FALSE@am_libformats_la_rpath =
 mdlformat_la_LIBADD =
-am__mdlformat_la_SOURCES_DIST = mdlformat.cpp obmolecformat.cpp
+am__mdlformat_la_SOURCES_DIST = mdlformat.cpp obmolecformat.cpp \
+	../alias.cpp
 @BUILD_SHARED_TRUE@am_mdlformat_la_OBJECTS = mdlformat.lo \
-@BUILD_SHARED_TRUE@	obmolecformat.lo
+@BUILD_SHARED_TRUE@	obmolecformat.lo alias.lo
 mdlformat_la_OBJECTS = $(am_mdlformat_la_OBJECTS)
 mdlformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -1134,7 +1135,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LIBADD = -linchi
 @BUILD_SHARED_TRUE@jaguarformat_la_SOURCES = jaguarformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
-@BUILD_SHARED_TRUE@mdlformat_la_SOURCES = mdlformat.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@mdlformat_la_SOURCES = mdlformat.cpp obmolecformat.cpp ../alias.cpp
 @BUILD_SHARED_TRUE@mdlformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mmcifformat_la_SOURCES = mmcifformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@mmcifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
@@ -1410,6 +1411,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PQSformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acrformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alchemyformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alias.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/amberformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/balstformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bgfformat.Plo@am__quote@
@@ -1496,6 +1498,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
+
+alias.lo: ../alias.cpp
+@am__fastdepCXX_TRUE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT alias.lo -MD -MP -MF $(DEPDIR)/alias.Tpo -c -o alias.lo `test -f '../alias.cpp' || echo '$(srcdir)/'`../alias.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/alias.Tpo $(DEPDIR)/alias.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../alias.cpp' object='alias.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o alias.lo `test -f '../alias.cpp' || echo '$(srcdir)/'`../alias.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
