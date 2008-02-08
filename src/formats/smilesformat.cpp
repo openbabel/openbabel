@@ -327,7 +327,7 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     _prev=0;
     chiralWatch=false;
 
-    if (!ParseSmiles(mol))
+    if (!ParseSmiles(mol) || mol.NumAtoms() == 0)
       {
         mol.Clear();
         return(false);
