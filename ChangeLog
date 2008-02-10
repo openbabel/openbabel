@@ -1,3 +1,12 @@
+2008-02-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/grid.cpp: Added extra check to Interpolate() to make sure no
+	_val[i] is used when i >= _xdim*_ydim*_zdim, this fixes some craches
+	in the Avogadro surface engine. I suspect that larger molecules have
+	larger errors in their _xmin, _xmax, _ymin, ... values (error
+	propagation) which causes the first check to pass, but still request 
+	an invalid _val[i]
+
 2008-02-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/Makefile.am: Make sure to link src/alias.cpp with

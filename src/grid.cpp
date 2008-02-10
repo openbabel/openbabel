@@ -230,6 +230,10 @@ namespace OpenBabel
     fgz= gz - (double) igz;
 
     n=(int)(igx+ _xdim*igy + xydim*igz);
+    
+    if ((n+1+_xdim+xydim) >= (xydim*_zdim))
+      return 0.0;
+
     /* calculate linear weightings */
     ax=1.0-fgx;
     bx=fgx;
