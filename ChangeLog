@@ -1,3 +1,16 @@
+2008-02-08 Chris Morley
+
+	* src/formats/MCDLFormat.cpp: NEW FILE Converted from his Java code
+	by Sergey Trepalin. There is a Java applet viewer and editor for
+	this linear format at http://sourceforge.net/projects/mcdl.
+	Some of the utility functions have been temporarily shoe-horned
+	into this file so there is only one MCDL related file. They will be
+	separated when further code for 2D layout from the applet
+	becomes available.
+	
+	* windows-vc2005/OpenBabelOBF.sln: updated
+
+	
 2008-02-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/grid.cpp: Added extra check to Interpolate() to make sure no
