@@ -72,9 +72,9 @@ namespace OpenBabel {
     double GetMinValue() const;
     /// \return the max value.
     double GetMaxValue() const;
-    /// \return the origin (i.e., the center of the grid)
+    /// \return the origin (i.e., the minimum x, y, and z coords of the grid)
     void GetOriginVector( double o[ 3 ] ) const;
-    /// \return the origin (i.e., the center of the grid)
+    /// \return the origin (i.e., the minimum x, y, and z coords of the grid)
     vector3 GetOriginVector() const;
     //@}
 
@@ -84,7 +84,8 @@ namespace OpenBabel {
     /// Set number of points along the three axes.
     void SetNumberOfPoints( int nx, int ny, int nz );
     /// Set the limits (i.e., the origin point and the axes)
-    /// NOTE: You must set the number of points first, so the grid spacing can be calculated
+    /// NOTE: You must set the number of points first,
+    ///       so the grid spacing can be calculated
     void SetLimits( double origin[ 3 ], double x[ 3 ], double y[ 3 ], double z[ 3 ] );
     /// Set the values
     void SetValues( const std::vector< double >& v );
