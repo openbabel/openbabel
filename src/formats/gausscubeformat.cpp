@@ -326,8 +326,11 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->SetLimits( gc.origin, gc.xAxis, gc.yAxis, gc.zAxis );
     gd->SetUnit( gc.unit == GaussianCube::BOHR ? OBGridData::BOHR : OBGridData::ANGSTROM );
     gd->SetValues( gc.values );
+
+    cerr << "min " <<  *std::min_element( gc.values.begin(), gc.values.end() ) << endl;
+    cerr << "max " <<  *std::max_element( gc.values.begin(), gc.values.end() ) << endl;
+
     gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
-    pmol->SetData( gd );
 
     if( !pConv->IsOption( "b", OBConversion::INOPTIONS ) ) pmol->ConnectTheDots();
     if (!pConv->IsOption( "s", OBConversion::INOPTIONS )
@@ -336,6 +339,8 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         pmol->PerceiveBondOrders();
     }
     pmol->EndModify();
+
+    pmol->SetData( gd );
 
     return true;
 }
