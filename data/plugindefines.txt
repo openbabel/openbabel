@@ -13,10 +13,10 @@ F,Cl,Br,I,At     # SMARTS defining the descriptor
 Number of halogen atoms\n      #This comment has two lines because of \n at the end.
 count fluorine, chlorine, etc. #When listing plugins, use verbose option to see lines after the first
 
-OpTransform      # Description() for the class includes a line "OpTransform is definable"
-tautomers        # ID. Commandline option to invoke is --tautomers
-tautomers.txt    # Datafile containing transforms. If filename is * the data follows later in the entry.
-Replace tautomers with their standard forms. Not reliable at present. # An explanatory description.
+#OpTransform      # Description() for the class includes a line "OpTransform is definable"
+#tautomers        # ID. Commandline option to invoke is --tautomers
+#tautomers.txt    # Datafile containing transforms. If filename is * the data follows later in the entry.
+#Replace tautomers with their standard forms. Not reliable at present. # An explanatory description.
 
 OpTransform
 nodative        # ID. Commandline option to invoke is --nodative

@@ -1,10 +1,20 @@
+2008-02-13 Chris Morley
+	
+	* data/plugindefines.txt: comment out problematic entry
+	
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:
+	update this installer for the multiple DLL build
+	
+	Update other Windows build files.
+
+
 2008-02-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/griddata.cpp, include/openbabel/griddata.h: Fix for
 	documentation (and code) for GetOriginVector -- return the minimum
 	x, y, and z coordinates from the grid.
 
-2008-02-08 Chris Morley
+2008-02-12 Chris Morley
 
 	* src/formats/MCDLFormat.cpp: NEW FILE Converted from his Java code
 	by Sergey Trepalin. There is a Java applet viewer and editor for
