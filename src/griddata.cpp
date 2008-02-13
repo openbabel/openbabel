@@ -136,7 +136,9 @@ namespace OpenBabel {
 
   vector3 OBGridData::GetOriginVector() const
   {
-    return vector3(GetOriginVector());
+    double origin[3];
+    d->_floatGrid.GetMin(origin);
+    return vector3(origin);
   }  
   
   void OBGridData::SetNumberOfPoints( int nx, int ny, int nz )
