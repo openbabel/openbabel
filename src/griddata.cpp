@@ -131,14 +131,12 @@ namespace OpenBabel {
 
   void OBGridData::GetOriginVector( double o[ 3 ] ) const
   {
-    o[0] = d->_floatGrid.Center().x();
-    o[1] = d->_floatGrid.Center().y();
-    o[2] = d->_floatGrid.Center().z();
+    d->_floatGrid.GetMin(o);
   }
 
   vector3 OBGridData::GetOriginVector() const
   {
-    return d->_floatGrid.Center();
+    return vector3(GetOriginVector());
   }  
   
   void OBGridData::SetNumberOfPoints( int nx, int ny, int nz )

@@ -1,3 +1,9 @@
+2008-02-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/griddata.cpp, include/openbabel/griddata.h: Fix for
+	documentation (and code) for GetOriginVector -- return the minimum
+	x, y, and z coordinates from the grid.
+
 2008-02-08 Chris Morley
 
 	* src/formats/MCDLFormat.cpp: NEW FILE Converted from his Java code
@@ -9,7 +15,6 @@
 	becomes available.
 	
 	* windows-vc2005/OpenBabelOBF.sln: updated
-
 	
 2008-02-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
