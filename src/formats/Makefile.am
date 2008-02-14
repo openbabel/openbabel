@@ -40,10 +40,11 @@ else
 libformats_la_LIBADD = -linchi
 endif
 libformats_la_SOURCES = \
-	APIInterface.cpp obmolecformat.cpp \
+	APIInterface.cpp obmolecformat.cpp MCDLformat.cpp \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	acrformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
+	cansmilesformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawct.cpp chemdrawcdx.cpp \
 	chemkinformat.cpp \
@@ -88,6 +89,7 @@ pkglib_LTLIBRARIES = \
 	gromos96format.la hinformat.la inchiformat.la \
 	jaguarformat.la mdlformat.la mmcifformat.la mmodformat.la \
 	mpdformat.la mol2format.la molreportformat.la mopacformat.la \
+	msiformat.la \
 	mpqcformat.la nwchemformat.la pcmodelformat.la \
 	pngformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
@@ -102,6 +104,9 @@ APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.l
 
 CSRformat_la_SOURCES = CSRformat.cpp obmolecformat.cpp
 CSRformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+
+#MCDLformat_la_SOURCES = MCDLformat.cpp obmolecformat.cpp
+#MCDLformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 PQSformat_la_SOURCES = PQSformat.cpp obmolecformat.cpp
 PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
@@ -245,6 +250,9 @@ mpdformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 mpqcformat_la_SOURCES = mpqcformat.cpp obmolecformat.cpp
 mpqcformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+msiformat_la_SOURCES = msiformat.cpp obmolecformat.cpp
+msiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 nwchemformat_la_SOURCES = nwchemformat.cpp obmolecformat.cpp
 nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
