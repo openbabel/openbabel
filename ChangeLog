@@ -1,3 +1,10 @@
+2008-02-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/mol.cpp: Removed check in AddHydrogens() to make sure hydrogens
+	are added to molecules with no bonds. This check was probably put in
+	to make sure you don't add hydrogens to a molecule comming from a QM
+	program for which ConnectTheDots() was not called yet? 
+
 2008-02-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/msiformat.cpp: Add new support for MSI/Accelrys

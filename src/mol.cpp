@@ -1815,13 +1815,18 @@ namespace OpenBabel
     if (HasHydrogensAdded())
       return(true);
     SetHydrogensAdded();
-
+    
+    /*
+    //
+    // This was causing bug #1892844 in avogadro. We also want to add hydrogens if the molecule has no bonds.
+    //    
     if(NumBonds()==0 && NumAtoms()!=1)
       {
         obErrorLog.ThrowError(__FUNCTION__,
                               "Did not run OpenBabel::AddHydrogens on molecule with no bonds", obAuditMsg);
         return true;
       }
+    */
     if (!polaronly)
       obErrorLog.ThrowError(__FUNCTION__,
                             "Ran OpenBabel::AddHydrogens", obAuditMsg);
