@@ -1,3 +1,10 @@
+2008-02-17  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/formats/gausscubeformat.cpp: Rewrote the Gaussian cube format to
+	use OpenBabel functions and data structures. Adding error checking and
+	also reordered the grid data from the Gaussian order to the internal
+	GridData order. Orbitals are now visible in Avogadro - success!
+
 2008-02-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/mol.cpp: Removed check in AddHydrogens() to make sure hydrogens
