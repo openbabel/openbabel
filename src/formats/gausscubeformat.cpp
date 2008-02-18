@@ -356,6 +356,10 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         return false;
       }
+      // Convert units...
+      x *= BOHR_TO_ANGSTROM;
+      y *= BOHR_TO_ANGSTROM;
+      z *= BOHR_TO_ANGSTROM;
       atom->SetVector(x, y, z);
     }
 
@@ -429,13 +433,11 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
 
     // Connect the dots and guess bond orders?
-    if(!pConv->IsOption("b", OBConversion::INOPTIONS))
+    if (!pConv->IsOption("b", OBConversion::INOPTIONS))
       pmol->ConnectTheDots();
-    if (!pConv->IsOption("s", OBConversion::INOPTIONS)
-        && !pConv->IsOption("b", OBConversion::INOPTIONS))
-    {
+    if (!pConv->IsOption("s", OBConversion::INOPTIONS) && !pConv->IsOption("b", OBConversion::INOPTIONS))
       pmol->PerceiveBondOrders();
-    }
+
     pmol->EndModify();
     pmol->SetData(gd);
 
