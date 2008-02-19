@@ -732,7 +732,7 @@ namespace OpenBabel
       _velocityPtr = NULL;       
     }    
    
-    if (IsSetupNeeded(mol)) {
+    if (IsSetupNeeded(mol) || !_validSetup) {
       if (_velocityPtr)
         delete [] _velocityPtr;
       _velocityPtr = NULL;       
@@ -741,16 +741,23 @@ namespace OpenBabel
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
 
-      if (!SetTypes())
+      _mol.UnsetSSSRPerceived();
+      
+      if (!SetTypes()) {
+        _validSetup = false;
         return false;
+      }
 
       SetFormalCharges();
       SetPartialCharges();
 
-      if (!SetupCalculations())
+      if (!SetupCalculations()) {
+        _validSetup = false;
         return false;
+      }
     }
 
+    _validSetup = true;
     return true;
   }
   
@@ -2067,10 +2074,6 @@ namespace OpenBabel
     _econv = econv;
     _method = method;
     _ncoords = _mol.NumAtoms() * 3;
-
-    IF_OBFF_LOGLVL_LOW {
-      ValidateGradients();
-    }
 
     _e_n1 = Energy() + _constraints.GetConstraintEnergy();
     

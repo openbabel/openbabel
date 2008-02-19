@@ -49,7 +49,7 @@ namespace OpenBabel
   {
     double energy;
 
-    IF_OBFF_LOGLVL_MEDIUM
+    IF_OBFF_LOGLVL_LOW
       OBFFLog("\nE N E R G Y\n\n");
     
     energy = E_Bond(gradients);
@@ -60,8 +60,8 @@ namespace OpenBabel
     energy += E_VDW(gradients);
     energy += E_Electrostatic(gradients);
 
-    IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+    IF_OBFF_LOGLVL_LOW {
+      sprintf(_logbuf, "\nTOTAL ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -129,7 +129,7 @@ namespace OpenBabel
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL BOND STRETCHING ENERGY = %8.3f %s\n",  energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL BOND STRETCHING ENERGY = %8.5f %s\n",  energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
     
@@ -201,7 +201,7 @@ namespace OpenBabel
     }
  
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
     
@@ -276,7 +276,7 @@ namespace OpenBabel
     }
 	
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
  
@@ -386,7 +386,7 @@ namespace OpenBabel
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL TORSIONAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL TORSIONAL ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -450,7 +450,7 @@ namespace OpenBabel
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -535,7 +535,7 @@ namespace OpenBabel
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL VAN DER WAALS ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL VAN DER WAALS ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -593,7 +593,7 @@ namespace OpenBabel
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL ELECTROSTATIC ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL ELECTROSTATIC ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -1111,7 +1111,11 @@ namespace OpenBabel
         // is the bond to the previous ring atom double?
         if (n > 1) {
           ringbond = _mol.GetBond(prev_rj, index);
-          if (ringbond->GetBO() == 2) {
+          if (!ringbond) {
+            prev_rj = index;
+            continue;
+	  }
+	  if (ringbond->GetBO() == 2) {
             pi_electrons += 2;
             prev_rj = index;
             n++;
@@ -1132,6 +1136,9 @@ namespace OpenBabel
             continue;
 
           ringbond = _mol.GetBond(nbr->GetIdx(), index);
+	  if (!ringbond) {
+	    continue;
+	  }
           if (ringbond->GetBO() == 2)
             pi_electrons++;
         }
@@ -1147,8 +1154,10 @@ namespace OpenBabel
       
       // is the bond from the first to the last atom double?
       ringbond = _mol.GetBond(first_rj, index);
-      if (ringbond->GetBO() == 2) 
-        pi_electrons += 2;
+      if (ringbond) {
+        if (ringbond->GetBO() == 2) 
+          pi_electrons += 2;
+      }
 
       if ((pi_electrons == 6) && ((ringsize == 5) || (ringsize == 6))) {
         // mark ring atoms as aromatic
@@ -1266,7 +1275,6 @@ namespace OpenBabel
 	  if (!betaAtoms.size()) {
 	    nitrogenCount = 0;
 	    FOR_NBORS_OF_ATOM (nbr, atom) {
-	      cout << "BOSum=" << nbr->BOSum() << endl;
 	      if (nbr->IsNitrogen() && (nbr->GetValence() == 3)) {
 	        if ((nbr->BOSum() == 4) && nbr->IsAromatic()) {
 	          nitrogenCount++;
@@ -4418,12 +4426,13 @@ namespace OpenBabel
         r0b -= 0.03;
     }
     
+    /*
     cout << "Ha=" << Ha << "  Hb=" << Hb << "  BOab=" << BOab << endl;
     cout << "r0a=" << r0a << "  Xa=" << Xa << endl;
     cout << "r0b=" << r0b << "  Xb=" << Xb << endl;
     cout << "r0a + r0b=" << r0a +r0b << endl;
     cout << "c=" << c << "  |Xa-Xb|=" << fabs(Xa-Xb) << "  |Xa-Xb|^1.4=" << pow(fabs(Xa-Xb), 1.4) << endl;
-    
+     */
     r0ab = r0a + r0b - c * pow(fabs(Xa - Xb), 1.4) - 0.008; 
 
     return r0ab;
