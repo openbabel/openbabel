@@ -1761,7 +1761,7 @@ namespace OpenBabel
   double OBForceField::LineSearch(double *currentCoords, double *direction)
   {
     int numCoords = _mol.NumAtoms() * 3;
-    double e_n1, e_n2, step, alpha;
+    double e_n1, e_n2, step, alpha, tempStep;
     double *lastStep = new double [numCoords];
 
     alpha = 0.0; // Scale factor along direction vector
@@ -1780,10 +1780,16 @@ namespace OpenBabel
       // Vectorizing this would be a big benefit
       // Need to look up using BLAS or Eigen or whatever
       for (unsigned int c = 0; c < numCoords; ++c) {
-        if (isfinite(direction[c])) { // make sure we don't have NaN or infinity
-          if (fabs(direction[c] * step) > trustRadius)
-            step = fabs(trustRadius / direction[c]);
-          currentCoords[c] += direction[c] * step;
+        if (isfinite(direction[c])) { 
+          // make sure we don't have NaN or infinity
+          tempStep = direction[c] * step;
+
+          if (tempStep > trustRadius) // positive big step
+            currentCoords[c] += trustRadius;
+          else if (tempStep < -1.0 * trustRadius) // negative big step
+            currentCoords[c] -= trustRadius;
+          else
+            currentCoords[c] += direction[c] * step;
         }
       }
     
