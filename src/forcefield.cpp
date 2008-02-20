@@ -1712,6 +1712,8 @@ namespace OpenBabel
     //   This dramatically cuts down on the number of Energy() calls.
     //  (and is more correct anyway)
 
+    // See the following implementation
+
     step = 0.2;
     direction.normalize();
     orig_xyz = atom->GetVector();
@@ -1764,10 +1766,11 @@ namespace OpenBabel
 
     alpha = 0.0; // Scale factor along direction vector
     step = 0.2;
+    double trustRadius = 0.3; // don't move further than 0.3 Angstroms
     
     //e_n1 = Energy(false) + ; // calculate e_k (before any move)
     e_n1 = Energy(false) + _constraints.GetConstraintEnergy();
-           // dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+    // dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
     
     unsigned int i;
     for (i=0; i < 10; ++i) {
@@ -1777,7 +1780,11 @@ namespace OpenBabel
       // Vectorizing this would be a big benefit
       // Need to look up using BLAS or Eigen or whatever
       for (unsigned int c = 0; c < numCoords; ++c) {
-        currentCoords[c] += direction[c] * step;
+        if (isfinite(direction[c])) { // make sure we don't have NaN or infinity
+          if (fabs(direction[c] * step) > trustRadius)
+            step = fabs(trustRadius / direction[c]);
+          currentCoords[c] += direction[c] * step;
+        }
       }
     
       //e_n2 = Energy(false); // calculate e_k+1

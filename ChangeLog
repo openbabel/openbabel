@@ -1,3 +1,9 @@
+2008-02-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefield.cpp (LineSearch): Check gradients with isfinite()
+	and for overly-large movements. Prevents any possible "explosions"
+	or "disappearing atoms."
+
 2008-02-17  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/formats/gausscubeformat.cpp: Rewrote the Gaussian cube format to
