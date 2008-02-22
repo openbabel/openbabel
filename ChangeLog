@@ -4,8 +4,12 @@
 	are too small. (The angle is ill-defined in these cases, so this
 	is better than returning NaN.)
 
+	* src/forcefield.cpp: Hunting down more divide-by-zero bugs.
+
 	* src/forcefields/forcefieldghemical.cpp: Remove some rare
 	divide-by-zero errors (e.g., when atoms are on top of each other).
+
+	* src/forcefields/forcefielduff.cpp: Ditto.
 
 2008-02-22 Chris Morley
 

@@ -2,6 +2,7 @@
 forcefield.cpp - Handle OBForceField class.
 
 Copyright (C) 2006-2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
+Some portions Copyright (C) 2007-2008 by Geoffrey Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -1273,12 +1274,8 @@ namespace OpenBabel
         rotorKey[i] = j;
         rotamers.SetCurrentCoordinates(_mol, rotorKey);
         
-        currentE = Energy(false);       
-        if (!isfinite(currentE))
-          FOR_ATOMS_OF_MOL(atom, _mol) {
-            cerr << "x: " << atom->x() << " y: " << atom->y() << " z: " << atom->z() << endl;
-          }
-        
+        currentE = Energy(false);
+
         if (j == 0) 
           bestE = worstE = currentE;
         else {
@@ -2825,7 +2822,11 @@ namespace OpenBabel
     vab = a - b;
     vcb = c - b;
     rab = vab.length();
+    if (IsNearZero(rab, 1.0e-3))
+      rab = 0.01;
     rcb = vcb.length();
+    if (IsNearZero(rcb, 1.0e-3))
+      rcb = 0.01;
     rab2 = rab * rab;
     rcb2 = rcb * rcb;
     
@@ -2867,8 +2868,14 @@ namespace OpenBabel
     vbd = b - d;
     vba = b - a;
     rbc = vbc.length();
+    if (IsNearZero(rbc, 1.0e-3))
+      rbc = 0.01;
     rbd = vbd.length();
+    if (IsNearZero(rbd, 1.0e-3))
+      rbd = 0.01;
     rba = vba.length();
+    if (IsNearZero(rba, 1.0e-3))
+      rba = 0.01;
     vbc.normalize();
     vbd.normalize();
     vba.normalize();
@@ -2879,6 +2886,8 @@ namespace OpenBabel
     double sinChi, sinABC, cosABC;
     sinChi = sin(angle);
     sinABC = sin(angleABC);
+    if (IsNearZero(sinABC, 1.0e-3))
+      sinABC = 1.0e-3;
     cosABC = cos(angleABC);
     vector3 bcbd = cross(vbc, vbd);
     vector3 bdba = cross(vbd, vba);
@@ -2913,8 +2922,8 @@ namespace OpenBabel
 
     double dotAbbcBccd = dot(abbc,bccd);
     tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-    if (IsNearZero(dotAbbcBccd)) {
-      tor = 0.0;
+    if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
+      tor = 1.0e-3; // rather than NaN
     }
     else if (dotAbbcBccd > 0.0) {
       tor = -tor;
@@ -2941,7 +2950,7 @@ namespace OpenBabel
     abbc_bccd2 = sqrt(1.0 - rabbc_rbccd * rabbc_rbccd);
 
     if (IsNearZero(abbc_bccd2) || IsNan(abbc_bccd2))
-      abbc_bccd2 = 1e-7;
+      abbc_bccd2 = 1e-5;
     
     /*
       cout << "sqrt(abbc_bccd2) = " << sqrt(abbc_bccd2) << endl;

@@ -90,20 +90,23 @@ namespace OpenBabel
       dc = c->GetVector();
       theta = OBForceField::VectorAngleDerivative(da, db, dc);  
     } else {
-      theta = a->GetAngle(b->GetIdx(), c->GetIdx());
+      theta = a->GetAngle(b, c);
     }
 
-      delta = theta - theta0;
-      delta2 = delta * delta;
-    
-      energy = ka * delta2;
+    if (!isfinite(theta))
+      theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
 
-      if (gradients) {
-        dE = 2.0 * ka * delta;
-        grada = dE * da; // - dE/drab * drab/da
-        gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
-        gradc = dE * dc; // - dE/drab * drab/dc
-      }
+    delta = theta - theta0;
+    delta2 = delta * delta;
+    
+    energy = ka * delta2;
+
+    if (gradients) {
+      dE = 2.0 * ka * delta;
+      grada = dE * da; // - dE/drab * drab/da
+      gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
+      gradc = dE * dc; // - dE/drab * drab/dc
+    }
   }
   
   double OBForceFieldGhemical::E_Angle(bool gradients)

@@ -98,6 +98,8 @@ namespace OpenBabel
     ab = a->GetDistance(b);
     bc = b->GetDistance(c);
     ac = a->GetDistance(c);
+    if (IsNearZero(ac, 1.0e-3))
+      ac = 1.0e-3; // prevent divide-by-zero when calculating ka
     
     if (gradients) {
       da = a->GetVector();
@@ -107,6 +109,9 @@ namespace OpenBabel
     } else {
       theta = a->GetAngle(b->GetIdx(), c->GetIdx()) * DEG_TO_RAD;
     }
+
+    if (!isfinite(theta))
+      theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
 
     ka = (644.12 * KCAL_TO_KJ) * (zi * zk / (pow(ac, 5.0)));
     ka *= (3.0 * ab * bc * (1.0 - cosT0*cosT0) - ac*ac*cosT0);
@@ -179,8 +184,8 @@ namespace OpenBabel
       dc = c->GetVector();
       dd = d->GetVector();
       tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
-      if (IsNan(tor))
-        tor = 1.0e-7;
+      if (!isfinite(tor))
+        tor = 1.0e-3;
       tor *= DEG_TO_RAD;
     } else {
       vector3 vab, vbc, vcd, abbc, bccd;
@@ -192,8 +197,8 @@ namespace OpenBabel
 
       double dotAbbcBccd = dot(abbc,bccd);
       tor = acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-      if (IsNearZero(dotAbbcBccd)) {
-        tor = 0.0; // rather than NaN
+      if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
+        tor = 1.0e-3; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
         tor = -tor;
@@ -263,7 +268,6 @@ namespace OpenBabel
       db = b->GetVector();
       dc = c->GetVector();
       dd = d->GetVector();
-      // This is wrong -- we need a real OOP derivative here
       angle = OBForceField::VectorOOPDerivative(da, db, dc, dd) * DEG_TO_RAD;  
 
       dE = -koop * (c1*sin(angle) + 2.0 * c2 * sin(2*angle));
@@ -319,6 +323,9 @@ namespace OpenBabel
       rab = OBForceField::VectorLengthDerivative(da, db);
     } else
       rab = a->GetDistance(b);
+    
+    if (IsNearZero(rab, 1.0e-3))
+      rab = 1.0e-3;
     
     term7 = term13 = term6 = ka / rab;
 
@@ -381,6 +388,9 @@ namespace OpenBabel
       rab = OBForceField::VectorLengthDerivative(da, db);
     } else
       rab = a->GetDistance(b);
+
+    if (IsNearZero(rab, 1.0e-3))
+      rab = 1.0e-3;
 
     energy = qq / rab;
 
