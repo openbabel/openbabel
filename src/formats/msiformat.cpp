@@ -32,7 +32,7 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "MSI text format\n";
+        "Accelrys/MSI Cerius II MSI format\n";
     };
 
     virtual const char* SpecificationURL()
@@ -98,53 +98,52 @@ namespace OpenBabel
     // )
     unsigned int openParens = 0; // the count of "open parentheses" tags
     unsigned int startBondAtom, endBondAtom, bondOrder;
-    bool atomRecord;
-    bool bondRecord;
+    bool atomRecord = false;
+    bool bondRecord = false;
     OBAtom *atom;
     OBBond *bond;
     vector<string> vs;
 
-    cerr << " starting read " << endl;
-
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-        cerr << "buffer: " << buffer << endl;
-
         // model record
-        if (strstr(buffer, " Model") != NULL) {
+        if (strstr(buffer, "Model") != NULL) {
           openParens++;
           continue;
         }
 
         // atom record
-        if (strstr(buffer, " Atom") != NULL) {
+        if (!bondRecord && strstr(buffer, "Atom") != NULL) {
           atomRecord = true;
           openParens++;
-          cerr << " starting atom " << endl;
           continue;
         }
 
-        if (strstr(buffer, " Bond") != NULL) {
+        if (strstr(buffer, "Bond") != NULL) {
+
           bondRecord = true;
           startBondAtom = endBondAtom = 0;
           bondOrder = 1;
           openParens++;
-          cerr << " stating bond " << endl;
           continue;
         }
         
         // atom information
         if (atomRecord) {
           if (strstr(buffer, "ACL") != NULL) {
-            atom = mol.NewAtom();
             tokenize(vs, buffer);
             // size should be 5 -- need a test here
             vs[3].erase(0,1); // "6 => remove the first " character
             int atomicNum = atoi(vs[3].c_str());
             if (atomicNum == 0)
-              atomicNum = 1; // hydrogen atom
-            atom->SetAtomicNum(atoi(vs[3].c_str()));
+              atomicNum = 1; // hydrogen ?
+            if (atomicNum <= 0 || atomicNum > etab.GetNumberOfElements())
+              continue;
+
+            // valid element, so create the atom
+            atom = mol.NewAtom();
+            atom->SetAtomicNum(atomicNum);
             continue;
           }
           else if (strstr(buffer, "XYZ") != NULL) {
@@ -177,18 +176,24 @@ namespace OpenBabel
             tokenize(vs, buffer);
             vs[3].erase(vs[3].length()-1,1);
             bondOrder = atoi(vs[3].c_str());
+            if (bondOrder == 4) // triple bond?
+              bondOrder = 3;
+            else if (bondOrder == 8) // aromatic?
+              bondOrder = 5;
+            else
+              bondOrder = 1;
             continue;
           }
         }
-
+        
         // ending a "tag" -- a lone ")" on a line
-        if (strstr(buffer,")") != NULL && strstr(buffer, ")") == NULL) {
-          cerr << " closing tag " << openParens << endl;
+        if (strstr(buffer,")") != NULL && strstr(buffer, "(") == NULL) {
           openParens--;
           if (atomRecord) {
             atomRecord = false;
           }
           if (bondRecord) {
+            // Bond records appear to be questionable
             mol.AddBond(startBondAtom, endBondAtom, bondOrder);
             bondRecord = false;
           }
@@ -199,6 +204,7 @@ namespace OpenBabel
           }
         }
       }
+
     mol.EndModify();
 
     // clean out any remaining blank lines
