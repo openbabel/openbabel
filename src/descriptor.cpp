@@ -22,10 +22,6 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/descriptor.h>
 
-#if defined(WIN32)
-#define IsNan _isnan
-#endif
-
 using namespace std;
 namespace OpenBabel
 {

@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 #include <openbabel/plugin.h>
+#include <float.h>
 
 #ifndef OBFPRT
 #define OBFPRT

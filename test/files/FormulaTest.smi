@@ -3,10 +3,11 @@ C		CH4
 [CH0]		C atom
 C[2H]		CH3D
 C[1H]		CH4 
-C([H])[H]	CH2  carbene
-C[H]	CH    
+[C]([H])[H]	CH2  carbene
+[C][H]	CH    
 [CH]	CH
 [CH][2H]  CHD
+C[2H]      CH3D
 [H][H]	H2
 C[O]        methoxy radical CH3O 
 [2H][H]		HD

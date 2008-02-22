@@ -21,6 +21,8 @@ GNU General Public License for more details.
 #include <openbabel/atomclass.h>
 #include <openbabel/reaction.h>
 #include <openbabel/xml.h>
+#include <float.h>
+
 
 #ifdef WIN32
 #pragma warning (disable : 4800)
@@ -128,6 +130,7 @@ namespace OpenBabel
     vector< pair<string,string> > cmlBondOrAtom; //for cml1 only
     vector< pair<string,string> > molWideData;
     bool inBondArray; //for cml1 only
+    bool inFormula;
     string RawFormula;
     xmlChar* prefix;
     string CurrentAtomID;
@@ -181,6 +184,7 @@ namespace OpenBabel
         AtomArray.clear();
         BondArray.clear();
         inBondArray = false;
+        inFormula = false;
         RawFormula.erase();
         molWideData.clear();
         CrystalScalarsNeeded=0;
@@ -210,8 +214,11 @@ namespace OpenBabel
       }
     else if(name=="atomArray")
       {
-        inBondArray=false;
-        TransferArray(AtomArray);
+        if(!inFormula) //do nothing when a child of <formula>
+        {
+          inBondArray=false;
+          TransferArray(AtomArray);
+        }
       }
     else if(name=="bondArray")
       {
@@ -252,6 +259,8 @@ namespace OpenBabel
       }
     else if(name=="formula")
       {
+        if(!xmlTextReaderIsEmptyElement(reader()))
+          inFormula=true;
         //Only concise form is currently supported
         const xmlChar* pformula = xmlTextReaderGetAttribute(reader(), BAD_CAST "concise");
         if(pformula)
@@ -339,8 +348,8 @@ namespace OpenBabel
           return false;
         string value = (const char*)pvalue;
         Trim(value);
-        pair<string,string> nameAndvalue(name,value);					
-        cmlBondOrAtom.push_back(nameAndvalue);			
+        pair<string,string> nameAndvalue(name,value);
+        cmlBondOrAtom.push_back(nameAndvalue);
       }
     else	if(name=="stringArray" || name=="floatArray" || name=="integerArray")
       {
@@ -362,7 +371,7 @@ namespace OpenBabel
         unsigned int i;
         for(i=0;i<items.size();++i)
           {				
-            pair<string,string> nameAndvalue(name,items[i]);					
+            pair<string,string> nameAndvalue(name,items[i]);
             arr[i].push_back(nameAndvalue);
           }
       }
@@ -386,6 +395,8 @@ namespace OpenBabel
       {
         BondArray.push_back(cmlBondOrAtom);
       }
+    else if(name=="formula")
+      inFormula=false;
     else if(name=="molecule")
       {
         DoAtoms();
@@ -429,11 +440,11 @@ namespace OpenBabel
         int nhvy = nAtoms;
 
         double x=0,y=0,z=0;
-		
+        bool using3=false, using2=false, usingFract=false;
+
         vector<pair<string,string> >::iterator AttributeIter;
         for(AttributeIter=AtomIter->begin();AttributeIter!=AtomIter->end();++AttributeIter)
           {
-            bool datanotused=false;
             string& attrname = AttributeIter->first;
             string& value    = AttributeIter->second;
 
@@ -447,6 +458,7 @@ namespace OpenBabel
                 //If the id begins with "aa", "ab", etc, the number that follows  is taken as an atom class
                 if(value[0]=='a' && value[1]>='a' && value[1]<='z')
                   aclass.Add(nAtoms, atoi(value.c_str()+2));
+                continue;
               }
             else if(attrname=="elementType")
               {
@@ -455,32 +467,35 @@ namespace OpenBabel
                 pAtom->SetAtomicNum(atno);
                 if(iso)
                   pAtom->SetIsotope(iso);
+                continue;
               }
 
-            else if(attrname=="x2" && (dim!=3 || use2d))//ignore 2D dimensions if 3D also provided
+            //If more than one set of coordinates provided, 
+            //prefer 3D over 2D over 3Dfractional,
+            //but if use2d is true, prefer 2D over 3D
+            else if((attrname=="x3" || attrname=="y3" || attrname=="z3" || attrname=="xyz3") && !use2d)
+            {
+              using3 = true;
+              usingFract = false;
+            }
+            else if((attrname=="x2" || attrname=="y2" || attrname=="z2" || attrname=="xy2") && !using3)
+            {
+              using2 = true;
+              usingFract = false;
+            }
+            else if(pUnitCell && !using3 && !using2 
+              && (attrname=="xFract" || attrname=="yFract" || attrname=="zFract"))
+              usingFract=true;
+            
+            if(using3 && attrname=="x3" || using2 && attrname=="x2" || usingFract && attrname=="xFract")
               x=strtod(value.c_str(),NULL);
-
-            else if(attrname=="y2" && (dim!=3 || use2d))
-              {
-                dim=2;
-                y=strtod(value.c_str(),NULL);
-              }
-
-            else if((attrname=="x3" && !use2d) || (pUnitCell && attrname=="xFract"))
-              x=strtod(value.c_str(),NULL);
-
-            else if((attrname=="y3" && !use2d) || (pUnitCell && attrname=="yFract"))
+            else if(using3 && attrname=="y3" || using2 && attrname=="y2" || usingFract && attrname=="yFract")
               y=strtod(value.c_str(),NULL);
+            else if(using3 && attrname=="z3" || using2 && attrname=="z2" || usingFract && attrname=="zFract")
+              z=strtod(value.c_str(),NULL);
 
-            else if((attrname=="z3" && !use2d) || (pUnitCell && attrname=="zFract"))
+            else if(using2 && attrname=="xy2")
               {
-                dim=3;
-                z=strtod(value.c_str(),NULL);
-              }
-
-            else if(attrname=="xy2" && (dim!=3 || use2d))
-              {
-                dim=2;
                 vector<string> vals;
                 tokenize(vals,value);
                 if(vals.size()==2)
@@ -489,9 +504,8 @@ namespace OpenBabel
                     y=strtod(vals[1].c_str(),NULL);
                   }
               }
-            else if((attrname=="xyz3" && !use2d) || (pUnitCell && attrname=="xyzFract"))
+            else if(using3 && attrname=="xyz3")
               {
-                dim=3;
                 vector<string> vals;
                 tokenize(vals,value);
                 if(vals.size()==3)
@@ -499,22 +513,6 @@ namespace OpenBabel
                     x=strtod(vals[0].c_str(),NULL);
                     y=strtod(vals[1].c_str(),NULL);
                     z=strtod(vals[2].c_str(),NULL);
-                  }
-              }
-            else
-              datanotused=true;
-
-            if(!datanotused && dim)
-              {
-                if(!pUnitCell)
-                  pAtom->SetVector(x, y , z);
-                else
-                  {
-                    //Coordinates are fractional
-                    vector3 v;
-                    v.Set(x, y, z);
-                    v *= pUnitCell->GetOrthoMatrix();
-                    pAtom->SetVector(v);
                   }
               }
 
@@ -573,7 +571,27 @@ namespace OpenBabel
               pAtom->SetIsotope(atoi(value.c_str()));
 
           } //each attribute
-		
+
+          //Save atom coordinates
+          if(using3 || usingFract)
+            dim=3;
+          else if(using2)
+          {
+            dim=2;
+            z=0.0;
+          }
+          else
+            dim=0;
+          if(usingFract)
+            {
+              //Coordinates are fractional
+              vector3 v;
+              v.Set(x, y, z);
+              v *= pUnitCell->GetOrthoMatrix();
+              pAtom->SetVector(v);
+            }
+          else
+            pAtom->SetVector(x, y, z);
       }//each atom
     
     if(aclass.size()>0)

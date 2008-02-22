@@ -2054,6 +2054,12 @@ namespace OpenBabel
 
     SetSpinMultiplicityAssigned();
 
+    if(NumBonds()==0 && NumAtoms()!=1)
+      {
+        obErrorLog.ThrowError(__FUNCTION__,
+                              "Did not run OpenBabel::AssignSpinMultiplicity on molecule with no bonds", obAuditMsg);
+        return true;
+      }
 
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::AssignSpinMultiplicity",

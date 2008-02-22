@@ -14,10 +14,15 @@
 #define BABEL_VERSION  "2.2"
 
 #define BABEL_DATADIR "."
+
+//The following are synomyms for various functions
 #define snprintf _snprintf
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
 #define rindex(a,b) strrchr((a),(b))
+#define IsNan _isnan
+#define isfinite _finite
+
 
 #define TESTDATADIR "../../test/files/"
 

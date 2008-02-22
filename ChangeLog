@@ -1,3 +1,25 @@
+2008-02-22 Chris Morley
+
+	* src/mol.cpp(AssignSpinMultiplicity): Move the functionality
+	recently removed from AddHydrogens() to here. Don't assign spin
+	multiplicity to multi-atom molecules with no bonds.
+	Molecules specified only by elemental formula from thermoformat,
+	cmlformat and smilesformat seem to be handled ok.
+	
+	* src/formats/xml/cmlformat.cpp: handle <atomArray> occurring as
+	a child of, formula> as well child of <molecule>.
+	DoAtoms) Rewrite so that not confused when multiple sets of
+	atom coordinates are present.
+	
+	* include/openbabel/forcefield.h: include float.h
+	
+	* windows-vc2005/babelconfig.h: add defines for IsNan and isfinite
+
+	* src/descriptor.cpp: remove define for IsNan
+
+	* test/files/FormulaTest.smi: correct the SMILES for carbene and
+	add CH3D
+
 2008-02-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp (WeightedRotorSearch): Check each individual
@@ -29,6 +51,7 @@
 	and for overly-large movements. Prevents any possible "explosions"
 	or "disappearing atoms."
 
+>>>>>>> .r2261
 2008-02-17  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/formats/gausscubeformat.cpp: Rewrote the Gaussian cube format to
