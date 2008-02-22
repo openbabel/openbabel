@@ -1,3 +1,12 @@
+2008-02-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/atom.cpp (GetAngle): Return 0.0 for the angle if the vectors
+	are too small. (The angle is ill-defined in these cases, so this
+	is better than returning NaN.)
+
+	* src/forcefields/forcefieldghemical.cpp: Remove some rare
+	divide-by-zero errors (e.g., when atoms are on top of each other).
+
 2008-02-22 Chris Morley
 
 	* src/mol.cpp(AssignSpinMultiplicity): Move the functionality

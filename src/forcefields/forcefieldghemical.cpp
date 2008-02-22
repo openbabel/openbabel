@@ -93,19 +93,6 @@ namespace OpenBabel
       theta = a->GetAngle(b->GetIdx(), c->GetIdx());
     }
 
-    /*
-    if (theta0 > 170.0) {
-      delta = 1.0 + cos(theta * DEG_TO_RAD);
-
-      energy = ka * delta * RAD_TO_DEG * RAD_TO_DEG;
-
-      if (gradients) {
-        grada = ka * da;
-        gradb = ka * db;
-        gradc = ka * dc;
-      } 
-    } else {
-    */
       delta = theta - theta0;
       delta2 = delta * delta;
     
@@ -117,9 +104,6 @@ namespace OpenBabel
         gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
         gradc = dE * dc; // - dE/drab * drab/dc
       }
-    /*
-    }
-    */
   }
   
   double OBForceFieldGhemical::E_Angle(bool gradients)
@@ -253,6 +237,9 @@ namespace OpenBabel
     } else
       rab = a->GetDistance(b);
     
+    if (IsNearZero(rab, 1.0e-3))
+      rab = 1.0e-3;
+
     term7 = term13 = term6 = rab / ka;
 
     term6 = term6 * term6 * term6; // ^3
@@ -314,6 +301,9 @@ namespace OpenBabel
       rab = OBForceField::VectorLengthDerivative(da, db);
     } else
       rab = a->GetDistance(b);
+
+    if (IsNearZero(rab, 1.0e-3))
+      rab = 1.0e-3;
 
     energy = qq / rab;
 

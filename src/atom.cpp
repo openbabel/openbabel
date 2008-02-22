@@ -1070,6 +1070,10 @@ namespace OpenBabel
 
     v1 = this->GetVector() - b->GetVector();
     v2 = c->GetVector() - b->GetVector();
+    if (IsNearZero(v1.length(), 1.0e-3)
+      || IsNearZero(v2.length(), 1.0e-3)) {
+        return(0.0);
+    }
 
     return(vectorAngle(v1, v2));
   }
@@ -1081,6 +1085,11 @@ namespace OpenBabel
 
     v1 = this->GetVector() - mol->GetAtom(b)->GetVector();
     v2 = mol->GetAtom(c)->GetVector() - mol->GetAtom(b)->GetVector();
+
+    if (IsNearZero(v1.length(), 1.0e-3)
+      || IsNearZero(v2.length(), 1.0e-3)) {
+        return(0.0);
+    }
 
     return(vectorAngle(v1, v2));
   }
