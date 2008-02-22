@@ -89,7 +89,7 @@ int main(int argc,char *argv[])
 
       pFF->Setup(mol);
       pFF->WeightedRotorSearch(weightSteps, geomSteps);
-      pFF->ConjugateGradients(geomSteps + 200); // final cleanup
+      pFF->ConjugateGradients(geomSteps); // final cleanup
       pFF->UpdateCoordinates(mol);
       conv.Write(&mol);
     } // while reading molecules

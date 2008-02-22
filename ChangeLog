@@ -1,3 +1,22 @@
+2008-02-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefield.cpp (WeightedRotorSearch): Check each individual
+	rotor setting in isolation and use Boltzmann initial weightings.
+	(*RotorSearch): Make sure to call Energy() evaluations without
+	gradients.
+
+	* src/rotamer.cpp (SetRotorToAngle): Remove unlikely (but
+	possible) divide-by-zero error.
+
+	* src/forcefields/forcefieldghemical.cpp: Fix divide-by-zero error
+	in calculation of torsional term. Should be bullet-proof now.
+
+	* src/formats/mdlformat.cpp: Fix rare crash when handling invalid
+	alias records.
+
+	* src/formats/msiformat.cpp: Remove debugging information and fix
+	various bugs (e.g., dummy atoms).
+
 2008-02-21  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/formats/gausscubeformat.cpp: Simplified the cube reading code,

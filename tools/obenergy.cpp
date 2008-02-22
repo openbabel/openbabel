@@ -105,8 +105,19 @@ int main(int argc,char **argv)
     exit (-1);
   }
 
-  OBMol mol;
+  OBForceField* pFF = OBForceField::FindForceField(ff);
+  if (!pFF) {
+    cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
+    exit (-1);
+  }
+  pFF->SetLogFile(&cout);
+  if (verbose)
+    pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
+  else
+    pFF->SetLogLevel(OBFF_LOGLVL_MEDIUM);
 
+  OBMol mol;
+  double energy;
   for (c=1;;c++) {
     mol.Clear();
     if (!conv.Read(&mol, &ifs))
@@ -116,25 +127,19 @@ int main(int argc,char **argv)
 
     if (hydrogens)
       mol.AddHydrogens();
-
-    OBForceField* pFF = OBForceField::FindForceField(ff);
-    if (!pFF) {
-      cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
-      exit (-1);
-    }
- 
-    pFF->SetLogFile(&cout);
-    if (verbose)
-      pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
-    else
-      pFF->SetLogLevel(OBFF_LOGLVL_MEDIUM);
-      
+       
     if (!pFF->Setup(mol)) {
       cerr << program_name << ": could not setup force field." << endl;
       exit (-1);
     }
-      
-    pFF->Energy(false);
+    
+    energy = pFF->Energy(false);
+    if (!isfinite(energy)) {
+      cerr << " Title: " << mol.GetTitle() << endl;
+      FOR_ATOMS_OF_MOL(atom, mol) {
+        cerr << " x: " << atom->x() << " y: " << atom->y() << " z: " << atom->z() << endl;
+      }
+    }
 
   } // end for loop
 

@@ -165,9 +165,9 @@ namespace OpenBabel
       db = b->GetVector();
       dc = c->GetVector();
       dd = d->GetVector();
-      tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
-      if (IsNan(tor))
-        tor = 1.0e-7;
+      tor = DEG_TO_RAD * OBForceField::VectorTorsionDerivative(da, db, dc, dd);
+      if (!isfinite(tor))
+        tor = 1.0e-3;
     } else {
       vector3 vab, vbc, vcd, abbc, bccd;
       vab = a->GetVector() - b->GetVector();
@@ -177,18 +177,19 @@ namespace OpenBabel
       bccd = cross(vbc, vcd);
 
       double dotAbbcBccd = dot(abbc,bccd);
-      tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-      if (IsNearZero(dotAbbcBccd)) {
-        tor = 0.0; // rather than NaN
+      // keep in radians here
+      tor = acos(dotAbbcBccd / (abbc.length() * bccd.length()));
+      if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
+        tor = 1.0e-3; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
         tor = -tor;
       }
     }
 
-    cosine = cos(DEG_TO_RAD * tor);
-    cosine2 = cos(2.0 * DEG_TO_RAD * tor);
-    cosine3 = cos(3.0 * DEG_TO_RAD * tor);
+    cosine = cos(tor);
+    cosine2 = cos(2.0 * tor);
+    cosine3 = cos(3.0 * tor);
 
     phi1 = 1.0 + cosine;
     phi2 = 1.0 - cosine2;
@@ -197,9 +198,9 @@ namespace OpenBabel
     energy = k1 * phi1 + k2 * phi2 + k3 * phi3;
     
     if (gradients) {
-      sine = sin(DEG_TO_RAD * tor);
-      sine2 = sin(2.0 * DEG_TO_RAD * tor);
-      sine3 = sin(3.0 * DEG_TO_RAD * tor);
+      sine = sin(tor);
+      sine2 = sin(2.0 * tor);
+      sine3 = sin(3.0 * tor);
       dE = -k1 * sine + k2 * 2.0 * sine2 - k3 * 3.0 * sine3;
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db

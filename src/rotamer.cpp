@@ -60,6 +60,7 @@ std::vector<int> rotorKey(rl.Size() + 1, 0);
 //   to sample for a rotamer search
 for (unsigned int i = 0; i < rl.Size() + 1; ++i)
   rotorKey[i] = 0; // could be anything from 0 .. OBRotor->GetResolution().size()
+  // -1 is for no rotation
 
 // The OBRotamerList can generate conformations (i.e., coordinate sets)
 OBRotamerList rotamers;
@@ -465,6 +466,7 @@ vector<double*> OBRotamerList::CreateConformerList(OBMol& mol)
       angle = rot[i+1];
       if (angle > 180.0)
         angle -= 360.0;
+        
       SetRotorToAngle(c,_vrotor[i].first,angle,_vrotor[i].second);
     }
   }
@@ -498,6 +500,7 @@ void OBRotamerList::SetBaseCoordinateSets(vector<double*> bc, unsigned int N)
 //! such that tor == ang.
 //! Atoms in 'tor' should be ordered such that the 3rd atom is 
 //! the pivot around which atoms rotate (ang is in degrees)
+//! \todo This code is identical to OBMol::SetTorsion() and should be combined
 void SetRotorToAngle(double *c, OBAtom **ref,double ang,vector<int> atoms)
 {
   double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
@@ -549,6 +552,7 @@ void SetRotorToAngle(double *c, OBAtom **ref,double ang,vector<int> atoms)
   sn = sin(rotang); cs = cos(rotang);t = 1 - cs;
   //normalize the rotation vector
   mag = sqrt(v2x*v2x + v2y*v2y + v2z*v2z);
+  if (mag < 0.1) mag = 0.1; // avoid divide by zero error
   x = v2x/mag; y = v2y/mag; z = v2z/mag;
   
   //set up the rotation matrix

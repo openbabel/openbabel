@@ -23,7 +23,7 @@ GNU General Public License for more details.
       - GenerateCoordinates():  removed, use OBBuilder
       - SystematicRotorSearch(): finished
       - RandomRotorSearch(): finished
-      - WeightedRotorSearch: NEEDS WORK
+      - WeightedRotorSearch: finished
       - DistanceGeometry(): needs matrix operations
 
       - src/forcefields/forcefieldghemical.cpp
@@ -1024,7 +1024,7 @@ namespace OpenBabel
     ConjugateGradients(geomSteps); // energy minimization for conformer
     _loglvl = _origLogLevel;
     
-    _energies.push_back(Energy()); // calculate and store energy
+    _energies.push_back(Energy(false)); // calculate and store energy
       
     IF_OBFF_LOGLVL_LOW {
       sprintf(_logbuf, "   %3d   %20.3f\n", (_current_conformer + 1), _energies[_current_conformer]);
@@ -1137,7 +1137,7 @@ namespace OpenBabel
     ConjugateGradients(geomSteps); // energy minimization for conformer
     _loglvl = _origLogLevel;
     
-    _energies.push_back(Energy()); // calculate and store energy
+    _energies.push_back(Energy(false)); // calculate and store energy
       
     IF_OBFF_LOGLVL_LOW {
       sprintf(_logbuf, "   %3d      %8.3f\n", (_current_conformer + 1), _energies[_current_conformer]);
@@ -1154,9 +1154,7 @@ namespace OpenBabel
     while (RandomRotorSearchNextConformer(geomSteps)) {}
   }
 
-  void Reweight(std::vector< std::vector <double> > &rotorWeights,
-                std::vector<int> rotorKey,
-                double bonus)
+  void Reweight(std::vector< std::vector <double> > &rotorWeights, std::vector<int> rotorKey, double bonus)
   {
     double fraction, minWeight, maxWeight;
     bool improve = (bonus > 0.0);
@@ -1198,8 +1196,7 @@ namespace OpenBabel
   }
                 
   
-  void OBForceField::WeightedRotorSearch(unsigned int conformers, 
-                                         unsigned int geomSteps)
+  void OBForceField::WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps)
   {
     OBRotorList rl;
     OBRotamerList rotamers;
@@ -1242,27 +1239,90 @@ namespace OpenBabel
       return;
     }
 
+    double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
+    memcpy((char*)initialCoord,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+
     // key for generating particular conformers
     std::vector<int> rotorKey(rl.Size() + 1, 0); // indexed from 1
 
+    // initialize the weights
     std::vector< std::vector <double> > rotorWeights;
     std::vector< double > weightSet;
     rotorWeights.push_back(weightSet); // empty set for unused index 0
 
-    // initialize the weights
     double weight;
+    double bestE, worstE, currentE;
+    std::vector<double> energies;
+    // First off, we test out each rotor position. How good (or bad) is it?
+    // This lets us pre-weight the search to a useful level
+    // So each rotor is considered in isolation
     rotor = rl.BeginRotor(ri);
     for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+      rotorKey[i] = 0; // for lack of another default. Unfortunately, this isn't "no rotation"
+    }
+    
+    rotor = rl.BeginRotor(ri);
+    int confCount = 0;
+    int settings;
+    for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       // foreach rotor
-      // start with equal weighting for all possible torsions
-      weight = 1.0 / rotor->GetResolution().size();
-      weightSet.clear();
+      energies.clear();
       for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+        // foreach rotor position
+        _mol.SetCoordinates(initialCoord);
+        rotorKey[i] = j;
+        rotamers.SetCurrentCoordinates(_mol, rotorKey);
+        
+        currentE = Energy(false);       
+        if (!isfinite(currentE))
+          FOR_ATOMS_OF_MOL(atom, _mol) {
+            cerr << "x: " << atom->x() << " y: " << atom->y() << " z: " << atom->z() << endl;
+          }
+        
+        if (j == 0) 
+          bestE = worstE = currentE;
+        else {
+          if (currentE > worstE)
+            worstE = currentE;
+          else if (currentE < bestE)
+            bestE = currentE;
+        }
+        energies.push_back(currentE);
+      }
+      rotorKey[i] = 0; // back to the previous setting before we go to another rotor
+      
+      weightSet.clear();
+      // first loop through and calculate the relative populations from Boltzmann
+      double totalPop = 0.0;
+      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+        currentE = energies[j];
+        // add back the Boltzmann population for these relative energies at 300K (assuming kJ/mol)
+        energies[j] = exp(-1.0*fabs(currentE - bestE) / 2.5);
+        totalPop += energies[j];
+      }
+      // now set the weights
+      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+        if (IsNear(worstE, bestE, 1.0e-3))
+          weight = 1 / rotor->GetResolution().size();
+        else
+          weight = energies[j]/totalPop;
         weightSet.push_back(weight);
       }
       rotorWeights.push_back(weightSet);
     }
 
+    int best_conformer;
+    double penalty; // for poor performance
+    double randFloat; // generated random number -- used to pick a rotor
+    double total; // used to calculate the total probability 
+    double *bestCoordPtr = new double [_mol.NumAtoms() * 3]; // coordinates for best conformer
+    
+    // Start with the current coordinates
+    bestE = worstE = Energy(false);
+    // We're later going to add this back to the molecule as a new conformer
+    memcpy((char*)bestCoordPtr,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());    
+    
+    // Now we actually test some weightings
     IF_OBFF_LOGLVL_LOW {
       sprintf(_logbuf, "  GENERATED %d CONFORMERS\n\n", conformers);
       OBFFLog(_logbuf);
@@ -1270,20 +1330,6 @@ namespace OpenBabel
       OBFFLog("--------------------\n");
     }
 
-    int best_conformer;
-    double bestE, worstE, currentE;
-    double penalty; // for poor performance
-    double randFloat; // generated random number -- used to pick a rotor
-    double total; // used to calculate the total probability 
-    double *bestCoordPtr = new double [_mol.NumAtoms() * 3]; // coordinates for best conformer
-    double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
-    
-    // Start with the current coordinates
-    bestE = worstE = Energy();
-    // We're later going to add this back to the molecule as a new conformer
-    memcpy((char*)bestCoordPtr,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
-    memcpy((char*)initialCoord,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
-    
     for (int c = 0; c < conformers; ++c) {
       _mol.SetCoordinates(initialCoord);
 
@@ -1308,14 +1354,14 @@ namespace OpenBabel
       //      _loglvl = OBFF_LOGLVL_NONE;
       //      SteepestDescent(geomSteps); // energy minimization for conformer
       //      _loglvl = origLogLevel;
-      currentE = Energy();
+      currentE = Energy(false);
 
       IF_OBFF_LOGLVL_LOW {
         sprintf(_logbuf, "   %3d      %8.3f\n", c + 1, currentE);
         OBFFLog(_logbuf);
       }
       
-      if (IsNan(currentE))
+      if (!isfinite(currentE))
         continue;
 
       if (currentE < bestE) {
@@ -1343,14 +1389,18 @@ namespace OpenBabel
     }
 
     // debugging output to see final weightings of each rotor setting
-//     cerr << "Final Weights: " << endl;
-//     for (int i = 1; i < rotorWeights.size() - 1; ++i) {
-//       cerr << "Weight: " << i;
-//       for (int j = 0; j < rotorWeights[i].size(); ++j) {
-//         cerr << " " << rotorWeights[i][j];
-//       }
-//       cerr << endl;
-//     }
+    IF_OBFF_LOGLVL_HIGH {
+      OBFFLog("Final Weights: \n");
+      for (int i = 1; i < rotorWeights.size() - 1; ++i) {
+        sprintf(_logbuf, " Weight: %d", i);
+        OBFFLog(_logbuf);
+        for (int j = 0; j < rotorWeights[i].size(); ++j) {
+          sprintf(_logbuf, " %8.3f", rotorWeights[i][j]);
+          OBFFLog(_logbuf);
+        }
+        OBFFLog("\n");
+     }
+   }
 
     _mol.AddConformer(bestCoordPtr);
     _current_conformer = _mol.NumConformers() - 1;
@@ -1824,11 +1874,11 @@ namespace OpenBabel
   bool OBForceField::DetectExplosion()
   {
     FOR_ATOMS_OF_MOL (atom, _mol) {
-      if (IsNan(atom->GetX()))
+      if (!isfinite(atom->GetX()))
         return true;
-      if (IsNan(atom->GetY()))
+      if (!isfinite(atom->GetY()))
         return true;
-      if (IsNan(atom->GetZ()))
+      if (!isfinite(atom->GetZ()))
         return true;
     }
     
