@@ -1,3 +1,9 @@
+2008-02-21  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/formats/gausscubeformat.cpp: Simplified the cube reading code,
+	now more resilient to more loosely formatted cube data without the
+	extra line ending at the end of each z data set.
+
 2008-02-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp (LineSearch): Check gradients with isfinite()

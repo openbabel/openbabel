@@ -110,16 +110,20 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     int nAtoms = 0;
     int negAtoms = false;
 
+    int line = 0; // Line counter - help in debugging...
+
     if (!ifs)
       return false; // We are attempting to read past the end of the file
 
     // The first two lines are comments - and so not needed.
+    ++line;
     if (!ifs.getline(buffer, BUFF_SIZE))
     {
       obErrorLog.ThrowError(__FUNCTION__,
                             "Problem reading the Gaussian cube file: cannot read the first line (title/comments).", obWarning);
       return false;
     }
+    ++line;
     if (!ifs.getline(buffer,BUFF_SIZE))
     {
       obErrorLog.ThrowError(__FUNCTION__,
@@ -129,6 +133,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 
     // This line contains the number of atoms included in the file followed by
     // the position of the origin of the cube.
+    ++line;
     if (!ifs.getline(buffer, BUFF_SIZE))
     {
       obErrorLog.ThrowError(__FUNCTION__,
@@ -207,10 +212,11 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     bool angstroms = true;
     for (int i = 0; i < 3; i++)
     {
+      ++line;
       if (!ifs.getline(buffer, BUFF_SIZE))
       {
         errorMsg << "Problem reading the Gaussian cube file: cannot read the "
-                 << i+4 << "line.\nAccording to the specification this line "
+                 << line << "line.\nAccording to the specification this line "
                  << "should contain header information on the size of the cube.\n";
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         return false;
@@ -286,10 +292,11 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     // Now to read in the atoms contained in the Gaussian cube
     for (int i = 0; i < nAtoms; i++)
     {
+      ++line;
       if (!ifs.getline(buffer, BUFF_SIZE))
       {
         errorMsg << "Problem reading the Gaussian cube file: cannot read the "
-                 << i+7 << "line.\nAccording to the specification this line "
+                 << line << "line.\nAccording to the specification this line "
                  << "should contain atomic number and coordinates.\n";
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         return false;
@@ -299,7 +306,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       if (vs.size() < 5)
       {
         errorMsg << "Problem reading the Gaussian cube file: cannot read the "
-                 << i+7 << "line.\nAccording to the specification this line "
+                 << line << "line.\nAccording to the specification this line "
                  << "should contain five elements (atom information).\n";
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         return false;
@@ -312,7 +319,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       if (endptr == static_cast<const char*>(vs.at(0).c_str()))
       {
         errorMsg << "Problems reading the Gaussian cube file: "
-                 << "Could not read line " << i+7 << ".\n"
+                 << "Could not read line " << line << ".\n"
                  << "According to the specification this line should contain "
                  << "five entries separated by white space.\n"
                  << "OpenBabel could not interpret item #0 as an integer.";
@@ -327,7 +334,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       if (endptr == static_cast<const char*>(vs.at(2).c_str()))
       {
         errorMsg << "Problems reading the Gaussian cube file: "
-                 << "Could not read line " << i+7 << ".\n"
+                 << "Could not read line " << line << ".\n"
                  << "According to the specification this line should contain "
                  << "five entries separated by white space.\n"
                  << "OpenBabel could not interpret item #2 as a double.";
@@ -338,7 +345,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       if (endptr == static_cast<const char*>(vs.at(3).c_str()))
       {
         errorMsg << "Problems reading the Gaussian cube file: "
-                 << "Could not read line " << i+7 << ".\n"
+                 << "Could not read line " << line << ".\n"
                  << "According to the specification this line should contain "
                  << "five entries separated by white space.\n"
                  << "OpenBabel could not interpret item #3 as a double.";
@@ -349,7 +356,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       if (endptr == static_cast<const char*>(vs.at(4).c_str()))
       {
         errorMsg << "Problems reading the Gaussian cube file: "
-                 << "Could not read line " << i+7 << ".\n"
+                 << "Could not read line " << line << ".\n"
                  << "According to the specification this line should contain "
                  << "five entries separated by white space.\n"
                  << "OpenBabel could not interpret item #4 as a double.";
@@ -373,48 +380,46 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     // atom data and the cube data.
     if (negAtoms)
     {
+      ++line;
       if (!ifs.getline(buffer, BUFF_SIZE))
       {
         obErrorLog.ThrowError(__FUNCTION__,
-                              "Problem reading the Gaussian cube file: cannot read the line between the atom data and cube data.", obWarning);
+                              "Problem reading the Gaussian cube file: cannot read the line between the atom data and cube data.", obError);
         return false;
       }
     }
     vector<double> values;
-    values.reserve(voxels[0]*voxels[1]*voxels[2]);
-    for (int i = 0; i < voxels[0]; i++)
+    int n = voxels[0]*voxels[1]*voxels[2];
+    values.reserve(n);
+    while (values.size() < n)
     {
-      for (int j = 0; j < voxels[1]; j++)
+      // Read in values until we have a complete row of data
+      ++line;
+      if (!ifs.getline(buffer, BUFF_SIZE))
       {
-        // Read in values until we have a complete row of data
-        vector<string> tmp;
-        while (tmp.size() < voxels[2])
-        {
-          if (!ifs.getline(buffer, BUFF_SIZE))
-          {
-            errorMsg << "Problem reading the Gaussian cube file: cannot read line "
-                     << (i * voxels[0] + j)
-                     << " of the cube data.";
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-            return false;
-          }
-          tokenize(vs, buffer);
-          if (vs.size() == 0)
-          {
-            errorMsg << "Problem reading the Gaussian cube file: cannot read line "
-                     << (i * voxels[0] * j)
-                     << " there does not appear to be any data in it.\n"
-                     << buffer << "\n";
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-            return false;
-          }
-          for (int l = 0; l < vs.size(); l++)
-            tmp.push_back(vs.at(l));
-        }
-        for (int k = 0; k < voxels[2]; k++)
-        {
-          values.push_back(strtod(static_cast<const char*>(tmp.at(k).c_str()), &endptr));
-        }
+        errorMsg << "Problem reading the Gaussian cube file: cannot"
+                 << " read line " << line
+                 << " of the file. More data was expected.\n"
+                 << "Values read in = " << values.size()
+                 << " and expected number of values = "
+                 << voxels[0]*voxels[1]*voxels[2] << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+        return false;
+      }
+      tokenize(vs, buffer);
+      if (vs.size() == 0)
+      {
+        errorMsg << "Problem reading the Gaussian cube file: cannot"
+                 << " read line " << line
+                 << ", there does not appear to be any data in it.\n"
+                 << buffer << "\n";
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+        return false;
+      }
+
+      for (int i = 0; i < vs.size(); ++i)
+      {
+        values.push_back(strtod(static_cast<const char*>(vs.at(i).c_str()), &endptr));
       }
     }
 
