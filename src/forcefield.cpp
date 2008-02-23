@@ -1161,6 +1161,9 @@ namespace OpenBabel
     bool improve = (bonus > 0.0);
 
     for (int i = 1; i < rotorWeights.size() - 1; ++i) {
+			if (rotorKey[i] == -1)
+				continue; // don't rotate
+
       if (improve && rotorWeights[i][rotorKey[i]] > 0.999 - bonus)
         continue;
       if (!improve && rotorWeights[i][rotorKey[i]] < 0.001 - bonus) // bonus < 0
@@ -1259,7 +1262,7 @@ namespace OpenBabel
     // So each rotor is considered in isolation
     rotor = rl.BeginRotor(ri);
     for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
-      rotorKey[i] = 0; // for lack of another default. Unfortunately, this isn't "no rotation"
+      rotorKey[i] = -1; // no rotation (new in 2.2)
     }
     
     rotor = rl.BeginRotor(ri);
@@ -1274,6 +1277,9 @@ namespace OpenBabel
         rotorKey[i] = j;
         rotamers.SetCurrentCoordinates(_mol, rotorKey);
         
+	      _loglvl = OBFF_LOGLVL_NONE;
+	      SteepestDescent(geomSteps); // energy minimization for conformer
+	      _loglvl = origLogLevel;
         currentE = Energy(false);
 
         if (j == 0) 
@@ -1286,7 +1292,7 @@ namespace OpenBabel
         }
         energies.push_back(currentE);
       }
-      rotorKey[i] = 0; // back to the previous setting before we go to another rotor
+      rotorKey[i] = -1; // back to the previous setting before we go to another rotor
       
       weightSet.clear();
       // first loop through and calculate the relative populations from Boltzmann
@@ -1327,6 +1333,7 @@ namespace OpenBabel
       OBFFLog("--------------------\n");
     }
 
+		double defaultRotor = 1.0/sqrt(rl.Size());
     for (int c = 0; c < conformers; ++c) {
       _mol.SetCoordinates(initialCoord);
 
@@ -1334,9 +1341,13 @@ namespace OpenBabel
       rotor = rl.BeginRotor(ri);
       for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
+        rotorKey[i] = -1; // default = don't change dihedral
         randFloat = generator.NextFloat();
+				if (randFloat < defaultRotor) // should we just leave this rotor with default setting?
+					continue;
+
+				randFloat = generator.NextFloat();
         total = 0.0;
-        rotorKey[i] = 0;
         for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
           if (randFloat > total && randFloat < (total+ rotorWeights[i][j])) {
             rotorKey[i] = j;
@@ -1348,9 +1359,9 @@ namespace OpenBabel
       }
       rotamers.SetCurrentCoordinates(_mol, rotorKey);
 
-      //      _loglvl = OBFF_LOGLVL_NONE;
-      //      SteepestDescent(geomSteps); // energy minimization for conformer
-      //      _loglvl = origLogLevel;
+      _loglvl = OBFF_LOGLVL_NONE;
+      SteepestDescent(geomSteps); // energy minimization for conformer
+      _loglvl = origLogLevel;
       currentE = Energy(false);
 
       IF_OBFF_LOGLVL_LOW {
@@ -1401,6 +1412,7 @@ namespace OpenBabel
 
     _mol.AddConformer(bestCoordPtr);
     _current_conformer = _mol.NumConformers() - 1;
+    _mol.SetConformer(_current_conformer);
   }
 
   void OBForceField::DistanceGeometry() 
@@ -2080,7 +2092,7 @@ namespace OpenBabel
             dir = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
           
           if (!_constraints.IsXFixed(a->GetIdx()))
-	    gradPtr[coordIdx] = dir.x();
+	    			gradPtr[coordIdx] = dir.x();
           if (!_constraints.IsYFixed(a->GetIdx()))
             gradPtr[coordIdx+1] = dir.y();
           if (!_constraints.IsZFixed(a->GetIdx()))

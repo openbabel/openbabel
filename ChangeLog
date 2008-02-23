@@ -1,3 +1,13 @@
+2008-02-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/rotamer.cpp (SetCurrentCoordinates): Allow -1 as a rotor
+	setting -- implies do not change the dihedral angle.
+	Some general code cleanups.
+
+	* src/forcefield.cpp (WeightedRotorSearch): Fix some bugs -- check
+	rotors without changing other dihedral angles and make sure to
+	update the conformer structure after the search.
+
 2008-02-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/atom.cpp (GetAngle): Return 0.0 for the angle if the vectors
