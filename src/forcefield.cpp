@@ -955,6 +955,9 @@ namespace OpenBabel
   {
     OBRotorList rl;
     OBRotamerList rotamers;
+    OBRotorIterator ri;
+    OBRotor *rotor;
+
     _origLogLevel = _loglvl;
 
     rl.Setup(_mol);
@@ -985,8 +988,7 @@ namespace OpenBabel
     }
 
     OBRotorKeys rotorKeys;
-    OBRotorIterator ri;
-    OBRotor *rotor = rl.BeginRotor(ri);
+    rotor = rl.BeginRotor(ri);
     for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) // foreach rotor
       rotorKeys.AddRotor(rotor->GetResolution().size());
     
