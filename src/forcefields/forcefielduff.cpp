@@ -209,7 +209,7 @@ namespace OpenBabel
     energy = V * (1.0 - cosPhi0*cosine);
     
     if (gradients) {
-      dE = V * n * cosPhi0 * sin(n * tor);
+      dE = -(V * n * cosPhi0 * sin(n * tor));
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
       gradc = dE * dc; // - dE/drab * drab/dc
