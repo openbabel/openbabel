@@ -78,7 +78,7 @@ int main(int argc,char *argv[])
       return (-1);
     }
   
-  OBForceField *pFF = OBForceField::FindForceField("Ghemical");
+  OBForceField *pFF = OBForceField::FindForceField("MMFF94");
   pFF->SetLogFile(&cerr);
   pFF->SetLogLevel(OBFF_LOGLVL_LOW);
 
