@@ -1,3 +1,8 @@
+2008-02-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefieldghemical.cpp: Small change for the new
+	derivatives.
+
 2008-02-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp: Output the number of possible rotamers when

@@ -102,7 +102,7 @@ namespace OpenBabel
     energy = ka * delta2;
 
     if (gradients) {
-      dE = 2.0 * ka * delta;
+      dE = RAD_TO_DEG * 2.0 * ka * delta;
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
       gradc = dE * dc; // - dE/drab * drab/dc
@@ -188,7 +188,7 @@ namespace OpenBabel
       sine = sin(tor);
       sine2 = sin(2.0 * tor);
       sine3 = sin(3.0 * tor);
-      dE = -k1 * sine + k2 * 2.0 * sine2 - k3 * 3.0 * sine3;
+      dE = k1 * sine - k2 * 2.0 * sine2 + k3 * 3.0 * sine3;
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
       gradc = dE * dc; // - dE/drab * drab/dc
