@@ -1061,7 +1061,6 @@ namespace OpenBabel
      * \return The angle between a-b-c
      */
     static double VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c);
-    static double VectorAngleDerivative_BALL(vector3 &a, vector3 &b, vector3 &c);
     /*! Calculate the derivative of a OOP angle a-b-c-d. b is the central atom, and a-b-c is the plane. 
      * The OOP angle is given by 90° - arccos(dot(corss(ab,cb),db)/rabbc*rdb).
      * \param a atom a (coordinates), will be changed to -dtheta/da
@@ -1071,7 +1070,6 @@ namespace OpenBabel
      * \return The OOP angle for a-b-c-d
      */
     static double VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
-    static double VectorOOPDerivative_BALL(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
  
     /*! Calculate the derivative of a torsion angle a-b-c-d. The torsion angle is given by arccos(dot(corss(ab,bc),cross(bc,cd))/rabbc*rbccd).
      * \param a atom a (coordinates), will be changed to -dtheta/da
@@ -1081,7 +1079,6 @@ namespace OpenBabel
      * \return The tosion angle for a-b-c-d
      */
     static double VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
-    static double VectorTorsionDerivative_BALL(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
     //@}
 
   }; // class OBForceField

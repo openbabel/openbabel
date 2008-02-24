@@ -965,6 +965,14 @@ namespace OpenBabel
       OBFFLog("\nS Y S T E M A T I C   R O T O R   S E A R C H\n\n");
       sprintf(_logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
       OBFFLog(_logbuf);
+
+      unsigned long int combinations = 1;
+      for (rotor = rl.BeginRotor(ri); rotor;
+           rotor = rl.NextRotor(ri)) {
+        combinations *= rotor->GetResolution().size();
+      }
+      sprintf(_logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %lu\n", combinations);
+      OBFFLog(_logbuf);
     }
 
     if (!rl.Size()) { // only one conformer
@@ -1069,12 +1077,12 @@ namespace OpenBabel
       sprintf(_logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
       OBFFLog(_logbuf);
 
-      int combinations = 1;
+      unsigned long int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
         combinations *= rotor->GetResolution().size();
       }
-      sprintf(_logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %d\n", combinations);
+      sprintf(_logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %lu\n", combinations);
       OBFFLog(_logbuf);
     }
 
@@ -1227,12 +1235,12 @@ namespace OpenBabel
       sprintf(_logbuf, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
       OBFFLog(_logbuf);
 
-      int combinations = 1;
+      unsigned long int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
         combinations *= rotor->GetResolution().size();
       }
-      sprintf(_logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %d\n", combinations);
+      sprintf(_logbuf, "  NUMBER OF POSSIBLE ROTAMERS: %lu\n", combinations);
       OBFFLog(_logbuf);
     }
 
@@ -1264,6 +1272,8 @@ namespace OpenBabel
     // First off, we test out each rotor position. How good (or bad) is it?
     // This lets us pre-weight the search to a useful level
     // So each rotor is considered in isolation
+    IF_OBFF_LOGLVL_LOW
+      OBFFLog("  INITIAL WEIGHTING OF ROTAMERS...\n\n");
     rotor = rl.BeginRotor(ri);
     for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       rotorKey[i] = -1; // no rotation (new in 2.2)
@@ -2830,7 +2840,7 @@ namespace OpenBabel
     return rab;
   }
   
-  double OBForceField::VectorAngleDerivative_BALL(vector3 &i, vector3 &j, vector3 &k)
+  double OBForceField::VectorAngleDerivative(vector3 &i, vector3 &j, vector3 &k)
   {
     // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
     // Many thanks to Andreas Moll and the BALLView developers for this
@@ -2897,46 +2907,8 @@ namespace OpenBabel
 
     return theta;
   }
-  
-  double OBForceField::VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c)
-  {
-    vector3 vab, vcb;
-    double theta, rab, rab2, rcb, rcb2, abcb, abcb2;
-     
-    vab = a - b;
-    vcb = c - b;
-    rab = vab.length();
-    if (IsNearZero(rab, 1.0e-3))
-      rab = 0.01;
-    rcb = vcb.length();
-    if (IsNearZero(rcb, 1.0e-3))
-      rcb = 0.01;
-    rab2 = rab * rab;
-    rcb2 = rcb * rcb;
-    
-    abcb = dot(vab, vcb) / (rab * rcb);
-    abcb2 = 1.0 - abcb * abcb;
-    theta = acos(abcb) * RAD_TO_DEG;
-    
-    if (IsNearZero(abcb2)) {
-      a = VZero;
-      b = VZero;
-      c = VZero;
-      return 180.0;
-    }
-
-    a = (vcb * rab * rcb - (vab / rab) * dot(vab, vcb) * rcb) / (sqrt(abcb2) * rab2 * rcb2);
-    c = -((vcb / rcb) * dot(vab, vcb) * rab - vab * rab * rcb) / (sqrt(abcb2) * rab2 * rcb2);
-    b = -a - c;
-
-    a *= (1.0 / DEG_TO_RAD);
-    b *= (1.0 / DEG_TO_RAD);
-    c *= (1.0 / DEG_TO_RAD);
-
-    return theta;
-  }
  
-  double OBForceField::VectorOOPDerivative_BALL(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
+  double OBForceField::VectorOOPDerivative(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
   {
     // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
     // Many thanks to Andreas Moll and the BALLView developers for this
@@ -3047,59 +3019,8 @@ namespace OpenBabel
     
     return RAD_TO_DEG * dl;
   }
-
-  double OBForceField::VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
-  {
-    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
-    // Many thanks to Andreas Moll and the BALLView developers for this
-
-    double angle = Point2PlaneAngle(d, a, b, c) * DEG_TO_RAD; // in the reference, this is x_ijk;l
-
-    vector3 vbc, vbd, vba; // normalized vectors between the atoms
-    double rbc, rbd, rba; // distances between the atoms
-    double angleABC; // angle between abc (in the reference, this is phi_ijk
-    
-    // We should add some double-checks for small values here to make sure we don't "explode" the gradient    
-    vbc = b - c;
-    vbd = b - d;
-    vba = b - a;
-    rbc = vbc.length();
-    if (IsNearZero(rbc, 1.0e-3))
-      rbc = 0.01;
-    rbd = vbd.length();
-    if (IsNearZero(rbd, 1.0e-3))
-      rbd = 0.01;
-    rba = vba.length();
-    if (IsNearZero(rba, 1.0e-3))
-      rba = 0.01;
-    vbc.normalize();
-    vbd.normalize();
-    vba.normalize();
-    
-    angleABC = vectorAngle(vbc, vba) * DEG_TO_RAD;
-    
-    // A few shortcuts
-    double sinChi, sinABC, cosABC;
-    sinChi = sin(angle);
-    sinABC = sin(angleABC);
-    if (IsNearZero(sinABC, 1.0e-3))
-      sinABC = 1.0e-3;
-    cosABC = cos(angleABC);
-    vector3 bcbd = cross(vbc, vbd);
-    vector3 bdba = cross(vbd, vba);
-    vector3 babd = cross(vba, vbd);
-    
-    // These terms lack the dE term (or Oijkl in the reference)
-    a = (bcbd + (-1.0*vba + (vbc * cosABC*sinChi/sinABC))) / (rba * sinABC);
-    c = (bdba + (-1.0*vbc + (vbc * cosABC*sinChi/sinABC))) / (rbc * sinABC);
-    d = ((babd / sinABC) - vbd * sinChi) / rbd;
-    
-    b = -1.0 * (a + c + d);
-    
-    return angle;
-  }
   
-  double OBForceField::VectorTorsionDerivative_BALL(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
+  double OBForceField::VectorTorsionDerivative(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
   {
     // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
     // Many thanks to Andreas Moll and the BALLView developers for this
@@ -3162,93 +3083,6 @@ namespace OpenBabel
     j = i * (rrcj - 1.) - l * rrck;
     k = -(i + j + l);
     
-    return tor;  
-  }
-
-  double OBForceField::VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
-  {
-    vector3 vab, vbc, vcd, vac, vbd, grada, gradb, gradc, gradd;
-    vector3 abbc, bccd, bcabbc, bcbccd, cdabbc, cdbccd, acabbc, acbccd, ababbc, abbccd, bdabbc, bdbccd;
-    double tor, rabbc, rbccd, rabbc2, rbccd2, rabbc3, rbccd3, abbc_bccd, rabbc_rbccd, abbc_bccd2;
-
-    vab = a - b;
-    vbc = b - c;
-    vcd = c - d;
-    vac = a - c;
-    vbd = b - d;
-    abbc = cross(vab, vbc);
-    bccd = cross(vbc, vcd);
-    
-    //    cerr << " abbc.length " << abbc.length() << " bccd length " << bccd.length()
-    //         << endl;
-
-    double dotAbbcBccd = dot(abbc,bccd);
-    tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-    if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
-      tor = 1.0e-3; // rather than NaN
-    }
-    else if (dotAbbcBccd > 0.0) {
-      tor = -tor;
-    }
- 
-    bcabbc = cross(vbc, abbc);
-    bcbccd = cross(vbc, bccd);
-    cdabbc = cross(vcd, abbc);
-    cdbccd = cross(vcd, bccd);
-    acabbc = cross(vac, abbc);
-    acbccd = cross(vac, bccd);
-    ababbc = cross(vab, abbc);
-    abbccd = cross(vab, bccd);
-    bdabbc = cross(vbd, abbc);
-    bdbccd = cross(vbd, bccd);
-    rabbc = abbc.length();
-    rbccd = bccd.length();
-    rabbc2 = rabbc * rabbc;
-    rbccd2 = rbccd * rbccd;
-    rabbc3 = rabbc2 * rabbc;
-    rbccd3 = rbccd2 * rbccd;
-    abbc_bccd = dot(abbc, bccd);
-    rabbc_rbccd = abbc_bccd / (rabbc * rbccd);
-    abbc_bccd2 = sqrt(1.0 - rabbc_rbccd * rabbc_rbccd);
-
-    if (IsNearZero(abbc_bccd2) || IsNan(abbc_bccd2))
-      abbc_bccd2 = 1e-5;
-    
-    /*
-      cout << "sqrt(abbc_bccd2) = " << sqrt(abbc_bccd2) << endl;
-      cout << "(rabbc*rbccd) = " << (rabbc*rbccd) << endl;
-      cout << "dot(abbc,bccd) = " << dot(abbc,bccd) << endl;
-      cout << "(rabbc*rbccd3) = " << (rabbc*rbccd3) << endl;
-      cout << "(rabbc3*rbccd) = " << (rabbc3*rbccd) << endl;
-    */
-    
-    a = (bcbccd / (rabbc*rbccd) - (bcabbc*abbc_bccd) / (rabbc3*rbccd)) / abbc_bccd2;
-    d = (bcabbc / (rabbc*rbccd) - (bcbccd*abbc_bccd) / (rabbc*rbccd3)) / abbc_bccd2;
-
-    b = ( -(cdbccd*abbc_bccd) / (rabbc*rbccd3) + 
-          (cdabbc - acbccd) / (rabbc*rbccd) + 
-          (acabbc*abbc_bccd) / (rabbc3*rbccd)    ) / abbc_bccd2;
-    
-    c = (  (bdbccd*abbc_bccd) / (rabbc*rbccd3) + 
-           (abbccd - bdabbc) / (rabbc*rbccd) +
-           -(ababbc*abbc_bccd) / (rabbc3*rbccd)    ) / abbc_bccd2;
-
-    if (IsNan(a.x()) || IsNan(a.y()) || IsNan(a.z()))
-      a = VZero;
-    if (IsNan(b.x()) || IsNan(b.y()) || IsNan(b.z()))
-      b = VZero;
-    if (IsNan(c.x()) || IsNan(c.y()) || IsNan(c.z()))
-      c = VZero;
-    if (IsNan(d.x()) || IsNan(d.y()) || IsNan(d.z()))
-      d = VZero;
-
-    if (dot(abbc, bccd) > 0.0) {
-      a = -a;
-      b = -b;
-      c = -c;
-      d = -d;
-    }
-   
     return tor;  
   }
   

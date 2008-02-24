@@ -270,6 +270,9 @@ namespace OpenBabel
       dd = d->GetVector();
       angle = OBForceField::VectorOOPDerivative(da, db, dc, dd) * DEG_TO_RAD;  
 
+	    if (!isfinite(angle))
+	      angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
+
       dE = -koop * (c1*sin(angle) + 2.0 * c2 * sin(2*angle));
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
@@ -278,7 +281,9 @@ namespace OpenBabel
     } else {
       angle = DEG_TO_RAD*Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
     }
-    
+
+    if (!isfinite(angle))
+      angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;    
     energy = koop * (c0 + c1 * cos(angle) + c2 * cos(2*angle));
   }
 

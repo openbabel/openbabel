@@ -159,7 +159,7 @@ namespace OpenBabel
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative_BALL(da, db, dc);  
+      theta = OBForceField::VectorAngleDerivative(da, db, dc);  
     } else {
       theta = a->GetAngle(b->GetIdx(), c->GetIdx());
     }
@@ -232,7 +232,7 @@ namespace OpenBabel
       rab_da = theta_da = a->GetVector();
       rab_db = rbc_db = theta_db = b->GetVector();
       rbc_dc = theta_dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative_BALL(theta_da, theta_db, theta_dc);
+      theta = OBForceField::VectorAngleDerivative(theta_da, theta_db, theta_dc);
       rab = OBForceField::VectorLengthDerivative(rab_da, rab_db);
       rbc = OBForceField::VectorLengthDerivative(rbc_db, rbc_dc);
     } else {
@@ -241,6 +241,9 @@ namespace OpenBabel
       rbc = b->GetDistance(c);
     }
     
+    if (!isfinite(theta))
+      theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
+
     delta_theta = theta - theta0;
     delta_rab = rab - rab0;
     delta_rbc = rbc - rbc0;
@@ -333,9 +336,9 @@ namespace OpenBabel
       db = b->GetVector();
       dc = c->GetVector();
       dd = d->GetVector();
-      tor = OBForceField::VectorTorsionDerivative_BALL(da, db, dc, dd);
+      tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
       if (!isfinite(tor))
-        tor = 10e-3; // rather than NaN
+        tor = 1.0e-3;
     } else {
       vector3 vab, vbc, vcd, abbc, bccd;
       vab = a->GetVector() - b->GetVector();
@@ -347,7 +350,7 @@ namespace OpenBabel
       double dotAbbcBccd = dot(abbc,bccd);
       tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
       if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
-        tor = 10e-3; // rather than NaN
+        tor = 180.0; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
         tor = -tor;
@@ -425,7 +428,7 @@ namespace OpenBabel
       db = b->GetVector();
       dc = c->GetVector();
       dd = d->GetVector();
-      angle = OBForceField::VectorOOPDerivative_BALL(da, db, dc, dd);
+      angle = OBForceField::VectorOOPDerivative(da, db, dc, dd);
       dE =  (-1.0 * RAD_TO_DEG * 0.043844 * angle * koop) / cos(angle * DEG_TO_RAD);
       grada = dE * da; // - dE/drab * drab/da
       gradc = dE * dc; // - dE/drab * drab/dc
@@ -435,6 +438,8 @@ namespace OpenBabel
       angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
     }
     
+    if (!isfinite(angle))
+      angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
     angle2 = angle * angle;
     energy = 0.043844 * 0.5 * koop * angle2;
   }
@@ -486,6 +491,9 @@ namespace OpenBabel
     } else
       rab = a->GetDistance(b);
  
+    if (IsNearZero(rab, 1.0e-3))
+      rab = 1.0e-3;
+
     rab2 = rab * rab;
     rab4 = rab2 * rab2;
     rab6 = rab4 * rab2;

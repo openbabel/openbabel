@@ -1,3 +1,17 @@
+2008-02-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefield.cpp: Output the number of possible rotamers when
+	doing rotor search -- as a long unsigned int.
+	Remove old derivatives in favor of BALL analogues.
+
+	* include/openbabel/forcefield.h: Remove old derivatives in favor
+	of BALL analogues.
+
+	* src/forcefields/forcefieldmmff94.cpp: Ditto.
+	
+	* src/forcefielduff.cpp: More checks for real numbers, uncovered
+	doing WeightedRotorSearch.
+
 2008-02-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Added VectorAngleDerivative_BALL,
