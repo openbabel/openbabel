@@ -49,7 +49,7 @@ namespace OpenBabel
   {
     double energy;
 
-    IF_OBFF_LOGLVL_LOW
+    IF_OBFF_LOGLVL_MEDIUM
       OBFFLog("\nE N E R G Y\n\n");
     
     energy = E_Bond(gradients);
@@ -60,7 +60,7 @@ namespace OpenBabel
     energy += E_VDW(gradients);
     energy += E_Electrostatic(gradients);
 
-    IF_OBFF_LOGLVL_LOW {
+    IF_OBFF_LOGLVL_MEDIUM {
       sprintf(_logbuf, "\nTOTAL ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
@@ -90,13 +90,14 @@ namespace OpenBabel
       da = a->GetVector();
       db = b->GetVector();
       rab = OBForceField::VectorLengthDerivative(da, db);
-    } else
+    } else {
       rab = a->GetDistance(b);
-
+    }
+    
     delta = rab - r0;
     delta2 = delta * delta;
  
-    energy = 143.9325 * 0.5 * kb * delta2 * (1.0 - 2.0 * delta + 7.0/12.0 * 4.0 * delta2);
+    energy = 143.9325 * 0.5 * kb * delta2 * (1.0 - 2.0 * delta + 7.0/3.0 * delta2);
     
     if (gradients) {
       dE = 143.9325 * kb * delta * (1.0 - 3.0 * delta + 14.0/3.0 * delta2);
@@ -158,17 +159,21 @@ namespace OpenBabel
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative(da, db, dc);  
-    } else
+      theta = OBForceField::VectorAngleDerivative_BALL(da, db, dc);  
+    } else {
       theta = a->GetAngle(b->GetIdx(), c->GetIdx());
+    }
     
+    if (!isfinite(theta))
+      theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
+
     delta = theta - theta0;
     delta2 = delta * delta;
     
     energy = 0.043844 * 0.5 * ka * delta2 * (1.0 - 0.007 * delta);
 
     if (gradients) {
-      dE = 0.043844 * ka * delta * (1.0 - 1.5 * 0.007 * delta);
+      dE = RAD_TO_DEG * 0.043844 * ka * delta * (1.0 - 1.5 * 0.007 * delta);
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
       gradc = dE * dc; // - dE/drab * drab/dc
@@ -227,7 +232,7 @@ namespace OpenBabel
       rab_da = theta_da = a->GetVector();
       rab_db = rbc_db = theta_db = b->GetVector();
       rbc_dc = theta_dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative(theta_da, theta_db, theta_dc);
+      theta = OBForceField::VectorAngleDerivative_BALL(theta_da, theta_db, theta_dc);
       rab = OBForceField::VectorLengthDerivative(rab_da, rab_db);
       rbc = OBForceField::VectorLengthDerivative(rbc_db, rbc_dc);
     } else {
@@ -244,8 +249,8 @@ namespace OpenBabel
 
     if (gradients) {
 
-      grada = 2.51210 * (kbaABC * rab_da * delta_theta + theta_da * (kbaABC * delta_rab + kbaCBA * delta_rbc));
-      gradc = 2.51210 * (kbaCBA * rbc_dc * delta_theta + theta_dc * (kbaABC * delta_rab + kbaCBA * delta_rbc));
+      grada = 2.51210 * (kbaABC * rab_da * delta_theta + RAD_TO_DEG * theta_da * (kbaABC * delta_rab + kbaCBA * delta_rbc));
+      gradc = 2.51210 * (kbaCBA * rbc_dc * delta_theta + RAD_TO_DEG * theta_dc * (kbaABC * delta_rab + kbaCBA * delta_rbc));
       gradb = -grada - gradc;
     }
   }
@@ -304,7 +309,18 @@ namespace OpenBabel
     
     return row;
   }
-
+  
+  // 
+  // MMFF part I - page 495
+  //      
+  // ET_ijkl = 0.5 ( V1 (1 + cos(0_ijkl)) + V2 (1 - cos(2 0_ijkl)) + V3 (1 + cos(3 0_ijkl)) )
+  //
+  // V1		force constant (md/rad)
+  // V2		force constant (md/rad)
+  // V3		force constant (md/rad)
+  //
+  // 0_ijkl 	torsion angle (degrees)
+  //
   void OBFFTorsionCalculationMMFF94::Compute(bool gradients)
   {
     vector3 da, db, dc, dd;
@@ -317,9 +333,9 @@ namespace OpenBabel
       db = b->GetVector();
       dc = c->GetVector();
       dd = d->GetVector();
-      tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
-      if (IsNan(tor))
-        tor = 1.0e-7;
+      tor = OBForceField::VectorTorsionDerivative_BALL(da, db, dc, dd);
+      if (!isfinite(tor))
+        tor = 10e-3; // rather than NaN
     } else {
       vector3 vab, vbc, vcd, abbc, bccd;
       vab = a->GetVector() - b->GetVector();
@@ -330,9 +346,8 @@ namespace OpenBabel
 
       double dotAbbcBccd = dot(abbc,bccd);
       tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-      if (IsNearZero(dotAbbcBccd)) {
-        //tor = 0.0; // rather than NaN
-        tor = 180.0; // rather than NaN
+      if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
+        tor = 10e-3; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
         tor = -tor;
@@ -353,7 +368,7 @@ namespace OpenBabel
       sine = sin(DEG_TO_RAD * tor);
       sine2 = sin(2.0 * DEG_TO_RAD * tor);
       sine3 = sin(3.0 * DEG_TO_RAD * tor);
-      dE = -0.5 * (v1 * sine - 2.0 * v2 * sine2 + 3.0 * v3 * sine3); // MMFF
+      dE = 0.5 * (v1 * sine - 2.0 * v2 * sine2 + 3.0 * v3 * sine3); // MMFF
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db
       gradc = dE * dc; // - dE/drab * drab/dc
@@ -410,12 +425,12 @@ namespace OpenBabel
       db = b->GetVector();
       dc = c->GetVector();
       dd = d->GetVector();
-      angle = OBForceField::VectorOOPDerivative(da, db, dc, dd) * RAD_TO_DEG;
-      dE =  (0.043844 * angle * koop) / cos(angle * DEG_TO_RAD);
+      angle = OBForceField::VectorOOPDerivative_BALL(da, db, dc, dd);
+      dE =  (-1.0 * RAD_TO_DEG * 0.043844 * angle * koop) / cos(angle * DEG_TO_RAD);
       grada = dE * da; // - dE/drab * drab/da
       gradc = dE * dc; // - dE/drab * drab/dc
       gradd = dE * dd; // - dE/drab * drab/dd
-      gradb = -1.0*(grada + gradc + gradd);
+      gradb = dE * db; // - dE/drab * drab/db
     } else {
       angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
     }

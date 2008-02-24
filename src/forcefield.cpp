@@ -42,10 +42,10 @@ GNU General Public License for more details.
 	    - Angle: finished
 	    - StrBnd: small errors
 	    - Torsion: finished
-	    - OOP: no analytical gradient
+	    - OOP: finished
 	    - VDW: finished
 	    - Electrostatic: finished
-      - Analytical gradients: finished (except OOP)
+      - Analytical gradients: finished 
       - Validation: http://home.scarlet.be/timvdm/MMFF94_validation_output.gz
 
       - src/forcefields/forcefielduff.cpp
@@ -733,7 +733,7 @@ namespace OpenBabel
       _velocityPtr = NULL;       
     }    
    
-    if (IsSetupNeeded(mol) || !_validSetup) {
+    if (IsSetupNeeded(mol)) {
       if (_velocityPtr)
         delete [] _velocityPtr;
       _velocityPtr = NULL;       
@@ -754,6 +754,10 @@ namespace OpenBabel
 
       if (!SetupCalculations()) {
         _validSetup = false;
+        return false;
+      }
+    } else {
+      if (!_validSetup) {
         return false;
       }
     }
@@ -2826,6 +2830,74 @@ namespace OpenBabel
     return rab;
   }
   
+  double OBForceField::VectorAngleDerivative_BALL(vector3 &i, vector3 &j, vector3 &k)
+  {
+    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
+    // Many thanks to Andreas Moll and the BALLView developers for this
+
+    vector3 v1, v2;
+    vector3 n1, n2;
+
+    // Calculate the vector between atom1 and atom2,
+    // test if the vector has length larger than 0 and normalize it
+    v1 = i - j;
+    v2 = k - j;
+
+    double length1 = v1.length();
+    double length2 = v2.length();
+
+    // test if the vector has length larger than 0 and normalize it
+    if (IsNearZero(length1) || IsNearZero(length2)) {
+      i = VZero;
+      j = VZero;
+      k = VZero;
+      return 0.0;
+    }
+
+    // Calculate the normalized bond vectors
+    double inverse_length_v1 = 1.0 / length1;
+    double inverse_length_v2 = 1.0 / length2;
+    v1 *= inverse_length_v1 ;
+    v2 *= inverse_length_v2;
+
+    // Calculate the cross product of v1 and v2, test if it has length unequal 0,
+    // and normalize it.
+    vector3 c1 = cross(v1, v2);
+    double length = c1.length();
+    if (IsNearZero(length)) {
+      i = VZero;
+      j = VZero;
+      k = VZero;
+      return 0.0;
+    }
+
+    c1 /= length;
+
+    // Calculate the cos of theta and then theta
+    double costheta = dot(v1, v2);
+    double theta;
+    if (costheta > 1.0) {
+      theta = 0.0;
+      costheta = 1.0;
+    } else if (costheta < -1.0) {
+      theta = 180.0;
+      costheta = -1.0;
+    } else {
+      theta = RAD_TO_DEG * acos(costheta);
+    }
+
+    vector3 t1 = cross(v1, c1);
+    t1.normalize();
+    vector3 t2 = cross(v2, c1);
+    t2.normalize();
+
+    i = -t1 * inverse_length_v1;
+    k =  t2 * inverse_length_v2;
+    j = - (i + k);
+
+    return theta;
+  }
+  
   double OBForceField::VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c)
   {
     vector3 vab, vcb;
@@ -2864,6 +2936,118 @@ namespace OpenBabel
     return theta;
   }
  
+  double OBForceField::VectorOOPDerivative_BALL(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
+  {
+    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
+    // Many thanks to Andreas Moll and the BALLView developers for this
+
+    // temp variables:
+    double length;
+    vector3 delta;
+
+    // normal vectors of the three planes:
+    vector3 an, bn, cn;
+
+    // calculate normalized bond vectors from central atom to outer atoms:
+    delta = i - j;
+    length = delta.length();
+    if (IsNearZero(length)) {
+      i = VZero;
+      j = VZero;
+      k = VZero;
+      l = VZero;
+      return 0.0;
+    }
+    // normalize the bond vector:
+    delta /= length;
+    // store the normalized bond vector from central atom to outer atoms:
+    const vector3 ji = delta;
+    // store length of this bond:
+    const double length_ji = length;
+		
+    delta = k - j;
+    length = delta.length();
+    if (IsNearZero(length)) {
+      i = VZero;
+      j = VZero;
+      k = VZero;
+      l = VZero;
+      return 0.0;
+    }
+    // normalize the bond vector:
+    delta /= length;
+    // store the normalized bond vector from central atom to outer atoms:
+    const vector3 jk = delta;
+    // store length of this bond:
+    const double length_jk = length;
+	
+    delta = l - j;
+    length = delta.length();
+    if (IsNearZero(length)) {
+      i = VZero;
+      j = VZero;
+      k = VZero;
+      l = VZero;
+      return 0.0;
+    }
+    // normalize the bond vector:
+    delta /= length;
+    // store the normalized bond vector from central atom to outer atoms:
+    const vector3 jl = delta;
+    // store length of this bond:
+    const double length_jl = length;
+	
+    // the normal vectors of the three planes:
+    an = cross(ji, jk);
+    bn = cross(jk, jl);
+    cn = cross(jl, ji);
+
+    // Bond angle ji to jk
+    const double cos_theta = dot(ji, jk);
+    const double theta = acos(cos_theta);
+    // If theta equals 180 degree or 0 degree
+    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
+      i = VZero;
+      j = VZero;
+      k = VZero;
+      l = VZero;
+      return 0.0;
+    }
+				
+    const double sin_theta = sin(theta);
+    const double sin_dl = dot(an, jl) / sin_theta;
+
+    // the wilson angle:
+    const double dl = asin(sin_dl);
+
+    // In case: wilson angle equals 0 or 180 degree: do nothing
+    if (IsNearZero(dl) || IsNearZero(fabs(dl - M_PI))) {
+      i = VZero;
+      j = VZero;
+      k = VZero;
+      l = VZero;
+      return RAD_TO_DEG * dl;
+    }
+				
+    const double cos_dl = cos(dl);
+
+    // if wilson angle equal 90 degree: abort
+    if (cos_dl < 0.0001) {
+      i = VZero;
+      j = VZero;
+      k = VZero;
+      l = VZero;
+      return RAD_TO_DEG * dl;
+    }
+
+    l = (an / sin_theta - jl * sin_dl) / length_jl;
+    i = ((bn + (((-ji + jk * cos_theta) * sin_dl) / sin_theta)) / length_ji) / sin_theta;
+    k = ((cn + (((-jk + ji * cos_theta) * sin_dl) / sin_theta)) / length_jk) / sin_theta;
+    j = -(i + k + l);
+    
+    return RAD_TO_DEG * dl;
+  }
+
   double OBForceField::VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)
   {
     // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
@@ -2913,6 +3097,72 @@ namespace OpenBabel
     b = -1.0 * (a + c + d);
     
     return angle;
+  }
+  
+  double OBForceField::VectorTorsionDerivative_BALL(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
+  {
+    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
+    // Many thanks to Andreas Moll and the BALLView developers for this
+
+    // Bond vectors of the three atoms
+    vector3 ij, jk, kl;
+    // length of the three bonds
+    double l_ij, l_jk, l_kl;
+    // angle between ijk and jkl:
+    double angle_ijk, angle_jkl;
+    
+    ij = j - i;
+    jk = k - j;
+    kl = l - k;
+    
+    l_ij = ij.length();
+    l_jk = jk.length();
+    l_kl = kl.length();
+    
+    if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
+      i = VZero;
+      j = VZero;
+      k = VZero;
+      l = VZero;
+      return 0.0;
+    }
+    
+    angle_ijk = DEG_TO_RAD * vectorAngle(ij, jk);
+    angle_jkl = DEG_TO_RAD * vectorAngle(jk, kl);
+
+    // normalize the bond vectors:
+    ij /= l_ij;
+    jk /= l_jk;
+    kl /= l_kl;
+
+    double sin_j = sin(angle_ijk);
+    double sin_k = sin(angle_jkl);
+
+    double rsj = l_ij * sin_j;
+    double rsk = l_kl * sin_k;
+
+    double rs2j = 1. / (rsj * sin_j);
+    double rs2k = 1. / (rsk * sin_k);
+  
+    double rrj = l_ij / l_jk;
+    double rrk = l_kl / l_jk;
+
+    double rrcj = rrj * (-cos(angle_ijk));
+    double rrck = rrk * (-cos(angle_jkl));
+
+    vector3 a = cross(ij, jk);
+    vector3 b = cross(jk, kl);
+    vector3 c = cross(a, b);
+    double d1 = dot(c, jk);
+    double d2 = dot(a, b);
+    double tor = RAD_TO_DEG * atan2(d1, d2);
+
+    i = -a * rs2j;
+    l = b * rs2k;
+    j = i * (rrcj - 1.) - l * rrck;
+    k = -(i + j + l);
+    
+    return tor;  
   }
 
   double OBForceField::VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d)

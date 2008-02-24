@@ -246,6 +246,10 @@ namespace OpenBabel
       { 
         return std::string("kcal/mol"); 
       }
+      
+      //! \return that analytical gradients are implemented for MMFF94
+      bool HasAnalyticalGradients() { return true; }
+
       //! Setup
       bool Setup(OBMol &mol);
  
