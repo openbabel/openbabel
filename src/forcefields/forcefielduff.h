@@ -143,8 +143,8 @@ namespace OpenBabel
         return std::string("kJ/mol");  // Note that we convert from kcal/mol internally
       }
 
-    //! \return that analytical gradients are implemented for Ghemical
-    bool HasAnalyticalGradients() { return true; }
+    //! \return that analytical gradients are implemented for UFF
+    bool HasAnalyticalGradients() { return false; } // angles are still wrong
 
     //! \return total energy
     double Energy(bool gradients = true);
@@ -163,6 +163,9 @@ namespace OpenBabel
       
     //! Compare and print the numerical and analytical gradients
     bool ValidateGradients();
+    
+    static double VectorUFFAngleDerivative(vector3 &i, vector3 &j, vector3 &k);
+    static double VectorUFFOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
 
   }; // class OBForceFieldUFF
 
