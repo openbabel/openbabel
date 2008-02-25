@@ -289,7 +289,7 @@ namespace OpenBabel
     }
 	
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL STRETCH BENDING ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
  
@@ -2552,6 +2552,9 @@ namespace OpenBabel
       anglecalc.at = angletype;
       
       _anglecalculations.push_back(anglecalc);
+
+      if (anglecalc.linear)
+        continue;
 
       parameter = GetTypedParameter3Atom(strbndtype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), _ffstrbndparams);
       if (parameter == NULL) {
