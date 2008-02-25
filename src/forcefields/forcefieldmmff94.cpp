@@ -159,7 +159,7 @@ namespace OpenBabel
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative(da, db, dc);  
+      theta = OBForceField::VectorAngleDerivative(da, db, dc);
     } else {
       theta = a->GetAngle(b->GetIdx(), c->GetIdx());
     }
@@ -168,12 +168,17 @@ namespace OpenBabel
       theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
 
     delta = theta - theta0;
-    delta2 = delta * delta;
     
-    energy = 0.043844 * 0.5 * ka * delta2 * (1.0 - 0.007 * delta);
+    if (linear) {
+      energy = 143.9325 * ka * (1.0 + cos(theta * DEG_TO_RAD));
+      dE = -sin(theta * DEG_TO_RAD) * 143.9325 * ka;
+    } else {
+      delta2 = delta * delta;
+      energy = 0.043844 * 0.5 * ka * delta2 * (1.0 - 0.007 * delta);
+      dE = RAD_TO_DEG * 0.043844 * ka * delta * (1.0 - 1.5 * 0.007 * delta);
+    }
 
     if (gradients) {
-      dE = RAD_TO_DEG * 0.043844 * ka * delta * (1.0 - 1.5 * 0.007 * delta);
       grada = dE * da; // - dE/drab * drab/da
       gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
       gradc = dE * dc; // - dE/drab * drab/dc
@@ -2455,6 +2460,12 @@ namespace OpenBabel
       bondtype1 = GetBondType(a, b);
       bondtype2 = GetBondType(b, c);
       
+      if (HasLinSet(atoi(b->GetType()))) {
+        anglecalc.linear = true;
+      } else {
+        anglecalc.linear = false;
+      }
+
       // try exact match 
       parameter = GetTypedParameter3Atom(angletype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), _ffangleparams);
       if (parameter == NULL) // try 3-2-3

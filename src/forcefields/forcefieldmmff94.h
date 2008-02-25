@@ -41,6 +41,7 @@ namespace OpenBabel
     public:
       double ka, theta0, theta, delta;
       int at; //angletype (ATIJK)
+      bool linear;
       
       void Compute(bool gradients = true);
   };
