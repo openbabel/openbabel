@@ -1,3 +1,11 @@
+2008-02-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/msiformat.cpp: Finally fixed bond connections and
+	single/double bonds. Still needs more testing.
+
+	* src/formats/gausscubeformat.cpp: Try to skim to the end of the
+	file after reading data.
+
 2008-02-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefieldghemical.cpp: Small change for the new

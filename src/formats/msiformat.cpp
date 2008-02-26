@@ -121,7 +121,6 @@ namespace OpenBabel
         }
 
         if (strstr(buffer, "Bond") != NULL) {
-
           bondRecord = true;
           startBondAtom = endBondAtom = 0;
           bondOrder = 1;
@@ -180,7 +179,7 @@ namespace OpenBabel
               bondOrder = 3;
             else if (bondOrder == 8) // aromatic?
               bondOrder = 5;
-            else
+            else if (bondOrder != 2) // 1 OK, 2 OK, others unknown
               bondOrder = 1;
             continue;
           }
@@ -194,7 +193,7 @@ namespace OpenBabel
           }
           if (bondRecord) {
             // Bond records appear to be questionable
-            mol.AddBond(startBondAtom, endBondAtom, bondOrder);
+            mol.AddBond(startBondAtom - 1, endBondAtom - 1, bondOrder);
             bondRecord = false;
           }
           
@@ -211,7 +210,14 @@ namespace OpenBabel
     while(ifs.peek() != EOF && ifs.good() && 
           (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
-
+    
+    /*
+    if (!pConv->IsOption("b",OBConversion::INOPTIONS))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+      mol.PerceiveBondOrders();
+    */
+      
     return(true);
   }
 
