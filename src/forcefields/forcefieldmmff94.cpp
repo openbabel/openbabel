@@ -3981,7 +3981,7 @@ namespace OpenBabel
   }
   
   //
-  // MMFF part V - page 609
+  // MMFF part IV - page 609
   //
   // TTijkl = 1 when BTjk = 1
   // TTijkl = 2 when BTjk = 0 but BTij and/or BTkl = 1
@@ -3999,21 +3999,26 @@ namespace OpenBabel
     if (btbc == 1)
       return 1;
     
-    // CXT = MC*(J*MA**3 + K*MA**2 + I*MA + L) + TTijkl  MC = 6, MA = 136
-    int order = (atoi(d->GetType())*2515456 + atoi(c->GetType())*18496 + atoi(b->GetType())*136 + atoi(a->GetType())) 
-      - (atoi(a->GetType())*2515456 + atoi(b->GetType())*18496 + atoi(c->GetType())*136 + atoi(d->GetType()));
-
-    if (order >= 0)
-      if (!btbc && (btab))
-        return 2;
-      else
-        if (!btbc && (btcd))
-          return 2;
-
     if (a->IsInRingSize(4) && b->IsInRingSize(4) && c->IsInRingSize(4) && d->IsInRingSize(4))
       if (IsInSameRing(a,b) && IsInSameRing(b,c) && IsInSameRing(c,d))
         return 4;
-
+   
+    if (_mol.GetBond(b,c)->IsSingle()) {
+      if (btab || btcd)
+        return 2;
+      /*
+      unsigned int order1 = GetCXT(0, atoi(d->GetType()), atoi(c->GetType()), atoi(b->GetType()), atoi(a->GetType())); 
+      unsigned int order2 = GetCXT(0, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()));
+    
+      cout << "GetTorsionType(" << a->GetType() << ", " << b->GetType() << ", " << c->GetType() << ", " << d->GetType() << ")" << endl;
+      cout << "    order1 = " << order1 << endl;
+      cout << "    order2 = " << order2 << endl;
+      cout << "    btab = " << btab << endl;
+      cout << "    btbc = " << btbc << endl;
+      cout << "    btcd = " << btcd << endl;
+      */
+    }
+    
     if (a->IsInRingSize(5) && b->IsInRingSize(5) && c->IsInRingSize(5) && d->IsInRingSize(5)) {
       vector<OBRing*> vr;
       vr = _mol.GetSSSR();
@@ -4036,31 +4041,32 @@ namespace OpenBabel
         return 5;
       }
     }
+ 
 
     return 0;
   }
 
-  // CXB = MC * (I * MA + J) * BTij
+  // CXB = MC * (I * MA + J) + BTij
   unsigned int OBForceFieldMMFF94::GetCXB(int type, int a, int b)
   {
     unsigned int cxb;
-    cxb = 2 * (a * 136 + b) * type;
+    cxb = 2 * (a * 136 + b) + type;
     return cxb;
   }
   
-  // CXA = MC * (J * MA^2 + I * MA + K) * ATijk
+  // CXA = MC * (J * MA^2 + I * MA + K) + ATijk
   unsigned int OBForceFieldMMFF94::GetCXA(int type, int a, int b, int c)
   {
     unsigned int cxa;
-    cxa = 9 * (b * 18496 + a * 136 + c) * type;
+    cxa = 9 * (b * 18496 + a * 136 + c) + type;
     return cxa;
   }
   
-  // CXS = MC * (J * MA^2 + I * MA + K) * STijk
+  // CXS = MC * (J * MA^2 + I * MA + K) + STijk
   unsigned int OBForceFieldMMFF94::GetCXS(int type, int a, int b, int c)
   {
     unsigned int cxs;
-    cxs = 12 * (b * 18496 + a * 136 + c) * type;
+    cxs = 12 * (b * 18496 + a * 136 + c) + type;
     return cxs;
   }
   
@@ -4076,7 +4082,7 @@ namespace OpenBabel
   unsigned int OBForceFieldMMFF94::GetCXT(int type, int a, int b, int c, int d)
   {
     unsigned int cxt;
-    cxt = 6 * (b * 2515456 + c * 18496 + a * 136 + d) * type;
+    cxt = 6 * (b * 2515456 + c * 18496 + a * 136 + d) + type;
     return cxt;
   }
   
@@ -4084,7 +4090,7 @@ namespace OpenBabel
   unsigned int OBForceFieldMMFF94::GetCXQ(int type, int a, int b)
   {
     unsigned int cxq;
-    cxq = 2 * (a * 136 + b) * type;
+    cxq = 2 * (a * 136 + b) + type;
     return cxq;
   }
 
