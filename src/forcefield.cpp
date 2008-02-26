@@ -1349,7 +1349,7 @@ namespace OpenBabel
       OBFFLog("--------------------\n");
     }
 
-		double defaultRotor = 1.0/sqrt(rl.Size());
+		double defaultRotor = 1.0/sqrt((double)rl.Size());
     for (int c = 0; c < conformers; ++c) {
       _mol.SetCoordinates(initialCoord);
 

@@ -334,10 +334,13 @@ namespace OpenBabel
   {
     XMLConversion* pxmlConv = static_cast<XMLConversion*>(context);
     ostream* ofs = pxmlConv->GetOutStream();
-    ofs->write(buffer,len);
-    if(!ofs)
-      return -1;
-    ofs->flush();
+    if(len>0)                //a call with len=0 coming from xmlFreeTextWriter
+    {                        //called from destructor of XMLConversion was causing crash
+      ofs->write(buffer,len);
+      if(!ofs)
+        return -1;
+      ofs->flush();
+    }
     return len;
   }
 
