@@ -437,14 +437,21 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->SetValues(nValues);
     gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
 
-    // Connect the dots and guess bond orders?
+    pmol->EndModify();
+    
+    // clean out any remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+          (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
+    // Connect the dots and guess bond orders
     if (!pConv->IsOption("b", OBConversion::INOPTIONS))
       pmol->ConnectTheDots();
     if (!pConv->IsOption("s", OBConversion::INOPTIONS) && !pConv->IsOption("b", OBConversion::INOPTIONS))
       pmol->PerceiveBondOrders();
 
-    pmol->EndModify();
     pmol->SetData(gd);
+    pmol->SetDimension(3); // always a 3D structure
 
     return true;
   }
