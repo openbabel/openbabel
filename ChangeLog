@@ -4,7 +4,7 @@
 	compiler error.
 	
 	* src/formats/xml/xml.cpp(XMLConversion::WriteStream): do not
-	write when buffer empty. Work around to prevent crash in CMLFormat
+	write when buffer empty. Workaround to prevent crash in CMLFormat
 	which occurs when freeing libxml2 writer. I don't understand exactly
 	what is happening here. I wish we had a C++ XML library!
 	I hope cures bugs #1815533 and #1900480.
