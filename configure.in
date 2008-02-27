@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([Open Babel], 2.2.0b3, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_INIT([Open Babel], 2.2.0b4, openbabel-discuss@lists.sourceforge.net, openbabel)
 AC_CONFIG_SRCDIR(src/zipstreamimpl.h)
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
@@ -128,32 +128,32 @@ AC_PATH_PROG(RUBY, ruby)
 dnl Conditionally build docs, scripts, etc.
 
 dnl check for wx widgets for src/GUI
-WXCONFIG=wx-config
-AC_ARG_WITH(wx-config,
-[[  --with-wx-config=FILE     Use the given path to wx-config when determining
-                            wxWidgets configuration; defaults to "wx-config"]],
-[
-    if test "$withval" != "yes" -a "$withval" != ""; then
-        WXCONFIG=$withval
+AC_ARG_VAR(
+ [WXCONFIG],
+ [Use the given path to wx-config when determining
+  wxWidgets configuration.]
+)
+AC_PATH_PROG([WXCONFIG], [wx-config])
+AC_SUBST([WXCONFIG])
+
+if test x"$WXCONFIG" != "x" ; then
+    AC_MSG_CHECKING([wxWidgets version])
+    if wxversion=`$WXCONFIG --version`; then
+        AC_MSG_RESULT([$wxversion])
+    else
+        AC_MSG_RESULT([not found])
     fi
-])
-AC_MSG_CHECKING([wxWidgets version])
-if wxversion=`$WXCONFIG --version`; then
-    AC_MSG_RESULT([$wxversion])
-else
-    AC_MSG_RESULT([not found])
+
+    WX_CPPFLAGS="`$WXCONFIG --cppflags`"
+    WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+    WX_LIBS="`$WXCONFIG --libs`"
+
+    dnl only needed for wx GUI
+    AC_SUBST([WX_LIBS])
+    AC_SUBST([WX_CXXFLAGS])
+    AC_SUBST([WX_CPPFLAGS])
 fi
-
-WX_CPPFLAGS="`$WXCONFIG --cppflags`"
-WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
-WX_LIBS="`$WXCONFIG --libs`"
-
-dnl only needed for wx GUI
-AC_SUBST(WX_LIBS)
-AC_SUBST(WX_CXXFLAGS)
-AC_SUBST(WX_CPPFLAGS)
-
-AM_CONDITIONAL(BUILD_WXGUI, test x"$wxversion" != "x" -a "$wx_gui" = "yes")
+AM_CONDITIONAL([BUILD_WXGUI], [test x"$wxversion" != "x" -a "$wx_gui" = "yes"])
 
 dnl Use Perl's "prove" test harness to run unit tests
 AM_CONDITIONAL(PERL_TESTS, test x"$PROVE" != "x")
