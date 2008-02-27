@@ -169,7 +169,7 @@ int main(int argc,char **argv)
       if(pDesc)
         cout << "logP             " << pDesc->Predict(&mol) << endl;
 
-      pDesc = OBDescriptor::FindType("PSA");
+      pDesc = OBDescriptor::FindType("TPSA");
       if(pDesc)
         cout << "PSA              " << pDesc->Predict(&mol) << endl;
 
