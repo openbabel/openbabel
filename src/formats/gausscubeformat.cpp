@@ -123,6 +123,8 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                             "Problem reading the Gaussian cube file: cannot read the first line (title/comments).", obWarning);
       return false;
     }
+    string cubeTitle = buffer; // save for later use
+    
     ++line;
     if (!ifs.getline(buffer,BUFF_SIZE))
     {
@@ -371,10 +373,12 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     }
 
     // Now to read in the actual cube data
+    // TODO: handle multiple cubes in one file
     OBGridData *gd = new OBGridData;
     gd->SetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
     gd->SetLimits(origin, axes[0], axes[1], axes[2]);
     gd->SetUnit(angstroms ? OBGridData::ANGSTROM : OBGridData::BOHR);
+    gd->SetAttribute(cubeTitle);
 
     // If the number of atoms was negative then there is some data between the
     // atom data and the cube data.
