@@ -146,6 +146,19 @@ namespace OpenBabel
     return(NULL);
   }
 
+  std::vector<OBGenericData *> OBBase::GetAllData(const unsigned int dt)
+  {
+    std::vector<OBGenericData *> matches;
+    
+    // return all values matching this type
+    OBDataIterator i;
+    for (i = _vdata.begin();i != _vdata.end();++i)
+      if ((*i)->GetDataType() == dt)
+        matches.push_back(*i);
+        
+    return(matches);
+  }
+
   std::vector<OBGenericData*>  OBBase::GetData(DataOrigin source)
   {
     std::vector<OBGenericData*> filtered; // filtered data only from source

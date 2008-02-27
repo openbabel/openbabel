@@ -1,3 +1,19 @@
+2008-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/base.h, src/base.cpp: Add new GetAllData()
+	function to return a vector of all OBGenericData of a given
+	type. This has been long requested and is sorely
+	needed. (For example, it's useful when you have multiple orbitals
+	in a molecule.)
+
+	* src/formats/gausscubeformat.cpp: Add the title of the cube as an
+	attribute of the GridData.
+
+	* tools/obprop.cpp: Update to new name of PSA descriptor.
+
+	* configure.in, configure: Update with patch from Daniel Leidert
+	for PR#1902640 and wx-config.
+
 2008-02-25  Chris Morley
 
 	* src/forcefield.cpp: added (double)cast to sqrt to prevent

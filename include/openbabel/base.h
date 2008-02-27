@@ -286,6 +286,10 @@ class OBBase;
       OBGenericData                    *GetData(const std::string&);
       //! \return any data matching the given attribute name or NULL if nothing matches
       OBGenericData                    *GetData(const char *);
+      //! \return the all matching data for a given type from OBGenericDataType
+      //!    or an empty vector if nothing matches
+      //! \since version 2.2
+      std::vector<OBGenericData*>       GetAllData(const unsigned int type);
       //! \return all data, suitable for iterating
       std::vector<OBGenericData*>      &GetData() { return(_vdata); }
       //! \return all data with a specific origin, suitable for iterating
