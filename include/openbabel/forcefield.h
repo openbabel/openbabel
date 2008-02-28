@@ -162,9 +162,6 @@ namespace OpenBabel
       //! \return Energy for this OBFFCalculation (call Compute() first)
       virtual double GetEnergy() 
       {
-        if (!energy)
-	  Compute(false);
-
         return energy; 
       }
       //! \return Gradient for this OBFFCalculation with respect to coordinates of atom (call Compute() first)
@@ -1099,8 +1096,14 @@ namespace OpenBabel
      * \return The distance between a and b (bondlength for bond stretching, separation for vdw, electrostatic)
      */
     static double VectorLengthDerivative(vector3 &a, vector3 &b);
-    static double VectorDistanceDerivative(double *pos_i, double *pos_j, 
-                                         double *force_i, double *force_j);
+    /*! To be used for VDW or Electrostatic interactions. Thi
+     *  is faster than VectorBondDerivative, but does no error checking. 
+     */
+    static double VectorDistanceDerivative(const double* const pos_i, const double* const pos_j, 
+                                           double *force_i, double *force_j);
+    static double VectorBondDerivative(double *pos_i, double *pos_j, 
+                                       double *force_i, double *force_j);
+ 
     /*! Calculate the derivative of a angle a-b-c. The angle is given by dot(ab,cb)/rab*rcb. 
      *  Used for harmonic (cubic) angle potentials.
      * \param a atom a (coordinates), will be changed to -dtheta/da
@@ -1145,6 +1148,13 @@ namespace OpenBabel
       result[2] = i[2] - j[2];
     }
     
+    static void VectorSubstract(const double* const i, const double* const j, double *result)
+    {
+      result[0] = i[0] - j[0];
+      result[1] = i[1] - j[1];
+      result[2] = i[2] - j[2];
+    }
+    
     /*! inline fuction to speed up minimization speed
      * \param i pointer to i[3]
      * \param j pointer to j[3]
@@ -1181,6 +1191,23 @@ namespace OpenBabel
       result[2] = i[2] * n;
     }
     
+    static void VectorMultiply(const double* const i, const double n, double *result)
+    {
+      result[0] = i[0] * n;
+      result[1] = i[1] * n;
+      result[2] = i[2] * n;
+    }
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3], multiply this vector by n and set this vector to the result.
+     */
+    static void VectorFastMultiply(double *i, double n)
+    {
+      i[0] *= n;
+      i[1] *= n;
+      i[2] *= n;
+    }
+    
     /*! inline fuction to speed up minimization speed
      * \param i pointer to i[3] to be normalized
      */
@@ -1215,11 +1242,8 @@ namespace OpenBabel
     static double VectorDistance(double *pos_i, double *pos_j)
     {
       double ij[3];
-      double rij;
-    
       VectorSubstract(pos_i, pos_j, ij);
-      rij = VectorLength(ij);
-
+      const double rij = VectorLength(ij);
       return rij;
     }
     

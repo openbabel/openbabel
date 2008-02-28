@@ -2089,6 +2089,7 @@ namespace OpenBabel
  
   bool OBForceField::SteepestDescentTakeNSteps(int n) 
   {
+  cout << "sttep "<<endl;
     int _ncoords = _mol.NumAtoms() * 3;
     int coordIdx;
     double e_n2, alpha;
@@ -2842,17 +2843,13 @@ namespace OpenBabel
     return rab;
   }
   
-  double OBForceField::VectorDistanceDerivative(double *pos_i, double *pos_j,
-                                              double *force_i, double *force_j)
+  double OBForceField::VectorBondDerivative(double *pos_i, double *pos_j,
+                                            double *force_i, double *force_j)
   {
-    /* vector3 vab, drab; */
     double ij[3];
-    double rij;
-    
-    /* vab = a - b; */
     VectorSubstract(pos_i, pos_j, ij);
-    /* rab = vab.length(); */
-    rij = VectorLength(ij);
+    
+    double rij = VectorLength(ij);
     if (rij < 0.1) { // atoms are too close to each other
       vector3 vij;
       vij.randomUnitVector();
@@ -2860,13 +2857,21 @@ namespace OpenBabel
       vij.Get(ij);
       rij = 0.1;
     }
-    /* drab = vab / rab; */
     VectorDivide(ij, rij, force_j);
     VectorMultiply(force_j, -1.0, force_i);
 
-    //a = -drab; // -drab/da
-    //b =  drab; // -drab/db
-
+    return rij;
+  }
+   
+ 
+  double OBForceField::VectorDistanceDerivative(const double* const pos_i, const double* const pos_j,
+                                              double *force_i, double *force_j)
+  {
+    VectorSubstract(pos_i, pos_j, force_j);
+    const double rij = VectorLength(force_j);
+    const double inverse_rij = 1.0 / rij;
+    VectorFastMultiply(force_j, inverse_rij);
+    VectorMultiply(force_j, -1.0, force_i);
     return rij;
   }
    

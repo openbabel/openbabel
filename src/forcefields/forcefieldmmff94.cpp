@@ -86,7 +86,7 @@ namespace OpenBabel
     double delta2, dE;
     
     if (gradients) {
-      rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
+      rab = OBForceField::VectorBondDerivative(pos_a, pos_b, force_a, force_b);
       delta = rab - r0;
       delta2 = delta * delta;
       
@@ -482,9 +482,9 @@ namespace OpenBabel
  
   void OBFFVDWCalculationMMFF94::Compute(bool gradients)
   {
-    double rab2, /*rab3,*/ rab4, /*rab5,*/ rab6, rab7;
-    double erep2, /*erep3,*/ erep4, /*erep5,*/ erep6; /*, erep7;*/
-    double dE;
+    //double rab2, /*rab3,*/ rab4, /*rab5,*/ rab6, rab7;
+    //double erep2, /*erep3,*/ erep4, /*erep5,*/ erep6; /*, erep7;*/
+    //double dE;
 
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
@@ -492,42 +492,48 @@ namespace OpenBabel
       rab = OBForceField::VectorDistance(pos_a, pos_b);
     }
     
-    if (IsNearZero(rab, 1.0e-3))
-      rab = 1.0e-3;
+    //if (IsNearZero(rab, 1.0e-3)) // VectorDistance(Derivative) does the checking.
+    //  rab = 1.0e-3;
 
-    rab2 = rab * rab;
-    rab4 = rab2 * rab2;
-    rab6 = rab4 * rab2;
-    rab7 = rab6 * rab;
+    //const double rab2 = rab * rab;
+    //const double rab4 = rab2 * rab2;
+    //const double rab6 = rab4 * rab2;
+    //const double rab7 = rab6 * rab;
+    const double rab7 = rab*rab*rab*rab*rab*rab*rab;
 
     erep = (1.07 * R_AB) / (rab + 0.07 * R_AB); //***
-    erep2 = erep * erep;
-    erep4 = erep2 * erep2;
-    erep6 = erep4 * erep2;
-    erep7 = erep6 * erep;
+    //double erep2 = erep * erep;
+    //double erep4 = erep2 * erep2;
+    //double erep6 = erep4 * erep2;
+    //erep7 = erep6 * erep;
+    erep7 = erep*erep*erep*erep*erep*erep*erep;
       
     eattr = (((1.12 * R_AB7) / (rab7 + 0.12 * R_AB7)) - 2.0);
       
     energy = epsilon * erep7 * eattr;
     
     if (gradients) { 
-      double q, q2, q4, q6, q7, term, term2;
-      q = rab / R_AB;
-      q2 = q * q;
-      q4 = q2 * q2;
-      q6 = q4 * q2;
-      q7 = q6 * q;
+      //double q, q2, q4, q6, q7, term, term2;
+      //q = rab / R_AB;
+      const double q = rab / R_AB;
+      //q2 = q * q;
+      //q4 = q2 * q2;
+      //q6 = q4 * q2;
+      //q7 = q6 * q;
+      const double q6 = q*q*q*q*q*q;
+      const double q7 = q6 * q;
       erep = 1.07 / (q + 0.07); 
-      erep2 = erep * erep;
-      erep4 = erep2 * erep2;
-      erep6 = erep4 * erep2;
-      erep7 = erep6 * erep;
-      term = q7 + 0.12;
-      term2 = term * term;
+      //erep2 = erep * erep;
+      //erep4 = erep2 * erep2;
+      //erep6 = erep4 * erep2;
+      //erep7 = erep6 * erep;
+      erep7 = erep*erep*erep*erep*erep*erep*erep;
+      const double term = q7 + 0.12;
+      const double term2 = term * term;
       eattr = (-7.84 * q6) / term2 + ((-7.84 / term) + 14) / (q + 0.07);
-      dE = (epsilon / R_AB) * erep7 * eattr;
-      OBForceField::VectorMultiply(force_a, dE, force_a);
-      OBForceField::VectorMultiply(force_b, dE, force_b);
+      const double dE = (epsilon / R_AB) * erep7 * eattr;
+      OBForceField::VectorFastMultiply(force_a, dE);
+      OBForceField::VectorFastMultiply(force_b, dE);
     }
   }
   
@@ -3805,46 +3811,38 @@ namespace OpenBabel
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EBOND))
       for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i)
         if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
-          i->Compute(true);
           grad += i->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EANGLE))
       for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); ++i2)
         if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
-          i2->Compute(true);
           grad += i2->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_ESTRBND))
       for (i3 = _strbndcalculations.begin(); i3 != _strbndcalculations.end(); ++i3)
         if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || ((*i3).c->GetIdx() == a->GetIdx())) {
-          i3->Compute(true);
           grad += i3->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_ETORSION))
       for (i4 = _torsioncalculations.begin(); i4 != _torsioncalculations.end(); ++i4)
         if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx()) || 
             ((*i4).c->GetIdx() == a->GetIdx()) || ((*i4).d->GetIdx() == a->GetIdx())) {
-          i4->Compute(true);
-	  //cout << "grad = " << grad << endl;
           grad += i4->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EOOP))
       for (i5 = _oopcalculations.begin(); i5 != _oopcalculations.end(); ++i5)
         if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx()) || 
             ((*i5).c->GetIdx() == a->GetIdx()) || ((*i5).d->GetIdx() == a->GetIdx())) {
-          i5->Compute(true);
           grad += i5->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EVDW))
       for (i6 = _vdwcalculations.begin(); i6 != _vdwcalculations.end(); ++i6)
         if (((*i6).a->GetIdx() == a->GetIdx()) || ((*i6).b->GetIdx() == a->GetIdx())) {
-          i6->Compute(true);
           grad += i6->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EELECTROSTATIC))
       for (i7 = _electrostaticcalculations.begin(); i7 != _electrostaticcalculations.end(); ++i7)
         if (((*i7).a->GetIdx() == a->GetIdx()) || ((*i7).b->GetIdx() == a->GetIdx())) {
-          i7->Compute(true);
           grad += i7->GetGradient(&*a);
         }
 

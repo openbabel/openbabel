@@ -995,33 +995,28 @@ namespace OpenBabel
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EBOND))
       for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i)
         if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
-          i->Compute(true);
 	  grad += i->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EANGLE))
       for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); ++i2)
         if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
-          i2->Compute(true);
           grad += i2->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_ETORSION))
       for (i3 = _torsioncalculations.begin(); i3 != _torsioncalculations.end(); ++i3)
         if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || 
 	    ((*i3).c->GetIdx() == a->GetIdx()) || ((*i3).d->GetIdx() == a->GetIdx())) {
-          i3->Compute(true);
           grad += i3->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EVDW))
       for (i4 = _vdwcalculations.begin(); i4 != _vdwcalculations.end(); ++i4) 
         if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx())) {
-          i4->Compute(true);
           grad += i4->GetGradient(&*a);
     
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EELECTROSTATIC))
       for (i5 = _electrostaticcalculations.begin(); i5 != _electrostaticcalculations.end(); ++i5)
         if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx())) {
-          i5->Compute(true);
           grad += i5->GetGradient(&*a);
         }
 
