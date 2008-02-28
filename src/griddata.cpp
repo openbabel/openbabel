@@ -48,7 +48,7 @@ namespace OpenBabel {
     /// No checking is performed
     int ComputeIndex (int i, int j, int k) const
     {
-      return k + _floatGrid.GetZdim() *( j + _floatGrid.GetYdim() * i);
+      return k + _floatGrid.GetZdim() * (j + _floatGrid.GetYdim() * i);
     }
   };
 
@@ -136,9 +136,7 @@ namespace OpenBabel {
 
   vector3 OBGridData::GetOriginVector() const
   {
-    double origin[3];
-    d->_floatGrid.GetMin(origin);
-    return vector3(origin);
+    return d->_floatGrid.GetMin();
   }
 
   void OBGridData::SetNumberOfPoints( int nx, int ny, int nz )
@@ -153,11 +151,7 @@ namespace OpenBabel {
 
   void OBGridData::SetLimits(vector3 &origin, vector3 &x, vector3 &y, vector3 &z)
   {
-    double Origin[3] = {origin.x(), origin.y(), origin.z()};
-    double X[3] = {x.x(), x.y(), x.z()};
-    double Y[3] = {y.x(), y.y(), y.z()};
-    double Z[3] = {z.x(), z.y(), z.z()};
-    d->_floatGrid.SetLimits(Origin, X, Y, Z);
+    d->_floatGrid.SetLimits(origin, x, y, z);
   }
 
   void OBGridData::SetValues( const std::vector< double >& v )

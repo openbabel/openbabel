@@ -1,3 +1,13 @@
+2008-02-28  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* include/openbabel/grid.h, src/grid.cpp, src/griddata.cpp: Updated
+	the grid classes to use an x, y, z index and added several new
+	convenience functions using vector3 variables. Some more work is
+	needed and a few extra functions to access/set grid values.
+
+	* src/formats/gausscubeformat.cpp: Stop translating from x, y, z index
+	to z, y, x as the grid classes now use the more common x, y, z index.
+
 2008-02-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.*: Remove redundant calls to

@@ -124,7 +124,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       return false;
     }
     string cubeTitle = buffer; // save for later use
-    
+
     ++line;
     if (!ifs.getline(buffer,BUFF_SIZE))
     {
@@ -427,24 +427,13 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       }
     }
 
-    // Now to translate from a vector stored in x, y, z to one stored in z, y, x
-    // Gaussian cube format order to OpenBabel GridData order!
-    vector<double> nValues;
-    nValues.resize(values.size());
-    for (int k = 0; k < voxels[2]; ++k)
-      for (int j = 0; j < voxels[1]; ++j)
-        for (int i = 0; i < voxels[0]; ++i)
-        {
-          nValues[k*voxels[0]*voxels[1] + j*voxels[0] + i] = values[i*voxels[1]*voxels[2] + j*voxels[2] + k];
-        }
-
-    gd->SetValues(nValues);
+    gd->SetValues(values);
     gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
 
     pmol->EndModify();
-    
+
     // clean out any remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
           (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 

@@ -1,16 +1,16 @@
 /**********************************************************************
 grid.h - Handle grids of values.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,10 +35,10 @@ namespace OpenBabel
   class OBMol;
 
   //! \class OBGrid grid.h <openbabel/grid.h>
-  //! \brief A base grid class 
+  //! \brief A base grid class
  class OBAPI OBGrid: public OBBase
   {
-  protected: 
+  protected:
     double _xmin,_xmax,_ymin,_ymax,_zmin,_zmax; //!< the min/max axes in XYZ axes (i.e., the box)
 
   public:
@@ -69,7 +69,7 @@ namespace OpenBabel
         (y>=_ymin) && (y<=_ymax) &&
         (z>=_zmin) && (z<=_zmax);
     }
-    //! \return true if the point falls within the box 
+    //! \return true if the point falls within the box
     bool PointIsInBox(double *c)
     {
       return (c[0]>=_xmin) && (c[0]<=_xmax) &&
@@ -77,7 +77,7 @@ namespace OpenBabel
         (c[2]>=_zmin) && (c[2]<=_zmax);
     }
 
-    //! \return true if the point falls within the box 
+    //! \return true if the point falls within the box
     bool PointIsInBox(vector3 v)
     {
       return (v.x() >= _xmin) && (v.x() <=_xmax) &&
@@ -102,7 +102,7 @@ namespace OpenBabel
     double _halfSpace;        //!< half of the grid spacing
     //! Three axes (i.e., translation vectors like a unit cell)
     vector3 _xAxis, _yAxis, _zAxis;
-    
+
   public:
 
   OBFloatGrid() : _val(NULL), _ival(NULL), _halfSpace(0.0) {}
@@ -121,12 +121,17 @@ namespace OpenBabel
       a[1]=_ymin;
       a[2]=_zmin;
     }
+
+    vector3 GetMin() { return vector3(_xmin, _ymin, _zmin); }
+
     void GetMax(double *a)
     {
       a[0]=_xmax;
       a[1]=_ymax;
       a[2]=_zmax;
     }
+
+    vector3 GetMax() { return vector3(_xmax, _ymax, _zmax); }
 
     double GetSpacing() const { return(_spacing); }
     void GetSpacing(double &s)
@@ -144,40 +149,42 @@ namespace OpenBabel
       a[1]=_ydim;
       a[2]=_zdim;
     }
-    
+
     void SetNumberOfPoints(int nx, int ny, int nz);
-    
+
     vector3 GetMidpointVector()
     {
       vector3 v;
       v.Set(_midx,_midy,_midz);
       return(v);
     }
-    
+
     vector3 GetXAxis() const
     {
       return _xAxis;
     }
 
     vector3 GetYAxis() const
-    { 
+    {
       return _yAxis;
     }
 
     vector3 GetZAxis() const
     {
       return _zAxis;
-    }    
+    }
 
     void SetXAxis(vector3);
     void SetYAxis(vector3);
     void SetZAxis(vector3);
-    
+
     void SetLimits(double origin[3], double x[3], double y[3], double z[3]);
-    
+    void SetLimits(const vector3& origin, const vector3& x, const vector3& y,
+                   const vector3& z);
+
     std::vector<double> GetDataVector();
     void SetVals(std::vector<double> vals);
-    
+
     double *GetVals()    {        return(_val);    }
     void SetVals(double *ptr)    {  _val = ptr;    }
 
@@ -194,7 +201,7 @@ namespace OpenBabel
 
     void IndexToCoords(int idx, double &x, double &y, double &z);
     void CoordsToIndex(int*,double*);
-    int CoordsToIndex(double &x, double &y, double &z);
+    int CoordsToIndex(double x, double y, double z);
     //! \return the interpolated value for the given point
     double Interpolate(double,double,double);
     //! \return the interpolated value for the given point and set the dx, dy, dz derivatives
@@ -219,7 +226,7 @@ namespace OpenBabel
     int _nxinc,_nyinc,_nzinc,_maxinc;
     double _inc;
     std::vector<std::vector<int> > cell;
-    
+
   public:
 
     OBProxGrid(int gridtype=0)

@@ -1,16 +1,16 @@
 /**********************************************************************
 grid.cpp - Handle grids of values.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,7 +30,7 @@ namespace OpenBabel
   {
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
-    
+
     for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)
         {
@@ -57,7 +57,7 @@ namespace OpenBabel
             _zmax = atom->GetZ();
         }
   }
-  
+
   void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
   {
     OBGrid::Init(box); // handle in the base class
@@ -91,55 +91,53 @@ namespace OpenBabel
       }
   }
 
-  void OBFloatGrid::SetLimits(double origin[3], double v1[3], double v2[3], double v3[3])
+  void OBFloatGrid::SetLimits(double origin[3], double v1[3], double v2[3],
+                              double v3[3])
   {
-    // Set the minimum points first from the origin
-    _xmin = origin[0];
-    _ymin = origin[1];
-    _zmin = origin[2];
-    
-    vector3 v;
-    // x-axis
-    v.Set(v1[0], v1[1], v1[2]);
-    SetXAxis(v);
-    // now y
-    v.Set(v2[0], v2[1], v2[2]);
-    SetYAxis(v);
-    // and z
-    v.Set(v3[0], v3[1], v3[2]);
-    SetZAxis(v);
-    
-    // Now we can set the max limits
-    // The v1, v2, v3 are not necessarily orthogonal
-    _xmax = _xmin + _xdim * v1[0] + _xdim * v2[0] + _xdim * v3[0];
-    _ymax = _ymin + _ydim * v1[1] + _ydim * v2[1] + _ydim * v3[1];
-    _zmax = _zmin + _zdim * v1[2] + _zdim * v2[2] + _zdim * v3[2];
-    
-    /* store in Grid */
-    _midx=0.5*(_xmax+_xmin);
-    _midy=0.5*(_ymax+_ymin);
-    _midz=0.5*(_zmax+_zmin);
-        
-    // Calculate the average spacing
-    _spacing = (_xmax - _xmin)/_xdim + (_ymax - _ymin)/_ydim + (_zmax - _zmin)/_zdim;
-    _spacing /= 3.0;
-    
-    _halfSpace= _spacing/2.0;
-    _inv_spa=1.0/_spacing;    
+    // Convert to vectors and call the vector form of the function
+    vector3 originv(origin[0], origin[1], origin[2]);
+    vector3 x(v1[0], v1[1], v1[2]);
+    vector3 y(v2[0], v2[1], v2[2]);
+    vector3 z(v3[0], v3[1], v3[2]);
+    SetLimits(originv, x, y, z);
   }
-  
+
+  void OBFloatGrid::SetLimits(const vector3& origin, const vector3& x,
+                              const vector3& y, const vector3& z)
+  {
+    // Using vectors instead of arrays of doubles
+    _xmin = origin.x();
+    _ymin = origin.y();
+    _zmin = origin.z();
+
+    // Set the axes
+    SetXAxis(x);
+    SetYAxis(y);
+    SetZAxis(z);
+
+    // Now set the max and mid as well as spacing
+    _xmax = _xmin + _xdim * x.x() + _xdim * y.x() + _xdim * z.x();
+    _ymax = _ymin + _ydim * x.y() + _ydim * y.y() + _ydim * z.y();
+    _zmax = _zmin + _zdim * x.z() + _zdim * y.z() + _zdim * z.z();
+    _spacing = (_xmax - _xmin)/_xdim + (_ymax - _ymin)/_ydim +
+               (_zmax - _zmin)/_zdim;
+    _spacing /= 3.0;
+    _halfSpace= _spacing/2.0;
+    _inv_spa=1.0/_spacing;
+  }
+
   void OBFloatGrid::SetNumberOfPoints(int nx, int ny, int nz)
   {
     _xdim = nx;
     _ydim = ny;
     _zdim = nz;
   }
-  
+
   void OBFloatGrid::SetXAxis(vector3 v)
   {
     _xAxis = v;
   }
-  
+
   void OBFloatGrid::SetYAxis(vector3 v)
   {
     _yAxis = v;
@@ -149,8 +147,8 @@ namespace OpenBabel
   {
     _zAxis = v;
   }
-  
-  double OBFloatGrid::Inject(double x,double y,double z)
+
+  double OBFloatGrid::Inject(double x, double y, double z)
   {
     if (_val == NULL)
       return 0.0;
@@ -158,50 +156,46 @@ namespace OpenBabel
     if( x<=_xmin || x>=_xmax
         || y<=_ymin || y>=_ymax
         || z<=_zmin || z>=_zmax ) return 0.0;
-  
-    int gx=(int)((x-_xmin)*_inv_spa);
-    int gy=(int)((y-_ymin)*_inv_spa);
-    int gz=(int)((z-_zmin)*_inv_spa);
-  
-    return(_val[(gz*_ydim*_xdim)+(gy*_xdim)+gx]);
+
+    return(_val[CoordsToIndex(x, y, z)]);
   }
 
   void OBFloatGrid::IndexToCoords(int idx, double &x, double &y, double &z)
   {
-    int grid_x,grid_y,grid_z;
+    int grid_x, grid_y, grid_z;
 
-    grid_x = idx % (int)_xdim;
-    grid_z = (int)(idx /(_xdim * _ydim));
-    grid_y = (int)((idx - (grid_z * _xdim * _ydim))/_xdim);
+    grid_z = idx % _zdim;
+    grid_x = static_cast<int>(idx / (_ydim * _zdim));
+    grid_y = static_cast<int>((idx - (grid_x * _ydim * _zdim)) / _zdim);
 
     x = (grid_x * _spacing + _xmin) + _halfSpace;
     y = (grid_y * _spacing + _ymin) + _halfSpace;
     z = (grid_z * _spacing + _zmin) + _halfSpace;
   }
 
-  int OBFloatGrid::CoordsToIndex(double &x, double &y, double &z)
+  int OBFloatGrid::CoordsToIndex(double x, double y, double z)
   {
     int gx=(int)((x-_xmin)*_inv_spa);
     int gy=(int)((y-_ymin)*_inv_spa);
     int gz=(int)((z-_zmin)*_inv_spa);
 
-    return((gz*_ydim*_xdim)+(gy*_xdim)+gx);
+    return((gx*_ydim*_zdim) + (gy*_zdim) + gz);
   }
 
   void OBFloatGrid::CoordsToIndex(int *idx,double *c)
   {
-    idx[0]=(int)((c[0]-_xmin)*_inv_spa);
-    idx[1]=(int)((c[1]-_ymin)*_inv_spa);
-    idx[2]=(int)((c[2]-_zmin)*_inv_spa);
+    idx[0]=static_cast<int>((c[0]-_xmin)*_inv_spa);
+    idx[1]=static_cast<int>((c[1]-_ymin)*_inv_spa);
+    idx[2]=static_cast<int>((c[2]-_zmin)*_inv_spa);
   }
 
-  double OBFloatGrid::Interpolate(double x,double y,double z)
+  double OBFloatGrid::Interpolate(double x, double y, double z)
   {
     if (_val == NULL)
       return 0.0;
 
     int n,igx,igy,igz;
-    double xydim;
+    double yzdim;
     double gx,gy,gz,fgx,fgy,fgz;
     double ax,ay,az,bx,by,bz;
     double AyA,ByA,AyB,ByB,Az,Bz;
@@ -210,28 +204,29 @@ namespace OpenBabel
         || y<=_ymin || y>=_ymax
         || z<=_zmin || z>=_zmax ) return 0.0;
 
-    xydim = _xdim*_ydim;
+    yzdim = _ydim*_zdim;
 
     /* calculate grid voxel and fractional offsets */
     gx=(x-_xmin-_halfSpace)*_inv_spa;
     if (gx<0)
       gx=0;
-    igx=(int)gx;
-    fgx=gx-(double)igx;
+    igx=static_cast<int>(gx);
+    fgx=gx-static_cast<double>(igx);
     gy=(y-_ymin-_halfSpace)*_inv_spa;
     if (gy<0)
       gy=0;
-    igy=(int) gy;
-    fgy= gy - (double) igy;
+    igy=static_cast<int>(gy);
+    fgy= gy - static_cast<double>(igy);
     gz=(z-_zmin-_halfSpace)*_inv_spa;
     if (gz<0)
       gz=0;
-    igz=(int) gz;
-    fgz= gz - (double) igz;
+    igz=static_cast<int>(gz);
+    fgz= gz - static_cast<double>(igz);
 
-    n=(int)(igx+ _xdim*igy + xydim*igz);
-    
-    if ((n+1+_xdim+xydim) >= (xydim*_zdim))
+    // Calculate the index of the nearest point
+    n=static_cast<int>(igx*yzdim + igy*_zdim + igz);
+
+    if ((n+1+_zdim+yzdim) >= (yzdim*_xdim))
       return 0.0;
 
     /* calculate linear weightings */
@@ -243,45 +238,47 @@ namespace OpenBabel
     bz=fgz;
 
     /* calculate interpolated value */
-    AyA=ax*_val[n           ]+bx*_val[(int)(n+1)    ];
-    ByA=ax*_val[n+_xdim]+bx*_val[(int)(n+1+_xdim)  ];
+    AyA=az*_val[n           ]+bz*_val[(n+1)    ];
+    ByA=az*_val[n+_zdim]+bz*_val[(n+1+_zdim)  ];
 
     Az=ay*AyA+by*ByA;
 
-    AyB=ax*_val[(int)(n     +xydim)]+bx*_val[(int)(n+1     +xydim)];
-    ByB=ax*_val[(int)(n+_xdim+xydim)]+bx*_val[(int)(n+1+_xdim+xydim)];
+    AyB=az*_val[static_cast<int>(n     +yzdim)] +
+        bz*_val[static_cast<int>(n+1     +yzdim)];
+    ByB=az*_val[static_cast<int>(n+_zdim+yzdim)] +
+        bz*_val[static_cast<int>(n+1+_zdim+yzdim)];
     Bz=ay*AyB+by*ByB;
 
-    return(az*Az+bz*Bz);
+    return(ax*Az+bx*Bz);
   }
 
   std::vector<double> OBFloatGrid::GetDataVector()
   {
     vector<double> v;
     int size = _xdim*_ydim*_zdim;
-    
+
     if (_val == NULL)
       return v;
-    
+
     //v.resize(size);
     for( int i = 0; i < size; i++)
     {
       v.push_back(_val[i]);
     }
-    
+
     return v;
   }
-  
+
   void OBFloatGrid::SetVals(std::vector<double> vals)
   {
     int size = _xdim*_ydim*_zdim;
-    
+
     if (vals.size() != size)
       return;
-    
+
     if (_val != NULL)
       delete[] _val;
-    
+
     _val = new double [size];
     double *valptr = _val;
     for( int i = 0; i < size; i++)
@@ -290,7 +287,7 @@ namespace OpenBabel
       valptr++;
     }
   }
-  
+
   double OBFloatGrid::InterpolateDerivatives(double x,double y,double z,double *derivatives)
   {
     int n,igx,igy,igz;
@@ -472,7 +469,7 @@ namespace OpenBabel
                          double res)
   {
     this->Init(box); // handle in the base class
-    
+
     _inc = res; // 1/2 angstrom resolution
 
     _nxinc = (int) floor((_xmax - _xmin)/0.5);
