@@ -163,9 +163,6 @@ namespace OpenBabel
       
     //! Compare and print the numerical and analytical gradients
     bool ValidateGradients();
-    
-    static double VectorUFFAngleDerivative(vector3 &i, vector3 &j, vector3 &k);
-    static double VectorUFFOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
 
   }; // class OBForceFieldUFF
 

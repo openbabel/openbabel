@@ -105,7 +105,7 @@ namespace OpenBabel
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
-      theta = OBForceFieldUFF::VectorUFFAngleDerivative(da, db, dc) * DEG_TO_RAD;
+      theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;
     } else {
       theta = a->GetAngle(b, c) * DEG_TO_RAD;
     }
@@ -114,7 +114,9 @@ namespace OpenBabel
       theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
 
     ka = (644.12 * KCAL_TO_KJ) * (zi * zk / (pow(ac, 5.0)));
+    // need the derivatives here!
     ka *= (3.0 * ab * bc * (1.0 - cosT0*cosT0) - ac*ac*cosT0);
+    
     switch (coord) {
     case 1:
       energy = ka * (1.0 + cos(theta));
@@ -268,7 +270,7 @@ namespace OpenBabel
       db = b->GetVector();
       dc = c->GetVector();
       dd = d->GetVector();
-      angle = OBForceFieldUFF::VectorUFFOOPDerivative(da, db, dc, dd) * DEG_TO_RAD;  
+      angle = OBForceField::VectorOOPDerivative(da, db, dc, dd) * DEG_TO_RAD;  
 
 	    if (!isfinite(angle))
 	      angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
@@ -280,10 +282,10 @@ namespace OpenBabel
       gradd = dE * dd; // - dE/drab * drab/dd
     } else {
       angle = DEG_TO_RAD*Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
+      if (!isfinite(angle))
+        angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
     }
-
-    if (!isfinite(angle))
-      angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;    
+      
     energy = koop * (c0 + c1 * cos(angle) + c2 * cos(2.0*angle));
   }
 
@@ -1061,39 +1063,33 @@ namespace OpenBabel
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EBOND))
       for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i)
         if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
-          i->Compute(true);
           grad += i->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EANGLE))
       for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); ++i2)
         if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
-          i2->Compute(true);
           grad += i2->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_ETORSION))
       for (i3 = _torsioncalculations.begin(); i3 != _torsioncalculations.end(); ++i3)
         if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || 
 	    ((*i3).c->GetIdx() == a->GetIdx()) || ((*i3).d->GetIdx() == a->GetIdx())) {
-          i3->Compute(true);
           grad += i3->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EVDW))
       for (i4 = _vdwcalculations.begin(); i4 != _vdwcalculations.end(); ++i4)
         if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx())) {
-          i4->Compute(true);
           grad += i4->GetGradient(&*a);
         } 
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EELECTROSTATIC))
       for (i5 = _electrostaticcalculations.begin(); i5 != _electrostaticcalculations.end(); ++i5)
         if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx())) {
-          i5->Compute(true);
           grad += i5->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EOOP))
       for (i6 = _oopcalculations.begin(); i6 != _oopcalculations.end(); ++i6)
         if (((*i6).a->GetIdx() == a->GetIdx()) || ((*i6).b->GetIdx() == a->GetIdx()) || 
 	    ((*i6).c->GetIdx() == a->GetIdx()) || ((*i6).d->GetIdx() == a->GetIdx())) {
-          i6->Compute(true);
           grad += i6->GetGradient(&*a);    
         }
 
@@ -1103,6 +1099,7 @@ namespace OpenBabel
   bool OBForceFieldUFF::ValidateGradients ()
   {
     vector3 numgrad, anagrad, err;
+    bool passed = true;
     
     OBFFLog("\nV A L I D A T E   G R A D I E N T S\n\n");
     OBFFLog("ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERRROR (%)   \n");
@@ -1115,6 +1112,7 @@ namespace OpenBabel
       numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
       anagrad = GetGradient(&*a, OBFF_ENERGY);
       err = ValidateGradientError(numgrad, anagrad);
+      if (err.length() )
 
       sprintf(_logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
@@ -1179,176 +1177,6 @@ namespace OpenBabel
     return true;
   }
   
-  double OBForceFieldUFF::VectorUFFAngleDerivative(vector3 &i, vector3 &j, vector3 &k)
-  {
-    // This code is adapted from RDKit: www.rdkit.org
-    // Thanks very much to Greg Landrum and the RDKit developers for their BSD-licensed code
-    
-    vector3 v1, v2;
-    vector3 n1, n2;
-
-    // Calculate the vector between atom1 and atom2,
-    // test if the vector has length larger than 0 and normalize it
-    v1 = i - j;
-    v2 = k - j;
-
-    double length1 = v1.length();
-    double length2 = v2.length();
-
-    // test if the vector has length larger than 0 and normalize it
-    if (IsNearZero(length1) || IsNearZero(length2)) {
-      i = VZero;
-      j = VZero;
-      k = VZero;
-      return 0.0;
-    }
-
-    // Calculate the normalized bond vectors
-    double inverse_length_v1 = 1.0 / length1;
-    double inverse_length_v2 = 1.0 / length2;
-    v1 *= inverse_length_v1;
-    v2 *= inverse_length_v2;
-
-    // Calculate the cos of theta and then theta
-    double cos_theta = dot(v1, v2);
-    double theta;
-    if (cos_theta > 1.0) {
-      theta = 0.0;
-      cos_theta = 1.0;
-    } else if (cos_theta < -1.0) {
-      theta = 180.0;
-      cos_theta = -1.0;
-    } else {
-      theta = RAD_TO_DEG * acos(cos_theta);
-    }
-    
-    double sin_theta = sin(theta*DEG_TO_RAD);
-    if (IsNearZero(sin_theta, 1.0e-3)) {
-      sin_theta = 1.0e-3;
-    }
-
-    vector3 t1 = inverse_length_v1 * (v2 - cos_theta * v1);
-    vector3 t2 = inverse_length_v2 * (v1 - cos_theta * v2);
-
-    i = t1 / sin_theta;
-    k = t2 / sin_theta;
-    j = -(i + k);
-
-    return theta;
-  }
- 
-  double OBForceFieldUFF::VectorUFFOOPDerivative(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
-  {
-    // This code is adapted from RDKit: www.rdkit.org
-    // Thanks very much to Greg Landrum and the RDKit developers for their BSD-licensed code
-    
-    // temp variables:
-    double length;
-    vector3 delta;
-
-    // normal vectors of the three planes:
-    vector3 an, bn, cn;
-
-    // calculate normalized bond vectors from central atom to outer atoms:
-    delta = i - j;
-    length = delta.length();
-    if (IsNearZero(length)) {
-      i = VZero;
-      j = VZero;
-      k = VZero;
-      l = VZero;
-      return 0.0;
-    }
-    // normalize the bond vector:
-    delta /= length;
-    // store the normalized bond vector from central atom to outer atoms:
-    const vector3 ji = delta;
-    // store length of this bond:
-    const double length_ji = length;
-		
-    delta = k - j;
-    length = delta.length();
-    if (IsNearZero(length)) {
-      i = VZero;
-      j = VZero;
-      k = VZero;
-      l = VZero;
-      return 0.0;
-    }
-    // normalize the bond vector:
-    delta /= length;
-    // store the normalized bond vector from central atom to outer atoms:
-    const vector3 jk = delta;
-    // store length of this bond:
-    const double length_jk = length;
-	
-    delta = l - j;
-    length = delta.length();
-    if (IsNearZero(length)) {
-      i = VZero;
-      j = VZero;
-      k = VZero;
-      l = VZero;
-      return 0.0;
-    }
-    // normalize the bond vector:
-    delta /= length;
-    // store the normalized bond vector from central atom to outer atoms:
-    const vector3 jl = delta;
-    // store length of this bond:
-    const double length_jl = length;
-	
-    // the normal vectors of the three planes:
-    an = cross(ji, jk);
-    bn = cross(jk, jl);
-    cn = cross(jl, ji);
-
-    // Bond angle ji to jk
-    const double cos_theta = dot(ji, jk);
-    const double theta = acos(cos_theta);
-    // If theta equals 180 degree or 0 degree
-    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
-      i = VZero;
-      j = VZero;
-      k = VZero;
-      l = VZero;
-      return 0.0;
-    }
-				
-    const double sin_theta = sin(theta);
-    const double sin_dl = dot(an, jl) / sin_theta;
-
-    // the wilson angle:
-    const double dl = asin(sin_dl);
-
-    // In case: wilson angle equals 0 or 180 degree: do nothing
-    if (IsNearZero(dl) || IsNearZero(fabs(dl - M_PI))) {
-      i = VZero;
-      j = VZero;
-      k = VZero;
-      l = VZero;
-      return RAD_TO_DEG * dl;
-    }
-				
-    const double cos_dl = cos(dl);
-
-    // if wilson angle equal 90 degree: abort
-    if (cos_dl < 0.0001) {
-      i = VZero;
-      j = VZero;
-      k = VZero;
-      l = VZero;
-      return RAD_TO_DEG * dl;
-    }
-
-    l = (an / sin_theta - jl * sin_dl) / length_jl;
-    i = ((bn + (((-ji + jk * cos_theta) * sin_dl) / sin_theta)) / length_ji) / sin_theta;
-    k = ((cn + (((-jk + ji * cos_theta) * sin_dl) / sin_theta)) / length_jk) / sin_theta;
-    j = -(i + k + l);
-    
-    return RAD_TO_DEG * dl;
-  }
-
 } // end namespace OpenBabel
 
 //! \file forcefieldUFF.cpp

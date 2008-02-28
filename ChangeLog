@@ -1,3 +1,21 @@
+2008-02-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.*: Remove redundant calls to
+	Compute when calculating gradients. Remove un-needed angle/oop
+	code. Problem lies elsewhere.
+
+	* doc/Makefile.am, doc/Makefile.in: Add missing man pages and html
+	documentation.
+
+	* doc/roundtrip.1: Add missing man page. (More needed for new
+	tools.)
+
+	* test/roundtrip.cpp: Fix incorrect usage statement. Thanks to
+	Daniel Leidert.
+
+	* acinclude.m4: Add Boost detection code. Still needs addition to
+	configure script.
+
 2008-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/base.h, src/base.cpp: Add new GetAllData()
