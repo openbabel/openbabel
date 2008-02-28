@@ -2842,6 +2842,34 @@ namespace OpenBabel
     return rab;
   }
   
+  double OBForceField::VectorDistanceDerivative(double *pos_i, double *pos_j,
+                                              double *force_i, double *force_j)
+  {
+    /* vector3 vab, drab; */
+    double ij[3];
+    double rij;
+    
+    /* vab = a - b; */
+    VectorSubstract(pos_i, pos_j, ij);
+    /* rab = vab.length(); */
+    rij = VectorLength(ij);
+    if (rij < 0.1) { // atoms are too close to each other
+      vector3 vij;
+      vij.randomUnitVector();
+      vij *= 0.1; // move the atoms a small, random distance apart
+      vij.Get(ij);
+      rij = 0.1;
+    }
+    /* drab = vab / rab; */
+    VectorDivide(ij, rij, force_j);
+    VectorMultiply(force_j, -1.0, force_i);
+
+    //a = -drab; // -drab/da
+    //b =  drab; // -drab/db
+
+    return rij;
+  }
+   
   double OBForceField::VectorAngleDerivative(vector3 &i, vector3 &j, vector3 &k)
   {
     // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
@@ -2909,7 +2937,126 @@ namespace OpenBabel
 
     return theta;
   }
+  
+  double OBForceField::VectorAngleDerivative(double *pos_i, double *pos_j, double *pos_k,
+                                             double *force_i, double *force_j, double *force_k)
+  {
+    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
+    // Many thanks to Andreas Moll and the BALLView developers for this
+
+    // Bond vectors of the three atoms
+    double ij[3], jk[3];
+    VectorSubstract(pos_i, pos_j, ij);
+    VectorSubstract(pos_k, pos_j, jk);
+
+    // length of the two bonds
+    double l_ij, l_jk;
+    l_ij = VectorLength(ij);
+    l_jk = VectorLength(jk);
+    
+    if (IsNearZero(l_ij) || IsNearZero(l_jk)) {
+      VectorClear(force_i);
+      VectorClear(force_j);
+      VectorClear(force_k);
+      return 0.0;
+    }
  
+    // normalize the bond vectors:
+    VectorDivide (ij, l_ij, ij); 
+    VectorDivide (jk, l_jk, jk);
+
+    // Calculate the cross product of v1 and v2, test if it has length unequal 0,
+    // and normalize it.
+    double c1[3];
+    VectorCross(ij, jk, c1); 
+    double length = VectorLength(c1);
+    if (IsNearZero(length)) {
+      VectorClear(force_i);
+      VectorClear(force_j);
+      VectorClear(force_k);
+      return 0.0;
+    }
+
+    VectorDivide(c1, length, c1);
+
+    // Calculate the cos of theta and then theta
+    double cos_ijk = VectorDot(ij, jk);
+    double angle_ijk;
+    if (cos_ijk > 1.0) {
+      angle_ijk = 0.0;
+      cos_ijk = 1.0;
+    } else if (cos_ijk < -1.0) {
+      angle_ijk = 180.0;
+      cos_ijk = -1.0;
+    } else {
+      angle_ijk = RAD_TO_DEG * acos(cos_ijk);
+    }
+    
+    double t1[3], t2[3];
+    
+    VectorCross(ij, c1, t1);
+    VectorNormalize(t1);
+
+    VectorCross(jk, c1, t2);
+    VectorNormalize(t2);
+
+    VectorDivide(t1, -l_ij, force_i);
+    VectorDivide(t2,  l_jk, force_k);
+    
+    VectorAdd(force_i, force_k, force_j);
+    VectorMultiply(force_j, -1.0, force_j);
+
+    return angle_ijk;
+  }
+  
+  double OBForceField::VectorAngle(double *pos_i, double *pos_j, double *pos_k)
+  {
+    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
+    // Many thanks to Andreas Moll and the BALLView developers for this
+
+    // Bond vectors of the three atoms
+    double ij[3], jk[3];
+    VectorSubstract(pos_i, pos_j, ij);
+    VectorSubstract(pos_k, pos_j, jk);
+
+    // length of the two bonds
+    double l_ij, l_jk;
+    l_ij = VectorLength(ij);
+    l_jk = VectorLength(jk);
+    
+    if (IsNearZero(l_ij) || IsNearZero(l_jk)) {
+      return 0.0;
+    }
+ 
+    // normalize the bond vectors:
+    VectorDivide (ij, l_ij, ij); 
+    VectorDivide (jk, l_jk, jk);
+
+    // Calculate the cross product of v1 and v2, test if it has length unequal 0,
+    // and normalize it.
+    double c1[3];
+    VectorCross(ij, jk, c1); 
+    double length = VectorLength(c1);
+    if (IsNearZero(length)) {
+      return 0.0;
+    }
+
+    // Calculate the cos of theta and then theta
+    double cos_ijk = VectorDot(ij, jk);
+    double angle_ijk;
+    if (cos_ijk > 1.0) {
+      angle_ijk = 0.0;
+      cos_ijk = 1.0;
+    } else if (cos_ijk < -1.0) {
+      angle_ijk = 180.0;
+      cos_ijk = -1.0;
+    } else {
+      angle_ijk = RAD_TO_DEG * acos(cos_ijk);
+    }
+    
+    return angle_ijk;
+  }
+
   double OBForceField::VectorOOPDerivative(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
   {
     // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
@@ -3022,11 +3169,187 @@ namespace OpenBabel
     return RAD_TO_DEG * dl;
   }
   
-  double OBForceField::VectorTorsionDerivative(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
+  double OBForceField::VectorOOPDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
+                                           double *force_i, double *force_j, double *force_k, double *force_l)
   {
     // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
     // Many thanks to Andreas Moll and the BALLView developers for this
 
+    // vector lengths of the three bonds:
+    double ji[3], jk[3], jl[3];
+    // normal vectors of the three planes:
+    double an[3], bn[3], cn[3];
+
+    // calculate normalized bond vectors from central atom to outer atoms:
+    VectorSubstract(pos_i, pos_j, ji);
+    // store length of this bond:
+    const double length_ji = VectorLength(ji);
+    if (IsNearZero(length_ji)) {
+      VectorClear(force_i);
+      VectorClear(force_j);
+      VectorClear(force_k);
+      VectorClear(force_l);
+      return 0.0;
+    }
+    // store the normalized bond vector from central atom to outer atoms:
+    // normalize the bond vector:
+    VectorDivide(ji, length_ji, ji);
+		
+    VectorSubstract(pos_k, pos_j, jk);
+    const double length_jk = VectorLength(jk);
+    if (IsNearZero(length_jk)) {
+      VectorClear(force_i);
+      VectorClear(force_j);
+      VectorClear(force_k);
+      VectorClear(force_l);
+      return 0.0;
+    }
+    VectorDivide(jk, length_jk, jk);
+	
+    VectorSubstract(pos_l, pos_j, jl);
+    const double length_jl = VectorLength(jl);
+    if (IsNearZero(length_jl)) {
+      VectorClear(force_i);
+      VectorClear(force_j);
+      VectorClear(force_k);
+      VectorClear(force_l);
+      return 0.0;
+    }
+    VectorDivide(jl, length_jl, jl);
+	
+    // the normal vectors of the three planes:
+    VectorCross(ji, jk, an);
+    VectorCross(jk, jl, bn);
+    VectorCross(jl, ji, cn);
+
+    // Bond angle ji to jk
+    const double cos_theta = VectorDot(ji, jk);
+    const double theta = acos(cos_theta);
+    // If theta equals 180 degree or 0 degree
+    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
+      VectorClear(force_i);
+      VectorClear(force_j);
+      VectorClear(force_k);
+      VectorClear(force_l);
+      return 0.0;
+    }
+				
+    const double sin_theta = sin(theta);
+    const double sin_dl = VectorDot(an, jl) / sin_theta;
+
+    // the wilson angle:
+    const double dl = asin(sin_dl);
+
+    // In case: wilson angle equals 0 or 180 degree: do nothing
+    if (IsNearZero(dl) || IsNearZero(fabs(dl - M_PI))) {
+      VectorClear(force_i);
+      VectorClear(force_j);
+      VectorClear(force_k);
+      VectorClear(force_l);
+      return RAD_TO_DEG * dl;
+    }
+				
+    const double cos_dl = cos(dl);
+
+    // if wilson angle equal 90 degree: abort
+    if (cos_dl < 0.0001) {
+      VectorClear(force_i);
+      VectorClear(force_j);
+      VectorClear(force_k);
+      VectorClear(force_l);
+      return RAD_TO_DEG * dl;
+    }
+    
+    double temp[3];
+    /* l = (an / sin_theta - jl * sin_dl) / length_jl; */
+    VectorDivide(an, sin_theta, an);
+    VectorMultiply(jl, sin_dl, temp);
+    VectorSubstract(an, temp, force_l);
+    VectorDivide(force_l, length_jl, force_l);
+    /* i = ((bn + (((-ji + jk * cos_theta) * sin_dl) / sin_theta)) / length_ji) / sin_theta; */
+    VectorMultiply(jk, cos_theta, temp);
+    VectorSubstract(temp, ji, temp);
+    VectorMultiply(temp, sin_dl, temp);
+    VectorDivide(temp, sin_theta, temp);
+    VectorAdd(bn, temp, force_i);
+    VectorMultiply(force_i, (sin_theta/length_ji) , force_i);
+    /* k = ((cn + (((-jk + ji * cos_theta) * sin_dl) / sin_theta)) / length_jk) / sin_theta; */
+    VectorMultiply(ji, cos_theta, temp);
+    VectorSubstract(temp, jk, temp);
+    VectorMultiply(temp, sin_dl, temp);
+    VectorDivide(temp, sin_theta, temp);
+    VectorAdd(cn, temp, force_k);
+    VectorMultiply(force_k, (sin_theta/length_ji) , force_k);
+    /* j = -(i + k + l); */
+    VectorAdd(force_i, force_k, temp);
+    VectorAdd(force_l, temp, temp);
+    VectorMultiply(temp, -1.0, force_j);
+    
+    return RAD_TO_DEG * dl;
+  }
+  
+  double OBForceField::VectorOOP(double *pos_i, double *pos_j, double *pos_k, double *pos_l)
+  {
+    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
+    // Many thanks to Andreas Moll and the BALLView developers for this
+
+    // vector lengths of the three bonds:
+    double ji[3], jk[3], jl[3];
+    // normal vectors of the three planes:
+    double an[3], bn[3], cn[3];
+
+    // calculate normalized bond vectors from central atom to outer atoms:
+    VectorSubstract(pos_i, pos_j, ji);
+    // store length of this bond:
+    const double length_ji = VectorLength(ji);
+    if (IsNearZero(length_ji)) {
+      return 0.0;
+    }
+    // store the normalized bond vector from central atom to outer atoms:
+    // normalize the bond vector:
+    VectorDivide(ji, length_ji, ji);
+		
+    VectorSubstract(pos_k, pos_j, jk);
+    const double length_jk = VectorLength(jk);
+    if (IsNearZero(length_jk)) {
+      return 0.0;
+    }
+    VectorDivide(jk, length_jk, jk);
+	
+    VectorSubstract(pos_l, pos_j, jl);
+    const double length_jl = VectorLength(jl);
+    if (IsNearZero(length_jl)) {
+      return 0.0;
+    }
+    VectorDivide(jl, length_jl, jl);
+	
+    // the normal vectors of the three planes:
+    VectorCross(ji, jk, an);
+    VectorCross(jk, jl, bn);
+    VectorCross(jl, ji, cn);
+
+    // Bond angle ji to jk
+    const double cos_theta = VectorDot(ji, jk);
+    const double theta = acos(cos_theta);
+    // If theta equals 180 degree or 0 degree
+    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
+      return 0.0;
+    }
+				
+    const double sin_theta = sin(theta);
+    const double sin_dl = VectorDot(an, jl) / sin_theta;
+
+    // the wilson angle:
+    const double dl = asin(sin_dl);
+
+    return RAD_TO_DEG * dl;
+  }
+
+  double OBForceField::VectorTorsionDerivative(vector3 &i, vector3 &j, vector3 &k, vector3 &l)
+  {
+    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
+    // Many thanks to Andreas Moll and the BALLView developers for this
+    
     // Bond vectors of the three atoms
     vector3 ij, jk, kl;
     // length of the three bonds
@@ -3052,7 +3375,7 @@ namespace OpenBabel
     
     angle_ijk = DEG_TO_RAD * vectorAngle(ij, jk);
     angle_jkl = DEG_TO_RAD * vectorAngle(jk, kl);
-
+    
     // normalize the bond vectors:
     ij /= l_ij;
     jk /= l_jk;
@@ -3072,7 +3395,7 @@ namespace OpenBabel
 
     double rrcj = rrj * (-cos(angle_ijk));
     double rrck = rrk * (-cos(angle_jkl));
-
+    
     vector3 a = cross(ij, jk);
     vector3 b = cross(jk, kl);
     vector3 c = cross(a, b);
@@ -3082,12 +3405,144 @@ namespace OpenBabel
 
     i = -a * rs2j;
     l = b * rs2k;
+
     j = i * (rrcj - 1.) - l * rrck;
     k = -(i + j + l);
     
     return tor;  
   }
+ 
+  double OBForceField::VectorTorsionDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
+                                               double *force_i, double *force_j, double *force_k, double *force_l)
+  {
+    // This is adapted from http://scidok.sulb.uni-saarland.de/volltexte/2007/1325/pdf/Dissertation_1544_Moll_Andr_2007.pdf
+    // Many thanks to Andreas Moll and the BALLView developers for this
+
+    // Bond vectors of the three atoms
+    double ij[3], jk[3], kl[3];
+    VectorSubstract(pos_j, pos_i, ij);
+    VectorSubstract(pos_k, pos_j, jk);
+    VectorSubstract(pos_l, pos_k, kl);
+
+    // length of the three bonds
+    double l_ij, l_jk, l_kl;
+    l_ij = VectorLength(ij);
+    l_jk = VectorLength(jk);
+    l_kl = VectorLength(kl);
+    
+    if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
+      VectorClear(force_i);
+      VectorClear(force_j);
+      VectorClear(force_k);
+      VectorClear(force_l);
+      return 0.0;
+    }
+ 
+    // normalize the bond vectors:
+    VectorDivide (ij, l_ij, ij); 
+    VectorDivide (jk, l_jk, jk);
+    VectorDivide (kl, l_kl, kl);
+
+    // angle between ijk and jkl:
+    double angle_ijk, angle_jkl;
+    
+    double cos_ijk = VectorDot(ij, jk);
+    if (cos_ijk > 1.0) {
+      angle_ijk = 0.0;
+      cos_ijk = 1.0;
+    } else if (cos_ijk < -1.0) {
+      angle_ijk = M_PI;
+      cos_ijk = -1.0;
+    } else {
+      angle_ijk = acos(cos_ijk);
+    }
+    
+    double cos_jkl = VectorDot(jk, kl);
+    if (cos_jkl > 1.0) {
+      angle_jkl = 0.0;
+      cos_jkl = 1.0;
+    } else if (cos_jkl < -1.0) {
+      angle_jkl = M_PI;
+      cos_jkl = -1.0;
+    } else {
+      angle_jkl = acos(cos_jkl);
+    }
+
+    double sin_j = sin(angle_ijk);
+    double sin_k = sin(angle_jkl);
+
+    double rsj = l_ij * sin_j;
+    double rsk = l_kl * sin_k;
+
+    double rs2j = 1. / (rsj * sin_j);
+    double rs2k = 1. / (rsk * sin_k);
   
+    double rrj = l_ij / l_jk;
+    double rrk = l_kl / l_jk;
+
+    double rrcj = rrj * (-cos(angle_ijk));
+    double rrck = rrk * (-cos(angle_jkl));
+    
+    double a[3];
+    VectorCross(ij, jk, a);
+    double b[3];
+    VectorCross(jk, kl, b);
+    double c[3];
+    VectorCross(a, b, c);
+    double d1 = VectorDot(c, jk);
+    double d2 = VectorDot(a, b);
+    double tor = RAD_TO_DEG * atan2(d1, d2);
+    
+    VectorMultiply(a, -rs2j, force_i);
+    VectorMultiply(b, rs2k, force_l);
+    
+    VectorMultiply(force_i, (rrcj - 1.0), a);
+    VectorMultiply(force_l, rrck, b);
+    VectorSubstract(a, b, force_j);
+    
+    VectorAdd(force_i, force_j, a);
+    VectorAdd(a, force_l, b);
+    VectorMultiply(b, -1.0, force_k);
+
+    return tor;  
+  }
+  
+  double OBForceField::VectorTorsion(double *pos_i, double *pos_j, double *pos_k, double *pos_l)
+  {
+    // Bond vectors of the three atoms
+    double ij[3], jk[3], kl[3];
+    VectorSubstract(pos_j, pos_i, ij);
+    VectorSubstract(pos_k, pos_j, jk);
+    VectorSubstract(pos_l, pos_k, kl);
+
+    // length of the three bonds
+    double l_ij, l_jk, l_kl;
+    l_ij = VectorLength(ij);
+    l_jk = VectorLength(jk);
+    l_kl = VectorLength(kl);
+    
+    if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
+      return 0.0;
+    }
+ 
+    // normalize the bond vectors:
+    VectorDivide (ij, l_ij, ij); 
+    VectorDivide (jk, l_jk, jk);
+    VectorDivide (kl, l_kl, kl);
+
+    double a[3];
+    VectorCross(ij, jk, a);
+    double b[3];
+    VectorCross(jk, kl, b);
+    double c[3];
+    VectorCross(a, b, c);
+    double d1 = VectorDot(c, jk);
+    double d2 = VectorDot(a, b);
+    double tor = RAD_TO_DEG * atan2(d1, d2);
+    
+    return tor;  
+  }
+
   bool OBForceField::IsInSameRing(OBAtom* a, OBAtom* b)
   {
     bool a_in, b_in;

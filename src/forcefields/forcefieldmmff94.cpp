@@ -83,27 +83,25 @@ namespace OpenBabel
   //
   void OBFFBondCalculationMMFF94::Compute(bool gradients)
   {
-    vector3 da, db;
     double delta2, dE;
-     
-    if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      rab = OBForceField::VectorLengthDerivative(da, db);
-    } else {
-      rab = a->GetDistance(b);
-    }
-    
-    delta = rab - r0;
-    delta2 = delta * delta;
- 
-    energy = 143.9325 * 0.5 * kb * delta2 * (1.0 - 2.0 * delta + 7.0/3.0 * delta2);
     
     if (gradients) {
+      rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
+      delta = rab - r0;
+      delta2 = delta * delta;
+      
       dE = 143.9325 * kb * delta * (1.0 - 3.0 * delta + 14.0/3.0 * delta2);
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
+      
+      OBForceField::VectorMultiply(force_a, dE, force_a);
+      OBForceField::VectorMultiply(force_b, dE, force_b);
+    } else {
+      rab = OBForceField::VectorDistance(pos_a, pos_b);
+      delta = rab - r0;
+      delta2 = delta * delta;
     }
+    
+    energy = 143.9325 * 0.5 * kb * delta2 * (1.0 - 2.0 * delta + 7.0/3.0 * delta2);
+  
   }
   
   double OBForceFieldMMFF94::E_Bond(bool gradients)
@@ -152,37 +150,45 @@ namespace OpenBabel
   //
   void OBFFAngleCalculationMMFF94::Compute(bool gradients) 
   {
-    vector3 da, db, dc;
     double delta2, dE;
-
+ 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative(da, db, dc);
+      theta = OBForceField::VectorAngleDerivative(pos_a, pos_b, pos_c, force_a, force_b, force_c);
+      
+      if (!isfinite(theta))
+        theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
+      
+      delta = theta - theta0;
+      
+      if (linear) {
+        energy = 143.9325 * ka * (1.0 + cos((theta) * DEG_TO_RAD));
+        dE = -sin((theta) * DEG_TO_RAD) * 143.9325 * ka;
+      } else {
+        delta2 = delta * delta;
+        energy = 0.043844 * 0.5 * ka * delta2 * (1.0 - 0.007 * delta);
+        dE = RAD_TO_DEG * 0.043844 * ka * delta * (1.0 - 1.5 * 0.007 * delta);
+      }
+      
+      OBForceField::VectorMultiply(force_a, dE, force_a);
+      OBForceField::VectorMultiply(force_b, dE, force_b);
+      OBForceField::VectorMultiply(force_c, dE, force_c);
     } else {
-      theta = a->GetAngle(b->GetIdx(), c->GetIdx());
+      theta = OBForceField::VectorAngle(pos_a, pos_b, pos_c);
+      
+      if (!isfinite(theta))
+        theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
+      
+      delta = theta - theta0;
+      
+      if (linear) {
+        energy = 143.9325 * ka * (1.0 + cos(theta * DEG_TO_RAD));
+      } else {
+        delta2 = delta * delta;
+        energy = 0.043844 * 0.5 * ka * delta2 * (1.0 - 0.007 * delta);
+      }
+   
     }
-    
-    if (!isfinite(theta))
-      theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
-
-    delta = theta - theta0;
-    
-    if (linear) {
-      energy = 143.9325 * ka * (1.0 + cos(theta * DEG_TO_RAD));
-      dE = -sin(theta * DEG_TO_RAD) * 143.9325 * ka;
-    } else {
-      delta2 = delta * delta;
-      energy = 0.043844 * 0.5 * ka * delta2 * (1.0 - 0.007 * delta);
-      dE = RAD_TO_DEG * 0.043844 * ka * delta * (1.0 - 1.5 * 0.007 * delta);
-    }
-
-    if (gradients) {
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
-      gradc = dE * dc; // - dE/drab * drab/dc
-    }
+  
   }
  
   double OBForceFieldMMFF94::E_Angle(bool gradients)
@@ -234,16 +240,14 @@ namespace OpenBabel
     vector3 rab_da, rab_db, rbc_db, rbc_dc, theta_da, theta_db, theta_dc;
     
     if (gradients) {
-      rab_da = theta_da = a->GetVector();
-      rab_db = rbc_db = theta_db = b->GetVector();
-      rbc_dc = theta_dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative(theta_da, theta_db, theta_dc);
-      rab = OBForceField::VectorLengthDerivative(rab_da, rab_db);
-      rbc = OBForceField::VectorLengthDerivative(rbc_db, rbc_dc);
+      theta = OBForceField::VectorAngleDerivative(pos_a, pos_b, pos_c, 
+                                                  force_abc_a, force_abc_b, force_abc_c);
+      rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_ab_a, force_ab_b);
+      rbc = OBForceField::VectorDistanceDerivative(pos_b, pos_c, force_bc_b, force_bc_c);
     } else {
-      theta = a->GetAngle(b->GetIdx(), c->GetIdx());
-      rab = a->GetDistance(b);
-      rbc = b->GetDistance(c);
+      theta = OBForceField::VectorAngle(pos_a, pos_b, pos_c); 
+      rab = OBForceField::VectorDistance(pos_a, pos_b);
+      rbc = OBForceField::VectorDistance(pos_b, pos_c);
     }
     
     if (!isfinite(theta))
@@ -252,14 +256,23 @@ namespace OpenBabel
     delta_theta = theta - theta0;
     delta_rab = rab - rab0;
     delta_rbc = rbc - rbc0;
+    const double factor = RAD_TO_DEG * (kbaABC * delta_rab + kbaCBA * delta_rbc);
 
-    energy = 2.51210 * (kbaABC * delta_rab + kbaCBA * delta_rbc) * delta_theta;
-
+    energy = 2.51210 * DEG_TO_RAD * factor * delta_theta;
     if (gradients) {
-
-      grada = 2.51210 * (kbaABC * rab_da * delta_theta + RAD_TO_DEG * theta_da * (kbaABC * delta_rab + kbaCBA * delta_rbc));
-      gradc = 2.51210 * (kbaCBA * rbc_dc * delta_theta + RAD_TO_DEG * theta_dc * (kbaABC * delta_rab + kbaCBA * delta_rbc));
-      gradb = -grada - gradc;
+      //grada = 2.51210 * (kbaABC * rab_da * delta_theta + RAD_TO_DEG * theta_da * (kbaABC * delta_rab + kbaCBA * delta_rbc));
+      OBForceField::VectorMultiply(force_ab_a, (kbaABC*delta_theta), force_ab_a);
+      OBForceField::VectorMultiply(force_abc_a, factor, force_abc_a);
+      OBForceField::VectorAdd(force_ab_a, force_abc_a, force_ab_a);
+      OBForceField::VectorMultiply(force_ab_a, 2.51210, force_a);
+      //gradc = 2.51210 * (kbaCBA * rbc_dc * delta_theta + RAD_TO_DEG * theta_dc * (kbaABC * delta_rab + kbaCBA * delta_rbc));
+      OBForceField::VectorMultiply(force_bc_c, (kbaCBA*delta_theta), force_bc_c);
+      OBForceField::VectorMultiply(force_abc_c, factor, force_abc_c);
+      OBForceField::VectorAdd(force_bc_c, force_abc_c, force_bc_c);
+      OBForceField::VectorMultiply(force_bc_c, 2.51210, force_c);
+      //gradb = -grada - gradc;
+      OBForceField::VectorAdd(force_a, force_c, force_b);
+      OBForceField::VectorMultiply(force_b, -1.0, force_b);
     }
   }
   
@@ -331,35 +344,30 @@ namespace OpenBabel
   //
   void OBFFTorsionCalculationMMFF94::Compute(bool gradients)
   {
-    vector3 da, db, dc, dd;
     double cosine, cosine2, cosine3;
     double phi1, phi2, phi3;
     double dE, sine, sine2, sine3;
     
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      dc = c->GetVector();
-      dd = d->GetVector();
-      tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
+      tor = OBForceField::VectorTorsionDerivative(pos_a, pos_b, pos_c, pos_d, 
+                                                  force_a, force_b, force_c, force_d);
       if (!isfinite(tor))
         tor = 1.0e-3;
+      
+      sine = sin(DEG_TO_RAD * tor);
+      sine2 = sin(2.0 * DEG_TO_RAD * tor);
+      sine3 = sin(3.0 * DEG_TO_RAD * tor);
+      
+      dE = 0.5 * (v1 * sine - 2.0 * v2 * sine2 + 3.0 * v3 * sine3); // MMFF
+      
+      OBForceField::VectorMultiply(force_a, dE, force_a);
+      OBForceField::VectorMultiply(force_b, dE, force_b);
+      OBForceField::VectorMultiply(force_c, dE, force_c);
+      OBForceField::VectorMultiply(force_d, dE, force_d);
     } else {
-      vector3 vab, vbc, vcd, abbc, bccd;
-      vab = a->GetVector() - b->GetVector();
-      vbc = b->GetVector() - c->GetVector();
-      vcd = c->GetVector() - d->GetVector();
-      abbc = cross(vab, vbc);
-      bccd = cross(vbc, vcd);
-
-      double dotAbbcBccd = dot(abbc,bccd);
-      tor = RAD_TO_DEG * acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-      if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
-        tor = 180.0; // rather than NaN
-      }
-      else if (dotAbbcBccd > 0.0) {
-        tor = -tor;
-      }
+      tor = OBForceField::VectorTorsion(pos_a, pos_b, pos_c, pos_d);
+      if (!isfinite(tor))
+        tor = 1.0e-3;
     }
     
     cosine = cos(DEG_TO_RAD * tor);
@@ -372,16 +380,6 @@ namespace OpenBabel
     
     energy = 0.5 * (v1 * phi1 + v2 * phi2 + v3 * phi3);
     
-    if (gradients) {
-      sine = sin(DEG_TO_RAD * tor);
-      sine2 = sin(2.0 * DEG_TO_RAD * tor);
-      sine3 = sin(3.0 * DEG_TO_RAD * tor);
-      dE = 0.5 * (v1 * sine - 2.0 * v2 * sine2 + 3.0 * v3 * sine3); // MMFF
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
-      gradc = dE * dc; // - dE/drab * drab/dc
-      gradd = dE * dd; // - dE/drab * drab/dd
-    }
   }
   
   double OBForceFieldMMFF94::E_Torsion(bool gradients) 
@@ -425,28 +423,28 @@ namespace OpenBabel
   //						//
   void OBFFOOPCalculationMMFF94::Compute(bool gradients)
   {
-    vector3 da, db, dc, dd;
     double angle2, dE;
     
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      dc = c->GetVector();
-      dd = d->GetVector();
-      angle = OBForceField::VectorOOPDerivative(da, db, dc, dd);
+      angle = OBForceField::VectorOOPDerivative(pos_a, pos_b, pos_c, pos_d, 
+                                                force_a, force_b, force_c, force_d);
+      
       dE =  (-1.0 * RAD_TO_DEG * 0.043844 * angle * koop) / cos(angle * DEG_TO_RAD);
-      grada = dE * da; // - dE/drab * drab/da
-      gradc = dE * dc; // - dE/drab * drab/dc
-      gradd = dE * dd; // - dE/drab * drab/dd
-      gradb = dE * db; // - dE/drab * drab/db
+      
+      OBForceField::VectorMultiply(force_a, dE, force_a);
+      OBForceField::VectorMultiply(force_b, dE, force_b);
+      OBForceField::VectorMultiply(force_c, dE, force_c);
+      OBForceField::VectorMultiply(force_d, dE, force_d);
     } else {
-      angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
+      angle = OBForceField::VectorOOP(pos_a, pos_b, pos_c, pos_d); 
     }
     
     if (!isfinite(angle))
       angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
+    
     angle2 = angle * angle;
     energy = 0.043844 * 0.5 * koop * angle2;
+  
   }
 
   double OBForceFieldMMFF94::E_OOP(bool gradients) 
@@ -484,18 +482,16 @@ namespace OpenBabel
  
   void OBFFVDWCalculationMMFF94::Compute(bool gradients)
   {
-    vector3 da, db;
     double rab2, /*rab3,*/ rab4, /*rab5,*/ rab6, rab7;
     double erep2, /*erep3,*/ erep4, /*erep5,*/ erep6; /*, erep7;*/
     double dE;
 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      rab = OBForceField::VectorLengthDerivative(da, db);
-    } else
-      rab = a->GetDistance(b);
- 
+      rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
+    } else {
+      rab = OBForceField::VectorDistance(pos_a, pos_b);
+    }
+    
     if (IsNearZero(rab, 1.0e-3))
       rab = 1.0e-3;
 
@@ -530,10 +526,8 @@ namespace OpenBabel
       term2 = term * term;
       eattr = (-7.84 * q6) / term2 + ((-7.84 / term) + 14) / (q + 0.07);
       dE = (epsilon / R_AB) * erep7 * eattr;
-      da.normalize();
-      db.normalize();
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
+      OBForceField::VectorMultiply(force_a, dE, force_a);
+      OBForceField::VectorMultiply(force_b, dE, force_b);
     }
   }
   
@@ -572,25 +566,23 @@ namespace OpenBabel
 
   void OBFFElectrostaticCalculationMMFF94::Compute(bool gradients)
   {
-    vector3 da, db;
     double dE, rab2;
 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      rab = OBForceField::VectorLengthDerivative(da, db);
-    } else
-      rab = a->GetDistance(b);
-
-    rab += 0.05;
-    energy = qq / rab;
-
-    if (gradients) {
+      rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
+      rab += 0.05; // ??
       rab2 = rab * rab;
       dE = -qq / rab2;
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
-    } 
+      OBForceField::VectorMultiply(force_a, dE, force_a);
+      OBForceField::VectorMultiply(force_b, dE, force_b);
+    } else {
+      rab = OBForceField::VectorDistance(pos_a, pos_b);
+      rab += 0.05; // ??
+      rab += 0.05;
+    }
+
+    energy = qq / rab;
+
   }
 
   double OBForceFieldMMFF94::E_Electrostatic(bool gradients)
@@ -2410,7 +2402,9 @@ namespace OpenBabel
 	  
           bondcalc.kb = parameter->_dpar[1] * rr6; // parameter->_dpar[1]  = kb-ref
           bondcalc.bt = bondtype;
-          _bondcalculations.push_back(bondcalc);
+          bondcalc.SetupPointers();
+          
+	  _bondcalculations.push_back(bondcalc);
         }
       } else {
         bondcalc.a = a;
@@ -2418,6 +2412,7 @@ namespace OpenBabel
         bondcalc.kb = parameter->_dpar[0];
         bondcalc.r0 = parameter->_dpar[1];
         bondcalc.bt = bondtype;
+        bondcalc.SetupPointers();
 
         _bondcalculations.push_back(bondcalc);
       }
@@ -2551,6 +2546,7 @@ namespace OpenBabel
       anglecalc.c = c;
       anglecalc.at = angletype;
       
+      anglecalc.SetupPointers();
       _anglecalculations.push_back(anglecalc);
 
       if (anglecalc.linear)
@@ -2604,7 +2600,96 @@ namespace OpenBabel
       strbndcalc.b = b;
       strbndcalc.c = c;
       strbndcalc.sbt = strbndtype;
+      strbndcalc.SetupPointers();
+      // Set the pointers to adresses in the anglecalc, find the matching bondcalcs and do the same.
+      // This should improve performance by not calculating all this twice. We could do the same
+      // for torsion and angles since the bond lengths are calculated for bond stretching first.
+      //bool found_angle = false;
+      /*
+      for (unsigned int ai = 0; ai < _anglecalculations.size(); ++ai) {
+        if ( (_anglecalculations[ai].a->GetIdx() == a->GetIdx()) && 
+	     (_anglecalculations[ai].b->GetIdx() == b->GetIdx()) && 
+	     (_anglecalculations[ai].c->GetIdx() == c->GetIdx()) ) {
+          strbndcalc.theta = &(_anglecalculations[ai].theta);
+          strbndcalc.force_abc_a = _anglecalculations[ai].force_a;
+          strbndcalc.force_abc_b = _anglecalculations[ai].force_b;
+          strbndcalc.force_abc_c = _anglecalculations[ai].force_c;
+	  found_angle = true;
+	  break;
+	} else if ( (_anglecalculations[ai].a->GetIdx() == c->GetIdx()) && 
+	            (_anglecalculations[ai].b->GetIdx() == b->GetIdx()) && 
+	            (_anglecalculations[ai].c->GetIdx() == a->GetIdx()) ) {
+          strbndcalc.theta = &(_anglecalculations[ai].theta);
+          strbndcalc.force_abc_a = _anglecalculations[ai].force_c;
+          strbndcalc.force_abc_b = _anglecalculations[ai].force_b;
+          strbndcalc.force_abc_c = _anglecalculations[ai].force_a;
+	  found_angle = true;
+	  break;
+	}
+      }
+      */
+  
+      /*
+      vector<OBFFAngleCalculationMMFF94>::iterator ai;
+      for (ai = _anglecalculations.begin(); ai != _anglecalculations.end(); ++ai) {
+        if ( (((*ai).a)->GetIdx() == a->GetIdx()) && (((*ai).b)->GetIdx() == b->GetIdx()) && (((*ai).c)->GetIdx() == c->GetIdx()) ) {
+          strbndcalc.theta = (*ai).theta;
+	  cout << "theta prt       = " << (*ai).theta << endl;
+	  cout << "delta prt       = " << &((*ai).delta) << endl;
+	  cout << "GetThetaPointer = " << ai->GetThetaPointer() << endl;
+          strbndcalc.force_abc_a = (*ai).force_a;
+          strbndcalc.force_abc_b = (*ai).force_b;
+          strbndcalc.force_abc_c = (*ai).force_c;
+	  found_angle = true;
+	  break;
+	} else if ( (((*ai).a)->GetIdx() == c->GetIdx()) && (((*ai).b)->GetIdx() == b->GetIdx()) && (((*ai).c)->GetIdx() == a->GetIdx()) ) {
+          strbndcalc.theta = (*ai).theta;
+          strbndcalc.force_abc_a = (*ai).force_c;
+          strbndcalc.force_abc_b = (*ai).force_b;
+          strbndcalc.force_abc_c = (*ai).force_a;
+	  found_angle = true;
+	  break;
+	}
+      }
+      if (!found_angle) // didn't find matching angle, shouldnt happen, but continue to be safe
+        continue;
 
+
+      bool found_rab = false;
+      bool found_rbc = false;
+      vector<OBFFBondCalculationMMFF94>::iterator bi;
+      for (bi = _bondcalculations.begin(); bi != _bondcalculations.end(); ++bi) {
+        // find rab
+        if ( (((*bi).a)->GetIdx() == a->GetIdx()) && (((*bi).b)->GetIdx() == b->GetIdx()) ) {
+	  strbndcalc.rab = &((*bi).rab);
+          strbndcalc.force_ab_a = (*bi).force_a;
+          strbndcalc.force_ab_b = (*bi).force_b;
+	  found_rab = true;
+	} else if ( (((*bi).a)->GetIdx() == b->GetIdx()) && (((*bi).b)->GetIdx() == a->GetIdx()) ) {
+          strbndcalc.rab = &((*bi).rab);
+          strbndcalc.force_ab_a = (*bi).force_b;
+          strbndcalc.force_ab_b = (*bi).force_a;
+	  found_rab = true;
+	}
+        // find rbc
+	if ( (((*bi).a)->GetIdx() == b->GetIdx()) && (((*bi).b)->GetIdx() == c->GetIdx()) ) {
+          strbndcalc.rbc = &(bondcalc.rab);
+          strbndcalc.force_ab_a = (*bi).force_a;
+          strbndcalc.force_ab_b = (*bi).force_b;
+	  found_rbc = true;
+	} else if ( (((*bi).a)->GetIdx() == c->GetIdx()) && (((*bi).b)->GetIdx() == b->GetIdx()) ) {
+          strbndcalc.rbc = &(bondcalc.rab);
+          strbndcalc.force_ab_a = (*bi).force_b;
+          strbndcalc.force_ab_b = (*bi).force_a;
+	  found_rbc = true;
+	}
+
+	if (found_rab && found_rbc)
+	  break;
+      }
+      if (!found_rab || !found_rbc) // didn't find matching bond, or atoms overlap
+        continue;
+*/
       _strbndcalculations.push_back(strbndcalc);
  
     }
@@ -2857,6 +2942,7 @@ namespace OpenBabel
       torsioncalc.b = b;
       torsioncalc.c = c;
       torsioncalc.d = d;
+      torsioncalc.SetupPointers();
       torsioncalc.tt = torsiontype;
 
       _torsioncalculations.push_back(torsioncalc);
@@ -2916,12 +3002,14 @@ namespace OpenBabel
               oopcalc.c = c;
               oopcalc.d = d;
 	    
+              oopcalc.SetupPointers();
               _oopcalculations.push_back(oopcalc);
 
               // C-B-DA || D-B-CA  PLANE BCD
               oopcalc.a = d;
               oopcalc.d = a;
 	
+              oopcalc.SetupPointers();
               _oopcalculations.push_back(oopcalc);
             
               // A-B-DC || D-B-AC  PLANE ABD
@@ -2929,6 +3017,7 @@ namespace OpenBabel
               oopcalc.c = d;
               oopcalc.d = c;
 	    
+              oopcalc.SetupPointers();
               _oopcalculations.push_back(oopcalc);
             }
 
@@ -2942,12 +3031,14 @@ namespace OpenBabel
               oopcalc.c = c;
               oopcalc.d = d;
 	    
+              oopcalc.SetupPointers();
               _oopcalculations.push_back(oopcalc);
 
               // C-B-DA || D-B-CA  PLANE BCD
               oopcalc.a = d;
               oopcalc.d = a;
 	
+              oopcalc.SetupPointers();
               _oopcalculations.push_back(oopcalc);
             
               // A-B-DC || D-B-AC  PLANE ABD
@@ -2955,6 +3046,7 @@ namespace OpenBabel
               oopcalc.c = d;
               oopcalc.d = c;
 	    
+              oopcalc.SetupPointers();
               _oopcalculations.push_back(oopcalc);
             }
         }
@@ -3059,7 +3151,7 @@ namespace OpenBabel
         vdwcalc.epsilon = (181.16 * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0 / R_AB6);
       }
       
-
+      vdwcalc.SetupPointers();
       _vdwcalculations.push_back(vdwcalc);
     }
     
@@ -3090,6 +3182,7 @@ namespace OpenBabel
         if (a->IsOneFour(b))
           elecalc.qq *= 0.75;
 	  
+        elecalc.SetupPointers();
         _electrostaticcalculations.push_back(elecalc);
       }
     }
@@ -3732,6 +3825,7 @@ namespace OpenBabel
         if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx()) || 
             ((*i4).c->GetIdx() == a->GetIdx()) || ((*i4).d->GetIdx() == a->GetIdx())) {
           i4->Compute(true);
+	  //cout << "grad = " << grad << endl;
           grad += i4->GetGradient(&*a);
         }
     if ((terms & OBFF_ENERGY) || (terms & OBFF_EOOP))

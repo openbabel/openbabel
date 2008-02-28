@@ -39,7 +39,7 @@ namespace OpenBabel
   class OBFFAngleCalculationMMFF94 : public OBFFCalculation
   {
     public:
-      double ka, theta0, theta, delta;
+      double ka, theta, theta0, delta;
       int at; //angletype (ATIJK)
       bool linear;
       
@@ -49,7 +49,10 @@ namespace OpenBabel
   class OBFFStrBndCalculationMMFF94 : public OBFFCalculation
   {
     public:
-      double kbaABC, kbaCBA, theta0, theta, rab0, rbc0, rab, rbc, delta_theta, delta_rab, delta_rbc;
+      double kbaABC, kbaCBA, theta0, rab0, rbc0, delta_theta, delta_rab, delta_rbc;
+      double theta, rab, rbc;
+      double force_ab_a[3], force_ab_b[3], force_bc_b[3], force_bc_c[3]; 
+      double force_abc_a[3], force_abc_b[3], force_abc_c[3];
       int sbt; //strbndtype (SBTIJK)
       
       void Compute(bool gradients = true);

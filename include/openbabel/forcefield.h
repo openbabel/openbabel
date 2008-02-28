@@ -127,19 +127,28 @@ namespace OpenBabel
       vector3 grada, gradb, gradc, gradd;
       //! Used to store the atoms for this OBFFCalculation
       OBAtom *a, *b, *c, *d;
+      //! Pointer to atom coordinates
+      double *pos_a, *pos_b, *pos_c, *pos_d;
+      //! Pointer to atom forces
+      double force_a[3], force_b[3], force_c[3], force_d[3];
+      
+      bool optimized;
 
       //! Constructor
       OBFFCalculation() 
         {
-	  a = NULL;
-	  b = NULL;
-	  c = NULL;
-	  d = NULL;
+	  a = b = c = d = NULL;
+	  pos_a = pos_b = pos_c = pos_d = NULL;
+	  force_a[0] = 0.0; force_a[1] = 0.0; force_a[2] = 0.0;
+	  force_b[0] = 0.0; force_b[1] = 0.0; force_b[2] = 0.0;
+	  force_c[0] = 0.0; force_c[1] = 0.0; force_c[2] = 0.0;
+	  force_d[0] = 0.0; force_d[1] = 0.0; force_d[2] = 0.0;
 	  energy = 0.0;
           grada = VZero;
           gradb = VZero;
           gradc = VZero;
           gradd = VZero;
+	  optimized = false;
         }
       //! Destructor
       virtual ~OBFFCalculation()
@@ -161,7 +170,25 @@ namespace OpenBabel
       //! \return Gradient for this OBFFCalculation with respect to coordinates of atom (call Compute() first)
       virtual vector3 GetGradient(OBAtom *atom) 
       {
-        if (atom == a)
+	if (optimized) {
+	  if (atom == a) {
+            grada = vector3(force_a);
+            return grada;
+          } else if (atom == b) {
+            gradb = vector3(force_b);
+            return gradb;
+          } else if (atom == c) {
+            gradc = vector3(force_c);
+            return gradc;
+          } else if (atom == d) {
+            gradd = vector3(force_d);
+            return gradd;
+          } else {
+            return  VZero;
+          }
+	}
+ 
+	if (atom == a)
           return grada;
         else if (atom == b)
           return gradb;
@@ -172,6 +199,24 @@ namespace OpenBabel
         else 
           return  VZero;
       }
+      //! \return Setup pointers to atom positions and forces (To be called while setting up calculations). Sets optimized to true.
+      void SetupPointers() 
+      {
+        if (!a || !b) return;
+	pos_a = a->GetCoordinate();
+	pos_b = b->GetCoordinate();
+	
+	optimized = true;
+        
+	if (!c) return;
+	pos_c = c->GetCoordinate();
+        
+	if (!d) return;
+	pos_d = d->GetCoordinate();
+        
+	
+      }
+ 
   };
   
   //! \class OBFFConstraint forcefield.h <openbabel/forcefield.h>
@@ -1054,13 +1099,18 @@ namespace OpenBabel
      * \return The distance between a and b (bondlength for bond stretching, separation for vdw, electrostatic)
      */
     static double VectorLengthDerivative(vector3 &a, vector3 &b);
-    /*! Calculate the derivative of a angle a-b-c. The angle is given by dot(ab,cb)/rab*rcb.
+    static double VectorDistanceDerivative(double *pos_i, double *pos_j, 
+                                         double *force_i, double *force_j);
+    /*! Calculate the derivative of a angle a-b-c. The angle is given by dot(ab,cb)/rab*rcb. 
+     *  Used for harmonic (cubic) angle potentials.
      * \param a atom a (coordinates), will be changed to -dtheta/da
      * \param b atom b (coordinates), will be changed to -dtheta/db
      * \param c atom c (coordinates), will be changed to -dtheta/dc
      * \return The angle between a-b-c
      */
     static double VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c);
+    static double VectorAngleDerivative(double *pos_i, double *pos_j, double *pos_k,
+                                        double *force_i, double *force_j, double *force_k);
     /*! Calculate the derivative of a OOP angle a-b-c-d. b is the central atom, and a-b-c is the plane. 
      * The OOP angle is given by 90° - arccos(dot(corss(ab,cb),db)/rabbc*rdb).
      * \param a atom a (coordinates), will be changed to -dtheta/da
@@ -1070,7 +1120,8 @@ namespace OpenBabel
      * \return The OOP angle for a-b-c-d
      */
     static double VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
- 
+    static double VectorOOPDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
+                                      double *force_i, double *force_j, double *force_k, double *force_l);
     /*! Calculate the derivative of a torsion angle a-b-c-d. The torsion angle is given by arccos(dot(corss(ab,bc),cross(bc,cd))/rabbc*rbccd).
      * \param a atom a (coordinates), will be changed to -dtheta/da
      * \param b atom b (coordinates), will be changed to -dtheta/db
@@ -1079,6 +1130,165 @@ namespace OpenBabel
      * \return The tosion angle for a-b-c-d
      */
     static double VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
+    static double VectorTorsionDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
+                                          double *force_i, double *force_j, double *force_k, double *force_l);
+
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \param j pointer to j[3]
+     * \param result pointer to result[3], will be set to i - j
+     */
+    static void VectorSubstract(double *i, double *j, double *result)
+    {
+      result[0] = i[0] - j[0];
+      result[1] = i[1] - j[1];
+      result[2] = i[2] - j[2];
+    }
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \param j pointer to j[3]
+     * \param result pointer to result[3], will be set to i + j
+     */
+    static void VectorAdd(double *i, double *j, double *result)
+    {
+      result[0] = i[0] + j[0];
+      result[1] = i[1] + j[1];
+      result[2] = i[2] + j[2];
+    }
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \param n divide x,y,z with n
+     * \param result pointer to result[3]
+     */
+    static void VectorDivide(double *i, double n, double *result)
+    {
+      result[0] = i[0] / n;
+      result[1] = i[1] / n;
+      result[2] = i[2] / n;
+    }
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \param n multiply x,y,z with n
+     * \param result pointer to result[3]
+     */
+    static void VectorMultiply(double *i, double n, double *result)
+    {
+      result[0] = i[0] * n;
+      result[1] = i[1] * n;
+      result[2] = i[2] * n;
+    }
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3] to be normalized
+     */
+    static void VectorNormalize(double *i)
+    {  
+      double length = VectorLength(i);
+      i[0] = i[0] / length;
+      i[1] = i[1] / length;
+      i[2] = i[2] / length;
+    }
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3] to be copied from
+     * \param j pointer to j[3] to be copied to
+     */
+    static void VectorCopy(double *from, double *to)
+    {  
+      to[0] = from[0];
+      to[1] = from[1];
+      to[2] = from[2];
+    }
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \return the vector length
+     */
+    static double VectorLength(double *i) 
+    {
+      return sqrt( i[0]*i[0] + i[1]*i[1] + i[2]*i[2] );
+    }
+    
+    static double VectorDistance(double *pos_i, double *pos_j)
+    {
+      double ij[3];
+      double rij;
+    
+      VectorSubstract(pos_i, pos_j, ij);
+      rij = VectorLength(ij);
+
+      return rij;
+    }
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \param j pointer to j[3]
+     * \param k pointer to k[3]
+     * \return the vector angle ijk (deg)
+     */
+    static double VectorAngle(double *i, double *j, double *k);
+ 
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \param j pointer to j[3]
+     * \param k pointer to k[3]
+     * \param l pointer to l[3]
+     * \return the vector torson ijkl (deg)
+     */
+    static double VectorTorsion(double *i, double *j, double *k, double *l);
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \param j pointer to j[3]
+     * \param k pointer to k[3]
+     * \param l pointer to l[3]
+     * \return the vector torson ijkl (deg)
+     */
+    static double VectorOOP(double *pos_i, double *pos_j, double *pos_k, double *pos_l);
+
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3], will set x,y,z to 0,0,0
+     */
+    static void VectorClear(double *i) 
+    {
+      i[0] = 0.0;
+      i[1] = 0.0;
+      i[2] = 0.0;
+    }
+   
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \param j pointer to j[3]
+     * \return the dot product
+     */
+    static double VectorDot(double *i, double *j)
+    {
+      return i[0]*j[0] + i[1]*j[1] + i[2]*j[2];
+    }
+    
+    /*! inline fuction to speed up minimization speed
+     * \param i pointer to i[3]
+     * \param j pointer to j[3]
+     * \return the dot product
+     */
+    static void VectorCross(double *i, double *j, double *result)
+    {
+      result[0] =   i[1]*j[2] - i[2]*j[1];
+      result[1] = - i[0]*j[2] + i[2]*j[0];
+      result[2] =   i[0]*j[1] - i[1]*j[0];
+    }
+    
+    static void PrintVector(double *i)
+    {
+      std::cout << "<" << i[0] << ", " << i[1] << ", " << i[2] << ">" << std::endl;
+    }
+
+
+
+
     //@}
 
   }; // class OBForceField
