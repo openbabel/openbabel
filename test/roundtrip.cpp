@@ -46,7 +46,7 @@ int main(int argc,char *argv[])
 
   if (argc != 3)
     {
-      cout << "Usage: roundtest <file1> <file2>" << endl;
+      cout << "Usage: roundtrip <file1> <file2>" << endl;
       return(-1);
     }
 
