@@ -131,6 +131,7 @@ namespace OpenBabel
     _xdim = nx;
     _ydim = ny;
     _zdim = nz;
+    _val = new double[nx*ny*nz];
   }
 
   void OBFloatGrid::SetXAxis(vector3 v)
