@@ -1,8 +1,8 @@
 /**********************************************************************
 forcefielduff.cpp - UFF force field.
  
-Copyright (C) 2007 by Geoffrey Hutchison
-Some portions Copyright (C) 2006-2007 by Tim Vandermeersch
+Copyright (C) 2007-2008 by Geoffrey Hutchison
+Some portions Copyright (C) 2006-2008 by Tim Vandermeersch
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -100,7 +100,7 @@ namespace OpenBabel
   {
     vector3 da, db, dc;
     double ab, bc, ac;
-    double dE;
+    double dE, dk;
 
     ab = a->GetDistance(b);
     bc = b->GetDistance(c);
@@ -114,43 +114,62 @@ namespace OpenBabel
       dc = c->GetVector();
       theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;
     } else {
-      theta = a->GetAngle(b, c) * DEG_TO_RAD;
+      theta = a->GetAngle(b, c) * DEG_TO_RAD; // CHECK
     }
 
     if (!isfinite(theta))
       theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
 
-    ka = (644.12 * KCAL_TO_KJ) * (zi * zk / (pow(ac, 5.0)));
-    // need the derivatives here!
+    // Original expression, as indicated in towhee website
+    // Unfortunately, k is a function of x,y,z == gradients are messy  
+    ka = (644.12 * KCAL_TO_KJ / (ab * bc)) * (zi * zk / (pow(ac, 5.0)));
     ka *= (3.0 * ab * bc * (1.0 - cosT0*cosT0) - ac*ac*cosT0);
-     
-    switch (coord) {
+
+    int modcoord = coord;
+    if (coord == 3 && theta0 == 90.0) // "tetrahedral, but equilibrium angle 90.0"
+      modcoord = 4; // see http://towhee.sourceforge.net/forcefields/uff.html
+    
+    // Energy terms ignore ka for now to simplify calculation of gradients
+    // (We multiply by ka at the end of the function)
+    switch (modcoord) {
     case 1:
-      energy = ka * (1.0 + cos(theta));
+      energy = (1.0 + cos(theta));
       dE = -ka * sin(theta);
       break;
     case 2:
-      energy = ka * (1.0 + cos(3.0 * theta)) / 9.0;
-      dE = -ka * sin(3.0 * theta) / 3.0;
+      energy = (1.0 + cos(3 * theta)) / 9;
+      dE = -ka * sin(3 * theta) / 3;
       break;
     case 4:
     case 6:
-      energy = ka * (1.0 + cos(4.0 * theta)) / 16.0;
-      dE = -ka * sin(4.0 * theta) / 4.0;
+      energy = (1.0 + cos(4 * theta)) / 16;
+      dE = -ka * sin(4 * theta) / 4;
       break;
     default:
-      energy = ka * (c0 + c1*cos(theta) + c2*cos(2.0 * theta));
-      dE = -ka * (c1*sin(theta) + 2.0 * c2 * sin(2.0 * theta));
+      energy = (c0 + c1*cos(theta) + c2*cos(2 * theta));
+      dE = -ka * (c1*sin(theta) + 2 * c2 * sin(2 * theta));
     }
     
     if (gradients) {
-      da *= dE;
-      db *= dE;
-      dc *= dE;
+      // Normally, we use VectorAngleDerivative() to simplify things for us
+      // i.e., dE/dx = dTheta/dx * dE/dTheta  (and VectorAngleDeriv gives dTheta/dx)
+      // but E = ka (cos n*theta)
+      // so dE = ka * dE [above] + dK * E
+      
+      // Now we need to calculate dk/dx * E
+      dK = 1.0; // WRONG -- need to work this part out
+      dE += dK * energy;
+      
+      da *= dE; // da = dTheta/dx * dE/dTheta
+      db *= dE; // da = dTheta/dx * dE/dTheta
+      dc *= dE; // da = dTheta/dx * dE/dTheta
       da.Get(force_a);
       db.Get(force_b);
       dc.Get(force_c);
     }
+
+    // Now put the ka back into the energy term
+    energy *= ka;
   }
   
   double OBForceFieldUFF::E_Angle(bool gradients)
