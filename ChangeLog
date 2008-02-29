@@ -1,3 +1,8 @@
+2008-02-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/generic.h (OBVectorData): New class for storing vector3
+	(e.g., dipole moment, transition dipole, etc.)
+
 2008-02-29  Chris Morley
 
 	* src/obconversion.cpp:mods to OBConversion destructor to prevent
@@ -10,6 +15,7 @@
 2008-02-29  Noel O'Boyle <baoilleach@gmail.com>
 
 	* acinclude.m4: Just say 'not found' if BOOST not found.
+	
 	* configure.in: Look for BOOST and look for tr1/memory.
 
 2008-02-29  Noel O'Boyle <baoilleach@gmail.com>
@@ -18,7 +24,6 @@
 	Torsion iterators dones not have deref() method". Turns out that I
 	could have been using the __ref__() method all along. This doesn't
 	seem to be in the SWIG documentation though.
-
 
 2008-02-28  Marcus D. Hanwell  <marcus@cryos.org>
 
