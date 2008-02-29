@@ -352,6 +352,7 @@ namespace OpenBabel
   
   double OBFFConstraints::GetConstraintEnergy()
   {
+    return 0.0;
     vector<OBFFConstraint>::iterator i;
     double constraint_energy = 0.0;
         
@@ -731,14 +732,21 @@ namespace OpenBabel
       ParseParamFile();
       _init = true;
       _velocityPtr = NULL;       
+      _gradientPtr = NULL;       
     }    
    
     if (IsSetupNeeded(mol)) {
+      _mol = mol;
+      _ncoords = _mol.NumAtoms() * 3;
+      
       if (_velocityPtr)
         delete [] _velocityPtr;
       _velocityPtr = NULL;       
       
-      _mol = mol;
+      if (_gradientPtr)
+        delete [] _gradientPtr;
+      _gradientPtr = new double[_ncoords];
+      
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
 
@@ -772,14 +780,21 @@ namespace OpenBabel
       ParseParamFile();
       _init = true;
       _velocityPtr = NULL;       
+      _gradientPtr = NULL;       
     }    
     
     if (IsSetupNeeded(mol)) {
+      _mol = mol;
+      _ncoords = _mol.NumAtoms() * 3;
+      
       if (_velocityPtr)
         delete [] _velocityPtr;
       _velocityPtr = NULL;       
- 
-      _mol = mol;
+      
+      if (_gradientPtr)
+        delete [] _gradientPtr;
+      _gradientPtr = new double[_ncoords];
+      
       _constraints = constraints;
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
@@ -1860,11 +1875,14 @@ namespace OpenBabel
           tempStep = direction[c] * step;
 
           if (tempStep > trustRadius) // positive big step
-            currentCoords[c] += trustRadius;
-          else if (tempStep < -1.0 * trustRadius) // negative big step
             currentCoords[c] -= trustRadius;
+            //currentCoords[c] += trustRadius;
+          else if (tempStep < -1.0 * trustRadius) // negative big step
+            currentCoords[c] += trustRadius;
+            //currentCoords[c] -= trustRadius;
           else
-            currentCoords[c] += direction[c] * step;
+            currentCoords[c] -= direction[c] * step;
+            //currentCoords[c] += direction[c] * step;
         }
       }
     
@@ -2089,34 +2107,33 @@ namespace OpenBabel
  
   bool OBForceField::SteepestDescentTakeNSteps(int n) 
   {
-  cout << "sttep "<<endl;
     int _ncoords = _mol.NumAtoms() * 3;
-    int coordIdx;
     double e_n2, alpha;
-    double *gradPtr = new double[_ncoords];
-    memset(gradPtr, '\0', sizeof(double)*_ncoords);
     vector3 dir;
 
     for (int i = 1; i <= n; i++) {
       _cstep++;
-      
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        if (!_constraints.IsFixed(a->GetIdx())) {
-          coordIdx = (a->GetIdx() - 1) * 3;
-          if (_method & OBFF_ANALYTICAL_GRADIENT)
-            dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
-          else
-            dir = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+      if (!HasAnalyticalGradients()) {
+        FOR_ATOMS_OF_MOL (a, _mol) {
+          int coordIdx = (a->GetIdx() - 1) * 3;
+          if (_constraints.IsFixed(a->GetIdx())) {
+	    _gradientPtr[coordIdx] = 0.0;
+	    _gradientPtr[coordIdx+1] = 0.0;
+	    _gradientPtr[coordIdx+2] = 0.0;
+	    continue;
+	  }
+            
+          dir = -NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
           
-          if (!_constraints.IsXFixed(a->GetIdx()))
-	    			gradPtr[coordIdx] = dir.x();
           if (!_constraints.IsYFixed(a->GetIdx()))
-            gradPtr[coordIdx+1] = dir.y();
+	    _gradientPtr[coordIdx] = dir.x();
+          if (!_constraints.IsYFixed(a->GetIdx()))
+            _gradientPtr[coordIdx+1] = dir.y();
           if (!_constraints.IsZFixed(a->GetIdx()))
-            gradPtr[coordIdx+2] = dir.z();
+            _gradientPtr[coordIdx+2] = dir.z();
         }
       }
-      alpha = LineSearch(_mol.GetCoordinates(), gradPtr);
+      alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
       e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
       IF_OBFF_LOGLVL_LOW {
@@ -2129,19 +2146,16 @@ namespace OpenBabel
       if (IsNear(e_n2, _e_n1, _econv)) {
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
-        delete [] gradPtr;
         return false;
       }
       
       if (_nsteps == _cstep) {
-        delete [] gradPtr;
         return false;
       }
 
       _e_n1 = e_n2;
     }
 
-    delete [] gradPtr;
     return true;  // no convergence reached
   }
  
@@ -2870,7 +2884,7 @@ namespace OpenBabel
     VectorSubstract(pos_i, pos_j, force_j);
     const double rij = VectorLength(force_j);
     const double inverse_rij = 1.0 / rij;
-    VectorFastMultiply(force_j, inverse_rij);
+    VectorSelfMultiply(force_j, inverse_rij);
     VectorMultiply(force_j, -1.0, force_i);
     return rij;
   }
@@ -3009,7 +3023,7 @@ namespace OpenBabel
     VectorDivide(t2,  l_jk, force_k);
     
     VectorAdd(force_i, force_k, force_j);
-    VectorMultiply(force_j, -1.0, force_j);
+    VectorSelfMultiply(force_j, -1.0);
 
     return angle_ijk;
   }
@@ -3274,17 +3288,17 @@ namespace OpenBabel
     /* i = ((bn + (((-ji + jk * cos_theta) * sin_dl) / sin_theta)) / length_ji) / sin_theta; */
     VectorMultiply(jk, cos_theta, temp);
     VectorSubstract(temp, ji, temp);
-    VectorMultiply(temp, sin_dl, temp);
+    VectorSelfMultiply(temp, sin_dl);
     VectorDivide(temp, sin_theta, temp);
     VectorAdd(bn, temp, force_i);
-    VectorMultiply(force_i, (sin_theta/length_ji) , force_i);
+    VectorSelfMultiply(force_i, (sin_theta/length_ji));
     /* k = ((cn + (((-jk + ji * cos_theta) * sin_dl) / sin_theta)) / length_jk) / sin_theta; */
     VectorMultiply(ji, cos_theta, temp);
     VectorSubstract(temp, jk, temp);
-    VectorMultiply(temp, sin_dl, temp);
+    VectorSelfMultiply(temp, sin_dl);
     VectorDivide(temp, sin_theta, temp);
     VectorAdd(cn, temp, force_k);
-    VectorMultiply(force_k, (sin_theta/length_ji) , force_k);
+    VectorSelfMultiply(force_k, (sin_theta/length_ji));
     /* j = -(i + k + l); */
     VectorAdd(force_i, force_k, temp);
     VectorAdd(force_l, temp, temp);
@@ -3521,10 +3535,9 @@ namespace OpenBabel
     VectorSubstract(pos_l, pos_k, kl);
 
     // length of the three bonds
-    double l_ij, l_jk, l_kl;
-    l_ij = VectorLength(ij);
-    l_jk = VectorLength(jk);
-    l_kl = VectorLength(kl);
+    const double l_ij = VectorLength(ij);
+    const double l_jk = VectorLength(jk);
+    const double l_kl = VectorLength(kl);
     
     if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
       return 0.0;

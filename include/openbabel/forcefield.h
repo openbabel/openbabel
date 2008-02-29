@@ -127,6 +127,8 @@ namespace OpenBabel
       vector3 grada, gradb, gradc, gradd;
       //! Used to store the atoms for this OBFFCalculation
       OBAtom *a, *b, *c, *d;
+      //! Used to store the index of atoms for this OBFFCalculation
+      int idx_a, idx_b, idx_c, idx_d;
       //! Pointer to atom coordinates
       double *pos_a, *pos_b, *pos_c, *pos_d;
       //! Pointer to atom forces
@@ -201,17 +203,19 @@ namespace OpenBabel
       {
         if (!a || !b) return;
 	pos_a = a->GetCoordinate();
+	idx_a = a->GetIdx();
 	pos_b = b->GetCoordinate();
+	idx_b = b->GetIdx();
 	
 	optimized = true;
         
 	if (!c) return;
 	pos_c = c->GetCoordinate();
+	idx_c = c->GetIdx();
         
 	if (!d) return;
 	pos_d = d->GetCoordinate();
-        
-	
+	idx_d = d->GetIdx();
       }
  
   };
@@ -454,10 +458,63 @@ namespace OpenBabel
      *  \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
      *  \return the negative gradient of atom a
      */
+    //virtual vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY) 
+    //{ 
+    //  return -NumericalDerivative(a, terms); 
+    //}
+    
+    /* 
+     *   NEW gradients functions
+     */ 
+    
+    /*! Set the gradient for atom with index idx to grad
+     */
+    void SetGradient(double *grad, int idx) 
+    { 
+      const int coordIdx = (idx - 1) * 3;
+      _gradientPtr[coordIdx  ] = grad[0]; 
+      _gradientPtr[coordIdx+1] = grad[1];
+      _gradientPtr[coordIdx+2] = grad[2];
+    }
+    
+    /*! Add grad to the gradient for atom with index idx
+     */
+    void AddGradient(double *grad, int idx) 
+    { 
+      //if (_constraints.IsFixed(idx));
+      //  return;
+
+      const int coordIdx = (idx - 1) * 3;
+      //if (!_constraints.IsXFixed(idx))
+        _gradientPtr[coordIdx  ] -= grad[0]; 
+      //if (!_constraints.IsYFixed(idx))
+        _gradientPtr[coordIdx+1] -= grad[1]; 
+      //if (!_constraints.IsZFixed(idx))
+        _gradientPtr[coordIdx+2] -= grad[2]; 
+    }
+    
+    /*! Get the pointer to the gradients
+     */
     virtual vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY) 
     { 
-      return -NumericalDerivative(a, terms); 
+      const int coordIdx = (a->GetIdx() - 1) * 3;
+      return _gradientPtr + coordIdx;
     }
+    
+    /*! Get the pointer to the gradients
+     */
+    double* GetGradientPtr() 
+    { 
+      return _gradientPtr;
+    }
+    
+    /*! Set all gradients to zero
+     */
+    virtual void ClearGradients() 
+    { 
+      memset(_gradientPtr, '\0', sizeof(double)*_ncoords);
+    }
+
     /*! Check if two atoms are in the same ring. [NOTE: this function uses SSSR, 
      *  this means that not all rings are found for bridged rings. This causes 
      *  some problems with the MMFF94 validation.]
@@ -468,6 +525,7 @@ namespace OpenBabel
     bool IsInSameRing(OBAtom* a, OBAtom* b);
  
     OBMol _mol; //!< Molecule to be evaluated or minimized
+    double *_gradientPtr; //! pointer to the gradients
     bool _init; //!< Used to make sure we only parse the parameter file once, when needed
     bool _validSetup; //! was the last call to Setup succesfull
 
@@ -1201,7 +1259,7 @@ namespace OpenBabel
     /*! inline fuction to speed up minimization speed
      * \param i pointer to i[3], multiply this vector by n and set this vector to the result.
      */
-    static void VectorFastMultiply(double *i, double n)
+    static void VectorSelfMultiply(double *i, double n)
     {
       i[0] *= n;
       i[1] *= n;

@@ -48,6 +48,9 @@ namespace OpenBabel
   double OBForceFieldMMFF94::Energy(bool gradients)
   {
     double energy;
+    
+    if (gradients)
+      ClearGradients();
 
     IF_OBFF_LOGLVL_MEDIUM
       OBFFLog("\nE N E R G Y\n\n");
@@ -83,17 +86,17 @@ namespace OpenBabel
   //
   void OBFFBondCalculationMMFF94::Compute(bool gradients)
   {
-    double delta2, dE;
+    double delta2;
     
     if (gradients) {
       rab = OBForceField::VectorBondDerivative(pos_a, pos_b, force_a, force_b);
       delta = rab - r0;
       delta2 = delta * delta;
       
-      dE = 143.9325 * kb * delta * (1.0 - 3.0 * delta + 14.0/3.0 * delta2);
+      const double dE = 143.9325 * kb * delta * (1.0 - 3.0 * delta + 14.0/3.0 * delta2);
       
-      OBForceField::VectorMultiply(force_a, dE, force_a);
-      OBForceField::VectorMultiply(force_b, dE, force_b);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
     } else {
       rab = OBForceField::VectorDistance(pos_a, pos_b);
       delta = rab - r0;
@@ -101,7 +104,6 @@ namespace OpenBabel
     }
     
     energy = 143.9325 * 0.5 * kb * delta2 * (1.0 - 2.0 * delta + 7.0/3.0 * delta2);
-  
   }
   
   double OBForceFieldMMFF94::E_Bond(bool gradients)
@@ -119,7 +121,12 @@ namespace OpenBabel
     for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i) {
       i->Compute(gradients);
       energy += i->GetEnergy();
-
+      
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+      }
+      
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
                 (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
@@ -169,9 +176,9 @@ namespace OpenBabel
         dE = RAD_TO_DEG * 0.043844 * ka * delta * (1.0 - 1.5 * 0.007 * delta);
       }
       
-      OBForceField::VectorMultiply(force_a, dE, force_a);
-      OBForceField::VectorMultiply(force_b, dE, force_b);
-      OBForceField::VectorMultiply(force_c, dE, force_c);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+      OBForceField::VectorSelfMultiply(force_c, dE);
     } else {
       theta = OBForceField::VectorAngle(pos_a, pos_b, pos_c);
       
@@ -207,6 +214,12 @@ namespace OpenBabel
 
       i->Compute(gradients);
       energy += i->GetEnergy();
+      
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+        AddGradient((*i).force_c, (*i).idx_c);
+      }
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
@@ -261,18 +274,18 @@ namespace OpenBabel
     energy = 2.51210 * DEG_TO_RAD * factor * delta_theta;
     if (gradients) {
       //grada = 2.51210 * (kbaABC * rab_da * delta_theta + RAD_TO_DEG * theta_da * (kbaABC * delta_rab + kbaCBA * delta_rbc));
-      OBForceField::VectorMultiply(force_ab_a, (kbaABC*delta_theta), force_ab_a);
-      OBForceField::VectorMultiply(force_abc_a, factor, force_abc_a);
+      OBForceField::VectorSelfMultiply(force_ab_a, (kbaABC*delta_theta));
+      OBForceField::VectorSelfMultiply(force_abc_a, factor);
       OBForceField::VectorAdd(force_ab_a, force_abc_a, force_ab_a);
       OBForceField::VectorMultiply(force_ab_a, 2.51210, force_a);
       //gradc = 2.51210 * (kbaCBA * rbc_dc * delta_theta + RAD_TO_DEG * theta_dc * (kbaABC * delta_rab + kbaCBA * delta_rbc));
-      OBForceField::VectorMultiply(force_bc_c, (kbaCBA*delta_theta), force_bc_c);
-      OBForceField::VectorMultiply(force_abc_c, factor, force_abc_c);
+      OBForceField::VectorSelfMultiply(force_bc_c, (kbaCBA*delta_theta));
+      OBForceField::VectorSelfMultiply(force_abc_c, factor);
       OBForceField::VectorAdd(force_bc_c, force_abc_c, force_bc_c);
       OBForceField::VectorMultiply(force_bc_c, 2.51210, force_c);
       //gradb = -grada - gradc;
       OBForceField::VectorAdd(force_a, force_c, force_b);
-      OBForceField::VectorMultiply(force_b, -1.0, force_b);
+      OBForceField::VectorSelfMultiply(force_b, -1.0);
     }
   }
   
@@ -293,6 +306,12 @@ namespace OpenBabel
       i->Compute(gradients);
       energy += i->GetEnergy();
       
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+        AddGradient((*i).force_c, (*i).idx_c);
+      }
+ 
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%2d   %2d   %2d     %2d   %8.3f   %8.3f   %8.3f   %8.3f   %8.3f\n", 
                 atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), 
@@ -360,10 +379,10 @@ namespace OpenBabel
       
       dE = 0.5 * (v1 * sine - 2.0 * v2 * sine2 + 3.0 * v3 * sine3); // MMFF
       
-      OBForceField::VectorMultiply(force_a, dE, force_a);
-      OBForceField::VectorMultiply(force_b, dE, force_b);
-      OBForceField::VectorMultiply(force_c, dE, force_c);
-      OBForceField::VectorMultiply(force_d, dE, force_d);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+      OBForceField::VectorSelfMultiply(force_c, dE);
+      OBForceField::VectorSelfMultiply(force_d, dE);
     } else {
       tor = OBForceField::VectorTorsion(pos_a, pos_b, pos_c, pos_d);
       if (!isfinite(tor))
@@ -399,6 +418,13 @@ namespace OpenBabel
       i->Compute(gradients);
       energy += i->GetEnergy();
       
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+        AddGradient((*i).force_c, (*i).idx_c);
+        AddGradient((*i).force_d, (*i).idx_d);
+      }
+ 
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f\n",  atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
                 atoi((*i).c->GetType()), atoi((*i).d->GetType()), (*i).tt, (*i).tor, (*i).v1, (*i).v2, (*i).v3, (*i).energy);
@@ -431,10 +457,10 @@ namespace OpenBabel
       
       dE =  (-1.0 * RAD_TO_DEG * 0.043844 * angle * koop) / cos(angle * DEG_TO_RAD);
       
-      OBForceField::VectorMultiply(force_a, dE, force_a);
-      OBForceField::VectorMultiply(force_b, dE, force_b);
-      OBForceField::VectorMultiply(force_c, dE, force_c);
-      OBForceField::VectorMultiply(force_d, dE, force_d);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+      OBForceField::VectorSelfMultiply(force_c, dE);
+      OBForceField::VectorSelfMultiply(force_d, dE);
     } else {
       angle = OBForceField::VectorOOP(pos_a, pos_b, pos_c, pos_d); 
     }
@@ -464,6 +490,13 @@ namespace OpenBabel
       i->Compute(gradients);
       energy += i->GetEnergy();
       
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+        AddGradient((*i).force_c, (*i).idx_c);
+        AddGradient((*i).force_d, (*i).idx_d);
+      }
+ 
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f\n", 
                 atoi((*i).a->GetType()), atoi((*i).b->GetType()), atoi((*i).c->GetType()), atoi((*i).d->GetType()), 
@@ -532,8 +565,8 @@ namespace OpenBabel
       const double term2 = term * term;
       eattr = (-7.84 * q6) / term2 + ((-7.84 / term) + 14) / (q + 0.07);
       const double dE = (epsilon / R_AB) * erep7 * eattr;
-      OBForceField::VectorFastMultiply(force_a, dE);
-      OBForceField::VectorFastMultiply(force_b, dE);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
     }
   }
   
@@ -555,6 +588,11 @@ namespace OpenBabel
       i->Compute(gradients);
       energy += i->GetEnergy();
       
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+      }
+ 
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f\n", atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
                 (*i).rab, (*i).R_AB, (*i).epsilon, (*i).energy);
@@ -572,23 +610,19 @@ namespace OpenBabel
 
   void OBFFElectrostaticCalculationMMFF94::Compute(bool gradients)
   {
-    double dE, rab2;
-
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
       rab += 0.05; // ??
-      rab2 = rab * rab;
-      dE = -qq / rab2;
-      OBForceField::VectorMultiply(force_a, dE, force_a);
-      OBForceField::VectorMultiply(force_b, dE, force_b);
+      const double rab2 = rab * rab;
+      const double dE = -qq / rab2;
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
     } else {
       rab = OBForceField::VectorDistance(pos_a, pos_b);
       rab += 0.05; // ??
-      rab += 0.05;
     }
 
     energy = qq / rab;
-
   }
 
   double OBForceFieldMMFF94::E_Electrostatic(bool gradients)
@@ -609,6 +643,11 @@ namespace OpenBabel
       i->Compute(gradients);
       energy += i->GetEnergy();
       
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+      }
+
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%2d   %2d   %8.3f  %8.3f  %8.3f  %8.3f\n", 
                 atoi((*i).a->GetType()), atoi((*i).b->GetType()), 
@@ -3795,64 +3834,11 @@ namespace OpenBabel
     
     return true;
   }
-  
-  vector3 OBForceFieldMMFF94::GetGradient(OBAtom *a, int terms)
-  {
-    vector<OBFFBondCalculationMMFF94>::iterator i;
-    vector<OBFFAngleCalculationMMFF94>::iterator i2;
-    vector<OBFFStrBndCalculationMMFF94>::iterator i3;
-    vector<OBFFTorsionCalculationMMFF94>::iterator i4;
-    vector<OBFFOOPCalculationMMFF94>::iterator i5;
-    vector<OBFFVDWCalculationMMFF94>::iterator i6;
-    vector<OBFFElectrostaticCalculationMMFF94>::iterator i7;
-
-    vector3 grad(0.0, 0.0, 0.0);
-    
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_EBOND))
-      for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i)
-        if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
-          grad += i->GetGradient(&*a);
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_EANGLE))
-      for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); ++i2)
-        if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
-          grad += i2->GetGradient(&*a);
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_ESTRBND))
-      for (i3 = _strbndcalculations.begin(); i3 != _strbndcalculations.end(); ++i3)
-        if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || ((*i3).c->GetIdx() == a->GetIdx())) {
-          grad += i3->GetGradient(&*a);
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_ETORSION))
-      for (i4 = _torsioncalculations.begin(); i4 != _torsioncalculations.end(); ++i4)
-        if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx()) || 
-            ((*i4).c->GetIdx() == a->GetIdx()) || ((*i4).d->GetIdx() == a->GetIdx())) {
-          grad += i4->GetGradient(&*a);
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_EOOP))
-      for (i5 = _oopcalculations.begin(); i5 != _oopcalculations.end(); ++i5)
-        if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx()) || 
-            ((*i5).c->GetIdx() == a->GetIdx()) || ((*i5).d->GetIdx() == a->GetIdx())) {
-          grad += i5->GetGradient(&*a);
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_EVDW))
-      for (i6 = _vdwcalculations.begin(); i6 != _vdwcalculations.end(); ++i6)
-        if (((*i6).a->GetIdx() == a->GetIdx()) || ((*i6).b->GetIdx() == a->GetIdx())) {
-          grad += i6->GetGradient(&*a);
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_EELECTROSTATIC))
-      for (i7 = _electrostaticcalculations.begin(); i7 != _electrostaticcalculations.end(); ++i7)
-        if (((*i7).a->GetIdx() == a->GetIdx()) || ((*i7).b->GetIdx() == a->GetIdx())) {
-          grad += i7->GetGradient(&*a);
-        }
-
-    return grad;
-  }
-
 
   bool OBForceFieldMMFF94::ValidateGradients ()
   {
     vector3 numgrad, anagrad, err;
+    int coordIdx;
     
     cout << "----------------------------------------------------------------------------------------" << endl;
     cout << "                                                                                        " << endl;
@@ -3864,79 +3850,96 @@ namespace OpenBabel
     //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
    
     FOR_ATOMS_OF_MOL (a, _mol) {
-
+      coordIdx = (a->GetIdx() - 1) * 3;
+      
       // OBFF_ENERGY
-      numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
-      anagrad = GetGradient(&*a, OBFF_ENERGY);
+      numgrad = -NumericalDerivative(&*a, OBFF_ENERGY);
+      Energy(); // compute
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << _logbuf << endl;
-
+      OBFFLog(_logbuf);
+      
       // OBFF_EBOND
-      numgrad = NumericalDerivative(&*a, OBFF_EBOND);
-      anagrad = GetGradient(&*a, OBFF_EBOND);
+      numgrad = -NumericalDerivative(&*a, OBFF_EBOND);
+      ClearGradients();
+      E_Bond(); // compute
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << _logbuf << endl;
+      OBFFLog(_logbuf);
       
       // OBFF_EANGLE
-      numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
-      anagrad = GetGradient(&*a, OBFF_EANGLE);
+      numgrad = -NumericalDerivative(&*a, OBFF_EANGLE);
+      ClearGradients();
+      E_Angle(); // compute
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << _logbuf << endl;
+      OBFFLog(_logbuf);
       
       // OBFF_ESTRBND
-      numgrad = NumericalDerivative(&*a, OBFF_ESTRBND);
-      anagrad = GetGradient(&*a, OBFF_ESTRBND);
+      numgrad = -NumericalDerivative(&*a, OBFF_ESTRBND);
+      ClearGradients();
+      E_StrBnd(); // compute
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    strbnd  (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    strbnd  (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << _logbuf << endl;
+      OBFFLog(_logbuf);
 
       // OBFF_ETORSION
-      numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
-      anagrad = GetGradient(&*a, OBFF_ETORSION);
+      numgrad = -NumericalDerivative(&*a, OBFF_ETORSION);
+      ClearGradients();
+      E_Torsion(); // compute
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << _logbuf << endl;
+      OBFFLog(_logbuf);
       
       // OBFF_EOOP
-      numgrad = NumericalDerivative(&*a, OBFF_EOOP);
-      anagrad = GetGradient(&*a, OBFF_EOOP);
+      numgrad = -NumericalDerivative(&*a, OBFF_EOOP);
+      ClearGradients();
+      E_OOP(); // compute
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << _logbuf << endl;
+      OBFFLog(_logbuf);
 
       // OBFF_EVDW
-      numgrad = NumericalDerivative(&*a, OBFF_EVDW);
-      anagrad = GetGradient(&*a, OBFF_EVDW);
+      numgrad = -NumericalDerivative(&*a, OBFF_EVDW);
+      ClearGradients();
+      E_VDW(); // compute
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << _logbuf << endl;
+      OBFFLog(_logbuf);
 
       // OBFF_EELECTROSTATIC
-      numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
-      anagrad = GetGradient(&*a, OBFF_EELECTROSTATIC);
+      numgrad = -NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
+      ClearGradients();
+      E_Electrostatic(); // compute
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)", numgrad.x(), numgrad.y(), numgrad.z(), 
+      sprintf(_logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
-      cout << _logbuf << endl;
+      OBFFLog(_logbuf);
     }
+
     return true;
   }
   

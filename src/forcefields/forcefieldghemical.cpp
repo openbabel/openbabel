@@ -25,27 +25,24 @@ namespace OpenBabel
 {
   void OBFFBondCalculationGhemical::Compute(bool gradients)
   {
-    vector3 da, db;
-    double delta2, dE;
-
-    //cout << "compute(" << gradients << ")" << endl;
-    
-    if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      rab = OBForceField::VectorLengthDerivative(da, db);
-    } else
-      rab = a->GetDistance(b);
-
-    delta = rab - r0;
-    delta2 = delta * delta;
-    energy = kb * delta2;
+    double delta2;
 
     if (gradients) {
-      dE = 2.0 * kb * delta;
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
+      rab = OBForceField::VectorBondDerivative(pos_a, pos_b, force_a, force_b);
+      delta = rab - r0;
+      delta2 = delta * delta;
+      
+      const double dE = 2.0 * kb * delta;
+      
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+    } else {
+      rab = OBForceField::VectorDistance(pos_a, pos_b);
+      delta = rab - r0;
+      delta2 = delta * delta;
     }
+
+    energy = kb * delta2;
   }
   
   double OBForceFieldGhemical::E_Bond(bool gradients)
@@ -65,6 +62,11 @@ namespace OpenBabel
       i->Compute(gradients);
       energy += i->GetEnergy();
 
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+      }
+
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%s %s    %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
@@ -81,32 +83,28 @@ namespace OpenBabel
   
   void OBFFAngleCalculationGhemical::Compute(bool gradients)
   {
-    vector3 da, db, dc;
     double delta2, dE;
 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      dc = c->GetVector();
-      theta = OBForceField::VectorAngleDerivative(da, db, dc);  
+      theta = OBForceField::VectorAngleDerivative(pos_a, pos_b, pos_c, force_a, force_b, force_c);
+      delta = theta - theta0;
+      
+      const double dE = RAD_TO_DEG * 2.0 * ka * delta;
+      
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+      OBForceField::VectorSelfMultiply(force_c, dE);
     } else {
-      theta = a->GetAngle(b, c);
+      theta = OBForceField::VectorAngle(pos_a, pos_b, pos_c);
+      delta = theta - theta0;
     }
 
     if (!isfinite(theta))
       theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
 
-    delta = theta - theta0;
     delta2 = delta * delta;
     
     energy = ka * delta2;
-
-    if (gradients) {
-      dE = RAD_TO_DEG * 2.0 * ka * delta;
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db = - dE/drab * drab/da - dE/drab * drab/dc 
-      gradc = dE * dc; // - dE/drab * drab/dc
-    }
   }
   
   double OBForceFieldGhemical::E_Angle(bool gradients)
@@ -126,6 +124,12 @@ namespace OpenBabel
       i->Compute(gradients);
       energy += i->GetEnergy();
       
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+        AddGradient((*i).force_c, (*i).idx_c);
+      }
+     
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%s %s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).c->GetType(), (*i).theta, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
@@ -142,58 +146,37 @@ namespace OpenBabel
   
   void OBFFTorsionCalculationGhemical::Compute(bool gradients)
   {
-    vector3 da, db, dc, dd;
-    double cosine, cosine2, cosine3;
-    double phi1, phi2, phi3;
-    double dE, sine, sine2, sine3;
-    
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      dc = c->GetVector();
-      dd = d->GetVector();
-      tor = DEG_TO_RAD * OBForceField::VectorTorsionDerivative(da, db, dc, dd);
+      tor = DEG_TO_RAD * OBForceField::VectorTorsionDerivative(pos_a, pos_b, pos_c, pos_d, 
+                                                               force_a, force_b, force_c, force_d);
       if (!isfinite(tor))
         tor = 1.0e-3;
+      
+      const double sine = sin(tor);
+      const double sine2 = sin(2.0 * tor);
+      const double sine3 = sin(3.0 * tor);
+      const double dE = k1 * sine - k2 * 2.0 * sine2 + k3 * 3.0 * sine3;
+      
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+      OBForceField::VectorSelfMultiply(force_c, dE);
+      OBForceField::VectorSelfMultiply(force_d, dE);
     } else {
-      vector3 vab, vbc, vcd, abbc, bccd;
-      vab = a->GetVector() - b->GetVector();
-      vbc = b->GetVector() - c->GetVector();
-      vcd = c->GetVector() - d->GetVector();
-      abbc = cross(vab, vbc);
-      bccd = cross(vbc, vcd);
-
-      double dotAbbcBccd = dot(abbc,bccd);
-      // keep in radians here
-      tor = acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-      if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
+      tor = DEG_TO_RAD * OBForceField::VectorTorsion(pos_a, pos_b, pos_c, pos_d);
+      if (!isfinite(tor)) // stop any NaN or infinity
         tor = 1.0e-3; // rather than NaN
-      }
-      else if (dotAbbcBccd > 0.0) {
-        tor = -tor;
-      }
     }
 
-    cosine = cos(tor);
-    cosine2 = cos(2.0 * tor);
-    cosine3 = cos(3.0 * tor);
+    const double cosine = cos(tor);
+    const double cosine2 = cos(2.0 * tor);
+    const double cosine3 = cos(3.0 * tor);
 
-    phi1 = 1.0 + cosine;
-    phi2 = 1.0 - cosine2;
-    phi3 = 1.0 + cosine3;
+    const double phi1 = 1.0 + cosine;
+    const double phi2 = 1.0 - cosine2;
+    const double phi3 = 1.0 + cosine3;
 
     energy = k1 * phi1 + k2 * phi2 + k3 * phi3;
     
-    if (gradients) {
-      sine = sin(tor);
-      sine2 = sin(2.0 * tor);
-      sine3 = sin(3.0 * tor);
-      dE = k1 * sine - k2 * 2.0 * sine2 + k3 * 3.0 * sine3;
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
-      gradc = dE * dc; // - dE/drab * drab/dc
-      gradd = dE * dd; // - dE/drab * drab/dd
-    }
   }
   
   double OBForceFieldGhemical::E_Torsion(bool gradients) 
@@ -213,6 +196,13 @@ namespace OpenBabel
       i->Compute(gradients);
       energy += i->GetEnergy();
       
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+        AddGradient((*i).force_c, (*i).idx_c);
+        AddGradient((*i).force_d, (*i).idx_d);
+      }
+  
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%s %s %s %s    %6.3f    %5.0f   %8.3f   %1.0f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).c->GetType(), (*i).d->GetType(), (*i).V, (*i).s, (*i).tor, (*i).n, (*i).energy);
@@ -230,33 +220,27 @@ namespace OpenBabel
 
   void OBFFVDWCalculationGhemical::Compute(bool gradients)
   {
-    vector3 da, db;
-    double term6, term12, dE, term7, term13;
 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      rab = OBForceField::VectorLengthDerivative(da, db);
-    } else
-      rab = a->GetDistance(b);
-    
-    if (IsNearZero(rab, 1.0e-3))
-      rab = 1.0e-3;
+      rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
+    } else {
+      rab = OBForceField::VectorDistance(pos_a, pos_b);
+    }
 
-    term7 = term13 = term6 = rab / ka;
+    const double term = rab / ka;
 
-    term6 = term6 * term6 * term6; // ^3
+    double term6 = term * term * term; // ^3
     term6 = term6 * term6; // ^6
-    term12 = term6 * term6; // ^12
+    const double term12 = term6 * term6; // ^12
    
     energy = (1.0 / term12) - (1.0 / term6);
     
     if (gradients) { 
-      term13 = term13 * term12; // ^13
-      term7 = term7 * term6; // ^7
-      dE = - (12.0 / ka) * (1.0 / term13) + (6.0 / kb) * (1.0 / term7);
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
+      const double term13 = term * term12; // ^13
+      const double term7 = term * term6; // ^7
+      const double dE = - (12.0 / ka) * (1.0 / term13) + (6.0 / kb) * (1.0 / term7);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
     }
   }
   
@@ -278,6 +262,11 @@ namespace OpenBabel
       i->Compute(gradients);
       energy += i->GetEnergy();
       
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+      }
+  
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%s %s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).rab, (*i).kab, (*i).energy);
@@ -295,27 +284,20 @@ namespace OpenBabel
 
   void OBFFElectrostaticCalculationGhemical::Compute(bool gradients)
   {
-    vector3 da, db;
-    double dE, rab2;
-
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      rab = OBForceField::VectorLengthDerivative(da, db);
-    } else
-      rab = a->GetDistance(b);
-
+      rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
+      const double rab2 = rab * rab;
+      const double dE = -qq / rab2;
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+    } else {
+      rab = OBForceField::VectorDistance(pos_a, pos_b);
+    }
+    
     if (IsNearZero(rab, 1.0e-3))
       rab = 1.0e-3;
 
     energy = qq / rab;
-
-    if (gradients) {
-      rab2 = rab * rab;
-      dE = -qq / rab2;
-      grada = dE * da; // - dE/drab * drab/da
-      gradb = dE * db; // - dE/drab * drab/db
-    } 
   }
   
   double OBForceFieldGhemical::E_Electrostatic(bool gradients)
@@ -335,6 +317,11 @@ namespace OpenBabel
       
       i->Compute(gradients);
       energy += i->GetEnergy();
+      
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+      }
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%s %s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
@@ -416,6 +403,7 @@ namespace OpenBabel
           if (parameter == NULL) {
             bondcalc.kb = KCAL_TO_KJ * 500.0;
             bondcalc.r0 = 1.100;
+            bondcalc.SetupPointers();
 
             _bondcalculations.push_back(bondcalc);
 
@@ -430,6 +418,7 @@ namespace OpenBabel
       }
       bondcalc.kb = KCAL_TO_KJ * parameter->_dpar[1];
       bondcalc.r0 = parameter->_dpar[0];
+      bondcalc.SetupPointers();
 
       _bondcalculations.push_back(bondcalc);
     }
@@ -463,6 +452,7 @@ namespace OpenBabel
             if (parameter == NULL) {
               anglecalc.ka = KCAL_TO_KJ * 0.020;
               anglecalc.theta0 = 120.0;
+              anglecalc.SetupPointers();
             
               _anglecalculations.push_back(anglecalc);
             
@@ -478,6 +468,7 @@ namespace OpenBabel
       }
       anglecalc.ka = KCAL_TO_KJ * parameter->_dpar[1];
       anglecalc.theta0 = parameter->_dpar[0];
+      anglecalc.SetupPointers();
       
       _anglecalculations.push_back(anglecalc);
     }
@@ -525,6 +516,7 @@ namespace OpenBabel
               torsioncalc.k1 = 0.0;
               torsioncalc.k2 = 0.0;
               torsioncalc.k3 = 0.0;
+              torsioncalc.SetupPointers();
               _torsioncalculations.push_back(torsioncalc);
 
               IF_OBFF_LOGLVL_LOW {
@@ -575,6 +567,7 @@ namespace OpenBabel
         break;
       }
 
+      torsioncalc.SetupPointers();
       _torsioncalculations.push_back(torsioncalc);     
     }
     
@@ -654,7 +647,8 @@ namespace OpenBabel
 
       vdwcalc.ka = (vdwcalc.Ra + vdwcalc.Rb) * pow(1.0 * vdwcalc.kab , 1.0 / 12.0);
       vdwcalc.kb = (vdwcalc.Ra + vdwcalc.Rb) * pow(2.0 * vdwcalc.kab , 1.0 / 6.0);
-      
+      vdwcalc.SetupPointers();
+
       _vdwcalculations.push_back(vdwcalc);
     }
     
@@ -682,6 +676,7 @@ namespace OpenBabel
         if (a->IsOneFour(b))
           elecalc.qq *= 0.5;
 	  
+        elecalc.SetupPointers();
         _electrostaticcalculations.push_back(elecalc);
       }
     }
@@ -897,12 +892,15 @@ namespace OpenBabel
 
   double OBForceFieldGhemical::Energy(bool gradients)
   {
-    double energy;
+    double energy = 0.0;
     
     IF_OBFF_LOGLVL_MEDIUM
       OBFFLog("\nE N E R G Y\n\n");
  
-    energy = E_Bond(gradients);
+    if (gradients)
+      ClearGradients();
+
+    energy += E_Bond(gradients);
     energy += E_Angle(gradients);
     energy += E_Torsion(gradients);
     energy += E_VDW(gradients);
@@ -982,50 +980,10 @@ namespace OpenBabel
     return NULL;
   }
   
-  vector3 OBForceFieldGhemical::GetGradient(OBAtom *a, int terms)
-  {
-    vector<OBFFBondCalculationGhemical>::iterator i;
-    vector<OBFFAngleCalculationGhemical>::iterator i2;
-    vector<OBFFTorsionCalculationGhemical>::iterator i3;
-    vector<OBFFVDWCalculationGhemical>::iterator i4;
-    vector<OBFFElectrostaticCalculationGhemical>::iterator i5;
-
-    vector3 grad(0.0, 0.0, 0.0);
-    
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_EBOND))
-      for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i)
-        if (((*i).a->GetIdx() == a->GetIdx()) || ((*i).b->GetIdx() == a->GetIdx())) {
-	  grad += i->GetGradient(&*a);
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_EANGLE))
-      for (i2 = _anglecalculations.begin(); i2 != _anglecalculations.end(); ++i2)
-        if (((*i2).a->GetIdx() == a->GetIdx()) || ((*i2).b->GetIdx() == a->GetIdx()) || ((*i2).c->GetIdx() == a->GetIdx())) {
-          grad += i2->GetGradient(&*a);
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_ETORSION))
-      for (i3 = _torsioncalculations.begin(); i3 != _torsioncalculations.end(); ++i3)
-        if (((*i3).a->GetIdx() == a->GetIdx()) || ((*i3).b->GetIdx() == a->GetIdx()) || 
-	    ((*i3).c->GetIdx() == a->GetIdx()) || ((*i3).d->GetIdx() == a->GetIdx())) {
-          grad += i3->GetGradient(&*a);
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_EVDW))
-      for (i4 = _vdwcalculations.begin(); i4 != _vdwcalculations.end(); ++i4) 
-        if (((*i4).a->GetIdx() == a->GetIdx()) || ((*i4).b->GetIdx() == a->GetIdx())) {
-          grad += i4->GetGradient(&*a);
-    
-        }
-    if ((terms & OBFF_ENERGY) || (terms & OBFF_EELECTROSTATIC))
-      for (i5 = _electrostaticcalculations.begin(); i5 != _electrostaticcalculations.end(); ++i5)
-        if (((*i5).a->GetIdx() == a->GetIdx()) || ((*i5).b->GetIdx() == a->GetIdx())) {
-          grad += i5->GetGradient(&*a);
-        }
-
-    return grad;
-  }
-
   bool OBForceFieldGhemical::ValidateGradients ()
   {
     vector3 numgrad, anagrad, err;
+    int coordIdx;
     
     OBFFLog("\nV A L I D A T E   G R A D I E N T S\n\n");
     OBFFLog("ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERRROR (%)   \n");
@@ -1033,19 +991,23 @@ namespace OpenBabel
     //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
    
     FOR_ATOMS_OF_MOL (a, _mol) {
+      coordIdx = (a->GetIdx() - 1) * 3;
 
       // OBFF_ENERGY
-      numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
-      anagrad = GetGradient(&*a, OBFF_ENERGY);
+      numgrad = -NumericalDerivative(&*a, OBFF_ENERGY);
+      Energy(); // compute
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
       sprintf(_logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
-
+      
       // OBFF_EBOND
-      numgrad = NumericalDerivative(&*a, OBFF_EBOND);
-      anagrad = GetGradient(&*a, OBFF_EBOND);
+      numgrad = -NumericalDerivative(&*a, OBFF_EBOND);
+      ClearGradients();
+      E_Bond();
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
       sprintf(_logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1053,8 +1015,10 @@ namespace OpenBabel
       OBFFLog(_logbuf);
       
       // OBFF_EANGLE
-      numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
-      anagrad = GetGradient(&*a, OBFF_EANGLE);
+      numgrad = -NumericalDerivative(&*a, OBFF_EANGLE);
+      ClearGradients();
+      E_Angle();
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
       sprintf(_logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1062,8 +1026,10 @@ namespace OpenBabel
       OBFFLog(_logbuf);
 
       // OBFF_ETORSION
-      numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
-      anagrad = GetGradient(&*a, OBFF_ETORSION);
+      numgrad = -NumericalDerivative(&*a, OBFF_ETORSION);
+      ClearGradients();
+      E_Torsion();
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
       sprintf(_logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1071,8 +1037,10 @@ namespace OpenBabel
       OBFFLog(_logbuf);
 
       // OBFF_EVDW
-      numgrad = NumericalDerivative(&*a, OBFF_EVDW);
-      anagrad = GetGradient(&*a, OBFF_EVDW);
+      numgrad = -NumericalDerivative(&*a, OBFF_EVDW);
+      ClearGradients();
+      E_VDW();
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
       sprintf(_logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1080,15 +1048,16 @@ namespace OpenBabel
       OBFFLog(_logbuf);
 
       // OBFF_EELECTROSTATIC
-      numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
-      anagrad = GetGradient(&*a, OBFF_EELECTROSTATIC);
+      numgrad = -NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
+      ClearGradients();
+      E_Electrostatic();
+      anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
       sprintf(_logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
     }
-    
     // For now, just return true. Should return false if validation fails.
     return true;
   }

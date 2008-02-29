@@ -194,9 +194,6 @@ namespace OpenBabel
       OBFFParameter* GetTypedParameter4Atom(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
       
       
-      //! Returns the negative gradient (force) on atom a
-      vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY);
-      
       // OBFFParameter vectors to contain the parameters
       std::vector<OBFFParameter> _ffbondparams;
       std::vector<OBFFParameter> _ffbndkparams;
