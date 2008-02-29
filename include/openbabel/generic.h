@@ -787,9 +787,28 @@ namespace OpenBabel
    RType GetRotorType()const   { return type; }
 
  protected:
-   std::vector<double> RotConsts;//Rotational constants in GHz
-   int                 SymNum;   //Rotational Symmetry Number
-   RType               type;     //linear, symmetric or asymmetric top
+   std::vector<double> RotConsts;//!< Rotational constants in GHz
+   int                 SymNum;   //!< Rotational Symmetry Number
+   RType               type;     //!< linear, symmetric or asymmetric top
+ };
+ 
+  //! \class OBVectorData generic.h <openbabel/generic.h>
+  //! \brief Used to hold a 3D vector item (e.g., a dipole moment)
+  //! \since version 2.2
+ class OBAPI OBVectorData: public OBGenericData
+ {
+ public:
+   OBVectorData(): OBGenericData("VectorData", OBGenericDataType::VectorData){}
+   virtual ~OBVectorData(){};
+   virtual OBGenericData* Clone(OBBase*) const
+         {return new OBVectorData(*this);}
+   void SetData(vector3 data)
+     { _vec = data; }
+   vector3 GetData() const
+     { return _vec; }
+   
+ protected:
+   vector3            _vec; //!< 3D vector to be stored
  };
 
  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
