@@ -1,3 +1,11 @@
+2008-02-29  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-python.i: Bugfix for "[ 1904345 ] Angle, Pair,
+	Torsion iterators dones not have deref() method". Turns out that I
+	could have been using the __ref__() method all along. This doesn't
+	seem to be in the SWIG documentation though.
+
+
 2008-02-28  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* include/openbabel/grid.h, src/grid.cpp,

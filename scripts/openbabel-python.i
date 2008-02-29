@@ -75,7 +75,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 // they cannot be used from Python
 %rename(inc)   *::operator++;
 %rename(good)  *::operator bool;
-%rename(deref) *::operator->;
+
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
@@ -170,7 +170,7 @@ class OBIter(object):
 
     def next(self):
         if not self.finished:
-            b = self.iter.deref()
+            b = self.iter.__ref__()
             self.iter.inc()
             if not self.iter.good():
                 # There is nothing left to iterate over
