@@ -1,5 +1,10 @@
 2008-02-29  Noel O'Boyle <baoilleach@gmail.com>
 
+	* acinclude.m4: Just say 'not found' if BOOST not found.
+	* configure.in: Look for BOOST and look for tr1/memory.
+
+2008-02-29  Noel O'Boyle <baoilleach@gmail.com>
+
 	* scripts/openbabel-python.i: Bugfix for "[ 1904345 ] Angle, Pair,
 	Torsion iterators dones not have deref() method". Turns out that I
 	could have been using the __ref__() method all along. This doesn't

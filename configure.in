@@ -113,6 +113,9 @@ AH_VERBATIM([OBCOMMON],
 #endif
 ])
 
+dnl Check for Boost base
+AX_BOOST_BASE([1.33.1])
+
 dnl Checks for programs.
 AC_PROG_CC
 AC_PROG_CXX
@@ -238,6 +241,7 @@ dnl Checks for header files.
 AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
 AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
 AC_CHECK_HEADERS(ctype.h iostream fstream sstream strstream)
+AC_CHECK_HEADERS(tr1/memory)
 AC_HEADER_TIME
 
 dnl Checks for typedefs, structures, and compiler characteristics.
