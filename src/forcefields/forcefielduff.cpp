@@ -108,14 +108,15 @@ namespace OpenBabel
     if (IsNearZero(ac, 1.0e-3))
       ac = 1.0e-3; // prevent divide-by-zero when calculating ka
     
+    /*
     if (gradients) {
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
       theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;
-    } else {
+    } else { */
       theta = a->GetAngle(b, c) * DEG_TO_RAD; // CHECK
-    }
+    /*}*/
 
     if (!isfinite(theta))
       theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
@@ -123,7 +124,7 @@ namespace OpenBabel
     // Original expression, as indicated in towhee website
     // Unfortunately, k is a function of x,y,z == gradients are messy  
     ka = (644.12 * KCAL_TO_KJ / (ab * bc)) * (zi * zk / (pow(ac, 5.0)));
-    ka *= (3.0 * ab * bc * (1.0 - cosT0*cosT0) - ac*ac*cosT0);
+    ka *= (ab * bc * (1.0 - cosT0*cosT0) - ac*ac*cosT0);
 
     int modcoord = coord;
     if (coord == 3 && theta0 == 90.0) // "tetrahedral, but equilibrium angle 90.0"
@@ -150,6 +151,7 @@ namespace OpenBabel
       dE = -ka * (c1*sin(theta) + 2 * c2 * sin(2 * theta));
     }
     
+    /*
     if (gradients) {
       // Normally, we use VectorAngleDerivative() to simplify things for us
       // i.e., dE/dx = dTheta/dx * dE/dTheta  (and VectorAngleDeriv gives dTheta/dx)
@@ -167,6 +169,7 @@ namespace OpenBabel
       db.Get(force_b);
       dc.Get(force_c);
     }
+    */
 
     // Now put the ka back into the energy term
     energy *= ka;
@@ -183,17 +186,12 @@ namespace OpenBabel
       OBFFLog(" I    J    K      ANGLE      ANGLE     CONSTANT      DELTA      ENERGY\n");
       OBFFLog("-----------------------------------------------------------------------------\n");
     }
-    
+       
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); ++i) {
 
-      i->Compute(gradients);
+      //i->Compute(gradients);
+      i->Compute(false);
       energy += i->GetEnergy();
-      
-      if (gradients) {
-        AddGradient((*i).force_a, (*i).idx_a);
-        AddGradient((*i).force_b, (*i).idx_b);
-        AddGradient((*i).force_c, (*i).idx_c);
-      }
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%-5s %-5s %-5s%8.3f  %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
@@ -1110,7 +1108,19 @@ namespace OpenBabel
     energy += E_OOP(gradients);
     energy += E_VDW(gradients);
     energy += E_Electrostatic(gradients);
+    
+    if (gradients) {
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        int coordIdx = (a->GetIdx() - 1) * 3;
 
+        vector3 numgrad = -NumericalDerivative(&*a, OBFF_EANGLE);
+        vector3 grad;
+	grad.Set(_gradientPtr+coordIdx);
+        grad += numgrad;
+	grad.Get(_gradientPtr+coordIdx);
+      }
+    }
+ 
     IF_OBFF_LOGLVL_MEDIUM {
       sprintf(_logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
@@ -1221,7 +1231,6 @@ namespace OpenBabel
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
     }
-    
     // For now, just return true. Should return false if validation fails.
     return true;
   }

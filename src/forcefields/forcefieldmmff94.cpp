@@ -3546,6 +3546,9 @@ namespace OpenBabel
       if (_mol.Empty())
         break;
       
+      _ncoords = _mol.NumAtoms() * 3;
+      _gradientPtr = new double[_ncoords];
+
       SetTypes();
       
       if ((c == 98) || (c == 692)) // CUDPAS & VUWXUG
@@ -3779,8 +3782,6 @@ namespace OpenBabel
 
 
       
-      
-
       if (!SetupCalculations()) {
         cout << "Could not setup calculations (missing parameters...)" << endl;
         return false;
