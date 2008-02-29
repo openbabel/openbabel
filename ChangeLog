@@ -1,3 +1,12 @@
+2008-02-29  Chris Morley
+
+	* src/obconversion.cpp:mods to OBConversion destructor to prevent
+	input or output stream being deleted twice when there is an
+	associated XMLConversion object - with CML. Possibly closer to
+	fixing bugs #1815533 and #1900480.
+	
+	Add OBMCDL for Windows OBF build.
+
 2008-02-29  Noel O'Boyle <baoilleach@gmail.com>
 
 	* acinclude.m4: Just say 'not found' if BOOST not found.

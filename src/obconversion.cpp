@@ -247,14 +247,22 @@ namespace OpenBabel {
   OBConversion::~OBConversion() 
   {
     if(pAuxConv!=this)
-      delete pAuxConv;
+      if(pAuxConv)
+      {
+        delete pAuxConv;
+        //pAuxConv has copies of pInStream, NeedToFreeInStream, pOutStream, NeedToFreeOutStream
+        //and may have already deleted the streams. So do not do it again.
+        NeedToFreeInStream = NeedToFreeOutStream = false;
+      }
     // Free any remaining streams from convenience functions
     if(pInStream && NeedToFreeInStream) {
       delete pInStream;
+      pInStream=NULL;
       NeedToFreeInStream = false;
     }
     if(pOutStream && NeedToFreeOutStream) {
       delete pOutStream;
+      pOutStream=NULL;
       NeedToFreeOutStream = false;
     }
   }
