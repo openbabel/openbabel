@@ -1,5 +1,11 @@
 2008-02-28  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* include/openbabel/grid.h, src/grid.cpp,
+	include/openbabel/griddata.h, src/griddata.cpp: Fixed the
+	interpolateDerivative function (hopefully). Added new functions to set
+	and retrieve values from the grid using just grid indices. This should
+	become the preferred way to access the grid values.
+
 	* include/openbabel/grid.h, src/grid.cpp, src/griddata.cpp: Updated
 	the grid classes to use an x, y, z index and added several new
 	convenience functions using vector3 variables. Some more work is

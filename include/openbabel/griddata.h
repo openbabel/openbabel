@@ -1,16 +1,16 @@
 /**********************************************************************
 griddata.h - Store grids of data linked to a molecule (e.g. Gaussian cube)
- 
+
 // Molekel - Molecular Visualization Program
 // Copyright (C) 2006, 2007 Swiss National Supercomputing Centre (CSCS)
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,17 +31,17 @@ namespace OpenBabel {
   // Uses private data pointer for ABI compatibility
   // http://techbase.kde.org/Policies/Library_Code_Policy#D-Pointers
   class GridDataPrivate;
-  
+
   // Class to store values for generic (non axis aligned) grids like Gaussian cube files
   // Class introduction in griddata.cpp
   class OBAPI OBGridData : public OBGenericData
   {
   public:
     /// Constructor
-    /// These values can be accessed through the 
+    /// These values can be accessed through the
     // OBMol::GetDataType(), OBMol::HasData() methods.
     OBGridData();
-    
+
     /// Destructor
     ~OBGridData();
 
@@ -78,7 +78,7 @@ namespace OpenBabel {
     vector3 GetOriginVector() const;
     //@}
 
-    
+
     //! \name Modification Methods
     //@{
     /// Set number of points along the three axes.
@@ -88,15 +88,17 @@ namespace OpenBabel {
     ///       so the grid spacing can be calculated
     void SetLimits( double origin[ 3 ], double x[ 3 ], double y[ 3 ], double z[ 3 ] );
     void SetLimits(vector3 &origin, vector3 &x, vector3 &y, vector3 &z);
+    /// Set an individual value, grid must have been initialised
+    bool SetValue(int i, int j, int k, double val);
     /// Set the values
     void SetValues( const std::vector< double >& v );
     /// Set the unit of measure
     void SetUnit( Unit u );
     //@}
-    
+
   private:
-    GridDataPrivate *const d; 
-    
+    GridDataPrivate *const d;
+
   };
 
 } // end namespace

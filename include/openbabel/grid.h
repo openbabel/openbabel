@@ -186,7 +186,22 @@ namespace OpenBabel
     void SetVals(std::vector<double> vals);
 
     double *GetVals()    {        return(_val);    }
+    double GetValue(int i, int j, int k)
+    {
+      if (i*_ydim*_zdim + j*_zdim + k > _xdim*_ydim*_zdim)
+        return 0.0;
+      else
+        return _val[i*_ydim*_zdim + j*_zdim + k];
+    }
+
     void SetVals(double *ptr)    {  _val = ptr;    }
+    bool SetValue(int i, int j, int k, double val)
+    {
+      if (i*_ydim*_zdim + j*_zdim + k > _xdim*_ydim*_zdim)
+        return false;
+      else
+        _val[i*_ydim*_zdim + j*_zdim + k] = val;
+    }
 
     vector3 Center()
     {

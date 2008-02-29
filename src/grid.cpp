@@ -175,9 +175,9 @@ namespace OpenBabel
 
   int OBFloatGrid::CoordsToIndex(double x, double y, double z)
   {
-    int gx=(int)((x-_xmin)*_inv_spa);
-    int gy=(int)((y-_ymin)*_inv_spa);
-    int gz=(int)((z-_zmin)*_inv_spa);
+    int gx=static_cast<int>((x-_xmin)*_inv_spa);
+    int gy=static_cast<int>((y-_ymin)*_inv_spa);
+    int gz=static_cast<int>((z-_zmin)*_inv_spa);
 
     return((gx*_ydim*_zdim) + (gy*_zdim) + gz);
   }
@@ -291,7 +291,7 @@ namespace OpenBabel
   double OBFloatGrid::InterpolateDerivatives(double x,double y,double z,double *derivatives)
   {
     int n,igx,igy,igz;
-    double xydim;
+    double yzdim;
     double gx,gy,gz,fgx,fgy,fgz;
     double ax,ay,az,bx,by,bz;
     double AyA,ByA,AyB,ByB,Az,Bz;
@@ -301,26 +301,26 @@ namespace OpenBabel
         || y<=_ymin || y>=_ymax
         || z<=_zmin || z>=_zmax ) return 0.0;
 
-    xydim = _xdim*_ydim;
+    yzdim = _ydim*_zdim;
 
     /* calculate grid voxel and fractional offsets */
     gx=(x-_xmin-_halfSpace)*_inv_spa;
     if (gx<0)
       gx=0;
-    igx=(int)gx;
+    igx=static_cast<int>(gx);
     fgx=gx-(double)igx;
     gy=(y-_ymin-_halfSpace)*_inv_spa;
     if (gy<0)
       gy=0;
-    igy=(int) gy;
+    igy=static_cast<int>(gy);
     fgy= gy - (double) igy;
     gz=(z-_zmin-_halfSpace)*_inv_spa;
     if (gz<0)
       gz=0;
-    igz=(int) gz;
+    igz=static_cast<int>(gz);
     fgz= gz - (double) igz;
 
-    n=(int)(igx+ _xdim*igy + xydim*igz);
+    n=static_cast<int>(igx*yzdim + igy*_zdim + igz);
     /* calculate linear weightings */
     ax=1.0-fgx;
     bx=fgx;
@@ -330,16 +330,18 @@ namespace OpenBabel
     bz=fgz;
 
     /* calculate interpolated value */
-    AyA=ax*_val[n           ]+bx*_val[(int)(n+1)    ];
-    ByA=ax*_val[n+_xdim]+bx*_val[(int)(n+1+_xdim)  ];
+    AyA=az*_val[n           ]+bx*_val[n+1    ];
+    ByA=az*_val[n+_zdim]+bx*_val[(n+1+_zdim)  ];
 
     Az=ay*AyA+by*ByA;
 
-    AyB=ax*_val[(int)(n      +xydim)]+bx*_val[(int)(n+1      +xydim)];
-    ByB=ax*_val[(int)(n+_xdim+xydim)]+bx*_val[(int)(n+1+_xdim+xydim)];
+    AyB=az*_val[static_cast<int>(n      +yzdim)]+
+        bz*_val[static_cast<int>(n+1      +yzdim)];
+    ByB=az*_val[static_cast<int>(n+_zdim+yzdim)]+
+        bz*_val[static_cast<int>(n+1+_zdim+yzdim)];
     Bz=ay*AyB+by*ByB;
 
-    energy = az*Az+bz*Bz;
+    energy = ax*Az+bx*Bz;
 
     //calculate derivatives
 
@@ -350,26 +352,26 @@ namespace OpenBabel
 
     fy=az*Az+bz*Bz;
 
-    AyA=-_val[n           ]+_val[(int)(n+1)     ];
-    ByA=-_val[n+_xdim      ]+_val[(int)(n+1+_xdim)];
+    AyA=-_val[n           ]+_val[(n+1)     ];
+    ByA=-_val[n+_zdim      ]+_val[(n+1+_zdim)];
 
     Az=ay*AyA+by*ByA;
 
-    AyB=-_val[(int)(n      +xydim)]+_val[(int)(n+1      +xydim)];
-    ByB=-_val[(int)(n+_xdim+xydim)]+_val[(int)(n+1+_xdim+xydim)];
+    AyB=-_val[static_cast<int>(n      +yzdim)]+
+         _val[static_cast<int>(n+1      +yzdim)];
+    ByB=-_val[static_cast<int>(n+_zdim+yzdim)]+
+         _val[static_cast<int>(n+1+_zdim+yzdim)];
 
     Bz=ay*AyB+by*ByB;
 
-    fx=az*Az+bz*Bz;
+    fx=ax*Az+bx*Bz;
 
     derivatives[0] += fx;
     derivatives[1] += fy;
     derivatives[2] += fz;
 
     return(energy);
-
   }
-
 
   ostream& operator<< ( ostream &os, const  OBFloatGrid& fg)
   {

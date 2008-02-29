@@ -42,14 +42,6 @@ namespace OpenBabel {
 
     double           _max;
     double           _min;
-
-    /// \return vector index, given i, j, k grid coordinates
-    /// \assert All indexes >= 0 and < number of points along each axis
-    /// No checking is performed
-    int ComputeIndex (int i, int j, int k) const
-    {
-      return k + _floatGrid.GetZdim() * (j + _floatGrid.GetYdim() * i);
-    }
   };
 
   OBGridData::OBGridData() : OBGenericData("GridData", OBGenericDataType::GridData),
@@ -102,11 +94,7 @@ namespace OpenBabel {
 
   double OBGridData::GetValue( int i, int j, int k ) const
   {
-    const int idx = d->ComputeIndex(i, j, k);
-    double x, y, z;
-    d->_floatGrid.IndexToCoords(idx, x, y, z);
-
-    return d->_floatGrid.Inject(x, y, z);
+    return d->_floatGrid.GetValue(i, j, k);
   }
 
   double OBGridData::GetValue(vector3 pos) const
@@ -152,6 +140,11 @@ namespace OpenBabel {
   void OBGridData::SetLimits(vector3 &origin, vector3 &x, vector3 &y, vector3 &z)
   {
     d->_floatGrid.SetLimits(origin, x, y, z);
+  }
+
+  bool OBGridData::SetValue(int i, int j, int k, double val)
+  {
+    return d->_floatGrid.SetValue(i, j, k, val);
   }
 
   void OBGridData::SetValues( const std::vector< double >& v )
