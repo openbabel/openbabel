@@ -11,6 +11,10 @@ if BUILD_INCHI
 SUBDIRS += inchi
 endif
 
+if USE_BOOST_FLAGS
+AM_CXXFLAGS = $(BOOST_CPPFLAGS)
+endif
+
 if BUILD_PCH
 BUILT_SOURCES = all.h.gch
 PCHFLAGS=-Winvalid-pch -x c++-header $(CPPFLAGS) $(INCLUDES)
@@ -77,8 +81,7 @@ pkglib_LTLIBRARIES = \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la cansmilesformat.la \
 	carformat.la cccformat.la \
-	chem3dformat.la chemdrawctformat.la chemdrawcdxformat.la \
-	chemkinformat.la \
+	chem3dformat.la chemdrawctformat.la \
 	chemtoolformat.la cifformat.la \
 	copyformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la fastaformat.la \
@@ -93,11 +96,14 @@ pkglib_LTLIBRARIES = \
 	mpqcformat.la nwchemformat.la pcmodelformat.la \
 	pngformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
-  rxnformat.la \
 	shelxformat.la smilesformat.la thermoformat.la \
 	tinkerformat.la titleformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
 	xedformat.la xyzformat.la yasaraformat.la zindoformat.la
+if HAVE_SHARED_POINTER
+    pkglib_LTLIBRARIES += chemdrawcdxformat.la chemkinformat.la \
+                          rxnformat.la
+endif
 
 APIInterface_la_SOURCES = APIInterface.cpp
 APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
