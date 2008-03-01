@@ -244,6 +244,14 @@ AC_CHECK_HEADERS(ctype.h iostream fstream sstream strstream)
 AC_CHECK_HEADERS(tr1/memory)
 AC_HEADER_TIME
 
+dnl Set a flag for Automake if shared_pointer is available
+AM_CONDITIONAL([HAVE_SHARED_POINTER], [test "$ac_cv_header_tr1_memory" = "yes" -o "$HAVE_BOOST" = "yes"])
+dnl OpenBabel will use BOOST instead of tr1/memory if available
+AM_CONDITIONAL([USE_BOOST_FLAGS], [test "$have_boost" = "yes"])
+if test "$have_boost" = "yes"; then
+    AC_DEFINE([USE_BOOST], [], [Using BOOST instead of tr1/memory for shared_pointer])
+fi
+
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_TYPES(clock_t)
 AC_C_CONST

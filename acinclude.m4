@@ -384,6 +384,7 @@ if test "x$want_boost" = "xyes"; then
 		AC_SUBST(BOOST_CPPFLAGS)
 		AC_SUBST(BOOST_LDFLAGS)
 		AC_DEFINE(HAVE_BOOST,,[define if the Boost library is available])
+		have_boost="yes"
 	fi
 
         CPPFLAGS="$CPPFLAGS_SAVED"

@@ -1,3 +1,15 @@
+2008-03-01  Noel O'Boyle <baoilleach@gmail.com>
+	
+	* acinclude.m4: Set "have_boost" to "yes" so I can test it in
+	configure.in
+	* configure.in: Set Automake variable HAVE_SHARED_POINTER if the user
+	has either of Boost or tr1/memory (gcc4.x)
+	If "have_boost" is "yes" then set both the Automake variable
+	USE_BOOST_FLAGS and the C++ #define USE_BOOST
+	* src/formats/Makefile.am: Set the compile flags for BOOST if necessary
+	Only compile chemkinformat, rxnformat and chemdrawcdxformat if
+	HAVE_SHARED_POINTER is true
+
 2008-02-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/generic.h (OBVectorData): New class for storing vector3
