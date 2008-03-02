@@ -245,7 +245,7 @@ AC_CHECK_HEADERS(tr1/memory)
 AC_HEADER_TIME
 
 dnl Set a flag for Automake if shared_pointer is available
-AM_CONDITIONAL([HAVE_SHARED_POINTER], [test "$ac_cv_header_tr1_memory" = "yes" -o "$HAVE_BOOST" = "yes"])
+AM_CONDITIONAL([HAVE_SHARED_POINTER], [test "$ac_cv_header_tr1_memory" = "yes" -o "$have_boost" = "yes"])
 dnl OpenBabel will use BOOST only if tr1/memory is not available
 if test "$have_boost" = "yes" -a "$ac_cv_header_tr1_memory" != "yes"; then
     AC_DEFINE([USE_BOOST], [], [Using BOOST for shared_pointer])

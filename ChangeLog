@@ -1,5 +1,9 @@
 2008-03-02  Noel O'Boyle <baoilleach@gmail.com>
 	
+	* configure.in: Fix bug...should have been $have_boost not $HAVE_BOOST
+
+2008-03-02  Noel O'Boyle <baoilleach@gmail.com>
+	
 	* configure.in: Only use BOOST for shared_pointer if the GCC4.x
 	implementation is not available.
 
