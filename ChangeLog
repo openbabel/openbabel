@@ -1,3 +1,8 @@
+2008-03-02  Noel O'Boyle <baoilleach@gmail.com>
+	
+	* configure.in: Only use BOOST for shared_pointer if the GCC4.x
+	implementation is not available.
+
 2008-03-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/perl: Add dependency checking for libopenbabel. This
