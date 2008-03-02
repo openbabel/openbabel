@@ -1,3 +1,9 @@
+2008-03-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/perl: Add dependency checking for libopenbabel. This
+	prevents people trying to run automated CPAN tests without the
+	library.
+
 2008-03-01  Noel O'Boyle <baoilleach@gmail.com>
 	
 	* acinclude.m4: Set "have_boost" to "yes" so I can test it in

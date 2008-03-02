@@ -7,6 +7,7 @@ OpenBabel.pm				 Perl interface to Open Babel
 openbabel_perl.cpp			 C++ extension for openbabel.pm
 examples/example.pl			 Examples of Chemistry::OpenBabel
 META.yml                                 Module meta-data (added by MakeMaker)
+inc/Devel/CheckLib.pm                    Utility to check for installed libs
 t/atom.t				 OBAtom unit tests
 t/bond.t				 OBBond unit tests
 t/conversion.t				 OBConversion unit tests

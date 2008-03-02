@@ -1,5 +1,9 @@
 use ExtUtils::MakeMaker;
 
+use lib 'inc';
+use Devel::CheckLib;
+check_lib_or_exit( lib => 'openbabel' );
+
 $CC = 'g++';
 $srcdir = '../../src';
 
@@ -14,7 +18,7 @@ $ldfrom = "\$(OBJECT) $srcdir/.libs/libopenbabel.a -lz"
 WriteMakefile(
     'NAME'	=>  'Chemistry::OpenBabel',
     'AUTHOR'    =>  'Geoffrey Hutchison <openbabel-scripting@lists.sourceforge.net>',
-    'VERSION'   => '1.2.1',
+    'VERSION'   => '1.3.0',
     'LDFROM'    => $ldfrom,
     'CC'        => $CC,
     'LD'        => '$(CC) -shared',
