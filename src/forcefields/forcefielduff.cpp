@@ -99,69 +99,40 @@ namespace OpenBabel
   void OBFFAngleCalculationUFF::Compute(bool gradients)
   {
     vector3 da, db, dc;
-    double ab, bc, ac;
-    double dE, dk;
-
-    ab = a->GetDistance(b);
-    bc = b->GetDistance(c);
-    ac = a->GetDistance(c);
-    if (IsNearZero(ac, 1.0e-3))
-      ac = 1.0e-3; // prevent divide-by-zero when calculating ka
+		double dE;
     
-    /*
     if (gradients) {
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
       theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;
-    } else { */
-      theta = a->GetAngle(b, c) * DEG_TO_RAD; // CHECK
-    /*}*/
+    } else {
+      theta = a->GetAngle(b, c) * DEG_TO_RAD;
+		}
 
     if (!isfinite(theta))
       theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
-
-    // Original expression, as indicated in towhee website
-    // Unfortunately, k is a function of x,y,z == gradients are messy  
-    ka = (644.12 * KCAL_TO_KJ / (ab * bc)) * (zi * zk / (pow(ac, 5.0)));
-    ka *= (ab * bc * (1.0 - cosT0*cosT0) - ac*ac*cosT0);
-
-    int modcoord = coord;
-    if (coord == 3 && theta0 == 90.0) // "tetrahedral, but equilibrium angle 90.0"
-      modcoord = 4; // see http://towhee.sourceforge.net/forcefields/uff.html
     
-    // Energy terms ignore ka for now to simplify calculation of gradients
-    // (We multiply by ka at the end of the function)
-    switch (modcoord) {
+    switch (coord) {
     case 1:
-      energy = (1.0 + cos(theta));
+      energy = ka*(1.0 + cos(theta));
       dE = -ka * sin(theta);
       break;
     case 2:
-      energy = (1.0 + cos(3 * theta)) / 9;
-      dE = -ka * sin(3 * theta) / 3;
+      energy = ka*(1.0 + cos(3.0 * theta)) / 9.0;
+      dE = -ka * sin(3.0 * theta) / 3.0;
       break;
     case 4:
     case 6:
-      energy = (1.0 + cos(4 * theta)) / 16;
-      dE = -ka * sin(4 * theta) / 4;
+      energy = ka*(1.0 + cos(4.0 * theta)) / 16.0;
+      dE = -ka * sin(4.0 * theta) / 4.0;
       break;
     default:
-      energy = (c0 + c1*cos(theta) + c2*cos(2 * theta));
-      dE = -ka * (c1*sin(theta) + 2 * c2 * sin(2 * theta));
+      energy = ka*(c0 + c1*cos(theta) + c2*cos(2.0 * theta));
+      dE = -ka * (c1*sin(theta) + 2.0 * c2 * sin(2.0 * theta));
     }
     
-    /*
     if (gradients) {
-      // Normally, we use VectorAngleDerivative() to simplify things for us
-      // i.e., dE/dx = dTheta/dx * dE/dTheta  (and VectorAngleDeriv gives dTheta/dx)
-      // but E = ka (cos n*theta)
-      // so dE = ka * dE [above] + dK * E
-      
-      // Now we need to calculate dk/dx * E
-      dK = 1.0; // WRONG -- need to work this part out
-      dE += dK * energy;
-      
       da *= dE; // da = dTheta/dx * dE/dTheta
       db *= dE; // da = dTheta/dx * dE/dTheta
       dc *= dE; // da = dTheta/dx * dE/dTheta
@@ -169,10 +140,6 @@ namespace OpenBabel
       db.Get(force_b);
       dc.Get(force_c);
     }
-    */
-
-    // Now put the ka back into the energy term
-    energy *= ka;
   }
   
   double OBForceFieldUFF::E_Angle(bool gradients)
@@ -189,10 +156,15 @@ namespace OpenBabel
        
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); ++i) {
 
-      //i->Compute(gradients);
-      i->Compute(false);
+      i->Compute(gradients);
       energy += i->GetEnergy();
       
+      if (gradients) {
+        AddGradient((*i).force_a, (*i).idx_a);
+        AddGradient((*i).force_b, (*i).idx_b);
+        AddGradient((*i).force_c, (*i).idx_c);
+      }
+
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%-5s %-5s %-5s%8.3f  %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
                 (*i).c->GetType(), (*i).theta * RAD_TO_DEG, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
@@ -537,6 +509,27 @@ namespace OpenBabel
     return *this;
   }
 
+	double CalculateBondDistance(OBFFParameter *i, OBFFParameter *j, double bondorder)
+	{
+		double ri, rj;
+		double chiI, chiJ;
+		double rbo, ren;
+		ri = i->_dpar[0];
+    rj = j->_dpar[0];
+    chiI = i->_dpar[8];
+    chiJ = j->_dpar[8];
+
+    // precompute the equilibrium geometry
+    // From equation 3
+    rbo = -0.1332*(ri+rj)*log(bondorder);
+    // From equation 4
+    ren = ri*rj*(pow((sqrt(chiI) - sqrt(chiJ)),2.0)) / (chiI*ri + chiJ*rj);
+    // From equation 2
+    // NOTE: See http://towhee.sourceforge.net/forcefields/uff.html
+    // There is a typo in the published paper
+		return(ri + rj + rbo - ren);
+	}
+
   bool OBForceFieldUFF::SetupCalculations()
   {
     OBFFParameter *parameterA, *parameterB, *parameterC, *parameterD;
@@ -572,20 +565,8 @@ namespace OpenBabel
 
       parameterA = GetParameterUFF(a->GetType(), _ffparams);
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
-      ri = parameterA->_dpar[0];
-      rj = parameterB->_dpar[0];
-      chiI = parameterA->_dpar[8];
-      chiJ = parameterB->_dpar[8];
-
-      // precompute the equilibrium geometry
-      // From equation 3
-      rbo = -0.1332*(ri+rj)*log(bondorder);
-      // From equation 4
-      ren = ri*rj*(pow((sqrt(chiI) - sqrt(chiJ)),2.0)) / (chiI*ri + chiJ*rj);
-      // From equation 2
-      // NOTE: See http://towhee.sourceforge.net/forcefields/uff.html
-      // There is a typo in the published paper
-      bondcalc.r0 = ri + rj + rbo - ren;
+			
+			bondcalc.r0 = CalculateBondDistance(parameterA, parameterB, bondorder);
 
       // here we fold the 1/2 into the kij from equation 1a
       // Otherwise, this is equation 6 from the UFF paper.
@@ -608,6 +589,8 @@ namespace OpenBabel
     _anglecalculations.clear();
     
     double sinT0;
+		double rab, rbc, rac;
+		OBBond *bond;
     FOR_ANGLES_OF_MOL(angle, _mol) {
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
@@ -631,6 +614,29 @@ namespace OpenBabel
       anglecalc.c2 = 1.0 / (4.0 * sinT0 * sinT0);
       anglecalc.c1 = -4.0 * anglecalc.c2 * anglecalc.cosT0;
       anglecalc.c0 = anglecalc.c2*(2.0*anglecalc.cosT0*anglecalc.cosT0 + 1.0);
+
+			// Precompute the force constant
+			bond = _mol.GetBond(a,b);
+			bondorder = bond->GetBondOrder(); 
+      if (bond->IsAromatic())
+        bondorder = 1.5;
+      if (bond->IsAmide())
+        bondorder = 1.41;      
+			rab = CalculateBondDistance(parameterA, parameterB, bondorder);
+
+			bond = _mol.GetBond(b,c);
+			bondorder = bond->GetBondOrder(); 
+      if (bond->IsAromatic())
+        bondorder = 1.5;
+      if (bond->IsAmide())
+        bondorder = 1.41;
+			rbc = CalculateBondDistance(parameterB, parameterC, bondorder);
+			rac = sqrt(rab*rab + rbc*rbc - 2.0 * rab*rbc*anglecalc.cosT0);
+
+			// Equation 13 from paper -- corrected by Towhee
+			// Note that 1/(rij * rjk) cancels with rij*rjk in eqn. 13
+			anglecalc.ka = (644.12 * KCAL_TO_KJ) * (anglecalc.zi * anglecalc.zk / (pow(rac, 5.0)));
+			anglecalc.ka *= (3.0*rab*rbc*(1.0 - anglecalc.cosT0*anglecalc.cosT0) - rac*rac*anglecalc.cosT0);
       
       anglecalc.SetupPointers();
       _anglecalculations.push_back(anglecalc);
@@ -1108,19 +1114,7 @@ namespace OpenBabel
     energy += E_OOP(gradients);
     energy += E_VDW(gradients);
     energy += E_Electrostatic(gradients);
-    
-    if (gradients) {
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        int coordIdx = (a->GetIdx() - 1) * 3;
-
-        vector3 numgrad = -NumericalDerivative(&*a, OBFF_EANGLE);
-        vector3 grad;
-	grad.Set(_gradientPtr+coordIdx);
-        grad += numgrad;
-	grad.Get(_gradientPtr+coordIdx);
-      }
-    }
- 
+     
     IF_OBFF_LOGLVL_MEDIUM {
       sprintf(_logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);

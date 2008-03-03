@@ -142,7 +142,7 @@ namespace OpenBabel
       }
 
     //! \return that analytical gradients are implemented for UFF
-    bool HasAnalyticalGradients() { return false; } // angles are still wrong
+    bool HasAnalyticalGradients() { return true; }
 
     //! \return total energy
     double Energy(bool gradients = true);

@@ -10,6 +10,13 @@
 
 	* src/config.h.in: Regenerate for HAVE_BOOST symbol.
 
+	* src/forcefields/forcefielduff.*: Fix angular
+	gradients. Previous implementation mis-read paper for force
+	constant.
+
+	* tools/obminimize.cpp: Validate gradients before starting
+	minimize. Useful for debugging force fields.
+
 2008-03-02  Noel O'Boyle <baoilleach@gmail.com>
 	
 	* configure.in: Only use BOOST for shared_pointer if the GCC4.x
