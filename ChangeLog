@@ -1,3 +1,8 @@
+2008-03-03  Noel O'Boyle <baoilleach@gmail.com>
+	
+	* tests/Makefile.am, files/3d.head.2.cml, tests/cmlreadfile.cpp,
+	test/wrapper.sh: Add tests for CML scripting support
+
 2008-03-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/dlhandler_unix.cpp: Ensure files match .so exactly. Prevents

@@ -1,7 +1,7 @@
 SUBDIRS = cmltest
 
 # Only compile these when running "make check"
-check_PROGRAMS = aromatic atom bond cansmi \
+check_PROGRAMS = aromatic atom bond cansmi cmlreadfile \
 	conversion data format formula formalcharge \
 	inchiwrite \
 	internalcoord invalidsmarts invalidsmiles \
@@ -34,6 +34,7 @@ aromatic_SOURCES = aromatest.cpp
 atom_SOURCES = atom.cpp
 bond_SOURCES = bond.cpp
 cansmi_SOURCES = cansmi.cpp
+cmlreadfile_SOURCES = cmlreadfile.cpp
 conversion_SOURCES = conversion.cpp
 data_SOURCES = data.cpp
 format_SOURCES = format.cpp
