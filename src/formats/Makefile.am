@@ -20,7 +20,7 @@ BUILT_SOURCES = all.h.gch
 PCHFLAGS=-Winvalid-pch -x c++-header $(CPPFLAGS) $(INCLUDES)
 all.h.gch: all.h Makefile \
 	$(srcdir)/../../include/openbabel/babelconfig.h \
-  $(srcdir)/../../include/openbabel/base.h \
+    $(srcdir)/../../include/openbabel/base.h \
 	$(srcdir)/../../include/openbabel/generic.h \
 	$(srcdir)/../../include/openbabel/mol.h \
 	$(srcdir)/../../include/openbabel/oberror.h \
@@ -69,14 +69,14 @@ libformats_la_SOURCES = \
 	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
 	tinkerformat.cpp titleformat.cpp \
 	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
-	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp
-#	rxnformat.cpp
+	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp \
+	rxnformat.cpp rsmiformat.cpp
 
 else BUILD_SHARED
 
 pkglib_LTLIBRARIES = \
 	APIInterface.la \
-	CSRformat.la PQSformat.la alchemyformat.la \
+	CSRformat.la PQSformat.la MCDLformat.la alchemyformat.la \
 	acrformat.la \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la cansmilesformat.la \
@@ -102,7 +102,7 @@ pkglib_LTLIBRARIES = \
 	xedformat.la xyzformat.la yasaraformat.la zindoformat.la
 if HAVE_SHARED_POINTER
     pkglib_LTLIBRARIES += chemdrawcdxformat.la chemkinformat.la \
-                          rxnformat.la
+                          rxnformat.la rsmiformat.la
 endif
 
 APIInterface_la_SOURCES = APIInterface.cpp
@@ -111,8 +111,8 @@ APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.l
 CSRformat_la_SOURCES = CSRformat.cpp obmolecformat.cpp
 CSRformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
-#MCDLformat_la_SOURCES = MCDLformat.cpp obmolecformat.cpp
-#MCDLformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+MCDLformat_la_SOURCES = MCDLformat.cpp obmolecformat.cpp
+MCDLformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 PQSformat_la_SOURCES = PQSformat.cpp obmolecformat.cpp
 PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
@@ -280,6 +280,9 @@ pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 reportformat_la_SOURCES = reportformat.cpp obmolecformat.cpp
 reportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+rsmiformat_la_SOURCES = rsmiformat.cpp
+rsmiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 rxnformat_la_SOURCES = rxnformat.cpp
 rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
