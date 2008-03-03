@@ -146,7 +146,7 @@ class OBBase;
       CustomData12 = 16396,
       CustomData13 = 16397,
       CustomData14 = 16398,
-      CustomData15 = 16399,
+      CustomData15 = 16399
     };
   } // end namespace
   enum DataOrigin {
@@ -252,7 +252,7 @@ class OBBase;
           if(pOb && clear)// Clear only if this is of target class
             Clear();
           return pOb;
-        };
+        }
 
 
       //! \name Generic data handling methods (via OBGenericData)
