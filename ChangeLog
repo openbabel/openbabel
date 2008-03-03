@@ -1,6 +1,14 @@
-2008-03-02  Noel O'Boyle <baoilleach@gmail.com>
-	
-	* configure.in: Fix bug...should have been $have_boost not $HAVE_BOOST
+2008-03-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/dlhandler_unix.cpp: Ensure files match .so exactly. Prevents
+	errors when looking for .so.dSYM files.
+
+	* src/formats/MCDLformat.cpp: Fix GCC compile error.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Build rsmi and
+	MCDL formats.
+
+	* src/config.h.in: Regenerate for HAVE_BOOST symbol.
 
 2008-03-02  Noel O'Boyle <baoilleach@gmail.com>
 	

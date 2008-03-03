@@ -41,7 +41,13 @@ namespace OpenBabel {
 
 int matchFiles (SCANDIR_CONST struct dirent *entry_p)
 {
-  return (strstr(entry_p->d_name, DLHandler::getFormatFilePattern()) != 0);
+	string filename(entry_p->d_name);
+	string::size_type extPos = filename.rfind(DLHandler::getFormatFilePattern());
+
+	if(extPos!=string::npos && filename.substr(extPos) == DLHandler::getFormatFilePattern())
+		return true;
+		
+	return false;
 }
 
 bool DLHandler::getConvDirectory(string& convPath)
