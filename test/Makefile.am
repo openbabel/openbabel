@@ -3,7 +3,7 @@ SUBDIRS = cmltest
 # Only compile these when running "make check"
 check_PROGRAMS = aromatic atom bond cansmi cmlreadfile \
 	conversion data format formula formalcharge \
-	inchiwrite \
+	ffghemical ffuff ffmmff94 inchiwrite \
 	internalcoord invalidsmarts invalidsmiles \
 	iterators logp_psa math mol residue rings smarts \
 	smilesmatch unitcell
@@ -37,6 +37,9 @@ cansmi_SOURCES = cansmi.cpp
 cmlreadfile_SOURCES = cmlreadfile.cpp
 conversion_SOURCES = conversion.cpp
 data_SOURCES = data.cpp
+ffghemical_SOURCES = ffghemical.cpp
+ffuff_SOURCES = ffuff.cpp
+ffmmff94_SOURCES = ffmmff94.cpp
 format_SOURCES = format.cpp
 formula_SOURCES = formula.cpp
 formalcharge_SOURCES = formalcharge.cpp

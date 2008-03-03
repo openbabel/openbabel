@@ -3841,6 +3841,8 @@ namespace OpenBabel
     vector3 numgrad, anagrad, err;
     int coordIdx;
     
+    bool passed = true; // set to false if any component fails
+    
     cout << "----------------------------------------------------------------------------------------" << endl;
     cout << "                                                                                        " << endl;
     cout << "  VALIDATE GRADIENTS : " << _mol.GetTitle() << endl;
@@ -3862,7 +3864,7 @@ namespace OpenBabel
       sprintf(_logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
-      
+
       // OBFF_EBOND
       numgrad = -NumericalDerivative(&*a, OBFF_EBOND);
       ClearGradients();
@@ -3873,6 +3875,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
       
       // OBFF_EANGLE
       numgrad = -NumericalDerivative(&*a, OBFF_EANGLE);
@@ -3884,6 +3888,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
       
       // OBFF_ESTRBND
       numgrad = -NumericalDerivative(&*a, OBFF_ESTRBND);
@@ -3895,6 +3901,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    strbnd  (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
 
       // OBFF_ETORSION
       numgrad = -NumericalDerivative(&*a, OBFF_ETORSION);
@@ -3906,6 +3914,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
       
       // OBFF_EOOP
       numgrad = -NumericalDerivative(&*a, OBFF_EOOP);
@@ -3917,6 +3927,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
 
       // OBFF_EVDW
       numgrad = -NumericalDerivative(&*a, OBFF_EVDW);
@@ -3928,6 +3940,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
 
       // OBFF_EELECTROSTATIC
       numgrad = -NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
@@ -3939,9 +3953,11 @@ namespace OpenBabel
       sprintf(_logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
     }
 
-    return true;
+    return passed; // did we pass every single component?
   }
   
 ////////////////////////////////////////////////////////////////////////////////

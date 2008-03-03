@@ -291,7 +291,8 @@ namespace OpenBabel
 	    if (!isfinite(angle))
 	      angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
 
-      dE = -koop * (c1*sin(angle) + 2.0 * c2 * sin(2.0*angle));
+      // somehow we already get the -1 from the OOPDeriv -- so we'll omit it here
+      dE = koop * (c1*sin(angle) + 2.0 * c2 * sin(2.0*angle));
       da *= dE;
       db *= dE;
       dc *= dE;
@@ -1138,7 +1139,7 @@ namespace OpenBabel
   bool OBForceFieldUFF::ValidateGradients ()
   {
     vector3 numgrad, anagrad, err;
-    bool passed = true;
+    bool passed = true; // set to false if any component fails
     int coordIdx;
     
     OBFFLog("\nV A L I D A T E   G R A D I E N T S\n\n");
@@ -1149,7 +1150,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL (a, _mol) {
       coordIdx = (a->GetIdx() - 1) * 3;
 
-      // OBFF_ENERGY
+      // OBFF_ENERGY (i.e., overall)
       numgrad = -NumericalDerivative(&*a, OBFF_ENERGY);
       Energy(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -1169,6 +1170,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
       
       // OBFF_EANGLE
       numgrad = -NumericalDerivative(&*a, OBFF_EANGLE);
@@ -1180,6 +1183,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
       
       // OBFF_ETORSION
       numgrad = -NumericalDerivative(&*a, OBFF_ETORSION);
@@ -1191,6 +1196,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
       
       // OBFF_EOOP
       numgrad = -NumericalDerivative(&*a, OBFF_EOOP);
@@ -1202,7 +1209,9 @@ namespace OpenBabel
       sprintf(_logbuf, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
-
+//      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+//        passed = false;
+        
       // OBFF_EVDW
       numgrad = -NumericalDerivative(&*a, OBFF_EVDW);
       ClearGradients();
@@ -1213,6 +1222,8 @@ namespace OpenBabel
       sprintf(_logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
 
       // OBFF_EELECTROSTATIC
       numgrad = -NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
@@ -1224,9 +1235,11 @@ namespace OpenBabel
       sprintf(_logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
+      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+        passed = false;
     }
-    // For now, just return true. Should return false if validation fails.
-    return true;
+    
+    return passed; // did we pass every single component?
   }
   
 } // end namespace OpenBabel

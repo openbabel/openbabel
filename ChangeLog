@@ -2,7 +2,15 @@
 
 	* include/openbabel/math/vector3.h, include/openbabel/base.h,
 	include/openbabel/residue.h: Fixes for compiling with GCC
-	-pedantic flag.
+	-pedantic flag, thanks to Daniel Leidert.
+
+	* tests/* : New tests for UFF, Ghemical and MMFF94 unit
+	tests. Compares energies and validates gradients. Still appear to
+	be some small gradient errors (although these may be due to
+	numerical instability.)
+
+	* src/forcefields/forcefield*.cpp (ValidateGradients): Return
+	false when gradient errors are > 5.0% anywhere along the line.
 
 2008-03-03  Noel O'Boyle <baoilleach@gmail.com>
 	

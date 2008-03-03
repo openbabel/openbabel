@@ -32,9 +32,10 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 check_PROGRAMS = aromatic$(EXEEXT) atom$(EXEEXT) bond$(EXEEXT) \
-	cansmi$(EXEEXT) conversion$(EXEEXT) data$(EXEEXT) \
-	format$(EXEEXT) formula$(EXEEXT) formalcharge$(EXEEXT) \
-	inchiwrite$(EXEEXT) internalcoord$(EXEEXT) \
+	cansmi$(EXEEXT) cmlreadfile$(EXEEXT) conversion$(EXEEXT) \
+	data$(EXEEXT) format$(EXEEXT) formula$(EXEEXT) \
+	formalcharge$(EXEEXT) ffghemical$(EXEEXT) ffuff$(EXEEXT) \
+	ffmmff94$(EXEEXT) inchiwrite$(EXEEXT) internalcoord$(EXEEXT) \
 	invalidsmarts$(EXEEXT) invalidsmiles$(EXEEXT) \
 	iterators$(EXEEXT) logp_psa$(EXEEXT) math$(EXEEXT) \
 	mol$(EXEEXT) residue$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
@@ -75,6 +76,10 @@ am_cansmi_OBJECTS = cansmi.$(OBJEXT)
 cansmi_OBJECTS = $(am_cansmi_OBJECTS)
 cansmi_LDADD = $(LDADD)
 cansmi_DEPENDENCIES = ../src/libopenbabel.la
+am_cmlreadfile_OBJECTS = cmlreadfile.$(OBJEXT)
+cmlreadfile_OBJECTS = $(am_cmlreadfile_OBJECTS)
+cmlreadfile_LDADD = $(LDADD)
+cmlreadfile_DEPENDENCIES = ../src/libopenbabel.la
 am_conversion_OBJECTS = conversion.$(OBJEXT)
 conversion_OBJECTS = $(am_conversion_OBJECTS)
 conversion_LDADD = $(LDADD)
@@ -83,6 +88,18 @@ am_data_OBJECTS = data.$(OBJEXT)
 data_OBJECTS = $(am_data_OBJECTS)
 data_LDADD = $(LDADD)
 data_DEPENDENCIES = ../src/libopenbabel.la
+am_ffghemical_OBJECTS = ffghemical.$(OBJEXT)
+ffghemical_OBJECTS = $(am_ffghemical_OBJECTS)
+ffghemical_LDADD = $(LDADD)
+ffghemical_DEPENDENCIES = ../src/libopenbabel.la
+am_ffmmff94_OBJECTS = ffmmff94.$(OBJEXT)
+ffmmff94_OBJECTS = $(am_ffmmff94_OBJECTS)
+ffmmff94_LDADD = $(LDADD)
+ffmmff94_DEPENDENCIES = ../src/libopenbabel.la
+am_ffuff_OBJECTS = ffuff.$(OBJEXT)
+ffuff_OBJECTS = $(am_ffuff_OBJECTS)
+ffuff_LDADD = $(LDADD)
+ffuff_DEPENDENCIES = ../src/libopenbabel.la
 am_formalcharge_OBJECTS = formalcharge.$(OBJEXT)
 formalcharge_OBJECTS = $(am_formalcharge_OBJECTS)
 formalcharge_LDADD = $(LDADD)
@@ -164,23 +181,25 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
-	$(cansmi_SOURCES) $(conversion_SOURCES) $(data_SOURCES) \
-	$(formalcharge_SOURCES) $(format_SOURCES) $(formula_SOURCES) \
-	$(inchiwrite_SOURCES) $(internalcoord_SOURCES) \
-	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
-	$(iterators_SOURCES) $(logp_psa_SOURCES) $(math_SOURCES) \
-	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
-	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
-	$(unitcell_SOURCES)
+	$(cansmi_SOURCES) $(cmlreadfile_SOURCES) $(conversion_SOURCES) \
+	$(data_SOURCES) $(ffghemical_SOURCES) $(ffmmff94_SOURCES) \
+	$(ffuff_SOURCES) $(formalcharge_SOURCES) $(format_SOURCES) \
+	$(formula_SOURCES) $(inchiwrite_SOURCES) \
+	$(internalcoord_SOURCES) $(invalidsmarts_SOURCES) \
+	$(invalidsmiles_SOURCES) $(iterators_SOURCES) \
+	$(logp_psa_SOURCES) $(math_SOURCES) $(mol_SOURCES) \
+	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
+	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(unitcell_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
-	$(cansmi_SOURCES) $(conversion_SOURCES) $(data_SOURCES) \
-	$(formalcharge_SOURCES) $(format_SOURCES) $(formula_SOURCES) \
-	$(inchiwrite_SOURCES) $(internalcoord_SOURCES) \
-	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
-	$(iterators_SOURCES) $(logp_psa_SOURCES) $(math_SOURCES) \
-	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
-	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
-	$(unitcell_SOURCES)
+	$(cansmi_SOURCES) $(cmlreadfile_SOURCES) $(conversion_SOURCES) \
+	$(data_SOURCES) $(ffghemical_SOURCES) $(ffmmff94_SOURCES) \
+	$(ffuff_SOURCES) $(formalcharge_SOURCES) $(format_SOURCES) \
+	$(formula_SOURCES) $(inchiwrite_SOURCES) \
+	$(internalcoord_SOURCES) $(invalidsmarts_SOURCES) \
+	$(invalidsmiles_SOURCES) $(iterators_SOURCES) \
+	$(logp_psa_SOURCES) $(math_SOURCES) $(mol_SOURCES) \
+	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
+	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -337,8 +356,12 @@ aromatic_SOURCES = aromatest.cpp
 atom_SOURCES = atom.cpp
 bond_SOURCES = bond.cpp
 cansmi_SOURCES = cansmi.cpp
+cmlreadfile_SOURCES = cmlreadfile.cpp
 conversion_SOURCES = conversion.cpp
 data_SOURCES = data.cpp
+ffghemical_SOURCES = ffghemical.cpp
+ffuff_SOURCES = ffuff.cpp
+ffmmff94_SOURCES = ffmmff94.cpp
 format_SOURCES = format.cpp
 formula_SOURCES = formula.cpp
 formalcharge_SOURCES = formalcharge.cpp
@@ -435,12 +458,24 @@ bond$(EXEEXT): $(bond_OBJECTS) $(bond_DEPENDENCIES)
 cansmi$(EXEEXT): $(cansmi_OBJECTS) $(cansmi_DEPENDENCIES) 
 	@rm -f cansmi$(EXEEXT)
 	$(CXXLINK) $(cansmi_OBJECTS) $(cansmi_LDADD) $(LIBS)
+cmlreadfile$(EXEEXT): $(cmlreadfile_OBJECTS) $(cmlreadfile_DEPENDENCIES) 
+	@rm -f cmlreadfile$(EXEEXT)
+	$(CXXLINK) $(cmlreadfile_OBJECTS) $(cmlreadfile_LDADD) $(LIBS)
 conversion$(EXEEXT): $(conversion_OBJECTS) $(conversion_DEPENDENCIES) 
 	@rm -f conversion$(EXEEXT)
 	$(CXXLINK) $(conversion_OBJECTS) $(conversion_LDADD) $(LIBS)
 data$(EXEEXT): $(data_OBJECTS) $(data_DEPENDENCIES) 
 	@rm -f data$(EXEEXT)
 	$(CXXLINK) $(data_OBJECTS) $(data_LDADD) $(LIBS)
+ffghemical$(EXEEXT): $(ffghemical_OBJECTS) $(ffghemical_DEPENDENCIES) 
+	@rm -f ffghemical$(EXEEXT)
+	$(CXXLINK) $(ffghemical_OBJECTS) $(ffghemical_LDADD) $(LIBS)
+ffmmff94$(EXEEXT): $(ffmmff94_OBJECTS) $(ffmmff94_DEPENDENCIES) 
+	@rm -f ffmmff94$(EXEEXT)
+	$(CXXLINK) $(ffmmff94_OBJECTS) $(ffmmff94_LDADD) $(LIBS)
+ffuff$(EXEEXT): $(ffuff_OBJECTS) $(ffuff_DEPENDENCIES) 
+	@rm -f ffuff$(EXEEXT)
+	$(CXXLINK) $(ffuff_OBJECTS) $(ffuff_LDADD) $(LIBS)
 formalcharge$(EXEEXT): $(formalcharge_OBJECTS) $(formalcharge_DEPENDENCIES) 
 	@rm -f formalcharge$(EXEEXT)
 	$(CXXLINK) $(formalcharge_OBJECTS) $(formalcharge_LDADD) $(LIBS)
@@ -503,8 +538,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atom.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bond.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cansmi.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmlreadfile.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conversion.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ffghemical.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ffmmff94.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ffuff.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/formalcharge.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/formula.Po@am__quote@

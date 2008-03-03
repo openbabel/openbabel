@@ -7,8 +7,9 @@
 # wrapper.sh --shuffle --debug
 # wrapper.sh --verbose # display full output of tests while running
 
-TESTS="aromatic.pl atom bond cansmi cmlreadfile conversion data format"
-TESTS="${TESTS} formula formalcharge inchi.pl inchi2.pl"
+TESTS="aromatic.pl atom bond cansmi cmlreadfile conversion data"
+# TESTS="${TESTS} ffghemical ffmmff94 ffuff"
+TESTS="${TESTS} format formula formalcharge inchi.pl inchi2.pl"
 TESTS="${TESTS} internalcoord iterators" 
 TESTS="${TESTS} invalidsmarts invalidsmiles"
 TESTS="${TESTS} logp_psa math"
