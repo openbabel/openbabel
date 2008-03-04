@@ -31,6 +31,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am__append_1 = cmlformat.la
 subdir = src/formats/xml
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -69,7 +70,9 @@ cmlformat_la_OBJECTS = $(am_cmlformat_la_OBJECTS)
 cmlformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cmlformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_cmlformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am_cmlformat_la_rpath =  \
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	-rpath \
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(pkglibdir)
 pubchem_la_LIBADD =
 am__pubchem_la_SOURCES_DIST = pubchem.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@am_pubchem_la_OBJECTS = pubchem.lo xml.lo \
@@ -242,10 +245,9 @@ top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/include 
 AM_CPPFLAGS = @XML_CPPFLAGS@
 AM_LDFLAGS = @LIBS@ @XML_LIBS@
-@BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
-@BUILD_SHARED_TRUE@  cmlformat.la \
-@BUILD_SHARED_TRUE@	pubchem.la xmlformat.la cdxmlformat.la
-
+@USE_BOOST_FLAGS_TRUE@AM_CXXFLAGS = $(BOOST_CPPFLAGS)
+@BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = pubchem.la xmlformat.la \
+@BUILD_SHARED_TRUE@	cdxmlformat.la $(am__append_1)
 @BUILD_SHARED_TRUE@cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@cdxmlformat_la_LDFLAGS = -module -avoid-version $(AM_LDFLAGS)
 @BUILD_SHARED_TRUE@cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
