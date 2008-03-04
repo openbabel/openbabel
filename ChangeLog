@@ -1,3 +1,7 @@
+2008-03-04  Daniel Leidert <daniel.leidert@wgdd.de>
+
+	* doc/babel.1: Fixed unkown RE macro.
+
 2008-03-04  Noel O'Boyle <baoilleach@gmail.com>
 	
 	* src/formats/xml/Makefile.am: Only compile cmlformat.cpp if
