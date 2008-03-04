@@ -1,3 +1,8 @@
+2008-03-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/chains.cpp (DeleteByteCode): Add protection against double-free
+	bugs in chains.cpp. Assign pointers to NULL.
+
 2008-03-04  Daniel Leidert <daniel.leidert@wgdd.de>
 
 	* doc/babel.1: Fixed unkown RE macro.

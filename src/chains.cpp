@@ -438,10 +438,14 @@ namespace OpenBabel
           {
           case BC_ASSIGN:
 
-            if (node->assign.atomid != NULL)
+            if (node->assign.atomid != NULL) {
               free(node->assign.atomid);
-            if (node->assign.bflags != NULL)
+              node->assign.atomid = NULL; // prevent double-free
+            }
+            if (node->assign.bflags != NULL) {
               free(node->assign.bflags);
+              node->assign.bflags = NULL; // prevent double-free
+            }
             
             break;
 
@@ -475,6 +479,7 @@ namespace OpenBabel
           }
 
         free(node);
+        node = NULL;
       }
   }
 
