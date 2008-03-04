@@ -2,11 +2,17 @@ INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/include
 AM_CPPFLAGS =  @XML_CPPFLAGS@
 AM_LDFLAGS = @LIBS@ @XML_LIBS@
 
+if USE_BOOST_FLAGS
+AM_CXXFLAGS = $(BOOST_CPPFLAGS)
+endif
+
 if BUILD_SHARED
 
 pkglib_LTLIBRARIES = \
-  cmlformat.la \
 	pubchem.la xmlformat.la cdxmlformat.la
+if HAVE_SHARED_POINTER
+    pkglib_LTLIBRARIES += cmlformat.la
+endif
 
 cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
 cdxmlformat_la_LDFLAGS = -module -avoid-version $(AM_LDFLAGS)

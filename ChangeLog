@@ -1,3 +1,8 @@
+2008-03-04  Noel O'Boyle <baoilleach@gmail.com>
+	
+	* src/formats/xml/Makefile.am: Only compile cmlformat.cpp if
+	HAVE_SHARED_POINTER is true
+
 2008-03-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/math/vector3.h, include/openbabel/base.h,
