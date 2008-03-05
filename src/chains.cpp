@@ -1291,7 +1291,10 @@ namespace OpenBabel
     int na,nb,nc;
     OBAtom *atom, *nbr;
     int count;
-    int j,k,idx;
+    int j,k;
+    int idx;
+    
+    j = k = 0; // ignore warning
 
     vector<OBBond *>::iterator b;
 

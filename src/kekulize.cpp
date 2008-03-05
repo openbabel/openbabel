@@ -57,7 +57,8 @@ namespace OpenBabel
     OBBond *bond;
     std::vector<OBBond*>::iterator bi;
     std::vector<int> electron;
-    int sume, orden, bestatom;
+    int sume, orden;
+    int bestatom = 1;
     int bestorden = 99;
     // Init the kekulized bonds
     unsigned i;
