@@ -8,7 +8,7 @@
 # wrapper.sh --verbose # display full output of tests while running
 
 TESTS="aromatic.pl atom bond cansmi cmlreadfile conversion data"
-# TESTS="${TESTS} ffghemical ffmmff94 ffuff"
+TESTS="${TESTS} ffghemical ffmmff94 ffuff"
 TESTS="${TESTS} format formula formalcharge inchi.pl inchi2.pl"
 TESTS="${TESTS} internalcoord iterators" 
 TESTS="${TESTS} invalidsmarts invalidsmiles"
@@ -17,6 +17,8 @@ TESTS="${TESTS} mol residue rings"
 TESTS="${TESTS} smarts smilesmatch unitcell"
 TESTS="${TESTS} cml.sh test-set.sh"
 PROVE=prove
+
+echo "top srcdir: .${topsrcdir}."
 
 unset BABEL_LIBDIR
 unset BABEL_DATADIR
