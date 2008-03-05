@@ -87,6 +87,13 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::FindSSSR", obAuditMsg);
 
+    // Delete any old data before we start finding new rings
+    // The following procedure is slow
+    // So if client code is multi-threaded, we don't want to make them wait
+    if (HasData(OBGenericDataType::RingData)) {
+      DeleteData(OBGenericDataType::RingData);
+    }
+
     OBRing *ring;
     vector<OBRing*>::iterator j;
 
@@ -126,11 +133,6 @@ namespace OpenBabel
                 vr.push_back(ring);
               }
             //rs.WriteRings();
-          }
-
-        if (HasData(OBGenericDataType::RingData))
-          {
-            DeleteData(OBGenericDataType::RingData);
           }
         
         SetData(new OBRingData);

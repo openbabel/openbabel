@@ -235,7 +235,7 @@ namespace OpenBabel
 
 
 
-  /*! \mainpage v2.1 API Documentation
+  /*! \mainpage API Documentation
 
   \section base Introduction
  

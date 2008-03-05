@@ -29,6 +29,10 @@
 
 	* src/kekulize.cpp, src/chains.cpp: Ditto.
 
+	* src/ring.cpp: Before running FindSSSR(), delete old data. This
+	improves potential race conditions in multi-threaded client code
+	(e.g., Avogadro).
+
 2008-03-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/gausscubeformat.cpp: Added write function.
