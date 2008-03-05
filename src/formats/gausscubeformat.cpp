@@ -6,6 +6,7 @@ gausscubeformat.cpp - Read in Gaussian cube format files.
 
  Some Portions Copyright (c) 2007 by Geoffrey R. Hutchison
  Some Portions Copyright (C) 2008 by Marcus D. Hanwell
+ Some Portions Copyright (C) 2008 by Tim Vandermeersch
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -70,22 +71,13 @@ namespace OpenBabel
     // Return MIME type, NULL in this case.
     virtual const char* GetMIMEType() { return 0; };
 
-    // Return read/write flag: read only.
-    virtual unsigned int Flags()
-    {
-        return READONEONLY;
-    };
-
     // Skip to object: used for multi-object file formats.
     virtual int SkipObjects( int n, OpenBabel::OBConversion* pConv ) { return 0; }
 
     /// The "API" interface functions
     virtual bool ReadMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );
     /// Write: always returns false right now - read only
-    virtual bool WriteMolecule( OpenBabel::OBBase* , OpenBabel::OBConversion* )
-    {
-        return false;
-    }
+    virtual bool WriteMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );
 };
 
 //------------------------------------------------------------------------------
@@ -445,6 +437,89 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 
     pmol->SetData(gd);
     pmol->SetDimension(3); // always a 3D structure
+
+    return true;
+  }
+  
+//------------------------------------------------------------------------------
+  bool OBGaussianCubeFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    if(pmol==NULL)
+      return false;
+
+    ostream &ofs = *pConv->GetOutStream();
+    OBMol &mol = *pmol;
+ 
+    char buffer[BUFF_SIZE];
+    string str;
+    stringstream errorMsg;
+    
+    // first two lines are comments
+    str = mol.GetTitle();
+    if (str.empty())
+      ofs << "*****" << endl;
+    else
+      ofs << str << endl;
+    
+    ofs << endl; // line 2
+
+    OBGridData *gd = (OBGridData*)mol.GetData(OBGenericDataType::GridData);
+    if (gd == NULL) {
+      errorMsg << "The molecule has no grid.";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      return false;
+    }
+    
+    int nx, ny, nz;
+    double origin[3], xAxis[3], yAxis[3], zAxis[3];
+    gd->GetAxes(xAxis, yAxis, zAxis);
+    gd->GetNumberOfPoints(nx, ny, nz);
+    gd->GetOriginVector(origin);
+
+    // line 3: number of atoms, origin x y z
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", mol.NumAtoms(), origin[0], origin[1], origin[2]);
+    ofs << buffer << endl;
+
+    // line 4: number of points x direction, axis x direction x y z
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nx, xAxis[0], xAxis[1], xAxis[2]);
+    ofs << buffer << endl;
+    
+    // line 5: number of points y direction, axis y direction x y z
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", ny, yAxis[0], yAxis[1], yAxis[2]);
+    ofs << buffer << endl;
+    
+    // line 6: number of points z direction, axis z direction x y z
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nz, zAxis[0], zAxis[1], zAxis[2]);
+    ofs << buffer << endl;
+
+    // Atom lines: atomic number, ?, X, Y, Z
+    FOR_ATOMS_OF_MOL (atom, mol) {
+      double *coordPtr = atom->GetCoordinate();
+      snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f %12.6f", atom->GetAtomicNum(), 0.0, coordPtr[0], coordPtr[1], coordPtr[2]);
+      ofs << buffer << endl;
+    }
+    
+    // The cube itself
+    double density;
+    unsigned int count = 1;
+    for (int i = 0; i < nx; ++i) {
+      for (int j = 0; j < ny; ++j) {
+        for (int k = 0; k < nz; ++k) {
+  	  density = gd->GetValue(i, j, k);
+	  
+	  if (count % 6 == 0) {
+            snprintf(buffer, BUFF_SIZE," %12.6E", density);
+            ofs << buffer << endl;
+	  } else {
+            snprintf(buffer, BUFF_SIZE," %12.6E ", density);
+            ofs << buffer;
+	  }
+	  
+	  count++;
+        } // z-axis
+      } // y-axis
+    } // x-axis
 
     return true;
   }

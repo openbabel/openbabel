@@ -1,3 +1,7 @@
+2008-03-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/gausscubeformat.cpp: Added write function.
+
 2008-03-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/chains.cpp (DeleteByteCode): Add protection against double-free
@@ -115,6 +119,22 @@
 
 	* src/formats/gausscubeformat.cpp: Stop translating from x, y, z index
 	to z, y, x as the grid classes now use the more common x, y, z index.
+
+2008-02-28  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h, src/forcefield.cpp: Some
+	improvements on the way gradients are handled. E_Bond, E_Angle, ...
+	iterate over the calculations and Add the gradients to the correct
+	atoms pointed to by the _gradientPtr. This pointer can then be used
+	directly by line search.
+
+	* src/forcefields/forcefieldghemical.*: Use it. GetGradient() function
+	removed.
+	
+	* src/forcefields/forcefieldmmff94.*: Same.
+	
+	* src/forcefields/forcefielduff.*: Same, but UFF still uses old
+	derivatives dunctions with all the vector3 objects.
 
 2008-02-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
