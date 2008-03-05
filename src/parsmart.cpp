@@ -572,16 +572,23 @@ namespace OpenBabel
           {
             for( i=0; i<pat->acount; i++ )
               FreeAtomExpr(pat->atom[i].expr);
-            free(pat->atom);
+            if (pat->atom != NULL) {
+              free(pat->atom);
+              pat->atom = NULL;
+            }
           }
       
         if( pat->balloc )
           {
             for( i=0; i<pat->bcount; i++ )
               FreeBondExpr(pat->bond[i].expr);
-            free(pat->bond);
+            if (pat->bond != NULL) {
+              free(pat->bond);
+              pat->bond = NULL;
+            }
           }
         free(pat);
+        pat = NULL;
       }
   }
 

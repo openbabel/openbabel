@@ -1,3 +1,9 @@
+2008-03-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/parsmart.cpp: Add protection against double-free
+	bugs. Assign pointers to NULL. Addresses bug reported from 
+	Avogaro PR#1897745.
+
 2008-03-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/gausscubeformat.cpp: Added write function.
