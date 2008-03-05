@@ -3150,18 +3150,29 @@ namespace OpenBabel
                || atom->SmallestBondAngle() < 45.0)
           {
             maxbond = atom->BeginBond(l);
-            // Fix from Liu Zhiguo 2008-01-26
+	    // Fix from Liu Zhiguo 2008-01-26
             // loop past any bonds
             // which existed before ConnectTheDots was called
             // (e.g., from PDB resdata.txt)
             valCount = 0;
             while (valCount < bondCount[atom->GetIdx() - 1]) {
               maxbond = atom->NextBond(l);
+              // timvdm: 2008-03-05
+	      // NextBond only returns NULL if the iterator l == _bonds.end().
+	      // This was casuing problems as follows:
+	      // NextBond = 0x????????
+	      // NextBond = 0x????????
+	      // NextBond = 0x????????
+	      // NextBond = 0x????????
+	      // NextBond = NULL	<-- this NULL was not detected
+	      // NextBond = 0x????????
+	      if (!maxbond) // so we add an additional check
+                break;
               valCount++;
             }
             if (!maxbond) // no new bonds added for this atom, just skip it
               break;
-
+            
             maxlength = maxbond->GetLength();
             for (bond = atom->BeginBond(l);bond;bond = atom->NextBond(l))
               {
@@ -3171,7 +3182,7 @@ namespace OpenBabel
                     maxlength = bond->GetLength();
                   }
               }
-            DeleteBond(maxbond); // delete the new bond with the longest length
+	    DeleteBond(maxbond); // delete the new bond with the longest length
           }
       }
 

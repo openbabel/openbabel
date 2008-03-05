@@ -1,3 +1,20 @@
+2008-03-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/mol.cpp: The recent patch from Liu Zhiguo had a bug in
+	OBMol::ConnectTheDots(). Inside a loop, NextBond was called without
+	checking the return value directly. The return value was being checked
+	outside the loop.
+	
+	while (valCount < bondCount[atom->GetIdx() - 1]) {
+	  maxbond = atom->NextBond(l);
+	  ...
+	  if (!maxbond) // Added
+	    break;      // Added
+	  valCount++;
+	}
+	if (!maxbond)
+	  break;
+
 2008-03-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/parsmart.cpp: Add protection against double-free
