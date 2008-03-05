@@ -4,6 +4,14 @@
 	bugs. Assign pointers to NULL. Addresses bug reported from 
 	Avogaro PR#1897745.
 
+	* src/forcefields/forcefieldghemical.cpp: Fix problem with VDW
+	gradients -- typo of "kb" instead of "ka."
+
+	* src/forcefields/*.cpp: Remove many (but not all) compile
+	warnings from GCC. 
+
+	* src/kekulize.cpp, src/chains.cpp: Ditto.
+
 2008-03-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/gausscubeformat.cpp: Added write function.

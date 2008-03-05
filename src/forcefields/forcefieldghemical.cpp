@@ -83,7 +83,7 @@ namespace OpenBabel
   
   void OBFFAngleCalculationGhemical::Compute(bool gradients)
   {
-    double delta2, dE;
+    double delta2;
 
     if (gradients) {
       theta = OBForceField::VectorAngleDerivative(pos_a, pos_b, pos_c, force_a, force_b, force_c);
@@ -238,7 +238,7 @@ namespace OpenBabel
     if (gradients) { 
       const double term13 = term * term12; // ^13
       const double term7 = term * term6; // ^7
-      const double dE = - (12.0 / ka) * (1.0 / term13) + (6.0 / kb) * (1.0 / term7);
+      const double dE = - (12.0 / ka) * (1.0 / term13) + (6.0 / ka) * (1.0 / term7);
       OBForceField::VectorSelfMultiply(force_a, dE);
       OBForceField::VectorSelfMultiply(force_b, dE);
     }
