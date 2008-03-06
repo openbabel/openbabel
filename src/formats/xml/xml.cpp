@@ -326,6 +326,11 @@ namespace OpenBabel
         buffer[count] = '>';
         buffer[++count] = '\0';
       }
+
+		if (ifs->peek() == '\n' || ifs->peek() == '\r')
+			{
+				ifs->get(); // remove any trailing endlines
+			}
     return count;
   }
 
