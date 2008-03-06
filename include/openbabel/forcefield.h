@@ -1199,14 +1199,14 @@ namespace OpenBabel
      * \param j pointer to j[3]
      * \param result pointer to result[3], will be set to i - j
      */
-    static void VectorSubstract(double *i, double *j, double *result)
+    static void VectorSubtract(double *i, double *j, double *result)
     {
       result[0] = i[0] - j[0];
       result[1] = i[1] - j[1];
       result[2] = i[2] - j[2];
     }
     
-    static void VectorSubstract(const double* const i, const double* const j, double *result)
+    static void VectorSubtract(const double* const i, const double* const j, double *result)
     {
       result[0] = i[0] - j[0];
       result[1] = i[1] - j[1];
@@ -1300,7 +1300,7 @@ namespace OpenBabel
     static double VectorDistance(double *pos_i, double *pos_j)
     {
       double ij[3];
-      VectorSubstract(pos_i, pos_j, ij);
+      VectorSubtract(pos_i, pos_j, ij);
       const double rij = VectorLength(ij);
       return rij;
     }

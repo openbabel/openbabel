@@ -2861,7 +2861,7 @@ namespace OpenBabel
                                             double *force_i, double *force_j)
   {
     double ij[3];
-    VectorSubstract(pos_i, pos_j, ij);
+    VectorSubtract(pos_i, pos_j, ij);
     
     double rij = VectorLength(ij);
     if (rij < 0.1) { // atoms are too close to each other
@@ -2881,7 +2881,7 @@ namespace OpenBabel
   double OBForceField::VectorDistanceDerivative(const double* const pos_i, const double* const pos_j,
                                               double *force_i, double *force_j)
   {
-    VectorSubstract(pos_i, pos_j, force_j);
+    VectorSubtract(pos_i, pos_j, force_j);
     const double rij = VectorLength(force_j);
     const double inverse_rij = 1.0 / rij;
     VectorSelfMultiply(force_j, inverse_rij);
@@ -2965,8 +2965,8 @@ namespace OpenBabel
 
     // Bond vectors of the three atoms
     double ij[3], jk[3];
-    VectorSubstract(pos_i, pos_j, ij);
-    VectorSubstract(pos_k, pos_j, jk);
+    VectorSubtract(pos_i, pos_j, ij);
+    VectorSubtract(pos_k, pos_j, jk);
 
     // length of the two bonds
     double l_ij, l_jk;
@@ -3035,8 +3035,8 @@ namespace OpenBabel
 
     // Bond vectors of the three atoms
     double ij[3], jk[3];
-    VectorSubstract(pos_i, pos_j, ij);
-    VectorSubstract(pos_k, pos_j, jk);
+    VectorSubtract(pos_i, pos_j, ij);
+    VectorSubtract(pos_k, pos_j, jk);
 
     // length of the two bonds
     double l_ij, l_jk;
@@ -3200,7 +3200,7 @@ namespace OpenBabel
     double an[3], bn[3], cn[3];
 
     // calculate normalized bond vectors from central atom to outer atoms:
-    VectorSubstract(pos_i, pos_j, ji);
+    VectorSubtract(pos_i, pos_j, ji);
     // store length of this bond:
     const double length_ji = VectorLength(ji);
     if (IsNearZero(length_ji)) {
@@ -3214,7 +3214,7 @@ namespace OpenBabel
     // normalize the bond vector:
     VectorDivide(ji, length_ji, ji);
 		
-    VectorSubstract(pos_k, pos_j, jk);
+    VectorSubtract(pos_k, pos_j, jk);
     const double length_jk = VectorLength(jk);
     if (IsNearZero(length_jk)) {
       VectorClear(force_i);
@@ -3225,7 +3225,7 @@ namespace OpenBabel
     }
     VectorDivide(jk, length_jk, jk);
 	
-    VectorSubstract(pos_l, pos_j, jl);
+    VectorSubtract(pos_l, pos_j, jl);
     const double length_jl = VectorLength(jl);
     if (IsNearZero(length_jl)) {
       VectorClear(force_i);
@@ -3283,18 +3283,18 @@ namespace OpenBabel
     /* l = (an / sin_theta - jl * sin_dl) / length_jl; */
     VectorDivide(an, sin_theta, an);
     VectorMultiply(jl, sin_dl, temp);
-    VectorSubstract(an, temp, force_l);
+    VectorSubtract(an, temp, force_l);
     VectorDivide(force_l, length_jl, force_l);
     /* i = ((bn + (((-ji + jk * cos_theta) * sin_dl) / sin_theta)) / length_ji) / sin_theta; */
     VectorMultiply(jk, cos_theta, temp);
-    VectorSubstract(temp, ji, temp);
+    VectorSubtract(temp, ji, temp);
     VectorSelfMultiply(temp, sin_dl);
     VectorDivide(temp, sin_theta, temp);
     VectorAdd(bn, temp, force_i);
     VectorSelfMultiply(force_i, (sin_theta/length_ji));
     /* k = ((cn + (((-jk + ji * cos_theta) * sin_dl) / sin_theta)) / length_jk) / sin_theta; */
     VectorMultiply(ji, cos_theta, temp);
-    VectorSubstract(temp, jk, temp);
+    VectorSubtract(temp, jk, temp);
     VectorSelfMultiply(temp, sin_dl);
     VectorDivide(temp, sin_theta, temp);
     VectorAdd(cn, temp, force_k);
@@ -3318,7 +3318,7 @@ namespace OpenBabel
     double an[3], bn[3], cn[3];
 
     // calculate normalized bond vectors from central atom to outer atoms:
-    VectorSubstract(pos_i, pos_j, ji);
+    VectorSubtract(pos_i, pos_j, ji);
     // store length of this bond:
     const double length_ji = VectorLength(ji);
     if (IsNearZero(length_ji)) {
@@ -3328,14 +3328,14 @@ namespace OpenBabel
     // normalize the bond vector:
     VectorDivide(ji, length_ji, ji);
 		
-    VectorSubstract(pos_k, pos_j, jk);
+    VectorSubtract(pos_k, pos_j, jk);
     const double length_jk = VectorLength(jk);
     if (IsNearZero(length_jk)) {
       return 0.0;
     }
     VectorDivide(jk, length_jk, jk);
 	
-    VectorSubstract(pos_l, pos_j, jl);
+    VectorSubtract(pos_l, pos_j, jl);
     const double length_jl = VectorLength(jl);
     if (IsNearZero(length_jl)) {
       return 0.0;
@@ -3439,9 +3439,9 @@ namespace OpenBabel
 
     // Bond vectors of the three atoms
     double ij[3], jk[3], kl[3];
-    VectorSubstract(pos_j, pos_i, ij);
-    VectorSubstract(pos_k, pos_j, jk);
-    VectorSubstract(pos_l, pos_k, kl);
+    VectorSubtract(pos_j, pos_i, ij);
+    VectorSubtract(pos_k, pos_j, jk);
+    VectorSubtract(pos_l, pos_k, kl);
 
     // length of the three bonds
     double l_ij, l_jk, l_kl;
@@ -3517,7 +3517,7 @@ namespace OpenBabel
     
     VectorMultiply(force_i, (rrcj - 1.0), a);
     VectorMultiply(force_l, rrck, b);
-    VectorSubstract(a, b, force_j);
+    VectorSubtract(a, b, force_j);
     
     VectorAdd(force_i, force_j, a);
     VectorAdd(a, force_l, b);
@@ -3530,9 +3530,9 @@ namespace OpenBabel
   {
     // Bond vectors of the three atoms
     double ij[3], jk[3], kl[3];
-    VectorSubstract(pos_j, pos_i, ij);
-    VectorSubstract(pos_k, pos_j, jk);
-    VectorSubstract(pos_l, pos_k, kl);
+    VectorSubtract(pos_j, pos_i, ij);
+    VectorSubtract(pos_k, pos_j, jk);
+    VectorSubtract(pos_l, pos_k, kl);
 
     // length of the three bonds
     const double l_ij = VectorLength(ij);
