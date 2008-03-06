@@ -1,3 +1,16 @@
+2008-03-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/mol.h, src/mol.cpp: GetEnergy(int) and GetEnergies 
+	now use OBConformerData to hold the energies.
+
+	* include/openbabel/forcefield.h, src/forcefield.cpp: GetConformers
+	and GetCoordinates attatches OBConformerData to the molecule. Energies
+	and Forces are set.
+
+	* src/forcefields/forcefieldmmff94.*: minimize the number of calls to
+	atoi(GetType, ...) in Setup functions. Use OBBitVec class to replace
+	vector<int> where possible.
+
 2008-03-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/mol.cpp: The recent patch from Liu Zhiguo had a bug in

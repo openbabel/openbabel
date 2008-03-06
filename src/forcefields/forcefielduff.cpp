@@ -1146,7 +1146,7 @@ namespace OpenBabel
       coordIdx = (a->GetIdx() - 1) * 3;
 
       // OBFF_ENERGY (i.e., overall)
-      numgrad = -NumericalDerivative(&*a, OBFF_ENERGY);
+      numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
       Energy(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
@@ -1156,7 +1156,7 @@ namespace OpenBabel
       OBFFLog(_logbuf);
       
       // OBFF_EBOND
-      numgrad = -NumericalDerivative(&*a, OBFF_EBOND);
+      numgrad = NumericalDerivative(&*a, OBFF_EBOND);
       ClearGradients();
       E_Bond(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -1169,7 +1169,7 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EANGLE
-      numgrad = -NumericalDerivative(&*a, OBFF_EANGLE);
+      numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
       ClearGradients();
       E_Angle(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -1182,7 +1182,7 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_ETORSION
-      numgrad = -NumericalDerivative(&*a, OBFF_ETORSION);
+      numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
       ClearGradients();
       E_Torsion(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -1196,7 +1196,7 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EOOP
-      numgrad = -NumericalDerivative(&*a, OBFF_EOOP);
+      numgrad = NumericalDerivative(&*a, OBFF_EOOP);
       ClearGradients();
       E_OOP(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -1209,7 +1209,7 @@ namespace OpenBabel
 //        passed = false;
         
       // OBFF_EVDW
-      numgrad = -NumericalDerivative(&*a, OBFF_EVDW);
+      numgrad = NumericalDerivative(&*a, OBFF_EVDW);
       ClearGradients();
       E_VDW(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -1222,7 +1222,7 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_EELECTROSTATIC
-      numgrad = -NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
+      numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
       ClearGradients();
       E_Electrostatic(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);

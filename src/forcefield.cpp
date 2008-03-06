@@ -854,6 +854,20 @@ namespace OpenBabel
       atom->SetVector(a->GetVector());
     }
 
+    if (!mol.HasData(OBGenericDataType::ConformerData))
+      mol.SetData(new OBConformerData);
+    OBConformerData *cd = (OBConformerData*) mol.GetData(OBGenericDataType::ConformerData);
+    cd->SetEnergies(_energies);
+    
+    vector<vector3> forces;
+    vector<vector<vector3> > confForces;
+    for (unsigned int i = 0; i < _mol.NumAtoms(); ++i) {
+      const int coordIdx = i * 3;
+      forces.push_back(vector3(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]));
+    }
+    confForces.push_back(forces);
+    cd->SetForces(confForces);
+
     return true;
   }
   
@@ -864,10 +878,12 @@ namespace OpenBabel
     if (_mol.NumAtoms() != mol.NumAtoms())
       return false;
     
+    /*
     FOR_ATOMS_OF_MOL (a, _mol) {
       atom = mol.GetAtom(a->GetIdx());
       atom->SetVector(a->GetVector());
     }
+    */
 
     //Copy conformer information
     if (_mol.NumConformers() > 1) {
@@ -881,8 +897,14 @@ namespace OpenBabel
         conf.push_back(xyz);
       }
       mol.SetConformers(conf);
-      mol.SetEnergies(_energies);
       mol.SetConformer(_current_conformer);
+      
+      if (!mol.HasData(OBGenericDataType::ConformerData))
+        mol.SetData(new OBConformerData);
+      OBConformerData *cd = (OBConformerData*) mol.GetData(OBGenericDataType::ConformerData);
+      cd->SetEnergies(_energies);
+
+      //mol.SetEnergies(_energies);
     }
     
     return true;
@@ -1847,6 +1869,112 @@ namespace OpenBabel
 
     return dir;
   }
+  
+  //
+  // Based on the ghemical code (conjgrad.cpp)
+  //
+  // Implements several enhancements:
+  // 1) Switch to smarter line search method (e.g., Newton's method in 1D)
+  //  x(n+1) = x(n) - F(x) / F'(x)   -- can be done numerically
+  // 2) Switch to line search for one step of the entire molecule!
+  //   This dramatically cuts down on the number of Energy() calls.
+  //  (and is more correct anyway)
+  double OBForceField::Newton2NumLineSearch()
+  {
+    double e_n1, e_n2, e_n3;
+    double *origCoords = new double [_ncoords];
+
+    //alpha = 0.0; // Scale factor along direction vector
+    double opt_step = 0.0;
+    double opt_e = _e_n1; // get energy calculated by sd or cg
+    const double def_step = 0.025; // default step
+    const double max_step = 5.0; // don't move further than 0.3 Angstroms
+    
+    double sum = 0.0;
+    for (unsigned int c = 0; c < _ncoords; ++c) {
+      if (isfinite(_gradientPtr[c])) { 
+        sum += _gradientPtr[c] * _gradientPtr[c];
+      } else {
+        // make sure we don't have NaN or infinity
+        _gradientPtr[c] = 0.0;
+      }
+    }
+
+    double scale = sqrt(sum);
+    if (IsNearZero(scale)) {
+      cout << "WARNING: too small \"scale\" at Newton2NumLineSearch" << endl;
+      scale = 1.0e-70; // try to avoid "division by zero" conditions
+    }
+
+    double step = def_step / scale;
+    double max_scl = max_step / scale;
+    
+    // Save the current position, before we take a step
+    memcpy((char*)origCoords,(char*)_mol.GetCoordinates(),sizeof(double)*_ncoords);
+    
+    int newton = 0;
+    while (true) {
+      // Take step X(n) + step
+      LineSearchTakeStep(origCoords, step);
+      e_n1 = Energy(false) + _constraints.GetConstraintEnergy();
+
+      if (e_n1 < opt_e) {
+        opt_step = step;
+	opt_e = e_n1;
+      }
+
+      if (newton++ > 9) 
+        break;
+      double delta = step * 0.001;
+      
+      // Take step X(n) + step + delta
+      LineSearchTakeStep(origCoords, step+delta);
+      e_n2 = Energy(false) + _constraints.GetConstraintEnergy();
+      
+      double denom = e_n2 - e_n1; // /\f(x)
+      if (denom != 0.0) {
+	cout << "before step = " << step << endl;
+        step = fabs(step - delta * e_n1 / denom);
+        cout << "delta * e_n1 / denom =" << delta * e_n1 / denom << endl;
+	cout << "after step = " << step << endl;
+	if (step > max_scl) {
+	  cout << "WARNING: damped steplength " << step << " to " << max_scl << endl;
+	  step = max_scl;
+	}
+      } else {
+        break;
+      }
+    }
+	cout << endl;
+    
+    if (opt_step == 0.0) { // if we still don't have any valid steplength, try a very small step
+      step = 0.001 * def_step / scale;
+      
+      // Take step X(n) + step
+      LineSearchTakeStep(origCoords, step);
+      e_n1 = Energy(false) + _constraints.GetConstraintEnergy();
+
+      if (e_n1 < opt_e) {
+        opt_step = step;
+	opt_e = e_n1;
+      }
+      
+    }
+    
+    cout << "opt_step = " << opt_step << endl;
+    LineSearchTakeStep(origCoords, opt_step);
+
+    return opt_step * scale;
+  }
+  
+  void OBForceField::LineSearchTakeStep(double* origCoords, double step)
+  {
+    double *currentCoords = _mol.GetCoordinates();
+
+    for (unsigned int c = 0; c < _ncoords; ++c) {
+      currentCoords[c] = origCoords[c] + _gradientPtr[c] * step;
+    }
+  }
 
   double OBForceField::LineSearch(double *currentCoords, double *direction)
   {
@@ -1875,14 +2003,11 @@ namespace OpenBabel
           tempStep = direction[c] * step;
 
           if (tempStep > trustRadius) // positive big step
-            currentCoords[c] -= trustRadius;
-            //currentCoords[c] += trustRadius;
-          else if (tempStep < -1.0 * trustRadius) // negative big step
             currentCoords[c] += trustRadius;
-            //currentCoords[c] -= trustRadius;
+          else if (tempStep < -1.0 * trustRadius) // negative big step
+            currentCoords[c] -= trustRadius;
           else
-            currentCoords[c] -= direction[c] * step;
-            //currentCoords[c] += direction[c] * step;
+            currentCoords[c] += direction[c] * step;
         }
       }
     
@@ -1911,6 +2036,7 @@ namespace OpenBabel
 
     delete [] lastStep;
 
+    cout << "alpha = " << alpha << endl;
     return alpha;
   }
   
@@ -2134,6 +2260,7 @@ namespace OpenBabel
         }
       }
       alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
+      //alpha = Newton2NumLineSearch();
       e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
       IF_OBFF_LOGLVL_LOW {
@@ -2237,13 +2364,11 @@ namespace OpenBabel
   bool OBForceField::ConjugateGradientsTakeNSteps(int n)
   {
     double e_n2;
-    double g2g2, g1g1, g2g1, alpha;
+    double g2g2, g1g1, beta, alpha;
     vector3 grad2, dir2;
     vector3 grad1, dir1; // temporaries to perform dot product, etc.
     int coordIdx;
     
-    int printStep = min(n, 10); // print results every 10 steps, or fewer
-
     if (_ncoords != _mol.NumAtoms() * 3)
       return false;
 
@@ -2269,9 +2394,9 @@ namespace OpenBabel
             g2g2 = dot(grad2, grad2);
             grad1 = vector3(_grad1[coordIdx], _grad1[coordIdx+1], _grad1[coordIdx+2]);
             g1g1 = dot(grad1, grad1);
-            g2g1 = g2g2 / g1g1;
+            beta = g2g2 / g1g1;
             dir1 = vector3(_dir1[coordIdx], _dir1[coordIdx+1], _dir1[coordIdx+2]);
-            dir2 = grad2 + g2g1 * dir1;
+            dir2 = grad2 + beta * dir1;
           } else { // reset conj. direction
             dir2 = grad2;
           }

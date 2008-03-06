@@ -123,8 +123,6 @@ namespace OpenBabel
     public:
       //! Used to store the energy for this OBFFCalculation
       double energy;
-      //! Used to store the gradients for this OBFFCalculation
-      vector3 grada, gradb, gradc, gradd;
       //! Used to store the atoms for this OBFFCalculation
       OBAtom *a, *b, *c, *d;
       //! Used to store the index of atoms for this OBFFCalculation
@@ -134,8 +132,6 @@ namespace OpenBabel
       //! Pointer to atom forces
       double force_a[3], force_b[3], force_c[3], force_d[3];
       
-      bool optimized;
-
       //! Constructor
       OBFFCalculation() 
         {
@@ -146,11 +142,6 @@ namespace OpenBabel
 	  force_c[0] = 0.0; force_c[1] = 0.0; force_c[2] = 0.0;
 	  force_d[0] = 0.0; force_d[1] = 0.0; force_d[2] = 0.0;
 	  energy = 0.0;
-          grada = VZero;
-          gradb = VZero;
-          gradc = VZero;
-          gradd = VZero;
-	  optimized = false;
         }
       //! Destructor
       virtual ~OBFFCalculation()
@@ -166,38 +157,7 @@ namespace OpenBabel
       {
         return energy; 
       }
-      //! \return Gradient for this OBFFCalculation with respect to coordinates of atom (call Compute() first)
-      virtual vector3 GetGradient(OBAtom *atom) 
-      {
-	if (optimized) {
-	  if (atom == a) {
-            grada = vector3(force_a);
-            return grada;
-          } else if (atom == b) {
-            gradb = vector3(force_b);
-            return gradb;
-          } else if (atom == c) {
-            gradc = vector3(force_c);
-            return gradc;
-          } else if (atom == d) {
-            gradd = vector3(force_d);
-            return gradd;
-          } else {
-            return  VZero;
-          }
-	}
- 
-	if (atom == a)
-          return grada;
-        else if (atom == b)
-          return gradb;
-        else if (atom == c)
-          return gradc;
-        else if (atom == d)
-          return gradd;
-        else 
-          return  VZero;
-      }
+      
       //! \return Setup pointers to atom positions and forces (To be called while setting up calculations). Sets optimized to true.
       void SetupPointers() 
       {
@@ -207,8 +167,6 @@ namespace OpenBabel
 	pos_b = b->GetCoordinate();
 	idx_b = b->GetIdx();
 	
-	optimized = true;
-        
 	if (!c) return;
 	pos_c = c->GetCoordinate();
 	idx_c = c->GetIdx();
@@ -486,11 +444,11 @@ namespace OpenBabel
 
       const int coordIdx = (idx - 1) * 3;
       //if (!_constraints.IsXFixed(idx))
-        _gradientPtr[coordIdx  ] -= grad[0]; 
+        _gradientPtr[coordIdx  ] += grad[0]; 
       //if (!_constraints.IsYFixed(idx))
-        _gradientPtr[coordIdx+1] -= grad[1]; 
+        _gradientPtr[coordIdx+1] += grad[1]; 
       //if (!_constraints.IsZFixed(idx))
-        _gradientPtr[coordIdx+2] -= grad[2]; 
+        _gradientPtr[coordIdx+2] += grad[2]; 
     }
     
     /*! Get the pointer to the gradients
@@ -627,18 +585,20 @@ namespace OpenBabel
      *  \return true if Setup needs to be called
      */
     bool IsSetupNeeded(OBMol &mol);
-    /*! Get coordinates for current conformer
+    /*! Get coordinates for current conformer and attach OBConformerData with energies, forces, ... to mol.
      *  \param mol the OBMol object to copy the coordinates to (from OBForceField::_mol)
      *  \return true if succesfull
      */
     bool GetCoordinates(OBMol &mol);
-    bool UpdateCoordinates(OBMol &mol) {return GetCoordinates(mol); } // = GetCoordinates, depricated
-    /*! Get coordinates for all conformers
+    //! /deprecated Use GetCooordinates instead
+    bool UpdateCoordinates(OBMol &mol) {return GetCoordinates(mol); } 
+    /*! Get coordinates for all conformers and attach OBConformerData with energies, forces, ... to mol.
      *  \param mol the OBMol object to copy the coordinates to (from OBForceField::_mol)
      *  \return true if succesfull
      */
     bool GetConformers(OBMol &mol);
-    bool UpdateConformers(OBMol &mol) { return GetConformers(mol); } // = GetConformers, depricated
+    //! /deprecated Use GetConformers instead
+    bool UpdateConformers(OBMol &mol) { return GetConformers(mol); } 
     /*! Set coordinates for current conformer
      *  \param mol the OBMol object to copy the coordinates from (to OBForceField::_mol)
      *  \return true if succesfull
@@ -928,6 +888,8 @@ namespace OpenBabel
         OBFF_LOGLVL_HIGH:   none \n
     */
     double LineSearch(double *currentCoords, double *direction);
+    double Newton2NumLineSearch();
+    void   LineSearchTakeStep(double *origCoords, double step);
 
     /*! Perform steepest descent optimalization for steps steps or until convergence criteria is reached.
       \param steps the number of steps 
@@ -1153,14 +1115,15 @@ namespace OpenBabel
      * \param b atom b (coordinates), will be changed to -drab/db
      * \return The distance between a and b (bondlength for bond stretching, separation for vdw, electrostatic)
      */
-    static double VectorLengthDerivative(vector3 &a, vector3 &b);
-    /*! To be used for VDW or Electrostatic interactions. Thi
+     static double VectorBondDerivative(double *pos_i, double *pos_j, 
+                                       double *force_i, double *force_j);
+    /*! To be used for VDW or Electrostatic interactions. This
      *  is faster than VectorBondDerivative, but does no error checking. 
      */
     static double VectorDistanceDerivative(const double* const pos_i, const double* const pos_j, 
                                            double *force_i, double *force_j);
-    static double VectorBondDerivative(double *pos_i, double *pos_j, 
-                                       double *force_i, double *force_j);
+    //! /deprecated
+    static double VectorLengthDerivative(vector3 &a, vector3 &b);
  
     /*! Calculate the derivative of a angle a-b-c. The angle is given by dot(ab,cb)/rab*rcb. 
      *  Used for harmonic (cubic) angle potentials.
@@ -1169,9 +1132,10 @@ namespace OpenBabel
      * \param c atom c (coordinates), will be changed to -dtheta/dc
      * \return The angle between a-b-c
      */
-    static double VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c);
     static double VectorAngleDerivative(double *pos_i, double *pos_j, double *pos_k,
                                         double *force_i, double *force_j, double *force_k);
+    //! /deprecated
+    static double VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c);
     /*! Calculate the derivative of a OOP angle a-b-c-d. b is the central atom, and a-b-c is the plane. 
      * The OOP angle is given by 90° - arccos(dot(corss(ab,cb),db)/rabbc*rdb).
      * \param a atom a (coordinates), will be changed to -dtheta/da
@@ -1180,9 +1144,10 @@ namespace OpenBabel
      * \param d atom d (coordinates), will be changed to -dtheta/dd
      * \return The OOP angle for a-b-c-d
      */
-    static double VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
     static double VectorOOPDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
                                       double *force_i, double *force_j, double *force_k, double *force_l);
+    //! /deprecated
+    static double VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
     /*! Calculate the derivative of a torsion angle a-b-c-d. The torsion angle is given by arccos(dot(corss(ab,bc),cross(bc,cd))/rabbc*rbccd).
      * \param a atom a (coordinates), will be changed to -dtheta/da
      * \param b atom b (coordinates), will be changed to -dtheta/db
@@ -1190,9 +1155,10 @@ namespace OpenBabel
      * \param d atom d (coordinates), will be changed to -dtheta/dd
      * \return The tosion angle for a-b-c-d
      */
-    static double VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
     static double VectorTorsionDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
                                           double *force_i, double *force_j, double *force_k, double *force_l);
+    //! /deprecated
+    static double VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
 
     /*! inline fuction to speed up minimization speed
      * \param i pointer to i[3]
@@ -1367,9 +1333,6 @@ namespace OpenBabel
     {
       std::cout << "<" << i[0] << ", " << i[1] << ", " << i[2] << ">" << std::endl;
     }
-
-
-
 
     //@}
 

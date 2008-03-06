@@ -114,7 +114,7 @@ namespace OpenBabel
     unsigned int                  _totalSpin;   //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
     double                        *_c;	        //!< coordinate array
     std::vector<double*>          _vconf;       //!< vector of conformers
-    std::vector<double>           _energies;    //!< energies of conformers
+    double                        _energy;      //!< heat of formation
     unsigned int                  _natoms;      //!< Number of atoms
     unsigned int                  _nbonds;      //!< Number of bonds
     std::vector<OBResidue*>       _residue;     //!< Residue information (if applicable)
@@ -285,7 +285,7 @@ namespace OpenBabel
     //! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
     std::string  GetSpacedFormula(int ones=0, const char* sp=" ");
     //! \return the heat of formation for this molecule (in kcal/mol)
-    double       GetEnergy() const;
+    double       GetEnergy() const { return _energy; }
     //! \return the standard molar mass given by IUPAC atomic masses (amu)
     double       GetMolWt();
     //! \return the mass given by isotopes (or most abundant isotope, if not specified)
@@ -316,7 +316,7 @@ namespace OpenBabel
     //! Set the stochiometric formula for this molecule
     void   SetFormula(std::string molFormula);
     //! Set the heat of formation for this molecule (in kcal/mol)
-    void   SetEnergy(double energy);
+    void   SetEnergy(double energy) { _energy = energy; }
     //! Set the dimension of this molecule (i.e., 0, 1 , 2, 3)
     void   SetDimension(unsigned short int d) { _dimension = d; }
     //! Set the total charge of this molecule to @p charge
@@ -557,7 +557,7 @@ namespace OpenBabel
     //! Set the entire set of conformer energies
     void    SetEnergies(std::vector<double> &energies);
     //! Set the entire set of conformer energies
-    std::vector<double> GetEnergies() { return _energies; }
+    std::vector<double> GetEnergies();
     //! Get the energy for conformer ci
     //! \par ci conformer index
     double  GetEnergy(int ci);

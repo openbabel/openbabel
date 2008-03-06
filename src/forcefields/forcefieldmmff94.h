@@ -207,6 +207,10 @@ namespace OpenBabel
       std::vector<OBFFParameter> _ffpbciparams;
       std::vector<OBFFParameter> _ffdefparams;
       std::vector<OBFFParameter> _ffpropparams;
+      OBBitVec			 _ffpropPilp;
+      OBBitVec			 _ffpropArom;
+      OBBitVec			 _ffpropLin;
+      OBBitVec			 _ffpropSbmb;
 
       // OBFFXXXCalculationYYY vectors to contain the calculations
       std::vector<OBFFBondCalculationMMFF94>          _bondcalculations;

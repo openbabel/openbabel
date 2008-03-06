@@ -120,7 +120,7 @@ namespace OpenBabel
     
     for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i) {
       i->Compute(gradients);
-      energy += i->GetEnergy();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -213,7 +213,7 @@ namespace OpenBabel
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); ++i) {
 
       i->Compute(gradients);
-      energy += i->GetEnergy();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -304,7 +304,7 @@ namespace OpenBabel
     for (i = _strbndcalculations.begin(); i != _strbndcalculations.end(); ++i) {
 
       i->Compute(gradients);
-      energy += i->GetEnergy();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -416,7 +416,7 @@ namespace OpenBabel
     for (i = _torsioncalculations.begin(); i != _torsioncalculations.end(); ++i) {
 
       i->Compute(gradients);
-      energy += i->GetEnergy();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -488,7 +488,7 @@ namespace OpenBabel
     for (i = _oopcalculations.begin(); i != _oopcalculations.end(); ++i) {
       
       i->Compute(gradients);
-      energy += i->GetEnergy();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -515,30 +515,15 @@ namespace OpenBabel
  
   void OBFFVDWCalculationMMFF94::Compute(bool gradients)
   {
-    //double rab2, /*rab3,*/ rab4, /*rab5,*/ rab6, rab7;
-    //double erep2, /*erep3,*/ erep4, /*erep5,*/ erep6; /*, erep7;*/
-    //double dE;
-
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
     } else {
       rab = OBForceField::VectorDistance(pos_a, pos_b);
     }
     
-    //if (IsNearZero(rab, 1.0e-3)) // VectorDistance(Derivative) does the checking.
-    //  rab = 1.0e-3;
-
-    //const double rab2 = rab * rab;
-    //const double rab4 = rab2 * rab2;
-    //const double rab6 = rab4 * rab2;
-    //const double rab7 = rab6 * rab;
     const double rab7 = rab*rab*rab*rab*rab*rab*rab;
 
     erep = (1.07 * R_AB) / (rab + 0.07 * R_AB); //***
-    //double erep2 = erep * erep;
-    //double erep4 = erep2 * erep2;
-    //double erep6 = erep4 * erep2;
-    //erep7 = erep6 * erep;
     erep7 = erep*erep*erep*erep*erep*erep*erep;
       
     eattr = (((1.12 * R_AB7) / (rab7 + 0.12 * R_AB7)) - 2.0);
@@ -546,20 +531,10 @@ namespace OpenBabel
     energy = epsilon * erep7 * eattr;
     
     if (gradients) { 
-      //double q, q2, q4, q6, q7, term, term2;
-      //q = rab / R_AB;
       const double q = rab / R_AB;
-      //q2 = q * q;
-      //q4 = q2 * q2;
-      //q6 = q4 * q2;
-      //q7 = q6 * q;
       const double q6 = q*q*q*q*q*q;
       const double q7 = q6 * q;
       erep = 1.07 / (q + 0.07); 
-      //erep2 = erep * erep;
-      //erep4 = erep2 * erep2;
-      //erep6 = erep4 * erep2;
-      //erep7 = erep6 * erep;
       erep7 = erep*erep*erep*erep*erep*erep*erep;
       const double term = q7 + 0.12;
       const double term2 = term * term;
@@ -586,7 +561,7 @@ namespace OpenBabel
     for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i) {
       
       i->Compute(gradients);
-      energy += i->GetEnergy();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -641,7 +616,7 @@ namespace OpenBabel
     for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i) {
       
       i->Compute(gradients);
-      energy += i->GetEnergy();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -1087,7 +1062,7 @@ namespace OpenBabel
       tokenize(vs, buffer);
 
       parameter.clear();
-      parameter.a = atoi(vs[0].c_str());
+      parameter.a = atoi(vs[0].c_str()); // atom type
       parameter._ipar.push_back(atoi(vs[1].c_str()));  // at.no
       parameter._ipar.push_back(atoi(vs[2].c_str()));  // crd
       parameter._ipar.push_back(atoi(vs[3].c_str()));  // val
@@ -1096,6 +1071,16 @@ namespace OpenBabel
       parameter._ipar.push_back(atoi(vs[6].c_str()));  // arom
       parameter._ipar.push_back(atoi(vs[7].c_str()));  // linh
       parameter._ipar.push_back(atoi(vs[8].c_str()));  // sbmb
+      
+      if (parameter._ipar[3])
+        _ffpropPilp.SetBitOn(parameter.a);
+      if (parameter._ipar[5])
+        _ffpropArom.SetBitOn(parameter.a);
+      if (parameter._ipar[6])
+        _ffpropLin.SetBitOn(parameter.a);
+      if (parameter._ipar[7])
+        _ffpropSbmb.SetBitOn(parameter.a);
+
       _ffpropparams.push_back(parameter);
     }
 
@@ -2390,6 +2375,7 @@ namespace OpenBabel
   {
     OBFFParameter *parameter;
     OBAtom *a, *b, *c, *d;
+    int type_a, type_b, type_c, type_d;
     bool found;
     int order;
     
@@ -2491,6 +2477,10 @@ namespace OpenBabel
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
+
+      type_a = atoi(a->GetType());
+      type_b = atoi(b->GetType());
+      type_c = atoi(c->GetType());
       
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) || _constraints.IsIgnored(c->GetIdx()) ) 
         continue;
@@ -2500,20 +2490,20 @@ namespace OpenBabel
       bondtype1 = GetBondType(a, b);
       bondtype2 = GetBondType(b, c);
       
-      if (HasLinSet(atoi(b->GetType()))) {
+      if (HasLinSet(type_b)) {
         anglecalc.linear = true;
       } else {
         anglecalc.linear = false;
       }
 
       // try exact match 
-      parameter = GetTypedParameter3Atom(angletype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), _ffangleparams);
+      parameter = GetTypedParameter3Atom(angletype, type_a, type_b, type_c, _ffangleparams);
       if (parameter == NULL) // try 3-2-3
-        parameter = GetTypedParameter3Atom(angletype, EqLvl3(atoi(a->GetType())), atoi(b->GetType()), EqLvl3(atoi(c->GetType())), _ffangleparams);
+        parameter = GetTypedParameter3Atom(angletype, EqLvl3(type_a), type_b, EqLvl3(type_c), _ffangleparams);
       if (parameter == NULL) // try 4-2-4
-        parameter = GetTypedParameter3Atom(angletype, EqLvl4(atoi(a->GetType())), atoi(b->GetType()), EqLvl4(atoi(c->GetType())), _ffangleparams);
+        parameter = GetTypedParameter3Atom(angletype, EqLvl4(type_a), type_b, EqLvl4(type_c), _ffangleparams);
       if (parameter == NULL) // try 5-2-5
-        parameter = GetTypedParameter3Atom(angletype, EqLvl5(atoi(a->GetType())), atoi(b->GetType()), EqLvl5(atoi(c->GetType())), _ffangleparams);
+        parameter = GetTypedParameter3Atom(angletype, EqLvl5(type_a), type_b, EqLvl5(type_c), _ffangleparams);
         
       if (parameter) {
         anglecalc.ka = parameter->_dpar[0];
@@ -2529,23 +2519,22 @@ namespace OpenBabel
         anglecalc.ka = 0.0;
         anglecalc.theta0 = 120.0;
 
-        if (GetCrd(atoi(b->GetType())) == 4)
+        if (GetCrd(type_b) == 4)
           anglecalc.theta0 = 109.45;
         
-        if ((GetCrd(atoi(b->GetType())) == 2) && b->IsOxygen())
+        if ((GetCrd(type_b) == 2) && b->IsOxygen())
           anglecalc.theta0 = 105.0;
 	
         if (b->GetAtomicNum() > 10)
           anglecalc.theta0 = 95.0;
 	
-        if (HasLinSet(atoi(b->GetType())))
+        if (HasLinSet(type_b))
           anglecalc.theta0 = 180.0;
 	
-        if ((GetCrd(atoi(b->GetType())) == 3) && (GetVal(atoi(b->GetType())) == 3) && !GetMltb(atoi(b->GetType()))) {
+        if ((GetCrd(type_b) == 3) && (GetVal(type_b) == 3) && !GetMltb(type_b)) {
           if (b->IsNitrogen()) {
             anglecalc.theta0 = 107.0;
-          }
-          else {
+          } else {
             anglecalc.theta0 = 92.0;
           }
         }
@@ -2600,7 +2589,7 @@ namespace OpenBabel
       if (anglecalc.linear)
         continue;
 
-      parameter = GetTypedParameter3Atom(strbndtype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), _ffstrbndparams);
+      parameter = GetTypedParameter3Atom(strbndtype, type_a, type_b, type_c, _ffstrbndparams);
       if (parameter == NULL) {
         int rowa, rowb, rowc;
         
@@ -2633,7 +2622,7 @@ namespace OpenBabel
           strbndcalc.kbaCBA = parameter->_dpar[0];
         }
       } else {
-        if (atoi(a->GetType()) == parameter->a) {
+        if (type_a == parameter->a) {
           strbndcalc.kbaABC = parameter->_dpar[0];
           strbndcalc.kbaCBA = parameter->_dpar[1];
         } else {
@@ -2768,39 +2757,38 @@ namespace OpenBabel
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
       
+      type_a = atoi(a->GetType());
+      type_b = atoi(b->GetType());
+      type_c = atoi(c->GetType());
+      type_d = atoi(d->GetType());
+      
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
            _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
         continue;
  
       torsiontype = GetTorsionType(a, b, c, d);
       // CXT = MC*(J*MA**3 + K*MA**2 + I*MA + L) + TTijkl  MC = 6, MA = 136
-      order = (atoi(c->GetType())*2515456 + atoi(b->GetType())*18496 + atoi(d->GetType())*136 + atoi(a->GetType())) 
-        - (atoi(b->GetType())*2515456 + atoi(c->GetType())*18496 + atoi(a->GetType())*136 + atoi(d->GetType()));
+      order = (type_c*2515456 + type_b*18496 + type_d*136 + type_a) 
+        - (type_b*2515456 + type_c*18496 + type_a*136 + type_d);
 
       if (order >= 0) {
         // try exact match 
-        parameter = GetTypedParameter4Atom(torsiontype, atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
+        parameter = GetTypedParameter4Atom(torsiontype, type_a, type_b, type_c, type_d, _fftorsionparams);
         if (parameter == NULL) // try 3-2-2-5
-          parameter = GetTypedParameter4Atom(torsiontype, EqLvl3(atoi(a->GetType())), atoi(b->GetType()), 
-                                             atoi(c->GetType()), EqLvl5(atoi(d->GetType())), _fftorsionparams);
+          parameter = GetTypedParameter4Atom(torsiontype, EqLvl3(type_a), type_b, type_c, EqLvl5(type_d), _fftorsionparams);
         if (parameter == NULL) // try 5-2-2-3
-          parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(a->GetType())), atoi(b->GetType()), 
-                                             atoi(c->GetType()), EqLvl3(atoi(d->GetType())), _fftorsionparams);
+          parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(type_a), type_b, type_c, EqLvl3(type_d), _fftorsionparams);
         if (parameter == NULL) // try 5-2-2-5
-          parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(a->GetType())), atoi(b->GetType()), 
-                                             atoi(c->GetType()), EqLvl5(atoi(d->GetType())), _fftorsionparams);
+          parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(type_a), type_b, type_c, EqLvl5(type_d), _fftorsionparams);
       } else {
         // try exact match 
-        parameter = GetTypedParameter4Atom(torsiontype, atoi(d->GetType()), atoi(c->GetType()), atoi(b->GetType()), atoi(a->GetType()), _fftorsionparams);
+        parameter = GetTypedParameter4Atom(torsiontype, type_d, type_c, type_b, type_a, _fftorsionparams);
         if (parameter == NULL) // try 3-2-2-5
-          parameter = GetTypedParameter4Atom(torsiontype, EqLvl3(atoi(d->GetType())), atoi(c->GetType()), 
-                                             atoi(b->GetType()), EqLvl5(atoi(a->GetType())), _fftorsionparams);
+          parameter = GetTypedParameter4Atom(torsiontype, EqLvl3(type_d), type_c, type_b, EqLvl5(type_a), _fftorsionparams);
         if (parameter == NULL) // try 5-2-2-3
-          parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(d->GetType())), atoi(c->GetType()), 
-                                             atoi(b->GetType()), EqLvl3(atoi(a->GetType())), _fftorsionparams);
+          parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(type_d), type_c, type_b, EqLvl3(type_a), _fftorsionparams);
         if (parameter == NULL) // try 5-2-2-5
-          parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(atoi(d->GetType())), atoi(c->GetType()), 
-                                             atoi(b->GetType()), EqLvl5(atoi(a->GetType())), _fftorsionparams);
+          parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(type_d), type_c, type_b, EqLvl5(type_a), _fftorsionparams);
       }
       
       if (parameter) {
@@ -2817,7 +2805,7 @@ namespace OpenBabel
         //}
 
         // rule (a) page 631
-        if (HasLinSet(atoi(b->GetType())) || HasLinSet(atoi(c->GetType())))
+        if (HasLinSet(type_b) || HasLinSet(type_c))
           continue;
         
         // rule (b) page 631
@@ -2826,13 +2814,13 @@ namespace OpenBabel
           Ub = GetUParam(b);
           Uc = GetUParam(c);
 
-          if (!HasPilpSet(atoi(b->GetType())) && !HasPilpSet(atoi(b->GetType())))
+          if (!HasPilpSet(type_b) && !HasPilpSet(type_c))
             pi_bc = 0.5;
           else
             pi_bc = 0.3;
 
-          if (((GetVal(atoi(b->GetType())) == 3) && (GetVal(atoi(c->GetType())) == 4)) || 
-              ((GetVal(atoi(b->GetType())) == 4) && (GetVal(atoi(c->GetType())) == 3)))
+          if (((GetVal(type_b) == 3) && (GetVal(type_c) == 4)) || 
+              ((GetVal(type_b) == 4) && (GetVal(type_c) == 3)))
             beta = 3.0;
           else
             beta = 6.0;
@@ -2847,7 +2835,7 @@ namespace OpenBabel
           Ub = GetUParam(b);
           Uc = GetUParam(c);
 
-          if (((GetMltb(atoi(b->GetType())) == 2) && (GetMltb(atoi(c->GetType())) == 2)) && a->GetBond(b)->IsDouble())
+          if (((GetMltb(type_b) == 2) && (GetMltb(type_c) == 2)) && a->GetBond(b)->IsDouble())
             pi_bc = 1.0;
           else
             pi_bc = 0.4;
@@ -2861,7 +2849,7 @@ namespace OpenBabel
 
         // rule (d) page 632
         if (!found_rule)
-          if (((GetCrd(atoi(b->GetType())) == 4) && (GetCrd(atoi(c->GetType())) == 4))) {
+          if (((GetCrd(type_b) == 4) && (GetCrd(type_c) == 4))) {
             double Vb, Vc;
             Vb = GetVParam(b);
             Vc = GetVParam(c);
@@ -2874,13 +2862,13 @@ namespace OpenBabel
 	
         // rule (e) page 632
         if (!found_rule)
-          if (((GetCrd(atoi(b->GetType())) == 4) && (GetCrd(atoi(c->GetType())) != 4))) {
-            if (GetCrd(atoi(c->GetType())) == 3) // case (1)
-              if ((GetVal(atoi(c->GetType())) == 4) || (GetVal(atoi(c->GetType())) == 34) || (GetMltb(atoi(c->GetType())) != 0))
+          if (((GetCrd(type_b) == 4) && (GetCrd(type_c) != 4))) {
+            if (GetCrd(type_c) == 3) // case (1)
+              if ((GetVal(type_c) == 4) || (GetVal(type_c) == 34) || (GetMltb(type_c) != 0))
                 continue;
 	    
-            if (GetCrd(atoi(c->GetType())) == 2) // case (2)
-              if ((GetVal(atoi(c->GetType())) == 3) || (GetMltb(atoi(c->GetType())) != 0))
+            if (GetCrd(type_c) == 2) // case (2)
+              if ((GetVal(type_c) == 3) || (GetMltb(type_c) != 0))
                 continue;
 	    
             // case (3) saturated bonds -- see rule (h)
@@ -2888,13 +2876,13 @@ namespace OpenBabel
 	
         // rule (f) page 632
         if (!found_rule)
-          if (((GetCrd(atoi(b->GetType())) != 4) && (GetCrd(atoi(c->GetType())) == 4))) {
-            if (GetCrd(atoi(b->GetType())) == 3) // case (1)
-              if ((GetVal(atoi(b->GetType())) == 4) || (GetVal(atoi(b->GetType())) == 34) || (GetMltb(atoi(b->GetType())) != 0))
+          if (((GetCrd(type_b) != 4) && (GetCrd(type_c) == 4))) {
+            if (GetCrd(type_b) == 3) // case (1)
+              if ((GetVal(type_b) == 4) || (GetVal(type_b) == 34) || (GetMltb(type_b) != 0))
                 continue;
 	    
-            if (GetCrd(atoi(b->GetType())) == 2) // case (2)
-              if ((GetVal(atoi(b->GetType())) == 3) || (GetMltb(atoi(b->GetType())) != 0))
+            if (GetCrd(type_b) == 2) // case (2)
+              if ((GetVal(type_b) == 3) || (GetMltb(type_b) != 0))
                 continue;
 	    
             // case (3) saturated bonds
@@ -2903,10 +2891,10 @@ namespace OpenBabel
         // rule (g) page 632
         if (!found_rule)
           if (b->GetBond(c)->IsSingle() && (
-                                            (GetMltb(atoi(b->GetType())) && GetMltb(atoi(c->GetType()))) ||
-                                            (GetMltb(atoi(b->GetType())) && HasPilpSet(atoi(c->GetType()))) ||
-                                            (GetMltb(atoi(c->GetType())) && HasPilpSet(atoi(b->GetType())))  )) {
-            if ((HasPilpSet(atoi(b->GetType())) && HasPilpSet(atoi(c->GetType())))) // case (1)
+                                            (GetMltb(type_b) && GetMltb(type_c)) ||
+                                            (GetMltb(type_b) && HasPilpSet(type_c)) ||
+                                            (GetMltb(type_c) && HasPilpSet(type_b))  )) {
+            if (HasPilpSet(type_b) && HasPilpSet(type_c)) // case (1)
               continue;
 	    
             double Ub, Uc, pi_bc, beta;
@@ -2914,8 +2902,8 @@ namespace OpenBabel
             Uc = GetUParam(c);
             beta = 6.0;
   
-            if ((HasPilpSet(atoi(b->GetType())) && GetMltb(atoi(c->GetType())))) { // case (2)
-              if (GetMltb(atoi(c->GetType())) == 1)
+            if (HasPilpSet(type_b) && GetMltb(type_c)) { // case (2)
+              if (GetMltb(type_c) == 1)
                 pi_bc = 0.5;
               else if ((GetElementRow(b) == 1) && (GetElementRow(c) == 1))
                 pi_bc = 0.3;
@@ -2924,8 +2912,8 @@ namespace OpenBabel
               found_rule = true;
             }
 	    
-            if ((HasPilpSet(atoi(c->GetType())) && GetMltb(atoi(b->GetType())))) { // case (3)
-              if (GetMltb(atoi(b->GetType())) == 1)
+            if (HasPilpSet(type_c) && GetMltb(type_b)) { // case (3)
+              if (GetMltb(type_b) == 1)
                 pi_bc = 0.5;
               else if ((GetElementRow(b) == 1) && (GetElementRow(c) == 1))
                 pi_bc = 0.3;
@@ -2935,7 +2923,7 @@ namespace OpenBabel
             }
             
             if (!found_rule)
-              if (((GetMltb(atoi(b->GetType())) == 1) || (GetMltb(atoi(b->GetType())) == 1)) && (!b->IsCarbon() || !c->IsCarbon())) {
+              if (((GetMltb(type_b) == 1) || (GetMltb(type_c) == 1)) && (!b->IsCarbon() || !c->IsCarbon())) {
                 pi_bc = 0.4;
                 found_rule = true;
               }
@@ -2982,7 +2970,7 @@ namespace OpenBabel
               OBFFLog(_logbuf);
             }
             
-            Nbc = GetCrd(atoi(b->GetType())) * GetCrd(atoi(c->GetType()));
+            Nbc = GetCrd(type_b) * GetCrd(type_c);
 
             torsioncalc.v1 = 0.0;
             torsioncalc.v2 = 0.0;
@@ -3015,8 +3003,10 @@ namespace OpenBabel
 
       found = false;
 
+      type_b = atoi(b->GetType());
+      
       for (unsigned int idx=0; idx < _ffoopparams.size(); idx++) {
-        if (atoi(b->GetType()) == _ffoopparams[idx].b) {
+        if (type_b == _ffoopparams[idx].b) {
           a = NULL;
           c = NULL;
           d = NULL;
@@ -3030,19 +3020,23 @@ namespace OpenBabel
               d = (OBAtom*) &*nbr;
           }
 	  
-          if ((a == NULL) || (c == NULL) || (d == NULL))
+	  if ((a == NULL) || (c == NULL) || (d == NULL))
             break;
           
+	  type_a = atoi(a->GetType());
+          type_c = atoi(c->GetType());
+          type_d = atoi(d->GetType());
+ 
           if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
                _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
             continue;
  
-          if (((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
-              ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(d->GetType()) == _ffoopparams[idx].d)) ||
-              ((atoi(c->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
-              ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(c->GetType()) == _ffoopparams[idx].c) && (atoi(a->GetType()) == _ffoopparams[idx].d)) ||
-              ((atoi(a->GetType()) == _ffoopparams[idx].a) && (atoi(d->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)) ||
-              ((atoi(d->GetType()) == _ffoopparams[idx].a) && (atoi(a->GetType()) == _ffoopparams[idx].c) && (atoi(c->GetType()) == _ffoopparams[idx].d)))
+          if (((type_a == _ffoopparams[idx].a) && (type_c == _ffoopparams[idx].c) && (type_d == _ffoopparams[idx].d)) ||
+              ((type_c == _ffoopparams[idx].a) && (type_a == _ffoopparams[idx].c) && (type_d == _ffoopparams[idx].d)) ||
+              ((type_c == _ffoopparams[idx].a) && (type_d == _ffoopparams[idx].c) && (type_a == _ffoopparams[idx].d)) ||
+              ((type_d == _ffoopparams[idx].a) && (type_c == _ffoopparams[idx].c) && (type_a == _ffoopparams[idx].d)) ||
+              ((type_a == _ffoopparams[idx].a) && (type_d == _ffoopparams[idx].c) && (type_c == _ffoopparams[idx].d)) ||
+              ((type_d == _ffoopparams[idx].a) && (type_a == _ffoopparams[idx].c) && (type_c == _ffoopparams[idx].d)))
             {
               found = true;
 
@@ -3249,9 +3243,57 @@ namespace OpenBabel
     _mol.SetAutomaticPartialCharge(false);
     
     FOR_ATOMS_OF_MOL (atom, _mol) {
+      int type = atoi(atom->GetType());
       atom->SetPartialCharge(0.0);
+      
+      bool done = false;
+      switch (type) {
+        case 34:
+        case 49:
+        case 51:
+        case 54:
+        case 58:
+        case 92:
+        case 93:
+        case 94:
+        case 97:
+          atom->SetPartialCharge(1.0);
+          done = true;
+	  break;
+        case 35:
+        case 62:
+        case 89:
+        case 90:
+        case 91:
+          atom->SetPartialCharge(-1.0);
+          done = true;
+	  break;
+        case 55:
+          atom->SetPartialCharge(0.5);
+          done = true;
+	  break;
+        case 56:
+          atom->SetPartialCharge(1.0/3.0);
+          done = true;
+	  break;
+        case 87:
+        case 95:
+        case 96:
+        case 98:
+        case 99:
+          atom->SetPartialCharge(2.0);
+          done = true;
+	  break;
+        //case 98:
+        //  atom->SetPartialCharge(3.0);
+	default:
+	  break;
+      }
 
-      if (atoi(atom->GetType()) == 32) {
+      if (done)
+        continue;
+    
+      if (type == 32) {
         int o_count = 0;
         bool sulfonamide = false;
         int s_count = 0;
@@ -3288,32 +3330,14 @@ namespace OpenBabel
             else if ((o_count + s_count) == 4)
               atom->SetPartialCharge(-0.25); // O4P
 	  
-          if (atoi(nbr->GetType()) == 77)
+          if (type == 77)
             atom->SetPartialCharge(-0.25); // O4CL
         }
-      } else if (atoi(atom->GetType()) == 34)
-        atom->SetPartialCharge(1.0);
-      else if (atoi(atom->GetType()) == 35)
-        atom->SetPartialCharge(-1.0);
-      else if (atoi(atom->GetType()) == 49)
-        atom->SetPartialCharge(1.0);
-      else if (atoi(atom->GetType()) == 51)
-        atom->SetPartialCharge(1.0);
-      else if (atoi(atom->GetType()) == 54)
-        atom->SetPartialCharge(1.0);
-      else if (atoi(atom->GetType()) == 55)
-        atom->SetPartialCharge(0.5);
-      else if (atoi(atom->GetType()) == 56)
-        atom->SetPartialCharge(1.0/3.0);
-      else if (atoi(atom->GetType()) == 58)
-        atom->SetPartialCharge(1.0);
-      else if (atoi(atom->GetType()) == 61) {
+      } else if (type == 61) {
         FOR_NBORS_OF_ATOM(nbr, &*atom)
           if (atom->GetBond(&*nbr)->IsTriple() && nbr->IsNitrogen())
             atom->SetPartialCharge(1.0);
-      } else if (atoi(atom->GetType()) == 62)
-        atom->SetPartialCharge(-1.0);
-      else if (atoi(atom->GetType()) == 72) {
+      } else if (type == 72) {
         int s_count = 0;
 
         FOR_NBORS_OF_ATOM(nbr, &*atom) {
@@ -3335,7 +3359,7 @@ namespace OpenBabel
           if (s_count >= 2)      
             atom->SetPartialCharge(-0.5); // SSMO
         }
-      } else if (atoi(atom->GetType()) == 76) {
+      } else if (type == 76) {
        	vector<OBRing*> vr;
         vr = _mol.GetSSSR();
         vector<OBRing*>::iterator ri;
@@ -3354,7 +3378,7 @@ namespace OpenBabel
               atom->SetPartialCharge(-1.0 / n_count);
           }
         }
-      } else if (atoi(atom->GetType()) == 81) {
+      } else if (type == 81) {
         atom->SetPartialCharge(1.0);
         
         vector<OBRing*> vr;
@@ -3380,33 +3404,8 @@ namespace OpenBabel
               if (atoi(nbr2->GetType()) == 55)
                 atom->SetPartialCharge(1.0 / (1.0 + n_count));
           }
-      } else if (atoi(atom->GetType()) == 87)
-        atom->SetPartialCharge(2.0);
-      else if (atoi(atom->GetType()) == 98)
-        atom->SetPartialCharge(3.0);
-      else if (atoi(atom->GetType()) == 89)
-        atom->SetPartialCharge(-1.0);
-      else if (atoi(atom->GetType()) == 90)
-        atom->SetPartialCharge(-1.0);
-      else if (atoi(atom->GetType()) == 91)
-        atom->SetPartialCharge(-1.0);
-      else if (atoi(atom->GetType()) == 92)
-        atom->SetPartialCharge(1.0);
-      else if (atoi(atom->GetType()) == 93)
-        atom->SetPartialCharge(1.0);
-      else if (atoi(atom->GetType()) == 94)
-        atom->SetPartialCharge(1.0);
-      else if (atoi(atom->GetType()) == 95)
-        atom->SetPartialCharge(2.0);
-      else if (atoi(atom->GetType()) == 96)
-        atom->SetPartialCharge(2.0);
-      else if (atoi(atom->GetType()) == 97)
-        atom->SetPartialCharge(1.0);
-      else if (atoi(atom->GetType()) == 98)
-        atom->SetPartialCharge(2.0);
-      else if (atoi(atom->GetType()) == 99)
-        atom->SetPartialCharge(2.0);
-
+      } 
+        
     }
 
     PrintFormalCharges();
@@ -3420,14 +3419,24 @@ namespace OpenBabel
     double M, Wab, factor, q0a, q0b, Pa, Pb;
 
     FOR_ATOMS_OF_MOL (atom, _mol) {
-      if ((atoi(atom->GetType()) == 32) || (atoi(atom->GetType()) == 35) || (atoi(atom->GetType()) == 72))
-        factor = 0.5;
-      else if ((atoi(atom->GetType()) == 62) || (atoi(atom->GetType()) == 76))
-        factor = 0.25;
-      else
-        factor = 0.0;
+      int type = atoi(atom->GetType());
+
+      switch (type) {
+        case 32:
+	case 35:
+	case 72:
+          factor = 0.5;
+	  break;
+	case 62:
+	case 76:
+          factor = 0.25;
+	  break;
+	default:
+          factor = 0.0;
+	  break;
+      }
       
-      M = GetCrd(atoi(atom->GetType()));
+      M = GetCrd(type);
       q0a = atom->GetPartialCharge();
 
       // charge sharing
@@ -3437,7 +3446,7 @@ namespace OpenBabel
             q0a += nbr->GetPartialCharge() / (2.0 * nbr->GetValence());
       
       // needed for SEYWUO, positive charge sharing?
-      if (atoi(atom->GetType()) == 62)
+      if (type == 62)
         FOR_NBORS_OF_ATOM (nbr, &*atom)
           if (nbr->GetPartialCharge() > 0.0)
             q0a -= nbr->GetPartialCharge() / 2.0;
@@ -3446,24 +3455,26 @@ namespace OpenBabel
       Wab = 0.0;
       Pa = Pb = 0.0;
       FOR_NBORS_OF_ATOM (nbr, &*atom) {
+        int nbr_type = atoi(nbr->GetType());
+
         q0b += nbr->GetPartialCharge();
     
         bool bci_found = false;
         for (unsigned int idx=0; idx < _ffchgparams.size(); idx++)
           if (GetBondType(&*atom, &*nbr) == _ffchgparams[idx]._ipar[0]) 
-            if ((atoi(atom->GetType()) == _ffchgparams[idx].a) && (atoi(nbr->GetType()) == _ffchgparams[idx].b)) {
+            if ((type == _ffchgparams[idx].a) && (nbr_type == _ffchgparams[idx].b)) {
               Wab += -_ffchgparams[idx]._dpar[0];
               bci_found = true;
-            } else if  ((atoi(atom->GetType()) == _ffchgparams[idx].b) && (atoi(nbr->GetType()) == _ffchgparams[idx].a)) {
+            } else if  ((type == _ffchgparams[idx].b) && (nbr_type == _ffchgparams[idx].a)) {
               Wab += _ffchgparams[idx]._dpar[0];
               bci_found = true;
             }
         
         if (!bci_found) {
           for (unsigned int idx=0; idx < _ffpbciparams.size(); idx++) {
-            if (atoi(atom->GetType()) == _ffpbciparams[idx].a)
+            if (type == _ffpbciparams[idx].a)
               Pa = _ffpbciparams[idx]._dpar[0];
-            if (atoi(nbr->GetType()) == _ffpbciparams[idx].a)
+            if (nbr_type == _ffpbciparams[idx].a)
               Pb = _ffpbciparams[idx]._dpar[0];
           }
           Wab += Pa - Pb;
@@ -3864,7 +3875,7 @@ namespace OpenBabel
       coordIdx = (a->GetIdx() - 1) * 3;
       
       // OBFF_ENERGY
-      numgrad = -NumericalDerivative(&*a, OBFF_ENERGY);
+      numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
       Energy(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
@@ -3874,7 +3885,7 @@ namespace OpenBabel
       OBFFLog(_logbuf);
 
       // OBFF_EBOND
-      numgrad = -NumericalDerivative(&*a, OBFF_EBOND);
+      numgrad = NumericalDerivative(&*a, OBFF_EBOND);
       ClearGradients();
       E_Bond(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -3887,7 +3898,7 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EANGLE
-      numgrad = -NumericalDerivative(&*a, OBFF_EANGLE);
+      numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
       ClearGradients();
       E_Angle(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -3900,7 +3911,7 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_ESTRBND
-      numgrad = -NumericalDerivative(&*a, OBFF_ESTRBND);
+      numgrad = NumericalDerivative(&*a, OBFF_ESTRBND);
       ClearGradients();
       E_StrBnd(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -3913,7 +3924,7 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_ETORSION
-      numgrad = -NumericalDerivative(&*a, OBFF_ETORSION);
+      numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
       ClearGradients();
       E_Torsion(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -3926,7 +3937,7 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EOOP
-      numgrad = -NumericalDerivative(&*a, OBFF_EOOP);
+      numgrad = NumericalDerivative(&*a, OBFF_EOOP);
       ClearGradients();
       E_OOP(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -3940,7 +3951,7 @@ namespace OpenBabel
 //        passed = false;
 
       // OBFF_EVDW
-      numgrad = -NumericalDerivative(&*a, OBFF_EVDW);
+      numgrad = NumericalDerivative(&*a, OBFF_EVDW);
       ClearGradients();
       E_VDW(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -3953,7 +3964,7 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_EELECTROSTATIC
-      numgrad = -NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
+      numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
       ClearGradients();
       E_Electrostatic(); // compute
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
@@ -4226,53 +4237,25 @@ namespace OpenBabel
   // MMFF part V - TABLE I
   bool OBForceFieldMMFF94::HasLinSet(int atomtype)
   {
-    OBFFParameter *par;
-    
-    par = GetParameter1Atom(atomtype, _ffpropparams); // from mmffprop.par
-    if (par)
-      if (par->_ipar[6])
-        return true;
-
-    return false;
+    return _ffpropLin.BitIsSet(atomtype);
   }
  
   // MMFF part V - TABLE I
   bool OBForceFieldMMFF94::HasPilpSet(int atomtype)
   {
-    OBFFParameter *par;
-    
-    par = GetParameter1Atom(atomtype, _ffpropparams); // from mmffprop.par
-    if (par)
-      if (par->_ipar[3])
-        return true;
-
-    return false;
+    return _ffpropPilp.BitIsSet(atomtype);
   }
   
   // MMFF part V - TABLE I
   bool OBForceFieldMMFF94::HasAromSet(int atomtype)
   {
-    OBFFParameter *par;
-    
-    par = GetParameter1Atom(atomtype, _ffpropparams); // from mmffprop.par
-    if (par)
-      if (par->_ipar[5])
-        return true;
-
-    return false;
+    return _ffpropArom.BitIsSet(atomtype);
   }
  
   // MMFF part V - TABLE I
   bool OBForceFieldMMFF94::HasSbmbSet(int atomtype)
   {
-    OBFFParameter *par;
-    
-    par = GetParameter1Atom(atomtype, _ffpropparams); // from mmffprop.par
-    if (par)
-      if (par->_ipar[7])
-        return true;
-
-    return false;
+    return _ffpropSbmb.BitIsSet(atomtype);
   }
 
   // MMFF part V - TABLE I
