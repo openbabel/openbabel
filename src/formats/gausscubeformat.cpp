@@ -36,6 +36,7 @@ using namespace std;
 /// <Num points along first axis> > 0 means that the values
 /// are already in Angstroms.
 static const double BOHR_TO_ANGSTROM = 0.529177249;
+static const double ANGSTROM_TO_BOHR = 1.0 / 0.529177249;
 
 namespace OpenBabel
 {
@@ -363,15 +364,9 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       z *= BOHR_TO_ANGSTROM;
       atom->SetVector(x, y, z);
     }
-
-    // Now to read in the actual cube data
-    // TODO: handle multiple cubes in one file
-    OBGridData *gd = new OBGridData;
-    gd->SetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
-    gd->SetLimits(origin, axes[0], axes[1], axes[2]);
-    gd->SetUnit(angstroms ? OBGridData::ANGSTROM : OBGridData::BOHR);
-    gd->SetAttribute(cubeTitle);
-
+    
+    int ncubes = 1;
+    vector<int> cubenumbers;
     // If the number of atoms was negative then there is some data between the
     // atom data and the cube data.
     if (negAtoms)
@@ -383,45 +378,96 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                               "Problem reading the Gaussian cube file: cannot read the line between the atom data and cube data.", obError);
         return false;
       }
-    }
-    vector<double> values;
-    int n = voxels[0]*voxels[1]*voxels[2];
-    values.reserve(n);
-    while (values.size() < n)
-    {
-      // Read in values until we have a complete row of data
-      ++line;
-      if (!ifs.getline(buffer, BUFF_SIZE))
-      {
-        errorMsg << "Problem reading the Gaussian cube file: cannot"
-                 << " read line " << line
-                 << " of the file. More data was expected.\n"
-                 << "Values read in = " << values.size()
-                 << " and expected number of values = "
-                 << voxels[0]*voxels[1]*voxels[2] << endl;
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-        return false;
-      }
+      
       tokenize(vs, buffer);
-      if (vs.size() == 0)
+      ncubes = strtol(static_cast<const char*>(vs.at(0).c_str()), &endptr, 10);
+      if (endptr == static_cast<const char*>(vs.at(0).c_str()))
       {
-        errorMsg << "Problem reading the Gaussian cube file: cannot"
-                 << " read line " << line
-                 << ", there does not appear to be any data in it.\n"
-                 << buffer << "\n";
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+        errorMsg << "Problems reading the Gaussian cube file: "
+                 << "Could not read line " << line << ".\n"
+                 << "According to the specification this line should contain "
+                 << "the number of cubes and a number for each cube (orbital number).\n"
+                 << "OpenBabel could not interpret item #0 as an integer.";
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         return false;
       }
 
-      for (int i = 0; i < vs.size(); ++i)
+      for (int i = 1; i <= ncubes; i++)
       {
-        values.push_back(strtod(static_cast<const char*>(vs.at(i).c_str()), &endptr));
+        int cubenumber = strtol(static_cast<const char*>(vs.at(i).c_str()), &endptr, 10);
+        if (endptr == static_cast<const char*>(vs.at(i).c_str()))
+        {
+          errorMsg << "Problems reading the Gaussian cube file: "
+                   << "Could not read line " << line << ".\n"
+                   << "According to the specification this line should contain "
+                   << "the number of cubes and a number for each cube (orbital number).\n"
+                   << "OpenBabel could not interpret item #" << i << " as an integer.";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+          return false;
+        }
+
+	cubenumbers.push_back(cubenumber);
       }
     }
+    
+    int n = voxels[0]*voxels[1]*voxels[2];
+    
+    for (int i = 1; i <= ncubes; i++)
+    {
+      // Now to read in the actual cube data
+      OBGridData *gd = new OBGridData;
+      gd->SetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
+      gd->SetLimits(origin, axes[0], axes[1], axes[2]);
+      gd->SetUnit(angstroms ? OBGridData::ANGSTROM : OBGridData::BOHR);
+      if (!cubenumbers.size()) 
+      {
+        // only one cube
+        gd->SetAttribute(cubeTitle);
+      } else {
+        char title[BUFF_SIZE];
+        snprintf(title, BUFF_SIZE," %s - cube %d", cubeTitle.c_str(), i); 
+        gd->SetAttribute(title);
+      }
+   
+      vector<double> values;
+      values.reserve(n);
+      while (values.size() < n)
+      {
+        // Read in values until we have a complete row of data
+        ++line;
+        if (!ifs.getline(buffer, BUFF_SIZE))
+        {
+          errorMsg << "Problem reading the Gaussian cube file: cannot"
+                   << " read line " << line
+                   << " of the file. More data was expected.\n"
+                   << "Values read in = " << values.size()
+                   << " and expected number of values = "
+                   << voxels[0]*voxels[1]*voxels[2] << endl;
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+          return false;
+        }
+        tokenize(vs, buffer);
+        if (vs.size() == 0)
+        {
+          errorMsg << "Problem reading the Gaussian cube file: cannot"
+                   << " read line " << line
+                   << ", there does not appear to be any data in it.\n"
+                   << buffer << "\n";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+          return false;
+        }
 
-    gd->SetValues(values);
-    gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
+        for (int i = 0; i < vs.size(); ++i)
+        {
+          values.push_back(strtod(static_cast<const char*>(vs.at(i).c_str()), &endptr));
+        }
+      }
 
+      gd->SetValues(values);
+      gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
+      pmol->SetData(gd);
+    }
+    
     pmol->EndModify();
 
     // clean out any remaining blank lines
@@ -435,7 +481,6 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     if (!pConv->IsOption("s", OBConversion::INOPTIONS) && !pConv->IsOption("b", OBConversion::INOPTIONS))
       pmol->PerceiveBondOrders();
 
-    pmol->SetData(gd);
     pmol->SetDimension(3); // always a 3D structure
 
     return true;
@@ -478,48 +523,80 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->GetOriginVector(origin);
 
     // line 3: number of atoms, origin x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", mol.NumAtoms(), origin[0], origin[1], origin[2]);
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", -mol.NumAtoms(), 
+        origin[0]*ANGSTROM_TO_BOHR, origin[1]*ANGSTROM_TO_BOHR, origin[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 
     // line 4: number of points x direction, axis x direction x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nx, xAxis[0], xAxis[1], xAxis[2]);
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nx, 
+        xAxis[0]*ANGSTROM_TO_BOHR, xAxis[1]*ANGSTROM_TO_BOHR, xAxis[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
     
     // line 5: number of points y direction, axis y direction x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", ny, yAxis[0], yAxis[1], yAxis[2]);
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", ny, 
+        yAxis[0]*ANGSTROM_TO_BOHR, yAxis[1]*ANGSTROM_TO_BOHR, yAxis[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
     
     // line 6: number of points z direction, axis z direction x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nz, zAxis[0], zAxis[1], zAxis[2]);
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nz, 
+        zAxis[0]*ANGSTROM_TO_BOHR, zAxis[1]*ANGSTROM_TO_BOHR, zAxis[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 
     // Atom lines: atomic number, ?, X, Y, Z
     FOR_ATOMS_OF_MOL (atom, mol) {
       double *coordPtr = atom->GetCoordinate();
-      snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f %12.6f", atom->GetAtomicNum(), 0.0, coordPtr[0], coordPtr[1], coordPtr[2]);
+      snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f %12.6f", atom->GetAtomicNum(), atom->GetPartialCharge(), 
+          coordPtr[0]*ANGSTROM_TO_BOHR, coordPtr[1]*ANGSTROM_TO_BOHR, coordPtr[2]*ANGSTROM_TO_BOHR);
       ofs << buffer << endl;
     }
     
-    // The cube itself
-    double density;
-    unsigned int count = 1;
-    for (int i = 0; i < nx; ++i) {
-      for (int j = 0; j < ny; ++j) {
-        for (int k = 0; k < nz; ++k) {
-  	  density = gd->GetValue(i, j, k);
+    vector<OBGenericData*> grids = pmol->GetAllData(OBGenericDataType::GridData);
+    snprintf(buffer, BUFF_SIZE," %5d", grids.size());
+    ofs << buffer << flush;
+    for (unsigned int l = 1; l <= grids.size(); ++l)
+    {
+      snprintf(buffer, BUFF_SIZE," %3d", l);
+      ofs << buffer << flush;
+    }
+    ofs << endl;
+
+    for (unsigned int l = 0; l < grids.size(); ++l)
+    {
+      gd = (OBGridData*)grids[l];
+      int mx, my, mz;
+      gd->GetNumberOfPoints(mx, my, mz);
+
+      if ((nx != mx) || (ny != my) || (nz != mz))
+      {
+          errorMsg << "Problem writing the Gaussian cube file: cube " << l
+                   << " does not have the same dimentions as cube 0.\n"
+                   << "This cube will be skipped.\n";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+      }
+  
+      // The cube itself
+      double value;
+      unsigned int count = 1;
+      for (int i = 0; i < nx; ++i) {
+        for (int j = 0; j < ny; ++j) {
+          for (int k = 0; k < nz; ++k) {
+  	    value = gd->GetValue(i, j, k);
 	  
-	  if (count % 6 == 0) {
-            snprintf(buffer, BUFF_SIZE," %12.6E", density);
-            ofs << buffer << endl;
-	  } else {
-            snprintf(buffer, BUFF_SIZE," %12.6E ", density);
-            ofs << buffer;
-	  }
+	    if (count % 6 == 0) {
+              snprintf(buffer, BUFF_SIZE," %12.6E", value);
+              ofs << buffer << endl;
+	    } else {
+              snprintf(buffer, BUFF_SIZE," %12.6E ", value);
+              ofs << buffer;
+	    }
 	  
-	  count++;
-        } // z-axis
-      } // y-axis
-    } // x-axis
+	    count++;
+          } // z-axis
+        } // y-axis
+      } // x-axis
+      if (l < (grids.size() - 1)) 
+        ofs << endl;
+    }
 
     return true;
   }

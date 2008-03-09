@@ -1,3 +1,8 @@
+2008-03-09  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/gausscubeformat.cpp: Read/write multiple cubes. Always
+	write in bohr. More error checking in write might be needed.
+
 2008-03-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/mol.h, src/mol.cpp: GetEnergy(int) and GetEnergies 
