@@ -344,7 +344,7 @@ namespace OpenBabel
           {
             mSpacegroupHermannMauguin=positem->second;
             found = true;
-            if(verbose) cout<<"Found spacegroup Hall Hermann-Mauguin (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupHermannMauguin<<endl;
+            if(verbose) cout<<"Found spacegroup Hermann-Mauguin symbol (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupHermannMauguin<<endl;
           }
       }
     if (mSpacegroupSymbolHall.length() > 0)
@@ -993,6 +993,21 @@ namespace OpenBabel
             << "_cell_angle_alpha " << pUC->GetAlpha() << endl
             << "_cell_angle_beta "  << pUC->GetBeta() << endl
             << "_cell_angle_gamma " << pUC->GetGamma() << endl;
+        // Save the space group if known
+        const SpaceGroup* pSG = pUC->GetSpaceGroup();
+        if (pSG != NULL)
+          {
+            ofs << "_space_group_name_Hall '" << pSG->GetHallName() << "'" << endl;
+            ofs << "loop_" <<endl
+                << "    _symmetry_equiv_pos_as_xyz" << endl;
+            transform3dIterator ti;
+            const transform3d *t = pSG->BeginTransform(ti);
+            while(t)
+              {
+                ofs << "    '" << t->DescribeAsString() << "'" << endl;
+                t = pSG->NextTransform(ti);
+             }
+          }
       }
 
 

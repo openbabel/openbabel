@@ -1,3 +1,8 @@
+2008-03-10  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/cifformat.cpp: export space group if known.
+	* src/formats/xml/cdxmlformat.cpp: removed a printf debug instruction.
+
 2008-03-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/smilesformat.cpp: Fixes from Craig James. Allow ring closure

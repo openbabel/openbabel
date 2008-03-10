@@ -61,7 +61,7 @@ Minimal support of chemical structure information only.\n \
  
 	// EndTag is used so that the stream buffer is is filled with the XML from
 	// complete objects, as far as possible. 
-	virtual const char* EndTag(){puts("end tag"); return "/fragment>"; };
+	virtual const char* EndTag(){ return "/fragment>"; };
 
     //atoms and bonds might have no content, so EndElement is not always called
     // that's why we need to ensure that atoms and bonds are really added.
