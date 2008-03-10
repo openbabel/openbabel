@@ -1,3 +1,11 @@
+2008-03-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/smilesformat.cpp: Fixes from Craig James. Allow ring closure
+	bonds in SMILES to be aromatic. Also check for ring closures in
+	ParseComplex.
+
+	* test/files/aromatics.smi: Add test for ring closure bug above.
+
 2008-03-10  Noel O'Boyle <baoilleach@gmail.com>
 	
 	* test/cmlreadfile.cpp: Commented out the failing test. This is a

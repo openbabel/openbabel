@@ -1671,7 +1671,26 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     if (_prev) //need to add bond
       {
+        OBAtom* prevatom = mol.GetAtom(_prev);
+        mol.SetAromaticPerceived();             // prevent aromaticity analysis
+        if(arom && prevatom->IsAromatic())
+          {
+            _order=5; //Potential aromatic bond
+
+            if (prevatom->GetSpinMultiplicity())
+              {
+                // Previous atom had been marked, so bond is potentially a double bond
+                // if it is not part of an aromatic ring. This will be decided when all
+                // molecule has been constructed.
+                PosDouble.push_back(mol.NumBonds()); //saves index of bond about to be added
+                prevatom->SetSpinMultiplicity(0);
+                atom->SetSpinMultiplicity(0);
+              }
+            }
+        mol.UnsetAromaticPerceived();
+        
         mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
+        
         if(chiralWatch) // if chiral atom need to add its previous into atom4ref
           {
             if (_mapcd[atom] == NULL)
@@ -1877,6 +1896,16 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         {
           bf = (_bondflags > (*j)[3]) ? _bondflags : (*j)[3];
           ord = (_order > (*j)[2]) ? _order : (*j)[2];
+          // Check if this ring closure bond may be aromatic and set order accordingly
+          if (ord == 1) {
+            OBAtom *a1 = mol.GetAtom((*j)[1]);
+            OBAtom *a2 = mol.GetAtom(_prev);
+            mol.SetAromaticPerceived();                 // prevent aromaticity analysis
+            if (a1->IsAromatic() && a2->IsAromatic())
+              ord = 5;
+            mol.UnsetAromaticPerceived();
+          }
+          
           mol.AddBond((*j)[1],_prev,ord,bf,(*j)[4]);
             
           // after adding a bond to atom "_prev"
