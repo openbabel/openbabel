@@ -1,3 +1,12 @@
+2008-03-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/obutil.h: replaced std::min() with min() and put
+	using namespace std at the top of the file. The compiler only gave an
+	error for this when compiling avogadro, not openbabel itself.
+	(windows)
+
+	* include/openbabel/builder.h: Added OBAPI.
+
 2008-03-10  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/cifformat.cpp: export space group if known.

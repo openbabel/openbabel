@@ -32,7 +32,7 @@ namespace OpenBabel
 {
   //! \class OBBuilder
   //! \brief Class to build 3D structures
-  class OBBuilder {
+  class OBAPI OBBuilder {
     public:
       //! constructor
       OBBuilder();
