@@ -1,3 +1,14 @@
+2008-03-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/msmsformat.cpp: New format to write input files for
+	MSMS (Michael Sanner Molecular Surface) calculation program,
+	contributed by Ugo Varetto and the Molekel project.
+
+	* src/formats/moldenformat.cpp: Read input from Molden files,
+	contributed by Ugo.
+
+	* src/formats/Makefile.*: Add above.
+
 2008-03-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/obutil.h: replaced std::min() with min() and put
