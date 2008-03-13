@@ -76,21 +76,23 @@ namespace OpenBabel
     OBSmartsPattern *sp = NULL;
     vector<vector3> coords;
     while (ifs.getline(buffer, 80)) {
+      if (buffer[0] != '#') // skip comment line (at the top)
+        continue;
+        
       tokenize(vs, buffer);
       
-      
-      if (vs[0] == "INDEX") {
+      if (vs.size() == 1) { // SMARTS pattern
         if (sp != NULL)
           _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
         
         coords.clear();
         sp = new OBSmartsPattern;
-        if (!sp->Init(vs[1])) {
+        if (!sp->Init(vs[0])) {
           delete sp;
           sp = NULL;
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
         }
-      } else {
+      } else if (vs.size() == 3) { // XYZ coordinates
         vector3 coord(atof(vs[0].c_str()), atof(vs[1].c_str()), atof(vs[2].c_str()));
         coords.push_back(coord);
       }

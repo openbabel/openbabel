@@ -1,3 +1,13 @@
+2008-03-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.cpp (Separate): Make sure to throw out any bogus
+	OBChiralData. This is much preferable to crashing.
+
+	* src/builder.cpp: Support new fragment.txt format with comments,
+	etc.
+
+	* data/*.txt: Update comments and fix minor formatting changes.
+
 2008-03-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/msmsformat.cpp: New format to write input files for
