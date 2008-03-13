@@ -1,6 +1,6 @@
 ##############################################################################
 #                                                                            #
-#	                Open Babel file: phmodel.txt                         #
+#                   Open Babel file: phmodel.txt                             #
 #                                                                            #
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
 #  Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison            #
@@ -10,7 +10,7 @@
 #                                                                            #
 # TRANSFORM: chemical transforms can be used to modify formal charges, bond  #
 #            orders, and to delete atoms (i.e hydrogens). Changes are applied#
-#	     to vector bound atoms (use the [:#] SMARTS notation) and bonds  #
+#        to vector bound atoms (use the [:#] SMARTS notation) and bonds      #
 #            between vector bound atoms.                                     #
 # SEEDCHARGE: used to seed partial charges.  Seed partial charges            #
 #             are used as initial values in Gasteiger charge calculation     #

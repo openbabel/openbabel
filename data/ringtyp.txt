@@ -1,11 +1,12 @@
 ##############################################################################
 #                                                                            #
-#	                Open Babel file: atomtyp.txt                         #
+#	                Open Babel file: ringtyp.txt                             #
 #                                                                            #
 #  Copyright (c) 2007 Tim Vandermeersch                                      #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
 # SMARTS patterns for ring typing (used by typer.cpp:OBRingTyper)            #
+# (involved in MMFF94 atom typing, among other things)                       #
 #                                                                            #
 # RINGTYP: used to assign the ring types                                     #
 #                                                                            #

@@ -1,6 +1,6 @@
 ##############################################################################
 #                                                                            #
-#	                Open Babel file: isotope.txt                         #
+#                   Open Babel file: isotope.txt                             #
 #                                                                            #
 #  Copyright (c) 2002-2004 by Geoffrey R. Hutchison                          #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
@@ -14,12 +14,12 @@
 #   (we don't currently have a math package that can deal with sig. fig.)    #
 #   so trailing zeros may not be significant and/or useful                   #
 #                                                                            #
-#  Values are compiled from:						     #
-#      "The Ame2003 atomic mass evaluation (II)"			     #
-#        by G.Audi, A.H.Wapstra and C.Thibault				     #
-#          Nuclear Physics A729 p. 337-676, December 22, 2003.		     #
-#  as made available in the mass.mas03round file			     #
-#  (these are values for publication)					     #
+#  Values are compiled from:                                                 #
+#      "The Ame2003 atomic mass evaluation (II)"                             #
+#        by G.Audi, A.H.Wapstra and C.Thibault                               #
+#          Nuclear Physics A729 p. 337-676, December 22, 2003.               #
+#  as made available in the mass.mas03round file                             #
+#  (these are values for publication)                                        #
 #                                                                            #
 #  Currently: 110 lines (neutron, H to Mt)                                   #
 #  (note that since element 0 often represents a dummy atom, the default     #

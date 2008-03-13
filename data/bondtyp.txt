@@ -8,12 +8,12 @@
 # Used by bondtyper.cpp::OBBondTyper (and thus OBMol::PerceiveBondOrders()   #
 #                                                                            #
 # List of functional groups with double, triple (etc.) bond orders           #
-# Pattern		Atom1 Atom2 Bond Order (repeat as needed)            #
+# Pattern       Atom1 Atom2 Bond Order (repeat as needed)                    #
 # * = Any atom (for setting non-multiple bonds)                              #
 #                                                                            #
-# NOTE: These are applied in order, first to last.			     #
+# NOTE: These are applied in order, first to last.                           #
 #     So it's generally better to have a long (specifc) SMARTS first.        #
-#     (all bonds must be single bonds to match)
+#     (all bonds must be single bonds to match)                              #
 #                                                                            #
 ##############################################################################
 

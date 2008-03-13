@@ -1,14 +1,20 @@
-//
-// OBForceField Parameters for UFF, the Universal Force Field
-// J. Am. Chem. Soc. (1992) 114(25) p. 10024-10035.
-// The parameters in this file are taken from the UFF implementation in RDKit
-// http://rdkit.org/
-//
-
-// Atom typing rules are based on UFF published atom descriptions
-// [SMARTS] [atomtype] [description]
-// These must be sorted according to the element and complexity of the type rule
-// (i.e., generic rules first, more specific rules later)
+#
+# Open Babel file: UFF.prm
+#
+# Force field parameters for UFF, the Universal Force Field
+# Used by OBForceField and OBUFFForceField
+#
+# J. Am. Chem. Soc. (1992) 114(25) p. 10024-10035.
+# The parameters in this file are taken from the UFF implementation in RDKit
+# http://rdkit.org/
+#
+# Atom typing rules are based on UFF published atom descriptions
+# atom [SMARTS] [atomtype] [description]
+# These must be sorted according to the element and complexity
+#  of the type rule (i.e., generic rules first, more specific rules later)
+#
+# Parameters follow later
+# param Atom	r1	theta0	x1	D1	zeta	Z1	Vi	Uj	Xi	Hard	Radius
 
 atom [#1]     H_          Generic hydrogen
 atom [#1D2]   H_b         Bridging hydrogen
@@ -138,7 +144,7 @@ atom [#101]    Md6+3
 atom [#102]    No6+3
 atom [#103]    Lw6+3
 
-//Atom	r1	theta0	x1	D1	zeta	Z1	Vi	Uj	Xi	Hard	Radius
+# Atom	r1	theta0	x1	D1	zeta	Z1	Vi	Uj	Xi	Hard	Radius
 param H_	0.354	180	2.886	0.044	12	0.712	0	0	4.528	6.9452	0.371
 param H_b	0.46	83.5	2.886	0.044	12	0.712	0	0	4.528	6.9452	0.371
 param He4+4	0.849	90	2.362	0.056	15.24	0.098	0	0	9.66	14.92	1.3

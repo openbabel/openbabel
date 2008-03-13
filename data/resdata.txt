@@ -1,16 +1,16 @@
 ##############################################################################
 #                                                                            #
-#	                Open Babel file: resdata.txt                         #
+#                   Open Babel file: resdata.txt                             #
 #                                                                            #
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
 #  Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison            #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
 #  Residue records are specified as follows: (used by data.cpp:OBResidueData)#
-#  RES <name>								     #
-#  ATOM	Name Type Hybridization		(hydrogens are implicit)	     #
-#  BOND Name1 Name2 BondOrder		(where Name1, Name2 are ATOM records)#
-#  END									     #
+#  RES <name>                                                                #
+#  ATOM Name Type Hybridization     (hydrogens are implicit)                 #
+#  BOND Name1 Name2 BondOrder       (where Name1, Name2 are ATOM records)    #
+#  END                                                                       #
 #                                                                            #
 ##############################################################################
 

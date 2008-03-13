@@ -1,6 +1,6 @@
 ##############################################################################
 #                                                                            #
-#	                Open Babel file: aromatic.txt                              #
+#	                Open Babel file: aromatic.txt                            # #                                                                            #
 #                                                                            #
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
 #  Some portions Copyright (c) 2001-2005 Geoffrey R. Hutchison               #
