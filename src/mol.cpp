@@ -3774,45 +3774,30 @@ namespace OpenBabel
           if (newAtom == NULL) continue; // shouldn't happen, but be defensive
 
           OBChiralData *newCD = new OBChiralData;
+          bool addCD = true; // in case we get bogus data
           //Code to work round Atom4Refs having < 4 members sometimes
           for(int i=0; i<oldCD->GetSize(input); ++i)
           {
             OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
+            if (at == NULL || AtomMap[at] == NULL) { addCD = false; break; }
             newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
           }
           for(int i=0; i<oldCD->GetSize(output); ++i)
           {
             OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
+            if (at == NULL || AtomMap[at] == NULL) { addCD = false; break; }
             newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
           }
           for(int i=0; i<oldCD->GetSize(calcvolume); ++i)
           {
             OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
+            if (at == NULL || AtomMap[at] == NULL) { addCD = false; break; }
             newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
           }
-/*
-          OBAtom *a0, *a1, *a2, *a3; // old atom references
-          //Code to work round Atom4Refs having < 4 members sometimes
-          for(int i=0; i< min((unsigned)4, oldCD->GetSize(input)); ++i)
-            {
-              OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
-              if (at == NULL || AtomMap[at] == NULL) break;
-              newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
-          }
-          for(int i=0; i< min((unsigned)4,oldCD->GetSize(output)); ++i)
-            {
-              OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
-              if (at == NULL || AtomMap[at] == NULL) break;
-              newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
-          }
-          for(int i=0; i < min((unsigned)4,oldCD->GetSize(calcvolume)); ++i)
-            {
-              OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
-              if (at == NULL || AtomMap[at] == NULL) break;
-              newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
-          }
-*/
-          newAtom->SetData(newCD);
+          if (!addCD) // We got bogus data somewhere along the way
+            delete newCD;
+          else
+            newAtom->SetData(newCD);
         }
 
         FOR_BONDS_OF_MOL(b, this) {
