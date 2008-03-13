@@ -9,6 +9,15 @@
 
 	* src/formats/Makefile.*: Add above.
 
+2008-03-13  Chris Morley
+
+	* include/openbabel/obutil.h: Revert the previous change.
+	In Windows there is a min function in the default namespace
+	(::min compiles ok). So it is essential that std::min is used.
+	It's also better not to have using std; in header files. If
+	there is a problem in Avagadro it would be better to find a
+	solution there. Maybe a cause for its Windows version to crash?
+	 
 2008-03-10  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/obutil.h: replaced std::min() with min() and put
