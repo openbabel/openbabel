@@ -76,7 +76,7 @@ namespace OpenBabel
     OBSmartsPattern *sp = NULL;
     vector<vector3> coords;
     while (ifs.getline(buffer, 80)) {
-      if (buffer[0] != '#') // skip comment line (at the top)
+      if (buffer[0] == '#') // skip comment line (at the top)
         continue;
         
       tokenize(vs, buffer);
@@ -290,7 +290,7 @@ namespace OpenBabel
       // check if a is in a fragment
       bool foundfrag = false;
       for (i = _fragments.begin();i != _fragments.end();++i) {
-        if (i->first->Match(mol)) { 
+        if (i->first != NULL && i->first->Match(mol)) { 
           _mlist = i->first->GetMapList();
           
           for (j = _mlist.begin();j != _mlist.end();++j) {
