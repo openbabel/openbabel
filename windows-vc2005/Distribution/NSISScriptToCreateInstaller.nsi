@@ -535,7 +535,25 @@ Section "Dummy Section" SecDummy
   File ..\..\data\mr.txt
   File ..\..\data\logp.txt
   File ..\..\data\ghemical.prm
-  File vcredist_x86.exe
+  File ..\..\data\mmffang.par
+  File ..\..\data\mmffbndk.par
+  File ..\..\data\mmffbond.par
+  File ..\..\data\mmffchg.par
+  File ..\..\data\mmffdef.par
+  File ..\..\data\mmffdfsb.par
+  File ..\..\data\mmffoop.par
+  File ..\..\data\mmffpbci.par
+  File ..\..\data\mmffprop.par
+  File ..\..\data\mmffstbn.par
+  File ..\..\data\mmfftor.par
+  File ..\..\data\mmffvdw.par
+  File ..\..\data\fragments.txt
+  File ..\..\data\plugindefines.txt
+  File ..\..\data\space-groups.txt
+  File ..\..\data\space-groups.xsl
+  File ..\..\data\ringtyp.txt
+  File ..\..\data\UFF.prm
+File vcredist_x86.exe
   
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR

@@ -746,7 +746,8 @@ public:
   virtual const char* Description() //required
   {
       return 
-"Compares first molecule with others using InChI\n"
+"Compare molecules using InChI\n"
+"The first molecule is compared with the rest\n"
 "e.g. babel first.smi second.mol third.cml -ok\n"
 "Same as  -oinchi -xet  and can take the same options as InChI format.\n"
 ;

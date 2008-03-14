@@ -510,10 +510,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\forcefields\forcefieldmm2.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\forcefields\forcefieldmmff94.h"
 				>
 			</File>
@@ -551,10 +547,6 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\lineend.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\openbabel\logp.h"
 				>
 			</File>
 			<File
@@ -623,10 +615,6 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\pointgroup.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\openbabel\psa.h"
 				>
 			</File>
 			<File
@@ -1021,7 +1009,15 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\gausscubeformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\gaussformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\gausszmatformat.cpp"
 				>
 			</File>
 			<File
@@ -1085,6 +1081,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\mmcifformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\mmodformat.cpp"
 				>
 				<FileConfiguration
@@ -1098,6 +1098,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\mol2format.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\moldenformat.cpp"
 				>
 			</File>
 			<File
@@ -1139,6 +1143,14 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\msiformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\msmsformat.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\nwchemformat.cpp"
@@ -1218,6 +1230,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\reportformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\rsmiformat.cpp"
 				>
 			</File>
 			<File

@@ -16,6 +16,9 @@ GNU General Public License for more details.
 
 #include <openbabel/obmolecformat.h>
 
+//Possible replacement for strcasestr. See end of file
+const char *_strcasestr(const char *s, const char *pattern);
+
 using namespace std;
 namespace OpenBabel
 {
@@ -355,3 +358,24 @@ namespace OpenBabel
   }
     
 } //namespace OpenBabel
+
+//*****************************************************************************
+// Adapted from the ht://Dig package   <http://www.htdig.org/>
+// Copyright (c) 1999, 2000, 2001 The ht://Dig Group
+// For copyright details, see the file COPYING in your distribution
+// or the GNU General Public License version 2 or later 
+// <http://www.gnu.org/copyleft/gpl.html>
+
+const char *
+_strcasestr(const char *s, const char *pattern)
+{
+    int		length = strlen(pattern);
+
+    while (*s)
+    {
+	if (strncasecmp(s, pattern, length) == 0)
+	    return s;
+	s++;
+    }
+    return 0;
+}

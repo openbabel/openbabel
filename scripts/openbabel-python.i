@@ -33,7 +33,8 @@
 
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
-
+#include <openbabel/alias.h>
+#include <openbabel/atomclass.h>
 
 
 
@@ -104,6 +105,8 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
+%include <openbabel/alias.h>
+%include <openbabel/atomclass.h>
 
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>

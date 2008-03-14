@@ -18,6 +18,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OBPython", "OBPython\OBPyth
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenBabelDLL", "OpenBabelDLL\OpenBabelDLL.vcproj", "{8D131E22-3017-412C-BCEC-460465C48A3B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcproj", "{0EB55047-AA8F-4623-9CA2-BC12B6EF0639}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8D131E22-3017-412C-BCEC-460465C48A3B} = {8D131E22-3017-412C-BCEC-460465C48A3B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -40,6 +45,10 @@ Global
 		{8D131E22-3017-412C-BCEC-460465C48A3B}.Debug|Win32.Build.0 = Debug|Win32
 		{8D131E22-3017-412C-BCEC-460465C48A3B}.Release|Win32.ActiveCfg = Release|Win32
 		{8D131E22-3017-412C-BCEC-460465C48A3B}.Release|Win32.Build.0 = Release|Win32
+		{0EB55047-AA8F-4623-9CA2-BC12B6EF0639}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0EB55047-AA8F-4623-9CA2-BC12B6EF0639}.Debug|Win32.Build.0 = Debug|Win32
+		{0EB55047-AA8F-4623-9CA2-BC12B6EF0639}.Release|Win32.ActiveCfg = Release|Win32
+		{0EB55047-AA8F-4623-9CA2-BC12B6EF0639}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

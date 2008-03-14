@@ -1,3 +1,33 @@
+2008-03-14  Chris Morley
+
+	* src/formats/gausszmatformat.cpp: add replacement function for
+	strcasestr, which is not in Visual Studio's library.
+
+	* windows-vc2005/babelconfig.h: #define strcasestr _strcasestr
+
+	* src/formats/mdlformat.cpp, src/formats/xml/cmlformat.cpp:
+	Don't output property with attribute "PartialCharges", which isn't
+	relevant in these formats. 
+	
+	* src/formats/xml/cmlformat.cpp: Make compilation of the code that dependends
+	on OBReaction(and hence shared_ptr) conditional on HAVE_SHARED_POINTER.
+	Means that most of cmlformat.cpp can be used even when HAVE_SHARED_POINTER
+	is not defined, and that Noel's change on 2008-03-04 can be reversed
+	(although I have not done it).
+	
+	* src/obconversion.cpp: prevent crash and add error message when multiple
+	output files are used with no input file.
+	
+	* include/openbabel/obutil.h: actually do the reversion, see below
+	
+	* src/formats/crkformat.cpp, src/formats/inchiformat.cpp: small 
+	changes in descriptions (to make GI look better).
+	
+	* windows-vc2005/Distribution/NSISScriptToCreateInstaller.nsi:
+	Add several data files
+	
+	Update Windows single DLL build files
+
 2008-03-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp (Separate): Make sure to throw out any bogus

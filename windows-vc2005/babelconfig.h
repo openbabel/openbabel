@@ -19,6 +19,7 @@
 #define snprintf _snprintf
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
+#define strcasestr _strcasestr
 #define rindex(a,b) strrchr((a),(b))
 #define IsNan _isnan
 #define isfinite _finite
@@ -51,6 +52,7 @@
 // shared_ptr. Use the Boost library instead. It is necessary to have download Boost
 // and put its top level folder in the Include section of Visual Studio's VC++ Directories.
 #define USE_BOOST
+#define HAVE_SHARED_POINTER
 
 /* Export of functions and global variables from DLLs
 */

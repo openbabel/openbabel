@@ -1093,7 +1093,14 @@ namespace OpenBabel {
 
         //INPUT
         if(FileList.empty())
-          pIs = NULL;
+          {
+            pIs = NULL;
+            if(HasMultipleOutputFiles)
+              {
+                obErrorLog.ThrowError(__FUNCTION__,"Cannot use multiple output files without an input file", obError);
+                return 0;
+              }
+          }
         else
           {
             if(FileList.size()>1 || OutputFileName.substr(0,2)=="*.")

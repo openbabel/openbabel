@@ -45,8 +45,6 @@ GNU General Public License for more details.
 // For backwards compatibility. Will be removed in the future
 #include <openbabel/rand.h>
 
-using namespace std; // for std::min
-
 namespace OpenBabel
 {
 
@@ -224,13 +222,13 @@ namespace OpenBabel
   OBAPI inline bool IsApprox(const double & a, const double & b,
                              const double precision = 1e-11)
   {
-    return( fabs(a - b) <= precision * min( fabs(a), fabs(b) ) );
+    return( fabs(a - b) <= precision * std::min( fabs(a), fabs(b) ) );
   }
   //! Same as IsApprox(), but only for positive numbers. Faster.
   OBAPI inline bool IsApprox_pos(const double &a, const double &b,
                                  const double precision = 1e-11)
   {
-    return( fabs(a - b) <= precision * min( a, b ) );
+    return( fabs(a - b) <= precision * std::min( a, b ) );
   }
   /*! \brief Tests whether its argument can be squared without triggering
     an overflow or underflow.

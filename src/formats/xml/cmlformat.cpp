@@ -19,9 +19,11 @@ GNU General Public License for more details.
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/kinetics.h>
 #include <openbabel/atomclass.h>
-#include <openbabel/reaction.h>
 #include <openbabel/xml.h>
 #include <float.h>
+#ifdef HAVE_SHARED_POINTER
+  #include <openbabel/reaction.h>
+#endif
 
 
 #ifdef WIN32
@@ -1128,23 +1130,28 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
     {
-      OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-      if(!pReact)
+#ifdef HAVE_SHARED_POINTER
+        OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
+        if(!pReact)
+          return false;
+        //Use CMLReact to convert OBReaction object
+        OBFormat* pCMLRFormat = pConv->FindFormat("cmlr");
+        if(!pCMLRFormat)
+        {
+          obErrorLog.ThrowError(__FUNCTION__, "Cannot find CMLReact format", obError);
+          return false;
+        }
+        //Disable list option and supress topping and tailing in CMLReactFormat.
+        _pxmlConv->AddOption("l", OBConversion::OUTOPTIONS);
+        _pxmlConv->AddOption("ReactionsNotStandalone", OBConversion::OUTOPTIONS);
+        bool ret = pCMLRFormat->WriteMolecule(pOb,_pxmlConv);
+        _pxmlConv->RemoveOption("ReactionsNotStandalone", OBConversion::OUTOPTIONS);
+        return ret;
+#else
         return false;
-      //Use CMLReact to convert OBReaction object
-      OBFormat* pCMLRFormat = pConv->FindFormat("cmlr");
-      if(!pCMLRFormat)
-      {
-        obErrorLog.ThrowError(__FUNCTION__, "Cannot find CMLReact format", obError);
-        return false;
-      }
-      //Disable list option and supress topping and tailing in CMLReactFormat.
-      _pxmlConv->AddOption("l", OBConversion::OUTOPTIONS);
-      _pxmlConv->AddOption("ReactionsNotStandalone", OBConversion::OUTOPTIONS);
-      bool ret = pCMLRFormat->WriteMolecule(pOb,_pxmlConv);
-      _pxmlConv->RemoveOption("ReactionsNotStandalone", OBConversion::OUTOPTIONS);
-      return ret;
+#endif
     }
+
 
     OBMol &mol = *pmol;
 
@@ -1762,7 +1769,8 @@ namespace OpenBabel
     for (k = vdata.begin();k != vdata.end();k++)
       {
         if ((*k)->GetDataType() == OBGenericDataType::PairData
-          && (*k)->GetAttribute()!="InChI") //InChI is output in <identifier>
+          && (*k)->GetAttribute()!="InChI" //InChI is output in <identifier>
+          && (*k)->GetAttribute()!="PartialCharges")//annotation not needed since partial charges are not output in this format
           {
             if(!propertyListWritten)
               {
@@ -1770,7 +1778,7 @@ namespace OpenBabel
                 propertyListWritten=true;
               }
             xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
-            //Title is onow on <property>
+            //Title is now on <property>
             xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",(*k)->GetAttribute().c_str());
             xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
             //Title used to be on <scalar>...

@@ -33,7 +33,7 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Chemical Resource Kit diagram format (2D)\n \
+        "Chemical Resource Kit diagram(2D)\n \
             No comments yet\n";
     };
 

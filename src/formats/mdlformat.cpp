@@ -637,8 +637,13 @@ public:
             if ((*k)->GetDataType() == OBGenericDataType::PairData)
               {
                 HasProperties = true;
-                ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
-                ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
+                //Since partial charges are not output
+                //in this format, don't need the annotation
+                if((*k)->GetAttribute()!="PartialCharges")
+                {
+                  ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
+                  ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
+                }
               }
           }
       }
