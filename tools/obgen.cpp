@@ -43,7 +43,7 @@ int main(int argc,char **argv)
 {
   char *program_name= argv[0];
   int c;
-  string basename, filename = "", option, option2, ff = "";
+  string basename, filename = "", option, option2, ff = "MMFF94";
 
   if (argc < 2) {
     cout << "Usage: obgen <filename> [options]" << endl;
@@ -113,15 +113,17 @@ int main(int argc,char **argv)
       OBBuilder builder;
       builder.Build(mol);
  
-      //mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
-      //if (!pFF->Setup(mol)) {
-      //  cerr << program_name << ": could not setup force field." << endl;
-      //  exit (-1);
-      //}
-  
-      //pFF->SystematicRotorSearch();
+      mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
+      if (!pFF->Setup(mol)) {
+        cerr << program_name << ": could not setup force field." << endl;
+        exit (-1);
+      }
+ 
+      pFF->SteepestDescent(500, 1.0e-4); 
+      pFF->WeightedRotorSearch(250, 50);
+      pFF->SteepestDescent(500, 1.0e-6);
 
-      //pFF->UpdateCoordinates(mol);
+      pFF->UpdateCoordinates(mol);
       //pFF->ValidateGradients();
       //pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
       //pFF->Energy();

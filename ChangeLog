@@ -8,6 +8,10 @@
 
 	* data/*.txt: Update comments and fix minor formatting changes.
 
+	* tools/obgen.cpp: Update to add hydrogens, cleanup geometry,
+	perform weighted rotor search, etc. Should produce decent 3D
+	structures with MMFF94.
+
 2008-03-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/msmsformat.cpp: New format to write input files for
