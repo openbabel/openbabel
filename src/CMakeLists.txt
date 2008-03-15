@@ -18,11 +18,13 @@ set(math_srcs
 )
 
 set(openbabel_srcs
+    alias.cpp
     atom.cpp
     base.cpp
     bitvec.cpp
     bond.cpp
     bondtyper.cpp
+    builder.cpp
     canon.cpp
     chains.cpp
     chiral.cpp
@@ -33,28 +35,30 @@ set(openbabel_srcs
     format.cpp
     generic.cpp
     grid.cpp
+    griddata.cpp
     kekulize.cpp
     matrix.cpp
-    mol.cpp
     molchrg.cpp
+    mol.cpp
     obconversion.cpp
     oberror.cpp
     obiter.cpp
     obutil.cpp
+    ops.cpp
     parsmart.cpp
     patty.cpp
     phmodel.cpp
     plugin.cpp
+    pointgroup.cpp
     rand.cpp
     residue.cpp
     ring.cpp
-    rotor.cpp
     rotamer.cpp
+    rotor.cpp
     tokenst.cpp
-    typer.cpp
     transform.cpp
-    groupcontrib.cpp
-    formats/obmolecformat.cpp
+    typer.cpp
+    formats/obmolecformat.cpp # ???
 )
 
 if(BUILD_SHARED)
