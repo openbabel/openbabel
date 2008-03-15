@@ -209,7 +209,7 @@ namespace OpenBabel
     return VZero; //previously undefined
   }
   
-  bool OBBuilder::Connect(OBMol &mol, int idxA, OBBitVec &fragment, int idxB, int bondOrder)
+  bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, int bondOrder)
   {
     _workMol = mol;
     OBAtom *a = _workMol.GetAtom(idxA);
@@ -220,7 +220,9 @@ namespace OpenBabel
     if (b == NULL)
       return false;
     
-    Connect(a, fragment, b);
+    if (!Connect(a, b))
+      return false;
+
     _workMol.GetBond(idxA, idxB)->SetBondOrder(bondOrder);
     
     // copy back
@@ -229,11 +231,15 @@ namespace OpenBabel
   }
 
   // The OBMol mol contains both the molecule to which we want to connect the 
-  // fragment and the fragment itself. The fragment that will be rotated and 
-  // translated is defined by the OBBitVec fragment. Atom a is the atom from 
+  // fragment and the fragment itself. The fragment containing b will be 
+  // rotated and translated. Atom a is the atom from 
   // the main molecule to which we want to connect atom b.
-  bool OBBuilder::Connect(OBAtom *a, OBBitVec &fragment, OBAtom *b)
+  bool OBBuilder::Connect(OBAtom *a, OBAtom *b)
   {
+    OBBitVec fragment = GetFragment(b->GetIdx());
+    if (fragment == GetFragment(a->GetIdx()))
+      return false; // a and b are in the same fragment
+
     // Make sure we use a and be from _workMol
     a = _workMol.GetAtom(a->GetIdx());
     b = _workMol.GetAtom(b->GetIdx());
@@ -331,16 +337,29 @@ namespace OpenBabel
     bond->SetBondOrder(1);
     a->AddBond(bond);
     b->AddBond(bond);
+  
+    return true;
+  }
+
+  void OBBuilder::AddNbrs(OBBitVec &fragment, OBAtom *atom)
+  {
+    FOR_NBORS_OF_ATOM (nbr, atom) {
+      if (!fragment.BitIsSet(nbr->GetIdx())) {
+        fragment.SetBitOn(nbr->GetIdx());
+        AddNbrs(fragment, &*nbr);
+      }
+    }
   }
 
   OBBitVec OBBuilder::GetFragment(int index)
   { 
-    for (unsigned int i = 0; i < _fragmentIdx.size(); ++i) {
-      if (_fragmentIdx[i].BitIsOn(index))
-        return _fragmentIdx[i];
-    }
+    OBBitVec fragment;
+    OBAtom *atom = _workMol.GetAtom(index);
 
-    return 0; 
+    fragment.SetBitOn(index);
+    AddNbrs(fragment, atom);
+    
+    return fragment; 
   }
 
   // First we find the most complex fragments in our molecule. Once we have a match,
@@ -402,14 +421,6 @@ namespace OpenBabel
             counter++;
           }
             
-          OBBitVec vfragment; 
-          for (k = j->begin(); k != j->end(); ++k) {
-            index = *k;
-            vfragment.SetBitOn(index);
-          }
-          _fragmentIdx.push_back(vfragment);
-            
-
           // add the bonds for the fragment
           for (k = j->begin(); k != j->end(); ++k) {
             index = *k;
@@ -441,15 +452,14 @@ namespace OpenBabel
       }
  
       if (vfrag.BitIsSet(a->GetIdx())) { // continue if the atom is already added
-        OBBitVec fragment = GetFragment(a->GetIdx());
-
         if (prev != NULL) { // if we have a previous atom, translate/rotate the fragment and connect it
-          Connect(prev, fragment, &*a);
+          Connect(prev, &*a);
           // set the correct bond order
           int bondOrder = origMol.GetBond(prev->GetIdx(), a->GetIdx())->GetBondOrder();
           _workMol.GetBond(prev->GetIdx(), a->GetIdx())->SetBondOrder(bondOrder);
         }
         
+        OBBitVec fragment = GetFragment(a->GetIdx());
         vdone |= fragment; // mark this fragment as done
 
         continue;

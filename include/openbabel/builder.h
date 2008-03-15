@@ -51,33 +51,34 @@ namespace OpenBabel
        */    
       bool Build(OBMol &mol);
       /*! Atoms a and b are part of two fragments that are not connected in mol.
-       *  Connect will translate and rotate the fragment defined by the OBBitVec so that
+       *  Connect will translate and rotate the fragment that contains b so that
        *  a and b are seperated by a bond. This bond is also added.
        *  \param a Index for atom in fragment that should not be rotated.
-       *  \param fragment Defines the atoms that belong to b's fragment and should be translated/rotated.
        *  \param b Index for atom in fragment that should be rotated.
        *  \param bondOrder Bond order of the new bond bewtween a and b.
+       *  \returns true if succesfull or fails when failed (most likely cause 
+       *  for failing: a and b are in the same fragment, they are connected)
        */
-      bool Connect(OBMol &mol, int a, OBBitVec &fragment, int b, int bondOrder = 1);
+      bool Connect(OBMol &mol, int a, int b, int bondOrder = 1);
     private:
       /*! Atoms a and b are part of two fragments that are not connected in _workMol.
-       *  Connect will translate and rotate the fragment defined by the OBBitVec so that
+       *  Connect will translate and rotate the fragment containing b so that
        *  a and b are seperated by a bond. This bond is also added.
        *  \param a Index for atom in fragment that should not be rotated.
-       *  \param fragment Defines the atoms that belong to b's fragment and should be translated/rotated.
        *  \param b Index for atom in fragment that should be rotated.
+       *  \returns true if succesfull or fails when failed (most likely cause 
+       *  for failing: a and b are in the same fragment, they are connected)
        */
-      bool Connect(OBAtom *a, OBBitVec &fragment, OBAtom *b);
-      /*! Get the fragment to which atom belongs.
-       *  Will iterate over _fragmentIdx and will return the first OBBitVec that has
-       *  the bit for atom (index) set.
+      bool Connect(OBAtom *a, OBAtom *b);
+      /*! Get the fragment to which atom with index belongs.
        *  \param index Atom index.
-       *  \returns The OBBitVec defining the fragment.
+       *  \returns The OBBitVec defining the fragment to which a belongs.
        */
       OBBitVec GetFragment(int index);
+      void AddNbrs(OBBitVec &fragment, OBAtom *atom);
       //! used to hold the fragments loaded in the constructor
       std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _fragments;
-      std::vector<OBBitVec> _fragmentIdx;
+      //! used to hold the molecule we're working on 
       OBMol _workMol;
   }; // class OBBuilder
 

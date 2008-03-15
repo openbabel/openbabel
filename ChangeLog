@@ -1,5 +1,13 @@
 2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* include/openbabel/builder.h, src/builder.cpp: More robust way to
+	determine OBBitVec fragment masks. This is now handled internally and 
+	actually checks if a and b (in Connect) don't belong to the same
+	fragment. This also fixes the previously not working commit for: 
+	c1cc(CC)ccc1
+
+2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* src/CMakeLists.txt: Remove groupcontrib.cpp, added some new files.
 	Not sure if the ops/ dir is included.
 
