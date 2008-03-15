@@ -1,3 +1,11 @@
+2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/builder.h, src/builder.cpp: Moved some
+	functionality from Build to Connect(). OBBuilder now constructs
+	molecules with a single pass trough the database.
+
+	* src/forcefield.cpp: Remove debug output.
+
 2008-03-14  Chris Morley
 
 	* src/formats/gausszmatformat.cpp: add replacement function for

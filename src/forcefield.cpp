@@ -2036,7 +2036,6 @@ namespace OpenBabel
 
     delete [] lastStep;
 
-    cout << "alpha = " << alpha << endl;
     return alpha;
   }
   

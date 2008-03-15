@@ -1,7 +1,8 @@
 /**********************************************************************
 builder.cpp - Class to create structures.
 
-Copyright (C) 2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
+Copyright (C) 2007-2008 by Tim Vandermeersch 
+                           <tim.vandermeersch@gmail.com>
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -57,7 +58,6 @@ namespace OpenBabel
       //
       // code to write molecule to 3D file format goes here...
       //
- 
       \endcode
   **/
 
@@ -71,11 +71,11 @@ namespace OpenBabel
       return;
     }
 
-    char buffer[80];
+    char buffer[BUFF_SIZE];
     vector<string> vs;
     OBSmartsPattern *sp = NULL;
     vector<vector3> coords;
-    while (ifs.getline(buffer, 80)) {
+    while (ifs.getline(buffer, BUFF_SIZE)) {
       if (buffer[0] == '#') // skip comment line (at the top)
         continue;
         
@@ -97,12 +97,9 @@ namespace OpenBabel
         coords.push_back(coord);
       }
  
-        
     }
+    
     _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
-    
-    cerr << "_fragments.size() = " << _fragments.size() << endl;
-    
   }
  
   
@@ -111,7 +108,7 @@ namespace OpenBabel
     _fragments.clear();
   }
 
-  vector3 OBBuilder::GetNewBondVector(OBMol &mol, OBAtom *atom)
+  vector3 OBBuilder::GetNewBondVector(OBAtom *atom)
   {
     vector3 bond1, bond2, bond3, v1, v2, newbond;
     
@@ -119,15 +116,8 @@ namespace OpenBabel
     bond2 = VZero;
     bond3 = VZero;
     
-    //cout << endl << "GetNewBondVector()" << endl;
-    
     if (atom == NULL)
       return VZero;
-
-    //cout << "atom : " << atom->GetIdx() << endl;
-    //cout << "atom->Valence: " << atom->GetValence() << endl;
-    //cout << "atom->Hyb: " << atom->GetHyb() << endl;
-
 
     if (atom->GetValence() == 0) {
       newbond = atom->GetVector() + VX * 1.5;
@@ -143,19 +133,14 @@ namespace OpenBabel
             bond2 = nbr->GetVector() - nbr2->GetVector();
       }
 
-      //cout << "bond1: " << bond1 << endl;
-      //cout << "bond2: " << bond2 << endl;
-      
       bond1 = bond1.normalize();
       if (bond2 == VZero) {
         if (atom->GetHyb() == 1)
           newbond = bond1;
         if (atom->GetHyb() == 2)
           newbond = bond1 + VY * tan(DEG_TO_RAD*60);
-          //newbond = bond1 + VY*1.7321;
         if (atom->GetHyb() == 3)
           newbond = bond1 + VY * tan(DEG_TO_RAD*70.5);
-          //newbond = bond1 + VY*2.8239;
         
         newbond = newbond.normalize();
         newbond *= 1.5;
@@ -190,8 +175,6 @@ namespace OpenBabel
       v1 = bond1 + bond2;
       v1 = v1.normalize();
      
-      cerr << "atom idx: " << atom->GetIdx() << ", hyb=" << atom->GetHyb() << endl;
-
       if (atom->GetHyb() == 2)
         newbond = v1;
       if (atom->GetHyb() == 3) {
@@ -222,300 +205,284 @@ namespace OpenBabel
       newbond += atom->GetVector();
       return newbond;
     }
+
     return VZero; //previously undefined
   }
+  
+  bool OBBuilder::Connect(OBMol &mol, int idxA, OBBitVec &fragment, int idxB, int bondOrder)
+  {
+    _workMol = mol;
+    OBAtom *a = _workMol.GetAtom(idxA);
+    OBAtom *b = _workMol.GetAtom(idxB);
+    
+    if (a == NULL)
+      return false;
+    if (b == NULL)
+      return false;
+    
+    Connect(a, fragment, b);
+    _workMol.GetBond(idxA, idxB)->SetBondOrder(bondOrder);
+    
+    // copy back
+    mol = _workMol;
+    return true;
+  }
 
+  // The OBMol mol contains both the molecule to which we want to connect the 
+  // fragment and the fragment itself. The fragment that will be rotated and 
+  // translated is defined by the OBBitVec fragment. Atom a is the atom from 
+  // the main molecule to which we want to connect atom b.
+  bool OBBuilder::Connect(OBAtom *a, OBBitVec &fragment, OBAtom *b)
+  {
+    // Make sure we use a and be from _workMol
+    a = _workMol.GetAtom(a->GetIdx());
+    b = _workMol.GetAtom(b->GetIdx());
+    vector3 posa = a->GetVector();
+    vector3 posb = b->GetVector();
+    vector3 newpos = GetNewBondVector(a);
+    vector3 moldir = newpos - posa;
+    // 
+    // translate fragment so that atom b is at the origin
+    //
+    for (unsigned int i = 1; i <= _workMol.NumAtoms(); ++i) {
+      if (fragment.BitIsSet(i)) {
+        // the atom is part of the fragment, translate it
+        vector3 tmpvec = _workMol.GetAtom(i)->GetVector();
+        tmpvec -= posb;
+        _workMol.GetAtom(i)->SetVector(tmpvec);
+      }
+    }
+    // 
+    // rotate the fragment to align the bond directions Mol-a-b and a-b-fragment
+    //  
+    matrix3x3 xymat, xzmat, yzmat;
+    double xyang, yzang, xzang;
+
+    vector3 fragdir = GetNewBondVector(b); // b is at origin 
+    xyang = vectorAngle(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0));
+    if (cross(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0)).z() > 0) {
+      xyang = 180 + xyang;
+    } else if (cross(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0)).z() < 0) {
+      xyang = 180 - xyang;
+    } else {
+      xyang = 0.0;
+    }
+    xymat.SetupRotMat(0.0, 0.0, xyang); 
+    for (unsigned int i = 1; i <= _workMol.NumAtoms(); ++i) {
+      if (fragment.BitIsSet(i)) {
+        vector3 tmpvec = _workMol.GetAtom(i)->GetVector();
+        tmpvec *= xymat; //apply the rotation
+        _workMol.GetAtom(i)->SetVector(tmpvec);
+      }
+    }
+    
+    fragdir = GetNewBondVector(b);
+    xzang = vectorAngle(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0));
+    if (cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)).z() > 0) {
+      xzang = 180 - xzang;
+    } else if (cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)).z() < 0) {
+      xzang = 180 + xzang;
+    } else {
+      xzang = 0.0;
+    }
+    xzmat.SetupRotMat(0.0, xzang, 0.0); 
+    for (unsigned int i = 1; i <= _workMol.NumAtoms(); ++i) {
+      if (fragment.BitIsSet(i)) {
+        vector3 tmpvec = _workMol.GetAtom(i)->GetVector();
+        tmpvec *= xzmat; //apply the rotation
+        _workMol.GetAtom(i)->SetVector(tmpvec);
+      }
+    }
+
+    fragdir = GetNewBondVector(b);
+    yzang = vectorAngle(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0));
+    if (cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)).z() > 0) {
+      yzang = 180 + yzang;
+    } else if (cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)).z() < 0) {
+      yzang = 180 - yzang;
+    } else {
+      yzang = 0.0;
+    }
+    yzmat.SetupRotMat(yzang, 0.0, 0.0); 
+    for (unsigned int i = 1; i <= _workMol.NumAtoms(); ++i) {
+      if (fragment.BitIsSet(i)) {
+        vector3 tmpvec = _workMol.GetAtom(i)->GetVector();
+        tmpvec *= yzmat; //apply the rotation
+        _workMol.GetAtom(i)->SetVector(tmpvec);
+      }
+    }
+    // 
+    // translate fragment 
+    //
+    for (unsigned int i = 1; i <= _workMol.NumAtoms(); ++i) {
+      if (fragment.BitIsSet(i)) {
+        // translate the fragment
+        vector3 tmpvec = _workMol.GetAtom(i)->GetVector();
+        tmpvec += newpos;
+        _workMol.GetAtom(i)->SetVector(tmpvec);
+      }
+    }     
+    //
+    // Create the bond between the two fragments
+    //
+    OBBond *bond = _workMol.NewBond();
+    bond->SetBegin(a);
+    bond->SetEnd(b);
+    bond->SetBondOrder(1);
+    a->AddBond(bond);
+    b->AddBond(bond);
+  }
+
+  OBBitVec OBBuilder::GetFragment(int index)
+  { 
+    for (unsigned int i = 0; i < _fragmentIdx.size(); ++i) {
+      if (_fragmentIdx[i].BitIsOn(index))
+        return _fragmentIdx[i];
+    }
+
+    return 0; 
+  }
+
+  // First we find the most complex fragments in our molecule. Once we have a match,
+  // vfrag is set for all the atoms in the fragment. A second match (smaller, more 
+  // simple part of the 1st match) is ignored.
+  //
+  // Next we iterate over the atoms. There are 3 possibilities:
+  // 
+  // 1) The atom is allready added (vdone is set) --> continue
+  // 2) The atom belongs to a fragment --> a) This is the first atom to add: leave fragment as it is
+  //                                       b) Not the first atom: rotate, translate and connect the fragment
+  // 3) The atom doesn't belong to a fragment: a) First atom: place at origin
+  //                                           b) Not first atom: Find position and place atom
   bool OBBuilder::Build(OBMol &mol)
   {
-    vector<int> visit(mol.NumAtoms()+1, 0);
-    vector3 molvec, fragvec, rootvec, moldir, fragdir;
+    OBBitVec vdone; // Atoms that are done, need no further manipulation.
+    OBBitVec vfrag; // Atoms that are part of a fragment found in the database.
+                    // These atoms have coordinates, but the fragment still has 
+                    // to be rotated and translated.
+    vector3 molvec, moldir;
     vector<pair<OBSmartsPattern*, vector<vector3 > > >::iterator i;
     vector<vector<int> >::iterator j;
     vector<int>::iterator k, k2, k3;
     vector<vector3>::iterator l;
-    vector<vector<int> > _mlist; //!< match list for atom typing
+    vector<vector<int> > mlist; // match list for fragments
  
-    OBMol tmpmol, fragment;
-
-    //cout << "-------------------------------------------------------------" << endl;
-    //cout << " OBBuilder::Build()" << endl;
-    //cout << "-------------------------------------------------------------" << endl;
-
-    tmpmol = mol;
+    // copy the molecule to private data
+    OBMol origMol = mol;
+    _workMol = mol;
     
-    //FOR_ATOMS_OF_MOL (atoms, tmpmol)
-    //  cout << "idx: " << atoms->GetIdx() << ", hyb: " << atoms->GetHyb() << endl;
-     
-    // delete all bonds in tmpmol
-    while (tmpmol.NumBonds())
-      tmpmol.DeleteBond(tmpmol.GetBond(0));
+    // delete all bonds in the working molecule
+    while (_workMol.NumBonds())
+      _workMol.DeleteBond(_workMol.GetBond(0));
     
-    tmpmol.SetHybridizationPerceived();
-    //FOR_ATOMS_OF_MOL (atoms, tmpmol)
-    //  cout << "idx: " << atoms->GetIdx() << ", hyb: " << atoms->GetHyb() << endl;
- 
+    _workMol.SetHybridizationPerceived();
+
+    // Loop through  the database once and assign the coordinates from
+    // the first (most complex) fragment.
+    for (i = _fragments.begin();i != _fragments.end();++i) {
+      if (i->first != NULL && i->first->Match(origMol)) { 
+        mlist = i->first->GetMapList();
+          
+        for (j = mlist.begin();j != mlist.end();++j) { // for all matches
+          if (vfrag.BitIsSet((*j)[0])) // the found match is already added
+            continue;
+
+          int index, index2, counter = 0;
+          for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
+            index = *k;
+
+            if (vfrag.BitIsSet(index))
+              continue;
+              
+            vfrag.SetBitOn(index); // set vfrag for all atoms of fragment
+
+            // set coordinates for atoms
+            OBAtom *atom = _workMol.GetAtom(index);
+            atom->SetVector(i->second[counter]);
+            counter++;
+          }
+            
+          OBBitVec vfragment; 
+          for (k = j->begin(); k != j->end(); ++k) {
+            index = *k;
+            vfragment.SetBitOn(index);
+          }
+          _fragmentIdx.push_back(vfragment);
+            
+
+          // add the bonds for the fragment
+          for (k = j->begin(); k != j->end(); ++k) {
+            index = *k;
+            OBAtom *atom1 = origMol.GetAtom(index);
+              
+            for (k2 = j->begin(); k2 != j->end(); ++k2) {
+              index2 = *k2;
+              OBAtom *atom2 = origMol.GetAtom(index2);
+              OBBond *bond = atom1->GetBond(atom2);
+
+              if (bond != NULL) 
+                _workMol.AddBond(*bond);
+            }
+          }
+        }
+      }
+    }
+
     // iterate over all atoms to place them in 3D space
-    FOR_DFS_OF_MOL (a, mol) {
-      cerr << "placing atom: " << a->GetIdx() << endl;
-      if (visit[a->GetIdx()]) // continue if the atom is already added
+    FOR_DFS_OF_MOL (a, origMol) {
+      if (vdone.BitIsSet(a->GetIdx())) // continue if the atom is already added
         continue;
-
-      // find an atom connected to the current atom that is already visited
+      
+      // find an atom connected to the current atom that is already added
       OBAtom *prev = NULL;
       FOR_NBORS_OF_ATOM (nbr, &*a) {
-        if (visit[nbr->GetIdx()])
+        if (vdone.BitIsSet(nbr->GetIdx()))
           prev = &*nbr;
       }
-     
+ 
+      if (vfrag.BitIsSet(a->GetIdx())) { // continue if the atom is already added
+        OBBitVec fragment = GetFragment(a->GetIdx());
+
+        if (prev != NULL) { // if we have a previous atom, translate/rotate the fragment and connect it
+          Connect(prev, fragment, &*a);
+          // set the correct bond order
+          int bondOrder = origMol.GetBond(prev->GetIdx(), a->GetIdx())->GetBondOrder();
+          _workMol.GetBond(prev->GetIdx(), a->GetIdx())->SetBondOrder(bondOrder);
+        }
+        
+        vdone |= fragment; // mark this fragment as done
+
+        continue;
+      }
+
+      //
+      // below is the code to add non-fragment atoms
+      //
+   
       // get the position for the new atom, this is done with GetNewBondVector
       if (prev != NULL) {
-        //cout << "prev: " << prev->GetIdx() << endl;
-
-        molvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(prev->GetIdx()));
-        moldir = molvec - tmpmol.GetAtom(prev->GetIdx())->GetVector();
+        molvec = GetNewBondVector(_workMol.GetAtom(prev->GetIdx()));
+        moldir = molvec - _workMol.GetAtom(prev->GetIdx())->GetVector();
       } else {
         molvec = VX;
         moldir = VX;
       }
       
-      /*
-      if (prev != NULL)
-        cout << "  prev: " << prev->GetIdx() << endl;
-      else
-        cout << "  prev: -" << endl;
-      cout << "  molvec: " << molvec << endl;
-      cout << "  moldir: " << moldir << endl;
-      */
+      vdone.SetBitOn(a->GetIdx());
       
-      // check if a is in a fragment
-      bool foundfrag = false;
-      for (i = _fragments.begin();i != _fragments.end();++i) {
-        if (i->first != NULL && i->first->Match(mol)) { 
-          _mlist = i->first->GetMapList();
-          
-          for (j = _mlist.begin();j != _mlist.end();++j) {
-            foundfrag = false;
-            if (visit[(*j)[0]]) // the found match is already added
-              continue;
-
-            int index, index2, counter = 0;
-            for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
-              index = *k;
-              if (index == a->GetIdx())
-                foundfrag = true;
-            }
-
-            if (!foundfrag)
-              continue;
-            
-            for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
-              index = *k;
-              //cout << "k=" << index << endl;
-
-              if (visit[index])
-                continue;
-              
-              visit[index] = 1; // set visit[] for all atoms of fragment
-
-              // set coordinates for atoms
-              OBAtom *atom = tmpmol.GetAtom(index);
-              atom->SetVector(i->second[counter]);
-              counter++;
-            }
-            
-            // add the bonds for the fragment
-            for (k = j->begin(); k != j->end(); ++k) {
-              index = *k;
-              OBAtom *atom1 = mol.GetAtom(index);
-                
-              for (k2 = j->begin(); k2 != j->end(); ++k2) {
-                index2 = *k2;
-                OBAtom *atom2 = mol.GetAtom(index2);
-                OBBond *bond = atom1->GetBond(atom2);
-
-                if (bond != NULL) 
-                  tmpmol.AddBond(*bond);
-              }
-            }
-              
-            // 
-            // translate fragment to origin
-            //
-            for (k = j->begin(); k != j->end(); ++k) {
-              index = *k;
-              
-              if (index == a->GetIdx()) {
-                rootvec = tmpmol.GetAtom(a->GetIdx())->GetVector();
-            
-                //cout << "a position: " << rootvec << endl;
-                  
-                for (k2 = j->begin(); k2 != j->end(); ++k2) {
-                  index = *k2;
-
-                  // translate the fragment
-                  vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
-                  tmpvec += molvec - rootvec;
-                  tmpmol.GetAtom(index)->SetVector(tmpvec);
-                  cerr << "tmpvec origin = " << tmpvec << endl;
-                     }
-              }
-            }
-        
-            if (prev != NULL) {
-            // 
-            // rotate
-            //  
-            matrix3x3 xymat, xzmat, yzmat;
-            double xyang, yzang, xzang;//, xyang1, yzang1, xzang1, xyang2, yzang2, xzang2;
-
-              cerr << "----------------" << endl;
-            cerr << " R O T A T E" << endl;
-            cerr << "----------------" << endl;
-            cerr << "  moldir = " << moldir << endl;
-                  
-            fragvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(a->GetIdx()));
-            fragdir = fragvec - tmpmol.GetAtom(a->GetIdx())->GetVector();
-            cerr << "  fragdir = " << fragdir << endl;
-            
-            cerr << "  --- XY plane ---" << endl;
-            xyang = vectorAngle(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0));
-            cerr << "cross: " << cross(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0)) << endl;
-            if (cross(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0)).z() > 0) {
-              cerr << "counterclockwise: " << xyang << endl;
-              xyang = 180 + xyang;
-            } else if (cross(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0)).z() < 0) {
-              cerr << "clockwise: " << xyang << endl;
-              xyang = 180 - xyang;
-            } else
-              xyang = 0.0;
-            xymat.SetupRotMat(0.0, 0.0, xyang); 
-            cerr << " xyang = "  << xyang << endl;
-            
-            for (k = j->begin(); k != j->end(); ++k) {
-              index = *k;
-              vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
-              tmpvec *= xymat; //apply the rotation
-              tmpmol.GetAtom(index)->SetVector(tmpvec);
-            }
- 
-            fragvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(a->GetIdx()));
-            fragdir = fragvec - tmpmol.GetAtom(a->GetIdx())->GetVector();
-            cerr << "  fragdir = " << fragdir << endl;
- 
-            cerr << "  --- XZ plane ---" << endl;
-            xzang = vectorAngle(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0));
-            cerr << "cross: " << cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)) << endl;
-            if (cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)).z() > 0) {
-              cerr << "counterclockwise: " << xzang << endl;
-              xzang = 180 - xzang;
-            } else if (cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)).z() < 0) {
-              cerr << "clockwise: " << xzang << endl;
-              xzang = 180 + xzang;
-            } else
-              xzang = 0.0;
-            xzmat.SetupRotMat(0.0, xzang, 0.0); 
-            cerr << " xzang = "  << xzang << endl;
-
-            for (k = j->begin(); k != j->end(); ++k) {
-              index = *k;
-              vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
-              tmpvec *= xzmat; //apply the rotation
-              tmpmol.GetAtom(index)->SetVector(tmpvec);
-            }
-            
-            fragvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(a->GetIdx()));
-            fragdir = fragvec - tmpmol.GetAtom(a->GetIdx())->GetVector();
-            cerr << "  fragdir = " << fragdir << endl;
-
-            cerr << "  --- YZ plane ---" << endl;
-            yzang = vectorAngle(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0));
-            cerr << "cross: " << cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)) << endl;
-            if (cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)).z() > 0) {
-              cerr << "counterclockwise: " << yzang << endl;
-              yzang = 180 + yzang;
-            } else if (cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)).z() < 0) {
-              cerr << "clockwise: " << yzang << endl;
-              yzang = 180 - yzang;
-            } else
-              yzang = 0.0;
-            yzmat.SetupRotMat(yzang, 0.0, 0.0); 
-            cerr << " yzang = "  << yzang << endl;
-        
-            for (k = j->begin(); k != j->end(); ++k) {
-              index = *k;
-              vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
-              tmpvec *= yzmat; //apply the rotation
-              tmpmol.GetAtom(index)->SetVector(tmpvec);
-            }
-
-
-            fragvec = GetNewBondVector(tmpmol, tmpmol.GetAtom(a->GetIdx()));
-            fragdir = fragvec - tmpmol.GetAtom(a->GetIdx())->GetVector();
-            xyang = vectorAngle(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0));
-            xzang = vectorAngle(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0));
-            yzang = vectorAngle(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0));
-            cerr << "xy angle after rotation: " << xyang << endl;
-            cerr << "xz angle after rotation: " << xzang << endl;
-            cerr << "yz angle after rotation: " << yzang << endl;
-    
-    
-            // 
-            // translate fragment 
-            //
-            for (k = j->begin(); k != j->end(); ++k) {
-              index = *k;
-              
-              if (index == a->GetIdx()) {
-                rootvec = tmpmol.GetAtom(a->GetIdx())->GetVector();
-            
-                //cout << "a position: " << rootvec << endl;
-                  
-                for (k2 = j->begin(); k2 != j->end(); ++k2) {
-                  index = *k2;
-
-                  // translate the fragment
-                  vector3 tmpvec = tmpmol.GetAtom(index)->GetVector();
-                  tmpvec += molvec - rootvec;
-                  tmpmol.GetAtom(index)->SetVector(tmpvec);
-                  //cout << "tmpvec = " << tmpvec << endl;
-                     }
-              }
-            }
-            
-            // add bond between previous part and added fragment
-            OBBond *bond = a->GetBond(prev);
-            tmpmol.AddBond(*bond);
-            } //if (prev != NULL) {
-
-
-
-          }
-        }
-      }
-
-
-      if (foundfrag)
-        continue;
-
-      //
-      // below is the code to add non-fragment atoms
-      //
-
-      visit[a->GetIdx()] = 1;
-      
-      // add the atom to tmpmol
-      OBAtom *atom = tmpmol.GetAtom(a->GetIdx());
+      // place the atom the atom 
+      OBAtom *atom = _workMol.GetAtom(a->GetIdx());
       atom->SetVector(molvec);
 
       // add bond between previous part and added atom
       if (prev != NULL) {
-        OBBond *bond = a->GetBond(prev);
-        tmpmol.AddBond(*bond);
+        OBBond *bond = a->GetBond(prev); // from origMol
+        _workMol.AddBond(*bond);
       }
 
     }
 
-    mol = tmpmol;
+    mol = _workMol;
     mol.SetDimension(3);
     return true;
   }
