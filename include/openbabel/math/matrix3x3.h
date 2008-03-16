@@ -50,29 +50,22 @@ namespace OpenBabel
       //! Constructs the zero-matrix
       matrix3x3(void)
         {
-          ele[0][0] = 0.0;
-          ele[0][1] = 0.0;
-          ele[0][2] = 0.0;
-          ele[1][0] = 0.0;
-          ele[1][1] = 0.0;
-          ele[1][2] = 0.0;
-          ele[2][0] = 0.0;
-          ele[2][1] = 0.0;
-          ele[2][2] = 0.0;
+          // Loops are typically unrolled and/or vectorized
+          for (unsigned int i = 0; i < 3; ++i)
+            for (unsigned int j = 0; j < 3; ++j)
+              ele[i][j] = 0.0;
         }
 
       //! Constructs s times the unit matrix
       matrix3x3(double s)
         {
-          ele[0][0] = s;
-          ele[0][1] = 0.0;
-          ele[0][2] = 0.0;
-          ele[1][0] = 0.0;
-          ele[1][1] = s;
-          ele[1][2] = 0.0;
-          ele[2][0] = 0.0;
-          ele[2][1] = 0.0;
-          ele[2][2] = s;
+          // Loops are typically unrolled and/or vectorized
+          for (unsigned int i = 0; i < 3; ++i)
+            for (unsigned int j = 0; j < 3; ++j)
+              ele[i][j] = 0.0;
+
+          for (unsigned int i = 0; i < 3; ++i)
+            ele[i][i] = s;
         }
 
       //! Constructs a matrix from row vectors
@@ -93,15 +86,12 @@ namespace OpenBabel
       /*! The first index represents the row, the second index the column */
       matrix3x3(double d[3][3])
         {
-          ele[0][0] = d[0][0];
-          ele[0][1] = d[0][1];
-          ele[0][2] = d[0][2];
-          ele[1][0] = d[1][0];
-          ele[1][1] = d[1][1];
-          ele[1][2] = d[1][2];
-          ele[2][0] = d[2][0];
-          ele[2][1] = d[2][1];
-          ele[2][2] = d[2][2];
+          // Loops are typically unrolled and/or vectorized
+          for (unsigned int i = 0; i < 3; ++i)
+            for (unsigned int j = 0; j < 3; ++j)
+              ele[i][j] = d[i][j];
+
+          // We could also potentially use memcpy here
         }
 
       //! \brief Access function
@@ -110,15 +100,9 @@ namespace OpenBabel
         program will segfault. */
       void GetArray(double *m)
         {
-          m[0] = ele[0][0];
-          m[1] = ele[0][1];
-          m[2] = ele[0][2];
-          m[3] = ele[1][0];
-          m[4] = ele[1][1];
-          m[5] = ele[1][2];
-          m[6] = ele[2][0];
-          m[7] = ele[2][1];
-          m[8] = ele[2][2];
+          for (unsigned int i = 0; i < 3; ++i)
+            for (unsigned int j = 0; j < 3; ++j)
+              m[3*i+j] = ele[i][j];
         }
 
       /*! \return a constant reference to an element of the matrix.

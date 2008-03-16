@@ -89,22 +89,22 @@ namespace OpenBabel
 
     //! Assignment 
     OBFFParameter& operator=(const OBFFParameter &ai) 
-    {
-      if (this != &ai) {
-        a = ai.a;
-        b = ai.b;
-        c = ai.c;
-        d = ai.d;
-        _a = ai._a;
-        _b = ai._b;
-        _c = ai._c;
-        _d = ai._d;
-        _ipar = ai._ipar;
-        _dpar = ai._dpar;
-      }
+      {
+        if (this != &ai) {
+          a = ai.a;
+          b = ai.b;
+          c = ai.c;
+          d = ai.d;
+          _a = ai._a;
+          _b = ai._b;
+          _c = ai._c;
+          _d = ai._d;
+          _ipar = ai._ipar;
+          _dpar = ai._dpar;
+        }
         
-      return *this;
-    }
+        return *this;
+      }
 
     //! Reset the atom types and set all parameters to zero
     void clear () 
@@ -120,61 +120,64 @@ namespace OpenBabel
   //! \brief Internal class for OBForceField to hold energy and gradient calculations on specific force fields
   class OBFPRT OBFFCalculation
   {
-    public:
-      //! Used to store the energy for this OBFFCalculation
-      double energy;
-      //! Used to store the atoms for this OBFFCalculation
-      OBAtom *a, *b, *c, *d;
-      //! Used to store the index of atoms for this OBFFCalculation
-      int idx_a, idx_b, idx_c, idx_d;
-      //! Pointer to atom coordinates
-      double *pos_a, *pos_b, *pos_c, *pos_d;
-      //! Pointer to atom forces
-      double force_a[3], force_b[3], force_c[3], force_d[3];
+  public:
+    //! Used to store the energy for this OBFFCalculation
+    double energy;
+    //! Used to store the atoms for this OBFFCalculation
+    OBAtom *a, *b, *c, *d;
+    //! Used to store the index of atoms for this OBFFCalculation
+    int idx_a, idx_b, idx_c, idx_d;
+    //! Pointer to atom coordinates
+    double *pos_a, *pos_b, *pos_c, *pos_d;
+    //! Pointer to atom forces
+    double force_a[3], force_b[3], force_c[3], force_d[3];
       
-      //! Constructor
-      OBFFCalculation() 
-        {
-	  a = b = c = d = NULL;
-	  pos_a = pos_b = pos_c = pos_d = NULL;
-	  force_a[0] = 0.0; force_a[1] = 0.0; force_a[2] = 0.0;
-	  force_b[0] = 0.0; force_b[1] = 0.0; force_b[2] = 0.0;
-	  force_c[0] = 0.0; force_c[1] = 0.0; force_c[2] = 0.0;
-	  force_d[0] = 0.0; force_d[1] = 0.0; force_d[2] = 0.0;
-	  energy = 0.0;
-        }
-      //! Destructor
-      virtual ~OBFFCalculation()
-        {
-        }
-      
-      //! Compute the energy and gradients for this OBFFCalculation
-      virtual void Compute(bool = true) 
-        {
-        }
-      //! \return Energy for this OBFFCalculation (call Compute() first)
-      virtual double GetEnergy() 
+    //! Constructor
+    OBFFCalculation() 
       {
-        return energy; 
+        a = b = c = d = NULL;
+        pos_a = pos_b = pos_c = pos_d = NULL;
+        // Loop unrolling and/or vectorization will take care of this
+        for (unsigned int i = 0; i < 3; ++i) {
+          force_a[i] = 0.0;
+          force_b[i] = 0.0;
+          force_c[i] = 0.0;
+          force_d[i] = 0.0;
+        }
+        energy = 0.0;
+      }
+    //! Destructor
+    virtual ~OBFFCalculation()
+      {
       }
       
-      //! \return Setup pointers to atom positions and forces (To be called while setting up calculations). Sets optimized to true.
-      void SetupPointers() 
-      {
-        if (!a || !b) return;
-	pos_a = a->GetCoordinate();
-	idx_a = a->GetIdx();
-	pos_b = b->GetCoordinate();
-	idx_b = b->GetIdx();
+    //! Compute the energy and gradients for this OBFFCalculation
+    virtual void Compute(bool = true) 
+    {
+    }
+    //! \return Energy for this OBFFCalculation (call Compute() first)
+    virtual double GetEnergy() 
+    {
+      return energy; 
+    }
+      
+    //! \return Setup pointers to atom positions and forces (To be called while setting up calculations). Sets optimized to true.
+    void SetupPointers() 
+    {
+      if (!a || !b) return;
+      pos_a = a->GetCoordinate();
+      idx_a = a->GetIdx();
+      pos_b = b->GetCoordinate();
+      idx_b = b->GetIdx();
 	
-	if (!c) return;
-	pos_c = c->GetCoordinate();
-	idx_c = c->GetIdx();
+      if (!c) return;
+      pos_c = c->GetCoordinate();
+      idx_c = c->GetIdx();
         
-	if (!d) return;
-	pos_d = d->GetCoordinate();
-	idx_d = d->GetIdx();
-      }
+      if (!d) return;
+      pos_d = d->GetCoordinate();
+      idx_d = d->GetIdx();
+    }
  
   };
   
@@ -182,65 +185,65 @@ namespace OpenBabel
   //! \brief Internal class for OBForceField to hold constraints
   class OBFPRT OBFFConstraint
   {
-    public:
-      //! Used to store the contraint energy for this OBFFConstraint
-      double factor, constraint_value;
-      double rab0, rbc0;
-      //! Used to store the contraint type for this OBFFConstraint
-      int type, ia, ib, ic, id;
-      //! Used to store the atoms for this OBFFCostraint
-      OBAtom *a, *b, *c, *d;
-      //! Used to store the gradients for this OBFFCalculation
-      vector3 grada, gradb, gradc, gradd;
+  public:
+    //! Used to store the contraint energy for this OBFFConstraint
+    double factor, constraint_value;
+    double rab0, rbc0;
+    //! Used to store the contraint type for this OBFFConstraint
+    int type, ia, ib, ic, id;
+    //! Used to store the atoms for this OBFFCostraint
+    OBAtom *a, *b, *c, *d;
+    //! Used to store the gradients for this OBFFCalculation
+    vector3 grada, gradb, gradc, gradd;
 
-      //! Constructor
-      OBFFConstraint() 
+    //! Constructor
+    OBFFConstraint() 
       {
-	a = b = c = d = NULL;
-	ia = ib = ic = id = 0;
+        a = b = c = d = NULL;
+        ia = ib = ic = id = 0;
         constraint_value = 0.0;
-	factor = 0.0;
+        factor = 0.0;
       }
-      //! Destructor
-      ~OBFFConstraint()
+    //! Destructor
+    ~OBFFConstraint()
       {
       }
       
-      vector3 GetGradient(int a) 
-      {
-        if (a == ia)
-          return grada;
-        else if (a == ib)
-          return gradb;
-        else if (a == ic)
-          return gradc;
-        else if (a == id)
-          return gradd;
-        else 
-          return  VZero;
-      }
+    vector3 GetGradient(int a) 
+    {
+      if (a == ia)
+        return grada;
+      else if (a == ib)
+        return gradb;
+      else if (a == ic)
+        return gradc;
+      else if (a == id)
+        return gradd;
+      else 
+        return  VZero;
+    }
   };
 
   //! \class OBFFConstraints forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to handle constraints
   class OBFPRT OBFFConstraints
   {
-    public:
-      //! Constructor
-      OBFFConstraints();
-      //! Destructor
-      ~OBFFConstraints()
+  public:
+    //! Constructor
+    OBFFConstraints();
+    //! Destructor
+    ~OBFFConstraints()
       {
         _constraints.clear();
       }
-      //! Clear all constraints
-      void Clear();
-      //! Get the constraint energy
-      double GetConstraintEnergy();
-      //! Get the constraint gradient for atom with index a
-      vector3 GetGradient(int a);
-      //! Get the constrain gradient for the atom
-      OBFFConstraints& operator=(const OBFFConstraints &ai) 
+    //! Clear all constraints
+    void Clear();
+    //! Get the constraint energy
+    double GetConstraintEnergy();
+    //! Get the constraint gradient for atom with index a
+    vector3 GetGradient(int a);
+    //! Get the constrain gradient for the atom
+    OBFFConstraints& operator=(const OBFFConstraints &ai) 
       {
         if (this != &ai) {
           _constraints = ai._constraints;
@@ -248,93 +251,93 @@ namespace OpenBabel
         return *this;
       }
 
-      /*! Translate indices to OBAtom* objects, this function is called from OBForceField::Setup,
-       *  this function doesn't have to be called from anywhere else.
-       */
-      void Setup(OBMol &mol);
+    /*! Translate indices to OBAtom* objects, this function is called from OBForceField::Setup,
+     *  this function doesn't have to be called from anywhere else.
+     */
+    void Setup(OBMol &mol);
 
-      /////////////////////////////////////////////////////////////////////////
-      // Set Constraints                                                     //
-      /////////////////////////////////////////////////////////////////////////
-      //! \name Methods to set constraints
-      //@{
-      //! Set Constraint factor
-      void SetFactor(double factor);
-      //! Ignore the atom while setting up calculations
-      void AddIgnore(int a);
-      //! Fix the position of an atom
-      void AddAtomConstraint(int a);
-      //! Fix the x coordinate of the atom position
-      void AddAtomXConstraint(int a);
-      //! Fix the y coordinate of the atom position
-      void AddAtomYConstraint(int a);
-      //! Fix the z coordinate of the atom position
-      void AddAtomZConstraint(int a);
-      //! Constrain the bond length a-b
-      void AddDistanceConstraint(int a, int b, double length);
-      //! Constrain the angle a-b-c
-      void AddAngleConstraint(int a, int b, int c, double angle);
-      //! Constrain the torsion angle a-b-c-d
-      void AddTorsionConstraint(int a, int b, int c, int d, double torsion);
-      //! Delete a constraint
-      //! \par index constraint index
-      void DeleteConstraint(int index);
-      //@}
-      /////////////////////////////////////////////////////////////////////////
-      // Get Constraints                                                     //
-      /////////////////////////////////////////////////////////////////////////
-      //! \name Methods to get information about set constraints
-      //@{
-      //! Get Constraint factor
-      double GetFactor();
-      //! \returns the number of set constraints
-      int Size() const;
-      /*! The following constraint types are known: OBFF_CONST_IGNORE (ignore 
-       *  the atom while setting up calculations, forcefield implementations 
-       *  need to check this value in their setup function), OBFF_CONST_ATOM
-       *  (fix atom position), OBFF_CONST_ATOM_X (fix x coordinate), 
-       *  OBFF_CONST_ATOM_Y (fix y coordinate), OBFF_CONST_ATOM_Z (fix z 
-       *  coordinate), OBFF_CONST_BOND (constrain bond length), OBFF_CONST_ANGLE
-       *  (constrain angle), OBFF_CONST_TORSION (constrain torsion angle)
-       *  \return the constraint type
-       */
-      int GetConstraintType(int index) const;
-      /*! \return The constraint value, this can be a bond length, angle or 
-       *   torsion angle depending on the constraint type.
-       */
-      double GetConstraintValue(int index) const;
-      //! \return The constraint atom a (or fixed atom)
-      //! \par index constraint index
-      int GetConstraintAtomA(int index) const;
-      //! \return The constraint atom b
-      //! \par index constraint index
-      int GetConstraintAtomB(int index) const;
-      //! \return The constraint atom c
-      //! \par index constraint index
-      int GetConstraintAtomC(int index) const;
-      //! \return The constraint atom d
-      //! \par index constraint index
-      int GetConstraintAtomD(int index) const;
-      //! \return true if this atom is ignored
-      //! \par a atom index
-      bool IsIgnored(int a);
-      //! \return true if this atom is fixed
-      //! \par a atom index
-      bool IsFixed(int a);
-      //! \return true if the x coordinate for this atom is fixed
-      //! \par a atom index
-      bool IsXFixed(int a);
-      //! \return true if the y coordinate for this atom is fixed
-      //! \par a atom index
-      bool IsYFixed(int a);
-      //! \return true if the z coordinate for this atom is fixed
-      //! \par a atom index
-      bool IsZFixed(int a);
-      //@}
+    /////////////////////////////////////////////////////////////////////////
+    // Set Constraints                                                     //
+    /////////////////////////////////////////////////////////////////////////
+    //! \name Methods to set constraints
+    //@{
+    //! Set Constraint factor
+    void SetFactor(double factor);
+    //! Ignore the atom while setting up calculations
+    void AddIgnore(int a);
+    //! Fix the position of an atom
+    void AddAtomConstraint(int a);
+    //! Fix the x coordinate of the atom position
+    void AddAtomXConstraint(int a);
+    //! Fix the y coordinate of the atom position
+    void AddAtomYConstraint(int a);
+    //! Fix the z coordinate of the atom position
+    void AddAtomZConstraint(int a);
+    //! Constrain the bond length a-b
+    void AddDistanceConstraint(int a, int b, double length);
+    //! Constrain the angle a-b-c
+    void AddAngleConstraint(int a, int b, int c, double angle);
+    //! Constrain the torsion angle a-b-c-d
+    void AddTorsionConstraint(int a, int b, int c, int d, double torsion);
+    //! Delete a constraint
+    //! \par index constraint index
+    void DeleteConstraint(int index);
+    //@}
+    /////////////////////////////////////////////////////////////////////////
+    // Get Constraints                                                     //
+    /////////////////////////////////////////////////////////////////////////
+    //! \name Methods to get information about set constraints
+    //@{
+    //! Get Constraint factor
+    double GetFactor();
+    //! \returns the number of set constraints
+    int Size() const;
+    /*! The following constraint types are known: OBFF_CONST_IGNORE (ignore 
+     *  the atom while setting up calculations, forcefield implementations 
+     *  need to check this value in their setup function), OBFF_CONST_ATOM
+     *  (fix atom position), OBFF_CONST_ATOM_X (fix x coordinate), 
+     *  OBFF_CONST_ATOM_Y (fix y coordinate), OBFF_CONST_ATOM_Z (fix z 
+     *  coordinate), OBFF_CONST_BOND (constrain bond length), OBFF_CONST_ANGLE
+     *  (constrain angle), OBFF_CONST_TORSION (constrain torsion angle)
+     *  \return the constraint type
+     */
+    int GetConstraintType(int index) const;
+    /*! \return The constraint value, this can be a bond length, angle or 
+     *   torsion angle depending on the constraint type.
+     */
+    double GetConstraintValue(int index) const;
+    //! \return The constraint atom a (or fixed atom)
+    //! \par index constraint index
+    int GetConstraintAtomA(int index) const;
+    //! \return The constraint atom b
+    //! \par index constraint index
+    int GetConstraintAtomB(int index) const;
+    //! \return The constraint atom c
+    //! \par index constraint index
+    int GetConstraintAtomC(int index) const;
+    //! \return The constraint atom d
+    //! \par index constraint index
+    int GetConstraintAtomD(int index) const;
+    //! \return true if this atom is ignored
+    //! \par a atom index
+    bool IsIgnored(int a);
+    //! \return true if this atom is fixed
+    //! \par a atom index
+    bool IsFixed(int a);
+    //! \return true if the x coordinate for this atom is fixed
+    //! \par a atom index
+    bool IsXFixed(int a);
+    //! \return true if the y coordinate for this atom is fixed
+    //! \par a atom index
+    bool IsYFixed(int a);
+    //! \return true if the z coordinate for this atom is fixed
+    //! \par a atom index
+    bool IsZFixed(int a);
+    //@}
  
-    private:
-      std::vector<OBFFConstraint> _constraints;
-      double _factor;
+  private:
+    std::vector<OBFFConstraint> _constraints;
+    double _factor;
   };
  
   // Class OBForceField
@@ -344,12 +347,12 @@ namespace OpenBabel
   
     MAKE_PLUGIN(OBForceField)
   
-    public:
+      public:
     //!Clone the current instance. May be desirable in multithreaded environments,
     //!Should be deleted after use
     virtual OBForceField* MakeNewInstance()=0;
 
-    protected:
+  protected:
 
     /*! 
       Get the correct OBFFParameter from a OBFFParameter vector.
@@ -430,9 +433,9 @@ namespace OpenBabel
     void SetGradient(double *grad, int idx) 
     { 
       const int coordIdx = (idx - 1) * 3;
-      _gradientPtr[coordIdx  ] = grad[0]; 
-      _gradientPtr[coordIdx+1] = grad[1];
-      _gradientPtr[coordIdx+2] = grad[2];
+      for (unsigned int i = 0; i < 3; ++i) {
+        _gradientPtr[coordIdx + i] = grad[i]; 
+      }
     }
     
     /*! Add grad to the gradient for atom with index idx
@@ -443,12 +446,9 @@ namespace OpenBabel
       //  return;
 
       const int coordIdx = (idx - 1) * 3;
-      //if (!_constraints.IsXFixed(idx))
-        _gradientPtr[coordIdx  ] += grad[0]; 
-      //if (!_constraints.IsYFixed(idx))
-        _gradientPtr[coordIdx+1] += grad[1]; 
-      //if (!_constraints.IsZFixed(idx))
-        _gradientPtr[coordIdx+2] += grad[2]; 
+      for (unsigned int i = 0; i < 3; ++i) {
+        _gradientPtr[coordIdx + i] += grad[i];
+      }
     }
     
     /*! Get the pointer to the gradients
@@ -470,7 +470,12 @@ namespace OpenBabel
      */
     virtual void ClearGradients() 
     { 
-      memset(_gradientPtr, '\0', sizeof(double)*_ncoords);
+      // We cannot use memset because IEEE floating point representations
+      // are not guaranteed by C/C++ standard, but this loop can be
+      // unrolled or vectorized by compilers
+      for (unsigned int i = 0; i < _ncoords; ++i)
+        _gradientPtr[i] = 0.0;
+      //      memset(_gradientPtr, '\0', sizeof(double)*_ncoords);
     }
 
     /*! Check if two atoms are in the same ring. [NOTE: this function uses SSSR, 
@@ -521,9 +526,9 @@ namespace OpenBabel
         }
       }
     const char* TypeID()
-      {
-        return "forcefields";
-      }
+    {
+      return "forcefields";
+    }
 
     /*! \param ID forcefield id (Ghemical, ...)
      *  \return A pointer to a forcefield (the default if ID is empty), or NULL if not available
@@ -590,14 +595,14 @@ namespace OpenBabel
      *  \return true if succesfull
      */
     bool GetCoordinates(OBMol &mol);
-    //! /deprecated Use GetCooordinates instead
+    //! \deprecated Use GetCooordinates instead
     bool UpdateCoordinates(OBMol &mol) {return GetCoordinates(mol); } 
     /*! Get coordinates for all conformers and attach OBConformerData with energies, forces, ... to mol.
      *  \param mol the OBMol object to copy the coordinates to (from OBForceField::_mol)
      *  \return true if succesfull
      */
     bool GetConformers(OBMol &mol);
-    //! /deprecated Use GetConformers instead
+    //! \deprecated Use GetConformers instead
     bool UpdateConformers(OBMol &mol) { return GetConformers(mol); } 
     /*! Set coordinates for current conformer
      *  \param mol the OBMol object to copy the coordinates from (to OBForceField::_mol)
@@ -704,15 +709,15 @@ namespace OpenBabel
       SetLogLevel(OBFF_LOGLVL_MEDIUM);
   
       IF_OBFF_LOGLVL_HIGH {
-        OBFFLog("this text will NOT be logged...\n");
+      OBFFLog("this text will NOT be logged...\n");
       }
    
       IF_OBFF_LOGLVL_LOW {
-        OBFFLog"this text will be logged...\n");
+      OBFFLog"this text will be logged...\n");
       }
   
       IF_OBFF_LOGLVL_MEDIUM {
-        OBFFLog("this text will also be logged...\n");
+      OBFFLog("this text will also be logged...\n");
       }
       \endcode
     */
@@ -868,10 +873,10 @@ namespace OpenBabel
       \return vector which starts at atom and stops at the minimum (the length is the ideal stepsize)
 
       \par Output to log:
-        OBFF_LOGLVL_NONE:   none \n
-        OBFF_LOGLVL_LOW:    none \n
-        OBFF_LOGLVL_MEDIUM: none \n
-        OBFF_LOGLVL_HIGH:   none \n
+      OBFF_LOGLVL_NONE:   none \n
+      OBFF_LOGLVL_LOW:    none \n
+      OBFF_LOGLVL_MEDIUM: none \n
+      OBFF_LOGLVL_HIGH:   none \n
     */
     vector3 LineSearch(OBAtom *atom, vector3 &direction);
 
@@ -882,10 +887,10 @@ namespace OpenBabel
       \return alpha, the scale of the step we moved along the direction vector
 
       \par Output to log:
-        OBFF_LOGLVL_NONE:   none \n
-        OBFF_LOGLVL_LOW:    none \n
-        OBFF_LOGLVL_MEDIUM: none \n
-        OBFF_LOGLVL_HIGH:   none \n
+      OBFF_LOGLVL_NONE:   none \n
+      OBFF_LOGLVL_LOW:    none \n
+      OBFF_LOGLVL_MEDIUM: none \n
+      OBFF_LOGLVL_HIGH:   none \n
     */
     double LineSearch(double *currentCoords, double *direction);
     double Newton2NumLineSearch();
@@ -897,13 +902,13 @@ namespace OpenBabel
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
 
       \par Output to log:
-        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-	too much information about the energy calculations needed for the minimization will interfere with the list 
-	of energies for succesive steps. \n\n
-        OBFF_LOGLVL_NONE:   none \n
-        OBFF_LOGLVL_LOW:    header including number of steps and first step \n
-        OBFF_LOGLVL_MEDIUM: see note above \n
-        OBFF_LOGLVL_HIGH:   see note above \n 
+      This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+      too much information about the energy calculations needed for the minimization will interfere with the list 
+      of energies for succesive steps. \n\n
+      OBFF_LOGLVL_NONE:   none \n
+      OBFF_LOGLVL_LOW:    header including number of steps and first step \n
+      OBFF_LOGLVL_MEDIUM: see note above \n
+      OBFF_LOGLVL_HIGH:   see note above \n 
     */
     void SteepestDescent(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
     /*! Initialize steepest descent optimalization, to be used in combination with SteepestDescentTakeNSteps().
@@ -913,7 +918,7 @@ namespace OpenBabel
       // pFF is a pointer to a OBForceField class 
       pFF->SteepestDescentInitialize(100, 1e-5f);
       while (pFF->SteepestDescentTakeNSteps(5)) {
-        // do some updating in your program (redraw structure, ...)
+      // do some updating in your program (redraw structure, ...)
       }
       \endcode
       
@@ -924,13 +929,13 @@ namespace OpenBabel
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
 
       \par Output to log:
-        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-	too much information about the energy calculations needed for the minimization will interfere with the list 
-	of energies for succesive steps. \n\n
-	OBFF_LOGLVL_NONE:   none \n
-        OBFF_LOGLVL_LOW:    header including number of steps \n
-        OBFF_LOGLVL_MEDIUM: see note above \n
-        OBFF_LOGLVL_HIGH:   see note above \n
+      This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+      too much information about the energy calculations needed for the minimization will interfere with the list 
+      of energies for succesive steps. \n\n
+      OBFF_LOGLVL_NONE:   none \n
+      OBFF_LOGLVL_LOW:    header including number of steps \n
+      OBFF_LOGLVL_MEDIUM: see note above \n
+      OBFF_LOGLVL_HIGH:   see note above \n
  
     */
     void SteepestDescentInitialize(int steps = 1000, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
@@ -940,13 +945,13 @@ namespace OpenBabel
       \return false if convergence or the number of steps given by SteepestDescentInitialize() has been reached 
       
       \par Output to log:
-        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-	too much information about the energy calculations needed for the minimization will interfere with the list 
-	of energies for succesive steps. \n\n
-	OBFF_LOGLVL_NONE:   none \n
-        OBFF_LOGLVL_LOW:    step number, energy and energy for the previous step \n
-        OBFF_LOGLVL_MEDIUM: see note above \n
-        OBFF_LOGLVL_HIGH:   see note above \n
+      This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+      too much information about the energy calculations needed for the minimization will interfere with the list 
+      of energies for succesive steps. \n\n
+      OBFF_LOGLVL_NONE:   none \n
+      OBFF_LOGLVL_LOW:    step number, energy and energy for the previous step \n
+      OBFF_LOGLVL_MEDIUM: see note above \n
+      OBFF_LOGLVL_HIGH:   see note above \n
  
     */
     bool SteepestDescentTakeNSteps(int n);
@@ -956,13 +961,13 @@ namespace OpenBabel
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
 
       \par Output to log:
-        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-	too much information about the energy calculations needed for the minimization will interfere with the list 
-	of energies for succesive steps. \n\n
-	OBFF_LOGLVL_NONE:   none \n
-        OBFF_LOGLVL_LOW:    information about the progress of the minimization \n
-        OBFF_LOGLVL_MEDIUM: see note above \n
-        OBFF_LOGLVL_HIGH:   see note above \n
+      This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+      too much information about the energy calculations needed for the minimization will interfere with the list 
+      of energies for succesive steps. \n\n
+      OBFF_LOGLVL_NONE:   none \n
+      OBFF_LOGLVL_LOW:    information about the progress of the minimization \n
+      OBFF_LOGLVL_MEDIUM: see note above \n
+      OBFF_LOGLVL_HIGH:   see note above \n
  
     */
     void ConjugateGradients(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
@@ -973,7 +978,7 @@ namespace OpenBabel
       // pFF is a pointer to a OBForceField class 
       pFF->ConjugateGradientsInitialize(100, 1e-5f);
       while (pFF->ConjugateGradientsTakeNSteps(5)) {
-        // do some updating in your program (redraw structure, ...)
+      // do some updating in your program (redraw structure, ...)
       }
       \endcode
       
@@ -984,13 +989,13 @@ namespace OpenBabel
       \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
       
       \par Output to log:
-        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-	too much information about the energy calculations needed for the minimization will interfere with the list 
-	of energies for succesive steps. \n\n
-	OBFF_LOGLVL_NONE:   none \n
-        OBFF_LOGLVL_LOW:    header including number of steps and first step \n
-        OBFF_LOGLVL_MEDIUM: see note above \n
-        OBFF_LOGLVL_HIGH:   see note above \n
+      This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+      too much information about the energy calculations needed for the minimization will interfere with the list 
+      of energies for succesive steps. \n\n
+      OBFF_LOGLVL_NONE:   none \n
+      OBFF_LOGLVL_LOW:    header including number of steps and first step \n
+      OBFF_LOGLVL_MEDIUM: see note above \n
+      OBFF_LOGLVL_HIGH:   see note above \n
     */
     void ConjugateGradientsInitialize(int steps = 1000, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
     /*! Take n steps in a conjugate gradient optimalization that was previously initialized with ConjugateGradientsInitialize().
@@ -999,13 +1004,13 @@ namespace OpenBabel
       \return false if convergence or the number of steps given by ConjugateGradientsInitialize() has been reached 
       
       \par Output to log:
-        This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-	too much information about the energy calculations needed for the minimization will interfere with the list 
-	of energies for succesive steps. \n\n
-	OBFF_LOGLVL_NONE:   none \n
-        OBFF_LOGLVL_LOW:    step number, energy and energy for the previous step \n
-        OBFF_LOGLVL_MEDIUM: see note above \n
-        OBFF_LOGLVL_HIGH:   see note above \n
+      This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+      too much information about the energy calculations needed for the minimization will interfere with the list 
+      of energies for succesive steps. \n\n
+      OBFF_LOGLVL_NONE:   none \n
+      OBFF_LOGLVL_LOW:    step number, energy and energy for the previous step \n
+      OBFF_LOGLVL_MEDIUM: see note above \n
+      OBFF_LOGLVL_HIGH:   see note above \n
     */
     bool ConjugateGradientsTakeNSteps(int n);
     //@}
@@ -1052,8 +1057,8 @@ namespace OpenBabel
      *  \param n number of steps to take
      *  \param T absolute temperature in Kelvin
      *  \param timestep the time step in picoseconds (10e-12)
-        \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
-     */
+     \param method OBFF_ANALYTICAL_GRADIENTS (default) or OBFF_NUMERICAL_GRADIENTS
+    */
     void MolecularDynamicsTakeNSteps(int n, double T, double timestep = 0.001, int method = OBFF_ANALYTICAL_GRADIENT);
     //@}
 
@@ -1099,7 +1104,7 @@ namespace OpenBabel
     /*! 
       Calculate the error of the analytical gradient (debugging)
       \return  error = fabs(numgrad - anagrad) / anagrad * 100% 
-   */
+    */
     vector3 ValidateGradientError(vector3 &numgrad, vector3 &anagrad);
     //@}
      
@@ -1115,14 +1120,14 @@ namespace OpenBabel
      * \param b atom b (coordinates), will be changed to -drab/db
      * \return The distance between a and b (bondlength for bond stretching, separation for vdw, electrostatic)
      */
-     static double VectorBondDerivative(double *pos_i, double *pos_j, 
+    static double VectorBondDerivative(double *pos_i, double *pos_j, 
                                        double *force_i, double *force_j);
     /*! To be used for VDW or Electrostatic interactions. This
      *  is faster than VectorBondDerivative, but does no error checking. 
      */
     static double VectorDistanceDerivative(const double* const pos_i, const double* const pos_j, 
                                            double *force_i, double *force_j);
-    //! /deprecated
+    //! \deprecated
     static double VectorLengthDerivative(vector3 &a, vector3 &b);
  
     /*! Calculate the derivative of a angle a-b-c. The angle is given by dot(ab,cb)/rab*rcb. 
@@ -1134,7 +1139,7 @@ namespace OpenBabel
      */
     static double VectorAngleDerivative(double *pos_i, double *pos_j, double *pos_k,
                                         double *force_i, double *force_j, double *force_k);
-    //! /deprecated
+    //! \deprecated
     static double VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c);
     /*! Calculate the derivative of a OOP angle a-b-c-d. b is the central atom, and a-b-c is the plane. 
      * The OOP angle is given by 90° - arccos(dot(corss(ab,cb),db)/rabbc*rdb).
@@ -1146,7 +1151,7 @@ namespace OpenBabel
      */
     static double VectorOOPDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
                                       double *force_i, double *force_j, double *force_k, double *force_l);
-    //! /deprecated
+    //! \deprecated
     static double VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
     /*! Calculate the derivative of a torsion angle a-b-c-d. The torsion angle is given by arccos(dot(corss(ab,bc),cross(bc,cd))/rabbc*rbccd).
      * \param a atom a (coordinates), will be changed to -dtheta/da
@@ -1157,7 +1162,7 @@ namespace OpenBabel
      */
     static double VectorTorsionDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
                                           double *force_i, double *force_j, double *force_k, double *force_l);
-    //! /deprecated
+    //! \deprecated
     static double VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
 
     /*! inline fuction to speed up minimization speed
@@ -1167,16 +1172,14 @@ namespace OpenBabel
      */
     static void VectorSubtract(double *i, double *j, double *result)
     {
-      result[0] = i[0] - j[0];
-      result[1] = i[1] - j[1];
-      result[2] = i[2] - j[2];
+      for (unsigned int c = 0; c < 3; ++c)
+        result[c] = i[c] - j[c];
     }
     
     static void VectorSubtract(const double* const i, const double* const j, double *result)
     {
-      result[0] = i[0] - j[0];
-      result[1] = i[1] - j[1];
-      result[2] = i[2] - j[2];
+      for (unsigned int c = 0; c < 3; ++c)
+        result[c] = i[c] - j[c];
     }
     
     /*! inline fuction to speed up minimization speed
@@ -1186,9 +1189,8 @@ namespace OpenBabel
      */
     static void VectorAdd(double *i, double *j, double *result)
     {
-      result[0] = i[0] + j[0];
-      result[1] = i[1] + j[1];
-      result[2] = i[2] + j[2];
+      for (unsigned int c = 0; c < 3; ++c)
+        result[c] = i[c] + j[c];
     }
     
     /*! inline fuction to speed up minimization speed
@@ -1198,9 +1200,8 @@ namespace OpenBabel
      */
     static void VectorDivide(double *i, double n, double *result)
     {
-      result[0] = i[0] / n;
-      result[1] = i[1] / n;
-      result[2] = i[2] / n;
+      for (unsigned int c = 0; c < 3; ++c)
+        result[c] = i[c] / n;
     }
     
     /*! inline fuction to speed up minimization speed
@@ -1210,16 +1211,14 @@ namespace OpenBabel
      */
     static void VectorMultiply(double *i, double n, double *result)
     {
-      result[0] = i[0] * n;
-      result[1] = i[1] * n;
-      result[2] = i[2] * n;
+      for (unsigned int c = 0; c < 3; ++c)
+        result[c] = i[c] * n;
     }
     
     static void VectorMultiply(const double* const i, const double n, double *result)
     {
-      result[0] = i[0] * n;
-      result[1] = i[1] * n;
-      result[2] = i[2] * n;
+      for (unsigned int c = 0; c < 3; ++c)
+        result[c] = i[c] * n;
     }
     
     /*! inline fuction to speed up minimization speed
@@ -1227,9 +1226,8 @@ namespace OpenBabel
      */
     static void VectorSelfMultiply(double *i, double n)
     {
-      i[0] *= n;
-      i[1] *= n;
-      i[2] *= n;
+      for (unsigned int c = 0; c < 3; ++c)
+        i[c] *= n;
     }
     
     /*! inline fuction to speed up minimization speed
@@ -1238,9 +1236,8 @@ namespace OpenBabel
     static void VectorNormalize(double *i)
     {  
       double length = VectorLength(i);
-      i[0] = i[0] / length;
-      i[1] = i[1] / length;
-      i[2] = i[2] / length;
+      for (unsigned int c = 0; c < 3; ++c)
+        i[c] /= length;
     }
     
     /*! inline fuction to speed up minimization speed
@@ -1249,9 +1246,8 @@ namespace OpenBabel
      */
     static void VectorCopy(double *from, double *to)
     {  
-      to[0] = from[0];
-      to[1] = from[1];
-      to[2] = from[2];
+      for (unsigned int c = 0; c < 3; ++c)
+        to[c] = from[c];
     }
     
     /*! inline fuction to speed up minimization speed
@@ -1302,9 +1298,8 @@ namespace OpenBabel
      */
     static void VectorClear(double *i) 
     {
-      i[0] = 0.0;
-      i[1] = 0.0;
-      i[2] = 0.0;
+      for (unsigned int c = 0; c < 3; ++c)
+        i[c] = 0.0;
     }
    
     /*! inline fuction to speed up minimization speed
@@ -1314,7 +1309,12 @@ namespace OpenBabel
      */
     static double VectorDot(double *i, double *j)
     {
-      return i[0]*j[0] + i[1]*j[1] + i[2]*j[2];
+      double result = 0.0;
+      // Written as a loop for vectorization
+      // Loop will be unrolled by compiler otherwise
+      for (unsigned int c = 0; c < 3; ++c)
+        result += i[c]*j[c];
+      return result;
     }
     
     /*! inline fuction to speed up minimization speed
