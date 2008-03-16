@@ -1,3 +1,20 @@
+2008-03-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/CMakeLists.txt: Add ops and descriptors subdirectories.
+
+	* src/ops.cpp, src/forcefield.cpp, src/ops/loader.cpp,
+	src/ops/optransform.cpp, src/descriptors/cmpdfilter.cpp,
+	src/descriptors/smartsdescriptors.cpp,
+	src/descriptors/groupcontrib.cpp, src/format.cpp, src/alias.cpp,
+	src/forcefields/forcefieldmmff94.cpp, src/formats/MCDLformat.cpp, 
+	Change to UNIX line-endings for consistency. (Some files also had
+	multiple line formats.)
+
+	* include/openbabel/math/matrix3x3.h,
+	include/openbabel/forcefield.h: Move to loop form. Compiler
+	loop unrolling is effective, and loops can be vectorized for
+	greater speed. 
+
 2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/builder.h, src/builder.cpp: More robust way to
