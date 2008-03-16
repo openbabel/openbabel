@@ -1,4 +1,4 @@
-  #include <openbabel/mol.h>
+#include <openbabel/mol.h>
 #include <openbabel/obiter.h>
 #include <graphmol/RWMol.h>
 #include <graphmol/Atom.h>

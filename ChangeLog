@@ -6,16 +6,12 @@
 	fragment. This also fixes the previously not working commit for: 
 	c1cc(CC)ccc1
 
-2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
-
 	* src/CMakeLists.txt: Remove groupcontrib.cpp, added some new files.
 	Not sure if the ops/ dir is included.
 
 	* data/CMakeLists.txt: Update data files to install.
 
 	* CMakeLists.txt: Change version to 2.2.0b4.
-
-2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/builder.h, src/builder.cpp: Moved some
 	functionality from Build to Connect(). OBBuilder now constructs
