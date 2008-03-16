@@ -1,3 +1,8 @@
+2008-03-16  Noel O'Boyle  <baoilleach@gmail.com>
+	
+	* All .cpp and .h files: Set SVN property svn:eol to native
+
+
 2008-03-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/CMakeLists.txt: Add ops and descriptors subdirectories.
