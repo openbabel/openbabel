@@ -1,4 +1,11 @@
 
+set(descriptors_srcs
+  descriptors/cmpdfilter.cpp
+  descriptors/groupcontrib.cpp
+  descriptors/filters.cpp
+  descriptors/smartsdescriptors.cpp
+)
+
 set(fingerprints_srcs
     fingerprints/finger2.cpp
     fingerprints/finger3.cpp
@@ -15,6 +22,12 @@ set(math_srcs
     math/spacegroup.cpp
     math/transform3d.cpp
     math/vector3.cpp
+)
+
+set(ops_srcs
+  ops/gen3d.cpp
+  ops/loader.cpp
+  ops/optransform.cpp
 )
 
 set(openbabel_srcs
@@ -58,7 +71,7 @@ set(openbabel_srcs
     tokenst.cpp
     transform.cpp
     typer.cpp
-    formats/obmolecformat.cpp # ???
+#    formats/obmolecformat.cpp  # Not needed -- included in individual file formats
 )
 
 if(BUILD_SHARED)
@@ -75,9 +88,11 @@ endif(BUILD_SHARED)
 
 add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
                 ${openbabel_srcs}
+                ${descriptors_srcs}
                 ${fingerprints_srcs}
                 ${forcefields_srcs}
                 ${math_srcs}
+                ${ops_srcs}
                 ${headers}
                 ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h
 )
