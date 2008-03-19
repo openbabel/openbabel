@@ -1,4 +1,4 @@
-project(openabel)
+project(openbabel)
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   2)
 set(BABEL_PATCH_VER 0b4)
@@ -8,7 +8,7 @@ else(WIN32)
   set(BABEL_LIBRARY   openbabel)
 endif(WIN32)
 set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
-set(BABEL_DATADIR  "{CMAKE_INSTALL_PREFIX}/share/openbabel")
+set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
 set(LIB            "lib")   ## FIXME: add lib suffix!
 
 option(WITH_INCHI   "build inchi lib" ON)
