@@ -1,4 +1,7 @@
 project(openbabel)
+#set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules )
+cmake_minimum_required(VERSION 2.4.5)
+
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   2)
 set(BABEL_PATCH_VER 0b4)
