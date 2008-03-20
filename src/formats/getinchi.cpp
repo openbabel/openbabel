@@ -42,7 +42,7 @@ std::string GetInChI(std::istream& is);
 
 /*!
 This function recovers a normal InChI from an input stream which
-contains other arbitary text. The InChI string can have
+contains other arbitrary text. The InChI string can have
 extraneous characters inserted, for example because of word wrapping,
 provided it follows certain rules.
 

@@ -324,7 +324,7 @@ static void FindRingAtoms(OBMol *pmol, OBBitVec &frag_atoms, OBBitVec &ring_atom
 *
 *       Vector is indexed from zero (not one, like atom->GetIdx()).
 *
-*       NOTE: This may need to be extended to include the bond-invarient properties,
+*       NOTE: This may need to be extended to include the bond-invariant properties,
 *       particularly the size of all rings the bond is in (from a SSSR).
 ***************************************************************************/
 
@@ -763,8 +763,8 @@ static void BreakChiralTies(OBMol *pmol,
       }
     }
     
-    // Now propagate the change accross the whole molecule with the
-    // extended sum-of-invarients.
+    // Now propagate the change across the whole molecule with the
+    // extended sum-of-invariants.
     ExtendInvarients(atom_sym_classes, frag_atoms, nfragatoms, pmol->NumAtoms());
     
   }

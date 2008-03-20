@@ -1,3 +1,7 @@
+2008-03-20  Carsten Niehaus  <cniehaus@kde.org>
+	* /canon.cpp /forcefield.cpp /chiral.cpp /kekulize.cpp /grid.cpp /builder.cpp /fingerprint.cpp /obutil.cpp /atom.cpp /forcefields/forcefieldghemical.h /forcefields/forcefieldmm2.h /forcefields/forcefieldmmff94.cpp /forcefields/forcefielduff.h /forcefields/forcefieldmmff94.h /forcefields/forcefieldghemical.cpp /zipstreamimpl.h /obconversion.cpp /base.cpp /formats/smilesformat.cpp /formats/cansmilesformat.cpp /formats/mpdformat.cpp /formats/getinchi.cpp /formats/obmolecformat.cpp /formats/exampleformat.cpp /formats/fchkformat.cpp: Typo fixes
+	
+	* All .cpp and .h files: Set SVN property svn:eol to native
 2008-03-16  Noel O'Boyle  <baoilleach@gmail.com>
 	
 	* All .cpp and .h files: Set SVN property svn:eol to native

@@ -135,7 +135,7 @@ namespace OpenBabel
       return "Universal Force Field.";
     }
       
-    //! Get the unit in wich the energy is expressed
+    //! Get the unit in which the energy is expressed
     std::string GetUnit() 
       { 
         return std::string("kJ/mol");  // Note that we convert from kcal/mol internally

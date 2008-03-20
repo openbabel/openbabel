@@ -750,7 +750,7 @@ namespace OpenBabel
 #define TwoThirdsPI   (2.0*PI/3.0)
 
   /*FUNCTION */
-  /* recieves: the co-efficients for a general
+  /* receives: the co-efficients for a general
    *           equation of degree one.
    *           Ax + B = 0 !!
    */

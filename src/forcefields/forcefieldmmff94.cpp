@@ -2688,7 +2688,7 @@ namespace OpenBabel
         break;
         }
         }
-        if (!found_angle) // didn't find matching angle, shouldnt happen, but continue to be safe
+        if (!found_angle) // didn't find matching angle, shouldn't happen, but continue to be safe
         continue;
 
 
@@ -3730,7 +3730,7 @@ namespace OpenBabel
       }
 
       if (failed) {
-        cout << "Could not succesfully assign atom types" << endl;
+        cout << "Could not successfully assign atom types" << endl;
         return false;
         //continue;
       }
@@ -3762,7 +3762,7 @@ namespace OpenBabel
       }
 
       if (failed) {
-        cout << "Could not succesfully assign formal charges" << endl;
+        cout << "Could not successfully assign formal charges" << endl;
         //return false;
         continue;
       }
@@ -3794,7 +3794,7 @@ namespace OpenBabel
       }
 
       if (failed) {
-        cout << "Could not succesfully assign partial charges" << endl;
+        cout << "Could not successfully assign partial charges" << endl;
         //return false;
         continue;
       }
@@ -3867,7 +3867,7 @@ namespace OpenBabel
     cout << "  VALIDATE GRADIENTS : " << _mol.GetTitle() << endl;
     cout << "                                                                                        " << endl;
     cout << "                                                                                        " << endl;
-    cout << "ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERRROR (%)   " << endl;
+    cout << "ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERROR (%)   " << endl;
     cout << "----------------------------------------------------------------------------------------" << endl;
     //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
    

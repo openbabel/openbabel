@@ -61,10 +61,10 @@ public:
 			 The parameter is always text and needs to be parsed to extract a number.
 		   
 		   Options can apply when writing - 4th parameter is OBConversion::OUTOPTIONS
-		   or can be omitted as shown. A single letter output option is preceeded 
+		   or can be omitted as shown. A single letter output option is preceded 
 		   by -x on the command line.
 		   Or options can apply to the input format - the 4th parameter is 
-		   OBConversion::INOPTIONS. They are then  preceeded by -a on the command line.
+		   OBConversion::INOPTIONS. They are then  preceded by -a on the command line.
 		
 		   Each option letter may be reused in other formats, but within the same group,
 		   INOPTIONS or OUTOPTIONS, must take the same number of parameters (0 or 1).

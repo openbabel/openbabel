@@ -69,7 +69,7 @@ namespace OpenBabel
       }
       \endcode
       A number of the property member functions indicate that atoms
-      have some knowlege of their covalently attached neighbor atoms.
+      have some knowledge of their covalently attached neighbor atoms.
       Bonding information is partly redundant within a molecule in
       that an OBMol has a complete list of bonds in a molecule, and
       an OBAtom has a list bonds of which it is a member. The following

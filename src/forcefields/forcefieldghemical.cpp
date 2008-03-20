@@ -988,7 +988,7 @@ namespace OpenBabel
     bool passed = true; // set to false if any component fails
     
     OBFFLog("\nV A L I D A T E   G R A D I E N T S\n\n");
-    OBFFLog("ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERRROR (%)   \n");
+    OBFFLog("ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERROR (%)   \n");
     OBFFLog("----------------------------------------------------------------------------------------\n");
     //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
    

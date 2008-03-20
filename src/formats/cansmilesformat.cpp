@@ -698,7 +698,7 @@ namespace OpenBabel
     // else -- the first atoms already match.
 
     // Now rotate the last three atoms of v2 so that the
-    // second atom matchs v1's second atom
+    // second atom matches v1's second atom
 
     if (v1[1] == v2[2]) {
       v2[2] = v2[3];
@@ -936,7 +936,7 @@ namespace OpenBabel
    *       the form of a vector of digit/OBBond* pair.  Some of the digits may
    *       be for newly-opened rings (the matching digit occurs later in the
    *       SMILES string), and some may be for closing rings (the matching
-   *       digit occured earlier in the string).
+   *       digit occurred earlier in the string).
    *
    *       Canonicalization requires that atoms with more than one digit
    *       have the digits assigned in a canonical fashion.  For example,
@@ -1073,7 +1073,7 @@ namespace OpenBabel
    * DESCRIPTION:
    *       This is like GetHvyValence(), but it returns the "valence" of an
    *       atom as it appears in the SMILES string.  In particular, hydrogens
-   *       count if they will appear explicitely -- see IsSuppressedHydrogen()
+   *       count if they will appear explicitly -- see IsSuppressedHydrogen()
    *       above.
    ***************************************************************************/
 
@@ -1151,7 +1151,7 @@ namespace OpenBabel
       // There are two cases: it's explicit in the OBMol object but should be
       // written inside the brackets, i.e. "[C@H]", or it is explicit and
       // must be outside the brackets, such as for deuterium.  (A hydrogen
-      // that will appear explicitely in the SMILES as a separate atom is
+      // that will appear explicitly in the SMILES as a separate atom is
       // treated like any other atom when calculating the chirality.)
 
       FOR_NBORS_OF_ATOM(i_nbr, atom) {

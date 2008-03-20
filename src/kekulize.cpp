@@ -91,7 +91,7 @@ namespace OpenBabel
             cycle.push_back(atom);
           }
         }
-        // At the begining each atom give one electron to the cycle
+        // At the beginning each atom give one electron to the cycle
         for(j=0; j< cycle.size(); ++j) {
           electron.push_back(1);
         }
@@ -476,11 +476,11 @@ namespace OpenBabel
     else {
       // if we found a good solution, then the state of Idx2 may have shifted from 1 to 0 during the kekulization
       // If it is the case, we should check if there is a remaining unmarked neighbor because it is possible
-      // that kekulizing from this neigbor failed just because Idx2 was equal to 1
+      // that kekulizing from this neighbor failed just because Idx2 was equal to 1
 
       if(previousState[Idx2] == 1) {
-        // Since now Idx2 is equal to 0 because it kekulized well the kekulizing of the failed neigbor could be successfull
-        // If there is still an unmarked neigbor try to kekulize it again
+        // Since now Idx2 is equal to 0 because it kekulized well the kekulizing of the failed neighbor could be successful
+        // If there is still an unmarked neighbor try to kekulize it again
         //mark[Idx2]=true;	
         return_false=false;
         //cout << "retry kekulizing from " << Idx2 << endl;
@@ -501,14 +501,14 @@ namespace OpenBabel
     
           }
   
-        // if we cannot kekulize the remaining neigbor again then we have to return false
+        // if we cannot kekulize the remaining neighbor again then we have to return false
         // we do not have to reset the states because the kekulize will fail anyway
         if(return_false) {
           //cout << "rekekulize failed" << endl;
           return(false);
         }
         else {
-          //cout << "rekekulized successfull" << endl;
+          //cout << "rekekulized successful" << endl;
           return (true);
         }
 	  

@@ -368,7 +368,7 @@ namespace OpenBabel
   //
   // Next we iterate over the atoms. There are 3 possibilities:
   // 
-  // 1) The atom is allready added (vdone is set) --> continue
+  // 1) The atom is already added (vdone is set) --> continue
   // 2) The atom belongs to a fragment --> a) This is the first atom to add: leave fragment as it is
   //                                       b) Not the first atom: rotate, translate and connect the fragment
   // 3) The atom doesn't belong to a fragment: a) First atom: place at origin

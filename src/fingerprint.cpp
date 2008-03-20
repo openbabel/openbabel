@@ -528,7 +528,7 @@ namespace OpenBabel
     of candidates by another method (like OBSmartsPattern).
 
     Note that the index files are not portable. They need to be prepared on the
-    computer that will acess them.
+    computer that will access them.
 
     <h4>Using FastSearch and FastSearchIndexer in a program</h4>
 

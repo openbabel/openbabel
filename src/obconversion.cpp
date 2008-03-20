@@ -486,7 +486,7 @@ namespace OpenBabel {
         if(!ret)
           {
             //error or termination request: terminate unless
-            // -e option requested and sucessfully can skip past current object
+            // -e option requested and successfully can skip past current object
             if(!IsOption("e", GENOPTIONS) || pInFormat->SkipObjects(0,this)!=1) 
               break;
           }

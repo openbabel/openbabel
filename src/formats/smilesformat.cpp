@@ -1910,7 +1910,7 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             
           // after adding a bond to atom "_prev"
           // search to see if atom is bonded to a chiral atom
-          // need to check both _prev and (*j)[1] as closure is direction independant
+          // need to check both _prev and (*j)[1] as closure is direction independent
           map<OBAtom*,OBChiralData*>::iterator ChiralSearch,cs2;
           ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
           cs2=_mapcd.find(mol.GetAtom((*j)[1]));
@@ -2818,7 +2818,7 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     else
       stereo[0] = '\0';
 
-    //re-zero psuedo-coords
+    //re-zero pseudo-coords
     if (is2D)
       {
         vector3 v;

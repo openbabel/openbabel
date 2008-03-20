@@ -2446,7 +2446,7 @@ namespace OpenBabel
   void OBForceField::ConjugateGradients(int steps, double econv, int method)
   {
     ConjugateGradientsInitialize(steps, econv, method);
-    ConjugateGradientsTakeNSteps(steps); // ConjugateGradientsInitialize takes the fisrt step
+    ConjugateGradientsTakeNSteps(steps); // ConjugateGradientsInitialize takes the first step
   }
   
   //  
@@ -2789,7 +2789,7 @@ namespace OpenBabel
   // F = [ -------- ]     a = --- = [ ----------- ] = [ ---------------- ] = [ ----------- ] = [ ------ ]
   //     [  mol  A  ]          m    [  mol A amu  ]   [  mol A 10^-27kg  ]   [  10^-24s^2  ]   [  ps^2  ]
   //
-  // This means that if we devide the force (comming from the FF) by 1000x its mass in amu, 
+  // This means that if we divide the force (coming from the FF) by 1000x its mass in amu, 
   // we get the acceleration in A ps^-2.
   
   // gromacs user manual page 17

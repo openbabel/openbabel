@@ -48,7 +48,7 @@ namespace OpenBabel
       double dielectric;
       std::vector<OBFFParameter> _ffbondparams; // a = atom 1 of bond
                                                 // b = atom 2 of bond
-						// dpar1 = lenght
+						// dpar1 = length
 						// dpar2 = force
       std::vector<OBFFParameter> _ffangleparams; // a = atom 1 of angle abc
                                                  // b = atom 2 of angle abc

@@ -397,7 +397,7 @@ namespace OpenBabel
       if(itr!=index.end())
       unsigned pos_in_datafile = itr->second;
       @endcode
-      pos_in_datafile is used as a paramter in seekg() to read from the datafile
+      pos_in_datafile is used as a parameter in seekg() to read from the datafile
 
       If no index is found, it is constructed from the datafile by reading all of
       it using the format pInFormat, and written to the directory containing the datafile.

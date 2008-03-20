@@ -306,7 +306,7 @@ namespace OpenBabel
       }
     cd->SetAtom4Refs(nbr_atms,calcvolume);
     
-    //re-zero psuedo-coords
+    //re-zero pseudo-coords
     if (is2D && ReZeroZ)
       {
         vector3 v;

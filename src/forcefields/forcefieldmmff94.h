@@ -246,7 +246,7 @@ namespace OpenBabel
         return "MMFF94 force field.";
       }
 
-      //! Get the unit in wich the energy is expressed
+      //! Get the unit in which the energy is expressed
       std::string GetUnit() 
       { 
         return std::string("kcal/mol"); 

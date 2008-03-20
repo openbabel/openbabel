@@ -415,7 +415,7 @@ namespace OpenBabel
   bonds. Previously only 2^16 atoms or bonds were possible.
 
   The OBNodeBase, OBEdgeBase, and OBGraphBase classes were
-  deprecated. Typedef declarations provide backwards compatibilty by
+  deprecated. Typedef declarations provide backwards compatibility by
   mapping to OBAtom, OBBond, and OBMol, respectively.
 
   In addition, this page gives a general list of additions to the library.

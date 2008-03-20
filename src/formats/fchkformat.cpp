@@ -175,7 +175,7 @@ namespace OpenBabel
     ++lineno;
     pmol->SetTitle(buff);
 
-    /* extract all the informations here */
+    /* extract all the information here */
     while (pifs->getline(buff, BUFF_SIZE))
     {
       ++lineno;

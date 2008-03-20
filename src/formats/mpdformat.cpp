@@ -23,9 +23,9 @@ GNU General Public License for more details.
 
 #define LAYER_DEPTH 2 // cannot increase past 2 without adding more *nbr atom pointers and loops
 #define LAYER_SIZE 184 // number of types needed for types system used
-#define SEP_0 ";"  // seperator between types
-#define SEP_1 "-"  // seperator for data layer-freq-type
-#define SEP_2 '\t' // seperator for atoms
+#define SEP_0 ";"  // separator between types
+#define SEP_1 "-"  // separator for data layer-freq-type
+#define SEP_2 '\t' // separator for atoms
 
 using namespace std;
 namespace OpenBabel
@@ -195,7 +195,7 @@ namespace OpenBabel
 		if(pConv->IsOption("n")) // appending file name to molecule names
       {
         name = pConv->GetInFilename();     // string name holds the filename for appending
-        unsigned int dotpos=name.find(".");         // removes the extention(s) from the filename
+        unsigned int dotpos=name.find(".");         // removes the extension(s) from the filename
         if (dotpos < name.length())name.erase(dotpos);
         pre_true = true;
       }

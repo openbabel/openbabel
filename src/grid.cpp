@@ -380,7 +380,7 @@ namespace OpenBabel
     // the bit representation of floating-point numbers. One can say
     // it's OK because IEEE754 is a widely accepted standard, but then
     // one should at least make it write the data in an endianness-
-    // independant way. Of course this comment applies also to
+    // independent way. Of course this comment applies also to
     // the operator>> below.
     os.write((const char*)&fg._xmin,sizeof(double));
     os.write((const char*)&fg._xmax,sizeof(double));
