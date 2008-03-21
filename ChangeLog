@@ -1,3 +1,12 @@
+2008-03-21 Chris Morley
+
+	* include/openbabel/builder.h, src/builder.cpp:
+	Delay parsing of fragments.txt until first use, and then
+	do only once, saving in a static variable. This matters for
+	gen3D where operation on multiple molecules is common.
+	I know OBBuilder is still under development and is not 'my'code;
+	please revert if not suitable.
+
 2008-03-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/atomrecord.cpp: New file to handle PDB-style atom

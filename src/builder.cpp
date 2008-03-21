@@ -60,10 +60,9 @@ namespace OpenBabel
       //
       \endcode
   **/
+  std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > OBBuilder::_fragments;
 
-
-  OBBuilder::OBBuilder() 
-  {
+  void OBBuilder::LoadFragments()  {
     // open data/fragments.txt
     ifstream ifs;
     if (OpenDatafile(ifs, "fragments.txt").length() == 0) {
@@ -102,14 +101,7 @@ namespace OpenBabel
     _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
   }
  
-  
-  OBBuilder::~OBBuilder() 
-  {
-    _fragments.clear();
-  }
-
-  vector3 OBBuilder::GetNewBondVector(OBAtom *atom)
-  {
+  vector3 OBBuilder::GetNewBondVector(OBAtom *atom){
     vector3 bond1, bond2, bond3, v1, v2, newbond;
     
     bond1 = VZero;
@@ -396,6 +388,12 @@ namespace OpenBabel
     
     _workMol.SetHybridizationPerceived();
 
+    //datafile is read only on first use of Build()
+    static bool loaded; //initially false
+    if(!loaded) {
+      LoadFragments();
+      loaded=true;
+    }
     // Loop through  the database once and assign the coordinates from
     // the first (most complex) fragment.
     for (i = _fragments.begin();i != _fragments.end();++i) {

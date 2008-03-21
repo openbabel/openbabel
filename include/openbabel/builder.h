@@ -35,10 +35,10 @@ namespace OpenBabel
   //! \brief Class to build 3D structures
   class OBAPI OBBuilder {
     public:
-      //! constructor
-      OBBuilder();
-      //! destructor
-      ~OBBuilder();
+
+      //! Load fragment info from file, if is it has not already been done
+      void LoadFragments();
+
       /*! Get the position for a new neighbour on atom.
        *  \param atom Atom for which we want a new neighbour location.
        *  \returns The position for the new atom.
@@ -77,7 +77,7 @@ namespace OpenBabel
       OBBitVec GetFragment(int index);
       void AddNbrs(OBBitVec &fragment, OBAtom *atom);
       //! used to hold the fragments loaded in the constructor
-      std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _fragments;
+      static std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _fragments;
       //! used to hold the molecule we're working on 
       OBMol _workMol;
   }; // class OBBuilder
