@@ -7,6 +7,7 @@ set(formats
     APIInterface
     CSRformat
     PQSformat
+    MCDLformat
     alchemyformat
     acrformat
     amberformat
@@ -15,11 +16,11 @@ set(formats
     boxformat
     cacaoformat
     cacheformat
+    cansmilesformat
     carformat
     cccformat
     chem3dformat
     chemdrawct
-    chemdrawcdx
     chemtoolformat
     cifformat
     copyformat
@@ -35,21 +36,29 @@ set(formats
     freefracformat
     gamessformat
     gaussformat
+    gausscubeformat
+    gausszmatformat
     ghemicalformat
     gromos96format
     hinformat
     jaguarformat
     mdlformat
+    mmcifforamt
     mmodformat
     mol2format
+    moldenformat
     molreport
     mopacformat
     mpdformat
     mpqcformat
+    msiformat
+    msmsformat
     nwchemformat
     pcmodelformat
     pdbformat
+    pngformat
     povrayformat
+    pqrformat
     qchemformat
     reportformat
     shelxformat
@@ -65,10 +74,18 @@ set(formats
     yasaraformat
     zindoformat
 )
+
+# Additional files for PDB and PQR formats
+set(pdbformat_additional_sources atomrecord.cpp)
+set(pqrformat_additional_sources atomrecord.cpp)
+
 if(Boost_FOUND)
   set(formats
     ${formats}
     rxnformat
+    chemdrawcdx
+    chemkinformat
+    rsmiformat
   )
 endif(Boost_FOUND)
 

@@ -50,7 +50,7 @@ libformats_la_SOURCES = \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cansmilesformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
-	chem3dformat.cpp chemdrawct.cpp chemdrawcdx.cpp \
+	chem3dformat.cpp chemdrawct.cpp \
 	chemkinformat.cpp \
 	chemtoolformat.cpp cifformat.cpp \
 	copyformat.cpp crkformat.cpp cssrformat.cpp \
@@ -65,8 +65,8 @@ libformats_la_SOURCES = \
 	mmodformat.cpp mol2format.cpp molreport.cpp mopacformat.cpp \
 	moldenformat.cpp msmsformat.cpp \
 	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
-	pngformat.cpp \
-	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
+	pngformat.cpp atomrecord.cpp \
+	pdbformat.cpp povrayformat.cpp pqrformat.cpp qchemformat.cpp reportformat.cpp \
 	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
 	tinkerformat.cpp titleformat.cpp \
 	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
@@ -95,8 +95,8 @@ pkglib_LTLIBRARIES = \
 	mpdformat.la mol2format.la moldenformat.la molreportformat.la \
 	mopacformat.la msiformat.la msmsformat.la \
 	mpqcformat.la nwchemformat.la pcmodelformat.la \
-	pngformat.la \
-	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
+	pngformat.la pdbformat.la \
+	povrayformat.la pqrformat.la qchemformat.la reportformat.la \
 	shelxformat.la smilesformat.la thermoformat.la \
 	tinkerformat.la titleformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
@@ -273,11 +273,14 @@ nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.l
 pcmodelformat_la_SOURCES = pcmodelformat.cpp obmolecformat.cpp
 pcmodelformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-pdbformat_la_SOURCES = pdbformat.cpp obmolecformat.cpp
+pdbformat_la_SOURCES = pdbformat.cpp atomrecord.cpp obmolecformat.cpp
 pdbformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 povrayformat_la_SOURCES = povrayformat.cpp obmolecformat.cpp
 povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+pqrformat_la_SOURCES = pqrformat.cpp atomrecord.cpp obmolecformat.cpp
+pqrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 qchemformat_la_SOURCES = qchemformat.cpp obmolecformat.cpp
 qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 

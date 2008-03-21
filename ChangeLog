@@ -1,12 +1,31 @@
+2008-03-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/atomrecord.cpp: New file to handle PDB-style atom
+	records -- shared between PDB and PQR formats.
+
+	* src/formats/pdbformat.cpp: Use it.
+
+	* src/formats/pqrformat.cpp: Initial support for reading PQR style
+	files (i.e., partial charge and VDW radius supplied with
+	coordinates).
+
+	* src/formats/Makefile.am, src/formats/Makefile.in,
+	src/formats/CMakeLists.txt: Updates for above.
+
+	* src/formats/cansmilesformat.cpp: Fix for bug exposed by Avogadro
+	-- sometimes we only have one atom (and no canonical order data).
+
+	* tools/obfragment.cpp: Update to generate new OBBuilder database.
+
 2008-03-20  Carsten Niehaus  <cniehaus@kde.org>
-	* /canon.cpp /forcefield.cpp /chiral.cpp /kekulize.cpp /grid.cpp /builder.cpp /fingerprint.cpp /obutil.cpp /atom.cpp /forcefields/forcefieldghemical.h /forcefields/forcefieldmm2.h /forcefields/forcefieldmmff94.cpp /forcefields/forcefielduff.h /forcefields/forcefieldmmff94.h /forcefields/forcefieldghemical.cpp /zipstreamimpl.h /obconversion.cpp /base.cpp /formats/smilesformat.cpp /formats/cansmilesformat.cpp /formats/mpdformat.cpp /formats/getinchi.cpp /formats/obmolecformat.cpp /formats/exampleformat.cpp /formats/fchkformat.cpp: Typo fixes
+
+	* src/*.cpp: Typo fixes
+
 	* CMakeLists.txt: Require CMake 2.4.5.
 	
-	* All .cpp and .h files: Set SVN property svn:eol to native
 2008-03-16  Noel O'Boyle  <baoilleach@gmail.com>
 	
 	* All .cpp and .h files: Set SVN property svn:eol to native
-
 
 2008-03-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

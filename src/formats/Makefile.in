@@ -457,12 +457,12 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 	mmcifformat.cpp mmodformat.cpp mol2format.cpp molreport.cpp \
 	mopacformat.cpp moldenformat.cpp msmsformat.cpp mpdformat.cpp \
 	mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
-	pngformat.cpp pdbformat.cpp povrayformat.cpp qchemformat.cpp \
-	reportformat.cpp shelxformat.cpp smilesformat.cpp \
-	thermoformat.cpp tinkerformat.cpp titleformat.cpp \
-	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
-	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp \
-	rxnformat.cpp rsmiformat.cpp
+	pngformat.cpp atomrecord.cpp pdbformat.cpp povrayformat.cpp \
+	pqrformat.cpp qchemformat.cpp reportformat.cpp shelxformat.cpp \
+	smilesformat.cpp thermoformat.cpp tinkerformat.cpp \
+	titleformat.cpp turbomoleformat.cpp unichemformat.cpp \
+	viewmolformat.cpp xedformat.cpp xyzformat.cpp yasaraformat.cpp \
+	zindoformat.cpp rxnformat.cpp rsmiformat.cpp
 @BUILD_SHARED_FALSE@am_libformats_la_OBJECTS = APIInterface.lo \
 @BUILD_SHARED_FALSE@	obmolecformat.lo MCDLformat.lo \
 @BUILD_SHARED_FALSE@	CSRformat.lo PQSformat.lo alchemyformat.lo \
@@ -486,8 +486,9 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 @BUILD_SHARED_FALSE@	mol2format.lo molreport.lo mopacformat.lo \
 @BUILD_SHARED_FALSE@	moldenformat.lo msmsformat.lo mpdformat.lo \
 @BUILD_SHARED_FALSE@	mpqcformat.lo nwchemformat.lo \
-@BUILD_SHARED_FALSE@	pcmodelformat.lo pngformat.lo pdbformat.lo \
-@BUILD_SHARED_FALSE@	povrayformat.lo qchemformat.lo \
+@BUILD_SHARED_FALSE@	pcmodelformat.lo pngformat.lo \
+@BUILD_SHARED_FALSE@	atomrecord.lo pdbformat.lo povrayformat.lo \
+@BUILD_SHARED_FALSE@	pqrformat.lo qchemformat.lo \
 @BUILD_SHARED_FALSE@	reportformat.lo shelxformat.lo \
 @BUILD_SHARED_FALSE@	smilesformat.lo thermoformat.lo \
 @BUILD_SHARED_FALSE@	tinkerformat.lo titleformat.lo \
@@ -617,9 +618,10 @@ pcmodelformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(CXXFLAGS) $(pcmodelformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_pcmodelformat_la_rpath = -rpath $(pkglibdir)
 pdbformat_la_LIBADD =
-am__pdbformat_la_SOURCES_DIST = pdbformat.cpp obmolecformat.cpp
+am__pdbformat_la_SOURCES_DIST = pdbformat.cpp atomrecord.cpp \
+	obmolecformat.cpp
 @BUILD_SHARED_TRUE@am_pdbformat_la_OBJECTS = pdbformat.lo \
-@BUILD_SHARED_TRUE@	obmolecformat.lo
+@BUILD_SHARED_TRUE@	atomrecord.lo obmolecformat.lo
 pdbformat_la_OBJECTS = $(am_pdbformat_la_OBJECTS)
 pdbformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -643,6 +645,16 @@ povrayformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(povrayformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_povrayformat_la_rpath = -rpath $(pkglibdir)
+pqrformat_la_LIBADD =
+am__pqrformat_la_SOURCES_DIST = pqrformat.cpp atomrecord.cpp \
+	obmolecformat.cpp
+@BUILD_SHARED_TRUE@am_pqrformat_la_OBJECTS = pqrformat.lo \
+@BUILD_SHARED_TRUE@	atomrecord.lo obmolecformat.lo
+pqrformat_la_OBJECTS = $(am_pqrformat_la_OBJECTS)
+pqrformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(pqrformat_la_LDFLAGS) $(LDFLAGS) -o $@
+@BUILD_SHARED_TRUE@am_pqrformat_la_rpath = -rpath $(pkglibdir)
 qchemformat_la_LIBADD =
 am__qchemformat_la_SOURCES_DIST = qchemformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@am_qchemformat_la_OBJECTS = qchemformat.lo \
@@ -833,14 +845,15 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(msmsformat_la_SOURCES) $(nwchemformat_la_SOURCES) \
 	$(pcmodelformat_la_SOURCES) $(pdbformat_la_SOURCES) \
 	$(pngformat_la_SOURCES) $(povrayformat_la_SOURCES) \
-	$(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) \
-	$(rsmiformat_la_SOURCES) $(rxnformat_la_SOURCES) \
-	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
-	$(thermoformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
-	$(titleformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
-	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
-	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
-	$(yasaraformat_la_SOURCES) $(zindoformat_la_SOURCES)
+	$(pqrformat_la_SOURCES) $(qchemformat_la_SOURCES) \
+	$(reportformat_la_SOURCES) $(rsmiformat_la_SOURCES) \
+	$(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) \
+	$(smilesformat_la_SOURCES) $(thermoformat_la_SOURCES) \
+	$(tinkerformat_la_SOURCES) $(titleformat_la_SOURCES) \
+	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
+	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
+	$(xyzformat_la_SOURCES) $(yasaraformat_la_SOURCES) \
+	$(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__MCDLformat_la_SOURCES_DIST) \
@@ -899,6 +912,7 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__pdbformat_la_SOURCES_DIST) \
 	$(am__pngformat_la_SOURCES_DIST) \
 	$(am__povrayformat_la_SOURCES_DIST) \
+	$(am__pqrformat_la_SOURCES_DIST) \
 	$(am__qchemformat_la_SOURCES_DIST) \
 	$(am__reportformat_la_SOURCES_DIST) \
 	$(am__rsmiformat_la_SOURCES_DIST) \
@@ -1092,8 +1106,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	mmodformat.cpp mol2format.cpp molreport.cpp mopacformat.cpp \
 @BUILD_SHARED_FALSE@	moldenformat.cpp msmsformat.cpp \
 @BUILD_SHARED_FALSE@	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
-@BUILD_SHARED_FALSE@	pngformat.cpp \
-@BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
+@BUILD_SHARED_FALSE@	pngformat.cpp atomrecord.cpp \
+@BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp pqrformat.cpp qchemformat.cpp reportformat.cpp \
 @BUILD_SHARED_FALSE@	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
 @BUILD_SHARED_FALSE@	tinkerformat.cpp titleformat.cpp \
 @BUILD_SHARED_FALSE@	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
@@ -1122,7 +1136,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	msiformat.la msmsformat.la mpqcformat.la \
 @BUILD_SHARED_TRUE@	nwchemformat.la pcmodelformat.la \
 @BUILD_SHARED_TRUE@	pngformat.la pdbformat.la povrayformat.la \
-@BUILD_SHARED_TRUE@	qchemformat.la reportformat.la \
+@BUILD_SHARED_TRUE@	pqrformat.la qchemformat.la reportformat.la \
 @BUILD_SHARED_TRUE@	shelxformat.la smilesformat.la \
 @BUILD_SHARED_TRUE@	thermoformat.la tinkerformat.la \
 @BUILD_SHARED_TRUE@	titleformat.la turbomoleformat.la \
@@ -1239,10 +1253,12 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@pcmodelformat_la_SOURCES = pcmodelformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@pcmodelformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
-@BUILD_SHARED_TRUE@pdbformat_la_SOURCES = pdbformat.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@pdbformat_la_SOURCES = pdbformat.cpp atomrecord.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@pdbformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@povrayformat_la_SOURCES = povrayformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@pqrformat_la_SOURCES = pqrformat.cpp atomrecord.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@pqrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@qchemformat_la_SOURCES = qchemformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@pngformat_la_SOURCES = pngformat.cpp obmolecformat.cpp
@@ -1463,6 +1479,8 @@ pngformat.la: $(pngformat_la_OBJECTS) $(pngformat_la_DEPENDENCIES)
 	$(pngformat_la_LINK) $(am_pngformat_la_rpath) $(pngformat_la_OBJECTS) $(pngformat_la_LIBADD) $(LIBS)
 povrayformat.la: $(povrayformat_la_OBJECTS) $(povrayformat_la_DEPENDENCIES) 
 	$(povrayformat_la_LINK) $(am_povrayformat_la_rpath) $(povrayformat_la_OBJECTS) $(povrayformat_la_LIBADD) $(LIBS)
+pqrformat.la: $(pqrformat_la_OBJECTS) $(pqrformat_la_DEPENDENCIES) 
+	$(pqrformat_la_LINK) $(am_pqrformat_la_rpath) $(pqrformat_la_OBJECTS) $(pqrformat_la_LIBADD) $(LIBS)
 qchemformat.la: $(qchemformat_la_OBJECTS) $(qchemformat_la_DEPENDENCIES) 
 	$(qchemformat_la_LINK) $(am_qchemformat_la_rpath) $(qchemformat_la_OBJECTS) $(qchemformat_la_LIBADD) $(LIBS)
 reportformat.la: $(reportformat_la_OBJECTS) $(reportformat_la_DEPENDENCIES) 
@@ -1510,6 +1528,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alchemyformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alias.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/amberformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomrecord.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/balstformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bgfformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/boxformat.Plo@am__quote@
@@ -1562,6 +1581,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pdbformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/povrayformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pqrformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qchemformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reportformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsmiformat.Plo@am__quote@
