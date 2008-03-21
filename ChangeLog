@@ -1,3 +1,8 @@
+2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/gausscubeformat.cpp: Applied patch from Louis Ricard and
+	make it work. Read function is done, write still needs to be done.
+
 2008-03-21 Chris Morley
 
 	* include/openbabel/builder.h, src/builder.cpp:
@@ -52,6 +57,10 @@
 	include/openbabel/forcefield.h: Move to loop form. Compiler
 	loop unrolling is effective, and loops can be vectorized for
 	greater speed. 
+
+2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/builder.h, src/builder.cpp: Added Swap function.
 
 2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 

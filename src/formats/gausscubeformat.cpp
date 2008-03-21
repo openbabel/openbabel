@@ -366,7 +366,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     }
     
     int ncubes = 1;
-    vector<int> cubenumbers;
+    vector<OBGridData*> vgd;
     // If the number of atoms was negative then there is some data between the
     // atom data and the cube data.
     if (negAtoms)
@@ -391,8 +391,9 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         return false;
       }
-
-      for (int i = 1; i <= ncubes; i++)
+      
+      vgd.reserve(ncubes);
+      for (int i = 0; i < ncubes; ++i)
       {
         int cubenumber = strtol(static_cast<const char*>(vs.at(i).c_str()), &endptr, 10);
         if (endptr == static_cast<const char*>(vs.at(i).c_str()))
@@ -406,68 +407,88 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
           return false;
         }
 
-	cubenumbers.push_back(cubenumber);
+        vgd.push_back(new OBGridData);
+      }
+    } else {
+      // only one cube
+      vgd.push_back(new OBGridData);
+    }
+    
+    // set some values in gd
+    for (int i = 0; i < ncubes; ++i) // foreach cube
+    {
+   }
+
+    //
+    // get all values as one vector<double>
+    //
+    vector<double> values;
+    int n = voxels[0]*voxels[1]*voxels[2];
+    values.reserve(n*ncubes);
+    while (values.size() < n*ncubes)
+    {
+      // Read in values until we have a complete row of data
+      ++line;
+      if (!ifs.getline(buffer, BUFF_SIZE))
+      {
+        errorMsg << "Problem reading the Gaussian cube file: cannot"
+                 << " read line " << line
+                 << " of the file. More data was expected.\n"
+                 << "Values read in = " << values.size()
+                 << " and expected number of values = "
+                 << voxels[0]*voxels[1]*voxels[2] << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+        return false;
+      }
+      tokenize(vs, buffer);
+      if (vs.size() == 0)
+      {
+        errorMsg << "Problem reading the Gaussian cube file: cannot"
+                 << " read line " << line
+                 << ", there does not appear to be any data in it.\n"
+                 << buffer << "\n";
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+        return false;
+      }
+
+      for (unsigned int l = 0; l < vs.size(); ++l) 
+      {
+        values.push_back(strtod(static_cast<const char*>(vs.at(l).c_str()), &endptr));
       }
     }
     
-    int n = voxels[0]*voxels[1]*voxels[2];
-    
-    for (int i = 1; i <= ncubes; i++)
+    // translate the vector<double> to vector<vector<double> >
+    vector<vector<double> > vvd;
+    vvd.resize(ncubes);
+    for (unsigned int i = 0; i < values.size(); )
     {
-      // Now to read in the actual cube data
-      OBGridData *gd = new OBGridData;
-      gd->SetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
-      gd->SetLimits(origin, axes[0], axes[1], axes[2]);
-      gd->SetUnit(angstroms ? OBGridData::ANGSTROM : OBGridData::BOHR);
-      if (!cubenumbers.size()) 
+      for (int j = 0; j < ncubes; ++j, ++i) // foreach cube
       {
-        // only one cube
-        gd->SetAttribute(cubeTitle);
-      } else {
+        vvd[j].push_back(values[i]);
+      }
+    }
+
+    for (int i = 0; i < ncubes; ++i) // foreach cube
+    {
+      if (ncubes > 1) 
+      {
         char title[BUFF_SIZE];
         snprintf(title, BUFF_SIZE," %s - cube %d", cubeTitle.c_str(), i); 
-        gd->SetAttribute(title);
-      }
-   
-      vector<double> values;
-      values.reserve(n);
-      while (values.size() < n)
+        vgd[i]->SetAttribute(title);
+      } 
+      else 
       {
-        // Read in values until we have a complete row of data
-        ++line;
-        if (!ifs.getline(buffer, BUFF_SIZE))
-        {
-          errorMsg << "Problem reading the Gaussian cube file: cannot"
-                   << " read line " << line
-                   << " of the file. More data was expected.\n"
-                   << "Values read in = " << values.size()
-                   << " and expected number of values = "
-                   << voxels[0]*voxels[1]*voxels[2] << endl;
-          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-          return false;
-        }
-        tokenize(vs, buffer);
-        if (vs.size() == 0)
-        {
-          errorMsg << "Problem reading the Gaussian cube file: cannot"
-                   << " read line " << line
-                   << ", there does not appear to be any data in it.\n"
-                   << buffer << "\n";
-          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-          return false;
-        }
-
-        for (int i = 0; i < vs.size(); ++i)
-        {
-          values.push_back(strtod(static_cast<const char*>(vs.at(i).c_str()), &endptr));
-        }
+        // only one cube
+        vgd[i]->SetAttribute(cubeTitle);
       }
-
-      gd->SetValues(values);
-      gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
-      pmol->SetData(gd);
+      vgd[i]->SetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
+      vgd[i]->SetLimits(origin, axes[0], axes[1], axes[2]);
+      vgd[i]->SetUnit(angstroms ? OBGridData::ANGSTROM : OBGridData::BOHR);
+      vgd[i]->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
+      vgd[i]->SetValues(vvd[i]); // set the values
+      pmol->SetData(vgd[i]); // store the grids in the OBMol 
     }
-    
+
     pmol->EndModify();
 
     // clean out any remaining blank lines
