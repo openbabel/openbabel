@@ -1300,15 +1300,17 @@ namespace OpenBabel
     // save the canonical order as a space-separated string
     // which will be returned by GetOutputOrder() for incorporation
     // into an OBPairData keyed "canonical order"
-    stringstream temp;
-    vector<int>::iterator can_iter = _atmorder.begin();
-    temp << (*can_iter++);
+    if (_atmorder.size()) {
+      stringstream temp;
+      vector<int>::iterator can_iter = _atmorder.begin();
+      temp << (*can_iter++);
 
-    for (; can_iter != _atmorder.end(); ++can_iter) {
-      if (*can_iter <= mol.NumAtoms())
-        temp << " " << (*can_iter);
-    }
+      for (; can_iter != _atmorder.end(); ++can_iter) {
+        if (*can_iter <= mol.NumAtoms())
+          temp << " " << (*can_iter);
+      }
     _canorder = temp.str(); // returned by GetOutputOrder()
+    }
   }
 
   /***************************************************************************
@@ -1513,9 +1515,10 @@ namespace OpenBabel
       delete pmol;
     }
     
-    if (!mol.HasData("canonical order")) {
+    // Could also be canonical bond order if anyone desires
+    if (!mol.HasData("Canonical Atom Order")) {
       OBPairData *canData = new OBPairData;
-      canData->SetAttribute("canonical order");
+      canData->SetAttribute("Canonical Atom Order");
       canData->SetValue(m2s.GetOutputOrder());
       mol.SetData(canData);
     }
