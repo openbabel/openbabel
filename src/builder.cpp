@@ -389,11 +389,9 @@ namespace OpenBabel
     _workMol.SetHybridizationPerceived();
 
     //datafile is read only on first use of Build()
-    static bool loaded; //initially false
-    if(!loaded) {
+    if(_fragments.empty())
       LoadFragments();
-      loaded=true;
-    }
+
     // Loop through  the database once and assign the coordinates from
     // the first (most complex) fragment.
     for (i = _fragments.begin();i != _fragments.end();++i) {

@@ -240,10 +240,6 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath="..\..\include\openbabel\oberror.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -259,6 +255,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\obconversion.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\oberror.h"
 				>
 			</File>
 		</Filter>

@@ -49,16 +49,16 @@ public:
     OBMSMSFormat()
     {
         OpenBabel::OBConversion::RegisterFormat( "msms", this );
-        OpenBabel::OBConversion::RegisterFormat( "MSMS", this );
     }
 
     /// Return description.
     virtual const char* Description() //required
     {
         return
-        "M.F. Sanner's MSMS input format"
-        "Write only.\n"
-        "a output atom names\n";
+        "M.F. Sanner's MSMS input format\n"
+        "WriteOnly.\n"
+        "Write Options, e.g. -xa\n"
+        "  a output atom names\n";
     }
 
     /// Return a specification url, not really a specification since
@@ -74,7 +74,7 @@ public:
       /// Return read/write flag: read only.
     virtual unsigned int Flags()
     {
-        return WRITEONEONLY;
+        return WRITEONEONLY | NOTREADABLE;
     };
 
     /// Skip to object: used for multi-object file formats.

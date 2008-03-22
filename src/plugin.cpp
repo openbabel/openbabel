@@ -105,7 +105,7 @@ bool OBPlugin::Display(string& txt, const char* param, const char* ID)
     txt = ID;
   else
     txt = GetID();
-  txt += '\t';
+  txt += "    ";// was '\t'; but caused problems in GUI menu
   if(param && !strcasecmp(param, "verbose"))
     txt += Description();
   else

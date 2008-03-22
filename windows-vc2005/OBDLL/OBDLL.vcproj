@@ -313,6 +313,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\builder.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\canon.cpp"
 				>
 			</File>
@@ -429,6 +433,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\griddata.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\..\src\kekulize.cpp"
@@ -651,6 +659,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\pointgroup.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\rand.cpp"
 				>
 				<FileConfiguration
@@ -864,6 +876,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\bondtyper.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\builder.h"
 				>
 			</File>
 			<File

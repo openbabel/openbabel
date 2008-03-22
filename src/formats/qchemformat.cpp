@@ -257,8 +257,8 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
-    OBAtom *atom;
+//    unsigned int i;
+//    OBAtom *atom;
 
     ofs << "$comment" << endl;
     ofs << mol.GetTitle() << endl;

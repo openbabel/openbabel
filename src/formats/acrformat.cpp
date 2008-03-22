@@ -94,7 +94,7 @@ namespace OpenBabel
     float scale, dtmp;
     bool atom_input = false, bond_input = false;
     string type;
-    int from, to;
+    //int from, to;
     double X,Y,Z;
     vector<string> vs;
 

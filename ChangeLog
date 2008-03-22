@@ -1,3 +1,33 @@
+2008-03-22 Chris Morley
+
+	* src/builder.cpp: Slightly cleaner version of yesterdays's change.
+	Load data when _fragments is empty.
+
+	* src/formats/gausscubeformat.cpp, src/formats/gausszmatformat.cpp,
+	src/formats/mmcifformat.cpp, src/formats/moldenformat.cpp,
+	src/formats/msmsformat.cpp:
+	Add some flags for Read or Write only, remove duplicate registration
+	statements(IDs are not case sensitive), edit Description so options
+	appear properly in GUI.
+	
+	* src/formats/acrformat.cpp, src/formats/chemdrawcdx.cpp,
+	src/formats/qchemformat.cpp, src/formats/xml/cdxmlformat.cpp,
+	src/formats/mopacformat.cpp, src/formats/msiformat.cpp: 
+	Reduce compiler warnings by commenting out unused variables.
+	
+	* src/obutil.cpp: Remove OBAPI from definitions; only needed in 
+	declarations
+
+	* src/ops/gen3d.cpp: Remove error wrap statements (no cerr calls in
+	OBBuilder now)
+	
+	* src/plugin.cpp(Display): remove tab character which was giving error
+	messages in wxWidgets menus.
+	* windows-vc2005/OBPythonOBF: New project to build Python for OBF
+	(multi-DLL) build.
+	
+	Update Windows OBF build files.
+
 2008-03-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.h, src/forcefield.cpp,
@@ -25,7 +55,7 @@
 	* src/formats/xml/Makefile.am: CML format can now be built without
 	shared_ptr, so I removed this dependency (c.f. CM 2008-03-14)
 
-2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2008-03-21  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/gausscubeformat.cpp: Applied patch from Louis Ricard and
 	make it work. Read function is done, write still needs to be done.

@@ -265,6 +265,10 @@
 				RelativePath="..\..\src\forcefields\forcefieldmmff94.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\forcefields\forcefielduff.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -301,12 +305,15 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\forcefields\forcefielduff.h"
+				>
 			</File>
 		</Filter>
 	</Files>

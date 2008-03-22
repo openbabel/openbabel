@@ -1102,7 +1102,7 @@ puts("found name");
     UINT16 tag;
     UINT16 size;
     UINT32 id;
-    char u32[4];
+    //char u32[4];
     int depth = 1;
 
  cerr<<"Reading "<<pmol<<endl;

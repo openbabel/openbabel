@@ -268,7 +268,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
+//    unsigned int i;
     char buffer[BUFF_SIZE];
 
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);

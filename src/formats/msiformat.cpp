@@ -101,7 +101,7 @@ namespace OpenBabel
     bool atomRecord = false;
     bool bondRecord = false;
     OBAtom *atom;
-    OBBond *bond;
+//    OBBond *bond;
     vector<string> vs;
 
     mol.BeginModify();

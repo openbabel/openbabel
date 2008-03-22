@@ -266,11 +266,11 @@
 				RelativePath="..\..\include\openbabel\op.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\include\openbabel\optransform.h"
+				>
+			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\include\openbabel\optransform.h"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

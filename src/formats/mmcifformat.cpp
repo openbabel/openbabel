@@ -37,7 +37,7 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Macromolecular Crystallographic Information File format\n ";
+        "Macromolecular Crystallographic Information\n ";
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";

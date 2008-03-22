@@ -40,7 +40,7 @@ using namespace OpenBabel;
 class OBMoldenFormat : public OpenBabel::OBMoleculeFormat
 {
 public:
-    /// Constructor: register 'cube' and "CUBE" format.
+    /// Constructor: register 'molden' format.
     OBMoldenFormat()
     {
         OBConversion::RegisterFormat( "molden", this );
@@ -50,10 +50,11 @@ public:
     virtual const char* Description() //required
     {
         return
-        "Molden input  format\n"
-        "Read only.\n"
-        "b no bonds\n"
-        "s no multiple bonds\n\n";
+        "Molden input format\n"
+        "ReadOnly.\n"
+        "Read Options e.g. -as\n"
+        "  b no bonds\n"
+        "  s no multiple bonds\n\n";
     }
 
     /// Return a specification url, not really a specification since
@@ -69,7 +70,7 @@ public:
       /// Return read/write flag: read only.
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | NOTWRITABLE  ;
     };
 
     /// Skip to object: used for multi-object file formats.

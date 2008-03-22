@@ -1,5 +1,5 @@
 /**********************************************************************
-gen3d.cpp - A OBOp for generation of 3D coordinates usingforcefields
+gen3d.cpp - A OBOp for generation of 3D coordinates (wrapper for OBBuilder)
 
 Copyright (C) 2006-2007 by Tim Vandermeersch
           (C) 2007 by Chris Morley
@@ -21,10 +21,6 @@ GNU General Public License for more details.
 #include<openbabel/op.h>
 #include<openbabel/mol.h>
 #include <openbabel/builder.h>
-
-#ifndef OBERROR
- #define OBERROR
-#endif
 
 namespace OpenBabel
 {
@@ -49,12 +45,9 @@ bool OpGen3D::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
   if(!pmol)
     return false;
 
-  obErrorLog.StartErrorWrap(); //make output to cerr into obInfo messages
-
   OBBuilder builder;
   builder.Build(*pmol);
 
-  obErrorLog.StopErrorWrap();
   return true;
 }
 }//namespace

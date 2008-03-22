@@ -47,51 +47,51 @@ namespace OpenBabel
 
   //! Deprecated: use the OBMessageHandler class instead
   //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
-  OBAPI void ThrowError(char *str)
+  void ThrowError(char *str)
   {
     obErrorLog.ThrowError("", str, obInfo);
   }
 
   //! Deprecated: use the OBMessageHandler class instead
   //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
-  OBAPI void ThrowError(std::string &str)
+  void ThrowError(std::string &str)
   {
     obErrorLog.ThrowError("", str, obInfo);
   }
 
   // returns True if a < b, False otherwise.
-  OBAPI bool OBCompareInt(const int &a,const int &b)
+  bool OBCompareInt(const int &a,const int &b)
   {
     return(a<b);
   }
 
   // Comparison function (for sorting unsigned ints) returns a < b
-  OBAPI bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
+  bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
   {
     return(a<b);
   }
 
   //! Comparison for doubles: returns fabs(a - b) < epsilon
-  OBAPI bool IsNear(const double &a, const double &b, const double epsilon)
+  bool IsNear(const double &a, const double &b, const double epsilon)
   {
     return (fabs(a - b) < epsilon);
   }
 
   //! Comparison for doubles: returns fabs(a) < epsilon
-  OBAPI bool IsNearZero(const double &a, const double epsilon)
+  bool IsNearZero(const double &a, const double epsilon)
   {
     return (fabs(a) < epsilon);
   }
   
   //! Comparison for nan (not a number)
-  OBAPI bool IsNan(const double &a)
+  bool IsNan(const double &a)
   {
     return ((a) != (a));
   }
 
   //! Tests whether its argument can be squared without triggering an overflow or
   //! underflow.
-  OBAPI bool CanBeSquared(const double &a)
+  bool CanBeSquared(const double &a)
   {
     if( a == 0 ) return true;
     const double max_squarable_double = 1e150;
@@ -101,7 +101,7 @@ namespace OpenBabel
   }
 
   //! Utility function: replace the last extension in string &src with new extension char *ext.
-  OBAPI string NewExtension(string &src,char *ext)
+  string NewExtension(string &src,char *ext)
   {
     string::size_type pos = (unsigned int)src.find_last_of(".");
     string dst;
@@ -121,7 +121,7 @@ namespace OpenBabel
   //! \return the geometric centroid to an array of coordinates in double* format
   //!  and center the coordinates to the origin. Operates on the first "size" 
   //!  coordinates in the array.
-  OBAPI vector3 center_coords(double *c, unsigned int size)
+  vector3 center_coords(double *c, unsigned int size)
   {
     if (size == 0)
       {
@@ -150,7 +150,7 @@ namespace OpenBabel
 
   //! Rotates the coordinate set *c by the transformation matrix m[3][3]
   //!  Operates on the first "size" coordinates in the array.
-  OBAPI void rotate_coords(double *c,double m[3][3],unsigned int size)
+  void rotate_coords(double *c,double m[3][3],unsigned int size)
   {
     double x,y,z;
     for (unsigned int i = 0;i < size;++i)
@@ -165,7 +165,7 @@ namespace OpenBabel
   }
 
   //! Calculate the RMS deviation between the first N coordinates of *r and *f
-  OBAPI double calc_rms(double *r,double *f, unsigned int N)
+  double calc_rms(double *r,double *f, unsigned int N)
   {
     if (N == 0)
       return 0.0; // no RMS deviation between two empty sets
@@ -185,7 +185,7 @@ namespace OpenBabel
   //! Rotate the coordinates of 'atoms'
   //! such that tor == ang - atoms in 'tor' should be ordered such
   //! that the 3rd atom is the pivot around which atoms rotate
-  OBAPI void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
+  void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
   {
     double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
     double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
@@ -287,7 +287,7 @@ namespace OpenBabel
 
   //! Safely open the supplied filename and return an ifstream, throwing an error
   //! to the default OBMessageHandler error log if it fails.
-  OBAPI bool SafeOpen(ifstream &fs, const char *filename)
+  bool SafeOpen(ifstream &fs, const char *filename)
   {
 #ifdef WIN32
     string s(filename);
@@ -313,7 +313,7 @@ namespace OpenBabel
 
   //! Safely open the supplied filename and return an ofstream, throwing an error
   //! to the default OBMessageHandler error log if it fails.
-  OBAPI bool SafeOpen(ofstream &fs, const char *filename)
+  bool SafeOpen(ofstream &fs, const char *filename)
   {
 #ifdef WIN32
     string s(filename);
@@ -338,20 +338,20 @@ namespace OpenBabel
 
   //! Safely open the supplied filename and return an ifstream, throwing an error
   //! to the default OBMessageHandler error log if it fails.
-  OBAPI bool SafeOpen(ifstream &fs, const string &filename)
+  bool SafeOpen(ifstream &fs, const string &filename)
   {
     return(SafeOpen(fs, filename.c_str()));
   }
 
   //! Safely open the supplied filename and return an ofstream, throwing an error
   //! to the default OBMessageHandler error log if it fails.
-  OBAPI bool SafeOpen(ofstream &fs, const string &filename)
+  bool SafeOpen(ofstream &fs, const string &filename)
   {
     return(SafeOpen(fs, filename.c_str()));
   }
 
   //! Shift the supplied string to uppercase
-  OBAPI void ToUpper(std::string &s)
+  void ToUpper(std::string &s)
   {
     if (s.empty())
       return;
@@ -362,7 +362,7 @@ namespace OpenBabel
   }
 
   //! Shift the supplied char* to uppercase
-  OBAPI void ToUpper(char *cptr)
+  void ToUpper(char *cptr)
   {
     char *c;
     for (c = cptr;*c != '\0';++c)
@@ -371,7 +371,7 @@ namespace OpenBabel
   }
 
   //! Shift the supplied string to lowercase
-  OBAPI void ToLower(std::string &s)
+  void ToLower(std::string &s)
   {
     if (s.empty())
       return;
@@ -382,7 +382,7 @@ namespace OpenBabel
   }
 
   //! Shift the supplied char* to lowercase
-  OBAPI void ToLower(char *cptr)
+  void ToLower(char *cptr)
   {
     char *c;
     for (c = cptr;*c != '\0';++c)
@@ -393,7 +393,7 @@ namespace OpenBabel
   //! Shift the supplied string: lowercase to upper, and upper to lower
   //! \param s - The string to switch case
   //! \param start - The position to start inverting case
-  OBAPI void InvertCase(std::string &s, unsigned int start)
+  void InvertCase(std::string &s, unsigned int start)
   {
     if (s.empty() || start >= s.size())
       return;
@@ -406,7 +406,7 @@ namespace OpenBabel
   }
 
   //! Shift the supplied char*: lowercase to upper, and upper to lower
-  OBAPI void InvertCase(char *cptr)
+  void InvertCase(char *cptr)
   {
     char *c;
     for (c = cptr;*c != '\0';++c)
@@ -419,7 +419,7 @@ namespace OpenBabel
   //! "Clean" the supplied atom type, shifting the first character to uppercase,
   //! the second character (if it's a letter) to lowercase, and terminating with a NULL
   //! to strip off any trailing characters
-  OBAPI void CleanAtomType(char *id)
+  void CleanAtomType(char *id)
   {
     id[0] = toupper(id[0]);
     if (isalpha(id[1]) == 0)
@@ -434,7 +434,7 @@ namespace OpenBabel
   //! Transform the supplied vector<OBInternalCoord*> into cartesian and update
   //! the OBMol accordingly.
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#zmatrixCoordinatesIntoCartesianCoordinates">blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates</a>
-  OBAPI void InternalToCartesian(std::vector<OBInternalCoord*> &vic,OBMol &mol)
+  void InternalToCartesian(std::vector<OBInternalCoord*> &vic,OBMol &mol)
   {
     vector3 n,nn,v1,v2,v3,avec,bvec,cvec;
     double dst = 0.0, ang = 0.0, tor = 0.0;
@@ -521,7 +521,7 @@ namespace OpenBabel
   //! a set of internal (z-matrix) coordinates as supplied in the
   //! vector<OBInternalCoord*> argument.
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#cartesianCoordinatesIntoZmatrixCoordinates">blue-obelisk:cartesianCoordinatesIntoZmatrixCoordinates</a>.
-  OBAPI void CartesianToInternal(std::vector<OBInternalCoord*> &vic,OBMol &mol)
+  void CartesianToInternal(std::vector<OBInternalCoord*> &vic,OBMol &mol)
   {
     double r,sum;
     OBAtom *atom,*nbr,*ref;
@@ -654,7 +654,7 @@ namespace OpenBabel
       }
   }
 
-  OBAPI void qtrfit (double *r,double *f,int size, double u[3][3])
+  void qtrfit (double *r,double *f,int size, double u[3][3])
   {
     register int i;
     double xxyx, xxyy, xxyz;
@@ -754,7 +754,7 @@ namespace OpenBabel
    *           equation of degree one.
    *           Ax + B = 0 !!
    */
-  OBAPI int SolveLinear(double A,double B)
+  int SolveLinear(double A,double B)
   {
     if( IsZero(A) )
       return( 0 );
@@ -767,7 +767,7 @@ namespace OpenBabel
    *           linear equation of degree two.
    *           Ax^2 + Bx + C = 0 !!
    */
-  OBAPI int SolveQuadratic(double A,double B,double C)
+  int SolveQuadratic(double A,double B,double C)
   {
     register double Descr, Temp, TwoA;
 
@@ -802,7 +802,7 @@ namespace OpenBabel
    *       given value taking into account
    *       that it may be negative.
    */
-  OBAPI double CubeRoot(double X)
+  double CubeRoot(double X)
   {
     if( X>=0.0 )
       {
@@ -812,7 +812,7 @@ namespace OpenBabel
       return -pow( -X, OneThird );
   }
 
-  OBAPI int SolveCubic(double A,double B,double C,double D)
+  int SolveCubic(double A,double B,double C,double D)
   {
     register double TwoA, ThreeA, BOver3A;
     register double Temp, POver3, QOver2;
@@ -864,7 +864,7 @@ namespace OpenBabel
 
 #define MAX_SWEEPS 50
 
-  OBAPI void ob_make_rmat(double a[3][3],double rmat[9])
+  void ob_make_rmat(double a[3][3],double rmat[9])
   {
     double onorm, dnorm;
     double b, dma, q, t, c, s,d[3];
@@ -1043,7 +1043,7 @@ namespace OpenBabel
     return 1;
   }
 
-  OBAPI double superimpose(double *r,double *f,int size)
+  double superimpose(double *r,double *f,int size)
   {
     int i,j;
     double x,y,z,d2;
@@ -1137,7 +1137,7 @@ namespace OpenBabel
     return((double)sqrt(d2));
   }
 
-  OBAPI void get_rmat(double *rvec,double *r,double *f,int size)
+  void get_rmat(double *rvec,double *r,double *f,int size)
   {
     int i,j;
     double x,d2;

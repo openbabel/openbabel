@@ -326,7 +326,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\gausscubeformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\gaussformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\gausszmatformat.cpp"
 				>
 			</File>
 			<File
@@ -346,7 +354,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\mmcifformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\mmodformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\moldenformat.cpp"
 				>
 			</File>
 			<File
@@ -359,6 +375,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\mpqcformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\msiformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\msmsformat.cpp"
 				>
 			</File>
 			<File

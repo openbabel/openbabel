@@ -188,10 +188,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\src\builder.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\ops\gen3d.cpp"
 				>
 			</File>
@@ -203,10 +199,6 @@
 			>
 			<File
 				RelativePath="..\..\include\openbabel\babelconfig.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\openbabel\builder.h"
 				>
 			</File>
 			<File

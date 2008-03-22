@@ -48,7 +48,6 @@ namespace OpenBabel
     OBGaussianCubeFormat()
     {
         OpenBabel::OBConversion::RegisterFormat( "cube", this );
-        OpenBabel::OBConversion::RegisterFormat( "CUBE", this );
         OpenBabel::OBConversion::RegisterFormat( "cub", this );
     }
 
@@ -57,9 +56,10 @@ namespace OpenBabel
     {
         return
         "Gaussian cube format\n"
-        "Read only.\n"
-        "b no bonds\n"
-        "s no multiple bonds\n\n";
+        "ReadOnly.\n"
+        "Read Options e.g. -as\n"
+        "  b no bonds\n"
+        "  s no multiple bonds\n\n";
     }
 
     // Return a specification url, not really a specification since
@@ -74,6 +74,12 @@ namespace OpenBabel
 
     // Skip to object: used for multi-object file formats.
     virtual int SkipObjects( int n, OpenBabel::OBConversion* pConv ) { return 0; }
+
+    virtual unsigned int Flags()
+    {
+        return READONEONLY | NOTWRITABLE  ;
+    };
+
 
     /// The "API" interface functions
     virtual bool ReadMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );
