@@ -1,3 +1,8 @@
+2008-03-22  Noel O'Boyle  <baoilleach@gmail.com>
+	
+	* src/formats/xml/Makefile.am: CML format can now be built without
+	shared_ptr, so I removed this dependency (c.f. CM 2008-03-14)
+
 2008-03-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/gausscubeformat.cpp: Applied patch from Louis Ricard and

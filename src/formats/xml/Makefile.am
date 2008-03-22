@@ -9,10 +9,10 @@ endif
 if BUILD_SHARED
 
 pkglib_LTLIBRARIES = \
-	pubchem.la xmlformat.la cdxmlformat.la
-if HAVE_SHARED_POINTER
-    pkglib_LTLIBRARIES += cmlformat.la
-endif
+	pubchem.la xmlformat.la cdxmlformat.la cmlformat.la
+#if HAVE_SHARED_POINTER
+#    pkglib_LTLIBRARIES += cmlreactformat.la
+#endif
 
 cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
 cdxmlformat_la_LDFLAGS = -module -avoid-version $(AM_LDFLAGS)
