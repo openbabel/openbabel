@@ -16,6 +16,8 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 
+using namespace std;
+
 // Parse Atom records in PDB or PQR formats
 
 namespace OpenBabel
