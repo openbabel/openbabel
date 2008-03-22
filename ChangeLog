@@ -30,6 +30,15 @@
 
 2008-03-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* include/openbabel/forcefield.h, src/forcefield.cpp: Move GetGrid to
+	OBForceField to implement it for all force fields at once.
+
+	* src/forcefields/forcefieldmmff94.*: Remove GetGrid.
+
+	* tools/obprobe.cpp: Implement the obprobe program.
+
+2008-03-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/forcefield.h, src/forcefield.cpp,
 	src/forcefields/forcefieldmmff94.*: Add GetGrid probe method.
 

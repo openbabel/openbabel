@@ -30,7 +30,6 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/mol.h>
-#include <openbabel/grid.h>
 #include <iomanip>
 #include "forcefieldmmff94.h"
 
@@ -4676,113 +4675,6 @@ namespace OpenBabel
     return NULL;
   }
   
-  OBGridData* OBForceFieldMMFF94::GetGrid(double step, double padding, const char* type, double pchg)
-  {
-    cout << "OBForceFieldMMFF94::GetGrid(" << step << ", " << type << ")" << endl;
-    // Add the probe atom
-    _mol.BeginModify();
-    OBAtom *atom = _mol.NewAtom();
-    int index = atom->GetIdx();
-    _mol.EndModify();
-    SetTypes();
-    atom->SetType(type);
-    atom->SetPartialCharge(pchg); 
-    
-    SetupCalculations();
-
-    atom = _mol.GetAtom(index);
-    double *pos = atom->GetCoordinate();
-
-    cout << "NumAtoms = " <<_mol.NumAtoms() << endl;
-
-    OBFloatGrid fgrid;
-    fgrid.Init(_mol, step, padding);
-    vector3 min;
-    int xDim, yDim, zDim;
-
-    min = fgrid.GetMin();
-
-    xDim = fgrid.GetXdim();
-    yDim = fgrid.GetYdim();
-    zDim = fgrid.GetZdim();
-
-    cout << "xDim = " << xDim << ", yDim = " << yDim << ", zDim = " << zDim << endl;
-
-    vector3 coord;
-    double evdw, eele;
-    double distance, minDistance;
-
-    OBGridData *grid = new OBGridData;
-    vector3 xAxis, yAxis, zAxis;
-    xAxis = vector3(step, 0.0, 0.0);
-    yAxis = vector3(0.0, step, 0.0);
-    zAxis = vector3(0.0, 0.0, step);
-
-    grid->SetNumberOfPoints(xDim, yDim, zDim);
-    grid->SetLimits(min, xAxis, yAxis, zAxis);
-    
-    // VDW surface
-    for (int i = 0; i < xDim; ++i) {
-      coord.SetX(min[0] + i * step);
-      for (int j = 0; j < yDim; ++j) {
-        coord.SetY(min[1] + j * step);
-        for (int k = 0; k < zDim; ++k)
-        {
-          coord.SetZ(min[2] + k * step);
-          minDistance = 1.0E+10;
-	  FOR_ATOMS_OF_MOL (a, _mol) {
-            if (a->GetIdx() == atom->GetIdx())
-	      continue;
-	    if (a->IsHydrogen())
-	      continue;
-
-	    distance = sqrt(coord.distSq(a->GetVector()));
-
-            if (distance < minDistance)
-              minDistance = distance;
-          } // end checking atoms
-          // negative = away from molecule, 0 = vdw surface, positive = inside
-          if (minDistance > 1.0) {
-	    grid->SetValue(i, j, k, 0.0); // outside the molecule
-	  } else {
-	    grid->SetValue(i, j, k, 10e99); // inside the molecule
-	  }
-        } // z-axis
-      } // y-axis
-    } // x-axis
-
-
-    for (int i = 0; i < xDim; ++i) {
-      coord.SetX(min[0] + i * step);
-      for (int j = 0; j < yDim; ++j) {
-        coord.SetY(min[1] + j * step);
-        for (int k = 0; k < zDim; ++k)
-        {
-	  coord.SetZ(min[2] + k * step);
-          
-	  if (grid->GetValue(i, j, k) == 0.0) {
-	    pos[0] = coord.x();
-	    pos[1] = coord.y();
-	    pos[2] = coord.z();
-	    evdw = E_VDW(false);
-	    eele = E_Electrostatic(false);
-	    cout << "VDW = " << evdw << ", ELE = " << eele << endl;
-	    //cout << "." << flush;
-            grid->SetValue(i, j, k, evdw + eele);
-	  }
-        } // z-axis
-      } // y-axis
-    } // x-axis
-    cout << endl;
-    
-    _mol.BeginModify();
-    _mol.DeleteAtom(atom);
-    _mol.EndModify();
-
-    return grid;
-  }
-
-
 } // end namespace OpenBabel
 
 //! \file forcefieldmmff94.cpp

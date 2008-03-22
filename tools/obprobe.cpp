@@ -1,5 +1,8 @@
 /**********************************************************************
-obenergy.cpp - calculate the energy for a molecule
+obprobe.cpp - This program will create a grid around a molecule, place
+              a probe atom with specified type and partial charge at
+              each grid point and calculate the energy. This energy is
+              stored in the grid. MMFF94 only for now.
 
 Copyright (C) 2006 Tim Vandermeersch
  
@@ -33,50 +36,57 @@ using namespace OpenBabel;
 
 int main(int argc,char **argv)
 {
-  char *program_name= argv[0];
+  char *program_name = argv[0];
+  char *type;
   int c;
-  int verbose = 0;
-  bool hydrogens = false;
-  string basename, filename = "", option, option2, ff = "";
+  double step, padding, pchg;
+  string basename, filename = "", option;
 
-  if (argc < 2) {
-    cout << "Usage: obenergy [options] <filename>" << endl;
+  step    = 0.5;
+  padding = 5.0;
+
+  if (argc < 4) {
+    cout << "Usage: obprobe [options] <type> <pchg> <filename>" << endl;
     cout << endl;
-    cout << "options:      description:" << endl;
+    cout << "  <type>: the probe MMFF94 atom type" << endl;
     cout << endl;
-    cout << "  -v          verbose: print out indivual energy interactions" << endl;
+    cout << "  <pchg>: the probe's partial charge" << endl;
     cout << endl;
-    cout << "  -h          add hydrogens before calculating energy" << endl;
     cout << endl;
-    cout << "  -ff ffid    select a forcefield" << endl;
+    cout << "Options:          Description:" << endl;
     cout << endl;
-    cout << "              available forcefields:" << endl;
+    cout << "  -s <stepsize>   step size" << endl;
     cout << endl;
-    OBPlugin::List("forcefields", "verbose");
+    cout << "  -p <padding>    padding" << endl;
+    cout << endl;
+    cout << "Example probes:" << endl;
+    cout << endl;
+    cout << "<type>  <pchg>    Description:" << endl;
+    cout << "  7     -0.57     carbonyl oxygen (HBA)" << endl;
+    cout << " 21      0.4      hydroxyl hydrogen (HBD)" << endl;
+    cout << " 37      0.0      phenyl carbon (hydrophobic)" << endl;
     exit(-1);
   } else {
     int ifile = 1;
     for (int i = 1; i < argc; i++) {
       option = argv[i];
       
-      if (option == "-v") {
-        verbose = 1;
-        ifile++;
-        break;
+      if ((option == "-s") && (argc > (i+1))) {
+        string stepstr = argv[i+1];
+        step = atof(stepstr.c_str());
+        ifile += 2;
       }
 
-      if (option == "-h") {
-        hydrogens = true;
-        ifile++;
-      }
-
-      if ((option == "-ff") && (argc > (i+1))) {
-        ff = argv[i+1];
+      if ((option == "-p") && (argc > (i+1))) {
+        string paddingstr = argv[i+1];
+        padding = atof(paddingstr.c_str());
         ifile += 2;
       }
     }
     
-    basename = filename = argv[ifile];
+    type = argv[ifile];
+    pchg = atof(argv[ifile+1]);
+    basename = filename = argv[ifile+2];
     size_t extPos = filename.rfind('.');
 
     if (extPos!= string::npos) {
@@ -89,14 +99,14 @@ int main(int argc,char **argv)
   // Find Input filetype
   OBConversion conv;
   OBFormat *format_in = conv.FormatFromExt(filename.c_str());
+  OBFormat *format_out = conv.FormatFromExt(".cube");
     
-  if (!format_in || !conv.SetInFormat(format_in)) {
-    cerr << program_name << ": cannot read input format!" << endl;
+  if (!format_in || !format_out || !conv.SetInAndOutFormats(format_in, format_out)) {
+    cerr << program_name << ": cannot read input/output format!" << endl;
     exit (-1);
   }
 
   ifstream ifs;
-  ofstream ofs;
 
   // Read the file
   ifs.open(filename.c_str());
@@ -105,19 +115,16 @@ int main(int argc,char **argv)
     exit (-1);
   }
 
-  OBForceField* pFF = OBForceField::FindForceField(ff);
+  OBForceField* pFF = OBForceField::FindForceField("MMFF94");
   if (!pFF) {
-    cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
+    cerr << program_name << ": could not find forcefield 'MMFF94'." <<endl;
     exit (-1);
   }
-  pFF->SetLogFile(&cout);
-  if (verbose)
-    pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
-  else
-    pFF->SetLogLevel(OBFF_LOGLVL_MEDIUM);
+  pFF->SetLogFile(&cerr);
+  pFF->SetLogLevel(OBFF_LOGLVL_NONE);
 
   OBMol mol;
-  double energy;
+  char buffer[BUFF_SIZE];
   for (c=1;;c++) {
     mol.Clear();
     if (!conv.Read(&mol, &ifs))
@@ -125,80 +132,28 @@ int main(int argc,char **argv)
     if (mol.Empty())
       break;
 
-    if (hydrogens)
-      mol.AddHydrogens();
-       
     if (!pFF->Setup(mol)) {
       cerr << program_name << ": could not setup force field." << endl;
       exit (-1);
     }
     
-    energy = pFF->Energy(false);
-    if (!isfinite(energy)) {
-      cerr << " Title: " << mol.GetTitle() << endl;
-      FOR_ATOMS_OF_MOL(atom, mol) {
-        cerr << " x: " << atom->x() << " y: " << atom->y() << " z: " << atom->z() << endl;
-      }
+    OBGridData* gd = pFF->GetGrid(step, padding, type, pchg);
+    mol.SetData(gd);
+
+    ofstream ofs;
+    snprintf(buffer, BUFF_SIZE, "%s_%s_%f.cube", basename.c_str(), type, pchg);
+    ofs.open(buffer);
+    if (!ofs) {
+      cerr << program_name << ": cannot read input file!" << endl;
+      exit (-1);
     }
+    if (!conv.Write(&mol, &ofs)) {
+      cerr << program_name << ": could not setup force field." << endl;
+    }
+
+    ofs.close();
 
   } // end for loop
 
   return(1);
 }
-
-/* obenergy man page*/
-/** \page calculate the energy for a molecule
-*
-* \n
-* \par SYNOPSIS
-*
-* \b obenergy [options] \<filename\>
-*
-* \par DESCRIPTION
-*
-* The obenergy tool can be used to calculate the energy for molecules 
-* inside (multi-)molecule files (e.g., MOL2, etc.)
-*
-* \par OPTIONS
-*
-* If no filename is given, obenergy will give all options including the
-* available forcefields.
-*
-* \b -v:
-*     Verbose: print out all individual energy interactions \n\n
-* \b -ff \<forcefield\>:
-*     Select the forcefield \n\n
-*
-* \par EXAMPLES
-*  - View the possible options, including available forcefields: 
-*   obenergy
-*  - Calculate the energy for the molecule(s) in file test.mol2:
-*   obenergy test.mol2
-*  - Calculate the energy for the molecule(s) in file test.mol2 using the Ghemical forcefield:
-*   obenergy -ff Ghemical test.mol2 
-*  - Calculate the energy for the molecule(s) in file test.mol2 and print out all individual energy interactions:
-*    obenergy -v test.mol2
-*
-* \par AUTHORS
-*
-* The obenergy program was contributed by \b Tim \b Vandermeersch.
-*
-* Open Babel is currently maintained by \b Geoff \b Hutchison, \b Chris \b Morley and \b Michael \b Banck.
-*
-* For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
-*
-* \par COPYRIGHT
-*  Copyright (C) 2007 by Tim Vandermeersch. \n \n
-*  This program is free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation version 2 of the License.\n \n
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-* \par SEE ALSO
-*   The web pages for Open Babel can be found at: http://openbabel.sourceforge.net/ \n
-*   The web pages for Open Babel Molecular Mechanics can be found at: 
-*   http://openbabel.sourceforge.net/wiki/Molecular_mechanics \n
-**/

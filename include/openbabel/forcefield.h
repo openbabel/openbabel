@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 #include <openbabel/plugin.h>
+#include <openbabel/grid.h>
 #include <openbabel/griddata.h>
 #include <float.h>
 
@@ -634,10 +635,7 @@ namespace OpenBabel
     /*! Create a grid with spacing step. Place a probe atom of type probe at every grid point,
      *  calculate the energy and store it in the grid.
      */
-    virtual OBGridData *GetGrid(double step, double padding, const char *type, double pchg)
-    {
-      return NULL;
-    }
+    virtual OBGridData *GetGrid(double step, double padding, const char *type, double pchg);
 
     /////////////////////////////////////////////////////////////////////////
     // Energy Evaluation                                                   //

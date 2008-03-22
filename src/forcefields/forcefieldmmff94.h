@@ -272,8 +272,6 @@ namespace OpenBabel
       //! Returns the dipole-dipole interaction energy
       double E_Electrostatic(bool gradients = true);
       
-      OBGridData* GetGrid(double step, double padding, const char* type, double pchg);
-      
       //! Validate MMFF94 using validation suite
       bool Validate();
       //! Compare and print the numerical and analytical gradients
