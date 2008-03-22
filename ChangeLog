@@ -1,3 +1,25 @@
+2008-03-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h, src/forcefield.cpp,
+	src/forcefields/forcefieldmmff94.*: Add GetGrid probe method.
+
+	* tools/Makefile.*, tools/obprobe.cpp: Add obprobe tool, still needs
+	to be implemented. (copied from obenergy)
+
+	* tools/obminimize.cpp: Don't call ValidateGradients before
+	minimizing, takes long for proteins.
+	
+	* data/UFF.prm: Fix SMARTS patterns for phosphorus (Bob Hanson)
+
+	* src/forcefields/forcefielduff.cpp,
+	src/forcefields/forcefieldghemical.cpp: Move loop for better
+	performance.
+
+	* src/forcefields/forcefieldmmff94.*: Make Compute() functions inline,
+	some optimization to VDW Compute().
+
+	* src/formats/atomrecord.cpp: Added using namespace std.
+
 2008-03-22  Noel O'Boyle  <baoilleach@gmail.com>
 	
 	* src/formats/xml/Makefile.am: CML format can now be built without
