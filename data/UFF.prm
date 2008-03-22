@@ -42,12 +42,12 @@ atom [#11]    Na
 atom [#12]    Mg3+2
 atom [#13]    Al3
 atom [#14]    Si3
-atom [#15+5]  P_3+5       formal charge +5
 #atom [#15]   P_3+q       Organometallic phosphine ligands
 atom [#15]    P_3+3       generic phosphorus
-atom [#16]    S_3+2       generic S
-atom [#16+4]  S_3+4       S+4
-atom [#16+6]  S_3+6       S+6
+atom [#15D5]  P_3+5       formal charge +5
+atom [#16]    S_3+2       generic S 
+atom [#16+4]  S_3+4       S+4  ( SO2 )
+atom [#16+6]  S_3+6       S+6  ( SO3 / H2SO4 )
 atom [S^2]    S_2         non-aromatic sp2 S
 atom [s]      S_R         aromatic S
 atom [#17]    Cl

@@ -163,11 +163,9 @@ int main(int argc,char **argv)
       
     bool done = true;
     if (sd) {
-			pFF->ValidateGradients();
       pFF->SteepestDescentInitialize(steps, crit);
 		}
     else {
-			pFF->ValidateGradients();
       pFF->ConjugateGradientsInitialize(steps, crit);
 		}    
 

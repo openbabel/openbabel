@@ -79,7 +79,7 @@ namespace OpenBabel
   {
     public:
       double rab, epsilon, alpha_a, alpha_b, Na, Nb, Aa, Ab, Ga, Gb;
-      double R_AB, R_AB7, erep, erep7, eattr;
+      double R_AB, R_AB7/*, erep, erep7, eattr*/;
       int aDA, bDA; // hydrogen donor/acceptor (A=1, D=2, neither=0)
 
       void Compute(bool gradients = true);

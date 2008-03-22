@@ -811,14 +811,14 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse atom type table from ghemical.prm", obInfo);
           return false;
         }
-        
-        for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
-          if (i->first->Match(_mol)) {
-            _mlist = i->first->GetMapList();
-            for (j = _mlist.begin();j != _mlist.end();++j) {
-              _mol.GetAtom((*j)[0])->SetType(i->second);
-            }
-          }
+      }
+    }
+    
+    for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
+      if (i->first->Match(_mol)) {
+        _mlist = i->first->GetMapList();
+        for (j = _mlist.begin();j != _mlist.end();++j) {
+          _mol.GetAtom((*j)[0])->SetType(i->second);
         }
       }
     }

@@ -85,7 +85,7 @@ namespace OpenBabel
   //
   // cs		cubic stretch constant = -2 A^(-1)
   //
-  void OBFFBondCalculationMMFF94::Compute(bool gradients)
+  inline void OBFFBondCalculationMMFF94::Compute(bool gradients)
   {
     double delta2;
     
@@ -156,7 +156,7 @@ namespace OpenBabel
   //
   // cs		cubic bend constant = -0.007 deg^-1 = -0.4 rad^-1
   //
-  void OBFFAngleCalculationMMFF94::Compute(bool gradients) 
+  inline void OBFFAngleCalculationMMFF94::Compute(bool gradients) 
   {
     double delta2, dE;
  
@@ -249,7 +249,7 @@ namespace OpenBabel
   // /\r_xx 	see above
   // /\0_ijk 	see above
   //
-  void OBFFStrBndCalculationMMFF94::Compute(bool gradients)
+  inline void OBFFStrBndCalculationMMFF94::Compute(bool gradients)
   {
     vector3 rab_da, rab_db, rbc_db, rbc_dc, theta_da, theta_db, theta_dc;
     
@@ -362,7 +362,7 @@ namespace OpenBabel
   //
   // 0_ijkl 	torsion angle (degrees)
   //
-  void OBFFTorsionCalculationMMFF94::Compute(bool gradients)
+  inline void OBFFTorsionCalculationMMFF94::Compute(bool gradients)
   {
     double cosine, cosine2, cosine3;
     double phi1, phi2, phi3;
@@ -474,7 +474,7 @@ namespace OpenBabel
   
   }
 
-  double OBForceFieldMMFF94::E_OOP(bool gradients) 
+  inline double OBForceFieldMMFF94::E_OOP(bool gradients) 
   {
     vector<OBFFOOPCalculationMMFF94>::iterator i;
     double energy = 0.0;
@@ -514,7 +514,7 @@ namespace OpenBabel
     return energy;
   }
  
-  void OBFFVDWCalculationMMFF94::Compute(bool gradients)
+  inline void OBFFVDWCalculationMMFF94::Compute(bool gradients)
   {
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
@@ -524,10 +524,10 @@ namespace OpenBabel
     
     const double rab7 = rab*rab*rab*rab*rab*rab*rab;
 
-    erep = (1.07 * R_AB) / (rab + 0.07 * R_AB); //***
-    erep7 = erep*erep*erep*erep*erep*erep*erep;
+    double erep = (1.07 * R_AB) / (rab + 0.07 * R_AB); //***
+    double erep7 = erep*erep*erep*erep*erep*erep*erep;
       
-    eattr = (((1.12 * R_AB7) / (rab7 + 0.12 * R_AB7)) - 2.0);
+    double eattr = (((1.12 * R_AB7) / (rab7 + 0.12 * R_AB7)) - 2.0);
       
     energy = epsilon * erep7 * eattr;
     
@@ -584,7 +584,7 @@ namespace OpenBabel
     return energy;
   }
 
-  void OBFFElectrostaticCalculationMMFF94::Compute(bool gradients)
+  inline void OBFFElectrostaticCalculationMMFF94::Compute(bool gradients)
   {
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
@@ -4686,7 +4686,7 @@ namespace OpenBabel
     _mol.EndModify();
     SetTypes();
     atom->SetType(type);
-    atom->SetPartialCharge(pchg); // O=C
+    atom->SetPartialCharge(pchg); 
     
     SetupCalculations();
 
@@ -4696,7 +4696,7 @@ namespace OpenBabel
     cout << "NumAtoms = " <<_mol.NumAtoms() << endl;
 
     OBFloatGrid fgrid;
-    fgrid.Init(_mol, step, 7.0);
+    fgrid.Init(_mol, step, padding);
     vector3 min;
     int xDim, yDim, zDim;
 
