@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 #include <openbabel/plugin.h>
+#include <openbabel/griddata.h>
 #include <float.h>
 
 #ifndef OBFPRT
@@ -235,6 +236,11 @@ namespace OpenBabel
     ~OBFFConstraints()
       {
         _constraints.clear();
+        _ignored.Clear();
+        _fixed.Clear();
+        _Xfixed.Clear();
+        _Yfixed.Clear();
+        _Zfixed.Clear();
       }
     //! Clear all constraints
     void Clear();
@@ -247,6 +253,11 @@ namespace OpenBabel
       {
         if (this != &ai) {
           _constraints = ai._constraints;
+          _ignored = ai._ignored;
+          _fixed = ai._fixed;
+          _Xfixed = ai._Xfixed;
+          _Yfixed = ai._Yfixed;
+          _Zfixed = ai._Zfixed;
         }
         return *this;
       }
@@ -337,6 +348,11 @@ namespace OpenBabel
  
   private:
     std::vector<OBFFConstraint> _constraints;
+    OBBitVec	_ignored;
+    OBBitVec	_fixed;
+    OBBitVec	_Xfixed;
+    OBBitVec	_Yfixed;
+    OBBitVec	_Zfixed;
     double _factor;
   };
  
@@ -614,7 +630,15 @@ namespace OpenBabel
      *  \return true if succesfull
      */
     bool SetConformers(OBMol &mol);
-    
+ 
+    /*! Create a grid with spacing step. Place a probe atom of type probe at every grid point,
+     *  calculate the energy and store it in the grid.
+     */
+    virtual OBGridData *GetGrid(double step, double padding, const char *type, double pchg)
+    {
+      return NULL;
+    }
+
     /////////////////////////////////////////////////////////////////////////
     // Energy Evaluation                                                   //
     /////////////////////////////////////////////////////////////////////////

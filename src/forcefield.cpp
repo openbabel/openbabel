@@ -448,6 +448,18 @@ namespace OpenBabel
 
     for (i = _constraints.begin(); i != _constraints.end(); ++n, ++i) {
       if (n == index) {
+        if (i->type == OBFF_CONST_IGNORE)
+          _ignored.SetBitOff(i->ia);
+        if (i->type == OBFF_CONST_ATOM)
+          _fixed.SetBitOff(i->ia);
+        if (i->type == OBFF_CONST_ATOM_X)
+          _Xfixed.SetBitOff(i->ia);
+        if (i->type == OBFF_CONST_ATOM_Y)
+          _Yfixed.SetBitOff(i->ia);
+        if (i->type == OBFF_CONST_ATOM_Z)
+          _Zfixed.SetBitOff(i->ia);
+
+ 
         _constraints.erase(i);
         break;
       }
@@ -466,6 +478,8 @@ namespace OpenBabel
 
   void OBFFConstraints::AddIgnore(int a)
   {
+    _ignored.SetBitOn(a);
+
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_IGNORE; // constraint type
     constraint.ia   = a; // atom to fix
@@ -474,6 +488,8 @@ namespace OpenBabel
   
   void OBFFConstraints::AddAtomConstraint(int a)
   {
+    _fixed.SetBitOn(a);
+
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM; // constraint type
     constraint.ia   = a; // atom to fix
@@ -483,6 +499,8 @@ namespace OpenBabel
   
   void OBFFConstraints::AddAtomXConstraint(int a)
   {
+    _Xfixed.SetBitOn(a);
+
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM_X; // constraint type
     constraint.ia   = a; // atom to fix
@@ -492,6 +510,8 @@ namespace OpenBabel
   
   void OBFFConstraints::AddAtomYConstraint(int a)
   {
+    _Yfixed.SetBitOn(a);
+
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM_Y; // constraint type
     constraint.ia   = a; // atom to fix
@@ -501,6 +521,8 @@ namespace OpenBabel
   
   void OBFFConstraints::AddAtomZConstraint(int a)
   {
+    _Zfixed.SetBitOn(a);
+
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM_Z; // constraint type
     constraint.ia   = a; // atom to fix
@@ -594,62 +616,27 @@ namespace OpenBabel
   
   bool OBFFConstraints::IsIgnored(int index)
   {
-    vector<OBFFConstraint>::iterator i;
-        
-    for (i = _constraints.begin(); i != _constraints.end(); ++i)
-      if (i->type == OBFF_CONST_IGNORE)
-        if (i->ia == index)
-          return true;
-    
-    return false;
+    return _ignored.BitIsSet(index);
   }
   
-  bool OBFFConstraints::IsFixed(int index)
+  inline bool OBFFConstraints::IsFixed(int index)
   {
-    vector<OBFFConstraint>::iterator i;
-        
-    for (i = _constraints.begin(); i != _constraints.end(); ++i)
-      if (i->type == OBFF_CONST_ATOM)
-        if (i->ia == index)
-          return true;
-    
-    return false;
+    return _fixed.BitIsSet(index);
   }
   
-  bool OBFFConstraints::IsXFixed(int index)
+  inline bool OBFFConstraints::IsXFixed(int index)
   {
-    vector<OBFFConstraint>::iterator i;
-        
-    for (i = _constraints.begin(); i != _constraints.end(); ++i)
-      if (i->type == OBFF_CONST_ATOM_X)
-        if ((i->a)->GetIdx() == index)
-          return true;
-    
-    return false;
+    return _Xfixed.BitIsSet(index);
   }
   
-  bool OBFFConstraints::IsYFixed(int index)
+  inline bool OBFFConstraints::IsYFixed(int index)
   {
-    vector<OBFFConstraint>::iterator i;
-        
-    for (i = _constraints.begin(); i != _constraints.end(); ++i)
-      if (i->type == OBFF_CONST_ATOM_Y)
-        if (i->ia == index)
-          return true;
-    
-    return false;
+    return _Yfixed.BitIsSet(index);
   }
   
-  bool OBFFConstraints::IsZFixed(int index)
+  inline bool OBFFConstraints::IsZFixed(int index)
   {
-    vector<OBFFConstraint>::iterator i;
-        
-    for (i = _constraints.begin(); i != _constraints.end(); ++i)
-      if (i->type == OBFF_CONST_ATOM_Z)
-        if (i->ia == index)
-          return true;
-    
-    return false;
+    return _Zfixed.BitIsSet(index);
   }
   
   //////////////////////////////////////////////////////////////////////////////////
@@ -1986,9 +1973,7 @@ namespace OpenBabel
     step = 0.2;
     double trustRadius = 0.3; // don't move further than 0.3 Angstroms
     
-    //e_n1 = Energy(false) + ; // calculate e_k (before any move)
     e_n1 = Energy(false) + _constraints.GetConstraintEnergy();
-    // dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
     
     unsigned int i;
     for (i=0; i < 10; ++i) {
@@ -1998,6 +1983,27 @@ namespace OpenBabel
       // Vectorizing this would be a big benefit
       // Need to look up using BLAS or Eigen or whatever
       for (unsigned int c = 0; c < numCoords; ++c) {
+        // check if this atom, X, Y or Z is fixed
+        bool fixed = false;
+        switch (numCoords % 3) {
+          case 0:
+            fixed = _constraints.IsFixed(numCoords / 3);
+            if (fixed) {
+              c += 2; // XYZ is fixed, skip Y and Z
+            } else {
+              fixed = _constraints.IsXFixed(numCoords / 3);
+            }
+            break;
+          case 1:
+            fixed = _constraints.IsYFixed(numCoords / 3);
+            break;
+          case 2:
+            fixed = _constraints.IsZFixed(numCoords / 3);
+            break;
+        }
+        if (fixed)
+          continue;
+
         if (isfinite(direction[c])) { 
           // make sure we don't have NaN or infinity
           tempStep = direction[c] * step;
@@ -2011,7 +2017,6 @@ namespace OpenBabel
         }
       }
     
-      //e_n2 = Energy(false); // calculate e_k+1
       e_n2 = Energy(false) + _constraints.GetConstraintEnergy();
       
       // convergence criteria: A higher precision here 

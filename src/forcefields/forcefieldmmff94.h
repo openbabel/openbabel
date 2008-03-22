@@ -255,9 +255,6 @@ namespace OpenBabel
       //! \return that analytical gradients are implemented for MMFF94
       bool HasAnalyticalGradients() { return true; }
 
-      //! Setup
-      bool Setup(OBMol &mol);
- 
       //! Returns total energy
       double Energy(bool gradients = true);
       //! Returns the bond stretching energy
@@ -275,6 +272,7 @@ namespace OpenBabel
       //! Returns the dipole-dipole interaction energy
       double E_Electrostatic(bool gradients = true);
       
+      OBGridData* GetGrid(double step, double padding, const char* type, double pchg);
       
       //! Validate MMFF94 using validation suite
       bool Validate();
