@@ -1,5 +1,6 @@
-import openbabel as ob
+import math
 import os.path
+import openbabel as ob
 
 def _formatstodict(list):
     broken = [x.replace("[Read-only]", "").replace("[Write-only]","").split(" -- ") for x in list]
@@ -14,6 +15,8 @@ def _getplugins(findplugin, names):
     return plugins
 descriptors = _getplugins(ob.OBDescriptor.FindType, ['LogP', 'MR', 'TPSA'])
 fingerprinters = _getplugins(ob.OBFingerprint.FindFingerprint, ['FP2', 'FP3', 'FP4'])
+forcefields = _getplugins(ob.OBForceField.FindType, ['UFF', 'MMFF94', 'Ghemical'])
+operations = _getplugins(ob.OBOp.FindType, ['Gen3D'])
 
 def readfile(format, filename):
     """Iterate over the molecules in a file.
@@ -263,6 +266,29 @@ class Molecule(object):
             obconversion.WriteFile(self.OBMol,filename)
         else:
             return obconversion.WriteString(self.OBMol)
+
+    def localopt(self, forcefield="MMFF94", steps=1000):
+        ff = forcefields[forcefield]
+        ff.Setup(self.OBMol)
+        ff.SteepestDescent(steps / 2)
+        ff.ConjugateGradients(steps / 2)
+        ff.GetCoordinates(self.OBMol)
+    
+    def globalopt(self, forcefield="MMFF94", steps=1000):
+        self.localopt(forcefield=forcefield, steps=steps / 4)
+        ff = forcefields[forcefield]
+        ff.Setup(self.OBMol)
+        numrots = self.OBMol.NumRotors()
+        if numrots > 0:
+            ff.WeightedRotorSearch(numrots, int(math.log(numrots + 1) * steps))
+            ff.GetCoordinates(self.OBMol)
+    
+    def make3D(self, forcefield="MMFF94", steps=500):
+        operations['Gen3D'].Do(self.OBMol)
+        self.localopt(forcefield=forcefield, steps=steps)
+
+    def addh(self):
+        self.OBMol.AddHydrogens()
 
     def __str__(self):
         return self.write()

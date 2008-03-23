@@ -1,4 +1,10 @@
 2008-03-23  Noel O'Boyle  <baoilleach@gmail.com>
+	
+	* scripts/python/pybel.py: First attempts at incorporating the recent
+	work by Tim, Geoff and others on geometry optimisation and 3D
+	coordinate generation.
+
+2008-03-23  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-python.i: Fix for bug reported by Florian Nigsch.
 	The Python iterators didn't correctly handle the case where there was
