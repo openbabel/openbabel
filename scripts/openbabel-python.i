@@ -167,6 +167,8 @@ class OBIter(object):
     def __init__(self, *params):
         self.iter = self.OBiterator(*params)
         self.finished = False
+        if not self.iter.good():
+            self.finished = True
 
     def __iter__(self):
         return self

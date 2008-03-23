@@ -1,3 +1,9 @@
+2008-03-23  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-python.i: Fix for bug reported by Florian Nigsch.
+	The Python iterators didn't correctly handle the case where there was
+	nothing to iterate over.
+
 2008-03-22 Chris Morley
 
 	* src/builder.cpp: Slightly cleaner version of yesterdays's change.
