@@ -1,5 +1,10 @@
 2008-03-24  Noel O'Boyle  <baoilleach@gmail.com>
 	
+	* windows-vc2005/OBPython/openbabel.py: Removed from SVN (it is
+	created with SWIG as part of the build process)
+
+2008-03-24  Noel O'Boyle  <baoilleach@gmail.com>
+	
 	* scripts/openbabel-python.i: Added griddata.h
 
 2008-03-23  Noel O'Boyle  <baoilleach@gmail.com>
