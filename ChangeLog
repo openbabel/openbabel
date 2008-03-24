@@ -1,3 +1,8 @@
+2008-03-24 Chris Morley
+
+	* src/formats/gaussformat.cpp: Fix bug #1924342 by looking for
+	"Multiplicity" as suggested by Richard West
+
 2008-03-24  Noel O'Boyle  <baoilleach@gmail.com>
 	
 	* windows-vc2005/OBPython/openbabel.py: Removed from SVN (it is

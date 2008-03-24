@@ -277,9 +277,8 @@ namespace OpenBabel
     
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-        if (strstr(buffer,"Symbolic Z-matrix:") != NULL)
+        if (strstr(buffer,"Multiplicity") != NULL)
           {
-            ifs.getline(buffer,BUFF_SIZE); // Charge = # Multiplicty = #
             tokenize(vs, buffer, " \t\n");
             if (vs.size() == 6)
               {
