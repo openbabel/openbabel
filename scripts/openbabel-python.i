@@ -88,6 +88,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %import <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
+%include <openbabel/griddata.h> // Needs to come after generic.h
 
 %import <openbabel/chains.h>
 %import <openbabel/bitvec.h>

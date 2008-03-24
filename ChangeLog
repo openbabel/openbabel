@@ -1,3 +1,7 @@
+2008-03-24  Noel O'Boyle  <baoilleach@gmail.com>
+	
+	* scripts/openbabel-python.i: Added griddata.h
+
 2008-03-23  Noel O'Boyle  <baoilleach@gmail.com>
 	
 	* scripts/python/pybel.py: First attempts at incorporating the recent
