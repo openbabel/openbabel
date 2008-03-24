@@ -1985,20 +1985,20 @@ namespace OpenBabel
       for (unsigned int c = 0; c < numCoords; ++c) {
         // check if this atom, X, Y or Z is fixed
         bool fixed = false;
-        switch (numCoords % 3) {
+        switch (c % 3) {
           case 0:
-            fixed = _constraints.IsFixed(numCoords / 3);
+            fixed = _constraints.IsFixed(c / 3 + 1);
             if (fixed) {
               c += 2; // XYZ is fixed, skip Y and Z
             } else {
-              fixed = _constraints.IsXFixed(numCoords / 3);
+              fixed = _constraints.IsXFixed(c / 3 + 1);
             }
             break;
           case 1:
-            fixed = _constraints.IsYFixed(numCoords / 3);
+            fixed = _constraints.IsYFixed(c / 3 + 1);
             break;
           case 2:
-            fixed = _constraints.IsZFixed(numCoords / 3);
+            fixed = _constraints.IsZFixed(c / 3 + 1);
             break;
         }
         if (fixed)
@@ -2473,19 +2473,19 @@ namespace OpenBabel
     else {
       e_orig = 0.0;
       if (terms & OBFF_EBOND)
-        e_orig += E_Bond();
+        e_orig += E_Bond(false);
       if (terms & OBFF_EANGLE)
-        e_orig += E_Angle();
+        e_orig += E_Angle(false);
       if (terms & OBFF_ESTRBND)
-        e_orig += E_StrBnd();
+        e_orig += E_StrBnd(false);
       if (terms & OBFF_ETORSION)
-        e_orig += E_Torsion();
+        e_orig += E_Torsion(false);
       if (terms & OBFF_EOOP)
-        e_orig += E_OOP();
+        e_orig += E_OOP(false);
       if (terms & OBFF_EVDW)
-        e_orig += E_VDW();
+        e_orig += E_VDW(false);
       if (terms & OBFF_EELECTROSTATIC)
-        e_orig += E_Electrostatic();
+        e_orig += E_Electrostatic(false);
     }
     
     // X direction
@@ -2496,19 +2496,19 @@ namespace OpenBabel
     else {
       e_plus_delta = 0.0;
       if (terms & OBFF_EBOND)
-        e_plus_delta += E_Bond();
+        e_plus_delta += E_Bond(false);
       if (terms & OBFF_EANGLE)
-        e_plus_delta += E_Angle();
+        e_plus_delta += E_Angle(false);
       if (terms & OBFF_ESTRBND)
-        e_plus_delta += E_StrBnd();
+        e_plus_delta += E_StrBnd(false);
       if (terms & OBFF_ETORSION)
-        e_plus_delta += E_Torsion();
+        e_plus_delta += E_Torsion(false);
       if (terms & OBFF_EOOP)
-        e_plus_delta += E_OOP();
+        e_plus_delta += E_OOP(false);
       if (terms & OBFF_EVDW)
-        e_plus_delta += E_VDW();
+        e_plus_delta += E_VDW(false);
       if (terms & OBFF_EELECTROSTATIC)
-        e_plus_delta += E_Electrostatic();
+        e_plus_delta += E_Electrostatic(false);
     }
     
     dx = (e_plus_delta - e_orig) / delta;
@@ -2521,19 +2521,19 @@ namespace OpenBabel
     else {
       e_plus_delta = 0.0;
       if (terms & OBFF_EBOND)
-        e_plus_delta += E_Bond();
+        e_plus_delta += E_Bond(false);
       if (terms & OBFF_EANGLE)
-        e_plus_delta += E_Angle();
+        e_plus_delta += E_Angle(false);
       if (terms & OBFF_ESTRBND)
-        e_plus_delta += E_StrBnd();
+        e_plus_delta += E_StrBnd(false);
       if (terms & OBFF_ETORSION)
-        e_plus_delta += E_Torsion();
+        e_plus_delta += E_Torsion(false);
       if (terms & OBFF_EOOP)
-        e_plus_delta += E_OOP();
+        e_plus_delta += E_OOP(false);
       if (terms & OBFF_EVDW)
-        e_plus_delta += E_VDW();
+        e_plus_delta += E_VDW(false);
       if (terms & OBFF_EELECTROSTATIC)
-        e_plus_delta += E_Electrostatic();
+        e_plus_delta += E_Electrostatic(false);
     }
  
     dy = (e_plus_delta - e_orig) / delta;
@@ -2546,19 +2546,19 @@ namespace OpenBabel
     else {
       e_plus_delta = 0.0;
       if (terms & OBFF_EBOND)
-        e_plus_delta += E_Bond();
+        e_plus_delta += E_Bond(false);
       if (terms & OBFF_EANGLE)
-        e_plus_delta += E_Angle();
+        e_plus_delta += E_Angle(false);
       if (terms & OBFF_ESTRBND)
-        e_plus_delta += E_StrBnd();
+        e_plus_delta += E_StrBnd(false);
       if (terms & OBFF_ETORSION)
-        e_plus_delta += E_Torsion();
+        e_plus_delta += E_Torsion(false);
       if (terms & OBFF_EOOP)
-        e_plus_delta += E_OOP();
+        e_plus_delta += E_OOP(false);
       if (terms & OBFF_EVDW)
-        e_plus_delta += E_VDW();
+        e_plus_delta += E_VDW(false);
       if (terms & OBFF_EELECTROSTATIC)
-        e_plus_delta += E_Electrostatic();
+        e_plus_delta += E_Electrostatic(false);
     }
  
     dz = (e_plus_delta - e_orig) / delta;

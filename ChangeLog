@@ -1,3 +1,8 @@
+2008-03-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: Fix LineSearch(*,*) to respect fixed atoms.
+	Don't calculate gradient in NumericalDerivative.
+
 2008-03-24 Chris Morley
 
 	* src/formats/gaussformat.cpp: Fix bug #1924342 by looking for
