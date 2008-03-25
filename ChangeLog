@@ -1,3 +1,8 @@
+2008-03-25  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefielduff.cpp: changed anglecalc.zi = ..[0] to
+	... [5]. This bug was reported by Bob Hanson in mail.
+
 2008-03-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Fix LineSearch(*,*) to respect fixed atoms.

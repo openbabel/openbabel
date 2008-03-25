@@ -605,8 +605,8 @@ namespace OpenBabel
 
       anglecalc.coord = parameterB->_ipar[0]; // coordination of central atom
 
-      anglecalc.zi = parameterA->_dpar[0];
-      anglecalc.zk = parameterC->_dpar[0];
+      anglecalc.zi = parameterA->_dpar[5];
+      anglecalc.zk = parameterC->_dpar[5];
       anglecalc.theta0 = parameterB->_dpar[1];
       anglecalc.cosT0 = cos(anglecalc.theta0 * DEG_TO_RAD);
       sinT0 = sin(anglecalc.theta0 * DEG_TO_RAD);
@@ -1066,7 +1066,7 @@ namespace OpenBabel
           sp = NULL;
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse atom type table from UFF.prm", obInfo);
           return false;
-        }
+        }    
       }
     }
  
