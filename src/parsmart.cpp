@@ -484,6 +484,8 @@ namespace OpenBabel
     ptr->bcount = 0;
   
     ptr->parts = 1;
+
+    ptr->hasExplicitH=false;
     return ptr;
   }
 
@@ -1534,6 +1536,7 @@ namespace OpenBabel
               {
                 aexpr = GenerateElement(1);
                 LexPtr++; // skip the 'H'
+                pat->hasExplicitH = true;
               }
             else
               aexpr = ParseAtomExpr(0);
@@ -2535,6 +2538,13 @@ namespace OpenBabel
   bool OBSmartsPattern::Match(OBMol &mol,bool single)
   {
     RSCACHE.clear();
+    if(_pat->hasExplicitH) //The SMARTS pattern contains [H]
+    {
+      //Do matching on a copy of mol with explict hydrogens
+      OBMol tmol = mol;
+      tmol.AddHydrogens(false,false);
+      return(match(tmol,_pat,_mlist,single));
+    }
     return(match(mol,_pat,_mlist,single));
   }
 

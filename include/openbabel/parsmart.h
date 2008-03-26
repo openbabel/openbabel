@@ -146,6 +146,7 @@ namespace OpenBabel
     AtomSpec *atom;
     BondSpec *bond;
     int parts;
+    bool hasExplicitH;
   }
   Pattern;
 #else

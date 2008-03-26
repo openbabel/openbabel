@@ -1,3 +1,12 @@
+2008-03-26 Chris Morley
+
+	* include/openbabel/parsmart.h, src/parsmart.cpp:
+	Fix bug #1906462. If SMARTS pattern contains [H], the matching
+	now is done on n explicit hydrogen copy of the molecules. Extra bool
+	in struct Pattern and mods to AllocPattern, SMARTSParser, Match.
+	Have to be careful with the mods: Match is called more than
+	420 times in doing a smi to smi conversion with a SMARTS filter!
+
 2008-03-25  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefielduff.cpp: changed anglecalc.zi = ..[0] to
