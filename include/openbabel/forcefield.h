@@ -915,7 +915,19 @@ namespace OpenBabel
       OBFF_LOGLVL_HIGH:   none \n
     */
     double LineSearch(double *currentCoords, double *direction);
+    /*! Perform a linesearch for the entire molecule.
+
+      \return alpha, the scale of the step we moved along the direction vector
+
+      \par Output to log:
+      OBFF_LOGLVL_NONE:   none \n
+      OBFF_LOGLVL_LOW:    none \n
+      OBFF_LOGLVL_MEDIUM: none \n
+      OBFF_LOGLVL_HIGH:   none \n
+    */
     double Newton2NumLineSearch();
+    /*! Set the coordinates of the atoms to origCoord + step.
+    */
     void   LineSearchTakeStep(double *origCoords, double step);
 
     /*! Perform steepest descent optimalization for steps steps or until convergence criteria is reached.

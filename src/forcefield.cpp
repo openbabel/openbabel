@@ -1845,7 +1845,6 @@ namespace OpenBabel
       }
       
     }
-    //cout << "LineSearch steps: " << i << endl;
 
     dir = atom->GetVector() - orig_xyz;
     atom->SetVector(orig_xyz);     
@@ -1856,7 +1855,7 @@ namespace OpenBabel
 
     return dir;
   }
-  
+
   //
   // Based on the ghemical code (conjgrad.cpp)
   //
@@ -1871,7 +1870,6 @@ namespace OpenBabel
     double e_n1, e_n2, e_n3;
     double *origCoords = new double [_ncoords];
 
-    //alpha = 0.0; // Scale factor along direction vector
     double opt_step = 0.0;
     double opt_e = _e_n1; // get energy calculated by sd or cg
     const double def_step = 0.025; // default step
@@ -1910,20 +1908,21 @@ namespace OpenBabel
         opt_e = e_n1;
       }
 
-      if (newton++ > 9) 
+      if (newton++ > 3) 
         break;
       double delta = step * 0.001;
       
       // Take step X(n) + step + delta
       LineSearchTakeStep(origCoords, step+delta);
       e_n2 = Energy(false) + _constraints.GetConstraintEnergy();
+ 
+      // Take step X(n) + step + delta * 2.0
+      LineSearchTakeStep(origCoords, step+delta*2.0);
+      e_n3 = Energy(false) + _constraints.GetConstraintEnergy();
       
-      double denom = e_n2 - e_n1; // /\f(x)
+      double denom = e_n3 - 2.0 * e_n2 + e_n1; // f'(x)
       if (denom != 0.0) {
-        cout << "before step = " << step << endl;
-        step = fabs(step - delta * e_n1 / denom);
-        cout << "delta * e_n1 / denom =" << delta * e_n1 / denom << endl;
-        cout << "after step = " << step << endl;
+        step = fabs(step - delta * (e_n2 - e_n1) / denom);
         if (step > max_scl) {
           cout << "WARNING: damped steplength " << step << " to " << max_scl << endl;
           step = max_scl;
@@ -1932,7 +1931,6 @@ namespace OpenBabel
         break;
       }
     }
-    cout << endl;
     
     if (opt_step == 0.0) { // if we still don't have any valid steplength, try a very small step
       step = 0.001 * def_step / scale;
@@ -1947,8 +1945,8 @@ namespace OpenBabel
       }
       
     }
-    
-    cout << "opt_step = " << opt_step << endl;
+
+    // Take optimal step 
     LineSearchTakeStep(origCoords, opt_step);
 
     return opt_step * scale;
@@ -2230,8 +2228,8 @@ namespace OpenBabel
       OBFFLog("\nS T E E P E S T   D E S C E N T\n\n");
       sprintf(_logbuf, "STEPS = %d\n\n",  steps);
       OBFFLog(_logbuf);
-      OBFFLog("STEP n     E(n)       E(n-1)    \n");
-      OBFFLog("--------------------------------\n");
+      OBFFLog("STEP n       E(n)         E(n-1)    \n");
+      OBFFLog("------------------------------------\n");
     }
   }
  
@@ -2263,13 +2261,13 @@ namespace OpenBabel
             _gradientPtr[coordIdx+2] = dir.z();
         }
       }
-      alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
-      //alpha = Newton2NumLineSearch();
+      //alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
+      alpha = Newton2NumLineSearch();
       e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
       IF_OBFF_LOGLVL_LOW {
         if (_cstep % 10 == 0) {
-          sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+          sprintf(_logbuf, " %4d    %8.5f    %8.5f\n", _cstep, e_n2, _e_n1);
           OBFFLog(_logbuf);
         }
       }
@@ -3715,7 +3713,7 @@ namespace OpenBabel
     
     return false;
   }
-  
+
   OBGridData* OBForceField::GetGrid(double step, double padding, const char* type, double pchg)
   {
     cout << "OBForceFieldMMFF94::GetGrid(" << step << ", " << type << ")" << endl;
