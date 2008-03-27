@@ -1,5 +1,9 @@
 2008-03-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* test/files/uffresults.txt: Update UFF results for recent bug fixes.
+
+2008-03-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* src/forcefield.cpp: Always call SetCoordinates in Setup.
 
 2008-03-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
