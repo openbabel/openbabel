@@ -1,5 +1,9 @@
 2008-03-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/forcefield.cpp: Always call SetCoordinates in Setup.
+
+2008-03-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/forcefield.h, src/forcefield.cpp: Working
 	Newton2NumLineSearch. Used only for SteepestDescent at the moment.
 

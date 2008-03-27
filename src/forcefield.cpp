@@ -752,7 +752,10 @@ namespace OpenBabel
         return false;
       }
     } else {
-      if (!_validSetup) {
+      if (_validSetup) {
+        SetCoordinates(mol);
+        return true;
+      } else {
         return false;
       }
     }
@@ -794,8 +797,16 @@ namespace OpenBabel
 
       if (!SetupCalculations())
         return false;
+    } else {
+      if (_validSetup) {
+        SetCoordinates(mol);
+        return true;
+      } else {
+        return false;
+      }
     }
-   
+
+    _validSetup = true;
     return true;
   }
  
