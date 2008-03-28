@@ -1,3 +1,15 @@
+2008-03-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/UFF.prm: Improved N sp, sp2 atom typing, suggested by Bob Hanson.
+
+	* src/forcefields/forcefielduff.*: Many bug fixes for angle and
+	torsion terms, suggested by Bob Hanson (via Jmol implementation).
+
+	* test/files/uffresults.txt: Updated for above changes.
+
+	* configure, configure.in, */Makefile.in: Bump to 2.2.0b5 and
+	update build files.
+
 2008-03-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* test/files/uffresults.txt: Update UFF results for recent bug fixes.

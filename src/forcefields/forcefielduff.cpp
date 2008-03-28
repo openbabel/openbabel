@@ -111,28 +111,46 @@ namespace OpenBabel
 		}
 
     if (!isfinite(theta))
-      theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
+      theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us
     
+    double cosT = cos(theta);
     switch (coord) {
-    case 1:
-      energy = ka*(1.0 + cos(theta));
-      dE = -ka * sin(theta);
+    case 1: // sp -- linear case, minima at 180 degrees, max (amplitude 2*ka) at 0, 360
+      // Fixed typo from Rappe paper (i.e., it's NOT 1 - cosT)
+      energy = ka*(1.0 + cosT);
       break;
-    case 2:
-      energy = ka*(1.0 + cos(3.0 * theta)) / 9.0;
-      dE = -ka * sin(3.0 * theta) / 3.0;
+    case 2: // sp2 -- trigonal planar, min at 120, 240, max at 0, 360 (amplitude 2*ka)
+      // Rappe form: (1 - cos 3*theta) -- minima at 0, 360 (bad...)
+      energy = (ka/4.5) * (1.0 + (1.0 + cosT)*(4.0*cosT));
       break;
-    case 4:
-    case 6:
-      energy = ka*(1.0 + cos(4.0 * theta)) / 16.0;
-      dE = -ka * sin(4.0 * theta) / 4.0;
+    case 4: // square planar // min at 90, 180, 270, max at 0, 360 (amplitude 2*ka)
+    case 6: // octahedral
+      // Rappe form: (1 - cos 4*theta) -- minima at 0, 360 (bad...)
+      energy = ka * (1.0 + cosT)*cosT*cosT;
       break;
-    default:
-      energy = ka*(c0 + c1*cos(theta) + c2*cos(2.0 * theta));
-      dE = -ka * (c1*sin(theta) + 2.0 * c2 * sin(2.0 * theta));
-    }
-    
+    default: // general (sp3) coordination
+      energy = ka*(c0 + c1*cosT + c2*(2.0*cosT*cosT - 1.0)); // use cos 2t = (2cos^2 - 1)
+    }  
+        
     if (gradients) {
+      double sinT = sin(theta);
+      
+      switch (coord) {
+      case 1: // sp -- linear case
+        dE = -ka * sinT;
+        break;
+      case 2: // sp2 -- trigonal planar
+        dE = -(ka*4.0/4.5) * (sinT + sin(2.0*theta));
+        break;
+      case 4: // square planar
+      case 6: // octahedral
+        dE = -ka * cosT * (2.0 + 3.0 * cosT) * sinT;
+        break;
+      default: // general (sp3) coordination
+        dE = -ka * (c1*sinT + 2.0 * c2*sin(2.0 * theta));
+      }
+      
+      
       da *= dE; // da = dTheta/dx * dE/dTheta
       db *= dE; // da = dTheta/dx * dE/dTheta
       dc *= dE; // da = dTheta/dx * dE/dTheta
@@ -213,10 +231,10 @@ namespace OpenBabel
     }
 
     cosine = cos(tor * n);
-    energy = V * (1.0 - cosPhi0*cosine);
+    energy = V * (1.0 - cosNPhi0*cosine);
     
     if (gradients) {
-      dE = -(V * n * cosPhi0 * sin(n * tor));
+      dE = -(V * n * cosNPhi0 * sin(n * tor));
       da *= dE;
       db *= dE;
       dc *= dE;
@@ -682,7 +700,7 @@ namespace OpenBabel
         vi = parameterB->_dpar[6];
         vj = parameterC->_dpar[6];
 
-        // exception for group 6 sp3 atoms
+        // exception for a pair of group 6 sp3 atoms
         switch (b->GetAtomicNum()) {
         case 8:
           vi = 2.0;
@@ -716,7 +734,7 @@ namespace OpenBabel
 
       } else if (parameterB->_ipar[0] == 2 && parameterC->_ipar[0] == 2) {
         // two sp2 centers
-        phi0 = 60.0;
+        phi0 = 180.0;
         torsioncalc.n = 2;
         torsioncalc.V = 0.5 * KCAL_TO_KJ * 5.0 *
           sqrt(parameterB->_dpar[7]*parameterC->_dpar[7]) * 
@@ -758,7 +776,7 @@ namespace OpenBabel
 
       // still need to implement special case of sp2-sp3 with sp2-sp2
 
-      torsioncalc.cosPhi0 = cos(torsioncalc.n * DEG_TO_RAD * phi0);
+      torsioncalc.cosNPhi0 = cos(torsioncalc.n * DEG_TO_RAD * phi0);
       torsioncalc.SetupPointers();
       _torsioncalculations.push_back(torsioncalc);     
     }
@@ -780,8 +798,8 @@ namespace OpenBabel
 
       switch (b->GetAtomicNum()) {
       case 6: // carbon
-      case 8: // oxygen
       case 7: // nitrogen
+      case 8: // oxygen
       case 15: // phos.
       case 33: // as
       case 51: // sb
@@ -926,6 +944,9 @@ namespace OpenBabel
       _vdwcalculations.push_back(vdwcalc);
     }
     
+    // NOTE: No electrostatics are set up
+    // If you want electrostatics with UFF (not a good idea), you will need to call SetupElectrostatics
+    
     return true;
   }
 
@@ -951,6 +972,15 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
       
+      if (a->IsConnected(b)) {
+        continue;
+      }
+      if (a->IsOneThree(b)) {
+        continue;
+      }
+      
+      // Remember that at the moment, this term is not currently used
+      // These are also the Gasteiger charges, not the Qeq mentioned in the UFF paper
       elecalc.qq = KCAL_TO_KJ * 332.0637 * a->GetPartialCharge() * b->GetPartialCharge();
       
       if (elecalc.qq) {
@@ -1005,6 +1035,7 @@ namespace OpenBabel
           parameter._ipar.push_back(1);
           break;
         case '2': // trigonal planar (sp2)
+        case 'R': // aromatic (N_R)
           parameter._ipar.push_back(2);
           break;
         case '3': // tetrahedral (sp3)
@@ -1019,6 +1050,9 @@ namespace OpenBabel
         case '6': // octahedral
           parameter._ipar.push_back(6);
           break;
+        case '7': // pentagonal bipyramidal -- not actually in parameterization
+            parameter._ipar.push_back(7);
+            break;
         default: // general case (unknown coordination)
           // These atoms appear to generally be linear coordination like Cl
           parameter._ipar.push_back(1);
@@ -1110,7 +1144,9 @@ namespace OpenBabel
     energy += E_Torsion(gradients);
     energy += E_OOP(gradients);
     energy += E_VDW(gradients);
-    energy += E_Electrostatic(gradients);
+    // The electrostatic term, by default is 0.0
+    // You will need to call SetupEletrostatics if you want it
+    // energy += E_Electrostatic(gradients);
      
     IF_OBFF_LOGLVL_MEDIUM {
       sprintf(_logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());

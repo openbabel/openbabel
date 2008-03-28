@@ -51,7 +51,7 @@ namespace OpenBabel
   class OBFFTorsionCalculationUFF : public OBFFCalculation
   {
   public:
-    double V, tor, cosPhi0;
+    double V, tor, cosNPhi0;
     int n;
     double tt; //torsiontype (i.e. b-c bond order)
       

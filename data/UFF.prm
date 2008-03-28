@@ -28,11 +28,11 @@ atom [C^2]    C_2         sp2 non-aromatic C
 atom [C^1]    C_1         sp hybridized C
 atom [c]      C_R         aromatic C
 atom [#7]     N_3         Generic sp3 N
-atom [ND2]    N_2         sp2 non-aromatic N
-atom [ND1]    N_1         sp hybridized N
+atom [N^2]    N_2         sp2 non-aromatic N
+atom [N^1]    N_1         sp hybridized N
 atom [n]      N_R         aromatic N
 atom [#8]     O_3         generic, sp3 hybridized O
-#atom [#8]    O_3_z       sp3 hybridized O for zeolites
+atom [#8][#14] O_3_z      sp3 hybridized O for zeolites
 atom [O^2]    O_2         sp2 hybridized O
 atom [O^1]    O_1         sp hybridized O
 atom [o]      O_R         aromatic O
