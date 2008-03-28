@@ -446,10 +446,10 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 	acrformat.cpp amberformat.cpp balstformat.cpp bgfformat.cpp \
 	boxformat.cpp cansmilesformat.cpp cacaoformat.cpp \
 	cacheformat.cpp carformat.cpp cccformat.cpp chem3dformat.cpp \
-	chemdrawct.cpp chemdrawcdx.cpp chemkinformat.cpp \
-	chemtoolformat.cpp cifformat.cpp copyformat.cpp crkformat.cpp \
-	cssrformat.cpp dmolformat.cpp fastsearchformat.cpp \
-	fastaformat.cpp fchkformat.cpp featformat.cpp fhformat.cpp \
+	chemdrawct.cpp chemkinformat.cpp chemtoolformat.cpp \
+	cifformat.cpp copyformat.cpp crkformat.cpp cssrformat.cpp \
+	dmolformat.cpp fastsearchformat.cpp fastaformat.cpp \
+	fchkformat.cpp featformat.cpp fhformat.cpp \
 	fingerprintformat.cpp freefracformat.cpp gamessformat.cpp \
 	gaussformat.cpp gausscubeformat.cpp gausszmatformat.cpp \
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
@@ -471,19 +471,19 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 @BUILD_SHARED_FALSE@	cansmilesformat.lo cacaoformat.lo \
 @BUILD_SHARED_FALSE@	cacheformat.lo carformat.lo cccformat.lo \
 @BUILD_SHARED_FALSE@	chem3dformat.lo chemdrawct.lo \
-@BUILD_SHARED_FALSE@	chemdrawcdx.lo chemkinformat.lo \
-@BUILD_SHARED_FALSE@	chemtoolformat.lo cifformat.lo \
-@BUILD_SHARED_FALSE@	copyformat.lo crkformat.lo cssrformat.lo \
-@BUILD_SHARED_FALSE@	dmolformat.lo fastsearchformat.lo \
-@BUILD_SHARED_FALSE@	fastaformat.lo fchkformat.lo featformat.lo \
-@BUILD_SHARED_FALSE@	fhformat.lo fingerprintformat.lo \
-@BUILD_SHARED_FALSE@	freefracformat.lo gamessformat.lo \
-@BUILD_SHARED_FALSE@	gaussformat.lo gausscubeformat.lo \
-@BUILD_SHARED_FALSE@	gausszmatformat.lo ghemicalformat.lo \
-@BUILD_SHARED_FALSE@	gromos96format.lo hinformat.lo getinchi.lo \
-@BUILD_SHARED_FALSE@	inchiformat.lo jaguarformat.lo \
-@BUILD_SHARED_FALSE@	mdlformat.lo mmcifformat.lo mmodformat.lo \
-@BUILD_SHARED_FALSE@	mol2format.lo molreport.lo mopacformat.lo \
+@BUILD_SHARED_FALSE@	chemkinformat.lo chemtoolformat.lo \
+@BUILD_SHARED_FALSE@	cifformat.lo copyformat.lo crkformat.lo \
+@BUILD_SHARED_FALSE@	cssrformat.lo dmolformat.lo \
+@BUILD_SHARED_FALSE@	fastsearchformat.lo fastaformat.lo \
+@BUILD_SHARED_FALSE@	fchkformat.lo featformat.lo fhformat.lo \
+@BUILD_SHARED_FALSE@	fingerprintformat.lo freefracformat.lo \
+@BUILD_SHARED_FALSE@	gamessformat.lo gaussformat.lo \
+@BUILD_SHARED_FALSE@	gausscubeformat.lo gausszmatformat.lo \
+@BUILD_SHARED_FALSE@	ghemicalformat.lo gromos96format.lo \
+@BUILD_SHARED_FALSE@	hinformat.lo getinchi.lo inchiformat.lo \
+@BUILD_SHARED_FALSE@	jaguarformat.lo mdlformat.lo \
+@BUILD_SHARED_FALSE@	mmcifformat.lo mmodformat.lo mol2format.lo \
+@BUILD_SHARED_FALSE@	molreport.lo mopacformat.lo \
 @BUILD_SHARED_FALSE@	moldenformat.lo msmsformat.lo mpdformat.lo \
 @BUILD_SHARED_FALSE@	mpqcformat.lo nwchemformat.lo \
 @BUILD_SHARED_FALSE@	pcmodelformat.lo pngformat.lo \
@@ -1091,7 +1091,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 @BUILD_SHARED_FALSE@	cansmilesformat.cpp \
 @BUILD_SHARED_FALSE@	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
-@BUILD_SHARED_FALSE@	chem3dformat.cpp chemdrawct.cpp chemdrawcdx.cpp \
+@BUILD_SHARED_FALSE@	chem3dformat.cpp chemdrawct.cpp \
 @BUILD_SHARED_FALSE@	chemkinformat.cpp \
 @BUILD_SHARED_FALSE@	chemtoolformat.cpp cifformat.cpp \
 @BUILD_SHARED_FALSE@	copyformat.cpp crkformat.cpp cssrformat.cpp \
