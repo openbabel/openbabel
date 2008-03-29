@@ -112,13 +112,18 @@ namespace OpenBabel
     std::vector<OBFFOOPCalculationUFF>           _oopcalculations;
     std::vector<OBFFVDWCalculationUFF>           _vdwcalculations;
     std::vector<OBFFElectrostaticCalculationUFF> _electrostaticcalculations;
-
+ 
   public:
-      //! Constructor
-      OBForceFieldUFF(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
-      {
-        _init = false;
-      }
+    //! Constructor
+    OBForceFieldUFF(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+    {
+      _init = false;
+      _rvdw = 7.0;
+      _rele = 15.0;
+      _pairfreq = 10;
+      _cutoff = false;
+      _linesearch = LineSearchType::Simple;
+    }
       
     //! Destructor
     virtual ~OBForceFieldUFF();

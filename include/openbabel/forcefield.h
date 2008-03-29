@@ -74,7 +74,12 @@ namespace OpenBabel
 #define IF_OBFF_LOGLVL_LOW    if(_loglvl >= OBFF_LOGLVL_LOW)
 #define IF_OBFF_LOGLVL_MEDIUM if(_loglvl >= OBFF_LOGLVL_MEDIUM)
 #define IF_OBFF_LOGLVL_HIGH   if(_loglvl >= OBFF_LOGLVL_HIGH)
-  
+
+  struct LineSearchType 
+  {
+    enum { Simple, Newton2Num };
+  };
+ 
   //! \class OBFFParameter forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to hold forcefield parameters
   class OBFPRT OBFFParameter {
@@ -129,7 +134,7 @@ namespace OpenBabel
     OBAtom *a, *b, *c, *d;
     //! Used to store the index of atoms for this OBFFCalculation
     int idx_a, idx_b, idx_c, idx_d;
-    //! Pointer to atom coordinates
+    //! Pointer to atom coordinates as double[3]
     double *pos_a, *pos_b, *pos_c, *pos_d;
     //! Pointer to atom forces
     double force_a[3], force_b[3], force_c[3], force_d[3];
@@ -504,44 +509,49 @@ namespace OpenBabel
      */
     bool IsInSameRing(OBAtom* a, OBAtom* b);
  
-    OBMol _mol; //!< Molecule to be evaluated or minimized
-    double *_gradientPtr; //! pointer to the gradients
-    bool _init; //!< Used to make sure we only parse the parameter file once, when needed
-    bool _validSetup; //! was the last call to Setup succesfull
+    OBMol 	_mol; //!< Molecule to be evaluated or minimized
+    double	*_gradientPtr; //! pointer to the gradients
+    bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
+    bool 	_validSetup; //! was the last call to Setup succesfull
 
     OBFFConstraints _constraints; //!< Constraints
 
     std::ostream* _logos; //! Output for logfile
-    char _logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
-    int _loglvl; //!< Log level for output
-    int _origLogLevel;
+    char 	_logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
+    int 	_loglvl; //!< Log level for output
+    int 	_origLogLevel;
     
     
-    int _current_conformer; //! used to hold i for current conformer (needed by UpdateConformers)
+    int 	_current_conformer; //! used to hold i for current conformer (needed by UpdateConformers)
     std::vector<double> _energies; //! used to hold the energies for all conformers
 
-    double _econv, _e_n1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    int _method, _cstep, _nsteps; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    double *_grad1, *_dir1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    int _ncoords; //!< Number of coordinates for conjugate gradients
+    double 	_econv, _e_n1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    int 	_method, _cstep, _nsteps; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    double 	*_grad1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    int 	_ncoords; //!< Number of coordinates for conjugate gradients
+    int         _linesearch; //! LineSearch type
 
-    double _timestep; //! Molecular dynamics time step in picoseconds
-    double _T; //! Molecular dynamics temperature in Kelvin
-    double *_velocityPtr; //! pointer to the velocities
+    double 	_timestep; //! Molecular dynamics time step in picoseconds
+    double 	_T; //! Molecular dynamics temperature in Kelvin
+    double 	*_velocityPtr; //! pointer to the velocities
+
+    bool 	_cutoff; //! true = cut-off enabled
+    double 	_rvdw; //! VDW cut-off distance
+    double 	_rele; //! Electrostatic cut-off distance
+    OBBitVec	_vdwpairs; //! VDW pairs that should be calculated
+    OBBitVec	_elepairs; //! Electrostatic pairs that should be calculated
+    int 	_pairfreq; //! The frequence to update non-bonded pairs
   
   public:
     //! Destructor
     virtual ~OBForceField()
-      {
-        if (_grad1 != NULL) {
-          delete [] _grad1;
-          _grad1 = NULL;
-        }
-        if (_dir1 != NULL) {
-          delete [] _dir1;
-          _dir1 = NULL;
-        }
+    {
+      if (_grad1 != NULL) {
+        delete [] _grad1;
+        _grad1 = NULL;
       }
+    }
+
     const char* TypeID()
     {
       return "forcefields";
@@ -637,6 +647,83 @@ namespace OpenBabel
      */
     virtual OBGridData *GetGrid(double step, double padding, const char *type, double pchg);
 
+    /////////////////////////////////////////////////////////////////////////
+    // Cut-off                                                             //
+    /////////////////////////////////////////////////////////////////////////
+      
+    //! \name Methods for Cut-off distances
+    //@{
+    /*! Enable or disable Cut-off.
+     */
+    void EnableCutOff(bool enable)
+    {
+      _cutoff = enable;
+    }
+    /*! \return true if Cut-off distances are used.
+     */
+    bool IsCutOffEnabled()
+    {
+      return _cutoff;
+    }
+    /*! Set the VDW cut-off distance to r.
+     */
+    void SetVDWCutOff(double r)
+    {
+      _rvdw = r;
+    }
+    /*! Get the VDW cut-off distance.
+     */
+    double GetVDWCutOff()
+    {
+      return _rvdw;
+    }
+    /*! Set the Electrostatic cut-off distance to r.
+     */
+    void SetElectrostaticCutOff(double r)
+    {
+      _rele = r;
+    }
+    /*! Get the Electrostatic cut-off distance.
+     */
+    double GetElectrostaticCutOff()
+    {
+      return _rele;
+    }
+    /*! Set the frequency by which non-bonded pairs are updated. Values from 10 to 20
+     *  are recommended. Too low will decrease performance, too high will cause 
+     *  non-bonded interactions within cut-off not to be calculated.
+     */ 
+    void SetUpdateFrequency(int f)
+    {
+      _pairfreq = f;
+    }
+    /*! Get the frequency by which non-bonded pairs are updated.
+     */ 
+    int GetUpdateFrequency()
+    {
+      return _pairfreq;
+    } 
+    /*! Set the bits in _vdwpairs and _elepairs to 1 for interactions that 
+     *  are within cut-off distance.  
+     */ 
+    void UpdatePairsSimple();
+
+    //void UpdatePairsGroup(); TODO
+
+    /*! Get the number of non-bonded pairs in _mol 
+     */ 
+    unsigned int GetNumPairs();
+    /*! Set bits in range 0..._numpairs-1 to 1. Using this means there will
+     *  be no cut-off. (not-working: see code for more information.
+     */ 
+    void EnableAllPairs()
+    {
+      // TODO: OBBitVec doesn't seem to be allocating it's memory correctly
+      //_vdwpairs.SetRangeOn(0, _numpairs-1);
+      //_elepairs.SetRangeOn(0, _numpairs-1);
+    }
+    //@}
+ 
     /////////////////////////////////////////////////////////////////////////
     // Energy Evaluation                                                   //
     /////////////////////////////////////////////////////////////////////////
@@ -887,6 +974,18 @@ namespace OpenBabel
       
     //! \name Methods for energy minimization
     //@{
+    /*! Set the LineSearchType.
+     */ 
+    void SetLineSearchType(int type)
+    {
+      _linesearch = type;
+    }
+    /*! Set the LineSearchType.
+     */ 
+    int GetLineSearchType()
+    {
+      return _linesearch;
+    }
     /*! Perform a linesearch starting at atom in direction direction
       \deprecated Current code should use LineSearch(double *, double*) instead
       \param atom start coordinates

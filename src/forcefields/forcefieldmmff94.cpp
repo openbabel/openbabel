@@ -558,8 +558,12 @@ namespace OpenBabel
       //       XX   XX     -000.000  -000.000  -000.000  -000.000
     }
     
-    for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i) {
-      
+    unsigned int j = 0; 
+    for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i, ++j) {
+      // Cut-off check
+      if (!_vdwpairs.BitIsSet(j)) 
+        continue;
+
       i->Compute(gradients);
       energy += i->energy;
       
@@ -573,6 +577,7 @@ namespace OpenBabel
                 (*i).rab, (*i).R_AB, (*i).epsilon, (*i).energy);
         OBFFLog(_logbuf);
       }
+      
     }
     
     IF_OBFF_LOGLVL_MEDIUM {
@@ -612,9 +617,13 @@ namespace OpenBabel
       OBFFLog("-----------------------------------------------------\n");
       //       XX   XX     XXXXXXXX   XXXXXXXX   XXXXXXXX   XXXXXXXX
     }
-    
-    for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i) {
-      
+
+    unsigned int j = 0; 
+    for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i, ++j) {
+      // Cut-off check
+      if (!_elepairs.BitIsSet(j)) 
+        continue;
+     
       i->Compute(gradients);
       energy += i->energy;
       

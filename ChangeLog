@@ -1,3 +1,13 @@
+2008-03-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h, src/forcefield.cpp: Implement
+	methods to handle cut-offs. Added SetLineSearchType().
+
+	* src/forcefields/forcefieldghemical.*, src/forcefields/forcefielduff.*,
+	src/forcefields/forcefieldmmff94.*: Use it.
+	
+	* tools/obminimize.cpp: Add new options to specify cut-off and linesearch.
+
 2008-03-29 Chris Morley
 
 	* src/formats/inchiformat.cpp: Add output options 

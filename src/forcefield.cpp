@@ -72,6 +72,7 @@ using namespace std;
 
 namespace OpenBabel
 {
+
   /** \class OBForceField forcefield.h <openbabel/forcefield.h>
       \brief Base class for molecular mechanics force fields
 
@@ -759,7 +760,7 @@ namespace OpenBabel
         return false;
       }
     }
-
+    
     _validSetup = true;
     return true;
   }
@@ -1781,7 +1782,57 @@ namespace OpenBabel
     }
 
   }
+ 
+  //////////////////////////////////////////////////////////////////////////////////
+  //
+  // Cut-off
+  //
+  //////////////////////////////////////////////////////////////////////////////////
   
+  void OBForceField::UpdatePairsSimple()
+  {
+    unsigned int i = 0;
+
+    _vdwpairs.Clear();
+    _elepairs.Clear();
+
+    FOR_PAIRS_OF_MOL(p, _mol) {
+      OBAtom *a = _mol.GetAtom((*p)[0]);
+      OBAtom *b = _mol.GetAtom((*p)[1]);
+ 
+      double rab = VectorDistance(a->GetCoordinate(), b->GetCoordinate());
+      // update vdw pairs
+      if (rab < _rvdw) {
+        _vdwpairs.SetBitOn(i);
+      } else {
+        _vdwpairs.SetBitOff(i);
+      }
+      // update electrostatic pairs
+      if (rab < _rele) {
+        _elepairs.SetBitOn(i);
+      } else {
+        _elepairs.SetBitOff(i);
+      }
+      
+      i++;  
+    }
+    /* 
+    IF_OBFF_LOGLVL_LOW {
+      sprintf(_logbuf, "UPDATE VDW PAIRS: %d --> %d (VDW), %d (ELE) \n", i+1, _vdwpairs.CountBits(), _elepairs.CountBits());
+      OBFFLog(_logbuf);
+    }
+    */
+  }
+  
+  unsigned int OBForceField::GetNumPairs()
+  {
+    unsigned int i = 1;
+    FOR_PAIRS_OF_MOL(p, _mol)
+      i++;
+    
+    return i;
+  }
+
   //////////////////////////////////////////////////////////////////////////////////
   //
   // Energy Minimization
@@ -2233,6 +2284,9 @@ namespace OpenBabel
     _econv = econv;
     _method = method;
 
+    if (_cutoff)
+      UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
+
     _e_n1 = Energy() + _constraints.GetConstraintEnergy();
     
     IF_OBFF_LOGLVL_LOW {
@@ -2272,10 +2326,20 @@ namespace OpenBabel
             _gradientPtr[coordIdx+2] = dir.z();
         }
       }
-      //alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
-      alpha = Newton2NumLineSearch();
+      switch (_linesearch) {
+        case LineSearchType::Newton2Num:
+          alpha = Newton2NumLineSearch();
+          break;
+        dafault:
+        case LineSearchType::Simple:
+          alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
+          break;
+      }
       e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
+      if ((_cstep % _pairfreq == 0) && _cutoff)
+        UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
+
       IF_OBFF_LOGLVL_LOW {
         if (_cstep % 10 == 0) {
           sprintf(_logbuf, " %4d    %8.5f    %8.5f\n", _cstep, e_n2, _e_n1);
@@ -2304,19 +2368,21 @@ namespace OpenBabel
     SteepestDescentInitialize(steps, econv, method);
     SteepestDescentTakeNSteps(steps);
   }
-  
+
   void OBForceField::ConjugateGradientsInitialize(int steps, double econv, 
                                                   int method)
   {
     double e_n2, alpha;
-    vector3 grad2, dir2;
+    vector3 grad2;
 
-    //_cstep = 0;
     _cstep = 0;
     _nsteps = steps;
     _econv = econv;
     _method = method;
     _ncoords = _mol.NumAtoms() * 3;
+
+    if (_cutoff)
+      UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
 
     _e_n1 = Energy() + _constraints.GetConstraintEnergy();
     
@@ -2332,10 +2398,6 @@ namespace OpenBabel
       delete [] _grad1;
     _grad1 = new double[_ncoords];
     memset(_grad1, '\0', sizeof(double)*_ncoords);
-    if (_dir1 != NULL)
-      delete [] _dir1;
-    _dir1 = new double[_ncoords];
-    memset(_grad1, '\0', sizeof(double)*_ncoords);
 
     // Take the first step (same as steepest descent because there is no 
     // gradient from the previous step.
@@ -2346,24 +2408,31 @@ namespace OpenBabel
             grad2 = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
           else
             grad2 = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
-          dir2 = grad2;
 
           int coordIdx = (a->GetIdx() - 1) * 3;
           if (!_constraints.IsXFixed(a->GetIdx())) {
             _grad1[coordIdx] = grad2.x();
-            _dir1[coordIdx] = grad2.x();
           }
           if (!_constraints.IsYFixed(a->GetIdx())) {
             _grad1[coordIdx + 1] = grad2.y();
-            _dir1[coordIdx + 1] = grad2.y();
           }
           if (!_constraints.IsZFixed(a->GetIdx())) {
             _grad1[coordIdx + 2] = grad2.z();
-            _dir1[coordIdx + 2] = grad2.z();
           }
         }
     }
-    alpha = LineSearch(_mol.GetCoordinates(), _dir1);
+    switch (_linesearch) {
+      case LineSearchType::Newton2Num:
+        memcpy(_gradientPtr, _grad1, sizeof(double)*_ncoords);
+        alpha = Newton2NumLineSearch();
+        break;
+      dafault:
+      case LineSearchType::Simple:
+        alpha = LineSearch(_mol.GetCoordinates(), _grad1);
+        break;
+    }
+    // save the direction
+    //memcpy(_grad1, _dir1, sizeof(double)*_ncoords);
     e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
     IF_OBFF_LOGLVL_LOW {
@@ -2408,33 +2477,40 @@ namespace OpenBabel
             grad1 = vector3(_grad1[coordIdx], _grad1[coordIdx+1], _grad1[coordIdx+2]);
             g1g1 = dot(grad1, grad1);
             beta = g2g2 / g1g1;
-            dir1 = vector3(_dir1[coordIdx], _dir1[coordIdx+1], _dir1[coordIdx+2]);
-            dir2 = grad2 + beta * dir1;
-          } else { // reset conj. direction
+            grad2 = grad2 + beta * grad1;
+          } /*else { // reset conj. direction
             dir2 = grad2;
-          }
+          }*/
  
-          
           if (!_constraints.IsXFixed(a->GetIdx())) {
             _grad1[coordIdx] = grad2.x();
-            _dir1[coordIdx] = dir2.x();
           }
           if (!_constraints.IsYFixed(a->GetIdx())) {
             _grad1[coordIdx + 1] = grad2.y();
-            _dir1[coordIdx + 1] = dir2.y();
           }
           if (!_constraints.IsZFixed(a->GetIdx())) {
-            _dir1[coordIdx + 2] = dir2.z();
             _grad1[coordIdx + 2] = grad2.z();
           }
         }
       }
-      alpha = LineSearch(_mol.GetCoordinates(), _dir1);
-      for (unsigned int j = 0; j < _ncoords; ++j)
-        _dir1[j] *= alpha;
+     switch (_linesearch) {
+        case LineSearchType::Newton2Num:
+          memcpy(_gradientPtr, _grad1, sizeof(double)*_ncoords);
+          alpha = Newton2NumLineSearch();
+          break;
+        dafault:
+        case LineSearchType::Simple:
+          alpha = LineSearch(_mol.GetCoordinates(), _grad1);
+          break;
+      }
+      //for (unsigned int j = 0; j < _ncoords; ++j)
+      //  _dir1[j] *= alpha;
 
       e_n2 = Energy() + _constraints.GetConstraintEnergy();
 	
+      if ((_cstep % _pairfreq == 0) && _cutoff)
+        UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
+
       IF_OBFF_LOGLVL_LOW {
         if (_cstep % 10 == 0) {
           sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
@@ -2456,7 +2532,7 @@ namespace OpenBabel
 
     return true; // no convergence reached
   }
- 
+  
   void OBForceField::ConjugateGradients(int steps, double econv, int method)
   {
     ConjugateGradientsInitialize(steps, econv, method);

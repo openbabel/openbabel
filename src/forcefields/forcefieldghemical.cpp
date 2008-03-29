@@ -257,8 +257,12 @@ namespace OpenBabel
       //          XX   XX     -000.000  -000.000  -000.000  -000.000
     }
     
-    for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i) {
-      
+    unsigned int j = 0; 
+    for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i, ++j) {
+      // Cut-off check
+      if (!_vdwpairs.BitIsSet(j)) 
+        continue;
+ 
       i->Compute(gradients);
       energy += i->GetEnergy();
       
@@ -313,8 +317,12 @@ namespace OpenBabel
       //            XX   XX     -000.000  -000.000  -000.000  
     }
 
-    for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i) {
-      
+    unsigned int j = 0; 
+    for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i, ++j) {
+      // Cut-off check
+      if (!_elepairs.BitIsSet(j)) 
+        continue;
+ 
       i->Compute(gradients);
       energy += i->GetEnergy();
       
@@ -822,7 +830,7 @@ namespace OpenBabel
         }
       }
     }
-
+ 
     SetPartialCharges();
  
     IF_OBFF_LOGLVL_LOW {

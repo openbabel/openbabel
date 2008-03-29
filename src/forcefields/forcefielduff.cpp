@@ -412,8 +412,12 @@ namespace OpenBabel
       //          XX   XX     -000.000  -000.000  -000.000  -000.000
     }
     
-    for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i) {
-      
+    unsigned int j = 0; 
+    for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i, ++j) {
+      // Cut-off check
+      if (!_vdwpairs.BitIsSet(j)) 
+        continue;
+     
       i->Compute(gradients);
       energy += i->GetEnergy();
       
@@ -477,7 +481,11 @@ namespace OpenBabel
       //            XX   XX     -000.000  -000.000  -000.000  
     }
 
-    for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i) {
+    unsigned int j = 0; 
+    for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i, ++j) {
+      // Cut-off check
+      if (!_elepairs.BitIsSet(j)) 
+        continue;
       
       i->Compute(gradients);
       energy += i->GetEnergy();
@@ -1149,7 +1157,7 @@ namespace OpenBabel
     // energy += E_Electrostatic(gradients);
      
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "\nTOTAL ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "\nTOTAL ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 

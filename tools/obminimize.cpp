@@ -39,7 +39,12 @@ int main(int argc,char **argv)
   int steps = 2500;
   double crit = 1e-6;
   bool sd = false;
+  bool cut = false;
+  bool newton = false;
   bool hydrogens = false;
+  double rvdw = 6.0;
+  double rele = 10.0;
+  int freq = 10;
   string basename, filename = "", option, option2, ff = "Ghemical";
   char *oext;
   OBConversion conv;
@@ -54,11 +59,23 @@ int main(int argc,char **argv)
     cout << endl;
     cout << "  -cg         use conjugate gradients algorithm (default)" << endl;
     cout << endl;
+    cout << "  -sd         use steepest descent algorithm" << endl;
+    cout << endl;
+    cout << "  -newton     use Newton2Num linesearch (default=Simple)" << endl;
+    cout << endl;
     cout << "  -ff ffid    select a forcefield:" << endl;
     cout << endl;
     cout << "  -h          add hydrogen atoms" << endl;
     cout << endl;
     cout << "  -n steps    specify the maximum numer of steps (default=2500)" << endl;
+    cout << endl;
+    cout << "  -cut        use cut-off (default=don't use cut-off)" << endl;
+    cout << endl;
+    cout << "  -rvdw rvdw  specify the VDW cut-off distance (default=6.0)" << endl;
+    cout << endl;
+    cout << "  -rele rele  specify the Electrostatic cut-off distance (default=10.0)" << endl;
+    cout << endl;
+    cout << "  -pf freq    specify the frequency to update the non-bonded pairs (default=10)" << endl;
     cout << endl;
     OBPlugin::List("forcefields", "verbose");
     exit(-1);
@@ -66,14 +83,40 @@ int main(int argc,char **argv)
     int ifile = 1;
     for (int i = 1; i < argc; i++) {
       option = argv[i];
-      
+
+      // steps
       if ((option == "-n") && (argc > (i+1))) {
         steps = atoi(argv[i+1]);
         ifile += 2;
       }
-
+      // vdw cut-off
+      if ((option == "-rvdw") && (argc > (i+1))) {
+        rvdw = atof(argv[i+1]);
+        ifile += 2;
+      }
+      // ele cut-off
+      if ((option == "-rele") && (argc > (i+1))) {
+        rele = atof(argv[i+1]);
+        ifile += 2;
+      }
+      // pair update frequency
+      if ((option == "-pf") && (argc > (i+1))) {
+        freq = atoi(argv[i+1]);
+        ifile += 2;
+      }
+      // steepest descent
       if (option == "-sd") {
         sd = true;
+        ifile++;
+      }
+      // enable cut-off
+      if (option == "-cut") {
+        cut = true;
+        ifile++;
+      }
+      // enable Newton2Num
+      if (option == "-newton") {
+        newton = true;
         ifile++;
       }
       
@@ -141,9 +184,16 @@ int main(int argc,char **argv)
     exit (-1);
   }
  
-  pFF->SetLogFile(&cout);
+  // set some force field variables
+  pFF->SetLogFile(&cerr);
   pFF->SetLogLevel(OBFF_LOGLVL_LOW);
-
+  pFF->SetVDWCutOff(rvdw);    
+  pFF->SetElectrostaticCutOff(rele);    
+  pFF->SetUpdateFrequency(freq);    
+  pFF->EnableCutOff(cut); 
+  if (newton)
+    pFF->SetLineSearchType(LineSearchType::Newton2Num); 
+ 
   OBMol mol;
 
   for (c=1;;c++) {
@@ -160,14 +210,13 @@ int main(int argc,char **argv)
       cerr << program_name << ": could not setup force field." << endl;
       exit (-1);
     }
-      
+
     bool done = true;
     if (sd) {
       pFF->SteepestDescentInitialize(steps, crit);
-		}
-    else {
+    } else {
       pFF->ConjugateGradientsInitialize(steps, crit);
-		}    
+    }    
 
     while (done) {
       if (sd)
@@ -180,11 +229,11 @@ int main(int argc,char **argv)
         conv.Write(&mol, &cout);
         return(1);
       } else
-        pFF->UpdateCoordinates(mol);
+        pFF->GetCoordinates(mol);
     }
     
 
-    pFF->UpdateCoordinates(mol);
+    pFF->GetCoordinates(mol);
 
     conv.Write(&mol, &cout);
   } // end for loop

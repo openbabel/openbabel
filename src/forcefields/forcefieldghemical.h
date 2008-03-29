@@ -104,7 +104,12 @@ namespace OpenBabel
       //! Constructor
       OBForceFieldGhemical(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
-          _init = false;
+        _init = false;
+        _rvdw = 7.0;
+        _rele = 15.0;
+        _pairfreq = 10;
+        _cutoff = false;
+        _linesearch = LineSearchType::Simple;
       }
       
       //! Destructor
