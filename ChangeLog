@@ -1,5 +1,11 @@
 2008-03-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/forcefields/forcefieldghemical.cpp,
+	src/forcefields/forcefielduff.cpp,
+	src/forcefields/forcefieldmmff94.cpp: Don't use Cut-off when disabled.
+
+2008-03-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/forcefield.h, src/forcefield.cpp: Implement
 	methods to handle cut-offs. Added SetLineSearchType().
 

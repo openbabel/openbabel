@@ -561,8 +561,9 @@ namespace OpenBabel
     unsigned int j = 0; 
     for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i, ++j) {
       // Cut-off check
-      if (!_vdwpairs.BitIsSet(j)) 
-        continue;
+      if (_cutoff)
+        if (!_vdwpairs.BitIsSet(j)) 
+          continue;
 
       i->Compute(gradients);
       energy += i->energy;
@@ -621,8 +622,9 @@ namespace OpenBabel
     unsigned int j = 0; 
     for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i, ++j) {
       // Cut-off check
-      if (!_elepairs.BitIsSet(j)) 
-        continue;
+      if (_cutoff)
+        if (!_elepairs.BitIsSet(j)) 
+          continue;
      
       i->Compute(gradients);
       energy += i->energy;
