@@ -45,6 +45,8 @@ public:
     OBConversion::RegisterOptionParam("t", this);
     OBConversion::RegisterOptionParam("X", this, 1, OBConversion::OUTOPTIONS);
     OBConversion::RegisterOptionParam("K", this, 0, OBConversion::OUTOPTIONS);
+    OBConversion::RegisterOptionParam("F", this, 0, OBConversion::OUTOPTIONS);
+    OBConversion::RegisterOptionParam("M", this, 0, OBConversion::OUTOPTIONS);
     OBConversion::RegisterOptionParam("X", this, 1, OBConversion::INOPTIONS);
   }
 
@@ -54,7 +56,9 @@ public:
     "InChI format\n"
     "IUPAC/NIST molecular identifier\n"
     "Write options, e.g. -xat\n"
-    " X <Option string> List of InChI options:\n"
+    " X <Option string> List of InChI options\n"
+    " F include fixed hydrogen layer\n"
+    " M include bonds to metal\n"
     " t add molecule name\n"
     " a output auxilliary information\n"
     " K output InChIKey\n"
@@ -64,7 +68,7 @@ public:
     " w don't warn on undef stereo or charge rearrangement\n\n"
 
     "Input options, e.g. -at\n"
-    " X <Option string> List of InChI options:\n"
+    " X <Option string> List of InChI options\n"
     " n molecule name follows InChI on same line\n"
     " a add InChI string to molecule name\n\n"
     " The InChI options should be space delimited in a single quoted string.\n"
@@ -916,22 +920,37 @@ char* InChIFormat::GetInChIOptions(OBConversion* pConv, bool Reading)
   char* opts;
   OBConversion::Option_type opttyp = Reading ? OBConversion::INOPTIONS : OBConversion::OUTOPTIONS;
   const char* copts = pConv->IsOption("X", opttyp);
+  vector<string> optsvec;
   if(copts)
   {
-    vector<string> optsvec;
     string tmp(copts); // GCC doesn't like passing string temporaries to functions
     tokenize(optsvec, tmp);
+  }
+  //Add a couple InChI options built in to OB
+  if(opttyp==OBConversion::OUTOPTIONS)
+  {
+    if(pConv->IsOption("F", opttyp))
+    {
+      string tmp2("FixedH");
+      optsvec.push_back(tmp2);
+    }
+    if(pConv->IsOption("M", opttyp))
+    {
+      string tmp2("RecMet");
+      optsvec.push_back(tmp2);
+    }
+  }
 #ifdef WIN32
     string ch(" /");
 #else
     string ch(" -");
 #endif
-    string sopts;
-    for(int i=0;i<optsvec.size();++i)
-      sopts += ch + optsvec[i];
-    opts = new char[strlen(sopts.c_str())+1]; //has to be char, not const char
-    return strcpy(opts, sopts.c_str());
-  }
+
+  string sopts;
+  for(int i=0;i<optsvec.size();++i)
+    sopts += ch + optsvec[i];
+  opts = new char[strlen(sopts.c_str())+1]; //has to be char, not const char
+  return strcpy(opts, sopts.c_str());
   opts = new char[1];
   *opts = '\0';
   return opts;

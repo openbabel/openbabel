@@ -142,7 +142,7 @@ namespace OpenBabel {
         { return &OptionsArray[opttyp];};
 
       ///@brief Set an option of specified type, with optional text
-      void AddOption(const char* opt, Option_type opttyp, const char* txt=NULL);
+      void AddOption(const char* opt, Option_type opttyp=OUTOPTIONS, const char* txt=NULL);
 	
       bool RemoveOption(const char* opt, Option_type optype);
 

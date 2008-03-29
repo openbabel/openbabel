@@ -1,3 +1,13 @@
+2008-03-29 Chris Morley
+
+	* src/formats/inchiformat.cpp: Add output options 
+	"include fixed hydrogen layer" and "include bonds to metal"
+	as shortcuts to NIST's InChI functionality.
+	
+	* include/openbabel/obconversion.h: Make default to OUTOPTIONS,
+	as IsOptions does. Makes setting most options less cumbersome.
+
+
 2008-03-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/UFF.prm: Improved N sp, sp2 atom typing, suggested by Bob Hanson.
