@@ -43,7 +43,7 @@ set(formats
     hinformat
     jaguarformat
     mdlformat
-    mmcifforamt
+    mmcifformat
     mmodformat
     mol2format
     moldenformat
