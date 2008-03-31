@@ -89,6 +89,7 @@ public:
 	void OnMouseWheel(wxMouseEvent& event);
 	void OnSelectFormats(wxCommandEvent& event);
 	void OnRestrictFormats(wxCommandEvent& event);
+	void OnClickPlugin(wxCommandEvent& event);
 
 	void DisplayInFile(wxString filename);
 	wxString GetInFileBasePath(){ return m_InFileBasePath;}
@@ -178,7 +179,7 @@ enum
 		ID_INFORMAT,ID_OUTFORMAT,ID_ININFO,ID_OUTINFO,
 		ID_INFORCEFORMAT,ID_OUTFORCEFORMAT,ID_NOOUTFILE,ID_CONVERT,
 		ID_MESSAGES,ID_INPUTHERE,ID_RESTRICTFORMATS,ID_SELFORMATS,
-    ID_COPYTOINPUT,
+    ID_COPYTOINPUT,ID_HINT,
     ID_PLUGINS
 };
 

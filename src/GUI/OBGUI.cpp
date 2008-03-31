@@ -42,6 +42,7 @@ BEGIN_EVENT_TABLE(OBGUIFrame, wxFrame)
   EVT_MENU(ID_COPYTOINPUT,  OBGUIFrame::OnCopyToInput)
   EVT_MENU(ID_SELFORMATS,  OBGUIFrame::OnSelectFormats)
   EVT_MENU(ID_RESTRICTFORMATS,  OBGUIFrame::OnRestrictFormats)
+  EVT_MENU_RANGE(ID_PLUGINS,ID_PLUGINS+1000, OBGUIFrame::OnClickPlugin)
   EVT_MENU_RANGE(ID_SHOWCONVOPTIONS,ID_SHOWOUTOPTIONS, OBGUIFrame::OnChangeFormat)
   EVT_MENU(wxID_ABOUT, OBGUIFrame::OnAbout)
   EVT_MENU(wxID_HELP, OBGUIFrame::OnHelp)
@@ -935,6 +936,7 @@ void OBGUIFrame::MakePluginsMenu()
 //    std::vector<std::string> verbosevec;
     OBPlugin::ListAsVector(topvec[itop].c_str(), NULL, subvec);//get each format, etc as single line
 //    OBPlugin::ListAsVector(topvec[itop].c_str(), "verbose", verbosevec);//get full description of each format
+    subMenu->Append(ID_HINT,"     (Click item to copy its ID to clipboard)");
     for(int isub=0; isub < subvec.size(); ++isub)
     {
 //      wxMenu* subsubMenu = new wxMenu();
@@ -946,6 +948,23 @@ void OBGUIFrame::MakePluginsMenu()
       _T("Plugin Classes"));
   }
 }
+
+void OBGUIFrame::OnClickPlugin(wxCommandEvent& event)
+{
+  //Puts ID on clipboard
+  if (wxTheClipboard->Open())
+  {
+    int nID = event.GetId();
+    wxMenuItem* item = listMenu->FindItem(nID);
+    if(item)
+    {
+      wxString itemText = item->GetText();
+      wxTheClipboard->SetData( new wxTextDataObject(itemText.BeforeFirst(' ')) );
+    }
+    wxTheClipboard->Close();
+  }
+}
+
 void CFilenames::OnKeyPress(wxKeyEvent& event)
 {
   int delta=1;

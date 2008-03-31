@@ -1,3 +1,8 @@
+2008-03-31 Chris Morley
+
+	* src/GUI/OBGUI.cpp, src/GUI/OBGUI.h: Click on menu item copies
+	plugin id to clipboard
+	
 2008-03-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefieldghemical.cpp,
