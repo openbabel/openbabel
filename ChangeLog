@@ -1,3 +1,8 @@
+2008-03-31  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/setup.py: Fix for MacOSX to allow compiling against
+	the contents of the build tree rather than /usr/local
+
 2008-03-31 Chris Morley
 
 	* src/GUI/OBGUI.cpp, src/GUI/OBGUI.h: Click on menu item copies

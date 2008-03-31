@@ -33,7 +33,8 @@ def find_likely_directory():
         sys.stderr.write("INFO: Looking for library and include files in ../../src and ../../include\n")
         if os.path.isfile("../../include/openbabel/atom.h"):
             includedir = ["../../include"]
-        if os.path.isfile("../../src/.libs/libopenbabel.so"):
+        if os.path.isfile("../../src/.libs/libopenbabel.so") or
+           os.path.isfile("../../src/.libs/libopenbabel.dylib"):
             libdir = ["../../src/.libs"]
         elif os.path.isfile("../../src/libopenbabel.so"):
             libdir = ["../../src"]
