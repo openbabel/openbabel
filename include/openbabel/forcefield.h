@@ -1024,10 +1024,10 @@ namespace OpenBabel
       OBFF_LOGLVL_MEDIUM: none \n
       OBFF_LOGLVL_HIGH:   none \n
     */
-    double Newton2NumLineSearch();
+    double Newton2NumLineSearch(double *direction);
     /*! Set the coordinates of the atoms to origCoord + step.
     */
-    void   LineSearchTakeStep(double *origCoords, double step);
+    void   LineSearchTakeStep(double *origCoords, double *direction, double step);
 
     /*! Perform steepest descent optimalization for steps steps or until convergence criteria is reached.
       \param steps the number of steps 

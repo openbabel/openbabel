@@ -1927,7 +1927,7 @@ namespace OpenBabel
   // 2) Switch to line search for one step of the entire molecule!
   //   This dramatically cuts down on the number of Energy() calls.
   //  (and is more correct anyway)
-  double OBForceField::Newton2NumLineSearch()
+  double OBForceField::Newton2NumLineSearch(double *direction)
   {
     double e_n1, e_n2, e_n3;
     double *origCoords = new double [_ncoords];
@@ -1939,11 +1939,11 @@ namespace OpenBabel
     
     double sum = 0.0;
     for (unsigned int c = 0; c < _ncoords; ++c) {
-      if (isfinite(_gradientPtr[c])) { 
-        sum += _gradientPtr[c] * _gradientPtr[c];
+      if (isfinite(direction[c])) { 
+        sum += direction[c] * direction[c];
       } else {
         // make sure we don't have NaN or infinity
-        _gradientPtr[c] = 0.0;
+        direction[c] = 0.0;
       }
     }
 
@@ -1962,7 +1962,7 @@ namespace OpenBabel
     int newton = 0;
     while (true) {
       // Take step X(n) + step
-      LineSearchTakeStep(origCoords, step);
+      LineSearchTakeStep(origCoords, direction, step);
       e_n1 = Energy(false) + _constraints.GetConstraintEnergy();
 
       if (e_n1 < opt_e) {
@@ -1975,11 +1975,11 @@ namespace OpenBabel
       double delta = step * 0.001;
       
       // Take step X(n) + step + delta
-      LineSearchTakeStep(origCoords, step+delta);
+      LineSearchTakeStep(origCoords, direction, step+delta);
       e_n2 = Energy(false) + _constraints.GetConstraintEnergy();
  
       // Take step X(n) + step + delta * 2.0
-      LineSearchTakeStep(origCoords, step+delta*2.0);
+      LineSearchTakeStep(origCoords, direction, step+delta*2.0);
       e_n3 = Energy(false) + _constraints.GetConstraintEnergy();
       
       double denom = e_n3 - 2.0 * e_n2 + e_n1; // f'(x)
@@ -1998,7 +1998,7 @@ namespace OpenBabel
       step = 0.001 * def_step / scale;
       
       // Take step X(n) + step
-      LineSearchTakeStep(origCoords, step);
+      LineSearchTakeStep(origCoords, direction, step);
       e_n1 = Energy(false) + _constraints.GetConstraintEnergy();
 
       if (e_n1 < opt_e) {
@@ -2009,17 +2009,17 @@ namespace OpenBabel
     }
 
     // Take optimal step 
-    LineSearchTakeStep(origCoords, opt_step);
+    LineSearchTakeStep(origCoords, direction, opt_step);
 
     return opt_step * scale;
   }
   
-  void OBForceField::LineSearchTakeStep(double* origCoords, double step)
+  void OBForceField::LineSearchTakeStep(double* origCoords, double *direction, double step)
   {
     double *currentCoords = _mol.GetCoordinates();
 
     for (unsigned int c = 0; c < _ncoords; ++c) {
-      currentCoords[c] = origCoords[c] + _gradientPtr[c] * step;
+      currentCoords[c] = origCoords[c] + direction[c] * step;
     }
   }
 
@@ -2328,7 +2328,7 @@ namespace OpenBabel
       }
       switch (_linesearch) {
         case LineSearchType::Newton2Num:
-          alpha = Newton2NumLineSearch();
+          alpha = Newton2NumLineSearch(_gradientPtr);
           break;
         dafault:
         case LineSearchType::Simple:
@@ -2423,16 +2423,14 @@ namespace OpenBabel
     }
     switch (_linesearch) {
       case LineSearchType::Newton2Num:
-        memcpy(_gradientPtr, _grad1, sizeof(double)*_ncoords);
-        alpha = Newton2NumLineSearch();
+        alpha = Newton2NumLineSearch(_grad1);
         break;
       dafault:
       case LineSearchType::Simple:
         alpha = LineSearch(_mol.GetCoordinates(), _grad1);
         break;
     }
-    // save the direction
-    //memcpy(_grad1, _dir1, sizeof(double)*_ncoords);
+    
     e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
     IF_OBFF_LOGLVL_LOW {
@@ -2477,10 +2475,8 @@ namespace OpenBabel
             grad1 = vector3(_grad1[coordIdx], _grad1[coordIdx+1], _grad1[coordIdx+2]);
             g1g1 = dot(grad1, grad1);
             beta = g2g2 / g1g1;
-            grad2 = grad2 + beta * grad1;
-          } /*else { // reset conj. direction
-            dir2 = grad2;
-          }*/
+            grad2 += beta * grad1;
+          } 
  
           if (!_constraints.IsXFixed(a->GetIdx())) {
             _grad1[coordIdx] = grad2.x();
@@ -2495,21 +2491,29 @@ namespace OpenBabel
       }
      switch (_linesearch) {
         case LineSearchType::Newton2Num:
-          memcpy(_gradientPtr, _grad1, sizeof(double)*_ncoords);
-          alpha = Newton2NumLineSearch();
+          alpha = Newton2NumLineSearch(_grad1);
           break;
         dafault:
         case LineSearchType::Simple:
           alpha = LineSearch(_mol.GetCoordinates(), _grad1);
           break;
       }
-      //for (unsigned int j = 0; j < _ncoords; ++j)
-      //  _dir1[j] *= alpha;
-
+      // save the direction
+      memcpy(_grad1, _gradientPtr, sizeof(double)*_ncoords);
+ 
       e_n2 = Energy() + _constraints.GetConstraintEnergy();
 	
       if ((_cstep % _pairfreq == 0) && _cutoff)
         UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
+
+      if (IsNear(e_n2, _e_n1, _econv)) {
+        IF_OBFF_LOGLVL_LOW {
+          sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+          OBFFLog(_logbuf);
+          OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED\n");
+        }
+        return false;
+      }
 
       IF_OBFF_LOGLVL_LOW {
         if (_cstep % 10 == 0) {
@@ -2518,12 +2522,6 @@ namespace OpenBabel
         }
       }
  
-      if (IsNear(e_n2, _e_n1, _econv)) {
-        IF_OBFF_LOGLVL_LOW
-          OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED\n");
-        return false;
-      }
-
       if (_nsteps == _cstep)
         return false;
 

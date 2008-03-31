@@ -1,3 +1,8 @@
+2008-03-31  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h, src/forcefield.cpp: Fix conjugate
+	gradients. (my previous commit had a bug..)
+
 2008-03-31  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/python/setup.py: Fix for MacOSX to allow compiling against
