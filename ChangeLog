@@ -1,3 +1,7 @@
+2008-04-01  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/setup.py: Error in my previous commit
+
 2008-03-31  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.h, src/forcefield.cpp: Fix conjugate
