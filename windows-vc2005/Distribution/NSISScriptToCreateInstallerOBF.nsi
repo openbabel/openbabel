@@ -454,7 +454,7 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.2.0SnapshotOBF3
+  !define OBVersion 2.2.0SnapshotOBF6
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
@@ -526,6 +526,7 @@ Section "Dummy Section" SecDummy
   File ..\iconv.dll
   File ..\libinchi.dll
   File ..\..\data\SMARTS_InteLigand.txt
+  File ..\..\data\Patterns.txt
   File ..\..\data\psa.txt
   File ..\..\data\mr.txt
   File ..\..\data\logp.txt
@@ -562,7 +563,6 @@ Section "Dummy Section" SecDummy
   File ..\OBXML.obf
   File ..\OBDESC.obf
   File ..\FastSearch.obf
-  File ..\ob2d.obf
   File ..\gen3D.obf
   File ..\OBMCDL.obf
   File vcredist_x86.exe

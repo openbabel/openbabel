@@ -2,8 +2,7 @@ The projects in this workspace are intended for Visual Studio 2005 (VC8).
 The various builds all use the same cross-platform source code.
 
 ---------------------------------------------------------------------------------------
-
-DLL builds
+Single DLL build    openbabel.sln
 
 OpenBabelDLL
 This makes OpenBabelDLL.dll (or the debug version OpenBabelDLLD.dll) 
@@ -31,9 +30,32 @@ OBPython
 This uses SWIG to generate an interface so that OpenBabel can be used.
 from Python.
 
-When using VC8, in addition to various macros defined in the project 
-files it is necessary to define the following to avoid a large number 
-of warnings. 
-_CRT_SECURE_NO_DEPRECATE
-_CRT_NONSTDC_NO_DEPRECATE
-_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES
+---------------------------------------------------------------------------------------
+Multiple DLL build    openbabelOBF.sln
+
+This build produces several DLLs and obf files. The latter are also DLLs
+but are loaded when the program starts. The latter provides a method to
+add additional formats and other plugin features without recompiling the
+program.
+
+OBDLL    API, Chemical core
+OBConv   File conversion
+OBError  Error handling, plugins, etc.
+OBDESC   Descriptos
+OBFPRT   Fingerprints, forcefields
+
+OBCommonFormats smiles, mdl, mol2, pdb formats
+OBMoreFormats   most of the formats
+OBXMLFormats    CML, PubChem, reaction formats
+OBInchi         InChI format
+OBMCDL          MCDL format
+OBUtilFormats   molreport, png, povray formats, etc.
+FastSearch      fastsearch, fingerprint formats
+gen3D           gen3D op
+
+OBConsole  Command-line iterface
+OBGUI      GUI interface
+
+OBPythonOBF     Uses SWIG to generate Python interface.
+
+

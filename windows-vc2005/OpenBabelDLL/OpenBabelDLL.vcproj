@@ -194,6 +194,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\atomrecord.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\base.cpp"
 				>
 			</File>

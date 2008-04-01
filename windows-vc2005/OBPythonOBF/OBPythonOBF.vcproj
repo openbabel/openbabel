@@ -93,8 +93,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying OpenBabelDLL.dll"
-				CommandLine="copy ..\OpenBabelDLL\OpenBabelDLL.dll"
+				Description="Copy python files to directory containing *.dll and *.obf"
+				CommandLine="copy *.py* ..\"
 			/>
 		</Configuration>
 	</Configurations>
@@ -135,7 +135,7 @@
 					Name="VCCustomBuildTool"
 					Description="Running SWIG to generate openbabel-python_wrap.cpp"
 					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-					AdditionalDependencies="../OpenBabelDLL/OpenBabelDLL.lib"
+					AdditionalDependencies="../OBDLL.lib;../OBConv.lib;../OBDESC.lib;../oberror.lib;../obcommon.lib"
 					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
 				/>
 			</FileConfiguration>
@@ -151,10 +151,6 @@
 		</File>
 		<File
 			RelativePath=".\openbabel-python_wrap.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\Readme.txt"
 			>
 		</File>
 	</Files>
