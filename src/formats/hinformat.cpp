@@ -95,6 +95,7 @@ namespace OpenBabel
 
         atom = mol.NewAtom();
         atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
+        atom->SetPartialCharge(atof(vs[6].c_str()));
         x = atof((char*)vs[7].c_str());
         y = atof((char*)vs[8].c_str());
         z = atof((char*)vs[9].c_str());
@@ -134,6 +135,8 @@ namespace OpenBabel
     mol.EndModify();
 
     mol.SetTitle(title);
+    mol.SetPartialChargesPerceived();
+    
     return(true);
   }
 
