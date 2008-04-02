@@ -620,22 +620,22 @@ namespace OpenBabel
     return _ignored.BitIsSet(index);
   }
   
-  inline bool OBFFConstraints::IsFixed(int index)
+  bool OBFFConstraints::IsFixed(int index)
   {
     return _fixed.BitIsSet(index);
   }
   
-  inline bool OBFFConstraints::IsXFixed(int index)
+  bool OBFFConstraints::IsXFixed(int index)
   {
     return _Xfixed.BitIsSet(index);
   }
   
-  inline bool OBFFConstraints::IsYFixed(int index)
+  bool OBFFConstraints::IsYFixed(int index)
   {
     return _Yfixed.BitIsSet(index);
   }
   
-  inline bool OBFFConstraints::IsZFixed(int index)
+  bool OBFFConstraints::IsZFixed(int index)
   {
     return _Zfixed.BitIsSet(index);
   }
