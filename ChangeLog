@@ -1,3 +1,8 @@
+2008-04-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp: Fix issue with C atoms not
+	being set for OOP terms. Thanks to Bob Hanson for spotting this.
+
 2008-04-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp: Remove inline declaration on constraints --
