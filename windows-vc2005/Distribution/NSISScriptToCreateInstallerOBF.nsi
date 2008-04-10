@@ -565,6 +565,7 @@ Section "Dummy Section" SecDummy
   File ..\FastSearch.obf
   File ..\gen3D.obf
   File ..\OBMCDL.obf
+  File ..\..\src\GUI\OpenBabelGUI.html
   File vcredist_x86.exe
   
   ;Store installation folder
@@ -578,7 +579,6 @@ Section "Dummy Section" SecDummy
 
   ;Create shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-    SetOutPath "$DESKTOP" ;side-effect is to set working dir for shortcuts
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUI.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI (web).lnk" "http://openbabel.sourceforge.net/wiki/OpenBabelGUI" "" "$SYSDIR\winhlp32.exe" 

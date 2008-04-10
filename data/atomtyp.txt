@@ -89,15 +89,13 @@ IMPVAL  [$([#15]=[#6])]         2
 IMPVAL  [pD2]			2
 IMPVAL  [$([#15]=[#8])]		4 # phosphinate (double bond = one valence)
 
-IMPVAL	[#16D4]			4
-IMPVAL	[#16D3]			3
-IMPVAL	[#16D2]			2
-IMPVAL	[$([#16D1]-*)]		2
-IMPVAL	[#16D1^2]		1
-IMPVAL  [s]                     2
-IMPVAL  [#16D1-]		1
+IMPVAL  [#16]			2 #revised CM April 2008
+IMPVAL  [$([#16D1]=*)]		1 
+IMPVAL  [$([#16D3](=O)(=O)-O)]	4 #e.g. O[S](=O)=O
+IMPVAL  [$([#16D2](=O)-O)]	3 # e.g. O[S]=O
 
-IMPVAL  [#16D0]		  2
+#IMPVAL  [#16D1-]		1
+
 IMPVAL  [#17D0]		  1
 IMPVAL  [#17D0-]	  0 #[Cl-]
 IMPVAL  [#35D0]		  1

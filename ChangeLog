@@ -1,3 +1,15 @@
+2008-04-10 Chris Morley
+	
+	* data/atomtyp.txt: revise IMPVAL entries for S. 
+	Fixes bug #1938652. Patches a dilapidated program structure...
+	
+	* test/files/FormulaTest.smi: add S containing species to test above
+	
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:
+	add help file and remove SetOutPath "$DESKTOP" which prevented
+	shortcuts starting with the current directory being that of the
+	exe file. Data files were not being found.
+
 2008-04-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.cpp: Fix issue with C atoms not
