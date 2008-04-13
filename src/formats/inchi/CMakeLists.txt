@@ -13,8 +13,14 @@ set(inchi_srcs
   inchi_dll_main.c runichi.c strutil.c util.c
   ikey_dll.c ikey_base26.c sha2.c
 )
+
+if(NOT WIN32)
+  set(libs ${libs} c)
+endif(NOT WIN32)
+
 include_directories(${CMAKE_SOURCE_DIR}/include/inchi)
 add_library(inchi SHARED ${inchi_srcs})
+target_link_libraries(inchi ${libs})
 set_target_properties(inchi PROPERTIES
                             VERSION ${INCHI_MAJ_VER}.${INCHI_MIN_VER}.${INCHI_PATCH_VER}
                             SOVERSION ${INCHI_MAJ_VER}

@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #endif
 
 #include <openbabel/mol.h>
+#include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
 #include <typeinfo>
 
@@ -102,11 +103,11 @@ public:
   /// The "Convert" interface for reading a new molecule
   virtual bool ReadChemObject(OBConversion* pConv)
   { return ReadChemObjectImpl(pConv, this);}
-    
+
   /// The "Convert" interface for writing a new molecule
   virtual bool WriteChemObject(OBConversion* pConv)
   { return WriteChemObjectImpl(pConv, this);}
-  
+
   /// \name Routines to handle the -C option for combining data from several OBMols
   //@{
   //! Defer output of a molecule until later, so it can be combined with others

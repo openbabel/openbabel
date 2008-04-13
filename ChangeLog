@@ -1,5 +1,18 @@
 2008-04-13  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* CMakeLists.txt, cmake/modules/MacroEnsureVersion.cmake,
+	src/config.h.cmake: Added visibility support when using a recent GCC
+	compiler.
+
+	* src/CMakeLists.txt, src/formats/CMakeLists.txt,
+	src/formats/inchi/CMakeLists.txt: Various fixes to ensure things are
+	linked correctly.
+
+	* include/openbabel/obmolecformat.h: Ensured this header includes the
+	babelconfig.h header and exports its symbols.
+
+	* src/formats/APIInterface.cpp: Export symbols.
+
 	* src/formats/xml/cmlreactformat.cpp: Removed extra qualifier.
 
 2008-04-10 Chris Morley

@@ -1,6 +1,9 @@
 project(openbabel)
-#set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules )
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 cmake_minimum_required(VERSION 2.4.5)
+
+include (CheckCXXCompilerFlag)
+include (MacroEnsureVersion)
 
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   2)
@@ -78,6 +81,42 @@ if(NOT WIN32)
 
    set(OB_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${LIB}/openbabel)
 endif(NOT WIN32)
+
+# Add some visibility support when using GCC
+if (CMAKE_COMPILER_IS_GNUCXX)
+  if (CMAKE_SYSTEM_NAME MATCHES Linux)
+    set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
+    set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_SHARED_LINKER_FLAGS}")
+    set (CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_EXE_LINKER_FLAGS}")
+  endif (CMAKE_SYSTEM_NAME MATCHES Linux)
+  # Now check if we can use visibility to selectively export symbols
+  # Get the GCC version - from KDE4 cmake files
+  exec_program(${CMAKE_C_COMPILER} ARGS --version OUTPUT_VARIABLE _gcc_version_info)
+  string (REGEX MATCH "[345]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
+  # gcc on mac just reports: "gcc (GCC) 3.3 20030304 ..." without the
+  # patch level, handle this here:
+  if (NOT _gcc_version)
+    string (REGEX REPLACE ".*\\(GCC\\).* ([34]\\.[0-9]) .*" "\\1.0" _gcc_version "${_gcc_version_info}")
+  endif (NOT _gcc_version)
+  check_cxx_compiler_flag(-fvisibility=hidden HAVE_GCC_VISIBILITY)
+  set(HAVE_GCC_VISIBILITY ${HAVE_GCC_VISIBILITY} CACHE BOOL "GCC support for hidden visibility")
+  macro_ensure_version("4.1.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_1)
+  macro_ensure_version("4.2.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_2)
+  set(_GCC_COMPILED_WITH_BAD_ALLOCATOR FALSE)
+  if (GCC_IS_NEWER_THAN_4_1)
+    exec_program(${CMAKE_C_COMPILER} ARGS -v OUTPUT_VARIABLE _gcc_alloc_info)
+    string(REGEX MATCH "(--enable-libstdcxx-allocator=mt)" _GCC_COMPILED_WITH_BAD_ALLOCATOR "${_gcc_alloc_info}")
+  endif (GCC_IS_NEWER_THAN_4_1)
+  if (HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_1 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR)
+    # We have all the parts necessary - use visibility support
+    add_definitions(-DHAVE_GCC_VISIBILITY)
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+    if (GCC_IS_NEWER_THAN_4_2)
+      set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
+    endif (GCC_IS_NEWER_THAN_4_2)
+  endif (HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_1 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR)
+endif (CMAKE_COMPILER_IS_GNUCXX)
+
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${CMAKE_SOURCE_DIR}/src/config.h.cmake ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)

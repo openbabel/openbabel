@@ -9,13 +9,19 @@
 /* The file extension used for shared modules */
 #define MODULE_EXTENSION "@MODULE_EXTENSION@"
 
-#if defined(WIN32)
+// If we are using a recent GCC version with visibility support use it
+#ifdef HAVE_GCC_VISIBILITY
+  #define OB_EXPORT __attribute__ ((visibility("default")))
+  #define OB_IMPORT __attribute__ ((visibility("default")))
+  #define OB_HIDDEN __attribute__ ((visibility("hidden")))
+#elif defined(WIN32)
  #define OB_EXPORT __declspec(dllexport)
  #define OB_IMPORT __declspec(dllimport)
+ #define OB_HIDDEN
 #else
- /* TODO: gcc 4.x supports visibility - enable it */
  #define OB_EXPORT
  #define OB_IMPORT
+ #define OB_HIDDEN
 #endif
 
 /* Used to export symbols for DLL / shared library builds */

@@ -98,7 +98,7 @@ add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
 )
 
 if(NOT WIN32)
-  set(libs ${libs} m)
+  set(libs ${libs} m dl)
 endif(NOT WIN32)
 
 target_link_libraries(${BABEL_LIBRARY} ${libs} ${LIBXML2_LIBRARIES} ${ZLIB_LIBRARY})
