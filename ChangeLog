@@ -1,3 +1,7 @@
+2008-04-13  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/formats/xml/cmlreactformat.cpp: Removed extra qualifier.
+
 2008-04-10 Chris Morley
 	
 	* data/atomtyp.txt: revise IMPVAL entries for S. 

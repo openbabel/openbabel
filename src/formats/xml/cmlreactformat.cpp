@@ -59,9 +59,9 @@ public:
   virtual const char* TargetClassDescription()
   {
       return OBReaction::ClassDescription();
-  };
+  }
 
-  unsigned CMLReactFormat::Flags()
+  unsigned Flags()
   {
     return 0;
   }
