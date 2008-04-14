@@ -82,3 +82,4 @@ private:
   SmartsDescriptor thenF("nF", "F","Number of Fluorine Atoms");
 
 }//namespace
+

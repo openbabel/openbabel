@@ -379,3 +379,4 @@ _strcasestr(const char *s, const char *pattern)
     }
     return 0;
 }
+

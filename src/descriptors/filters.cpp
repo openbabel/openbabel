@@ -193,3 +193,4 @@ bool InChIFilter::Compare(OBBase* pOb, istream& optionText, bool noEval)
 InChIFilter theInChIFilter("InChI");
 
 }//namespace
+
