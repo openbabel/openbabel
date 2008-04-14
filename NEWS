@@ -2,7 +2,19 @@ Open Babel 2.2.0 (2008-XX-XX)
 
 What's New from 2.1.1:
 
-- 
+- Significantly faster force fields (up to 200x faster).
+- New force fields, including complete UFF and MMFF94 implementations.
+- Monte Carlo conformer search support, including the new obconformer tool.
+- Code for integrating Open Babel and RDKit.
+- Code for integrating Open Babel and the BOOST graph library.
+- New support for 3D coordinate generation using the OBBuilder class
+- A new "descriptor" framework for QSAR descriptors.
+- A new "filter" framework for selecting molecules by title, molecular weight, etc.
+- Space group support.
+- 3D Point group symmetry perception.
+- Improved support for "grids" or "cubes" of molecular data, such as from quantum mechanics programs. (See below for supported file formats.)
+- File format modules are now installed in a version-specific directory, preventing problems between 2.2.x and 2.1.x (or older) plugin libraries.
+- MDL SDF formats now support "aliases" for group abbreviations
 
 New formats:
 

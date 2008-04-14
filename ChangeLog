@@ -1,3 +1,20 @@
+2008-04-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/atomrecord.cpp: Fix from Louis Ricard to handle PDB
+	files from platon. An example has been added to the test
+	repository.
+
+	* src/formats/gamessukformat.cpp: New format contributed by Jens
+	Thomas to support the GAMESS-UK variant.
+
+	* src/formats/moldenformat.cpp, src/formats/msmsformat.cpp: Ensure
+	namespace is properly included.
+
+	* tools/babel.cpp: Eliminate some GCC warnings.
+
+	* ltmain.sh, configure.in, configure, */Makefile.*: Upgrade to
+	libtool 2.2.x, which offers improved build speed and bug fixes.
+
 2008-04-13  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* CMakeLists.txt, cmake/modules/MacroEnsureVersion.cmake,

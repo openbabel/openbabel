@@ -67,8 +67,8 @@ int main(int argc,char *argv[])
   bool gotInType = false, gotOutType = false;
   bool SplitOrBatch=false;
 
-  char *oext;
-  char *iext;
+  char *oext = NULL;
+  char *iext = NULL;
 
   //Save name of program without its path (and .exe)
   string pn(argv[0]);
@@ -319,7 +319,8 @@ int main(int argc,char *argv[])
       if(OutputFileName.empty())
         {
           OutputFileName = "*.";
-          OutputFileName += oext;
+          if (oext != NULL)
+            OutputFileName += oext;
         }
       else
         {
