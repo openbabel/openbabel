@@ -88,7 +88,8 @@ pkglib_LTLIBRARIES = \
 	dmolformat.la fastsearchformat.la fastaformat.la \
 	fchkformat.la \
 	featformat.la fhformat.la fingerprintformat.la \
-	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
+	freefracformat.la gamessformat.la gamessukformat.la \
+	gaussformat.la ghemicalformat.la \
 	gausscubeformat.la gausszmatformat.la \
 	gromos96format.la hinformat.la inchiformat.la \
 	jaguarformat.la mdlformat.la mmcifformat.la mmodformat.la \
@@ -204,6 +205,9 @@ freefracformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel
 
 gamessformat_la_SOURCES = gamessformat.cpp obmolecformat.cpp
 gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+gamessukformat_la_SOURCES = gamessukformat.cpp obmolecformat.cpp
+gamessukformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 gaussformat_la_SOURCES = gaussformat.cpp obmolecformat.cpp
 gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
