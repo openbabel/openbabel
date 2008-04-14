@@ -34,7 +34,8 @@
 
 using namespace std;
 
-using namespace OpenBabel;
+namespace OpenBabel
+{
 
 
 //==============================================================================
@@ -128,4 +129,6 @@ bool OBMSMSFormat::WriteMolecule( OBBase* pOb, OBConversion* pConv )
     }
     os.flush();
     return true;
+}
+
 }

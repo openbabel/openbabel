@@ -34,7 +34,9 @@
 #include <openbabel/obmolecformat.h>
 
 using namespace std;
-using namespace OpenBabel;
+
+namespace OpenBabel
+{
 
 /// Molden input reader: reads atoms from [Atoms] section of Molden input file.
 class OBMoldenFormat : public OpenBabel::OBMoleculeFormat
@@ -149,4 +151,6 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     pmol->EndModify();
 
     return true;
+}
+
 }
