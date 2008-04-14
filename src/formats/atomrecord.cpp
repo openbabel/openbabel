@@ -78,7 +78,8 @@ namespace OpenBabel
           else type = atmid.substr(2,1); 
         } else if (sbuf[6] == ' ' &&
                    strncasecmp(type.c_str(), "Zn", 2) != 0 &&
-                   strncasecmp(type.c_str(), "Fe", 2) != 0)
+                   strncasecmp(type.c_str(), "Fe", 2) != 0 ||
+		               isdigit(type[1]))	//type[1] is digit in Platon
           type = atmid.substr(0,1);     // one-character element
         
 
