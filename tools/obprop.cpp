@@ -28,7 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/descriptor.h>
 #include <openbabel/obconversion.h>
-#ifndef WIN32 
+#ifndef _MSC_VER
   #include <unistd.h>
 #endif
 

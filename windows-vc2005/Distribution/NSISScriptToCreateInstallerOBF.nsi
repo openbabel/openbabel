@@ -565,6 +565,21 @@ Section "Dummy Section" SecDummy
   File ..\FastSearch.obf
   File ..\gen3D.obf
   File ..\OBMCDL.obf
+  File ..\nbabel.exe
+  File ..\obchiral.exe
+  File ..\obconformer.exe
+  File ..\obenergy.exe
+  File ..\obfit.exe
+  File ..\obminimize.exe
+  File ..\obmm.exe
+  File ..\obprobe.exe
+  File ..\obprop.exe
+  File ..\obrotamer.exe
+  File ..\obrotate.exe
+  File ..\obseq.exe
+  File ..\obsym.exe
+
+  File ToolsPrograms.txt
   File ..\..\src\GUI\OpenBabelGUI.html
   File vcredist_x86.exe
   

@@ -1,3 +1,16 @@
+2008-04-15 Chris Morley
+
+	* tools/obchiral.cpp, tools/obenergy.cpp, tools/obfit.cpp,
+	tools/obminimize.cpp, tools/obmm.cpp, tools/obprobe.cpp,
+	tools/obprop.cpp, tools/obsym.cpp:
+	don't #include <#include <unistd.h> in Windows build
+	
+	* windows-vc2005/OBTools.sln, windows-vc2005/OBTools,
+	windows-vc2005/OBTools/*.proj: New build files for tools exes
+
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi
+	Add tools exe files to installer
+
 2008-04-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/atomrecord.cpp: Fix from Louis Ricard to handle PDB

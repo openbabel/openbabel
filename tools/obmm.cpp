@@ -55,7 +55,9 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
-#include <unistd.h>
+#ifndef _MSC_VER
+  #include <unistd.h>
+#endif
 
 using namespace std;
 using namespace OpenBabel;
