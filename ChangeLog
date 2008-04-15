@@ -1,3 +1,9 @@
+2008-04-15  Noel O'Boyle <baoilleach@gmail.com>
+
+	* windows-vc2005/OBPython: removed
+	* windows-vc2005/OBPythonOBF: added setup.py,
+	openbabel_postinstall.py, Readme.txt and logo.bmp
+
 2008-04-15 Chris Morley
 
 	* tools/obchiral.cpp, tools/obenergy.cpp, tools/obfit.cpp,
