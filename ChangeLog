@@ -1,3 +1,8 @@
+2008-04-19  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* configure.in, src/config.h.in: Updates to the auto* build tools,
+	added HAVE_GCC_VISIBILITY logic and the defines to use it.
+
 2008-04-15  Noel O'Boyle <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPython: removed

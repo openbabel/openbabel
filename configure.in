@@ -35,81 +35,75 @@ AC_CANONICAL_HOST
 
 AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_TARNAME], [Where the data files are located])
 
+AH_VERBATIM([ADEFINE],
+[/* Used by other #define statements for symbol exporting
+ Use symbol hiding in GCC 4.0 and later where available */
+#ifdef HAVE_GCC_VISIBILITY
+  #define OB_EXPORT __attribute__ ((visibility("default")))
+  #define OB_IMPORT __attribute__ ((visibility("default")))
+  #define OB_HIDDEN __attribute__ ((visibility("hidden")))
+#elif defined(WIN32)
+  #define OB_EXPORT __declspec(dllexport)
+  #define OB_IMPORT __declspec(dllimport)
+  #define OB_HIDDEN
+#else
+  #define OB_EXPORT
+  #define OB_IMPORT
+  #define OB_HIDDEN
+#endif
+])
+
 AH_VERBATIM([OBAPI], 
 [/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBAPI __declspec(dllimport)
- #else
-  #define OBAPI __declspec(dllexport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBAPI 
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBAPI OB_IMPORT
+#else
+  #define OBAPI OB_EXPORT
 #endif
 ])
 
 AH_VERBATIM([EXTERN], 
 [/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define EXTERN __declspec(dllimport) extern
- #else
-  #define EXTERN __declspec(dllexport) extern
- #endif
-#else //Everything else (behaviour as original)
- #define EXTERN extern 
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define EXTERN OB_IMPORT extern
+#else
+  #define EXTERN OB_EXPORT extern
 #endif
 ])
 
 AH_VERBATIM([OBCONV], 
 [/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBCONV __declspec(dllimport)
- #else
-  #define OBCONV __declspec(dllexport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBCONV
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBCONV OB_IMPORT
+#else
+  #define OBCONV OB_EXPORT
 #endif
 ])
 
 AH_VERBATIM([OBERROR], 
 [/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBERROR __declspec(dllimport)
- #else
-  #define OBERROR __declspec(dllexport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBERROR 
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBERROR OB_IMPORT
+#else
+  #define OBERROR OB_EXPORT
 #endif
 ])
 
 AH_VERBATIM([OBFPTR], 
 [/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBFPTR __declspec(dllimport)
- #else
-  #define OBFPTR __declspec(dllexport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBFPTR 
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBFPTR OB_IMPORT
+#else
+  #define OBFPTR OB_EXPORT
 #endif
 ])
 
 AH_VERBATIM([OBCOMMON], 
 [/* Used to export symbols for DLL / shared library builds */
-#if defined(WIN32)
- #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBCOMMON __declspec(dllimport)
- #else
-  #define OBCOMMON __declspec(dllexport)
- #endif
-#else //Everything else (behaviour as original)
- #define OBCOMMON 
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBCOMMON OB_IMPORT
+#else
+  #define OBCOMMON OB_EXPORT
 #endif
 ])
 
