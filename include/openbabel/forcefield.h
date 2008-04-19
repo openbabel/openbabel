@@ -63,9 +63,10 @@ namespace OpenBabel
 #define OBFF_CONST_DISTANCE	(1 << 5)   //!< constrain distance length
 #define OBFF_CONST_ANGLE	(1 << 6)   //!< constrain angle
 #define OBFF_CONST_TORSION	(1 << 7)   //!< constrain torsion
+#define OBFF_CONST_CHIRAL	(1 << 8)   //!< constrain chiral volume
 
   // mode arguments for SteepestDescent, ConjugateGradients, ...
-#define OBFF_NUMERICAL_GRADIENT   (1 << 0)  //!< use numerical gradients
+#define OBFF_NUMERICAL_GRADIENT  	(1 << 0)  //!< use numerical gradients
 #define OBFF_ANALYTICAL_GRADIENT	(1 << 1)  //!< use analytical gradients
 
 #define KCAL_TO_KJ	4.1868
@@ -77,7 +78,16 @@ namespace OpenBabel
 
   struct LineSearchType 
   {
-    enum { Simple, Newton2Num };
+    enum {
+      Simple, Newton2Num 
+    };
+  };
+
+  struct ConstraintType
+  {
+    enum { 
+      Ignore, Atom, AtomX, AtomY, AtomZ, Distance, Angle, Torsion, Chiral
+    };
   };
  
   //! \class OBFFParameter forcefield.h <openbabel/forcefield.h>
@@ -168,7 +178,9 @@ namespace OpenBabel
       return energy; 
     }
       
-    //! \return Setup pointers to atom positions and forces (To be called while setting up calculations). Sets optimized to true.
+    /*! \return Setup pointers to atom positions and forces (To be called 
+     *  while setting up calculations). Sets optimized to true.
+     */
     void SetupPointers() 
     {
       if (!a || !b) return;
@@ -364,7 +376,7 @@ namespace OpenBabel
  
   // Class OBForceField
   // class introduction in forcefield.cpp
-  class OBFPRT  OBForceField : public OBPlugin
+  class OBFPRT OBForceField : public OBPlugin
   {
   
     MAKE_PLUGIN(OBForceField)
@@ -419,26 +431,31 @@ namespace OpenBabel
     */
     OBFFParameter* GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
     //! see GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)
-    OBFFParameter* GetParameter(const char* a, const char* b, const char* c, const char* d, std::vector<OBFFParameter> &parameter);
+    OBFFParameter* GetParameter(const char* a, const char* b, const char* c, const char* d, 
+        std::vector<OBFFParameter> &parameter);
     //! Get index for vector<OBFFParameter> ...
     int GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
            
-    //! Calculate the potential energy function derivative numerically with repect to the coordinates of atom with index a (this vector is the gradient)
-    /*!
+    /*! Calculate the potential energy function derivative numerically with 
+     *  repect to the coordinates of atom with index a (this vector is the gradient)
+     *
      * \param a  provides coordinates
-     * \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
+     * \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, 
+     * OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
      * \return the negative gradient of atom a
      */
     vector3 NumericalDerivative(OBAtom *a, int terms = OBFF_ENERGY);
     //! OB 3.0
     vector3 NumericalSecondDerivative(OBAtom *a, int terms = OBFF_ENERGY);
-    /*! Calculate the potential energy function derivative analyticaly with repect to the coordinates of atom with index a (this vector is the gradient)
+    /*! Calculate the potential energy function derivative analyticaly with 
+     *  repect to the coordinates of atom with index a (this vector is the gradient)
      *
      *  If the currently selected forcefield doesn't have analytical gradients, 
      *  we can still call this function which will return the result of 
      *  NumericalDerivative()
      *  \param a  provides coordinates
-     *  \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
+     *  \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, 
+     *  OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
      *  \return the negative gradient of atom a
      */
     //virtual vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY) 
@@ -464,9 +481,6 @@ namespace OpenBabel
      */
     void AddGradient(double *grad, int idx) 
     { 
-      //if (_constraints.IsFixed(idx));
-      //  return;
-
       const int coordIdx = (idx - 1) * 3;
       for (unsigned int i = 0; i < 3; ++i) {
         _gradientPtr[coordIdx + i] += grad[i];
@@ -509,39 +523,43 @@ namespace OpenBabel
      */
     bool IsInSameRing(OBAtom* a, OBAtom* b);
  
+    // general variables
     OBMol 	_mol; //!< Molecule to be evaluated or minimized
-    double	*_gradientPtr; //! pointer to the gradients
     bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
     bool 	_validSetup; //! was the last call to Setup succesfull
-
+    double	*_gradientPtr; //! pointer to the gradients (used by AddGradient(), minimization functions, ...)
+    // contraint varibles
     OBFFConstraints _constraints; //!< Constraints
-
+    // logging variables
     std::ostream* _logos; //! Output for logfile
     char 	_logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
     int 	_loglvl; //!< Log level for output
     int 	_origLogLevel;
-    
-    
+    // conformer genereation (rotor search) variables
     int 	_current_conformer; //! used to hold i for current conformer (needed by UpdateConformers)
     std::vector<double> _energies; //! used to hold the energies for all conformers
-
+    // minimization variables
     double 	_econv, _e_n1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     int 	_method, _cstep, _nsteps; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     double 	*_grad1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     int 	_ncoords; //!< Number of coordinates for conjugate gradients
     int         _linesearch; //! LineSearch type
-
+    // molecular dynamics variables
     double 	_timestep; //! Molecular dynamics time step in picoseconds
     double 	_T; //! Molecular dynamics temperature in Kelvin
     double 	*_velocityPtr; //! pointer to the velocities
-
+    // cut-off variables
     bool 	_cutoff; //! true = cut-off enabled
     double 	_rvdw; //! VDW cut-off distance
     double 	_rele; //! Electrostatic cut-off distance
     OBBitVec	_vdwpairs; //! VDW pairs that should be calculated
     OBBitVec	_elepairs; //! Electrostatic pairs that should be calculated
     int 	_pairfreq; //! The frequence to update non-bonded pairs
-  
+    // group variables
+    std::vector<OBBitVec> _intraGroup; //! groups for which intra-molecular interactions should be calculated
+    std::vector<OBBitVec> _interGroup; //! groups for which intra-molecular interactions should be calculated
+    std::vector<std::pair<OBBitVec, OBBitVec> > _interGroups; //! groups for which intra-molecular 
+                                                              //!interactions should be calculated
   public:
     //! Destructor
     virtual ~OBForceField()
@@ -611,6 +629,11 @@ namespace OpenBabel
      *  and is called autoamically from OBForceField::Setup())
      */
     virtual bool SetupCalculations() { return false; }
+    /*! Setup the pointers to the atom positions in the OBFFCalculation objects. This method
+     *  will iterate over all the calculations and call SetupPointers for each one. (This 
+     *  function should be implemented by the individual force field implementations)
+     */
+    virtual bool SetupPointers() { return false; }
     /*! Compare the internal forcefield OBMol object to mol. If the two have the
      *  same number of atoms and bonds, and all atomic numbers are the same, 
      *  this function returns false, and no call to Setup is needed.
@@ -647,6 +670,33 @@ namespace OpenBabel
      */
     virtual OBGridData *GetGrid(double step, double padding, const char *type, double pchg);
 
+    /////////////////////////////////////////////////////////////////////////
+    // Interacting groups                                                  //
+    /////////////////////////////////////////////////////////////////////////
+      
+    //! \name Methods for specifying interaction groups
+    //@{
+    /*! Enable intra-molecular interactions for group (bonds, angles, strbnd, torsions, oop). 
+     *  This function should be called before Setup()
+     */
+    void AddIntraGroup(OBBitVec &group);
+    /*! Enable inter-molecular interactions for group (non-bonded: vdw & ele)
+     *  This function should be called before Setup()
+     */
+    void AddInterGroup(OBBitVec &group);
+    /*! Enable inter-molecular interactions between group1 and group2 (non-bonded: vdw & ele)
+     *  This function should be called before Setup()
+     */
+    void AddInterGroups(OBBitVec &group1, OBBitVec &group2);
+    /*! Enable inter-molecular interactions between group1 and group2 (non-bonded: vdw & ele)
+     *  This function should be called before Setup()
+     */
+    void ClearGroups(); 
+    /*! \return true if there are groups.
+     */ 
+    bool HasGroups(); 
+    //@}
+ 
     /////////////////////////////////////////////////////////////////////////
     // Cut-off                                                             //
     /////////////////////////////////////////////////////////////////////////

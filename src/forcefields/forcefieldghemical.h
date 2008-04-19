@@ -83,8 +83,11 @@ namespace OpenBabel
       bool SetPartialCharges();
       //! fill OBFFXXXCalculation vectors
       bool SetupCalculations();
+      //! Setup pointers in OBFFXXXCalculation vectors
+      bool SetupPointers();
       //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
-      OBFFParameter* GetParameterGhemical(int type, const char* a, const char* b, const char* c, const char* d, std::vector<OBFFParameter> &parameter);
+      OBFFParameter* GetParameterGhemical(int type, const char* a, const char* b, 
+          const char* c, const char* d, std::vector<OBFFParameter> &parameter);
       
       // OBFFParameter vectors to contain the parameters
       std::vector<OBFFParameter> _ffbondparams; 

@@ -2410,9 +2410,21 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(bond, _mol) {
       a = bond->GetBeginAtom();
       b = bond->GetEndAtom();
-      
+     
+      // skip this bond if the atoms are ignored 
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
         continue;
+
+      // if there are any groups specified, check if the two bond atoms are in a single intraGroup
+      if (HasGroups()) {
+        bool validBond = false;
+        for (unsigned int i=0; i < _intraGroup.size(); ++i) {
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()))
+            validBond = true;
+        }
+        if (!validBond)
+          continue;
+      }
       
       bondtype = GetBondType(a, b);
       
@@ -2493,8 +2505,21 @@ namespace OpenBabel
       type_b = atoi(b->GetType());
       type_c = atoi(c->GetType());
       
+      // skip this angle if the atoms are ignored 
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) || _constraints.IsIgnored(c->GetIdx()) ) 
         continue;
+ 
+      // if there are any groups specified, check if the three angle atoms are in a single intraGroup
+      if (HasGroups()) {
+        bool validAngle = false;
+        for (unsigned int i=0; i < _intraGroup.size(); ++i) {
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
+              _intraGroup[i].BitIsOn(c->GetIdx()))
+            validAngle = true;
+        }
+        if (!validAngle)
+          continue;
+      }
  
       angletype = GetAngleType(a, b, c);
       strbndtype = GetStrBndType(a, b, c);
@@ -2773,9 +2798,22 @@ namespace OpenBabel
       type_c = atoi(c->GetType());
       type_d = atoi(d->GetType());
       
+      // skip this torsion if the atoms are ignored 
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
            _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
         continue;
+ 
+      // if there are any groups specified, check if the four torsion atoms are in a single intraGroup
+      if (HasGroups()) {
+        bool validTorsion = false;
+        for (unsigned int i=0; i < _intraGroup.size(); ++i) {
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
+              _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
+            validTorsion = true;
+        }
+        if (!validTorsion)
+          continue;
+      }
  
       torsiontype = GetTorsionType(a, b, c, d);
       // CXT = MC*(J*MA**3 + K*MA**2 + I*MA + L) + TTijkl  MC = 6, MA = 136
@@ -3038,9 +3076,22 @@ namespace OpenBabel
           type_c = atoi(c->GetType());
           type_d = atoi(d->GetType());
  
+          // skip this oop if the atoms are ignored 
           if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
                _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
             continue;
+ 
+          // if there are any groups specified, check if the four oop atoms are in a single intraGroup
+          if (HasGroups()) {
+            bool validOOP = false;
+            for (unsigned int i=0; i < _intraGroup.size(); ++i) {
+              if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
+                  _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
+                validOOP = true;
+            }
+            if (!validOOP)
+              continue;
+          }
  
           if (((type_a == _ffoopparams[idx].a) && (type_c == _ffoopparams[idx].c) && (type_d == _ffoopparams[idx].d)) ||
               ((type_c == _ffoopparams[idx].a) && (type_a == _ffoopparams[idx].c) && (type_d == _ffoopparams[idx].d)) ||
@@ -3124,8 +3175,28 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
       
+      // skip this vdw if the atoms are ignored 
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
         continue;
+  
+      // if there are any groups specified, check if the two atoms are in a single _interGroup or if
+      // two two atoms are in one of the _interGroups pairs.
+      if (HasGroups()) {
+        bool validVDW = false;
+        for (unsigned int i=0; i < _interGroup.size(); ++i) {
+          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) 
+            validVDW = true;
+        }
+        for (unsigned int i=0; i < _interGroups.size(); ++i) {
+          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) 
+            validVDW = true;
+          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) 
+            validVDW = true;
+        }
+ 
+        if (!validVDW)
+          continue;
+      }
  
       OBFFParameter *parameter_a, *parameter_b;
       parameter_a = GetParameter1Atom(atoi(a->GetType()), _ffvdwparams);
@@ -3226,8 +3297,28 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
       
+      // skip this ele if the atoms are ignored 
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
         continue;
+  
+      // if there are any groups specified, check if the two atoms are in a single _interGroup or if
+      // two two atoms are in one of the _interGroups pairs.
+      if (HasGroups()) {
+        bool validEle = false;
+        for (unsigned int i=0; i < _interGroup.size(); ++i) {
+          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) 
+            validEle = true;
+        }
+        for (unsigned int i=0; i < _interGroups.size(); ++i) {
+          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) 
+            validEle = true;
+          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) 
+            validEle = true;
+        }
+ 
+        if (!validEle)
+          continue;
+      }
  
       elecalc.qq = 332.0716 * a->GetPartialCharge() * b->GetPartialCharge();
       
@@ -3246,6 +3337,27 @@ namespace OpenBabel
 
     return true;
   }
+
+  bool OBForceFieldMMFF94::SetupPointers()
+  {
+    for (unsigned int i = 0; i < _bondcalculations.size(); ++i)
+      _bondcalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _anglecalculations.size(); ++i)
+      _anglecalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _strbndcalculations.size(); ++i)
+      _strbndcalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _torsioncalculations.size(); ++i)
+      _torsioncalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _oopcalculations.size(); ++i)
+      _oopcalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _vdwcalculations.size(); ++i)
+      _vdwcalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _electrostaticcalculations.size(); ++i)
+      _electrostaticcalculations[i].SetupPointers();
+
+    return true;
+  }
+
 
   // we set the the formal charge with SetPartialCharge because formal charges 
   // in MMFF94 are not always and integer

@@ -1,3 +1,20 @@
+2008-04-19  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h, src/forcefield.cpp: Added
+	SetupPointer. Added Framework for specifying groups using OBBitVec for
+	now until we have OBGroup/OBFragment. Documentation example using
+	groups. 
+	The *RotorSearch functions should call SetupPointers when they change
+	conformer. This will update the pointers to the atom positions in the
+	OBFFCalculation(s). This solves some weird results when the rotor
+	search functions were used with MMFF94 or ghemical. UFF doesn't have
+	this problem because it still uses the vector3 class.
+
+	* src/forcefields/forcefieldmmff94.*: Added SetupPointer.
+	SetupCalculations() now checks the intra and inter groups.
+
+	* src/forcefields/forcefieldghemical.*: Added SetupPointer.
+
 2008-04-19  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* configure.in, src/config.h.in: Updates to the auto* build tools,

@@ -33,18 +33,13 @@ GNU General Public License for more details.
       - Energy terms: finished
       - Analytical gradients: finished
       - Validation: finished
+      - TODO: groups
 
       - src/forcefields/forcefieldmmff94.cpp
       - Atom typing: done.
       - Charges: done.
-      - Energy terms:
-	    - Bond: finished
-	    - Angle: finished
-	    - StrBnd: small errors
-	    - Torsion: finished
-	    - OOP: finished
-	    - VDW: finished
-	    - Electrostatic: finished
+      - Energy terms: finished (small problems with SSSR 
+        algorithm not finding all bridged rings)
       - Analytical gradients: finished 
       - Validation: http://home.scarlet.be/timvdm/MMFF94_validation_output.gz
 
@@ -53,6 +48,8 @@ GNU General Public License for more details.
       - OOP: needs validation
       - Gradients: need OOP gradient
       - Validation in progress...
+      - TODO: vector3 -> pointers, SetupPointers
+      - TODO: groups
 
 
 ***********************************************************************/
@@ -113,7 +110,7 @@ namespace OpenBabel
       OBMol mol;
       // Select the forcefield, this returns a pointer that we 
       // will later use to access the forcefield functions.
-      OBForceField* pFF = OBForceField::FindForceField("Ghemical");
+      OBForceField* pFF = OBForceField::FindForceField("MMFF94");
 
       // Make sure we have a valid pointer
       if (!pFF)
@@ -143,7 +140,7 @@ namespace OpenBabel
       #include <openbabel/mol.h>
 
       OBMol mol;
-      OBForceField* pFF = OBForceField::FindForceField("Ghemical");
+      OBForceField* pFF = OBForceField::FindForceField("MMFF94");
 
       // Make sure we have a valid pointer
       if (!pFF)
@@ -165,7 +162,7 @@ namespace OpenBabel
       #include <openbabel/mol.h>
 
       OBMol mol;
-      OBForceField* pFF = OBForceField::FindForceField("Ghemical");
+      OBForceField* pFF = OBForceField::FindForceField("MMFF94");
 
       // Make sure we have a valid pointer
       if (!pFF)
@@ -181,6 +178,52 @@ namespace OpenBabel
       // We pass the constraints as argument for Setup()
       if (!pFF->Setup(mol, constraints)) {
       cerr << "ERROR: could not setup force field." << endl;
+      }
+      
+      // Perform the actual minimization, maximum 1000 steps 
+      pFF->SteepestDescent(1000);
+      \endcode
+ 
+      Minimize a ligand molecule in a binding pocket.
+      \code
+      #include <openbabel/forcefield.h>
+      #include <openbabel/mol.h>
+
+      OBMol mol;
+      
+      //
+      // Read the pocket + ligand (initial guess for position) into mol...
+      //
+      
+      OBBitVec pocket; // set the bits with atoms indexes for the pocket to 1...
+      OBBitVec ligand; // set the bits with atoms indexes for the ligand to 1...
+
+      OBForceField* pFF = OBForceField::FindForceField("MMFF94");
+
+      // Make sure we have a valid pointer
+      if (!pFF)
+      // exit...
+      
+      pFF->SetLogFile(&cerr);
+      pFF->SetLogLevel(OBFF_LOGLVL_LOW);
+      
+      // Fix the binding pocket atoms
+      OBFFConstraints constraints;
+      FOR_ATOMS_OF_MOL (a, mol) {
+        if (pocket.BitIsOn(a->GetIdx())
+          constraints.AddAtomConstraint(a->GetIdx());
+      }
+
+      // Specify the interacting groups. The pocket atoms are fixed, so there
+      // is no need to calculate intra- and inter-molecular interactions for 
+      // the binding pocket.
+      pFF->AddIntraGroup(ligand); // bonded interactions in the ligand
+      pFF->AddInterGroup(ligand); // non-bonded between ligand-ligand atoms
+      pFF->AddInterGroups(ligand, pocket); // non-bonded between ligand and pocket atoms
+
+      // We pass the constraints as argument for Setup()
+      if (!pFF->Setup(mol, constraints)) {
+        cerr << "ERROR: could not setup force field." << endl;
       }
       
       // Perform the actual minimization, maximum 1000 steps 
@@ -334,9 +377,7 @@ namespace OpenBabel
     vector3 grad(0.0, 0.0, 0.0);
     
     for (i = _constraints.begin(); i != _constraints.end(); ++i)
-      if (((*i).ia == a) || ((*i).ib == a)) {
-        grad += i->GetGradient(a);
-      }
+      grad += i->GetGradient(a);
 
     return grad;
   }
@@ -418,7 +459,7 @@ namespace OpenBabel
             delta = theta + i->constraint_value;
             delta2 = delta * delta;
             constraint_energy += 0.00025 * delta2;
-            dE = 0.000125 * delta;
+            dE = 0.0005 * delta;
 
             if (theta >= 0) {
             i->grada = dE * da;
@@ -950,6 +991,7 @@ namespace OpenBabel
       }
       _mol.SetConformers(conf);
       _mol.SetConformer(_current_conformer);
+      SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
     }
     
     return true;
@@ -1064,12 +1106,14 @@ namespace OpenBabel
       }
 
       _mol.SetConformer(best_conformer);
+      SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
       _current_conformer = best_conformer;
     
       return false;
     }
 
     _mol.SetConformer(_current_conformer); // select conformer
+    SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
     
     _loglvl = OBFF_LOGLVL_NONE;
     ConjugateGradients(geomSteps); // energy minimization for conformer
@@ -1177,12 +1221,14 @@ namespace OpenBabel
       }
 
       _mol.SetConformer(best_conformer);
+      SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
       _current_conformer = best_conformer;
       
       return false;
     }
     
     _mol.SetConformer(_current_conformer); // select conformer
+    SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
     _loglvl = OBFF_LOGLVL_NONE;
     ConjugateGradients(geomSteps); // energy minimization for conformer
@@ -1328,10 +1374,11 @@ namespace OpenBabel
         _mol.SetCoordinates(initialCoord);
         rotorKey[i] = j;
         rotamers.SetCurrentCoordinates(_mol, rotorKey);
+        SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
         
-	      _loglvl = OBFF_LOGLVL_NONE;
-	      SteepestDescent(geomSteps); // energy minimization for conformer
-	      _loglvl = origLogLevel;
+        _loglvl = OBFF_LOGLVL_NONE;
+        SteepestDescent(geomSteps); // energy minimization for conformer
+        _loglvl = origLogLevel;
         currentE = Energy(false);
 
         if (j == 0) 
@@ -1385,7 +1432,7 @@ namespace OpenBabel
       OBFFLog("--------------------\n");
     }
 
-		double defaultRotor = 1.0/sqrt((double)rl.Size());
+    double defaultRotor = 1.0/sqrt((double)rl.Size());
     for (int c = 0; c < conformers; ++c) {
       _mol.SetCoordinates(initialCoord);
 
@@ -1395,10 +1442,10 @@ namespace OpenBabel
         // foreach rotor
         rotorKey[i] = -1; // default = don't change dihedral
         randFloat = generator.NextFloat();
-				if (randFloat < defaultRotor) // should we just leave this rotor with default setting?
-					continue;
+        if (randFloat < defaultRotor) // should we just leave this rotor with default setting?
+          continue;
 
-				randFloat = generator.NextFloat();
+        randFloat = generator.NextFloat();
         total = 0.0;
         for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
           if (randFloat > total && randFloat < (total+ rotorWeights[i][j])) {
@@ -1410,6 +1457,7 @@ namespace OpenBabel
         }
       }
       rotamers.SetCurrentCoordinates(_mol, rotorKey);
+      SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
       _loglvl = OBFF_LOGLVL_NONE;
       SteepestDescent(geomSteps); // energy minimization for conformer
@@ -1465,6 +1513,7 @@ namespace OpenBabel
     _mol.AddConformer(bestCoordPtr);
     _current_conformer = _mol.NumConformers() - 1;
     _mol.SetConformer(_current_conformer);
+    SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
   }
 
   void OBForceField::DistanceGeometry() 
@@ -1835,6 +1884,52 @@ namespace OpenBabel
 
   //////////////////////////////////////////////////////////////////////////////////
   //
+  // Interaction groups
+  //
+  //////////////////////////////////////////////////////////////////////////////////
+ 
+
+  void OBForceField::AddIntraGroup(OBBitVec &group)
+  {
+    _intraGroup.push_back(group);
+  }
+
+  void OBForceField::AddInterGroup(OBBitVec &group)
+  {
+    _interGroup.push_back(group);
+  }
+
+  void OBForceField::AddInterGroups(OBBitVec &group1, OBBitVec &group2)
+  {
+    pair<OBBitVec,OBBitVec> groups;
+    groups.first = group1;
+    groups.second = group2;
+    _interGroups.push_back(groups);
+  }
+
+  void OBForceField::ClearGroups()
+  {
+    _intraGroup.clear();
+    _interGroup.clear();
+    _interGroups.clear();
+  }
+  
+  bool OBForceField::HasGroups()
+  {
+    if (_intraGroup.size())
+      return true;
+
+    if (_interGroup.size())
+      return true;
+
+    if (_interGroups.size())
+      return true;
+
+    return false;
+  }
+ 
+  //////////////////////////////////////////////////////////////////////////////////
+  //
   // Energy Minimization
   //
   //////////////////////////////////////////////////////////////////////////////////
@@ -2019,6 +2114,27 @@ namespace OpenBabel
     double *currentCoords = _mol.GetCoordinates();
 
     for (unsigned int c = 0; c < _ncoords; ++c) {
+      // check if this atom, X, Y or Z is fixed
+      bool fixed = false;
+      switch (c % 3) {
+        case 0:
+          fixed = _constraints.IsFixed(c / 3 + 1);
+          if (fixed) {
+            c += 2; // XYZ is fixed, skip Y and Z
+          } else {
+            fixed = _constraints.IsXFixed(c / 3 + 1);
+          }
+          break;
+        case 1:
+          fixed = _constraints.IsYFixed(c / 3 + 1);
+          break;
+        case 2:
+          fixed = _constraints.IsZFixed(c / 3 + 1);
+          break;
+      }
+      if (fixed)
+        continue;
+
       currentCoords[c] = origCoords[c] + direction[c] * step;
     }
   }
@@ -2306,26 +2422,24 @@ namespace OpenBabel
 
     for (int i = 1; i <= n; i++) {
       _cstep++;
-      if (!HasAnalyticalGradients()) {
-        FOR_ATOMS_OF_MOL (a, _mol) {
-          int coordIdx = (a->GetIdx() - 1) * 3;
-          if (_constraints.IsFixed(a->GetIdx())) {
-            _gradientPtr[coordIdx] = 0.0;
-            _gradientPtr[coordIdx+1] = 0.0;
-            _gradientPtr[coordIdx+2] = 0.0;
-            continue;
-          }
-            
+
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        int coordIdx = (a->GetIdx() - 1) * 3;
+        if (!HasAnalyticalGradients()) {
           dir = -NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
-          
-          if (!_constraints.IsYFixed(a->GetIdx()))
-            _gradientPtr[coordIdx] = dir.x();
-          if (!_constraints.IsYFixed(a->GetIdx()))
-            _gradientPtr[coordIdx+1] = dir.y();
-          if (!_constraints.IsZFixed(a->GetIdx()))
-            _gradientPtr[coordIdx+2] = dir.z();
+
+          _gradientPtr[coordIdx] = dir.x();
+          _gradientPtr[coordIdx+1] = dir.y();
+          _gradientPtr[coordIdx+2] = dir.z();
+        } else {
+          dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+ 
+          _gradientPtr[coordIdx] = dir.x();
+          _gradientPtr[coordIdx+1] = dir.y();
+          _gradientPtr[coordIdx+2] = dir.z();
         }
       }
+
       switch (_linesearch) {
         case LineSearchType::Newton2Num:
           alpha = Newton2NumLineSearch(_gradientPtr);
@@ -2401,36 +2515,25 @@ namespace OpenBabel
 
     // Take the first step (same as steepest descent because there is no 
     // gradient from the previous step.
-    FOR_ATOMS_OF_MOL (a, _mol) {
-      if (!_constraints.IsFixed(a->GetIdx())) 
-        {
-          if (_method & OBFF_ANALYTICAL_GRADIENT)
-            grad2 = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
-          else
-            grad2 = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+    if (!HasAnalyticalGradients()) {
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        vector3 dir = -NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
 
-          int coordIdx = (a->GetIdx() - 1) * 3;
-          if (!_constraints.IsXFixed(a->GetIdx())) {
-            _grad1[coordIdx] = grad2.x();
-          }
-          if (!_constraints.IsYFixed(a->GetIdx())) {
-            _grad1[coordIdx + 1] = grad2.y();
-          }
-          if (!_constraints.IsZFixed(a->GetIdx())) {
-            _grad1[coordIdx + 2] = grad2.z();
-          }
-        }
+        int coordIdx = (a->GetIdx() - 1) * 3;
+        _gradientPtr[coordIdx] = dir.x();
+        _gradientPtr[coordIdx+1] = dir.y();
+        _gradientPtr[coordIdx+2] = dir.z();
+      }
     }
     switch (_linesearch) {
       case LineSearchType::Newton2Num:
-        alpha = Newton2NumLineSearch(_grad1);
+        alpha = Newton2NumLineSearch(_gradientPtr);
         break;
       dafault:
       case LineSearchType::Simple:
-        alpha = LineSearch(_mol.GetCoordinates(), _grad1);
+        alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
         break;
     }
-    
     e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
     IF_OBFF_LOGLVL_LOW {
@@ -2438,6 +2541,8 @@ namespace OpenBabel
       OBFFLog(_logbuf);
     }
  
+    // save the direction and energy
+    memcpy(_grad1, _gradientPtr, sizeof(double)*_ncoords);
     _e_n1 = e_n2;
   }
   
@@ -2456,13 +2561,24 @@ namespace OpenBabel
     
     for (int i = 1; i <= n; i++) {
       _cstep++;
-      
+     
+      // calculate numerical gradient if we don't have analytical 
+      if (!HasAnalyticalGradients()) {
+        FOR_ATOMS_OF_MOL (a, _mol) {
+          vector3 dir = -NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+
+          int coordIdx = (a->GetIdx() - 1) * 3;
+          _gradientPtr[coordIdx] = dir.x();
+          _gradientPtr[coordIdx+1] = dir.y();
+          _gradientPtr[coordIdx+2] = dir.z();
+        }
+      }
       FOR_ATOMS_OF_MOL (a, _mol) {
         if (!_constraints.IsFixed(a->GetIdx())) {
           coordIdx = (a->GetIdx() - 1) * 3;
 
-          if (_method & OBFF_ANALYTICAL_GRADIENT)
-            grad2 = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+          if (HasAnalyticalGradients())
+            grad2 = GetGradient(&*a);
           else
             grad2 = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
           
@@ -2478,18 +2594,12 @@ namespace OpenBabel
             grad2 += beta * grad1;
           } 
  
-          if (!_constraints.IsXFixed(a->GetIdx())) {
-            _grad1[coordIdx] = grad2.x();
-          }
-          if (!_constraints.IsYFixed(a->GetIdx())) {
-            _grad1[coordIdx + 1] = grad2.y();
-          }
-          if (!_constraints.IsZFixed(a->GetIdx())) {
-            _grad1[coordIdx + 2] = grad2.z();
-          }
+          _grad1[coordIdx] = grad2.x();
+          _grad1[coordIdx + 1] = grad2.y();
+          _grad1[coordIdx + 2] = grad2.z();
         }
       }
-     switch (_linesearch) {
+      switch (_linesearch) {
         case LineSearchType::Newton2Num:
           alpha = Newton2NumLineSearch(_grad1);
           break;

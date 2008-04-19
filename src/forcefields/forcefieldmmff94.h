@@ -120,6 +120,8 @@ namespace OpenBabel
       bool SetTypes();
       //! fill OBFFXXXCalculation vectors
       bool SetupCalculations();
+      //! Setup pointers in OBFFXXXCalculation vectors
+      bool SetupPointers();
       //!  Sets formal charges
       bool SetFormalCharges();
       //!  Sets partial charges
