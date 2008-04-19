@@ -17,6 +17,9 @@
 
 2008-04-19  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* src/formats/gausscubeformat.cpp: Cleaned up support for reading in
+	multiple cubes - large cube files can now be read in.
+
 	* configure.in, src/config.h.in: Updates to the auto* build tools,
 	added HAVE_GCC_VISIBILITY logic and the defines to use it.
 

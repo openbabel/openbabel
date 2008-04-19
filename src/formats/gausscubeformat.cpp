@@ -80,11 +80,11 @@ namespace OpenBabel
         return READONEONLY | NOTWRITABLE  ;
     };
 
-
     /// The "API" interface functions
     virtual bool ReadMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );
     /// Write: always returns false right now - read only
     virtual bool WriteMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );
+
 };
 
 //------------------------------------------------------------------------------
@@ -204,7 +204,6 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     }
     vector3 origin(x, y, z);
     origin *= BOHR_TO_ANGSTROM;
-//    cerr << "Origin: " << origin.x() << ", " << origin.y() << ", " << origin.z() << endl;
 
     // The next three lines contain the number of voxels in x, y and z along
     // with the three cube cell axes.
@@ -370,11 +369,11 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       z *= BOHR_TO_ANGSTROM;
       atom->SetVector(x, y, z);
     }
-    
-    int ncubes = 1;
+
+    int nCubes = 1;
     vector<OBGridData*> vgd;
     // If the number of atoms was negative then there is some data between the
-    // atom data and the cube data.
+    // atom data and the cube data, i.e. we have multiple cubes...
     if (negAtoms)
     {
       ++line;
@@ -384,9 +383,9 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                               "Problem reading the Gaussian cube file: cannot read the line between the atom data and cube data.", obError);
         return false;
       }
-      
+
       tokenize(vs, buffer);
-      ncubes = strtol(static_cast<const char*>(vs.at(0).c_str()), &endptr, 10);
+      nCubes = strtol(static_cast<const char*>(vs.at(0).c_str()), &endptr, 10);
       if (endptr == static_cast<const char*>(vs.at(0).c_str()))
       {
         errorMsg << "Problems reading the Gaussian cube file: "
@@ -397,41 +396,76 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         return false;
       }
-      
-      vgd.reserve(ncubes);
-      for (int i = 0; i < ncubes; ++i)
+
+      vgd.reserve(nCubes);
+      for (int i = 1; i < vs.size(); ++i)
       {
-        int cubenumber = strtol(static_cast<const char*>(vs.at(i).c_str()), &endptr, 10);
+        int cubeNumber = strtol(static_cast<const char*>(vs.at(i).c_str()), &endptr, 10);
         if (endptr == static_cast<const char*>(vs.at(i).c_str()))
         {
           errorMsg << "Problems reading the Gaussian cube file: "
                    << "Could not read line " << line << ".\n"
                    << "According to the specification this line should contain "
                    << "the number of cubes and a number for each cube (orbital number).\n"
-                   << "OpenBabel could not interpret item #" << i << " as an integer.";
+                   << "OpenBabel could not interpret item #" << vgd.size()
+                   << " as an integer.";
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
           return false;
         }
-
         vgd.push_back(new OBGridData);
+        stringstream cubeTitle;
+        cubeTitle << "MO " << cubeNumber;
+        vgd.at(vgd.size()-1)->SetAttribute(cubeTitle.str().c_str());
       }
-    } else {
+      // Now if we have lots of cubes we need to read in more line(s)
+      while (vgd.size() < nCubes)
+      {
+        ++line;
+        if (!ifs.getline(buffer, BUFF_SIZE))
+        {
+          errorMsg << "Problem reading the Gaussian cube file: cannot"
+                   << " read line " << line
+                   << " of the file. More data was expected.\n"
+                   << "Grid MO titles read in = " << vgd.size()
+                   << " and expected number of values = "
+                   << nCubes << endl;
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+          return false;
+        }
+        tokenize(vs, buffer);
+        for (int i = 0; i < vs.size(); ++i)
+        {
+          int cubeNumber = strtol(static_cast<const char*>(vs.at(i).c_str()), &endptr, 10);
+          if (endptr == static_cast<const char*>(vs.at(i).c_str()))
+          {
+            errorMsg << "Problems reading the Gaussian cube file: "
+                     << "Could not read line " << line << ".\n"
+                     << "According to the specification this line should contain "
+                     << "the number of cubes and a number for each cube (orbital number).\n"
+                     << "OpenBabel could not interpret item #" << vgd.size()
+                     << " as an integer.";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+            return false;
+          }
+          vgd.push_back(new OBGridData);
+          stringstream cubeTitle;
+          cubeTitle << "MO " << cubeNumber;
+          vgd.at(vgd.size()-1)->SetAttribute(cubeTitle.str().c_str());
+        }
+      }
+    }
+    else
+    {
       // only one cube
       vgd.push_back(new OBGridData);
+      vgd.at(0)->SetAttribute(cubeTitle.c_str());
     }
-    
-    // set some values in gd
-    for (int i = 0; i < ncubes; ++i) // foreach cube
-    {
-   }
 
-    //
     // get all values as one vector<double>
-    //
     vector<double> values;
     int n = voxels[0]*voxels[1]*voxels[2];
-    values.reserve(n*ncubes);
-    while (values.size() < n*ncubes)
+    values.reserve(n*nCubes);
+    while (values.size() < n*nCubes)
     {
       // Read in values until we have a complete row of data
       ++line;
@@ -442,7 +476,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                  << " of the file. More data was expected.\n"
                  << "Values read in = " << values.size()
                  << " and expected number of values = "
-                 << voxels[0]*voxels[1]*voxels[2] << endl;
+                 << n*nCubes << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
         return false;
       }
@@ -457,42 +491,31 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         return false;
       }
 
-      for (unsigned int l = 0; l < vs.size(); ++l) 
+      for (unsigned int l = 0; l < vs.size(); ++l)
       {
         values.push_back(strtod(static_cast<const char*>(vs.at(l).c_str()), &endptr));
       }
     }
-    
+
     // translate the vector<double> to vector<vector<double> >
     vector<vector<double> > vvd;
-    vvd.resize(ncubes);
+    vvd.resize(nCubes);
     for (unsigned int i = 0; i < values.size(); )
     {
-      for (int j = 0; j < ncubes; ++j, ++i) // foreach cube
+      for (int j = 0; j < nCubes; ++j, ++i) // foreach cube
       {
         vvd[j].push_back(values[i]);
       }
     }
 
-    for (int i = 0; i < ncubes; ++i) // foreach cube
+    for (int i = 0; i < nCubes; ++i) // foreach cube
     {
-      if (ncubes > 1) 
-      {
-        char title[BUFF_SIZE];
-        snprintf(title, BUFF_SIZE," %s - cube %d", cubeTitle.c_str(), i); 
-        vgd[i]->SetAttribute(title);
-      } 
-      else 
-      {
-        // only one cube
-        vgd[i]->SetAttribute(cubeTitle);
-      }
       vgd[i]->SetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
       vgd[i]->SetLimits(origin, axes[0], axes[1], axes[2]);
       vgd[i]->SetUnit(angstroms ? OBGridData::ANGSTROM : OBGridData::BOHR);
       vgd[i]->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
       vgd[i]->SetValues(vvd[i]); // set the values
-      pmol->SetData(vgd[i]); // store the grids in the OBMol 
+      pmol->SetData(vgd[i]); // store the grids in the OBMol
     }
 
     pmol->EndModify();
@@ -512,7 +535,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 
     return true;
   }
-  
+
 //------------------------------------------------------------------------------
   bool OBGaussianCubeFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -522,18 +545,18 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
- 
+
     char buffer[BUFF_SIZE];
     string str;
     stringstream errorMsg;
-    
+
     // first two lines are comments
     str = mol.GetTitle();
     if (str.empty())
       ofs << "*****" << endl;
     else
       ofs << str << endl;
-    
+
     ofs << endl; // line 2
 
     OBGridData *gd = (OBGridData*)mol.GetData(OBGenericDataType::GridData);
@@ -542,7 +565,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false;
     }
-    
+
     int nx, ny, nz;
     double origin[3], xAxis[3], yAxis[3], zAxis[3];
     gd->GetAxes(xAxis, yAxis, zAxis);
@@ -550,33 +573,33 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->GetOriginVector(origin);
 
     // line 3: number of atoms, origin x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", -mol.NumAtoms(), 
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", -mol.NumAtoms(),
         origin[0]*ANGSTROM_TO_BOHR, origin[1]*ANGSTROM_TO_BOHR, origin[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 
     // line 4: number of points x direction, axis x direction x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nx, 
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nx,
         xAxis[0]*ANGSTROM_TO_BOHR, xAxis[1]*ANGSTROM_TO_BOHR, xAxis[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
-    
+
     // line 5: number of points y direction, axis y direction x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", ny, 
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", ny,
         yAxis[0]*ANGSTROM_TO_BOHR, yAxis[1]*ANGSTROM_TO_BOHR, yAxis[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
-    
+
     // line 6: number of points z direction, axis z direction x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nz, 
+    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nz,
         zAxis[0]*ANGSTROM_TO_BOHR, zAxis[1]*ANGSTROM_TO_BOHR, zAxis[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 
     // Atom lines: atomic number, ?, X, Y, Z
     FOR_ATOMS_OF_MOL (atom, mol) {
       double *coordPtr = atom->GetCoordinate();
-      snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f %12.6f", atom->GetAtomicNum(), atom->GetPartialCharge(), 
+      snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f %12.6f", atom->GetAtomicNum(), atom->GetPartialCharge(),
           coordPtr[0]*ANGSTROM_TO_BOHR, coordPtr[1]*ANGSTROM_TO_BOHR, coordPtr[2]*ANGSTROM_TO_BOHR);
       ofs << buffer << endl;
     }
-    
+
     vector<OBGenericData*> grids = pmol->GetAllData(OBGenericDataType::GridData);
     snprintf(buffer, BUFF_SIZE," %5d", grids.size());
     ofs << buffer << flush;
@@ -600,7 +623,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                    << "This cube will be skipped.\n";
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
       }
-  
+
       // The cube itself
       double value;
       unsigned int count = 1;
@@ -608,7 +631,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         for (int j = 0; j < ny; ++j) {
           for (int k = 0; k < nz; ++k) {
   	    value = gd->GetValue(i, j, k);
-	  
+
 	    if (count % 6 == 0) {
               snprintf(buffer, BUFF_SIZE," %12.6E", value);
               ofs << buffer << endl;
@@ -616,12 +639,12 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               snprintf(buffer, BUFF_SIZE," %12.6E ", value);
               ofs << buffer;
 	    }
-	  
+
 	    count++;
           } // z-axis
         } // y-axis
       } // x-axis
-      if (l < (grids.size() - 1)) 
+      if (l < (grids.size() - 1))
         ofs << endl;
     }
 
