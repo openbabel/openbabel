@@ -20,6 +20,10 @@
 	* src/formats/gausscubeformat.cpp: Cleaned up support for reading in
 	multiple cubes - large cube files can now be read in.
 
+	* src/formats/gausscubeformat.cpp: Worked on improvements to the cube
+	writing function. It now staggers cubes in the z correctly and I think
+	I got the rest of it lining up correctly now. Enabled.
+
 	* configure.in, src/config.h.in: Updates to the auto* build tools,
 	added HAVE_GCC_VISIBILITY logic and the defines to use it.
 

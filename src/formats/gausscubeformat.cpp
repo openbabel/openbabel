@@ -77,7 +77,7 @@ namespace OpenBabel
 
     virtual unsigned int Flags()
     {
-        return READONEONLY | NOTWRITABLE  ;
+        return 0;
     };
 
     /// The "API" interface functions
@@ -573,29 +573,30 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->GetOriginVector(origin);
 
     // line 3: number of atoms, origin x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", -mol.NumAtoms(),
+    snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", -mol.NumAtoms(),
         origin[0]*ANGSTROM_TO_BOHR, origin[1]*ANGSTROM_TO_BOHR, origin[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 
     // line 4: number of points x direction, axis x direction x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nx,
+    snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", nx,
         xAxis[0]*ANGSTROM_TO_BOHR, xAxis[1]*ANGSTROM_TO_BOHR, xAxis[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 
     // line 5: number of points y direction, axis y direction x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", ny,
+    snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", ny,
         yAxis[0]*ANGSTROM_TO_BOHR, yAxis[1]*ANGSTROM_TO_BOHR, yAxis[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 
     // line 6: number of points z direction, axis z direction x y z
-    snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f", nz,
+    snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", nz,
         zAxis[0]*ANGSTROM_TO_BOHR, zAxis[1]*ANGSTROM_TO_BOHR, zAxis[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 
     // Atom lines: atomic number, ?, X, Y, Z
     FOR_ATOMS_OF_MOL (atom, mol) {
       double *coordPtr = atom->GetCoordinate();
-      snprintf(buffer, BUFF_SIZE," %5d %12.6f %12.6f %12.6f %12.6f", atom->GetAtomicNum(), atom->GetPartialCharge(),
+      snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f%12.6f", atom->GetAtomicNum(),
+          static_cast<double>(atom->GetAtomicNum()),
           coordPtr[0]*ANGSTROM_TO_BOHR, coordPtr[1]*ANGSTROM_TO_BOHR, coordPtr[2]*ANGSTROM_TO_BOHR);
       ofs << buffer << endl;
     }
@@ -612,7 +613,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 
     for (unsigned int l = 0; l < grids.size(); ++l)
     {
-      gd = (OBGridData*)grids[l];
+      gd = static_cast<OBGridData*>(grids[l]);
       int mx, my, mz;
       gd->GetNumberOfPoints(mx, my, mz);
 
@@ -623,30 +624,31 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                    << "This cube will be skipped.\n";
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
       }
-
-      // The cube itself
-      double value;
-      unsigned int count = 1;
-      for (int i = 0; i < nx; ++i) {
-        for (int j = 0; j < ny; ++j) {
-          for (int k = 0; k < nz; ++k) {
-  	    value = gd->GetValue(i, j, k);
-
-	    if (count % 6 == 0) {
-              snprintf(buffer, BUFF_SIZE," %12.6E", value);
-              ofs << buffer << endl;
-	    } else {
-              snprintf(buffer, BUFF_SIZE," %12.6E ", value);
-              ofs << buffer;
-	    }
-
-	    count++;
-          } // z-axis
-        } // y-axis
-      } // x-axis
-      if (l < (grids.size() - 1))
-        ofs << endl;
     }
+
+    // The cube(s)
+    double value;
+    unsigned int count = 1;
+    for (int i = 0; i < nx; ++i)
+    {
+      for (int j = 0; j < ny; ++j)
+      {
+        for (int k = 0; k < nz; ++k)
+        {
+          // The cube files are stored in staggered z
+          for (int l = 0; l < grids.size(); ++l)
+          {
+            value = static_cast<OBGridData*>(grids[l])->GetValue(i, j, k);
+            snprintf(buffer, BUFF_SIZE," %12.5E", value);
+            if (count % 6 == 0)
+              ofs << buffer << endl;
+            else
+              ofs << buffer;
+            count++;
+          }
+        } // z-axis
+      } // y-axis
+    } // x-axis
 
     return true;
   }
