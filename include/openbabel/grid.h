@@ -3,6 +3,7 @@ grid.h - Handle grids of values.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some Portions Copyright (C) 2008 by Marcus D. Hanwell
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -94,7 +95,8 @@ namespace OpenBabel
  class OBAPI OBFloatGrid: public OBGrid
   {
   protected:
-    double *_val;             //!< floating point values
+    //double *_val;             //!< floating point values
+    std::vector<double> _values;   //!< floating point values
     int   *_ival;             //!< for integer values (deprecated)
     double _midz,_midx,_midy; //!< center of grid in world coordinates
     int _ydim,_xdim,_zdim;    //!< grid dimensions
@@ -105,11 +107,10 @@ namespace OpenBabel
 
   public:
 
-  OBFloatGrid() : _val(NULL), _ival(NULL), _halfSpace(0.0) {}
+  OBFloatGrid() : _ival(NULL), _halfSpace(0.0) {}
     ~OBFloatGrid()
       {
         if (_ival) delete [] _ival;
-        if (_val)  delete [] _val;
       }
     //! Initialize the grid using this molecule as a box (plus a padding)
     //!  with the supplied spacing between points
@@ -185,22 +186,28 @@ namespace OpenBabel
     std::vector<double> GetDataVector();
     void SetVals(std::vector<double> vals);
 
-    double *GetVals()    {        return(_val);    }
+    double *GetVals()    {        return(&_values[0]);    }
     double GetValue(int i, int j, int k)
     {
       if (i*_ydim*_zdim + j*_zdim + k > _xdim*_ydim*_zdim)
         return 0.0;
       else
-        return _val[i*_ydim*_zdim + j*_zdim + k];
+        return _values[i*_ydim*_zdim + j*_zdim + k];
     }
 
-    void SetVals(double *ptr)    {  _val = ptr;    }
+    void SetVals(double *ptr)
+    {
+      // FIXME - needs porting
+     // _values = ptr;
+     for (int i = 0; i < _xdim*_ydim*_zdim; ++i)
+       _values[i] = ptr[i];
+    }
     bool SetValue(int i, int j, int k, double val)
     {
       if (i*_ydim*_zdim + j*_zdim + k > _xdim*_ydim*_zdim)
         return false;
       else
-        _val[i*_ydim*_zdim + j*_zdim + k] = val;
+        _values[i*_ydim*_zdim + j*_zdim + k] = val;
     }
 
     vector3 Center()

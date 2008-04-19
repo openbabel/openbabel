@@ -3,6 +3,7 @@ grid.cpp - Handle grids of values.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some Portions Copyright (C) 2008 by Marcus D. Hanwell
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -82,8 +83,8 @@ namespace OpenBabel
     _ival=NULL;
 
     int size = _xdim*_ydim*_zdim;
-    _val = new double [size];
-    double *valptr = _val;
+    _values.resize(size);
+    double *valptr = &_values[0];
     for( int i = 0; i < size; i++)
       {
         *valptr = 0.0;
@@ -131,7 +132,7 @@ namespace OpenBabel
     _xdim = nx;
     _ydim = ny;
     _zdim = nz;
-    _val = new double[nx*ny*nz];
+    _values.resize(nx*ny*nz);
   }
 
   void OBFloatGrid::SetXAxis(vector3 v)
@@ -151,14 +152,14 @@ namespace OpenBabel
 
   double OBFloatGrid::Inject(double x, double y, double z)
   {
-    if (_val == NULL)
+    if (_values.size() == 0)
       return 0.0;
 
     if( x<=_xmin || x>=_xmax
         || y<=_ymin || y>=_ymax
         || z<=_zmin || z>=_zmax ) return 0.0;
 
-    return(_val[CoordsToIndex(x, y, z)]);
+    return(_values[CoordsToIndex(x, y, z)]);
   }
 
   void OBFloatGrid::IndexToCoords(int idx, double &x, double &y, double &z)
@@ -192,7 +193,7 @@ namespace OpenBabel
 
   double OBFloatGrid::Interpolate(double x, double y, double z)
   {
-    if (_val == NULL)
+    if (_values.size() == 0)
       return 0.0;
 
     int n,igx,igy,igz;
@@ -239,15 +240,15 @@ namespace OpenBabel
     bz=fgz;
 
     /* calculate interpolated value */
-    AyA=az*_val[n           ]+bz*_val[(n+1)    ];
-    ByA=az*_val[n+_zdim]+bz*_val[(n+1+_zdim)  ];
+    AyA=az*_values[n           ]+bz*_values[(n+1)    ];
+    ByA=az*_values[n+_zdim]+bz*_values[(n+1+_zdim)  ];
 
     Az=ay*AyA+by*ByA;
 
-    AyB=az*_val[static_cast<int>(n     +yzdim)] +
-        bz*_val[static_cast<int>(n+1     +yzdim)];
-    ByB=az*_val[static_cast<int>(n+_zdim+yzdim)] +
-        bz*_val[static_cast<int>(n+1+_zdim+yzdim)];
+    AyB=az*_values[static_cast<int>(n     +yzdim)] +
+        bz*_values[static_cast<int>(n+1     +yzdim)];
+    ByB=az*_values[static_cast<int>(n+_zdim+yzdim)] +
+        bz*_values[static_cast<int>(n+1+_zdim+yzdim)];
     Bz=ay*AyB+by*ByB;
 
     return(ax*Az+bx*Bz);
@@ -255,38 +256,14 @@ namespace OpenBabel
 
   std::vector<double> OBFloatGrid::GetDataVector()
   {
-    vector<double> v;
-    int size = _xdim*_ydim*_zdim;
-
-    if (_val == NULL)
-      return v;
-
-    //v.resize(size);
-    for( int i = 0; i < size; i++)
-    {
-      v.push_back(_val[i]);
-    }
-
-    return v;
+    return _values;
   }
 
   void OBFloatGrid::SetVals(std::vector<double> vals)
   {
     int size = _xdim*_ydim*_zdim;
-
-    if (vals.size() != size)
-      return;
-
-    if (_val != NULL)
-      delete[] _val;
-
-    _val = new double [size];
-    double *valptr = _val;
-    for( int i = 0; i < size; i++)
-    {
-      *valptr = vals[i];
-      valptr++;
-    }
+    _values.clear();
+    _values = vals;
   }
 
   double OBFloatGrid::InterpolateDerivatives(double x,double y,double z,double *derivatives)
@@ -331,15 +308,15 @@ namespace OpenBabel
     bz=fgz;
 
     /* calculate interpolated value */
-    AyA=az*_val[n           ]+bx*_val[n+1    ];
-    ByA=az*_val[n+_zdim]+bx*_val[(n+1+_zdim)  ];
+    AyA=az*_values[n           ]+bx*_values[n+1    ];
+    ByA=az*_values[n+_zdim]+bx*_values[(n+1+_zdim)  ];
 
     Az=ay*AyA+by*ByA;
 
-    AyB=az*_val[static_cast<int>(n      +yzdim)]+
-        bz*_val[static_cast<int>(n+1      +yzdim)];
-    ByB=az*_val[static_cast<int>(n+_zdim+yzdim)]+
-        bz*_val[static_cast<int>(n+1+_zdim+yzdim)];
+    AyB=az*_values[static_cast<int>(n      +yzdim)]+
+        bz*_values[static_cast<int>(n+1      +yzdim)];
+    ByB=az*_values[static_cast<int>(n+_zdim+yzdim)]+
+        bz*_values[static_cast<int>(n+1+_zdim+yzdim)];
     Bz=ay*AyB+by*ByB;
 
     energy = ax*Az+bx*Bz;
@@ -353,15 +330,15 @@ namespace OpenBabel
 
     fy=az*Az+bz*Bz;
 
-    AyA=-_val[n           ]+_val[(n+1)     ];
-    ByA=-_val[n+_zdim      ]+_val[(n+1+_zdim)];
+    AyA=-_values[n           ]+_values[(n+1)     ];
+    ByA=-_values[n+_zdim      ]+_values[(n+1+_zdim)];
 
     Az=ay*AyA+by*ByA;
 
-    AyB=-_val[static_cast<int>(n      +yzdim)]+
-         _val[static_cast<int>(n+1      +yzdim)];
-    ByB=-_val[static_cast<int>(n+_zdim+yzdim)]+
-         _val[static_cast<int>(n+1+_zdim+yzdim)];
+    AyB=-_values[static_cast<int>(n      +yzdim)]+
+         _values[static_cast<int>(n+1      +yzdim)];
+    ByB=-_values[static_cast<int>(n+_zdim+yzdim)]+
+         _values[static_cast<int>(n+1+_zdim+yzdim)];
 
     Bz=ay*AyB+by*ByB;
 
@@ -397,7 +374,7 @@ namespace OpenBabel
     os.write((const char*)&fg._xdim,sizeof(int));
     os.write((const char*)&fg._ydim,sizeof(int));
     os.write((const char*)&fg._zdim,sizeof(int));
-    os.write((const char*)&fg._val[0],
+    os.write((const char*)&fg._values[0],
              (sizeof(double)*(fg._xdim*fg._ydim*fg._zdim)));
 
     return(os);
@@ -421,10 +398,10 @@ namespace OpenBabel
     is.read((char*)&fg._ydim,sizeof(int));
     is.read((char*)&fg._zdim,sizeof(int));
     int size = fg._xdim*fg._ydim*fg._zdim;
-    fg._val = new double [size];
+    fg._values.resize(size);
     size *= (int) sizeof(double);
 
-    is.read((char*)&fg._val[0],size);
+    is.read((char*)&fg._values[0],size);
     fg._halfSpace= fg._spacing/2.0;
 
     return(is);

@@ -17,6 +17,10 @@
 
 2008-04-19  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* include/openbabel/grid.h, src/grid.cpp,
+	include/openbabel/griddata.h, src/griddata.cpp: Now using std::vector
+	to store data internally. Made safer where possible.
+
 	* src/formats/gausscubeformat.cpp: Cleaned up support for reading in
 	multiple cubes - large cube files can now be read in.
 

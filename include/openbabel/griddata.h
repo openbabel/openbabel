@@ -4,6 +4,8 @@ griddata.h - Store grids of data linked to a molecule (e.g. Gaussian cube)
 // Molekel - Molecular Visualization Program
 // Copyright (C) 2006, 2007 Swiss National Supercomputing Centre (CSCS)
 
+Some Portions Copyright (C) 2008 by Marcus D. Hanwell
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
 
