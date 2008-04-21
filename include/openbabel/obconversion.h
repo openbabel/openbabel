@@ -46,6 +46,8 @@ GNU General Public License for more details.
 //using namespace std;
 namespace OpenBabel {
 
+  // Needed to preserve deprecated API
+  typedef OBPlugin::PluginIterator Formatpos;
 
   OBERROR extern  OBMessageHandler obErrorLog;
 
@@ -74,7 +76,6 @@ namespace OpenBabel {
       /// @brief Searches registered formats for a MIME the same as the chemical MIME type passed
       static OBFormat*        FormatFromMIME(const char* MIME);
 
-      typedef             OBPlugin::PluginIterator Formatpos;
       ///Deprecated!.Repeatedly called to recover available Formats
       static bool	        GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
       //@}
