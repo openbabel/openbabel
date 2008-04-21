@@ -74,8 +74,9 @@ namespace OpenBabel {
       /// @brief Searches registered formats for a MIME the same as the chemical MIME type passed
       static OBFormat*        FormatFromMIME(const char* MIME);
 
-      ///Repeatedly called to recover available Formats
-//      static bool	        GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
+      typedef             OBPlugin::PluginIterator Formatpos;
+      ///Deprecated!.Repeatedly called to recover available Formats
+      static bool	        GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
       //@}
 		
       /// @name Information

@@ -8,8 +8,9 @@ What's New from 2.1.1:
 - Code for integrating Open Babel and RDKit.
 - Code for integrating Open Babel and the BOOST graph library.
 - New support for 3D coordinate generation using the OBBuilder class
-- A new "descriptor" framework for QSAR descriptors.
-- A new "filter" framework for selecting molecules by title, molecular weight, etc.
+- A new "descriptor" plugin framework for QSAR descriptors.
+- A new "filter" plugin framework for selecting molecules by title, molecular weight, etc.
+- Facility to add new options on the conversion process as plugin code.
 - Space group support.
 - 3D Point group symmetry perception.
 - Improved support for "grids" or "cubes" of molecular data, such as from quantum mechanics programs. (See below for supported file formats.)

@@ -1,3 +1,13 @@
+2008-04-21 Chris Morley
+
+	* include/openbabel/obconversion.h, src/obconversion.cpp:
+	Reinstate a version of OBConversion::GetNextFormat() to prevent
+	breaking xchemdraw. Formatpos is defined differently but would
+	not be accessed in an application program.
+
+	NEWS, windows-vc2005/OBPythonOBF/Readme.txt:
+	Minor documentation changes
+
 2008-04-19  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.h, src/forcefield.cpp: Added

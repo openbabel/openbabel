@@ -1418,6 +1418,44 @@ namespace OpenBabel {
      OptionsArray[typ]=pSourceConv->OptionsArray[typ];
   }
 
+  //The following function and typedef are deprecated, and are present only
+  //for backward compatibility.
+  //Use OBConversion::GetSupportedInputFormat(), OBConversion::GetSupportedOutputFormat(),
+  //OBPlugin::List(), OBPlugin::OBPlugin::ListAsVector(),OBPlugin::OBPlugin::ListAsString(),
+  //or (in extremis) OBPlugin::PluginIterator instead.
+
+  typedef OBPlugin::PluginIterator Formatpos;
+
+  bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat)
+  {
+
+    pFormat = NULL;
+    if(str==NULL) 
+      itr = OBPlugin::Begin("formats");
+    else
+      itr++;
+    if(itr == OBPlugin::End("formats"))
+      {
+        str=NULL; pFormat=NULL;
+        return false;
+      }
+    static string s;
+    s =itr->first;
+    pFormat = static_cast<OBFormat*>(itr->second);
+    if(pFormat)
+      {
+        string description(pFormat->Description());
+        s += " -- ";
+        s += description.substr(0,description.find('\n'));
+      }
+
+    if(pFormat->Flags() & NOTWRITABLE) s+=" [Read-only]";
+    if(pFormat->Flags() & NOTREADABLE) s+=" [Write-only]";
+
+    str = s.c_str();
+    return true;
+  }
+
 }//namespace OpenBabel
 
 //! \file obconversion.cpp
