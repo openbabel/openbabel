@@ -1,3 +1,12 @@
+2008-04-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h: Documentation update.
+	
+	* src/forcefield.cpp: Fixed (X, Y, Z, XYZ) atoms are now checked in
+	SteepestDescent and ConjugateGradients and works.
+	Enable constraints again. Distance and angles work, torsion still
+	needs some attention.
+
 2008-04-21  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* include/openbabel/obconversion.h: Moved the Formatpos typedef

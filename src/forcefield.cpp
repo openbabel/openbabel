@@ -25,9 +25,19 @@ GNU General Public License for more details.
       - SystematicRotorSearch(): finished
       - RandomRotorSearch(): finished
       - WeightedRotorSearch: finished
-      - DistanceGeometry(): needs matrix operations
+      - DistanceGeometry(): needs matrix operations (Eigen)
 
-      - src/forcefields/forcefieldghemical.cpp
+      Constraints:
+      - Fix Atom: working 
+      - Fix Atom X: working 
+      - Fix Atom Y: working 
+      - Fix Atom Z: working 
+      - Distance: working
+      - Angle: working
+      - Torsion: TODO 
+      - Chirality: TODO
+
+      src/forcefields/forcefieldghemical.cpp
       - Atom typing: finished
       - Charges: finished
       - Energy terms: finished
@@ -35,7 +45,7 @@ GNU General Public License for more details.
       - Validation: finished
       - TODO: groups
 
-      - src/forcefields/forcefieldmmff94.cpp
+      src/forcefields/forcefieldmmff94.cpp
       - Atom typing: done.
       - Charges: done.
       - Energy terms: finished (small problems with SSSR 
@@ -43,7 +53,7 @@ GNU General Public License for more details.
       - Analytical gradients: finished 
       - Validation: http://home.scarlet.be/timvdm/MMFF94_validation_output.gz
 
-      - src/forcefields/forcefielduff.cpp
+      src/forcefields/forcefielduff.cpp
       - Energy terms: finished
       - OOP: needs validation
       - Gradients: need OOP gradient
@@ -241,7 +251,8 @@ namespace OpenBabel
 
     if (!c)
       for (unsigned int idx=0; idx < parameter.size(); idx++)
-        if (((a == parameter[idx].a) && (b == parameter[idx].b)) || ((a == parameter[idx].b) && (b == parameter[idx].a)))
+        if (((a == parameter[idx].a) && (b == parameter[idx].b)) || 
+            ((a == parameter[idx].b) && (b == parameter[idx].a)))
           return idx;
 
     if (!d)
@@ -251,14 +262,17 @@ namespace OpenBabel
           return idx;
  
     for (unsigned int idx=0; idx < parameter.size(); idx++)
-      if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (d == parameter[idx].d)) || 
-          ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && (d == parameter[idx].a)))
+      if (((a == parameter[idx].a) && (b == parameter[idx].b) && 
+           (c == parameter[idx].c) && (d == parameter[idx].d)) || 
+          ((a == parameter[idx].d) && (b == parameter[idx].c) && 
+           (c == parameter[idx].b) && (d == parameter[idx].a)))
         return idx;
 
     return -1;
   }
   
-  OBFFParameter* OBForceField::GetParameter(int a, int b, int c, int d, vector<OBFFParameter> &parameter)
+  OBFFParameter* OBForceField::GetParameter(int a, int b, int c, int d, 
+      vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
 
@@ -271,7 +285,8 @@ namespace OpenBabel
 
     if (!c)
       for (unsigned int idx=0; idx < parameter.size(); idx++)
-        if (((a == parameter[idx].a) && (b == parameter[idx].b)) || ((a == parameter[idx].b) && (b == parameter[idx].a))) {
+        if (((a == parameter[idx].a) && (b == parameter[idx].b)) || 
+            ((a == parameter[idx].b) && (b == parameter[idx].a))) {
           par = &parameter[idx];
           return par;
         }
@@ -285,8 +300,10 @@ namespace OpenBabel
         }
 
     for (unsigned int idx=0; idx < parameter.size(); idx++)
-      if (((a == parameter[idx].a) && (b == parameter[idx].b) && (c == parameter[idx].c) && (d == parameter[idx].d)) || 
-          ((a == parameter[idx].d) && (b == parameter[idx].c) && (c == parameter[idx].b) && (d == parameter[idx].a))) {
+      if (((a == parameter[idx].a) && (b == parameter[idx].b) && 
+           (c == parameter[idx].c) && (d == parameter[idx].d)) || 
+          ((a == parameter[idx].d) && (b == parameter[idx].c) && 
+           (c == parameter[idx].b) && (d == parameter[idx].a))) {
         par = &parameter[idx];
         return par;
       }
@@ -294,7 +311,8 @@ namespace OpenBabel
     return NULL;
   }
   
-  OBFFParameter* OBForceField::GetParameter(const char* a, const char* b, const char* c, const char* d, vector<OBFFParameter> &parameter)
+  OBFFParameter* OBForceField::GetParameter(const char* a, const char* b, const char* c, 
+      const char* d, vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
     if (a == NULL)
@@ -313,7 +331,8 @@ namespace OpenBabel
       string _a(a);
       string _b(b);
       for (unsigned int idx=0; idx < parameter.size(); idx++) {
-        if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b)) || ((_a == parameter[idx]._b) && (_b == parameter[idx]._a))) {
+        if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b)) || 
+            ((_a == parameter[idx]._b) && (_b == parameter[idx]._a))) {
           par = &parameter[idx];
           return par;
         }
@@ -338,8 +357,10 @@ namespace OpenBabel
     string _c(c);
     string _d(d);
     for (unsigned int idx=0; idx < parameter.size(); idx++)
-      if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && (_c == parameter[idx]._c) && (_d == parameter[idx]._d)) || 
-          ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && (_c == parameter[idx]._b) && (_d == parameter[idx]._a))) {
+      if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && 
+           (_c == parameter[idx]._c) && (_d == parameter[idx]._d)) || 
+          ((_a == parameter[idx]._d) && (_b == parameter[idx]._c) && 
+           (_c == parameter[idx]._b) && (_d == parameter[idx]._a))) {
         par = &parameter[idx];
         return par;
       }
@@ -394,15 +415,14 @@ namespace OpenBabel
   
   double OBFFConstraints::GetConstraintEnergy()
   {
-    return 0.0;
     vector<OBFFConstraint>::iterator i;
     double constraint_energy = 0.0;
-        
+       
     for (i = _constraints.begin(); i != _constraints.end(); ++i)
-      if ( (i->type == OBFF_CONST_DISTANCE) || (i->type == OBFF_CONST_ANGLE) || (i->type == OBFF_CONST_TORSION) ) {
+      if ( (i->type == OBFF_CONST_DISTANCE) || (i->type == OBFF_CONST_ANGLE) || 
+           (i->type == OBFF_CONST_TORSION) ) {
         vector3 da, db, dc, dd;
         double delta, delta2, rab, theta, phi, sine, dE;
- 
 	
         switch (i->type) {
         case OBFF_CONST_DISTANCE:
@@ -443,7 +463,6 @@ namespace OpenBabel
           if ((i->a == NULL) || ((i->b) == NULL) || ((i->c) == NULL) || ((i->d) == NULL))
             break;
 
-          /*
             da = (i->a)->GetVector();
             db = (i->b)->GetVector();
             dc = (i->c)->GetVector();
@@ -453,28 +472,20 @@ namespace OpenBabel
             if (IsNan(theta))
             theta = 1.0e-7;
             
-            if (theta >= 0)
             delta = theta - i->constraint_value;
-            else
-            delta = theta + i->constraint_value;
-            delta2 = delta * delta;
-            constraint_energy += 0.00025 * delta2;
-            dE = 0.0005 * delta;
 
-            if (theta >= 0) {
+            //cout << "theta = " << theta  << endl;
+            //cout << "delta = " << delta << endl;
+
+            delta2 = delta * delta;
+            constraint_energy +=  2.0 * delta2;
+            dE =  - 4.0 *  delta;
+
             i->grada = dE * da;
             i->gradb = dE * db;
             i->gradc = dE * dc;
             i->gradd = dE * dd;
-            } else {
-            i->grada = -dE * da;
-            i->gradb = -dE * db;
-            i->gradc = -dE * dc;
-            i->gradd = -dE * dd;
-            }
-          */
           break;
-        
         default:
           break;
         }
@@ -733,7 +744,8 @@ namespace OpenBabel
       OBFFLog("IDX\tVELOCITY\n");
       
       FOR_ATOMS_OF_MOL (a, _mol) {
-        sprintf(_logbuf, "%d\t<%8.3f, %8.3f, %8.3f>\n", a->GetIdx(), _velocityPtr[a->GetIdx()], _velocityPtr[a->GetIdx()+1], _velocityPtr[a->GetIdx()+2]);
+        sprintf(_logbuf, "%d\t<%8.3f, %8.3f, %8.3f>\n", a->GetIdx(), _velocityPtr[a->GetIdx()], 
+            _velocityPtr[a->GetIdx()+1], _velocityPtr[a->GetIdx()+2]);
         OBFFLog(_logbuf);
       }
     }
@@ -903,7 +915,8 @@ namespace OpenBabel
     vector<vector<vector3> > confForces;
     for (unsigned int i = 0; i < _mol.NumAtoms(); ++i) {
       const int coordIdx = i * 3;
-      forces.push_back(vector3(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]));
+      forces.push_back(vector3(_gradientPtr[coordIdx], 
+          _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]));
     }
     confForces.push_back(forces);
     cd->SetForces(confForces);
@@ -1251,7 +1264,8 @@ namespace OpenBabel
     while (RandomRotorSearchNextConformer(geomSteps)) {}
   }
 
-  void Reweight(std::vector< std::vector <double> > &rotorWeights, std::vector<int> rotorKey, double bonus)
+  void Reweight(std::vector< std::vector <double> > &rotorWeights, 
+      std::vector<int> rotorKey, double bonus)
   {
     double fraction, minWeight, maxWeight;
     bool improve = (bonus > 0.0);
@@ -1867,7 +1881,8 @@ namespace OpenBabel
     }
     /* 
     IF_OBFF_LOGLVL_LOW {
-      sprintf(_logbuf, "UPDATE VDW PAIRS: %d --> %d (VDW), %d (ELE) \n", i+1, _vdwpairs.CountBits(), _elepairs.CountBits());
+      sprintf(_logbuf, "UPDATE VDW PAIRS: %d --> %d (VDW), %d (ELE) \n", i+1, 
+          _vdwpairs.CountBits(), _elepairs.CountBits());
       OBFFLog(_logbuf);
     }
     */
@@ -2114,28 +2129,9 @@ namespace OpenBabel
     double *currentCoords = _mol.GetCoordinates();
 
     for (unsigned int c = 0; c < _ncoords; ++c) {
-      // check if this atom, X, Y or Z is fixed
-      bool fixed = false;
-      switch (c % 3) {
-        case 0:
-          fixed = _constraints.IsFixed(c / 3 + 1);
-          if (fixed) {
-            c += 2; // XYZ is fixed, skip Y and Z
-          } else {
-            fixed = _constraints.IsXFixed(c / 3 + 1);
-          }
-          break;
-        case 1:
-          fixed = _constraints.IsYFixed(c / 3 + 1);
-          break;
-        case 2:
-          fixed = _constraints.IsZFixed(c / 3 + 1);
-          break;
+      if (isfinite(direction[c])) { 
+        currentCoords[c] = origCoords[c] + direction[c] * step;
       }
-      if (fixed)
-        continue;
-
-      currentCoords[c] = origCoords[c] + direction[c] * step;
     }
   }
 
@@ -2159,27 +2155,6 @@ namespace OpenBabel
       // Vectorizing this would be a big benefit
       // Need to look up using BLAS or Eigen or whatever
       for (unsigned int c = 0; c < numCoords; ++c) {
-        // check if this atom, X, Y or Z is fixed
-        bool fixed = false;
-        switch (c % 3) {
-          case 0:
-            fixed = _constraints.IsFixed(c / 3 + 1);
-            if (fixed) {
-              c += 2; // XYZ is fixed, skip Y and Z
-            } else {
-              fixed = _constraints.IsXFixed(c / 3 + 1);
-            }
-            break;
-          case 1:
-            fixed = _constraints.IsYFixed(c / 3 + 1);
-            break;
-          case 2:
-            fixed = _constraints.IsZFixed(c / 3 + 1);
-            break;
-        }
-        if (fixed)
-          continue;
-
         if (isfinite(direction[c])) { 
           // make sure we don't have NaN or infinity
           tempStep = direction[c] * step;
@@ -2411,7 +2386,10 @@ namespace OpenBabel
       OBFFLog(_logbuf);
       OBFFLog("STEP n       E(n)         E(n-1)    \n");
       OBFFLog("------------------------------------\n");
+      sprintf(_logbuf, " %4d    %8.3f      ----\n", _cstep, _e_n1);
+      OBFFLog(_logbuf);
     }
+ 
   }
  
   bool OBForceField::SteepestDescentTakeNSteps(int n) 
@@ -2424,22 +2402,39 @@ namespace OpenBabel
       _cstep++;
 
       FOR_ATOMS_OF_MOL (a, _mol) {
-        int coordIdx = (a->GetIdx() - 1) * 3;
-        if (!HasAnalyticalGradients()) {
-          dir = -NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+        unsigned int idx = a->GetIdx();
+        unsigned int coordIdx = (idx - 1) * 3;
 
-          _gradientPtr[coordIdx] = dir.x();
-          _gradientPtr[coordIdx+1] = dir.y();
-          _gradientPtr[coordIdx+2] = dir.z();
+        if (_constraints.IsFixed(idx)) {
+          _gradientPtr[coordIdx] = 0.0;
+          _gradientPtr[coordIdx+1] = 0.0;
+          _gradientPtr[coordIdx+2] = 0.0;
         } else {
-          dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+          if (!HasAnalyticalGradients()) {
+            // use numerical gradients
+            dir = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+          } else {
+            // use analytical gradients
+            dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+          }
  
-          _gradientPtr[coordIdx] = dir.x();
-          _gradientPtr[coordIdx+1] = dir.y();
-          _gradientPtr[coordIdx+2] = dir.z();
+          if (!_constraints.IsXFixed(idx))
+            _gradientPtr[coordIdx] = dir.x();
+          else
+            _gradientPtr[coordIdx] = 0.0;
+
+          if (!_constraints.IsYFixed(idx))
+            _gradientPtr[coordIdx+1] = dir.y();
+          else
+            _gradientPtr[coordIdx+1] = 0.0;
+
+          if (!_constraints.IsZFixed(idx))
+            _gradientPtr[coordIdx+2] = dir.z();
+          else
+            _gradientPtr[coordIdx+2] = 0.0;
         }
       }
-
+      // perform a linesearch
       switch (_linesearch) {
         case LineSearchType::Newton2Num:
           alpha = Newton2NumLineSearch(_gradientPtr);
@@ -2487,7 +2482,7 @@ namespace OpenBabel
                                                   int method)
   {
     double e_n2, alpha;
-    vector3 grad2;
+    vector3 dir;
 
     _cstep = 0;
     _nsteps = steps;
@@ -2515,16 +2510,40 @@ namespace OpenBabel
 
     // Take the first step (same as steepest descent because there is no 
     // gradient from the previous step.
-    if (!HasAnalyticalGradients()) {
-      FOR_ATOMS_OF_MOL (a, _mol) {
-        vector3 dir = -NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      unsigned int idx = a->GetIdx();
+      unsigned int coordIdx = (idx - 1) * 3;
+ 
+      if (_constraints.IsFixed(idx)) {
+        _gradientPtr[coordIdx] = 0.0;
+        _gradientPtr[coordIdx+1] = 0.0;
+        _gradientPtr[coordIdx+2] = 0.0;
+      } else {
+        if (!HasAnalyticalGradients()) {
+          // use numerical gradients
+          dir = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+        } else {
+          // use analytical gradients
+          dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+        }
+ 
+        if (!_constraints.IsXFixed(idx))
+          _gradientPtr[coordIdx] = dir.x();
+        else
+          _gradientPtr[coordIdx] = 0.0;
 
-        int coordIdx = (a->GetIdx() - 1) * 3;
-        _gradientPtr[coordIdx] = dir.x();
-        _gradientPtr[coordIdx+1] = dir.y();
-        _gradientPtr[coordIdx+2] = dir.z();
+        if (!_constraints.IsYFixed(idx))
+          _gradientPtr[coordIdx+1] = dir.y();
+        else
+          _gradientPtr[coordIdx+1] = 0.0;
+
+        if (!_constraints.IsZFixed(idx))
+          _gradientPtr[coordIdx+2] = dir.z();
+        else
+          _gradientPtr[coordIdx+2] = 0.0;
       }
     }
+    // perform a linesearch
     switch (_linesearch) {
       case LineSearchType::Newton2Num:
         alpha = Newton2NumLineSearch(_gradientPtr);
@@ -2537,7 +2556,7 @@ namespace OpenBabel
     e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
     IF_OBFF_LOGLVL_LOW {
-      sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+      sprintf(_logbuf, " %4d    %8.3f    %8.3f\n", 1, e_n2, _e_n1);
       OBFFLog(_logbuf);
     }
  
@@ -2552,7 +2571,6 @@ namespace OpenBabel
     double g2g2, g1g1, beta, alpha;
     vector3 grad2, dir2;
     vector3 grad1, dir1; // temporaries to perform dot product, etc.
-    int coordIdx;
     
     if (_ncoords != _mol.NumAtoms() * 3)
       return false;
@@ -2562,26 +2580,23 @@ namespace OpenBabel
     for (int i = 1; i <= n; i++) {
       _cstep++;
      
-      // calculate numerical gradient if we don't have analytical 
-      if (!HasAnalyticalGradients()) {
-        FOR_ATOMS_OF_MOL (a, _mol) {
-          vector3 dir = -NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
-
-          int coordIdx = (a->GetIdx() - 1) * 3;
-          _gradientPtr[coordIdx] = dir.x();
-          _gradientPtr[coordIdx+1] = dir.y();
-          _gradientPtr[coordIdx+2] = dir.z();
-        }
-      }
       FOR_ATOMS_OF_MOL (a, _mol) {
-        if (!_constraints.IsFixed(a->GetIdx())) {
-          coordIdx = (a->GetIdx() - 1) * 3;
+        unsigned int idx = a->GetIdx();
+        unsigned int coordIdx = (a->GetIdx() - 1) * 3;
 
-          if (HasAnalyticalGradients())
-            grad2 = GetGradient(&*a);
-          else
+        if (_constraints.IsFixed(idx)) {
+          _gradientPtr[coordIdx] = 0.0;
+          _gradientPtr[coordIdx+1] = 0.0;
+          _gradientPtr[coordIdx+2] = 0.0;
+        } else {
+          if (!HasAnalyticalGradients()) {
+            // use numerical gradients
             grad2 = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
-          
+          } else {
+            // use analytical gradients
+            grad2 = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+          }
+ 
           // Fletcher-Reeves formula for Beta
           // http://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method
           // NOTE: We make sure to reset and use the steepest descent direction
@@ -2594,11 +2609,23 @@ namespace OpenBabel
             grad2 += beta * grad1;
           } 
  
-          _grad1[coordIdx] = grad2.x();
-          _grad1[coordIdx + 1] = grad2.y();
-          _grad1[coordIdx + 2] = grad2.z();
+          if (!_constraints.IsXFixed(idx))
+            _grad1[coordIdx] = grad2.x();
+          else
+            _grad1[coordIdx] = 0.0;
+
+          if (!_constraints.IsYFixed(idx))
+            _grad1[coordIdx+1] = grad2.y();
+          else
+            _grad1[coordIdx+1] = 0.0;
+
+          if (!_constraints.IsZFixed(idx))
+            _grad1[coordIdx+2] = grad2.z();
+          else
+            _grad1[coordIdx+2] = 0.0;
         }
       }
+      // perform a linesearch
       switch (_linesearch) {
         case LineSearchType::Newton2Num:
           alpha = Newton2NumLineSearch(_grad1);
