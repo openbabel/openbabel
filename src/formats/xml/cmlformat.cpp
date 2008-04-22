@@ -136,9 +136,11 @@ namespace OpenBabel
     string RawFormula;
     xmlChar* prefix;
     string CurrentAtomID;
-    int CrystalScalarsNeeded, PropertyScalarsNeeded;
+    int CrystalScalarsNeeded, PropertyScalarsNeeded, TransformsNeeded;
     vector<double> CrystalVals;
     OBUnitCell* pUnitCell;
+    SpaceGroup _SpaceGroup;
+    string SpaceGroupName;
     string titleonproperty;
   };
 
@@ -322,7 +324,27 @@ namespace OpenBabel
             PropertyScalarsNeeded=0;
           }
       }
-    else if(name=="property")
+    else if(name=="symmetry")
+      {
+        const xmlChar* pname  = xmlTextReaderGetAttribute(reader(), BAD_CAST "spaceGroup");
+        if (pname)
+		  {
+            SpaceGroupName = (const char*)pname;
+            // free((void*)pname);
+          }
+      }
+     else if(name=="transform3")
+      {
+        xmlTextReaderRead(reader());
+        const xmlChar* ptransform = xmlTextReaderConstValue(reader());
+        if (ptransform)
+		  {
+            string t = (const char*)ptransform;
+            _SpaceGroup.AddTransform(t);
+            // free((void*)ptransform);
+         }
+      }
+   else if(name=="property")
       {
         //***pattr need to be deleted***
         const char* pattr  = (const char*)xmlTextReaderGetAttribute(reader(), BAD_CAST "dictRef");
@@ -419,6 +441,16 @@ namespace OpenBabel
         _pmol->EndModify();
         return (--_embedlevel>=0); //false to stop parsing if no further embedded mols
         //		return false;//means stop parsing
+      }
+     else if(name=="symmetry")
+      {
+        const SpaceGroup *group = SpaceGroup::GetSpaceGroup(SpaceGroupName);
+        if ((!group || !(_SpaceGroup == *group)) && _SpaceGroup.IsValid())
+          group = SpaceGroup::Find(&_SpaceGroup);
+        if (group)
+          pUnitCell->SetSpaceGroup(group);
+        else
+          pUnitCell->SetSpaceGroup(SpaceGroupName);
       }
     return true;
   }
@@ -1711,6 +1743,9 @@ namespace OpenBabel
     // static const xmlChar C_Z[] = "z";
     static const xmlChar C_TITLE[] = "title";
     static const xmlChar C_UNITS[] = "units";
+    static const xmlChar C_SYMMETRY[]  = "symmetry";
+    static const xmlChar C_SPACEGROUP[]  = "spaceGroup";
+    static const xmlChar C_TRANSFORM3[]  = "transform3";
 
     pUnitCell = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
 
@@ -1752,6 +1787,34 @@ namespace OpenBabel
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:degree");
     xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetGamma());
     xmlTextWriterEndElement(writer());//scalar
+
+    const SpaceGroup *group = pUnitCell->GetSpaceGroup();
+    string s;
+    if (group)
+	  {
+        xmlTextWriterStartElementNS(writer(), prefix, C_SYMMETRY, NULL);
+        xmlTextWriterWriteAttribute (writer(), C_SPACEGROUP, (const xmlChar*)group->GetHallName().c_str());
+        transform3dIterator ti;
+        const transform3d *t = group->BeginTransform(ti);
+        string s;
+        while(t)
+          {
+			s = t->DescribeAsValues() + " 0 0 0 1";
+            xmlTextWriterWriteElement(writer(), C_TRANSFORM3, (const xmlChar*)s.c_str());
+            t = group->NextTransform(ti);
+          }
+        xmlTextWriterEndElement(writer());//symmetry
+	  }
+    else
+	  {
+        s = pUnitCell.GetSpaceGroupName();
+        if (s.length())
+	      {
+            xmlTextWriterStartElementNS(writer(), prefix, C_SYMMETRY, NULL);
+            xmlTextWriterWriteAttribute (writer(), C_SPACEGROUP, (const xmlChar*)s.c_str());
+            xmlTextWriterEndElement(writer());//symmetry
+	      }
+	  }
 
     xmlTextWriterEndElement(writer());//crystal	
   }

@@ -1,3 +1,8 @@
+2008-04-22  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/formats/xml/cmlformat.cpp: import/export crystal symmetry.
+	* src/math/spacegroup.cpp: fixes a bug related to transform creation.
+
 2008-04-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.h: Documentation update.

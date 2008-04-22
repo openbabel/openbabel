@@ -202,9 +202,9 @@ namespace OpenBabel
           /* supposing the string is a list of at least 12 float values. If there are
             16, the last four are 0., 0., 0. and 1. and are not needed */
           istringstream iss(s);
-          iss >> m(0,1) >> m(0,2) >> m(0,3) >> v.x();
-          iss >> m(1,1) >> m(1,2) >> m(1,3) >> v.y();
-          iss >> m(2,1) >> m(2,2) >> m(2,3) >> v.z();
+          iss >> m(0,0) >> m(0,1) >> m(0,2) >> v.x();
+          iss >> m(1,0) >> m(1,1) >> m(1,2) >> v.y();
+          iss >> m(2,0) >> m(2,1) >> m(2,2) >> v.z();
         }
 		if (v.x() < 0)
 			v.x() += 1.;
