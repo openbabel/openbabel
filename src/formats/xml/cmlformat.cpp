@@ -1807,7 +1807,8 @@ namespace OpenBabel
 	  }
     else
 	  {
-        s = pUnitCell.GetSpaceGroupName();
+        //s = pUnitCell.GetSpaceGroupName();
+        s = pUnitCell->GetSpaceGroupName();
         if (s.length())
 	      {
             xmlTextWriterStartElementNS(writer(), prefix, C_SYMMETRY, NULL);

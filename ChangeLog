@@ -1,3 +1,9 @@
+2008-04-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/xml/cmlformat.cpp: change line 1810 from 
+	s = pUnitCell.GetSpaceGroupName();    to
+	s = pUnitCell->GetSpaceGroupName(); 
+
 2008-04-22  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/formats/xml/cmlformat.cpp: import/export crystal symmetry.
