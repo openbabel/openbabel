@@ -1,3 +1,9 @@
+2008-04-21 Chris Morley
+
+	* src/descriptors/groupcontrib.cpp(Predict): Make a copy of
+	the molecule and add hydrogens before calculating property.
+	As recommended by Noel in his blog.
+
 2008-04-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/xml/cmlformat.cpp: change line 1810 from 
@@ -22,8 +28,6 @@
 
 	* include/openbabel/obconversion.h: Moved the Formatpos typedef
 	outside of the class in order to preserve old API call.
-
-2008-04-21 Chris Morley
 
 	* include/openbabel/obconversion.h, src/obconversion.cpp:
 	Reinstate a version of OBConversion::GetNextFormat() to prevent

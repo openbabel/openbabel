@@ -105,7 +105,10 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(!pmol)
       return 0.0;
-    OBMol& mol = *pmol;
+
+    //Need to add hydrogens, so do this to a copy to leave original unchanged
+    OBMol mol(*pmol);
+    mol.AddHydrogens(false, false);
 
     //Read in data, unless it has already been done.
     if(_contribsHeavy.empty() && _contribsHydrogen.empty())
