@@ -1,3 +1,9 @@
+2008-04-25  Noel O'Boyle <baoilleach@gmail.com>
+
+	* data/mr.txt: Based on a comparison with RDKit's Crippen parameter
+	text file, identified a single error in the MR value for Me1 (see
+	JCICS, 1999, 39, 868) 
+
 2008-04-21 Chris Morley
 
 	* src/descriptors/groupcontrib.cpp(Predict): Make a copy of

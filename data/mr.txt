@@ -165,4 +165,4 @@
 [S-*]	7.365
 [S+*]	7.365
 [s]	6.691
-[B,Si,Ga,Ge,As,Se,Sn,Te,Pb,Nc,Nr,Kr,Xe,Rn]	-0.5754
+[B,Si,Ga,Ge,As,Se,Sn,Te,Pb,Nc,Nr,Kr,Xe,Rn]	5.754
