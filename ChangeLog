@@ -1,3 +1,13 @@
+2008-04-27 Chris Morley
+
+	* include/openbabel/mol.h, src/mol.cpp(AssignSpinMultiplicity):
+	added a parameter which forces no implicit hydrogen. The default
+	is false and backward compatible.
+	
+	* src/mol.cpp(PerceiveBondOrders): added a call to
+	AssignSpinMultiplicity which should prevent molecules from
+	computational chemistry formats being given implicit hydrogen.
+
 2008-04-25  Noel O'Boyle <baoilleach@gmail.com>
 
 	* data/mr.txt: Based on a comparison with RDKit's Crippen parameter

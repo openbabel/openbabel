@@ -444,7 +444,7 @@ namespace OpenBabel
     //! Correct for pH by applying the OBPhModel transformations
     bool CorrectForPH();
     // docs in mol.cpp
-    bool AssignSpinMultiplicity();
+    bool AssignSpinMultiplicity(bool NoImplicitH=false);
     //! \return the center of the supplied conformer @p nconf
     //! \see Center() to actually center all conformers at the origin
     vector3 Center(int nconf);

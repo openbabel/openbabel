@@ -2031,7 +2031,24 @@ namespace OpenBabel
   }
 
   //! \brief set spin multiplicity for H-deficient atoms
-  bool OBMol::AssignSpinMultiplicity()
+  /**
+  If NoImplicitH is true then the molecule has no implicit hydrogens. Individual atoms
+  on which ForceNoH() has been called also have no implicit hydrogens.
+  If NoImplicitH is false (the default), then if there are any explicit hydrogens
+  on an atom then they constitute all the hydrogen on that atom. However, a hydrogen
+  atom with its _isotope!=0 is not considered explicit hydrogen for this purpose.
+  In addition, an atom which has had ForceImplH()called for it is never considered
+  hydrogen deficient, e.g. unbracketed atoms in SMILES.
+  Any discrepancy with the expected atom valency is interpreted as the atom being a
+  radical of some sort and iits _spinMultiplicity is set to 2 when it is one hydrogen short
+  and 3 when it is two hydrogens short and similarly for greater hydrogen deficiency.
+
+  So SMILES C[CH] is interpreted as methyl carbene, CC[H][H] as ethane, and CC[2H] as CH3CH2D.
+  **/
+
+
+
+  bool OBMol::AssignSpinMultiplicity(bool NoImplicitH)
   {
     if (HasSpinMultiplicityAssigned())
       return(true);
@@ -2052,15 +2069,12 @@ namespace OpenBabel
     OBAtom *atom;
     int diff;
     vector<OBAtom*>::iterator k;
-    //if there are any explicit Hs on an atom, except if their _isotope!=0,
-    //then they consitute all the Hs.
-    //Any discrepancy with the expected atom valency is because it is a radical of some sort.
-    //So SMILES CC[2H] is interpreted as CH3CH2D; CC[H] is methyl carbene.
     for (atom = BeginAtom(k);atom;atom = NextAtom(k))
       {
         if(atom->HasImplHForced()) //Probably unbracketed atoms in SMILES, which are never H deficient
             continue;
-        if ((!atom->IsHydrogen() && atom->ExplicitHydrogenCount(true)!=0)//exclude D,T
+        if (NoImplicitH
+            || (!atom->IsHydrogen() && atom->ExplicitHydrogenCount(true)!=0)//exclude D,T
             || atom->HasNoHForced()) 
           {
             diff=atom->GetImplicitValence() - (atom->GetHvyValence() + atom->ExplicitHydrogenCount());
@@ -2068,18 +2082,6 @@ namespace OpenBabel
               atom->SetSpinMultiplicity(diff+1);//radicals =2; all carbenes =3
           }
       }
-
-/*  Now done on demand in GetTotalSouinMultiplicity
-    vector<OBAtom*>::iterator i;
-    unsigned int spin = 1;
-
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      {
-        if (atom->GetSpinMultiplicity() > 1)
-          spin += atom->GetSpinMultiplicity() - 1;
-      }
-    _totalSpin = spin;
-*/
     return (true);
   }
 
@@ -3185,7 +3187,10 @@ namespace OpenBabel
     connectivity to guess atom types and then filling empty valences
     with multiple bonds. It currently has a pass to detect some
     frequent functional groups. It still needs a pass to detect aromatic
-    rings to "clean up." */
+    rings to "clean up." 
+    AssignSpinMultiplicity(true) is called at the end of the function. The true
+    states that there are no implict hydrogens in the molecule.
+  */
   void OBMol::PerceiveBondOrders()
   {
     if (Empty())
@@ -3458,6 +3463,11 @@ namespace OpenBabel
     _flags &= (~(OB_ATOMTYPES_MOL));
     _flags &= (~(OB_IMPVAL_MOL));
     //  EndModify(true); // "nuke" perceived data
+
+    //Set _spinMultiplicity other than zero for atoms which are hydrogen
+    //deficient and which have implicit valency definitions (essentially the
+    //organic subset in SMILES). There are assumed to no implicit hydrogens.
+    AssignSpinMultiplicity(true);
   }
 
   void OBMol::Center()
