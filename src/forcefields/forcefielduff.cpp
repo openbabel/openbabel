@@ -580,6 +580,22 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(bond, _mol) {
       a = bond->GetBeginAtom();
       b = bond->GetEndAtom();
+
+      // skip this bond if the atoms are ignored 
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
+        continue;
+
+      // if there are any groups specified, check if the two bond atoms are in a single intraGroup
+      if (HasGroups()) {
+        bool validBond = false;
+        for (unsigned int i=0; i < _intraGroup.size(); ++i) {
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()))
+            validBond = true;
+        }
+        if (!validBond)
+          continue;
+      }
+ 
       bondorder = bond->GetBondOrder(); 
       if (bond->IsAromatic())
         bondorder = 1.5;
@@ -623,6 +639,22 @@ namespace OpenBabel
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
       
+      // skip this angle if the atoms are ignored 
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) || _constraints.IsIgnored(c->GetIdx()) ) 
+        continue;
+ 
+      // if there are any groups specified, check if the three angle atoms are in a single intraGroup
+      if (HasGroups()) {
+        bool validAngle = false;
+        for (unsigned int i=0; i < _intraGroup.size(); ++i) {
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
+              _intraGroup[i].BitIsOn(c->GetIdx()))
+            validAngle = true;
+        }
+        if (!validAngle)
+          continue;
+      }
+ 
       anglecalc.a = a;
       anglecalc.b = b;
       anglecalc.c = c;
@@ -687,6 +719,24 @@ namespace OpenBabel
       b = _mol.GetAtom((*t)[1] + 1);
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
+
+      // skip this torsion if the atoms are ignored 
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
+           _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
+        continue;
+ 
+      // if there are any groups specified, check if the four torsion atoms are in a single intraGroup
+      if (HasGroups()) {
+        bool validTorsion = false;
+        for (unsigned int i=0; i < _intraGroup.size(); ++i) {
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
+              _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
+            validTorsion = true;
+        }
+        if (!validTorsion)
+          continue;
+      }
+ 
       OBBond *bc = _mol.GetBond(b, c);
       torsiontype = bc->GetBondOrder(); 
       if (bc->IsAromatic())
@@ -791,7 +841,7 @@ namespace OpenBabel
       _torsioncalculations.push_back(torsioncalc);     
     }
     
-   //
+    //
     // OOP/Inversion Calculations
     //
     IF_OBFF_LOGLVL_LOW
@@ -867,7 +917,24 @@ namespace OpenBabel
 	  
       if ((a == NULL) || (c == NULL) || (d == NULL))
         continue;
-      
+ 
+      // skip this oop if the atoms are ignored 
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
+           _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
+        continue;
+ 
+      // if there are any groups specified, check if the four oop atoms are in a single intraGroup
+      if (HasGroups()) {
+        bool validOOP = false;
+        for (unsigned int i=0; i < _intraGroup.size(); ++i) {
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
+              _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
+            validOOP = true;
+        }
+        if (!validOOP)
+          continue;
+      }
+ 
       if (EQn(b->GetType(), "C_2", 3) || EQn(b->GetType(), "C_R", 3)) {
         oopcalc.c0 = 1.0;
         oopcalc.c1 = -1.0;
@@ -920,6 +987,29 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
 
+      // skip this vdw if the atoms are ignored 
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
+        continue;
+  
+      // if there are any groups specified, check if the two atoms are in a single _interGroup or if
+      // two two atoms are in one of the _interGroups pairs.
+      if (HasGroups()) {
+        bool validVDW = false;
+        for (unsigned int i=0; i < _interGroup.size(); ++i) {
+          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) 
+            validVDW = true;
+        }
+        for (unsigned int i=0; i < _interGroups.size(); ++i) {
+          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) 
+            validVDW = true;
+          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) 
+            validVDW = true;
+        }
+ 
+        if (!validVDW)
+          continue;
+      }
+ 
       if (a->IsConnected(b)) {
         continue;
       }
@@ -982,6 +1072,29 @@ namespace OpenBabel
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
       
+      // skip this ele if the atoms are ignored 
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
+        continue;
+  
+      // if there are any groups specified, check if the two atoms are in a single _interGroup or if
+      // two two atoms are in one of the _interGroups pairs.
+      if (HasGroups()) {
+        bool validEle = false;
+        for (unsigned int i=0; i < _interGroup.size(); ++i) {
+          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) 
+            validEle = true;
+        }
+        for (unsigned int i=0; i < _interGroups.size(); ++i) {
+          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) 
+            validEle = true;
+          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) 
+            validEle = true;
+        }
+ 
+        if (!validEle)
+          continue;
+      }
+ 
       if (a->IsConnected(b)) {
         continue;
       }

@@ -1,3 +1,16 @@
+2008-04-28  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefielduff.cpp: Added groups and Ignore.
+
+	* src/forcefields/forcefieldghemical.cpp: Added groups and Ignore.
+
+	* src/forcefields/forcefieldmmff94.cpp: OpenMP version of MMFF94. Does
+	not affect normal compilation. Only used with GCC options "-lgomp
+	-fopenmp".
+
+	* include/openbabel/forcefield.h: Changed _ncoords from int to
+	unsigned int. (Fixes some compiler warnings)
+
 2008-04-27 Chris Morley
 
 	* include/openbabel/mol.h, src/mol.cpp(AssignSpinMultiplicity):

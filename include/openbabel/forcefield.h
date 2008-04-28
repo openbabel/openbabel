@@ -1544,7 +1544,7 @@ namespace OpenBabel
     double 	_econv, _e_n1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     int 	_method, _cstep, _nsteps; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     double 	*_grad1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    int 	_ncoords; //!< Number of coordinates for conjugate gradients
+    unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
     int         _linesearch; //! LineSearch type
     // molecular dynamics variables
     double 	_timestep; //! Molecular dynamics time step in picoseconds
