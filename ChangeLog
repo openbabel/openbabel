@@ -1,3 +1,8 @@
+2008-04-28  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* libavogadro/src/extensions/gaussianinputdialog.cpp: Removed trailing
+	white space.
+
 2008-04-28  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefielduff.cpp: Added groups and Ignore.
@@ -57,6 +62,8 @@
 
 	* include/openbabel/obconversion.h: Moved the Formatpos typedef
 	outside of the class in order to preserve old API call.
+
+2008-04-21 Chris Morley
 
 	* include/openbabel/obconversion.h, src/obconversion.cpp:
 	Reinstate a version of OBConversion::GetNextFormat() to prevent
