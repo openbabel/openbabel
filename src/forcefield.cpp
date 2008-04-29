@@ -34,7 +34,7 @@ GNU General Public License for more details.
       - Fix Atom Z: working 
       - Distance: working
       - Angle: working
-      - Torsion: TODO 
+      - Torsion: working 
       - Chirality: TODO
 
       src/forcefields/forcefieldghemical.cpp
@@ -43,7 +43,6 @@ GNU General Public License for more details.
       - Energy terms: finished
       - Analytical gradients: finished
       - Validation: finished
-      - TODO: groups
 
       src/forcefields/forcefieldmmff94.cpp
       - Atom typing: done.
@@ -58,8 +57,6 @@ GNU General Public License for more details.
       - OOP: needs validation
       - Gradients: need OOP gradient
       - Validation in progress...
-      - TODO: vector3 -> pointers, SetupPointers
-      - TODO: groups
 
 
 ***********************************************************************/
@@ -422,7 +419,7 @@ namespace OpenBabel
       if ( (i->type == OBFF_CONST_DISTANCE) || (i->type == OBFF_CONST_ANGLE) || 
            (i->type == OBFF_CONST_TORSION) ) {
         vector3 da, db, dc, dd;
-        double delta, delta2, rab, theta, phi, sine, dE;
+        double delta, delta2, rab, theta, dE;
 	
         switch (i->type) {
         case OBFF_CONST_DISTANCE:
@@ -463,28 +460,23 @@ namespace OpenBabel
           if ((i->a == NULL) || ((i->b) == NULL) || ((i->c) == NULL) || ((i->d) == NULL))
             break;
 
-            da = (i->a)->GetVector();
-            db = (i->b)->GetVector();
-            dc = (i->c)->GetVector();
-            dd = (i->d)->GetVector();
+          da = (i->a)->GetVector();
+          db = (i->b)->GetVector();
+          dc = (i->c)->GetVector();
+          dd = (i->d)->GetVector();
 	
-            theta = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
-            if (IsNan(theta))
+          theta = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
+          if (IsNan(theta))
             theta = 1.0e-7;
             
-            delta = theta - i->constraint_value;
-
-            //cout << "theta = " << theta  << endl;
-            //cout << "delta = " << delta << endl;
-
-            delta2 = delta * delta;
-            constraint_energy +=  2.0 * delta2;
-            dE =  - 4.0 *  delta;
-
-            i->grada = dE * da;
-            i->gradb = dE * db;
-            i->gradc = dE * dc;
-            i->gradd = dE * dd;
+          theta = DEG_TO_RAD * (theta + 180.0 - i->constraint_value);
+          constraint_energy +=  0.001 * i->factor * (1.0 + cos(theta));
+          dE = 0.001 * i->factor * sin(theta);
+          
+          i->grada = dE * da;
+          i->gradb = dE * db;
+          i->gradc = dE * dc;
+          i->gradd = dE * dd;
           break;
         default:
           break;

@@ -1,3 +1,7 @@
+2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: Torsion constraints are working now.
+
 2008-04-28  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* libavogadro/src/extensions/gaussianinputdialog.cpp: Removed trailing
