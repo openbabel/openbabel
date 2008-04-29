@@ -71,7 +71,7 @@ set(openbabel_srcs
     tokenst.cpp
     transform.cpp
     typer.cpp
-#    formats/obmolecformat.cpp  # Not needed -- included in individual file formats
+    formats/obmolecformat.cpp  # Not needed -- included in individual file formats
 )
 
 if(BUILD_SHARED)

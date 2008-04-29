@@ -131,7 +131,7 @@ if(BUILD_SHARED)
 endif(BUILD_SHARED)
 
 foreach(format ${formats})
-  add_library(${format} ${BUILD_TYPE} ${format}.cpp obmolecformat.cpp
+  add_library(${format} ${BUILD_TYPE} ${format}.cpp #obmolecformat.cpp
     ${${format}_additional_sources}
     ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
