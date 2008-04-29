@@ -233,4 +233,20 @@ def double_array(mylist):
         c[i] = v
     return c
 %}
-        
+
+# Functions to set the log file to std::cout and std::cerr
+       
+%ignore OBForceField::SetLogFile(std::ostream *pos);
+%extend OpenBabel::OBForceField {
+  void SetLogToStdOut() 
+  {
+    self->SetLogFile(&std::cout);
+  }
+
+  void SetLogToStdErr() 
+  {
+    self->SetLogFile(&std::cerr);
+  }
+};    
+
+
