@@ -160,9 +160,11 @@ namespace OpenBabel
       //! \return The set of property flags defined for this bond.
       unsigned int     GetFlags()         const { return(_flags);      }
       //! \return The atom index for the end atom in this bond (from OBAtom::GetIdx()
-      unsigned int     GetBeginAtomIdx()  const { return(_bgn->GetIdx()); }
+      unsigned int     GetBeginAtomIdx()  const 
+        { return (_bgn ? _bgn->GetIdx() : 0); }
       //! \return The atom index for the end atom in this bond (from OBAtom::GetIdx()
-      unsigned int     GetEndAtomIdx()    const { return(_end->GetIdx()); }
+      unsigned int     GetEndAtomIdx()    const 
+        { return (_end ? _end->GetIdx() : 0); }
       //! \return The "beginning" atom for this bond
       OBAtom *GetBeginAtom()    { return(_bgn);    }
       const OBAtom *GetBeginAtom() const 
@@ -190,7 +192,10 @@ namespace OpenBabel
           index will always be returned **/
       unsigned int     GetNbrAtomIdx(OBAtom *ptr)
         {
-          return((ptr!=_bgn)?_bgn->GetIdx():_end->GetIdx());
+          if (ptr!=_bgn)
+            return (_bgn ? _bgn->GetIdx() : 0); 
+          else
+            return (_end ? _end->GetIdx() : 0); 
         }
       //@}
 

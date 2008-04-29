@@ -1,5 +1,11 @@
 2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* include/openbabel/bond.h: Add some defensive checks to
+	OBBond::GetBeginAtomIdx, OBBond::GetEndAtomIdx and
+	OBBond::GetNbrAtomIdx. (closes #1953657)
+
+2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* scripts/openbabel-python.i: Added OBForceField::SetLogToStdOut() and
 	OBForceField::SetLogToStdErr() to replace SetLogFile(std::ostream
 	*pos) in python.
