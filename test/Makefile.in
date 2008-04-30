@@ -342,6 +342,7 @@ sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = cmltest
@@ -393,9 +394,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  test/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  test/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  test/Makefile
+	  $(AUTOMAKE) --foreign  test/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

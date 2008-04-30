@@ -185,6 +185,7 @@ sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 libmathincludedir = $(includedir)/openbabel-2.0/openbabel/math
@@ -203,9 +204,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  include/openbabel/math/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  include/openbabel/math/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  include/openbabel/math/Makefile
+	  $(AUTOMAKE) --foreign  include/openbabel/math/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

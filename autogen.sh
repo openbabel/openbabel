@@ -2,19 +2,19 @@
 
 OSTYPE=`uname -s`
 
-AMFLAGS="--add-missing"
+AMFLAGS="--foreign --add-missing"
 if test "$OSTYPE" = "IRIX" -o "$OSTYPE" = "IRIX64"; then
    AMFLAGS=$AMFLAGS" --include-deps";
 fi
 
-echo "Running aclocal$AMVER"
 rm -fr autom4te.cache
-aclocal
 echo "Running libtoolize"
 libtoolize --force --copy
+echo "Running aclocal"
+aclocal
 echo "Running autoheader"
 autoheader
-echo "Running automake$AMVER"
+echo "Running automake"
 automake $AMFLAGS
 echo "Running autoconf"
 autoconf

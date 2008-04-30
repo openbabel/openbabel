@@ -1,4 +1,16 @@
-2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2008-04-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* autogen.sh, autoconf/: Add macros to work with new libtool 2.2.2.
+
+	* configure.in, configure, aclocal.m4:  */Makefile.in: Use above.
+
+	* src/obmolecformat.cpp: Move from src/formats to facilitate
+	external programs creating OBMolecFormat subclasses.
+
+	* src/formats/opendxformat.cpp: New format for OpenDX grids from
+	APBS.
+
+2008-04-30  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/mol.h: Add units to documentation for
 	GetTorsion/SetTorsion.
@@ -6,23 +18,15 @@
 	* tools/obrotate.cpp: Total review of the code. Thanks to Josep Maria
 	and Noel for pointing out the problems.
 
-2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
-
 	* src/mol.cpp: Added UnsetSSSRPerceived to all OBMol::Delete*()
 	functions. (not DeleteConformer(int i), doesn't change rings... )
-
-2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* scripts/python/examples/*.py: Added some force field examples. More
 	will follow.
 
-2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
-
 	* include/openbabel/bond.h: Add some defensive checks to
 	OBBond::GetBeginAtomIdx, OBBond::GetEndAtomIdx and
 	OBBond::GetNbrAtomIdx. (closes #1953657)
-
-2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* scripts/openbabel-python.i: Added OBForceField::SetLogToStdOut() and
 	OBForceField::SetLogToStdErr() to replace SetLogFile(std::ostream

@@ -29,7 +29,7 @@ libopenbabel_la_SOURCES = \
 		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
-		obutil.cpp \
+		obmolecformat.cpp obutil.cpp \
 		ops.cpp \
 		parsmart.cpp \
 		patty.cpp phmodel.cpp plugin.cpp \
