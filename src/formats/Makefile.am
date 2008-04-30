@@ -44,7 +44,7 @@ else
 libformats_la_LIBADD = -linchi
 endif
 libformats_la_SOURCES = \
-	APIInterface.cpp obmolecformat.cpp MCDLformat.cpp \
+	APIInterface.cpp MCDLformat.cpp \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	acrformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
@@ -97,7 +97,8 @@ pkglib_LTLIBRARIES = \
 	mopacformat.la msiformat.la msmsformat.la \
 	mpqcformat.la nwchemformat.la pcmodelformat.la \
 	pngformat.la pdbformat.la \
-	povrayformat.la pqrformat.la qchemformat.la reportformat.la \
+	povrayformat.la pqrformat.la opendxformat.la \
+	qchemformat.la reportformat.la \
 	shelxformat.la smilesformat.la thermoformat.la \
 	tinkerformat.la titleformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
@@ -110,124 +111,124 @@ endif
 APIInterface_la_SOURCES = APIInterface.cpp
 APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
-CSRformat_la_SOURCES = CSRformat.cpp obmolecformat.cpp
+CSRformat_la_SOURCES = CSRformat.cpp 
 CSRformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
-MCDLformat_la_SOURCES = MCDLformat.cpp obmolecformat.cpp
+MCDLformat_la_SOURCES = MCDLformat.cpp 
 MCDLformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
-PQSformat_la_SOURCES = PQSformat.cpp obmolecformat.cpp
+PQSformat_la_SOURCES = PQSformat.cpp 
 PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-acrformat_la_SOURCES = acrformat.cpp obmolecformat.cpp
+acrformat_la_SOURCES = acrformat.cpp 
 acrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-alchemyformat_la_SOURCES = alchemyformat.cpp obmolecformat.cpp
+alchemyformat_la_SOURCES = alchemyformat.cpp 
 alchemyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-amberformat_la_SOURCES = amberformat.cpp obmolecformat.cpp
+amberformat_la_SOURCES = amberformat.cpp 
 amberformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-balstformat_la_SOURCES = balstformat.cpp obmolecformat.cpp
+balstformat_la_SOURCES = balstformat.cpp 
 balstformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-bgfformat_la_SOURCES = bgfformat.cpp obmolecformat.cpp
+bgfformat_la_SOURCES = bgfformat.cpp 
 bgfformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-boxformat_la_SOURCES = boxformat.cpp obmolecformat.cpp
+boxformat_la_SOURCES = boxformat.cpp 
 boxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-cacaoformat_la_SOURCES = cacaoformat.cpp obmolecformat.cpp
+cacaoformat_la_SOURCES = cacaoformat.cpp 
 cacaoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-cacheformat_la_SOURCES = cacheformat.cpp obmolecformat.cpp
+cacheformat_la_SOURCES = cacheformat.cpp 
 cacheformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-cansmilesformat_la_SOURCES = cansmilesformat.cpp obmolecformat.cpp
+cansmilesformat_la_SOURCES = cansmilesformat.cpp 
 cansmilesformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-carformat_la_SOURCES = carformat.cpp obmolecformat.cpp
+carformat_la_SOURCES = carformat.cpp 
 carformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-cccformat_la_SOURCES = cccformat.cpp obmolecformat.cpp
+cccformat_la_SOURCES = cccformat.cpp 
 cccformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-chem3dformat_la_SOURCES = chem3dformat.cpp obmolecformat.cpp
+chem3dformat_la_SOURCES = chem3dformat.cpp 
 chem3dformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-chemdrawctformat_la_SOURCES = chemdrawct.cpp obmolecformat.cpp
+chemdrawctformat_la_SOURCES = chemdrawct.cpp 
 chemdrawctformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp obmolecformat.cpp
+chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp 
 chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-chemtoolformat_la_SOURCES = chemtoolformat.cpp obmolecformat.cpp
+chemtoolformat_la_SOURCES = chemtoolformat.cpp 
 chemtoolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-chemkinformat_la_SOURCES = chemkinformat.cpp obmolecformat.cpp
+chemkinformat_la_SOURCES = chemkinformat.cpp 
 chemkinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-cifformat_la_SOURCES = cifformat.cpp obmolecformat.cpp
+cifformat_la_SOURCES = cifformat.cpp 
 cifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 copyformat_la_SOURCES = copyformat.cpp 
 copyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-crkformat_la_SOURCES = crkformat.cpp obmolecformat.cpp
+crkformat_la_SOURCES = crkformat.cpp 
 crkformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-cssrformat_la_SOURCES = cssrformat.cpp obmolecformat.cpp
+cssrformat_la_SOURCES = cssrformat.cpp 
 cssrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-dmolformat_la_SOURCES = dmolformat.cpp obmolecformat.cpp
+dmolformat_la_SOURCES = dmolformat.cpp 
 dmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 fastsearchformat_la_SOURCES = fastsearchformat.cpp
 fastsearchformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-fastaformat_la_SOURCES = fastaformat.cpp obmolecformat.cpp
+fastaformat_la_SOURCES = fastaformat.cpp 
 fastaformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-fchkformat_la_SOURCES = fchkformat.cpp obmolecformat.cpp
+fchkformat_la_SOURCES = fchkformat.cpp 
 fchkformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-featformat_la_SOURCES = featformat.cpp obmolecformat.cpp
+featformat_la_SOURCES = featformat.cpp 
 featformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-fhformat_la_SOURCES = fhformat.cpp obmolecformat.cpp
+fhformat_la_SOURCES = fhformat.cpp 
 fhformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
-fingerprintformat_la_SOURCES = fingerprintformat.cpp obmolecformat.cpp
+fingerprintformat_la_SOURCES = fingerprintformat.cpp 
 fingerprintformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
-freefracformat_la_SOURCES = freefracformat.cpp obmolecformat.cpp
+freefracformat_la_SOURCES = freefracformat.cpp 
 freefracformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-gamessformat_la_SOURCES = gamessformat.cpp obmolecformat.cpp
+gamessformat_la_SOURCES = gamessformat.cpp 
 gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-gamessukformat_la_SOURCES = gamessukformat.cpp obmolecformat.cpp
+gamessukformat_la_SOURCES = gamessukformat.cpp 
 gamessukformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-gaussformat_la_SOURCES = gaussformat.cpp obmolecformat.cpp
+gaussformat_la_SOURCES = gaussformat.cpp 
 gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-gausscubeformat_la_SOURCES = gausscubeformat.cpp obmolecformat.cpp
+gausscubeformat_la_SOURCES = gausscubeformat.cpp 
 gausscubeformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-gausszmatformat_la_SOURCES = gausszmatformat.cpp obmolecformat.cpp
+gausszmatformat_la_SOURCES = gausszmatformat.cpp 
 gausszmatformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
-ghemicalformat_la_SOURCES = ghemicalformat.cpp obmolecformat.cpp
+ghemicalformat_la_SOURCES = ghemicalformat.cpp 
 ghemicalformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-gromos96format_la_SOURCES = gromos96format.cpp obmolecformat.cpp
+gromos96format_la_SOURCES = gromos96format.cpp 
 gromos96format_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-hinformat_la_SOURCES = hinformat.cpp obmolecformat.cpp
+hinformat_la_SOURCES = hinformat.cpp 
 hinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-inchiformat_la_SOURCES = inchiformat.cpp obmolecformat.cpp getinchi.cpp
+inchiformat_la_SOURCES = inchiformat.cpp  getinchi.cpp
 if BUILD_INCHI
 inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la inchi/libinchi.la
 else
@@ -235,64 +236,67 @@ inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 inchiformat_la_LIBADD = -linchi
 endif
 
-jaguarformat_la_SOURCES = jaguarformat.cpp obmolecformat.cpp
+jaguarformat_la_SOURCES = jaguarformat.cpp 
 jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-mdlformat_la_SOURCES = mdlformat.cpp obmolecformat.cpp ../alias.cpp
+mdlformat_la_SOURCES = mdlformat.cpp  ../alias.cpp
 mdlformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-mmcifformat_la_SOURCES = mmcifformat.cpp obmolecformat.cpp
+mmcifformat_la_SOURCES = mmcifformat.cpp 
 mmcifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-mmodformat_la_SOURCES = mmodformat.cpp obmolecformat.cpp
+mmodformat_la_SOURCES = mmodformat.cpp 
 mmodformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-mol2format_la_SOURCES = mol2format.cpp obmolecformat.cpp
+mol2format_la_SOURCES = mol2format.cpp 
 mol2format_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-molreportformat_la_SOURCES = molreport.cpp obmolecformat.cpp
+molreportformat_la_SOURCES = molreport.cpp 
 molreportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-moldenformat_la_SOURCES = moldenformat.cpp obmolecformat.cpp
+moldenformat_la_SOURCES = moldenformat.cpp 
 moldenformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-mopacformat_la_SOURCES = mopacformat.cpp obmolecformat.cpp
+mopacformat_la_SOURCES = mopacformat.cpp 
 mopacformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-mpdformat_la_SOURCES = mpdformat.cpp obmolecformat.cpp
+mpdformat_la_SOURCES = mpdformat.cpp 
 mpdformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-mpqcformat_la_SOURCES = mpqcformat.cpp obmolecformat.cpp
+mpqcformat_la_SOURCES = mpqcformat.cpp 
 mpqcformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-msiformat_la_SOURCES = msiformat.cpp obmolecformat.cpp
+msiformat_la_SOURCES = msiformat.cpp 
 msiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-msmsformat_la_SOURCES = msmsformat.cpp obmolecformat.cpp
+msmsformat_la_SOURCES = msmsformat.cpp 
 msmsformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-nwchemformat_la_SOURCES = nwchemformat.cpp obmolecformat.cpp
+nwchemformat_la_SOURCES = nwchemformat.cpp 
 nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-pcmodelformat_la_SOURCES = pcmodelformat.cpp obmolecformat.cpp
+pcmodelformat_la_SOURCES = pcmodelformat.cpp 
 pcmodelformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-pdbformat_la_SOURCES = pdbformat.cpp atomrecord.cpp obmolecformat.cpp
+pdbformat_la_SOURCES = pdbformat.cpp atomrecord.cpp 
 pdbformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-povrayformat_la_SOURCES = povrayformat.cpp obmolecformat.cpp
+povrayformat_la_SOURCES = povrayformat.cpp 
 povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-pqrformat_la_SOURCES = pqrformat.cpp atomrecord.cpp obmolecformat.cpp
+pqrformat_la_SOURCES = pqrformat.cpp atomrecord.cpp 
 pqrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-qchemformat_la_SOURCES = qchemformat.cpp obmolecformat.cpp
+opendxformat_la_SOURCES = opendxformat.cpp
+opendxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+qchemformat_la_SOURCES = qchemformat.cpp 
 qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-pngformat_la_SOURCES = pngformat.cpp obmolecformat.cpp
+pngformat_la_SOURCES = pngformat.cpp 
 pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-reportformat_la_SOURCES = reportformat.cpp obmolecformat.cpp
+reportformat_la_SOURCES = reportformat.cpp 
 reportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 rsmiformat_la_SOURCES = rsmiformat.cpp
@@ -301,40 +305,40 @@ rsmiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 rxnformat_la_SOURCES = rxnformat.cpp
 rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-shelxformat_la_SOURCES = shelxformat.cpp obmolecformat.cpp
+shelxformat_la_SOURCES = shelxformat.cpp 
 shelxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-smilesformat_la_SOURCES = smilesformat.cpp obmolecformat.cpp
+smilesformat_la_SOURCES = smilesformat.cpp 
 smilesformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-thermoformat_la_SOURCES = thermoformat.cpp obmolecformat.cpp
+thermoformat_la_SOURCES = thermoformat.cpp 
 thermoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-tinkerformat_la_SOURCES = tinkerformat.cpp obmolecformat.cpp
+tinkerformat_la_SOURCES = tinkerformat.cpp 
 tinkerformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-titleformat_la_SOURCES = titleformat.cpp obmolecformat.cpp
+titleformat_la_SOURCES = titleformat.cpp 
 titleformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-turbomoleformat_la_SOURCES = turbomoleformat.cpp obmolecformat.cpp
+turbomoleformat_la_SOURCES = turbomoleformat.cpp 
 turbomoleformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
-unichemformat_la_SOURCES = unichemformat.cpp obmolecformat.cpp
+unichemformat_la_SOURCES = unichemformat.cpp 
 unichemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-viewmolformat_la_SOURCES = viewmolformat.cpp obmolecformat.cpp
+viewmolformat_la_SOURCES = viewmolformat.cpp 
 viewmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-xedformat_la_SOURCES = xedformat.cpp obmolecformat.cpp
+xedformat_la_SOURCES = xedformat.cpp 
 xedformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-xyzformat_la_SOURCES = xyzformat.cpp obmolecformat.cpp
+xyzformat_la_SOURCES = xyzformat.cpp 
 xyzformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-yasaraformat_la_SOURCES = yasaraformat.cpp obmolecformat.cpp
+yasaraformat_la_SOURCES = yasaraformat.cpp 
 yasaraformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-zindoformat_la_SOURCES = zindoformat.cpp obmolecformat.cpp
+zindoformat_la_SOURCES = zindoformat.cpp 
 zindoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 endif

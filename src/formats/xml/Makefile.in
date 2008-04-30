@@ -51,39 +51,32 @@ am__installdirs = "$(DESTDIR)$(pkglibdir)"
 pkglibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(pkglib_LTLIBRARIES)
 cdxmlformat_la_LIBADD =
-am__cdxmlformat_la_SOURCES_DIST = cdxmlformat.cpp xml.cpp \
-	../obmolecformat.cpp
-@BUILD_SHARED_TRUE@am_cdxmlformat_la_OBJECTS = cdxmlformat.lo xml.lo \
-@BUILD_SHARED_TRUE@	obmolecformat.lo
+am__cdxmlformat_la_SOURCES_DIST = cdxmlformat.cpp xml.cpp
+@BUILD_SHARED_TRUE@am_cdxmlformat_la_OBJECTS = cdxmlformat.lo xml.lo
 cdxmlformat_la_OBJECTS = $(am_cdxmlformat_la_OBJECTS)
 cdxmlformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cdxmlformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_cdxmlformat_la_rpath = -rpath $(pkglibdir)
 cmlformat_la_LIBADD =
-am__cmlformat_la_SOURCES_DIST = cmlformat.cpp xml.cpp \
-	../obmolecformat.cpp
-@BUILD_SHARED_TRUE@am_cmlformat_la_OBJECTS = cmlformat.lo xml.lo \
-@BUILD_SHARED_TRUE@	obmolecformat.lo
+am__cmlformat_la_SOURCES_DIST = cmlformat.cpp xml.cpp
+@BUILD_SHARED_TRUE@am_cmlformat_la_OBJECTS = cmlformat.lo xml.lo
 cmlformat_la_OBJECTS = $(am_cmlformat_la_OBJECTS)
 cmlformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cmlformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_cmlformat_la_rpath = -rpath $(pkglibdir)
 pubchem_la_LIBADD =
-am__pubchem_la_SOURCES_DIST = pubchem.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@am_pubchem_la_OBJECTS = pubchem.lo xml.lo \
-@BUILD_SHARED_TRUE@	obmolecformat.lo
+am__pubchem_la_SOURCES_DIST = pubchem.cpp xml.cpp
+@BUILD_SHARED_TRUE@am_pubchem_la_OBJECTS = pubchem.lo xml.lo
 pubchem_la_OBJECTS = $(am_pubchem_la_OBJECTS)
 pubchem_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(pubchem_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_pubchem_la_rpath = -rpath $(pkglibdir)
 xmlformat_la_LIBADD =
-am__xmlformat_la_SOURCES_DIST = xmlformat.cpp xml.cpp \
-	../obmolecformat.cpp
-@BUILD_SHARED_TRUE@am_xmlformat_la_OBJECTS = xmlformat.lo xml.lo \
-@BUILD_SHARED_TRUE@	obmolecformat.lo
+am__xmlformat_la_SOURCES_DIST = xmlformat.cpp xml.cpp
+@BUILD_SHARED_TRUE@am_xmlformat_la_OBJECTS = xmlformat.lo xml.lo
 xmlformat_la_OBJECTS = $(am_xmlformat_la_OBJECTS)
 xmlformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -239,11 +232,12 @@ sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/include 
 AM_CPPFLAGS = @XML_CPPFLAGS@
-AM_LDFLAGS = @LIBS@ @XML_LIBS@
+AM_LDFLAGS = @LIBS@ @XML_LIBS@ ../../libopenbabel.la
 @USE_BOOST_FLAGS_TRUE@AM_CXXFLAGS = $(BOOST_CPPFLAGS)
 @BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
 @BUILD_SHARED_TRUE@	pubchem.la xmlformat.la cdxmlformat.la cmlformat.la
@@ -251,14 +245,14 @@ AM_LDFLAGS = @LIBS@ @XML_LIBS@
 #if HAVE_SHARED_POINTER
 #    pkglib_LTLIBRARIES += cmlreactformat.la
 #endif
-@BUILD_SHARED_TRUE@cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cdxmlformat_la_LDFLAGS = -module -avoid-version $(AM_LDFLAGS)
-@BUILD_SHARED_TRUE@cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
-@BUILD_SHARED_TRUE@pubchem_la_SOURCES = pubchem.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@pubchem_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
-@BUILD_SHARED_TRUE@xmlformat_la_SOURCES = xmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@xmlformat_la_LDFLAGS = -module -avoid-version  $(AM_LDFLAGS)
+@BUILD_SHARED_TRUE@cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp 
+@BUILD_SHARED_TRUE@cdxmlformat_la_LDFLAGS = -module -avoid-version -no-undefined $(AM_LDFLAGS)
+@BUILD_SHARED_TRUE@cmlformat_la_SOURCES = cmlformat.cpp xml.cpp 
+@BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version -no-undefined $(AM_LDFLAGS)
+@BUILD_SHARED_TRUE@pubchem_la_SOURCES = pubchem.cpp xml.cpp 
+@BUILD_SHARED_TRUE@pubchem_la_LDFLAGS = -module -avoid-version -no-undefined $(AM_LDFLAGS)
+@BUILD_SHARED_TRUE@xmlformat_la_SOURCES = xmlformat.cpp xml.cpp 
+@BUILD_SHARED_TRUE@xmlformat_la_LDFLAGS = -module -avoid-version -no-undefined $(AM_LDFLAGS)
 all: all-am
 
 .SUFFIXES:
@@ -272,9 +266,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/formats/xml/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/formats/xml/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  src/formats/xml/Makefile
+	  $(AUTOMAKE) --foreign  src/formats/xml/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -336,7 +330,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cdxmlformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmlformat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obmolecformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pubchem.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xml.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xmlformat.Plo@am__quote@
@@ -361,13 +354,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
-
-obmolecformat.lo: ../obmolecformat.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT obmolecformat.lo -MD -MP -MF $(DEPDIR)/obmolecformat.Tpo -c -o obmolecformat.lo `test -f '../obmolecformat.cpp' || echo '$(srcdir)/'`../obmolecformat.cpp
-@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/obmolecformat.Tpo $(DEPDIR)/obmolecformat.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../obmolecformat.cpp' object='obmolecformat.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o obmolecformat.lo `test -f '../obmolecformat.cpp' || echo '$(srcdir)/'`../obmolecformat.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
