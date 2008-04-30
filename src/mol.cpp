@@ -1679,6 +1679,7 @@ namespace OpenBabel
 
     DecrementMod();
 
+    UnsetSSSRPerceived();
     return(true);
   }
 
@@ -1718,6 +1719,7 @@ namespace OpenBabel
 
     DecrementMod();
 
+    UnsetSSSRPerceived();
     return(true);
   }
 
@@ -1742,7 +1744,7 @@ namespace OpenBabel
     DecrementMod();
 
     UnsetHydrogensAdded();
-
+    UnsetSSSRPerceived();
     return(true);
   }
 
@@ -1788,6 +1790,8 @@ namespace OpenBabel
     UnsetHydrogensAdded();
 
     DestroyAtom(atom);
+    
+    UnsetSSSRPerceived();
     return(true);
   }
 
@@ -2566,6 +2570,7 @@ namespace OpenBabel
 
     DestroyAtom(atom);
 
+    UnsetSSSRPerceived();
     return(true);
   }
 
@@ -2579,6 +2584,7 @@ namespace OpenBabel
 
     DestroyResidue(residue);
 
+    UnsetSSSRPerceived();
     return(true);
   }
 
@@ -2685,6 +2691,7 @@ namespace OpenBabel
 
     DestroyBond(bond);
 
+    UnsetSSSRPerceived();
     return(true);
   }
 

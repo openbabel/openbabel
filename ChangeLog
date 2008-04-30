@@ -1,5 +1,10 @@
 2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/mol.cpp: Added UnsetSSSRPerceived to all OBMol::Delete*()
+	functions. (not DeleteConformer(int i), doesn't change rings... )
+
+2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* scripts/python/examples/*.py: Added some force field examples. More
 	will follow.
 
