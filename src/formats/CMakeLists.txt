@@ -131,7 +131,7 @@ if(BUILD_SHARED)
 endif(BUILD_SHARED)
 
 foreach(format ${formats})
-  add_library(${format} ${BUILD_TYPE} ${format}.cpp #obmolecformat.cpp
+  add_library(${format} ${BUILD_TYPE} ${format}.cpp
     ${${format}_additional_sources}
     ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
@@ -146,8 +146,7 @@ foreach(format ${formats})
 endforeach(format)
 
 foreach(format ${xml_formats})
-  add_library(${format} ${BUILD_TYPE} xml/${format}.cpp xml/xml.cpp
-    obmolecformat.cpp)
+  add_library(${format} ${BUILD_TYPE} xml/${format}.cpp xml/xml.cpp)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION bin

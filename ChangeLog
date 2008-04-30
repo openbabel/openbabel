@@ -1,3 +1,8 @@
+2008-04-29  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/CMakeLists.txt, src/formats/CMakeLists.txt: Updates in order to
+	build after obmolecformat.cpp was moved.
+
 2008-04-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* autogen.sh, autoconf/: Add macros to work with new libtool 2.2.2.
