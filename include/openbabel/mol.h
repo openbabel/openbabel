@@ -273,11 +273,17 @@ namespace OpenBabel
     //! \warning Residue indexing may change. Use iterator methods instead.
     OBResidue   *GetResidue(int idx);
     std::vector<OBInternalCoord*> GetInternalCoord();
-    //! \return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
+    /*! \return the dihedral angle (in degrees) between the four atoms supplied a1-a2-a3-a4)
+     *  WARNING: SetTorsion takes an angle in radians while GetTorsion returns it
+     *  in degrees
+     */ 
     double       GetTorsion(int,int,int,int);
-    //! \return the dihedral angle between the four atoms @p a, @p b, @p c, and @p d)
+    /*! \return the dihedral angle (in degrees) between the four atoms @p a, @p b, @p c, and @p d)
+     *  WARNING: SetTorsion takes an angle in radians while GetTorsion returns it
+     *  in degrees
+     */ 
     double       GetTorsion(OBAtom* a,OBAtom* b,OBAtom* c,OBAtom* d);
-    //! \return the angle between the three atoms @p a, @p b and @p c
+    //! \return the angle (in degrees) between the three atoms @p a, @p b and @p c
     //!  (where  a-> b (vertex) -> c )
     double GetAngle(OBAtom* a, OBAtom* b, OBAtom* c);
     //! \return the stochoimetric formula (e.g., C4H6O)
@@ -448,8 +454,12 @@ namespace OpenBabel
     //! \return the center of the supplied conformer @p nconf
     //! \see Center() to actually center all conformers at the origin
     vector3 Center(int nconf);
-    //! Set the torsion defined by these atoms, rotating bonded neighbors
-    void SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double);
+    /*! Set the torsion defined by these atoms, rotating bonded neighbors
+     *  \par ang The torsion angle in radians
+     *  WARNING: SetTorsion takes an angle in radians while GetTorsion returns it
+     *  in degrees
+     */ 
+    void SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double ang);
     //@}
 
     //! \name Molecule utilities and perception methods
