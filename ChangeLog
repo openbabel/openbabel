@@ -1,5 +1,10 @@
 2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* scripts/python/examples/*.py: Added some force field examples. More
+	will follow.
+
+2008-04-29  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/bond.h: Add some defensive checks to
 	OBBond::GetBeginAtomIdx, OBBond::GetEndAtomIdx and
 	OBBond::GetNbrAtomIdx. (closes #1953657)
