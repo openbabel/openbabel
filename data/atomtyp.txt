@@ -67,8 +67,9 @@ IMPVAL	[$(NC=O)]		3
 IMPVAL	[$(N(~[OD1])~[OD1])]	3
 IMPVAL	[$([Nr0]C=[Nr0])]	3
 IMPVAL	[$(N=*)]		2
-#IMPVAL	[$([Nr0]=C[Nr0])]	3 
+#IMPVAL	[$([Nr0]=C[Nr0])]	3
 IMPVAL	[$([Nr0]=C[Nr0])]	2
+IMPVAL	[$([N+r0]=C[Nr0])]	3	# patch from Steve Constable
 IMPVAL  [$([#7D1-]=*)]          1
 IMPVAL	[n]			2
 IMPVAL	[n-]			2

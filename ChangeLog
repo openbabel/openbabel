@@ -1,3 +1,8 @@
+2008-05-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* data/atomtyp.*: Added amidine/guanidine IMPVAL rule (thanks to Steve
+	Constable for reporting & fixing the bug).
+
 2008-04-29  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/CMakeLists.txt, src/formats/CMakeLists.txt: Updates in order to
