@@ -124,9 +124,9 @@ install(FILES ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION in
 configure_file(${CMAKE_SOURCE_DIR}/openbabel-2.0.pc.cmake ${CMAKE_BINARY_DIR}/openbabel-2.0.pc @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB}/pkgconfig)
 
-include_directories(${CMAKE_SOURCE_DIR}/include
+include_directories(${CMAKE_BINARY_DIR}/include
                     ${CMAKE_SOURCE_DIR}/data
-                    ${CMAKE_BINARY_DIR}/include
+                    ${CMAKE_SOURCE_DIR}/include
 )
 
 add_subdirectory(include)
