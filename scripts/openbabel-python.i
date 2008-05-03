@@ -31,6 +31,7 @@
 #include <openbabel/forcefield.h>
 #include <openbabel/op.h>
 
+#include <openbabel/bitvec.h>
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/alias.h>
@@ -91,7 +92,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/griddata.h> // Needs to come after generic.h
 
 %import <openbabel/chains.h>
-%import <openbabel/bitvec.h>
+//# %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
 
 %include <openbabel/plugin.h>
@@ -114,6 +115,8 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/forcefield.h>
 
 %include <openbabel/op.h>
+
+%include <openbabel/bitvec.h>
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)

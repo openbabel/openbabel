@@ -1,3 +1,7 @@
+2008-05-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* scripts/openbabel-python.i: Add OBBitVec.
+
 2008-05-02  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* CMakeLists.txt: Fixed include directory order.
