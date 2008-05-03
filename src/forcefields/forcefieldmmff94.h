@@ -27,70 +27,70 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  class OBFFBondCalculationMMFF94 : public OBFFCalculation
+  class OBFFBondCalculationMMFF94 : public OBFFCalculation2
   {
     public:
-      double kb, r0, rab, delta;
       int bt; // bondtype (BTIJ)
+      double kb, r0, rab, delta;
       
-      void Compute(bool gradients = true);
+      template<bool> void Compute();
   };
   
-  class OBFFAngleCalculationMMFF94 : public OBFFCalculation
+  class OBFFAngleCalculationMMFF94 : public OBFFCalculation3 
   {
     public:
-      double ka, theta, theta0, delta;
       int at; //angletype (ATIJK)
       bool linear;
-      
-      void Compute(bool gradients = true);
+      double ka, theta, theta0, delta;
+ 
+      template<bool> void Compute();
   };
   
-  class OBFFStrBndCalculationMMFF94 : public OBFFCalculation
+  class OBFFStrBndCalculationMMFF94 : public OBFFCalculation3 
   {
     public:
+      int sbt; //strbndtype (SBTIJK)
       double kbaABC, kbaCBA, theta0, rab0, rbc0, delta_theta, delta_rab, delta_rbc;
       double theta, rab, rbc;
       double force_ab_a[3], force_ab_b[3], force_bc_b[3], force_bc_c[3]; 
       double force_abc_a[3], force_abc_b[3], force_abc_c[3];
-      int sbt; //strbndtype (SBTIJK)
-      
-      void Compute(bool gradients = true);
+ 
+      template<bool> void Compute();
   };
 
-  class OBFFTorsionCalculationMMFF94 : public OBFFCalculation
+  class OBFFTorsionCalculationMMFF94 : public OBFFCalculation4 
   {
     public:
-      double v1, v2, v3, tor, cosine;
       int tt; //torsiontype (TTIJKL)
+      double v1, v2, v3, tor, cosine;
       
-      void Compute(bool gradients = true);
+      template<bool> void Compute();
   };
 
- class OBFFOOPCalculationMMFF94 : public OBFFCalculation
+  class OBFFOOPCalculationMMFF94 : public OBFFCalculation4
   {
     public:
       double koop, angle;
-      
-      void Compute(bool gradients = true);
+     
+      template<bool> void Compute();
   };
 
-  class OBFFVDWCalculationMMFF94 : public OBFFCalculation
+  class OBFFVDWCalculationMMFF94 : public OBFFCalculation2
   {
     public:
+      int aDA, bDA; // hydrogen donor/acceptor (A=1, D=2, neither=0)
       double rab, epsilon, alpha_a, alpha_b, Na, Nb, Aa, Ab, Ga, Gb;
       double R_AB, R_AB7/*, erep, erep7, eattr*/;
-      int aDA, bDA; // hydrogen donor/acceptor (A=1, D=2, neither=0)
- 
-      void Compute(bool gradients = true);
+
+      template<bool> void Compute();
   };
 
-  class OBFFElectrostaticCalculationMMFF94 : public OBFFCalculation
+  class OBFFElectrostaticCalculationMMFF94 : public OBFFCalculation2
   {
     public:
       double qq, rab;
-      
-      void Compute(bool gradients = true);
+
+      template<bool> void Compute();
   };
 
   // Class OBForceFieldMMFF94
@@ -265,19 +265,47 @@ namespace OpenBabel
       //! Returns total energy
       double Energy(bool gradients = true);
       //! Returns the bond stretching energy
-      double E_Bond(bool gradients = true);
+      template<bool> double E_Bond();
+      double E_Bond(bool gradients = true) 
+      { 
+        return gradients ? E_Bond<true>() : E_Bond<false>(); 
+      }
       //! Returns the angle bending energy
-      double E_Angle(bool gradients = true);
+      template<bool> double E_Angle();
+      double E_Angle(bool gradients = true)
+      { 
+        return gradients ? E_Angle<true>() : E_Angle<false>(); 
+      }
       //! Returns the stretch-bend energy
-      double E_StrBnd(bool gradients = true);
+      template<bool> double E_StrBnd();
+      double E_StrBnd(bool gradients = true)
+      { 
+        return gradients ? E_StrBnd<true>() : E_StrBnd<false>(); 
+      }
       //! Returns the torsional energy
-      double E_Torsion(bool gradients = true);
+      template<bool> double E_Torsion();
+      double E_Torsion(bool gradients = true)
+      { 
+        return gradients ? E_Torsion<true>() : E_Torsion<false>(); 
+      }
       //! Returns the out-of-plane bending energy
-      double E_OOP(bool gradients = true);
+      template<bool> double E_OOP();
+      double E_OOP(bool gradients = true)
+      { 
+        return gradients ? E_OOP<true>() : E_OOP<false>(); 
+      }
       //! Returns the Van der Waals energy (Buckingham potential)
-      double E_VDW(bool gradients = true);
+      template<bool> double E_VDW();
+      double E_VDW(bool gradients = true)
+      { 
+        return gradients ? E_VDW<true>() : E_VDW<false>(); 
+      }
       //! Returns the dipole-dipole interaction energy
-      double E_Electrostatic(bool gradients = true);
+      template<bool> double E_Electrostatic();
+      double E_Electrostatic(bool gradients = true)
+      { 
+        return gradients ? E_Electrostatic<true>() : E_Electrostatic<false>(); 
+      }
       
       //! Validate MMFF94 using validation suite
       bool Validate();

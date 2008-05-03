@@ -34,7 +34,8 @@ using namespace std;
 
 namespace OpenBabel
 {
-  void OBFFBondCalculationUFF::Compute(bool gradients)
+  template<bool gradients>
+  void OBFFBondCalculationUFF::Compute()
   {
     vector3 vab, da, db;
     double delta2, dE;
@@ -59,7 +60,8 @@ namespace OpenBabel
     }
   }
   
-  double OBForceFieldUFF::E_Bond(bool gradients)
+  template<bool gradients>
+  double OBForceFieldUFF::E_Bond()
   {
     vector<OBFFBondCalculationUFF>::iterator i;
     double energy = 0.0;
@@ -73,8 +75,8 @@ namespace OpenBabel
  
     for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i) {
 
-      i->Compute(gradients);
-      energy += i->GetEnergy();
+      i->Compute<gradients>();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -96,7 +98,8 @@ namespace OpenBabel
     return energy;
   }
   
-  void OBFFAngleCalculationUFF::Compute(bool gradients)
+  template<bool gradients>
+  void OBFFAngleCalculationUFF::Compute()
   {
     vector3 da, db, dc;
 		double dE;
@@ -160,7 +163,8 @@ namespace OpenBabel
     }
   }
   
-  double OBForceFieldUFF::E_Angle(bool gradients)
+  template<bool gradients>
+  double OBForceFieldUFF::E_Angle()
   {
     vector<OBFFAngleCalculationUFF>::iterator i;
     double energy = 0.0;
@@ -174,8 +178,8 @@ namespace OpenBabel
        
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); ++i) {
 
-      i->Compute(gradients);
-      energy += i->GetEnergy();
+      i->Compute<gradients>();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -197,7 +201,8 @@ namespace OpenBabel
     return energy;
   }
   
-  void OBFFTorsionCalculationUFF::Compute(bool gradients)
+  template<bool gradients>
+  void OBFFTorsionCalculationUFF::Compute()
   {
     vector3 da, db, dc, dd;
     double cosine;
@@ -246,7 +251,8 @@ namespace OpenBabel
     }
   }
   
-  double OBForceFieldUFF::E_Torsion(bool gradients) 
+  template<bool gradients>
+  double OBForceFieldUFF::E_Torsion() 
   {
     vector<OBFFTorsionCalculationUFF>::iterator i;
     double energy = 0.0;
@@ -260,8 +266,8 @@ namespace OpenBabel
     
     for (i = _torsioncalculations.begin(); i != _torsioncalculations.end(); ++i) {
 
-      i->Compute(gradients);
-      energy += i->GetEnergy();
+      i->Compute<gradients>();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -294,7 +300,8 @@ namespace OpenBabel
   //   /  
   //  c
   */
-  void OBFFOOPCalculationUFF::Compute(bool gradients)
+  template<bool gradients>
+  void OBFFOOPCalculationUFF::Compute()
   {
     vector3 da, db, dc, dd;
     double dE;
@@ -328,7 +335,8 @@ namespace OpenBabel
     energy = koop * (c0 + c1 * cos(angle) + c2 * cos(2.0*angle));
   }
 
-  double OBForceFieldUFF::E_OOP(bool gradients) 
+  template<bool gradients>
+  double OBForceFieldUFF::E_OOP() 
   {
      vector<OBFFOOPCalculationUFF>::iterator i;
      double energy = 0.0;
@@ -341,8 +349,8 @@ namespace OpenBabel
      }
 
      for (i = _oopcalculations.begin(); i != _oopcalculations.end(); ++i) {
-      i->Compute(gradients);
-      energy += i->GetEnergy();
+      i->Compute<gradients>();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -365,7 +373,8 @@ namespace OpenBabel
      return energy;
   }
 
-  void OBFFVDWCalculationUFF::Compute(bool gradients)
+  template<bool gradients>
+  void OBFFVDWCalculationUFF::Compute()
   {
     vector3 da, db;
     double term6, term12, dE, term7, term13;
@@ -399,7 +408,8 @@ namespace OpenBabel
     }
   }
   
-  double OBForceFieldUFF::E_VDW(bool gradients)
+  template<bool gradients>
+  double OBForceFieldUFF::E_VDW()
   {
     vector<OBFFVDWCalculationUFF>::iterator i;
     double energy = 0.0;
@@ -419,8 +429,8 @@ namespace OpenBabel
         if (!_vdwpairs.BitIsSet(j)) 
           continue;
      
-      i->Compute(gradients);
-      energy += i->GetEnergy();
+      i->Compute<gradients>();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -442,7 +452,8 @@ namespace OpenBabel
     return energy;
   }
 
-  void OBFFElectrostaticCalculationUFF::Compute(bool gradients)
+  template<bool gradients>
+  void OBFFElectrostaticCalculationUFF::Compute()
   {
     vector3 da, db;
     double dE, rab2;
@@ -469,7 +480,8 @@ namespace OpenBabel
     } 
   }
   
-  double OBForceFieldUFF::E_Electrostatic(bool gradients)
+  template<bool gradients>
+  double OBForceFieldUFF::E_Electrostatic()
   {
     vector<OBFFElectrostaticCalculationUFF>::iterator i;
     double energy = 0.0;
@@ -489,8 +501,8 @@ namespace OpenBabel
         if (!_elepairs.BitIsSet(j)) 
           continue;
       
-      i->Compute(gradients);
-      energy += i->GetEnergy();
+      i->Compute<gradients>();
+      energy += i->energy;
       
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
@@ -1259,14 +1271,21 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_MEDIUM
       OBFFLog("\nE N E R G Y\n\n");
     
-    if (gradients)
+    if (gradients) {
       ClearGradients();
+      energy  = E_Bond<true>();
+      energy += E_Angle<true>();
+      energy += E_Torsion<true>();
+      energy += E_OOP<true>();
+      energy += E_VDW<true>();
+    } else {
+      energy  = E_Bond<false>();
+      energy += E_Angle<false>();
+      energy += E_Torsion<false>();
+      energy += E_OOP<false>();
+      energy += E_VDW<false>();
+    }
 
-    energy = E_Bond(gradients);
-    energy += E_Angle(gradients);
-    energy += E_Torsion(gradients);
-    energy += E_OOP(gradients);
-    energy += E_VDW(gradients);
     // The electrostatic term, by default is 0.0
     // You will need to call SetupEletrostatics if you want it
     // energy += E_Electrostatic(gradients);

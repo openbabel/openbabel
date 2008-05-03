@@ -26,48 +26,48 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  class OBFFBondCalculationGhemical : public OBFFCalculation
+  class OBFFBondCalculationGhemical : public OBFFCalculation2
   {
     public:
+      int bt; // bondtype (BTIJ)
       double kb, r0, rab, delta;
-      int bt; // bondtype
       
-      void Compute(bool gradients = true);
+      template<bool> void Compute();
   };
   
-  class OBFFAngleCalculationGhemical : public OBFFCalculation
+  class OBFFAngleCalculationGhemical : public OBFFCalculation3
   {
     public:
-      double ka, theta0, theta, delta;
-      
-      void Compute(bool gradients = true);
+      double ka, theta, theta0, delta;
+ 
+      template<bool> void Compute();
   };
   
-  class OBFFTorsionCalculationGhemical : public OBFFCalculation
+  class OBFFTorsionCalculationGhemical : public OBFFCalculation4
   {
     public:
+      int tt; //torsiontype (TTIJKL)
       double V, s, n, tor;
       double k1, k2, k3;
-      int tt; //torsiontype
-      
-      void Compute(bool gradients = true);
+ 
+      template<bool> void Compute();
   };
 
-  class OBFFVDWCalculationGhemical : public OBFFCalculation
+  class OBFFVDWCalculationGhemical : public OBFFCalculation2
   {
     public:
-      double ka, Ra, kb, Rb, kab, rab;
       bool is14, samering;
+      double ka, Ra, kb, Rb, kab, rab;
 
-      void Compute(bool gradients = true);
+      template<bool> void Compute();
   };
 
-  class OBFFElectrostaticCalculationGhemical : public OBFFCalculation
+  class OBFFElectrostaticCalculationGhemical : public OBFFCalculation2
   {
     public:
       double qq, rab;
-      
-      void Compute(bool gradients = true);
+
+      template<bool> void Compute();
   };
 
   // Class OBForceFieldGhemical
@@ -144,16 +144,36 @@ namespace OpenBabel
       
       //! \return total energy
       double Energy(bool gradients = true);
-     //! \return the bond stretching energy
-      double E_Bond(bool gradients = true);
-      //! \return the angle bending energy
-      double E_Angle(bool gradients = true);
-      //! \return the torsional energy
-      double E_Torsion(bool gradients = true);
-      //! \return energy due to Van der Waals interactions
-      double E_VDW(bool gradients = true);
-      //! \return energy due to electrostatic interactions
-      double E_Electrostatic(bool gradients = true);
+      //! Returns the bond stretching energy
+      template<bool> double E_Bond();
+      double E_Bond(bool gradients = true) 
+      { 
+        return gradients ? E_Bond<true>() : E_Bond<false>(); 
+      }
+      //! Returns the angle bending energy
+      template<bool> double E_Angle();
+      double E_Angle(bool gradients = true)
+      { 
+        return gradients ? E_Angle<true>() : E_Angle<false>(); 
+      }
+      //! Returns the torsional energy
+      template<bool> double E_Torsion();
+      double E_Torsion(bool gradients = true)
+      { 
+        return gradients ? E_Torsion<true>() : E_Torsion<false>(); 
+      }
+      //! Returns the Van der Waals energy (Buckingham potential)
+      template<bool> double E_VDW();
+      double E_VDW(bool gradients = true)
+      { 
+        return gradients ? E_VDW<true>() : E_VDW<false>(); 
+      }
+      //! Returns the dipole-dipole interaction energy
+      template<bool> double E_Electrostatic();
+      double E_Electrostatic(bool gradients = true)
+      { 
+        return gradients ? E_Electrostatic<true>() : E_Electrostatic<false>(); 
+      }
       
       //! Compare and print the numerical and analytical gradients
       bool ValidateGradients();

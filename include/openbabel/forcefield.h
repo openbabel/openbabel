@@ -136,71 +136,86 @@ namespace OpenBabel
   // specific class introductions in forcefieldYYYY.cpp (for YYYY calculations)
   //! \class OBFFCalculation forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to hold energy and gradient calculations on specific force fields
-  class OBFPRT OBFFCalculation
+  class OBFPRT OBFFCalculation2
   {
   public:
     //! Used to store the energy for this OBFFCalculation
     double energy;
     //! Used to store the atoms for this OBFFCalculation
-    OBAtom *a, *b, *c, *d;
+    OBAtom *a, *b;
     //! Used to store the index of atoms for this OBFFCalculation
-    int idx_a, idx_b, idx_c, idx_d;
+    int idx_a, idx_b;
     //! Pointer to atom coordinates as double[3]
-    double *pos_a, *pos_b, *pos_c, *pos_d;
+    double *pos_a, *pos_b;
     //! Pointer to atom forces
-    double force_a[3], force_b[3], force_c[3], force_d[3];
+    double force_a[3], force_b[3];
       
-    //! Constructor
-    OBFFCalculation() 
-      {
-        a = b = c = d = NULL;
-        pos_a = pos_b = pos_c = pos_d = NULL;
-        // Loop unrolling and/or vectorization will take care of this
-        for (unsigned int i = 0; i < 3; ++i) {
-          force_a[i] = 0.0;
-          force_b[i] = 0.0;
-          force_c[i] = 0.0;
-          force_d[i] = 0.0;
-        }
-        energy = 0.0;
-      }
-    //! Destructor
-    virtual ~OBFFCalculation()
-      {
-      }
-      
-    //! Compute the energy and gradients for this OBFFCalculation
-    virtual void Compute(bool = true) 
-    {
-    }
-    //! \return Energy for this OBFFCalculation (call Compute() first)
-    virtual double GetEnergy() 
-    {
-      return energy; 
-    }
-      
-    /*! \return Setup pointers to atom positions and forces (To be called 
-     *  while setting up calculations). Sets optimized to true.
-     */
-    void SetupPointers() 
+    //! \return Setup pointers to atom positions and forces (To be called 
+    //!  while setting up calculations). Sets optimized to true.
+    virtual void SetupPointers() 
     {
       if (!a || !b) return;
       pos_a = a->GetCoordinate();
       idx_a = a->GetIdx();
       pos_b = b->GetCoordinate();
       idx_b = b->GetIdx();
-	
-      if (!c) return;
+    }
+  };
+ 
+  class OBFPRT OBFFCalculation3: public OBFFCalculation2
+  {
+  public:
+    //! Used to store the atoms for this OBFFCalculation
+    OBAtom *c;
+    //! Used to store the index of atoms for this OBFFCalculation
+    int idx_c;
+    //! Pointer to atom coordinates as double[3]
+    double *pos_c;
+    //! Pointer to atom forces
+    double force_c[3];
+      
+    //! \return Setup pointers to atom positions and forces (To be called 
+    //!  while setting up calculations). Sets optimized to true.
+    virtual void SetupPointers() 
+    {
+      if (!a || !b || !c) return;
+      pos_a = a->GetCoordinate();
+      idx_a = a->GetIdx();
+      pos_b = b->GetCoordinate();
+      idx_b = b->GetIdx();
       pos_c = c->GetCoordinate();
       idx_c = c->GetIdx();
-        
-      if (!d) return;
+    }
+  };
+
+  class OBFPRT OBFFCalculation4: public OBFFCalculation3
+  {
+  public:
+    //! Used to store the atoms for this OBFFCalculation
+    OBAtom *d;
+    //! Used to store the index of atoms for this OBFFCalculation
+    int idx_d;
+    //! Pointer to atom coordinates as double[3]
+    double *pos_d;
+    //! Pointer to atom forces
+    double force_d[3];
+      
+    //! \return Setup pointers to atom positions and forces (To be called 
+    //!  while setting up calculations). Sets optimized to true.
+    void SetupPointers() 
+    {
+      if (!a || !b || !c || !d) return;
+      pos_a = a->GetCoordinate();
+      idx_a = a->GetIdx();
+      pos_b = b->GetCoordinate();
+      idx_b = b->GetIdx();
+      pos_c = c->GetCoordinate();
+      idx_c = c->GetIdx();
       pos_d = d->GetCoordinate();
       idx_d = d->GetIdx();
     }
- 
   };
-  
+
   //! \class OBFFConstraint forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to hold constraints
   class OBFPRT OBFFConstraint

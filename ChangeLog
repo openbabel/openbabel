@@ -1,3 +1,18 @@
+2008-05-03  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h, src/forcefields/forcefieldghemical.*,
+	src/forcefields/forcefielduff.*,src/forcefields/forcefieldmmff94.*:
+	OBFFCalculation has been replaced by OBFFCalculation2,
+	OBFFCalculation3 and OBFFCalculation4. This makes the sizeof() smaller
+	and improves performance.
+	The OBFFCalculation::Compute(bool gradients) is now a template <bool
+	gradients> Compute() function. The compiler will generate a Compute
+	function with gradients and one without gradients. The E_Bond, ...
+	functions are also template functions now. The old functions are still
+	available as a wrapper for backwards compatibility. The template
+	function is initialized in OBForceField::Energy(bool gradients) by
+	calling E_Bond<true>() or E_Bond<false>().
+
 2008-05-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* scripts/openbabel-python.i: Add OBBitVec.

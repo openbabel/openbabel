@@ -27,61 +27,64 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  class OBFFBondCalculationUFF : public OBFFCalculation
+  class OBFFBondCalculationUFF : public OBFFCalculation2
   {
-  public:
-    double kb, r0, rab, delta;
-    double bt; // bond order (e.g., 1.41 for amide)
-      
-    void Compute(bool gradients = true);
+    public:
+      double bt; // bond order (e.g., 1.41 for amide)
+      double kb, r0, rab, delta;
+ 
+      template<bool> void Compute();
   };
   
-  class OBFFAngleCalculationUFF : public OBFFCalculation
+  class OBFFAngleCalculationUFF : public OBFFCalculation3 
   {
-  public:
-    double ka, theta0, theta, delta;
-    double c0, c1, c2;
-    double zi, zk, rij, rjk, rik;
-    double cosT0; // cos theta0
-    int coord, n;
-
-    void Compute(bool gradients = true);
+    public:
+      int at; //angletype (ATIJK)
+      bool linear;
+      double ka, theta0, theta, delta;
+      double c0, c1, c2;
+      double zi, zk, rij, rjk, rik;
+      double cosT0; // cos theta0
+      int coord, n;
+ 
+      template<bool> void Compute();
   };
   
-  class OBFFTorsionCalculationUFF : public OBFFCalculation
+  class OBFFTorsionCalculationUFF : public OBFFCalculation4 
   {
-  public:
-    double V, tor, cosNPhi0;
-    int n;
-    double tt; //torsiontype (i.e. b-c bond order)
+    public:
+      int n;
+      double tt; //torsiontype (i.e. b-c bond order)
+      double V, tor, cosNPhi0;
       
-    void Compute(bool gradients = true);
+      template<bool> void Compute();
+ 
   };
 
-  class OBFFOOPCalculationUFF : public OBFFCalculation
+  class OBFFOOPCalculationUFF : public OBFFCalculation4 
   {
-  public:
-    double koop, angle;
-    double c0, c1, c2;
-      
-    void Compute(bool gradients = true);
+    public:
+      double koop, angle;
+      double c0, c1, c2;
+     
+      template<bool> void Compute();
   };  
   
-  class OBFFVDWCalculationUFF : public OBFFCalculation
+  class OBFFVDWCalculationUFF : public OBFFCalculation2
   {
-  public:
-    double ka, Ra, kb, Rb, kab, rab;
-    bool is14, samering;
-
-    void Compute(bool gradients = true);
+    public:
+      bool is14, samering;
+      double ka, Ra, kb, Rb, kab, rab;
+ 
+      template<bool> void Compute();
   };
 
-  class OBFFElectrostaticCalculationUFF : public OBFFCalculation
+  class OBFFElectrostaticCalculationUFF : public OBFFCalculation2 
   {
-  public:
-    double qq, rab;
-      
-    void Compute(bool gradients = true);
+    public:
+      double qq, rab;
+
+      template<bool> void Compute();
   };
 
   // Class OBForceFieldUFF
@@ -152,18 +155,42 @@ namespace OpenBabel
     //! \return total energy
     double Energy(bool gradients = true);
     //! \return the bond stretching energy
-    double E_Bond(bool gradients = true);
-    //! \return the angle bending energy
-    double E_Angle(bool gradients = true);
-    //! \return the torsional energy
-    double E_Torsion(bool gradients = true);
-    //! \return the out-of-plane (inversion) energy
-    double E_OOP(bool gradients = true);
-    //! \return energy due to Van der Waals interactions
-    double E_VDW(bool gradients = true);
-    //! \return energy due to electrostatic interactions
-    double E_Electrostatic(bool gradients = true);
-      
+    template<bool> double E_Bond();
+    double E_Bond(bool gradients = true) 
+    { 
+      return gradients ? E_Bond<true>() : E_Bond<false>(); 
+    }
+    //! Returns the angle bending energy
+    template<bool> double E_Angle();
+    double E_Angle(bool gradients = true)
+    { 
+      return gradients ? E_Angle<true>() : E_Angle<false>(); 
+    }
+    //! Returns the torsional energy
+    template<bool> double E_Torsion();
+    double E_Torsion(bool gradients = true)
+    { 
+      return gradients ? E_Torsion<true>() : E_Torsion<false>(); 
+    }
+    //! Returns the out-of-plane bending energy
+    template<bool> double E_OOP();
+    double E_OOP(bool gradients = true)
+    { 
+      return gradients ? E_OOP<true>() : E_OOP<false>(); 
+    }
+    //! Returns the Van der Waals energy (Buckingham potential)
+    template<bool> double E_VDW();
+    double E_VDW(bool gradients = true)
+    { 
+      return gradients ? E_VDW<true>() : E_VDW<false>(); 
+    }
+    //! Returns the dipole-dipole interaction energy
+    template<bool> double E_Electrostatic();
+    double E_Electrostatic(bool gradients = true)
+    { 
+      return gradients ? E_Electrostatic<true>() : E_Electrostatic<false>(); 
+    }
+ 
     //! Compare and print the numerical and analytical gradients
     bool ValidateGradients();
 

@@ -49,19 +49,27 @@ namespace OpenBabel
   {
     double energy;
     
-    if (gradients)
-      ClearGradients();
-
     IF_OBFF_LOGLVL_MEDIUM
       OBFFLog("\nE N E R G Y\n\n");
 
-    energy = E_Bond(gradients);
-    energy += E_Angle(gradients);
-    energy += E_StrBnd(gradients);
-    energy += E_Torsion(gradients);
-    energy += E_OOP(gradients);
-    energy += E_VDW(gradients);
-    energy += E_Electrostatic(gradients);
+    if (gradients) {
+      ClearGradients();
+      energy  = E_Bond<true>();
+      energy += E_Angle<true>();
+      energy += E_StrBnd<true>();
+      energy += E_Torsion<true>();
+      energy += E_OOP<true>();
+      energy += E_VDW<true>();
+      energy += E_Electrostatic<true>();
+    } else {
+      energy  = E_Bond<false>();
+      energy += E_Angle<false>();
+      energy += E_StrBnd<false>();
+      energy += E_Torsion<false>();
+      energy += E_OOP<false>();
+      energy += E_VDW<false>();
+      energy += E_Electrostatic<false>();
+    }
 
     IF_OBFF_LOGLVL_MEDIUM {
       sprintf(_logbuf, "\nTOTAL ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
@@ -84,7 +92,8 @@ namespace OpenBabel
   //
   // cs		cubic stretch constant = -2 A^(-1)
   //
-  inline void OBFFBondCalculationMMFF94::Compute(bool gradients)
+  template<bool gradients>
+  inline void OBFFBondCalculationMMFF94::Compute()
   {
     double delta2;
     
@@ -103,10 +112,11 @@ namespace OpenBabel
       delta2 = delta * delta;
     }
     
-    energy = 143.9325 * 0.5 * kb * delta2 * (1.0 - 2.0 * delta + 7.0/3.0 * delta2);
+    energy = kb * delta2 * (1.0 - 2.0 * delta + 7.0/3.0 * delta2);
   }
-  
-  double OBForceFieldMMFF94::E_Bond(bool gradients)
+ 
+  template<bool gradients>
+  double OBForceFieldMMFF94::E_Bond()
   {
     double energy = 0.0;
 
@@ -121,7 +131,7 @@ namespace OpenBabel
     #pragma omp parallel for reduction(+:energy)
     #endif
     for (int i = 0; i < _bondcalculations.size(); ++i) {
-      _bondcalculations[i].Compute(gradients);
+      _bondcalculations[i].Compute<gradients>();
       energy += _bondcalculations[i].energy;
       
       #ifndef _OPENMP
@@ -135,7 +145,8 @@ namespace OpenBabel
         sprintf(_logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
                 atoi(_bondcalculations[i].a->GetType()), atoi(_bondcalculations[i].b->GetType()), 
                 _bondcalculations[i].bt, _bondcalculations[i].rab, _bondcalculations[i].r0, 
-                _bondcalculations[i].kb, _bondcalculations[i].delta, _bondcalculations[i].energy);
+                _bondcalculations[i].kb, _bondcalculations[i].delta, 
+                143.9325 * 0.5 * _bondcalculations[i].energy);
         OBFFLog(_logbuf);
       }
     }
@@ -150,11 +161,11 @@ namespace OpenBabel
     #endif
  
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL BOND STRETCHING ENERGY = %8.5f %s\n",  energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL BOND STRETCHING ENERGY = %8.5f %s\n",  143.9325 * 0.5 * energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
     
-    return energy;
+    return (143.9325 * 0.5 * energy);
   }
   
   // 
@@ -170,7 +181,8 @@ namespace OpenBabel
   //
   // cs		cubic bend constant = -0.007 deg^-1 = -0.4 rad^-1
   //
-  inline void OBFFAngleCalculationMMFF94::Compute(bool gradients) 
+  template<bool gradients>
+  inline void OBFFAngleCalculationMMFF94::Compute() 
   {
     double delta2, dE;
  
@@ -213,7 +225,8 @@ namespace OpenBabel
   
   }
  
-  double OBForceFieldMMFF94::E_Angle(bool gradients)
+  template<bool gradients>
+  double OBForceFieldMMFF94::E_Angle()
   {
     double energy = 0.0;
  
@@ -229,7 +242,7 @@ namespace OpenBabel
     #endif
     for (int i = 0; i < _anglecalculations.size(); ++i) {
 
-      _anglecalculations[i].Compute(gradients);
+      _anglecalculations[i].Compute<gradients>();
       energy += _anglecalculations[i].energy;
       
       #ifndef _OPENMP
@@ -242,9 +255,11 @@ namespace OpenBabel
       
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
-                atoi(_anglecalculations[i].a->GetType()), atoi(_anglecalculations[i].b->GetType()), atoi(_anglecalculations[i].c->GetType()), 
-                _anglecalculations[i].at, _anglecalculations[i].theta, _anglecalculations[i].theta0, 
-                _anglecalculations[i].ka, _anglecalculations[i].delta, _anglecalculations[i].energy);
+                atoi(_anglecalculations[i].a->GetType()), atoi(_anglecalculations[i].b->GetType()), 
+                atoi(_anglecalculations[i].c->GetType()), _anglecalculations[i].at, 
+                _anglecalculations[i].theta, _anglecalculations[i].theta0, 
+                _anglecalculations[i].ka, _anglecalculations[i].delta, 
+                _anglecalculations[i].energy);
         OBFFLog(_logbuf);
       }
     }
@@ -278,9 +293,9 @@ namespace OpenBabel
   // /\r_xx 	see above
   // /\0_ijk 	see above
   //
-  inline void OBFFStrBndCalculationMMFF94::Compute(bool gradients)
+  template<bool gradients>
+  inline void OBFFStrBndCalculationMMFF94::Compute()
   {
-    vector3 rab_da, rab_db, rbc_db, rbc_dc, theta_da, theta_db, theta_dc;
     
     if (gradients) {
       theta = OBForceField::VectorAngleDerivative(pos_a, pos_b, pos_c, 
@@ -301,7 +316,7 @@ namespace OpenBabel
     delta_rbc = rbc - rbc0;
     const double factor = RAD_TO_DEG * (kbaABC * delta_rab + kbaCBA * delta_rbc);
 
-    energy = 2.51210 * DEG_TO_RAD * factor * delta_theta;
+    energy = DEG_TO_RAD * factor * delta_theta;
     if (gradients) {
       //grada = 2.51210 * (kbaABC * rab_da * delta_theta + RAD_TO_DEG * theta_da * (kbaABC * delta_rab + kbaCBA * delta_rbc));
       OBForceField::VectorSelfMultiply(force_ab_a, (kbaABC*delta_theta));
@@ -319,7 +334,8 @@ namespace OpenBabel
     }
   }
   
-  double OBForceFieldMMFF94::E_StrBnd(bool gradients) 
+  template<bool gradients>
+  double OBForceFieldMMFF94::E_StrBnd() 
   {
     double energy = 0.0;
     
@@ -335,7 +351,7 @@ namespace OpenBabel
     #endif
     for (int i = 0; i < _strbndcalculations.size(); ++i) {
 
-      _strbndcalculations[i].Compute(gradients);
+      _strbndcalculations[i].Compute<gradients>();
       energy += _strbndcalculations[i].energy;
       
       #ifndef _OPENMP
@@ -348,9 +364,11 @@ namespace OpenBabel
  
       IF_OBFF_LOGLVL_HIGH {
         sprintf(_logbuf, "%2d   %2d   %2d     %2d   %8.3f   %8.3f   %8.3f   %8.3f   %8.3f\n", 
-                atoi(_strbndcalculations[i].a->GetType()), atoi(_strbndcalculations[i].b->GetType()), atoi(_strbndcalculations[i].c->GetType()), 
-                _strbndcalculations[i].sbt, _strbndcalculations[i].theta, _strbndcalculations[i].delta_theta, 
-                _strbndcalculations[i].kbaABC, _strbndcalculations[i].kbaCBA, _strbndcalculations[i].energy);
+                atoi(_strbndcalculations[i].a->GetType()), atoi(_strbndcalculations[i].b->GetType()), 
+                atoi(_strbndcalculations[i].c->GetType()), _strbndcalculations[i].sbt, 
+                _strbndcalculations[i].theta, _strbndcalculations[i].delta_theta, 
+                _strbndcalculations[i].kbaABC, _strbndcalculations[i].kbaCBA, 
+                2.51210 * _strbndcalculations[i].energy);
         OBFFLog(_logbuf);
       }
     }
@@ -366,11 +384,11 @@ namespace OpenBabel
     #endif
  
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL STRETCH BENDING ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL STRETCH BENDING ENERGY = %8.5f %s\n", 2.51210 * energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
  
-    return energy;
+    return (2.51210 * energy);
   }
  
   int OBForceFieldMMFF94::GetElementRow(OBAtom *atom)
@@ -406,7 +424,8 @@ namespace OpenBabel
   //
   // 0_ijkl 	torsion angle (degrees)
   //
-  inline void OBFFTorsionCalculationMMFF94::Compute(bool gradients)
+  template<bool gradients>
+  inline void OBFFTorsionCalculationMMFF94::Compute()
   {
     double cosine, cosine2, cosine3;
     double phi1, phi2, phi3;
@@ -442,11 +461,12 @@ namespace OpenBabel
     phi2 = 1.0 - cosine2;
     phi3 = 1.0 + cosine3;
     
-    energy = 0.5 * (v1 * phi1 + v2 * phi2 + v3 * phi3);
+    energy = (v1 * phi1 + v2 * phi2 + v3 * phi3);
     
   }
   
-  double OBForceFieldMMFF94::E_Torsion(bool gradients) 
+  template<bool gradients>
+  double OBForceFieldMMFF94::E_Torsion() 
   {
     double energy = 0.0;
         
@@ -462,7 +482,7 @@ namespace OpenBabel
     #endif
     for (int i = 0; i < _torsioncalculations.size(); ++i) {
 
-      _torsioncalculations[i].Compute(gradients);
+      _torsioncalculations[i].Compute<gradients>();
       energy += _torsioncalculations[i].energy;
       
       #ifndef _OPENMP
@@ -479,7 +499,7 @@ namespace OpenBabel
                 atoi(_torsioncalculations[i].a->GetType()), atoi(_torsioncalculations[i].b->GetType()), 
                 atoi(_torsioncalculations[i].c->GetType()), atoi(_torsioncalculations[i].d->GetType()), 
                 _torsioncalculations[i].tt, _torsioncalculations[i].tor, _torsioncalculations[i].v1, 
-                _torsioncalculations[i].v2, _torsioncalculations[i].v3, _torsioncalculations[i].energy);
+                _torsioncalculations[i].v2, _torsioncalculations[i].v3, 0.5 * _torsioncalculations[i].energy);
         OBFFLog(_logbuf);
       }
 
@@ -497,11 +517,11 @@ namespace OpenBabel
     #endif
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL TORSIONAL ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL TORSIONAL ENERGY = %8.5f %s\n", 0.5 * energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
-    return energy;
+    return (0.5 * energy);
   }
  
   //						//
@@ -511,7 +531,8 @@ namespace OpenBabel
   //   / 					//
   //  c						//
   //						//
-  void OBFFOOPCalculationMMFF94::Compute(bool gradients)
+  template<bool gradients>
+  void OBFFOOPCalculationMMFF94::Compute()
   {
     double angle2, dE;
     
@@ -533,11 +554,12 @@ namespace OpenBabel
       angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
     
     angle2 = angle * angle;
-    energy = 0.043844 * 0.5 * koop * angle2;
+    energy = koop * angle2;
   
   }
 
-  inline double OBForceFieldMMFF94::E_OOP(bool gradients) 
+  template<bool gradients>
+  inline double OBForceFieldMMFF94::E_OOP() 
   {
     double energy = 0.0;
     
@@ -553,7 +575,7 @@ namespace OpenBabel
     #endif
     for (int i = 0; i < _oopcalculations.size(); ++i) {
       
-      _oopcalculations[i].Compute(gradients);
+      _oopcalculations[i].Compute<gradients>();
       energy += _oopcalculations[i].energy;
       
       #ifndef _OPENMP
@@ -569,7 +591,8 @@ namespace OpenBabel
         sprintf(_logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f\n", 
                 atoi(_oopcalculations[i].a->GetType()), atoi(_oopcalculations[i].b->GetType()), 
                 atoi(_oopcalculations[i].c->GetType()), atoi(_oopcalculations[i].d->GetType()), 
-                _oopcalculations[i].angle, _oopcalculations[i].koop, _oopcalculations[i].energy);
+                _oopcalculations[i].angle, _oopcalculations[i].koop, 
+                0.043844 * 0.5 * _oopcalculations[i].energy);
         OBFFLog(_logbuf);
       }
     }
@@ -586,14 +609,15 @@ namespace OpenBabel
     #endif
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
+      sprintf(_logbuf, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.5f %s\n", 0.043844 * 0.5 * energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
-    return energy;
+    return (0.043844 * 0.5 * energy);
   }
  
-  inline void OBFFVDWCalculationMMFF94::Compute(bool gradients)
+  template<bool gradients>
+  inline void OBFFVDWCalculationMMFF94::Compute()
   {
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
@@ -625,7 +649,8 @@ namespace OpenBabel
     }
   }
   
-  double OBForceFieldMMFF94::E_VDW(bool gradients)
+  template<bool gradients>
+  double OBForceFieldMMFF94::E_VDW()
   {
     double energy = 0.0;
     
@@ -646,7 +671,7 @@ namespace OpenBabel
         if (!_vdwpairs.BitIsSet(i)) 
           continue;
 
-      _vdwcalculations[i].Compute(gradients);
+      _vdwcalculations[i].Compute<gradients>();
       energy += _vdwcalculations[i].energy;
       
       #ifndef _OPENMP
@@ -687,7 +712,8 @@ namespace OpenBabel
     return energy;
   }
 
-  inline void OBFFElectrostaticCalculationMMFF94::Compute(bool gradients)
+  template<bool gradients>
+  inline void OBFFElectrostaticCalculationMMFF94::Compute()
   {
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
@@ -704,7 +730,8 @@ namespace OpenBabel
     energy = qq / rab;
   }
 
-  double OBForceFieldMMFF94::E_Electrostatic(bool gradients)
+  template<bool gradients>
+  double OBForceFieldMMFF94::E_Electrostatic()
   {
     double energy = 0.0;
     
@@ -725,7 +752,7 @@ namespace OpenBabel
         if (!_elepairs.BitIsSet(i)) 
           continue;
      
-      _electrostaticcalculations[i].Compute(gradients);
+      _electrostaticcalculations[i].Compute<gradients>();
       energy += _electrostaticcalculations[i].energy;
       
       #ifndef _OPENMP
