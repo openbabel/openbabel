@@ -1,6 +1,15 @@
+2008-05-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h: Add virtual destructors to
+	OBFFCalculation2-4.
+
 2005-05-03  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/config.h.cmake: Fixed so that TIME_WITH_SYS_TIME is defined.
+
+2008-05-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+	
+	* src/forcefields/forcefieldmmff94.*: Do the same for logging.
 
 2008-05-03  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 

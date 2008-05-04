@@ -149,7 +149,10 @@ namespace OpenBabel
     double *pos_a, *pos_b;
     //! Pointer to atom forces
     double force_a[3], force_b[3];
-      
+    //! Destructor
+    virtual ~OBFFCalculation2() 
+    {
+    }    
     //! \return Setup pointers to atom positions and forces (To be called 
     //!  while setting up calculations). Sets optimized to true.
     virtual void SetupPointers() 
@@ -173,7 +176,10 @@ namespace OpenBabel
     double *pos_c;
     //! Pointer to atom forces
     double force_c[3];
-      
+    //! Destructor
+    virtual ~OBFFCalculation3() 
+    {
+    }    
     //! \return Setup pointers to atom positions and forces (To be called 
     //!  while setting up calculations). Sets optimized to true.
     virtual void SetupPointers() 
@@ -199,7 +205,10 @@ namespace OpenBabel
     double *pos_d;
     //! Pointer to atom forces
     double force_d[3];
-      
+    //! Destructor
+    virtual ~OBFFCalculation4() 
+    {
+    }    
     //! \return Setup pointers to atom positions and forces (To be called 
     //!  while setting up calculations). Sets optimized to true.
     void SetupPointers() 
@@ -396,7 +405,181 @@ namespace OpenBabel
   {
     MAKE_PLUGIN(OBForceField)
   
-    public:
+    protected:
+
+      /*! 
+      Get the correct OBFFParameter from a OBFFParameter vector.
+       
+      \code vector<OBFFParameter> parameters; \endcode
+      
+      this vector is filled with entries (as OBFFParameter) from 
+      a parameter file. This happens in the Setup() function.
+      
+      \code GetParameter(a, 0, 0, 0, parameters); \endcode
+        
+      returns the first OBFFParameter from vector<OBFFParameter> 
+      parameters where: pa = a (pa = parameter.a)
+      
+      use: vdw parameters, ...
+      
+      \code GetParameter(a, b, 0, 0, parameters); \endcode
+      
+      returns the first OBFFParameter from vector<OBFFParameter> 
+      parameters where: pa = a & pb = b      (ab)
+      or: pa = b & pb = a      (ba)
+            
+      use: bond parameters, vdw parameters (pairs), ...
+      
+      \code GetParameter(a, b, c, 0, parameters); \endcode
+      
+      returns the first OBFFParameter from vector<OBFFParameter> 
+      parameters where: pa = a & pb = b & pc = c     (abc)
+      or: pa = c & pb = b & pc = a     (cba)
+      
+      use: angle parameters, ...
+      
+      \code GetParameter(a, b, c, d, parameters); \endcode
+      
+      returns the first OBFFParameter from vector<OBFFParameter> 
+      parameters where: pa = a & pb = b & pc = c & pd = d    (abcd)
+      or: pa = d & pb = b & pc = c & pd = a    (dbca)
+      or: pa = a & pb = c & pc = b & pd = d    (acbd)
+      or: pa = d & pb = c & pc = b & pd = a    (dcba)
+      
+      use: torsion parameters, ...
+    */
+    OBFFParameter* GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
+    //! see GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)
+    OBFFParameter* GetParameter(const char* a, const char* b, const char* c, const char* d, 
+        std::vector<OBFFParameter> &parameter);
+    //! Get index for vector<OBFFParameter> ...
+    int GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
+           
+    /*! Calculate the potential energy function derivative numerically with 
+     *  repect to the coordinates of atom with index a (this vector is the gradient)
+     *
+     * \param a  provides coordinates
+     * \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, 
+     * OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
+     * \return the negative gradient of atom a
+     */
+    vector3 NumericalDerivative(OBAtom *a, int terms = OBFF_ENERGY);
+    //! OB 3.0
+    vector3 NumericalSecondDerivative(OBAtom *a, int terms = OBFF_ENERGY);
+    /*! Calculate the potential energy function derivative analyticaly with 
+     *  repect to the coordinates of atom with index a (this vector is the gradient)
+     *
+     *  If the currently selected forcefield doesn't have analytical gradients, 
+     *  we can still call this function which will return the result of 
+     *  NumericalDerivative()
+     *  \param a  provides coordinates
+     *  \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, 
+     *  OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
+     *  \return the negative gradient of atom a
+     */
+    //virtual vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY) 
+    //{ 
+    //  return -NumericalDerivative(a, terms); 
+    //}
+    
+    /* 
+     *   NEW gradients functions
+     */ 
+    
+    /*! Set the gradient for atom with index idx to grad
+     */
+    void SetGradient(double *grad, int idx) 
+    { 
+      const int coordIdx = (idx - 1) * 3;
+      for (unsigned int i = 0; i < 3; ++i) {
+        _gradientPtr[coordIdx + i] = grad[i]; 
+      }
+    }
+    
+    /*! Add grad to the gradient for atom with index idx
+     */
+    void AddGradient(double *grad, int idx) 
+    { 
+      const int coordIdx = (idx - 1) * 3;
+      for (unsigned int i = 0; i < 3; ++i) {
+        _gradientPtr[coordIdx + i] += grad[i];
+      }
+    }
+    
+    /*! Get the pointer to the gradients
+     */
+    virtual vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY) 
+    { 
+      const int coordIdx = (a->GetIdx() - 1) * 3;
+      return _gradientPtr + coordIdx;
+    }
+    
+    /*! Get the pointer to the gradients
+     */
+    double* GetGradientPtr() 
+    { 
+      return _gradientPtr;
+    }
+    
+    /*! Set all gradients to zero
+     */
+    virtual void ClearGradients() 
+    { 
+      // We cannot use memset because IEEE floating point representations
+      // are not guaranteed by C/C++ standard, but this loop can be
+      // unrolled or vectorized by compilers
+      for (unsigned int i = 0; i < _ncoords; ++i)
+        _gradientPtr[i] = 0.0;
+      //      memset(_gradientPtr, '\0', sizeof(double)*_ncoords);
+    }
+
+    /*! Check if two atoms are in the same ring. [NOTE: this function uses SSSR, 
+     *  this means that not all rings are found for bridged rings. This causes 
+     *  some problems with the MMFF94 validation.]
+     *  \param a atom a
+     *  \param b atom b
+     *  \return true if atom a and b are in the same ring
+     */
+    bool IsInSameRing(OBAtom* a, OBAtom* b);
+ 
+    // general variables
+    OBMol 	_mol; //!< Molecule to be evaluated or minimized
+    bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
+    bool 	_validSetup; //! was the last call to Setup succesfull
+    double	*_gradientPtr; //! pointer to the gradients (used by AddGradient(), minimization functions, ...)
+    // logging variables
+    std::ostream* _logos; //! Output for logfile
+    char 	_logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
+    int 	_loglvl; //!< Log level for output
+    int 	_origLogLevel;
+    // conformer genereation (rotor search) variables
+    int 	_current_conformer; //! used to hold i for current conformer (needed by UpdateConformers)
+    std::vector<double> _energies; //! used to hold the energies for all conformers
+    // minimization variables
+    double 	_econv, _e_n1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    int 	_cstep, _nsteps; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    double 	*_grad1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
+    int         _linesearch; //! LineSearch type
+    // molecular dynamics variables
+    double 	_timestep; //! Molecular dynamics time step in picoseconds
+    double 	_T; //! Molecular dynamics temperature in Kelvin
+    double 	*_velocityPtr; //! pointer to the velocities
+    // contraint varibles
+    static OBFFConstraints _constraints; //!< Constraints
+    // cut-off variables
+    bool 	_cutoff; //! true = cut-off enabled
+    double 	_rvdw; //! VDW cut-off distance
+    double 	_rele; //! Electrostatic cut-off distance
+    OBBitVec	_vdwpairs; //! VDW pairs that should be calculated
+    OBBitVec	_elepairs; //! Electrostatic pairs that should be calculated
+    int 	_pairfreq; //! The frequence to update non-bonded pairs
+    // group variables
+    std::vector<OBBitVec> _intraGroup; //! groups for which intra-molecular interactions should be calculated
+    std::vector<OBBitVec> _interGroup; //! groups for which intra-molecular interactions should be calculated
+    std::vector<std::pair<OBBitVec, OBBitVec> > _interGroups; //! groups for which intra-molecular 
+                                                              //!interactions should be calculated
+  public:
     /*! Clone the current instance. May be desirable in multithreaded environments,
      *  Should be deleted after use
      */
@@ -1135,16 +1318,18 @@ namespace OpenBabel
     /*! Get the current constraints.
      *  \return The current constrains stored in the force field.
      */ 
-    OBFFConstraints& GetConstraints() { return _constraints; }
+    OBFFConstraints& GetConstraints();/* { return _constraints; }*/
     /*! Set the constraints.
      *  \param constraints The new constraints to be used.
      */
-    void SetConstraints(OBFFConstraints& constraints) 
+    void SetConstraints(OBFFConstraints& constraints);
+/*
     { 
       _constraints = constraints; 
       if (_mol.NumAtoms())
         _constraints.Setup(_mol); 
     }
+*/
     //@}
 
  
@@ -1403,181 +1588,6 @@ namespace OpenBabel
     }
     //@}
 
-    protected:
-
-      /*! 
-      Get the correct OBFFParameter from a OBFFParameter vector.
-       
-      \code vector<OBFFParameter> parameters; \endcode
-      
-      this vector is filled with entries (as OBFFParameter) from 
-      a parameter file. This happens in the Setup() function.
-      
-      \code GetParameter(a, 0, 0, 0, parameters); \endcode
-        
-      returns the first OBFFParameter from vector<OBFFParameter> 
-      parameters where: pa = a (pa = parameter.a)
-      
-      use: vdw parameters, ...
-      
-      \code GetParameter(a, b, 0, 0, parameters); \endcode
-      
-      returns the first OBFFParameter from vector<OBFFParameter> 
-      parameters where: pa = a & pb = b      (ab)
-      or: pa = b & pb = a      (ba)
-            
-      use: bond parameters, vdw parameters (pairs), ...
-      
-      \code GetParameter(a, b, c, 0, parameters); \endcode
-      
-      returns the first OBFFParameter from vector<OBFFParameter> 
-      parameters where: pa = a & pb = b & pc = c     (abc)
-      or: pa = c & pb = b & pc = a     (cba)
-      
-      use: angle parameters, ...
-      
-      \code GetParameter(a, b, c, d, parameters); \endcode
-      
-      returns the first OBFFParameter from vector<OBFFParameter> 
-      parameters where: pa = a & pb = b & pc = c & pd = d    (abcd)
-      or: pa = d & pb = b & pc = c & pd = a    (dbca)
-      or: pa = a & pb = c & pc = b & pd = d    (acbd)
-      or: pa = d & pb = c & pc = b & pd = a    (dcba)
-      
-      use: torsion parameters, ...
-    */
-    OBFFParameter* GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
-    //! see GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)
-    OBFFParameter* GetParameter(const char* a, const char* b, const char* c, const char* d, 
-        std::vector<OBFFParameter> &parameter);
-    //! Get index for vector<OBFFParameter> ...
-    int GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
-           
-    /*! Calculate the potential energy function derivative numerically with 
-     *  repect to the coordinates of atom with index a (this vector is the gradient)
-     *
-     * \param a  provides coordinates
-     * \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, 
-     * OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
-     * \return the negative gradient of atom a
-     */
-    vector3 NumericalDerivative(OBAtom *a, int terms = OBFF_ENERGY);
-    //! OB 3.0
-    vector3 NumericalSecondDerivative(OBAtom *a, int terms = OBFF_ENERGY);
-    /*! Calculate the potential energy function derivative analyticaly with 
-     *  repect to the coordinates of atom with index a (this vector is the gradient)
-     *
-     *  If the currently selected forcefield doesn't have analytical gradients, 
-     *  we can still call this function which will return the result of 
-     *  NumericalDerivative()
-     *  \param a  provides coordinates
-     *  \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, 
-     *  OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
-     *  \return the negative gradient of atom a
-     */
-    //virtual vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY) 
-    //{ 
-    //  return -NumericalDerivative(a, terms); 
-    //}
-    
-    /* 
-     *   NEW gradients functions
-     */ 
-    
-    /*! Set the gradient for atom with index idx to grad
-     */
-    void SetGradient(double *grad, int idx) 
-    { 
-      const int coordIdx = (idx - 1) * 3;
-      for (unsigned int i = 0; i < 3; ++i) {
-        _gradientPtr[coordIdx + i] = grad[i]; 
-      }
-    }
-    
-    /*! Add grad to the gradient for atom with index idx
-     */
-    void AddGradient(double *grad, int idx) 
-    { 
-      const int coordIdx = (idx - 1) * 3;
-      for (unsigned int i = 0; i < 3; ++i) {
-        _gradientPtr[coordIdx + i] += grad[i];
-      }
-    }
-    
-    /*! Get the pointer to the gradients
-     */
-    virtual vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY) 
-    { 
-      const int coordIdx = (a->GetIdx() - 1) * 3;
-      return _gradientPtr + coordIdx;
-    }
-    
-    /*! Get the pointer to the gradients
-     */
-    double* GetGradientPtr() 
-    { 
-      return _gradientPtr;
-    }
-    
-    /*! Set all gradients to zero
-     */
-    virtual void ClearGradients() 
-    { 
-      // We cannot use memset because IEEE floating point representations
-      // are not guaranteed by C/C++ standard, but this loop can be
-      // unrolled or vectorized by compilers
-      for (unsigned int i = 0; i < _ncoords; ++i)
-        _gradientPtr[i] = 0.0;
-      //      memset(_gradientPtr, '\0', sizeof(double)*_ncoords);
-    }
-
-    /*! Check if two atoms are in the same ring. [NOTE: this function uses SSSR, 
-     *  this means that not all rings are found for bridged rings. This causes 
-     *  some problems with the MMFF94 validation.]
-     *  \param a atom a
-     *  \param b atom b
-     *  \return true if atom a and b are in the same ring
-     */
-    bool IsInSameRing(OBAtom* a, OBAtom* b);
- 
-    // general variables
-    OBMol 	_mol; //!< Molecule to be evaluated or minimized
-    bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
-    bool 	_validSetup; //! was the last call to Setup succesfull
-    double	*_gradientPtr; //! pointer to the gradients (used by AddGradient(), minimization functions, ...)
-    // contraint varibles
-    OBFFConstraints _constraints; //!< Constraints
-    // logging variables
-    std::ostream* _logos; //! Output for logfile
-    char 	_logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
-    int 	_loglvl; //!< Log level for output
-    int 	_origLogLevel;
-    // conformer genereation (rotor search) variables
-    int 	_current_conformer; //! used to hold i for current conformer (needed by UpdateConformers)
-    std::vector<double> _energies; //! used to hold the energies for all conformers
-    // minimization variables
-    double 	_econv, _e_n1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    int 	_method, _cstep, _nsteps; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    double 	*_grad1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
-    int         _linesearch; //! LineSearch type
-    // molecular dynamics variables
-    double 	_timestep; //! Molecular dynamics time step in picoseconds
-    double 	_T; //! Molecular dynamics temperature in Kelvin
-    double 	*_velocityPtr; //! pointer to the velocities
-    // cut-off variables
-    bool 	_cutoff; //! true = cut-off enabled
-    double 	_rvdw; //! VDW cut-off distance
-    double 	_rele; //! Electrostatic cut-off distance
-    OBBitVec	_vdwpairs; //! VDW pairs that should be calculated
-    OBBitVec	_elepairs; //! Electrostatic pairs that should be calculated
-    int 	_pairfreq; //! The frequence to update non-bonded pairs
-    // group variables
-    std::vector<OBBitVec> _intraGroup; //! groups for which intra-molecular interactions should be calculated
-    std::vector<OBBitVec> _interGroup; //! groups for which intra-molecular interactions should be calculated
-    std::vector<std::pair<OBBitVec, OBBitVec> > _interGroups; //! groups for which intra-molecular 
-                                                              //!interactions should be calculated
-  public:
   }; // class OBForceField
 
 }// namespace OpenBabel
