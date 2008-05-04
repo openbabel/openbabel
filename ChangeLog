@@ -1,5 +1,10 @@
 2008-05-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* include/openbabel/forcefield.h, src/forcefield.cpp: Make
+	OBForceField::_constraints static.
+
+2008-05-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/forcefield.h: Add virtual destructors to
 	OBFFCalculation2-4.
 

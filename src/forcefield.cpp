@@ -371,6 +371,20 @@ namespace OpenBabel
   //
   //////////////////////////////////////////////////////////////////////////////////
  
+  OBFFConstraints OBForceField::_constraints; // define static data variable
+
+  OBFFConstraints& OBForceField::GetConstraints() 
+  { 
+    return _constraints; 
+  }
+  
+  void OBForceField::SetConstraints(OBFFConstraints& constraints) 
+  { 
+    _constraints = constraints; 
+    if (_mol.NumAtoms())
+      _constraints.Setup(_mol); 
+  }
+  
   OBFFConstraints::OBFFConstraints()
   {
     _factor = 50000.0;
@@ -2365,7 +2379,6 @@ namespace OpenBabel
     _nsteps = steps;
     _cstep = 0;
     _econv = econv;
-    _method = method;
 
     if (_cutoff)
       UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
@@ -2479,7 +2492,6 @@ namespace OpenBabel
     _cstep = 0;
     _nsteps = steps;
     _econv = econv;
-    _method = method;
     _ncoords = _mol.NumAtoms() * 3;
 
     if (_cutoff)
@@ -3114,7 +3126,6 @@ namespace OpenBabel
     double timestep2;
     vector3 force, pos, accel;
     double kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
-    _method = method;
     _timestep = timestep;
     _T = T;
 
@@ -3128,7 +3139,7 @@ namespace OpenBabel
     for (int i = 1; i <= n; i++) {
       FOR_ATOMS_OF_MOL (a, _mol) {
         if (!_constraints.IsFixed(a->GetIdx())) {
-          if (_method & OBFF_ANALYTICAL_GRADIENT)
+          if (HasAnalyticalGradients())
             force = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
           else
             force = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
@@ -3152,7 +3163,7 @@ namespace OpenBabel
 
           Energy(true); // compute gradients
           
-          if (_method & OBFF_ANALYTICAL_GRADIENT)
+          if (HasAnalyticalGradients())
             force = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
           else
             force = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());

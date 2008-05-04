@@ -1318,18 +1318,11 @@ namespace OpenBabel
     /*! Get the current constraints.
      *  \return The current constrains stored in the force field.
      */ 
-    OBFFConstraints& GetConstraints();/* { return _constraints; }*/
+    OBFFConstraints& GetConstraints();
     /*! Set the constraints.
      *  \param constraints The new constraints to be used.
      */
     void SetConstraints(OBFFConstraints& constraints);
-/*
-    { 
-      _constraints = constraints; 
-      if (_mol.NumAtoms())
-        _constraints.Setup(_mol); 
-    }
-*/
     //@}
 
  
