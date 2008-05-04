@@ -1,3 +1,8 @@
+2005-05-04  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* configure.in, src/config.h.in, include/openbabel/forcefield.h: Fixed
+	the babelconfig.h file - typo spotted...
+
 2008-05-04  Noel O'Boyle <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPythonOBF/setup.py: Minor changes to install the

@@ -174,9 +174,9 @@
 
 /* Used to export symbols for DLL / shared library builds */
 #if defined(USING_OBDLL) // e.g. in src/main.cpp
-  #define OBFPTR OB_IMPORT
+  #define OBFPRT OB_IMPORT
 #else
-  #define OBFPTR OB_EXPORT
+  #define OBFPRT OB_EXPORT
 #endif
 
 

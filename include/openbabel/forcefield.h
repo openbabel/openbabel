@@ -25,16 +25,13 @@ GNU General Public License for more details.
 
 #include <list>
 #include <set>
+#include <openbabel/babelconfig.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 #include <openbabel/plugin.h>
 #include <openbabel/grid.h>
 #include <openbabel/griddata.h>
 #include <float.h>
-
-#ifndef OBFPRT
-#define OBFPRT
-#endif
 
 namespace OpenBabel
 {
