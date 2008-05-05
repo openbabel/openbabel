@@ -89,7 +89,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
-%import <openbabel/math/matrix3x3.h>
+%include <openbabel/math/matrix3x3.h>
 
 %import <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>

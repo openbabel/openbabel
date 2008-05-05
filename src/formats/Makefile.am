@@ -78,7 +78,7 @@ else BUILD_SHARED
 pkglib_LTLIBRARIES = \
 	APIInterface.la \
 	CSRformat.la PQSformat.la MCDLformat.la alchemyformat.la \
-	acrformat.la \
+	acrformat.la adfformat.la \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la cansmilesformat.la \
 	carformat.la cccformat.la \
@@ -122,6 +122,9 @@ PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 acrformat_la_SOURCES = acrformat.cpp 
 acrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+adfformat_la_SOURCES = adfformat.cpp 
+adfformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 alchemyformat_la_SOURCES = alchemyformat.cpp 
 alchemyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
