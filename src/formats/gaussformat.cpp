@@ -325,6 +325,8 @@ namespace OpenBabel
                    strstr(buffer,"Sum of ") == NULL)
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
+                if (!atom)
+                  break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
 		
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
