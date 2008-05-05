@@ -810,6 +810,25 @@ namespace OpenBabel
  protected:
    vector3            _vec; //!< 3D vector to be stored
  };
+ 
+   //! \class OBMatrixData generic.h <openbabel/generic.h>
+   //! \brief Used to hold a 3x3 matrix item (e.g., a quadrupole moment)
+   //! \since version 2.2
+  class OBAPI OBMatrixData: public OBGenericData
+  {
+  public:
+    OBMatrixData(): OBGenericData("MatrixData", OBGenericDataType::MatrixData){}
+    virtual ~OBMatrixData(){};
+    virtual OBGenericData* Clone(OBBase*) const
+          {return new OBMatrixData(*this);}
+    void SetData(matrix3x3 data)
+      { _matrix = data; }
+    matrix3x3 GetData() const
+      { return _matrix; }
+
+  protected:
+    matrix3x3            _matrix; //!< 3x3 matrix to be stored
+  };
 
  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
   typedef std::vector<OBGenericData*>::iterator OBDataIterator;

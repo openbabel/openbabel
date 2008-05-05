@@ -127,6 +127,9 @@ class OBBase;
 
       //! Vector Data (i.e., one vector like a dipole moment)
       VectorData =        25,
+      
+      //! Matrix data (i.e., a 3x3 matrix like a rotation or quadrupole moment)
+      MatrixData =        26,
 
       // space for up to 2^14 more entries...
 
