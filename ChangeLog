@@ -4,6 +4,9 @@
 	avoid timestamp issues (probably not necessary for automake and
 	autoconf).
 
+	* include/openbabel/Makefile.am: babelconfig.h is not removed
+	automatically. Added it to DISTCLEANFILES.
+
 2008-05-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp: Ensure energy is always 0.0.
