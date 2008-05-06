@@ -11,9 +11,9 @@ rm -fr autom4te.cache
 echo "Running libtoolize"
 libtoolize --force --copy
 echo "Running aclocal"
-aclocal
+aclocal --force
 echo "Running autoheader"
-autoheader
+autoheader --force
 echo "Running automake"
 automake $AMFLAGS
 echo "Running autoconf"
