@@ -1,4 +1,9 @@
-2008-05-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2008-05-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: initialize static _constraints to a
+	OBFFConstraints object.
+
+2008-05-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/parsmarts.cpp: Add if(_pat) before _pat->...(). This was causing
 	Avogadro to crash here sometimes.

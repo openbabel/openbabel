@@ -371,7 +371,7 @@ namespace OpenBabel
   //
   //////////////////////////////////////////////////////////////////////////////////
  
-  OBFFConstraints OBForceField::_constraints; // define static data variable
+  OBFFConstraints OBForceField::_constraints = OBFFConstraints(); // define static data variable
 
   OBFFConstraints& OBForceField::GetConstraints() 
   { 
