@@ -2538,6 +2538,8 @@ namespace OpenBabel
   bool OBSmartsPattern::Match(OBMol &mol,bool single)
   {
     RSCACHE.clear();
+    if(_pat == NULL)
+      return false;
     if(_pat->hasExplicitH) //The SMARTS pattern contains [H]
     {
       //Do matching on a copy of mol with explict hydrogens
