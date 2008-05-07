@@ -1,3 +1,7 @@
+2008-05-07  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/python/pybel.py: Synch with cinfony.
+
 2008-05-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: initialize static _constraints to a

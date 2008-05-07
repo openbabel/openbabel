@@ -1,6 +1,20 @@
 import math
 import os.path
+import tempfile
 import openbabel as ob
+
+try:
+    import oasa
+    import oasa.cairo_out
+except ImportError:
+    oasa = None
+
+try:
+    import Tkinter as tk
+    import Image as PIL
+    import ImageTk as piltk
+except ImportError:
+    tk = None
 
 def _formatstodict(list):
     broken = [x.replace("[Read-only]", "").replace("[Write-only]","").split(" -- ") for x in list]
@@ -13,10 +27,15 @@ outformats = _formatstodict(_obconv.GetSupportedOutputFormat())
 def _getplugins(findplugin, names):
     plugins = dict([(x, findplugin(x)) for x in names if findplugin(x)])
     return plugins
-descriptors = _getplugins(ob.OBDescriptor.FindType, ['LogP', 'MR', 'TPSA'])
-fingerprinters = _getplugins(ob.OBFingerprint.FindFingerprint, ['FP2', 'FP3', 'FP4'])
-forcefields = _getplugins(ob.OBForceField.FindType, ['UFF', 'MMFF94', 'Ghemical'])
-operations = _getplugins(ob.OBOp.FindType, ['Gen3D'])
+
+descriptors = ['LogP', 'MR', 'TPSA']
+_descdict = _getplugins(ob.OBDescriptor.FindType, descriptors)
+fps = ['FP2', 'FP3', 'FP4']
+_fingerprinters = _getplugins(ob.OBFingerprint.FindFingerprint, fps)
+forcefields = ['UFF', 'MMFF94', 'Ghemical']
+_forcefields = _getplugins(ob.OBForceField.FindType, forcefields)
+operations = ['Gen3D']
+_operations = _getplugins(ob.OBOp.FindType, operations)
 
 def readfile(format, filename):
     """Iterate over the molecules in a file.
@@ -73,7 +92,10 @@ def readstring(format, string):
     if not formatok:
         raise ValueError,"%s is not a recognised OpenBabel format" % format
 
-    obconversion.ReadString(obmol, string)
+    success = obconversion.ReadString(obmol, string)
+    if not success:
+        raise IOError, "Failed to convert '%s' to format '%s'" % (
+            string, format)
     return Molecule(obmol)
 
 class Outputfile(object):
@@ -161,12 +183,12 @@ class Molecule(object):
         'spin':'GetTotalSpinMultiplicity'
     }
     
-    def __init__(self, OBMol=None):
-
+    def __init__(self, OBMol):
+        
+        if hasattr(OBMol, "_exchange"):
+            OBMol = readstring("smi", OBMol._exchange).OBMol
         self.OBMol = OBMol
-        if not self.OBMol:
-            self.OBMol = ob.OBMol()
-
+ 
     def __getattr__(self, attr):
         """Return the value of an attribute
 
@@ -176,12 +198,12 @@ class Molecule(object):
         # This function is not accessed in the case of OBMol
         if attr == "atoms":
             # Create an atoms attribute on-the-fly
-            return [ Atom(self.OBMol.GetAtom(i+1),i+1) for i in range(self.OBMol.NumAtoms()) ]
+            return [ Atom(self.OBMol.GetAtom(i+1)) for i in range(self.OBMol.NumAtoms()) ]
         elif attr == "data":
             # Create a data attribute on-the-fly
             return MoleculeData(self.OBMol)
         elif attr == "unitcell":
-            # Create a unitcell attribute on-th-fly
+            # Create a unitcell attribute on-the-fly
             unitcell = self.OBMol.GetData(ob.UnitCell)
             if unitcell:
                 return ob.toUnitCell(unitcell)
@@ -190,6 +212,8 @@ class Molecule(object):
         elif attr in self._getmethods:
             # Call the OB Method to find the attribute value
             return getattr(self.OBMol, self._getmethods[attr])()
+        elif attr == "_exchange":
+            return self.write("can").split("\t")[0]
         else:
             raise AttributeError, "Molecule has no attribute '%s'" % attr
 
@@ -213,11 +237,11 @@ class Molecule(object):
         descriptors is calculated: LogP, PSA and MR.
         """
         if not descnames:
-            descnames = descriptors.keys()
+            descnames = descriptors
         ans = {}
         for descname in descnames:
             try:
-                desc = descriptors[descname]
+                desc = _descdict[descname]
             except KeyError:
                 raise ValueError, "%s is not a recognised Open Babel descriptor type" % descname
             ans[descname] = desc.Predict(self.OBMol)
@@ -235,7 +259,7 @@ class Molecule(object):
         """
         fp = ob.vectorUnsignedInt()
         try:
-            fingerprinter = fingerprinters[fptype]
+            fingerprinter = _fingerprinters[fptype]
         except KeyError:
             raise ValueError, "%s is not a recognised Open Babel Fingerprint type" % fptype
         fingerprinter.GetFingerprint(self.OBMol, fp)
@@ -254,7 +278,6 @@ class Molecule(object):
         The overwrite flag is ignored if a filename is not specified.
         It controls whether to overwrite an existing file.
         """
-
         obconversion = ob.OBConversion()
         formatok = obconversion.SetOutFormat(format)
         if not formatok:
@@ -267,32 +290,127 @@ class Molecule(object):
         else:
             return obconversion.WriteString(self.OBMol)
 
-    def localopt(self, forcefield="MMFF94", steps=1000):
-        ff = forcefields[forcefield]
+    def localopt(self, forcefield="MMFF94", steps=500):
+        """Locally optimize the coordinates.
+        
+        Optional parameters:
+           forcefield -- default is "MMFF94"
+           steps -- default is 500
+
+        If the molecule does not have 2D or 3D coordinates, make3D() is
+        called before the optimization. Note that the molecule needs
+        to have explicit hydrogens. If not, call addh().
+        """
+        
+        if not (self.OBMol.Has2D() or self.OBMol.Has3D()):
+            self.make3D()
+        ff = _forcefields[forcefield]
         ff.Setup(self.OBMol)
-        ff.SteepestDescent(steps / 2)
-        ff.ConjugateGradients(steps / 2)
+        ff.SteepestDescent(steps)
         ff.GetCoordinates(self.OBMol)
     
-    def globalopt(self, forcefield="MMFF94", steps=1000):
-        self.localopt(forcefield=forcefield, steps=steps / 4)
-        ff = forcefields[forcefield]
-        ff.Setup(self.OBMol)
-        numrots = self.OBMol.NumRotors()
-        if numrots > 0:
-            ff.WeightedRotorSearch(numrots, int(math.log(numrots + 1) * steps))
-            ff.GetCoordinates(self.OBMol)
+##    def globalopt(self, forcefield="MMFF94", steps=1000):
+##        if not (self.OBMol.Has2D() or self.OBMol.Has3D()):
+##            self.make3D()
+##        self.localopt(forcefield, 250)
+##        ff = _forcefields[forcefield]
+##        numrots = self.OBMol.NumRotors()
+##        if numrots > 0:
+##            ff.WeightedRotorSearch(numrots, int(math.log(numrots + 1) * steps))
+##        ff.GetCoordinates(self.OBMol)
     
-    def make3D(self, forcefield="MMFF94", steps=500):
-        operations['Gen3D'].Do(self.OBMol)
-        self.localopt(forcefield=forcefield, steps=steps)
+    def make3D(self, forcefield="MMFF94", steps=50):
+        """Generate 3D coordinates.
+        
+        Optional parameters:
+           forcefield -- default is "MMFF94"
+           steps -- default is 50
+
+        Once coordinates are generated, hydrogens are added and a quick
+        local optimization is carried out with 50 steps and the
+        MMFF94 forcefield. Call localopt() if you want
+        to improve the coordinates further.
+        """
+        _operations['Gen3D'].Do(self.OBMol)
+        self.addh()
+        self.localopt(forcefield, steps)
 
     def addh(self):
+        """Add hydrogens."""
         self.OBMol.AddHydrogens()
 
+    def removeh(self):
+        """Remove hydrogens."""
+        self.OBMol.DeleteHydrogens()
+        
     def __str__(self):
         return self.write()
 
+    def draw(self, show=True, filename=None, update=False, usecoords=False):
+        """Create a 2D depiction of the molecule.
+
+        Optional parameters:
+          show -- display on screen (default is True)
+          filename -- write to file (default is None)
+          update -- update the coordinates of the atoms to those
+                    determined by the structure diagram generator
+                    (default is False)
+          usecoords -- don't calculate 2D coordinates, just use
+                       the current coordinates (default is False)
+
+        OASA is used for 2D coordinate generation and depiction. Tkinter and
+        Python Imaging Library are required for image display.
+        """
+        etab = ob.OBElementTable()
+
+        if not oasa:
+            errormessage = """OASA not found, but is required for 2D structure
+generation and depiction. OASA is part of BKChem. See
+installation instructions for more information."""
+            raise ImportError, errormessage
+        mol = oasa.molecule()
+        for atom in self.atoms:
+            v = mol.create_vertex()
+            v.symbol = etab.GetSymbol(atom.atomicnum)
+            if usecoords:
+                v.x, v.y, v.z = atom.coords[0] * 30., atom.coords[1] * -30., 0.0
+            mol.add_vertex(v)
+
+        for bond in [(x.GetBeginAtomIdx()-1, x.GetEndAtomIdx()-1, x.GetBO())
+                    for x in ob.OBMolBondIter(self.OBMol)]:
+            e = mol.create_edge()
+            e.order = bond[2]
+            mol.add_edge(bond[0], bond[1], e)
+        if not usecoords:
+            oasa.coords_generator.calculate_coords(mol, bond_length=30)
+            if update:
+                newcoords = [(v.x / 30., v.y / -30., 0.0) for v in mol.vertices]
+                for atom, newcoord in zip(ob.OBMolAtomIter(self.OBMol), newcoords):
+                    atom.SetVector(*newcoord)
+        if filename or show:
+            if filename:
+                filedes = None
+            else:
+                filedes, filename = tempfile.mkstemp()
+            
+            oasa.cairo_out.cairo_out().mol_to_cairo(mol, filename)
+            if show:
+                if not tk:
+                    errormessage = """Tkinter or Python Imaging Library not found, but is required for image
+display. See installation instructions for more information."""
+                    raise ImportError, errormessage
+                root = tk.Tk()
+                root.title((hasattr(self, "title") and self.title)
+                           or self.__str__().rstrip())
+                frame = tk.Frame(root, colormap="new", visual='truecolor').pack()
+                image = PIL.open(filename)
+                imagedata = piltk.PhotoImage(image)
+                label = tk.Label(frame, image=imagedata).pack()
+                quitbutton = tk.Button(root, text="Close", command=root.destroy).pack(fill=tk.X)
+                root.mainloop()
+            if filedes:
+                os.close(filedes)
+                os.remove(filename)
 
 class Atom(object):
     """Represent a Pybel atom.
@@ -336,13 +454,8 @@ class Atom(object):
         'vector':'GetVector',
         }
 
-    def __init__(self, OBAtom=None, index=None):
-        if not OBAtom:
-            OBAtom = ob.OBAtom()
+    def __init__(self, OBAtom):
         self.OBAtom = OBAtom
-        # For the moment, I will remember the index of the atom in the molecule...
-        # I'm not sure if this is useful, though.
-        self.index = index
         
     def __getattr__(self, attr):
         if attr == "coords":
@@ -359,14 +472,15 @@ class Atom(object):
         >>> print a
         Atom: 0 (0.0, 0.0, 0.0)
         """
-        return "Atom: %d %s" % (self.atomicnum, self.coords.__str__())
+        c = self.coords
+        return "Atom: %d (%.2f %.2f %.2f)" % (self.atomicnum, c[0], c[1], c[2])
 
-def findbits(fp, bitsperint):
+def _findbits(fp, bitsperint):
     """Find which bits are set in a list/vector.
 
     This function is used by the Fingerprint class.
 
-    >>> findbits([13, 71], 8)
+    >>> _findbits([13, 71], 8)
     [1, 3, 4, 9, 10, 11, 15]
     """
     ans = []
@@ -403,9 +517,9 @@ class Fingerprint(object):
     def __getattr__(self, attr):
         if attr == "bits":
             # Create a bits attribute on-the-fly
-            return findbits(self.fp, ob.OBFingerprint.Getbitsperint())
+            return _findbits(self.fp, ob.OBFingerprint.Getbitsperint())
         else:
-            raise AttributeError, "Molecule has no attribute %s" % attr
+            raise AttributeError, "Fingerprint has no attribute %s" % attr
     def __str__(self):
         return ", ".join([str(x) for x in self.fp])
 
