@@ -64,7 +64,7 @@ namespace OpenBabel
 
     virtual unsigned int Flags()
     {
-      return READONEONLY | WRITEONEONLY;
+      return READONEONLY | WRITEONEONLY | ZEROATOMSOK;
     };
 
     /// The "API" interface functions
@@ -133,8 +133,8 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     vector3 origin(x, y, z);
 
     // now three lines with the x, y, and z axes
-    vector<vector3> axes(3);
-    for (unsigned int i = 0; i < 2; ++i) {
+    vector<vector3> axes;
+    for (unsigned int i = 0; i < 3; ++i) {
       if (!ifs.getline(buffer, BUFF_SIZE) || !EQn(buffer, "delta", 5))
         return false;
       else {
@@ -173,6 +173,8 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     while (ifs.getline(buffer, BUFF_SIZE))
     {
       ++line;
+      if (EQn(buffer, "attribute", 9))
+        break; // we're finished with reading data -- although we should probably have a voxel check in here too
 
       tokenize(vs, buffer);
       if (vs.size() == 0)
@@ -207,8 +209,6 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
      component "connections" value 2
      component "data" value 3
     */
-    if (!ifs.getline(buffer, BUFF_SIZE) || !EQn(buffer, "attribute", 9))
-      return false;
     if (!ifs.getline(buffer, BUFF_SIZE) || !EQn(buffer, "object", 6))
       return false;
     if (!ifs.getline(buffer, BUFF_SIZE) || !EQn(buffer, "component", 9))
@@ -263,7 +263,7 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->GetOriginVector(origin);
 
     // data line 1: # of points in x, y, z (nx, ny, nz)
-    snprintf(buffer, BUFF_SIZE, "object 1 class gridposition counts %5d %5d %5d\n", nx, ny, nz);
+    snprintf(buffer, BUFF_SIZE, "object 1 class gridposition counts %5d %5d %5d", nx, ny, nz);
     ofs << buffer << "\n";
 
     // data line 2: origin (x, y, z)
@@ -287,11 +287,11 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     ofs << buffer << "\n";
 
     // data line 6: # of points in x, y, z (nx, ny, nz)    
-    snprintf(buffer, BUFF_SIZE, "object 2 class gridconnections counts %5d %5d %5d\n", nx, ny, nz);
+    snprintf(buffer, BUFF_SIZE, "object 2 class gridconnections counts %5d %5d %5d", nx, ny, nz);
     ofs << buffer << "\n";
 
     // data line 7: total # of points
-    snprintf(buffer, BUFF_SIZE, "object 3 class array type double rank 0 times %5d data follows\n", nx*ny*nz);
+    snprintf(buffer, BUFF_SIZE, "object 3 class array type double rank 0 times %5d data follows", nx*ny*nz);
     ofs << buffer << "\n";
 
     // The cube(s)
@@ -314,6 +314,8 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       } // y-axis
     } // x-axis
 
+    if (count % 3 != 0)
+      ofs << "\n";
     ofs << "attribute \"dep\" string \"positions\"\n";
     ofs << "object \"regular positions regular connections\" class field\n";
     ofs << "component \"positions\" value 1\n";

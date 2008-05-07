@@ -1,3 +1,9 @@
+2008-05-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/opendxformat.cpp: Bug fixing. Now roundtrips OpenDX
+	data from APBS. The format will create an empty OBMol with
+	attached OBGridData.
+
 2008-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Regenerate autotools build system based on Daniel's updated autogen.
@@ -56,8 +62,6 @@
 	* include/openbabel/forcefield.h, src/forcefield.cpp: Make
 	OBForceField::_constraints static.
 
-2008-05-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
-
 	* include/openbabel/forcefield.h: Add virtual destructors to
 	OBFFCalculation2-4.
 
@@ -65,11 +69,9 @@
 
 	* src/config.h.cmake: Fixed so that TIME_WITH_SYS_TIME is defined.
 
-2008-05-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2008-05-03  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 	
 	* src/forcefields/forcefieldmmff94.*: Do the same for logging.
-
-2008-05-03  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.h, src/forcefields/forcefieldghemical.*,
 	src/forcefields/forcefielduff.*,src/forcefields/forcefieldmmff94.*:
