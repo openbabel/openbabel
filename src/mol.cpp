@@ -2537,7 +2537,7 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBMol::DeleteAtom(OBAtom *atom)
+  bool OBMol::DeleteAtom(OBAtom *atom, bool destroyAtom)
   {
     if (atom->IsHydrogen())
       return(DeleteHydrogen(atom));
@@ -2567,14 +2567,15 @@ namespace OpenBabel
       atomi->SetIdx(idx);
 
     EndModify();
-
-    DestroyAtom(atom);
+    
+    if (destroyAtom)
+      DestroyAtom(atom);
 
     UnsetSSSRPerceived();
     return(true);
   }
 
-  bool OBMol::DeleteResidue(OBResidue *residue)
+  bool OBMol::DeleteResidue(OBResidue *residue, bool destroyResidue)
   {
     unsigned short idx = residue->GetIdx();
     _residue.erase(_residue.begin() + idx);
@@ -2582,7 +2583,32 @@ namespace OpenBabel
     for ( unsigned short i = idx ; i < _residue.size() ; i++ )
       _residue[i]->SetIdx(i);
 
-    DestroyResidue(residue);
+    if (destroyResidue)
+      DestroyResidue(residue);
+
+    UnsetSSSRPerceived();
+    return(true);
+  }
+  
+  bool OBMol::DeleteBond(OBBond *bond, bool destroyBond)
+  {
+    BeginModify();
+
+    (bond->GetBeginAtom())->DeleteBond(bond);
+    (bond->GetEndAtom())->DeleteBond(bond);
+    _vbond.erase(_vbond.begin() + bond->GetIdx()); // bond index starts at 0!!!
+    _nbonds--;
+
+    vector<OBBond*>::iterator i;
+    int j;
+    OBBond *bondi;
+    for (bondi = BeginBond(i),j=0;bondi;bondi = NextBond(i),++j)
+      bondi->SetIdx(j);
+
+    EndModify();
+
+    if (destroyBond)
+      DestroyBond(bond);
 
     UnsetSSSRPerceived();
     return(true);
@@ -2670,29 +2696,6 @@ namespace OpenBabel
                    bond.GetEndAtomIdx(),
                    bond.GetBO(),
                    bond.GetFlags()));
-  }
-
-  bool OBMol::DeleteBond(OBBond *bond)
-  {
-    BeginModify();
-
-    (bond->GetBeginAtom())->DeleteBond(bond);
-    (bond->GetEndAtom())->DeleteBond(bond);
-    _vbond.erase(_vbond.begin() + bond->GetIdx()); // bond index starts at 0!!!
-    _nbonds--;
-
-    vector<OBBond*>::iterator i;
-    int j;
-    OBBond *bondi;
-    for (bondi = BeginBond(i),j=0;bondi;bondi = NextBond(i),++j)
-      bondi->SetIdx(j);
-
-    EndModify();
-
-    DestroyBond(bond);
-
-    UnsetSSSRPerceived();
-    return(true);
   }
 
   void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)

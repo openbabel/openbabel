@@ -1,3 +1,11 @@
+2008-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Regenerate autotools build system based on Daniel's updated autogen.
+
+	* include/openbabel/mol.h, src/mol.cpp (DeleteAtom, DeleteBond,
+	DeleteResidue): Update to allow the user to free an atom, bond or
+	residue (i.e., just remove the atom or bond or residue from the molecule).
+
 2008-05-07  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/python/pybel.py: Synch with cinfony.

@@ -208,13 +208,13 @@ namespace OpenBabel
     //! Updates the molecule and atom and bond indexes accordingly.
     //! \warning Does not update any residues which may contain this atom
     //! \return Whether deletion was successful
-    bool DeleteAtom(OBAtom*);
+    bool DeleteAtom(OBAtom*, bool destroyAtom = true);
     //! Deletes an bond from this molecule and updates accordingly
     //! \return Whether deletion was successful
-    bool DeleteBond(OBBond*);
+    bool DeleteBond(OBBond*, bool destroyBond = true);
     //! Deletes a residue from this molecule and updates accordingly.
     //! \return Whether deletion was successful
-    bool DeleteResidue(OBResidue*);
+    bool DeleteResidue(OBResidue*, bool destroyResidue = true);
     //@}
 
     //! \name Molecule modification methods
