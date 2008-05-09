@@ -60,6 +60,8 @@ namespace OpenBabel {
     void GetAxes( vector3 &v1, vector3 &v2, vector3 &v3 ) const;
     /// \return number of points along the three axes parallel to the grid edges.
     void GetNumberOfPoints( int &nx, int &ny, int &nz) const;
+    /// \return total number of points in the grid.
+    int GetNumberOfPoints() const;
     /// \return number of points along the three axes parallel to the grid edges.
     void GetNumberOfSteps( int steps[ 3 ] ) const;
     /// \return grid values as a vector of doubles.
@@ -78,6 +80,10 @@ namespace OpenBabel {
     void GetOriginVector( double o[ 3 ] ) const;
     /// \return the origin (i.e., the minimum x, y, and z coords of the grid)
     vector3 GetOriginVector() const;
+    /// \return the unrestricted flag.
+    bool GetUnrestricted() const;
+    /// \return the number of symmetries.
+    int GetNumSymmetries() const;
     //@}
 
 
@@ -96,6 +102,10 @@ namespace OpenBabel {
     void SetValues( const std::vector< double >& v );
     /// Set the unit of measure
     void SetUnit( Unit u );
+    /// Set the unrestricted flag
+    void SetUnrestricted( bool u );
+    /// Set the number of symmetries
+    void SetNumSymmetries( int s );
     //@}
 
   private:
