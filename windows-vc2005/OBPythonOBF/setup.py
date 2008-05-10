@@ -15,7 +15,7 @@ or related areas.
 shutil.copy("../../scripts/python/pybel.py", ".")
 
 setup(name='openbabel-python',
-      version='1.2',
+      version='1.3b',
       author='The Open Babel development team',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/wiki/Python',
@@ -30,7 +30,8 @@ setup(name='openbabel-python',
                     '../OBDESC.obf', '../obcommon.obf',
                     '../OBMore.obf', '../OBXML.obf',
                     '../OBUtil.obf', '../OBInchi.obf',
-                    '../OBMCDL.obf', '../gen3D.obf']),
+                    '../OBMCDL.obf', '../gen3D.obf',
+                    '../oberror.dll']),
                   ('Lib/site-packages/openbabel_data',
                    glob.glob("../../data/*.txt"))
                  ],
