@@ -82,7 +82,7 @@ namespace OpenBabel
   class OBAPI OBElement
     {
       int _num;
-      char _symbol[3];
+      char _symbol[4];
       std::string _name;
       double _Rcov,_Rvdw,_mass,_elNeg,_ARENeg,_ionize,_elAffinity;
       double _red, _green, _blue;

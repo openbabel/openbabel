@@ -96,14 +96,14 @@ namespace OpenBabel
   void OBElementTable::ParseLine(const char *buffer)
   {
     int num,maxbonds;
-    char symbol[5];
+    char symbol[4];
     char name[256];
     double Rcov,Rvdw,mass, elNeg, ARENeg, ionize, elAffin;
     double red, green, blue;
 
     if (buffer[0] != '#') // skip comment line (at the top)
       {
-        sscanf(buffer,"%d %5s %lf %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %255s",
+        sscanf(buffer,"%d %4s %lf %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %255s",
                &num,
                symbol,
                &ARENeg,
