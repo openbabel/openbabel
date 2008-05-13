@@ -846,6 +846,9 @@ namespace OpenBabel {
   {
     if(!pInFormat) return false;
 
+    // save the filename
+    InFilename = filePath;
+
     // if we have an old stream, free this first before creating a new one
     if (pInStream && NeedToFreeInStream) {
       delete pInStream;
