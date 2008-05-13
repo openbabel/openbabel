@@ -1,5 +1,18 @@
 2008-05-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/formats/xtcformat.cpp: Portable compressed trajectory file
+	format. Used by gromacs. Since there is no real API to handle
+	trajectories at the moment, ReadMolecule is used. Instead of
+	CastAndClear, the OBBase object is only cast to an OBMol object to
+	which conformers are added for each frame. Box, step and time are
+	currently ignored. Currently read only. (Avogadro implementation)
+
+	* Makefiles: NOT updated yet, from looking at the gromacs source, it
+	seems that the XDR stuff needs special handling on windows and I don't
+	want to break OB now.
+
+2008-05-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* src/atom.cpp: Replace implementation for 
 	bool IsHbondDonor() { return MatchesSMARTS("[$([#8,#7H,#9;!H0])]"); }
 	with C++ code for better performance.
