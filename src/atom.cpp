@@ -1789,7 +1789,17 @@ namespace OpenBabel
 
   bool OBAtom::IsHbondDonor()
   {
-    return MatchesSMARTS("[$([#8,#7H,#9;!H0])]");
+    // return MatchesSMARTS("[$([#8,#7H,#9;!H0])]");
+    if (!(_ele == 7 || _ele == 8 || _ele == 9))
+      return false;
+
+    OBAtom *nbr;
+    OBBondIterator i;
+    for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
+      if (nbr->IsHydrogen())
+        return true;
+
+    return false;
   }
 
   bool OBAtom::IsHbondDonorH()

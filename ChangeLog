@@ -1,3 +1,9 @@
+2008-05-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/atom.cpp: Replace implementation for 
+	bool IsHbondDonor() { return MatchesSMARTS("[$([#8,#7H,#9;!H0])]"); }
+	with C++ code for better performance.
+
 2008-05-10  Noel O'Boyle <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPythonOBF/setup.py: Adding missing oberror.dll.
