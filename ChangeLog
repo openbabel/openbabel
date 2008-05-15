@@ -1,3 +1,7 @@
+2008-05-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/CMakeList.txt: Add xtc format for non-WIN32 platforms.
+
 2008-05-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/obconversion.cpp: save the filename in ReadFile (needed for xtc

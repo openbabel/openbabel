@@ -115,6 +115,14 @@ if(LIBXML2_FOUND)
 endif(LIBXML2_FOUND)
 
 if(NOT WIN32)
+  set(formats
+    ${formats}
+    xtcformat
+  )
+endif(NOT WIN32)
+
+
+if(NOT WIN32)
   set(libs ${libs} m)
 endif(NOT WIN32)
 
