@@ -807,7 +807,7 @@ namespace OpenBabel
 
   //! Returns a pointer to the atom after a safety check
   //! 0 < idx <= NumAtoms
-  OBAtom *OBMol::GetAtom(int idx)
+  OBAtom *OBMol::GetAtom(int idx) const
   {
     if ((unsigned)idx < 1 || (unsigned)idx > NumAtoms())
       {
@@ -818,14 +818,14 @@ namespace OpenBabel
     return((OBAtom*)_vatom[idx-1]);
   }
 
-  OBAtom *OBMol::GetFirstAtom()
+  OBAtom *OBMol::GetFirstAtom() const
   {
     return((_vatom.empty()) ? (OBAtom*)NULL : (OBAtom*)_vatom[0]);
   }
 
   //! Returns a pointer to the bond after a safety check
   //! 0 <= idx < NumBonds
-  OBBond *OBMol::GetBond(int idx)
+  OBBond *OBMol::GetBond(int idx) const
   {
     if (idx < 0 || (unsigned)idx >= NumBonds())
       {
@@ -836,12 +836,12 @@ namespace OpenBabel
     return((OBBond*)_vbond[idx]);
   }
 
-  OBBond *OBMol::GetBond(int bgn, int end)
+  OBBond *OBMol::GetBond(int bgn, int end) const
   {
     return(GetBond(GetAtom(bgn),GetAtom(end)));
   }
 
-  OBBond *OBMol::GetBond(OBAtom *bgn,OBAtom *end)
+  OBBond *OBMol::GetBond(OBAtom *bgn,OBAtom *end) const
   {
     OBAtom *nbr;
     vector<OBBond*>::iterator i;
@@ -853,7 +853,7 @@ namespace OpenBabel
     return(NULL); //just to keep the SGI compiler happy
   }
 
-  OBResidue *OBMol::GetResidue(int idx)
+  OBResidue *OBMol::GetResidue(int idx) const
   {
     if (idx < 0 || (unsigned)idx >= NumResidues())
       {

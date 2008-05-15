@@ -256,22 +256,22 @@ namespace OpenBabel
     
     //! \return the atom at index @p idx or NULL if it does not exist.
     //! \warning Atom indexing will change. Use iterator methods instead.
-    OBAtom      *GetAtom(int idx);
+    OBAtom      *GetAtom(int idx) const;
     //! \return the first atom in this molecule, or NULL if none exist.
     //! \deprecated Will be removed in favor of more standard iterator methods
-    OBAtom      *GetFirstAtom();
+    OBAtom      *GetFirstAtom() const;
     //! \return the bond at index @p idx or NULL if it does not exist.
     //! \warning Bond indexing may change. Use iterator methods instead.
-    OBBond      *GetBond(int idx);
+    OBBond      *GetBond(int idx) const;
     //! \return the bond connecting the atom indexed by @p a and @p b or NULL if none exists.
     //! \warning Atom indexing will change. Use atom objects and iterators instead.
-    OBBond      *GetBond(int a, int b);
+    OBBond      *GetBond(int a, int b) const;
     // The safer version of the above method
     //! \return the bond between the atoms @p bgn and @p end or NULL if none exists
-    OBBond      *GetBond(OBAtom* bgn, OBAtom* end);
+    OBBond      *GetBond(OBAtom* bgn, OBAtom* end) const;
     //! \return the residue indexed by @p idx, or NULL if none exists
     //! \warning Residue indexing may change. Use iterator methods instead.
-    OBResidue   *GetResidue(int idx);
+    OBResidue   *GetResidue(int idx) const;
     std::vector<OBInternalCoord*> GetInternalCoord();
     /*! \return the dihedral angle (in degrees) between the four atoms supplied a1-a2-a3-a4)
      *  WARNING: SetTorsion takes an angle in radians while GetTorsion returns it
