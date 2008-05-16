@@ -972,6 +972,7 @@ namespace OpenBabel
                     }
                   //cout<<tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge<<endl;
                   if(0!=charge) atom->SetFormalCharge(sign*charge);
+                  else if(-1==sign) atom->SetFormalCharge(sign);
                 }
               
               if(nbc>0) tmpSymbol=tmpSymbol.substr(0,nbc);
