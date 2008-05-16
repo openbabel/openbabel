@@ -24,6 +24,7 @@
 //#include <malloc.h>
 //#include <math.h>
 //#include <rpc/rpc.h>
+#include <rpc/types.h>
 #include <rpc/xdr.h>
 //#include <stdio.h>
 //#include <stdlib.h>

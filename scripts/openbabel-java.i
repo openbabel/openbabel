@@ -11,7 +11,11 @@
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/math/transform3d.h>
+#include <openbabel/math/spacegroup.h>
+
 #include <openbabel/generic.h>
+#include <openbabel/griddata.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
@@ -90,14 +94,16 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
 %include <openbabel/math/matrix3x3.h>
+%include <openbabel/math/transform3d.h>
+%include <openbabel/math/spacegroup.h>
 
-%import <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
+%include <openbabel/griddata.h>
 
-%import <openbabel/chains.h>
-%import <openbabel/bitvec.h>
-%import <openbabel/typer.h>
+%include <openbabel/chains.h>
+%include <openbabel/bitvec.h>
+%include <openbabel/typer.h>
 
 %include <openbabel/plugin.h>
 
@@ -139,6 +145,6 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
 
-
+%ignore SpaceGroup::RegisterSpaceGroup;
 
 %include <openbabel/obiter.h>

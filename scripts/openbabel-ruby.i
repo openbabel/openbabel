@@ -19,6 +19,7 @@
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/griddata.h>
 #include <openbabel/generic.h>
 
 #include <openbabel/base.h>
@@ -89,6 +90,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %import <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
+%include <openbabel/griddata.h>
 
 %import <openbabel/chains.h>
 %import <openbabel/bitvec.h>

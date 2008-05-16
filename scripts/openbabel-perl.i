@@ -13,6 +13,7 @@
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/generic.h>
+#include <openbabel/griddata.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
@@ -82,12 +83,13 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %import <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
+%include <openbabel/griddata.h>
 
 %import <openbabel/chains.h>
 %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
 
-%include <openbabel/plugin.h>
+%import <openbabel/plugin.h>
 
 %include <openbabel/oberror.h>
 %include <openbabel/format.h>

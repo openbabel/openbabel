@@ -718,6 +718,14 @@ xedformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(xedformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_xedformat_la_rpath = -rpath $(pkglibdir)
+xtcformat_la_LIBADD =
+am__xtcformat_la_SOURCES_DIST = xtcformat.cpp
+@BUILD_SHARED_TRUE@am_xtcformat_la_OBJECTS = xtcformat.lo
+xtcformat_la_OBJECTS = $(am_xtcformat_la_OBJECTS)
+xtcformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(xtcformat_la_LDFLAGS) $(LDFLAGS) -o $@
+@BUILD_SHARED_TRUE@am_xtcformat_la_rpath = -rpath $(pkglibdir)
 xyzformat_la_LIBADD =
 am__xyzformat_la_SOURCES_DIST = xyzformat.cpp
 @BUILD_SHARED_TRUE@am_xyzformat_la_OBJECTS = xyzformat.lo
@@ -791,8 +799,9 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(thermoformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
 	$(titleformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
 	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
-	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
-	$(yasaraformat_la_SOURCES) $(zindoformat_la_SOURCES)
+	$(xedformat_la_SOURCES) $(xtcformat_la_SOURCES) \
+	$(xyzformat_la_SOURCES) $(yasaraformat_la_SOURCES) \
+	$(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__MCDLformat_la_SOURCES_DIST) \
@@ -868,6 +877,7 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__unichemformat_la_SOURCES_DIST) \
 	$(am__viewmolformat_la_SOURCES_DIST) \
 	$(am__xedformat_la_SOURCES_DIST) \
+	$(am__xtcformat_la_SOURCES_DIST) \
 	$(am__xyzformat_la_SOURCES_DIST) \
 	$(am__yasaraformat_la_SOURCES_DIST) \
 	$(am__zindoformat_la_SOURCES_DIST)
@@ -1091,8 +1101,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	smilesformat.la thermoformat.la \
 @BUILD_SHARED_TRUE@	tinkerformat.la titleformat.la \
 @BUILD_SHARED_TRUE@	turbomoleformat.la unichemformat.la \
-@BUILD_SHARED_TRUE@	viewmolformat.la xedformat.la xyzformat.la \
-@BUILD_SHARED_TRUE@	yasaraformat.la zindoformat.la \
+@BUILD_SHARED_TRUE@	viewmolformat.la xedformat.la xtcformat.la \
+@BUILD_SHARED_TRUE@	xyzformat.la yasaraformat.la zindoformat.la \
 @BUILD_SHARED_TRUE@	$(am__append_3)
 @BUILD_SHARED_TRUE@APIInterface_la_SOURCES = APIInterface.cpp
 @BUILD_SHARED_TRUE@APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
@@ -1244,6 +1254,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@viewmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@xedformat_la_SOURCES = xedformat.cpp 
 @BUILD_SHARED_TRUE@xedformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@xtcformat_la_SOURCES = xtcformat.cpp 
+@BUILD_SHARED_TRUE@xtcformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@xyzformat_la_SOURCES = xyzformat.cpp 
 @BUILD_SHARED_TRUE@xyzformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@yasaraformat_la_SOURCES = yasaraformat.cpp 
@@ -1470,6 +1482,8 @@ viewmolformat.la: $(viewmolformat_la_OBJECTS) $(viewmolformat_la_DEPENDENCIES)
 	$(viewmolformat_la_LINK) $(am_viewmolformat_la_rpath) $(viewmolformat_la_OBJECTS) $(viewmolformat_la_LIBADD) $(LIBS)
 xedformat.la: $(xedformat_la_OBJECTS) $(xedformat_la_DEPENDENCIES) 
 	$(xedformat_la_LINK) $(am_xedformat_la_rpath) $(xedformat_la_OBJECTS) $(xedformat_la_LIBADD) $(LIBS)
+xtcformat.la: $(xtcformat_la_OBJECTS) $(xtcformat_la_DEPENDENCIES) 
+	$(xtcformat_la_LINK) $(am_xtcformat_la_rpath) $(xtcformat_la_OBJECTS) $(xtcformat_la_LIBADD) $(LIBS)
 xyzformat.la: $(xyzformat_la_OBJECTS) $(xyzformat_la_DEPENDENCIES) 
 	$(xyzformat_la_LINK) $(am_xyzformat_la_rpath) $(xyzformat_la_OBJECTS) $(xyzformat_la_LIBADD) $(LIBS)
 yasaraformat.la: $(yasaraformat_la_OBJECTS) $(yasaraformat_la_DEPENDENCIES) 
@@ -1560,6 +1574,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unichemformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/viewmolformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xedformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtcformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xyzformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/yasaraformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zindoformat.Plo@am__quote@

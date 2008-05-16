@@ -1,3 +1,19 @@
+2008-05-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/java/OBTest.java: Bring back test program.
+
+	* scripts/openbabel-java.i, scripts/openbabel-perl.i,
+	scripts/openbabel-ruby.i: Fix script bindings. Now compile
+	cleanly. Perl still needs work to pass tests.
+
+	* include/openbabel/math/spacegroup.h, include/openbabel/plugin.h:
+	Minor updates for SWIG compatibility.
+
+	* src/formats/Makefile.*: Add xtcformat.cpp.
+
+	* src/formats/xtcformat.cpp: Add rpc/types.h for Mac
+	compatibility.
+
 2008-05-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.h, src/forcefield.cpp: Added functions

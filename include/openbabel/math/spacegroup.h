@@ -64,7 +64,12 @@ namespace OpenBabel
         static const SpaceGroup * Find (SpaceGroup* group);
         /* Use it if the space group is unknown (might happen if no database has
          been loaded or if the HM name is not usual. */
+        // Unfortunately, this seems to confuse the SWIG parser
+        // Fortunately, it's not needed for the scripting bindings, 
+        // since this is internal code
+#ifndef SWIG
         void RegisterSpaceGroup (int nb = 0, ...);
+#endif
 
         bool operator ==(const SpaceGroup &) const;
         int operator!=(const SpaceGroup &other) const

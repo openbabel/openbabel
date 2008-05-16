@@ -57,7 +57,7 @@ public:
   virtual ~OBPlugin(){};
 
   ///Required description of a sub-type
-  virtual const char* Description() =0;
+  virtual const char* Description() { return NULL;} ;
 
   ///Write information on a plugin class to the string txt.
   ///Return false if not written.

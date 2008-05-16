@@ -102,7 +102,7 @@ pkglib_LTLIBRARIES = \
 	shelxformat.la smilesformat.la thermoformat.la \
 	tinkerformat.la titleformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
-	xedformat.la xyzformat.la yasaraformat.la zindoformat.la
+	xedformat.la xtcformat.la xyzformat.la yasaraformat.la zindoformat.la
 if HAVE_SHARED_POINTER
     pkglib_LTLIBRARIES += chemdrawcdxformat.la chemkinformat.la \
                           rxnformat.la rsmiformat.la
@@ -334,6 +334,9 @@ viewmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.
 
 xedformat_la_SOURCES = xedformat.cpp 
 xedformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+xtcformat_la_SOURCES = xtcformat.cpp 
+xtcformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 xyzformat_la_SOURCES = xyzformat.cpp 
 xyzformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
