@@ -1,5 +1,14 @@
 2008-05-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* include/openbabel/forcefield.h, src/forcefield.cpp: Added functions
+	to temporarily ignore or fix an atom. This allows interactive programs
+	to use this while drawing (no repulsion between your new atom and the
+	fragment you want to connect to. 
+
+	* src/forcefields/forcefield*.cpp: Same
+
+2008-05-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* src/formats/CMakeList.txt: Add xtc format for non-WIN32 platforms.
 
 2008-05-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>

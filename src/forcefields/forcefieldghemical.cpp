@@ -26,6 +26,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFBondCalculationGhemical::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b)) {
+      energy = 0.0;
+      return;
+    }
+ 
     double delta2;
 
     if (gradients) {
@@ -86,6 +91,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFAngleCalculationGhemical::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b, idx_c)) {
+      energy = 0.0;
+      return;
+    }
+ 
     double delta2;
 
     if (gradients) {
@@ -151,6 +161,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFTorsionCalculationGhemical::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b, idx_c, idx_d)) {
+      energy = 0.0;
+      return;
+    }
+ 
     if (gradients) {
       tor = DEG_TO_RAD * OBForceField::VectorTorsionDerivative(pos_a, pos_b, pos_c, pos_d, 
                                                                force_a, force_b, force_c, force_d);
@@ -227,7 +242,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFVDWCalculationGhemical::Compute()
   {
-
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b)) {
+      energy = 0.0;
+      return;
+    }
+ 
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
     } else {
@@ -298,6 +317,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFElectrostaticCalculationGhemical::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b)) {
+      energy = 0.0;
+      return;
+    }
+ 
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
       const double rab2 = rab * rab;

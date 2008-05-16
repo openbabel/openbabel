@@ -37,6 +37,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFBondCalculationUFF::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b)) {
+      energy = 0.0;
+      return;
+    }
+ 
     vector3 vab, da, db;
     double delta2, dE;
 
@@ -101,6 +106,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFAngleCalculationUFF::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b, idx_c)) {
+      energy = 0.0;
+      return;
+    }
+ 
     vector3 da, db, dc;
 		double dE;
     
@@ -204,6 +214,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFTorsionCalculationUFF::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b, idx_c, idx_d)) {
+      energy = 0.0;
+      return;
+    }
+ 
     vector3 da, db, dc, dd;
     double cosine;
     double dE;
@@ -303,6 +318,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFOOPCalculationUFF::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b, idx_c, idx_d)) {
+      energy = 0.0;
+      return;
+    }
+ 
     vector3 da, db, dc, dd;
     double dE;
     
@@ -376,6 +396,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFVDWCalculationUFF::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b)) {
+      energy = 0.0;
+      return;
+    }
+ 
     vector3 da, db;
     double term6, term12, dE, term7, term13;
 
@@ -455,6 +480,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFElectrostaticCalculationUFF::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b)) {
+      energy = 0.0;
+      return;
+    }
+ 
     vector3 da, db;
     double dE, rab2;
 

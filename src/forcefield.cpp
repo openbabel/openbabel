@@ -372,6 +372,8 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////////////////////////////
  
   OBFFConstraints OBForceField::_constraints = OBFFConstraints(); // define static data variable
+  int OBForceField::_fixAtom = 0; // define static data variable
+  int OBForceField::_ignoreAtom = 0; // define static data variable
 
   OBFFConstraints& OBForceField::GetConstraints() 
   { 
@@ -380,11 +382,64 @@ namespace OpenBabel
   
   void OBForceField::SetConstraints(OBFFConstraints& constraints) 
   { 
-    _constraints = constraints; 
+    _constraints = constraints;
     if (_mol.NumAtoms())
       _constraints.Setup(_mol); 
   }
-  
+ 
+  void OBForceField::SetFixAtom(int index) 
+  {
+    _fixAtom = index; 
+  }
+
+  void OBForceField::UnsetFixAtom()
+  {
+    _fixAtom = 0;
+  }
+
+  void OBForceField::SetIgnoreAtom(int index) 
+  {
+    _ignoreAtom = index; // remember the index
+  }
+
+  void OBForceField::UnsetIgnoreAtom()
+  {
+    _ignoreAtom = 0;
+  }
+
+  bool OBForceField::IgnoreCalculation(int a, int b)
+  {
+    if (!_ignoreAtom)
+      return false;
+
+    if (_ignoreAtom == a)
+      return true;
+    if (_ignoreAtom == b)
+      return true;
+
+    return false;
+  }
+
+  bool OBForceField::IgnoreCalculation(int a, int b, int c)
+  {
+    if (OBForceField::IgnoreCalculation(a, c))
+      return true;
+    if (_ignoreAtom == b)
+      return true;
+    
+    return false;
+  }
+
+  bool OBForceField::IgnoreCalculation(int a, int b, int c, int d)
+  {
+    if (OBForceField::IgnoreCalculation(a, b, c))
+      return true;
+    if (_ignoreAtom == d)
+      return true;
+    
+    return false;
+  }
+
   OBFFConstraints::OBFFConstraints()
   {
     _factor = 50000.0;
@@ -2410,7 +2465,7 @@ namespace OpenBabel
         unsigned int idx = a->GetIdx();
         unsigned int coordIdx = (idx - 1) * 3;
 
-        if (_constraints.IsFixed(idx)) {
+        if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
           _gradientPtr[coordIdx] = 0.0;
           _gradientPtr[coordIdx+1] = 0.0;
           _gradientPtr[coordIdx+2] = 0.0;
@@ -2518,7 +2573,7 @@ namespace OpenBabel
       unsigned int idx = a->GetIdx();
       unsigned int coordIdx = (idx - 1) * 3;
  
-      if (_constraints.IsFixed(idx)) {
+      if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
         _gradientPtr[coordIdx] = 0.0;
         _gradientPtr[coordIdx+1] = 0.0;
         _gradientPtr[coordIdx+2] = 0.0;
@@ -2588,7 +2643,7 @@ namespace OpenBabel
         unsigned int idx = a->GetIdx();
         unsigned int coordIdx = (a->GetIdx() - 1) * 3;
 
-        if (_constraints.IsFixed(idx)) {
+        if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
           _gradientPtr[coordIdx] = 0.0;
           _gradientPtr[coordIdx+1] = 0.0;
           _gradientPtr[coordIdx+2] = 0.0;
@@ -3036,7 +3091,7 @@ namespace OpenBabel
     memset(_velocityPtr, '\0', sizeof(double)*_ncoords);
     
     FOR_ATOMS_OF_MOL (a, _mol) {
-      if (!_constraints.IsFixed(a->GetIdx())) {
+      if (!_constraints.IsFixed(a->GetIdx()) || (_fixAtom == a->GetIdx()) || (_ignoreAtom == a->GetIdx())) {
         velocityIdx = (a->GetIdx() - 1) * 3;
       
         // add twelve random numbers between 0.0 and 1.0,
@@ -3138,7 +3193,7 @@ namespace OpenBabel
  
     for (int i = 1; i <= n; i++) {
       FOR_ATOMS_OF_MOL (a, _mol) {
-        if (!_constraints.IsFixed(a->GetIdx())) {
+        if (!_constraints.IsFixed(a->GetIdx()) || (_fixAtom == a->GetIdx()) || (_ignoreAtom == a->GetIdx())) {
           if (HasAnalyticalGradients())
             force = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
           else

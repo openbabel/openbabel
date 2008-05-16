@@ -95,6 +95,11 @@ namespace OpenBabel
   template<bool gradients>
   inline void OBFFBondCalculationMMFF94::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b)) {
+      energy = 0.0;
+      return;
+    }
+ 
     double delta2;
     
     if (gradients) {
@@ -184,6 +189,11 @@ namespace OpenBabel
   template<bool gradients>
   inline void OBFFAngleCalculationMMFF94::Compute() 
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b, idx_c)) {
+      energy = 0.0;
+      return;
+    }
+ 
     double delta2, dE;
  
     if (gradients) {
@@ -296,7 +306,11 @@ namespace OpenBabel
   template<bool gradients>
   inline void OBFFStrBndCalculationMMFF94::Compute()
   {
-    
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b, idx_c)) {
+      energy = 0.0;
+      return;
+    }
+  
     if (gradients) {
       theta = OBForceField::VectorAngleDerivative(pos_a, pos_b, pos_c, 
                                                   force_abc_a, force_abc_b, force_abc_c);
@@ -427,6 +441,11 @@ namespace OpenBabel
   template<bool gradients>
   inline void OBFFTorsionCalculationMMFF94::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b, idx_c, idx_d)) {
+      energy = 0.0;
+      return;
+    }
+ 
     double cosine, cosine2, cosine3;
     double phi1, phi2, phi3;
     double dE, sine, sine2, sine3;
@@ -534,6 +553,11 @@ namespace OpenBabel
   template<bool gradients>
   void OBFFOOPCalculationMMFF94::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b, idx_c, idx_d)) {
+      energy = 0.0;
+      return;
+    }
+ 
     double angle2, dE;
     
     if (gradients) {
@@ -559,7 +583,7 @@ namespace OpenBabel
   }
 
   template<bool gradients>
-  inline double OBForceFieldMMFF94::E_OOP() 
+  double OBForceFieldMMFF94::E_OOP() 
   {
     double energy = 0.0;
     
@@ -619,6 +643,11 @@ namespace OpenBabel
   template<bool gradients>
   inline void OBFFVDWCalculationMMFF94::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b)) {
+      energy = 0.0;
+      return;
+    }
+    
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
     } else {
@@ -715,6 +744,11 @@ namespace OpenBabel
   template<bool gradients>
   inline void OBFFElectrostaticCalculationMMFF94::Compute()
   {
+    if (OBForceField::IgnoreCalculation(idx_a, idx_b)) {
+      energy = 0.0;
+      return;
+    }
+
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
       rab += 0.05; // ??

@@ -542,40 +542,42 @@ namespace OpenBabel
     // general variables
     OBMol 	_mol; //!< Molecule to be evaluated or minimized
     bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
-    bool 	_validSetup; //! was the last call to Setup succesfull
-    double	*_gradientPtr; //! pointer to the gradients (used by AddGradient(), minimization functions, ...)
+    bool 	_validSetup; //!< was the last call to Setup succesfull
+    double	*_gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
     // logging variables
-    std::ostream* _logos; //! Output for logfile
+    std::ostream* _logos; //!< Output for logfile
     char 	_logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
     int 	_loglvl; //!< Log level for output
     int 	_origLogLevel;
     // conformer genereation (rotor search) variables
-    int 	_current_conformer; //! used to hold i for current conformer (needed by UpdateConformers)
-    std::vector<double> _energies; //! used to hold the energies for all conformers
+    int 	_current_conformer; //!< used to hold i for current conformer (needed by UpdateConformers)
+    std::vector<double> _energies; //!< used to hold the energies for all conformers
     // minimization variables
-    double 	_econv, _e_n1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    int 	_cstep, _nsteps; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    double 	*_grad1; //! Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    double 	_econv, _e_n1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    int 	_cstep, _nsteps; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    double 	*_grad1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
-    int         _linesearch; //! LineSearch type
+    int         _linesearch; //!< LineSearch type
     // molecular dynamics variables
-    double 	_timestep; //! Molecular dynamics time step in picoseconds
-    double 	_T; //! Molecular dynamics temperature in Kelvin
-    double 	*_velocityPtr; //! pointer to the velocities
+    double 	_timestep; //!< Molecular dynamics time step in picoseconds
+    double 	_T; //!< Molecular dynamics temperature in Kelvin
+    double 	*_velocityPtr; //!< pointer to the velocities
     // contraint varibles
     static OBFFConstraints _constraints; //!< Constraints
+    static int _fixAtom; //!< SetFixAtom()/UnsetFixAtom()
+    static int _ignoreAtom; //!< SetIgnoreAtom()/UnsetIgnoreAtom()
     // cut-off variables
-    bool 	_cutoff; //! true = cut-off enabled
-    double 	_rvdw; //! VDW cut-off distance
-    double 	_rele; //! Electrostatic cut-off distance
-    OBBitVec	_vdwpairs; //! VDW pairs that should be calculated
-    OBBitVec	_elepairs; //! Electrostatic pairs that should be calculated
-    int 	_pairfreq; //! The frequence to update non-bonded pairs
+    bool 	_cutoff; //!< true = cut-off enabled
+    double 	_rvdw; //!< VDW cut-off distance
+    double 	_rele; //!< Electrostatic cut-off distance
+    OBBitVec	_vdwpairs; //!< VDW pairs that should be calculated
+    OBBitVec	_elepairs; //!< Electrostatic pairs that should be calculated
+    int 	_pairfreq; //!< The frequence to update non-bonded pairs
     // group variables
-    std::vector<OBBitVec> _intraGroup; //! groups for which intra-molecular interactions should be calculated
-    std::vector<OBBitVec> _interGroup; //! groups for which intra-molecular interactions should be calculated
-    std::vector<std::pair<OBBitVec, OBBitVec> > _interGroups; //! groups for which intra-molecular 
-                                                              //!interactions should be calculated
+    std::vector<OBBitVec> _intraGroup; //!< groups for which intra-molecular interactions should be calculated
+    std::vector<OBBitVec> _interGroup; //!< groups for which intra-molecular interactions should be calculated
+    std::vector<std::pair<OBBitVec, OBBitVec> > _interGroups; //!< groups for which intra-molecular 
+                                                              //!< interactions should be calculated
   public:
     /*! Clone the current instance. May be desirable in multithreaded environments,
      *  Should be deleted after use
@@ -1320,6 +1322,38 @@ namespace OpenBabel
      *  \param constraints The new constraints to be used.
      */
     void SetConstraints(OBFFConstraints& constraints);
+    /*! Fix the atom position until UnsetFixAtom() is called. This function 
+     *  can be used in programs that allow the user to interact with a molecule
+     *  that is being minimized without having to check if the atom is already 
+     *  fixed in the constraints set by Setup() or SetConstraints(). Using this 
+     *  makes sure the selected atom follows the mouse cursur.
+     *  \param index The index for the atom to fix.
+     */
+    void SetFixAtom(int index);
+    /*! Undo last SetFixAtom. This function will not remove the fix atom 
+     *  constraint for this atom if set by Setup() or SetConstraints().
+     */
+    void UnsetFixAtom();
+    /*! Ignore the atom until UnsetIgnoreAtom() is called. This function 
+     *  can be used in programs that allow the user to interact with a molecule
+     *  that is being minimized without having to check if the atom is already 
+     *  ignored in the constraints set by Setup() or SetConstraints(). Using this 
+     *  makes sure, in drawing mode, you can close rings without your newly 
+     *  created puching the other atoms away.
+     *  \param index The index for the atom to ignore.
+     */
+    void SetIgnoreAtom(int index);
+    /*! Undo last SetIgnoreAtom. This function will not remove the ignore atom 
+     *  constraint for this atom if set by Setup() or SetConstraints().
+     */
+    void UnsetIgnoreAtom();
+   
+    //! internal function 
+    static bool IgnoreCalculation(int a, int b);
+    //! internal function 
+    static bool IgnoreCalculation(int a, int b, int c);
+    //! internal function 
+    static bool IgnoreCalculation(int a, int b, int c, int d);
     //@}
 
  
