@@ -963,16 +963,19 @@ namespace OpenBabel
               if(tmpSymbol.size()>nbc)
                 {// Try to find a formal charge in the symbol
                   int charge=0;
-                  int sign=1;
+                  int sign=0;
                   for(unsigned int i=nbc;i<tmpSymbol.size();++i)
                     {// Use first number found as formal charge
                       if(isdigit(tmpSymbol[i]) && (charge==0)) charge=atoi(tmpSymbol.substr(i,1).c_str());
-                      if('-'==tmpSymbol[i]) sign=-1;
-                      if(('+'==tmpSymbol[i]) && (charge==0)) charge=1;
+                      if('-'==tmpSymbol[i]) sign-=1;
+                      if('+'==tmpSymbol[i]) sign+=1;
                     }
-                  //cout<<tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge<<endl;
-                  if(0!=charge) atom->SetFormalCharge(sign*charge);
-                  else if(-1==sign) atom->SetFormalCharge(sign);
+                  if(0!=sign) // no sign, no charge
+                    {
+                      if(charge==0) charge=1;
+                      cout<<tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge<<endl;
+                      atom->SetFormalCharge(sign*charge);
+                    }
                 }
               
               if(nbc>0) tmpSymbol=tmpSymbol.substr(0,nbc);
