@@ -945,13 +945,41 @@ namespace OpenBabel
           pmol->ReserveAtoms(nbatoms);
           for(vector<CIFData::CIFAtom>::const_iterator posat=pos->second.mvAtom.begin();posat!=pos->second.mvAtom.end();++posat)
             {
-              OBAtom *atom  = pmol->NewAtom();
-              int atomicNum = etab.GetAtomicNum(posat->mSymbol.c_str());
-              // :TODO: posat->mSymbol is not garanteed to actually be a symbol
+              // Problem: posat->mSymbol is not garanteed to actually be a symbol
               // see http://www.iucr.org/iucr-top/cif/cifdic_html/1/cif_core.dic/Iatom_type_symbol.html
+              // Try to strip the string to have a better chance to have a valid symbol
+              // This is not guaranteed to work still, as the CIF standard allows about any string...
+              string tmpSymbol=posat->mSymbol;
+              int nbc=0;
+              if((tmpSymbol.size()==1) && isalpha(tmpSymbol[0])) nbc=1;
+              else if(tmpSymbol.size()>=2)
+                {
+                  if(isalpha(tmpSymbol[0]) && isalpha(tmpSymbol[1])) nbc=2;
+                  else if(isalpha(tmpSymbol[0])) nbc=1;
+                }
+              
+              OBAtom *atom  = pmol->NewAtom();
+              
+              if(tmpSymbol.size()>nbc)
+                {// Try to find a formal charge in the symbol
+                  int charge=0;
+                  int sign=1;
+                  for(unsigned int i=nbc;i<tmpSymbol.size();++i)
+                    {// Use first number found as formal charge
+                      if(isdigit(tmpSymbol[i]) && (charge==0)) charge=atoi(tmpSymbol.substr(i,1).c_str());
+                      if('-'==tmpSymbol[i]) sign=-1;
+                      if(('+'==tmpSymbol[i]) && (charge==0)) charge=1;
+                    }
+                  //cout<<tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge<<endl;
+                  if(0!=charge) atom->SetFormalCharge(sign*charge);
+                }
+              
+              if(nbc>0) tmpSymbol=tmpSymbol.substr(0,nbc);
+              else tmpSymbol="C";//Something went wrong, no symbol ! Default to C ??
+              
+              int atomicNum = etab.GetAtomicNum(tmpSymbol.c_str());
               atom->SetAtomicNum(atomicNum); //set atomic number, or '0' if the atom type is not recognized
-              string symb=posat->mSymbol;// Need a no-const string to pass...
-              atom->SetType(symb); //set atomic number, or '0' if the atom type is not recognized
+              atom->SetType(tmpSymbol); //set atomic number, or '0' if the atom type is not recognized
               atom->SetVector(posat->mCoordCart[0],posat->mCoordCart[1],posat->mCoordCart[2]);
             }
           if (!pConv->IsOption("b",OBConversion::INOPTIONS))
