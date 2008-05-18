@@ -179,7 +179,7 @@ namespace OpenBabel
     void SetYAxis(vector3);
     void SetZAxis(vector3);
 
-    void SetLimits(double origin[3], double x[3], double y[3], double z[3]);
+    void SetLimits(const double origin[3], const double x[3], const double y[3], const double z[3]);
     void SetLimits(const vector3& origin, const vector3& x, const vector3& y,
                    const vector3& z);
 

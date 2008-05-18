@@ -161,7 +161,7 @@ namespace OpenBabel {
     d->floatGrid.SetNumberOfPoints(nx, ny, nz);
   }
 
-  void OBGridData::SetLimits(double origin [ 3 ], double x[ 3 ], double y[ 3 ], double z[ 3 ] )
+  void OBGridData::SetLimits(const double origin [ 3 ], const double x[ 3 ], const double y[ 3 ], const double z[ 3 ] )
   {
     d->floatGrid.SetLimits(origin, x, y, z);
   }

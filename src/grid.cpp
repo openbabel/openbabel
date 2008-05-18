@@ -92,8 +92,8 @@ namespace OpenBabel
       }
   }
 
-  void OBFloatGrid::SetLimits(double origin[3], double v1[3], double v2[3],
-                              double v3[3])
+  void OBFloatGrid::SetLimits(const double origin[3], const double v1[3], const double v2[3],
+                              const double v3[3])
   {
     // Convert to vectors and call the vector form of the function
     vector3 originv(origin[0], origin[1], origin[2]);

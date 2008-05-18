@@ -33,7 +33,7 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
 
-#include "t41data.h"
+#include <openbabel/griddata.h>
 
 using namespace std;
 using namespace OpenBabel;
@@ -127,7 +127,7 @@ private:
 
 
     /// Add grids from SCF
-    void AddSCFGrids( istream& is, OBT41Data& t41 ) {}
+    void AddSCFGrids( istream& is, OBGridData& t41 ) {}
 
     ///Inner class used to hold atomic number, coordinate, charge data
     struct AtomData
@@ -168,14 +168,15 @@ private:
     GridData ReadGridData( istream& is ) const;
 
     ///Read SCF grids.
-    bool ReadSCFGrid( istream& is, OBT41Data& t41Data ) const;
+    bool ReadSCFGrid( istream& is, OBGridData& t41Data ) const;
     
     ///Read SCF orbital grids.
-    bool ReadSCFOrbitalGrid( istream& is, OBT41Data& t41Data ) const;
+    bool ReadSCFOrbitalGrid( istream& is, OBGridData& t41Data ) const;
 
     ///Read SumFrag grids.
-    bool ReadSumFragGrid( istream& is, OBT41Data& t41Data ) const;
+    bool ReadSumFragGrid( istream& is, OBGridData& t41Data ) const;
 
+		OBGridData *NewData(const GridData &gd);
 };
 
 //------------------------------------------------------------------------------
@@ -191,6 +192,17 @@ namespace
 
 //==============================================================================
 
+OBGridData *OBT41Format::NewData(const T41GridData &gd)
+{
+	OBGridData *t41Data = new OBGridData;
+  t41Data->SetNumberOfPoints( gd.numPoints[ 0 ], gd.numPoints[ 1 ], gd.numPoints[ 2 ] );
+	t41Data->SetLimits( gd.startPoint, gd.xAxis, gd.yAxis, gd.zAxis );
+  t41Data->SetUnrestricted( gd.unrestricted );
+  t41Data->SetNumSymmetries( gd.numSymmetries );
+
+	return t41Data;
+}
+
 //------------------------------------------------------------------------------
 bool OBT41Format::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 {
@@ -202,26 +214,29 @@ bool OBT41Format::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     GridData gd;
     gd = ReadGridData( ifs );
 
-    OBT41Data* t41Data = 0;
+    OBGridData* t41Data = 0;
     if( gd )
     {
-       // vector< Orbital > orbitals;
-       // ReadOrbitals( orbitals, gd.labels[ 0 ] );
-       t41Data = new OBT41Data;
-       t41Data->SetNumberOfPoints( gd.numPoints[ 0 ], gd.numPoints[ 1 ], gd.numPoints[ 2 ] );
-       t41Data->SetAxes( gd.xAxis, gd.yAxis, gd.zAxis );
-       t41Data->SetStartPoint( gd.startPoint );
-       t41Data->SetUnrestricted( gd.unrestricted );
-       t41Data->SetNumSymmetries( gd.numSymmetries );
        streampos current = ifs.tellg();
+
+ 			 t41Data = NewData(gd);
        while( ReadSCFOrbitalGrid( ifs, *t41Data ) );
+       pmol->SetData( t41Data );
+
        ifs.clear();
        ifs.seekg( current, ios::beg );
+			 
+ 			 t41Data = NewData(gd);
        while( ReadSCFGrid( ifs, *t41Data ) );
+       pmol->SetData( t41Data );
+
        ifs.clear();
        ifs.seekg( current, ios::beg );
+
+ 			 t41Data = NewData(gd);
        while( ReadSumFragGrid( ifs, *t41Data ) );
        pmol->SetData( t41Data );
+
        ifs.clear();
        ifs.seekg( current, ios::beg );
     }
@@ -463,7 +478,7 @@ inline bool IsNum( const string& s )
     return isnum;
 }
 
-bool OBT41Format::ReadSCFOrbitalGrid( istream& is, OBT41Data& t41Data ) const
+bool OBT41Format::ReadSCFOrbitalGrid( istream& is, OBGridData& t41Data ) const
 {
     //find next tag starting with 'SCF'
     //if tag starts with SCF_ check next line
@@ -503,12 +518,13 @@ bool OBT41Format::ReadSCFOrbitalGrid( istream& is, OBT41Data& t41Data ) const
     {
         is >> grid[ i ];
     }
-    t41Data.SetValues( label, grid );
+    t41Data.SetValues( grid );
+		t41Data.SetAttribute( label );
     return true;
 }
 
 //------------------------------------------------------------------------------
-bool OBT41Format::ReadSCFGrid( istream& is, OBT41Data& t41Data ) const
+bool OBT41Format::ReadSCFGrid( istream& is, OBGridData& t41Data ) const
 {
 	if( !is ) return false;
     string buf;
@@ -525,13 +541,14 @@ bool OBT41Format::ReadSCFGrid( istream& is, OBT41Data& t41Data ) const
     vector< double > grid( numPoints );
     int i = 0;
     for( ; i != numPoints; ++i ) is >> grid[ i ];
-    t41Data.SetValues( label, grid );
+    t41Data.SetValues( grid );
+		t41Data.SetAttribute( label );
     return true;   
 }
 
 
 //------------------------------------------------------------------------------
-bool OBT41Format::ReadSumFragGrid( istream& is, OBT41Data& t41Data ) const
+bool OBT41Format::ReadSumFragGrid( istream& is, OBGridData& t41Data ) const
 {
     if( !is ) return false;
     string buf;
@@ -546,7 +563,8 @@ bool OBT41Format::ReadSumFragGrid( istream& is, OBT41Data& t41Data ) const
     vector< double > grid( numPoints );
     int i = 0;
     for( ; i != numPoints; ++i ) is >> grid[ i ];
-    t41Data.SetValues( label, grid );
+    t41Data.SetValues( grid );
+		t41Data.SetAttribute( label );
     return true;
 }
 
