@@ -560,7 +560,7 @@ namespace OpenBabel
     int         _linesearch; //!< LineSearch type
     // molecular dynamics variables
     double 	_timestep; //!< Molecular dynamics time step in picoseconds
-    double 	_T; //!< Molecular dynamics temperature in Kelvin
+    double 	_temp; //!< Molecular dynamics temperature in Kelvin
     double 	*_velocityPtr; //!< pointer to the velocities
     // contraint varibles
     static OBFFConstraints _constraints; //!< Constraints

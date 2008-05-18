@@ -1,3 +1,8 @@
+2008-05-19  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.h, src/forcefield.cpp: rename _T to
+	_temp. (_T is more likely to be defined elsewhere compared to _temp).
+
 2008-05-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/grid.h, src/grid.cpp,

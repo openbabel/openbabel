@@ -3101,7 +3101,7 @@ namespace OpenBabel
           for (int i=0; i < 12; ++i) 
             velocity += generator.NextFloat();
           velocity -= 6.0;
-          velocity *= sqrt((kB * _T)/ (1000 * a->GetAtomicMass()));
+          velocity *= sqrt((kB * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx] = velocity; // x10: gromacs uses nm instead of A
         }
         
@@ -3110,7 +3110,7 @@ namespace OpenBabel
           for (int i=0; i < 12; ++i)
             velocity += generator.NextFloat();
           velocity -= 6.0;
-          velocity *= sqrt((kB * _T)/ (1000 * a->GetAtomicMass()));
+          velocity *= sqrt((kB * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx+1] = velocity; // idem
         }
 
@@ -3119,7 +3119,7 @@ namespace OpenBabel
           for (int i=0; i < 12; ++i)
             velocity += generator.NextFloat();
           velocity -= 6.0;
-          velocity *= sqrt((kB * _T)/ (1000 * a->GetAtomicMass()));
+          velocity *= sqrt((kB * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx+2] = velocity; // idem
         }
       }
@@ -3136,7 +3136,7 @@ namespace OpenBabel
     kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
  
     // E_kin = 0.5 * Ndf * kB * T
-    E_kin = _ncoords * kB * _T;
+    E_kin = _ncoords * kB * _temp;
     //cout << "E_{kin} = Ndf * kB * T = " << E_kin << endl;
     
     // E_kin = 0.5 * sum( m_i * v_i^2 )
@@ -3182,7 +3182,7 @@ namespace OpenBabel
     vector3 force, pos, accel;
     double kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
     _timestep = timestep;
-    _T = T;
+    _temp = T;
 
 
     timestep2 = 0.5 * _timestep * _timestep;
