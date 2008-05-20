@@ -547,17 +547,13 @@ namespace OpenBabel
     curr.SetBitOn(second);
 
     OBAtom *atom;
-    OBBond *bond;
-    vector<OBBond*>::iterator j;
-
     while (!curr.IsEmpty())
       {
         next.Clear();
         for (i = curr.NextBit(-1);i != curr.EndBit();i = curr.NextBit(i))
           {
             atom = GetAtom(i);
-            for (j = atom->BeginBonds(),bond=(OBBond *)*j;
-                 j != atom->EndBonds();j++,bond=(OBBond *)*j)
+            FOR_BONDS_OF_ATOM (bond, atom)
               if (!used.BitIsOn(bond->GetNbrAtomIdx(atom)))
                 next.SetBitOn(bond->GetNbrAtomIdx(atom));
           }

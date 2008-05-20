@@ -1,3 +1,13 @@
+2008-05-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	Changes from avogadro win32 build:
+
+	* include/openbabel/obutil.h: Change std::min(a,b) into std::min<const
+	double>(a,b).
+
+	* src/mol.cpp: OBMol::FindChildren was iterating over an atom's bonds
+	in a wrong way.
+
 2008-05-19  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.h, src/forcefield.cpp: rename _T to
