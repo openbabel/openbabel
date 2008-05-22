@@ -1132,6 +1132,7 @@ namespace OpenBabel
   //Conformers are now copied also, MM 2/7/01
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
+  //OBChiralData for all atoms copied, TV 2008
   {
     OBMol &src = (OBMol &)source;
     vector<OBAtom*>::iterator i;
@@ -1210,7 +1211,16 @@ namespace OpenBabel
         OBGenericData* pCopiedData = (*itr)->Clone(this);
         SetData(pCopiedData);
       }
-   
+    
+    // copy chiral data for all atoms
+    FOR_ATOMS_OF_MOL (atom, src) {
+      if (atom->HasData(OBGenericDataType::ChiralData)) {
+        OBChiralData* cd = (OBChiralData*) atom->GetData(OBGenericDataType::ChiralData);
+        OBGenericData* pCopiedData = cd->Clone(NULL); // parent not used in OBChiralData::Clone()
+        GetAtom(atom->GetIdx())->SetData(pCopiedData);
+      }
+    }
+ 
     return(*this);
   }
 
