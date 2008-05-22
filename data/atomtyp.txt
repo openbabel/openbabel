@@ -59,7 +59,7 @@ IMPVAL [$([#8]=*)] 1
 IMPVAL	[N^3]			3
 IMPVAL	[N^3+]			4
 IMPVAL	[N^2]			3
-IMPVAL  [N^2-,N^3-]		2
+#IMPVAL  [N^2-,N^3-]		2
 IMPVAL	[ND1^1]			1
 IMPVAL	[ND2^1]			2
 IMPVAL	[$(N([OD1])*)]		3
@@ -71,6 +71,7 @@ IMPVAL	[$(N=*)]		2
 IMPVAL	[$([Nr0]=C[Nr0])]	2
 IMPVAL	[$([N+r0]=C[Nr0])]	3	# patch from Steve Constable
 IMPVAL  [$([#7D1-]=*)]          1
+IMPVAL	[N-]			2
 IMPVAL	[n]			2
 IMPVAL	[n-]			2
 IMPVAL  [n+]			3

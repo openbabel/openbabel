@@ -311,10 +311,10 @@ Writing
 This embeds chemical information into an existing PNG file.
 A PNG file should be the first input file, followed by one or more chemical
 files in any format. Each can contain multiple molecules. Each molecule is output
-in a separate chunk in a format specified by the -O option. the default with no
+in a separate chunk in a format specified by the -xO option. the default with no
 option is InChI. The chunk ID is normally tEXt but can be specified in the -xa option.
 For example
-  babel OrigImg.png Firstmol.smi Secondmol.mol2 OutImg.png -O "inchi" -xa "chEm"
+  babel OrigImg.png Firstmol.smi Secondmol.mol2 OutImg.png -xO "cml" -xa "chEm"
 
 It should be possible to embed into png filesusing the API.
 The following is simplified and UNTESTED:

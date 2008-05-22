@@ -1,3 +1,13 @@
+2008-05-22 Chris Morley
+
+	* data/atomtyp.txt: remove
+	  IMPVAL  [N^2-,N^3-]		2
+	and add
+	  IMPVAL	[N-]			2
+	so that O1S(=O)(=O)[N-]C(=O)C=C1C.[K+] is interpreted correctly.
+ 
+	* src/formats/pngformat.cpp: minor documentation change
+
 2005-05-22  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* CMakeLists.txt: Fixed version string in CMake. Also added policy
