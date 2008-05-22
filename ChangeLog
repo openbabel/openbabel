@@ -1,3 +1,16 @@
+2008-05-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/mol.cpp: copy OBChiralData for all atoms in operator=.
+
+	* include/openbabel/builder.h, src/builder.cpp: Added
+	Swap(...) : swap the position of two substituents (can be used to
+	invert chiral centers)
+	CorrectAtomChirality(...) : use the (atomreftype) input references to
+	make sure the molecule has the right chirality as specified by
+	IsClockwise() / IsAntiClockwise().
+	CorrectBondChirality(...) : use the IsUp() / IsDown() values to rotate
+	the bonds if needed.
+
 2008-05-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	Changes from avogadro win32 build:

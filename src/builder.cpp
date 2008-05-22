@@ -222,11 +222,21 @@ namespace OpenBabel
     return true;
   }
 
+  bool OBBuilder::Connect(OBAtom *a, OBAtom *b)
+  {
+    a = _workMol.GetAtom(a->GetIdx());
+    b = _workMol.GetAtom(b->GetIdx());
+ 
+    vector3 newpos = GetNewBondVector(a);
+
+    return Connect(a, b, newpos);
+  }
+
   // The OBMol mol contains both the molecule to which we want to connect the 
   // fragment and the fragment itself. The fragment containing b will be 
   // rotated and translated. Atom a is the atom from 
   // the main molecule to which we want to connect atom b.
-  bool OBBuilder::Connect(OBAtom *a, OBAtom *b)
+  bool OBBuilder::Connect(OBAtom *a, OBAtom *b, vector3 &newpos)
   {
     OBBitVec fragment = GetFragment(b->GetIdx());
     if (fragment == GetFragment(a->GetIdx()))
@@ -237,8 +247,6 @@ namespace OpenBabel
     b = _workMol.GetAtom(b->GetIdx());
     vector3 posa = a->GetVector();
     vector3 posb = b->GetVector();
-    vector3 newpos = GetNewBondVector(a);
-    vector3 moldir = newpos - posa;
     // 
     // translate fragment so that atom b is at the origin
     //
@@ -252,8 +260,28 @@ namespace OpenBabel
     }
     // 
     // rotate the fragment to align the bond directions Mol-a-b and a-b-fragment
-    //  
+    //
+    /* 
+    matrix3x3 mat;
+    vector3 moldir = newpos - posa;
+    vector3 fragdir = GetNewBondVector(b); // b is at origin 
+    moldir.normalize(); 
+    fragdir.normalize(); 
+    double angle = acos(dot(moldir, fragdir));
+    vector3 axis = cross(moldir, fragdir);
+    axis.normalize();
+
+    mat.RotAboutAxisByAngle(axis, angle);
+    for (unsigned int i = 1; i <= _workMol.NumAtoms(); ++i) {
+      if (fragment.BitIsSet(i)) {
+        vector3 tmpvec = _workMol.GetAtom(i)->GetVector();
+        tmpvec *= mat; //apply the rotation
+        _workMol.GetAtom(i)->SetVector(tmpvec);
+      }
+    }
+    */
     matrix3x3 xymat, xzmat, yzmat;
+    vector3 moldir = newpos - posa;
     double xyang, yzang, xzang;
 
     vector3 fragdir = GetNewBondVector(b); // b is at origin 
@@ -333,6 +361,46 @@ namespace OpenBabel
     return true;
   }
 
+  bool OBBuilder::Swap(OBMol &mol, int idxA, int idxB, int idxC, int idxD)
+  {
+    OBAtom *a = mol.GetAtom(idxA);
+    OBAtom *b = mol.GetAtom(idxB);
+    OBAtom *c = mol.GetAtom(idxC);
+    OBAtom *d = mol.GetAtom(idxD);
+    
+    // make sure the atoms exist
+    if (a == NULL || b == NULL || c == NULL || d == NULL)
+      return false;
+
+    OBBond *bond1 = _workMol.GetBond(idxA, idxB);
+    OBBond *bond2 = _workMol.GetBond(idxC, idxD);
+
+    // make sure a-b and c-d are connected
+    if (bond1 == NULL || bond2 == NULL)
+      return false;
+
+    // make sure the bonds are not in a ring 
+    if (bond1->IsInRing() || bond2->IsInRing())
+      return false;
+
+    // delete the bonds
+    mol.DeleteBond(bond1);
+    mol.DeleteBond(bond2);
+
+    // save the original positions
+    vector3 posB = b->GetVector();
+    vector3 posD = d->GetVector();
+
+    // connect the fragments
+    if (!Connect(a, d, posB))
+      return false;
+    if (!Connect(c, b, posD))
+      return false;
+    
+    return true;
+  }
+
+
   void OBBuilder::AddNbrs(OBBitVec &fragment, OBAtom *atom)
   {
     FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -367,6 +435,7 @@ namespace OpenBabel
   //                                           b) Not first atom: Find position and place atom
   bool OBBuilder::Build(OBMol &mol)
   {
+    //cerr << "OBBuilder::Build(OBMol &mol)" << endl;
     OBBitVec vdone; // Atoms that are done, need no further manipulation.
     OBBitVec vfrag; // Atoms that are part of a fragment found in the database.
                     // These atoms have coordinates, but the fragment still has 
@@ -487,12 +556,136 @@ namespace OpenBabel
       }
 
     }
+    
+    // correct the chirality
+    CorrectStereoBonds(_workMol);
+    CorrectStereoAtoms(_workMol);
 
     mol = _workMol;
     mol.SetDimension(3);
     return true;
   }
 
+  void OBBuilder::CorrectStereoBonds(OBMol &mol)
+  {
+    /*
+    cerr << "bond IsUp IsDown" << endl;
+    FOR_BONDS_OF_MOL (bond, mol) {
+      cerr << bond->GetIdx() << ": " << bond->IsUp() << " " << bond->IsDown() << " (" 
+           << bond->GetBeginAtomIdx() << "-" << bond->GetEndAtomIdx() << ")" << endl;
+    }
+    */
+ 
+    OBAtom *a, *b, *c, *d;
+    OBBond *ab, *bc, *cd;
+    vector<int> done;
+    FOR_TORSIONS_OF_MOL(t, mol) {
+      a = mol.GetAtom((*t)[0] + 1);
+      b = mol.GetAtom((*t)[1] + 1);
+      c = mol.GetAtom((*t)[2] + 1);
+      d = mol.GetAtom((*t)[3] + 1);
+
+      ab = a->GetBond(b);
+      bc = b->GetBond(c);
+      cd = c->GetBond(d);
+
+      if (bc->IsAromatic() || !bc->IsDouble())
+        continue;
+
+      if (!(ab->IsUp() || ab->IsDown()) || !(cd->IsUp() || cd->IsDown())) {
+        //cerr << "no double bond stereochemistry set for bond " << bc->GetIdx() << endl;
+        continue;
+      }
+
+      for (unsigned int i = 0; i < done.size(); ++i)
+        if (done[i] == bc->GetIdx())
+          continue;
+
+      // Check if atom a is double bonded to an atom.
+      // If so, also check if we have visited the bond.
+      // This is the case in 
+      //      
+      //        +---- this bond should be trans, the smiles parser assigns
+      //        |     both C/C bonds up. So we have to invert it
+      // F/C=C/C=C/C
+      //  d   u   u   (down/up)
+      //
+      // F/C=C/C/C=C/C  
+      //  d   u d   u
+      //
+      // See src/formats/smilesformat.cpp for details on OB's up/down implementation.
+      //
+      bool invert = false;
+      FOR_BONDS_OF_ATOM (bond, a) {
+        if (bond->IsDouble())
+          for (unsigned int i = 0; i < done.size(); ++i)
+            if (done[i] == bond->GetIdx())
+              invert = true;
+      }
+
+      //cerr << a->GetIdx() << "-" << b->GetIdx() << "-" << c->GetIdx() << "-" << d->GetIdx() << endl;
+
+      double angle;
+      if (ab->IsUp() && cd->IsUp())
+        angle = 0.0;
+      if (ab->IsUp() && cd->IsDown())
+        angle = M_PI;
+      if (ab->IsDown() && cd->IsUp())
+        angle = M_PI;
+      if (ab->IsDown() && cd->IsDown())
+        angle = 0.0;
+      
+      if  (invert)
+        mol.SetTorsion(a, b, c, d, angle + M_PI);
+      else
+        mol.SetTorsion(a, b, c, d, angle);
+
+      done.push_back(bc->GetIdx());
+    }
+  }
+
+  void OBBuilder::CorrectStereoAtoms(OBMol &mol)
+  {
+    FOR_ATOMS_OF_MOL (center, mol) {
+      if (center->HasData(OBGenericDataType::ChiralData)) {
+        OBChiralData *cd = (OBChiralData*) center->GetData(OBGenericDataType::ChiralData);
+        vector<unsigned int> refs = cd->GetAtom4Refs(input);
+        // We look along the refs[0]-center bond.
+        //
+        //  1                     1
+        //   \        eye        /
+        //    0--2    -->   0---C-<2
+        //   /                   \
+        //  3                     3
+        //
+        //  fig 1             fig2
+        OBAtom *a = mol.GetAtom(refs[0]);
+        OBAtom *b = mol.GetAtom(refs[1]);
+        OBAtom *c = mol.GetAtom(refs[2]);
+        OBAtom *d = mol.GetAtom(refs[3]);
+
+        double angbc = mol.GetTorsion(b, a, &*center, c); // angle 1-0-2 in fig 1
+        double angbd = mol.GetTorsion(b, a, &*center, d); // angle 1-0-3 in fig 1
+
+        // this should not never happen if the molecule was build using OBBuilder...
+        if ((angbc < 0.0) == (angbd < 0.0))
+          continue;
+
+        // invert chirality if needed
+        if (angbc > 0.0) {
+          if (center->IsAntiClockwise()) {
+            Swap(mol, center->GetIdx(), a->GetIdx(), center->GetIdx(), b->GetIdx());
+          }
+        } else  {
+          if (center->IsClockwise()) {
+            Swap(mol, center->GetIdx(), a->GetIdx(), center->GetIdx(), b->GetIdx());
+          }
+        }
+
+      } // HasData
+    } // FOR_ATOMS_OF_MOL
+
+  }
 
 } // end namespace OpenBabel
 

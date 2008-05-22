@@ -60,7 +60,49 @@ namespace OpenBabel
        *  for failing: a and b are in the same fragment, they are connected)
        */
       bool Connect(OBMol &mol, int a, int b, int bondOrder = 1);
+      /*! Swap group b, bonded to a with group d, bonded to c. The bonds a-b and b-c cannot be
+       *  part of a ring. Atoms a and b will not be moved. Atoms b, d and their connected atoms
+       *  (after deleting bonds ab and cd) will be translated/rotated. 
+       *  
+       *  Example:
+       *  \code
+       *    \ /                            /
+       *     b                            d
+       *      \     /     Swap(a,b,c,d)    \     /
+       *       a---x          ---->         a---x 
+       *      /     \     /                /     \     /
+       *     x       c---d                x       c---b
+       *                                               \
+       *  \endcode
+       *
+       *
+       *  This function can also be used to invert chiral centers if a and c are the same atom.
+       *
+       *  Example
+       *  \code
+       *     1                        3
+       *     |      Swap(C,1,C,3)     |
+       *  2>-C-<3      ----->      2>-C-<1
+       *     |                        |
+       *     4                        4
+       *  \endcode
+       */   
+      bool Swap(OBMol &mol, int a, int b, int c, int d);
+      /*! Atoms a and b must be bonded and this bond cannot be part of a ring. The bond will 
+       *  be broken and the smiles fragment will be inserted bewteen the two remaining fragments.
+       *  The fragment that contains a will not be translated or rotated. Parameters c and d are
+       *  the index in the smiles to which atoms a and b will be connected respectivly.
+       *
+       */  
+      bool Insert(OBMol &mol, int a, int b, std::string smiles, int c, int d);
+      /*! Currently only corrects double bond chemistry comming from smiles. (OBBond::IsUp() / OBBond::IsDown())
+       */ 
+      void CorrectStereoBonds(OBMol &mol);
+      /*! Currently only corrects atom chirality comming from smiles. (OBAtom::IsClockwize() / OBBond::IsAntiClockwise())
+       */ 
+      void CorrectStereoAtoms(OBMol &mol);
     private:
+      bool Connect(OBAtom *a, OBAtom *b, vector3 &newpos);
       /*! Atoms a and b are part of two fragments that are not connected in _workMol.
        *  Connect will translate and rotate the fragment containing b so that
        *  a and b are seperated by a bond. This bond is also added.
