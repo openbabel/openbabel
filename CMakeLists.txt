@@ -1,13 +1,17 @@
 project(openbabel)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
-cmake_minimum_required(VERSION 2.4.5)
+cmake_minimum_required(VERSION 2.4.8)
+
+if(COMMAND cmake_policy)
+  cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
 
 include (CheckCXXCompilerFlag)
 include (MacroEnsureVersion)
 
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   2)
-set(BABEL_PATCH_VER 0b4)
+set(BABEL_PATCH_VER 0b5)
 if(WIN32)
   set(BABEL_LIBRARY   openbabel-2)
 else(WIN32)
@@ -15,7 +19,11 @@ else(WIN32)
 endif(WIN32)
 set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
-set(LIB            "lib")   ## FIXME: add lib suffix!
+if(NOT LIB_INSTALL_DIR)
+  set(LIB          "lib")   ## FIXME: add lib suffix!
+else(NOT LIB_INSTALL_DIR)
+  set(LIB ${LIB_INSTALL_DIR})
+endif(NOT LIB_INSTALL_DIR)
 
 option(WITH_INCHI   "build inchi lib" ON)
 option(BUILD_SHARED "enable static build support" ON)

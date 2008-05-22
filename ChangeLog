@@ -1,3 +1,8 @@
+2005-05-22  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* CMakeLists.txt: Fixed version string in CMake. Also added policy
+	stuff for CMake 2.6 and the option to set the library directory.
+
 2008-05-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/mol.cpp: copy OBChiralData for all atoms in operator=.
