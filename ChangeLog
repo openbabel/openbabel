@@ -1,3 +1,8 @@
+2005-05-23  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* include/openbabel/obconversion.h: Removed extra qualification on
+	OpenInAndOutFiles which broke compilation here.
+
 2008-05-23 Chris Morley
 
 	* include/openbabel/obconversion.h, src/obconversion.cpp:

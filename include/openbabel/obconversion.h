@@ -265,7 +265,7 @@ namespace OpenBabel {
       /// This method is primarily intended for scripting languages without "stream" classes
       /// and will usually followed by a call to Convert()
       /// \return false if unsucessful.
-      bool OBConversion::OpenInAndOutFiles(std::string infilepath, std::string outfilepath);
+      bool OpenInAndOutFiles(std::string infilepath, std::string outfilepath);
 
       /// @brief Sends a message like "2 molecules converted" to clog
       /// The type of object is taken from the TargetClassDescription
