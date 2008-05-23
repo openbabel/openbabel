@@ -10,6 +10,7 @@ try:
         cinfony = None
     try:
         import pybel as obpybel
+        pybel = rdkit = cdk = None
     except ImportError:
         obpybel = None
 except AttributeError:
