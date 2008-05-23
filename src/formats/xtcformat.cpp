@@ -126,8 +126,8 @@ namespace OpenBabel
       return false;
 
     OBMol &mol = *pmol;
-    //std::string filename = pConv->GetInFilename();
-    std::string filename = "traj.xtc";
+    std::string filename = pConv->GetInFilename();
+    //std::string filename = "traj.xtc";
 
     if (xdropen(&xd, filename.c_str(),"r") == 0) {
       std::stringstream errorMsg;
