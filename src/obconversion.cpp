@@ -869,6 +869,40 @@ namespace OpenBabel {
     return Read(pOb,ifs);
   }
 
+  ////////////////////////////////////////////
+  bool OBConversion::OpenInAndOutFiles(std::string infilepath, std::string outfilepath)
+  {
+    // if we have an old input stream, free this first before creating a new one
+    if (pInStream && NeedToFreeInStream)
+      delete pInStream;
+
+    // if we have an old output stream, free this first before creating a new one
+    if (pOutStream && NeedToFreeOutStream)
+      delete pOutStream;
+
+    ifstream *ifs = new ifstream;
+    NeedToFreeInStream = true; // make sure we free this
+    ifs->open(infilepath.c_str(),ios_base::in|ios_base::binary); //always open in binary mode
+    if(!ifs || !ifs->good())
+    {
+      obErrorLog.ThrowError(__FUNCTION__,"Cannot read from " + infilepath, obError);
+      return false;
+    }
+    pInStream = ifs;
+    InFilename = infilepath;
+
+    ofstream *ofs = new ofstream;
+    NeedToFreeOutStream = true; // make sure we clean this up later
+    ofs->open(outfilepath.c_str(),ios_base::out|ios_base::binary);//always open in binary mode
+    if(!ofs || !ofs->good())
+    {
+      obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + outfilepath, obError);
+      return false;
+    }
+    pOutStream = ofs;
+
+    return true;
+  }
 
   ////////////////////////////////////////////
   const char* OBConversion::Description()

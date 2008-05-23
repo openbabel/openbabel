@@ -260,6 +260,13 @@ namespace OpenBabel {
       /// This method is primarily intended for scripting languages without "stream" classes
       bool	ReadFile(OBBase* pOb, std::string filePath);
 
+      /// Part of the "Convert" interface
+      /// Open the files and update the streams in the OBConversion object.
+      /// This method is primarily intended for scripting languages without "stream" classes
+      /// and will usually followed by a call to Convert()
+      /// \return false if unsucessful.
+      bool OBConversion::OpenInAndOutFiles(std::string infilepath, std::string outfilepath);
+
       /// @brief Sends a message like "2 molecules converted" to clog
       /// The type of object is taken from the TargetClassDescription
       /// of the specified class (or the output format if not specified)and
