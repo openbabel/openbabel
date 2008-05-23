@@ -6,14 +6,14 @@ import openbabel as ob
 try:
     import oasa
     import oasa.cairo_out
-except ImportError:
+except ImportError: #pragma: no cover
     oasa = None
 
 try:
     import Tkinter as tk
     import Image as PIL
     import ImageTk as piltk
-except ImportError:
+except ImportError: #pragma: no cover
     tk = None
 
 def _formatstodict(list):
@@ -28,8 +28,8 @@ def _getplugins(findplugin, names):
     plugins = dict([(x, findplugin(x)) for x in names if findplugin(x)])
     return plugins
 
-descriptors = ['LogP', 'MR', 'TPSA']
-_descdict = _getplugins(ob.OBDescriptor.FindType, descriptors)
+descs = ['LogP', 'MR', 'TPSA']
+_descdict = _getplugins(ob.OBDescriptor.FindType, descs)
 fps = ['FP2', 'FP3', 'FP4']
 _fingerprinters = _getplugins(ob.OBFingerprint.FindFingerprint, fps)
 forcefields = ['UFF', 'MMFF94', 'Ghemical']
@@ -113,7 +113,7 @@ class Outputfile(object):
        overwrite (default is False) -- if the output file already exists,
                                        should it be overwritten?
     Methods:
-       write(molecule)
+       write(molecule), close()
     """
     def __init__(self, format, filename, overwrite=False):
         self.format = format
@@ -149,10 +149,12 @@ class Outputfile(object):
 class Molecule(object):
     """Represent a Pybel molecule.
 
-    Optional parameters:
-       OBMol -- an Open Babel molecule (default is None)
-    
-    An empty Molecule is created if an Open Babel molecule is not provided.
+    Required parameter:
+       OBMol -- an Open Babel OBMol
+       or
+       Molecule -- any type of cinfony Molecule (e.g. one from cinfony.rdkit)
+
+    If a cinfony Molecule is provided it will be converted into a pybel Molecule.       
     
     Attributes:
        atoms, charge, data, dim, energy, exactmass, flags, formula, 
@@ -160,7 +162,7 @@ class Molecule(object):
     (refer to the Open Babel library documentation for more info).
     
     Methods:
-       write(), calcfp(), calcdesc()
+       addh(), calcfp(), calcdesc(), draw(), localopt(), make3D(), removeh(), write() 
       
     The original Open Babel molecule can be accessed using the attribute:
        OBMol
@@ -182,11 +184,18 @@ class Molecule(object):
         'charge':'GetTotalCharge',
         'spin':'GetTotalSpinMultiplicity'
     }
-    
+    _cinfony = True
+
     def __init__(self, OBMol):
         
-        if hasattr(OBMol, "_exchange"):
-            OBMol = readstring("smi", OBMol._exchange).OBMol
+        if hasattr(OBMol, "_cinfony"):
+            a, b = OBMol._exchange
+            if a == 0:
+                mol = readstring("smi", b)
+            else:
+                mol = readstring("mol", b)
+            OBMol = mol.OBMol
+
         self.OBMol = OBMol
  
     def __getattr__(self, attr):
@@ -213,7 +222,10 @@ class Molecule(object):
             # Call the OB Method to find the attribute value
             return getattr(self.OBMol, self._getmethods[attr])()
         elif attr == "_exchange":
-            return self.write("can").split("\t")[0]
+            if self.OBMol.HasNonZeroCoords():
+                return (1, self.write("mol"))
+            else:
+                return (0, self.write("can").split()[0])
         else:
             raise AttributeError, "Molecule has no attribute '%s'" % attr
 
@@ -237,7 +249,7 @@ class Molecule(object):
         descriptors is calculated: LogP, PSA and MR.
         """
         if not descnames:
-            descnames = descriptors
+            descnames = descs
         ans = {}
         for descname in descnames:
             try:
@@ -364,40 +376,98 @@ class Molecule(object):
         etab = ob.OBElementTable()
 
         if not oasa:
-            errormessage = """OASA not found, but is required for 2D structure
-generation and depiction. OASA is part of BKChem. See
-installation instructions for more information."""
+            errormessage = ("OASA not found, but is required for 2D structure "
+                            "generation and depiction. OASA is part of BKChem. "
+                            "See installation instructions for more "
+                            "information.")
             raise ImportError, errormessage
         mol = oasa.molecule()
         for atom in self.atoms:
             v = mol.create_vertex()
             v.symbol = etab.GetSymbol(atom.atomicnum)
+            v.charge = atom.formalcharge
             if usecoords:
-                v.x, v.y, v.z = atom.coords[0] * 30., atom.coords[1] * -30., 0.0
+                v.x, v.y, v.z = atom.coords[0] * 30., atom.coords[1] * 30., 0.0
             mol.add_vertex(v)
 
-        for bond in [(x.GetBeginAtomIdx()-1, x.GetEndAtomIdx()-1, x.GetBO())
-                    for x in ob.OBMolBondIter(self.OBMol)]:
+        for bond in ob.OBMolBondIter(self.OBMol):
             e = mol.create_edge()
-            e.order = bond[2]
-            mol.add_edge(bond[0], bond[1], e)
+            e.order = bond.GetBO()
+            if bond.IsHash():
+                e.type = "h"
+            elif bond.IsWedge():
+                e.type = "w"
+            mol.add_edge(bond.GetBeginAtomIdx() - 1,
+                         bond.GetEndAtomIdx() - 1,
+                         e)
+        # I'm sure there's a more elegant way to do the following, but here goes...
+        # let's set the stereochemistry around double bonds
+        self.write("smi") # Perceive UP/DOWNness
+        for bond in ob.OBMolBondIter(self.OBMol):
+            ends = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
+            if bond.GetBO() == 2:
+                stereobonds = [[b for b in ob.OBAtomBondIter(self.OBMol.GetAtom(x)) if b.GetIdx() != bond.GetIdx() and (b.IsUp() or b.IsDown())]
+                               for x in ends]
+                if stereobonds[0] and stereobonds[1]: # Needs to be defined at either end
+                    if stereobonds[0][0].IsUp() == stereobonds[1][0].IsUp():
+                        # Either both up or both down
+                        stereo = oasa.stereochemistry.cis_trans_stereochemistry.SAME_SIDE
+                    else:
+                        stereo = oasa.stereochemistry.cis_trans_stereochemistry.OPPOSITE_SIDE
+                    atomids = [(b[0].GetBeginAtomIdx(), b[0].GetEndAtomIdx()) for b in stereobonds]
+                    extremes = []
+                    for id, end in zip(ends, atomids):
+                        if end[0] == id:
+                            extremes.append(end[1])
+                        else:
+                            extremes.append(end[0])
+                    center = mol.get_edge_between(mol.atoms[ends[0] - 1], mol.atoms[ends[1] - 1])
+                    st = oasa.stereochemistry.cis_trans_stereochemistry(
+                              center = center, value = stereo,
+                              references = (mol.atoms[extremes[0] - 1], mol.atoms[ends[0] - 1],
+                                            mol.atoms[ends[1] - 1], mol.atoms[extremes[1] - 1]))
+                    mol.add_stereochemistry(st)
+        
+        mol.remove_unimportant_hydrogens()
         if not usecoords:
             oasa.coords_generator.calculate_coords(mol, bond_length=30)
             if update:
-                newcoords = [(v.x / 30., v.y / -30., 0.0) for v in mol.vertices]
+                newcoords = [(v.x / 30., v.y / 30., 0.0) for v in mol.vertices]
                 for atom, newcoord in zip(ob.OBMolAtomIter(self.OBMol), newcoords):
                     atom.SetVector(*newcoord)
         if filename or show:
+            maxx = max([v.x for v in mol.vertices])
+            minx = min([v.x for v in mol.vertices])
+            maxy = max([v.y for v in mol.vertices])
+            miny = min([v.y for v in mol.vertices])
+            maxcoord = max(maxx - minx, maxy - miny)
+            fontsize = 16
+            bondwidth = 6
+            linewidth = 2
+            if maxcoord > 270: # 300  - margin * 2
+                for v in mol.vertices:
+                    v.x *= 270. / maxcoord
+                    v.y *= 270. / maxcoord
+                fontsize *= math.sqrt(270. / maxcoord)
+                bondwidth *= math.sqrt(270. / maxcoord)
+                linewidth *= math.sqrt(270. / maxcoord)
             if filename:
                 filedes = None
             else:
                 filedes, filename = tempfile.mkstemp()
             
-            oasa.cairo_out.cairo_out().mol_to_cairo(mol, filename)
+            canvas = oasa.cairo_out.cairo_out()
+            canvas.show_hydrogens_on_hetero = True
+            canvas.font_size = fontsize
+            canvas.bond_width = bondwidth
+            canvas.line_width = linewidth
+            canvas.mol_to_cairo(mol, filename)
             if show:
                 if not tk:
-                    errormessage = """Tkinter or Python Imaging Library not found, but is required for image
-display. See installation instructions for more information."""
+                    errormessage = ("Tkinter or Python Imaging "
+                                    "Library not found, but is required for image "
+                                    "display. See installation instructions for "
+                                    "more information.")
                     raise ImportError, errormessage
                 root = tk.Tk()
                 root.title((hasattr(self, "title") and self.title)
@@ -415,12 +485,9 @@ display. See installation instructions for more information."""
 class Atom(object):
     """Represent a Pybel atom.
 
-    Optional parameters:
-       OBAtom -- an Open Babel Atom (default is None)
-       index -- the index of the atom in the molecule (default is None)
-     
-    An empty Atom is created if an Open Babel atom is not provided.
-    
+    Required parameter:
+       OBAtom -- an Open Babel OBAtom
+        
     Attributes:
        atomicmass, atomicnum, cidx, coords, coordidx, exactmass,
        formalcharge, heavyvalence, heterovalence, hyb, idx,
@@ -463,7 +530,7 @@ class Atom(object):
         elif attr in self._getmethods:
             return getattr(self.OBAtom, self._getmethods[attr])()
         else:
-            raise AttributeError, "Molecule has no attribute %s" % attr
+            raise AttributeError, "Atom has no attribute %s" % attr
 
     def __str__(self):
         """Create a string representation of the atom.
@@ -530,18 +597,24 @@ class Smarts(object):
        smartspattern
     
     Methods:
-       findall()
+       findall(molecule)
     
     Example:
     >>> mol = readstring("smi","CCN(CC)CC") # triethylamine
     >>> smarts = Smarts("[#6][#6]") # Matches an ethyl group
     >>> print smarts.findall(mol) 
     [(1, 2), (4, 5), (6, 7)]
+
+    The numbers returned are the indices (starting from 1) of the atoms
+    that match the SMARTS pattern. In this case, there are three matches
+    for each of the three ethyl groups in the molecule.
     """
     def __init__(self,smartspattern):
         """Initialise with a SMARTS pattern."""
         self.obsmarts = ob.OBSmartsPattern()
-        self.obsmarts.Init(smartspattern)
+        success = self.obsmarts.Init(smartspattern)
+        if not success:
+            raise IOError, "Invalid SMARTS pattern"
     def findall(self,molecule):
         """Find all matches of the SMARTS pattern to a particular molecule.
         

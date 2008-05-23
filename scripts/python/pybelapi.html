@@ -8,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>pybel</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/user/Tools/openbabel-2-1-xz/scripts/python/pybel.py">/home/user/Tools/openbabel-2-1-xz/scripts/python/pybel.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:///D|/tools/cinfony/trunk/cinfony/pybel.py">d:\tools\cinfony\trunk\cinfony\pybel.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -17,9 +17,15 @@
 <font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="openbabel.html">openbabel</a><br>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="Image.html">Image</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="oasa.html">oasa</a><br>
+<a href="openbabel.html">openbabel</a><br>
 </td><td width="25%" valign=top><a href="os.html">os</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<a href="ImageTk.html">ImageTk</a><br>
+</td><td width="25%" valign=top><a href="tempfile.html">tempfile</a><br>
+<a href="Tkinter.html">Tkinter</a><br>
+</td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -48,12 +54,9 @@
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Represent&nbsp;a&nbsp;Pybel&nbsp;atom.<br>
 &nbsp;<br>
-Optional&nbsp;parameters:<br>
-&nbsp;&nbsp;&nbsp;OBAtom&nbsp;--&nbsp;an&nbsp;Open&nbsp;Babel&nbsp;<a href="#Atom">Atom</a>&nbsp;(default&nbsp;is&nbsp;None)<br>
-&nbsp;&nbsp;&nbsp;index&nbsp;--&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;atom&nbsp;in&nbsp;the&nbsp;molecule&nbsp;(default&nbsp;is&nbsp;None)<br>
-&nbsp;<br>
-An&nbsp;empty&nbsp;<a href="#Atom">Atom</a>&nbsp;is&nbsp;created&nbsp;if&nbsp;an&nbsp;Open&nbsp;Babel&nbsp;atom&nbsp;is&nbsp;not&nbsp;provided.<br>
-&nbsp;<br>
+Required&nbsp;parameter:<br>
+&nbsp;&nbsp;&nbsp;OBAtom&nbsp;--&nbsp;an&nbsp;Open&nbsp;Babel&nbsp;OBAtom<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
 Attributes:<br>
 &nbsp;&nbsp;&nbsp;atomicmass,&nbsp;atomicnum,&nbsp;cidx,&nbsp;coords,&nbsp;coordidx,&nbsp;exactmass,<br>
 &nbsp;&nbsp;&nbsp;formalcharge,&nbsp;heavyvalence,&nbsp;heterovalence,&nbsp;hyb,&nbsp;idx,<br>
@@ -68,7 +71,7 @@ The&nbsp;original&nbsp;Open&nbsp;Babel&nbsp;atom&nbsp;can&nbsp;be&nbsp;accessed&
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Atom-__getattr__"><strong>__getattr__</strong></a>(self, attr)</dt></dl>
 
-<dl><dt><a name="Atom-__init__"><strong>__init__</strong></a>(self, OBAtom<font color="#909090">=None</font>, index<font color="#909090">=None</font>)</dt></dl>
+<dl><dt><a name="Atom-__init__"><strong>__init__</strong></a>(self, OBAtom)</dt></dl>
 
 <dl><dt><a name="Atom-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Create&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;the&nbsp;atom.<br>
 &nbsp;<br>
@@ -77,11 +80,13 @@ The&nbsp;original&nbsp;Open&nbsp;Babel&nbsp;atom&nbsp;can&nbsp;be&nbsp;accessed&
 <a href="#Atom">Atom</a>:&nbsp;0&nbsp;(0.0,&nbsp;0.0,&nbsp;0.0)</tt></dd></dl>
 
 <hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>__dict__</strong> = &lt;dictproxy object&gt;<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dl>
-
-<dl><dt><strong>__weakref__</strong> = &lt;attribute '__weakref__' of 'Atom' objects&gt;<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;(if&nbsp;defined)</tt></dl>
-
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -113,11 +118,13 @@ Methods:<br>
 <dl><dt><a name="Fingerprint-__str__"><strong>__str__</strong></a>(self)</dt></dl>
 
 <hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>__dict__</strong> = &lt;dictproxy object&gt;<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dl>
-
-<dl><dt><strong>__weakref__</strong> = &lt;attribute '__weakref__' of 'Fingerprint' objects&gt;<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;(if&nbsp;defined)</tt></dl>
-
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -127,10 +134,12 @@ Data and other attributes defined here:<br>
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Represent&nbsp;a&nbsp;Pybel&nbsp;molecule.<br>
 &nbsp;<br>
-Optional&nbsp;parameters:<br>
-&nbsp;&nbsp;&nbsp;OBMol&nbsp;--&nbsp;an&nbsp;Open&nbsp;Babel&nbsp;molecule&nbsp;(default&nbsp;is&nbsp;None)<br>
+Required&nbsp;parameter:<br>
+&nbsp;&nbsp;&nbsp;OBMol&nbsp;--&nbsp;an&nbsp;Open&nbsp;Babel&nbsp;OBMol<br>
+&nbsp;&nbsp;&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;<a href="#Molecule">Molecule</a>&nbsp;--&nbsp;any&nbsp;type&nbsp;of&nbsp;cinfony&nbsp;<a href="#Molecule">Molecule</a>&nbsp;(e.g.&nbsp;one&nbsp;from&nbsp;cinfony.rdkit)<br>
 &nbsp;<br>
-An&nbsp;empty&nbsp;<a href="#Molecule">Molecule</a>&nbsp;is&nbsp;created&nbsp;if&nbsp;an&nbsp;Open&nbsp;Babel&nbsp;molecule&nbsp;is&nbsp;not&nbsp;provided.<br>
+If&nbsp;a&nbsp;cinfony&nbsp;<a href="#Molecule">Molecule</a>&nbsp;is&nbsp;provided&nbsp;it&nbsp;will&nbsp;be&nbsp;converted&nbsp;into&nbsp;a&nbsp;pybel&nbsp;<a href="#Molecule">Molecule</a>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;<br>
 Attributes:<br>
 &nbsp;&nbsp;&nbsp;atoms,&nbsp;charge,&nbsp;data,&nbsp;dim,&nbsp;energy,&nbsp;exactmass,&nbsp;flags,&nbsp;formula,&nbsp;<br>
@@ -138,7 +147,7 @@ Attributes:<br>
 (refer&nbsp;to&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;library&nbsp;documentation&nbsp;for&nbsp;more&nbsp;info).<br>
 &nbsp;<br>
 Methods:<br>
-&nbsp;&nbsp;&nbsp;<a href="#Molecule-write">write</a>(),&nbsp;<a href="#Molecule-calcfp">calcfp</a>(),&nbsp;<a href="#Molecule-calcdesc">calcdesc</a>()<br>
+&nbsp;&nbsp;&nbsp;<a href="#Molecule-addh">addh</a>(),&nbsp;<a href="#Molecule-calcfp">calcfp</a>(),&nbsp;<a href="#Molecule-calcdesc">calcdesc</a>(),&nbsp;<a href="#Molecule-draw">draw</a>(),&nbsp;<a href="#Molecule-localopt">localopt</a>(),&nbsp;<a href="#Molecule-make3D">make3D</a>(),&nbsp;<a href="#Molecule-removeh">removeh</a>(),&nbsp;<a href="#Molecule-write">write</a>()&nbsp;<br>
 &nbsp;&nbsp;<br>
 The&nbsp;original&nbsp;Open&nbsp;Babel&nbsp;molecule&nbsp;can&nbsp;be&nbsp;accessed&nbsp;using&nbsp;the&nbsp;attribute:<br>
 &nbsp;&nbsp;&nbsp;OBMol<br>&nbsp;</tt></td></tr>
@@ -149,7 +158,7 @@ The&nbsp;original&nbsp;Open&nbsp;Babel&nbsp;molecule&nbsp;can&nbsp;be&nbsp;acces
 Note:&nbsp;The&nbsp;values&nbsp;are&nbsp;calculated&nbsp;on-the-fly.&nbsp;You&nbsp;may&nbsp;want&nbsp;to&nbsp;store&nbsp;the&nbsp;value&nbsp;in<br>
 a&nbsp;variable&nbsp;if&nbsp;you&nbsp;repeatedly&nbsp;access&nbsp;the&nbsp;same&nbsp;attribute.</tt></dd></dl>
 
-<dl><dt><a name="Molecule-__init__"><strong>__init__</strong></a>(self, OBMol<font color="#909090">=None</font>)</dt></dl>
+<dl><dt><a name="Molecule-__init__"><strong>__init__</strong></a>(self, OBMol)</dt></dl>
 
 <dl><dt><a name="Molecule-__iter__"><strong>__iter__</strong></a>(self)</dt><dd><tt>Iterate&nbsp;over&nbsp;the&nbsp;Atoms&nbsp;of&nbsp;the&nbsp;<a href="#Molecule">Molecule</a>.<br>
 &nbsp;<br>
@@ -159,6 +168,8 @@ This&nbsp;allows&nbsp;constructions&nbsp;such&nbsp;as&nbsp;the&nbsp;following:<b
 
 <dl><dt><a name="Molecule-__str__"><strong>__str__</strong></a>(self)</dt></dl>
 
+<dl><dt><a name="Molecule-addh"><strong>addh</strong></a>(self)</dt><dd><tt>Add&nbsp;hydrogens.</tt></dd></dl>
+
 <dl><dt><a name="Molecule-calcdesc"><strong>calcdesc</strong></a>(self, descnames<font color="#909090">=[]</font>)</dt><dd><tt>Calculate&nbsp;descriptor&nbsp;values.<br>
 &nbsp;<br>
 Optional&nbsp;parameter:<br>
@@ -167,14 +178,51 @@ Optional&nbsp;parameter:<br>
 If&nbsp;descnames&nbsp;is&nbsp;not&nbsp;specified,&nbsp;the&nbsp;full&nbsp;list&nbsp;of&nbsp;Open&nbsp;Babel<br>
 descriptors&nbsp;is&nbsp;calculated:&nbsp;LogP,&nbsp;PSA&nbsp;and&nbsp;MR.</tt></dd></dl>
 
-<dl><dt><a name="Molecule-calcfp"><strong>calcfp</strong></a>(self, fptype<font color="#909090">=''</font>)</dt><dd><tt>Calculate&nbsp;a&nbsp;molecular&nbsp;fingerprint.<br>
+<dl><dt><a name="Molecule-calcfp"><strong>calcfp</strong></a>(self, fptype<font color="#909090">='FP2'</font>)</dt><dd><tt>Calculate&nbsp;a&nbsp;molecular&nbsp;fingerprint.<br>
 &nbsp;<br>
 Optional&nbsp;parameters:<br>
 &nbsp;&nbsp;&nbsp;fptype&nbsp;--&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;fingerprint&nbsp;type.<br>
 &nbsp;<br>
-If&nbsp;fptype&nbsp;is&nbsp;not&nbsp;specified,&nbsp;the&nbsp;default&nbsp;Open&nbsp;Babel&nbsp;fingerprint<br>
-type&nbsp;is&nbsp;used.&nbsp;See&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;library&nbsp;documentation&nbsp;for&nbsp;more<br>
+If&nbsp;fptype&nbsp;is&nbsp;not&nbsp;specified,&nbsp;the&nbsp;FP2&nbsp;fingerprint&nbsp;type<br>
+is&nbsp;used.&nbsp;See&nbsp;the&nbsp;Open&nbsp;Babel&nbsp;library&nbsp;documentation&nbsp;for&nbsp;more<br>
 details.</tt></dd></dl>
+
+<dl><dt><a name="Molecule-draw"><strong>draw</strong></a>(self, show<font color="#909090">=True</font>, filename<font color="#909090">=None</font>, update<font color="#909090">=False</font>, usecoords<font color="#909090">=False</font>)</dt><dd><tt>Create&nbsp;a&nbsp;2D&nbsp;depiction&nbsp;of&nbsp;the&nbsp;molecule.<br>
+&nbsp;<br>
+Optional&nbsp;parameters:<br>
+&nbsp;&nbsp;show&nbsp;--&nbsp;display&nbsp;on&nbsp;screen&nbsp;(default&nbsp;is&nbsp;True)<br>
+&nbsp;&nbsp;filename&nbsp;--&nbsp;write&nbsp;to&nbsp;file&nbsp;(default&nbsp;is&nbsp;None)<br>
+&nbsp;&nbsp;update&nbsp;--&nbsp;update&nbsp;the&nbsp;coordinates&nbsp;of&nbsp;the&nbsp;atoms&nbsp;to&nbsp;those<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determined&nbsp;by&nbsp;the&nbsp;structure&nbsp;diagram&nbsp;generator<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(default&nbsp;is&nbsp;False)<br>
+&nbsp;&nbsp;usecoords&nbsp;--&nbsp;don't&nbsp;calculate&nbsp;2D&nbsp;coordinates,&nbsp;just&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;current&nbsp;coordinates&nbsp;(default&nbsp;is&nbsp;False)<br>
+&nbsp;<br>
+OASA&nbsp;is&nbsp;used&nbsp;for&nbsp;2D&nbsp;coordinate&nbsp;generation&nbsp;and&nbsp;depiction.&nbsp;Tkinter&nbsp;and<br>
+Python&nbsp;Imaging&nbsp;Library&nbsp;are&nbsp;required&nbsp;for&nbsp;image&nbsp;display.</tt></dd></dl>
+
+<dl><dt><a name="Molecule-localopt"><strong>localopt</strong></a>(self, forcefield<font color="#909090">='MMFF94'</font>, steps<font color="#909090">=500</font>)</dt><dd><tt>Locally&nbsp;optimize&nbsp;the&nbsp;coordinates.<br>
+&nbsp;<br>
+Optional&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;forcefield&nbsp;--&nbsp;default&nbsp;is&nbsp;"MMFF94"<br>
+&nbsp;&nbsp;&nbsp;steps&nbsp;--&nbsp;default&nbsp;is&nbsp;500<br>
+&nbsp;<br>
+If&nbsp;the&nbsp;molecule&nbsp;does&nbsp;not&nbsp;have&nbsp;2D&nbsp;or&nbsp;3D&nbsp;coordinates,&nbsp;<a href="#Molecule-make3D">make3D</a>()&nbsp;is<br>
+called&nbsp;before&nbsp;the&nbsp;optimization.&nbsp;Note&nbsp;that&nbsp;the&nbsp;molecule&nbsp;needs<br>
+to&nbsp;have&nbsp;explicit&nbsp;hydrogens.&nbsp;If&nbsp;not,&nbsp;call&nbsp;<a href="#Molecule-addh">addh</a>().</tt></dd></dl>
+
+<dl><dt><a name="Molecule-make3D"><strong>make3D</strong></a>(self, forcefield<font color="#909090">='MMFF94'</font>, steps<font color="#909090">=50</font>)</dt><dd><tt>Generate&nbsp;3D&nbsp;coordinates.<br>
+&nbsp;<br>
+Optional&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;forcefield&nbsp;--&nbsp;default&nbsp;is&nbsp;"MMFF94"<br>
+&nbsp;&nbsp;&nbsp;steps&nbsp;--&nbsp;default&nbsp;is&nbsp;50<br>
+&nbsp;<br>
+Once&nbsp;coordinates&nbsp;are&nbsp;generated,&nbsp;hydrogens&nbsp;are&nbsp;added&nbsp;and&nbsp;a&nbsp;quick<br>
+local&nbsp;optimization&nbsp;is&nbsp;carried&nbsp;out&nbsp;with&nbsp;50&nbsp;steps&nbsp;and&nbsp;the<br>
+MMFF94&nbsp;forcefield.&nbsp;Call&nbsp;<a href="#Molecule-localopt">localopt</a>()&nbsp;if&nbsp;you&nbsp;want<br>
+to&nbsp;improve&nbsp;the&nbsp;coordinates&nbsp;further.</tt></dd></dl>
+
+<dl><dt><a name="Molecule-removeh"><strong>removeh</strong></a>(self)</dt><dd><tt>Remove&nbsp;hydrogens.</tt></dd></dl>
 
 <dl><dt><a name="Molecule-write"><strong>write</strong></a>(self, format<font color="#909090">='SMI'</font>, filename<font color="#909090">=None</font>, overwrite<font color="#909090">=False</font>)</dt><dd><tt>Write&nbsp;the&nbsp;molecule&nbsp;to&nbsp;a&nbsp;file&nbsp;or&nbsp;return&nbsp;a&nbsp;string.<br>
 &nbsp;<br>
@@ -189,11 +237,13 @@ The&nbsp;overwrite&nbsp;flag&nbsp;is&nbsp;ignored&nbsp;if&nbsp;a&nbsp;filename&n
 It&nbsp;controls&nbsp;whether&nbsp;to&nbsp;overwrite&nbsp;an&nbsp;existing&nbsp;file.</tt></dd></dl>
 
 <hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>__dict__</strong> = &lt;dictproxy object&gt;<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dl>
-
-<dl><dt><strong>__weakref__</strong> = &lt;attribute '__weakref__' of 'Molecule' objects&gt;<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;(if&nbsp;defined)</tt></dl>
-
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -259,11 +309,13 @@ NSC&nbsp;--&gt;&nbsp;1<br>
 <dl><dt><a name="MoleculeData-values"><strong>values</strong></a>(self)</dt></dl>
 
 <hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>__dict__</strong> = &lt;dictproxy object&gt;<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dl>
-
-<dl><dt><strong>__weakref__</strong> = &lt;attribute '__weakref__' of 'MoleculeData' objects&gt;<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;(if&nbsp;defined)</tt></dl>
-
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -285,7 +337,7 @@ Optional&nbsp;parameters:<br>
 &nbsp;&nbsp;&nbsp;overwrite&nbsp;(default&nbsp;is&nbsp;False)&nbsp;--&nbsp;if&nbsp;the&nbsp;output&nbsp;file&nbsp;already&nbsp;exists,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;it&nbsp;be&nbsp;overwritten?<br>
 Methods:<br>
-&nbsp;&nbsp;&nbsp;<a href="#Outputfile-write">write</a>(molecule)<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;<a href="#Outputfile-write">write</a>(molecule),&nbsp;<a href="#Outputfile-close">close</a>()<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Outputfile-__init__"><strong>__init__</strong></a>(self, format, filename, overwrite<font color="#909090">=False</font>)</dt></dl>
@@ -298,11 +350,13 @@ Required&nbsp;parameters:<br>
 &nbsp;&nbsp;&nbsp;molecule</tt></dd></dl>
 
 <hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>__dict__</strong> = &lt;dictproxy object&gt;<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dl>
-
-<dl><dt><strong>__weakref__</strong> = &lt;attribute '__weakref__' of 'Outputfile' objects&gt;<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;(if&nbsp;defined)</tt></dl>
-
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -316,13 +370,17 @@ Required&nbsp;parameters:<br>
 &nbsp;&nbsp;&nbsp;smartspattern<br>
 &nbsp;<br>
 Methods:<br>
-&nbsp;&nbsp;&nbsp;<a href="#Smarts-findall">findall</a>()<br>
+&nbsp;&nbsp;&nbsp;<a href="#Smarts-findall">findall</a>(molecule)<br>
 &nbsp;<br>
 Example:<br>
 &gt;&gt;&gt;&nbsp;mol&nbsp;=&nbsp;<a href="#-readstring">readstring</a>("smi","CCN(CC)CC")&nbsp;#&nbsp;triethylamine<br>
 &gt;&gt;&gt;&nbsp;smarts&nbsp;=&nbsp;<a href="#Smarts">Smarts</a>("[#6][#6]")&nbsp;#&nbsp;Matches&nbsp;an&nbsp;ethyl&nbsp;group<br>
 &gt;&gt;&gt;&nbsp;print&nbsp;smarts.<a href="#Smarts-findall">findall</a>(mol)&nbsp;<br>
-[(1,&nbsp;2),&nbsp;(4,&nbsp;5),&nbsp;(6,&nbsp;7)]<br>&nbsp;</tt></td></tr>
+[(1,&nbsp;2),&nbsp;(4,&nbsp;5),&nbsp;(6,&nbsp;7)]<br>
+&nbsp;<br>
+The&nbsp;numbers&nbsp;returned&nbsp;are&nbsp;the&nbsp;indices&nbsp;(starting&nbsp;from&nbsp;1)&nbsp;of&nbsp;the&nbsp;atoms<br>
+that&nbsp;match&nbsp;the&nbsp;SMARTS&nbsp;pattern.&nbsp;In&nbsp;this&nbsp;case,&nbsp;there&nbsp;are&nbsp;three&nbsp;matches<br>
+for&nbsp;each&nbsp;of&nbsp;the&nbsp;three&nbsp;ethyl&nbsp;groups&nbsp;in&nbsp;the&nbsp;molecule.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Smarts-__init__"><strong>__init__</strong></a>(self, smartspattern)</dt><dd><tt>Initialise&nbsp;with&nbsp;a&nbsp;SMARTS&nbsp;pattern.</tt></dd></dl>
@@ -333,11 +391,13 @@ Required&nbsp;parameters:<br>
 &nbsp;&nbsp;&nbsp;molecule</tt></dd></dl>
 
 <hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>__dict__</strong> = &lt;dictproxy object&gt;<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dl>
-
-<dl><dt><strong>__weakref__</strong> = &lt;attribute '__weakref__' of 'Smarts' objects&gt;<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;(if&nbsp;defined)</tt></dl>
-
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
@@ -345,13 +405,7 @@ Data and other attributes defined here:<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-findbits"><strong>findbits</strong></a>(fp, bitsperint)</dt><dd><tt>Find&nbsp;which&nbsp;bits&nbsp;are&nbsp;set&nbsp;in&nbsp;a&nbsp;list/vector.<br>
-&nbsp;<br>
-This&nbsp;function&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#Fingerprint">Fingerprint</a>&nbsp;class.<br>
-&nbsp;<br>
-&gt;&gt;&gt;&nbsp;<a href="#-findbits">findbits</a>([13,&nbsp;71],&nbsp;8)<br>
-[1,&nbsp;3,&nbsp;4,&nbsp;9,&nbsp;10,&nbsp;11,&nbsp;15]</tt></dd></dl>
- <dl><dt><a name="-readfile"><strong>readfile</strong></a>(format, filename)</dt><dd><tt>Iterate&nbsp;over&nbsp;the&nbsp;molecules&nbsp;in&nbsp;a&nbsp;file.<br>
+<td width="100%"><dl><dt><a name="-readfile"><strong>readfile</strong></a>(format, filename)</dt><dd><tt>Iterate&nbsp;over&nbsp;the&nbsp;molecules&nbsp;in&nbsp;a&nbsp;file.<br>
 &nbsp;<br>
 Required&nbsp;parameters:<br>
 &nbsp;&nbsp;&nbsp;format<br>
@@ -389,6 +443,10 @@ Required&nbsp;parameters:<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>informats</strong> = {'acr': 'ACR format', 'alc': 'Alchemy format', 'arc': 'Accelrys/MSI Biosym/Insight II CAR format', 'bgf': 'MSI BGF format', 'box': 'Dock 3.5 Box format', 'bs': 'Ball and Stick format', 'c3d1': 'Chem3D Cartesian 1 format', 'c3d2': 'Chem3D Cartesian 2 format', 'caccrt': 'Cacao Cartesian format', 'car': 'Accelrys/MSI Biosym/Insight II CAR format', ...}<br>
+<td width="100%"><strong>descs</strong> = ['LogP', 'MR', 'TPSA']<br>
+<strong>forcefields</strong> = ['UFF', 'MMFF94', 'Ghemical']<br>
+<strong>fps</strong> = ['FP2', 'FP3', 'FP4']<br>
+<strong>informats</strong> = {'acr': 'ACR format', 'alc': 'Alchemy format', 'arc': 'Accelrys/MSI Biosym/Insight II CAR format', 'bgf': 'MSI BGF format', 'box': 'Dock 3.5 Box format', 'bs': 'Ball and Stick format', 'c3d1': 'Chem3D Cartesian 1 format', 'c3d2': 'Chem3D Cartesian 2 format', 'caccrt': 'Cacao Cartesian format', 'car': 'Accelrys/MSI Biosym/Insight II CAR format', ...}<br>
+<strong>operations</strong> = ['Gen3D']<br>
 <strong>outformats</strong> = {'alc': 'Alchemy format', 'bgf': 'MSI BGF format', 'box': 'Dock 3.5 Box format', 'bs': 'Ball and Stick format', 'c3d1': 'Chem3D Cartesian 1 format', 'c3d2': 'Chem3D Cartesian 2 format', 'cac': 'CAChe MolStruct format', 'caccrt': 'Cacao Cartesian format', 'cache': 'CAChe MolStruct format', 'cacint': 'Cacao Internal format', ...}</td></tr></table>
 </body></html>

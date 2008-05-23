@@ -15,7 +15,7 @@ or related areas.
 shutil.copy("../../scripts/python/pybel.py", ".")
 
 setup(name='openbabel-python',
-      version='1.3b',
+      version='1.3',
       author='The Open Babel development team',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/wiki/Python',
