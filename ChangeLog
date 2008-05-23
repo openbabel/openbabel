@@ -1,6 +1,7 @@
 2008-05-23 Chris Morley
 
-	* 
+	* src/formats/xml/cmlformat.cpp: Applied Jean Brefort's patch to fix
+	leading spaces on atom refs bug #1965086
 	
 2005-05-23  Noel O'Boyle  <baoilleach@gmail.com>
 
