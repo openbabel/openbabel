@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="OpenBabelDLL"
 	ProjectGUID="{8D131E22-3017-412C-BCEC-460465C48A3B}"
 	RootNamespace="OpenBabelDLL"
@@ -357,6 +357,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\obiter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\obmolecformat.cpp"
 				>
 			</File>
 			<File
@@ -1167,10 +1171,6 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\obmolecformat.cpp"
-				>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\pcmodelformat.cpp"
