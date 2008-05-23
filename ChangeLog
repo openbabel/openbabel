@@ -1,8 +1,16 @@
+2008-05-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/mol.cpp: SetTorsion(), move j=*i out of this for loop:
+	for (i = atom.begin(), j = *i; ... ; i++, j = *i)
+	This was causing weird results in windows (MSVC2005). Thanks 
+	to Noel for reporting the bug, this also fixes #1954233 I believe.
+
 2008-05-23 Chris Morley
 
 	* src/formats/xml/cmlformat.cpp: Applied Jean Brefort's patch to fix
 	leading spaces on atom refs bug #1965086
 	
+
 2005-05-23  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* Pybel: minor fix to test suite for running outside cinfony

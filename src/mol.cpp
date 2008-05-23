@@ -227,6 +227,7 @@ namespace OpenBabel
     v3y = _c[tor[2]+1] - _c[tor[3]+1];
     v3z = _c[tor[2]+2] - _c[tor[3]+2];
 
+
     c1x = v1y*v2z - v1z*v2y;
     c2x = v2y*v3z - v2z*v3y;
     c1y = -v1x*v2z + v1z*v2x;
@@ -288,8 +289,10 @@ namespace OpenBabel
     ty = _c[tor[1]+1];
     tz = _c[tor[1]+2];
     vector<int>::iterator i;
-    for (i = atoms.begin(),j=*i;i != atoms.end();i++,j=*i)
+	for (i = atoms.begin(); i != atoms.end(); ++i)
       {
+        j = *i;
+
         _c[j] -= tx;
         _c[j+1] -= ty;
         _c[j+2]-= tz;
