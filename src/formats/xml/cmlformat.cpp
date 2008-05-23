@@ -1517,7 +1517,7 @@ namespace OpenBabel
 #ifdef HAVE_SSTREAM
         stringstream ord;
 #else
-        strstream ref1, ref2, ord;
+        strstream ord;
 #endif
         
         string ref1, ref2;
@@ -1526,16 +1526,16 @@ namespace OpenBabel
         for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
           {
             int bo = pbond->GetBO();
-            if(bo==5 || (WriteAromaticBonds && pbond->IsAromatic())) //aromatic
-              ord << " " << 'A';
-            else
-              ord << " " << bo;
-
-            ref1 += ' ' + atomIds[pbond->GetBeginAtomIdx()];
-            ref2 += ' ' + atomIds[pbond->GetEndAtomIdx()];
 
             if(!arrayform)
               {
+                if(bo==5 || (WriteAromaticBonds && pbond->IsAromatic())) //aromatic
+                  ord << 'A';
+                else
+                  ord << bo;
+
+                ref1 = atomIds[pbond->GetBeginAtomIdx()];
+                ref2 = atomIds[pbond->GetEndAtomIdx()];
                 xmlTextWriterStartElementNS(writer(), prefix, C_BOND, NULL);
                 //				xmlTextWriterWriteFormatAttribute(writer(), C_ID,"b%d", pbond->GetIdx()); remove bond id
                 if(!cml1)
@@ -1567,8 +1567,16 @@ namespace OpenBabel
                   }
                 xmlTextWriterEndElement(writer());//bond
                 ord.str(""); //clear (For array form it accumulates.)
-                ref1.clear();
-                ref2.clear();
+              }
+            else
+              {
+                if(bo==5 || (WriteAromaticBonds && pbond->IsAromatic())) //aromatic
+                  ord << " " << 'A';
+                else
+                  ord << " " << bo;
+
+                ref1 += ' ' + atomIds[pbond->GetBeginAtomIdx()];
+                ref2 += ' ' + atomIds[pbond->GetEndAtomIdx()];
               }
           }
         if(arrayform)
