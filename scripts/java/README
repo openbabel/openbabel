@@ -11,12 +11,18 @@ http://openbabel.sourceforge.net/wiki/Java
 
 *** Linux Compilation
 
-To compile, run the following steps:
-% javac *.java
-# assuming that jni.h is found in /usr/include/java
-% g++ -c -fpic openbabel_java.cpp -I../../include -I/usr/include/java
-# assuming that the C++ libopenbabel is in /usr/local/lib
-% g++ -shared -L/usr/local/lib openbabel_java.o -lopenbabel -o libopenbabel.so
+To compile on Debian 4.0, run the following steps:
+$ export JAVA=/home/noel/Tools/jdk1.5.0_15
+
+I installed OB into /home/noel/tree (/lib)
+$ export tree=/home/noel/tree 
+
+$ cd /home/noel/Tools/openbabel/scripts/java
+$ $JAVA/bin/javac *.java
+$ g++ -c -fpic openbabel_java.cpp -I../../include -I$JAVA/include -I$JAVA/include/linux
+$ g++ -shared -L$tree/lib openbabel_java.o -lopenbabel -o libopenbabel.so
+$ export LD_LIBRARY_PATH=.:$tree/lib
+$ LD_PRELOAD=$tree/lib/libopenbabel.so $JAVA/bin/java OBTest
 
 
 *** Mac OS X Compliation

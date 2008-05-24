@@ -1,3 +1,8 @@
+2005-05-24  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/java/README: Updated instructions for using Java bindings on
+	Linux
+
 2005-05-23  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* include/openbabel/obconversion.h: Removed extra qualification on
