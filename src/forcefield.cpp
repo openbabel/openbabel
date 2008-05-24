@@ -836,23 +836,24 @@ namespace OpenBabel
       _velocityPtr = NULL;       
       _gradientPtr = NULL;       
     }    
-   
+
     if (IsSetupNeeded(mol)) {
       _mol = mol;
       _ncoords = _mol.NumAtoms() * 3;
-      
+
       if (_velocityPtr)
         delete [] _velocityPtr;
       _velocityPtr = NULL;       
-      
+
       if (_gradientPtr)
         delete [] _gradientPtr;
       _gradientPtr = new double[_ncoords];
-      
+
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
 
       _mol.UnsetSSSRPerceived();
+	  _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
       
       if (!SetTypes()) {
         _validSetup = false;
@@ -866,6 +867,7 @@ namespace OpenBabel
         _validSetup = false;
         return false;
       }
+
     } else {
       if (_validSetup) {
         SetCoordinates(mol);
@@ -874,7 +876,7 @@ namespace OpenBabel
         return false;
       }
     }
-    
+
     _validSetup = true;
     return true;
   }
@@ -903,6 +905,9 @@ namespace OpenBabel
       _constraints = constraints;
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
+      
+	  _mol.UnsetSSSRPerceived();
+	  _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
 
       if (!SetTypes())
         return false;

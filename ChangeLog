@@ -1,7 +1,25 @@
+2008-05-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: Setup(), delete TorsionData before using 
+	FOR_TORSION_OF_MOL. (fixed #1954233)
+
+	* windows-vc2005/OBCommonFormats/OBCommonFormats.vcproj: Correct
+	location for obmolecformat.cpp
+
 2005-05-24  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/java/README: Updated instructions for using Java bindings on
 	Linux
+
+2008-05-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* windows-vc2005/openbabel.sln: remove non-existing OBPython and test, 
+	add template.
+
+	* windows-vc2005/OpenBabelDLL/OpenBabelDLL.vcproj: move obmolecformats 
+	from formats to sources.
+
+	* windows-vc2005/template/*.*: Example of a C++ program using openbabel.
 
 2005-05-23  Marcus D. Hanwell  <marcus@cryos.org>
 
