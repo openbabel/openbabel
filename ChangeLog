@@ -1,3 +1,8 @@
+2008-05-25 Chris Morley
+	
+	windows-vc2005/examples: new folder with an example project
+	for OBF build. Will replace /template.
+
 2008-05-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Setup(), delete TorsionData before using 
