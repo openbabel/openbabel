@@ -563,6 +563,7 @@ namespace OpenBabel
 
     mol = _workMol;
     mol.SetDimension(3);
+
     return true;
   }
 
@@ -579,6 +580,8 @@ namespace OpenBabel
     OBAtom *a, *b, *c, *d;
     OBBond *ab, *bc, *cd;
     vector<int> done;
+
+    mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
     FOR_TORSIONS_OF_MOL(t, mol) {
       a = mol.GetAtom((*t)[0] + 1);
       b = mol.GetAtom((*t)[1] + 1);
@@ -634,7 +637,7 @@ namespace OpenBabel
         angle = M_PI;
       if (ab->IsDown() && cd->IsDown())
         angle = 0.0;
-      
+
       if  (invert)
         mol.SetTorsion(a, b, c, d, angle + M_PI);
       else
@@ -642,6 +645,7 @@ namespace OpenBabel
 
       done.push_back(bc->GetIdx());
     }
+
   }
 
   void OBBuilder::CorrectStereoAtoms(OBMol &mol)
@@ -650,6 +654,8 @@ namespace OpenBabel
       if (center->HasData(OBGenericDataType::ChiralData)) {
         OBChiralData *cd = (OBChiralData*) center->GetData(OBGenericDataType::ChiralData);
         vector<unsigned int> refs = cd->GetAtom4Refs(input);
+		if (refs.size() < 4)
+          continue;
         // We look along the refs[0]-center bond.
         //
         //  1                     1
@@ -664,7 +670,7 @@ namespace OpenBabel
         OBAtom *c = mol.GetAtom(refs[2]);
         OBAtom *d = mol.GetAtom(refs[3]);
 
-        double angbc = mol.GetTorsion(b, a, &*center, c); // angle 1-0-2 in fig 1
+		double angbc = mol.GetTorsion(b, a, &*center, c); // angle 1-0-2 in fig 1
         double angbd = mol.GetTorsion(b, a, &*center, d); // angle 1-0-3 in fig 1
 
         // this should not never happen if the molecule was build using OBBuilder...

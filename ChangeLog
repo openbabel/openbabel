@@ -1,3 +1,8 @@
+2008-05-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/builder.cpp: Fix bug. CorrectStereoAtoms was not checking the 
+	size of refs, before doing refs[0]...refs[3] (thanks Noel)
+
 2008-05-25 Chris Morley
 	
 	windows-vc2005/examples: new folder with an example project
