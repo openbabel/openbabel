@@ -1,3 +1,9 @@
+2005-05-26  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-csharp.i: Creating SWIG wrapper for C#
+	* windows-vc2005/OpenBabelOBF.sln, OBJava, OBCSharp: Creating projects
+	for OBJava and OBCSharp
+
 2008-05-24  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/builder.cpp: Fix bug. CorrectStereoAtoms was not checking the 
