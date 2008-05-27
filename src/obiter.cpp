@@ -983,8 +983,6 @@ namespace OpenBabel
 	} else {
 	  _i = _vtorsion.end();
 	}
-    else
-      _i = _vtorsion.end();
   }
 
   OBMolTorsionIter::OBMolTorsionIter(OBMol &mol)
@@ -1002,8 +1000,6 @@ namespace OpenBabel
 	  // always set _i, _i will be compared to _vtorsion.end() in OBMolTorsionIter::bool()
 	  _i = _vtorsion.end();
 	}
-    else
-      _i = _vtorsion.end();
   }
 
   OBMolTorsionIter::OBMolTorsionIter(const OBMolTorsionIter &ai)
