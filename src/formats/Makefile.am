@@ -74,8 +74,8 @@ libformats_la_SOURCES = \
 	rxnformat.cpp rsmiformat.cpp
 
 else BUILD_SHARED
-
-pkglib_LTLIBRARIES = \
+formatsdir = $(pkglibdir)/$(VERSION)
+formats_LTLIBRARIES = \
 	APIInterface.la \
 	CSRformat.la PQSformat.la MCDLformat.la alchemyformat.la \
 	acrformat.la adfformat.la \
@@ -104,7 +104,7 @@ pkglib_LTLIBRARIES = \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
 	xedformat.la xtcformat.la xyzformat.la yasaraformat.la zindoformat.la
 if HAVE_SHARED_POINTER
-    pkglib_LTLIBRARIES += chemdrawcdxformat.la chemkinformat.la \
+formats_LTLIBRARIES += chemdrawcdxformat.la chemkinformat.la \
                           rxnformat.la rsmiformat.la
 endif
 

@@ -288,7 +288,7 @@ libopenbabel_la_SOURCES = \
 		transform.cpp $(dlhandler)
 
 libopenbabel_la_LDFLAGS = -version-info 3:1:1 -no-undefined
-@BUILD_SHARED_TRUE@AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
+@BUILD_SHARED_TRUE@AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)/$(VERSION)\" -DUSING_DYNAMIC_LIBS
 @BUILD_SHARED_FALSE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 @BUILD_SHARED_FALSE@			formats/libformats.la forcefields/libforcefields.la \
 @BUILD_SHARED_FALSE@			ops/libops.la descriptors/libdescriptors.la @LTLIBOBJS@

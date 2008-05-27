@@ -1,3 +1,8 @@
+2008-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/Makefile.* src/formats/Makefile.*: Add versioned install
+	directories for formats. Fixes PR#1905093.
+
 2005-05-26  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-csharp.i: Creating SWIG wrapper for C#

@@ -52,9 +52,9 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(pkglibdir)"
-pkglibLTLIBRARIES_INSTALL = $(INSTALL)
-LTLIBRARIES = $(noinst_LTLIBRARIES) $(pkglib_LTLIBRARIES)
+am__installdirs = "$(DESTDIR)$(formatsdir)"
+formatsLTLIBRARIES_INSTALL = $(INSTALL)
+LTLIBRARIES = $(formats_LTLIBRARIES) $(noinst_LTLIBRARIES)
 APIInterface_la_LIBADD =
 am__APIInterface_la_SOURCES_DIST = APIInterface.cpp
 @BUILD_SHARED_TRUE@am_APIInterface_la_OBJECTS = APIInterface.lo
@@ -62,7 +62,7 @@ APIInterface_la_OBJECTS = $(am_APIInterface_la_OBJECTS)
 APIInterface_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(APIInterface_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_APIInterface_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_APIInterface_la_rpath = -rpath $(formatsdir)
 CSRformat_la_LIBADD =
 am__CSRformat_la_SOURCES_DIST = CSRformat.cpp
 @BUILD_SHARED_TRUE@am_CSRformat_la_OBJECTS = CSRformat.lo
@@ -70,7 +70,7 @@ CSRformat_la_OBJECTS = $(am_CSRformat_la_OBJECTS)
 CSRformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(CSRformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_CSRformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_CSRformat_la_rpath = -rpath $(formatsdir)
 MCDLformat_la_LIBADD =
 am__MCDLformat_la_SOURCES_DIST = MCDLformat.cpp
 @BUILD_SHARED_TRUE@am_MCDLformat_la_OBJECTS = MCDLformat.lo
@@ -78,7 +78,7 @@ MCDLformat_la_OBJECTS = $(am_MCDLformat_la_OBJECTS)
 MCDLformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(MCDLformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_MCDLformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_MCDLformat_la_rpath = -rpath $(formatsdir)
 PQSformat_la_LIBADD =
 am__PQSformat_la_SOURCES_DIST = PQSformat.cpp
 @BUILD_SHARED_TRUE@am_PQSformat_la_OBJECTS = PQSformat.lo
@@ -86,7 +86,7 @@ PQSformat_la_OBJECTS = $(am_PQSformat_la_OBJECTS)
 PQSformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(PQSformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_PQSformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_PQSformat_la_rpath = -rpath $(formatsdir)
 acrformat_la_LIBADD =
 am__acrformat_la_SOURCES_DIST = acrformat.cpp
 @BUILD_SHARED_TRUE@am_acrformat_la_OBJECTS = acrformat.lo
@@ -94,7 +94,7 @@ acrformat_la_OBJECTS = $(am_acrformat_la_OBJECTS)
 acrformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(acrformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_acrformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_acrformat_la_rpath = -rpath $(formatsdir)
 adfformat_la_LIBADD =
 am__adfformat_la_SOURCES_DIST = adfformat.cpp
 @BUILD_SHARED_TRUE@am_adfformat_la_OBJECTS = adfformat.lo
@@ -102,7 +102,7 @@ adfformat_la_OBJECTS = $(am_adfformat_la_OBJECTS)
 adfformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(adfformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_adfformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_adfformat_la_rpath = -rpath $(formatsdir)
 alchemyformat_la_LIBADD =
 am__alchemyformat_la_SOURCES_DIST = alchemyformat.cpp
 @BUILD_SHARED_TRUE@am_alchemyformat_la_OBJECTS = alchemyformat.lo
@@ -110,7 +110,7 @@ alchemyformat_la_OBJECTS = $(am_alchemyformat_la_OBJECTS)
 alchemyformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(alchemyformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_alchemyformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_alchemyformat_la_rpath = -rpath $(formatsdir)
 amberformat_la_LIBADD =
 am__amberformat_la_SOURCES_DIST = amberformat.cpp
 @BUILD_SHARED_TRUE@am_amberformat_la_OBJECTS = amberformat.lo
@@ -118,7 +118,7 @@ amberformat_la_OBJECTS = $(am_amberformat_la_OBJECTS)
 amberformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(amberformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_amberformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_amberformat_la_rpath = -rpath $(formatsdir)
 balstformat_la_LIBADD =
 am__balstformat_la_SOURCES_DIST = balstformat.cpp
 @BUILD_SHARED_TRUE@am_balstformat_la_OBJECTS = balstformat.lo
@@ -126,7 +126,7 @@ balstformat_la_OBJECTS = $(am_balstformat_la_OBJECTS)
 balstformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(balstformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_balstformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_balstformat_la_rpath = -rpath $(formatsdir)
 bgfformat_la_LIBADD =
 am__bgfformat_la_SOURCES_DIST = bgfformat.cpp
 @BUILD_SHARED_TRUE@am_bgfformat_la_OBJECTS = bgfformat.lo
@@ -134,7 +134,7 @@ bgfformat_la_OBJECTS = $(am_bgfformat_la_OBJECTS)
 bgfformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(bgfformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_bgfformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_bgfformat_la_rpath = -rpath $(formatsdir)
 boxformat_la_LIBADD =
 am__boxformat_la_SOURCES_DIST = boxformat.cpp
 @BUILD_SHARED_TRUE@am_boxformat_la_OBJECTS = boxformat.lo
@@ -142,7 +142,7 @@ boxformat_la_OBJECTS = $(am_boxformat_la_OBJECTS)
 boxformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(boxformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_boxformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_boxformat_la_rpath = -rpath $(formatsdir)
 cacaoformat_la_LIBADD =
 am__cacaoformat_la_SOURCES_DIST = cacaoformat.cpp
 @BUILD_SHARED_TRUE@am_cacaoformat_la_OBJECTS = cacaoformat.lo
@@ -150,7 +150,7 @@ cacaoformat_la_OBJECTS = $(am_cacaoformat_la_OBJECTS)
 cacaoformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cacaoformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_cacaoformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_cacaoformat_la_rpath = -rpath $(formatsdir)
 cacheformat_la_LIBADD =
 am__cacheformat_la_SOURCES_DIST = cacheformat.cpp
 @BUILD_SHARED_TRUE@am_cacheformat_la_OBJECTS = cacheformat.lo
@@ -158,7 +158,7 @@ cacheformat_la_OBJECTS = $(am_cacheformat_la_OBJECTS)
 cacheformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cacheformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_cacheformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_cacheformat_la_rpath = -rpath $(formatsdir)
 cansmilesformat_la_LIBADD =
 am__cansmilesformat_la_SOURCES_DIST = cansmilesformat.cpp
 @BUILD_SHARED_TRUE@am_cansmilesformat_la_OBJECTS = cansmilesformat.lo
@@ -166,7 +166,7 @@ cansmilesformat_la_OBJECTS = $(am_cansmilesformat_la_OBJECTS)
 cansmilesformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cansmilesformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_cansmilesformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_cansmilesformat_la_rpath = -rpath $(formatsdir)
 carformat_la_LIBADD =
 am__carformat_la_SOURCES_DIST = carformat.cpp
 @BUILD_SHARED_TRUE@am_carformat_la_OBJECTS = carformat.lo
@@ -174,7 +174,7 @@ carformat_la_OBJECTS = $(am_carformat_la_OBJECTS)
 carformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(carformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_carformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_carformat_la_rpath = -rpath $(formatsdir)
 cccformat_la_LIBADD =
 am__cccformat_la_SOURCES_DIST = cccformat.cpp
 @BUILD_SHARED_TRUE@am_cccformat_la_OBJECTS = cccformat.lo
@@ -182,7 +182,7 @@ cccformat_la_OBJECTS = $(am_cccformat_la_OBJECTS)
 cccformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cccformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_cccformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_cccformat_la_rpath = -rpath $(formatsdir)
 chem3dformat_la_LIBADD =
 am__chem3dformat_la_SOURCES_DIST = chem3dformat.cpp
 @BUILD_SHARED_TRUE@am_chem3dformat_la_OBJECTS = chem3dformat.lo
@@ -190,7 +190,7 @@ chem3dformat_la_OBJECTS = $(am_chem3dformat_la_OBJECTS)
 chem3dformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(chem3dformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_chem3dformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_chem3dformat_la_rpath = -rpath $(formatsdir)
 chemdrawcdxformat_la_LIBADD =
 am__chemdrawcdxformat_la_SOURCES_DIST = chemdrawcdx.cpp
 @BUILD_SHARED_TRUE@am_chemdrawcdxformat_la_OBJECTS = chemdrawcdx.lo
@@ -200,7 +200,7 @@ chemdrawcdxformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(CXXFLAGS) $(chemdrawcdxformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am_chemdrawcdxformat_la_rpath =  \
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	-rpath \
-@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(pkglibdir)
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(formatsdir)
 chemdrawctformat_la_LIBADD =
 am__chemdrawctformat_la_SOURCES_DIST = chemdrawct.cpp
 @BUILD_SHARED_TRUE@am_chemdrawctformat_la_OBJECTS = chemdrawct.lo
@@ -208,7 +208,7 @@ chemdrawctformat_la_OBJECTS = $(am_chemdrawctformat_la_OBJECTS)
 chemdrawctformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(chemdrawctformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_chemdrawctformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_chemdrawctformat_la_rpath = -rpath $(formatsdir)
 chemkinformat_la_LIBADD =
 am__chemkinformat_la_SOURCES_DIST = chemkinformat.cpp
 @BUILD_SHARED_TRUE@am_chemkinformat_la_OBJECTS = chemkinformat.lo
@@ -218,7 +218,7 @@ chemkinformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(CXXFLAGS) $(chemkinformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am_chemkinformat_la_rpath =  \
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	-rpath \
-@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(pkglibdir)
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(formatsdir)
 chemtoolformat_la_LIBADD =
 am__chemtoolformat_la_SOURCES_DIST = chemtoolformat.cpp
 @BUILD_SHARED_TRUE@am_chemtoolformat_la_OBJECTS = chemtoolformat.lo
@@ -226,7 +226,7 @@ chemtoolformat_la_OBJECTS = $(am_chemtoolformat_la_OBJECTS)
 chemtoolformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(chemtoolformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_chemtoolformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_chemtoolformat_la_rpath = -rpath $(formatsdir)
 cifformat_la_LIBADD =
 am__cifformat_la_SOURCES_DIST = cifformat.cpp
 @BUILD_SHARED_TRUE@am_cifformat_la_OBJECTS = cifformat.lo
@@ -234,7 +234,7 @@ cifformat_la_OBJECTS = $(am_cifformat_la_OBJECTS)
 cifformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cifformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_cifformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_cifformat_la_rpath = -rpath $(formatsdir)
 copyformat_la_LIBADD =
 am__copyformat_la_SOURCES_DIST = copyformat.cpp
 @BUILD_SHARED_TRUE@am_copyformat_la_OBJECTS = copyformat.lo
@@ -242,7 +242,7 @@ copyformat_la_OBJECTS = $(am_copyformat_la_OBJECTS)
 copyformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(copyformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_copyformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_copyformat_la_rpath = -rpath $(formatsdir)
 crkformat_la_LIBADD =
 am__crkformat_la_SOURCES_DIST = crkformat.cpp
 @BUILD_SHARED_TRUE@am_crkformat_la_OBJECTS = crkformat.lo
@@ -250,7 +250,7 @@ crkformat_la_OBJECTS = $(am_crkformat_la_OBJECTS)
 crkformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(crkformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_crkformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_crkformat_la_rpath = -rpath $(formatsdir)
 cssrformat_la_LIBADD =
 am__cssrformat_la_SOURCES_DIST = cssrformat.cpp
 @BUILD_SHARED_TRUE@am_cssrformat_la_OBJECTS = cssrformat.lo
@@ -258,7 +258,7 @@ cssrformat_la_OBJECTS = $(am_cssrformat_la_OBJECTS)
 cssrformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(cssrformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_cssrformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_cssrformat_la_rpath = -rpath $(formatsdir)
 dmolformat_la_LIBADD =
 am__dmolformat_la_SOURCES_DIST = dmolformat.cpp
 @BUILD_SHARED_TRUE@am_dmolformat_la_OBJECTS = dmolformat.lo
@@ -266,7 +266,7 @@ dmolformat_la_OBJECTS = $(am_dmolformat_la_OBJECTS)
 dmolformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(dmolformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_dmolformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_dmolformat_la_rpath = -rpath $(formatsdir)
 fastaformat_la_LIBADD =
 am__fastaformat_la_SOURCES_DIST = fastaformat.cpp
 @BUILD_SHARED_TRUE@am_fastaformat_la_OBJECTS = fastaformat.lo
@@ -274,7 +274,7 @@ fastaformat_la_OBJECTS = $(am_fastaformat_la_OBJECTS)
 fastaformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(fastaformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_fastaformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_fastaformat_la_rpath = -rpath $(formatsdir)
 fastsearchformat_la_LIBADD =
 am__fastsearchformat_la_SOURCES_DIST = fastsearchformat.cpp
 @BUILD_SHARED_TRUE@am_fastsearchformat_la_OBJECTS =  \
@@ -283,7 +283,7 @@ fastsearchformat_la_OBJECTS = $(am_fastsearchformat_la_OBJECTS)
 fastsearchformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(fastsearchformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_fastsearchformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_fastsearchformat_la_rpath = -rpath $(formatsdir)
 fchkformat_la_LIBADD =
 am__fchkformat_la_SOURCES_DIST = fchkformat.cpp
 @BUILD_SHARED_TRUE@am_fchkformat_la_OBJECTS = fchkformat.lo
@@ -291,7 +291,7 @@ fchkformat_la_OBJECTS = $(am_fchkformat_la_OBJECTS)
 fchkformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(fchkformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_fchkformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_fchkformat_la_rpath = -rpath $(formatsdir)
 featformat_la_LIBADD =
 am__featformat_la_SOURCES_DIST = featformat.cpp
 @BUILD_SHARED_TRUE@am_featformat_la_OBJECTS = featformat.lo
@@ -299,7 +299,7 @@ featformat_la_OBJECTS = $(am_featformat_la_OBJECTS)
 featformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(featformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_featformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_featformat_la_rpath = -rpath $(formatsdir)
 fhformat_la_LIBADD =
 am__fhformat_la_SOURCES_DIST = fhformat.cpp
 @BUILD_SHARED_TRUE@am_fhformat_la_OBJECTS = fhformat.lo
@@ -307,7 +307,7 @@ fhformat_la_OBJECTS = $(am_fhformat_la_OBJECTS)
 fhformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(fhformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_fhformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_fhformat_la_rpath = -rpath $(formatsdir)
 fingerprintformat_la_LIBADD =
 am__fingerprintformat_la_SOURCES_DIST = fingerprintformat.cpp
 @BUILD_SHARED_TRUE@am_fingerprintformat_la_OBJECTS =  \
@@ -316,7 +316,8 @@ fingerprintformat_la_OBJECTS = $(am_fingerprintformat_la_OBJECTS)
 fingerprintformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(fingerprintformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_fingerprintformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_fingerprintformat_la_rpath = -rpath \
+@BUILD_SHARED_TRUE@	$(formatsdir)
 freefracformat_la_LIBADD =
 am__freefracformat_la_SOURCES_DIST = freefracformat.cpp
 @BUILD_SHARED_TRUE@am_freefracformat_la_OBJECTS = freefracformat.lo
@@ -324,7 +325,7 @@ freefracformat_la_OBJECTS = $(am_freefracformat_la_OBJECTS)
 freefracformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(freefracformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_freefracformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_freefracformat_la_rpath = -rpath $(formatsdir)
 gamessformat_la_LIBADD =
 am__gamessformat_la_SOURCES_DIST = gamessformat.cpp
 @BUILD_SHARED_TRUE@am_gamessformat_la_OBJECTS = gamessformat.lo
@@ -332,7 +333,7 @@ gamessformat_la_OBJECTS = $(am_gamessformat_la_OBJECTS)
 gamessformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(gamessformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_gamessformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_gamessformat_la_rpath = -rpath $(formatsdir)
 gamessukformat_la_LIBADD =
 am__gamessukformat_la_SOURCES_DIST = gamessukformat.cpp
 @BUILD_SHARED_TRUE@am_gamessukformat_la_OBJECTS = gamessukformat.lo
@@ -340,7 +341,7 @@ gamessukformat_la_OBJECTS = $(am_gamessukformat_la_OBJECTS)
 gamessukformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(gamessukformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_gamessukformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_gamessukformat_la_rpath = -rpath $(formatsdir)
 gausscubeformat_la_LIBADD =
 am__gausscubeformat_la_SOURCES_DIST = gausscubeformat.cpp
 @BUILD_SHARED_TRUE@am_gausscubeformat_la_OBJECTS = gausscubeformat.lo
@@ -348,7 +349,7 @@ gausscubeformat_la_OBJECTS = $(am_gausscubeformat_la_OBJECTS)
 gausscubeformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(gausscubeformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_gausscubeformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_gausscubeformat_la_rpath = -rpath $(formatsdir)
 gaussformat_la_LIBADD =
 am__gaussformat_la_SOURCES_DIST = gaussformat.cpp
 @BUILD_SHARED_TRUE@am_gaussformat_la_OBJECTS = gaussformat.lo
@@ -356,7 +357,7 @@ gaussformat_la_OBJECTS = $(am_gaussformat_la_OBJECTS)
 gaussformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(gaussformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_gaussformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_gaussformat_la_rpath = -rpath $(formatsdir)
 gausszmatformat_la_LIBADD =
 am__gausszmatformat_la_SOURCES_DIST = gausszmatformat.cpp
 @BUILD_SHARED_TRUE@am_gausszmatformat_la_OBJECTS = gausszmatformat.lo
@@ -364,7 +365,7 @@ gausszmatformat_la_OBJECTS = $(am_gausszmatformat_la_OBJECTS)
 gausszmatformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(gausszmatformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_gausszmatformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_gausszmatformat_la_rpath = -rpath $(formatsdir)
 ghemicalformat_la_LIBADD =
 am__ghemicalformat_la_SOURCES_DIST = ghemicalformat.cpp
 @BUILD_SHARED_TRUE@am_ghemicalformat_la_OBJECTS = ghemicalformat.lo
@@ -372,7 +373,7 @@ ghemicalformat_la_OBJECTS = $(am_ghemicalformat_la_OBJECTS)
 ghemicalformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(ghemicalformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_ghemicalformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_ghemicalformat_la_rpath = -rpath $(formatsdir)
 gromos96format_la_LIBADD =
 am__gromos96format_la_SOURCES_DIST = gromos96format.cpp
 @BUILD_SHARED_TRUE@am_gromos96format_la_OBJECTS = gromos96format.lo
@@ -380,7 +381,7 @@ gromos96format_la_OBJECTS = $(am_gromos96format_la_OBJECTS)
 gromos96format_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(gromos96format_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_gromos96format_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_gromos96format_la_rpath = -rpath $(formatsdir)
 hinformat_la_LIBADD =
 am__hinformat_la_SOURCES_DIST = hinformat.cpp
 @BUILD_SHARED_TRUE@am_hinformat_la_OBJECTS = hinformat.lo
@@ -388,7 +389,7 @@ hinformat_la_OBJECTS = $(am_hinformat_la_OBJECTS)
 hinformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(hinformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_hinformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_hinformat_la_rpath = -rpath $(formatsdir)
 inchiformat_la_DEPENDENCIES =
 am__inchiformat_la_SOURCES_DIST = inchiformat.cpp getinchi.cpp
 @BUILD_SHARED_TRUE@am_inchiformat_la_OBJECTS = inchiformat.lo \
@@ -397,7 +398,7 @@ inchiformat_la_OBJECTS = $(am_inchiformat_la_OBJECTS)
 inchiformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(inchiformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_inchiformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_inchiformat_la_rpath = -rpath $(formatsdir)
 jaguarformat_la_LIBADD =
 am__jaguarformat_la_SOURCES_DIST = jaguarformat.cpp
 @BUILD_SHARED_TRUE@am_jaguarformat_la_OBJECTS = jaguarformat.lo
@@ -405,7 +406,7 @@ jaguarformat_la_OBJECTS = $(am_jaguarformat_la_OBJECTS)
 jaguarformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(jaguarformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_jaguarformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_jaguarformat_la_rpath = -rpath $(formatsdir)
 @BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_DEPENDENCIES =  \
 @BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@	inchi/libinchi.la
 am__libformats_la_SOURCES_DIST = APIInterface.cpp MCDLformat.cpp \
@@ -471,7 +472,7 @@ mdlformat_la_OBJECTS = $(am_mdlformat_la_OBJECTS)
 mdlformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(mdlformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_mdlformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_mdlformat_la_rpath = -rpath $(formatsdir)
 mmcifformat_la_LIBADD =
 am__mmcifformat_la_SOURCES_DIST = mmcifformat.cpp
 @BUILD_SHARED_TRUE@am_mmcifformat_la_OBJECTS = mmcifformat.lo
@@ -479,7 +480,7 @@ mmcifformat_la_OBJECTS = $(am_mmcifformat_la_OBJECTS)
 mmcifformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(mmcifformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_mmcifformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_mmcifformat_la_rpath = -rpath $(formatsdir)
 mmodformat_la_LIBADD =
 am__mmodformat_la_SOURCES_DIST = mmodformat.cpp
 @BUILD_SHARED_TRUE@am_mmodformat_la_OBJECTS = mmodformat.lo
@@ -487,7 +488,7 @@ mmodformat_la_OBJECTS = $(am_mmodformat_la_OBJECTS)
 mmodformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(mmodformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_mmodformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_mmodformat_la_rpath = -rpath $(formatsdir)
 mol2format_la_LIBADD =
 am__mol2format_la_SOURCES_DIST = mol2format.cpp
 @BUILD_SHARED_TRUE@am_mol2format_la_OBJECTS = mol2format.lo
@@ -495,7 +496,7 @@ mol2format_la_OBJECTS = $(am_mol2format_la_OBJECTS)
 mol2format_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(mol2format_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_mol2format_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_mol2format_la_rpath = -rpath $(formatsdir)
 moldenformat_la_LIBADD =
 am__moldenformat_la_SOURCES_DIST = moldenformat.cpp
 @BUILD_SHARED_TRUE@am_moldenformat_la_OBJECTS = moldenformat.lo
@@ -503,7 +504,7 @@ moldenformat_la_OBJECTS = $(am_moldenformat_la_OBJECTS)
 moldenformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(moldenformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_moldenformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_moldenformat_la_rpath = -rpath $(formatsdir)
 molreportformat_la_LIBADD =
 am__molreportformat_la_SOURCES_DIST = molreport.cpp
 @BUILD_SHARED_TRUE@am_molreportformat_la_OBJECTS = molreport.lo
@@ -511,7 +512,7 @@ molreportformat_la_OBJECTS = $(am_molreportformat_la_OBJECTS)
 molreportformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(molreportformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_molreportformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_molreportformat_la_rpath = -rpath $(formatsdir)
 mopacformat_la_LIBADD =
 am__mopacformat_la_SOURCES_DIST = mopacformat.cpp
 @BUILD_SHARED_TRUE@am_mopacformat_la_OBJECTS = mopacformat.lo
@@ -519,7 +520,7 @@ mopacformat_la_OBJECTS = $(am_mopacformat_la_OBJECTS)
 mopacformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(mopacformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_mopacformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_mopacformat_la_rpath = -rpath $(formatsdir)
 mpdformat_la_LIBADD =
 am__mpdformat_la_SOURCES_DIST = mpdformat.cpp
 @BUILD_SHARED_TRUE@am_mpdformat_la_OBJECTS = mpdformat.lo
@@ -527,7 +528,7 @@ mpdformat_la_OBJECTS = $(am_mpdformat_la_OBJECTS)
 mpdformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(mpdformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_mpdformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_mpdformat_la_rpath = -rpath $(formatsdir)
 mpqcformat_la_LIBADD =
 am__mpqcformat_la_SOURCES_DIST = mpqcformat.cpp
 @BUILD_SHARED_TRUE@am_mpqcformat_la_OBJECTS = mpqcformat.lo
@@ -535,7 +536,7 @@ mpqcformat_la_OBJECTS = $(am_mpqcformat_la_OBJECTS)
 mpqcformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(mpqcformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_mpqcformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_mpqcformat_la_rpath = -rpath $(formatsdir)
 msiformat_la_LIBADD =
 am__msiformat_la_SOURCES_DIST = msiformat.cpp
 @BUILD_SHARED_TRUE@am_msiformat_la_OBJECTS = msiformat.lo
@@ -543,7 +544,7 @@ msiformat_la_OBJECTS = $(am_msiformat_la_OBJECTS)
 msiformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(msiformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_msiformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_msiformat_la_rpath = -rpath $(formatsdir)
 msmsformat_la_LIBADD =
 am__msmsformat_la_SOURCES_DIST = msmsformat.cpp
 @BUILD_SHARED_TRUE@am_msmsformat_la_OBJECTS = msmsformat.lo
@@ -551,7 +552,7 @@ msmsformat_la_OBJECTS = $(am_msmsformat_la_OBJECTS)
 msmsformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(msmsformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_msmsformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_msmsformat_la_rpath = -rpath $(formatsdir)
 nwchemformat_la_LIBADD =
 am__nwchemformat_la_SOURCES_DIST = nwchemformat.cpp
 @BUILD_SHARED_TRUE@am_nwchemformat_la_OBJECTS = nwchemformat.lo
@@ -559,7 +560,7 @@ nwchemformat_la_OBJECTS = $(am_nwchemformat_la_OBJECTS)
 nwchemformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(nwchemformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_nwchemformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_nwchemformat_la_rpath = -rpath $(formatsdir)
 opendxformat_la_LIBADD =
 am__opendxformat_la_SOURCES_DIST = opendxformat.cpp
 @BUILD_SHARED_TRUE@am_opendxformat_la_OBJECTS = opendxformat.lo
@@ -567,7 +568,7 @@ opendxformat_la_OBJECTS = $(am_opendxformat_la_OBJECTS)
 opendxformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(opendxformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_opendxformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_opendxformat_la_rpath = -rpath $(formatsdir)
 pcmodelformat_la_LIBADD =
 am__pcmodelformat_la_SOURCES_DIST = pcmodelformat.cpp
 @BUILD_SHARED_TRUE@am_pcmodelformat_la_OBJECTS = pcmodelformat.lo
@@ -575,7 +576,7 @@ pcmodelformat_la_OBJECTS = $(am_pcmodelformat_la_OBJECTS)
 pcmodelformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(pcmodelformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_pcmodelformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_pcmodelformat_la_rpath = -rpath $(formatsdir)
 pdbformat_la_LIBADD =
 am__pdbformat_la_SOURCES_DIST = pdbformat.cpp atomrecord.cpp
 @BUILD_SHARED_TRUE@am_pdbformat_la_OBJECTS = pdbformat.lo \
@@ -584,7 +585,7 @@ pdbformat_la_OBJECTS = $(am_pdbformat_la_OBJECTS)
 pdbformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(pdbformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_pdbformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_pdbformat_la_rpath = -rpath $(formatsdir)
 pngformat_la_LIBADD =
 am__pngformat_la_SOURCES_DIST = pngformat.cpp
 @BUILD_SHARED_TRUE@am_pngformat_la_OBJECTS = pngformat.lo
@@ -592,7 +593,7 @@ pngformat_la_OBJECTS = $(am_pngformat_la_OBJECTS)
 pngformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(pngformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_pngformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_pngformat_la_rpath = -rpath $(formatsdir)
 povrayformat_la_LIBADD =
 am__povrayformat_la_SOURCES_DIST = povrayformat.cpp
 @BUILD_SHARED_TRUE@am_povrayformat_la_OBJECTS = povrayformat.lo
@@ -600,7 +601,7 @@ povrayformat_la_OBJECTS = $(am_povrayformat_la_OBJECTS)
 povrayformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(povrayformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_povrayformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_povrayformat_la_rpath = -rpath $(formatsdir)
 pqrformat_la_LIBADD =
 am__pqrformat_la_SOURCES_DIST = pqrformat.cpp atomrecord.cpp
 @BUILD_SHARED_TRUE@am_pqrformat_la_OBJECTS = pqrformat.lo \
@@ -609,7 +610,7 @@ pqrformat_la_OBJECTS = $(am_pqrformat_la_OBJECTS)
 pqrformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(pqrformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_pqrformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_pqrformat_la_rpath = -rpath $(formatsdir)
 qchemformat_la_LIBADD =
 am__qchemformat_la_SOURCES_DIST = qchemformat.cpp
 @BUILD_SHARED_TRUE@am_qchemformat_la_OBJECTS = qchemformat.lo
@@ -617,7 +618,7 @@ qchemformat_la_OBJECTS = $(am_qchemformat_la_OBJECTS)
 qchemformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(qchemformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_qchemformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_qchemformat_la_rpath = -rpath $(formatsdir)
 reportformat_la_LIBADD =
 am__reportformat_la_SOURCES_DIST = reportformat.cpp
 @BUILD_SHARED_TRUE@am_reportformat_la_OBJECTS = reportformat.lo
@@ -625,7 +626,7 @@ reportformat_la_OBJECTS = $(am_reportformat_la_OBJECTS)
 reportformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(reportformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_reportformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_reportformat_la_rpath = -rpath $(formatsdir)
 rsmiformat_la_LIBADD =
 am__rsmiformat_la_SOURCES_DIST = rsmiformat.cpp
 @BUILD_SHARED_TRUE@am_rsmiformat_la_OBJECTS = rsmiformat.lo
@@ -635,7 +636,7 @@ rsmiformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(CXXFLAGS) $(rsmiformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am_rsmiformat_la_rpath =  \
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	-rpath \
-@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(pkglibdir)
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(formatsdir)
 rxnformat_la_LIBADD =
 am__rxnformat_la_SOURCES_DIST = rxnformat.cpp
 @BUILD_SHARED_TRUE@am_rxnformat_la_OBJECTS = rxnformat.lo
@@ -645,7 +646,7 @@ rxnformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(CXXFLAGS) $(rxnformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am_rxnformat_la_rpath =  \
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	-rpath \
-@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(pkglibdir)
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(formatsdir)
 shelxformat_la_LIBADD =
 am__shelxformat_la_SOURCES_DIST = shelxformat.cpp
 @BUILD_SHARED_TRUE@am_shelxformat_la_OBJECTS = shelxformat.lo
@@ -653,7 +654,7 @@ shelxformat_la_OBJECTS = $(am_shelxformat_la_OBJECTS)
 shelxformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(shelxformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_shelxformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_shelxformat_la_rpath = -rpath $(formatsdir)
 smilesformat_la_LIBADD =
 am__smilesformat_la_SOURCES_DIST = smilesformat.cpp
 @BUILD_SHARED_TRUE@am_smilesformat_la_OBJECTS = smilesformat.lo
@@ -661,7 +662,7 @@ smilesformat_la_OBJECTS = $(am_smilesformat_la_OBJECTS)
 smilesformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(smilesformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_smilesformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_smilesformat_la_rpath = -rpath $(formatsdir)
 thermoformat_la_LIBADD =
 am__thermoformat_la_SOURCES_DIST = thermoformat.cpp
 @BUILD_SHARED_TRUE@am_thermoformat_la_OBJECTS = thermoformat.lo
@@ -669,7 +670,7 @@ thermoformat_la_OBJECTS = $(am_thermoformat_la_OBJECTS)
 thermoformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(thermoformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_thermoformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_thermoformat_la_rpath = -rpath $(formatsdir)
 tinkerformat_la_LIBADD =
 am__tinkerformat_la_SOURCES_DIST = tinkerformat.cpp
 @BUILD_SHARED_TRUE@am_tinkerformat_la_OBJECTS = tinkerformat.lo
@@ -677,7 +678,7 @@ tinkerformat_la_OBJECTS = $(am_tinkerformat_la_OBJECTS)
 tinkerformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(tinkerformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_tinkerformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_tinkerformat_la_rpath = -rpath $(formatsdir)
 titleformat_la_LIBADD =
 am__titleformat_la_SOURCES_DIST = titleformat.cpp
 @BUILD_SHARED_TRUE@am_titleformat_la_OBJECTS = titleformat.lo
@@ -685,7 +686,7 @@ titleformat_la_OBJECTS = $(am_titleformat_la_OBJECTS)
 titleformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(titleformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_titleformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_titleformat_la_rpath = -rpath $(formatsdir)
 turbomoleformat_la_LIBADD =
 am__turbomoleformat_la_SOURCES_DIST = turbomoleformat.cpp
 @BUILD_SHARED_TRUE@am_turbomoleformat_la_OBJECTS = turbomoleformat.lo
@@ -693,7 +694,7 @@ turbomoleformat_la_OBJECTS = $(am_turbomoleformat_la_OBJECTS)
 turbomoleformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(turbomoleformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_turbomoleformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_turbomoleformat_la_rpath = -rpath $(formatsdir)
 unichemformat_la_LIBADD =
 am__unichemformat_la_SOURCES_DIST = unichemformat.cpp
 @BUILD_SHARED_TRUE@am_unichemformat_la_OBJECTS = unichemformat.lo
@@ -701,7 +702,7 @@ unichemformat_la_OBJECTS = $(am_unichemformat_la_OBJECTS)
 unichemformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(unichemformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_unichemformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_unichemformat_la_rpath = -rpath $(formatsdir)
 viewmolformat_la_LIBADD =
 am__viewmolformat_la_SOURCES_DIST = viewmolformat.cpp
 @BUILD_SHARED_TRUE@am_viewmolformat_la_OBJECTS = viewmolformat.lo
@@ -709,7 +710,7 @@ viewmolformat_la_OBJECTS = $(am_viewmolformat_la_OBJECTS)
 viewmolformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(viewmolformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_viewmolformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_viewmolformat_la_rpath = -rpath $(formatsdir)
 xedformat_la_LIBADD =
 am__xedformat_la_SOURCES_DIST = xedformat.cpp
 @BUILD_SHARED_TRUE@am_xedformat_la_OBJECTS = xedformat.lo
@@ -717,7 +718,7 @@ xedformat_la_OBJECTS = $(am_xedformat_la_OBJECTS)
 xedformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(xedformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_xedformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_xedformat_la_rpath = -rpath $(formatsdir)
 xtcformat_la_LIBADD =
 am__xtcformat_la_SOURCES_DIST = xtcformat.cpp
 @BUILD_SHARED_TRUE@am_xtcformat_la_OBJECTS = xtcformat.lo
@@ -733,7 +734,7 @@ xyzformat_la_OBJECTS = $(am_xyzformat_la_OBJECTS)
 xyzformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(xyzformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_xyzformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_xyzformat_la_rpath = -rpath $(formatsdir)
 yasaraformat_la_LIBADD =
 am__yasaraformat_la_SOURCES_DIST = yasaraformat.cpp
 @BUILD_SHARED_TRUE@am_yasaraformat_la_OBJECTS = yasaraformat.lo
@@ -741,7 +742,7 @@ yasaraformat_la_OBJECTS = $(am_yasaraformat_la_OBJECTS)
 yasaraformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(yasaraformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_yasaraformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_yasaraformat_la_rpath = -rpath $(formatsdir)
 zindoformat_la_LIBADD =
 am__zindoformat_la_SOURCES_DIST = zindoformat.cpp
 @BUILD_SHARED_TRUE@am_zindoformat_la_OBJECTS = zindoformat.lo
@@ -749,7 +750,7 @@ zindoformat_la_OBJECTS = $(am_zindoformat_la_OBJECTS)
 zindoformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(zindoformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_zindoformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_zindoformat_la_rpath = -rpath $(formatsdir)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -1071,7 +1072,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp \
 @BUILD_SHARED_FALSE@	rxnformat.cpp rsmiformat.cpp
 
-@BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = APIInterface.la CSRformat.la \
+@BUILD_SHARED_TRUE@formatsdir = $(pkglibdir)/$(VERSION)
+@BUILD_SHARED_TRUE@formats_LTLIBRARIES = APIInterface.la CSRformat.la \
 @BUILD_SHARED_TRUE@	PQSformat.la MCDLformat.la alchemyformat.la \
 @BUILD_SHARED_TRUE@	acrformat.la adfformat.la amberformat.la \
 @BUILD_SHARED_TRUE@	balstformat.la bgfformat.la boxformat.la \
@@ -1295,37 +1297,37 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+install-formatsLTLIBRARIES: $(formats_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	test -z "$(formatsdir)" || $(MKDIR_P) "$(DESTDIR)$(formatsdir)"
+	@list='$(formats_LTLIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    f=$(am__strip_dir) \
+	    echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(formatsLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) '$$p' '$(DESTDIR)$(formatsdir)/$$f'"; \
+	    $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(formatsLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) "$$p" "$(DESTDIR)$(formatsdir)/$$f"; \
+	  else :; fi; \
+	done
 
-clean-noinstLTLIBRARIES:
-	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
-	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
+uninstall-formatsLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@list='$(formats_LTLIBRARIES)'; for p in $$list; do \
+	  p=$(am__strip_dir) \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(formatsdir)/$$p'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(formatsdir)/$$p"; \
+	done
+
+clean-formatsLTLIBRARIES:
+	-test -z "$(formats_LTLIBRARIES)" || rm -f $(formats_LTLIBRARIES)
+	@list='$(formats_LTLIBRARIES)'; for p in $$list; do \
 	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
 	  test "$$dir" != "$$p" || dir=.; \
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-install-pkglibLTLIBRARIES: $(pkglib_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	test -z "$(pkglibdir)" || $(MKDIR_P) "$(DESTDIR)$(pkglibdir)"
-	@list='$(pkglib_LTLIBRARIES)'; for p in $$list; do \
-	  if test -f $$p; then \
-	    f=$(am__strip_dir) \
-	    echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(pkglibLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) '$$p' '$(DESTDIR)$(pkglibdir)/$$f'"; \
-	    $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(pkglibLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) "$$p" "$(DESTDIR)$(pkglibdir)/$$f"; \
-	  else :; fi; \
-	done
 
-uninstall-pkglibLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(pkglib_LTLIBRARIES)'; for p in $$list; do \
-	  p=$(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(pkglibdir)/$$p'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(pkglibdir)/$$p"; \
-	done
-
-clean-pkglibLTLIBRARIES:
-	-test -z "$(pkglib_LTLIBRARIES)" || rm -f $(pkglib_LTLIBRARIES)
-	@list='$(pkglib_LTLIBRARIES)'; for p in $$list; do \
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
 	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
 	  test "$$dir" != "$$p" || dir=.; \
 	  echo "rm -f \"$${dir}/so_locations\""; \
@@ -1791,7 +1793,7 @@ check: $(BUILT_SOURCES)
 all-am: Makefile $(LTLIBRARIES)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(pkglibdir)"; do \
+	for dir in "$(DESTDIR)$(formatsdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -1823,8 +1825,8 @@ maintainer-clean-generic:
 @BUILD_PCH_FALSE@clean-local:
 clean: clean-recursive
 
-clean-am: clean-generic clean-libtool clean-local \
-	clean-noinstLTLIBRARIES clean-pkglibLTLIBRARIES mostlyclean-am
+clean-am: clean-formatsLTLIBRARIES clean-generic clean-libtool \
+	clean-local clean-noinstLTLIBRARIES mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -rf ./$(DEPDIR)
@@ -1842,11 +1844,11 @@ info: info-recursive
 
 info-am:
 
-install-data-am:
+install-data-am: install-formatsLTLIBRARIES
 
 install-dvi: install-dvi-recursive
 
-install-exec-am: install-pkglibLTLIBRARIES
+install-exec-am:
 
 install-html: install-html-recursive
 
@@ -1878,27 +1880,27 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-pkglibLTLIBRARIES
+uninstall-am: uninstall-formatsLTLIBRARIES
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) install-am \
 	install-strip
 
 .PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
-	all all-am check check-am clean clean-generic clean-libtool \
-	clean-local clean-noinstLTLIBRARIES clean-pkglibLTLIBRARIES \
-	ctags ctags-recursive distclean distclean-compile \
-	distclean-generic distclean-libtool distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
+	all all-am check check-am clean clean-formatsLTLIBRARIES \
+	clean-generic clean-libtool clean-local \
+	clean-noinstLTLIBRARIES ctags ctags-recursive distclean \
+	distclean-compile distclean-generic distclean-libtool \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am \
+	install-formatsLTLIBRARIES install-html install-html-am \
 	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-pkglibLTLIBRARIES install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am \
-	uninstall-pkglibLTLIBRARIES
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs installdirs-am \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	uninstall-formatsLTLIBRARIES
 
 @BUILD_PCH_TRUE@all.h.gch: all.h Makefile \
 @BUILD_PCH_TRUE@	$(srcdir)/../../include/openbabel/babelconfig.h \

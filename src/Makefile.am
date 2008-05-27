@@ -42,7 +42,7 @@ libopenbabel_la_SOURCES = \
 libopenbabel_la_LDFLAGS = -version-info 3:1:1 -no-undefined
 
 if BUILD_SHARED
-AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
+AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)/$(VERSION)\" -DUSING_DYNAMIC_LIBS
 
 libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 			forcefields/libforcefields.la ops/libops.la \
