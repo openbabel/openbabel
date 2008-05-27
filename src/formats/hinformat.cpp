@@ -75,16 +75,18 @@ namespace OpenBabel
     vector<string> vs;
 
     ifs.getline(buffer, BUFF_SIZE);
-    while (strstr(buffer,"mol") == NULL)
+    while (ifs.good() && strstr(buffer,"mol") == NULL)
       {
         ifs.getline(buffer, BUFF_SIZE);
         if (ifs.peek() == EOF || !ifs.good())
           return false;
       }
     ifs.getline(buffer, BUFF_SIZE);
+    if (!ifs.good())
+      return false; // ended early
 
     mol.BeginModify();
-    while (strstr(buffer,"endmol") == NULL)
+    while (ifs.good() && strstr(buffer,"endmol") == NULL)
       {
         tokenize(vs,buffer); // Don't really know how long it'll be
         if (vs.size() < 11)
