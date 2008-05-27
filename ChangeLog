@@ -1,8 +1,17 @@
+2008-05-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/obiter.cpp: (same as Chris' commit, but let's do the same for angles)
+	Make sure to always set _i, even when _vtorsion is empty.
+	Otherwise OBMolTorsionIter::bool() will compare _i to _vtorsion.end() which
+	caused a segfault on windows. Fixes Avogadro windows bug #1972244.
+
+
 2008-05-27 Chris Morley
 
 	* src/obiter.cpp(OBMolTorsionIter::OBMolTorsionIter):
 	prevent crash when _vtorsion is empty. Was affecting builder
 	with small molecules.
+
 
 2008-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

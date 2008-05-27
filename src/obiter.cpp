@@ -881,7 +881,9 @@ namespace OpenBabel
     if (!_vangle.empty()) {
       _i = _vangle.begin();
       _angle = *_i;
-    }
+	} else {
+	  _i = _vangle.end();
+	}
   }
 
   OBMolAngleIter::OBMolAngleIter(OBMol &mol)
@@ -894,7 +896,9 @@ namespace OpenBabel
     if (!_vangle.empty()) {
       _i = _vangle.begin();
       _angle = *_i;
-    }
+	} else {
+      _i = _vangle.end();
+	}
   }
 
   OBMolAngleIter::OBMolAngleIter(const OBMolAngleIter &ai)
@@ -976,7 +980,9 @@ namespace OpenBabel
     if (!_vtorsion.empty()) {
       _i = _vtorsion.begin();
       _torsion = *_i;
-    }
+	} else {
+	  _i = _vtorsion.end();
+	}
     else
       _i = _vtorsion.end();
   }
@@ -986,12 +992,16 @@ namespace OpenBabel
     mol.FindTorsions();
     OBTorsionData *td = (OBTorsionData *) mol.GetData(OBGenericDataType::TorsionData);
     td->FillTorsionArray(_vtorsion);
-    
+
     _parent = &mol;
     if (!_vtorsion.empty()) {
       _i = _vtorsion.begin();
       _torsion = *_i;
-    }
+	} else {
+	  // Avogadro bug #1972244
+	  // always set _i, _i will be compared to _vtorsion.end() in OBMolTorsionIter::bool()
+	  _i = _vtorsion.end();
+	}
     else
       _i = _vtorsion.end();
   }
