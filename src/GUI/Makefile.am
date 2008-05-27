@@ -1,4 +1,5 @@
-EXTRA_DIST = OBGUI.h optswx.h selformats.h stdwx.h
+EXTRA_DIST = OBGUI.h optswx.h selformats.h stdwx.h \
+							OpenBabelGUI.html babel.xpm babel2.ico OBGUI.rc
 
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data -I$(top_srcdir)/include
 
