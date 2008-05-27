@@ -1,3 +1,9 @@
+2008-05-27 Chris Morley
+
+	* src/obiter.cpp(OBMolTorsionIter::OBMolTorsionIter):
+	prevent crash when _vtorsion is empty. Was affecting builder
+	with small molecules.
+
 2008-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/Makefile.* src/formats/Makefile.*: Add versioned install

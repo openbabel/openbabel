@@ -977,6 +977,8 @@ namespace OpenBabel
       _i = _vtorsion.begin();
       _torsion = *_i;
     }
+    else
+      _i = _vtorsion.end();
   }
 
   OBMolTorsionIter::OBMolTorsionIter(OBMol &mol)
@@ -990,6 +992,8 @@ namespace OpenBabel
       _i = _vtorsion.begin();
       _torsion = *_i;
     }
+    else
+      _i = _vtorsion.end();
   }
 
   OBMolTorsionIter::OBMolTorsionIter(const OBMolTorsionIter &ai)
