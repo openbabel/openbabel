@@ -43,7 +43,7 @@
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -189,7 +189,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Swigify"
-					CommandLine="swig -csharp -c++ -I&quot;../../src&quot; -I&quot;../../include&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
+					CommandLine="swig -csharp -c++ -I&quot;../../src&quot; -I&quot;../../include&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 					Outputs="$(ProjDir)\$(InputName)_wrap.cpp"
 				/>
 			</FileConfiguration>

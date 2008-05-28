@@ -1,3 +1,15 @@
+2008-05-28 Chris Morley
+
+	* windows-vc2005/OBCSharp/OBCSharp.vcproj,
+	* windows-vc2005/OBJava/OBJava.vcproj,
+	* windows-vc2005/OpenBabelOBF.sln
+	Build release versions even in Debug mode.
+	Use env var JAVABASE, e.g."C:\Program Files\Java\jdk1.6.0_03"
+	so that there is no dependence in the code on the installed
+	Java version. (Is there a standard variable for this?)
+	
+	* windows-vc2005/OBMoreFormats/OBMoreFormats.vcproj:add adfformat
+
 2008-05-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/adfformat.cpp (OBT41Format::ReadMolecule): Convert

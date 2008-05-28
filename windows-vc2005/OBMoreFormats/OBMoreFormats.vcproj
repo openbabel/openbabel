@@ -230,6 +230,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\adfformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\alchemyformat.cpp"
 				>
 			</File>
