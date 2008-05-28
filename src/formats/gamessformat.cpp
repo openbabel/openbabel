@@ -46,6 +46,7 @@ namespace OpenBabel
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
+        "  c  Read multiple conformers\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -221,6 +222,10 @@ namespace OpenBabel
     int HOMO = 0;
     vector<double> orbitals;
 
+    // Read multiple conformers (e.g. for geometry optimization or IRC
+    bool addConformers = pConv->IsOption("c",OBConversion::INOPTIONS);
+    bool readOneConformer = false;
+
     // must build generic data while we parse then add at the end.
     OBSetData *gmsset = new OBSetData();
     gmsset->SetAttribute("gamess");
@@ -231,9 +236,15 @@ namespace OpenBabel
       {
         if(strstr(buffer,"ATOMIC                      COORDINATES (BOHR)") != NULL)
           {
-            // mol.EndModify();
-            mol.Clear();
-            mol.BeginModify();
+            if (addConformers && readOneConformer) { // add another
+              double *c = new double [mol.NumAtoms()*3];
+              mol.AddConformer(c);
+              mol.SetConformer(mol.NumConformers());
+            } else if (!addConformers) {
+              mol.Clear();
+              mol.BeginModify();
+            }
+            readOneConformer = true;
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
@@ -254,9 +265,15 @@ namespace OpenBabel
           }
         else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL)
           {
-            // mol.EndModify();
-            mol.Clear();
-            mol.BeginModify();
+            if (addConformers && readOneConformer) { // add another
+              double *c = new double [mol.NumAtoms()*3];
+              mol.AddConformer(c);
+              mol.SetConformer(mol.NumConformers());
+            } else if (!addConformers) {
+              mol.Clear();
+              mol.BeginModify();
+            }
+            readOneConformer = true;
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);	// ---------------
             ifs.getline(buffer,BUFF_SIZE);
@@ -275,6 +292,27 @@ namespace OpenBabel
                   break;
                 tokenize(vs,buffer);
               }
+          }
+        else if(strstr(buffer,"ELECTROSTATIC MOMENTS") != NULL)
+          {
+            ifs.getline(buffer,BUFF_SIZE); //-----
+            ifs.getline(buffer,BUFF_SIZE);  // blank line
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE); // point charges TODO
+            ifs.getline(buffer,BUFF_SIZE);	// column headings dipole moment
+            ifs.getline(buffer,BUFF_SIZE);
+            
+            tokenize(vs, buffer);
+            if (vs.size() == 4) {
+              OBVectorData *dipoleMoment = new OBVectorData;
+              dipoleMoment->SetAttribute("Dipole Moment");
+              double x, y, z;
+              x = atof(vs[0].c_str());
+              y = atof(vs[1].c_str());
+              z = atof(vs[2].c_str());
+              dipoleMoment->SetData(x, y, z);
+              mol.SetData(dipoleMoment);
+            } 
           }
         else if(strstr(buffer,"MOPAC CHARGES") != NULL)
           {
@@ -574,9 +612,6 @@ namespace OpenBabel
       {
         if(strstr(buffer,"$DATA") != NULL)
           {
-            // mol.EndModify();
-            mol.Clear();
-            mol.BeginModify();
             ifs.getline(buffer,BUFF_SIZE);	// title
             tokenize(vs,buffer);
             mol.SetTitle(buffer);

@@ -802,6 +802,8 @@ namespace OpenBabel
    virtual ~OBVectorData(){};
    virtual OBGenericData* Clone(OBBase*) const
          {return new OBVectorData(*this);}
+   void SetData(double x, double y, double z)
+     { _vec = vector3(x, y, z); }
    void SetData(vector3 data)
      { _vec = data; }
    vector3 GetData() const
