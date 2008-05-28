@@ -209,6 +209,8 @@ bool OBT41Format::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     OBMol* pmol = dynamic_cast< OBMol* >(pOb);
     if( pmol == 0 ) return false;
 
+    cerr << " Ha !" << endl;
+
     istream& ifs = *pConv->GetInStream();
 
     GridData gd;
@@ -219,23 +221,35 @@ bool OBT41Format::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     {
        streampos current = ifs.tellg();
 
+       // We create new data for each grid
+       // If we don't find any legitimate data, we'll end and still have "OBGridData"
+       // rather than a legitimate label
  			 t41Data = NewData(gd);
        while( ReadSCFOrbitalGrid( ifs, *t41Data ) );
-       pmol->SetData( t41Data );
+       if (t41Data->GetAttribute() == "GridData") {
+         delete t41Data;
+       } else
+         pmol->SetData( t41Data );
 
        ifs.clear();
        ifs.seekg( current, ios::beg );
 			 
  			 t41Data = NewData(gd);
        while( ReadSCFGrid( ifs, *t41Data ) );
-       pmol->SetData( t41Data );
+       if (t41Data->GetAttribute() == "GridData") {
+         delete t41Data;
+       } else
+         pmol->SetData( t41Data );
 
        ifs.clear();
        ifs.seekg( current, ios::beg );
 
  			 t41Data = NewData(gd);
        while( ReadSumFragGrid( ifs, *t41Data ) );
-       pmol->SetData( t41Data );
+       if (t41Data->GetAttribute() == "GridData") {
+         delete t41Data;
+       } else
+         pmol->SetData( t41Data );
 
        ifs.clear();
        ifs.seekg( current, ios::beg );
@@ -486,7 +500,6 @@ bool OBT41Format::ReadSCFOrbitalGrid( istream& is, OBGridData& t41Data ) const
     //  read number = orbital id
     //  skip line
     //  read grid data
-    //  add values to t41Data: t41Data.SetValues( tag + ' ' + number, double vector );
     if( !is ) return false;
     string buf;
     while( is >> buf ) if( buf.find( "SCF", 0 ) == 0 && buf.size() > 3 ) break;
@@ -518,7 +531,19 @@ bool OBT41Format::ReadSCFOrbitalGrid( istream& is, OBGridData& t41Data ) const
     {
         is >> grid[ i ];
     }
-    t41Data.SetValues( grid );
+
+    // Now to translate from a vector stored in z, y, x to one stored in xyz
+    // ADF format order to OpenBabel GridData order!
+    int voxels[3];
+    t41Data.GetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
+    for (int k = 0; k < voxels[2]; ++k)
+      for (int j = 0; j < voxels[1]; ++j)
+        for (int i = 0; i < voxels[0]; ++i)
+          {
+            t41Data.SetValue(i, j, k, 
+                             grid[k*voxels[0]*voxels[1] + j*voxels[0] + i]);
+          }
+
 		t41Data.SetAttribute( label );
     return true;
 }
@@ -541,7 +566,21 @@ bool OBT41Format::ReadSCFGrid( istream& is, OBGridData& t41Data ) const
     vector< double > grid( numPoints );
     int i = 0;
     for( ; i != numPoints; ++i ) is >> grid[ i ];
-    t41Data.SetValues( grid );
+
+    // Now to translate from a vector stored in z, y, x to one stored in xyz
+    // ADF format order to OpenBabel GridData order!
+    // Now to translate from a vector stored in z, y, x to one stored in xyz
+    // ADF format order to OpenBabel GridData order!
+    int voxels[3];
+    t41Data.GetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
+    for (int k = 0; k < voxels[2]; ++k)
+      for (int j = 0; j < voxels[1]; ++j)
+        for (int i = 0; i < voxels[0]; ++i)
+          {
+            t41Data.SetValue(i, j, k, 
+                             grid[k*voxels[0]*voxels[1] + j*voxels[0] + i]);
+          }
+
 		t41Data.SetAttribute( label );
     return true;   
 }
@@ -563,7 +602,19 @@ bool OBT41Format::ReadSumFragGrid( istream& is, OBGridData& t41Data ) const
     vector< double > grid( numPoints );
     int i = 0;
     for( ; i != numPoints; ++i ) is >> grid[ i ];
-    t41Data.SetValues( grid );
+
+    // Now to translate from a vector stored in z, y, x to one stored in xyz
+    // ADF format order to OpenBabel GridData order!
+    int voxels[3];
+    t41Data.GetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
+    for (int k = 0; k < voxels[2]; ++k)
+      for (int j = 0; j < voxels[1]; ++j)
+        for (int i = 0; i < voxels[0]; ++i)
+          {
+            t41Data.SetValue(i, j, k, 
+                             grid[k*voxels[0]*voxels[1] + j*voxels[0] + i]);
+          }
+
 		t41Data.SetAttribute( label );
     return true;
 }

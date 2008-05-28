@@ -726,7 +726,7 @@ xtcformat_la_OBJECTS = $(am_xtcformat_la_OBJECTS)
 xtcformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(xtcformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_xtcformat_la_rpath = -rpath $(pkglibdir)
+@BUILD_SHARED_TRUE@am_xtcformat_la_rpath = -rpath $(formatsdir)
 xyzformat_la_LIBADD =
 am__xyzformat_la_SOURCES_DIST = xyzformat.cpp
 @BUILD_SHARED_TRUE@am_xyzformat_la_OBJECTS = xyzformat.lo
@@ -1027,6 +1027,7 @@ sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data -I$(top_srcdir)/include

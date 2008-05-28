@@ -1,3 +1,9 @@
+2008-05-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/adfformat.cpp (OBT41Format::ReadMolecule): Convert
+	from zyx format in ADF files to xyz in Open Babel for cubes. Only
+	keep cubes which have actual data.
+
 2005-05-28  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/formats/xml/cmlformat.cpp: Fixed PR 1975137 - atoi, strtol
