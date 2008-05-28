@@ -33,8 +33,11 @@
 #include <openbabel/forcefield.h>
 #include <openbabel/op.h>
 
+#include <openbabel/bitvec.h>
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
+#include <openbabel/alias.h>
+#include <openbabel/atomclass.h>
 %}
 
 %include "std_list.i"
@@ -72,6 +75,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %rename(inc)   *::operator++;
 %rename(good)  *::operator bool;
 %rename(deref) *::operator->;
+
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
@@ -101,6 +105,8 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
+%include <openbabel/alias.h>
+%include <openbabel/atomclass.h>
 
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>

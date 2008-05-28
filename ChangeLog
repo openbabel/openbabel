@@ -12,6 +12,10 @@
 
 2008-05-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* scripts/openbabel-perl.i, scripts/perl/Makefile.PL: 
+	Fix up Perl scripting. Now works on Mac OS X and appears to have
+	clean converisons via "make test." Fixes PR#1795155 and 1881688.
+
 	* src/formats/adfformat.cpp (OBT41Format::ReadMolecule): Convert
 	from zyx format in ADF files to xyz in Open Babel for cubes. Only
 	keep cubes which have actual data.
@@ -28,13 +32,11 @@
 	Otherwise OBMolTorsionIter::bool() will compare _i to _vtorsion.end() which
 	caused a segfault on windows. Fixes Avogadro windows bug #1972244.
 
-
 2008-05-27 Chris Morley
 
 	* src/obiter.cpp(OBMolTorsionIter::OBMolTorsionIter):
 	prevent crash when _vtorsion is empty. Was affecting builder
 	with small molecules.
-
 
 2008-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
