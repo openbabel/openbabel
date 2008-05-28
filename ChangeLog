@@ -1,3 +1,8 @@
+2005-05-28  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/formats/xml/cmlformat.cpp: Fixed PR 1975137 - atoi, strtol
+	require null terminated strings.
+
 2008-05-27  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/obiter.cpp: (same as Chris' commit, but let's do the same for angles)

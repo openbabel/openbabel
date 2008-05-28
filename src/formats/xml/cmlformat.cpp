@@ -692,7 +692,6 @@ namespace OpenBabel
               }
             else if(attrname=="order")
               {	
-                Trim(value);
                 const char bo = value[0];
                 if(bo=='S')
                   ord=1;
@@ -700,8 +699,10 @@ namespace OpenBabel
                   ord=2;
                 else if(bo=='A')
                   ord=5;
-                else
-                  ord=atoi(&bo);
+                else {
+                  char* endptr;
+                  ord = strtol(value.c_str(), &endptr, 10);
+                }
               }
           }
 
