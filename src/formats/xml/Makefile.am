@@ -7,8 +7,8 @@ AM_CXXFLAGS = $(BOOST_CPPFLAGS)
 endif
 
 if BUILD_SHARED
-
-pkglib_LTLIBRARIES = \
+formatsdir = $(pkglibdir)/$(VERSION)
+formats_LTLIBRARIES = \
 	pubchem.la xmlformat.la cdxmlformat.la cmlformat.la
 #if HAVE_SHARED_POINTER
 #    pkglib_LTLIBRARIES += cmlreactformat.la
