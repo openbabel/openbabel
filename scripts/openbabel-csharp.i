@@ -63,16 +63,16 @@ namespace std {
 %include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
-%import <openbabel/math/matrix3x3.h>
+%include <openbabel/math/matrix3x3.h>
 
-%import <openbabel/math/spacegroup.h>
+%include <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h> // Needs to come after generic.h
 
-%import <openbabel/chains.h>
+%include <openbabel/chains.h>
 //# %import <openbabel/bitvec.h>
-%import <openbabel/typer.h>
+%include <openbabel/typer.h>
 
 %include <openbabel/plugin.h>
 

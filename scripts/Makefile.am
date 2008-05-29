@@ -1,7 +1,8 @@
 EXTRA_DIST = openbabel-perl.i perl \
 					openbabel-python.i python \
 					openbabel-ruby.i ruby \
-					openbabel-java.i java
+					openbabel-java.i java \
+				openbabel-csharp.i csharp	
 
 # Remove various files before making a distribution archive
 dist-hook:
@@ -20,7 +21,7 @@ dist-hook:
 if MAINTAINER_MODE
 if BUILD_SWIG
 BUILT_SOURCES = perl/openbabel_perl.cpp python/openbabel_python.cpp \
-	java/openbabel_java.cpp
+	java/openbabel_java.cpp csharp/openbabel_csharp.cpp
 
 script_includes = $(top_srcdir)/include/openbabel
 script_headers = $(script_includes)/mol.h $(script_includes)/obconversion.h \
@@ -50,6 +51,10 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include \
   -I$(top_builddir)/include $<;
+
+csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
+	$(SWIG) -csharp -naturalvar -c++ -o $@ -I$(top_srcdir)/include \
+	-I$(top_builddir)/include $<;
 
 if BUILD_RUBY
 BUILT_SOURCES += ruby/openbabel_ruby.cpp
