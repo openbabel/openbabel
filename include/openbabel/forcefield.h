@@ -384,6 +384,10 @@ namespace OpenBabel
     //! \return true if the z coordinate for this atom is fixed
     //! \par a atom index
     bool IsZFixed(int a);
+    //! \return the ignored atom indexes as bitvec. (used in 
+    //! OBForceField::Setup() to determine if a call to 
+    //! OBForceField::SetupCalculations() is needed)
+    OBBitVec GetIgnoredBitVec() { return _ignored; }
     //@}
  
   private:

@@ -1,3 +1,15 @@
+2008-05-30  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: OBFFConstraints::Clear(), clear all the bitvecs.
+	ConjugateGradientsTakeNSteps(), set _grad1[] to (0,0,0) when atom is
+	fixed and not _gradientPtr (_grad1 is used for linesearch).
+	Setup() & SetConstraints, check if SetupCalculations needs to be
+	called. This is the case when the ignored bitvecs of both
+	OBFFConstraints are different.
+
+	* include/openbabel/forcefield.h: OBFFConstraints::GetIgnoredBitVec().
+	Used in Setup() & SetConstraints().
+
 2008-05-28 Chris Morley
 
 	* windows-vc2005/OBCSharp/OBCSharp.vcproj,

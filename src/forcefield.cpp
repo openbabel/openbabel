@@ -382,9 +382,18 @@ namespace OpenBabel
   
   void OBForceField::SetConstraints(OBFFConstraints& constraints) 
   { 
-    _constraints = constraints;
-    if (_mol.NumAtoms())
-      _constraints.Setup(_mol); 
+    if (!(_constraints.GetIgnoredBitVec() == constraints.GetIgnoredBitVec())) {
+      _constraints = constraints;
+cout << "CDEFGHIJKL" << endl;
+      if (!SetupCalculations()) {
+        _validSetup = false;
+        return;
+      }
+    } else {
+      _constraints = constraints;
+    }
+
+    _constraints.Setup(_mol); 
   }
  
   void OBForceField::SetFixAtom(int index) 
@@ -472,6 +481,11 @@ namespace OpenBabel
   void OBFFConstraints::Clear()
   {
     _constraints.clear();
+    _ignored.Clear();
+    _fixed.Clear();
+    _Xfixed.Clear();
+    _Yfixed.Clear();
+    _Zfixed.Clear();
   }
   
   int OBFFConstraints::Size() const
@@ -556,7 +570,6 @@ namespace OpenBabel
   
   void OBFFConstraints::DeleteConstraint(int index)
   {
-    vector<OBFFConstraint> constraints;
     vector<OBFFConstraint>::iterator i;
     int n = 0;
 
@@ -853,7 +866,7 @@ namespace OpenBabel
         _constraints.Setup(_mol);
 
       _mol.UnsetSSSRPerceived();
-	  _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
+      _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
       
       if (!SetTypes()) {
         _validSetup = false;
@@ -889,36 +902,53 @@ namespace OpenBabel
       _velocityPtr = NULL;       
       _gradientPtr = NULL;       
     }    
-    
+
     if (IsSetupNeeded(mol)) {
       _mol = mol;
       _ncoords = _mol.NumAtoms() * 3;
-      
+
       if (_velocityPtr)
         delete [] _velocityPtr;
       _velocityPtr = NULL;       
-      
+
       if (_gradientPtr)
         delete [] _gradientPtr;
       _gradientPtr = new double[_ncoords];
-      
+
       _constraints = constraints;
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
       
-	  _mol.UnsetSSSRPerceived();
-	  _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
+      _mol.UnsetSSSRPerceived();
+      _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
 
-      if (!SetTypes())
+      if (!SetTypes()) {
+        _validSetup = false;
         return false;
+      }
 
       SetFormalCharges();
       SetPartialCharges();
 
-      if (!SetupCalculations())
+      if (!SetupCalculations()) {
+        _validSetup = false;
         return false;
+      }
+
     } else {
       if (_validSetup) {
+        if (!(_constraints.GetIgnoredBitVec() == constraints.GetIgnoredBitVec())) {
+          _constraints = constraints;
+cout << "ABCD" << endl;
+          if (!SetupCalculations()) {
+            _validSetup = false;
+            return false;
+          }
+        } else {
+          _constraints = constraints;
+        }
+
+        _constraints.Setup(_mol);
         SetCoordinates(mol);
         return true;
       } else {
@@ -2649,9 +2679,9 @@ namespace OpenBabel
         unsigned int coordIdx = (a->GetIdx() - 1) * 3;
 
         if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
-          _gradientPtr[coordIdx] = 0.0;
-          _gradientPtr[coordIdx+1] = 0.0;
-          _gradientPtr[coordIdx+2] = 0.0;
+          _grad1[coordIdx] = 0.0;
+          _grad1[coordIdx+1] = 0.0;
+          _grad1[coordIdx+2] = 0.0;
         } else {
           if (!HasAnalyticalGradients()) {
             // use numerical gradients
