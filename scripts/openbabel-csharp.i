@@ -10,6 +10,7 @@
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/math/transform3d.h>
 #include <openbabel/generic.h>
 
 #include <openbabel/base.h>
@@ -38,22 +39,36 @@
 
 %}
 
+%ignore *::operator=;
+%ignore *::operator++;
+%ignore *::operator-=;
+%ignore *::operator+=;
+%ignore *::operator bool;
+%ignore *::operator*=;
+%ignore *::operator/=;
+%ignore *::operator <<;
+%ignore *::operator==;
+%ignore *::operator-;
+%ignore *::operator*;
+%ignore *::operator !=;
+
 %include "std_vector.i"
+%include "std_string.i"
 
 namespace std {
 %template (vectorInt)		  vector<int>;
 %template (vectorUnsignedInt)     vector<unsigned int>;
-%template (vvInt)		      vector< vector<int> >;
+//%template (vvInt)		      vector< vector<int> >;
 %template (vectorDouble) 	vector<double>;
-%template (vectorString)		  vector<std::string>;
-%template (vVector3)		  vector<OpenBabel::vector3>;
+%template (vectorString)		  vector<string>;
+//%template (vVector3)		  vector<OpenBabel::vector3>;
 
-%template (vectorMol)		  vector<OpenBabel::OBMol>;
-%template (vectorBond)		vector<OpenBabel::OBBond>;
-%template (vectorResidue)	vector<OpenBabel::OBResidue>;
-%template (vectorRing)		vector<OpenBabel::OBRing>;
-%template (vectorpRing)		vector<OpenBabel::OBRing*>;
-%template (vectorData)    vector<OpenBabel::OBGenericData*>;
+//%template (vectorMol)		  vector<OpenBabel::OBMol>;
+//%template (vectorBond)		vector<OpenBabel::OBBond>;
+//%template (vectorResidue)	vector<OpenBabel::OBResidue>;
+//%template (vectorRing)		vector<OpenBabel::OBRing>;
+//%template (vectorpRing)		vector<OpenBabel::OBRing*>;
+//%template (vectorData)    vector<OpenBabel::OBGenericData*>;
 }
 
 
@@ -64,7 +79,7 @@ namespace std {
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
 %include <openbabel/math/matrix3x3.h>
-
+%include <openbabel/math/transform3d.h>
 %include <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
@@ -118,6 +133,6 @@ namespace std {
 %ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
 
-%ignore *::operator=;
+
 
 %include <openbabel/obiter.h>

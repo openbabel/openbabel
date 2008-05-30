@@ -1,3 +1,9 @@
+2005-05-30  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-csharp.i: Added header file to SWIG wrapper. Also
+	removed several of the vector templates. These don't seem to be
+	handled correctly by SWIG (should report bug to them).
+
 2008-05-30  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: OBFFConstraints::Clear(), clear all the bitvecs.
