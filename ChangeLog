@@ -1,3 +1,8 @@
+2005-05-30  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* configure, configure.in: Stop the wx-config test being called when
+	the wx-gui is not enabled - bug 1979603.
+
 2005-05-30  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-csharp.i: Added header file to SWIG wrapper. Also

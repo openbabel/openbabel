@@ -135,7 +135,8 @@ AC_ARG_VAR(
 AC_PATH_PROG([WXCONFIG], [wx-config])
 AC_SUBST([WXCONFIG])
 
-if test x"$WXCONFIG" != "x" ; then
+if test "$wx_gui" = "yes"; then
+  if test x"$WXCONFIG" != "x" ; then
     AC_MSG_CHECKING([wxWidgets version])
     if wxversion=`$WXCONFIG --version`; then
         AC_MSG_RESULT([$wxversion])
@@ -151,6 +152,7 @@ if test x"$WXCONFIG" != "x" ; then
     AC_SUBST([WX_LIBS])
     AC_SUBST([WX_CXXFLAGS])
     AC_SUBST([WX_CPPFLAGS])
+  fi
 fi
 AM_CONDITIONAL([BUILD_WXGUI], [test x"$wxversion" != "x" -a "$wx_gui" = "yes"])
 
