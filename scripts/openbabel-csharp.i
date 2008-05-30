@@ -55,22 +55,31 @@
 %include "std_vector.i"
 %include "std_string.i"
 
-namespace std {
-%template (vectorInt)		  vector<int>;
-%template (vectorUnsignedInt)     vector<unsigned int>;
-//%template (vvInt)		      vector< vector<int> >;
-%template (vectorDouble) 	vector<double>;
-%template (vectorString)		  vector<string>;
-//%template (vVector3)		  vector<OpenBabel::vector3>;
 
-//%template (vectorMol)		  vector<OpenBabel::OBMol>;
-//%template (vectorBond)		vector<OpenBabel::OBBond>;
-//%template (vectorResidue)	vector<OpenBabel::OBResidue>;
-//%template (vectorRing)		vector<OpenBabel::OBRing>;
-//%template (vectorpRing)		vector<OpenBabel::OBRing*>;
-//%template (vectorData)    vector<OpenBabel::OBGenericData*>;
-}
+%template (vectorInt)		  std::vector<int>;
+%template (vectorUnsignedInt)     std::vector<unsigned int>;
+//SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(vector<int>, std::vector<int>);
+//%template (vvInt)		      std::vector< std::vector<int> >;
+%template (vectorDouble) 	std::vector<double>;
+%template (vectorString)		  std::vector<std::string>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(vector3, OpenBabel::vector3);
+%template (vVector3)		  std::vector<OpenBabel::vector3>;
 
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBMol, OpenBabel::OBMol);
+%template (vectorMol)		  std::vector<OpenBabel::OBMol>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond);
+%template (vectorBond)		std::vector<OpenBabel::OBBond>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBResidue, OpenBabel::OBResidue);
+%template (vectorResidue)	std::vector<OpenBabel::OBResidue>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing);
+%template (vectorRing)		std::vector<OpenBabel::OBRing>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing*, OpenBabel::OBRing*);
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBGenericData*, OpenBabel::OBGenericData*);
+// Uncommenting the following ...
+//%template (vectorpRing)		std::vector<OpenBabel::OBRing*>;
+//%template (vectorData)    std::vector<OpenBabel::OBGenericData*>;
+// ... gives ...
+// Error	3	Pointers and fixed size buffers may only be used in an unsafe context
 
 %import <openbabel/babelconfig.h>
 

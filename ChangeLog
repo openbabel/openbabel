@@ -1,3 +1,8 @@
+2005-05-30  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-csharp.i: Fixed most of the std::vectors by using
+	weird macro described in std_vector.i in the SWIG distribution
+
 2005-05-30  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* configure, configure.in: Stop the wx-config test being called when
