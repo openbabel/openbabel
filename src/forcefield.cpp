@@ -384,7 +384,6 @@ namespace OpenBabel
   { 
     if (!(_constraints.GetIgnoredBitVec() == constraints.GetIgnoredBitVec())) {
       _constraints = constraints;
-cout << "CDEFGHIJKL" << endl;
       if (!SetupCalculations()) {
         _validSetup = false;
         return;
@@ -939,7 +938,6 @@ cout << "CDEFGHIJKL" << endl;
       if (_validSetup) {
         if (!(_constraints.GetIgnoredBitVec() == constraints.GetIgnoredBitVec())) {
           _constraints = constraints;
-cout << "ABCD" << endl;
           if (!SetupCalculations()) {
             _validSetup = false;
             return false;
