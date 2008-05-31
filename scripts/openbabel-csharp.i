@@ -58,8 +58,8 @@
 
 %template (vectorInt)		  std::vector<int>;
 %template (vectorUnsignedInt)     std::vector<unsigned int>;
-//SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(vector<int>, std::vector<int>);
-//%template (vvInt)		      std::vector< std::vector<int> >;
+//SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(vector, std::vector<int>);
+//%template (vvInt)		      std::vector<std::vector<int>>;
 %template (vectorDouble) 	std::vector<double>;
 %template (vectorString)		  std::vector<std::string>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(vector3, OpenBabel::vector3);
@@ -73,13 +73,12 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBResidue, OpenBabel::OBResidue);
 %template (vectorResidue)	std::vector<OpenBabel::OBResidue>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing);
 %template (vectorRing)		std::vector<OpenBabel::OBRing>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing*, OpenBabel::OBRing*);
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBGenericData*, OpenBabel::OBGenericData*);
-// Uncommenting the following ...
-//%template (vectorpRing)		std::vector<OpenBabel::OBRing*>;
-//%template (vectorData)    std::vector<OpenBabel::OBGenericData*>;
-// ... gives ...
-// Error	3	Pointers and fixed size buffers may only be used in an unsafe context
+
+// Note that vectors of pointers need slightly different syntax
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing*);
+%template (vectorpRing)		std::vector<OpenBabel::OBRing*>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBGenericData, OpenBabel::OBGenericData*);
+%template (vectorData)    std::vector<OpenBabel::OBGenericData*>;
 
 %import <openbabel/babelconfig.h>
 

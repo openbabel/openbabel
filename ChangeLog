@@ -1,3 +1,8 @@
+2005-05-31  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-csharp.i: Fixed two of the three remaining
+	std::vectors based on examples found in Krugle code search
+
 2005-05-30  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-csharp.i: Fixed most of the std::vectors by using
