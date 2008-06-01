@@ -1,3 +1,9 @@
+2008-06-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/atomrecord.cpp: Call OBAtom::ForceImplH() for all atoms.
+	Loading a pdb file and calling OBMol::AddHydrogens() added only on
+	hydrogen.
+
 2005-05-31  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-csharp.i: Fixed two of the three remaining

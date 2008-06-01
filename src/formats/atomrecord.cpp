@@ -176,6 +176,7 @@ namespace OpenBabel
     string zstr = sbuf.substr(40,8);
     vector3 v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
     atom.SetVector(v);
+    atom.ForceImplH();
 
     // useful for debugging unknown atom types (e.g., PR#1577238)
     //    cout << mol.NumAtoms() + 1 << " " << atmid << " type: " << type << endl;
