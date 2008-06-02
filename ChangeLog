@@ -1,3 +1,16 @@
+2008-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Makefile.am, Makefile.in: Correct small automake typo with
+	"autoconf" libtool macro directory.
+
+	* configure: Regenerated using autogen.sh.
+
+	* include/openbabel/grid.h: Fix compiler warning -- make sure to
+	return values in all methods.
+
+	* src/forcefield.cpp: Fix compiler warning "default" not "dafault"
+	in switch statements.
+
 2008-06-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/atomrecord.cpp: Call OBAtom::ForceImplH() for all atoms.
