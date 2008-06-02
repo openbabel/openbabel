@@ -206,8 +206,9 @@ namespace OpenBabel
     {
       if (i*_ydim*_zdim + j*_zdim + k > _xdim*_ydim*_zdim)
         return false;
-      else
-        _values[i*_ydim*_zdim + j*_zdim + k] = val;
+
+      _values[i*_ydim*_zdim + j*_zdim + k] = val;
+      return true;
     }
 
     vector3 Center()
