@@ -548,7 +548,7 @@ namespace OpenBabel
           dd = (i->d)->GetVector();
 	
           theta = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
-          if (IsNan(theta))
+          if (!isfinite(theta))
             theta = 1.0e-7;
             
           theta = DEG_TO_RAD * (theta + 180.0 - i->constraint_value);
@@ -2640,7 +2640,7 @@ namespace OpenBabel
       case LineSearchType::Newton2Num:
         alpha = Newton2NumLineSearch(_gradientPtr);
         break;
-      dafault:
+      default:
       case LineSearchType::Simple:
         alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
         break;
@@ -2722,7 +2722,7 @@ namespace OpenBabel
         case LineSearchType::Newton2Num:
           alpha = Newton2NumLineSearch(_grad1);
           break;
-        dafault:
+        default:
         case LineSearchType::Simple:
           alpha = LineSearch(_mol.GetCoordinates(), _grad1);
           break;
