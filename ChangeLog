@@ -1,3 +1,9 @@
+2005-06-02  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/atom.cpp, src/mol.cpp: Added extra checks in AddHydrogens for
+	finite hydrogen coordinates. Also added some extra checks in the
+	GetNewBondVector function to check for sane numbers.
+
 2008-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Makefile.am, Makefile.in: Correct small automake typo with

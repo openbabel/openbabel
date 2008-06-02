@@ -1904,10 +1904,21 @@ namespace OpenBabel
                 SetConformer(n);
                 if (hasCoords)
                   {
+                    // Ensure that add hydrogens only returns finite coords
                     atom->GetNewBondVector(v,bondlen);
-                    _c[(NumAtoms())*3]   = v.x();
-                    _c[(NumAtoms())*3+1] = v.y();
-                    _c[(NumAtoms())*3+2] = v.z();
+                    if (isfinite(v.x()) || isfinite(v.y()) || isfinite(v.z())) {
+                      _c[(NumAtoms())*3]   = v.x();
+                      _c[(NumAtoms())*3+1] = v.y();
+                      _c[(NumAtoms())*3+2] = v.z();
+                    }
+                    else {
+                      _c[(NumAtoms())*3]   = 0.0;
+                      _c[(NumAtoms())*3+1] = 0.0;
+                      _c[(NumAtoms())*3+2] = 0.0;
+                      obErrorLog.ThrowError(__FUNCTION__,
+                        "Ran OpenBabel::AddHydrogens -- non-finite hydrogens found.",
+                        obAuditMsg);
+                    }
                   }
                 else
                   memset((char*)&_c[NumAtoms()*3],'\0',sizeof(double)*3);

@@ -1107,6 +1107,9 @@ namespace OpenBabel
         v = VX;
         v *= length;
         v += GetVector();
+        // Check that the vector is still finite before returning
+        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
+          v.Set(0.0, 0.0, 0.0);
         return(true);
       }
 
@@ -1161,6 +1164,9 @@ namespace OpenBabel
 
         v *= length;
         v += GetVector();
+        // Check that the vector is still finite before returning
+        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
+          v.Set(0.0, 0.0, 0.0);
         return(true);
       }
 
@@ -1203,6 +1209,9 @@ namespace OpenBabel
         v *= length;
 
         v += GetVector();
+        // Check that the vector is still finite before returning
+        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
+          v.Set(0.0, 0.0, 0.0);
         return(true);
       }
 
@@ -1214,6 +1223,12 @@ namespace OpenBabel
         for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
           {
             vtmp = GetVector() - atom->GetVector();
+            if (vtmp.length_2() < 0.1) { // atoms are nearly on top of each other
+              // Move the other atom a small random distance apart
+              vtmp.randomUnitVector();
+              vtmp *= length;
+              atom->SetVector(vtmp + GetVector());
+            } // Now this should be a real distance, not a zero vector
             vtmp.normalize();
             vtmp /= 3.0;
             vsum += vtmp;
@@ -1222,6 +1237,9 @@ namespace OpenBabel
         v = vsum;
         v *= length;
         v += GetVector();
+        // Check that the vector is still finite before returning
+        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
+          v.Set(0.0, 0.0, 0.0);
         return(true);
       }
 
