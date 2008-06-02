@@ -204,6 +204,36 @@ namespace OpenBabel
         continue;
       }
 
+      /* Dipole Moment */
+      if (buff == strstr(buff, "Dipole Moment"))
+      {
+        if (!pifs->getline(buff, BUFF_SIZE)) {
+          error_msg << "Could not read the dipole moment after line #"
+                    << lineno << ".";
+          obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                error_msg.str(),
+                                obError);
+          return false;
+        }
+        ++lineno;
+        vector<double> moments;
+        if (!FCHKFormat::read_numbers(buff, moments) || moments.size() != 3) {
+          error_msg << "Could not read the dipole moment from line #"
+                    << lineno << ".";
+          obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                error_msg.str(),
+                                obError);
+          return false;
+        }
+        
+        OBVectorData *dipoleMoment = new OBVectorData;
+        dipoleMoment->SetAttribute("Dipole Moment");
+        dipoleMoment->SetData(moments[0], moments[1], moments[2]);
+        dipoleMoment->SetOrigin(fileformatInput);
+        pmol->SetData(dipoleMoment);
+        continue;
+      }
+
       /* Charge */
       if (buff == strstr(buff, "Charge"))
       {

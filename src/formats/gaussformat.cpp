@@ -314,6 +314,24 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
+        else if(strstr(buffer,"Dipole moment") != NULL)
+            {
+              ifs.getline(buffer,BUFF_SIZE); // actual components   X ###  Y #### Z ###
+              tokenize(vs,buffer);
+              if (vs.size() >= 6) 
+                {
+                  OBVectorData *dipoleMoment = new OBVectorData;
+                  dipoleMoment->SetAttribute("Dipole Moment");
+                  double x, y, z;
+                  x = atof(vs[1].c_str());
+                  y = atof(vs[3].c_str());
+                  z = atof(vs[5].c_str());
+                  dipoleMoment->SetData(x, y, z);
+                  dipoleMoment->SetOrigin(fileformatInput);
+                  mol.SetData(dipoleMoment);
+                }
+              if (!ifs.getline(buffer,BUFF_SIZE)) break;
+            }
         else if(strstr(buffer,"Total atomic charges") != NULL ||
                 strstr(buffer,"Mulliken atomic charges") != NULL)
           {

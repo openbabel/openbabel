@@ -45,7 +45,7 @@ namespace OpenBabel
         "GAMESS Output\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
-        "  b  Disable bonding entirely\n\n";
+        "  b  Disable bonding entirely\n\n"
         "  c  Read multiple conformers\n\n";
     };
 
@@ -311,6 +311,7 @@ namespace OpenBabel
               y = atof(vs[1].c_str());
               z = atof(vs[2].c_str());
               dipoleMoment->SetData(x, y, z);
+              dipoleMoment->SetOrigin(fileformatInput);
               mol.SetData(dipoleMoment);
             } 
           }

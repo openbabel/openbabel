@@ -17,6 +17,10 @@
 	* src/forcefield.cpp: Fix compiler warning "default" not "dafault"
 	in switch statements.
 
+	* src/formats/qchemformat.cpp, src/formats/gamessformat.cpp,
+	src/formats/gaussformat.cpp, src/formats/fchkformat.cpp: Add
+	support for reading dipole moments using OBVectorData.
+
 2008-06-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/atomrecord.cpp: Call OBAtom::ForceImplH() for all atoms.

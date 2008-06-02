@@ -145,24 +145,42 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
-        else if(strstr(buffer,"Mulliken Net Atomic Charges") != NULL)
+        else if(strstr(buffer,"Dipole Moment") != NULL)
           {
-            hasPartialCharges = true;
-            ifs.getline(buffer,BUFF_SIZE);	// (blank)
-            ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE);	// -----------------
-            ifs.getline(buffer,BUFF_SIZE);
+            ifs.getline(buffer,BUFF_SIZE); // actual components   X ###  Y #### Z ###
             tokenize(vs,buffer);
-            while (vs.size() >= 3)
+            if (vs.size() >= 6) 
               {
-                atom = mol.GetAtom(atoi(vs[0].c_str()));
-                atom->SetPartialCharge(atof(vs[2].c_str()));
-
-                if (!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-                tokenize(vs,buffer);
+                OBVectorData *dipoleMoment = new OBVectorData;
+                dipoleMoment->SetAttribute("Dipole Moment");
+                double x, y, z;
+                x = atof(vs[1].c_str());
+                y = atof(vs[3].c_str());
+                z = atof(vs[5].c_str());
+                dipoleMoment->SetData(x, y, z);
+                dipoleMoment->SetOrigin(fileformatInput);
+                mol.SetData(dipoleMoment);
               }
+            if (!ifs.getline(buffer,BUFF_SIZE)) break;
           }
+          else if(strstr(buffer,"Mulliken Net Atomic Charges") != NULL)
+            {
+              hasPartialCharges = true;
+              ifs.getline(buffer,BUFF_SIZE);	// (blank)
+              ifs.getline(buffer,BUFF_SIZE);	// column headings
+              ifs.getline(buffer,BUFF_SIZE);	// -----------------
+              ifs.getline(buffer,BUFF_SIZE);
+              tokenize(vs,buffer);
+              while (vs.size() >= 3)
+                {
+                  atom = mol.GetAtom(atoi(vs[0].c_str()));
+                  atom->SetPartialCharge(atof(vs[2].c_str()));
+
+                  if (!ifs.getline(buffer,BUFF_SIZE))
+                    break;
+                  tokenize(vs,buffer);
+                }
+            }
         // In principle, the final geometry in cartesians is exactly the same
         // as this geometry, so we shouldn't lose any information
         // but we grab the charge and spin from this $molecule block
