@@ -3,7 +3,7 @@
 #                   Open Babel file: atomtyp.txt                             # #                                                                            #
 #                                                                            #
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
-#  Some portions Copyright (c) 2001-2003 Geoffrey R. Hutchison               #
+#  Some portions Copyright (c) 2001-2008 Geoffrey R. Hutchison               #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
 # SMARTS patterns for atom typing (used by typer.cpp:OBAtomTyper)            #
@@ -40,6 +40,16 @@ INTHYB	[S]				3	#sp3 sulfur
 INTHYB	[#16;s,$([SD1]=*)]		2	#sp2 sulfur
 INTHYB	[B]				2	#sp2 boron
 INTHYB	[BD4]				3	#sp3 boron
+
+INTHYB  [Si]            3
+INTHYB  [Al]            2  # typical sp2 Al
+INTHYB  [AlD4]          3  # sp3 Al
+INTHYB  [Ge]            3
+INTHYB  [As]            3  # sp3 hybridization As
+INTHYB  [Se]            3  # sp3 hybridization Se
+INTHYB  [se]            2  # aromatic sp2 Se
+INTHYB  [Te]            3  # sp3 hybridization Te
+
 #
 #IMPLICIT VALENCE RULES
 #

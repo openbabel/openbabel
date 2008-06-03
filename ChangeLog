@@ -1,3 +1,10 @@
+2008-06-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/atomtyp.txt, data/atomtyp.h: Add hybridization rules for
+	Si, Al, Ge, As, Se, and Te. (Atom typing and valence rules need to
+	be generalized.) Fixes problems with adding hydrogens to Si
+	uncovered in Avogadro.
+
 2005-06-02  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/atom.cpp, src/mol.cpp: Added extra checks in AddHydrogens for
