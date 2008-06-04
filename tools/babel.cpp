@@ -422,20 +422,20 @@ void help()
   cout << "More than one input file can be specified and their names can contain" <<endl;
   cout << "wildcard chars (* and ?).The molecules are aggregated in the output file.\n" << endl;
   cout << OBConversion::Description(); // Conversion options
-  cout << "  -H Outputs this help text" << endl;
-  cout << "  -Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl; 
-  cout << "  -Hall Outputs details of all formats" <<endl; 
-  cout << "  -V Outputs version number" <<endl; 
-  cout << "  -L <BaseType> Lists plugin classes of this type" << endl;
-  cout << "      e.g. <fingerprints>, or <plugins> for a list of BaseTypes" << endl; 
-  cout << "  -m Produces multiple output files, to allow:" <<endl;
-  cout << "     Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
-  cout << "       puts each molecule into new1.smi new2.smi etc" <<endl;
-  cout << "     Batch conversion: e.g. " << program_name << " *.mol -osmi -m" <<endl;
-  cout << "       converts each input file to a .smi file" << endl;
+  cout << "-H Outputs this help text" << endl;
+  cout << "-Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl; 
+  cout << "-Hall Outputs details of all formats" <<endl; 
+  cout << "-V Outputs version number" <<endl; 
+  cout << "-L <BaseType> Lists plugin classes of this type" << endl;
+  cout << "    e.g. <fingerprints>, or <plugins> for a list of BaseTypes" << endl; 
+  cout << "-m Produces multiple output files, to allow:" <<endl;
+  cout << "   Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
+  cout << "     puts each molecule into new1.smi new2.smi etc" <<endl;
+  cout << "   Batch conversion: e.g. " << program_name << " *.mol -osmi -m" <<endl;
+  cout << "     converts each input file to a .smi file" << endl;
 #ifdef _WIN32
-  cout << "     In Windows these can also be done using the forms" <<endl;
-  cout << "       " << program_name << " infile.mol new*.smi and " << program_name << " *.mol *.smi respectively.\n" <<endl;
+  cout << "   In Windows these can also be done using the forms" <<endl;
+  cout << "     " << program_name << " infile.mol new*.smi and " << program_name << " *.mol *.smi respectively.\n" <<endl;
 #endif
   
   OBFormat* pDefault = OBConversion::GetDefaultFormat();

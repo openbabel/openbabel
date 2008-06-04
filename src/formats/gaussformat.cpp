@@ -277,7 +277,24 @@ namespace OpenBabel
     
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-        if (strstr(buffer,"Multiplicity") != NULL)
+        /*
+        if(strstr(buffer,"Isotopes") != NULL)
+        {
+          ifs.getline(buffer,BUFF_SIZE);//blank line
+          do
+          {
+            ifs.getline(buffer,BUFF_SIZE);
+            if(strstr(buffer,"Atom") == NULL)
+              break;
+            ifs.getline(buffer,BUFF_SIZE);
+            ifs.getline(buffer,BUFF_SIZE);//****unfinished
+            tokenize(vs, buffer, " \t");
+          }
+            GetExactMass(atno);
+
+        }
+        else */
+          if (strstr(buffer,"Multiplicity") != NULL)
           {
             tokenize(vs, buffer, " \t\n");
             if (vs.size() == 6)

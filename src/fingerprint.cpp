@@ -47,6 +47,13 @@ namespace OpenBabel
   ////////////////////////////////////////	
   void OBFingerprint::Fold(vector<unsigned int>& vec, unsigned int nbits)
   {
+    if(nbits<Getbitsperint())
+    {
+      stringstream ss;
+      ss << "Can't fold to less than " << Getbitsperint() << "bits";
+      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+      return;
+    }
     while(vec.size()*Getbitsperint()/2 >= nbits) 
       vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
                           vec.begin()+vec.size()/2, vec.begin(), bit_or()), vec.end());
@@ -425,7 +432,7 @@ namespace OpenBabel
 
     For more on these specific implementations of fingerprints in Open
     Babel, please take a look at the developer's wiki:
-    http://openbabel.sourceforge.net/wiki/Fingerprints
+    http://openbabel.org/wiki/Fingerprints
  
     Fingerprints derived from this abstract base class OBFingerprint can be for any 
     object derived from OBBase (not just for OBMol). 

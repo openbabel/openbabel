@@ -86,7 +86,10 @@ namespace OpenBabel
 
     p=pConv->IsOption("N");
     if(p)
-      nbits = atoi(p);		
+      nbits = atoi(p);
+    if(nbits<=0)
+      obErrorLog.ThrowError(__FUNCTION__,
+      "The number of bits to fold to, in the-xN option, should be >0", obWarning);
 
     vector<unsigned int> fptvec;
     if(!pFP->GetFingerprint(pOb, fptvec, nbits))

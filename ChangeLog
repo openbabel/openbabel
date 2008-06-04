@@ -1,3 +1,30 @@
+2008-06-04 Chris Morley
+
+	* include/openbabel/mol.h: include float.h so that isinfinite
+	is handled properly in Windows
+	
+	Deficiencies raised by Andrew Dalke
+	
+	* src/fingerprint.cpp: Error message if attempting to fold to 
+	less than size of unsigned int.
+	
+	* src/formats/fingerprintformat.cpp(WriteMolecule) Error message 
+	when parameter of -xN option (fold) is negative.
+	
+	* src/formats/fastsearchformat.cpp(WriteChem Object):
+	Error message if more than one input file.
+	
+	Delete the outputstream after deleting the index, which is when
+	it is written. Sometimes a fs file made without a specified name 
+	was empty.
+	
+	* tools/babel.cpp: change indentation on help text
+	
+	* windows-vc2005/OpenBabelOBF.sln: another go at getting debug and
+	release configurations right. The scripting interfaces need to be
+	explicitly enabled before building if they are required. (I get
+	tired of waiting for them.)
+
 2008-06-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/residue.cpp (GetResidueNumber): Fix bug reported by Izhar

@@ -293,6 +293,15 @@ namespace OpenBabel {
           mes = "update the";
         clog << "This will " << mes << " index of " << pConv->GetInFilename()
              <<  " and may take some time..." << flush;
+
+        if(!pConv->IsLastFile())
+        {
+          obErrorLog.ThrowError(__FUNCTION__,
+            "There should not be multiple input files. A .fs file is an index of a single datafile.",
+            obError);
+          return false;
+        }
+
         std::string auditMsg = "OpenBabel::Write fastsearch index ";
         std::string description(Description());
         auditMsg += description.substr( 0, description.find('\n') );
@@ -401,10 +410,10 @@ have the same name as the datafile. Use the form:\n \
     if(pConv->IsLast())
       {
         //Last pass 
+        delete fsi; //saves index file
         if(NewOstreamUsed)
           delete pOs;
 
-        delete fsi; //saves index file
         //return to starting conditions
         fsi=NULL;
 
