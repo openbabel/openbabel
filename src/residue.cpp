@@ -356,7 +356,7 @@ namespace OpenBabel
 
   static unsigned int GetResidueNumber(const char *res)
   {
-    if (res != NULL)
+    if (res != NULL && strlen(res) > 2)
       {
         int ch1 = toupper(res[0]);
         int ch2 = toupper(res[1]);
