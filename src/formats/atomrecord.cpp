@@ -212,7 +212,7 @@ namespace OpenBabel
 
         res->AddAtom(atom);
         res->SetSerialNum(atom, atoi(serno.c_str()));
-        res->SetAtomID(atom, atmid);
+        res->SetAtomID(atom, sbuf.substr(6,4));
         res->SetHetAtom(atom, hetatm);
 
         return(true);

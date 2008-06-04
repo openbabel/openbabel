@@ -80,7 +80,7 @@ namespace OpenBabel
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
-        if(strstr(buffer,"CARTESIAN COORDINATES") != NULL)
+        if(strstr(buffer,"  CARTESIAN COORDINATES") != NULL)
           {
             // mol.EndModify();
             mol.Clear();
