@@ -675,7 +675,7 @@ namespace OpenBabel
     
     double sinT0;
 		double rab, rbc, rac;
-		OBBond *bond;
+		OBBond *bondPtr;
     FOR_ANGLES_OF_MOL(angle, _mol) {
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
@@ -717,19 +717,19 @@ namespace OpenBabel
       anglecalc.c0 = anglecalc.c2*(2.0*anglecalc.cosT0*anglecalc.cosT0 + 1.0);
 
 			// Precompute the force constant
-			bond = _mol.GetBond(a,b);
-			bondorder = bond->GetBondOrder(); 
-      if (bond->IsAromatic())
+			bondPtr = _mol.GetBond(a,b);
+			bondorder = bondPtr->GetBondOrder(); 
+      if (bondPtr->IsAromatic())
         bondorder = 1.5;
-      if (bond->IsAmide())
+      if (bondPtr->IsAmide())
         bondorder = 1.41;      
 			rab = CalculateBondDistance(parameterA, parameterB, bondorder);
 
-			bond = _mol.GetBond(b,c);
-			bondorder = bond->GetBondOrder(); 
-      if (bond->IsAromatic())
+			bondPtr = _mol.GetBond(b,c);
+			bondorder = bondPtr->GetBondOrder(); 
+      if (bondPtr->IsAromatic())
         bondorder = 1.5;
-      if (bond->IsAmide())
+      if (bondPtr->IsAmide())
         bondorder = 1.41;
 			rbc = CalculateBondDistance(parameterB, parameterC, bondorder);
 			rac = sqrt(rab*rab + rbc*rbc - 2.0 * rab*rbc*anglecalc.cosT0);

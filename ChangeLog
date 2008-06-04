@@ -1,3 +1,11 @@
+2008-06-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/residue.cpp (GetResidueNumber): Fix bug reported by Izhar
+	Wallach.
+
+	* src/forcefields/forcefielduff.cpp: Fix error reported by Chris
+	Morley with Microsoft compiler -- don't duplicate loop variable names.
+
 2008-06-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/atomtyp.txt, data/atomtyp.h: Add hybridization rules for
