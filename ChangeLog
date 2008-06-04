@@ -1,3 +1,9 @@
+2008-06-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/adfformat.cpp, src/formats/Makefile.am: Add KFReader
+	and ArrayList code contributed under LGPL by SCM, Inc. for
+	improved ADF binary support.
+
 2008-06-04 Chris Morley
 
 	* include/openbabel/mol.h: include float.h so that isinfinite

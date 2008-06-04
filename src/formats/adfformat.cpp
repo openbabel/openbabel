@@ -43,6 +43,289 @@ static const double BOHR_TO_ANGSTROM = 0.529177249;
 
 namespace OpenBabel {
 
+  class ADFOutputFormat : public OBMoleculeFormat
+  {
+  public:
+    //Register this format type ID
+    ADFOutputFormat()
+    {
+      OBConversion::RegisterFormat("adfout",this);
+    }
+
+    virtual const char* Description() //required
+    {
+      return
+        "ADF output format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
+    };
+
+    virtual const char* SpecificationURL()
+    {return "http://www.scm.com/";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return READONEONLY | NOTWRITABLE;
+    };
+
+    /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  };
+  //***
+
+  //Make an instance of the format class
+  ADFOutputFormat theADFOutputFormat;
+
+  /////////////////////////////////////////////////////////////////
+  bool ADFOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
+    if(pmol==NULL)
+      return false;
+
+    //Define some references so we can use the old parameter names
+    istream &ifs = *pConv->GetInStream();
+    OBMol &mol = *pmol;
+    const char* title = pConv->GetTitle();
+
+    char buffer[BUFF_SIZE];
+    string str,str1;
+    double x,y,z;
+    OBAtom *atom;
+    vector<string> vs;
+
+    int charge = 0;
+    unsigned int spin = 1;
+    bool hasPartialCharges = false;
+
+    mol.BeginModify();
+
+    while	(ifs.getline(buffer,BUFF_SIZE))
+      {
+        if(strstr(buffer,"Coordinates (Cartesian)") != NULL)
+          {
+            mol.Clear();
+            mol.BeginModify();
+            ifs.getline(buffer,BUFF_SIZE);	// =========
+            ifs.getline(buffer,BUFF_SIZE);	// blank line
+            ifs.getline(buffer,BUFF_SIZE);  // Column headings (Atom, etc.)
+            ifs.getline(buffer,BUFF_SIZE);  // Column headings 2nd line (X Y Z)
+            ifs.getline(buffer,BUFF_SIZE);  // ---------
+            
+            ifs.getline(buffer,BUFF_SIZE);  // actual data
+            tokenize(vs,buffer);
+            while (strstr(buffer, "----") == NULL && vs.size() == 8)
+              {
+                atom = mol.NewAtom();
+                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str())); // atom number, then symbol
+                // columns 2, 3, 4 = coordinates in bohr
+                x = atof((char*)vs[5].c_str());
+                y = atof((char*)vs[6].c_str());
+                z = atof((char*)vs[7].c_str());
+                atom->SetVector(x,y,z);
+
+                if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+                tokenize(vs,buffer);
+              }
+          }
+        else if(strstr(buffer,"Dipole Moment  ***") != NULL)
+          {
+            ifs.getline(buffer,BUFF_SIZE);	// =========
+            ifs.getline(buffer,BUFF_SIZE);	// blank line            
+            ifs.getline(buffer,BUFF_SIZE); // actual components  Vector: ###  #### ###
+            tokenize(vs,buffer);
+            if (vs.size() >= 5) 
+              {
+                OBVectorData *dipoleMoment = new OBVectorData;
+                dipoleMoment->SetAttribute("Dipole Moment");
+                double x, y, z;
+                x = atof(vs[2].c_str());
+                y = atof(vs[3].c_str());
+                z = atof(vs[4].c_str());
+                dipoleMoment->SetData(x, y, z);
+                dipoleMoment->SetOrigin(fileformatInput);
+                mol.SetData(dipoleMoment);
+              }
+            if (!ifs.getline(buffer,BUFF_SIZE)) break;
+          }
+          else if(strstr(buffer,"M U L L I K E N") != NULL)
+            {
+              ifs.getline(buffer,BUFF_SIZE);	// ========
+              ifs.getline(buffer,BUFF_SIZE);	// (blank)
+              ifs.getline(buffer,BUFF_SIZE);	// The survey below
+              ifs.getline(buffer,BUFF_SIZE);	// a)
+              ifs.getline(buffer,BUFF_SIZE);	// b)
+              ifs.getline(buffer,BUFF_SIZE);	// c)
+              ifs.getline(buffer,BUFF_SIZE);	// 
+              ifs.getline(buffer,BUFF_SIZE);	// Atom (column headings)
+              ifs.getline(buffer,BUFF_SIZE);  // ---
+              
+              ifs.getline(buffer,BUFF_SIZE); // Actual data!
+              tokenize(vs,buffer);
+              while (vs.size() >= 3)
+                {
+                  atom = mol.GetAtom(atoi(vs[0].c_str()));
+                  if (atom) {
+                    atom->SetPartialCharge(atof(vs[2].c_str()));
+                    hasPartialCharges = true;
+                  }
+
+                  if (!ifs.getline(buffer,BUFF_SIZE))
+                    break;
+                  tokenize(vs,buffer);
+                }
+            }
+        else if(strstr(buffer,"Net Charge") != NULL)
+          {
+            tokenize(vs, buffer);
+            if (vs.size() > 3) // Net Charge: ##
+              {
+                charge = atoi(vs[2].c_str());
+              }
+          }
+      } // end while
+
+    if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
+      mol.EndModify();
+      return false;
+    }
+
+    if (!pConv->IsOption("b",OBConversion::INOPTIONS))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+      mol.PerceiveBondOrders();
+
+    mol.EndModify();
+
+    if (hasPartialCharges) {
+      mol.SetPartialChargesPerceived();
+      // Annotate that partial charges come from Q-Chem Mulliken
+      OBPairData *dp = new OBPairData;
+      dp->SetAttribute("PartialCharges");
+      dp->SetValue("Mulliken");
+      dp->SetOrigin(perceived);
+      mol.SetData(dp);
+    }
+    mol.SetTotalCharge(charge);
+    mol.SetTotalSpinMultiplicity(spin);
+
+    mol.SetTitle(title);
+    return(true);
+  }
+
+  class ADFInputFormat : public OBMoleculeFormat
+  {
+  public:
+    //Register this format type ID
+    ADFInputFormat()
+    {
+      OBConversion::RegisterFormat("adf", this);
+    }
+
+    virtual const char* Description() //required
+    {
+      return
+        "ADF cartesian input format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
+    };
+
+    virtual const char* SpecificationURL()
+    {return "http://www.scm.com/Doc/Doc2007.01/ADF/ADFUsersGuide/page32.html";}; //optional
+
+    //*** This section identical for most OBMol conversions ***
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
+      { return false; }
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    
+    virtual unsigned int Flags()
+    {
+      return NOTREADABLE | WRITEONEONLY;
+    };
+  };
+  //***
+
+  //Make an instance of the format class
+  ADFInputFormat theADFInputFormat;
+  
+  bool ADFInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    if(pmol==NULL)
+      return false;
+
+    //Define some references so we can use the old parameter names
+    ostream &ofs = *pConv->GetOutStream();
+    OBMol &mol = *pmol;
+
+    char buffer[BUFF_SIZE];
+
+    snprintf(buffer, BUFF_SIZE, "TITLE %s\n\n", mol.GetTitle());
+    ofs << buffer;
+
+    // Output CHARGE and spin
+    // Note that ADF expects the spin parameter to be the # of unpaired spins
+    // (i.e., singlet = 0, doublet = 1, etc.)
+    snprintf(buffer, BUFF_SIZE, "CHARGE %d  %d\n\n", 
+             mol.GetTotalCharge(),
+             mol.GetTotalSpinMultiplicity() - 1);
+    ofs << buffer;
+
+    // Cartesian input -- change this if you want a z-matrix format
+    snprintf(buffer, BUFF_SIZE, "Number of atoms\n %d\n\n", mol.NumAtoms());
+    ofs << buffer;
+    
+    ofs << "ATOMS Cartesian\n";
+    FOR_ATOMS_OF_MOL(atom, mol)
+      {
+        snprintf(buffer, BUFF_SIZE, "%-3s%15.5f%15.5f%15.5f\n",
+                 etab.GetSymbol(atom->GetAtomicNum()),
+                 atom->GetX(),
+                 atom->GetY(),
+                 atom->GetZ());
+        ofs << buffer;
+      }
+    ofs << "End\n\n";
+    
+    // command-line keywords (-xk "blah")
+    const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+    const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    
+    // If the user specified a full file, pick that over anything else
+    if (keywordFile) {
+        ifstream kfstream(keywordFile);
+        string keyBuffer;
+        if (kfstream)
+          {
+            while (getline(kfstream, keyBuffer))
+              ofs << keyBuffer << endl;
+          }
+      }
+    else if (keywords) {
+      ofs << keywords << endl;
+    }
+    else {
+      ofs << "Basis\n";
+      ofs << "End\n\n";
+    
+      ofs << "Geometry\n";
+      ofs << "End\n\n";
+    }
+
+    ofs << endl; // one final blank line
+
+    return true;
+  }
+  
+
 class OBT41Format : public OBMoleculeFormat
 {
 public:
@@ -57,10 +340,10 @@ public:
     virtual const char* Description() //required
     {
         return
-        "ADF ASCII t41 format\n"
-        "Read only.\n"
-        "b no bonds\n"
-        "s no multiple bonds\n\n";
+        "ADF TAPE41 format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
     }
 
     /// Return a specification url, not really a specification since
@@ -76,7 +359,7 @@ public:
       /// Return read/write flag: read only.
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | READBINARY | NOTWRITABLE;
     };
 
     /// Skip to object: used for multi-object file formats.
@@ -84,12 +367,13 @@ public:
 
     /// Read.
     virtual bool ReadMolecule( OBBase* pOb, OBConversion* pConv );
+    
+    bool ReadASCII( OBBase* pOb, OBConversion* pConv);
+    bool ReadBinary( OBBase* pOb, OBConversion* pConv);
 
     /// Write: always returns false.
     virtual bool WriteMolecule( OBBase* , OBConversion* )
-    {
-          return false;
-    }
+    { return false; }
 
 private:
     ///Maps atom name to atomic number.
@@ -206,175 +490,189 @@ OBGridData *OBT41Format::NewData(const T41GridData &gd)
 //------------------------------------------------------------------------------
 bool OBT41Format::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 {
-    OBMol* pmol = dynamic_cast< OBMol* >(pOb);
-    if( pmol == 0 ) return false;
+  istream& ifs = *pConv->GetInStream();
+  // Check if the file is ASCII or Binary
+  // Binary TAPE41 files start with "SUPERINDEX"
+  if (ifs.peek() == 'S')
+    return ReadBinary(pOb, pConv);
+  else
+    return ReadASCII(pOb, pConv);
+}
 
-    cerr << " Ha !" << endl;
+bool OBT41Format::ReadBinary( OBBase* pOb, OBConversion* pConv )
+{
+  return false;
+}
 
-    istream& ifs = *pConv->GetInStream();
+bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
+{
+      OBMol* pmol = dynamic_cast< OBMol* >(pOb);
+      if( pmol == 0 ) return false;
 
-    GridData gd;
-    gd = ReadGridData( ifs );
+      istream& ifs = *pConv->GetInStream();
 
-    OBGridData* t41Data = 0;
-    if( gd )
-    {
-       streampos current = ifs.tellg();
+      GridData gd;
+      gd = ReadGridData( ifs );
 
-       // We create new data for each grid
-       // If we don't find any legitimate data, we'll end and still have "OBGridData"
-       // rather than a legitimate label
- 			 t41Data = NewData(gd);
-       while( ReadSCFOrbitalGrid( ifs, *t41Data ) );
-       if (t41Data->GetAttribute() == "GridData") {
-         delete t41Data;
-       } else
-         pmol->SetData( t41Data );
+      OBGridData* t41Data = 0;
+      if( gd )
+      {
+         streampos current = ifs.tellg();
 
-       ifs.clear();
-       ifs.seekg( current, ios::beg );
-			 
- 			 t41Data = NewData(gd);
-       while( ReadSCFGrid( ifs, *t41Data ) );
-       if (t41Data->GetAttribute() == "GridData") {
-         delete t41Data;
-       } else
-         pmol->SetData( t41Data );
+         // We create new data for each grid
+         // If we don't find any legitimate data, we'll end and still have "OBGridData"
+         // rather than a legitimate label
+   			 t41Data = NewData(gd);
+         while( ReadSCFOrbitalGrid( ifs, *t41Data ) );
+         if (t41Data->GetAttribute() == "GridData") {
+           delete t41Data;
+         } else
+           pmol->SetData( t41Data );
 
-       ifs.clear();
-       ifs.seekg( current, ios::beg );
+         ifs.clear();
+         ifs.seekg( current, ios::beg );
 
- 			 t41Data = NewData(gd);
-       while( ReadSumFragGrid( ifs, *t41Data ) );
-       if (t41Data->GetAttribute() == "GridData") {
-         delete t41Data;
-       } else
-         pmol->SetData( t41Data );
+   			 t41Data = NewData(gd);
+         while( ReadSCFGrid( ifs, *t41Data ) );
+         if (t41Data->GetAttribute() == "GridData") {
+           delete t41Data;
+         } else
+           pmol->SetData( t41Data );
 
-       ifs.clear();
-       ifs.seekg( current, ios::beg );
-    }
+         ifs.clear();
+         ifs.seekg( current, ios::beg );
 
-    string buf;
-    // nuuc
-    while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
-    ifs >> buf; cout << buf << endl;
-    if( buf != "nnuc" )
-    {
-        obErrorLog.ThrowError( __FUNCTION__, "no 'nuuc' after first Geometry tag" );
-        return false;
-    }
-    eol( ifs );
-    int numAtoms = -1;
-    ifs >> numAtoms; cout << numAtoms << endl;
-    buf  = "";
+   			 t41Data = NewData(gd);
+         while( ReadSumFragGrid( ifs, *t41Data ) );
+         if (t41Data->GetAttribute() == "GridData") {
+           delete t41Data;
+         } else
+           pmol->SetData( t41Data );
 
-    // labels
-    while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
-    ifs >> buf; cout << buf << endl;
-    if( buf != "labels" )
-    {
-        obErrorLog.ThrowError( __FUNCTION__, "no 'labels' after second Geometry tag" );
-        return false;
-    }
-    eol( ifs );
-    std::vector< AtomData > atoms;
-    atoms.reserve( numAtoms );
-    for( int i = 0; i != numAtoms; ++i )
-    {
-        ifs >> buf; cout << buf << endl;
-        atoms.push_back( GetAtomicNumber( buf ) );
-    }
-    if( atoms.size() != numAtoms )
-    {
-        obErrorLog.ThrowError( __FUNCTION__, "wrong number of atoms" );
-        return false;
-    }
-    //coordinates
-    buf = "";
-    while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
-    ifs >> buf; cout << buf << endl;
-    if( buf != "xyznuc" )
-    {
-        obErrorLog.ThrowError( __FUNCTION__, "no 'xyznuc' after third Geometry tag" );
-        return false;
-    }
-    eol( ifs );
-    for( int i = 0; i != numAtoms; ++i )
-    {
-        ifs >> atoms[ i ].coord[ 0 ] >> atoms[ i ].coord[ 1 ] >> atoms[ i ].coord[ 2 ];
-        cout << atoms[ i ].coord[ 0 ] << ' ' << atoms[ i ].coord[ 1 ] << ' ' << atoms[ i ].coord[ 2 ] << endl;
-    }
-    //charge
-    buf = "";
-    while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
-    ifs >> buf; cout << buf << endl;
-    if( buf != "qtch" )
-    {
-        obErrorLog.ThrowError( __FUNCTION__, "no 'qtch' after fourth Geometry tag" );
-        return false;
-    }
-    eol( ifs );
-    for( int i = 0; i != numAtoms; ++i )
-    {
-        ifs >> atoms[ i ].charge;
-    }
+         ifs.clear();
+         ifs.seekg( current, ios::beg );
+      }
 
-    // unit of length
-    buf = "";
-    while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
-    ifs >> buf >> buf >> buf; cout << buf << endl;
-    if( buf != "length" )
-    {
-        obErrorLog.ThrowError( __FUNCTION__, "no 'unit of length' after fifth Geometry tag" );
-        return false;
-    }
-    eol( ifs );
-    double scale = 1.0;
-    ifs >> scale; 
-    /// @todo multply coordinates by axis length;
-    for( int i = 0; i != numAtoms; ++i )
-    {
+      string buf;
+      // nuuc
+      while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
+      ifs >> buf; cout << buf << endl;
+      if( buf != "nnuc" )
+      {
+          obErrorLog.ThrowError( __FUNCTION__, "no 'nuuc' after first Geometry tag" );
+          return false;
+      }
+      eol( ifs );
+      int numAtoms = -1;
+      ifs >> numAtoms; cout << numAtoms << endl;
+      buf  = "";
 
-        atoms[ i ].coord[ 0 ] *= BOHR_TO_ANGSTROM;
-        atoms[ i ].coord[ 1 ] *= BOHR_TO_ANGSTROM;
-        atoms[ i ].coord[ 2 ] *= BOHR_TO_ANGSTROM;
-//        atoms[ i ].coord[ 0 ] *= scale;
-//        atoms[ i ].coord[ 1 ] *= scale;
-//        atoms[ i ].coord[ 2 ] *= scale;
-//        MatVecMul( gd.xAxis, gd.yAxis, gd.zAxis, atoms[ i ].coord );
-//        atoms[ i ].coord[ 0 ] += gd.startPoint[ 0 ];
-//        atoms[ i ].coord[ 1 ] += gd.startPoint[ 1 ];
-//        atoms[ i ].coord[ 2 ] += gd.startPoint[ 2 ];
-    }
+      // labels
+      while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
+      ifs >> buf; cout << buf << endl;
+      if( buf != "labels" )
+      {
+          obErrorLog.ThrowError( __FUNCTION__, "no 'labels' after second Geometry tag" );
+          return false;
+      }
+      eol( ifs );
+      std::vector< AtomData > atoms;
+      atoms.reserve( numAtoms );
+      for( int i = 0; i != numAtoms; ++i )
+      {
+          ifs >> buf; cout << buf << endl;
+          atoms.push_back( GetAtomicNumber( buf ) );
+      }
+      if( atoms.size() != numAtoms )
+      {
+          obErrorLog.ThrowError( __FUNCTION__, "wrong number of atoms" );
+          return false;
+      }
+      //coordinates
+      buf = "";
+      while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
+      ifs >> buf; cout << buf << endl;
+      if( buf != "xyznuc" )
+      {
+          obErrorLog.ThrowError( __FUNCTION__, "no 'xyznuc' after third Geometry tag" );
+          return false;
+      }
+      eol( ifs );
+      for( int i = 0; i != numAtoms; ++i )
+      {
+          ifs >> atoms[ i ].coord[ 0 ] >> atoms[ i ].coord[ 1 ] >> atoms[ i ].coord[ 2 ];
+          cout << atoms[ i ].coord[ 0 ] << ' ' << atoms[ i ].coord[ 1 ] << ' ' << atoms[ i ].coord[ 2 ] << endl;
+      }
+      //charge
+      buf = "";
+      while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
+      ifs >> buf; cout << buf << endl;
+      if( buf != "qtch" )
+      {
+          obErrorLog.ThrowError( __FUNCTION__, "no 'qtch' after fourth Geometry tag" );
+          return false;
+      }
+      eol( ifs );
+      for( int i = 0; i != numAtoms; ++i )
+      {
+          ifs >> atoms[ i ].charge;
+      }
 
-    // build OB molecule
+      // unit of length
+      buf = "";
+      while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
+      ifs >> buf >> buf >> buf; cout << buf << endl;
+      if( buf != "length" )
+      {
+          obErrorLog.ThrowError( __FUNCTION__, "no 'unit of length' after fifth Geometry tag" );
+          return false;
+      }
+      eol( ifs );
+      double scale = 1.0;
+      ifs >> scale; 
+      /// @todo multply coordinates by axis length;
+      for( int i = 0; i != numAtoms; ++i )
+      {
 
-    pmol->BeginModify();
+          atoms[ i ].coord[ 0 ] *= BOHR_TO_ANGSTROM;
+          atoms[ i ].coord[ 1 ] *= BOHR_TO_ANGSTROM;
+          atoms[ i ].coord[ 2 ] *= BOHR_TO_ANGSTROM;
+  //        atoms[ i ].coord[ 0 ] *= scale;
+  //        atoms[ i ].coord[ 1 ] *= scale;
+  //        atoms[ i ].coord[ 2 ] *= scale;
+  //        MatVecMul( gd.xAxis, gd.yAxis, gd.zAxis, atoms[ i ].coord );
+  //        atoms[ i ].coord[ 0 ] += gd.startPoint[ 0 ];
+  //        atoms[ i ].coord[ 1 ] += gd.startPoint[ 1 ];
+  //        atoms[ i ].coord[ 2 ] += gd.startPoint[ 2 ];
+      }
 
-    pmol->SetDimension( 3 );
+      // build OB molecule
 
-    pmol->ReserveAtoms( numAtoms );
+      pmol->BeginModify();
 
-    for( int i = 0; i < numAtoms; ++i )
-    {
-        OBAtom *atom = pmol->NewAtom();
-        atom->SetAtomicNum( atoms[ i ].atomicNum );
-        atom->SetVector( atoms[ i ].coord[ 0 ],
-                         atoms[ i ].coord[ 1 ],
-                         atoms[ i ].coord[ 2 ] );
-        atom->SetPartialCharge( atoms[ i ].charge );
-    }
+      pmol->SetDimension( 3 );
 
-    if( !pConv->IsOption( "b", OBConversion::INOPTIONS ) ) pmol->ConnectTheDots();
-    if (!pConv->IsOption( "s", OBConversion::INOPTIONS )
-        && !pConv->IsOption( "b", OBConversion::INOPTIONS ) )
-    {
-        pmol->PerceiveBondOrders();
-    }
-    pmol->EndModify();
+      pmol->ReserveAtoms( numAtoms );
 
-    return true;
+      for( int i = 0; i < numAtoms; ++i )
+      {
+          OBAtom *atom = pmol->NewAtom();
+          atom->SetAtomicNum( atoms[ i ].atomicNum );
+          atom->SetVector( atoms[ i ].coord[ 0 ],
+                           atoms[ i ].coord[ 1 ],
+                           atoms[ i ].coord[ 2 ] );
+          atom->SetPartialCharge( atoms[ i ].charge );
+      }
+
+      if( !pConv->IsOption( "b", OBConversion::INOPTIONS ) ) pmol->ConnectTheDots();
+      if (!pConv->IsOption( "s", OBConversion::INOPTIONS )
+          && !pConv->IsOption( "b", OBConversion::INOPTIONS ) )
+      {
+          pmol->PerceiveBondOrders();
+      }
+      pmol->EndModify();
+
+      return true;
 }
 
 //------------------------------------------------------------------------------

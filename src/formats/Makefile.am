@@ -1,6 +1,7 @@
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data -I$(top_srcdir)/include
 
-EXTRA_DIST = exampleformat.cpp 
+# KFc.h and ArrayList.h for ADF formats
+EXTRA_DIST = exampleformat.cpp KFc.h ArrayList.h
 SUBDIRS =
 
 if BUILD_XML
@@ -123,7 +124,7 @@ PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 acrformat_la_SOURCES = acrformat.cpp 
 acrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-adfformat_la_SOURCES = adfformat.cpp 
+adfformat_la_SOURCES = adfformat.cpp KFReader.c ArrayList.c
 adfformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 alchemyformat_la_SOURCES = alchemyformat.cpp 
