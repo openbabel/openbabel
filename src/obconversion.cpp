@@ -462,7 +462,7 @@ namespace OpenBabel {
       {
         if(pInStream==&cin)
           {
-            if(pInStream->peek()=='\n')
+            if(pInStream->peek()==-1) //Cntl Z Was \n but interfered with piping
               break;
           }
         else

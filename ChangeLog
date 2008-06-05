@@ -1,5 +1,13 @@
 2008-06-05 Chris Morley
 
+	* src/obconversion.cpp(Convert): test for Cntl Z to terminate
+	commandline input rather than \n (a blank line).
+	Fixes bug 1984660: piping with titleless mol files.
+	Commandline data input always was clunky and is even clunkier now.
+	Being able to pipe is more important. 
+	
+2008-06-05 Chris Morley
+
 	* src/forcefield.cpp:In line 2535 replace 'dafault:' by 'default:' 
 	This may have a real effect and needs to be checked.
 	
