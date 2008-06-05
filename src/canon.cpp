@@ -832,7 +832,6 @@ static void FindConjugatedEZBonds(OBAtom *atom,
 
   // Now recursively call this function on the other atom across
   // the double bond from this one.
-  OBBond *dbond;
   FOR_BONDS_OF_ATOM(bond, atom) {
     if (bond->IsDouble()) {
       OBAtom *nbr = bond->GetNbrAtom(atom);

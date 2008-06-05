@@ -243,7 +243,7 @@ namespace OpenBabel {
   int
   establish_pairs( SYMMETRY_ELEMENT *elem )
   {
-    int               i, j, k, best_j ;
+    int               i, j, best_j ;
     char *            atom_used = (char *)calloc( _mol->NumAtoms(), 1 ) ;
     double            distance, best_distance ;
     OBAtom            symmetric;
@@ -385,7 +385,7 @@ namespace OpenBabel {
   int
   check_transform_quality( SYMMETRY_ELEMENT *elem )
   {
-    int               i, j, k ;
+    int               i, j;
     OBAtom            symmetric ;
     double            r, max_r ;
 
@@ -798,7 +798,6 @@ namespace OpenBabel {
   static void
   invert_atom( SYMMETRY_ELEMENT *center, OBAtom *from, OBAtom *to )
   {
-    int                i ;
 
     // copy the "type" of from into to
     to->SetAtomicNum(from->GetAtomicNum());
@@ -1144,7 +1143,6 @@ namespace OpenBabel {
   {
     SYMMETRY_ELEMENT * axis ;
     double             a[ DIMENSION ], b[ DIMENSION ], c[ DIMENSION ] ;
-    int                i ;
 
     if( verbose > 0 ) printf( "Trying cn axis for the triplet (%d,%d,%d)\n", ia, ib, ic ) ;
     StatTotal++ ;
@@ -1379,7 +1377,7 @@ namespace OpenBabel {
   void
   find_c2_axes(void)
   {
-    int                i, j, k, l, m ;
+    int                i, j, k, l;
     double             center[ DIMENSION ] ;
     double *           distances = (double*)calloc( _mol->NumAtoms(), sizeof( double ) ) ;
     double             r ;
@@ -1767,7 +1765,6 @@ namespace OpenBabel {
     int            i;
     int            last_matching = -1;
     int            matching_count = 0;
-    char           buffer[BUFF_SIZE];
 
     for( i = 0 ; i < PointGroupsCount ; i++ ){
       if( strcmp( SymmetryCode, PointGroups[i].symmetry_code ) == 0 ){

@@ -862,7 +862,7 @@ namespace OpenBabel
     vector<OBAtom *>::iterator ai;
     OBBond *bond;
     OBCanSmiNode *next;
-    int idx, canorder;
+    int idx;//, canorder;
 
     atom = node->GetAtom();
 
@@ -1343,7 +1343,7 @@ namespace OpenBabel
       mol.BeginModify();
       
       vector<OBAtom*>::iterator i;
-      OBAtom *atom;
+//      OBAtom *atom;
       for (i = atomList.begin(); i != atomList.end(); ++i) {
         // Get the (x,y,z) coordinates where best to put the H
         vector3 v;
@@ -1392,9 +1392,9 @@ namespace OpenBabel
 
   void CreateCansmiString(OBMol &mol, char *buffer, OBBitVec &frag_atoms, bool iso)
   {
-    char tmp[BUFF_SIZE];
-    int chg;
-    char *p, *pp;
+//    char tmp[BUFF_SIZE];
+//    int chg;
+//    char *p, *pp;
 
     // This is a hack to prevent recursion problems.
     //  we still need to fix the underlying problem -GRH
@@ -1442,7 +1442,7 @@ namespace OpenBabel
 
           vector3 v;
           OBAtom *nbr;
-          OBBond *bond;
+//          OBBond *bond;
 
           FOR_BONDS_OF_ATOM(bond, atom) {
 

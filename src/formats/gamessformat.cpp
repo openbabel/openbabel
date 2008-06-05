@@ -223,7 +223,7 @@ namespace OpenBabel
     vector<double> orbitals;
 
     // Read multiple conformers (e.g. for geometry optimization or IRC
-    bool addConformers = pConv->IsOption("c",OBConversion::INOPTIONS);
+    bool addConformers = pConv->IsOption("c",OBConversion::INOPTIONS)!=NULL;
     bool readOneConformer = false;
 
     // must build generic data while we parse then add at the end.

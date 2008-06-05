@@ -338,7 +338,7 @@ namespace OpenBabel
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    bool ligandsOnly = pConv->IsOption("l", OBConversion::OUTOPTIONS);
+    bool ligandsOnly = pConv->IsOption("l", OBConversion::OUTOPTIONS)!=NULL;
  
     //The old code follows....
     string str,str1;

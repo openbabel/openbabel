@@ -65,7 +65,7 @@ namespace OpenBabel
 	  
 	private:
 	  /// The number of <b>words</b> currently stored ( NOT bit count )
-      unsigned		_size;
+      size_t _size; //was unsigned
 	  /// A vector of words used to store the bit values
       word_vector	_set;
 	  

@@ -757,7 +757,7 @@ static void getSectionFromSuperEntry(KFFile *kf, void *buf){
 static void getDataBlockFromSuperEntry(KFFile *kf, void *buf){
    char name[KF_SECTION_NAME_LENGTH+1];
    int phBlk, logBlk, numBlks, type;
-   int iblk;
+   /*int iblk;*/
    KFSuperIndexBlockEntry32 *ent32 = buf;
    KFSuperIndexBlockEntry64 *ent64 = buf;
    KFSection *section;

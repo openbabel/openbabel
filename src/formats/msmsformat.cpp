@@ -112,7 +112,7 @@ bool OBMSMSFormat::WriteMolecule( OBBase* pOb, OBConversion* pConv )
 
     ostream& os = *pConv->GetOutStream();
 
-    const bool atomNames = pConv->IsOption( "a", OBConversion::OUTOPTIONS );
+    const bool atomNames = pConv->IsOption( "a", OBConversion::OUTOPTIONS )!=NULL;
 
     // write header ?
 

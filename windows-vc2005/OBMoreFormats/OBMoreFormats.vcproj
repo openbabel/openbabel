@@ -242,6 +242,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\ArrayList.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\balstformat.cpp"
 				>
 			</File>
@@ -358,6 +362,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\KFReader.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\mmcifformat.cpp"
 				>
 			</File>
@@ -447,7 +455,15 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
+				RelativePath="..\..\src\formats\ArrayList.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\babelconfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\KFc.h"
 				>
 			</File>
 			<File

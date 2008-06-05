@@ -1,3 +1,22 @@
+2008-06-05 Chris Morley
+
+	* src/forcefield.cpp:In line 2535 replace 'dafault:' by 'default:' 
+	This may have a real effect and needs to be checked.
+	
+	* include/openbabel/bitvec.h, src/canon.cpp,src/dlhandler_win32.cpp,
+	src/forcefield.cpp, src/formats/cansmilesformat.cpp,
+	src/formats/gamessformat.cpp, src/formats/gaussformat.cpp,
+	src/formats/KFReader.c,src/formats/mol2format.cpp,
+	src/formats/msmsformat.cpp, src/pointgroup.cpp,
+	src/tokenst.cpp:
+	Tidy to reduce compiler warnings: remove or comment out unreferenced
+	variables; size_t decalation replaces some int or unsigned;
+	!=NULL added to avoid implict const char* to bool conversion 
+	
+	* windows-vc2005/OBMoreFormats/OBMoreFormats.vcproj: change to
+	project build order as pointed out by peterennis bug #1985163
+
+
 2008-06-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mopacformat.cpp: Fix for PR#1978982 with reading

@@ -65,7 +65,7 @@ namespace OpenBabel
     if (!string)
       return(NULL);
 
-    int length;
+    size_t length;
 
     length = strlen(string);
     if (length == 0)
@@ -101,7 +101,7 @@ namespace OpenBabel
     size_t startpos=0,endpos=0;
 
     int matched=0;
-    unsigned int s_size = s.size();
+    size_t s_size = s.size();
     for (;;)
       {
         startpos = s.find_first_not_of(delimstr,startpos);

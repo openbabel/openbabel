@@ -1020,7 +1020,7 @@ namespace OpenBabel
   
   bool OBForceField::GetConformers(OBMol &mol)
   { 
-    OBAtom *atom;
+//    OBAtom *atom;
 
     if (_mol.NumAtoms() != mol.NumAtoms())
       return false;
@@ -1473,7 +1473,7 @@ namespace OpenBabel
     
     rotor = rl.BeginRotor(ri);
     int confCount = 0;
-    int settings;
+//    int settings;
     for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       // foreach rotor
       energies.clear();
@@ -1522,7 +1522,7 @@ namespace OpenBabel
     }
 
     int best_conformer;
-    double penalty; // for poor performance
+//    double penalty; // for poor performance
     double randFloat; // generated random number -- used to pick a rotor
     double total; // used to calculate the total probability 
     double *bestCoordPtr = new double [_mol.NumAtoms() * 3]; // coordinates for best conformer
@@ -2532,7 +2532,7 @@ namespace OpenBabel
         case LineSearchType::Newton2Num:
           alpha = Newton2NumLineSearch(_gradientPtr);
           break;
-        dafault:
+        default:
         case LineSearchType::Simple:
           alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
           break;
