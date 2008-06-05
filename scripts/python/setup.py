@@ -60,12 +60,26 @@ def find_likely_directory():
 
 OBinclude,OBlibrary = find_likely_directory()
 
-obExtension = Extension('_openbabel',
-                        ['openbabel_python.cpp'],
-                        include_dirs=OBinclude,
-                        library_dirs=OBlibrary,
-                        libraries=['openbabel']
-                        )
+obCore = Extension('_obcore',
+                   ['obcore.cpp'],
+                   include_dirs=OBinclude,
+                   library_dirs=OBlibrary,
+                   libraries=['openbabel']
+                   )
+
+obConversion = Extension('_obconversion',
+                         ['obconversion.cpp'],
+                         include_dirs=OBinclude,
+                         library_dirs=OBlibrary,
+                         libraries=['openbabel']
+                         )
+
+obTemplate = Extension('_obtemplate',
+                       ['obtemplate.cpp'],
+                       include_dirs=OBinclude,
+                       library_dirs=OBlibrary,
+                       libraries=['openbabel']
+                       )
 
 setup(name='openbabel',
       version='1.3',
@@ -74,7 +88,7 @@ setup(name='openbabel',
       url='http://openbabel.sourceforge.net/',
       license='http://www.gnu.org/copyleft/gpl.html',
       py_modules=['openbabel','pybel'],
-      ext_modules=[obExtension],
+      ext_modules=[obCore, obConversion, obTemplate],
       description = 'openbabel: Python interface to the Open Babel chemistry library',
       classifiers=[
       'Development Status :: 5 - Production/Stable',

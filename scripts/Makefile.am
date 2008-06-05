@@ -20,8 +20,9 @@ dist-hook:
 
 if MAINTAINER_MODE
 if BUILD_SWIG
-BUILT_SOURCES = perl/openbabel_perl.cpp python/openbabel_python.cpp \
-	java/openbabel_java.cpp csharp/openbabel_csharp.cpp
+BUILT_SOURCES = perl/openbabel_perl.cpp \
+	java/openbabel_java.cpp csharp/openbabel_csharp.cpp \
+	python/obcore.cpp python/obconversion.cpp python/obtemplate.cpp
 
 script_includes = $(top_srcdir)/include/openbabel
 script_headers = $(script_includes)/mol.h $(script_includes)/obconversion.h \
@@ -34,19 +35,17 @@ perl/openbabel_perl.cpp: openbabel-perl.i $(script_headers)
 	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
-python/openbabel_python.cpp: openbabel-python.i $(script_headers)
+python/obconversion.cpp: openbabel-python2.i $(script_headers)
 	$(SWIG) -small -O -python -templatereduce -naturalvar \
 		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
-	echo "import sys" >python/ob.py;
-	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
-	echo "    try:" >>python/ob.py;
-	echo "        import dl" >>python/ob.py;
-	echo "    except ImportError:" >>python/ob.py;
-	echo "        import DLFCN as dl" >>python/ob.py;
-	echo "    sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >>python/ob.py;
-	echo >>python/ob.py;
-	cat python/openbabel.py >>python/ob.py;
-	mv python/ob.py python/openbabel.py;
+
+python/obtemplate.cpp: openbabel-python3.i $(script_headers)
+	$(SWIG) -small -O -python -templatereduce -naturalvar \
+		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
+
+python/obcore.cpp: openbabel-python.i $(script_headers)
+	$(SWIG) -small -O -python -templatereduce -naturalvar \
+		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
 
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 	$(SWIG) -small -O -java -naturalvar -templatereduce -c++ -o $@ \

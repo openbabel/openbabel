@@ -1,4 +1,4 @@
-%module openbabel
+%module obcore
 
 %{
 // used to set import/export for Cygwin DLLs
@@ -41,28 +41,6 @@
 
 %}
 
-%include "std_list.i"
-%include "std_map.i"
-%include "std_vector.i"
-%include "std_string.i"
-
-namespace std {
-%template (vectorInt)		  vector<int>;
-%template (vectorUnsignedInt)     vector<unsigned int>;
-%template (vvInt)		      vector< vector<int> >;
-%template (vectorDouble) 	vector<double>;
-%template (vectorString)		  vector<std::string>;
-%template (vVector3)		  vector<OpenBabel::vector3>;
-
-%template (vectorMol)		  vector<OpenBabel::OBMol>;
-%template (vectorBond)		vector<OpenBabel::OBBond>;
-%template (vectorResidue)	vector<OpenBabel::OBResidue>;
-%template (vectorRing)		vector<OpenBabel::OBRing>;
-%template (vectorpRing)		vector<OpenBabel::OBRing*>;
-%template (vectorData)    vector<OpenBabel::OBGenericData*>;
-}
-
-
 %inline %{
 OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
 	return (OpenBabel::OBPairData *) data;
@@ -95,11 +73,11 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 //# %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
 
-%include <openbabel/plugin.h>
+%import <openbabel/plugin.h>
 
-%include <openbabel/oberror.h>
-%include <openbabel/format.h>
-%include <openbabel/obconversion.h>
+%import <openbabel/oberror.h>
+%import <openbabel/format.h>
+%import <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
@@ -110,11 +88,11 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 
-%include <openbabel/fingerprint.h>
-%include <openbabel/descriptor.h>
-%include <openbabel/forcefield.h>
+%import <openbabel/fingerprint.h>
+%import <openbabel/descriptor.h>
+%import <openbabel/forcefield.h>
 
-%include <openbabel/op.h>
+%import <openbabel/op.h>
 
 %include <openbabel/bitvec.h>
 
