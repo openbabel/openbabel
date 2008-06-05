@@ -9,6 +9,7 @@ set(formats
     PQSformat
     MCDLformat
     alchemyformat
+    adfformat
     acrformat
     amberformat
     balstformat
@@ -16,7 +17,6 @@ set(formats
     boxformat
     cacaoformat
     cacheformat
-    cansmilesformat
     carformat
     cccformat
     chem3dformat

@@ -49,7 +49,6 @@ libformats_la_SOURCES = \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	acrformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
-	cansmilesformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawct.cpp \
 	chemkinformat.cpp \
@@ -81,7 +80,7 @@ formats_LTLIBRARIES = \
 	CSRformat.la PQSformat.la MCDLformat.la alchemyformat.la \
 	acrformat.la adfformat.la \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
-	cacaoformat.la cacheformat.la cansmilesformat.la \
+	cacaoformat.la cacheformat.la \
 	carformat.la cccformat.la \
 	chem3dformat.la chemdrawctformat.la \
 	chemtoolformat.la cifformat.la \
@@ -147,9 +146,6 @@ cacaoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 cacheformat_la_SOURCES = cacheformat.cpp 
 cacheformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
-
-cansmilesformat_la_SOURCES = cansmilesformat.cpp 
-cansmilesformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 carformat_la_SOURCES = carformat.cpp 
 carformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 

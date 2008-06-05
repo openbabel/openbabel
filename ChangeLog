@@ -1,3 +1,12 @@
+2008-06-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/smilesformat.cpp: Incorporate cansmilesformat
+	code. Now all SMILES export goes through Craig's cleaner,
+	less-buggy code. Currently all SMILES are canonically
+	ordered. Need to add code to provide non-canonical ordering for "regular."
+	
+	* src/formats/Makefile.* src/formats/CMakeLists.txt: Update for above.
+
 2008-06-05 Chris Morley
 
 	* src/obconversion.cpp(Convert): test for Cntl Z to terminate
@@ -6,8 +15,6 @@
 	Commandline data input always was clunky and is even clunkier now.
 	Being able to pipe is more important. 
 	
-2008-06-05 Chris Morley
-
 	* src/forcefield.cpp:In line 2535 replace 'dafault:' by 'default:' 
 	This may have a real effect and needs to be checked.
 	
