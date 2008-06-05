@@ -2,7 +2,7 @@ EXTRA_DIST = openbabel-perl.i perl \
 					openbabel-python.i python \
 					openbabel-ruby.i ruby \
 					openbabel-java.i java \
-				openbabel-csharp.i csharp	
+		   		openbabel-csharp.i csharp	
 
 # Remove various files before making a distribution archive
 dist-hook:
@@ -29,13 +29,13 @@ script_headers = $(script_includes)/mol.h $(script_includes)/obconversion.h \
 	$(script_includes)/residue.h
 
 perl/openbabel_perl.cpp: openbabel-perl.i $(script_headers)
-	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
+	$(SWIG) -small -O -perl5 -c++ -templatereduce -naturalvar -o $@ \
 		-I$(top_srcdir)/include -I$(top_builddir)/include $<;
 	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
 python/openbabel_python.cpp: openbabel-python.i $(script_headers)
-	$(SWIG) -python -modern -naturalvar -fastinit \
+	$(SWIG) -small -O -python -templatereduce -naturalvar \
 		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
 	echo "import sys" >python/ob.py;
 	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
@@ -49,19 +49,19 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 	mv python/ob.py python/openbabel.py;
 
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
-	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/include \
-  -I$(top_builddir)/include $<;
+	$(SWIG) -small -O -java -naturalvar -templatereduce -c++ -o $@ \
+	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
 
 csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
-	$(SWIG) -csharp -naturalvar -c++ -o $@ -I$(top_srcdir)/include \
-	-I$(top_builddir)/include $<;
+	$(SWIG) -small -O -csharp -naturalvar -templatereduce -c++ -o $@ \
+	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
 
 if BUILD_RUBY
 BUILT_SOURCES += ruby/openbabel_ruby.cpp
 
 ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
-	$(SWIG) -ruby -naturalvar -autorename -c++ -o $@ -I$(top_srcdir)/include \
-  -I$(top_builddir)/include $<;
+	$(SWIG) -small -O -ruby -naturalvar -autorename -c++ -o $@ \
+	-templatereduce -I$(top_srcdir)/include -I$(top_builddir)/include $<;
 	(cd ruby; ruby extconf.rb \
   --with-openbabel-include=$(includedir)/openbabel-2.0 \
   --with-openbabel-lib=$(libdir) )
