@@ -37,6 +37,8 @@ GNU General Public License for more details.
 #include <string>
 #include <map>
 
+#include <stdlib.h>
+
 #include <openbabel/obconversion.h>
 
 #ifdef HAVE_LIBZ
