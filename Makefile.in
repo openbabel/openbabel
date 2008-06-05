@@ -38,8 +38,12 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	THANKS config.guess config.sub depcomp install-sh ltmain.sh \
 	missing mkinstalldirs
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
-	$(top_srcdir)/configure.in
+am__aclocal_m4_deps = $(top_srcdir)/autoconf/libtool.m4 \
+	$(top_srcdir)/autoconf/ltoptions.m4 \
+	$(top_srcdir)/autoconf/ltsugar.m4 \
+	$(top_srcdir)/autoconf/ltversion.m4 \
+	$(top_srcdir)/autoconf/lt~obsolete.m4 \
+	$(top_srcdir)/acinclude.m4 $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
@@ -218,7 +222,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
 # Use our libtool macros
-ACLOCAL_AMFLAGS = '-I autoconf'
+ACLOCAL_AMFLAGS = '-Iautoconf'
 
 # only build in the scripts subdirectory if possible (perl, python, swig, etc.)
 @BUILD_SCRIPTS_TRUE@SCRIPT_DIR = scripts

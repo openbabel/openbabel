@@ -1,5 +1,14 @@
 2008-06-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* scripts/openbabel-python*, scripts/python/*: Split the python
+	bindings into three pieces for improved compilation. Should solve
+	PR#1905826.
+
+	* src/obconversion.cpp: Add stdlib.h to hopefully solve
+	PR#1985717.
+
+	* configure.in, configure: Update to build libinchi by default.
+
 	* src/formats/smilesformat.cpp: Incorporate cansmilesformat
 	code. Now all SMILES export goes through Craig's cleaner,
 	less-buggy code. Currently all SMILES are canonically

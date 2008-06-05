@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([Open Babel], 2.2.0b5, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_INIT([Open Babel], 2.2.0b6, openbabel-discuss@lists.sourceforge.net, openbabel)
 AC_PREREQ([2.61])
 AC_CONFIG_SRCDIR(src/zipstreamimpl.h)
 AM_INIT_AUTOMAKE([no-define])
@@ -16,10 +16,10 @@ AC_ARG_ENABLE(wx-gui,
 		[wx_gui="no"])
 
 AC_ARG_ENABLE(inchi,
-	AS_HELP_STRING([--enable-inchi],
-		       [always build the InChI library]),
+	AS_HELP_STRING([--disable-inchi],
+		       [do not build the InChI library]),
 		[inchi="$enable_inchi"],
-		[inchi="no"])
+		[inchi="yes"])
 
 AC_ARG_ENABLE(dynamic-modules,
 	AS_HELP_STRING([--disable-dynamic-modules],

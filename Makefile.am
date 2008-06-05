@@ -1,5 +1,5 @@
 # Use our libtool macros
-ACLOCAL_AMFLAGS='-I autoconf'
+ACLOCAL_AMFLAGS='-Iautoconf'
 
 # only build in the scripts subdirectory if possible (perl, python, swig, etc.)
 if BUILD_SCRIPTS
