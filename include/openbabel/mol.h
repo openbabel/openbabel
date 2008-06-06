@@ -29,7 +29,6 @@ GNU General Public License for more details.
 #endif
 
 #include <math.h>
-#include <float.h>
 
 #include <vector>
 #include <string>
@@ -435,7 +434,7 @@ namespace OpenBabel
     //! (i.e., not to C atoms)
     //! \param correctForPH Whether to call CorrectForPH() first
     //! \return Whether any hydrogens were added
-    bool AddHydrogens(bool polaronly=false,bool correctForPH=true);
+    bool AddHydrogens(bool polaronly=false,bool correctForPH=true, double pH=7.4);
     //! Add hydrogens only to the supplied atom to fill out implicit valence
     bool AddHydrogens(OBAtom*);
     //! Add only polar hydrogens (i.e., attached to polar atoms, not C)
@@ -449,7 +448,7 @@ namespace OpenBabel
     bool ConvertDativeBonds();
 
     //! Correct for pH by applying the OBPhModel transformations
-    bool CorrectForPH();
+    bool CorrectForPH(double pH=7.4);
     // docs in mol.cpp
     bool AssignSpinMultiplicity(bool NoImplicitH=false);
     //! \return the center of the supplied conformer @p nconf

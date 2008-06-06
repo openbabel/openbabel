@@ -69,7 +69,7 @@ void OBPhModel::ParseLine(const char *buffer)
     if (EQn(buffer,"TRANSFORM",7))
     {
         tokenize(vs,buffer);
-        if (vs.empty() || vs.size() < 4)
+        if (vs.empty() || vs.size() < 5)
 	  {
 	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in phmodel table from phmodel.txt", obInfo);
             return;
@@ -85,6 +85,7 @@ void OBPhModel::ParseLine(const char *buffer)
         }
 
         _vtsfm.push_back(tsfm);
+        _vpKa.push_back(atof(vs[4].c_str()));
     }
     else if (EQn(buffer,"SEEDCHARGE",10))
     {
@@ -136,7 +137,7 @@ void OBPhModel::AssignSeedPartialCharge(OBMol &mol)
         }
 }
 
-void OBPhModel::CorrectForPH(OBMol &mol)
+void OBPhModel::CorrectForPH(OBMol &mol, double pH)
 {
     if (!_init)
         Init();
@@ -152,12 +153,45 @@ void OBPhModel::CorrectForPH(OBMol &mol)
 
     mol.DeleteHydrogens();
 
-    vector<OBChemTsfm*>::iterator i;
-    for (i = _vtsfm.begin();i != _vtsfm.end();++i)
-        (*i)->Apply(mol);
+    for (unsigned int i = 0; i < _vtsfm.size(); ++i) {
+      
+      if (_vpKa[i] > 1E+9) { 
+	// always apply when pKa is > 1e+9
+        _vtsfm[i]->Apply(mol);
+      } else {
+        // 10^(pKa - pH) = [HA] / [A-]
+        //
+        // > 1 : [HA] > [A-]
+        // < 1 : [HA] < [A-]
+        if (_vtsfm[i]->IsAcid()) {
+          //cout << "IsAcid == " << _vtsfm[i]->IsAcid() << endl;
+          //cout << "pKa == " << _vpKa[i] << endl;
+          //cout << "pow(10, _vpKa[i] - pH) == " << pow(10, _vpKa[i] - pH) << endl;
+          if (pow(10, _vpKa[i] - pH) < 1.0) {
+            //cout << "APPLY!!" << endl;
+            _vtsfm[i]->Apply(mol);
+	  }
+        }
+
+        // 10^(pKa - pH) = [BH+] / [B:]
+        //
+        // > 1 : [BH+] > [B:]
+        // < 1 : [BH+] < [B:]
+        if (_vtsfm[i]->IsBase()) {
+          //cout << "IsBase == " << _vtsfm[i]->IsBase() << endl;
+          //cout << "pKa == " << _vpKa[i] << endl;
+          //cout << "pow(10, _vpKa[i] - pH) == " << pow(10, _vpKa[i] - pH) << endl;
+          if (pow(10, _vpKa[i] - pH) > 1.0) {
+            //cout << "APPLY!!" << endl;
+            _vtsfm[i]->Apply(mol);
+	  }
+        }
+      }
+    }
 
     atomtyper.CorrectAromaticNitrogens(mol);
 }
+
 
 // Portions of this documentation adapted from the JOELib docs, written by
 // Joerg Wegner
@@ -333,6 +367,39 @@ bool OBChemTsfm::Apply(OBMol &mol)
     }
 
     return(true);
+}
+
+bool OBChemTsfm::IsAcid()
+{
+  //cout << _bgn.GetSMARTS() << " >> " << _end.GetSMARTS() << endl;
+  //cout << "  NumAtoms = " << _end.NumAtoms() << endl;
+
+  if (_bgn.NumAtoms() > _end.NumAtoms())  // O=CO[#1:1] >> O=CO
+    return true;
+
+  for (int i = 0; i < _end.NumAtoms(); ++i) {
+    //cout << "    _end(" << i << ")  " << _end.GetCharge(i) << endl;
+    //cout << "    _bgn(" << i << ")  " << _bgn.GetCharge(i) << endl;
+    if (_end.GetCharge(i) < 0)
+      return true;
+  }
+  
+  return false;
+}
+
+bool OBChemTsfm::IsBase()
+{
+  //cout << _bgn.GetSMARTS() << " >> " << _end.GetSMARTS() << endl;
+  //cout << "  NumAtoms = " << _end.NumAtoms() << endl;
+
+  for (int i = 0; i < _end.NumAtoms(); ++i) {
+    //cout << "    _end(" << i << ")  " << _end.GetCharge(i) << endl;
+    //cout << "    _bgn(" << i << ")  " << _bgn.GetCharge(i) << endl;
+    if (_end.GetCharge(i) > 0)
+      return true;
+  }
+
+  return false;
 }
 
 } //namespace OpenBabel

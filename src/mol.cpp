@@ -1804,15 +1804,15 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
+  bool OBMol::AddHydrogens(bool polaronly,bool correctForPH, double pH)
   {
     if (!IsCorrectedForPH() && correctForPH)
-      CorrectForPH();
+      CorrectForPH(pH);
 
     if (HasHydrogensAdded())
       return(true);
     SetHydrogensAdded();
-    
+   
     /*
     //
     // This was causing bug #1892844 in avogadro. We also want to add hydrogens if the molecule has no bonds.
@@ -1892,7 +1892,6 @@ namespace OpenBabel
     vector<pair<OBAtom*,int> >::iterator k;
     double hbrad = etab.CorrectedBondRad(1,0);
 
-
     for (k = vhadd.begin();k != vhadd.end();++k)
       {
         atom = k->first;
@@ -1969,6 +1968,9 @@ namespace OpenBabel
   {
     OBAtom *h;
 
+    if (atom->IsHydrogen())
+      return false;
+    
     //count up number of hydrogens to add
     int hcount,count=0;
     vector<pair<OBAtom*,int> > vhadd;
@@ -2042,11 +2044,11 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBMol::CorrectForPH()
+  bool OBMol::CorrectForPH(double pH)
   {
     if (IsCorrectedForPH())
       return(true);
-    phmodel.CorrectForPH(*this);
+    phmodel.CorrectForPH(*this, pH);
 
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::CorrectForPH", obAuditMsg);
@@ -2648,7 +2650,7 @@ namespace OpenBabel
         OBBond *bond = CreateBond();
         if (!bond)
           {
-            EndModify();
+            //EndModify();
             return(false);
           }
 
@@ -2707,6 +2709,7 @@ namespace OpenBabel
       SetData(new OBVirtualBond(first,second,order,flags));
 
     //    EndModify();
+
     return(true);
   }
 

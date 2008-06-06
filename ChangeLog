@@ -1,3 +1,22 @@
+2008-06-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/phmodel.h, src/phmodel.cpp: Changes to OBPhModel, 
+	use the	Henderson-Hasselbalch formula to determine protonation states.
+	Updated doxygen documentation to give some info about the method.
+
+	* include/openbabel/mol.h, src/mol.cpp: Use it.
+	OBMol::AddHydrogens(bool polar=false, bool correctForPH=true, double
+	pH=7.4)
+
+	* data/phmodel.txt: Add extra column with pKa values.
+
+	* test/phmodel.cpp: Unit test for the new phmodel. The two errors are
+	Glutamate (4.0 used, should be 4.3) and Lysine (10.0 used, should be
+	10.1). I'll probably have to add a visited list so we can only
+	transform an atom once, transformations would then have to be ordered
+	by decreasing complexity. But the errors are very small and this is a
+	major improvement compared to what we had.
+
 2008-06-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/openbabel-python*, scripts/python/*: Split the python
