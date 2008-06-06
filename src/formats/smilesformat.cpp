@@ -29,18 +29,10 @@ using namespace std;
 
 namespace OpenBabel {
 
-  class SMIFormat : public OBMoleculeFormat
+  //Base class for SMIFormat and CANSIFormat with most of the functionality
+  class SMIBaseFormat : public OBMoleculeFormat
   {
   public:
-    //Register this format type ID
-    SMIFormat()
-    {
-      OBConversion::RegisterFormat("smi",this, "chemical/x-daylight-smiles");
-      OBConversion::RegisterFormat("smiles",this, "chemical/x-daylight-smiles");
-      OBConversion::RegisterOptionParam("n", this);
-      OBConversion::RegisterOptionParam("t", this);
-    }
-
     virtual const char* GetMIMEType() 
     { return "chemical/x-daylight-smiles"; };
 
@@ -51,21 +43,6 @@ namespace OpenBabel {
 
     ///////////////////////////////////////////////////////
 
-    virtual const char* Description()
-    {
-      return
-        "SMILES format\n"
-        "A linear text format which can describe the connectivity\n"
-        "and chirality of a molecule\n"
-        "Write Options e.g. -xt\n"
-        "  n no molecule name\n"
-        "  t molecule name only\n"
-        "  r radicals lower case eg ethyl is Cc\n"
-        "  c output atomclass like [C:2], if available\n"
-        "\n";
-    }
-
-    virtual unsigned int Flags() { return DEFAULTFORMAT;};
     virtual const char* TargetClassDescription(){return OBMol::ClassDescription();};
 
     virtual const char* SpecificationURL()
@@ -87,30 +64,56 @@ namespace OpenBabel {
 
   };
 
+  //**************************************************
+  class SMIFormat : public SMIBaseFormat
+  {
+  public:
+    //Register this format type ID
+    SMIFormat()
+    {
+      OBConversion::RegisterFormat("smi",this, "chemical/x-daylight-smiles");
+      OBConversion::RegisterFormat("smiles",this, "chemical/x-daylight-smiles");
+      OBConversion::RegisterOptionParam("n", this);
+      OBConversion::RegisterOptionParam("t", this);
+      OBConversion::RegisterOptionParam("r", this);
+      OBConversion::RegisterOptionParam("c", this);
+    }
+    virtual const char* Description()
+    {
+      return
+        "SMILES format\n"
+        "A linear text format which can describe the connectivity\n"
+        "and chirality of a molecule\n"
+        "Write Options e.g. -xt\n"
+        "  n no molecule name\n"
+        "  t molecule name only\n"
+        "  r radicals lower case eg ethyl is Cc\n"
+        "  c output atomclass like [C:2], if available\n"
+        "  can output in canonical form\n"
+        "\n";
+    }
+
+
+  };
+
   //Make an instance of the format class
   SMIFormat theSMIFormat;
   
-  
-  class CANSMIFormat : public SMIFormat
+//**************************************************
+  class CANSMIFormat : public SMIBaseFormat
   {
   public:
     //Register this format type ID
     CANSMIFormat()
     {
       OBConversion::RegisterFormat("can", this, "chemical/x-daylight-cansmiles");
-      OBConversion::RegisterOptionParam("n", this);
-      OBConversion::RegisterOptionParam("t", this);
     }
 
-    // Reading should be handled by the virtual parent class SMIFormat
-
-    ////////////////////////////////////////////////////
-    /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
     {      
       //The "can" option sets us to use canonical ordering
       pConv->AddOption("can",OBConversion::OUTOPTIONS);
-      return SMIFormat::WriteMolecule(pOb, pConv);
+      return SMIBaseFormat::WriteMolecule(pOb, pConv);
     }
 
     ///////////////////////////////////////////////////////
@@ -124,7 +127,10 @@ namespace OpenBabel {
         "Write Options e.g. -xt\n"
         //        "  i  Includes isotopic and chiral markings\n"
         "  n  No molecule name\n"
-        "  t  Molecule name only\n\n";
+        "  t  Molecule name only\n";
+        "  r radicals lower case eg ethyl is Cc\n"
+        "  c output atomclass like [C:2], if available\n"
+        "/n";
     };
 
   };
@@ -132,7 +138,8 @@ namespace OpenBabel {
   // Make an instance of the format class
   CANSMIFormat theCANSMIFormat;
 
-  /////////////////////////////////////////////////////////////////
+  //************************************************************
+
   class OBSmilesParser
   {
     int _bondflags;
@@ -182,14 +189,14 @@ namespace OpenBabel {
   */
 
   ///Returns true if character is not one used in a SMILES string.
-  bool SMIFormat::isNotSmiles(char ch)
+  bool SMIBaseFormat::isNotSmiles(char ch)
   {
     static std::string notsmileschars(",<>\"\'!^&_|{}");
     return ch<=0x20 || notsmileschars.find(ch)!=string::npos;
   }
 
   //////////////////////////////////////////////////////////////////
-  bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  bool SMIBaseFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
 
@@ -2737,7 +2744,7 @@ namespace OpenBabel {
     vector<OBAtom *>::iterator ai;
     OBBond *bond;
     OBCanSmiNode *next;
-    int idx, canorder;
+    int idx;//, canorder;
 
     atom = node->GetAtom();
 
@@ -3223,7 +3230,7 @@ namespace OpenBabel {
       mol.BeginModify();
 
       vector<OBAtom*>::iterator i;
-      OBAtom *atom;
+//      OBAtom *atom;
       for (i = atomList.begin(); i != atomList.end(); ++i) {
         // Get the (x,y,z) coordinates where best to put the H
         vector3 v;
@@ -3272,10 +3279,10 @@ namespace OpenBabel {
 
   void CreateCansmiString(OBMol &mol, char *buffer, OBBitVec &frag_atoms, bool iso, OBConversion* pConv)
   {
-    char tmp[BUFF_SIZE];
-    int chg;
-    char *p, *pp;
-    bool canonical = pConv->IsOption("can");
+//    char tmp[BUFF_SIZE];
+//    int chg;
+//    char *p, *pp;
+    bool canonical = pConv->IsOption("can")!=NULL;
 
     // This is a hack to prevent recursion problems.
     //  we still need to fix the underlying problem -GRH
@@ -3327,7 +3334,7 @@ namespace OpenBabel {
 
           vector3 v;
           OBAtom *nbr;
-          OBBond *bond;
+//          OBBond *bond;
 
           FOR_BONDS_OF_ATOM(bond, atom) {
 
@@ -3410,7 +3417,7 @@ namespace OpenBabel {
   }
 
   //////////////////////////////////////////////////
-  bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
+  bool SMIBaseFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 

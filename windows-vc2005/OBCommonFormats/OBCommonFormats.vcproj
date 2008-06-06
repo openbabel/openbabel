@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="OBCommonFormats"
 	ProjectGUID="{C3CC4EC4-B4B7-48AD-99E4-E6742B16730C}"
 	RootNamespace="OBCommonFormats"
@@ -231,10 +231,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\atomrecord.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\cansmilesformat.cpp"
 				>
 			</File>
 			<File

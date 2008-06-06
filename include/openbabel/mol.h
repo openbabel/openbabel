@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #endif
 
 #include <math.h>
+#include <float.h>
 
 #include <vector>
 #include <string>

@@ -1,3 +1,18 @@
+2008-06-06  Chris Morley
+
+	* src/formats/smilesformat.cpp: SMIFormat was being hidden because
+	its constructor was being called again when its derived class
+	CANSMIFormat was made. Now both derived from a base class with most
+	of the functionality. 
+	Modified Description() and made same for both.
+	Removed DEFAULTFORMAT flag (MolFormat already is).
+	
+	* include/openbabel/mol.h: add back #include <float.h> which was
+	somehow removed in the last commit and is need for Windows build.
+	
+	* windows-vc2005/OBCommonFormats/OBCommonFormats.vcproj: remove
+	cansmilesformat.cpp
+	
 2008-06-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/phmodel.h, src/phmodel.cpp: Changes to OBPhModel, 
