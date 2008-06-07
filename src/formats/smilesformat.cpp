@@ -3428,7 +3428,7 @@ namespace OpenBabel {
       delete pmol;
     }
 
-    // Could also be canonical bond order if anyone desires
+    // Could also save canonical bond order if anyone desires
     if (canonical && !mol.HasData("Canonical Atom Order")) {
       OBPairData *canData = new OBPairData;
       canData->SetAttribute("Canonical Atom Order");
