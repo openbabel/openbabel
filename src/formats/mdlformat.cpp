@@ -155,10 +155,13 @@ public:
     string comment;
     string r1,r2;
 
+ 	  // Attempting to read past the end of the file -- don't bother
+		if( !ifs.good() || ifs.peek() == EOF ) return( false );
+
     if (!ifs.getline(buffer,BUFF_SIZE)) {
-//      errorMsg << "WARNING: Problems reading a MDL file\n";
-//      errorMsg << "Cannot read title line\n";
-//      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+      errorMsg << "WARNING: Problems reading a MDL file\n";
+      errorMsg << "Cannot read title line\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
       return(false);
     }
     mol.SetTitle(buffer);
