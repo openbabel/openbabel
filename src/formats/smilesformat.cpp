@@ -3132,8 +3132,8 @@ namespace OpenBabel {
 		
 		FOR_ATOMS_OF_MOL(atom, *pMol) {
 			if (!frag_atoms.BitIsOn(atom->GetIdx())) {
-				labels.push_back(atom->GetIdx());
-				symmetry_classes.push_back(0);
+				labels.push_back(atom->GetIdx() - 1);
+				symmetry_classes.push_back(atom->GetIdx() - 1);
 	    }
 		}
 	}
@@ -3164,9 +3164,10 @@ namespace OpenBabel {
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
 		if (_canonicalOutput)
-    	CanonicalLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
-		else	
+   		CanonicalLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+		else {
 			StandardLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+		}
 
     // OUTER LOOP: Handles dot-disconnected structures.  Finds the 
     // lowest unmarked canorder atom, and starts there to generate a SMILES.
@@ -3302,9 +3303,6 @@ namespace OpenBabel {
 
   void CreateCansmiString(OBMol &mol, char *buffer, OBBitVec &frag_atoms, bool iso, OBConversion* pConv)
   {
-//    char tmp[BUFF_SIZE];
-//    int chg;
-//    char *p, *pp;
     bool canonical = pConv->IsOption("c")!=NULL;
 
     // This is a hack to prevent recursion problems.
@@ -3480,11 +3478,8 @@ namespace OpenBabel {
       allbits.SetBitOn(a->GetIdx());
     }
 
-    if (mol.NumAtoms() != 0) {      
-      // TODO -- iso parameter (the 4th one)
-      // should respect the user's choice of command-line options
-      // it *should* be possible to output a non-iso SMILES
-      CreateCansmiString(mol, buffer, allbits, true, pConv);
+    if (mol.NumAtoms() > 0) {
+      CreateCansmiString(mol, buffer, allbits, !pConv->IsOption("i"), pConv);
     }
 
     ofs << buffer;
