@@ -85,11 +85,12 @@ namespace OpenBabel {
         "A linear text format which can describe the connectivity\n"
         "and chirality of a molecule\n"
         "Write Options e.g. -xt\n"
-        "  n no molecule name\n"
-        "  t molecule name only\n"
-        "  r radicals lower case eg ethyl is Cc\n"
-        "  a output atomclass like [C:2], if available\n"
-        "  can output in canonical form\n"
+        "  a  Output atomclass like [C:2], if available\n"
+        "  c  Output in canonical form\n"
+        "  i  Do not include isotopic or chiral markings\n"
+        "  n  No molecule name\n"
+        "  r  Radicals lower case eg ethyl is Cc\n"
+        "  t  Molecule name only\n"
         "\n";
     }
 
@@ -111,8 +112,8 @@ namespace OpenBabel {
 
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
     {      
-      //The "can" option sets us to use canonical ordering
-      pConv->AddOption("can",OBConversion::OUTOPTIONS);
+      //The "c" option sets us to use canonical ordering
+      pConv->AddOption("c",OBConversion::OUTOPTIONS);
       return SMIBaseFormat::WriteMolecule(pOb, pConv);
     }
 
@@ -125,12 +126,12 @@ namespace OpenBabel {
         "and chirality of a molecule, and has a single 'canonical'\n"
         "form for any particular molecule.\n"
         "Write Options e.g. -xt\n"
-        //        "  i  Includes isotopic and chiral markings\n"
+        "  a  Output atomclass like [C:2], if available\n"
+        "  i  Do not include isotopic or chiral markings\n"
         "  n  No molecule name\n"
-        "  t  Molecule name only\n";
-        "  r radicals lower case eg ethyl is Cc\n"
-        "  a output atomclass like [C:2], if available\n"
-        "/n";
+        "  r  Radicals lower case eg ethyl is Cc\n"
+        "  t  Molecule name only\n"
+        "\n";
     };
 
   };
@@ -3117,6 +3118,25 @@ namespace OpenBabel {
     }
   }
 
+	/****************************************************************************
+	* FUNCTION: StandardLabels
+	* 
+	* DESCRIPTION:
+	*        Creates a set of non-canonical labels for the fragment atoms
+	* ***************************************************************************/
+	void StandardLabels(OBMol *pMol, OBBitVec &frag_atoms, vector<unsigned int> &symmetry_classes,
+		vector<unsigned int> &labels)
+	{
+		symmetry_classes.clear();
+		labels.clear();
+		
+		FOR_ATOMS_OF_MOL(atom, *pMol) {
+			if (!frag_atoms.BitIsOn(atom->GetIdx())) {
+				labels.push_back(atom->GetIdx());
+				symmetry_classes.push_back(0);
+	    }
+		}
+	}
 
   /***************************************************************************
    * FUNCTION: CreateFragCansmiString
@@ -3143,7 +3163,10 @@ namespace OpenBabel {
 
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
-    CanonicalLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+		if (_canonicalOutput)
+    	CanonicalLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+		else	
+			StandardLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
 
     // OUTER LOOP: Handles dot-disconnected structures.  Finds the 
     // lowest unmarked canorder atom, and starts there to generate a SMILES.
@@ -3282,7 +3305,7 @@ namespace OpenBabel {
 //    char tmp[BUFF_SIZE];
 //    int chg;
 //    char *p, *pp;
-    bool canonical = pConv->IsOption("can")!=NULL;
+    bool canonical = pConv->IsOption("c")!=NULL;
 
     // This is a hack to prevent recursion problems.
     //  we still need to fix the underlying problem -GRH
@@ -3457,14 +3480,7 @@ namespace OpenBabel {
       allbits.SetBitOn(a->GetIdx());
     }
 
-    if (mol.NumAtoms() != 0) {
-      // GH -- these do not seem to have any effect
-      // The CorrectAromaticAmineCharge method sets internal variables to m2s
-      // which is then abandoned
-      //        OBMol2Cansmi m2s;
-      //        m2s.Init(pConv->IsOption("can"), pConv);
-      //        m2s.CorrectAromaticAmineCharge(mol);
-      
+    if (mol.NumAtoms() != 0) {      
       // TODO -- iso parameter (the 4th one)
       // should respect the user's choice of command-line options
       // it *should* be possible to output a non-iso SMILES

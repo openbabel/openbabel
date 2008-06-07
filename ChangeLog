@@ -3,6 +3,9 @@
 	* src/formats/mdlformat.cpp: Add a check for EOF before reading,
 	as suggested by Izhar.
 
+	* src/formats/smilesformat.cpp: Add initial pass at "standard"
+	SMILES labels.
+
 2008-06-07  Chris Morley
 
 	* src/formats/fingerprintformat.cpp: correct folding error message
