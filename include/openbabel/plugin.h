@@ -41,8 +41,11 @@ struct OBERROR CharPtrLess : public std::binary_function<const char*,const char*
   { return strcasecmp(p1,p2)<0; }
 };
 
-//! \class Plugin plugin.h <openbabel/plugin.h>
-//! \brief Base class for all types of dynamic classes discovered at runtime
+/** \class OBPlugin plugin.h <openbabel/plugin.h>
+    \brief Base class for all types of dynamic classes discovered at runtime
+    \since version 2.2
+    \sa plugin.h
+ */
 class OBERROR OBPlugin
 {
 public:
@@ -151,7 +154,6 @@ static BaseClass*& Default(){static BaseClass* d;return d;}\
 static BaseClass* FindType(const char* ID)\
  {if(!ID || *ID==0) return Default();\
  return static_cast<BaseClass*>(BaseFindType(Map(),ID));}
-}//namespace
 
 /** \file plugin.h
    \brief Simplify 'plugin' classes to be discovered and/or loaded at runtime.
@@ -289,4 +291,7 @@ public:
   }
 \endcode
 */
+
+} // end namespce
+
 #endif

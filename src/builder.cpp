@@ -35,7 +35,7 @@ GNU General Public License for more details.
  *
  * fragments.txt:
  * - fragments should be ordered from complex to simple
- *
+ * - practically speaking, this means they are ordered by the number of atoms
  * */
 
 using namespace std;
@@ -44,7 +44,8 @@ namespace OpenBabel
 {
   /** \class OBBuilder builder.h <openbabel/builder.h>
       \brief Class for 3D structure generation
-
+      \since version 2.2
+      
       The OBBuilder class is used for generating 3D structures.
 
       Below is and example which explain the basics. 

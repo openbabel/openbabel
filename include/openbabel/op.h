@@ -28,6 +28,7 @@ General Public License for more details.
 namespace OpenBabel
 {
 
+// Class introduction below
 class OBAPI OBOp : public OBPlugin
 {
   MAKE_PLUGIN(OBOp);
@@ -41,10 +42,10 @@ public:
   ///Required function that does the work. Normally return true, unless object is not to be output.
   virtual bool Do(OBBase* pOb, OpMap* pOptions=NULL, const char* OptionText=NULL)=0;
 
-  ///Returns true if this op is designed to work with the class of pOb, e.g. OBMol
+  /// \return true if this op is designed to work with the class of pOb, e.g. OBMol
   virtual bool WorksWith(OBBase* pOb)const=0;
 
-  /// Returns string describing options, for display with -H and to make checkboxes in GUI
+  /// \return string describing options, for display with -H and to make checkboxes in GUI
   static std::string OpOptions(OBBase* pOb)
   {
     std::string s;
@@ -70,7 +71,7 @@ public:
   ///Called from Transform(). The map has general options like -x or --multicharoption
   ///The key is the option name and the value, if any, is text which follows the option name.
   /// In some cases, there may be several parameters, space separated)
-  ///Returns false indicating object should not be output, if any Do() returns false
+  /// \return false indicating object should not be output, if any Do() returns false
   static bool DoOps(OBBase* pOb, OpMap* pOptions)
   {
     OpMap::const_iterator itr;
@@ -84,9 +85,11 @@ public:
     return true;
   }
 };
-}//namespace
 
-/*
+/** \class OBOp op.h <openbabel/op.h>
+      \brief Operations to modify molecules before output
+      \since version 2.2
+
 Classes derived from OBOp implement options for the babel program (for both
 its commandline and GUI interfaces). It is intended for options that carry out some
 modification on the molecule(or reaction) after it has been input, but before
@@ -124,4 +127,7 @@ if(!pOp)
 pOp->Do(mol);
 
   */
+
+}//namespace
+
 #endif

@@ -73,6 +73,7 @@ namespace OpenBabel
 #define IF_OBFF_LOGLVL_MEDIUM if(_loglvl >= OBFF_LOGLVL_MEDIUM)
 #define IF_OBFF_LOGLVL_HIGH   if(_loglvl >= OBFF_LOGLVL_HIGH)
 
+  //! The type of line search to be used for optimization -- simple or Newton numeric
   struct LineSearchType 
   {
     enum {
@@ -131,7 +132,8 @@ namespace OpenBabel
   }; // class OBFFParameter
   
   // specific class introductions in forcefieldYYYY.cpp (for YYYY calculations)
-  //! \class OBFFCalculation forcefield.h <openbabel/forcefield.h>
+
+  //! \class OBFFCalculation2 forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to hold energy and gradient calculations on specific force fields
   class OBFPRT OBFFCalculation2
   {
@@ -162,6 +164,8 @@ namespace OpenBabel
     }
   };
  
+  //! \class OBFFCalculation3 forcefield.h <openbabel/forcefield.h>
+  //! \brief Internal class for OBForceField to hold energy and gradient calculations on specific force fields
   class OBFPRT OBFFCalculation3: public OBFFCalculation2
   {
   public:
@@ -191,6 +195,8 @@ namespace OpenBabel
     }
   };
 
+  //! \class OBFFCalculation4 forcefield.h <openbabel/forcefield.h>
+  //! \brief Internal class for OBForceField to hold energy and gradient calculations on specific force fields
   class OBFPRT OBFFCalculation4: public OBFFCalculation3
   {
   public:

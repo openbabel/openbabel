@@ -23,7 +23,13 @@ namespace OpenBabel
   #define OBAPI
 #endif
 
-/*! An object of this class can be attached to an OBAtom if it is considered
+const unsigned int AliasDataType = 0x7883;
+
+/** \class AliasData alias.h <openbabel/alias.h>
+  \brief Indicate atoms as aliases for larger functional groups
+  \since version 2.2
+
+An object of this class can be attached to an OBAtom if it is considered
 to be a placeholder for an alias, such as Ph, Ser, etc. 
 
 If the alias has not been interpreted chemically, the element type of the
@@ -35,8 +41,6 @@ information or as a hint for an alternative representation, for example to
 a chemical drawing program. The _expandedatoms vector would then contains
 the indices of the atoms to which the alias is an alternative.
 */
-const unsigned int AliasDataType = 0x7883;
-
 class OBAPI AliasData : public OBGenericData
 {
 protected:

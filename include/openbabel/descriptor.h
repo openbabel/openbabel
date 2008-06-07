@@ -29,6 +29,7 @@ namespace OpenBabel
 {
 class OBBase; //Forward declaration; used only as pointer.
 
+// Class introduction in descriptor.cpp
 class OBAPI OBDescriptor : public OBPlugin
 {
   MAKE_PLUGIN(OBDescriptor)
@@ -36,10 +37,10 @@ class OBAPI OBDescriptor : public OBPlugin
   public:
     const char* TypeID(){return "descriptors";};
 
-  ///returns the value of a numeric descriptor
+  /// \return the value of a numeric descriptor
   virtual double Predict(OBBase* pOb){return std::numeric_limits<double>::quiet_NaN();}
 
-  ///returns the value of the descriptor and adds it to the object's OBPairData
+  /// \return the value of the descriptor and adds it to the object's OBPairData
   double PredictAndSave(OBBase* pOb);
 
   ///Provides a string value for non-numeric descriptors and returns NaN, or a string representation and returns a numeric value
@@ -73,11 +74,11 @@ protected:
   static double ParsePredicate(std::istream& optionText, char& ch1, char& ch2, std::string& svalue);
 
   ///Reads a string from the filter stream, optionally preceded by = or !=
-  ///Returns false if != operator found, and true otherwise.
+  /// \return false if != operator found, and true otherwise.
   static bool ReadStringFromFilter(std::istream& ss, std::string& result);
 
   ///Makes a comparison using the operator and a string read from the filter stream with a provided string.
-  ///Returns the result of the comparison and true if NoCompOK==true and there is no comparison operator.
+  /// \return the result of the comparison and true if NoCompOK==true and there is no comparison operator.
   static bool CompareStringWithFilter(std::istream& optionText, std::string& s, bool noEval, bool NoCompOK=false);
 
   // Treats _ as not a punctuation character
@@ -86,7 +87,7 @@ protected:
     return ispunct(ch) && ch!='_';
   }
 
-  ///Returns true if s (with or without _ replaced by spaces) is a PairData attribute. On return s is the form which matches.
+  /// \return true if s (with or without _ replaced by spaces) is a PairData attribute. On return s is the form which matches.
   static bool MatchPairData(OBBase* pOb, std::string& s);
 
 };

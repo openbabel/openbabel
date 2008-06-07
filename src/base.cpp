@@ -261,7 +261,9 @@ namespace OpenBabel
      (the most important, widely-used public classes)
   - <a href="annotated.shtml" class="el">All Classes</a> \n
      (all classes with brief descriptions)
-  - \ref changes "What's New in Version 2.1" \n
+  - \ref changes22 "What's New in Version 2.2" \n
+     (changes since 2.1 releases)
+  - \ref changes21 "What's New in Version 2.1" \n
      (changes since 2.0 releases)
   - \ref other "Further Information" \n
      (other resources, tutorials, mailing lists, ...)
@@ -400,7 +402,31 @@ namespace OpenBabel
   - matrix3x3 - Square 3x3 matrices for 3D transformations and rotations
   - vector3 - 3D vector class for translations and planes
 
-  \page changes What's New in Version 2.1
+  \page changes22 What's New in Version 2.2
+
+  Throughout the API documentation, new classes and methods are
+  indicated with a disclaimer "Since: version 2.2." 
+
+  Several new classes have been introduced, notably
+  - OBPlugin - Cleaner interface to dynamic plugins, including OBFormat
+  OBForceField, OBFingerprint, and the new OBDescriptor and OBOp.
+  - SpaceGroup - Handle crystallographic space group symmetry.
+  - OBAliasData - Handle atoms which serve as "aliases" for larger fragments
+  for example in drawing programs - "COOH" vs. four atoms for the carboxylic
+  acid.
+  - OBGridData - Store and process numeric grid data involved with orbitals or 
+  electrostatic potential.
+  - OBBuilder - New class to handle generation of 3D coordinates for SMILES,
+  InChI and other formats.
+
+  In addition, a wide variety of plugins are available, including MMFF94 
+  and UFF force fields, SMARTS-based descriptors for filtering data sets,
+  compound descriptors such as the Lipinsky Rule of Five, and chemical 
+  transformations.
+
+  Optional headers include integration with the RDKit library.
+
+  \page changes21 What's New in Version 2.1
 
   Throughout the API documentation, new classes and methods are
   indicated with a disclaimer "Since: version 2.1." Documentation, in

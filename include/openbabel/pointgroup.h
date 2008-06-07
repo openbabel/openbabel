@@ -31,6 +31,14 @@ namespace OpenBabel
 
   class PointGroupPrivate;
 
+  /** \class OBPointGroup pointgroup.h <openbabel/pointgroup.h>
+      \brief Brute-force point group symmetry perception
+      \since version 2.2
+      
+      This class performs brute-force point group symmetry perception
+      to yield symmetry identifiers. In the future, this should provide
+      optimized symmetry-derived coordinates as well.
+  */
   class OBAPI OBPointGroup
     {
     public:

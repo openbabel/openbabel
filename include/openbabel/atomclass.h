@@ -24,10 +24,15 @@ namespace OpenBabel
   #define OBAPI
 #endif
 
-///Class for attaching to OBMol to hold the info from SMILES like [C:2]
-/// Useful for reaction SMILES (SMIRKS). It influences the atom id attribute in CML.
-/// Not all atoms need have an atom class. 
-/// The atom class can be any positive or negative integer.
+  /** \class OBAtomClassData atomclass.h <openbabel/atomclass.h>
+      \brief Handle atom classes in reaction SMILES/SMIRKS
+      \since version 2.2
+
+      Class for attaching to OBMol to hold the info from SMILES like [C:2]
+      Useful for reaction SMILES (SMIRKS). It influences the atom id attribute in CML.
+      Not all atoms need have an atom class. 
+      The atom class can be any positive or negative integer.
+  */
 class OBAPI OBAtomClassData : public OBGenericData
 {
 protected:
@@ -36,16 +41,15 @@ public:
   OBAtomClassData(): OBGenericData("Atom Class", 0x7882){ }
   virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBAtomClassData(*this);}
   
-  //Erase contents
+  ///Erase contents
   void Clear(){ _map.clear(); }
 
   ///Add an individual value
   void Add(int indx, int cl) { _map[indx] = cl;}
 
-  /// Returns true if there is an entry for atom index
+  /// \return true if there is an entry for atom index
   bool HasClass(int indx)const { return _map.find(indx)!=_map.end(); }
-  /// Return value of class index (Test with HasClass first)
-
+  /// \return value of class index (Test with HasClass first)
   int GetClass(int indx)const 
   {
     std::map<int,int>::const_iterator pos = _map.find(indx);

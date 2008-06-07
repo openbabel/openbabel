@@ -177,7 +177,7 @@ namespace OpenBabel
     read, the stored molecules (possibly now having augmented properties) are
     sent to the output format.
     
-    Is a static function with <this> as parameter so that it can be called from other
+    Is a static function with *this as parameter so that it can be called from other
     format classes like XMLMoleculeFormat which are not derived from OBMoleculeFormat. 
   */
   bool OBMoleculeFormat::DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF )

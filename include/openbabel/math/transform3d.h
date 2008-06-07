@@ -26,6 +26,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  
+  /** \class transform3d transform3d.h <openbabel/math/transform3d.h>
+      \brief Handle 3D transformations, such as space group definitions
+      \since version 2.2
+      \sa SpaceGroup
+  */
   class OBAPI transform3d: private matrix3x3, private vector3
     {
     public:

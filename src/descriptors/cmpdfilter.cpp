@@ -27,7 +27,7 @@ namespace OpenBabel
 Compound filter provides a macro capability:
 a descriptor returning a boolean value can be defined in terms of conditional
 statements involvingother descriptors or properties(OBPairData probably from SDF).
-For exampleLipinsky's Rule of Five would have a definition (macrotext in the constructor)
+For example Lipinsky's Rule of Five would have a definition (macrotext in the constructor)
  "HBD<5 HBA1<10 MW<500 logP<5"
 
 An instance can be made in code by defining a global variable:

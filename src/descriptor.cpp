@@ -484,16 +484,18 @@ bool OBDescriptor::Display(std::string&txt, const char* param, const char* ID)
   return OBPlugin::Display(txt,param,ID);
 }
 
-}//namespace
+/**
+  \class OBDescriptor descriptor.h <openbabel/descriptor.h>
+  \brief Base class for molecular properties, descriptors or features
+  \since version 2.2
 
-/* 
 OBDescriptor and Filtering
            
 On the command line, using the option --filter filter-string converts only
 those molecules which meet the criteria specified in the filter-string. This
 is useful to select particular molecules from a set.
 It is used like:
-babel dataset.xxx outfile.smi --filter "MW>200 SMARTS!=c1ccccc1 PUBCHEM_CACTVS_ROTATABLE_BOND<5"
+babel dataset.sdf outfile.smi --filter "MW>200 SMARTS!=c1ccccc1 PUBCHEM_CACTVS_ROTATABLE_BOND<5"
 
 The identifier , "PUBCHEM_CACTVS_ROTATABLE_BOND" is the name of an attribute
 of an OBPairData which has probably been imported from a property in a SDF
@@ -561,3 +563,6 @@ The classes MWFilter and TitleFilter illustrate the code that has to be
 provided for numerical and non-numerical descriptors.
 
 */ 
+
+}//namespace
+

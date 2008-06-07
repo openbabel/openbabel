@@ -27,6 +27,11 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
+  /** \class SpaceGroup spacegroup.h <openbabel/math/spacegroup.h>
+      \brief Handle crystallographic space group symmetry
+      \since version 2.2
+      \sa transform3d
+  */
   class OBAPI SpaceGroup
     {
       public:

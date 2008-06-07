@@ -48,6 +48,54 @@ namespace OpenBabel {
     int              _symmetries;
   };
 
+  /** \class OBGridData griddata.h <openbabel/griddata.h>
+    \brief Store values for numeric grids such as orbitals or electrostatic potential
+    \since version 2.2
+    \sa OBFloatGrid
+    
+    OBGridData facilitates attaching grids and cubes to molecular data. A "grid" is
+    data representing some function f(x,y,z), such as a molecule's electrostatic potential
+    or molecular orbitals. This need not be a "cube" even though this file format from Gaussian
+    is frequently used. Axes need not be identical, and indeed do not need to be orthogonal.
+    
+    Open Babel supports reading several types of grid file formats, including Gaussian cube,
+    and OpenDX. The latter is notably used by the APBS program for numeric evaluation of molecular
+    and protein electrostatic potential.
+    
+    \code
+    OBGridData *gd = new OBGridData;
+    gd->SetAttribute("Example Grid"); // the title of the grid -- e.g., for user display
+    vector<int> voxels(3); // the number of voxels in each direction
+    vector3 origin; // the beginning x, y, z coordinate of the grid
+    vector<vector3> axes; // the xyz displacements for each of the grid axes
+    ...
+    gd->SetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
+    gd->SetLimits(origin, axes[0], axes[1], axes[2]);
+    gd->SetUnit(OBGridData::ANGSTROM);
+    gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
+    
+    for (int k = 0; k < voxels[2]; ++k)
+      for (int j = 0; j < voxels[1]; ++j)
+        for (int i = 0; i < voxels[0]; ++i)
+          {
+            gd->SetValue(i, j, k, 
+                         grid[k*voxels[0]*voxels[1] + j*voxels[0] + i]);
+          }
+    
+    mol->SetData(gd);
+    \endcode
+    
+    \code
+    if (mol->HasData(OBGenericDataType::GridData)) {
+      vector<OBGenericData*> grids = mol->GetAllData(OBGenericDataType::GridData)
+      // Output the name of the grid
+      if (grids[0] != NULL)
+        cout << grids[0]->GetAttribute();
+    }
+    \endcode
+    
+  */
+
   OBGridData::OBGridData() : OBGenericData("GridData", OBGenericDataType::GridData),
     d(new GridDataPrivate)
   {

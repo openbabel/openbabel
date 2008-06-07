@@ -23,7 +23,11 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  ///Option that applies molecular transforms (OBChemTsfm class) read from a datafile
+  
+  /** \class OpTransform optransform.h <openbabel/optransform.h>
+      \brief Applies molecular transforms (OBChemTsfm class) read from a datafile
+      \since version 2.2
+  */
 class OpTransform : public OBOp
 {
 public:
