@@ -87,9 +87,9 @@ namespace OpenBabel
     p=pConv->IsOption("N");
     if(p)
       nbits = atoi(p);
-    if(nbits<=0)
+    if(nbits<0)
       obErrorLog.ThrowError(__FUNCTION__,
-      "The number of bits to fold to, in the-xN option, should be >0", obWarning);
+      "The number of bits to fold to, in the-xN option, should be >=0", obWarning);
 
     vector<unsigned int> fptvec;
     if(!pFP->GetFingerprint(pOb, fptvec, nbits))
@@ -102,6 +102,12 @@ namespace OpenBabel
     // checkmol-type output
     if(pConv->IsOption("s") || pConv->IsOption("u"))
     {
+      if(nbits!=0)
+      {
+        obErrorLog.ThrowError(__FUNCTION__,
+        "The fingerprint must be unfolded when describing bits.", obError);
+        return false;
+      }
       ofs << pFP->DescribeBits(fptvec, pConv->IsOption("s")!=NULL);
       return true;
     }

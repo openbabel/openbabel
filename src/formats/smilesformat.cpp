@@ -76,7 +76,7 @@ namespace OpenBabel {
       OBConversion::RegisterOptionParam("n", this);
       OBConversion::RegisterOptionParam("t", this);
       OBConversion::RegisterOptionParam("r", this);
-      OBConversion::RegisterOptionParam("c", this);
+      OBConversion::RegisterOptionParam("a", this);
     }
     virtual const char* Description()
     {
@@ -88,7 +88,7 @@ namespace OpenBabel {
         "  n no molecule name\n"
         "  t molecule name only\n"
         "  r radicals lower case eg ethyl is Cc\n"
-        "  c output atomclass like [C:2], if available\n"
+        "  a output atomclass like [C:2], if available\n"
         "  can output in canonical form\n"
         "\n";
     }
@@ -129,7 +129,7 @@ namespace OpenBabel {
         "  n  No molecule name\n"
         "  t  Molecule name only\n";
         "  r radicals lower case eg ethyl is Cc\n"
-        "  c output atomclass like [C:2], if available\n"
+        "  a output atomclass like [C:2], if available\n"
         "/n";
     };
 
@@ -2351,7 +2351,7 @@ namespace OpenBabel {
     if(atom->GetIsotope())
       bracketElement = true;
 
-    //If the molecule has Atom Class data and -xc option set and atom has data
+    //If the molecule has Atom Class data and -xa option set and atom has data
     if(_pac && _pac->HasClass(atom->GetIdx()))
       bracketElement = true;
 
@@ -3137,8 +3137,8 @@ namespace OpenBabel {
     vector<OBNodeBase*>::iterator ai;
     vector<unsigned int> symmetry_classes, canonical_order;
 
-    //Pointer to Atom Class data set if -xc option and the molecule has any; NULL otherwise.
-    if(_pconv->IsOption("c"))
+    //Pointer to Atom Class data set if -xa option and the molecule has any; NULL otherwise.
+    if(_pconv->IsOption("a"))
       _pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
 
     // First, create a canonical ordering vector for the atoms.  Canonical

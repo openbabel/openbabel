@@ -1,3 +1,13 @@
+2008-06-07  Chris Morley
+
+	* src/formats/fingerprintformat.cpp: correct folding error message
+	and prevent description of bits when fingerprint is folded.
+	
+	* src/formats/smilesformat.cpp: change -xc to -xa (for atomclass)
+	
+	* windows-vc2005/OBFS/OBFS.vcproj,windows-vc2005/OpenBabelOBF.sln
+	add dependency of OBCommon to Fastsearch project
+
 2008-06-06  Chris Morley
 
 	* src/formats/smilesformat.cpp: SMIFormat was being hidden because
