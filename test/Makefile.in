@@ -38,8 +38,8 @@ check_PROGRAMS = aromatic$(EXEEXT) atom$(EXEEXT) bond$(EXEEXT) \
 	ffmmff94$(EXEEXT) inchiwrite$(EXEEXT) internalcoord$(EXEEXT) \
 	invalidsmarts$(EXEEXT) invalidsmiles$(EXEEXT) \
 	iterators$(EXEEXT) logp_psa$(EXEEXT) math$(EXEEXT) \
-	mol$(EXEEXT) residue$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
-	smilesmatch$(EXEEXT) unitcell$(EXEEXT)
+	mol$(EXEEXT) phmodel$(EXEEXT) residue$(EXEEXT) rings$(EXEEXT) \
+	smarts$(EXEEXT) smilesmatch$(EXEEXT) unitcell$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
 @PERL_TESTS_FALSE@TESTS = cansmi$(EXEEXT) invalidsmarts$(EXEEXT) \
 @PERL_TESTS_FALSE@	invalidsmiles$(EXEEXT) smarts$(EXEEXT) \
@@ -148,6 +148,10 @@ am_mol_OBJECTS = mol.$(OBJEXT)
 mol_OBJECTS = $(am_mol_OBJECTS)
 mol_LDADD = $(LDADD)
 mol_DEPENDENCIES = ../src/libopenbabel.la
+am_phmodel_OBJECTS = phmodel.$(OBJEXT)
+phmodel_OBJECTS = $(am_phmodel_OBJECTS)
+phmodel_LDADD = $(LDADD)
+phmodel_DEPENDENCIES = ../src/libopenbabel.la
 am_residue_OBJECTS = residue.$(OBJEXT)
 residue_OBJECTS = $(am_residue_OBJECTS)
 residue_LDADD = $(LDADD)
@@ -192,8 +196,9 @@ SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(internalcoord_SOURCES) $(invalidsmarts_SOURCES) \
 	$(invalidsmiles_SOURCES) $(iterators_SOURCES) \
 	$(logp_psa_SOURCES) $(math_SOURCES) $(mol_SOURCES) \
-	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
-	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(unitcell_SOURCES)
+	$(phmodel_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
+	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
+	$(unitcell_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(cansmi_SOURCES) $(cmlreadfile_SOURCES) $(conversion_SOURCES) \
 	$(data_SOURCES) $(ffghemical_SOURCES) $(ffmmff94_SOURCES) \
@@ -202,8 +207,9 @@ DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(internalcoord_SOURCES) $(invalidsmarts_SOURCES) \
 	$(invalidsmiles_SOURCES) $(iterators_SOURCES) \
 	$(logp_psa_SOURCES) $(math_SOURCES) $(mol_SOURCES) \
-	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
-	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(unitcell_SOURCES)
+	$(phmodel_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
+	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
+	$(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -349,7 +355,6 @@ sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = cmltest
@@ -383,6 +388,7 @@ iterators_SOURCES = iterators.cpp
 logp_psa_SOURCES = logp_psa.cpp
 math_SOURCES = math.cpp
 mol_SOURCES = mol.cpp
+phmodel_SOURCES = phmodel.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
 smarts_SOURCES = smartstest.cpp
@@ -519,6 +525,9 @@ math$(EXEEXT): $(math_OBJECTS) $(math_DEPENDENCIES)
 mol$(EXEEXT): $(mol_OBJECTS) $(mol_DEPENDENCIES) 
 	@rm -f mol$(EXEEXT)
 	$(CXXLINK) $(mol_OBJECTS) $(mol_LDADD) $(LIBS)
+phmodel$(EXEEXT): $(phmodel_OBJECTS) $(phmodel_DEPENDENCIES) 
+	@rm -f phmodel$(EXEEXT)
+	$(CXXLINK) $(phmodel_OBJECTS) $(phmodel_LDADD) $(LIBS)
 residue$(EXEEXT): $(residue_OBJECTS) $(residue_DEPENDENCIES) 
 	@rm -f residue$(EXEEXT)
 	$(CXXLINK) $(residue_OBJECTS) $(residue_LDADD) $(LIBS)
@@ -566,6 +575,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/logp_psa.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/math.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/phmodel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/residue.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ringtest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/roundtrip.Po@am__quote@

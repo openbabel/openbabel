@@ -5,7 +5,8 @@ check_PROGRAMS = aromatic atom bond cansmi cmlreadfile \
 	conversion data format formula formalcharge \
 	ffghemical ffuff ffmmff94 inchiwrite \
 	internalcoord invalidsmarts invalidsmiles \
-	iterators logp_psa math mol residue rings smarts \
+	iterators logp_psa math mol phmodel \
+	residue rings smarts \
 	smilesmatch unitcell
 
 bin_PROGRAMS = roundtrip
@@ -51,6 +52,7 @@ iterators_SOURCES = iterators.cpp
 logp_psa_SOURCES = logp_psa.cpp
 math_SOURCES = math.cpp
 mol_SOURCES = mol.cpp
+phmodel_SOURCES = phmodel.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
 smarts_SOURCES = smartstest.cpp
