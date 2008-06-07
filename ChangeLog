@@ -1,5 +1,9 @@
 2008-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/phmodel.cpp (OBPhModel::CorrectForPH): Fix PR#1835204. Allow
+	SMILES to have pH-correction. (i.e., only check for automatic
+	formal charges for molecules with dimension > 0).
+
 	* src/formats/mdlformat.cpp: Add a check for EOF before reading,
 	as suggested by Izhar.
 

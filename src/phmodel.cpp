@@ -143,7 +143,7 @@ void OBPhModel::CorrectForPH(OBMol &mol, double pH)
         Init();
     if (mol.IsCorrectedForPH())
         return;
-    if (!mol.AutomaticFormalCharge())
+    if (mol.GetDimension() > 0 && !mol.AutomaticFormalCharge())
         return;
 
     mol.SetCorrectedForPH();
