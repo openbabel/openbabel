@@ -115,7 +115,7 @@ namespace OpenBabel
         _red(red), _green(green), _blue(blue),
         _maxbonds(maxbo)
         {
-          strncpy(_symbol, sym, 3);
+          strncpy(_symbol, sym, 4);
         }
 
       //! \return the atomic number of this element
