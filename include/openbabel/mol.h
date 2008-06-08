@@ -435,7 +435,7 @@ namespace OpenBabel
     //! (i.e., not to C atoms)
     //! \param correctForPH Whether to call CorrectForPH() first
     //! \return Whether any hydrogens were added
-    bool AddHydrogens(bool polaronly=false,bool correctForPH=true, double pH=7.4);
+    bool AddHydrogens(bool polaronly=false,bool correctForPH=false, double pH=7.4);
     //! Add hydrogens only to the supplied atom to fill out implicit valence
     bool AddHydrogens(OBAtom*);
     //! Add only polar hydrogens (i.e., attached to polar atoms, not C)
