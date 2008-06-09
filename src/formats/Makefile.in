@@ -1035,7 +1035,7 @@ top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data -I$(top_srcdir)/include
 
 # KFc.h and ArrayList.h for ADF formats
-EXTRA_DIST = exampleformat.cpp KFc.h ArrayList.h
+EXTRA_DIST = exampleformat.cpp KFc.h ArrayList.h CMakeLists.txt
 SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_PCH_TRUE@AM_CXXFLAGS = -include $(top_srcdir)/src/formats/all.h
 @USE_BOOST_FLAGS_TRUE@AM_CXXFLAGS = $(BOOST_CPPFLAGS)

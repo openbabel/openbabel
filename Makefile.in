@@ -227,7 +227,7 @@ ACLOCAL_AMFLAGS = '-Iautoconf'
 # only build in the scripts subdirectory if possible (perl, python, swig, etc.)
 @BUILD_SCRIPTS_TRUE@SCRIPT_DIR = scripts
 SUBDIRS = data src test tools doc include $(SCRIPT_DIR)
-EXTRA_DIST = Doxyfile windows-vc2005
+EXTRA_DIST = Doxyfile windows-vc2005 CMakeLists.txt
 AUTOMAKE_OPTIONS = foreign
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = openbabel-2.0.pc
