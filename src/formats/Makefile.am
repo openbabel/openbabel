@@ -1,7 +1,7 @@
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data -I$(top_srcdir)/include
 
 # KFc.h and ArrayList.h for ADF formats
-EXTRA_DIST = exampleformat.cpp KFc.h ArrayList.h
+EXTRA_DIST = exampleformat.cpp KFc.h ArrayList.h CMakeLists.txt
 SUBDIRS =
 
 if BUILD_XML

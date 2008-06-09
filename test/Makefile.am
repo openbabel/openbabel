@@ -26,7 +26,7 @@ TESTDATADIR = $(top_srcdir)/test/files/
 AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/include -DTESTDATADIR="\"$(TESTDATADIR)\""
 
 EXTRA_DIST = files wrapper.sh cml.sh test-set.sh \
-		aromatic.pl inchi inchi.pl inchi2.pl
+		aromatic.pl inchi inchi.pl inchi2.pl CMakeLists.txt 
 
 roundtrip_SOURCES = roundtrip.cpp
 

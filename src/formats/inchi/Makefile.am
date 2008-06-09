@@ -1,3 +1,4 @@
+EXTRA_DIST = CMakeLists.txt
 INCLUDES = -I$(top_srcdir)/include/inchi
 
 noinst_LTLIBRARIES = libinchi.la

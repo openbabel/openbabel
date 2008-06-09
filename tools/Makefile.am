@@ -1,3 +1,4 @@
+EXTRA_DIST = CMakeLists.txt
 bin_PROGRAMS = babel obchiral obgrep obrotate obfit obprop obxyz obgen \
 		obenergy obminimize obprobe obrotamer obfragment obconformer \
 		obseq obsym # obdoc 
