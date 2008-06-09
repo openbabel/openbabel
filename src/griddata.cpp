@@ -238,3 +238,5 @@ namespace OpenBabel {
 
 } // end namespace
 
+//! \file griddata.cpp
+//! \brief OBGenericData class to connect numeric grids (e.g., orbitals, electrostatic potential) to molecules

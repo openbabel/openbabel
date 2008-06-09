@@ -1,5 +1,5 @@
 /**********************************************************************
-spacegroup.h - Handle Space Groups.
+spacegroup.h - Handle Crystallographic Space Groups.
  
 Copyright (C) 2007 by Jean Bréfort
 
@@ -93,3 +93,5 @@ namespace OpenBabel
 
 #endif // OB_SPACE_GROUP_H
 
+//! \file spacegroup.h
+//! \brief Handle Crystallographic Space Groups

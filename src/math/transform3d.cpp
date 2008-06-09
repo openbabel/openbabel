@@ -134,3 +134,6 @@ namespace OpenBabel
 	}
 
 }
+
+//! \file transform3d.cpp
+//! \brief Handle 3D transformations in space groups.

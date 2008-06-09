@@ -1,6 +1,6 @@
 /**********************************************************************
 alias.cpp - implementation of OBGenericData class to hold alias information on atoms
-Copyright (C) Copyright (C) 2008 by Chris Morley
+Copyright (C) 2008 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -106,3 +106,5 @@ namespace OpenBabel
 
 }//namespace
 
+//! \file alias.cpp
+//! \brief OBGenericData class to for atom alias data (e.g., in 2D drawing programs for "COOH")

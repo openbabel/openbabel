@@ -118,3 +118,6 @@ static bool DoComparison(char ch1, char ch2, T& val, T& filterval)
 
 }//namespace
 #endif
+
+//! \file descriptor.h
+//! \brief Base class for molecular descriptors

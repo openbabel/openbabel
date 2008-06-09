@@ -74,3 +74,5 @@ namespace OpenBabel
 
 }//namespace
 
+//! \file ops.cpp
+//! \brief Base plugin class for operations on molecules

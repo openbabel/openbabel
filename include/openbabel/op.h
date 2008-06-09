@@ -131,3 +131,6 @@ pOp->Do(mol);
 }//namespace
 
 #endif
+
+//! \file op.h
+//! \brief Base plugin class for operations on molecules

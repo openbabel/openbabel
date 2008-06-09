@@ -123,3 +123,6 @@ bool OBFormat::Display(std::string& txt, const char* param, const char* ID)
   return true;//means txt has been updated
 }
 }//namespace
+
+//! \file format.cpp
+//! \brief Base class OBFormat for file formats

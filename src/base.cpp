@@ -248,7 +248,7 @@ namespace OpenBabel
   This documentation outlines the Open Babel programming interface, providing
   information on all public classes, methods, and data. In particular, strives 
   to provide as much (or as little) detail as needed. More information
-  can also be found on the <a href="http://openbabel.sourceforge.net/">
+  can also be found on the <a href="http://openbabel.org/">
   main website</a> and through the <a
   href="mailto:openbabel-discuss@lists.sourceforge.net">openbabel-discuss</a>
   mailing list.
@@ -359,7 +359,7 @@ namespace OpenBabel
 
   For a further list of example code, see the 
   <a
-  href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">developer
+  href="http://openbabel.org/wiki/Developer:Tutorial">developer
   tutorials</a>. This section includes examples in C++, Perl, Python,
   and other porgramming languages.
 
@@ -411,7 +411,7 @@ namespace OpenBabel
   - OBPlugin - Cleaner interface to dynamic plugins, including OBFormat
   OBForceField, OBFingerprint, and the new OBDescriptor and OBOp.
   - SpaceGroup - Handle crystallographic space group symmetry.
-  - OBAliasData - Handle atoms which serve as "aliases" for larger fragments
+  - AliasData - Handle atoms which serve as "aliases" for larger fragments
   for example in drawing programs - "COOH" vs. four atoms for the carboxylic
   acid.
   - OBGridData - Store and process numeric grid data involved with orbitals or 
@@ -473,10 +473,10 @@ namespace OpenBabel
   developing with the library.
 
   Open Babel homepage:
-  - <a href="http://openbabel.sourceforge.net/wiki/Develop">Developing with Open Babel</a>
-  - <a href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">Developer
+  - <a href="http://openbabel.org/wiki/Develop">Developing with Open Babel</a>
+  - <a href="http://openbabel.org/wiki/Developer:Tutorial">Developer
   tutorials</a>
-  - <a href="http://openbabel.sourceforge.net/wiki/Contribute">Contributing
+  - <a href="http://openbabel.org/wiki/Contribute">Contributing
   to the Open Babel project</a>
 
   SourceForge project pages:

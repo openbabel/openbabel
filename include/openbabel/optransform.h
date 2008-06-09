@@ -68,3 +68,5 @@ private:
 
 }//namespace
 
+//! \file optransform.h
+//! \brief Operations to change molecules using a datafile of chemical transformations OBChemTsfm

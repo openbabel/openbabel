@@ -1824,3 +1824,6 @@ namespace OpenBabel {
   }
 
 } // end namespace OpenBabel
+
+//! \file pointgroup.cpp
+//! \brief Brute-force point group detection

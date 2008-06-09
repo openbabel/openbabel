@@ -167,3 +167,6 @@ private:
 
 }//namespace
 #endif
+
+//! \file format.h
+//! \brief Declarations for OBFormat

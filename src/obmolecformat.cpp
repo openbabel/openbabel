@@ -485,5 +485,7 @@ namespace OpenBabel
     return true;
   }
 
-
 } //namespace OpenBabel
+
+//! \file obmolecformat.cpp
+//! \brief Subclass of OBFormat for conversion of OBMol.

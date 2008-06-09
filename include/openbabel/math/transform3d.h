@@ -77,3 +77,6 @@ namespace OpenBabel
 }
 
 #endif // OB_TRANSFORM_3D_H
+
+//! \file transform3d.h 
+//! \brief Handle 3D transformations in space groups.

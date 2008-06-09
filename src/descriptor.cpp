@@ -566,3 +566,5 @@ provided for numerical and non-numerical descriptors.
 
 }//namespace
 
+//! \file descriptor.cpp
+//! \brief Base class for molecular descriptors

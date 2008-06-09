@@ -12,6 +12,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#ifndef OB_ALIAS_H
+#define OB_ALIAS_H
+
+
 #include <vector>
 #include <openbabel/mol.h>
 
@@ -72,3 +76,8 @@ public:
 
 };
 } //namespace
+
+#endif // OB_ALIAS_H
+
+//! \file alias.h
+//! \brief OBGenericData class to for atom alias data (e.g., in 2D drawing programs for "COOH")

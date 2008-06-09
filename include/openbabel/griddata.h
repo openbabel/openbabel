@@ -93,6 +93,7 @@ namespace OpenBabel {
     void SetNumberOfPoints( int nx, int ny, int nz );
     /// Set the limits (i.e., the origin point and the axes)
     /// NOTE: You must set the number of points first,
+    ///       with SetNumberOfPoints
     ///       so the grid spacing can be calculated
     void SetLimits(const double origin[ 3 ], const double x[ 3 ], const double y[ 3 ], const double z[ 3 ] );
     void SetLimits(vector3 &origin, vector3 &x, vector3 &y, vector3 &z);
@@ -116,3 +117,6 @@ namespace OpenBabel {
 } // end namespace
 
 #endif /*OBGRIDDATA_H_*/
+
+//! \file griddata.h
+//! \brief OBGenericData class to connect numeric grids (e.g., orbitals, electrostatic potential) to molecules

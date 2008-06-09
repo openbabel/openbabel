@@ -15,6 +15,7 @@ WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 General Public License for more details.
 ***********************************************************************/
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/plugin.h>
 
@@ -114,3 +115,6 @@ bool OBPlugin::Display(string& txt, const char* param, const char* ID)
 }
 
 }//namespace
+
+//! \file plugin.cpp
+//! \brief Simplify 'plugin' classes to be discovered and/or loaded at runtime

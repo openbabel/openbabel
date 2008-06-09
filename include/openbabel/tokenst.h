@@ -49,3 +49,6 @@ namespace OpenBabel
 
 }//namespace
 #endif
+
+//! \file tokenst.h
+//! \brief Tokenize strings, open data files

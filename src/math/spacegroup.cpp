@@ -469,3 +469,6 @@ namespace OpenBabel
       return NULL;
 	}
 }
+
+//! \file spacegroup.cpp
+//! \brief Handle Crystallographic Space Groups
