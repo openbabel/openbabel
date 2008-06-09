@@ -53,6 +53,7 @@ namespace OpenBabel
       /*! Atoms a and b are part of two fragments that are not connected in mol.
        *  Connect will translate and rotate the fragment that contains b so that
        *  a and b are seperated by a bond. This bond is also added.
+       *  \param mol The molecule to be modified
        *  \param a Index for atom in fragment that should not be rotated.
        *  \param b Index for atom in fragment that should be rotated.
        *  \param bondOrder Bond order of the new bond bewtween a and b.

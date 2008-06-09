@@ -473,21 +473,6 @@ namespace OpenBabel
     vector3 NumericalDerivative(OBAtom *a, int terms = OBFF_ENERGY);
     //! OB 3.0
     vector3 NumericalSecondDerivative(OBAtom *a, int terms = OBFF_ENERGY);
-    /*! Calculate the potential energy function derivative analyticaly with 
-     *  repect to the coordinates of atom with index a (this vector is the gradient)
-     *
-     *  If the currently selected forcefield doesn't have analytical gradients, 
-     *  we can still call this function which will return the result of 
-     *  NumericalDerivative()
-     *  \param a  provides coordinates
-     *  \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, 
-     *  OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
-     *  \return the negative gradient of atom a
-     */
-    //virtual vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY) 
-    //{ 
-    //  return -NumericalDerivative(a, terms); 
-    //}
     
     /* 
      *   NEW gradients functions
@@ -737,7 +722,7 @@ namespace OpenBabel
      *  interactions in the groups itself are also not enabled.
      *  This function should be called before Setup().
      *  \param group1 OBBitVec with bits set for the indexes of the atoms which make up the first group.
-     *  \param group1 OBBitVec with bits set for the indexes of the atoms which make up the second group.
+     *  \param group2 OBBitVec with bits set for the indexes of the atoms which make up the second group.
      */
     void AddInterGroups(OBBitVec &group1, OBBitVec &group2);
     /*! Clear all previously specified groups.
@@ -1146,7 +1131,7 @@ namespace OpenBabel
      */
     double Newton2NumLineSearch(double *direction);
     /*! Set the coordinates of the atoms to origCoord + step.
-     *  \param currentCoords Start coordinates.
+     *  \param origCoords Start coordinates.
      *  \param direction The search direction.
      *  \param step The step to take.
      */
@@ -1403,12 +1388,14 @@ namespace OpenBabel
     //@{
     /*! Calculate the derivative of a vector length. The vector is given by a - b, 
      * the length of this vector rab = sqrt(ab.x^2 + ab.y^2 + ab.z^2).
-     * \param a atom a (coordinates), will be changed to -drab/da
-     * \param b atom b (coordinates), will be changed to -drab/db
+     * \param pos_a atom a (coordinates)
+     * \param pos_b atom b (coordinates)
+     * \param force_a - return value for the force on atom a
+     * \param force_b - return value for the force on atom b
      * \return The distance between a and b (bondlength for bond stretching, separation for vdw, electrostatic)
      */
-    static double VectorBondDerivative(double *pos_i, double *pos_j, 
-                                       double *force_i, double *force_j);
+    static double VectorBondDerivative(double *pos_a, double *pos_b, 
+                                       double *force_a, double *force_b);
     /*! To be used for VDW or Electrostatic interactions. This
      *  is faster than VectorBondDerivative, but does no error checking. 
      */
@@ -1419,36 +1406,47 @@ namespace OpenBabel
  
     /*! Calculate the derivative of a angle a-b-c. The angle is given by dot(ab,cb)/rab*rcb. 
      *  Used for harmonic (cubic) angle potentials.
-     * \param a atom a (coordinates), will be changed to -dtheta/da
-     * \param b atom b (coordinates), will be changed to -dtheta/db
-     * \param c atom c (coordinates), will be changed to -dtheta/dc
+     * \param pos_a atom a (coordinates)
+     * \param pos_b atom b (coordinates)
+     * \param pos_c atom c (coordinates)
+     * \param force_a - return value for the force on atom a
+     * \param force_b - return value for the force on atom b
+     * \param force_c - return value for the force on atom c
      * \return The angle between a-b-c
      */
-    static double VectorAngleDerivative(double *pos_i, double *pos_j, double *pos_k,
-                                        double *force_i, double *force_j, double *force_k);
+    static double VectorAngleDerivative(double *pos_a, double *pos_b, double *pos_c,
+                                        double *force_a, double *force_b, double *force_c);
     //! \deprecated
     static double VectorAngleDerivative(vector3 &a, vector3 &b, vector3 &c);
     /*! Calculate the derivative of a OOP angle a-b-c-d. b is the central atom, and a-b-c is the plane. 
      * The OOP angle is given by 90° - arccos(dot(corss(ab,cb),db)/rabbc*rdb).
-     * \param a atom a (coordinates), will be changed to -dtheta/da
-     * \param b atom b (coordinates), will be changed to -dtheta/db
-     * \param c atom c (coordinates), will be changed to -dtheta/dc
-     * \param d atom d (coordinates), will be changed to -dtheta/dd
+     * \param pos_a atom a (coordinates)
+     * \param pos_b atom b (coordinates)
+     * \param pos_c atom c (coordinates)
+     * \param pos_d atom d (coordinates)
+     * \param force_a - return value for the force on atom a
+     * \param force_b - return value for the force on atom b
+     * \param force_c - return value for the force on atom c
+     * \param force_d - return value for the force on atom d
      * \return The OOP angle for a-b-c-d
      */
-    static double VectorOOPDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
-                                      double *force_i, double *force_j, double *force_k, double *force_l);
+    static double VectorOOPDerivative(double *pos_a, double *pos_b, double *pos_c, double *pos_d,
+                                      double *force_a, double *force_b, double *force_c, double *force_d);
     //! \deprecated
     static double VectorOOPDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
     /*! Calculate the derivative of a torsion angle a-b-c-d. The torsion angle is given by arccos(dot(corss(ab,bc),cross(bc,cd))/rabbc*rbccd).
-     * \param a atom a (coordinates), will be changed to -dtheta/da
-     * \param b atom b (coordinates), will be changed to -dtheta/db
-     * \param c atom c (coordinates), will be changed to -dtheta/dc
-     * \param d atom d (coordinates), will be changed to -dtheta/dd
+     * \param pos_a atom a (coordinates)
+     * \param pos_b atom b (coordinates)
+     * \param pos_c atom c (coordinates)
+     * \param pos_d atom d (coordinates)
+     * \param force_a - return value for the force on atom a
+     * \param force_b - return value for the force on atom b
+     * \param force_c - return value for the force on atom c
+     * \param force_d - return value for the force on atom d
      * \return The tosion angle for a-b-c-d
      */
-    static double VectorTorsionDerivative(double *pos_i, double *pos_j, double *pos_k, double *pos_l,
-                                          double *force_i, double *force_j, double *force_k, double *force_l);
+    static double VectorTorsionDerivative(double *pos_a, double *pos_b, double *pos_c, double *pos_d,
+                                          double *force_a, double *force_b, double *force_c, double *force_d);
     //! \deprecated
     static double VectorTorsionDerivative(vector3 &a, vector3 &b, vector3 &c, vector3 &d);
 
@@ -1510,6 +1508,7 @@ namespace OpenBabel
     
     /*! inline fuction to speed up minimization speed
      * \param i pointer to i[3], multiply this vector by n and set this vector to the result.
+     * \param n the scalar value to be multipled
      */
     static void VectorSelfMultiply(double *i, double n)
     {
@@ -1528,8 +1527,8 @@ namespace OpenBabel
     }
     
     /*! inline fuction to speed up minimization speed
-     * \param i pointer to i[3] to be copied from
-     * \param j pointer to j[3] to be copied to
+     * \param from pointer to i[3] to be copied from
+     * \param to pointer to j[3] to be copied to
      */
     static void VectorCopy(double *from, double *to)
     {  
@@ -1578,7 +1577,7 @@ namespace OpenBabel
      * \param l pointer to l[3]
      * \return the vector torson ijkl (deg)
      */
-    static double VectorOOP(double *pos_i, double *pos_j, double *pos_k, double *pos_l);
+    static double VectorOOP(double *i, double *j, double *k, double *l);
 
     /*! inline fuction to speed up minimization speed
      * \param i pointer to i[3], will set x,y,z to 0,0,0
@@ -1607,7 +1606,7 @@ namespace OpenBabel
     /*! inline fuction to speed up minimization speed
      * \param i pointer to i[3]
      * \param j pointer to j[3]
-     * \return the dot product
+     * \param result the dot product (as a return value double[3])
      */
     static void VectorCross(double *i, double *j, double *result)
     {
