@@ -9,6 +9,11 @@
 	Change locale before parsing files to use "C" numeric locale and
 	reset it to the original state afterwards. Should solve PR#1785463.
 
+	* src/obiter.cpp: Fixes from Izhar for DFS and BFS iterators.
+
+	* src/mol.cpp, include/openbabel/mol.h: Added iterative
+	GetFragment method to augment Separate(), contributed by Izhar.
+
 2008-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/phmodel.cpp (OBPhModel::CorrectForPH): Fix PR#1835204. Allow

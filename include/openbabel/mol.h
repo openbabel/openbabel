@@ -443,9 +443,11 @@ namespace OpenBabel
     bool AddPolarHydrogens();
 
     //! Deletes all atoms except for the largest contiguous fragment
-    bool StripSalts();
+    bool StripSalts(int threshold);
     //! Copies each disconnected fragment as a separate OBMol
     std::vector<OBMol> Separate(int StartIndex=1);
+    //! Iterative component of Separate to copy one fragment at a time
+    bool GetNextFragment( OpenBabel::OBMolAtomDFSIter& iter, OBMol& newMol );
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O 
     bool ConvertDativeBonds();
 

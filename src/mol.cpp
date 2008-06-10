@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/math/matrix3x3.h>
 
 #include <sstream>
+#include <set>
 
 using namespace std;
 
@@ -289,7 +290,7 @@ namespace OpenBabel
     ty = _c[tor[1]+1];
     tz = _c[tor[1]+2];
     vector<int>::iterator i;
-	for (i = atoms.begin(); i != atoms.end(); ++i)
+    for (i = atoms.begin(); i != atoms.end(); ++i)
       {
         j = *i;
 
@@ -1114,8 +1115,8 @@ namespace OpenBabel
     else // calculate from atomic spin information (assuming high-spin case)
       {
         obErrorLog.ThrowError(__FUNCTION__,
-           "Ran OpenBabel::GetTotalSpinMultiplicity -- calculating from atomic spins assuming high spin case",
-            obAuditMsg);
+                              "Ran OpenBabel::GetTotalSpinMultiplicity -- calculating from atomic spins assuming high spin case",
+                              obAuditMsg);
 
         OBAtom *atom;
         vector<OBAtom*>::iterator i;
@@ -1614,7 +1615,7 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBMol::StripSalts()
+  bool OBMol::StripSalts(int threshold)
   {
     vector<vector<int> > cfl;
     vector<vector<int> >::iterator i,max;
@@ -1632,22 +1633,29 @@ namespace OpenBabel
         max = i;
 
     vector<int>::iterator j;
-    vector<OBAtom*> delatoms;
-    for (i = cfl.begin();i != cfl.end();++i)
-      if (i != max)
-        for (j = (*i).begin();j != (*i).end();++j)
-          delatoms.push_back(GetAtom(*j));
-
-    if (!delatoms.empty())
-      {
-        int tmpflags = _flags & (~(OB_SSSR_MOL));
-        BeginModify();
-        vector<OBAtom*>::iterator k;
-        for (k = delatoms.begin();k != delatoms.end();++k)
-          DeleteAtom((OBAtom*)*k);
-        EndModify();
-        _flags = tmpflags;
+    vector< OBAtom* > delatoms;
+    set< int > atomIndices;
+    for( i = cfl.begin(); i != cfl.end(); ++i ) {
+      if( i->size() < threshold ) {
+        for (j = (*i).begin();j != (*i).end();++j) {
+          if( atomIndices.find( *j ) == atomIndices.end() ) {
+            delatoms.push_back(GetAtom(*j));
+            atomIndices.insert( *j );
+          }
+        }
       }
+    }
+
+    if( ! delatoms.empty() ) {
+      int tmpflags = _flags & (~(OB_SSSR_MOL));
+      BeginModify();
+      vector<OBAtom*>::iterator k;
+      for (k = delatoms.begin();k != delatoms.end();++k) {
+        DeleteAtom((OBAtom*)*k);
+      }
+      EndModify();
+      _flags = tmpflags;
+    }
 
     return(true);
   }
@@ -1818,11 +1826,11 @@ namespace OpenBabel
     // This was causing bug #1892844 in avogadro. We also want to add hydrogens if the molecule has no bonds.
     //    
     if(NumBonds()==0 && NumAtoms()!=1)
-      {
-        obErrorLog.ThrowError(__FUNCTION__,
-                              "Did not run OpenBabel::AddHydrogens on molecule with no bonds", obAuditMsg);
-        return true;
-      }
+    {
+    obErrorLog.ThrowError(__FUNCTION__,
+    "Did not run OpenBabel::AddHydrogens on molecule with no bonds", obAuditMsg);
+    return true;
+    }
     */
     if (!polaronly)
       obErrorLog.ThrowError(__FUNCTION__,
@@ -1915,8 +1923,8 @@ namespace OpenBabel
                       _c[(NumAtoms())*3+1] = 0.0;
                       _c[(NumAtoms())*3+2] = 0.0;
                       obErrorLog.ThrowError(__FUNCTION__,
-                        "Ran OpenBabel::AddHydrogens -- non-finite hydrogens found.",
-                        obAuditMsg);
+                                            "Ran OpenBabel::AddHydrogens -- non-finite hydrogens found.",
+                                            obAuditMsg);
                     }
                   }
                 else
@@ -2058,18 +2066,18 @@ namespace OpenBabel
 
   //! \brief set spin multiplicity for H-deficient atoms
   /**
-  If NoImplicitH is true then the molecule has no implicit hydrogens. Individual atoms
-  on which ForceNoH() has been called also have no implicit hydrogens.
-  If NoImplicitH is false (the default), then if there are any explicit hydrogens
-  on an atom then they constitute all the hydrogen on that atom. However, a hydrogen
-  atom with its _isotope!=0 is not considered explicit hydrogen for this purpose.
-  In addition, an atom which has had ForceImplH()called for it is never considered
-  hydrogen deficient, e.g. unbracketed atoms in SMILES.
-  Any discrepancy with the expected atom valency is interpreted as the atom being a
-  radical of some sort and iits _spinMultiplicity is set to 2 when it is one hydrogen short
-  and 3 when it is two hydrogens short and similarly for greater hydrogen deficiency.
+     If NoImplicitH is true then the molecule has no implicit hydrogens. Individual atoms
+     on which ForceNoH() has been called also have no implicit hydrogens.
+     If NoImplicitH is false (the default), then if there are any explicit hydrogens
+     on an atom then they constitute all the hydrogen on that atom. However, a hydrogen
+     atom with its _isotope!=0 is not considered explicit hydrogen for this purpose.
+     In addition, an atom which has had ForceImplH()called for it is never considered
+     hydrogen deficient, e.g. unbracketed atoms in SMILES.
+     Any discrepancy with the expected atom valency is interpreted as the atom being a
+     radical of some sort and iits _spinMultiplicity is set to 2 when it is one hydrogen short
+     and 3 when it is two hydrogens short and similarly for greater hydrogen deficiency.
 
-  So SMILES C[CH] is interpreted as methyl carbene, CC[H][H] as ethane, and CC[2H] as CH3CH2D.
+     So SMILES C[CH] is interpreted as methyl carbene, CC[H][H] as ethane, and CC[2H] as CH3CH2D.
   **/
 
 
@@ -2098,7 +2106,7 @@ namespace OpenBabel
     for (atom = BeginAtom(k);atom;atom = NextAtom(k))
       {
         if(atom->HasImplHForced()) //Probably unbracketed atoms in SMILES, which are never H deficient
-            continue;
+          continue;
         if (NoImplicitH
             || (!atom->IsHydrogen() && atom->ExplicitHydrogenCount(true)!=0)//exclude D,T
             || atom->HasNoHForced()) 
@@ -3171,7 +3179,7 @@ namespace OpenBabel
                || atom->SmallestBondAngle() < 45.0)
           {
             maxbond = atom->BeginBond(l);
-	    // Fix from Liu Zhiguo 2008-01-26
+            // Fix from Liu Zhiguo 2008-01-26
             // loop past any bonds
             // which existed before ConnectTheDots was called
             // (e.g., from PDB resdata.txt)
@@ -3179,15 +3187,15 @@ namespace OpenBabel
             while (valCount < bondCount[atom->GetIdx() - 1]) {
               maxbond = atom->NextBond(l);
               // timvdm: 2008-03-05
-	      // NextBond only returns NULL if the iterator l == _bonds.end().
-	      // This was casuing problems as follows:
-	      // NextBond = 0x????????
-	      // NextBond = 0x????????
-	      // NextBond = 0x????????
-	      // NextBond = 0x????????
-	      // NextBond = NULL	<-- this NULL was not detected
-	      // NextBond = 0x????????
-	      if (!maxbond) // so we add an additional check
+              // NextBond only returns NULL if the iterator l == _bonds.end().
+              // This was casuing problems as follows:
+              // NextBond = 0x????????
+              // NextBond = 0x????????
+              // NextBond = 0x????????
+              // NextBond = 0x????????
+              // NextBond = NULL	<-- this NULL was not detected
+              // NextBond = 0x????????
+              if (!maxbond) // so we add an additional check
                 break;
               valCount++;
             }
@@ -3203,7 +3211,7 @@ namespace OpenBabel
                     maxlength = bond->GetLength();
                   }
               }
-	    DeleteBond(maxbond); // delete the new bond with the longest length
+            DeleteBond(maxbond); // delete the new bond with the longest length
           }
       }
 
@@ -3787,78 +3795,93 @@ namespace OpenBabel
   vector<OBMol> OBMol::Separate(int StartIndex)
   {
     vector<OBMol> result;
-    if (NumAtoms() == 0)
+    if( NumAtoms() == 0 )
       return result; // nothing to do, but let's prevent a crash
 
-    OBMolAtomDFSIter iter(this, StartIndex);
-    while(iter) //for each disconnected fragment
-      {
-        OBMol newmol;
-        newmol.SetDimension(GetDimension());
-        map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
-        map<OBAtom*, OBChiralData*> ChiralMap; // key is from old mol
-        do //for each atom in fragment
-          {
-            OBAtom* pnext = &*iter;
-            newmol.AddAtom(*pnext); //each subsequent atom with its bond
-            AtomMap[pnext] = newmol.GetAtom(newmol.NumAtoms());
+    OBMolAtomDFSIter iter( this, StartIndex );
+    OBMol newMol;
+    while( GetNextFragment( iter, newMol ) ) {
+      result.push_back( newMol );
+      newMol.Clear();
+    }
 
-            OBChiralData* cd = (OBChiralData*)pnext->GetData(OBGenericDataType::ChiralData);
-            if (cd)
-              ChiralMap[pnext] = cd;
-          }while((iter++).next());
-
-        // update any OBChiralData records
-        map<OBAtom*, OBChiralData*>::iterator ChiralSearch;
-        for (ChiralSearch = ChiralMap.begin(); ChiralSearch != ChiralMap.end();
-             ++ChiralSearch)
-        {
-          OBAtom *oldAtom = ChiralSearch->first;
-          OBChiralData *oldCD = ChiralSearch->second;
-          OBAtom *newAtom = AtomMap[oldAtom];
-          if (newAtom == NULL) continue; // shouldn't happen, but be defensive
-
-          OBChiralData *newCD = new OBChiralData;
-          bool addCD = true; // in case we get bogus data
-          //Code to work round Atom4Refs having < 4 members sometimes
-          for(int i=0; i<oldCD->GetSize(input); ++i)
-          {
-            OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
-            if (at == NULL || AtomMap[at] == NULL) { addCD = false; break; }
-            newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
-          }
-          for(int i=0; i<oldCD->GetSize(output); ++i)
-          {
-            OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
-            if (at == NULL || AtomMap[at] == NULL) { addCD = false; break; }
-            newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
-          }
-          for(int i=0; i<oldCD->GetSize(calcvolume); ++i)
-          {
-            OBAtom* at = this->GetAtom(oldCD->GetAtomRef(i, input));
-            if (at == NULL || AtomMap[at] == NULL) { addCD = false; break; }
-            newCD->AddAtomRef(AtomMap[at]->GetIdx(), input);
-          }
-          if (!addCD) // We got bogus data somewhere along the way
-            delete newCD;
-          else
-            newAtom->SetData(newCD);
-        }
-
-        FOR_BONDS_OF_MOL(b, this) {
-            map<OBAtom*, OBAtom*>::iterator pos;
-            pos = AtomMap.find(b->GetBeginAtom());
-            if(pos!=AtomMap.end() && AtomMap[b->GetEndAtom()] != NULL)
-              //if bond belongs to current fragment make a similar one in new molecule
-              newmol.AddBond((pos->second)->GetIdx(), 
-                             AtomMap[b->GetEndAtom()]->GetIdx(),
-                             b->GetBO(), b->GetFlags());
-          }
-
-        //Remap
-        result.push_back(newmol);
-      }
     return result;
+  }
+  
+  bool OBMol::GetNextFragment( OBMolAtomDFSIter& iter, OBMol& newmol ) {
+    if( ! iter ) return false;
+
+    //iOBMol newmol;
+    newmol.SetDimension(GetDimension());
+    map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
+    map<OBAtom*, OBChiralData*> ChiralMap; // key is from old mol
+    do { //for each atom in fragment
+      OBAtom* pnext = &*iter;
+      newmol.AddAtom(*pnext); //each subsequent atom with its bond
+      AtomMap[pnext] = newmol.GetAtom(newmol.NumAtoms());
+
+      OBChiralData* cd = (OBChiralData*)pnext->GetData(OBGenericDataType::ChiralData);
+      if (cd)
+        ChiralMap[pnext] = cd;
+    }while((iter++).next());
+
+    // update any OBChiralData records
+    map<OBAtom*, OBChiralData*>::iterator ChiralSearch;
+    for (ChiralSearch = ChiralMap.begin(); ChiralSearch != ChiralMap.end(); ++ChiralSearch) {
+      OBAtom *oldAtom = ChiralSearch->first;
+      OBChiralData *oldCD = ChiralSearch->second;
+      OBAtom *newAtom = AtomMap[oldAtom];
+      if (newAtom == NULL) continue; // shouldn't happen, but be defensive
+
+      OBChiralData *newCD = new OBChiralData;
+      OBAtom *a0, *a1, *a2, *a3; // old atom references
+      if (oldCD->GetSize(input)) {
+        a0 = this->GetAtom(oldCD->GetAtomRef(0, input));
+        a1 = this->GetAtom(oldCD->GetAtomRef(1, input));
+        a2 = this->GetAtom(oldCD->GetAtomRef(2, input));
+        a3 = this->GetAtom(oldCD->GetAtomRef(3, input));
+        newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
+        newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
+        newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
+        newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
+      }
+
+      if (oldCD->GetSize(output)) {
+        a0 = this->GetAtom(oldCD->GetAtomRef(0, output));
+        a1 = this->GetAtom(oldCD->GetAtomRef(1, output));
+        a2 = this->GetAtom(oldCD->GetAtomRef(2, output));
+        a3 = this->GetAtom(oldCD->GetAtomRef(3, output));
+        newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
+        newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
+        newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
+        newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
+      }
+
+      if (oldCD->GetSize(calcvolume)) {
+        a0 = this->GetAtom(oldCD->GetAtomRef(0, calcvolume));
+        a1 = this->GetAtom(oldCD->GetAtomRef(1, calcvolume));
+        a2 = this->GetAtom(oldCD->GetAtomRef(2, calcvolume));
+        a3 = this->GetAtom(oldCD->GetAtomRef(3, calcvolume));
+        newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
+        newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
+        newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
+        newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
+      }
+
+      newAtom->SetData(newCD);
+    }
+
+    FOR_BONDS_OF_MOL(b, this) {
+      map<OBAtom*, OBAtom*>::iterator pos;
+      pos = AtomMap.find(b->GetBeginAtom());
+      if(pos!=AtomMap.end())
+        //if bond belongs to current fragment make a similar one in new molecule
+        newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
+                       b->GetBO(), b->GetFlags());
+    }
+
+    //return newmol;
+    return( true );
   }
 
 
