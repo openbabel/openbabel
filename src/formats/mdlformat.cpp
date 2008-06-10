@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <iomanip>
 #include <map>
+#include <algorithm>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/chiral.h>
 #include <openbabel/alias.h>
@@ -621,9 +622,14 @@ public:
           }                     
         if(chgs.size())
           {
-            ofs << "M  CHG" << setw(3) << chgs.size();
-            for(itr=chgs.begin();itr!=chgs.end();++itr)
+            int counter = 0;
+            for( itr=chgs.begin(); itr != chgs.end(); ++itr, counter++ ) {
+              if( counter % 8 == 0 ) {
+                if( counter > 0 ) ofs << endl;
+                ofs << "M  CHG" << setw(3) << std::min( chgs.size() - counter, (unsigned long int)8 );
+              }
               ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetFormalCharge();
+            }
             ofs << endl;
           }
       }
