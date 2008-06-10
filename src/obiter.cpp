@@ -211,6 +211,8 @@ namespace OpenBabel
             _ptr = _parent->GetAtom(next + 1);
             _notVisited.SetBitOff(next);
           }
+        else
+          _ptr = NULL;
       }
 
     if (_ptr)
@@ -345,6 +347,8 @@ namespace OpenBabel
             _ptr = _parent->GetAtom(next + 1);
             _notVisited.SetBitOff(next);
           }
+        else
+          _ptr = NULL;
       }
 
     if (_ptr)
