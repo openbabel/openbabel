@@ -856,6 +856,10 @@ namespace OpenBabel
  
   bool OBForceFieldMMFF94::ParseParamFile()
   {
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+  	setlocale(LC_NUMERIC, "C");
+
     ParseParamProp();
     ParseParamDef();
     ParseParamBond();
@@ -868,6 +872,10 @@ namespace OpenBabel
     ParseParamVDW();
     ParseParamCharge();
     ParseParamPbci();
+
+    // Return the locale to the original state
+  	setlocale(LC_NUMERIC, old_num_locale);
+  	free (old_num_locale);
     return true;
   }
   
@@ -884,7 +892,7 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffbond.par", obError);
       return false;
     }
-    
+        
     while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "*", 1)) continue;
       if (EQn(buffer, "$", 1)) continue;
@@ -902,7 +910,7 @@ namespace OpenBabel
 	
     if (ifs)
       ifs.close();
- 
+  
     return 0;
   }
   

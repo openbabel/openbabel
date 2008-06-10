@@ -56,6 +56,10 @@ namespace OpenBabel
       return false;
     }
 
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+  	setlocale(LC_NUMERIC, "C");
+
     vector<string> vs;
     bool heavy = false;
     string ln;
@@ -92,10 +96,17 @@ namespace OpenBabel
         delete sp;
         sp = NULL;
         obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
+        // Return the locale to the original version
+        setlocale(LC_NUMERIC, old_num_locale);
+      	free (old_num_locale);
+        
         return false;
       }
     }
 
+    // return the locale to the original version
+  	setlocale(LC_NUMERIC, old_num_locale);
+  	free (old_num_locale);
     return true;
   }
   

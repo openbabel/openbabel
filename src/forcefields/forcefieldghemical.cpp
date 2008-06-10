@@ -855,6 +855,10 @@ namespace OpenBabel
       return false;
     }
 
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+  	setlocale(LC_NUMERIC, "C");
+
     while (ifs.getline(buffer, 80)) {
       tokenize(vs, buffer);
 
@@ -932,6 +936,10 @@ namespace OpenBabel
 	
     if (ifs)
       ifs.close();
+
+    // Return the locale to the original version
+  	setlocale(LC_NUMERIC, old_num_locale);
+  	free (old_num_locale);
  
     return 0;
   }
@@ -954,6 +962,10 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open ghemical.prm", obError);
       return false;
     }
+
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+  	setlocale(LC_NUMERIC, "C");
 
     while (ifs.getline(buffer, 80)) {
       if (EQn(buffer, "atom", 4)) {
@@ -1009,6 +1021,10 @@ namespace OpenBabel
  
     if (ifs)
       ifs.close();
+
+    // Return the locale to the original value
+  	setlocale(LC_NUMERIC, old_num_locale);
+  	free (old_num_locale);
 
     return true;
   }

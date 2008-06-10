@@ -71,6 +71,10 @@ namespace OpenBabel
       return;
     }
 
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+  	setlocale(LC_NUMERIC, "C");
+
     char buffer[BUFF_SIZE];
     vector<string> vs;
     OBSmartsPattern *sp = NULL;
@@ -100,6 +104,10 @@ namespace OpenBabel
     }
     
     _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+
+    // return the locale to the original one
+  	setlocale(LC_NUMERIC, old_num_locale);
+  	free (old_num_locale);
   }
  
   vector3 OBBuilder::GetNewBondVector(OBAtom *atom){

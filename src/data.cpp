@@ -871,6 +871,9 @@ namespace OpenBabel
 
     ifstream ifs;
     char charBuffer[BUFF_SIZE];
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+  	setlocale(LC_NUMERIC, "C");
 
     // Check return value from OpenDatafile
     // Suggestion from Zhiguo Liu
@@ -903,6 +906,10 @@ namespace OpenBabel
           s += "'";
           obErrorLog.ThrowError(__FUNCTION__, s, obWarning);
         }
+
+    // return the locale to the original version
+  	setlocale(LC_NUMERIC, old_num_locale);
+  	free (old_num_locale);
 
     if (ifs)
       ifs.close();

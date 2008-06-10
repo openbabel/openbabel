@@ -720,7 +720,17 @@ namespace OpenBabel {
 #endif
 
     InstallStreamFilter();
-    return pInFormat->ReadMolecule(pOb, this);
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+  	setlocale(LC_NUMERIC, "C");
+
+    bool success = pInFormat->ReadMolecule(pOb, this);
+
+    // return the locale to the original state
+  	setlocale(LC_NUMERIC, old_num_locale);
+  	free (old_num_locale);
+  	
+    return success;
   }
 
     void OBConversion::InstallStreamFilter()
@@ -761,8 +771,17 @@ namespace OpenBabel {
 #endif
 #endif
     SetOneObjectOnly(); //So that IsLast() returns true, which is important for XML formats
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+  	setlocale(LC_NUMERIC, "C");
+
     bool ret = pOutFormat->WriteMolecule(pOb,this);
+
     pOutStream = pOrigOutStream;
+    // Clean up the locale -- set it to the original value
+  	setlocale(LC_NUMERIC, old_num_locale);
+  	free (old_num_locale);
+
     return ret;
   }
 

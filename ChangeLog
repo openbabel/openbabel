@@ -1,3 +1,14 @@
+2008-06-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/data.cpp, src/ops/loader.cpp, src/ops/optransform.cpp,
+	src/descriptors/groupcontrib.cpp, src/builder.cpp,
+	src/forcefields/forcefieldmm2.cpp,
+	src/forcefields/forcefielduff.cpp,
+	src/forcefields/forcefieldmmff94.cpp,
+	src/forcefields/forcefieldghemical.cpp, src/obconversion.cpp:
+	Change locale before parsing files to use "C" numeric locale and
+	reset it to the original state afterwards. Should solve PR#1785463.
+
 2008-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/phmodel.cpp (OBPhModel::CorrectForPH): Fix PR#1835204. Allow

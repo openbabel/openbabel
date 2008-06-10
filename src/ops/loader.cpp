@@ -56,6 +56,11 @@ public:
         obErrorLog.ThrowError(__FUNCTION__,string(filename) + " found but could not be opened", obError);
       return;
     }
+    
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+   	setlocale(LC_NUMERIC, "C");
+    
     string ln;
     while(ifs) //read entries for multiple objects
     {
@@ -88,6 +93,10 @@ public:
         obErrorLog.ThrowError(__FUNCTION__, "Failed to make an instance " + textlines[0], obError);
       textlines.clear();
     }
+    
+    // Return the locale to the original state
+  	setlocale(LC_NUMERIC, old_num_locale);
+  	free (old_num_locale);
   }
 
   virtual const char* Description(){ return "Makes plugin classes from a datafile"; }

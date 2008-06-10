@@ -40,6 +40,10 @@ bool OpTransform::Initialize()
   ifstream ifs;
   char charBuffer[BUFF_SIZE];
 
+  // Set the locale for number parsing to avoid locale issues: PR#1785463
+  char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
+  setlocale(LC_NUMERIC, "C");
+
   if(strcmp(_filename,"*"))
   {
     if(!strncmp(_filename,"TRANSFORM",9))//A single transform can replace the filename
@@ -59,6 +63,12 @@ bool OpTransform::Initialize()
   else //When filename is * use data in lines following
     for(int i=4;i<_textlines.size();++i)
       ParseLine(_textlines[i].c_str());
+      
+          
+  // Return the locale to the original state
+  setlocale(LC_NUMERIC, old_num_locale);
+  free (old_num_locale);
+  
   return true;
 }
 
