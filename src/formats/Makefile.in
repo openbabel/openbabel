@@ -100,9 +100,8 @@ acrformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(CXXFLAGS) $(acrformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_acrformat_la_rpath = -rpath $(formatsdir)
 adfformat_la_LIBADD =
-am__adfformat_la_SOURCES_DIST = adfformat.cpp KFReader.c ArrayList.c
-@BUILD_SHARED_TRUE@am_adfformat_la_OBJECTS = adfformat.lo KFReader.lo \
-@BUILD_SHARED_TRUE@	ArrayList.lo
+am__adfformat_la_SOURCES_DIST = adfformat.cpp ArrayList.c
+@BUILD_SHARED_TRUE@am_adfformat_la_OBJECTS = adfformat.lo ArrayList.lo
 adfformat_la_OBJECTS = $(am_adfformat_la_OBJECTS)
 adfformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -1035,7 +1034,7 @@ top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data -I$(top_srcdir)/include
 
 # KFc.h and ArrayList.h for ADF formats
-EXTRA_DIST = exampleformat.cpp KFc.h ArrayList.h CMakeLists.txt
+EXTRA_DIST = exampleformat.cpp ArrayList.h CMakeLists.txt
 SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_PCH_TRUE@AM_CXXFLAGS = -include $(top_srcdir)/src/formats/all.h
 @USE_BOOST_FLAGS_TRUE@AM_CXXFLAGS = $(BOOST_CPPFLAGS)
@@ -1118,7 +1117,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@acrformat_la_SOURCES = acrformat.cpp 
 @BUILD_SHARED_TRUE@acrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
-@BUILD_SHARED_TRUE@adfformat_la_SOURCES = adfformat.cpp KFReader.c ArrayList.c
+@BUILD_SHARED_TRUE@adfformat_la_SOURCES = adfformat.cpp ArrayList.c #KReader.c
 @BUILD_SHARED_TRUE@adfformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@alchemyformat_la_SOURCES = alchemyformat.cpp 
 @BUILD_SHARED_TRUE@alchemyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
@@ -1500,7 +1499,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/APIInterface.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ArrayList.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CSRformat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/KFReader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MCDLformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PQSformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acrformat.Plo@am__quote@
