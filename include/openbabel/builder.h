@@ -117,8 +117,8 @@ namespace OpenBabel
        *  \param index Atom index.
        *  \returns The OBBitVec defining the fragment to which a belongs.
        */
-      OBBitVec GetFragment(int index);
-      void AddNbrs(OBBitVec &fragment, OBAtom *atom);
+      static OBBitVec GetFragment(OBAtom *atom);
+      static void AddNbrs(OBBitVec &fragment, OBAtom *atom);
       //! used to hold the fragments loaded in the constructor
       static std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _fragments;
       //! used to hold the molecule we're working on 

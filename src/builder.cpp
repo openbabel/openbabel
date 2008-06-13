@@ -264,13 +264,15 @@ namespace OpenBabel
   // the main molecule to which we want to connect atom b.
   bool OBBuilder::Connect(OBAtom *a, OBAtom *b, vector3 &newpos)
   {
-    OBBitVec fragment = GetFragment(b->GetIdx());
-    if (fragment == GetFragment(a->GetIdx()))
+    a = _workMol.GetAtom(a->GetIdx());
+    b = _workMol.GetAtom(b->GetIdx());
+ 
+       
+    OBBitVec fragment = GetFragment(b);
+    if (fragment == GetFragment(a))
       return false; // a and b are in the same fragment
 
     // Make sure we use a and be from _workMol
-    a = _workMol.GetAtom(a->GetIdx());
-    b = _workMol.GetAtom(b->GetIdx());
     vector3 posa = a->GetVector();
     vector3 posb = b->GetVector();
     // 
@@ -437,12 +439,11 @@ namespace OpenBabel
     }
   }
 
-  OBBitVec OBBuilder::GetFragment(int index)
+  OBBitVec OBBuilder::GetFragment(OBAtom *atom)
   { 
     OBBitVec fragment;
-    OBAtom *atom = _workMol.GetAtom(index);
 
-    fragment.SetBitOn(index);
+    fragment.SetBitOn(atom->GetIdx());
     AddNbrs(fragment, atom);
     
     return fragment; 
@@ -550,7 +551,7 @@ namespace OpenBabel
           _workMol.GetBond(prev->GetIdx(), a->GetIdx())->SetBondOrder(bondOrder);
         }
         
-        OBBitVec fragment = GetFragment(a->GetIdx());
+        OBBitVec fragment = GetFragment(_workMol.GetAtom(a->GetIdx()));
         vdone |= fragment; // mark this fragment as done
 
         continue;
