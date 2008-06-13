@@ -626,7 +626,7 @@ public:
             for( itr=chgs.begin(); itr != chgs.end(); ++itr, counter++ ) {
               if( counter % 8 == 0 ) {
                 if( counter > 0 ) ofs << endl;
-                ofs << "M  CHG" << setw(3) << std::min( (unsigned long int)chgs.size() - counter, (unsigned long int)8 );
+                ofs << "M  CHG" << setw(3) << min(static_cast<unsigned long int>(chgs.size() - counter), static_cast<unsigned long int>(8));
               }
               ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetFormalCharge();
             }
