@@ -171,6 +171,20 @@ namespace OpenBabel
     Trim(_title);
   }
 
+  const char *OBMol::GetTitle(bool replaceNewlines) const
+  {
+    if (!replaceNewlines)
+      return(_title.c_str());
+
+    string title(_title);
+    string::size_type j;
+    for ( ; (j = title.find_first_of( "\n\r" )) != string::npos ; ) {
+      title.replace( j, 1, " ");
+    }
+    
+    return(title.c_str());
+  }
+
   bool SortVVInt(const vector<int> &a,const vector<int> &b)
   {
     return(a.size() > b.size());

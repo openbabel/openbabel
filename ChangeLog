@@ -1,4 +1,4 @@
-2008-06-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2008-06-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/builder.h, src/builder.cpp: Make most functions 
 	static.
@@ -10,6 +10,9 @@
 	* src/formats/mdlformat.cpp: Use static_cast in the min function.
 
 2008-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/mol.h, src/mol.cpp (GetTitle): Add a parameter
+	to replace newlines with spaces. Fixes PR#1984742.
 
 	* configure.in: Check for xlocale.h, locale.h, and uselocale functions.
 

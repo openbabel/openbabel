@@ -243,7 +243,8 @@ namespace OpenBabel
     //! \return the entire set of flags. (Internal use, mainly.)
     int          GetFlags()               { return(_flags); }
     //! \return the title of this molecule (often the filename)
-    const char  *GetTitle() const         { return(_title.c_str()); }
+    //! \param replaceNewlines whether to replace any newline characters with spaces
+    const char  *GetTitle(bool replaceNewlines = true) const;
     //! \return the number of atoms (i.e. OBAtom children)
     unsigned int NumAtoms() const         {  return(_natoms); }
     //! \return the number of bonds (i.e. OBBond children)
