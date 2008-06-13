@@ -20,6 +20,11 @@
 
 2008-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/kekulize.cpp (NewPerceiveKekulizeBonds): Give up on
+	kekulization when we find "cycles" with < 3 atoms. Sybyl mol2
+	labels some atoms as aromatic that aren't in rings. Fixes
+	PR#1965566 and PR#1784204.
+
 	* include/openbabel/mol.h, src/mol.cpp (GetTitle): Add a parameter
 	to replace newlines with spaces. Fixes PR#1984742.
 

@@ -34,8 +34,9 @@ namespace OpenBabel
   ///////////////////////////////////////////////////////////////////////////////
   //! \brief Kekulize aromatic rings without using implicit valence
 
-  //! This new perceive kekule bonds function has been especifically designed to 
+  //! This new perceive kekule bonds function has been designed to 
   //! handle molecule files without explicit hydrogens such as pdb or xyz.
+  //! (It can, of course, easily handle explicit hydrogens too.)
   //! The function does not rely on GetImplicitValence function
   //! The function looks for groups of aromatic cycle 
   //! For each group it tries to guess the number of electrons given by each atom
@@ -66,9 +67,9 @@ namespace OpenBabel
       {
         switch (bond->GetBO())
           {
-          case 1: bond->SetKSingle(); break;
           case 2: bond->SetKDouble(); break;
           case 3: bond->SetKTriple(); break;
+          case 1: bond->SetKSingle(); break;
           }
       }
 
@@ -91,6 +92,13 @@ namespace OpenBabel
             cycle.push_back(atom);
           }
         }
+
+        // This isn't a real aromatic cycle -- give up
+        // Fixes PR#1965566
+        // Fixes PR#1784204
+        if (cycle.size() < 3)
+          continue;
+
         // At the beginning each atom give one electron to the cycle
         for(j=0; j< cycle.size(); ++j) {
           electron.push_back(1);
@@ -120,7 +128,6 @@ namespace OpenBabel
           // count the number of electrons
           sume += electron[j];
         }
-
 
         // Save the electron state in case huckel rule is not satisfied
         vector<int> previousElectron = electron;
