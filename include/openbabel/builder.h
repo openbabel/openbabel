@@ -43,7 +43,7 @@ namespace OpenBabel
        *  \param atom Atom for which we want a new neighbour location.
        *  \returns The position for the new atom.
        */  
-      vector3 GetNewBondVector(OBAtom *atom);
+      static vector3 GetNewBondVector(OBAtom *atom);
       /*! The mol object contains all connectivity information (atomic numbers, bonds, bond orders, ..) 
        *  but no 3D coordinates. Build generates these coordinates and assigns them.
        *  \param mol Molecule with the connectivity (from smiles for example). The coordinates are also
@@ -119,6 +119,9 @@ namespace OpenBabel
        */
       static OBBitVec GetFragment(OBAtom *atom);
       static void AddNbrs(OBBitVec &fragment, OBAtom *atom);
+      
+      
+      
       //! used to hold the fragments loaded in the constructor
       static std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _fragments;
       //! used to hold the molecule we're working on 
