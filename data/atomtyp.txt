@@ -121,7 +121,7 @@ IMPVAL  [as]			3
 #EXTERNAL TYPE RULES
 #
 EXTTYP	[#7^3]					N3
-EXTTYP	[#7X4+]					N3+
+EXTTYP	[#7X4]					N3+
 EXTTYP	[#7^2]					Npl
 EXTTYP	[#7^1]					N1
 EXTTYP	[$(N=*)]				N2

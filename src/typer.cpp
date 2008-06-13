@@ -171,6 +171,27 @@ namespace OpenBabel
           for (j = _mlist.begin();j != _mlist.end();++j)
             mol.GetAtom((*j)[0])->SetType(i->second);
         }
+
+    // Special cases
+    vector<OBAtom*>::iterator a;
+    OBAtom* atom;
+    for (atom = mol.BeginAtom(a); atom; atom = mol.NextAtom(a)) {
+      // guanidinium. Fixes PR#1800964
+      if (strncasecmp(atom->GetType(),"C2", 2) == 0) {
+        int guanidineN = 0;
+        OBAtom *nbr;
+        vector<OBBond*>::iterator k;
+        for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k)) {
+          if (strncasecmp(nbr->GetType(),"Npl", 3) == 0 ||
+              strncasecmp(nbr->GetType(),"N2", 2) == 0 ||
+              strncasecmp(nbr->GetType(),"Ng+", 3) == 0)
+            ++guanidineN;
+        }
+        atom->SetType("C+");
+
+      } // end C2 carbon for guanidinium
+
+    } // end special cases
   }
 
   void OBAtomTyper::AssignHyb(OBMol &mol)

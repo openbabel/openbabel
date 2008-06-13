@@ -7,8 +7,6 @@
 	* src/forcefields/*.cpp: Change i->Compute<gradients>() to i->template
 	Compute<gradients>().
 
-2008-06-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
-
 	* include/openbabel/builder.h, src/builder.cpp: Make most functions 
 	static.
 
@@ -20,6 +18,13 @@
 
 2008-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/typer.cpp: Add a special case for guanidinium carbon
+	atoms. (We may need additional special cases.)
+
+	* data/atomtyp.txt, data/atomtyp.h: Change pattern for N3+ to
+	match any 4-valent N, regardless of whether the formal charge has
+	been set.
+	
 	* src/kekulize.cpp (NewPerceiveKekulizeBonds): Give up on
 	kekulization when we find "cycles" with < 3 atoms. Sybyl mol2
 	labels some atoms as aromatic that aren't in rings. Fixes
