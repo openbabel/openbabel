@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/rotamer.h>
 #include <openbabel/phmodel.h>
 #include <openbabel/bondtyper.h>
+#include <openbabel/builder.h>
 #include <openbabel/math/matrix3x3.h>
 
 #include <sstream>
@@ -1912,7 +1913,8 @@ namespace OpenBabel
                 if (hasCoords)
                   {
                     // Ensure that add hydrogens only returns finite coords
-                    atom->GetNewBondVector(v,bondlen);
+                    //atom->GetNewBondVector(v,bondlen);
+		    v = OBBuilder::GetNewBondVector(atom,bondlen);
                     if (isfinite(v.x()) || isfinite(v.y()) || isfinite(v.z())) {
                       _c[(NumAtoms())*3]   = v.x();
                       _c[(NumAtoms())*3+1] = v.y();
@@ -2030,7 +2032,8 @@ namespace OpenBabel
             for (n = 0;n < NumConformers();++n)
               {
                 SetConformer(n);
-                atom->GetNewBondVector(v,bondlen);
+                //atom->GetNewBondVector(v,bondlen);
+		v = OBBuilder::GetNewBondVector(atom,bondlen);
                 _c[(NumAtoms())*3]   = v.x();
                 _c[(NumAtoms())*3+1] = v.y();
                 _c[(NumAtoms())*3+2] = v.z();

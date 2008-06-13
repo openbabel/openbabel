@@ -44,6 +44,7 @@ namespace OpenBabel
        *  \returns The position for the new atom.
        */  
       static vector3 GetNewBondVector(OBAtom *atom);
+      static vector3 GetNewBondVector(OBAtom *atom, double length);
       /*! The mol object contains all connectivity information (atomic numbers, bonds, bond orders, ..) 
        *  but no 3D coordinates. Build generates these coordinates and assigns them.
        *  \param mol Molecule with the connectivity (from smiles for example). The coordinates are also
@@ -60,7 +61,8 @@ namespace OpenBabel
        *  \returns true if succesfull or fails when failed (most likely cause 
        *  for failing: a and b are in the same fragment, they are connected)
        */
-      bool Connect(OBMol &mol, int a, int b, int bondOrder = 1);
+      static bool Connect(OBMol &mol, int a, int b, vector3 &newpos, int bondOrder = 1);
+      static bool Connect(OBMol &mol, int a, int b, int bondOrder = 1);
       /*! Swap group b, bonded to a with group d, bonded to c. The bonds a-b and b-c cannot be
        *  part of a ring. Atoms a and b will not be moved. Atoms b, d and their connected atoms
        *  (after deleting bonds ab and cd) will be translated/rotated. 
@@ -88,44 +90,30 @@ namespace OpenBabel
        *     4                        4
        *  \endcode
        */   
-      bool Swap(OBMol &mol, int a, int b, int c, int d);
+      static bool Swap(OBMol &mol, int a, int b, int c, int d);
       /*! Atoms a and b must be bonded and this bond cannot be part of a ring. The bond will 
        *  be broken and the smiles fragment will be inserted bewteen the two remaining fragments.
        *  The fragment that contains a will not be translated or rotated. Parameters c and d are
        *  the index in the smiles to which atoms a and b will be connected respectivly.
        *
        */  
-      bool Insert(OBMol &mol, int a, int b, std::string smiles, int c, int d);
+      //bool Insert(OBMol &mol, int a, int b, std::string smiles, int c, int d);
       /*! Currently only corrects double bond chemistry comming from smiles. (OBBond::IsUp() / OBBond::IsDown())
        */ 
-      void CorrectStereoBonds(OBMol &mol);
+      static void CorrectStereoBonds(OBMol &mol);
       /*! Currently only corrects atom chirality comming from smiles. (OBAtom::IsClockwize() / OBBond::IsAntiClockwise())
        */ 
-      void CorrectStereoAtoms(OBMol &mol);
-    private:
-      bool Connect(OBAtom *a, OBAtom *b, vector3 &newpos);
-      /*! Atoms a and b are part of two fragments that are not connected in _workMol.
-       *  Connect will translate and rotate the fragment containing b so that
-       *  a and b are seperated by a bond. This bond is also added.
-       *  \param a Index for atom in fragment that should not be rotated.
-       *  \param b Index for atom in fragment that should be rotated.
-       *  \returns true if succesfull or fails when failed (most likely cause 
-       *  for failing: a and b are in the same fragment, they are connected)
-       */
-      bool Connect(OBAtom *a, OBAtom *b);
+      static void CorrectStereoAtoms(OBMol &mol);
       /*! Get the fragment to which atom with index belongs.
        *  \param index Atom index.
        *  \returns The OBBitVec defining the fragment to which a belongs.
        */
       static OBBitVec GetFragment(OBAtom *atom);
       static void AddNbrs(OBBitVec &fragment, OBAtom *atom);
-      
-      
-      
+ 
+    private:
       //! used to hold the fragments loaded in the constructor
       static std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _fragments;
-      //! used to hold the molecule we're working on 
-      OBMol _workMol;
   }; // class OBBuilder
 
 }// namespace OpenBabel

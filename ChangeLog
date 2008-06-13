@@ -1,3 +1,10 @@
+2008-06-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/builder.h, src/builder.cpp: Make most functions 
+	static.
+
+	* src/mol.cpp: Use OBBuilder::GetNewBondVector() in AddHydrogens(). 
+
 2005-06-13  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/formats/mdlformat.cpp: Use static_cast in the min function.
