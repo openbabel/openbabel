@@ -43,6 +43,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <map>
+#include <locale>
 
 #include <stdlib.h>
 
@@ -738,6 +739,10 @@ namespace OpenBabel {
     char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
   	setlocale(LC_NUMERIC, "C");
 #endif
+    // Also set the C++ stream locale
+    locale originalLocale = pInStream->getloc(); // save the original
+    locale cNumericLocale(originalLocale, "C", locale::numeric);
+    pInStream->imbue(cNumericLocale);
 
     bool success = pInFormat->ReadMolecule(pOb, this);
 
@@ -749,7 +754,9 @@ namespace OpenBabel {
   	setlocale(LC_NUMERIC, old_num_locale);
   	free (old_num_locale);
 #endif
-  	
+    // Restore the original locale as well
+    pInStream->imbue(originalLocale);
+
     return success;
   }
 
@@ -802,6 +809,10 @@ namespace OpenBabel {
     char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
   	setlocale(LC_NUMERIC, "C");
 #endif
+    // Also set the C++ stream locale
+    locale originalLocale = pOutStream->getloc(); // save the original
+    locale cNumericLocale(originalLocale, "C", locale::numeric);
+    pOutStream->imbue(cNumericLocale);
 
     // The actual work is done here
     bool success = pOutFormat->WriteMolecule(pOb,this);
@@ -815,6 +826,8 @@ namespace OpenBabel {
   	setlocale(LC_NUMERIC, old_num_locale);
   	free (old_num_locale);
 #endif
+    // Restore the C++ stream locale too
+    pOutStream->imbue(originalLocale);
 
     return success;
   }
