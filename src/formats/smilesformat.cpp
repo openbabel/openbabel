@@ -3124,14 +3124,12 @@ namespace OpenBabel {
 	* DESCRIPTION:
 	*        Creates a set of non-canonical labels for the fragment atoms
 	* ***************************************************************************/
-	void StandardLabels(OBMol *pMol, OBBitVec &frag_atoms, vector<unsigned int> &symmetry_classes,
-		vector<unsigned int> &labels)
-	{
-		symmetry_classes.clear();
-		labels.clear();
-		
+	void StandardLabels(OBMol *pMol, OBBitVec &frag_atoms, 
+                      vector<unsigned int> &symmetry_classes,
+                      vector<unsigned int> &labels)
+	{		
 		FOR_ATOMS_OF_MOL(atom, *pMol) {
-			if (!frag_atoms.BitIsOn(atom->GetIdx())) {
+			if (frag_atoms.BitIsOn(atom->GetIdx())) {
 				labels.push_back(atom->GetIdx() - 1);
 				symmetry_classes.push_back(atom->GetIdx() - 1);
 	    }
