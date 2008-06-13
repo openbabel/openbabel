@@ -21,6 +21,13 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include "forcefielduff.h"
 
+#if HAVE_XLOCALE_H
+#include <xlocale.h>
+#endif
+#if HAVE_LOCALE_H
+#include <locale.h>
+#endif
+
 using namespace std;
 
 // This implementation was created based on open code and reference websites:
@@ -1174,8 +1181,15 @@ namespace OpenBabel
     }
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
+#if HAVE_USELOCALE
+    // Extended per-thread interface
+    locale_t new_c_num_locale = newlocale(LC_NUMERIC_MASK, NULL, NULL);
+    locale_t old_num_locale = uselocale(new_c_num_locale);
+#else
+    // Original global POSIX interface
     char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
   	setlocale(LC_NUMERIC, "C");
+#endif
 
     while (ifs.getline(buffer, BUFF_SIZE)) {
       tokenize(vs, buffer);
@@ -1234,9 +1248,14 @@ namespace OpenBabel
     if (ifs)
       ifs.close();
  
-    // Return the locale to the original value
+    // return the locale to the original one
+#ifdef HAVE_USELOCALE
+    uselocale(old_num_locale);
+    freelocale(new_c_num_locale);
+#else
   	setlocale(LC_NUMERIC, old_num_locale);
   	free (old_num_locale);
+#endif
  
     return 0;
   }

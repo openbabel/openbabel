@@ -22,6 +22,13 @@ GNU General Public License for more details.
 #include <openbabel/tokenst.h>
 #include <openbabel/plugin.h>
 
+#if HAVE_XLOCALE_H
+#include <xlocale.h>
+#endif
+#if HAVE_LOCALE_H
+#include <locale.h>
+#endif
+
 using namespace std;
 namespace OpenBabel
 {
@@ -58,8 +65,15 @@ public:
     }
     
     // Set the locale for number parsing to avoid locale issues: PR#1785463
+#if HAVE_USELOCALE
+    // Extended per-thread interface
+    locale_t new_c_num_locale = newlocale(LC_NUMERIC_MASK, NULL, NULL);
+    locale_t old_num_locale = uselocale(new_c_num_locale);
+#else
+    // Original global POSIX interface
     char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
-   	setlocale(LC_NUMERIC, "C");
+  	setlocale(LC_NUMERIC, "C");
+#endif
     
     string ln;
     while(ifs) //read entries for multiple objects
@@ -94,9 +108,14 @@ public:
       textlines.clear();
     }
     
-    // Return the locale to the original state
+    // return the locale to the original one
+#ifdef HAVE_USELOCALE
+    uselocale(old_num_locale);
+    freelocale(new_c_num_locale);
+#else
   	setlocale(LC_NUMERIC, old_num_locale);
   	free (old_num_locale);
+#endif
   }
 
   virtual const char* Description(){ return "Makes plugin classes from a datafile"; }

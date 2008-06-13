@@ -31,6 +31,13 @@ GNU General Public License for more details.
 	#endif
 #endif
 
+#if HAVE_XLOCALE_H
+#include <xlocale.h>
+#endif
+#if HAVE_LOCALE_H
+#include <locale.h>
+#endif
+
 #include <iosfwd>
 #include <fstream>
 #include <sstream>
@@ -720,15 +727,28 @@ namespace OpenBabel {
 #endif
 
     InstallStreamFilter();
+
     // Set the locale for number parsing to avoid locale issues: PR#1785463
+#if HAVE_USELOCALE
+    // Extended per-thread interface
+    locale_t new_c_num_locale = newlocale(LC_NUMERIC_MASK, NULL, NULL);
+    locale_t old_num_locale = uselocale(new_c_num_locale);
+#else
+    // Original global POSIX interface
     char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
   	setlocale(LC_NUMERIC, "C");
+#endif
 
     bool success = pInFormat->ReadMolecule(pOb, this);
 
-    // return the locale to the original state
+    // return the locale to the original one
+#ifdef HAVE_USELOCALE
+    uselocale(old_num_locale);
+    freelocale(new_c_num_locale);
+#else
   	setlocale(LC_NUMERIC, old_num_locale);
   	free (old_num_locale);
+#endif
   	
     return success;
   }
@@ -771,18 +791,32 @@ namespace OpenBabel {
 #endif
 #endif
     SetOneObjectOnly(); //So that IsLast() returns true, which is important for XML formats
+
     // Set the locale for number parsing to avoid locale issues: PR#1785463
+#if HAVE_USELOCALE
+    // Extended per-thread interface
+    locale_t new_c_num_locale = newlocale(LC_NUMERIC_MASK, NULL, NULL);
+    locale_t old_num_locale = uselocale(new_c_num_locale);
+#else
+    // Original global POSIX interface
     char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
   	setlocale(LC_NUMERIC, "C");
+#endif
 
-    bool ret = pOutFormat->WriteMolecule(pOb,this);
+    // The actual work is done here
+    bool success = pOutFormat->WriteMolecule(pOb,this);
 
     pOutStream = pOrigOutStream;
-    // Clean up the locale -- set it to the original value
+    // return the locale to the original one
+#ifdef HAVE_USELOCALE
+    uselocale(old_num_locale);
+    freelocale(new_c_num_locale);
+#else
   	setlocale(LC_NUMERIC, old_num_locale);
   	free (old_num_locale);
+#endif
 
-    return ret;
+    return success;
   }
 
   //////////////////////////////////////////////////

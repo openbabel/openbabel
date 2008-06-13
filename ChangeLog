@@ -1,3 +1,20 @@
+2008-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in: Check for xlocale.h, locale.h, and uselocale functions.
+
+	* src/data.cpp, src/ops/loader.cpp, src/ops/optransform.cpp,
+	src/descriptors/groupcontrib.cpp, src/builder.cpp,
+	src/forcefields/forcefieldmm2.cpp,
+	src/forcefields/forcefielduff.cpp,
+	src/forcefields/forcefieldmmff94.cpp,
+	src/forcefields/forcefieldghemical.cpp, src/obconversion.cpp:
+	Change locale using uselocale if available and reset it to the
+	afterwards. Update of previous change, suggested by Benoit.
+
+	* include/openbabel/bond.h, include/openbabel/atom.h,
+	src/bond.cpp: Fixes for "const" correctness. It's now possible to
+	get the bond length of a const OBBond.
+	
 2008-06-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/data.cpp, src/ops/loader.cpp, src/ops/optransform.cpp,
