@@ -500,7 +500,7 @@ namespace OpenBabel
     
     /*! Get the pointer to the gradients
      */
-    virtual vector3 GetGradient(OBAtom *a, int terms = OBFF_ENERGY) 
+    virtual vector3 GetGradient(OBAtom *a, int /*terms*/ = OBFF_ENERGY) 
     { 
       const int coordIdx = (a->GetIdx() - 1) * 3;
       return _gradientPtr + coordIdx;

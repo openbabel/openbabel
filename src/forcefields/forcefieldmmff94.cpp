@@ -143,7 +143,7 @@ namespace OpenBabel
     #pragma omp parallel for reduction(+:energy)
     #endif
     for (int i = 0; i < _bondcalculations.size(); ++i) {
-      _bondcalculations[i].Compute<gradients>();
+      _bondcalculations[i].template Compute<gradients>();
       energy += _bondcalculations[i].energy;
       
       #ifndef _OPENMP
@@ -259,7 +259,7 @@ namespace OpenBabel
     #endif
     for (int i = 0; i < _anglecalculations.size(); ++i) {
 
-      _anglecalculations[i].Compute<gradients>();
+      _anglecalculations[i].template Compute<gradients>();
       energy += _anglecalculations[i].energy;
       
       #ifndef _OPENMP
@@ -372,7 +372,7 @@ namespace OpenBabel
     #endif
     for (int i = 0; i < _strbndcalculations.size(); ++i) {
 
-      _strbndcalculations[i].Compute<gradients>();
+      _strbndcalculations[i].template Compute<gradients>();
       energy += _strbndcalculations[i].energy;
       
       #ifndef _OPENMP
@@ -508,7 +508,7 @@ namespace OpenBabel
     #endif
     for (int i = 0; i < _torsioncalculations.size(); ++i) {
 
-      _torsioncalculations[i].Compute<gradients>();
+      _torsioncalculations[i].template Compute<gradients>();
       energy += _torsioncalculations[i].energy;
       
       #ifndef _OPENMP
@@ -606,7 +606,7 @@ namespace OpenBabel
     #endif
     for (int i = 0; i < _oopcalculations.size(); ++i) {
       
-      _oopcalculations[i].Compute<gradients>();
+      _oopcalculations[i].template Compute<gradients>();
       energy += _oopcalculations[i].energy;
       
       #ifndef _OPENMP
@@ -707,7 +707,7 @@ namespace OpenBabel
         if (!_vdwpairs.BitIsSet(i)) 
           continue;
 
-      _vdwcalculations[i].Compute<gradients>();
+      _vdwcalculations[i].template Compute<gradients>();
       energy += _vdwcalculations[i].energy;
       
       #ifndef _OPENMP
@@ -793,7 +793,7 @@ namespace OpenBabel
         if (!_elepairs.BitIsSet(i)) 
           continue;
      
-      _electrostaticcalculations[i].Compute<gradients>();
+      _electrostaticcalculations[i].template Compute<gradients>();
       energy += _electrostaticcalculations[i].energy;
       
       #ifndef _OPENMP

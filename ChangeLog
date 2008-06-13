@@ -1,5 +1,14 @@
 2008-06-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* include/openbabel/forcefield.cpp: Change GetGradient(..., int terms
+	= ...) to GetGradient(..., int /*terms*/ = ...). (comiler warning:
+	unused parameter).
+
+	* src/forcefields/*.cpp: Change i->Compute<gradients>() to i->template
+	Compute<gradients>().
+
+2008-06-13  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/builder.h, src/builder.cpp: Make most functions 
 	static.
 

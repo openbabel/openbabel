@@ -87,7 +87,7 @@ namespace OpenBabel
  
     for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i) {
 
-      i->Compute<gradients>();
+      i->template Compute<gradients>();
       energy += i->energy;
       
       if (gradients) {
@@ -195,7 +195,7 @@ namespace OpenBabel
        
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); ++i) {
 
-      i->Compute<gradients>();
+      i->template Compute<gradients>();
       energy += i->energy;
       
       if (gradients) {
@@ -288,7 +288,7 @@ namespace OpenBabel
     
     for (i = _torsioncalculations.begin(); i != _torsioncalculations.end(); ++i) {
 
-      i->Compute<gradients>();
+      i->template Compute<gradients>();
       energy += i->energy;
       
       if (gradients) {
@@ -376,7 +376,7 @@ namespace OpenBabel
      }
 
      for (i = _oopcalculations.begin(); i != _oopcalculations.end(); ++i) {
-      i->Compute<gradients>();
+      i->template Compute<gradients>();
       energy += i->energy;
       
       if (gradients) {
@@ -461,7 +461,7 @@ namespace OpenBabel
         if (!_vdwpairs.BitIsSet(j)) 
           continue;
      
-      i->Compute<gradients>();
+      i->template Compute<gradients>();
       energy += i->energy;
       
       if (gradients) {
@@ -538,7 +538,7 @@ namespace OpenBabel
         if (!_elepairs.BitIsSet(j)) 
           continue;
       
-      i->Compute<gradients>();
+      i->template Compute<gradients>();
       energy += i->energy;
       
       if (gradients) {
