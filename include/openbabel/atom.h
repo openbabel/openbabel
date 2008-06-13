@@ -228,26 +228,26 @@ namespace OpenBabel
       char        *GetType();
 
       //! \return the x coordinate
-      double      GetX()    {        return(x());    }
+      double      GetX() const   {        return(x());    }
       //! \return the y coordinate
-      double      GetY()    {        return(y());    }
+      double      GetY() const  {        return(y());    }
       //! \return the z coordinate
-      double      GetZ()    {        return(z());    }
+      double      GetZ() const  {        return(z());    }
 
       // These methods check to see if there is a coordinate pointer
       // or an internal vector (e.g., SetCoordPtr())
       //! \return the x coordinate
-      double      x() {
+      double      x() const {
         if (_c)            return((*_c)[_cidx]);
         else               return _v.x();
       }
       //! \return the y coordinate
-      double      y() {
+      double      y() const {
         if (_c)            return((*_c)[_cidx+1]);
         else               return _v.y();
       }
       //! \return the z coordinate
-      double      z() {
+      double      z() const {
         if (_c)            return((*_c)[_cidx+2]);
         else               return _v.z();
       }
@@ -261,6 +261,7 @@ namespace OpenBabel
       }
       //! \return the coordinates as a vector3 object
       vector3   &GetVector();
+      //! \return the coordinates as a vector3 object
       const vector3   &GetVector() const;
       //! \return the partial charge of this atom, calculating a Gasteiger charge if needed
       double     GetPartialCharge();

@@ -519,10 +519,10 @@ namespace OpenBabel
     return(HasFlag(OB_CLOSURE_BOND));
   }
 
-  double OBBond::GetEquibLength()
+  double OBBond::GetEquibLength() const
   {
     double length;
-    OBAtom *begin, *end;
+    const OBAtom *begin, *end;
     // CorrectedBondRad will always return a # now
     //  if (!CorrectedBondRad(GetBeginAtom(),rad1)) return(0.0);
     //  if (!CorrectedBondRad(GetEndAtom(),rad2))   return(0.0);
@@ -541,10 +541,10 @@ namespace OpenBabel
     return(length);
   }
 
-  double OBBond::GetLength()
+  double OBBond::GetLength() const
   {
     double	d2;
-    OBAtom *begin, *end;
+    const OBAtom *begin, *end;
     begin = GetBeginAtom();
     end = GetEndAtom();
 

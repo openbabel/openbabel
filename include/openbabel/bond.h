@@ -184,9 +184,9 @@ namespace OpenBabel
       OBMol  *GetParent()                 {return(_parent);}
       //! \return The expected "equilibrium" length based on the covalent radii and bond order
       /** Length is given in Angstroms **/
-      double  GetEquibLength();
+      double  GetEquibLength() const;
       //! \return The current length of this bond in Angstroms
-      double  GetLength();
+      double  GetLength() const;
       //! \return The index to the neighboring atom of @p ptr (i.e., the end if @p ptr is the start)
       /** \warning If @p ptr is not part of the bond, the beginning atom
           index will always be returned **/
