@@ -18,8 +18,8 @@
 #                                                                            #
 #  INCOMPLETE!! Really only useful to test the fingerprint FP3               #
 ##############################################################################
-[+]	1
-[-]	2
+[+]	1	cation
+[-]	2	anion
 [#6][CX3](=O)	3 aldehyde or ketone
 [CX3H1](=O)[#6]	4 aldehyde
 [#6][CX3](=O)[#6]	5 ketone
@@ -28,8 +28,8 @@
 [#6]C(=[S])[#6]	8 thioketone
 [CX3]=N([#6,#1])[#6,#1]	9 imine
 [#6,#1]C([#6,#1])=[N][N]([#6,#1])[#6,#1]	10 hydrazone
-[#6,#1]C([#6,#1])=[N][N]([#6,#1])C(=[O])[N]([#6,#1])[#6,#1] 11 semicarbazone
-[#6,#1]C([#6,#1])=[N][N]([#6,#1])C(=[S])[N]([#6,#1])[#6,#1] 12 thiosemicarbazone
+[#6,#1]C([#6,#1])=[N][N]([#6,#1])C(=[O])[N]([#6,#1])[#6,#1]	11 semicarbazone
+[#6,#1]C([#6,#1])=[N][N]([#6,#1])C(=[S])[N]([#6,#1])[#6,#1]	12 thiosemicarbazone
 [#6,#1]C([#6,#1])=[N][OH]	13 oxime
 [#6,#1]C([#6,#1])=[N][O][#6]	14 oxime ether
 [CX3]=C=O	15 ketene
