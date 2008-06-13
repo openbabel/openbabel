@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <map>
 #include <set>
 #include <iterator>
+#include <locale>
 
 #include "openbabel/mol.h"
 #include "openbabel/oberror.h"
@@ -507,6 +508,9 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
 
       //Read in rate parameters
       stringstream ss(*itr);
+      locale cLocale("C");
+      ss.imbue(cLocale);
+
       double val;
       ss >> val;
       if(n==0)
