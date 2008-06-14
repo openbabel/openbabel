@@ -441,12 +441,12 @@ namespace OpenBabel
 
             if (node->assign.atomid != NULL) {
               //free(node->assign.atomid);
-	      delete node->assign.atomid;
+	      delete [] node->assign.atomid;
               node->assign.atomid = NULL; // prevent double-free
             }
             if (node->assign.bflags != NULL) {
               //free(node->assign.bflags);
-              delete node->assign.bflags;
+              delete [] node->assign.bflags;
               node->assign.bflags = NULL; // prevent double-free
             }
             
