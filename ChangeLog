@@ -1,5 +1,8 @@
 2005-06-14  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* CMakeLists.txt, src/formats/CMakeLists.txt: Some build system
+	updates to build format plugins as modules.
+
 	* src/ops/loader.cpp: GCC 4.3 fix - cstdlib needed for free calls.
 
 2008-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
