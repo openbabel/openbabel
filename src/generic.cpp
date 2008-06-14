@@ -28,7 +28,6 @@ GNU General Public License for more details.
 #include <openbabel/atomclass.h>
 #include <openbabel/alias.h>
 
-
 using namespace std;
 
 namespace OpenBabel
@@ -546,6 +545,43 @@ namespace OpenBabel
       }
     }
     return 0; //presumably never reached
+  }
+  
+  void OBUnitCell::FillUnitCell(OBMol *mol)
+  {
+    const SpaceGroup *sg = GetSpaceGroup(); // the actual space group and transformations for this unit cell
+    
+    // For each atom, we loop through: convert the coords back to inverse space, apply the transformations and create new atoms
+    vector3 uniqueV, newV;
+    list<vector3> transformedVectors; // list of symmetry-defined copies of the atom
+    list<vector3>::iterator transformIterator;
+    OBAtom *newAtom;
+    list<OBAtom*> atoms; // keep the current list of unique atoms -- don't double-create
+    FOR_ATOMS_OF_MOL(atom, *mol)
+      atoms.push_back(&(*atom));
+
+    list<OBAtom*>::iterator i;
+    for (i = atoms.begin(); i != atoms.end(); ++i) {
+      uniqueV = (*i)->GetVector();
+      uniqueV *= GetFractionalMatrix();
+        
+      transformedVectors = sg->Transform(uniqueV);
+      for (transformIterator = transformedVectors.begin();
+           transformIterator != transformedVectors.end(); ++transformIterator) {
+        // coordinates are in reciprocal space -- check if it's in the unit cell
+        // TODO: transform these into the unit cell and check for duplicates
+        if (transformIterator->x() < 0.0 || transformIterator->x() > 1.0)
+          continue;
+        else if (transformIterator->y() < 0.0 || transformIterator->y() > 1.0)
+          continue;
+        else if (transformIterator->z() < 0.0 || transformIterator->z() > 1.0)
+          continue;
+             
+        newAtom = mol->NewAtom();
+        newAtom->Duplicate(*i);
+        newAtom->SetVector(GetOrthoMatrix() * (*transformIterator));
+      } // end loop of transformed atoms
+    } // end loop of atoms
   }
   
   double OBUnitCell::GetCellVolume()

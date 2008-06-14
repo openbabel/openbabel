@@ -116,6 +116,8 @@ namespace OpenBabel
       virtual ~OBAtom();
       //! Assignment
       OBAtom &operator = (OBAtom &);
+      //! Duplicate another atom. Copies all information with the exception of index
+      void Duplicate(OBAtom *);
       //! Clear all data. Calls OBBase::Clear() to handle any generic data.
       //! \return True if successful.
       bool Clear();

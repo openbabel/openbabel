@@ -148,21 +148,37 @@ namespace OpenBabel
   OBAtom &OBAtom::operator=(OBAtom &src)
   //copy atom information
   //bond info is not copied here as ptrs may be invalid
-  //vdata is also not copied yet (again it's unclear what can work)
   {
     _idx = src.GetIdx();
-    _hyb = src.GetHyb();
-    _ele = src.GetAtomicNum();
-    _isotope = src.GetIsotope();
-    _fcharge = src.GetFormalCharge();
-    _spinmultiplicity = src.GetSpinMultiplicity();
-    strncpy(_type,src.GetType(), sizeof(_type) - 1);
-    _type[sizeof(_type) - 1] = '\0';
-    _pcharge = src.GetPartialCharge();
-    _v = src.GetVector();
-    _flags = src.GetFlag();
-    _residue = (OBResidue*)NULL;
+    Duplicate(&src);
     return(*this);
+  }
+  
+  void OBAtom::Duplicate(OBAtom *src)
+  {
+    if (!src)
+      return;
+      
+    _hyb = src->GetHyb();
+    _ele = src->GetAtomicNum();
+    _isotope = src->GetIsotope();
+    _fcharge = src->GetFormalCharge();
+    _spinmultiplicity = src->GetSpinMultiplicity();
+    strncpy(_type,src->GetType(), sizeof(_type) - 1);
+    _type[sizeof(_type) - 1] = '\0';
+    _pcharge = src->GetPartialCharge();
+    _v = src->GetVector();
+    _flags = src->GetFlag();
+    _residue = (OBResidue*)NULL;
+    
+    _vdata.clear();
+    //Copy all the OBGenericData, providing the new atom
+    vector<OBGenericData*>::iterator itr;
+    for(itr=src->BeginData();itr!=src->EndData();++itr)
+      {
+        OBGenericData* pCopiedData = (*itr)->Clone(this);
+        SetData(pCopiedData);
+      }
   }
 
   bool OBAtom::IsConnected(OBAtom *a1)

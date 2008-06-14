@@ -33,9 +33,11 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
+  // Forward declarations
   class OBBase;
   class OBAtom;
   class OBBond;
+  class OBMol;
   class OBRing;
 
   //! \class OBCommentData generic.h <openbabel/generic.h>
@@ -349,6 +351,10 @@ namespace OpenBabel
     
     //! Set the Bravais lattice type for this unit cell
     void SetLatticeType(const LatticeType lt) { _lattice = lt; }
+
+    //! Duplicate symmetry-unique atoms to fill out the unit cell
+    //! of the molecule, based on the known space group
+    void FillUnitCell(OBMol *);
 
     //! \return vector a
     double GetA()    { return(_a);    }
