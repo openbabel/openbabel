@@ -203,7 +203,8 @@ namespace OpenBabel
   {
     register AtomExpr *result;
   
-    result = (AtomExpr*)malloc(sizeof(AtomExpr));
+    //result = (AtomExpr*)malloc(sizeof(AtomExpr));
+    result = new AtomExpr;
     return result;
   }
 
@@ -255,7 +256,8 @@ namespace OpenBabel
           }
         if (expr)
           {
-            free(expr);
+            //free(expr);
+	    delete expr;
             expr = (AtomExpr*)NULL;
           }
       }
@@ -335,7 +337,8 @@ namespace OpenBabel
   {
     register BondExpr *result;
   
-    result = (BondExpr*)malloc(sizeof(BondExpr));
+    //result = (BondExpr*)malloc(sizeof(BondExpr));
+    result = new BondExpr;
     return result;
   }
 
@@ -415,7 +418,8 @@ namespace OpenBabel
       
         if (expr)
           {
-            free(expr);
+            //free(expr);
+	    delete expr;
             expr = (BondExpr*)NULL;
           }
       }
@@ -471,7 +475,8 @@ namespace OpenBabel
   {
     Pattern *ptr;
   
-    ptr = (Pattern*)malloc(sizeof(Pattern));
+    //ptr = (Pattern*)malloc(sizeof(Pattern));
+    ptr = new Pattern;
     if( !ptr )
       FatalAllocationError("pattern");
   
@@ -499,10 +504,15 @@ namespace OpenBabel
         size = (int)(pat->aalloc*sizeof(AtomSpec));
         if( pat->atom )
           {
-            pat->atom = (AtomSpec*)realloc(pat->atom,size);
+            //pat->atom = (AtomSpec*)realloc(pat->atom,size);
+	    AtomSpec *tmp = new AtomSpec[pat->aalloc];
+            copy(pat->atom, pat->atom + pat->aalloc - ATOMPOOL, tmp);
+            delete [] pat->atom;
+            pat->atom = tmp;
           }
         else
-          pat->atom = (AtomSpec*)malloc(size);
+          //pat->atom = (AtomSpec*)malloc(size);
+          pat->atom = new AtomSpec[pat->aalloc];
         if( !pat->atom )
           FatalAllocationError("atom pool");
       }
@@ -525,10 +535,15 @@ namespace OpenBabel
         size = (int)(pat->balloc*sizeof(BondSpec));
         if( pat->bond )
           {
-            pat->bond = (BondSpec*)realloc(pat->bond,size);
+            //pat->bond = (BondSpec*)realloc(pat->bond,size);
+	    BondSpec *tmp = new BondSpec[pat->balloc];
+            copy(pat->bond, pat->bond + pat->balloc - BONDPOOL, tmp);
+            delete [] pat->bond;
+            pat->bond = tmp;
           }
         else
-          pat->bond = (BondSpec*)malloc(size);
+          //pat->bond = (BondSpec*)malloc(size);
+          pat->bond = new BondSpec[pat->balloc];
         if( !pat->bond )
           FatalAllocationError("bond pool");
       }
@@ -575,7 +590,8 @@ namespace OpenBabel
             for( i=0; i<pat->acount; i++ )
               FreeAtomExpr(pat->atom[i].expr);
             if (pat->atom != NULL) {
-              free(pat->atom);
+              //free(pat->atom);
+              delete [] pat->atom;
               pat->atom = NULL;
             }
           }
@@ -585,11 +601,12 @@ namespace OpenBabel
             for( i=0; i<pat->bcount; i++ )
               FreeBondExpr(pat->bond[i].expr);
             if (pat->bond != NULL) {
-              free(pat->bond);
+              //free(pat->bond);
+              delete [] pat->bond;
               pat->bond = NULL;
             }
           }
-        free(pat);
+        delete pat;
         pat = NULL;
       }
   }

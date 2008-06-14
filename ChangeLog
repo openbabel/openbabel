@@ -5,6 +5,14 @@
 	2) new T[n] with std::vector (where possible)
 	Original code still there as comments, can be removed once reviewed.
 
+	* src/parsmarts.cpp: Replace malloc/free with new/delete.
+	Replace realloc(array, size) with:
+	  T *tmp = new T[size];
+	  copy(array, array + old_size, tmp);
+	  delete [] array;
+	  array = tmp;
+
+
 2005-06-14  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* CMakeLists.txt, src/formats/CMakeLists.txt: Some build system
