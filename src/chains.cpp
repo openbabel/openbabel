@@ -405,7 +405,8 @@ namespace OpenBabel
   {
     ByteCode *result;
 
-    result = (ByteCode*)malloc(sizeof(ByteCode));
+    //result = (ByteCode*)malloc(sizeof(ByteCode));
+    result = new ByteCode;
     if( !result )
       {
         obErrorLog.ThrowError(__FUNCTION__, "Unable to allocate byte codes for biomolecule residue perception.", obError);
@@ -439,11 +440,13 @@ namespace OpenBabel
           case BC_ASSIGN:
 
             if (node->assign.atomid != NULL) {
-              free(node->assign.atomid);
+              //free(node->assign.atomid);
+	      delete node->assign.atomid;
               node->assign.atomid = NULL; // prevent double-free
             }
             if (node->assign.bflags != NULL) {
-              free(node->assign.bflags);
+              //free(node->assign.bflags);
+              delete node->assign.bflags;
               node->assign.bflags = NULL; // prevent double-free
             }
             
@@ -478,7 +481,8 @@ namespace OpenBabel
             break;
           }
 
-        free(node);
+        //free(node);
+	delete node;
         node = NULL;
       }
   }
@@ -702,7 +706,8 @@ namespace OpenBabel
       {
         ptr = AllocateByteCode(BC_ASSIGN);
         ptr->assign.resid = resid;
-        ptr->assign.atomid = (int*)malloc(AtomIndex*sizeof(int));
+        //ptr->assign.atomid = (int*)malloc(AtomIndex*sizeof(int));
+        ptr->assign.atomid = new int[AtomIndex];
         if( !ptr->assign.atomid )
           FatalMemoryError();
         for( i=0; i<MonoAtomCount; i++ )
@@ -710,7 +715,8 @@ namespace OpenBabel
             ptr->assign.atomid[j] = MonoAtom[i].atomid;
         if( BondIndex )
           {
-            ptr->assign.bflags = (int*)malloc(BondIndex*sizeof(int));
+            //ptr->assign.bflags = (int*)malloc(BondIndex*sizeof(int));
+            ptr->assign.bflags = new int[BondIndex];
             for( i=0; i<MonoBondCount; i++ )
               if( (j=MonoBond[i].index) != -1 )
                 ptr->assign.bflags[j] = MonoBond[i].flag;
@@ -748,10 +754,10 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////////////////////////
 
   // validated
-  OBChainsParser::OBChainsParser(void) :
+  OBChainsParser::OBChainsParser(void) /*:
     bitmasks(NULL), visits(NULL),   hetflags(NULL), atomids (NULL),
     resids  (NULL), resnos  (NULL), sernos  (NULL), hcounts (NULL), 
-    chains  (NULL), flags   (NULL)
+    chains  (NULL), flags   (NULL)*/
   {
     int i, res = RESIDMIN;
 
@@ -793,6 +799,7 @@ namespace OpenBabel
     int asize = mol.NumAtoms();
     int bsize = mol.NumBonds();
 
+    /*
     bitmasks = new unsigned short[asize];
     visits   = new bool[asize];
     resids   = new unsigned char[asize];
@@ -814,6 +821,17 @@ namespace OpenBabel
     memset(chains,   ' ', sizeof(char)           * asize);
     
     memset(flags,    0,   sizeof(unsigned char)  * bsize);
+    */
+    bitmasks.resize(asize, 0);
+    visits.resize(asize, 0);
+    resids.resize(asize, 0);
+    flags.resize(bsize, 0);
+    hetflags.resize(asize, 0);
+    atomids.resize(asize, 0);
+    resnos.resize(asize, 0);
+    sernos.resize(asize, 0);
+    hcounts.resize(asize, 0);
+    chains.resize(asize, 0);
 
     for ( i = 0 ; i < asize ; i++ )
       {
@@ -825,6 +843,7 @@ namespace OpenBabel
   //! Used by OBChainsParser::SetupMol()
   void OBChainsParser::CleanupMol(void)
   {
+    /*
     if (bitmasks != NULL)
       {
         delete bitmasks;
@@ -875,6 +894,17 @@ namespace OpenBabel
         delete flags;
         flags = NULL;
       }
+    */
+    bitmasks.clear();
+    visits.clear();
+    resids.clear();
+    flags.clear();
+    hetflags.clear();
+    atomids.clear();
+    resnos.clear();
+    sernos.clear();
+    hcounts.clear();
+    chains.clear();
   }
 
   //! Clear all residue information for a supplied molecule

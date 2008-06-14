@@ -103,16 +103,16 @@ namespace OpenBabel
       int   ResMonoAtom[MaxMonoAtom];
       int   ResMonoBond[MaxMonoBond];
 
-      unsigned short *bitmasks; 
-      bool           *visits;   //!< mark visits to prevent looping
-      unsigned char  *resids;
-      unsigned char  *flags;
-      bool           *hetflags;
-      int            *atomids;
-      short          *resnos;
-      short          *sernos;   //!< array of residue serial numbers
-      char           *hcounts;
-      char           *chains;
+      std::vector<unsigned short> bitmasks; 
+      std::vector<bool>           visits;   //!< mark visits to prevent looping
+      std::vector<unsigned char>  resids;
+      std::vector<unsigned char>  flags;
+      std::vector<bool>           hetflags;
+      std::vector<int>            atomids;
+      std::vector<short>          resnos;
+      std::vector<short>          sernos;   //!< array of residue serial numbers
+      std::vector<char>           hcounts;
+      std::vector<char>           chains;
     };
 
 }

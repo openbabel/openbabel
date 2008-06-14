@@ -1,3 +1,10 @@
+2008-06-14  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/chain.h, src/chain.cpp: Replace:
+	1) malloc/free with new/delete
+	2) new T[n] with std::vector (where possible)
+	Original code still there as comments, can be removed once reviewed.
+
 2005-06-14  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* CMakeLists.txt, src/formats/CMakeLists.txt: Some build system
