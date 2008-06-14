@@ -1,3 +1,7 @@
+2005-06-14  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/ops/loader.cpp: GCC 4.3 fix - cstdlib needed for free calls.
+
 2008-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/atom.h, src/atom.cpp: Add OBAtom::Duplcate()

@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #include <iosfwd>
 #include <string>
 #include <vector>
+#include <cstdlib>
 #include <openbabel/oberror.h>
 #include <openbabel/tokenst.h>
 #include <openbabel/plugin.h>
