@@ -76,7 +76,7 @@ bool XEDFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     ttab.SetFromType("INT");
     ttab.SetToType("XED");
-    sprintf(buffer,"%10.3f%10i%10i",
+    snprintf(buffer, BUFF_SIZE, "%10.3f%10i%10i",
             mol.GetEnergy(),mol.NumAtoms(),mol.NumBonds());
     ofs << buffer << endl;
     ofs << "File conversion by Open Babel" << endl;
@@ -84,7 +84,7 @@ bool XEDFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     for (i = 0; i < mol.NumBonds(); i++)
     {
         bond = mol.GetBond(i);
-        sprintf(buffer,"%8i%8i",
+        snprintf(buffer, BUFF_SIZE, "%8i%8i",
                 bond->GetBeginAtomIdx(),
                 bond->GetEndAtomIdx());
         ofs << buffer;
@@ -151,7 +151,7 @@ bool XEDFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             mass=0;
         }
 
-        sprintf(buffer,"%6i%15.6f%15.6f%15.6f%6i%12.4f",
+        snprintf(buffer, BUFF_SIZE, "%6i%15.6f%15.6f%15.6f%6i%12.4f",
                 mass, atom->GetX(),atom->GetY(),atom->GetZ(), type_name, 0.0);
         ofs << buffer << endl;
     }

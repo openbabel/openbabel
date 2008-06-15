@@ -157,7 +157,7 @@ namespace OpenBabel
         ofs << buffer;
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
           {
-            sprintf(buffer,"%6d",nbr->GetIdx());
+            snprintf(buffer, BUFF_SIZE, "%6d",nbr->GetIdx());
             ofs << buffer;
           }
         ofs << endl;

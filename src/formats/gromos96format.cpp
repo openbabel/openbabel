@@ -149,7 +149,7 @@ namespace OpenBabel
 
         if (!(atom->GetIdx()%10))
           {
-            sprintf(buffer,"# %d\n",atom->GetIdx());
+            snprintf(buffer, BUFF_SIZE, "# %d\n",atom->GetIdx());
             ofs << buffer;
           }
       }

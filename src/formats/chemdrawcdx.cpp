@@ -191,7 +191,7 @@ namespace OpenBabel
         if(tag & kCDXTag_Object)	// Object
           {
             READ_INT32 (ifs, id);
-            sprintf(errorMsg, "Object ID: %08X in root has type: %04X\n", id, tag);
+            snprintf(errorMsg, BUFF_SIZE, "Object ID: %08X in root has type: %04X\n", id, tag);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
             if(tag == kCDXObj_Fragment)
@@ -261,7 +261,7 @@ namespace OpenBabel
             else
               {
                 depth++;
-                sprintf(errorMsg, "New object in root, type %04X\n", tag);
+                snprintf(errorMsg, BUFF_SIZE, "New object in root, type %04X\n", tag);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
               }
           }
@@ -325,7 +325,7 @@ namespace OpenBabel
                 break;
               default: // some unknown tag
                 ifs.seekg(size, ios_base::cur); 
-                sprintf(errorMsg, "Root Tag: %04X\tSize: %04X\n", tag, size); 
+                snprintf(errorMsg, BUFF_SIZE, "Root Tag: %04X\tSize: %04X\n", tag, size); 
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
                 break;
               }
@@ -374,7 +374,7 @@ namespace OpenBabel
         if(tag & kCDXTag_Object)	// Object
           {
             READ_INT32 (ifs, id);
-            sprintf(errorMsg, "Object ID: %08X in root has type: %04X\n", id, tag);
+            snprintf(errorMsg, BUFF_SIZE, "Object ID: %08X in root has type: %04X\n", id, tag);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
             if(tag == kCDXObj_Fragment)
@@ -461,7 +461,7 @@ puts("found a reaction");
             else
               {
                 depth++;
-                sprintf(errorMsg, "New object in root, type %04X\n", tag);
+                snprintf(errorMsg, BUFF_SIZE, "New object in root, type %04X\n", tag);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
               }
           }
@@ -526,7 +526,7 @@ puts("found name");
                 break;
               default: // some unknown tag
                 ifs.seekg(size, ios_base::cur); 
-                sprintf(errorMsg, "Root Tag: %04X\tSize: %04X\n", tag, size); 
+                snprintf(errorMsg, BUFF_SIZE, "Root Tag: %04X\tSize: %04X\n", tag, size); 
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
                 break;
               }
@@ -737,7 +737,7 @@ puts("found name");
             depth++;
             READ_INT32 (*ifs, id);
             //			printf("Object ID (in text-object %08X): %08X has type: %04X\n", textId, id, tag);
-            sprintf(errorMsg, "New object in text, type %04X\n", tag);
+            snprintf(errorMsg, BUFF_SIZE, "New object in text, type %04X\n", tag);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
           }
         else if(tag == 0)	// End of object
@@ -779,7 +779,7 @@ puts("found name");
 
     atom.SetAtomicNum(6);
     //	data->SetAttribute("nodeId");
-    //	sprintf(strNodeId, "%d", nodeId);
+    //	snprintf(strNodeId, 20, "%d", nodeId);
     //	data->SetValue(strNodeId);
     //	atom.SetData(data);	
     //	if(atom.HasData("nodeId"))
@@ -797,7 +797,7 @@ puts("found name");
             depth++;
             READ_INT32 (*ifs, id);
 
-            sprintf(errorMsg, "Object ID (in node %08X): %08X has type: %04X\n", nodeId, id, tag);
+            snprintf(errorMsg, BUFF_SIZE, "Object ID (in node %08X): %08X has type: %04X\n", nodeId, id, tag);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
             if(tag == kCDXObj_Fragment)
@@ -825,7 +825,7 @@ puts("found name");
               }			
             else
               {
-                sprintf(errorMsg, "New object in node, type %04X\n", tag);
+                snprintf(errorMsg, BUFF_SIZE, "New object in node, type %04X\n", tag);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
               }			
           }
@@ -837,7 +837,7 @@ puts("found name");
         else	// Property
           {
             READ_INT16 (*ifs, size);
-            sprintf(errorMsg, "Node Tag: %04X\tSize: %04X\n", tag, size);
+            snprintf(errorMsg, BUFF_SIZE, "Node Tag: %04X\tSize: %04X\n", tag, size);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
             switch(tag)
@@ -885,7 +885,7 @@ puts("found name");
                 break;
               default: // some unknown node tag
                 ifs->seekg(size, ios_base::cur); 
-                sprintf(errorMsg, "Node Tag: %04X\tSize: %04X\n", tag, size); 
+                snprintf(errorMsg, BUFF_SIZE, "Node Tag: %04X\tSize: %04X\n", tag, size); 
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
                 break;
               }
@@ -936,7 +936,7 @@ puts("found name");
           {
             depth++;
             READ_INT32 (*ifs, id);
-            sprintf(errorMsg, "Object ID (in bond %08X): %08X has type: %04X\n", bondId, id, tag);
+            snprintf(errorMsg, BUFF_SIZE, "Object ID (in bond %08X): %08X has type: %04X\n", bondId, id, tag);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
             if(tag == kCDXObj_Text)
@@ -946,7 +946,7 @@ puts("found name");
               }
             else
               {
-                sprintf(errorMsg, "New object in bond, type %04X\n", tag);
+                snprintf(errorMsg, BUFF_SIZE, "New object in bond, type %04X\n", tag);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
               }
           }
@@ -959,7 +959,7 @@ puts("found name");
           {
             READ_INT16 (*ifs, size);
 
-            sprintf(errorMsg, "Bond Tag: %04X\tSize: %04X\n", tag, size);
+            snprintf(errorMsg, BUFF_SIZE, "Bond Tag: %04X\tSize: %04X\n", tag, size);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
             switch(tag)
@@ -1020,7 +1020,7 @@ puts("found name");
 
               default: // some unknown, undocumented property
                 ifs->seekg(size, ios_base::cur);
-                sprintf(errorMsg, "Bond Tag: %04X\tSize: %04X\n", tag, size);
+                snprintf(errorMsg, BUFF_SIZE, "Bond Tag: %04X\tSize: %04X\n", tag, size);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
                 break;
               }
@@ -1050,7 +1050,7 @@ puts("found name");
             depth++;
             READ_INT32 (*ifs, id);
 
-            sprintf(errorMsg, "Object ID (in generic %08X): %08X has type: %04X\n", objId, id, tag);
+            snprintf(errorMsg, BUFF_SIZE, "Object ID (in generic %08X): %08X has type: %04X\n", objId, id, tag);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
             if ((tag == kCDXObj_BracketAttachment) 
@@ -1063,21 +1063,21 @@ puts("found name");
                 depth--;
               }
             else {
-              sprintf(errorMsg, "New object in generic, type %04X\n", tag);
+              snprintf(errorMsg, BUFF_SIZE, "New object in generic, type %04X\n", tag);
               obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
             }
           }
         else if(tag == 0)	// End of object
           {
             depth--;
-            sprintf(errorMsg, "End of Object in generic %08X\n", objId);
+            snprintf(errorMsg, BUFF_SIZE, "End of Object in generic %08X\n", objId);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
           }
         else	// Property
           {
             READ_INT16 (*ifs, size);
 
-            sprintf(errorMsg, "Generic Tag: %04X\tSize: %04X\n", tag, size);
+            snprintf(errorMsg, BUFF_SIZE, "Generic Tag: %04X\tSize: %04X\n", tag, size);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
             switch(tag)
               {
@@ -1115,7 +1115,7 @@ puts("found name");
             depth++;
             READ_INT32 (*ifs, id);
 
-            sprintf(errorMsg, "Object ID (in fragment %08X): %08X has type: %04X\n", fragmentId, id, tag);
+            snprintf(errorMsg, BUFF_SIZE, "Object ID (in fragment %08X): %08X has type: %04X\n", fragmentId, id, tag);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
             if(tag == kCDXObj_Fragment)
@@ -1146,7 +1146,7 @@ puts("found name");
             //			}
             else
               {
-                sprintf(errorMsg, "New object in fragment, type %04X\n", tag);
+                snprintf(errorMsg, BUFF_SIZE, "New object in fragment, type %04X\n", tag);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
               }
 
@@ -1168,7 +1168,7 @@ puts("found name");
                 break;
               default:
                 ifs->seekg(size, ios_base::cur); 
-                sprintf(errorMsg, "Fragment Tag: %04X\tSize: %04X\n", tag, size);
+                snprintf(errorMsg, BUFF_SIZE, "Fragment Tag: %04X\tSize: %04X\n", tag, size);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
                 break;

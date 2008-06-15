@@ -565,7 +565,7 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         if (strlen(mob_elementsym[element])==1||strncasecmp(mob_elementsym[element],atomname,2)) pos=5; }
       str_copy(&buffer[pos],atomname);
       str_copy(&buffer[8],(char*)res->GetName().c_str());
-      sprintf(&buffer[12],"%4d",res->GetNum()); }
+      snprintf(&buffer[12], 4, "%4d",res->GetNum()); }
     else
     { str_copy(&buffer[4],etab.GetSymbol(element));
       str_copy(&buffer[8],"UNK    1"); }

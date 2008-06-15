@@ -1,5 +1,14 @@
 2008-06-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/formats/cssrformat.cpp, src/formats/MCDLformat.cpp,
+	src/formats/mmcifformat.cpp, src/formats/balstformat.cpp,
+	src/formats/chemdrawcdx.cpp, src/formats/boxformat.cpp,
+	src/formats/unichemformat.cpp, src/formats/yasaraformat.cpp,
+	src/formats/zindoformat.cpp, src/formats/gromos96format.cpp,
+	src/formats/xedformat.cpp: sprintf --> snprintf
+
+2008-06-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* src/chains.cpp, src/pointgroup.cpp, src/rotor.cpp: Some more sprintf
 	-> snprintf (I don't expect any problems here, but just in case...)
 

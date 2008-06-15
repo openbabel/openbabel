@@ -118,16 +118,16 @@ namespace OpenBabel
         for (nbr = atom->BeginNbrAtom(j); nbr; nbr = atom->NextNbrAtom(j))
           {
             if (bonds > 8) break;
-            sprintf(buffer,"%4d",nbr->GetIdx());
+            snprintf(buffer, BUFF_SIZE, "%4d",nbr->GetIdx());
             ofs << buffer;
             bonds++;
           }
         for (; bonds < 8; bonds ++)
           {
-            sprintf(buffer,"%4d",0);
+            snprintf(buffer, BUFF_SIZE, "%4d",0);
             ofs << buffer;
           }
-        sprintf(buffer," %7.3f%4d", atom->GetPartialCharge(), 1);
+        snprintf(buffer, BUFF_SIZE, " %7.3f%4d", atom->GetPartialCharge(), 1);
         ofs << buffer << endl;
       }
 

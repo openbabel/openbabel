@@ -210,9 +210,9 @@ private:
     int  i,j,k,n,nn,icons[6],comma;
     char line[82],semis[100];
     //char *sp = tstr;
-  string result="";
+    string result="";
 
-    result="[";//sprintf(sp,"[");
+    result="[";//snprintf(sp, 1, "[");
     semis[0] = '\0';
     
     for (i=0; i<ntatoms; i++)
@@ -241,14 +241,14 @@ private:
         {
             if (icons[j] > (i+1) && comma == 0)
             {
-                sprintf(line,"%s%d",semis,icons[j]);
+                snprintf(line, 82, "%s%d",semis,icons[j]);
                 result=result+line;//strcat(sp,line);
                 comma = 1;
                 semis[0] = '\0';
             }
             else if (icons[j] > (i+1) && comma == 1)
             {
-                sprintf(line,",%d",icons[j]);
+                snprintf(line, 82, ",%d",icons[j]);
                 result=result+line;//strcat(sp,line);
             }
 
@@ -508,9 +508,9 @@ private:
 
   string MCDLFormat::intToStr(int k) {
     char temp[16];
-    sprintf(temp,"%d",k);
-  string line=temp;
-  return line;
+    snprintf(temp, 16, "%d", k);
+    string line = temp;
+    return line;
   };
 
   string MCDLFormat::getMCDL(OBMol* pmol, bool includeCoordinates) {
@@ -2234,9 +2234,9 @@ bool MCDLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   string intToStr(int k) {
     char temp[16];
-    sprintf(temp,"%d",k);
-	string line=temp;
-	return line;
+    snprintf(temp, 16, "%d", k);
+    string line = temp;
+    return line;
   };
 
 

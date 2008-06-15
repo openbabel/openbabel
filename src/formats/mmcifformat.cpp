@@ -821,7 +821,7 @@ namespace OpenBabel
     //Define some references so we can use the old parameter names
     ostream & ofs = * pConv->GetOutStream();
 
-    char buffer[0x20];
+    char buffer[BUFF_SIZE];
     
     string id;
     for (const char * p = pmol->GetTitle(); * p; ++ p)
@@ -829,7 +829,7 @@ namespace OpenBabel
         id.append(1, (char)toupper(* p));
     if (id.empty())
       {
-      sprintf(buffer, "T%d", time(0));
+      snprintf(buffer, BUFF_SIZE, "T%d", time(0));
       id.assign(buffer);
       }
     ofs << "# --------------------------------------------------------------------------" << endl;
@@ -897,7 +897,7 @@ namespace OpenBabel
         string resname(pRes->GetName()), atomname(pRes->GetAtomID(atom));
         if (atomname.empty())
           {
-          sprintf(buffer, "%s%u", etab.GetSymbol(atom->GetAtomicNum()), site_id);
+          snprintf(buffer, BUFF_SIZE, "%s%u", etab.GetSymbol(atom->GetAtomicNum()), site_id);
           atomname.assign(buffer);
           }
         if (resname.empty())

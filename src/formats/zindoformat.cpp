@@ -132,12 +132,12 @@ bool ZINDOFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         ofs << endl;
         ofs << " NOP = 1 " << endl;
         ofs << " NDT = 1 " << endl;
-        sprintf(buffer," FOP(1) =% 4d% 10.6f",
+        snprintf(buffer, BUFF_SIZE, " FOP(1) =% 4d% 10.6f",
                 valenceE - 1, 1.0);
         ofs << buffer << endl;
     }
 
-    sprintf(buffer," NAT          %4d   NEL        %4d   MULT           1",
+    snprintf(buffer, BUFF_SIZE, " NAT          %4d   NEL        %4d   MULT           1",
             mol.NumAtoms(),
             valenceE);
     ofs << buffer << endl;
@@ -146,7 +146,7 @@ bool ZINDOFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "! ***** BASIS SET AND C. I. SIZE INFORMATION ***** " << endl;
     ofs << endl;
 
-    sprintf(buffer," DYNAL(1) =     0%5d%5d    0    0 1200%5d",
+    snprintf(buffer, BUFF_SIZE, " DYNAL(1) =     0%5d%5d    0    0 1200%5d",
             mol.NumAtoms() - mol.NumHvyAtoms(),
             mol.NumHvyAtoms(),
             orbitals + 25);
@@ -166,7 +166,7 @@ bool ZINDOFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
     {
-        sprintf(buffer, "% 10.6f% 10.6f% 10.6f%5d",
+        snprintf(buffer, BUFF_SIZE, "% 10.6f% 10.6f% 10.6f%5d",
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ(),
@@ -187,15 +187,15 @@ bool ZINDOFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << endl;
 
     if (charged)
-        sprintf(buffer, "%5d%5d%5d%5d", 1, orbitals, orbitals, orbitals + 1);
+        snprintf(buffer, BUFF_SIZE, "%5d%5d%5d%5d", 1, orbitals, orbitals, orbitals + 1);
     else
-        sprintf(buffer, "%5d%5d%5d", 1, orbitals, orbitals);
+        snprintf(buffer, BUFF_SIZE, "%5d%5d%5d", 1, orbitals, orbitals);
     ofs << buffer << endl;
     if (charged)
-        sprintf(buffer,"%5d%5d%5d%5d%5d",
+        snprintf(buffer, BUFF_SIZE, "%5d%5d%5d%5d%5d",
                 21, (orbitals - 8), orbitals + 1, orbitals + 1, orbitals + 11);
     else
-        sprintf(buffer,"%5d%5d%5d%5d%5d",
+        snprintf(buffer, BUFF_SIZE, "%5d%5d%5d%5d%5d",
                 21, (orbitals - 9), orbitals, orbitals + 1, orbitals + 10);
     ofs << buffer << endl;
     ofs << endl;

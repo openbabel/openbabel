@@ -156,10 +156,10 @@ bool BoxFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vmid /= 2.0;
 
     ofs << "HEADER    CORNERS OF BOX" << endl;
-    sprintf(buffer,"REMARK    CENTER (X Y Z)      %10.3f %10.3f %10.3f",
+    snprintf(buffer, BUFF_SIZE, "REMARK    CENTER (X Y Z)      %10.3f %10.3f %10.3f",
             vmid.x(),vmid.y(),vmid.z());
     ofs << buffer << endl;
-    sprintf(buffer,"REMARK    DIMENSIONS (X Y Z)  %10.3f %10.3f %10.3f",
+    snprintf(buffer, BUFF_SIZE, "REMARK    DIMENSIONS (X Y Z)  %10.3f %10.3f %10.3f",
             vdim.x(),vdim.y(),vdim.z());
     ofs << buffer << endl;
     vdim /= 2.0;
@@ -197,7 +197,7 @@ bool BoxFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             vtmp.SetX(vmid.x()-vdim.x());
             break;
         }
-        sprintf(buffer,"ATOM      %d  DUA BOX     1    %8.3f%8.3f%8.3f",
+        snprintf(buffer, BUFF_SIZE, "ATOM      %d  DUA BOX     1    %8.3f%8.3f%8.3f",
                 j,vtmp.x(),vtmp.y(),vtmp.z());
         ofs << buffer << endl;
     }
