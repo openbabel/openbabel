@@ -961,12 +961,12 @@ namespace OpenBabel
         else if (atom->IsHydrogen())
           {
             if (hcounts[i])
-              sprintf(buffer, "%cH%.2s", hcounts[i]+'0', ChainsAtomName[atomids[i]]+2);
+              snprintf(buffer, BUFF_SIZE, "%cH%.2s", hcounts[i]+'0', ChainsAtomName[atomids[i]]+2);
             else
-              sprintf(buffer, "H%.2s", ChainsAtomName[atomids[i]]+2);
+              snprintf(buffer, BUFF_SIZE, "H%.2s", ChainsAtomName[atomids[i]]+2);
           }
         else
-          sprintf(buffer, "%.4s", ChainsAtomName[atomids[i]]);
+          snprintf(buffer, BUFF_SIZE, "%.4s", ChainsAtomName[atomids[i]]);
 
         if (buffer[3] == ' ')
           buffer[3] = '\0';

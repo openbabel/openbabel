@@ -1742,19 +1742,19 @@ namespace OpenBabel {
       if( NormalAxesCounts[0] == 1 )
         strcat( symmetry_code, "(Cinf) " ) ;
       if( NormalAxesCounts[0] >  1 ) {
-        sprintf( buf, "%d*(Cinf) ", NormalAxesCounts[0] ) ;
+        snprintf( buf, 100, "%d*(Cinf) ", NormalAxesCounts[0] ) ;
         strcat( symmetry_code, buf ) ;
       }
       for( i = MaxAxisOrder ; i >= 2 ; i-- ){
-        if( NormalAxesCounts[i] == 1 ){ sprintf( buf, "(C%d) ", i ) ; strcat( symmetry_code, buf ) ; }
-        if( NormalAxesCounts[i] >  1 ){ sprintf( buf, "%d*(C%d) ", NormalAxesCounts[i], i ) ; strcat( symmetry_code, buf ) ; }
+        if( NormalAxesCounts[i] == 1 ){ snprintf( buf, 100, "(C%d) ", i ) ; strcat( symmetry_code, buf ) ; }
+        if( NormalAxesCounts[i] >  1 ){ snprintf( buf, 100, "%d*(C%d) ", NormalAxesCounts[i], i ) ; strcat( symmetry_code, buf ) ; }
       }
       for( i = MaxAxisOrder ; i >= 2 ; i-- ){
-        if( ImproperAxesCounts[i] == 1 ){ sprintf( buf, "(S%d) ", i ) ; strcat( symmetry_code, buf ) ; }
-        if( ImproperAxesCounts[i] >  1 ){ sprintf( buf, "%d*(S%d) ", ImproperAxesCounts[i], i ) ; strcat( symmetry_code, buf ) ; }
+        if( ImproperAxesCounts[i] == 1 ){ snprintf( buf, 100, "(S%d) ", i ) ; strcat( symmetry_code, buf ) ; }
+        if( ImproperAxesCounts[i] >  1 ){ snprintf( buf, 100, "%d*(S%d) ", ImproperAxesCounts[i], i ) ; strcat( symmetry_code, buf ) ; }
       }
       if( PlanesCount == 1 ) strcat( symmetry_code, "(sigma) " ) ;
-      if( PlanesCount >  1 ){ sprintf( buf, "%d*(sigma) ", PlanesCount ) ; strcat( symmetry_code, buf ) ; }
+      if( PlanesCount >  1 ){ snprintf( buf, 100, "%d*(sigma) ", PlanesCount ) ; strcat( symmetry_code, buf ) ; }
       printf( "%s\n", symmetry_code ) ;
     }
     SymmetryCode = symmetry_code ;

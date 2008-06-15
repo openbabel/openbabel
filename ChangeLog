@@ -1,5 +1,10 @@
 2008-06-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/chains.cpp, src/pointgroup.cpp, src/rotor.cpp: Some more sprintf
+	-> snprintf (I don't expect any problems here, but just in case...)
+
+2008-06-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/forcefield.cpp, src/forcefield.cpp,
 	src/forcefields/*: Replace sprintf(_logbuf, ...) with
 	snprintf(_logbuf, BUFF_SIZE). 

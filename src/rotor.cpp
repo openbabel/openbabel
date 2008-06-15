@@ -57,8 +57,8 @@ namespace OpenBabel
           int ref[4];
           rotor->GetDihedralAtoms(ref);
           char buffer[BUFF_SIZE];
-          sprintf(buffer,"The rotor has no associated torsion values -> %d %d %d %d",ref[0],ref[1],ref[2],ref[3]);
-
+          snprintf(buffer, BUFF_SIZE, "The rotor has no associated torsion values -> %d %d %d %d",
+		  ref[0],ref[1],ref[2],ref[3]);
           obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
         }
 
