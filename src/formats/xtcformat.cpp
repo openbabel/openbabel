@@ -26,6 +26,7 @@
 //#include <rpc/rpc.h>
 #include <rpc/types.h>
 #include <rpc/xdr.h>
+#include <vector>
 //#include <stdio.h>
 //#include <stdlib.h>
 
@@ -65,10 +66,10 @@ namespace OpenBabel
       int	sizeofint(const int size);
       int	sizeofints( const int num_of_ints, unsigned int sizes[]);
       void	sendints(int buf[], const int num_of_ints, const int num_of_bits, 
-		unsigned int sizes[], unsigned int nums[]);
+      unsigned int sizes[], unsigned int nums[]);
       int	receivebits(int buf[], int num_of_bits);
       void	receiveints(int buf[], const int num_of_ints, int num_of_bits, 
-		unsigned int sizes[], int nums[]);
+      unsigned int sizes[], int nums[]);
       int	xdr3dfcoord(XDR *xdrs, float *fp, int *size, float *precision);
  
     public:
@@ -127,7 +128,6 @@ namespace OpenBabel
 
     OBMol &mol = *pmol;
     std::string filename = pConv->GetInFilename();
-    //std::string filename = "traj.xtc";
 
     if (xdropen(&xd, filename.c_str(),"r") == 0) {
       std::stringstream errorMsg;
@@ -139,8 +139,7 @@ namespace OpenBabel
     int magic, natoms, step;
     float prec = 1000.0;
     float time, box[3][3];
-    float *floatCoord = NULL;
-    double *doubleCoord = NULL;
+    std::vector<float> floatCoord;
     std::vector<double*> vconf;
 
 
@@ -180,31 +179,26 @@ namespace OpenBabel
       xdr_float(&xd, &box[2][1]);
       xdr_float(&xd, &box[2][2]);
 
-      if (floatCoord == NULL)
-        floatCoord = (float *)malloc(natoms * 3 * sizeof(float));
+      if (!floatCoord.size())
+        floatCoord.resize(natoms * 3);
 
       // Read the positions
-      if (xdr3dfcoord(&xd, (float *)floatCoord, &natoms, &prec) == 0) {
+      if (xdr3dfcoord(&xd, &floatCoord[0], &natoms, &prec) == 0) {
         // printf("end reached...\n");
         break;
       }
 
       // Convert positions from single to double precision and convert from
       // nm to A
-      doubleCoord = new double[3*natoms];
+      double *confs = new double[natoms * 3];
       for (int i=0; i < natoms * 3; ++i) // unroll??
-        doubleCoord[i] = (double) 10.0 * floatCoord[i];
+        confs[i] = static_cast<double>(10.0 * floatCoord.at(i));
 
-      // Add positions to vector
-      vconf.push_back(doubleCoord);
+      vconf.push_back(confs);
     }
 
     // Close the XDR file
     xdrclose(&xd); 
-
-    // Free the allocated floatCoord memory
-    free (floatCoord);
-    floatCoord = NULL;
  
     // Set the conformers in the mol object
     mol.SetConformers(vconf);

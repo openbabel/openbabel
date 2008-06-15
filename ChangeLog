@@ -15,6 +15,9 @@
 
 2005-06-14  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* src/formats/xtcformat.cpp: Some modifications to the xtc format to
+	use C++ structures.
+
 	* CMakeLists.txt, src/formats/CMakeLists.txt: Some build system
 	updates to build format plugins as modules.
 
