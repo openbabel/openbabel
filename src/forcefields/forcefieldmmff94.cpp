@@ -79,7 +79,7 @@ namespace OpenBabel
     }
 
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "\nTOTAL ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
+      snprintf(_logbuf, BUFF_SIZE, "\nTOTAL ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -154,7 +154,7 @@ namespace OpenBabel
       #endif
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(_logbuf, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
+        snprintf(_logbuf, BUFF_SIZE, "%2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
                 atoi(_bondcalculations[i].a->GetType()), atoi(_bondcalculations[i].b->GetType()), 
                 _bondcalculations[i].bt, _bondcalculations[i].rab, _bondcalculations[i].r0, 
                 _bondcalculations[i].kb, _bondcalculations[i].delta, 
@@ -173,7 +173,7 @@ namespace OpenBabel
     #endif
  
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL BOND STRETCHING ENERGY = %8.5f %s\n",  143.9325 * 0.5 * energy, GetUnit().c_str());
+      snprintf(_logbuf, BUFF_SIZE, "     TOTAL BOND STRETCHING ENERGY = %8.5f %s\n",  143.9325 * 0.5 * energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
     
@@ -271,7 +271,7 @@ namespace OpenBabel
       #endif
       
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(_logbuf, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
+        snprintf(_logbuf, BUFF_SIZE, "%2d   %2d   %2d      %d   %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", 
                 atoi(_anglecalculations[i].a->GetType()), atoi(_anglecalculations[i].b->GetType()), 
                 atoi(_anglecalculations[i].c->GetType()), _anglecalculations[i].at, 
                 _anglecalculations[i].theta, _anglecalculations[i].theta0, 
@@ -292,7 +292,7 @@ namespace OpenBabel
     #endif
  
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL ANGLE BENDING ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
+      snprintf(_logbuf, BUFF_SIZE, "     TOTAL ANGLE BENDING ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
     
@@ -384,7 +384,7 @@ namespace OpenBabel
       #endif
  
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(_logbuf, "%2d   %2d   %2d     %2d   %8.3f   %8.3f   %8.3f   %8.3f   %8.3f\n", 
+        snprintf(_logbuf, BUFF_SIZE, "%2d   %2d   %2d     %2d   %8.3f   %8.3f   %8.3f   %8.3f   %8.3f\n", 
                 atoi(_strbndcalculations[i].a->GetType()), atoi(_strbndcalculations[i].b->GetType()), 
                 atoi(_strbndcalculations[i].c->GetType()), _strbndcalculations[i].sbt, 
                 _strbndcalculations[i].theta, _strbndcalculations[i].delta_theta, 
@@ -405,7 +405,7 @@ namespace OpenBabel
     #endif
  
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL STRETCH BENDING ENERGY = %8.5f %s\n", 2.51210 * energy, GetUnit().c_str());
+      snprintf(_logbuf, BUFF_SIZE, "     TOTAL STRETCH BENDING ENERGY = %8.5f %s\n", 2.51210 * energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
  
@@ -521,7 +521,7 @@ namespace OpenBabel
       #endif
  
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(_logbuf, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f\n",  
+        snprintf(_logbuf, BUFF_SIZE, "%2d   %2d   %2d   %2d      %d   %8.3f   %6.3f   %6.3f   %6.3f   %8.3f\n",  
                 atoi(_torsioncalculations[i].a->GetType()), atoi(_torsioncalculations[i].b->GetType()), 
                 atoi(_torsioncalculations[i].c->GetType()), atoi(_torsioncalculations[i].d->GetType()), 
                 _torsioncalculations[i].tt, _torsioncalculations[i].tor, _torsioncalculations[i].v1, 
@@ -543,7 +543,7 @@ namespace OpenBabel
     #endif
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL TORSIONAL ENERGY = %8.5f %s\n", 0.5 * energy, GetUnit().c_str());
+      snprintf(_logbuf, BUFF_SIZE, "     TOTAL TORSIONAL ENERGY = %8.5f %s\n", 0.5 * energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -619,7 +619,7 @@ namespace OpenBabel
       #endif
  
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(_logbuf, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f\n", 
+        snprintf(_logbuf, BUFF_SIZE, "%2d   %2d   %2d   %2d      0   %8.3f   %8.3f     %8.3f\n", 
                 atoi(_oopcalculations[i].a->GetType()), atoi(_oopcalculations[i].b->GetType()), 
                 atoi(_oopcalculations[i].c->GetType()), atoi(_oopcalculations[i].d->GetType()), 
                 _oopcalculations[i].angle, _oopcalculations[i].koop, 
@@ -640,7 +640,7 @@ namespace OpenBabel
     #endif
     
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.5f %s\n", 0.043844 * 0.5 * energy, GetUnit().c_str());
+      snprintf(_logbuf, BUFF_SIZE, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.5f %s\n", 0.043844 * 0.5 * energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -718,7 +718,7 @@ namespace OpenBabel
       #endif
 
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(_logbuf, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f\n", 
+        snprintf(_logbuf, BUFF_SIZE, "%2d   %2d     %8.3f  %8.3f  %8.3f  %8.3f\n", 
                 atoi(_vdwcalculations[i].a->GetType()), atoi(_vdwcalculations[i].b->GetType()), 
                 _vdwcalculations[i].rab, _vdwcalculations[i].R_AB, _vdwcalculations[i].epsilon, _vdwcalculations[i].energy);
         OBFFLog(_logbuf);
@@ -741,7 +741,7 @@ namespace OpenBabel
     #endif
      
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL VAN DER WAALS ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
+      snprintf(_logbuf, BUFF_SIZE, "     TOTAL VAN DER WAALS ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -804,7 +804,7 @@ namespace OpenBabel
       #endif
 
       IF_OBFF_LOGLVL_HIGH {
-        sprintf(_logbuf, "%2d   %2d   %8.3f  %8.3f  %8.3f  %8.3f\n", 
+        snprintf(_logbuf, BUFF_SIZE, "%2d   %2d   %8.3f  %8.3f  %8.3f  %8.3f\n", 
                 atoi(_electrostaticcalculations[i].a->GetType()), atoi(_electrostaticcalculations[i].b->GetType()), 
                 _electrostaticcalculations[i].rab, _electrostaticcalculations[i].a->GetPartialCharge(), 
                 _electrostaticcalculations[i].b->GetPartialCharge(), _electrostaticcalculations[i].energy);
@@ -827,7 +827,7 @@ namespace OpenBabel
     #endif
  
     IF_OBFF_LOGLVL_MEDIUM {
-      sprintf(_logbuf, "     TOTAL ELECTROSTATIC ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
+      snprintf(_logbuf, BUFF_SIZE, "     TOTAL ELECTROSTATIC ENERGY = %8.5f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
 
@@ -2576,7 +2576,7 @@ namespace OpenBabel
     }
     
     FOR_ATOMS_OF_MOL (atom, _mol) {
-      sprintf(type, "%d", GetType(&*atom));
+      snprintf(type, 3, "%d", GetType(&*atom));
       atom->SetType(type);
     }
     
@@ -2637,13 +2637,13 @@ namespace OpenBabel
         if (parameter == NULL) { 
           IF_OBFF_LOGLVL_LOW {
             // This should never happen
-            sprintf(_logbuf, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
+            snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
             OBFFLog(_logbuf);
           }
           return false;
         } else {
           IF_OBFF_LOGLVL_LOW {
-            sprintf(_logbuf, "   USING EMPIRICAL RULE FOR BOND STRETCHING %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
+            snprintf(_logbuf, BUFF_SIZE, "   USING EMPIRICAL RULE FOR BOND STRETCHING %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
             OBFFLog(_logbuf);
           }
 
@@ -2750,8 +2750,8 @@ namespace OpenBabel
         strbndcalc.theta0 = parameter->_dpar[1]; // **
       } else {
         IF_OBFF_LOGLVL_LOW {
-          sprintf(_logbuf, "   USING DEFAULT ANGLE FOR %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
-          sprintf(_logbuf, "   USING EMPIRICAL RULE FOR ANGLE BENDING %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          snprintf(_logbuf, BUFF_SIZE, "   USING DEFAULT ANGLE FOR %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          snprintf(_logbuf, BUFF_SIZE, "   USING EMPIRICAL RULE FOR ANGLE BENDING %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
           OBFFLog(_logbuf);
         }
 
@@ -2790,7 +2790,7 @@ namespace OpenBabel
       // empirical rule for 0-b-0 and standard angles
       if (anglecalc.ka == 0.0) {
         IF_OBFF_LOGLVL_LOW {
-          sprintf(_logbuf, "   USING EMPIRICAL RULE FOR ANGLE BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+          snprintf(_logbuf, BUFF_SIZE, "   USING EMPIRICAL RULE FOR ANGLE BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
           OBFFLog(_logbuf);
         }
 
@@ -2834,7 +2834,7 @@ namespace OpenBabel
         
         // This is not a real empirical rule...
         //IF_OBFF_LOGLVL_LOW {
-        //  sprintf(_logbuf, "   USING EMPIRICAL RULE FOR STRETCH-BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+        //  snprintf(_logbuf, BUFF_SIZE, "   USING EMPIRICAL RULE FOR STRETCH-BENDING FORCE CONSTANT %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
         //  OBFFLog(_logbuf);
         //}
     
@@ -2847,7 +2847,7 @@ namespace OpenBabel
         if (parameter == NULL) {
           // This should never happen
           IF_OBFF_LOGLVL_LOW {
-            sprintf(_logbuf, "    COULD NOT FIND PARAMETERS FOR STRETCH-BEND %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
+            snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR STRETCH-BEND %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
             OBFFLog(_logbuf);
           }
           return false;
@@ -3051,7 +3051,7 @@ namespace OpenBabel
         bool found_rule = false;
 	
         //IF_OBFF_LOGLVL_LOW {
-        //  sprintf(_logbuf, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
+        //  snprintf(_logbuf, BUFF_SIZE, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
         //    a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
         //  OBFFLog(_logbuf);
         //}
@@ -3217,7 +3217,7 @@ namespace OpenBabel
             Vc = GetVParam(c);
 
             IF_OBFF_LOGLVL_LOW {
-              sprintf(_logbuf, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
+              snprintf(_logbuf, BUFF_SIZE, "   USING EMPIRICAL RULE FOR TORSION FORCE CONSTANT %d-%d-%d-%d (IDX)...\n", 
                       a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
               OBFFLog(_logbuf);
             }
@@ -3406,7 +3406,7 @@ namespace OpenBabel
       parameter_b = GetParameter1Atom(atoi(b->GetType()), _ffvdwparams);
       if ((parameter_a == NULL) || (parameter_b == NULL)) {
         IF_OBFF_LOGLVL_LOW {
-          sprintf(_logbuf, "   COULD NOT FIND VAN DER WAALS PARAMETERS FOR %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
+          snprintf(_logbuf, BUFF_SIZE, "   COULD NOT FIND VAN DER WAALS PARAMETERS FOR %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
           OBFFLog(_logbuf);
         }
 
@@ -4042,10 +4042,10 @@ namespace OpenBabel
              ) continue;
 
         if (atoi(_mol.GetAtom(ni)->GetType()) == (*i))
-          sprintf(_logbuf, "%2d   %3d  %4d    %3d      %3d          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
+          snprintf(_logbuf, BUFF_SIZE, "%2d   %3d  %4d    %3d      %3d          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
                   _mol.GetAtom(ni)->IsAromatic(), atoi(_mol.GetAtom(ni)->GetType()), *i);
         else {
-          sprintf(_logbuf, "%2d   %3d  %4d    %3d      %3d      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
+          snprintf(_logbuf, BUFF_SIZE, "%2d   %3d  %4d    %3d      %3d      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetHyb(), 
                   _mol.GetAtom(ni)->IsAromatic(), atoi(_mol.GetAtom(ni)->GetType()), *i);
           failed = true;
         }
@@ -4076,9 +4076,9 @@ namespace OpenBabel
              ) continue;
 
         if (fabs((*di) - _mol.GetAtom(ni)->GetPartialCharge()) <= 0.001)
-          sprintf(_logbuf, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          snprintf(_logbuf, BUFF_SIZE, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
         else {
-          sprintf(_logbuf, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          snprintf(_logbuf, BUFF_SIZE, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
           failed = true;
         }
       
@@ -4108,9 +4108,9 @@ namespace OpenBabel
              ) continue;
 
         if (fabs((*di) - _mol.GetAtom(ni)->GetPartialCharge()) <= 0.001)
-          sprintf(_logbuf, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          snprintf(_logbuf, BUFF_SIZE, "%2d   %7.4f     %7.4f          PASSED", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
         else {
-          sprintf(_logbuf, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
+          snprintf(_logbuf, BUFF_SIZE, "%2d   %7.4f     %7.4f      XXX FAILED XXX", _mol.GetAtom(ni)->GetIdx(), _mol.GetAtom(ni)->GetPartialCharge(), *di);
           failed = true;
         }
       
@@ -4139,36 +4139,36 @@ namespace OpenBabel
       cout << "---------------------------------------------------------------" << endl;
     
       delta = (E_Bond() - ebond);
-      sprintf(_logbuf, "Bond Stretching        %11.5f    %11.5f   %11.5f", E_Bond(), ebond, delta);
+      snprintf(_logbuf, BUFF_SIZE, "Bond Stretching        %11.5f    %11.5f   %11.5f", E_Bond(), ebond, delta);
       cout << _logbuf << endl;
     
       delta = (E_Angle() - eangle);
-      sprintf(_logbuf, "Angle Bending          %11.5f    %11.5f   %11.5f", E_Angle(), eangle, delta);
+      snprintf(_logbuf, BUFF_SIZE, "Angle Bending          %11.5f    %11.5f   %11.5f", E_Angle(), eangle, delta);
       cout << _logbuf << endl;
     
       delta = (E_StrBnd() - estbn);
-      sprintf(_logbuf, "Stretch-Bending        %11.5f    %11.5f   %11.5f", E_StrBnd(), estbn, delta);
+      snprintf(_logbuf, BUFF_SIZE, "Stretch-Bending        %11.5f    %11.5f   %11.5f", E_StrBnd(), estbn, delta);
       cout << _logbuf << endl;
     
       delta = (E_OOP() - eoop);
-      sprintf(_logbuf, "Out-Of-Plane Bending   %11.5f    %11.5f   %11.5f", E_OOP(), eoop, delta);
+      snprintf(_logbuf, BUFF_SIZE, "Out-Of-Plane Bending   %11.5f    %11.5f   %11.5f", E_OOP(), eoop, delta);
       cout << _logbuf << endl;
     
       delta = (E_Torsion() - etor);
-      sprintf(_logbuf, "Torsional              %11.5f    %11.5f   %11.5f", E_Torsion(), etor, delta);
+      snprintf(_logbuf, BUFF_SIZE, "Torsional              %11.5f    %11.5f   %11.5f", E_Torsion(), etor, delta);
       cout << _logbuf << endl;
     
       delta = (E_VDW() - evdw);
-      sprintf(_logbuf, "Van der Waals          %11.5f    %11.5f   %11.5f", E_VDW(), evdw, delta);
+      snprintf(_logbuf, BUFF_SIZE, "Van der Waals          %11.5f    %11.5f   %11.5f", E_VDW(), evdw, delta);
       cout << _logbuf << endl;
       
       delta = (E_Electrostatic() - eeq);
-      sprintf(_logbuf, "Electrostatic          %11.5f    %11.5f   %11.5f", E_Electrostatic(), eeq, delta);
+      snprintf(_logbuf, BUFF_SIZE, "Electrostatic          %11.5f    %11.5f   %11.5f", E_Electrostatic(), eeq, delta);
       cout << _logbuf << endl;
 
       cout << endl;
       delta = (Energy() - etot);
-      sprintf(_logbuf, "Total ENERGY           %11.5f    %11.5f   %11.5f", Energy(), etot, delta);
+      snprintf(_logbuf, BUFF_SIZE, "Total ENERGY           %11.5f    %11.5f   %11.5f", Energy(), etot, delta);
       cout << _logbuf << endl;
 
     } // for (unsigned int c;; c++ )
@@ -4206,7 +4206,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
 
@@ -4217,7 +4217,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
@@ -4230,7 +4230,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
@@ -4243,7 +4243,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    strbnd  (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    strbnd  (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
@@ -4256,7 +4256,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
@@ -4269,7 +4269,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       // disable OOP gradient validation for now -- some small errors, but nothing major
@@ -4283,7 +4283,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
@@ -4296,7 +4296,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      sprintf(_logbuf, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)

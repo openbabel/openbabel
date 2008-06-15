@@ -1,3 +1,9 @@
+2008-06-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/forcefield.cpp, src/forcefield.cpp,
+	src/forcefields/*: Replace sprintf(_logbuf, ...) with
+	snprintf(_logbuf, BUFF_SIZE). 
+
 2008-06-14  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/chain.h, src/chain.cpp: Replace:

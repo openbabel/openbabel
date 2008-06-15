@@ -541,7 +541,7 @@ namespace OpenBabel
     double	*_gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
     // logging variables
     std::ostream* _logos; //!< Output for logfile
-    char 	_logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
+    char 	_logbuf[BUFF_SIZE+1]; //!< Temporary buffer for logfile output
     int 	_loglvl; //!< Log level for output
     int 	_origLogLevel;
     // conformer genereation (rotor search) variables
