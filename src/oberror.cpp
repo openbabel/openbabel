@@ -21,6 +21,7 @@ General Public License for more details.
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 #include <openbabel/oberror.h>
 
@@ -71,6 +72,7 @@ namespace OpenBabel
     return tmp;
   }
 
+  bool OBError::operator== (const OBError& other)const {return GetError()==other.GetError();}
 
   /** \class OBMessageHandler oberror.h <openbabel/oberror.h>
 
@@ -157,29 +159,32 @@ namespace OpenBabel
       delete _filterStreamBuf;
   }
     
-  void OBMessageHandler::ThrowError(OBError err)
+  void OBMessageHandler::ThrowError(OBError err, errorQualifier qualifier)
   {
     if (!_logging)
       return;
+  
+    //Output error message if level sufficiently high and, if onceOnly set, it has not been logged before 
+    if (err.GetLevel() <= _outputLevel &&
+      (qualifier!=onceOnly || find(_messageList.begin(), _messageList.end(), err)==_messageList.end()))
+    {
+      *_outputStream << err;
+    }
+
     _messageList.push_back(err);
     _messageCount[err.GetLevel()]++;
     if (_maxEntries != 0 && _messageList.size() > _maxEntries)
       _messageList.pop_front();
-  
-    if (err.GetLevel() <= _outputLevel)
-      {
-        *_outputStream << err;
-      }
   }
 
   void OBMessageHandler::ThrowError(const std::string &method, 
                                     const std::string &errorMsg,
-                                    obMessageLevel level)
+                                    obMessageLevel level, errorQualifier qualifier)
   {
     if (errorMsg.length() > 1)
       {
         OBError err(method, errorMsg, "", "", "", level);
-        ThrowError(err);
+        ThrowError(err, qualifier);
       }
   }
 

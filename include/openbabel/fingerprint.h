@@ -71,7 +71,7 @@ public:
   /// Returns a description of each bit that is set (or unset, if bSet=false)
   virtual std::string DescribeBits(const std::  vector<unsigned int> fp, bool bSet=true)
   {
-    std::string txt("Bit descriptions are not available for this fingerprint type");
+    std::string txt("");
     return txt;
   }
 

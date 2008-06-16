@@ -44,6 +44,8 @@ namespace OpenBabel
     obDebug      //!< for messages only useful for debugging purposes
   };
 
+  enum errorQualifier {always, onceOnly};
+
   /** \class OBError oberror.h <openbabel/oberror.h>
       \brief Customizable error handling and logging -- store a message,
       including the method yielding the error, causes, etc. **/
@@ -68,17 +70,19 @@ namespace OpenBabel
 
       /** \return The method which caused this error
           (typically supplied via the __FUNCTION__ compiler macro **/
-      std::string    GetMethod()            { return _method;          }
+      std::string    GetMethod() const           { return _method;          }
       //! \return The main error message
-      std::string    GetError()             { return _errorMsg;        }
+      std::string    GetError() const            { return _errorMsg;        }
       //! \return A more detailed explanation of the error (optional)
-      std::string    GetExplanation()       { return _explanation;     }
+      std::string    GetExplanation() const      { return _explanation;     }
       //! \return A possible cause for the error (optional)
-      std::string    GetPossibleCause()     { return _possibleCause;   }
+      std::string    GetPossibleCause() const    { return _possibleCause;   }
       //! \return The suggested workaround or remedy for the error (optional)
-      std::string    GetSuggestedRemedy()   { return _suggestedRemedy; }
+      std::string    GetSuggestedRemedy() const  { return _suggestedRemedy; }
       //! \return The severity level of this error
-      obMessageLevel GetLevel()             { return _level;           }
+      obMessageLevel GetLevel() const            { return _level;           }
+
+      bool operator== (const OBError&)const;
 
     protected:
 
@@ -110,10 +114,10 @@ namespace OpenBabel
       ~OBMessageHandler();
     
       //! Throw an error with an already-formatted OBError object
-      void ThrowError(OBError err);
+      void ThrowError(OBError err, errorQualifier qqualifier = always);
       //! Throw an error in the specified method with an appropriate level
       void ThrowError(const std::string &method, const std::string &errorMsg, 
-                      obMessageLevel level = obDebug);
+                      obMessageLevel level = obDebug, errorQualifier qualifier = always);
 
       //! \return all messages matching a specified level
       std::vector<std::string> GetMessagesOfLevel(const obMessageLevel);

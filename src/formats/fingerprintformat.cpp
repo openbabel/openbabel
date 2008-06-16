@@ -108,7 +108,12 @@ namespace OpenBabel
         "The fingerprint must be unfolded when describing bits.", obError);
         return false;
       }
-      ofs << pFP->DescribeBits(fptvec, pConv->IsOption("s")!=NULL);
+      string descr = pFP->DescribeBits(fptvec, pConv->IsOption("s")!=NULL);
+      if(descr=="")
+        obErrorLog.ThrowError(__FUNCTION__,
+        "Bit descriptions are not available for this fingerprint type", obError, onceOnly);
+
+      ofs << descr;
       return true;
     }
 

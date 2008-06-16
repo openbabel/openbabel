@@ -77,6 +77,7 @@ namespace OpenBabel {
       OBConversion::RegisterOptionParam("t", this);
       OBConversion::RegisterOptionParam("r", this);
       OBConversion::RegisterOptionParam("a", this);
+      OBConversion::RegisterOptionParam("h", this);
     }
     virtual const char* Description()
     {
@@ -87,6 +88,7 @@ namespace OpenBabel {
         "Write Options e.g. -xt\n"
         "  a  Output atomclass like [C:2], if available\n"
         "  c  Output in canonical form\n"
+        "  h  explict hydrogen form, e.g. [CH3][CH3]\n"
         "  i  Do not include isotopic or chiral markings\n"
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
@@ -127,6 +129,7 @@ namespace OpenBabel {
         "form for any particular molecule.\n"
         "Write Options e.g. -xt\n"
         "  a  Output atomclass like [C:2], if available\n"
+        "  h  explict hydrogen form, e.g. [CH3][CH3]\n"
         "  i  Do not include isotopic or chiral markings\n"
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
@@ -2370,6 +2373,10 @@ namespace OpenBabel {
       if(!(_pconv && _pconv->IsOption ("r")))
         bracketElement = true;
     }
+
+    //Output as [CH3][CH3] rather than CC if -xh option has been specified
+    if(_pconv->IsOption("h")!=NULL)
+      bracketElement = true;
 
     if (!bracketElement) {
 

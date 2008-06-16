@@ -1,3 +1,35 @@
+2008-06-16  Chris Morley
+
+	* include/openbabel/oberror.h, src/oberror.cpp:
+	add a parameter to ThrowError to allow error messages to be 
+	output only once (although they are all logged.). The default
+	behaviour is as at present.
+	
+	* src/formats/inchiformat.cpp: default output uses the "recommended"
+	set of InChi options. -xn option uses no options as at present.
+	
+	Add -xl option to output the InChI log - only once for multiple
+	molecules.
+	
+	* include/openbabel/fingerprint.h, src/formats/fingerprintformat.cpp:
+	Make DescribeBits error message appear only once.
+	
+	* src/mol.cpp(GetTitle): make variable title static to avoid returning
+	a pointer to a temporary variable. But this might cause problems with
+	multiple molecules unless the title is captured in the calling code 
+	before getting the next. Until this is done properly, add a
+	test so that the problem can only occur with multi-line titles.
+
+	* src/formats/smilesformat.cpp: add option to output explicit hydrogen
+	form like [CH3][CH3].
+	**** The SMILES output currently crashes with  Nc1nc(O)c2nc[nH]c2n1
+	but I haven't tracked this down.****
+	
+	* src/ops/addpolarh.cpp: add simple op for Feature Request #1995162 
+	
+	* windows-vc2005/gen3D/gen3D.vcproj,
+	windows-vc2005/OBMoreFormats/OBMoreFormats.vcproj: update
+
 2008-06-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/cssrformat.cpp, src/formats/MCDLformat.cpp,

@@ -362,10 +362,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\KFReader.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\formats\mmcifformat.cpp"
 				>
 			</File>

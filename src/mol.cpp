@@ -173,10 +173,11 @@ namespace OpenBabel
 
   const char *OBMol::GetTitle(bool replaceNewlines) const
   {
-    if (!replaceNewlines)
+    if (!replaceNewlines || _title.find('\n')== string::npos )
       return(_title.c_str());
 
-    string title(_title);
+    //Only multiline titles use the following to replace newlines by spaces
+    static string title(_title); //potential problems in calling code with multiple molecules!
     string::size_type j;
     for ( ; (j = title.find_first_of( "\n\r" )) != string::npos ; ) {
       title.replace( j, 1, " ");
