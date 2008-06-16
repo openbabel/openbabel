@@ -190,11 +190,12 @@ namespace OpenBabel
 
       // Convert positions from single to double precision and convert from
       // nm to A
-      double *confs = new double[natoms * 3];
+      std::vector<double> confs;
+      confs.resize(natoms * 3);
       for (int i=0; i < natoms * 3; ++i) // unroll??
         confs[i] = static_cast<double>(10.0 * floatCoord.at(i));
 
-      vconf.push_back(confs);
+      vconf.push_back(&confs[0]);
     }
 
     // Close the XDR file
