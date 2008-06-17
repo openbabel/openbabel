@@ -1,3 +1,10 @@
+2008-06-17  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* Reverted r2535 except for changes to scripts/perl/Makefile.PL
+	* scripts/openbabel-python.i: Updated SWIG interface file to ignore 21
+	methods of each std::vector created. This should substantially reduce
+	the size of the wrapper code.
+
 2008-06-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/xtcformat.cpp: make confs a std::vector too. Was double

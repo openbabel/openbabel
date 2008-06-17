@@ -34,12 +34,8 @@ host_triplet = @host@
 subdir = scripts
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/autoconf/libtool.m4 \
-	$(top_srcdir)/autoconf/ltoptions.m4 \
-	$(top_srcdir)/autoconf/ltsugar.m4 \
-	$(top_srcdir)/autoconf/ltversion.m4 \
-	$(top_srcdir)/autoconf/lt~obsolete.m4 \
-	$(top_srcdir)/acinclude.m4 $(top_srcdir)/configure.in
+am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
+	$(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -93,7 +89,6 @@ LIBDL = @LIBDL@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
-LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAINT = @MAINT@
@@ -103,8 +98,6 @@ NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
-OTOOL = @OTOOL@
-OTOOL64 = @OTOOL64@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -180,7 +173,6 @@ sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = openbabel-perl.i perl \
@@ -193,11 +185,9 @@ EXTRA_DIST = openbabel-perl.i perl \
 # build the scripting language interfaces if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@BUILT_SOURCES = perl/openbabel_perl.cpp \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	python/openbabel_python.cpp \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	java/openbabel_java.cpp \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	csharp/openbabel_csharp.cpp \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	python/obcore.cpp \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	python/obconversion.cpp \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	python/obtemplate.cpp \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(am__append_1)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@script_includes = $(top_srcdir)/include/openbabel
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@script_headers = $(script_includes)/mol.h $(script_includes)/obconversion.h \
@@ -396,17 +386,19 @@ dist-hook:
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/obconversion.cpp: openbabel-python2.i $(script_headers)
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -python -templatereduce -naturalvar \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
-
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/obtemplate.cpp: openbabel-python3.i $(script_headers)
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -python -templatereduce -naturalvar \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
-
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/obcore.cpp: openbabel-python.i $(script_headers)
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -python -templatereduce -naturalvar \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "import sys" >python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    try:" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "        import dl" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    except ImportError:" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "        import DLFCN as dl" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	cat python/openbabel.py >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv python/ob.py python/openbabel.py;
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -java -naturalvar -templatereduce -c++ -o $@ \

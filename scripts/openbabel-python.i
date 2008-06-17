@@ -1,4 +1,4 @@
-%module obcore
+%module openbabel
 
 %{
 // used to set import/export for Cygwin DLLs
@@ -41,6 +41,79 @@
 
 %}
 
+%include "std_list.i"
+%include "std_map.i"
+%include "std_vector.i"
+%include "std_string.i"
+
+namespace std {
+
+%define VVTEMPLATE_WRAP(name, T) 
+%feature("ignore") vector< vector<T> >::append;
+%feature("ignore") vector< vector<T> >::assign;
+%feature("ignore") vector< vector<T> >::back;
+%feature("ignore") vector< vector<T> >::begin;
+%feature("ignore") vector< vector<T> >::capacity;
+%feature("ignore") vector< vector<T> >::clear;
+%feature("ignore") vector< vector<T> >::empty;
+%feature("ignore") vector< vector<T> >::end;
+%feature("ignore") vector< vector<T> >::erase;
+%feature("ignore") vector< vector<T> >::front;
+%feature("ignore") vector< vector<T> >::get_allocator;
+%feature("ignore") vector< vector<T> >::insert;
+%feature("ignore") vector< vector<T> >::pop;
+%feature("ignore") vector< vector<T> >::pop_back;
+%feature("ignore") vector< vector<T> >::push_back;
+%feature("ignore") vector< vector<T> >::rbegin;
+%feature("ignore") vector< vector<T> >::rend;
+%feature("ignore") vector< vector<T> >::reserve;
+%feature("ignore") vector< vector<T> >::resize;
+%feature("ignore") vector< vector<T> >::size;
+%feature("ignore") vector< vector<T> >::swap;
+%template(vectorv ## name) vector< vector<T> >;
+%enddef
+
+%define VECTORTEMPLATE_WRAP(vectorname, T) 
+%feature("ignore") vector<T>::append;
+%feature("ignore") vector<T>::assign;
+%feature("ignore") vector<T>::back;
+%feature("ignore") vector<T>::begin;
+%feature("ignore") vector<T>::capacity;
+%feature("ignore") vector<T>::clear;
+%feature("ignore") vector<T>::empty;
+%feature("ignore") vector<T>::end;
+%feature("ignore") vector<T>::erase;
+%feature("ignore") vector<T>::front;
+%feature("ignore") vector<T>::get_allocator;
+%feature("ignore") vector<T>::insert;
+%feature("ignore") vector<T>::pop;
+%feature("ignore") vector<T>::pop_back;
+%feature("ignore") vector<T>::push_back;
+%feature("ignore") vector<T>::rbegin;
+%feature("ignore") vector<T>::rend;
+%feature("ignore") vector<T>::reserve;
+%feature("ignore") vector<T>::resize;
+%feature("ignore") vector<T>::size;
+%feature("ignore") vector<T>::swap;
+%template(vector ## vectorname) vector<T>;
+%enddef
+
+VECTORTEMPLATE_WRAP(Int, int)
+VECTORTEMPLATE_WRAP(UnsignedInt, unsigned int)
+VVTEMPLATE_WRAP(Int, int)
+VECTORTEMPLATE_WRAP(Double, double)
+VECTORTEMPLATE_WRAP(String, std::string)
+VECTORTEMPLATE_WRAP(Vector3, OpenBabel::vector3)
+VECTORTEMPLATE_WRAP(OBMol, OpenBabel::OBMol)
+VECTORTEMPLATE_WRAP(OBBond, OpenBabel::OBBond)
+VECTORTEMPLATE_WRAP(OBResidue, OpenBabel::OBResidue)
+VECTORTEMPLATE_WRAP(OBRing, OpenBabel::OBRing)
+VECTORTEMPLATE_WRAP(pOBRing, OpenBabel::OBRing*)
+VECTORTEMPLATE_WRAP(pOBGenericData, OpenBabel::OBGenericData*)
+
+}
+
+
 %inline %{
 OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
 	return (OpenBabel::OBPairData *) data;
@@ -73,11 +146,11 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 //# %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
 
-%import <openbabel/plugin.h>
+%include <openbabel/plugin.h>
 
-%import <openbabel/oberror.h>
-%import <openbabel/format.h>
-%import <openbabel/obconversion.h>
+%include <openbabel/oberror.h>
+%include <openbabel/format.h>
+%include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
@@ -88,11 +161,11 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 
-%import <openbabel/fingerprint.h>
-%import <openbabel/descriptor.h>
-%import <openbabel/forcefield.h>
+%include <openbabel/fingerprint.h>
+%include <openbabel/descriptor.h>
+%include <openbabel/forcefield.h>
 
-%import <openbabel/op.h>
+%include <openbabel/op.h>
 
 %include <openbabel/bitvec.h>
 
