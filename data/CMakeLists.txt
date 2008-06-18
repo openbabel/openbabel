@@ -10,6 +10,8 @@ set(to_install
     isotope-small.txt
     isotope.txt
     logp.txt
+    mmff94.ff
+    mmff94s.ff
     mmffang.par
     mmffbndk.par
     mmffbond.par
@@ -22,6 +24,8 @@ set(to_install
     mmffstbn.par
     mmfftor.par
     mmffvdw.par
+    mmffs_oop.par
+    mmffs_tor.par
     mr.txt
     patterns.txt
     phmodel.txt

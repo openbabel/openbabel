@@ -840,6 +840,7 @@ namespace OpenBabel
   //***********************************************
   //Make a global instance
   OBForceFieldMMFF94 theForceFieldMMFF94("MMFF94", false);
+  OBForceFieldMMFF94 theForceFieldMMFF94s("MMFF94s", false);
   //***********************************************
 
   OBForceFieldMMFF94::~OBForceFieldMMFF94()
@@ -874,19 +875,52 @@ namespace OpenBabel
   	setlocale(LC_NUMERIC, "C");
 #endif
 
-    ParseParamProp();
-    ParseParamDef();
-    ParseParamBond();
-    ParseParamBndk();
-    ParseParamAngle();
-    ParseParamStrBnd();
-    ParseParamDfsb();
-    ParseParamOOP();
-    ParseParamTorsion();
-    ParseParamVDW();
-    ParseParamCharge();
-    ParseParamPbci();
+    vector<string> vs;
+    char buffer[80];
+    
+    // open data/_parFile
+    ifstream ifs;
+    if (OpenDatafile(ifs, _parFile).length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open parameter file", obError);
+      return false;
+    }
+        
+    while (ifs.getline(buffer, 80)) {
+      if (EQn(buffer, "#", 1)) continue;
+	
+      tokenize(vs, buffer);
+      if (vs.size() < 2)
+	continue;
 
+      if (vs[0] == "prop")
+        ParseParamProp(vs[1]);
+      if (vs[0] == "def")
+        ParseParamDef(vs[1]);
+      if (vs[0] == "bond")
+        ParseParamBond(vs[1]);
+      if (vs[0] == "ang")
+        ParseParamAngle(vs[1]);
+      if (vs[0] == "bndk")
+        ParseParamBndk(vs[1]);
+      if (vs[0] == "chg")
+        ParseParamCharge(vs[1]);
+      if (vs[0] == "dfsb")
+        ParseParamDfsb(vs[1]);
+      if (vs[0] == "oop")
+        ParseParamOOP(vs[1]);
+      if (vs[0] == "pbci")
+        ParseParamPbci(vs[1]);
+      if (vs[0] == "stbn")
+        ParseParamStrBnd(vs[1]);
+      if (vs[0] == "tor")
+        ParseParamTorsion(vs[1]);
+      if (vs[0] == "vdw")
+        ParseParamVDW(vs[1]);
+    }
+	
+    if (ifs)
+      ifs.close();
+  
     // return the locale to the original one
 #ifdef HAVE_USELOCALE
     uselocale(old_num_locale);
@@ -898,7 +932,7 @@ namespace OpenBabel
     return true;
   }
   
-  bool OBForceFieldMMFF94::ParseParamBond()
+  bool OBForceFieldMMFF94::ParseParamBond(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -907,7 +941,7 @@ namespace OpenBabel
     
     // open data/mmffbond.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffbond.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffbond.par", obError);
       return false;
     }
@@ -933,7 +967,7 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldMMFF94::ParseParamBndk()
+  bool OBForceFieldMMFF94::ParseParamBndk(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -942,7 +976,7 @@ namespace OpenBabel
     
     // open data/mmffbndk.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffbndk.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffbndk.par", obError);
       return false;
     }
@@ -967,7 +1001,7 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldMMFF94::ParseParamAngle()
+  bool OBForceFieldMMFF94::ParseParamAngle(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -976,7 +1010,7 @@ namespace OpenBabel
     
     // open data/mmffang.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffang.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffang.par", obError);
       return false;
     }
@@ -1003,7 +1037,7 @@ namespace OpenBabel
     return 0;
   }
    
-  bool OBForceFieldMMFF94::ParseParamStrBnd()
+  bool OBForceFieldMMFF94::ParseParamStrBnd(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -1012,7 +1046,7 @@ namespace OpenBabel
     
     // open data/mmffstbn.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffstbn.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffstbn.par", obError);
       return false;
     }
@@ -1039,7 +1073,7 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldMMFF94::ParseParamDfsb()
+  bool OBForceFieldMMFF94::ParseParamDfsb(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -1048,7 +1082,7 @@ namespace OpenBabel
     
     // open data/mmffdfsb.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffdfsb.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffdfsb.par", obError);
       return false;
     }
@@ -1074,7 +1108,7 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldMMFF94::ParseParamOOP()
+  bool OBForceFieldMMFF94::ParseParamOOP(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -1083,7 +1117,7 @@ namespace OpenBabel
     
     // open data/mmffoop.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffoop.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffoop.par", obError);
       return false;
     }
@@ -1109,7 +1143,7 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldMMFF94::ParseParamTorsion()
+  bool OBForceFieldMMFF94::ParseParamTorsion(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -1118,7 +1152,7 @@ namespace OpenBabel
     
     // open data/mmfftor.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmfftor.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmfftor.par", obError);
       return false;
     }
@@ -1147,7 +1181,7 @@ namespace OpenBabel
     return 0;
   }
    
-  bool OBForceFieldMMFF94::ParseParamVDW()
+  bool OBForceFieldMMFF94::ParseParamVDW(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -1156,7 +1190,7 @@ namespace OpenBabel
     
     // open data/mmffvdw.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffvdw.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffvdw.par", obError);
       return false;
     }
@@ -1188,7 +1222,7 @@ namespace OpenBabel
     return 0;
   }
    
-  bool OBForceFieldMMFF94::ParseParamCharge()
+  bool OBForceFieldMMFF94::ParseParamCharge(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -1197,7 +1231,7 @@ namespace OpenBabel
     
     // open data/mmffchg.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffchg.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffchg.par", obError);
       return false;
     }
@@ -1222,7 +1256,7 @@ namespace OpenBabel
     return 0;
   }
  
-  bool OBForceFieldMMFF94::ParseParamPbci()
+  bool OBForceFieldMMFF94::ParseParamPbci(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -1231,7 +1265,7 @@ namespace OpenBabel
     
     // open data/mmffpbci.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffpbci.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffpbci", obError);
       return false;
     }
@@ -1255,7 +1289,7 @@ namespace OpenBabel
     return 0;
   }
  
-  bool OBForceFieldMMFF94::ParseParamProp()
+  bool OBForceFieldMMFF94::ParseParamProp(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -1264,7 +1298,7 @@ namespace OpenBabel
     
     // open data/mmffprop.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffprop.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffprop.par", obError);
       return false;
     }
@@ -1304,7 +1338,7 @@ namespace OpenBabel
     return 0;
   }
   
-  bool OBForceFieldMMFF94::ParseParamDef()
+  bool OBForceFieldMMFF94::ParseParamDef(std::string &filename)
   {
     vector<string> vs;
     char buffer[80];
@@ -1313,7 +1347,7 @@ namespace OpenBabel
     
     // open data/mmffdef.par
     ifstream ifs;
-    if (OpenDatafile(ifs, "mmffdef.par").length() == 0) {
+    if (OpenDatafile(ifs, filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mmffdef.par", obError);
       return false;
     }

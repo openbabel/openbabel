@@ -537,6 +537,7 @@ namespace OpenBabel
     // general variables
     OBMol 	_mol; //!< Molecule to be evaluated or minimized
     bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
+    std::string	_parFile; //! < parameter file name
     bool 	_validSetup; //!< was the last call to Setup succesfull
     double	*_gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
     // logging variables
@@ -607,6 +608,14 @@ namespace OpenBabel
     static OBForceField* FindForceField(const char *ID)
     {
       return FindType(ID);
+    }
+    /*
+     *
+     */
+    void SetParameterFile(const std::string &filename)
+    {
+      _parFile = filename;
+      _init = false;
     }
     /*! \return The unit (kcal/mol, kJ/mol, ...) in which the energy is expressed as std::string.
      */  

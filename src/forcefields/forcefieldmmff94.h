@@ -100,18 +100,18 @@ namespace OpenBabel
     protected:
       //! \return Parses the parameter file
       bool ParseParamFile();
-      bool ParseParamProp();
-      bool ParseParamDef();
-      bool ParseParamBond();
-      bool ParseParamBndk();
-      bool ParseParamAngle();
-      bool ParseParamStrBnd();
-      bool ParseParamDfsb();
-      bool ParseParamOOP();
-      bool ParseParamTorsion();
-      bool ParseParamVDW();
-      bool ParseParamCharge();
-      bool ParseParamPbci();
+      bool ParseParamProp(std::string &filename);
+      bool ParseParamDef(std::string &filename);
+      bool ParseParamBond(std::string &filename);
+      bool ParseParamBndk(std::string &filename);
+      bool ParseParamAngle(std::string &filename);
+      bool ParseParamStrBnd(std::string &filename);
+      bool ParseParamDfsb(std::string &filename);
+      bool ParseParamOOP(std::string &filename);
+      bool ParseParamTorsion(std::string &filename);
+      bool ParseParamVDW(std::string &filename);
+      bool ParseParamCharge(std::string &filename);
+      bool ParseParamPbci(std::string &filename);
       //! detect which rings are aromatic
       bool PerceiveAromatic();
       //! \return Get the MMFF94 atom type for atom
@@ -222,6 +222,8 @@ namespace OpenBabel
       std::vector<OBFFOOPCalculationMMFF94>           _oopcalculations;
       std::vector<OBFFVDWCalculationMMFF94>           _vdwcalculations;
       std::vector<OBFFElectrostaticCalculationMMFF94> _electrostaticcalculations;
+
+      bool mmff94s;
       
     public:
       //! Constructor
@@ -233,6 +235,13 @@ namespace OpenBabel
         _pairfreq = 15;
         _cutoff = false;
         _linesearch = LineSearchType::Simple;
+	if (!strncmp(ID, "MMFF94s", 7)) {
+          mmff94s = true;
+          _parFile = std::string("mmff94s.ff");
+	} else {
+          mmff94s = false;
+          _parFile = std::string("mmff94.ff");
+	}
       }
       
       //! Destructor
@@ -250,7 +259,10 @@ namespace OpenBabel
       //! Get the description for this force field
       const char* Description()
       { 
-        return "MMFF94 force field.";
+        if (mmff94s)
+          return "MMFF94s force field.";
+	else
+          return "MMFF94 force field.";
       }
 
       //! Get the unit in which the energy is expressed
