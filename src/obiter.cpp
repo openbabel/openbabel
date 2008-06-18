@@ -1076,88 +1076,68 @@ namespace OpenBabel
 
   OBMolPairIter::OBMolPairIter(OBMol *mol)
   {
-    std::vector<unsigned int> atoms;
-    OBAtom *i, *j;
-    bool not14;
-    
     _parent = mol;
 
-    FOR_ATOMS_OF_MOL(a, mol) {
-      FOR_ATOMS_OF_MOL(b, mol) {
-        if (a->GetIdx() < b->GetIdx()) {
-          not14 = false;
+    bool foundPair = false;
+    OBAtom *a = _parent->BeginAtom(_i);
+    OBAtom *b = _parent->BeginAtom(_j);
+    while (!foundPair) {
+      b = _parent->NextAtom(_j);
 
-          i = &*a;
-          FOR_NBORS_OF_ATOM(nbr, i) {
-            if (&*nbr == &*b)
-              not14 = true;
-
-            j = &*nbr;
-            FOR_NBORS_OF_ATOM(nbr2, j)
-              if (&*nbr2 == &*b)
-                not14 = true;
-          }
-
-          if (!not14) {
-	    atoms.clear();
-            atoms.push_back(a->GetIdx());
-	    atoms.push_back(b->GetIdx());
-	    _vpair.push_back(atoms);
-	  }
-	} 
+      if (!b) {
+        a = _parent->NextAtom(_i);
+        b = _parent->BeginAtom(_j);
       }
+
+      if (a->GetIdx() >= b->GetIdx()) continue;
+      if (a->IsConnected(b)) continue;
+      if (a->IsOneThree(b)) continue;
+
+      foundPair = true;
     }
 
-    _i = _vpair.begin();
-    if (!_vpair.empty())
-      _pair = *_i;
+    _pair.clear();
+    _pair.push_back(a->GetIdx());
+    _pair.push_back(b->GetIdx());
   }
 
   OBMolPairIter::OBMolPairIter(OBMol &mol)
   {
-    std::vector<unsigned int> atoms;
-    OBAtom *i, *j;
-    bool not14;
- 
     _parent = &mol;
-    
-    FOR_ATOMS_OF_MOL(a, mol) {
-      FOR_ATOMS_OF_MOL(b, mol) {
-        if (a->GetIdx() < b->GetIdx()) {
-          not14 = false;
 
-          i = &*a;
-          FOR_NBORS_OF_ATOM(nbr, i) {
-            if (&*nbr == &*b)
-              not14 = true;
+    bool foundPair = false;
+    OBAtom *a = _parent->BeginAtom(_i);
+    if (!a) 
+      return;
+    OBAtom *b = _parent->BeginAtom(_j);
+    while (!foundPair) {
+      b = _parent->NextAtom(_j);
 
-            j = &*nbr;
-            FOR_NBORS_OF_ATOM(nbr2, j)
-              if (&*nbr2 == &*b)
-                not14 = true;
-          }
-
-          if (!not14) {
-	    atoms.clear();
-            atoms.push_back(a->GetIdx());
-	    atoms.push_back(b->GetIdx());
-	    _vpair.push_back(atoms);
-          }
-        } 
+      if (!b) {
+        a = _parent->NextAtom(_i);
+	if (!a)
+          return;
+        b = _parent->BeginAtom(_j);
       }
+
+      if (a->GetIdx() >= b->GetIdx()) continue;
+      if (a->IsConnected(b)) continue;
+      if (a->IsOneThree(b)) continue;
+
+      foundPair = true;
     }
 
-    _i = _vpair.begin();
-    if (!_vpair.empty())
-      _pair = *_i;
+    _pair.clear();
+    _pair.push_back(a->GetIdx());
+    _pair.push_back(b->GetIdx());
   }
 
   OBMolPairIter::OBMolPairIter(const OBMolPairIter &ai)
   {
     _parent = ai._parent;
     _pair = ai._pair;
-    _vpair = ai._vpair;
     _i = ai._i;
+    _j = ai._j;
   }
 
   OBMolPairIter& OBMolPairIter::operator=(const OBMolPairIter &ai)
@@ -1165,18 +1145,39 @@ namespace OpenBabel
     if (this != &ai) {
       _parent = ai._parent;
       _pair = ai._pair;
-      _vpair = ai._vpair;
       _i = ai._i;
+      _j = ai._j;
     }
     return *this;
   }
 
   OBMolPairIter& OBMolPairIter::operator++()
   {
-    _i++;
+    _pair.clear();
 
-    if (_i != _vpair.end())
-      _pair = *_i;
+    bool foundPair = false;
+    OBAtom *a, *b;
+    a = *_i;
+    while (!foundPair) {
+      b = _parent->NextAtom(_j);
+
+      if (!b) {
+        a = _parent->NextAtom(_i);
+	if (!a)
+          return *this;
+        b = _parent->BeginAtom(_j);
+      }
+
+      if (a->GetIdx() >= b->GetIdx()) continue;
+      if (a->IsConnected(b)) continue;
+      if (a->IsOneThree(b)) continue;
+
+
+      foundPair = true;
+    }
+
+    _pair.push_back(a->GetIdx());
+    _pair.push_back(b->GetIdx());
  
     return *this;
   }

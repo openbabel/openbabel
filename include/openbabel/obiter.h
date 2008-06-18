@@ -306,9 +306,11 @@ namespace OpenBabel
   
   //! \brief Iterate over all pairs of atoms (>1-4) in an OBMol
   class OBAPI OBMolPairIter {
+    std::vector<OBAtom*>::iterator _i;
+    std::vector<OBAtom*>::iterator _j;
     OBMol *_parent;
-    std::vector<std::vector<unsigned int> > _vpair;
-    std::vector<std::vector<unsigned int> >::iterator _i;
+    //std::vector<std::vector<unsigned int> > _vpair;
+    //std::vector<std::vector<unsigned int> >::iterator _i;
     std::vector<unsigned int> _pair;
  
   public:
@@ -321,7 +323,7 @@ namespace OpenBabel
 
     OBMolPairIter& operator=(const OBMolPairIter &ai);
     //! \return Whether the iterator can still advance (i.e., visit more 1-4 atom pairs)
-    operator bool() const        { return (_i != _vpair.end()); }
+    operator bool() const        { return _pair.size(); }
     //! Preincrement -- advance to the next 1-4 atom pair and return
     OBMolPairIter& operator++();
     //! \return A vector of two atom indexes specifying the 1-4 atom pair
