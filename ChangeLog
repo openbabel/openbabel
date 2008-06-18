@@ -4,6 +4,9 @@
 	to centralize calls to setlocale/uselocale. Should solve strange
 	segfault on Linux with freelocale.
 
+	* include/openbabel/obiter.h, src/obiter.cpp: Add depth tracking
+	for DFS and BFS iterators. Addresses PR#1901348.
+
 2008-06-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/*.cpp: Checked all files for their use of tokenize().

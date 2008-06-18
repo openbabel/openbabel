@@ -149,12 +149,17 @@ namespace OpenBabel
     _notVisited.Negate(); // all on
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
+    // Set up storage for the depths
+    _depth.resize(_parent->NumAtoms(), 0);
+    _depth[_ptr->GetIdx()] = 1;
+
     vector<OBBond*>::iterator i;
     OBAtom *a;
 
     for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
       {
         _stack.push(a);
+        _depth[a->GetIdx()] = 2;
         _notVisited.SetBitOff(a->GetIdx() - 1);
       }
   }
@@ -166,12 +171,17 @@ namespace OpenBabel
     _notVisited.Negate(); // all on
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
+    // Set up storage for the depths
+    _depth.resize(_parent->NumAtoms(), 0);
+    _depth[_ptr->GetIdx()] = 1;
+
     vector<OBBond*>::iterator i;
     OBAtom *a;
 
     for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
       {
         _stack.push(a);
+        _depth[a->GetIdx()] = 2;
         _notVisited.SetBitOff(a->GetIdx() - 1);
       }
   }
@@ -182,6 +192,7 @@ namespace OpenBabel
     _ptr = ai._ptr;
     _notVisited = ai._notVisited;
     _stack = ai._stack;
+    _depth = ai._depth;
   }
 
   OBMolAtomDFSIter& OBMolAtomDFSIter::operator=(const OBMolAtomDFSIter &ai)
@@ -192,6 +203,7 @@ namespace OpenBabel
         _ptr = ai._ptr;
         _notVisited = ai._notVisited;
         _stack = ai._stack;
+        _depth = ai._depth;
       }
     return *this;
   }
@@ -209,6 +221,8 @@ namespace OpenBabel
         if (next != _notVisited.EndBit())
           {
             _ptr = _parent->GetAtom(next + 1);
+            if (_ptr != NULL)
+              _depth[_ptr->GetIdx()] = 1; // New island
             _notVisited.SetBitOff(next);
           }
         else
@@ -224,6 +238,8 @@ namespace OpenBabel
           if (_notVisited[a->GetIdx() - 1])
             {
               _stack.push(a);
+              // Further down in the search
+              _depth[a->GetIdx()] = _depth[_ptr->GetIdx()] + 1;
               _notVisited.SetBitOff(a->GetIdx() - 1);
             }
       }
@@ -236,6 +252,14 @@ namespace OpenBabel
     OBMolAtomDFSIter tmp(*this);
     operator++();
     return tmp;
+  }
+  
+  int OBMolAtomDFSIter::CurrentDepth() const
+  {
+    if (_ptr == NULL)
+      return 0;
+      
+    return _depth[_ptr->GetIdx()];
   }
 
   /** \class OBMolAtomBFSIter obiter.h <openbabel/obiter.h>
@@ -285,12 +309,17 @@ namespace OpenBabel
     _notVisited.Negate(); // all on
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
+    // Set up storage for the depths
+    _depth.resize(_parent->NumAtoms(), 0);
+    _depth[_ptr->GetIdx()] = 1;
+
     vector<OBBond*>::iterator i;
     OBAtom *a;
 
     for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
       {
         _queue.push(a);
+        _depth[a->GetIdx()] = 2;
         _notVisited.SetBitOff(a->GetIdx() - 1);
       }
   }
@@ -302,12 +331,17 @@ namespace OpenBabel
     _notVisited.Negate(); // all on
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
+    // Set up storage for the depths
+    _depth.resize(_parent->NumAtoms() + 1, 0);
+    _depth[_ptr->GetIdx()] = 1;
+
     vector<OBBond*>::iterator i;
     OBAtom *a;
 
     for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
       {
         _queue.push(a);
+        _depth[a->GetIdx()] = 2;
         _notVisited.SetBitOff(a->GetIdx() - 1);
       }
   }
@@ -318,6 +352,7 @@ namespace OpenBabel
     _ptr = ai._ptr;
     _notVisited = ai._notVisited;
     _queue = ai._queue;
+    _depth = ai._depth;
   }
 
   OBMolAtomBFSIter& OBMolAtomBFSIter::operator=(const OBMolAtomBFSIter &ai)
@@ -328,6 +363,7 @@ namespace OpenBabel
         _ptr = ai._ptr;
         _notVisited = ai._notVisited;
         _queue = ai._queue;
+        _depth = ai._depth;
       }
     return *this;
   }
@@ -344,7 +380,9 @@ namespace OpenBabel
         int next = _notVisited.FirstBit();
         if (next != _notVisited.EndBit())
           {
-            _ptr = _parent->GetAtom(next + 1);
+            _ptr = _parent->GetAtom(next + 1); // Atom index issue
+            if (_ptr != NULL)
+              _depth[_ptr->GetIdx()] = 1; // new island
             _notVisited.SetBitOff(next);
           }
         else
@@ -360,6 +398,7 @@ namespace OpenBabel
           if (_notVisited[a->GetIdx() - 1])
             {
               _queue.push(a);
+              _depth[a->GetIdx()] = _depth[_ptr->GetIdx()] + 1;
               _notVisited.SetBitOff(a->GetIdx() - 1);
             }
       }
@@ -372,6 +411,14 @@ namespace OpenBabel
     OBMolAtomBFSIter tmp(*this);
     operator++();
     return tmp;
+  }
+  
+  int OBMolAtomBFSIter::CurrentDepth() const
+  {
+    if (_ptr == NULL)
+      return 0;
+      
+    return _depth[_ptr->GetIdx()];
   }
 
   /** \class OBMolBondIter obiter.h <openbabel/obiter.h>
