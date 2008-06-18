@@ -1,5 +1,12 @@
 2008-06-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/formats/*.cpp: Checked all files for their use of tokenize().
+	All added lines are like:
+	
+	if (vs.size() < 1) return false; // timvdm 18/06/2008 
+
+2008-06-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/obiter.h, src/obiter.cpp: Reimplement
 	FOR_PAIRS_OF_MOL. Do not build a list of all pairs in the constructor,
 	but find the pairs while iterating. This is faster and requires less

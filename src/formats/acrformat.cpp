@@ -133,6 +133,7 @@ namespace OpenBabel
       tokenize(vs, buf, " \t\r\n");
 
       if (atom_input) {
+	if (vs.size() < 9) return false; // timvdm 18/06/2008
         id = atoi((char*)vs[0].c_str()) + 1; // see warning above
         type = vs[1];
         X = atof((char*)vs[6].c_str())/scale;
@@ -145,6 +146,7 @@ namespace OpenBabel
         a->SetVector(X,Y,Z);
 
       } else if (bond_input) {
+	if (vs.size() < 2) return false; // timvdm 18/06/2008
         // add to pmol
         if (!pmol->AddBond(atoi((char*)vs[0].c_str()) + 1, atoi((char*)vs[1].c_str()) + 1, 
                            1 /* bond order not specified in Carine, use PerceiveBondOrder later */))

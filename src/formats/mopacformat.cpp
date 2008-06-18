@@ -117,8 +117,10 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
+            if (vs.size() < 1) return false; // timvdm 18/06/2008
             while (strstr(vs[0].c_str(),"DIPOLE") == NULL)
               {
+                if (vs.size() < 3) return false; // timvdm 18/06/2008
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 atom->SetPartialCharge(atof(vs[2].c_str()));
                 charges.push_back(atof(vs[2].c_str()));
@@ -126,6 +128,7 @@ namespace OpenBabel
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
+                if (vs.size() < 1) vs.push_back(string()); // timvdm 18/06/2008
               }
           }
       }

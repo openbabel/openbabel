@@ -96,18 +96,21 @@ namespace OpenBabel
       {
         ifs.getline(buffer,BUFF_SIZE);
         tokenize(vs,buffer); // we really need to check that it's 3 entries only
+	if (vs.size() < 3) return false; // timvdm 18/06/2008
         x = atof((char*)vs[0].c_str()) * BOHR_TO_ANGSTROM;
         y = atof((char*)vs[1].c_str()) * BOHR_TO_ANGSTROM;
         z = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
         v1.Set(x,y,z);
         ifs.getline(buffer,BUFF_SIZE);
         tokenize(vs,buffer);
+	if (vs.size() < 3) return false; // timvdm 18/06/2008
         x = atof((char*)vs[0].c_str()) * BOHR_TO_ANGSTROM;
         y = atof((char*)vs[1].c_str()) * BOHR_TO_ANGSTROM;
         z = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
         v2.Set(x,y,z);
         ifs.getline(buffer,BUFF_SIZE);
         tokenize(vs,buffer);
+	if (vs.size() < 3) return false; // timvdm 18/06/2008
         x = atof((char*)vs[0].c_str()) * BOHR_TO_ANGSTROM;
         y = atof((char*)vs[1].c_str()) * BOHR_TO_ANGSTROM;
         z = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;

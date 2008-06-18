@@ -717,6 +717,7 @@ public:
     char buffer[BUFF_SIZE];
     if(!ifs.getline(buffer,BUFF_SIZE)) return false;
     tokenize(vs,buffer," \t\n\r");
+    if (vs.size() < 2) return false; // timvdm 18/06/2008
     if(vs[0]!="M" || (vs[1]!="V30" && vs[1]!="END")) return false;
         
     if(buffer[strlen(buffer)-1] == '-') //continuation char

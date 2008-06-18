@@ -116,8 +116,9 @@ namespace OpenBabel
         else if (lcount == 4) //energy
           {
             tokenize(vstr,buffer);
-            if (!vstr.empty() && vstr[0] == "Energy" && vstr.size() == 3)
-              mol.SetEnergy(atof(vstr[2].c_str()));
+            if (!vstr.empty() && vstr.size() == 3)
+              if (vstr[0] == "Energy")
+                mol.SetEnergy(atof(vstr[2].c_str()));
           }
         else if (lcount == 5) //comment
           {

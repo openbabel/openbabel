@@ -133,6 +133,7 @@ namespace OpenBabel
           if (strstr(buffer, "ACL") != NULL) {
             tokenize(vs, buffer);
             // size should be 5 -- need a test here
+            if (vs.size() != 5) return false; // timvdm 18/06/2008
             vs[3].erase(0,1); // "6 => remove the first " character
             int atomicNum = atoi(vs[3].c_str());
             if (atomicNum == 0)
@@ -148,6 +149,7 @@ namespace OpenBabel
           else if (strstr(buffer, "XYZ") != NULL) {
             tokenize(vs, buffer);
             // size should be 6 -- need a test here
+            if (vs.size() != 6) return false; // timvdm 18/06/2008
             vs[3].erase(0,1); // remove ( character
             vs[5].erase(vs[5].length()-2, 2); // remove trailing )) characters
             atom->SetVector(atof(vs[3].c_str()),
@@ -161,18 +163,21 @@ namespace OpenBabel
         if (bondRecord) {
           if (strstr(buffer, "Atom1") != NULL) {
             tokenize(vs, buffer);
+            if (vs.size() < 4) return false; // timvdm 18/06/2008
             vs[3].erase(vs[3].length()-1,1);
             startBondAtom = atoi(vs[3].c_str());
             continue;
           }
           else if (strstr(buffer, "Atom2") != NULL) {
             tokenize(vs, buffer);
+            if (vs.size() < 4) return false; // timvdm 18/06/2008
             vs[3].erase(vs[3].length()-1,1);
             endBondAtom = atoi(vs[3].c_str());
             continue;
           }
           else if (strstr(buffer, "Type") != NULL) {
             tokenize(vs, buffer);
+            if (vs.size() < 4) return false; // timvdm 18/06/2008
             vs[3].erase(vs[3].length()-1,1);
             bondOrder = atoi(vs[3].c_str());
             if (bondOrder == 4) // triple bond?

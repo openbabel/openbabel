@@ -134,10 +134,12 @@ namespace OpenBabel
         if (buffer[0]!='$')
           {
             tokenize(vs, buffer);
+            if (vs.size() < 1) return false; // timvdm 18/06/2008
             atom=mol.NewAtom();
             str=vs[0];
             if (input_style==0)
               {
+                if (vs.size() < 4) return false; // timvdm 18/06/2008
                 atom->SetAtomicNum(etab.GetAtomicNum(str.c_str()));
                 x=atof((char*) vs[1].c_str())*bohr_to_angstrom;
                 y=atof((char*) vs[2].c_str())*bohr_to_angstrom;
@@ -145,6 +147,7 @@ namespace OpenBabel
               }
             else
               {
+                if (vs.size() < 5) return false; // timvdm 18/06/2008
                 str.replace (0,2,"");
                 atom->SetAtomicNum(etab.GetAtomicNum(str.c_str()));
                 x=atof((char*) vs[2].c_str())*bohr_to_angstrom;
