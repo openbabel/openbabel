@@ -31,13 +31,6 @@ GNU General Public License for more details.
 	#endif
 #endif
 
-#if HAVE_XLOCALE_H
-#include <xlocale.h>
-#endif
-#if HAVE_LOCALE_H
-#include <locale.h>
-#endif
-
 #include <iosfwd>
 #include <fstream>
 #include <sstream>
@@ -48,6 +41,7 @@ GNU General Public License for more details.
 #include <stdlib.h>
 
 #include <openbabel/obconversion.h>
+#include <openbabel/locale.h>
 
 #ifdef HAVE_LIBZ
 #include "zipstream.h"
@@ -730,15 +724,8 @@ namespace OpenBabel {
     InstallStreamFilter();
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
-#if HAVE_USELOCALE
-    // Extended per-thread interface
-    locale_t new_c_num_locale = newlocale(LC_NUMERIC_MASK, NULL, NULL);
-    locale_t old_num_locale = uselocale(new_c_num_locale);
-#else
-    // Original global POSIX interface
-    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
-  	setlocale(LC_NUMERIC, "C");
-#endif
+    obLocale.SetLocale();
+    
     // Also set the C++ stream locale
     locale originalLocale = pInStream->getloc(); // save the original
     locale cNumericLocale(originalLocale, "C", locale::numeric);
@@ -746,15 +733,9 @@ namespace OpenBabel {
 
     bool success = pInFormat->ReadMolecule(pOb, this);
 
-    // return the locale to the original one
-#ifdef HAVE_USELOCALE
-    uselocale(old_num_locale);
-    freelocale(new_c_num_locale);
-#else
-  	setlocale(LC_NUMERIC, old_num_locale);
-  	free (old_num_locale);
-#endif
-    // Restore the original locale as well
+    // return the C locale to the original one
+    obLocale.RestoreLocale();
+    // Restore the original C++ locale as well
     pInStream->imbue(originalLocale);
 
     return success;
@@ -800,15 +781,7 @@ namespace OpenBabel {
     SetOneObjectOnly(); //So that IsLast() returns true, which is important for XML formats
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
-#if HAVE_USELOCALE
-    // Extended per-thread interface
-    locale_t new_c_num_locale = newlocale(LC_NUMERIC_MASK, NULL, NULL);
-    locale_t old_num_locale = uselocale(new_c_num_locale);
-#else
-    // Original global POSIX interface
-    char *old_num_locale = strdup (setlocale (LC_NUMERIC, NULL));
-  	setlocale(LC_NUMERIC, "C");
-#endif
+    obLocale.SetLocale();
     // Also set the C++ stream locale
     locale originalLocale = pOutStream->getloc(); // save the original
     locale cNumericLocale(originalLocale, "C", locale::numeric);
@@ -818,14 +791,8 @@ namespace OpenBabel {
     bool success = pOutFormat->WriteMolecule(pOb,this);
 
     pOutStream = pOrigOutStream;
-    // return the locale to the original one
-#ifdef HAVE_USELOCALE
-    uselocale(old_num_locale);
-    freelocale(new_c_num_locale);
-#else
-  	setlocale(LC_NUMERIC, old_num_locale);
-  	free (old_num_locale);
-#endif
+    // return the C locale to the original one
+    obLocale.RestoreLocale();
     // Restore the C++ stream locale too
     pOutStream->imbue(originalLocale);
 

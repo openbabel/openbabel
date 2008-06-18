@@ -29,6 +29,7 @@ libopenbabelinclude_HEADERS = \
 	groupcontrib.h \
 	internalcoord.h \
 	kinetics.h \
+	locale.h \
 	lineend.h \
 	matrix.h \
 	mol.h \

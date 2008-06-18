@@ -1,11 +1,15 @@
+2008-06-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/locale.h, src/locale.cpp: New OBLocale class
+	to centralize calls to setlocale/uselocale. Should solve strange
+	segfault on Linux with freelocale.
+
 2008-06-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/*.cpp: Checked all files for their use of tokenize().
 	All added lines are like:
 	
 	if (vs.size() < 1) return false; // timvdm 18/06/2008 
-
-2008-06-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/obiter.h, src/obiter.cpp: Reimplement
 	FOR_PAIRS_OF_MOL. Do not build a list of all pairs in the constructor,
@@ -68,7 +72,6 @@
 	* windows-vc2005/gen3D/gen3D.vcproj,
 	windows-vc2005/OBMoreFormats/OBMoreFormats.vcproj: update
 
->>>>>>> .r2589
 2008-06-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/cssrformat.cpp, src/formats/MCDLformat.cpp,
@@ -78,12 +81,8 @@
 	src/formats/zindoformat.cpp, src/formats/gromos96format.cpp,
 	src/formats/xedformat.cpp: sprintf --> snprintf
 
-2008-06-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
-
 	* src/chains.cpp, src/pointgroup.cpp, src/rotor.cpp: Some more sprintf
 	-> snprintf (I don't expect any problems here, but just in case...)
-
-2008-06-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* include/openbabel/forcefield.cpp, src/forcefield.cpp,
 	src/forcefields/*: Replace sprintf(_logbuf, ...) with
