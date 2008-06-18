@@ -1,3 +1,22 @@
+2008-06-18  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* include/openbabel/obiter.h, src/obiter.cpp: Reimplement
+	FOR_PAIRS_OF_MOL. Do not build a list of all pairs in the constructor,
+	but find the pairs while iterating. This is faster and requires less
+	memory.
+
+	* include/openbabel/forcefield.cpp: Add SetParameterFile().
+
+	* src/forcefields/forcefieldmmff94.*: Use the new SetParameterFile().
+	Add a global definition for MMFF94s.
+
+	* data/*: Add MMFF94s parameters.
+
+	MMFF94s: Same functional form, only torsion and oop parameters are
+	different. To see the difference, you can try to minimize alanine with
+	both force fields, MMFF94s will give a planar nitrogen while MMFF94
+	will not.
+
 2008-06-17  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* Reverted r2535 except for changes to scripts/perl/Makefile.PL
