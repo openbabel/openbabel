@@ -1080,12 +1080,16 @@ namespace OpenBabel
 
     bool foundPair = false;
     OBAtom *a = _parent->BeginAtom(_i);
+    if (!a) 
+      return;
     OBAtom *b = _parent->BeginAtom(_j);
     while (!foundPair) {
       b = _parent->NextAtom(_j);
 
       if (!b) {
         a = _parent->NextAtom(_i);
+        if (!a)
+	  return;
         b = _parent->BeginAtom(_j);
       }
 
