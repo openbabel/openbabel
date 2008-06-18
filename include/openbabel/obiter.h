@@ -70,7 +70,6 @@ namespace OpenBabel
     OBAtom              *_ptr;
     OBBitVec             _notVisited;
     std::stack<OBAtom *> _stack;
-    std::vector<int>     _depth;
   public:
 
     OBMolAtomDFSIter() : _parent(NULL), _ptr(NULL) { }
@@ -90,9 +89,6 @@ namespace OpenBabel
     OBAtom* operator->() const   { return _ptr;      }
     //! \return a reference to the current atom
     OBAtom& operator*() const    { return *_ptr;     }
-    //! \return the current depth of the iterator
-    //! \since version 2.2
-    int CurrentDepth() const;
     /// \return NULL if at the last atom in a fragment, else the next atom
     OBAtom* next()
     { 
