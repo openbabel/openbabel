@@ -100,10 +100,15 @@ namespace OpenBabel
         int andfp = vec1[i] & vec2[i];
         int orfp = vec1[i] | vec2[i];
         //Count bits
+#ifdef __GNUC__
+        andbits += __builtin_popcount(andfp);
+        orbits += __builtin_popcount(orfp);
+#else
         for(;andfp;andfp=andfp<<1)
           if(andfp<0) ++andbits;
         for(;orfp;orfp=orfp<<1)
           if(orfp<0) ++orbits;
+#endif
       }
     if(orbits==0)
       return 0.0;

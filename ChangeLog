@@ -1,3 +1,8 @@
+2008-06-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/fingerprint.cpp: Contribution from Andrew Dalke for
+	improved speed using GCC.
+
 2008-06-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/locale.h, src/locale.cpp: New OBLocale class
