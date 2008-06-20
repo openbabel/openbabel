@@ -1,3 +1,7 @@
+2008-06-20  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* Revert of r2347: I had set eol:native instead of eol-style native.
+
 2008-06-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/fingerprint.cpp: Contribution from Andrew Dalke for
