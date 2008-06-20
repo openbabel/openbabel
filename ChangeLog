@@ -5,6 +5,10 @@
 	atoms, don't pick non-bonded >10.0 Angstroms, which cause
 	problems with FH (and other) fixed format z-matrices.
 
+	* src/mol.cpp (ConnectTheDots): Fix for PR#1813502 for
+	existing bonds getting deleted by ConnectTheDots. Make sure to
+	preserve all original connections from PDB.
+
 2008-06-20  Chris Morley
 
 	* include/openbabel/locale.h, src/locale.cpp: extra #includes
