@@ -9,6 +9,9 @@
 	existing bonds getting deleted by ConnectTheDots. Make sure to
 	preserve all original connections from PDB.
 
+	* src/formats/pdbformat.cpp (ReadMolecule): Fix for PR#1985681
+	with virtual bonds still built into a PDB file.
+
 2008-06-20  Chris Morley
 
 	* include/openbabel/locale.h, src/locale.cpp: extra #includes

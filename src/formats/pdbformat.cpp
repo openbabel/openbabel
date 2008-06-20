@@ -176,6 +176,10 @@ namespace OpenBabel
     /*assign hetatm bonds based on distance*/
 
     mol.EndModify();
+    // Clear all virtual bond data
+    vector<OBGenericData*> vbonds = mol.GetAllData(OBGenericDataType::VirtualBondData);
+    mol.DeleteData(vbonds);
+
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
