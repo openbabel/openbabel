@@ -79,7 +79,7 @@ public:
     {
       OBSmartsPattern sp;
       sp.Init(smartsStrings[n]);
-      if(sp.Match(*pmol))
+      if(sp.Match(*pmol, true))
         SetBit(fp, n);
     }
 

@@ -198,6 +198,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\locale.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\oberror.cpp"
 				>
 			</File>
@@ -225,6 +229,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\dlhandler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\locale.h"
 				>
 			</File>
 			<File

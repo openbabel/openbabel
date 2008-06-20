@@ -1,3 +1,16 @@
+2008-06-20  Chris Morley
+
+	* include/openbabel/locale.h, src/locale.cpp: extra #includes
+	
+	* windows-vc2005/babelconfig.h: define strdup. Version to 2.2.0
+	
+	* include/openbabel/obiter.h: trivial change to avoid compiler warning
+	
+	* src/fingerprints/finger3.cpp: do singel SMARTS match, as suggested by
+	Ernst-Georg Schmid
+
+	* windows-vc2005/OBError/OBError.vcproj: add locale.cpp
+
 2008-06-20  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* Revert of r2347: I had set eol:native instead of eol-style native.

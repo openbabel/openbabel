@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #ifndef OB_LOCALE_H
 #define OB_LOCALE_H
 
+#include <locale>
 #include <openbabel/babelconfig.h>
 
 #ifndef OBERROR

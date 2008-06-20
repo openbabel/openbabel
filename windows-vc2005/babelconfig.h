@@ -11,7 +11,8 @@
 #define HAVE_STRNCASECMP 1
 #define HAVE_LIBZ 1 //Compression enabled...
 #define DISABLE_WRITE_COMPRESSION 1 //...but not for output
-#define BABEL_VERSION  "2.2"
+
+#define BABEL_VERSION  "2.2.0"
 
 #define BABEL_DATADIR "."
 
@@ -23,6 +24,7 @@
 #define rindex(a,b) strrchr((a),(b))
 #define IsNan _isnan
 #define isfinite _finite
+#define strdup _strdup
 
 
 #define TESTDATADIR "../../test/files/"
