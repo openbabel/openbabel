@@ -633,6 +633,10 @@ namespace OpenBabel
               ang = fabs(vectorAngle(v1,v2));
               if (ang < 5.0 || ang > 175.0)
                 continue;
+                
+              // Also check length considerations -- don't bother if the length > 10.0 Angstroms
+              if (v1.length_2() > 99.999)
+                continue;
 
               for (c = mol.BeginAtom(m);c && c->GetIdx() < atom->GetIdx();c = mol.NextAtom(m))
                 if (c != atom && c != a && c != b)

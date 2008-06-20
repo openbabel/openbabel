@@ -1,3 +1,10 @@
+2008-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obutil.cpp (CartesianToInternal): Fix PR#1923896 for
+	Fenske-Hall z-matrix format. When looking for non-linear
+	atoms, don't pick non-bonded >10.0 Angstroms, which cause
+	problems with FH (and other) fixed format z-matrices.
+
 2008-06-20  Chris Morley
 
 	* include/openbabel/locale.h, src/locale.cpp: extra #includes
