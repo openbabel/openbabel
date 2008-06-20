@@ -50,6 +50,7 @@ set(openbabel_srcs
     grid.cpp
     griddata.cpp
     kekulize.cpp
+    locale.cpp
     matrix.cpp
     molchrg.cpp
     mol.cpp
