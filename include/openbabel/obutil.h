@@ -235,6 +235,8 @@ namespace OpenBabel
   */
   OBAPI bool CanBeSquared(const double &);
 
+  OBAPI bool SafeOpen(std::ifstream &fs, const char *filename);
+  OBAPI bool SafeOpen(std::ofstream &fs, const char *filename);
 #endif
   // (end part to be skipped by SWIG)
 
