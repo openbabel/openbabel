@@ -501,6 +501,7 @@ bool OBT41Format::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 
 bool OBT41Format::ReadBinary( OBBase* pOb, OBConversion* pConv )
 {
+  obErrorLog.ThrowError( __FUNCTION__, "OpenBabel does not currently support the TAPE41 binary format. Please use dmpkf to convert to ASCII.", obError );
   return false;
 }
 
