@@ -2892,7 +2892,7 @@ namespace OpenBabel
       strbndcalc.c = c;
       strbndcalc.sbt = strbndtype;
       strbndcalc.SetupPointers();
-      // Set the pointers to adresses in the anglecalc, find the matching bondcalcs and do the same.
+      // Set the pointers to addresses in the anglecalc, find the matching bondcalcs and do the same.
       // This should improve performance by not calculating all this twice. We could do the same
       // for torsion and angles since the bond lengths are calculated for bond stretching first.
       //bool found_angle = false;

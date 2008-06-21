@@ -298,7 +298,7 @@ namespace OpenBabel
 	return 0;
     }
     xdrmodes[xdrid] = *type;
-    /* next test isn't usefull in the case of C language
+    /* next test isn't useful in the case of C language
      * but is used for the Fortran interface
      * (C users are expected to pass the address of an already allocated
      * XDR staructure)
@@ -600,7 +600,7 @@ namespace OpenBabel
  | using multiplication by *precision and rounding to the nearest integer.
  | Then the minimum and maximum value are calculated to determine the range.
  | The limited range of integers so found, is used to compress the coordinates.
- | In addition the differences between succesive coordinates is calculated.
+ | In addition the differences between successive coordinates is calculated.
  | If the difference happens to be 'small' then only the difference is saved,
  | compressing the data even more. The notion of 'small' is changed dynamically
  | and is enlarged or reduced whenever needed or possible.

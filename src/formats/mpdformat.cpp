@@ -200,7 +200,7 @@ namespace OpenBabel
         pre_true = true;
       }
 
-		if(pConv->IsOption("c")) // outputing in XML format
+		if(pConv->IsOption("c")) // outputting in XML format
 			xml_true=true;
 
 		if(pConv->IsOption("i")) // using IDX not SBN

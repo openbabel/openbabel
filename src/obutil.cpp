@@ -767,7 +767,7 @@ namespace OpenBabel
   }
 
   /*FUNCTION */
-  /* recieves: the co-efficients for a general
+  /* receives: the co-efficients for a general
    *           linear equation of degree two.
    *           Ax^2 + Bx + C = 0 !!
    */
