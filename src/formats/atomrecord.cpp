@@ -24,7 +24,7 @@ namespace OpenBabel
 {
 
   ////////////////////////////////////////////////////////////////
-  bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
+  bool ParseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/)
   /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,1x,i3)" */
   {
     string sbuf = &buffer[6];
@@ -39,6 +39,9 @@ namespace OpenBabel
 
     /* atom name */
     string atmid = sbuf.substr(6,4);
+    
+    /* chain */
+    char chain = sbuf.substr(15,1)[0];
 
     /* element */
     string element;
@@ -192,13 +195,13 @@ namespace OpenBabel
         for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
           if (res->GetName() == resname 
               && res->GetNumString() == resnum
-              && static_cast<int>(res->GetChainNum()) == chainNum)
+              && static_cast<int>(res->GetChain()) == chain)
             break;
 
         if (res == NULL)
           {
             res = mol.NewResidue();
-            res->SetChainNum(chainNum);
+            res->SetChain(chain);
             res->SetName(resname);
             res->SetNum(resnum);
           }

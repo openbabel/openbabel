@@ -1,3 +1,7 @@
+2008-06-21  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/atomrecord.cpp: Keep original chain ID (#1760959).
+
 2008-06-21  Carsten Niehaus  <cniehaus@kde.org>
 
 	* src/obutil.cpp: Typo fixes.
