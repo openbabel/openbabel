@@ -986,6 +986,49 @@ namespace OpenBabel
 
     return false;
   }
+  
+  bool OBForceField::GetAtomTypes(OBMol &mol)
+  {
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
+    
+    FOR_ATOMS_OF_MOL (atom, _mol) {
+      if (atom->HasData("FFAtomType")) {
+        OBPairData *data = (OBPairData*) atom->GetData("FFAtomType");
+	data->SetValue(atom->GetType());
+      } else {
+        OBPairData *data = new OBPairData();
+       	data->SetAttribute("FFAtomType");
+	data->SetValue(atom->GetType());
+        atom->SetData(data);
+      }
+    }
+
+    return true; 
+  }
+
+  bool OBForceField::GetPartialCharges(OBMol &mol)
+  {
+    if (_mol.NumAtoms() != mol.NumAtoms())
+      return false;
+    
+    ostringstream out;
+    FOR_ATOMS_OF_MOL (atom, _mol) {
+      out << atom->GetPartialCharge();
+      if (atom->HasData("FFPartialCharge")) {
+        OBPairData *data = (OBPairData*) atom->GetData("FFPartialCharge");
+	data->SetValue(out.str());
+      } else {
+        OBPairData *data = new OBPairData();
+       	data->SetAttribute("FFPartialCharge");
+	data->SetValue(out.str());
+        atom->SetData(data);
+      }
+    }
+
+    return true; 
+  }
+
 
   bool OBForceField::GetCoordinates(OBMol &mol)
   { 

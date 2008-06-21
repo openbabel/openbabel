@@ -675,6 +675,41 @@ namespace OpenBabel
      *  \return True if Setup needs to be called.
      */
     bool IsSetupNeeded(OBMol &mol);
+    /*! Get the force atom types. The atom types will be added to 
+     *  the atoms of mol as OBPairData. The attribute will be "FFAtomType".
+     *
+     *  \code
+     *  ...
+     *  pFF->Setup(&mol);
+     *  pFF->GetAtomTypes(&mol);
+     *  FOR_ATOMS_OF_MOL (atom, mol) {
+     *    OBPairData *type = (OBPairData*) atom->GetData("FFAtomType");
+     *    if (type)
+     *      cout << "atom " << atom->GetIdx() << " : " << type->GetValue() << endl;
+     *  }
+     *  ...
+     *  \endcode
+     */
+    bool GetAtomTypes(OBMol &mol);
+    /*! Get the force field formal charges. The formal charges will be added to 
+     *  the atoms of mol as OBPairData. The attribute will be "FFPartialCharge".
+     *
+     *  \code
+     *  ...
+     *  pFF->Setup(&mol);
+     *  pFF->GetPartialCharges(&mol);
+     *  FOR_ATOMS_OF_MOL (atom, mol) {
+     *    OBPairData *chg = (OBPairData*) atom->GetData("FFPartialCharge");
+     *    if (chg)
+     *      cout << "atom " << atom->GetIdx() << " : " << chg->GetValue() << endl;
+     *  }
+     *  ...
+     *  \endcode
+     */
+    bool GetPartialCharges(OBMol &mol);
+
+
+
     /*! Get coordinates for current conformer and attach OBConformerData with energies, forces, ... to mol.
      *  \param mol The OBMol object to copy the coordinates to (from OBForceField::_mol).
      *  \return True if succesfull.
