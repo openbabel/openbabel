@@ -227,7 +227,7 @@ namespace OpenBabel
       
     public:
       //! Constructor
-      OBForceFieldMMFF94(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+      explicit OBForceFieldMMFF94(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
         _init = false;
         _rvdw = 7.0;

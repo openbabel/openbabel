@@ -88,7 +88,7 @@ namespace OpenBabel
       //! Setup
       bool Setup(OBMol &mol);
       //! Constructor
-      OBForceFieldMM2(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault), _init(false)
+      explicit OBForceFieldMM2(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault), _init(false)
       {
         // ParseParamFile only called when needed
       }

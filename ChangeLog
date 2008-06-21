@@ -1,9 +1,13 @@
 2008-06-21  Carsten Niehaus  <cniehaus@kde.org>
 
-	* src/obutil.cpp: Typo fixes
-	* forcefields/{forcefielduff.cpp,forcefieldmmff94.cpp}: Typo fixes
-	* formats/{mpdformat.cpp,xtcformat.cpp}: Typo fixes
+	* src/obutil.cpp: Typo fixes.
 
+	* src/forcefields/[forcefielduff.cpp,forcefieldmmff94.cpp]: Typo fixes
+
+	* src/formats/[mpdformat.cpp,xtcformat.cpp]: Typo fixes
+	
+	* src/forcefields/*.h: Make ctor explicit.
+	
 2008-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obutil.cpp (CartesianToInternal): Fix PR#1923896 for

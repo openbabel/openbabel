@@ -105,7 +105,7 @@ namespace OpenBabel
     
     public:
       //! Constructor
-      OBForceFieldGhemical(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
+      explicit OBForceFieldGhemical(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
         _init = false;
         _rvdw = 7.0;
