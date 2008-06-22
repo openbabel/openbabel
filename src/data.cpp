@@ -139,7 +139,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return("\0");
 
     return(_element[atomicnum]->GetSymbol());
@@ -150,7 +150,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(0);
 
     return(_element[atomicnum]->GetMaxBonds());
@@ -161,7 +161,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(0.0);
 
     return(_element[atomicnum]->GetElectroNeg());
@@ -172,7 +172,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(0.0);
 
     return(_element[atomicnum]->GetAllredRochowElectroNeg());
@@ -184,7 +184,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(0.0);
 
     return(_element[atomicnum]->GetIonization());
@@ -196,7 +196,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(0.0);
 
     return(_element[atomicnum]->GetElectronAffinity());
@@ -210,7 +210,7 @@ namespace OpenBabel
     vector <double> colors;
     colors.reserve(3);
     
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       {
         colors.push_back(0.0);
         colors.push_back(0.0);
@@ -230,7 +230,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return("Unknown");
 
     return(_element[atomicnum]->GetName());
@@ -241,7 +241,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(0.0);
 
     return(_element[atomicnum]->GetVdwRad());
@@ -253,7 +253,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(1.0);
 
     rad = _element[atomicnum]->GetCovalentRad();
@@ -272,7 +272,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(1.95);
 
     rad = _element[atomicnum]->GetVdwRad();
@@ -290,7 +290,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(0.0);
 
     return(_element[atomicnum]->GetCovalentRad());
@@ -301,7 +301,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       return(0.0);
 
     return(_element[atomicnum]->GetMass());
