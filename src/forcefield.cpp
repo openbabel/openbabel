@@ -694,7 +694,7 @@ namespace OpenBabel
   
   int OBFFConstraints::GetConstraintType(int index) const
   {
-    if (index > _constraints.size())
+    if (index >= _constraints.size())
       return 0;
 
     return _constraints[index].type; 
@@ -702,7 +702,7 @@ namespace OpenBabel
   
   double OBFFConstraints::GetConstraintValue(int index) const 
   {
-    if (index > _constraints.size())
+    if (index >= _constraints.size())
       return 0;
 
     return _constraints[index].constraint_value; 
@@ -710,7 +710,7 @@ namespace OpenBabel
   
   int OBFFConstraints::GetConstraintAtomA(int index) const
   {
-    if (index > _constraints.size())
+    if (index >= _constraints.size())
       return 0;
 
     return _constraints[index].ia; 
@@ -718,7 +718,7 @@ namespace OpenBabel
   
   int OBFFConstraints::GetConstraintAtomB(int index) const
   {
-    if (index > _constraints.size())
+    if (index >= _constraints.size())
       return 0;
 
     return _constraints[index].ib; 
@@ -726,7 +726,7 @@ namespace OpenBabel
   
   int OBFFConstraints::GetConstraintAtomC(int index) const
   {
-    if (index > _constraints.size())
+    if (index >= _constraints.size())
       return 0;
 
     return _constraints[index].ic; 
@@ -734,7 +734,7 @@ namespace OpenBabel
   
   int OBFFConstraints::GetConstraintAtomD(int index) const
   {
-    if (index > _constraints.size())
+    if (index >= _constraints.size())
       return 0;
 
     return _constraints[index].id; 
