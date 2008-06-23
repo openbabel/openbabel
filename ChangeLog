@@ -1,5 +1,13 @@
 2008-06-23  Chris Morley
 
+	* test/inchiwrite.cpp: add -xn option so that the tests are done without
+	the 'recommended' InChI options. wInChI.exe is not yet available
+	for InChI 1.02. Needs revisting when it is.
+
+	* src/fingerprint.cpp(FastSearchIndexer): ensure fpid is terminated
+	when copied to guard against theoretical problem pointed out
+	by Andrew Dalke.
+
 2008-06-21  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/chains.cpp: Assign HOH and ligands to separate residues.
