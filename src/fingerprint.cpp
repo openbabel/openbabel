@@ -354,6 +354,7 @@ namespace OpenBabel
     _pindex= new FptIndex;
     _pindex->header.headerlength = sizeof(FptIndexHeader);
     strncpy(_pindex->header.fpid,fpid.c_str(),15);
+    _pindex->header.fpid[15]='\0'; //ensure fpid is terminated at 15 characters.
     strncpy(_pindex->header.datafilename, datafilename.c_str(), 255);
 
     //check that fingerprint type is available

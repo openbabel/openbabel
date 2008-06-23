@@ -72,6 +72,15 @@ int main(int argc, char* argv[])
   }
 
   conv.AddOption("w",OBConversion::OUTOPTIONS); //suppress routine warnings
+
+  /*In OB version 2.2.0 a set of 'recommended' InChI options is used by default.
+    The compiled Windows program wInChI.exe, which is used to generate the results file
+    was not available for InChI version 1.02, the beta of which is used in OB.
+    So the following option turns off all the InChI options. This needs to be revisted
+    when InChI 1.02 is released.
+  */
+  conv.AddOption("n",OBConversion::OUTOPTIONS);
+
   int count = conv.Convert();
   if(count<=0) {
     cout << "# Skipped. Did not convert any molecules" << endl;
