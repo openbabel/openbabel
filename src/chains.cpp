@@ -405,12 +405,10 @@ namespace OpenBabel
   {
     ByteCode *result;
 
-    //result = (ByteCode*)malloc(sizeof(ByteCode));
     result = new ByteCode;
     if( !result )
       {
         obErrorLog.ThrowError(__FUNCTION__, "Unable to allocate byte codes for biomolecule residue perception.", obError);
-        //        exit(1);
       }
     result->type = type;
     result->eval.next     = NULL;
@@ -440,12 +438,10 @@ namespace OpenBabel
           case BC_ASSIGN:
 
             if (node->assign.atomid != NULL) {
-              //free(node->assign.atomid);
 	      delete [] node->assign.atomid;
               node->assign.atomid = NULL; // prevent double-free
             }
             if (node->assign.bflags != NULL) {
-              //free(node->assign.bflags);
               delete [] node->assign.bflags;
               node->assign.bflags = NULL; // prevent double-free
             }
@@ -481,7 +477,6 @@ namespace OpenBabel
             break;
           }
 
-        //free(node);
 	delete node;
         node = NULL;
       }
@@ -490,7 +485,6 @@ namespace OpenBabel
   static void FatalMemoryError(void)
   {
     obErrorLog.ThrowError(__FUNCTION__, "Unable to allocate memory for biomolecule residue / chain perception.", obError);
-    //    exit(1);
   }
 
   void GenerateByteCodes(ByteCode **node, int resid, int curr, int prev, int bond)
@@ -706,7 +700,6 @@ namespace OpenBabel
       {
         ptr = AllocateByteCode(BC_ASSIGN);
         ptr->assign.resid = resid;
-        //ptr->assign.atomid = (int*)malloc(AtomIndex*sizeof(int));
         ptr->assign.atomid = new int[AtomIndex];
         if( !ptr->assign.atomid )
           FatalMemoryError();
@@ -715,7 +708,6 @@ namespace OpenBabel
             ptr->assign.atomid[j] = MonoAtom[i].atomid;
         if( BondIndex )
           {
-            //ptr->assign.bflags = (int*)malloc(BondIndex*sizeof(int));
             ptr->assign.bflags = new int[BondIndex];
             for( i=0; i<MonoBondCount; i++ )
               if( (j=MonoBond[i].index) != -1 )
@@ -754,10 +746,7 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////////////////////////
 
   // validated
-  OBChainsParser::OBChainsParser(void) /*:
-    bitmasks(NULL), visits(NULL),   hetflags(NULL), atomids (NULL),
-    resids  (NULL), resnos  (NULL), sernos  (NULL), hcounts (NULL), 
-    chains  (NULL), flags   (NULL)*/
+  OBChainsParser::OBChainsParser(void)
   {
     int i, res = RESIDMIN;
 
@@ -786,6 +775,14 @@ namespace OpenBabel
     DeleteByteCode((ByteCode*)NDecisionTree);
   }
 
+  void OBChainsParser::DumpState()
+  {
+    for (int i = 0; i < resids.size(); ++i ) {
+      cout <<  "hetflags=" << hetflags[i] << "  chains=" << chains[i] << "  resnos=" << resnos[i] <<  
+	       "  resids=" << (int)resids[i] << endl;
+    }
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // Setup / Cleanup Functions
   //////////////////////////////////////////////////////////////////////////////
@@ -799,29 +796,6 @@ namespace OpenBabel
     int asize = mol.NumAtoms();
     int bsize = mol.NumBonds();
 
-    /*
-    bitmasks = new unsigned short[asize];
-    visits   = new bool[asize];
-    resids   = new unsigned char[asize];
-    flags    = new unsigned char[bsize];
-    hetflags = new bool[asize];
-    atomids  = new int[asize];
-    resnos   = new short[asize];
-    sernos   = new short[asize];
-    hcounts  = new char[asize];
-    chains   = new char[asize];
-
-    memset(bitmasks, 0,   sizeof(unsigned short) * asize);
-    memset(visits,   0,   sizeof(bool)           * asize);
-    memset(resids,   0,   sizeof(unsigned char)  * asize);
-    memset(hetflags, 0,   sizeof(bool)           * asize);
-    memset(resnos,   0,   sizeof(short)          * asize);
-    memset(sernos,   0,   sizeof(short)          * asize);
-    memset(hcounts,  0,   sizeof(char)           * asize);
-    memset(chains,   ' ', sizeof(char)           * asize);
-    
-    memset(flags,    0,   sizeof(unsigned char)  * bsize);
-    */
     bitmasks.resize(asize, 0);
     visits.resize(asize, 0);
     resids.resize(asize, 0);
@@ -831,7 +805,7 @@ namespace OpenBabel
     resnos.resize(asize, 0);
     sernos.resize(asize, 0);
     hcounts.resize(asize, 0);
-    chains.resize(asize, 0);
+    chains.resize(asize, ' ');
 
     for ( i = 0 ; i < asize ; i++ )
       {
@@ -843,58 +817,6 @@ namespace OpenBabel
   //! Used by OBChainsParser::SetupMol()
   void OBChainsParser::CleanupMol(void)
   {
-    /*
-    if (bitmasks != NULL)
-      {
-        delete bitmasks;
-        bitmasks = NULL;
-      }
-    if (visits != NULL)
-      {
-        delete visits;
-        visits = NULL;
-      }
-    if (hetflags != NULL)
-      {
-        delete hetflags;
-        hetflags = NULL;
-      }
-    if (atomids  != NULL)
-      {
-        delete atomids;
-        atomids = NULL;
-      }
-    if (resids   != NULL)
-      {
-        delete resids;
-        resids = NULL;
-      }
-    if (resnos   != NULL)
-      {
-        delete resnos;
-        resnos = NULL;
-      }
-    if (sernos   != NULL)
-      {
-        delete sernos;
-        sernos = NULL;
-      }
-    if (hcounts  != NULL)
-      {
-        delete hcounts;
-        hcounts = NULL;
-      }
-    if (chains   != NULL)
-      {
-        delete chains;
-        chains = NULL;
-      }
-    if (flags    != NULL)
-      {
-        delete flags;
-        flags = NULL;
-      }
-    */
     bitmasks.clear();
     visits.clear();
     resids.clear();
@@ -934,77 +856,66 @@ namespace OpenBabel
 
     OBAtom    *atom;
     OBResidue *residue;
-    map<short, OBResidue *> resmap;
+    map<char, map<short, OBResidue*> > resmap;
+
+    //DumpState();
 
     int size = mol.NumAtoms();
-    for ( int i = 0 ; i < size ; i++ )
-      {
-        atom = mol.GetAtom(i+1); // WARNING: ATOM INDEX ISSUE
+    for ( int i = 0 ; i < size ; i++ ) {
+      atom = mol.GetAtom(i+1); // WARNING: ATOM INDEX ISSUE
 
-        if (atomids[i] == -1)
-          {
-            symbol = etab.GetSymbol(atom->GetAtomicNum());
-            if( symbol[1] )
-              {
-                buffer[0] = symbol[0];
-                buffer[1] = (char) toupper(symbol[1]);
-              }
-            else
-              {
-                buffer[0] = ' ';
-                buffer[1] = symbol[0];
-              }
-            buffer[2] = ' ';
-            buffer[3] = ' ';
-            buffer[4] = '\0';
-          }
-        else if (atom->IsHydrogen())
-          {
-            if (hcounts[i])
-              snprintf(buffer, BUFF_SIZE, "%cH%.2s", hcounts[i]+'0', ChainsAtomName[atomids[i]]+2);
-            else
-              snprintf(buffer, BUFF_SIZE, "H%.2s", ChainsAtomName[atomids[i]]+2);
-          }
+      if (atomids[i] == -1) {
+        symbol = etab.GetSymbol(atom->GetAtomicNum());
+        if ( symbol[1] ) {
+          buffer[0] = symbol[0];
+          buffer[1] = (char) toupper(symbol[1]);
+        } else {
+          buffer[0] = ' ';
+          buffer[1] = symbol[0];
+        }
+        buffer[2] = ' ';
+        buffer[3] = ' ';
+        buffer[4] = '\0';
+      } else if (atom->IsHydrogen()) {
+        if (hcounts[i])
+          snprintf(buffer, BUFF_SIZE, "%cH%.2s", hcounts[i]+'0', ChainsAtomName[atomids[i]]+2);
         else
-          snprintf(buffer, BUFF_SIZE, "%.4s", ChainsAtomName[atomids[i]]);
+          snprintf(buffer, BUFF_SIZE, "H%.2s", ChainsAtomName[atomids[i]]+2);
+      } else
+        snprintf(buffer, BUFF_SIZE, "%.4s", ChainsAtomName[atomids[i]]);
 
-        if (buffer[3] == ' ')
-          buffer[3] = '\0';
+      if (buffer[3] == ' ')
+        buffer[3] = '\0';
 
-        atomid = (buffer[0] == ' ') ? buffer + 1 : buffer;
+      atomid = (buffer[0] == ' ') ? buffer + 1 : buffer;
 
-        if (resmap.find(resnos[i]) != resmap.end())
-          {
-            residue = resmap[resnos[i]];
-            residue->AddAtom(atom);
-            residue->SetAtomID(atom, atomid);
-            residue->SetHetAtom(atom, hetflags[i]);
-            residue->SetSerialNum(atom, sernos[i]);
-          }
-        else
-          {
-            name    = ChainsResName[resids[i]];
+      if (resmap[chains[i]].find(resnos[i]) != resmap[chains[i]].end()) {
+        residue = resmap[chains[i]][resnos[i]];
+        residue->AddAtom(atom);
+        residue->SetAtomID(atom, atomid);
+        residue->SetHetAtom(atom, hetflags[i]);
+        residue->SetSerialNum(atom, sernos[i]);
+      } else {
+        name    = ChainsResName[resids[i]];
 
-            residue = mol.NewResidue();
+        residue = mol.NewResidue();
+        residue->SetName(name);
+        residue->SetNum(resnos[i]);
+        residue->SetChain(chains[i]);
+        residue->SetChainNum((chains[i] > 'A') ? (int)(chains[i] - 'A') : 1);
 
-            residue->SetName(name);
-            residue->SetNum(resnos[i]);
-            residue->SetChain(chains[i]);
-            residue->SetChainNum((chains[i] > 'A') ? (int)(chains[i] - 'A') : 1);
+        residue->AddAtom(atom);
+        residue->SetAtomID(atom, atomid);
+        residue->SetHetAtom(atom, hetflags[i]);
+        residue->SetSerialNum(atom, sernos[i]);
 
-            residue->AddAtom(atom);
-            residue->SetAtomID(atom, atomid);
-            residue->SetHetAtom(atom, hetflags[i]);
-            residue->SetSerialNum(atom, sernos[i]);
-
-            resmap[resnos[i]] = residue;
-          }
+        resmap[chains[i]][resnos[i]] = residue;
       }
+    }
 
     if (mol.NumResidues() == 1 && nukeSingleResidue)
       mol.DeleteResidue(mol.GetResidue(0));
-    else if (mol.NumResidues() == 1
-             && (mol.GetResidue(0))->GetName() == "UNK")
+    else if (mol.NumResidues() == 1 && (mol.GetResidue(0))->GetName() == "UNK")
       mol.DeleteResidue(mol.GetResidue(0));
   }
 
@@ -1074,40 +985,40 @@ namespace OpenBabel
 
     OBAtom *atom;
     vector<OBAtom *>::iterator a;
-    for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
-      {
-        idx = atom->GetIdx() - 1;
-        if (!hetflags[idx] && chains[idx] == ' ' && !atom->IsHydrogen())
-          {
-            size = RecurseChain(mol, idx, 'A' + count);
+    for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a)) {
+      idx = atom->GetIdx() - 1;
+      if (!hetflags[idx] && chains[idx] == ' ' && !atom->IsHydrogen()) {
+        size = RecurseChain(mol, idx, 'A' + count);
             
-            // size = number of heavy atoms in residue chain
-            if (size < 10) // small ligand, probably
-              {
-                if (size == 1 && atom->IsOxygen())
-                  resid = 1; /* HOH */
-                else
-                  resid = 2; /* LIG */
+        // size = number of heavy atoms in residue chain
+        if (size < 10) { // small ligand, probably
+          if (size == 1 && atom->IsOxygen())
+            resid = 1; /* HOH */
+          else
+            resid = 2; /* LIG */
 
-                for (i = 0 ; i < numAtoms ; ++i)
-                  {
-                    if (chains[i] == ('A' + count))
-                      {
-                        hetflags[i] = true;
-                        resids[i]   = resid;
-                        resnos[i]   = resno;
-                        chains[i]   = ' ';
-                      }
-                  }
-                resno++;
-              }
-            else {
-              count++; // number of connected chains
-              if (count > 26) // out of chain IDs
-                break;
+          for (i = 0 ; i < numAtoms ; ++i) {
+            if (chains[i] == ('A' + count)) {
+              hetflags[i] = true;
+              resids[i]   = resid;
+              resnos[i]   = resno;
+              chains[i]   = ' ';
             }
           }
+          resno++;
+        } else {
+          count++; // number of connected chains
+          if (count > 26) // out of chain IDs
+            break;
+        }
       }
+      // HOH
+      if (hetflags[idx] && resids[idx] == 1) {
+        resnos[idx]   = resno;
+        chains[idx]   = ' ';
+        resno++;
+      }
+    }
 
     if( count == 1 )
       for ( i = 0 ; i < numAtoms ; i++ )

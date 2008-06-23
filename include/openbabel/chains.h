@@ -95,6 +95,9 @@ namespace OpenBabel
 
       const char *ParseSmiles(const char *, int);
 
+      // debugging
+      void DumpState();
+
     private: // members
 
       void *PDecisionTree; // ByteCode *
