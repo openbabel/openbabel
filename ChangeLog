@@ -1,3 +1,11 @@
+2008-06-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/parsmart.cpp: Add support for Isotopes in SMARTS. Fixes
+	PR#1987729.
+
+	* test/files/nci.smi: Add tests for matching isotopic
+	SMILES/SMARTS.
+
 2008-06-23  Chris Morley
 
 	* test/inchiwrite.cpp: add -xn option so that the tests are done without

@@ -2837,6 +2837,8 @@ namespace OpenBabel
               return(expr->leaf.value == -(atom->GetFormalCharge()));
             case AL_POSITIVE:
               return(expr->leaf.value == atom->GetFormalCharge());
+            case AL_MASS:
+              return(expr->leaf.value == atom->GetIsotope());
             case AL_HYB:
               return(expr->leaf.value == (int)atom->GetHyb());
 	    
