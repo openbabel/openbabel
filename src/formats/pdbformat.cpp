@@ -360,8 +360,8 @@ namespace OpenBabel
         if (vs.size() <= 4)
           limit = vs.size() - 1;
 
-        for (unsigned int i = 0; i < limit; i++)
-          boundedAtomsSerialNumbersValid[i] = true;
+        for (unsigned int s = 0; s < limit; ++s)
+          boundedAtomsSerialNumbersValid[s] = true;
       }
     else
       {
@@ -552,37 +552,49 @@ namespace OpenBabel
       }
 
     OBAtom *nbr;
-    int count;
     vector<OBBond*>::iterator k;
     for (i = 1; i <= mol.NumAtoms(); i ++)
       {
         atom = mol.GetAtom(i);
-        if (atom->GetValence() <= 4)
+        if (atom->GetValence() == 0)
+          continue; // no need to write a CONECT record -- no bonds
+
+        snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
+        ofs << buffer;
+        // Write out up to 4 real bonds per line PR#1711154
+        int currentValence = 0;
+        for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
           {
-            snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
+            snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
             ofs << buffer;
-            for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-              {
-                snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
-                ofs << buffer;
-              }
-            for (count = 0; count < (4 - (int)atom->GetValence()); count++)
-              {
-                snprintf(buffer, BUFF_SIZE, "     ");
-                ofs << buffer;
-              }
-            ofs << "                                       " << endl;
+            if (++currentValence % 4 == 0) {
+              // Add the trailing space to finish this record
+              ofs << "                                       \n";
+              // write the start of a new CONECT record
+              snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
+              ofs << buffer;              
+            }
           }
+
+        // Add trailing spaces
+        int remainingValence = atom->GetValence() % 4;
+        for (int count = 0; count < (4 - remainingValence); count++) {
+          snprintf(buffer, BUFF_SIZE, "     ");
+          ofs << buffer;
+        }
+        ofs << "                                       \n";
       }
+
     snprintf(buffer, BUFF_SIZE, "MASTER        0    0    0    0    0    0    0    0 ");
     ofs << buffer;
     snprintf(buffer, BUFF_SIZE, "%4d    0 %4d    0\n",mol.NumAtoms(),mol.NumAtoms());
     ofs << buffer;
+
     ofs << "END\n";
-    if (model_num)
-      {
+    if (model_num) {
       ofs << "ENDMDL" << endl;
-      }
+    }
+
     return(true);
   }
 

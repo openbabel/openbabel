@@ -16,6 +16,9 @@
 	* src/formats/mdlformat.cpp: Fix for SKP records, suggested by
 	Andrew.
 
+	* src/formats/pdbformat.cpp: Fix for CONECT records for atoms
+	with > 4 records (PR#1711154).
+
 2008-06-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/parsmart.cpp: Add support for Isotopes in SMARTS. Fixes
