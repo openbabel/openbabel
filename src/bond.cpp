@@ -145,6 +145,18 @@ namespace OpenBabel
       }
   }
 
+  void OBBond::SetLength(double length)
+  {
+    OBAtom *atom1 = GetBeginAtom();
+    OBAtom *atom2 = GetEndAtom();
+    
+    //split the length difference in half, and modify the bond twice
+    double firstLength = length + ((GetLength() - length) / 2);
+    
+    SetLength(atom1, firstLength);
+    SetLength(atom2, length);
+  }
+
   bool OBBond::IsRotor()
   {
     return(_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1 &&

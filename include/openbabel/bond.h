@@ -106,6 +106,9 @@ namespace OpenBabel
       void SetParent(OBMol *ptr)  {        _parent= ptr;        }
       //! Change the bond length to @p length, while keeping @p fixed stationary
       void SetLength(OBAtom *fixed,double length);
+      //! Change the bond length to @p length, moving both atoms halfway
+      //! \since version 2.2
+      void SetLength(double length);
       //! Set the main bond information (i.e., when creating a bond)
       void Set(int index, OBAtom* begin,OBAtom* end,int order,int flags);
       //! \deprecated Use SetBondOrder() instead

@@ -7,6 +7,12 @@
 	* include/openbabel/math/*.h, src/math/*.cpp: Updates to fix
 	some GCC warnings.
 
+	* include/openbabel/bond.h, src/bond.cpp: Patch from Steven
+	Constable, PR#2004391. Adds SetLength() to move both atoms.
+
+	* include/openbabel/mol.h: Fix for ReserveAtoms() suggested by
+	Andrew Dalke.
+
 2008-06-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/parsmart.cpp: Add support for Isotopes in SMARTS. Fixes
