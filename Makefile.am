@@ -7,7 +7,7 @@ if BUILD_SCRIPTS
 endif
 
 SUBDIRS = data src test tools doc include $(SCRIPT_DIR)
-EXTRA_DIST = Doxyfile windows-vc2005 CMakeLists.txt
+EXTRA_DIST = Doxyfile windows-vc2005 CMakeLists.txt openbabel-2.0.pc.cmake
 AUTOMAKE_OPTIONS = foreign
 
 pkgconfigdir = $(libdir)/pkgconfig
@@ -17,4 +17,5 @@ docs:
 	(cd $(top_srcdir); $(DOXYGEN))
 
 dist-hook:
+	find $(distdir) -name "._*" | xargs rm -rf
 	find $(distdir) -name ".svn" | xargs rm -rf

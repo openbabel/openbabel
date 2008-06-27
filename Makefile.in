@@ -227,7 +227,7 @@ ACLOCAL_AMFLAGS = '-Iautoconf'
 # only build in the scripts subdirectory if possible (perl, python, swig, etc.)
 @BUILD_SCRIPTS_TRUE@SCRIPT_DIR = scripts
 SUBDIRS = data src test tools doc include $(SCRIPT_DIR)
-EXTRA_DIST = Doxyfile windows-vc2005 CMakeLists.txt
+EXTRA_DIST = Doxyfile windows-vc2005 CMakeLists.txt openbabel-2.0.pc.cmake
 AUTOMAKE_OPTIONS = foreign
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = openbabel-2.0.pc
@@ -692,6 +692,7 @@ docs:
 	(cd $(top_srcdir); $(DOXYGEN))
 
 dist-hook:
+	find $(distdir) -name "._*" | xargs rm -rf
 	find $(distdir) -name ".svn" | xargs rm -rf
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
