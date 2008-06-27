@@ -13,6 +13,9 @@
 	* include/openbabel/mol.h: Fix for ReserveAtoms() suggested by
 	Andrew Dalke.
 
+	* src/formats/mdlformat.cpp: Fix for SKP records, suggested by
+	Andrew.
+
 2008-06-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/parsmart.cpp: Add support for Isotopes in SMARTS. Fixes

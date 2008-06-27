@@ -340,7 +340,8 @@ public:
               {
                 int i = atoi(buffer+6);
                 for(;i>0;--i)
-                  ifs.getline(buffer,BUFF_SIZE);
+                  if (ifs.good()) // check for EOL, suggested by Dalke
+                    ifs.getline(buffer,BUFF_SIZE);
                 continue;
               }
             if(buffer[0]=='A') //alias
