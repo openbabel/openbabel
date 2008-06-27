@@ -109,8 +109,8 @@ namespace OpenBabel
   public:
 
     OBMolAtomBFSIter(): _parent(NULL), _ptr(NULL) { }
-    OBMolAtomBFSIter(OBMol *mol);
-    OBMolAtomBFSIter(OBMol &mol);
+    OBMolAtomBFSIter(OBMol *mol, int StartIndex = 1);
+    OBMolAtomBFSIter(OBMol &mol, int StartIndex = 1);
     OBMolAtomBFSIter(const OBMolAtomBFSIter &ai);
     ~OBMolAtomBFSIter() { }
 

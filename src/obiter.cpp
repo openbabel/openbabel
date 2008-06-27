@@ -278,8 +278,8 @@ namespace OpenBabel
       \endcode
   **/
 
-  OBMolAtomBFSIter::OBMolAtomBFSIter(OBMol *mol):
-    _parent(mol), _ptr(_parent->GetFirstAtom())
+  OBMolAtomBFSIter::OBMolAtomBFSIter(OBMol *mol, int StartIndex):
+    _parent(mol), _ptr(_parent->GetAtom(StartIndex))
   {
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.Negate(); // all on
@@ -300,8 +300,8 @@ namespace OpenBabel
       }
   }
 
-  OBMolAtomBFSIter::OBMolAtomBFSIter(OBMol &mol):
-    _parent(&mol), _ptr(_parent->GetFirstAtom())
+  OBMolAtomBFSIter::OBMolAtomBFSIter(OBMol &mol, int StartIndex):
+    _parent(&mol), _ptr(_parent->GetAtom(StartIndex))
   {
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.Negate(); // all on
