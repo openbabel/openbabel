@@ -152,7 +152,7 @@ namespace OpenBabel
     //! This improves performance since the internal atom vector does not grow.
     void ReserveAtoms(int natoms)
     {
-      if (natoms && _mod)
+      if (natoms > 0 && _mod)
         _vatom.reserve(natoms);
     }
     
