@@ -93,6 +93,9 @@ namespace OpenBabel
 
           // We could also potentially use memcpy here
         }
+        
+      //! Destructor
+      virtual ~matrix3x3() {}
 
       //! \brief Access function
       /*! Writes the matrix into the 1-dimensional array m, row by

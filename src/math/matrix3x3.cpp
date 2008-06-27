@@ -319,33 +319,33 @@ namespace OpenBabel
       }
 #endif
 
-    matrix3x3 inverse;
-    inverse.ele[0][0] = ele[1][1]*ele[2][2] - ele[1][2]*ele[2][1];
-    inverse.ele[1][0] = ele[1][2]*ele[2][0] - ele[1][0]*ele[2][2];
-    inverse.ele[2][0] = ele[1][0]*ele[2][1] - ele[1][1]*ele[2][0];
-    inverse.ele[0][1] = ele[2][1]*ele[0][2] - ele[2][2]*ele[0][1];
-    inverse.ele[1][1] = ele[2][2]*ele[0][0] - ele[2][0]*ele[0][2];
-    inverse.ele[2][1] = ele[2][0]*ele[0][1] - ele[2][1]*ele[0][0];
-    inverse.ele[0][2] = ele[0][1]*ele[1][2] - ele[0][2]*ele[1][1];
-    inverse.ele[1][2] = ele[0][2]*ele[1][0] - ele[0][0]*ele[1][2];
-    inverse.ele[2][2] = ele[0][0]*ele[1][1] - ele[0][1]*ele[1][0];
+    matrix3x3 returnValue;
+    returnValue.ele[0][0] = ele[1][1]*ele[2][2] - ele[1][2]*ele[2][1];
+    returnValue.ele[1][0] = ele[1][2]*ele[2][0] - ele[1][0]*ele[2][2];
+    returnValue.ele[2][0] = ele[1][0]*ele[2][1] - ele[1][1]*ele[2][0];
+    returnValue.ele[0][1] = ele[2][1]*ele[0][2] - ele[2][2]*ele[0][1];
+    returnValue.ele[1][1] = ele[2][2]*ele[0][0] - ele[2][0]*ele[0][2];
+    returnValue.ele[2][1] = ele[2][0]*ele[0][1] - ele[2][1]*ele[0][0];
+    returnValue.ele[0][2] = ele[0][1]*ele[1][2] - ele[0][2]*ele[1][1];
+    returnValue.ele[1][2] = ele[0][2]*ele[1][0] - ele[0][0]*ele[1][2];
+    returnValue.ele[2][2] = ele[0][0]*ele[1][1] - ele[0][1]*ele[1][0];
 
-    inverse /= det;
+    returnValue /= det;
 
-    return(inverse);
+    return(returnValue);
   }
 
   /* This method returns the transpose of a matrix. The original
      matrix remains unchanged. */
   matrix3x3 matrix3x3::transpose(void) const
   {
-    matrix3x3 transpose;
+    matrix3x3 returnValue;
 
     for(unsigned int i=0; i<3; i++)
       for(unsigned int j=0; j<3; j++)
-        transpose.ele[i][j] = ele[j][i];
+        returnValue.ele[i][j] = ele[j][i];
 
-    return(transpose);
+    return(returnValue);
   }
 
   double matrix3x3::determinant(void) const

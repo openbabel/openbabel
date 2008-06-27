@@ -58,6 +58,9 @@ namespace OpenBabel
     vector3 (const vector3& v):
       _vx(v._vx), _vy(v._vy), _vz(v._vz)
         { }
+        
+    //! Destructor
+    virtual ~vector3() {}
 
     //! Set x,y and z-component of a vector
     void Set(const double inX, const double inY, const double inZ)

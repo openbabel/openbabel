@@ -55,7 +55,7 @@ namespace OpenBabel
         {
           if (i)
             r << ",";
-          n = floor((*v)[i] * 12.0 + 0.1);
+          n = rint(floor((*v)[i] * 12.0 + 0.1)); // we take the floor and then rint to ensure int conversion
           j = 0;
           while ((*m)(i, j) == 0.)
             j++;

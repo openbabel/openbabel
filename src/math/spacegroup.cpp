@@ -130,7 +130,7 @@ namespace OpenBabel
   SpaceGroup::~SpaceGroup()
   {
     list<transform3d*>::iterator i, end = m_transforms.end();
-    for (i = m_transforms.begin(); i != end; i++)
+    for (i = m_transforms.begin(); i != end; ++i)
       delete *i;
   }
 
