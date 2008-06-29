@@ -1,3 +1,9 @@
+2008-06-29  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* include/openbabel/math/vector3.h,
+	include/openbabel/math/matrix3x3.h: Made the destructors non-virtual,
+	fixes Avogadro bug 2005984.
+
 2008-06-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/obiter.h, src/obiter.cpp: Fix

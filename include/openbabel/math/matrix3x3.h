@@ -95,7 +95,7 @@ namespace OpenBabel
         }
         
       //! Destructor
-      virtual ~matrix3x3() {}
+      ~matrix3x3() {}
 
       //! \brief Access function
       /*! Writes the matrix into the 1-dimensional array m, row by

@@ -23,6 +23,7 @@ GNU General Public License for more details.
 
 #include <ostream>
 #include <math.h>
+#include <iostream>
 
 #include <openbabel/rand.h>
 
@@ -60,7 +61,7 @@ namespace OpenBabel
         { }
         
     //! Destructor
-    virtual ~vector3() {}
+    ~vector3() { }
 
     //! Set x,y and z-component of a vector
     void Set(const double inX, const double inY, const double inZ)
