@@ -279,6 +279,9 @@ class OBBase;
         {
           if(d) _vdata.push_back(d);
         }
+      //! Adds a copy of a data object; does nothing if d == NULL
+      //! \since version 2.2
+      void                              CloneData(OBGenericData *d);
       //! \return the number of OBGenericData items attached to this molecule.
       unsigned int                      DataSize() const 
         { return(_vdata.size()); }

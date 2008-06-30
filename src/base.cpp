@@ -170,6 +170,20 @@ namespace OpenBabel
 
     return filtered;
   }
+  
+  void OBBase::CloneData(OBGenericData *d)
+  {
+    if(!d)
+      return; // Nothing to do for NULL
+    
+    // Clone the data, relative to ourselves
+    // This creates a new copy -- useable by scripting languages
+    OBGenericData *clone = d->Clone(this);
+    if (clone)
+      _vdata.push_back(clone);
+    
+    return;
+  }
 
   void OBBase::DeleteData(unsigned int dt)
   {
