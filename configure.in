@@ -297,5 +297,6 @@ AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
        include/Makefile include/openbabel/Makefile \
        include/openbabel/math/Makefile \
 		   test/Makefile test/cmltest/Makefile tools/Makefile \
-		   doc/Makefile scripts/Makefile openbabel-2.0.pc)
+		   doc/Makefile scripts/Makefile openbabel-2.0.pc \
+		   cmake/Makefile cmake/modules/Makefile)
 

@@ -6,7 +6,7 @@ if BUILD_SCRIPTS
   SCRIPT_DIR = scripts
 endif
 
-SUBDIRS = data src test tools doc include $(SCRIPT_DIR)
+SUBDIRS = cmake data src test tools doc include $(SCRIPT_DIR)
 EXTRA_DIST = Doxyfile windows-vc2005 CMakeLists.txt openbabel-2.0.pc.cmake
 AUTOMAKE_OPTIONS = foreign
 
