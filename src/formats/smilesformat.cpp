@@ -2875,10 +2875,13 @@ namespace OpenBabel {
       if (_ubonds.BitIsOn(bond1->GetIdx()))
         continue;
       nbr1 = bond1->GetNbrAtom(atom);
-      nbr1_canorder = canonical_order[nbr1->GetIdx()-1];
+      // Skip hydrogens before checking canonical_order
+      // PR#1999348
       if (   (nbr1->IsHydrogen() && IsSuppressedHydrogen(nbr1))
              || !frag_atoms.BitIsOn(nbr1->GetIdx()))
         continue;
+
+      nbr1_canorder = canonical_order[nbr1->GetIdx()-1];
 
       // Insert into the bond-vector in canonical order (by neighbor atom order)
       for (bi = vbonds.begin(); bi != vbonds.end(); bi++) {
@@ -3422,7 +3425,8 @@ namespace OpenBabel {
     // center) anyway.
     FOR_ATOMS_OF_MOL(iatom, *pmol) {
       OBAtom *atom = &(*iatom);
-      if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen() && (!iso || m2s.IsSuppressedHydrogen(atom))) {
+      if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen() 
+          && (!iso || m2s.IsSuppressedHydrogen(atom))) {
         frag_atoms.SetBitOff(atom->GetIdx());
       }
     }
