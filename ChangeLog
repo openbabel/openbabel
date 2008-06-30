@@ -1,3 +1,12 @@
+2008-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Makefile.am: Move cmake to EXTRA_DIST (4 Makefiles for one
+	file?)
+	* Makefile.in: Regenerated.
+
+	* include/openbabel/base.h, src/base.cpp: New CloneData()
+	method to solve PR#2004495 for scripting interfaces.
+
 2008-06-30  Michael Banck  <mbanck@gmx.net>
 	
 	* src/Makefile.am (EXTRA_DIST): Added config.h.cmake.
