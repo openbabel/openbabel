@@ -1,6 +1,6 @@
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
-	dlhandler_win32.cpp CMakeLists.txt RDKitConv.cpp
+	dlhandler_win32.cpp CMakeLists.txt RDKitConv.cpp config.h.cmake
 
 if BUILD_SHARED
 thisdir = .

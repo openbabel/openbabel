@@ -264,7 +264,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
-	dlhandler_win32.cpp CMakeLists.txt RDKitConv.cpp
+	dlhandler_win32.cpp CMakeLists.txt RDKitConv.cpp config.h.cmake
 
 @BUILD_SHARED_TRUE@thisdir = .
 SUBDIRS = math fingerprints forcefields descriptors ops $(thisdir) \

@@ -1,3 +1,19 @@
+2008-06-30  Michael Banck  <mbanck@gmx.net>
+	
+	* src/Makefile.am (EXTRA_DIST): Added config.h.cmake.
+	* src/Makefile.in: Regenerated.
+
+	* Makefile.am (SUBDIRS): Added cmake.
+	* Makefile.in: Regenerated.
+	* cmake/Makefile.am: New file.
+	* cmake/Makefile.in: New file.
+	* cmake/modules/Makefile.am: Likewise.	
+	* cmake/modules/Makefile.in: Likewise.	
+	* configure.in (AC_OUTPUT): Added cmake/Makefile and
+	cmake/modules/Makefile.
+	* configure: Regenerated.
+	* acinclude (AM_PATH_XML2): New macro, copied from aclocal.m4.
+
 2008-06-29  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* include/openbabel/math/vector3.h,
