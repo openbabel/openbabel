@@ -576,7 +576,7 @@ namespace OpenBabel
     if (!_init)
       Init();
 
-    if (!from.size())
+    if (from.empty())
       return("");
 
     if (_from >= 0 && _to >= 0 &&

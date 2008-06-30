@@ -152,7 +152,7 @@ namespace OpenBabel
 
   double OBFloatGrid::Inject(double x, double y, double z)
   {
-    if (_values.size() == 0)
+    if (_values.empty())
       return 0.0;
 
     if( x<=_xmin || x>=_xmax
@@ -193,7 +193,7 @@ namespace OpenBabel
 
   double OBFloatGrid::Interpolate(double x, double y, double z)
   {
-    if (_values.size() == 0)
+    if (_values.empty())
       return 0.0;
 
     int n,igx,igy,igz;

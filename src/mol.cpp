@@ -1856,7 +1856,7 @@ namespace OpenBabel
                             "Ran OpenBabel::AddHydrogens -- polar only", obAuditMsg);
 
     // Make sure we have conformers (PR#1665519)
-    if (_vconf.size() == 0) {
+    if (!_vconf.empty()) {
       BeginModify();
       EndModify();
     }

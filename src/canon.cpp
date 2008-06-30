@@ -738,7 +738,7 @@ static void BreakChiralTies(OBMol *pmol,
 
     // If there's nothing in symclass2, then we don't have to split 
     // the symmetry class.
-    if (symclass2.size() == 0)
+    if (symclass2.empty())
       continue;
 
 #if DEBUG

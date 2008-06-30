@@ -951,7 +951,7 @@ namespace OpenBabel
   */
   bool OBAngleData::FillAngleArray(std::vector<std::vector<unsigned int> > &angles)
   {
-    if(_angles.size() == 0)
+    if(_angles.empty())
       return(false);
 
     vector<OBAngle>::iterator angle;
@@ -1204,7 +1204,7 @@ namespace OpenBabel
   */
   bool OBTorsionData::FillTorsionArray(std::vector<std::vector<unsigned int> > &torsions)
   {
-    if(_torsions.size() == 0)
+    if(_torsions.empty())
       return(false);
 
     vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > tmpquads,quads;

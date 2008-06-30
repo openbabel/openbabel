@@ -2068,13 +2068,13 @@ namespace OpenBabel
   
   bool OBForceField::HasGroups()
   {
-    if (_intraGroup.size())
+    if (!_intraGroup.empty())
       return true;
 
-    if (_interGroup.size())
+    if (!_interGroup.empty())
       return true;
 
-    if (_interGroups.size())
+    if (!_interGroups.empty())
       return true;
 
     return false;

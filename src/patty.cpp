@@ -169,7 +169,7 @@ namespace OpenBabel
         _sp[i]->Match(mol);
         vector<vector<int> > match = _sp[i]->GetMapList();
         //vector<vector<int> >& match = _sp[i]->GetMapList();
-        if (match.size())
+        if (!match.empty())
           {
             if (debug)
               {
@@ -204,7 +204,7 @@ namespace OpenBabel
         _sp[i]->Match(mol);
         vector<vector<int> > match = _sp[i]->GetMapList();
         //vector<vector<int> >& match = _sp[i]->GetMapList();
-        if (match.size())
+        if (!match.empty())
           {
             if (debug)
               {

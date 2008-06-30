@@ -82,14 +82,14 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
       
       OpenBabel::tokenize(vs, buffer, "\r\n\t :");
       
-      if (vs.size() > 0)
+      if (!vs.empty())
         {
           for (unsigned int i = 0; i < vs.size(); ++i)
             paths.push_back(vs[i]);
         }
     }
   
-  if (paths.size() == 0)
+  if (paths.empty())
     paths.push_back("./"); // defaults to current directory
   
   /* Old method using scandir. Replaced with readdir (below) as for example
@@ -135,7 +135,7 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
         }
     }
   
-  if (file_list.size() == 0)
+  if (file_list.empty())
     return(-1); // error, didn't find any files at all
   return file_list.size();
 }

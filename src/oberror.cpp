@@ -63,11 +63,11 @@ namespace OpenBabel
         tmp += " in " + _method + string("\n  ");
       }
     tmp += _errorMsg + "\n";
-    if (_explanation.size() != 0)
+    if (!_explanation.empty())
       tmp += "  " + _explanation + "\n";
-    if (_possibleCause.size() != 0)
+    if (!_possibleCause.empty())
       tmp += "  Possible reason: " + _possibleCause + "\n";
-    if (_suggestedRemedy.size() != 0)
+    if (!_suggestedRemedy.empty())
       tmp += "  Suggestion: " + _suggestedRemedy + "\n";
     return tmp;
   }
