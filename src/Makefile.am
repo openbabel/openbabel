@@ -40,7 +40,7 @@ libopenbabel_la_SOURCES = \
 		tokenst.cpp typer.cpp \
 		transform.cpp $(dlhandler)
 
-libopenbabel_la_LDFLAGS = -version-info 3:1:1 -no-undefined
+libopenbabel_la_LDFLAGS = -version-info 4:0:2 -no-undefined
 
 if BUILD_SHARED
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)/$(VERSION)\" -DUSING_DYNAMIC_LIBS
