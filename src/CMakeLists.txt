@@ -27,6 +27,7 @@ set(math_srcs
 )
 
 set(ops_srcs
+  ops/addpolarh.cpp
   ops/gen3d.cpp
   ops/loader.cpp
   ops/optransform.cpp

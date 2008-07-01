@@ -47,7 +47,7 @@ CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libops_la_LIBADD =
-am_libops_la_OBJECTS = gen3d.lo loader.lo optransform.lo
+am_libops_la_OBJECTS = addpolarh.lo gen3d.lo loader.lo optransform.lo
 libops_la_OBJECTS = $(am_libops_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -202,7 +202,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LTLIBRARIES = libops.la
-libops_la_SOURCES = gen3d.cpp  loader.cpp  optransform.cpp
+libops_la_SOURCES = addpolarh.cpp gen3d.cpp  loader.cpp  optransform.cpp
 AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/src -I$(top_srcdir)/include
 all: all-am
 
@@ -255,6 +255,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/addpolarh.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gen3d.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optransform.Plo@am__quote@
