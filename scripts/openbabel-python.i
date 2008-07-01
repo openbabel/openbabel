@@ -239,6 +239,19 @@ class OBIter(object):
         else:
             raise StopIteration
 
+class OBIterWithDepth(OBIter):
+    def next(self):
+        if not self.finished:
+            b = self.iter.__ref__()
+            depth = self.iter.CurrentDepth()
+            self.iter.inc()
+            if not self.iter.good():
+                # There is nothing left to iterate over
+                self.finished = True
+            return b, depth
+        else:
+            raise StopIteration
+
 class OBAtomAtomIter(OBIter):
     """Iterator over the atoms attached to an atom."""
     OBiterator = _OBAtomAtomIter
@@ -251,7 +264,7 @@ class OBMolAngleIter(OBIter):
 class OBMolAtomIter(OBIter):
     """Iterator over the atoms in a molecule."""
     OBiterator = _OBMolAtomIter
-class OBMolAtomBFSIter(OBIter):
+class OBMolAtomBFSIter(OBIterWithDepth):
     """Iterator over the atoms in a molecule in a breadth-first manner."""
     OBiterator = _OBMolAtomBFSIter
 class OBMolAtomDFSIter(OBIter):
