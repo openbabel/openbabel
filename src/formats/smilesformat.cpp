@@ -102,7 +102,7 @@ namespace OpenBabel {
   //Make an instance of the format class
   SMIFormat theSMIFormat;
   
-//**************************************************
+  //**************************************************
   class CANSMIFormat : public SMIBaseFormat
   {
   public:
@@ -2702,11 +2702,13 @@ namespace OpenBabel {
 
     // If any of the neighbors have the same symmetry class, we're done.
     for (int i = 0; i < chiral_neighbors.size(); i++) {
-      int idx = chiral_neighbors[i]->GetIdx();
-      int symclass = symmetry_classes[idx-1];
+      int idxI = chiral_neighbors[i]->GetIdx();
+      int symclass = symmetry_classes[idxI-1];
       for (int j = i+1; j < chiral_neighbors.size(); j++) {
-        int idx = chiral_neighbors[j]->GetIdx();
-        if (symclass == symmetry_classes[idx-1])
+        int idxJ = chiral_neighbors[j]->GetIdx();
+        if (idxJ - 1 > symmetry_classes.size())
+          return false; // this atom isn't included in the symmetry classes
+        if (symclass == symmetry_classes[idxJ-1])
           return false;
       }
     }
@@ -3129,11 +3131,11 @@ namespace OpenBabel {
   }
 
 	/****************************************************************************
-	* FUNCTION: StandardLabels
-	* 
-	* DESCRIPTION:
-	*        Creates a set of non-canonical labels for the fragment atoms
-	* ***************************************************************************/
+   * FUNCTION: StandardLabels
+   * 
+   * DESCRIPTION:
+   *        Creates a set of non-canonical labels for the fragment atoms
+   * ***************************************************************************/
 	void StandardLabels(OBMol *pMol, OBBitVec &frag_atoms, 
                       vector<unsigned int> &symmetry_classes,
                       vector<unsigned int> &labels)
@@ -3262,7 +3264,7 @@ namespace OpenBabel {
       mol.BeginModify();
 
       vector<OBAtom*>::iterator i;
-//      OBAtom *atom;
+      //      OBAtom *atom;
       for (i = atomList.begin(); i != atomList.end(); ++i) {
         // Get the (x,y,z) coordinates where best to put the H
         vector3 v;
@@ -3363,7 +3365,7 @@ namespace OpenBabel {
 
           vector3 v;
           OBAtom *nbr;
-//          OBBond *bond;
+          //          OBBond *bond;
 
           FOR_BONDS_OF_ATOM(bond, atom) {
 
