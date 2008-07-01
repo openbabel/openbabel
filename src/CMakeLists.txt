@@ -1,3 +1,5 @@
+set(VERSION 2.2.0)
+set(SOVERSION 2)
 
 set(descriptors_srcs
   descriptors/cmpdfilter.cpp

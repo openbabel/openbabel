@@ -11,7 +11,7 @@ include (MacroEnsureVersion)
 
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   2)
-set(BABEL_PATCH_VER 0b5)
+set(BABEL_PATCH_VER 0)
 if(WIN32)
   set(BABEL_LIBRARY   openbabel-2)
 else(WIN32)

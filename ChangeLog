@@ -1,3 +1,7 @@
+2008-07-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/perl/Makefile.PL: Update from Noel for PR#2007797.
+
 2008-07-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/atomrecord.cpp: Fix bug where arginine hydrogen atoms

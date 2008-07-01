@@ -1,4 +1,4 @@
-Open Babel README version 2.1.1
+Open Babel README version 2.2.0
 ----------------
 
 Open Babel is a chemical toolbox designed to speak the many languages
@@ -7,7 +7,7 @@ to search, convert, analyze, or store data from molecular modeling,
 chemistry, solid-state materials, biochemistry, or related areas.
 
 * Ready-to-use programs, and complete programmer's toolkit
-* Read, write and convert over 70 chemical file formats
+* Read, write and convert over 80 chemical file formats
 * Filter and search molecular files using SMARTS and other methods
 * Supports molecular modeling, cheminformatics, bioinformatics,
   organic chemistry, inorganic chemistry, solid-state materials,
