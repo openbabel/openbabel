@@ -31,11 +31,10 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = babel$(EXEEXT) obchiral$(EXEEXT) obgrep$(EXEEXT) \
-	obrotate$(EXEEXT) obfit$(EXEEXT) obprop$(EXEEXT) \
-	obxyz$(EXEEXT) obgen$(EXEEXT) obenergy$(EXEEXT) \
-	obminimize$(EXEEXT) obprobe$(EXEEXT) obrotamer$(EXEEXT) \
-	obfragment$(EXEEXT) obconformer$(EXEEXT) obseq$(EXEEXT) \
+bin_PROGRAMS = babel$(EXEEXT) obchiral$(EXEEXT) obconformer$(EXEEXT) \
+	obenergy$(EXEEXT) obfit$(EXEEXT) obgen$(EXEEXT) \
+	obgrep$(EXEEXT) obminimize$(EXEEXT) obprobe$(EXEEXT) \
+	obprop$(EXEEXT) obrotamer$(EXEEXT) obrotate$(EXEEXT) \
 	obsym$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -69,9 +68,6 @@ obenergy_DEPENDENCIES = ../src/libopenbabel.la
 am_obfit_OBJECTS = obfit.$(OBJEXT)
 obfit_OBJECTS = $(am_obfit_OBJECTS)
 obfit_DEPENDENCIES = ../src/libopenbabel.la
-am_obfragment_OBJECTS = obfragment.$(OBJEXT)
-obfragment_OBJECTS = $(am_obfragment_OBJECTS)
-obfragment_DEPENDENCIES = ../src/libopenbabel.la
 am_obgen_OBJECTS = obgen.$(OBJEXT)
 obgen_OBJECTS = $(am_obgen_OBJECTS)
 obgen_DEPENDENCIES = ../src/libopenbabel.la
@@ -93,15 +89,9 @@ obrotamer_DEPENDENCIES = ../src/libopenbabel.la
 am_obrotate_OBJECTS = obrotate.$(OBJEXT)
 obrotate_OBJECTS = $(am_obrotate_OBJECTS)
 obrotate_DEPENDENCIES = ../src/libopenbabel.la
-am_obseq_OBJECTS = obseq.$(OBJEXT)
-obseq_OBJECTS = $(am_obseq_OBJECTS)
-obseq_DEPENDENCIES = ../src/libopenbabel.la
 am_obsym_OBJECTS = obsym.$(OBJEXT)
 obsym_OBJECTS = $(am_obsym_OBJECTS)
 obsym_DEPENDENCIES = ../src/libopenbabel.la
-am_obxyz_OBJECTS = obxyz.$(OBJEXT)
-obxyz_OBJECTS = $(am_obxyz_OBJECTS)
-obxyz_DEPENDENCIES = ../src/libopenbabel.la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -115,17 +105,15 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obconformer_SOURCES) \
-	$(obenergy_SOURCES) $(obfit_SOURCES) $(obfragment_SOURCES) \
-	$(obgen_SOURCES) $(obgrep_SOURCES) $(obminimize_SOURCES) \
-	$(obprobe_SOURCES) $(obprop_SOURCES) $(obrotamer_SOURCES) \
-	$(obrotate_SOURCES) $(obseq_SOURCES) $(obsym_SOURCES) \
-	$(obxyz_SOURCES)
+	$(obenergy_SOURCES) $(obfit_SOURCES) $(obgen_SOURCES) \
+	$(obgrep_SOURCES) $(obminimize_SOURCES) $(obprobe_SOURCES) \
+	$(obprop_SOURCES) $(obrotamer_SOURCES) $(obrotate_SOURCES) \
+	$(obsym_SOURCES)
 DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) \
 	$(obconformer_SOURCES) $(obenergy_SOURCES) $(obfit_SOURCES) \
-	$(obfragment_SOURCES) $(obgen_SOURCES) $(obgrep_SOURCES) \
-	$(obminimize_SOURCES) $(obprobe_SOURCES) $(obprop_SOURCES) \
-	$(obrotamer_SOURCES) $(obrotate_SOURCES) $(obseq_SOURCES) \
-	$(obsym_SOURCES) $(obxyz_SOURCES)
+	$(obgen_SOURCES) $(obgrep_SOURCES) $(obminimize_SOURCES) \
+	$(obprobe_SOURCES) $(obprop_SOURCES) $(obrotamer_SOURCES) \
+	$(obrotate_SOURCES) $(obsym_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -264,7 +252,9 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include
 EXTRA_DIST = CMakeLists.txt
+# obdoc 
 
 # obdoc is intended to be used for generating file format documentation
 # and is not a general end-user program
@@ -272,35 +262,28 @@ babel_SOURCES = babel.cpp
 babel_LDADD = ../src/libopenbabel.la @LIBDL@
 obchiral_SOURCES = obchiral.cpp
 obchiral_LDADD = ../src/libopenbabel.la @LIBDL@
+obconformer_SOURCES = obconformer.cpp
+obconformer_LDADD = ../src/libopenbabel.la @LIBDL@
+obenergy_SOURCES = obenergy.cpp
+obenergy_LDADD = ../src/libopenbabel.la @LIBDL@
 obfit_SOURCES = obfit.cpp
 obfit_LDADD = ../src/libopenbabel.la @LIBDL@
 obgen_SOURCES = obgen.cpp
 obgen_LDADD = ../src/libopenbabel.la @LIBDL@
 obgrep_SOURCES = obgrep.cpp
 obgrep_LDADD = ../src/libopenbabel.la @LIBDL@
-obprobe_SOURCES = obprobe.cpp
-obprobe_LDADD = ../src/libopenbabel.la @LIBDL@
-obenergy_SOURCES = obenergy.cpp
-obenergy_LDADD = ../src/libopenbabel.la @LIBDL@
 obminimize_SOURCES = obminimize.cpp
 obminimize_LDADD = ../src/libopenbabel.la @LIBDL@
+obprobe_SOURCES = obprobe.cpp
+obprobe_LDADD = ../src/libopenbabel.la @LIBDL@
 obprop_SOURCES = obprop.cpp
 obprop_LDADD = ../src/libopenbabel.la @LIBDL@
 obrotate_SOURCES = obrotate.cpp
 obrotate_LDADD = ../src/libopenbabel.la @LIBDL@
 obrotamer_SOURCES = obrotamer.cpp
 obrotamer_LDADD = ../src/libopenbabel.la @LIBDL@
-obxyz_SOURCES = obxyz.cpp
-obxyz_LDADD = ../src/libopenbabel.la @LIBDL@
-obconformer_SOURCES = obconformer.cpp
-obconformer_LDADD = ../src/libopenbabel.la @LIBDL@
-obseq_SOURCES = obseq.cpp
-obseq_LDADD = ../src/libopenbabel.la @LIBDL@
 obsym_SOURCES = obsym.cpp
 obsym_LDADD = ../src/libopenbabel.la @LIBDL@
-obfragment_SOURCES = obfragment.cpp
-obfragment_LDADD = ../src/libopenbabel.la @LIBDL@
-AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include
 all: all-am
 
 .SUFFIXES:
@@ -377,9 +360,6 @@ obenergy$(EXEEXT): $(obenergy_OBJECTS) $(obenergy_DEPENDENCIES)
 obfit$(EXEEXT): $(obfit_OBJECTS) $(obfit_DEPENDENCIES) 
 	@rm -f obfit$(EXEEXT)
 	$(CXXLINK) $(obfit_OBJECTS) $(obfit_LDADD) $(LIBS)
-obfragment$(EXEEXT): $(obfragment_OBJECTS) $(obfragment_DEPENDENCIES) 
-	@rm -f obfragment$(EXEEXT)
-	$(CXXLINK) $(obfragment_OBJECTS) $(obfragment_LDADD) $(LIBS)
 obgen$(EXEEXT): $(obgen_OBJECTS) $(obgen_DEPENDENCIES) 
 	@rm -f obgen$(EXEEXT)
 	$(CXXLINK) $(obgen_OBJECTS) $(obgen_LDADD) $(LIBS)
@@ -401,15 +381,9 @@ obrotamer$(EXEEXT): $(obrotamer_OBJECTS) $(obrotamer_DEPENDENCIES)
 obrotate$(EXEEXT): $(obrotate_OBJECTS) $(obrotate_DEPENDENCIES) 
 	@rm -f obrotate$(EXEEXT)
 	$(CXXLINK) $(obrotate_OBJECTS) $(obrotate_LDADD) $(LIBS)
-obseq$(EXEEXT): $(obseq_OBJECTS) $(obseq_DEPENDENCIES) 
-	@rm -f obseq$(EXEEXT)
-	$(CXXLINK) $(obseq_OBJECTS) $(obseq_LDADD) $(LIBS)
 obsym$(EXEEXT): $(obsym_OBJECTS) $(obsym_DEPENDENCIES) 
 	@rm -f obsym$(EXEEXT)
 	$(CXXLINK) $(obsym_OBJECTS) $(obsym_LDADD) $(LIBS)
-obxyz$(EXEEXT): $(obxyz_OBJECTS) $(obxyz_DEPENDENCIES) 
-	@rm -f obxyz$(EXEEXT)
-	$(CXXLINK) $(obxyz_OBJECTS) $(obxyz_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -422,7 +396,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obconformer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obenergy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfit.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfragment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgrep.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obminimize.Po@am__quote@
@@ -430,9 +403,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obprop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotamer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotate.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obseq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obsym.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obxyz.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

@@ -1,12 +1,16 @@
 set(tools
       babel
       obchiral
+      obconformer
       obenergy
       obfit
+      obgen
       obminimize
+      obprobe
       obprop
       obrotamer
       obrotate
+      obsym
 )
 
 # no getopt on windows
