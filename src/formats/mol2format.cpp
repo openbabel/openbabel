@@ -125,6 +125,11 @@ namespace OpenBabel
             if ( buffer[0] )
               {
                 len = (int) strlen(buffer)+1;
+                // TODO allow better multi-line comments
+                // which don't allow ill-formed data to consume memory
+                // Thanks to Andrew Dalke for the pointer
+                if (comment != NULL)
+                  delete [] comment;
                 comment = new char [len];
                 memcpy(comment,buffer,len);
               }
