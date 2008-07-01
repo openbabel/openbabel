@@ -694,8 +694,7 @@ class MoleculeData(object):
             pairdata = ob.OBPairData()
             pairdata.SetAttribute(key)
             pairdata.SetValue(str(value))
-            pairdata.thisown = 0 # So that SWIG Proxy will not delete pairdata
-            self._mol.SetData(pairdata)
+            self._mol.CloneData(pairdata)
     def __repr__(self):
         return dict(self.iteritems()).__repr__()
  

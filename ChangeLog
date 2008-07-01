@@ -1,5 +1,9 @@
 2008-07-01  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* scripts/python/pybel.py: Make pybel use CloneData instead of SetData
+
+2008-07-01  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* scripts/openbabel-python.i: Make the BFS Iterator return two values,
 	the Atom and the depth
 
