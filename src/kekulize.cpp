@@ -545,7 +545,7 @@ namespace OpenBabel
   }
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
-  void OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit)
+  bool OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit, OBAtom *, int)
   {
     OBAtom *nbr;
     //  OBBond *bond;
@@ -562,6 +562,8 @@ namespace OpenBabel
           expandcycle(nbr, avisit);
         }
       }
+
+    return true;
   }
 
 } // end namespace OpenBabel

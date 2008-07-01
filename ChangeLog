@@ -1,6 +1,11 @@
 2008-07-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/kekulize.cpp (expandcycle): Add more flexible API for
+	expandcycle.
+
 	* scripts/perl/Makefile.PL: Update from Noel for PR#2007797.
+
+	* Makefile.*, configure.*: Update for 2.2.0 release.
 
 2008-07-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
