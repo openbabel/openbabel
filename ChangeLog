@@ -1,5 +1,14 @@
 2008-07-01  Chris Morley
 
+	* data/atomtyp.txt: remove IMPVAL entry for silicon to fix
+	bug #1911590. (I thought I had already done this.)
+	
+	* windows-vc2005/babelconfig.h: add macro which apparently
+	disables native tr1 in recent VC++ 2008, so that boost version
+	will be used. Step towards getting tit to compile on this
+	platform but probably not there yet. Not critical for v2.2.0
+	release, since Windows compilation should be done from SVN.
+
 2008-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Makefile.am: Move cmake to EXTRA_DIST (4 Makefiles for one
