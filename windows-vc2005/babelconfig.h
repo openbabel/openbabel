@@ -55,6 +55,9 @@
 // and put its top level folder in the Include section of Visual Studio's VC++ Directories.
 #define USE_BOOST
 #define HAVE_SHARED_POINTER
+//The following should disable the TR1 version in a Feature Pack  of VC2008PRO,
+//so that Boost shared_ptr is still used.
+#define _HAS_TR1 0
 
 /* Export of functions and global variables from DLLs
 */

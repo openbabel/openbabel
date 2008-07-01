@@ -1,3 +1,5 @@
+2008-07-01  Chris Morley
+
 2008-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Makefile.am: Move cmake to EXTRA_DIST (4 Makefiles for one

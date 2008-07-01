@@ -89,8 +89,6 @@ IMPVAL  [n+]			3
 IMPVAL  [#9D0]		  1
 IMPVAL  [#9D0-]		  0 #[F-]
 
-IMPVAL  [#14] 4
-
 IMPVAL	[#15D4]			4
 IMPVAL	[#15D3]			3
 IMPVAL	[#15D2]			3
