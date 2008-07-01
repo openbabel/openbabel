@@ -48,7 +48,9 @@ using namespace std;
 //! An index of the residue names perceived during a run
 //! 0, 1, and 2 reserved for UNK, HOH, LIG
 static char ChainsResName[RESIDMAX][4] = {
-  /*0*/ "UNK",  /*1*/ "HOH",  /*2*/ "LIG"
+  /*0*/ "UNK",  
+  /*1*/ "HOH",  
+  /*2*/ "LIG"
 };
 
 #define ATOMMINAMINO   4
@@ -775,14 +777,6 @@ namespace OpenBabel
     DeleteByteCode((ByteCode*)NDecisionTree);
   }
 
-  void OBChainsParser::DumpState()
-  {
-    for (int i = 0; i < resids.size(); ++i ) {
-      cout <<  "hetflags=" << hetflags[i] << "  chains=" << chains[i] << "  resnos=" << resnos[i] <<  
-	       "  resids=" << (int)resids[i] << endl;
-    }
-  }
-
   //////////////////////////////////////////////////////////////////////////////
   // Setup / Cleanup Functions
   //////////////////////////////////////////////////////////////////////////////
@@ -857,11 +851,24 @@ namespace OpenBabel
     OBAtom    *atom;
     OBResidue *residue;
     map<char, map<short, OBResidue*> > resmap;
+    unsigned int numAtoms = mol.NumAtoms();
 
     //DumpState();
+    
+    // correct serine OG
+    for ( unsigned int i = 0 ; i < numAtoms ; i++ ) {
+      if (resids[i] == RESIDMIN + 17) // serine
+	if (atomids[i] == -1) {
+	  atom = mol.GetAtom(i+1);
 
-    int size = mol.NumAtoms();
-    for ( int i = 0 ; i < size ; i++ ) {
+	  FOR_NBORS_OF_ATOM (nbr, atom) {
+	    if (atomids[nbr->GetIdx()-1] == 4) // CB
+              atomids[i] = 6; // OG
+	  }
+	}
+    }
+
+    for ( unsigned int i = 0 ; i < numAtoms ; i++ ) {
       atom = mol.GetAtom(i+1); // WARNING: ATOM INDEX ISSUE
 
       if (atomids[i] == -1) {
@@ -877,9 +884,13 @@ namespace OpenBabel
         buffer[3] = ' ';
         buffer[4] = '\0';
       } else if (atom->IsHydrogen()) {
-        if (hcounts[i])
-          snprintf(buffer, BUFF_SIZE, "%cH%.2s", hcounts[i]+'0', ChainsAtomName[atomids[i]]+2);
-        else
+        if (hcounts[i]) {
+          snprintf(buffer, BUFF_SIZE, "H%.2s%c", ChainsAtomName[atomids[i]]+2, hcounts[i]+'0');
+	  if (buffer[2] == ' ') {
+            buffer[2] = buffer[3];
+            buffer[3] = '\0';
+	  }
+	} else
           snprintf(buffer, BUFF_SIZE, "H%.2s", ChainsAtomName[atomids[i]]+2);
       } else
         snprintf(buffer, BUFF_SIZE, "%.4s", ChainsAtomName[atomids[i]]);
@@ -902,7 +913,6 @@ namespace OpenBabel
         residue->SetName(name);
         residue->SetNum(resnos[i]);
         residue->SetChain(chains[i]);
-        residue->SetChainNum((chains[i] > 'A') ? (int)(chains[i] - 'A') : 1);
 
         residue->AddAtom(atom);
         residue->SetAtomID(atom, atomid);
@@ -926,6 +936,7 @@ namespace OpenBabel
   bool OBChainsParser::PerceiveChains(OBMol &mol, bool nukeSingleResidue)
   {
     bool result = true;
+    unsigned int idx;
 
     SetupMol(mol);
     ClearResidueInformation(mol);
@@ -937,6 +948,81 @@ namespace OpenBabel
     result = DetermineNucleicBackbone(mol)   && result;
     result = DetermineNucleicSidechains(mol) && result;
     result = DetermineHydrogens(mol)         && result;
+    
+    // Partially identified residues
+    // example: CSD in 1LWF (CYS with two Os on the S)
+    bool changed;
+    vector<pair<char,short> > invalidResidues;
+    do {
+      changed = false;
+
+      FOR_ATOMS_OF_MOL (atom, mol) {
+        idx = atom->GetIdx() - 1;
+
+	if (resids[idx] == 0) { // UNK
+	  FOR_NBORS_OF_ATOM (nbr, &*atom) {
+	    unsigned int idx2 = nbr->GetIdx() - 1;
+	    if (resids[idx2] != 0) { // !UNK
+	      resnos[idx] = resnos[idx2];
+	      resids[idx] = resids[idx2];
+	      changed = true;
+	      
+	      bool addResidue = true;
+	      for (unsigned int i = 0; i < invalidResidues.size(); ++i)
+		if ( (invalidResidues[i].first == chains[idx2]) && 
+		     (invalidResidues[i].second == resnos[idx2]) )
+                  addResidue = false;
+	      if (addResidue)
+		invalidResidues.push_back(pair<char,short>(chains[idx2], resnos[idx2]));
+	    }
+	  }
+	}
+        
+      }
+    } while (changed);
+    for (unsigned int i = 0; i < invalidResidues.size(); ++i) {
+      FOR_ATOMS_OF_MOL (atom, mol) {
+        idx = atom->GetIdx() - 1;
+        if ( (invalidResidues[i].first == chains[idx]) && 
+           (invalidResidues[i].second == resnos[idx]) ) {
+	  hetflags[idx] = true;
+	  resids[idx] = 0; // UNK
+	  atomids[idx] = -1; 
+	}
+      }
+    }
+    invalidResidues.clear();
+
+    // number the element in the ' ' chain (water, ions, ligands, ...)
+    short resno = 1;
+    FOR_ATOMS_OF_MOL (atom, mol) {
+      idx = atom->GetIdx() - 1;
+      
+      if (atom->GetHvyValence() == 0) { 
+	chains[idx] = ' ';
+	resnos[idx] = resno;
+        resno++;
+      } else { 
+        if (resids[idx] != 0) // UNK
+	  continue;
+	if (hetflags[idx])
+	  continue;
+	
+	char chain = chains[idx];
+        FOR_ATOMS_OF_MOL (b, mol) {
+	  unsigned int idx2 = b->GetIdx() - 1;
+	  if (chains[idx2] == chain && !hetflags[idx2]) {
+            hetflags[idx2] = true;
+	    chains[idx2] = ' ';
+	    resnos[idx2] = resno;
+	    resids[idx2] = 2; // LIG
+	  }
+	}
+        
+	resno++;
+      }
+
+    }
 
     SetResidueInformation(mol, nukeSingleResidue);
     CleanupMol();
@@ -955,14 +1041,20 @@ namespace OpenBabel
   {
     OBAtom *atom;
     vector<OBAtom *>::iterator a;
-    for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
-      if (!atom->IsHydrogen() && atom->GetHvyValence() == 0)
-        {
-          // find un-connected atoms (e.g., HOH oxygen atoms)
-          //  if it's not an oxygen, it's probably some ligand
-          resids[atom->GetIdx()-1]   = (atom->IsOxygen()) ? 1 : 2;
-          hetflags[atom->GetIdx()-1] = true;
-        }
+    
+    // find un-connected atoms (e.g., HOH oxygen atoms)
+    for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a)) {
+      if (atom->IsHydrogen() || atom->GetHvyValence() != 0)
+        continue;
+
+      unsigned int idx = atom->GetIdx() - 1;
+
+      if (atom->IsOxygen()) {
+          resids[idx]   = 1;
+          hetflags[idx] = true;
+      }
+    }
+
     return true;
   }
 
@@ -976,8 +1068,8 @@ namespace OpenBabel
     int resno;
     int count;
     int size;
-    int i,idx;
-    int numAtoms;
+    unsigned int i, idx;
+    unsigned int numAtoms;
 
     resno    = 1;
     count    = 0;
@@ -991,7 +1083,7 @@ namespace OpenBabel
         size = RecurseChain(mol, idx, 'A' + count);
             
         // size = number of heavy atoms in residue chain
-        if (size < 10) { // small ligand, probably
+        if (size < 4) { // small ligand, probably
           if (size == 1 && atom->IsOxygen())
             resid = 1; /* HOH */
           else
@@ -1012,17 +1104,13 @@ namespace OpenBabel
             break;
         }
       }
-      // HOH
-      if (hetflags[idx] && resids[idx] == 1) {
-        resnos[idx]   = resno;
-        chains[idx]   = ' ';
-        resno++;
-      }
     }
 
+   /* 
     if( count == 1 )
       for ( i = 0 ; i < numAtoms ; i++ )
         chains[i] = ' ';
+   */
 
     return true;
   }
@@ -1058,11 +1146,23 @@ namespace OpenBabel
   {
     ConstrainBackbone(mol, Peptide, MAXPEPTIDE);
 
-    int i, max = mol.NumAtoms();
+    unsigned int i, numAtoms = mol.NumAtoms();
 
+    // Cyclic peptides have no NTer (1SKI) 
+    // timvdm 30/06/08
+    bool foundNTer = false;
+    for (i = 0 ; i < numAtoms; i++)
+      if (bitmasks[i] & BitNTer)
+	foundNTer = true;
+    if (!foundNTer)
+      for (i = 0 ; i < numAtoms; i++)
+        if (bitmasks[i] & BitNAll)
+          bitmasks[i] |= BitNTer;
+
+    
     /* Order Peptide Backbone */
 
-    for ( i = 0 ; i < max ; i++ )
+    for ( i = 0 ; i < numAtoms ; i++ )
       if (atomids[i] == -1)
         {
           if( bitmasks[i] & BitNTer )
@@ -1098,8 +1198,8 @@ namespace OpenBabel
     OBAtom *na,*nb,*nc,*nd;
     OBAtom *atom, *nbr;
     bool change, result;
-    int  count;
-    int  i,idx;
+    int count;
+    unsigned int i, idx;
 
     vector<OBAtom *>::iterator a;
     vector<OBBond *>::iterator b;
@@ -1111,8 +1211,7 @@ namespace OpenBabel
         idx = atom->GetIdx() - 1;
         bitmasks[idx] = 0;
         for ( i = 0 ; i < tmax ; i++ )
-          if ( (static_cast<unsigned int>(templ[i].elem)  == atom->GetAtomicNum())
-               &&
+          if ( (static_cast<unsigned int>(templ[i].elem)  == atom->GetAtomicNum()) &&
                (static_cast<unsigned int>(templ[i].count) == atom->GetHvyValence()))
             bitmasks[idx] |= templ[i].flag;
       }
@@ -1707,6 +1806,7 @@ namespace OpenBabel
               atomids[idx]  = atomids[sidx];
               resids[idx]   = resids[sidx];
               resnos[idx]   = resnos[sidx];
+              chains[idx]   = chains[sidx];
             }
         }
 

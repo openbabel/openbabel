@@ -107,6 +107,8 @@ namespace OpenBabel
             if (atmid == "AE2")
               type = "N";
           }
+        if (atmid.substr(0,2) == "HH") // ARG
+          type = "H";
       }
     else //must be hetatm record
       {

@@ -1,12 +1,29 @@
+2008-07-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/atomrecord.cpp: Fix bug where arginine hydrogen atoms
+	where read as dummy Xx atoms. (#2002557)
+
+	* src/formats/pdbformat.cpp: 1) Write the chain number. 2) Don't
+	rearrange atom ids when writing. (see chains item 2)
+
+	* src/chains.cpp: 1) Serine OG is now given the correct atom id.
+	2) produce correctly ordered atom ids (see pdbformat item 2)
+	3) fix for cyclic peptides (have no NTer)
+	4) water, ions and ligands are all placed in the ' ' chain now and get
+	unique residue numbers.
+	5) partially identified residues are merged with the atoms not used to
+	identify them and the resids is set to UNK (hetflags is also set to
+	true) (e.g. CSD in 1LWF = CYS with two O's on S )
+
 2008-07-01  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/python/pybel.py: Make pybel use CloneData instead of SetData
-
+	
 2008-07-01  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-python.i: Make the BFS Iterator return two values,
 	the Atom and the depth
-
+	
 2008-07-01  Chris Morley
 
 	* data/atomtyp.txt: remove IMPVAL entry for silicon to fix

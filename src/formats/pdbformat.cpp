@@ -435,6 +435,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     char type_name[10], padded_name[10];
     char the_res[10];
+    char the_chain = ' ';
     const char *element_name;
     int res_num;
     bool het=true;
@@ -504,6 +505,7 @@ namespace OpenBabel
             het = res->IsHetAtom(atom);
             snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
             snprintf(type_name,5,"%s",(char*)res->GetAtomID(atom).c_str());
+	    the_chain = res->GetChain();
 
             //two char. elements are on position 13 and 14 one char. start at 14
             if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
@@ -518,11 +520,13 @@ namespace OpenBabel
                   }
                 else
                   {
-                    type_name[4] = type_name[3];
+                    /*
+		    type_name[4] = type_name[3];
                     type_name[3] = type_name[2];
                     type_name[2] = type_name[1];
                     type_name[1] = type_name[0];
                     type_name[0] = type_name[4];
+		    */
                     type_name[4] = '\0';
                   }
               }
@@ -538,11 +542,12 @@ namespace OpenBabel
           }
 
         element_name = etab.GetSymbol(atom->GetAtomicNum());
-        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
+        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
                  het?"HETATM":"ATOM  ",
                  i,
                  type_name,
                  the_res,
+		 the_chain,
                  res_num,
                  atom->GetX(),
                  atom->GetY(),
