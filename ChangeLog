@@ -27,6 +27,18 @@
 	* include/openbabel/base.h, src/base.cpp: New CloneData()
 	method to solve PR#2004495 for scripting interfaces.
 
+	* src/Makefile.am, src/Makefile.in: Bump library version for
+	2.2 release.
+
+	* src/formats/smilesformat.cpp: Minor fix relating to
+	PR#1999348.
+
+	* src/patty.cpp, src/forcefield.cpp, src/oberror.cpp, 
+	src/generic.cpp, src/canon.cpp, src/dlhandler_unix.cpp, 
+	src/data.cpp, src/grid.cpp, src/mol.cpp: Minor fixes from
+	static code analysis. Test for empty() instead of size().
+
+
 2008-06-30  Michael Banck  <mbanck@gmx.net>
 	
 	* src/Makefile.am (EXTRA_DIST): Added config.h.cmake.
