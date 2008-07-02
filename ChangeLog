@@ -21,6 +21,9 @@
 
 	* src/formats/xtcformat.cpp: Use new HAVE_RPC_XDR_H #define.
 
+	* src/formats/smilesformat.cpp: Bring back FIX format, killed
+	during merger of canonical and standard smiles.
+
 2008-07-02  Chris Morley
 
 	* src/descriptor.cpp(PredictandSave): don't duplicate an existing

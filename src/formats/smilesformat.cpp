@@ -2706,8 +2706,6 @@ namespace OpenBabel {
       int symclass = symmetry_classes[idxI-1];
       for (int j = i+1; j < chiral_neighbors.size(); j++) {
         int idxJ = chiral_neighbors[j]->GetIdx();
-        if (idxJ - 1 > symmetry_classes.size())
-          return false; // this atom isn't included in the symmetry classes
         if (symclass == symmetry_classes[idxJ-1])
           return false;
       }
@@ -3506,6 +3504,108 @@ namespace OpenBabel {
     }
 
     return true;
+  }
+  
+  //********************************************************
+  class FIXFormat : public OBMoleculeFormat
+  {
+  public:
+    //Register this format type ID
+    FIXFormat()
+    {
+      OBConversion::RegisterFormat("fix",this);
+    }
+
+    virtual const char* Description() //required
+    {
+      return
+        "SMILES FIX format\n"
+        "  No comments yet\n";
+    };
+
+    virtual const char* SpecificationURL()
+    {return "";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return NOTREADABLE;
+    };
+
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+  };
+
+  //Make an instance of the format class
+  FIXFormat theFIXFormat;
+
+  /////////////////////////////////////////////////////////////////
+
+  bool FIXFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    if(pmol==NULL)
+      return false;
+
+    //Define some references so we can use the old parameter names
+    ostream &ofs = *pConv->GetOutStream();
+    OBMol &mol = *pmol;
+
+    char buffer[BUFF_SIZE];
+    OBMol2Cansmi m2s;
+
+    // This is a hack to prevent recursion problems.
+    //  we still need to fix the underlying problem -GRH
+    if (mol.NumAtoms() > 1000)
+      {
+        stringstream errorMsg;
+        errorMsg << "SMILES Conversion failed: Molecule is too large to convert. Open Babel is currently limited to 1000 atoms." << endl;
+        errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+        return(false);
+      }
+
+    // Write the SMILES in a FIX with canonical order
+    m2s.Init(true, pConv);
+    // From 2.1 code.
+    m2s.CorrectAromaticAmineCharge(mol);
+
+    // We're outputting a full molecule
+    // so we pass a bitvec for all atoms
+    OBBitVec allbits(mol.NumAtoms());
+    FOR_ATOMS_OF_MOL(a, mol) {
+      allbits.SetBitOn(a->GetIdx());
+    }
+
+    if (mol.NumAtoms() > 0) {
+      CreateCansmiString(mol, buffer, allbits, !pConv->IsOption("i"), pConv);
+    }
+    ofs << buffer << endl;
+
+    OBAtom *atom;
+    vector<int>::iterator i;
+    // Retrieve the canonical order of the molecule
+    string orderString = m2s.GetOutputOrder();
+    vector<string> canonical_order;
+    tokenize(canonical_order, orderString);
+
+    int j;
+    int atomIdx;
+    for (j = 0;j < mol.NumConformers();j++)
+      {
+        mol.SetConformer(j);
+        for (unsigned int index = 0; index < canonical_order.size(); 
+             ++index) {
+          atomIdx = atoi(canonical_order[index].c_str());
+          atom = mol.GetAtom(atomIdx);
+          sprintf(buffer,"%9.3f %9.3f %9.3f",atom->GetX(),atom->GetY(),atom->GetZ());
+          ofs << buffer<< endl;
+        }
+      }
+    return(true);
   }
 
 } // end namespace OpenBabel
