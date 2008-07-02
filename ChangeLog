@@ -1,5 +1,10 @@
 2008-07-02  Chris Morley
 
+	* src/descriptor.cpp(PredictandSave): don't duplicate an existing
+	OBPairData. Was crashing when adding a property that was already present.
+	 
+2008-07-02  Chris Morley
+
 	* src/formats/smilesformat.cpp(StandardLabels): A couple of vectors now
 	have 2147483647 pushed when the atom is H, to match the situation with
 	canonical ordering, rather than ending up with a size smaller than the

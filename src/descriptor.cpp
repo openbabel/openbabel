@@ -312,12 +312,17 @@ double OBDescriptor::PredictAndSave(OBBase* pOb)
   double val = GetStringValue(pOb, svalue);
 
   OBPairData *dp = static_cast<OBPairData *> (pOb->GetData(attr));
-  if (dp == NULL) // already set
+  bool PreviouslySet = true;
+  if (dp == NULL)
+  {
+    PreviouslySet = false;
     dp = new OBPairData;
+  }
   dp->SetAttribute(attr);
   dp->SetValue( svalue );
   dp->SetOrigin(perceived);
-  pOb->SetData(dp);
+  if(!PreviouslySet)
+    pOb->SetData(dp);
   return val;
 }
 
