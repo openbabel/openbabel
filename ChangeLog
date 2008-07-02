@@ -1,10 +1,14 @@
+2008-07-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/locale.cpp: Add string.h header, from patch by Marcus
+	Hufgard. Allows compilation with GCC 4.3.1 on Linux: PR#2008642.
+
 2008-07-02  Chris Morley
 
 	* src/descriptor.cpp(PredictandSave): don't duplicate an existing
-	OBPairData. Was crashing when adding a property that was already present.
+	OBPairData. Was crashing when adding a property that was already
+	present. 
 	 
-2008-07-02  Chris Morley
-
 	* src/formats/smilesformat.cpp(StandardLabels): A couple of vectors now
 	have 2147483647 pushed when the atom is H, to match the situation with
 	canonical ordering, rather than ending up with a size smaller than the

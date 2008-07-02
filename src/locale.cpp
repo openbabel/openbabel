@@ -17,6 +17,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <stdlib.h>
+#include <string.h>
 #include <openbabel/locale.h>
 
 #if HAVE_XLOCALE_H
