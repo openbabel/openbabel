@@ -3144,6 +3144,10 @@ namespace OpenBabel {
 			if (frag_atoms.BitIsOn(atom->GetIdx())) {
 				labels.push_back(atom->GetIdx() - 1);
 				symmetry_classes.push_back(atom->GetIdx() - 1);
+      }
+      else{
+				labels.push_back(2147483647); //to match situation when canonical ordering. Just a big number?
+				symmetry_classes.push_back(2147483647);
 	    }
 		}
 	}

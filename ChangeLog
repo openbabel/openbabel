@@ -1,3 +1,11 @@
+2008-07-02  Chris Morley
+
+	* src/formats/smilesformat.cpp(StandardLabels): A couple of vectors now
+	have 2147483647 pushed when the atom is H, to match the situation with
+	canonical ordering, rather than ending up with a size smaller than the
+	number of atoms. I assume 2147483647 = 2^31-1 is just a big number?
+	Fixes bug 1999348.
+
 2008-07-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/kekulize.cpp (expandcycle): Add more flexible API for
