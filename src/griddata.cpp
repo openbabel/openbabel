@@ -183,6 +183,11 @@ namespace OpenBabel {
   {
     return d->floatGrid.GetMin();
   }
+
+  vector3 OBGridData::GetMaxVector() const
+  {
+    return d->floatGrid.GetMax();
+  }
   
   bool OBGridData::GetUnrestricted() const
   {
@@ -209,12 +214,14 @@ namespace OpenBabel {
     d->floatGrid.SetNumberOfPoints(nx, ny, nz);
   }
 
-  void OBGridData::SetLimits(const double origin [ 3 ], const double x[ 3 ], const double y[ 3 ], const double z[ 3 ] )
+  void OBGridData::SetLimits(const double origin [3], const double x[3],
+                             const double y[3], const double z[3])
   {
     d->floatGrid.SetLimits(origin, x, y, z);
   }
 
-  void OBGridData::SetLimits(vector3 &origin, vector3 &x, vector3 &y, vector3 &z)
+  void OBGridData::SetLimits(const vector3 &origin, const vector3 &x,
+                             const vector3 &y, const vector3 &z)
   {
     d->floatGrid.SetLimits(origin, x, y, z);
   }

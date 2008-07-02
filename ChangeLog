@@ -1,5 +1,9 @@
 2008-07-02  Marcus D. Hanwell  <marcus@cryos.org>
 
+        * include/openbabel/griddata.h, src/griddata.cpp: Updates to the
+	documentation, added a GetMaxVector function and made SetLimits const
+	fixes for the vector3 form.
+
 	* CMakeLists.txt, src/CMakeLists.txt, src/formats/CMakeLists.txt:
 	Reduce the number of version variables floating around to only those
 	that are used...

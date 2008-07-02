@@ -39,15 +39,13 @@ namespace OpenBabel {
   class OBAPI OBGridData : public OBGenericData
   {
   public:
-    /// Constructor
-    /// These values can be accessed through the
-    // OBMol::GetDataType(), OBMol::HasData() methods.
+    /// Constructor.
     OBGridData();
 
     /// Destructor
     ~OBGridData();
 
-    /// Unit of measure for grid spacings
+    /// Unit of measure for grid spacings.
     typedef enum { BOHR, ANGSTROM, OTHER } Unit;
 
     //! \name Property Methods
@@ -55,31 +53,35 @@ namespace OpenBabel {
     /// \return the three axes parallel to the grid edges. The
     /// length of the returned vector is the step along that
     /// direction.
-    void GetAxes( double x[3], double y[3], double z[3] ) const;
+    void GetAxes(double x[3], double y[3], double z[3]) const;
     /// \return the three axes parallel to the grid edges
-    void GetAxes( vector3 &v1, vector3 &v2, vector3 &v3 ) const;
+    void GetAxes(vector3 &v1, vector3 &v2, vector3 &v3) const;
     /// \return number of points along the three axes parallel to the grid edges.
-    void GetNumberOfPoints( int &nx, int &ny, int &nz) const;
+    void GetNumberOfPoints(int &nx, int &ny, int &nz) const;
     /// \return total number of points in the grid.
     int GetNumberOfPoints() const;
     /// \return number of points along the three axes parallel to the grid edges.
-    void GetNumberOfSteps( int steps[ 3 ] ) const;
+    void GetNumberOfSteps(int steps[3]) const;
     /// \return grid values as a vector of doubles.
     std::vector< double > GetValues() const;
     /// \return the value at position i, j, k in the grid.
-    double GetValue( int i, int j, int k ) const;
+    double GetValue(int i, int j, int k) const;
     /// \return the value at a position in the grid (by interpolation)
     double GetValue (vector3 pos) const;
-    /// \return the unit of measure for grid spacings
+    /// \return the unit of measure for grid spacings.
     Unit GetUnit() const;
-    /// \return the min value.
+    /// \return the minimum value of all points in the grid.
     double GetMinValue() const;
-    /// \return the max value.
+    /// \return the maximum value of all points in the grid.
     double GetMaxValue() const;
-    /// \return the origin (i.e., the minimum x, y, and z coords of the grid)
-    void GetOriginVector( double o[ 3 ] ) const;
-    /// \return the origin (i.e., the minimum x, y, and z coords of the grid)
+    /// \return vector3 of the origin (i.e., the minimum x, y, and z coords of the grid).
     vector3 GetOriginVector() const;
+    /// \param o set to the origin (i.e., the minimum x, y, and z coords of the grid).
+    /// \deprecated Will be removed..
+    /// \sa GetOriginVector()
+    void GetOriginVector(double o[3]) const;
+    /// \return The maximum point in the grid.
+    vector3 GetMaxVector() const;
     /// \return the unrestricted flag.
     bool GetUnrestricted() const;
     /// \return the number of symmetries.
@@ -90,23 +92,27 @@ namespace OpenBabel {
     //! \name Modification Methods
     //@{
     /// Set number of points along the three axes.
-    void SetNumberOfPoints( int nx, int ny, int nz );
+    void SetNumberOfPoints(int nx, int ny, int nz);
     /// Set the limits (i.e., the origin point and the axes)
     /// NOTE: You must set the number of points first,
     ///       with SetNumberOfPoints
     ///       so the grid spacing can be calculated
-    void SetLimits(const double origin[ 3 ], const double x[ 3 ], const double y[ 3 ], const double z[ 3 ] );
-    void SetLimits(vector3 &origin, vector3 &x, vector3 &y, vector3 &z);
+    void SetLimits(const vector3 &origin, const vector3 &x, const vector3 &y,
+                   const vector3 &z);
+    /// \deprecated Will be removed.
+    /// \sa SetLimits(const vector3 &origin, const vector3 &x, const vector3 &y, const vector3 &z)
+    void SetLimits(const double origin[3], const double x[3], const double y[3],
+                   const double z[3]);
     /// Set an individual value, grid must have been initialised
     bool SetValue(int i, int j, int k, double val);
-    /// Set the values
-    void SetValues( const std::vector< double >& v );
+    /// Set the values, this vector must match the dimensions of the grid
+    void SetValues(const std::vector< double >& v);
     /// Set the unit of measure
-    void SetUnit( Unit u );
+    void SetUnit(Unit u);
     /// Set the unrestricted flag
-    void SetUnrestricted( bool u );
+    void SetUnrestricted(bool u);
     /// Set the number of symmetries
-    void SetNumSymmetries( int s );
+    void SetNumSymmetries(int s);
     //@}
 
   private:
