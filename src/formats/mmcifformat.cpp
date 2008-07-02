@@ -30,6 +30,7 @@ namespace OpenBabel
     mmCIFFormat()
     { // Copied from the Chemical MIME Page at http://www.ch.ic.ac.uk/chemime/
       OBConversion::RegisterFormat("mcif", this, "chemical/x-mmcif");
+      OBConversion::RegisterFormat("mmcif", this, "chemical/x-mmcif");
       // Uncomment the following line, and this file will handle all CIF formats
       // OBConversion::RegisterFormat("cif", this, "chemical/x-cif");
     }
