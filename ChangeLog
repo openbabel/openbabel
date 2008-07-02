@@ -1,5 +1,9 @@
 2008-07-02  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* CMakeLists.txt, src/CMakeLists.txt, src/formats/CMakeLists.txt:
+	Reduce the number of version variables floating around to only those
+	that are used...
+
 	* CMakeLists.txt, src/formats/CMakeLists.txt: Use a versioned plugin
 	directory as autotools does.
 

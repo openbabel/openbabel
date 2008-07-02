@@ -13,7 +13,6 @@ include (MacroEnsureVersion)
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   2)
 set(BABEL_PATCH_VER 0)
-set(OBVERSION ${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER})
 if(WIN32)
   set(BABEL_LIBRARY   openbabel-2)
 else(WIN32)
@@ -91,7 +90,7 @@ if(NOT WIN32)
     }
    " SCANDIR_NEEDS_CONST)
 
-   set(OB_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${LIB}/openbabel/${OBVERSION})
+   set(OB_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${LIB}/openbabel/${BABEL_VERSION})
 endif(NOT WIN32)
 
 # Add some visibility support when using GCC
