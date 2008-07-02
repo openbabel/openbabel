@@ -287,7 +287,7 @@ namespace OpenBabel
 
   //! Safely open the supplied filename and return an ifstream, throwing an error
   //! to the default OBMessageHandler error log if it fails.
-  bool SafeOpen(ifstream &fs, const char *filename)
+  bool SafeOpen(std::ifstream &fs, const char *filename)
   {
 #ifdef WIN32
     string s(filename);
@@ -313,7 +313,7 @@ namespace OpenBabel
 
   //! Safely open the supplied filename and return an ofstream, throwing an error
   //! to the default OBMessageHandler error log if it fails.
-  bool SafeOpen(ofstream &fs, const char *filename)
+  bool SafeOpen(std::ofstream &fs, const char *filename)
   {
 #ifdef WIN32
     string s(filename);
@@ -338,14 +338,14 @@ namespace OpenBabel
 
   //! Safely open the supplied filename and return an ifstream, throwing an error
   //! to the default OBMessageHandler error log if it fails.
-  bool SafeOpen(ifstream &fs, const string &filename)
+  bool SafeOpen(std::ifstream &fs, const string &filename)
   {
     return(SafeOpen(fs, filename.c_str()));
   }
 
   //! Safely open the supplied filename and return an ofstream, throwing an error
   //! to the default OBMessageHandler error log if it fails.
-  bool SafeOpen(ofstream &fs, const string &filename)
+  bool SafeOpen(std::ofstream &fs, const string &filename)
   {
     return(SafeOpen(fs, filename.c_str()));
   }

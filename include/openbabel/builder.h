@@ -57,11 +57,22 @@ namespace OpenBabel
        *  \param mol The molecule to be modified
        *  \param a Index for atom in fragment that should not be rotated.
        *  \param b Index for atom in fragment that should be rotated.
+       *  \param newpos Direction for new bond between a and b
+       *  \param bondOrder Bond order of the new bond between a and b.
+       *  \returns true if succesful or fails when failed (most likely cause 
+       *  for failing: a and b are in the same fragment, they are connected)
+       */
+      static bool Connect(OBMol &mol, int a, int b, vector3 &newpos, int bondOrder = 1);
+      /*! Atoms a and b are part of two fragments that are not connected in mol.
+       *  Connect will translate and rotate the fragment that contains b so that
+       *  a and b are seperated by a bond. This bond is also added.
+       *  \param mol The molecule to be modified
+       *  \param a Index for atom in fragment that should not be rotated.
+       *  \param b Index for atom in fragment that should be rotated.
        *  \param bondOrder Bond order of the new bond bewtween a and b.
        *  \returns true if succesfull or fails when failed (most likely cause 
        *  for failing: a and b are in the same fragment, they are connected)
        */
-      static bool Connect(OBMol &mol, int a, int b, vector3 &newpos, int bondOrder = 1);
       static bool Connect(OBMol &mol, int a, int b, int bondOrder = 1);
       /*! Swap group b, bonded to a with group d, bonded to c. The bonds a-b and b-c cannot be
        *  part of a ring. Atoms a and b will not be moved. Atoms b, d and their connected atoms
@@ -104,8 +115,8 @@ namespace OpenBabel
       /*! Currently only corrects atom chirality comming from smiles. (OBAtom::IsClockwize() / OBBond::IsAntiClockwise())
        */ 
       static void CorrectStereoAtoms(OBMol &mol);
-      /*! Get the fragment to which atom with index belongs.
-       *  \param index Atom index.
+      /*! Get the fragment to which this atom belongs.
+       *  \param atom Atom in the fragment.
        *  \returns The OBBitVec defining the fragment to which a belongs.
        */
       static OBBitVec GetFragment(OBAtom *atom);
