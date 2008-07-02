@@ -141,11 +141,10 @@ int main(int argc,char *argv[])
   CheckInvalidResidue(conv, amine, ++testCount);
 
   // check some dipeptides
-  // Currently disabled -- TODO fix dipeptide and tripeptide tests
-  //  string test = ala + val;
-  //  CheckValidDipeptide(conv, test, ++testCount);
-  //  test = cys + leu;
-  //  CheckValidDipeptide(conv, test, ++testCount);
+  static const string ala_val("NC(C)C(=O)NC(C(C)C)C(=O)O");
+  CheckValidDipeptide(conv, ala_val, ++testCount);
+  static const string cys_leu("NC(CS)C(=O)NC(CC(C)C)C(=O)O");
+  CheckValidDipeptide(conv, cys_leu, ++testCount);
  
   // the number of tests for "prove"
   cout << "1.." << testCount << "\n";
