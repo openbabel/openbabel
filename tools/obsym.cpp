@@ -40,44 +40,30 @@ int main(int argc,char **argv)
   char *program_name= argv[0];
   int c;
   char *FileIn = NULL;
-  char *FileOut = NULL;
 
-  if (argc != 3) {
-    cerr << " Usage: " << program_name << " <input file> <output file>\n";
+  if (argc != 2) {
+    cerr << " Usage: " << program_name << " <input file>\n";
     exit(-1);
   }
   else {
       FileIn  = argv[1];
-      FileOut = argv[2];
   }
 
   // Find Input filetype
   OBConversion conv;
   OBFormat *inFormat = conv.FormatFromExt(FileIn);
-  OBFormat *outFormat = conv.FormatFromExt(FileOut);
     
   if (!inFormat || !conv.SetInFormat(inFormat)) {
     cerr << program_name << ": cannot read input format!" << endl;
     exit (-1);
   }
-  if (!outFormat || !conv.SetOutFormat(outFormat)) {
-    cerr << program_name << ": cannot write to output format!" << endl;
-    exit (-1);
-  }
 
   ifstream ifs;
-  ofstream ofs;
 
   // Read the file
   ifs.open(FileIn);
   if (!ifs) {
     cerr << program_name << ": cannot read input file!" << endl;
-    exit (-1);
-  }
-
-  ofs.open(FileOut);
-  if (!ofs) {
-    cerr << program_name << ": cannot write to output file!" << endl;
     exit (-1);
   }
 
@@ -98,7 +84,6 @@ int main(int argc,char **argv)
       pg.Setup(&mol);
       cout << "Point Group: " << pg.IdentifyPointGroup() << endl;
 
-      conv.Write(&mol, &ofs);
     } // end for loop
   
   return(1);

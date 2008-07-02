@@ -107,13 +107,14 @@ int main(int argc,char **argv)
       ofs << endl;
 
       ofs << "|mime=";
-      if (strlen(pFormat->GetMIMEType()) != 0)
+      if (pFormat->GetMIMEType() && strlen(pFormat->GetMIMEType()) != 0)
         ofs << pFormat->GetMIMEType() << endl;
       else
         ofs << endl;
 	
       ofs << "|url=";
-      if (strlen(pFormat->SpecificationURL()) != 0)
+      if (pFormat->SpecificationURL() && 
+          strlen(pFormat->SpecificationURL()) != 0)
         {
           ofs << pFormat->SpecificationURL() << endl;
         }
@@ -142,12 +143,14 @@ int main(int argc,char **argv)
         ofs << ", Output is a binary file";
       ofs << endl;
 
-      ofs << "|version=2.1 and later" << endl; // added in 2.1
+      ofs << "|version=2.2 and later" << endl; // added in 2.1
       ofs << "|dimensionality=3D" << endl;
       ofs << "|options =\n<pre>";
       ofs << 	description.substr(description.find('\n'), description.size()); 
       ofs << "</pre>" << endl;
       ofs << "}}" << endl << endl;
+
+      ofs << "[[Category:Formats]]" << endl;
 
       ofs.close();
     }

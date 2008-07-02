@@ -1,6 +1,6 @@
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include
 
-EXTRA_DIST = CMakeLists.txt
+EXTRA_DIST = CMakeLists.txt obsym.cpp
 bin_PROGRAMS = babel \
 		obchiral \
 		obconformer \
@@ -12,12 +12,7 @@ bin_PROGRAMS = babel \
 		obprobe \
 		obprop \
 		obrotamer \
-		obrotate \
-		obsym 
-# obdoc 
-
-# obdoc is intended to be used for generating file format documentation
-# and is not a general end-user program
+		obrotate 
 
 babel_SOURCES = babel.cpp
 babel_LDADD = ../src/libopenbabel.la @LIBDL@
@@ -55,6 +50,11 @@ obrotate_LDADD = ../src/libopenbabel.la @LIBDL@
 obrotamer_SOURCES = obrotamer.cpp
 obrotamer_LDADD = ../src/libopenbabel.la @LIBDL@
 
-obsym_SOURCES = obsym.cpp
-obsym_LDADD = ../src/libopenbabel.la @LIBDL@
+# obsym_SOURCES = obsym.cpp
+# obsym_LDADD = ../src/libopenbabel.la @LIBDL@
 
+# obdoc is intended to be used for generating file format documentation
+# and is not a general end-user program
+
+# obdoc_SOURCES = obdoc.cpp
+# obdoc_LDADD = ../src/libopenbabel.la @LIBDL@
