@@ -7,6 +7,11 @@
 	* src/formats/gausszmatformat.cpp: Add definition of
 	strcasestr if not defined. Solves compile problems on Cygwin.
 
+	* configure.in, src/config.h.in, configure: Check for
+	rpc/xdr.h needed for xtcformat.
+
+	* src/formats/xtcformat.cpp: Use new HAVE_RPC_XDR_H #define.
+
 2008-07-02  Chris Morley
 
 	* src/descriptor.cpp(PredictandSave): don't duplicate an existing

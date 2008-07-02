@@ -240,6 +240,7 @@ AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
 AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
 AC_CHECK_HEADERS(ctype.h iostream fstream sstream strstream)
 AC_CHECK_HEADERS(tr1/memory)
+AC_CHECK_HEADERS(rpc/xdr.h)
 AC_CHECK_HEADERS(xlocale.h locale.h)
 AC_HEADER_TIME
 

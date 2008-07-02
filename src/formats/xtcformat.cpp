@@ -20,6 +20,7 @@
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 
+#if HAVE_RPC_XDR_H
 //#include <limits.h>
 //#include <malloc.h>
 //#include <math.h>
@@ -1058,3 +1059,5 @@ namespace OpenBabel
 
 } //namespace OpenBabel
 
+// end HAVE_RPC_XDR_H
+#endif
