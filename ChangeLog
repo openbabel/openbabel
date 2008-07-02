@@ -1,3 +1,8 @@
+2008-07-02  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* CMakeLists.txt, src/formats/CMakeLists.txt: Use a versioned plugin
+	directory as autotools does.
+
 2008-07-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/locale.cpp: Add string.h header, from patch by Marcus
