@@ -45,16 +45,11 @@ namespace OpenBabel
       OBPointGroup();
       ~OBPointGroup();
 
+      //! Set the point group detection for this molecule
       void Setup(OBMol *);
-      
-      const char *IdentifyPointGroup();
 
-      /*! Update coordinates based on perceived symmetry
-       *  \param mol the OBMol object to copy the coordinates to
-       *  \return true if succesful
-       */
-      bool UpdateCoordinates(OBMol &mol);
-      
+      //! \return the 3D point group symbol for this molecule
+      const char *IdentifyPointGroup();
 
     protected:
       PointGroupPrivate *d;

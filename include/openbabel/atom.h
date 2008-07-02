@@ -117,6 +117,7 @@ namespace OpenBabel
       //! Assignment
       OBAtom &operator = (OBAtom &);
       //! Duplicate another atom. Copies all information with the exception of index
+      //! \since version 2.2
       void Duplicate(OBAtom *);
       //! Clear all data. Calls OBBase::Clear() to handle any generic data.
       //! \return True if successful.
@@ -365,8 +366,10 @@ namespace OpenBabel
       bool HasNoHForced() {return HasFlag(OB_ATOM_HAS_NO_H);}
 
       //! Mark that atom is not hydrogen deficient (For SMILES input)
+      //! \since version 2.2
       void ForceImplH() {SetFlag(OB_ATOM_NOT_H_DEFICIENT);}
       //! \return if atom has been marked as having no hydrogens attached
+      //! \since version 2.2
       bool HasImplHForced() {return HasFlag(OB_ATOM_NOT_H_DEFICIENT);}
       //@}
 

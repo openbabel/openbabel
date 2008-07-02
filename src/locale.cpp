@@ -49,6 +49,33 @@ namespace OpenBabel
     {    }
   }; // class definition for OBLocalePrivate
 
+  /** \class OBLocale locale.h <openbabel/locale.h>
+   *
+   * Many users will utilize Open Babel and tools built on top of the library
+   * in non-English locales. In particular, the numeric locale (LC_NUMERIC) 
+   * is used to determine the parsing of numeric data in files, reference data,
+   * etc.
+   *
+   * The OBLocale class, and its global variable obLocale handle both internal
+   * parsing of data through the ANSI-C numeric locale and can be used for
+   * external use as well.
+   *
+   * In particular, where available, OBLocale will use the enhanced uselocale()
+   * interface, which sets the locale for a particular thread, rather
+   * for the entire process. (This is available on Linux, Mac OS X, 
+   * and other platforms.)
+   *
+   * \code
+   * obLocale.SetLocale(); // set the numeric locale before reading data
+   * ... // your data processing here
+   * obLocale.RestoreLocale(); // restore the numeric locale
+   * \encode
+   *
+   * To prevent errors, OBLocale will handle reference counting.
+   * If nested function calls all set the locale, only the first call
+   * to SetLocale() and the last call to RestoreLocale() will do any work.
+   **/
+
   OBLocale::OBLocale()
   {
     d = new OBLocalePrivate;

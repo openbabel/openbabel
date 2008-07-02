@@ -24,6 +24,12 @@
 	* src/formats/smilesformat.cpp: Bring back FIX format, killed
 	during merger of canonical and standard smiles.
 
+	* src/rotamer.cpp, src/locale.cpp, src/base.cpp,
+	include/openbabel/atom.h, include/openbabel/locale.h,
+	include/openbabel/forcefield.h,
+	include/openbabel/pointgroup.h,
+	include/openbabel/fingerprint.h: Doxygen updates for 2.2.0.
+
 2008-07-02  Chris Morley
 
 	* src/descriptor.cpp(PredictandSave): don't duplicate an existing

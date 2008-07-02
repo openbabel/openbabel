@@ -419,6 +419,7 @@ namespace OpenBabel
   }
   
   //! Change the current coordinate set
+  //! \since version 2.2
   void OBRotamerList::SetCurrentCoordinates(OBMol &mol, std::vector<int> arr)
   {
     unsigned int i;

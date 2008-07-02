@@ -68,7 +68,8 @@ public:
   enum FptFlag{FPT_UNIQUEBITS=1};
   virtual unsigned int Flags() { return 0;}; 
 
-  /// Returns a description of each bit that is set (or unset, if bSet=false)
+  /// \return a description of each bit that is set (or unset, if bSet=false)
+  /// \since version 2.2
   virtual std::string DescribeBits(const std::  vector<unsigned int> fp, bool bSet=true)
   {
     std::string txt("");

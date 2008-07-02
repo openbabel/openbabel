@@ -230,6 +230,7 @@ namespace OpenBabel
 
   //! \class OBFFConstraint forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to hold constraints
+  //! \since version 2.2
   class OBFPRT OBFFConstraint
   {
   public:
@@ -273,6 +274,7 @@ namespace OpenBabel
 
   //! \class OBFFConstraints forcefield.h <openbabel/forcefield.h>
   //! \brief Internal class for OBForceField to handle constraints
+  //! \since version 2.2
   class OBFPRT OBFFConstraints
   {
   public:
