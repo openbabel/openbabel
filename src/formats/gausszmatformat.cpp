@@ -1,7 +1,6 @@
 /**********************************************************************
-Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
-Some portions Copyright (C) 2004 by Chris Morley
+Copyright (C) 2008 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2004-2008 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,6 +17,10 @@ GNU General Public License for more details.
 
 //Possible replacement for strcasestr. See end of file
 const char *_strcasestr(const char *s, const char *pattern);
+
+#ifndef strcasestr
+#define strcasestr _strcasestr
+#endif
 
 using namespace std;
 namespace OpenBabel

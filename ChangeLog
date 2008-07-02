@@ -1,7 +1,11 @@
 2008-07-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/locale.cpp: Add string.h header, from patch by Marcus
-	Hufgard. Allows compilation with GCC 4.3.1 on Linux: PR#2008642.
+	Hufgard. Allows compilation with GCC 4.3.1 on Linux:
+	PR#2008642.
+
+	* src/formats/gausszmatformat.cpp: Add definition of
+	strcasestr if not defined. Solves compile problems on Cygwin.
 
 2008-07-02  Chris Morley
 
