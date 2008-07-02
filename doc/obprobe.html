@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>obprop</title>
+<title>obprobe</title>
 </head>
 <body bgcolor='white'>
 <a href='#toc'>Table of Contents</a><p>
@@ -11,71 +11,76 @@
 <h2><a name='sect0' href='#toc0'>Name</a></h2>
 
 <p>
-<b>obprop</b> -- print standard molecular properties
+<b>obprobe</b> -- create electrostatic probe grid
 
 <p>
 <h2><a name='sect1' href='#toc1'><b>Synopsis</b></a></h2>
 
 <p>
-<b>obprop</b> <i>filename</i>
+<b>obprop</b> <i>[options]</i> <i>type</i> <i>pcharge</i> <i>filename</i>
 
 <p>
 <h2><a name='sect2' href='#toc2'><b>Description</b></a></h2>
 
 <p>
-The obprop program is a tool to print a set of standard molecular properties
-for all molecules in a file. It also serves as example code for
-using the Open Babel library (libopenbabel).
+The obprobe tool creates a grid around a molecule, placing a probe
+atom with a specified atom type and partial charge at each point to
+calculate the MMFF94 energy. This can be used for docking experiments
+to test hydrogen-bond affinity, electrostatic potential, etc.
+Output is sent to standard output using the Gaussian Cube format.
 
-<p><p>
-Output format includes:<br>
+<p>
+<h2><a name='options' href='#tocO'><b>Options</b></a></h2>
 
-name [<i>Name</i>]<br>
+<p>
+If no filename is given, obprobe will give all options including the
+example probes.
 
-formula [<i>Formula</i>]<br>
+<dl>
 
-mol_weight [<i>Molecular</i> <i>Weight</i>]<br>
+<dt><b>-s</b> <i>step size</i></dt></dt>
+<dd>
+Set the resolution of the grid (stepsize)
+<p></dd>
 
-exact_mass [<i>Isotopic</i> <i>Mass</i>]<br>
+<dt><b>-p</b> <i>padding</i></dt></dt>
+<dd>
+Set the padding -- extra distance on each side of the box formed by
+the molecule.
+<p></dd>
 
-canonical_SMILES [<i>String</i>]<br>
+<dt><i>type</i></dt></dt>
+<dd>
+The MMFF94 atom type code of the probe atom.
+<p></dd>
 
-num_atoms [<i>Number</i>]<br>
+<dt><i>pchg</i></dt></dt>
+<dd>
+The partial charge on the probe atom.
+  <p></dd>
 
-num_bonds [<i>Number</i>]<br>
-
-num_residues [<i>Number</i>]<br>
-
-sequence [<i>Residue</i> <i>Sequence</i>]<br>
-
-num_rings [<i>Number</i> <i>of</i> <i>Rings</i> <i>(by</i> <i>SSSR)</i>]<br>
-
-logP [<i>Number</i> <i>(octanol-water</i> <i>partition)</i>]<br>
-
-PSA [<i>Number</i> <i>(topological</i> <i>polar</i> <i>surface</i> <i>area)</i>]
-MR [<i>Number</i> <i>(molar</i> <i>refractivity)</i>]<br>
-
-$$$
-
-<p><p>
-The &ldquo;$$$&rdquo; is the separator between multiple molecular entries in a file
 
 <p>
 <h2><a name='sect3' href='#toc3'><b>Examples</b></a></h2>
 
 <p>
-<pre>obprop pyridines.sdf</pre>
+  Probe the file pyridines.sdf using a carbonyl oxygen -- a hydrogen
+bond acceptor with partial charge -0.57:
 
+<pre>obprobe 7 -0.57 pyridines.sdf</pre>
+
+<p>
+Probe the file pyridines.sdf using a phenyl carbon atom -- a
+hydrophobic atom with no partial charge:
+
+<pre>obprobe 37 0.0 pyridines.sdf</pre>
+
+  
 <p>
 <h2><a name='sect4' href='#toc4'><b>See</b> <b>Also</b></a></h2>
 
 <p>
-<a href='babel.html'>babel(1)</a>
-, <a href='obchiral.html'>obchiral(1)</a>
-, <a href='obfit.html'>obfit(1)</a>
-, <a href='obgrep.html'>obgrep(1)</a>
-, <a href='obrotate.html'>obrotate(1)</a>
-.
+<a href='babel.html'>babel(1)</a>.
 
 <p><p>
 The web pages for Open Babel can be found at: &lt;<b><a href="http://openbabel.sourceforge.net/">http://openbabel.sourceforge.net/</a></b>&gt;
@@ -84,7 +89,7 @@ The web pages for Open Babel can be found at: &lt;<b><a href="http://openbabel.s
 <h2><a name='sect5' href='#toc5'><b>Authors</b></a></h2>
 
 <p>
-The obprop program was contributed by Fabien Fontaine
+The obprobe program was contributed by Tim Vandermeersch
 
 <p><p>
 Open Babel is developed by a cast of many, including currrent maintainers
@@ -96,9 +101,9 @@ Babel, see &lt;<b><a href="http://openbabel.sourceforge.net/wiki/THANKS">http://
 <h2><a name='sect6' href='#toc6'><b>Copyright</b></a></h2>
 
 <p>
-Copyright (C) 2003 by Fabien Fontaine<br>
+Copyright (C) 2006-2008 by Tim Vandermeersch<br>
 
-Some portions Copyright (C) 2004-2007 by Geoffrey R. Hutchison and other
+Some portions Copyright (C) 2004-2008 by Geoffrey R. Hutchison and other
 contributors.
 
 <p><p>
@@ -119,6 +124,7 @@ License for more details.
 <li><a name='toc0' href='#sect0'>Name</a></li>
 <li><a name='toc1' href='#sect1'>Synopsis</a></li>
 <li><a name='toc2' href='#sect2'>Description</a></li>
+<li><a name='tocO' href='#options'>Options</a></li>
 <li><a name='toc3' href='#sect3'>Examples</a></li>
 <li><a name='toc4' href='#sect4'>See Also</a></li>
 <li><a name='toc5' href='#sect5'>Authors</a></li>
