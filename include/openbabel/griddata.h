@@ -77,7 +77,7 @@ namespace OpenBabel {
     /// \return vector3 of the origin (i.e., the minimum x, y, and z coords of the grid).
     vector3 GetOriginVector() const;
     /// \param o set to the origin (i.e., the minimum x, y, and z coords of the grid).
-    /// \deprecated Will be removed..
+    /// \deprecated Will be removed.
     /// \sa GetOriginVector()
     void GetOriginVector(double o[3]) const;
     /// \return The maximum point in the grid.

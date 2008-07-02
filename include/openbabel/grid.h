@@ -88,14 +88,15 @@ namespace OpenBabel
   };
 
   //! \class OBFloatGrid grid.h <openbabel/grid.h>
-  //! \brief Handle floating-point 3D grids (e.g., charge density around an OBMol)
+  //! \brief Handle double precision floating point 3D grids (e.g., charge density around an OBMol)
   //!
   //! Supports input/output and base functionality for simple 3D discrete grids
-  //! of some function -- typically around a molecule
+  //! of some function -- typically around a molecule. Typically you will want
+  //! to use OBGridData which uses OBFloatGrid to store its data.
+  //! \sa OBGridData
  class OBAPI OBFloatGrid: public OBGrid
   {
   protected:
-    //double *_val;             //!< floating point values
     std::vector<double> _values;   //!< floating point values
     int   *_ival;             //!< for integer values (deprecated)
     double _midz,_midx,_midy; //!< center of grid in world coordinates
@@ -107,15 +108,22 @@ namespace OpenBabel
 
   public:
 
-  OBFloatGrid() : _ival(NULL), _halfSpace(0.0) {}
+    OBFloatGrid() : _ival(NULL), _halfSpace(0.0) {}
     ~OBFloatGrid()
-      {
-        if (_ival) delete [] _ival;
-      }
-    //! Initialize the grid using this molecule as a box (plus a padding)
-    //!  with the supplied spacing between points
-    void Init(OBMol &box,double spacing, double pad= 0.0);
+    {
+      if (_ival) delete [] _ival;
+    }
 
+    //! Initialize the grid using this molecule as a box (plus a padding)
+    //! with the supplied spacing between points.
+    void Init(OBMol &box,double spacing, double pad=0.0);
+
+    //! \return the minimum point in the grid.
+    vector3 GetMin() { return vector3(_xmin, _ymin, _zmin); }
+
+    //! Get the minimum point in the grid.
+    //! \deprecated Will be removed.
+    //! Use \sa GetMin()
     void GetMin(double *a)
     {
       a[0]=_xmin;
@@ -123,8 +131,12 @@ namespace OpenBabel
       a[2]=_zmin;
     }
 
-    vector3 GetMin() { return vector3(_xmin, _ymin, _zmin); }
+    //! \return the minimum point in the grid.
+    vector3 GetMax() { return vector3(_xmax, _ymax, _zmax); }
 
+    //! Get the maximum point in the grid.
+    //! \deprecated Will be removed.
+    //! \sa GetMax()
     void GetMax(double *a)
     {
       a[0]=_xmax;
@@ -132,18 +144,28 @@ namespace OpenBabel
       a[2]=_zmax;
     }
 
-    vector3 GetMax() { return vector3(_xmax, _ymax, _zmax); }
-
+    //! \return The grid spacing.
     double GetSpacing() const { return(_spacing); }
+    //! Get the grid spacing.
+    //! \deprecated Will be removed.
+    //! \sa GetSpacing()
     void GetSpacing(double &s)
     {
       s=_spacing;
     }
+    //! \return Inverse of the grid spacing.
     double GetScale() const   { return(_inv_spa); }
+    //! \return Half of the spacing between grid points.
     double GetHalfSpace() const {return(_halfSpace);}
+    //! \return Size of the grid in the x dimension.
     int GetXdim() const       { return(_xdim);    }
+    //! \return Size of the grid in the y dimension.
     int GetYdim() const       { return(_ydim);    }
+    //! \return Size of the grid in the z dimension.
     int GetZdim() const       { return(_zdim);    }
+    //! Get the x, y and z dimensions (must pass an double[3] at least).
+    //! \deprecated May be removed in future.
+    //! \sa GetXdim() \sa GetYdim() \sa GetZdim()
     void GetDim(int *a)
     {
       a[0]=_xdim;
@@ -151,8 +173,7 @@ namespace OpenBabel
       a[2]=_zdim;
     }
 
-    void SetNumberOfPoints(int nx, int ny, int nz);
-
+    //! \return Position of the center of the grid.
     vector3 GetMidpointVector()
     {
       vector3 v;
@@ -160,33 +181,59 @@ namespace OpenBabel
       return(v);
     }
 
+    //! \return X axis direction.
     vector3 GetXAxis() const
     {
       return _xAxis;
     }
 
+    //! \return Y axis direction.
     vector3 GetYAxis() const
     {
       return _yAxis;
     }
 
+    //! \return Z axis direction.
     vector3 GetZAxis() const
     {
       return _zAxis;
     }
 
+    //! Sets the number of points in the x, y and z directions.
+    void SetNumberOfPoints(int nx, int ny, int nz);
+
+    //! Set the direction of the x axis.
     void SetXAxis(vector3);
+    //! Set the direction of the y axis.
     void SetYAxis(vector3);
+    //! Set the direction of the z axis.
     void SetZAxis(vector3);
 
-    void SetLimits(const double origin[3], const double x[3], const double y[3], const double z[3]);
+    //! Set the limits (i.e., the origin point and the axes)
+    //! NOTE: You must set the number of points first,
+    //!       with SetNumberOfPoints
+    //!       so the grid spacing can be calculated
     void SetLimits(const vector3& origin, const vector3& x, const vector3& y,
                    const vector3& z);
+    //! \deprecated Will be removed.
+    //! \sa SetLimits(const vector3& origin, const vector3& x, const vector3& y, const vector3& z)
+    void SetLimits(const double origin[3], const double x[3], const double y[3],
+                   const double z[3]);
 
+    //! Get a copy of the vector that stores the points in the grid.
     std::vector<double> GetDataVector();
-    void SetVals(std::vector<double> vals);
+    //! Set the values in the grid to those in the vector passed. Note that the
+    //! vector must be of the same dimensions as the grid based on the values
+    //! given in SetNumberOfPoints(int nx, int ny, int nz).
+    void SetVals(const std::vector<double> & vals);
 
+    //! \return Pointer to the first element of the grid point data stored as a
+    //! one dimensional array.
+    //! \deprecated Will be removed.
+    //! \sa GetDataVector()
     double *GetVals()    {        return(&_values[0]);    }
+
+    //! \return Value at the point in the grid specified by i, j and k.
     double GetValue(int i, int j, int k)
     {
       if (i*_ydim*_zdim + j*_zdim + k > _xdim*_ydim*_zdim)
@@ -195,13 +242,15 @@ namespace OpenBabel
         return _values[i*_ydim*_zdim + j*_zdim + k];
     }
 
+    //! \deprecated Will be removed.
+    //! \sa SetVals(const std::vector<double> & vals)
     void SetVals(double *ptr)
     {
-      // FIXME - needs porting
-     // _values = ptr;
      for (int i = 0; i < _xdim*_ydim*_zdim; ++i)
        _values[i] = ptr[i];
     }
+
+    //! Set the value at the grid point specified by i, j and k to val.
     bool SetValue(int i, int j, int k, double val)
     {
       if (i*_ydim*_zdim + j*_zdim + k > _xdim*_ydim*_zdim)
@@ -211,6 +260,7 @@ namespace OpenBabel
       return true;
     }
 
+    //! \return Position of the center of the grid.
     vector3 Center()
     {
       return vector3(_midx,_midy,_midz);
@@ -221,7 +271,6 @@ namespace OpenBabel
 
     //! \return the value at the given point (rounding as needed)
     double Inject(double x,double y,double z);
-
     void IndexToCoords(int idx, double &x, double &y, double &z);
     void CoordsToIndex(int*,double*);
     int CoordsToIndex(double x, double y, double z);

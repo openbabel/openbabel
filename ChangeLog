@@ -1,5 +1,8 @@
 2008-07-02  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* include/openbabel/grid.h, src/grid.cpp: Updated the documentation
+	and a few fixes to the function prototypes.
+
         * include/openbabel/griddata.h, src/griddata.cpp: Updates to the
 	documentation, added a GetMaxVector function and made SetLimits const
 	fixes for the vector3 form.
