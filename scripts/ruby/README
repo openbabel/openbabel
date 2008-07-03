@@ -9,8 +9,7 @@ of chemical data. It's an open, collaborative project allowing anyone
 to search, convert, analyze, or store data from molecular modeling,
 chemistry, solid-state materials, biochemistry, or related areas.
 
-This code was automatically generated with SWIG and provides access to almost all 
-of the Open Babel API via Ruby.
+This code was automatically generated with SWIG and provides access to almost all of the Open Babel API via Ruby.
 
 More details can also be found at the Open Babel website:
 <http://openbabel.sourceforge.net/wiki/Ruby/>
@@ -19,21 +18,29 @@ INSTALLATION
 
 To install this module globally, first install Open Babel. Then invoke the following commands:
 
+$ ruby extconf.rb
 $ make
 # make install
 
-To install this module locally in ~/myroot, first install Open Babel. Then invoke the following commands:
+To install this module locally in ~/tree, first install Open Babel. Then invoke the following commands:
 
+$ ruby extconf.rb 
+   (use the option --with-openbabel-dir=~/tree
+    if OpenBabel was installed locally)
 $ make
-$ export DESTDIR=~/myroot
+$ export DESTDIR=~/tree
 $ make install
-$ export RUBYLIB=~/myroot/usr/local/lib/site_ruby/1.8/i486-linux/
+$ export RUBYLIB=~/tree/usr/local/lib/site_ruby/1.8/i486-linux/
+
 
 USE
 
-This module can be conveniently tested from irb (interactive ruby):
+If OpenBabel is installed locally, then set LD_LIBRARY_PATH to the directory containing libopenbabel.so.
+
+The module can be easily tested from irb (interactive ruby):
 
 $ irb
+
 irb(main):001:0> require 'openbabel'
 => true
 irb(main):002:0> mol=OpenBabel::OBMol.new
