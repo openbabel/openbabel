@@ -10,7 +10,6 @@ set(tools
       obprop
       obrotamer
       obrotate
-      obsym
 )
 
 # no getopt on windows
