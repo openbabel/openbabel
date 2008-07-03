@@ -33,7 +33,9 @@ setup(name='openbabel-python',
                     '../OBMCDL.obf', '../gen3D.obf',
                     '../oberror.dll']),
                   ('Lib/site-packages/openbabel_data',
-                   glob.glob("../../data/*.txt"))
+                   glob.glob("../../data/*.txt") +
+                   glob.glob("../../data/*.par") +
+                   glob.glob("../../data/*.ff"))
                  ],
       description = 'openbabel: Python interface to the Open Babel chemistry library',
       classifiers=[

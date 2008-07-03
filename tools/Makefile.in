@@ -34,8 +34,7 @@ host_triplet = @host@
 bin_PROGRAMS = babel$(EXEEXT) obchiral$(EXEEXT) obconformer$(EXEEXT) \
 	obenergy$(EXEEXT) obfit$(EXEEXT) obgen$(EXEEXT) \
 	obgrep$(EXEEXT) obminimize$(EXEEXT) obprobe$(EXEEXT) \
-	obprop$(EXEEXT) obrotamer$(EXEEXT) obrotate$(EXEEXT) \
-	obdoc$(EXEEXT)
+	obprop$(EXEEXT) obrotamer$(EXEEXT) obrotate$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -62,9 +61,6 @@ obchiral_DEPENDENCIES = ../src/libopenbabel.la
 am_obconformer_OBJECTS = obconformer.$(OBJEXT)
 obconformer_OBJECTS = $(am_obconformer_OBJECTS)
 obconformer_DEPENDENCIES = ../src/libopenbabel.la
-am_obdoc_OBJECTS = obdoc.$(OBJEXT)
-obdoc_OBJECTS = $(am_obdoc_OBJECTS)
-obdoc_DEPENDENCIES = ../src/libopenbabel.la
 am_obenergy_OBJECTS = obenergy.$(OBJEXT)
 obenergy_OBJECTS = $(am_obenergy_OBJECTS)
 obenergy_DEPENDENCIES = ../src/libopenbabel.la
@@ -105,15 +101,14 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obconformer_SOURCES) \
-	$(obdoc_SOURCES) $(obenergy_SOURCES) $(obfit_SOURCES) \
+	$(obenergy_SOURCES) $(obfit_SOURCES) $(obgen_SOURCES) \
+	$(obgrep_SOURCES) $(obminimize_SOURCES) $(obprobe_SOURCES) \
+	$(obprop_SOURCES) $(obrotamer_SOURCES) $(obrotate_SOURCES)
+DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) \
+	$(obconformer_SOURCES) $(obenergy_SOURCES) $(obfit_SOURCES) \
 	$(obgen_SOURCES) $(obgrep_SOURCES) $(obminimize_SOURCES) \
 	$(obprobe_SOURCES) $(obprop_SOURCES) $(obrotamer_SOURCES) \
 	$(obrotate_SOURCES)
-DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) \
-	$(obconformer_SOURCES) $(obdoc_SOURCES) $(obenergy_SOURCES) \
-	$(obfit_SOURCES) $(obgen_SOURCES) $(obgrep_SOURCES) \
-	$(obminimize_SOURCES) $(obprobe_SOURCES) $(obprop_SOURCES) \
-	$(obrotamer_SOURCES) $(obrotate_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -254,7 +249,6 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include
 EXTRA_DIST = CMakeLists.txt obsym.cpp
-#	obsym 
 babel_SOURCES = babel.cpp
 babel_LDADD = ../src/libopenbabel.la @LIBDL@
 obchiral_SOURCES = obchiral.cpp
@@ -279,14 +273,6 @@ obrotate_SOURCES = obrotate.cpp
 obrotate_LDADD = ../src/libopenbabel.la @LIBDL@
 obrotamer_SOURCES = obrotamer.cpp
 obrotamer_LDADD = ../src/libopenbabel.la @LIBDL@
-
-# obsym_SOURCES = obsym.cpp
-# obsym_LDADD = ../src/libopenbabel.la @LIBDL@
-
-# obdoc is intended to be used for generating file format documentation
-# and is not a general end-user program
-obdoc_SOURCES = obdoc.cpp
-obdoc_LDADD = ../src/libopenbabel.la @LIBDL@
 all: all-am
 
 .SUFFIXES:
@@ -357,9 +343,6 @@ obchiral$(EXEEXT): $(obchiral_OBJECTS) $(obchiral_DEPENDENCIES)
 obconformer$(EXEEXT): $(obconformer_OBJECTS) $(obconformer_DEPENDENCIES) 
 	@rm -f obconformer$(EXEEXT)
 	$(CXXLINK) $(obconformer_OBJECTS) $(obconformer_LDADD) $(LIBS)
-obdoc$(EXEEXT): $(obdoc_OBJECTS) $(obdoc_DEPENDENCIES) 
-	@rm -f obdoc$(EXEEXT)
-	$(CXXLINK) $(obdoc_OBJECTS) $(obdoc_LDADD) $(LIBS)
 obenergy$(EXEEXT): $(obenergy_OBJECTS) $(obenergy_DEPENDENCIES) 
 	@rm -f obenergy$(EXEEXT)
 	$(CXXLINK) $(obenergy_OBJECTS) $(obenergy_LDADD) $(LIBS)
@@ -397,7 +380,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/babel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obchiral.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obconformer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obdoc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obenergy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgen.Po@am__quote@
@@ -613,6 +595,15 @@ uninstall-am: uninstall-binPROGRAMS
 	pdf pdf-am ps ps-am tags uninstall uninstall-am \
 	uninstall-binPROGRAMS
 
+
+# obsym_SOURCES = obsym.cpp
+# obsym_LDADD = ../src/libopenbabel.la @LIBDL@
+
+# obdoc is intended to be used for generating file format documentation
+# and is not a general end-user program
+
+# obdoc_SOURCES = obdoc.cpp
+# obdoc_LDADD = ../src/libopenbabel.la @LIBDL@
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
