@@ -54,6 +54,12 @@ namespace OpenBabel {
     /// length of the returned vector is the step along that
     /// direction.
     void GetAxes(double x[3], double y[3], double z[3]) const;
+    //! \return X axis direction.
+    vector3 GetXAxis() const;
+    //! \return Y axis direction.
+    vector3 GetYAxis() const;
+    //! \return Z axis direction.
+    vector3 GetZAxis() const;
     /// \return the three axes parallel to the grid edges
     void GetAxes(vector3 &v1, vector3 &v2, vector3 &v3) const;
     /// \return number of points along the three axes parallel to the grid edges.

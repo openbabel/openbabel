@@ -118,6 +118,21 @@ namespace OpenBabel {
     z[0] = v3.x(); z[1] = v3.y(), z[2] = v3.z();
   }
 
+  vector3 OBGridData::GetXAxis() const
+  {
+    return d->floatGrid.GetXAxis();
+  }
+
+  vector3 OBGridData::GetYAxis() const
+  {
+    return d->floatGrid.GetYAxis();
+  }
+
+  vector3 OBGridData::GetZAxis() const
+  {
+    return d->floatGrid.GetZAxis();
+  }
+
   void OBGridData::GetAxes( vector3 &v1, vector3 &v2, vector3 &v3 ) const
   {
     v1 = d->floatGrid.GetXAxis();

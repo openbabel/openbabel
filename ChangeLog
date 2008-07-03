@@ -5,6 +5,9 @@
 
 2008-07-03  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* include/openbabel/griddata.h, src/griddata.cpp: Added three new
+	getter functions to get the x, y and z axes.
+
 	* src/CMakeLists.txt: Updated to use SONAME 3.
 
 	* include/openbabel/mol.h, src/mol.cpp: Added extra arguments to
