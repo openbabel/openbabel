@@ -6,6 +6,7 @@
 
 	* data/Makefile.am (table_DATA): Added plugindefines.txt.
 	* data/Makefile.in: Regenerated.
+	* data/CMakelists.txt: Removed space-groups.xsl from to_install.
 
 2008-07-03  Noel O'Boyle  <baoilleach@gmail.com>
 

@@ -35,7 +35,6 @@ set(to_install
     ringtyp.txt
     SMARTS_InteLigand.txt
     space-groups.txt
-    space-groups.xsl # needed?
     torlib.txt
     types.txt
     UFF.prm
