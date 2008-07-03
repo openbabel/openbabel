@@ -8,10 +8,10 @@ EXTRA_DIST = openbabel-perl.i perl \
 dist-hook:
 	find $(distdir) -name .svn | xargs rm -rf
 	find $(distdir) -name "*~" | xargs rm -rf
-	(cd $(distdir)/perl; $(MAKE) distclean)
+	-(cd $(distdir)/perl; $(MAKE) distclean)
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
 	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
-	(cd $(distdir)/ruby; $(MAKE) distclean)
+	-(cd $(distdir)/ruby; $(MAKE) distclean)
 	(cd $(distdir)/java; rm -f *.so *.o *.class)
 	(cd $(distdir)/java; rm -f *.jnilib *.jar)
 

@@ -1,3 +1,9 @@
+2008-07-03  Michael Banck  <mbanck@gmx.net>
+
+	* scripts/Makefile.am (dist-hook): Do not fail if make distclean does
+	not succeed in the perl and ruby directories.
+	* scripts/Makefile.in: Regenerated.
+
 2008-07-03  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/ruby/README: Updated build instructions
