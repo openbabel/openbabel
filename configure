@@ -955,10 +955,10 @@ enable_wx_gui
 enable_inchi
 enable_dynamic_modules
 enable_precompiled_headers
+enable_static
 with_boost
 enable_dependency_tracking
 enable_shared
-enable_static
 with_pic
 enable_fast_install
 with_gnu_ld
@@ -1621,10 +1621,10 @@ Optional Features:
                           disable building shared file format modules
   --enable-precompiled-headers
                           enable building with precompiled headers
+  --enable-static[=PKGS]  build static libraries [default=no]
   --disable-dependency-tracking  speeds up one-time build
   --enable-dependency-tracking   do not reject slow dependency extractors
   --enable-shared[=PKGS]  build shared libraries [default=yes]
-  --enable-static[=PKGS]  build static libraries [default=yes]
   --enable-fast-install[=PKGS]
                           optimize for fast installation [default=yes]
   --disable-libtool-lock  avoid locking (might break parallel builds)
@@ -2758,6 +2758,37 @@ shift; shift
 host_os=$*
 IFS=$ac_save_IFS
 case $host_os in *\ *) host_os=`echo "$host_os" | sed 's/ /-/g'`;; esac
+
+
+# Check whether --enable-static was given.
+if test "${enable_static+set}" = set; then
+  enableval=$enable_static; p=${PACKAGE-default}
+    case $enableval in
+    yes) enable_static=yes ;;
+    no) enable_static=no ;;
+    *)
+     enable_static=no
+      # Look at the argument we got.  We use all the common list separators.
+      lt_save_ifs="$IFS"; IFS="${IFS}$PATH_SEPARATOR,"
+      for pkg in $enableval; do
+	IFS="$lt_save_ifs"
+	if test "X$pkg" = "X$p"; then
+	  enable_static=yes
+	fi
+      done
+      IFS="$lt_save_ifs"
+      ;;
+    esac
+else
+  enable_static=no
+fi
+
+
+
+
+
+
+
 
 
 
@@ -6773,13 +6804,13 @@ if test "${lt_cv_nm_interface+set}" = set; then
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:6776: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:6807: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:6779: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:6810: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:6782: output\"" >&5)
+  (eval echo "\"\$as_me:6813: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -7890,7 +7921,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 7893 "configure"' > conftest.$ac_ext
+  echo '#line 7924 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -10020,36 +10051,6 @@ fi
 
 
 
-  # Check whether --enable-static was given.
-if test "${enable_static+set}" = set; then
-  enableval=$enable_static; p=${PACKAGE-default}
-    case $enableval in
-    yes) enable_static=yes ;;
-    no) enable_static=no ;;
-    *)
-     enable_static=no
-      # Look at the argument we got.  We use all the common list separators.
-      lt_save_ifs="$IFS"; IFS="${IFS}$PATH_SEPARATOR,"
-      for pkg in $enableval; do
-	IFS="$lt_save_ifs"
-	if test "X$pkg" = "X$p"; then
-	  enable_static=yes
-	fi
-      done
-      IFS="$lt_save_ifs"
-      ;;
-    esac
-else
-  enable_static=yes
-fi
-
-
-
-
-
-
-
-
 
 
 # Check whether --with-pic was given.
@@ -10479,11 +10480,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10482: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10483: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:10486: \$? = $ac_status" >&5
+   echo "$as_me:10487: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -10803,11 +10804,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10806: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10807: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:10810: \$? = $ac_status" >&5
+   echo "$as_me:10811: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -10908,11 +10909,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10911: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10912: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:10915: \$? = $ac_status" >&5
+   echo "$as_me:10916: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10963,11 +10964,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10966: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10967: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:10970: \$? = $ac_status" >&5
+   echo "$as_me:10971: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -13755,7 +13756,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 13758 "configure"
+#line 13759 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -13855,7 +13856,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 13858 "configure"
+#line 13859 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15866,11 +15867,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15869: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15870: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15873: \$? = $ac_status" >&5
+   echo "$as_me:15874: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -15965,11 +15966,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15968: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15969: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15972: \$? = $ac_status" >&5
+   echo "$as_me:15973: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16017,11 +16018,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16020: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16021: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16024: \$? = $ac_status" >&5
+   echo "$as_me:16025: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19290,7 +19291,7 @@ fi
 done
 
 
-for ac_header in rpc/xdr.h
+for ac_header in rpc/types.h
 do
 as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
@@ -19429,6 +19430,70 @@ ac_res=`eval 'as_val=${'$as_ac_Header'}
 $as_echo "$ac_res" >&6; }
 
 fi
+if test `eval 'as_val=${'$as_ac_Header'}
+		 $as_echo "$as_val"'` = yes; then
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+
+done
+
+
+for ac_header in rpc/xdr.h
+do
+as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
+{ $as_echo "$as_me:$LINENO: checking for $ac_header" >&5
+$as_echo_n "checking for $ac_header... " >&6; }
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  $as_echo_n "(cached) " >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#ifdef HAVE_RPC_TYPES_H
+# include <rpc/types.h>
+# endif
+
+
+#include <$ac_header>
+_ACEOF
+rm -f conftest.$ac_objext
+if { (ac_try="$ac_compile"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
+$as_echo "$ac_try_echo") >&5
+  (eval "$ac_compile") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && {
+	 test -z "$ac_cxx_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest.$ac_objext; then
+  eval "$as_ac_Header=yes"
+else
+  $as_echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	eval "$as_ac_Header=no"
+fi
+
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+ac_res=`eval 'as_val=${'$as_ac_Header'}
+		 $as_echo "$as_val"'`
+	       { $as_echo "$as_me:$LINENO: result: $ac_res" >&5
+$as_echo "$ac_res" >&6; }
 if test `eval 'as_val=${'$as_ac_Header'}
 		 $as_echo "$as_val"'` = yes; then
   cat >>confdefs.h <<_ACEOF
@@ -20968,13 +21033,13 @@ AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"
 sed_quote_subst='$sed_quote_subst'
 double_quote_subst='$double_quote_subst'
 delay_variable_subst='$delay_variable_subst'
+enable_static='`$ECHO "X$enable_static" | $Xsed -e "$delay_single_quote_subst"`'
 AS='`$ECHO "X$AS" | $Xsed -e "$delay_single_quote_subst"`'
 DLLTOOL='`$ECHO "X$DLLTOOL" | $Xsed -e "$delay_single_quote_subst"`'
 OBJDUMP='`$ECHO "X$OBJDUMP" | $Xsed -e "$delay_single_quote_subst"`'
 macro_version='`$ECHO "X$macro_version" | $Xsed -e "$delay_single_quote_subst"`'
 macro_revision='`$ECHO "X$macro_revision" | $Xsed -e "$delay_single_quote_subst"`'
 enable_shared='`$ECHO "X$enable_shared" | $Xsed -e "$delay_single_quote_subst"`'
-enable_static='`$ECHO "X$enable_static" | $Xsed -e "$delay_single_quote_subst"`'
 pic_mode='`$ECHO "X$pic_mode" | $Xsed -e "$delay_single_quote_subst"`'
 enable_fast_install='`$ECHO "X$enable_fast_install" | $Xsed -e "$delay_single_quote_subst"`'
 host_alias='`$ECHO "X$host_alias" | $Xsed -e "$delay_single_quote_subst"`'
@@ -22176,6 +22241,9 @@ available_tags="CXX "
 
 # ### BEGIN LIBTOOL CONFIG
 
+# Whether or not to build static libraries.
+build_old_libs=$enable_static
+
 # Assembler program.
 AS=$AS
 
@@ -22191,9 +22259,6 @@ macro_revision=$macro_revision
 
 # Whether or not to build shared libraries.
 build_libtool_libs=$enable_shared
-
-# Whether or not to build static libraries.
-build_old_libs=$enable_static
 
 # What type of objects to build.
 pic_mode=$pic_mode
