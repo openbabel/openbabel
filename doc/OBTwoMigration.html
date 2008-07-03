@@ -4,7 +4,7 @@
 <title>Open Babel: Migration from 1.x to 2.0</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 
-<link rel="top" href="http://openbabel.sourceforge.net/" />
+<link rel="top" href="http://openbabel.org/" />
 <link rel="stylesheet" href="site.css" type="text/css" media="all" />
 </head>
 <body bgcolor="#ffffff">
@@ -101,7 +101,7 @@ files, 2 header files, and extable.txt needed to be changed.</li>
         }
 </pre>
 
-<p>Here's another example of setting up the <a href="http://openbabel.sourceforge.net/dev-api/classOpenBabel_1_1OBConversion.shtml">OBConversion</a> framework:</p>
+<p>Here's another example of setting up the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBConversion.shtml">OBConversion</a> framework:</p>
 
 <pre>
         OBConversion conv(&cin,&cout);
@@ -115,10 +115,10 @@ files, 2 header files, and extable.txt needed to be changed.</li>
         }
 </pre>
 
-<p>Some small changes are needed to the file format translator code modules themselves. In general, these are easy to see from the current code files, e.g., <code>src/formats/xyzformat.cpp</code>. If your format writes molecular records (as opposed to reactions), you will likely be able to derive from the <a href="http://openbabel.sourceforge.net/dev-api/classOpenBabel_1_1OBMoleculeFormat.shtml">OBMoleculeFormat</a> class.
+<p>Some small changes are needed to the file format translator code modules themselves. In general, these are easy to see from the current code files, e.g., <code>src/formats/xyzformat.cpp</code>. If your format writes molecular records (as opposed to reactions), you will likely be able to derive from the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBMoleculeFormat.shtml">OBMoleculeFormat</a> class.
 </p>
 
-<p>For more information, see the <a href="http://openbabel.sourceforge.net/dev-api/classOpenBabel_1_1OBConversion.shtml">OBConversion</a> API documentation.</p>
+<p>For more information, see the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBConversion.shtml">OBConversion</a> API documentation.</p>
 
 <p><a href="#top">Top</a>
 
@@ -161,7 +161,7 @@ Therefore, it is <strong>highly recommended</strong> to use the new STL-style it
          ...
 </pre>
 
-<p>For more information, see the documentation for the <a href="http://openbabel.sourceforge.net/dev-api/classOpenBabel_1_1OBMol.shtml">OBMol</a> class.
+<p>For more information, see the documentation for the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBMol.shtml">OBMol</a> class.
 
 <p><a href="#top">Top</a></p>
 
@@ -198,19 +198,19 @@ In order to allow users and developers to easily redirect, filter, and log error
 
 </pre>
 
-<p>For more information, see the <a href="http://openbabel.sourceforge.net/dev-api/classOpenBabel_1_1OBMessageHandler.shtml">OBMessageHandler</a> class.</p>
+<p>For more information, see the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBMessageHandler.shtml">OBMessageHandler</a> class.</p>
 
 <p><a href="#top">Top</a></p>
 
 <h2><a name="generic">Generic Data</a></h2>
 
 <p>
-The OBGenericData class has some small modifications, notably the expansion of hash-index access through the old obDataType class to <a href="http://openbabel.sourceforge.net/dev-api/namespaceOpenBabel_1_1OBGenericDataType.shtml">OBGenericDataType</a>, with named unsigned integers. In particular, this greatly facilitates the storage and manipulation of essentially an unlimited number of data types on a per-atom, per-bond, per-residue, or per-molecule basis.
+The OBGenericData class has some small modifications, notably the expansion of hash-index access through the old obDataType class to <a href="http://openbabel.org/dev-api/namespaceOpenBabel_1_1OBGenericDataType.shtml">OBGenericDataType</a>, with named unsigned integers. In particular, this greatly facilitates the storage and manipulation of essentially an unlimited number of data types on a per-atom, per-bond, per-residue, or per-molecule basis.
 </p>
 
 <h3>Code Changes</h3>
 
-<p>Very little needs to be done. If you have derived a subclass of <a href="http://openbabel.sourceforge.net/dev-api/namespaceOpenBabel_1_1OBGenericData.shtml">OBGenericData</a>, then you should also pick a new <a href="http://openbabel.sourceforge.net/dev-api/namespaceOpenBabel_1_1OBGenericDataType.shtml">OBGenericDataType</a>, using some of the undefined namespace. (We would prefer if you also let us know, so we can minimize conflicts or future compatibility problems.)
+<p>Very little needs to be done. If you have derived a subclass of <a href="http://openbabel.org/dev-api/namespaceOpenBabel_1_1OBGenericData.shtml">OBGenericData</a>, then you should also pick a new <a href="http://openbabel.org/dev-api/namespaceOpenBabel_1_1OBGenericDataType.shtml">OBGenericDataType</a>, using some of the undefined namespace. (We would prefer if you also let us know, so we can minimize conflicts or future compatibility problems.)
 </p>
 
 <pre>

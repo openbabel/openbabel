@@ -1,7 +1,6 @@
 EXTRA_DIST = $(man_MANS) README.dioxin.pov README.povray babel31.inc \
 		dioxin.mol2 dioxin.inc dioxin.png dioxin.pov \
 		CMakeLists.txt \
-		Doxyfile-man \
 		FAQ.html OBTwoMigration.html \
 		babel.html obchiral.html obfit.html obgrep.html \
 		obprop.html obrotate.html obminimize.html obenergy.html \
