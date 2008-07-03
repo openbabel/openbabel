@@ -69,7 +69,7 @@ namespace OpenBabel
    * obLocale.SetLocale(); // set the numeric locale before reading data
    * ... // your data processing here
    * obLocale.RestoreLocale(); // restore the numeric locale
-   * \encode
+   * \endcode
    *
    * To prevent errors, OBLocale will handle reference counting.
    * If nested function calls all set the locale, only the first call
