@@ -1,3 +1,7 @@
+2008-07-03  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/grid.cpp: Fixed the Init function to apply padding correctly.
+
 2008-07-02  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* include/openbabel/grid.h, src/grid.cpp: Updated the documentation

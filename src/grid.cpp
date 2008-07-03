@@ -32,34 +32,33 @@ namespace OpenBabel
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 
-    for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
-      if (atom->GetIdx() == 1)
-        {
+    for (atom = box.BeginAtom(i); atom; atom = box.NextAtom(i)) {
+      if (atom->GetIdx() == 1) {
+        _xmin = atom->GetX();
+        _xmax = atom->GetX();
+        _ymin = atom->GetY();
+        _ymax = atom->GetY();
+        _zmin = atom->GetZ();
+        _zmax = atom->GetZ();
+      }
+      else {
+        if (atom->GetX() < _xmin)
           _xmin = atom->GetX();
+        if (atom->GetX() > _xmax)
           _xmax = atom->GetX();
+        if (atom->GetY() < _ymin)
           _ymin = atom->GetY();
+        if (atom->GetY() > _ymax)
           _ymax = atom->GetY();
+        if (atom->GetZ() < _zmin)
           _zmin = atom->GetZ();
+        if (atom->GetZ() > _zmax)
           _zmax = atom->GetZ();
-        }
-      else
-        {
-          if (atom->GetX() < _xmin)
-            _xmin = atom->GetX();
-          if (atom->GetX() > _xmax)
-            _xmax = atom->GetX();
-          if (atom->GetY() < _ymin)
-            _ymin = atom->GetY();
-          if (atom->GetY() > _ymax)
-            _ymax = atom->GetY();
-          if (atom->GetZ() < _zmin)
-            _zmin = atom->GetZ();
-          if (atom->GetZ() > _zmax)
-            _zmax = atom->GetZ();
-        }
+      }
+    }
   }
 
-  void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
+  void OBFloatGrid::Init(OBMol &box, double spacing, double pad)
   {
     OBGrid::Init(box); // handle in the base class
 
@@ -74,22 +73,17 @@ namespace OpenBabel
     _midx=0.5*(_xmax+_xmin);
     _midy=0.5*(_ymax+_ymin);
     _midz=0.5*(_zmax+_zmin);
-    _xdim=3+(int) ((_xmax-_xmin)/spacing);
-    _ydim=3+(int) ((_ymax-_ymin)/spacing);
-    _zdim=3+(int) ((_zmax-_zmin)/spacing);
+    _xdim=static_cast<int>((_xmax-_xmin)/spacing) + 1;
+    _ydim=static_cast<int>((_ymax-_ymin)/spacing) + 1;
+    _zdim=static_cast<int>((_zmax-_zmin)/spacing) + 1;
     _spacing=spacing;
-    _halfSpace= _spacing/2.0;
+    _halfSpace=_spacing/2.0;
     _inv_spa=1.0/_spacing;
     _ival=NULL;
 
+    // Calculate the size needed, resize the vector and initialise it to 0.0
     int size = _xdim*_ydim*_zdim;
-    _values.resize(size);
-    double *valptr = &_values[0];
-    for( int i = 0; i < size; i++)
-      {
-        *valptr = 0.0;
-        valptr++;
-      }
+    _values.resize(size, 0.0);
   }
 
   void OBFloatGrid::SetLimits(const double origin[3], const double v1[3], const double v2[3],
