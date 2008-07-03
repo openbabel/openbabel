@@ -1,3 +1,6 @@
+# Library versioning
+set(SOVERSION 3)
+
 set(descriptors_srcs
   descriptors/cmpdfilter.cpp
   descriptors/groupcontrib.cpp
