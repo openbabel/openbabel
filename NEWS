@@ -2,23 +2,81 @@ Open Babel 2.2.0 (2008-07-04)
 
 What's New from 2.1.1:
 
-- Significantly faster force fields (up to 200x faster).
-- New force fields, including complete UFF and MMFF94 implementations.
-- Monte Carlo conformer search support, including the new obconformer tool.
-- Code for integrating Open Babel and RDKit.
+This release represents a major update and should be a stable upgrade,
+strongly recommended for all users of Open Babel. Highlights include
+improved force fields and coordinate generation, conformer searching,
+enhanced plugins including molecular descriptors, filters, and
+command-line transformations. Many formats are improved or added,
+including CIF, mmCIF, Gaussian cube, PQR, OpenDX cubes, and
+more. Improved developer API and scripting support and many, many bug
+fixes are also included.
+
+- New support for 3D coordinate generation using the OBBuilder class.
+    Note that this code directly supports non-chiral compounds
+    Stereochemistry may or may not be supported in this release
+- Significantly faster force fields (up to 200x faster) and support
+    for constrained optimization.
+- New force fields, including complete UFF, MMFF94, and MMFF94s implementations.
+- Monte Carlo conformer search support, including a new obconformer tool.
+- Unified framework for plugin classes, including easy-to program file
+    formats, descriptors, filters, force fields, fingerprints, etc.
+- A new "descriptor" plugin framework for QSAR descriptors, etc.
+   Initial descriptors include hydrogen-bond donors, acceptors,
+    octanol/water partition, topological polar surface area, molar
+    refractivity, molecular weight, InChI, SMARTS, titles, Lipinski
+    Rule of Five, etc.
+- A new "filter" plugin framework for selecting molecules by title,
+    molecular weight, etc.
+- Facility to add new "ops", commandline options or operations on the
+    conversion process as plugin code.
+   Initial operations include 3D coordinate generation, tautomer
+    standarization, and addition of polar hydrogens. 
 - Code for integrating Open Babel and the BOOST graph library.
-- New support for 3D coordinate generation using the OBBuilder class
-- A new "descriptor" plugin framework for QSAR descriptors.
-- A new "filter" plugin framework for selecting molecules by title, molecular weight, etc.
-- Facility to add new options on the conversion process as plugin code.
-- Space group support.
-- 3D Point group symmetry perception.
-- Improved support for "grids" or "cubes" of molecular data, such as from quantum mechanics programs. (See below for supported file formats.)
-- File format modules are now installed in a version-specific directory, preventing problems between 2.2.x and 2.1.x (or older) plugin libraries.
-- MDL SDF formats now support "aliases" for group abbreviations
+- Improved scripting support, including new bindings for C# and
+    improved Java, Ruby, Python, and Perl bindings.
+- Space group support and thoroughly revised and improved CIF format.
+- Initial support for 3D point group symmetry perception.
+- Improved support for "grids" or "cubes" of molecular data, such as
+    from quantum mechanics programs. (See below for supported file
+    formats.)
+- Initial support for reading trajectories and animations.
+- Improved support for reaction formats, including CML, RXN, and
+    Reaction SMILES.
+- Improved residue handling in PDB and Mol2 formats.
+- Improved pH-dependent hydrogen addition.
+- Latest released version of the InChI library, including use of the
+    latest "preferred" options for InChI generation.
+- Support for the cross-platform CMake build system.
+- File format modules are now installed in a version-specific
+    directory on unix, preventing problems between 2.2.x and 2.1.x (or
+    older) plugin libraries.
+- Framework to support "aliases" for group abbreviations, partially
+    implemented for MDL formats.
+- Many more bug fixes and small feature improvements.
 
-New formats:
+==New File Formats==
 
+Import & Export: 
+ Chemkin
+ Gaussian Cube
+ Gaussian Z-matrix
+ GROMACS xtc trajectories
+ MCDL
+ mmCIF
+ OpenDX cube (e.g., from APBS)
+ Reaction SMILES
+Import only:
+ Accelrys/MSI Cerius II MSI text format
+ ADF output
+ ADF Tape41 ASCII data
+ GAMESS-UK input and output
+ Molden structure
+ PNG (for embedded chemical data)
+ PQR
+Export only:
+ MSMS input
+ ADF input
+ InChI Keys
 
 Open Babel 2.1.1 (2007-07-07)
 

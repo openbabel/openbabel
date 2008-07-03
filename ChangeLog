@@ -1,3 +1,8 @@
+2008-07-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/Makefile.am, src/CMakeLists.txt: Update SONAME to 3 for
+	version 2.2.0 release.
+
 2008-07-03  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/grid.cpp: Fixed the Init function to apply padding correctly.
