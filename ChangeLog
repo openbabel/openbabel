@@ -1,3 +1,9 @@
+2008-07-03  Michael Banck  <mbanck@gmx.net>
+
+	* src/CMakelists.txt (LIBRARY_VERSION): New variable.
+	* src/CMakelists.txt (BABEL_LIBRARY): Set VERSION property to
+	${LIBRARY_VERSION}.
+	
 2008-07-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/Makefile.am, src/CMakeLists.txt: Update SONAME to 3 for

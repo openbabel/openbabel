@@ -1,5 +1,6 @@
 # Library versioning
 set(SOVERSION 3)
+set(LIBRARY_VERSION 3.0.0)
 
 set(descriptors_srcs
   descriptors/cmpdfilter.cpp
@@ -107,7 +108,7 @@ endif(NOT WIN32)
 
 target_link_libraries(${BABEL_LIBRARY} ${libs} ${LIBXML2_LIBRARIES} ${ZLIB_LIBRARY})
 set_target_properties(${BABEL_LIBRARY} PROPERTIES
-                                       VERSION ${BABEL_VERSION}
+                                       VERSION ${LIBRARY_VERSION}
                                        SOVERSION ${SOVERSION}
                                        DEFINE_SYMBOL MAKE_OBDLL
                       )
