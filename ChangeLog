@@ -13,6 +13,11 @@
 	* data/Makefile.in: Regenerated.
 	* data/CMakelists.txt: Removed space-groups.xsl from to_install.
 
+	* test/cmlreadfile.cpp: Read files from TESTDATADIR, not relative to
+	current directory.
+	* test/wrapper.sh: Use ${srcdir}, not ${top_srcdir} to set
+	$BABEL_DATADIR.
+
 2008-07-03  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/ruby/README: Updated build instructions

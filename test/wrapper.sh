@@ -28,8 +28,8 @@ if [ -d ../src/formats/.libs ]; then
         export BABEL_LIBDIR
     fi
     if [ "x${BABEL_DATADIR}" = "x" ]; then
-	      if [ "x${top_srcdir}" != "x" ]; then
-	          BABEL_DATADIR="${top_srcdir}/data"
+	      if [ "x${srcdir}" != "x" ]; then
+	          BABEL_DATADIR="${srcdir}/../data"
 	      else
 	          BABEL_DATADIR="`pwd`/../data"
 	      fi

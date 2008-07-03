@@ -31,8 +31,8 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-string cmlfile = "cmltest/cs2a.cml";
-string cmlfile_multi = "files/3d.head.2.cml";
+string cmlfile = "../cmltest/cs2a.cml";
+string cmlfile_multi = "3d.head.2.cml";
 
 int main(int argc,char *argv[])
 {
@@ -59,7 +59,7 @@ int main(int argc,char *argv[])
 
   // Test using ReadFile to read from CML
   OpenBabel::OBMol obmol_first;
-  if (obconv_first.ReadFile(&obmol_first, cmlfile))
+  if (obconv_first.ReadFile(&obmol_first, TESTDATADIR + cmlfile))
           cout << "ok 2!" << endl;
   else
           cout << "not ok 2" << endl;
@@ -74,7 +74,7 @@ int main(int argc,char *argv[])
   }
   // Test using ReadFile to read from multimol CML
   OpenBabel::OBMol obmol;
-  if (obconv.ReadFile(&obmol, cmlfile_multi))
+  if (obconv.ReadFile(&obmol, TESTDATADIR + cmlfile_multi))
           cout << "ok 3!" << endl;
   else
           cout << "not ok 3" << endl;
