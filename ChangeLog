@@ -5,6 +5,10 @@
 
 2008-07-03  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* include/openbabel/mol.h, src/mol.cpp: Added extra arguments to
+	GetMolWt, GetExactMass and GetSpacedFormula to optionally disable
+	implicit hydrogens.
+
 	* src/grid.cpp: Fixed the Init function to apply padding correctly.
 
 2008-07-02  Marcus D. Hanwell  <marcus@cryos.org>

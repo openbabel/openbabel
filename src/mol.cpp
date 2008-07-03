@@ -908,13 +908,15 @@ namespace OpenBabel
     return(rd->GetData());
   }
 
-  double OBMol::GetMolWt()
+  double OBMol::GetMolWt(bool implicitH)
   {
     double molwt=0.0;
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 
     bool UseImplicitH = NumHvyAtoms() && (NumBonds()!=0 || NumAtoms()==1);
+    // Do not use implicit hydrogens if explicitly required not to
+    if (!implicitH) UseImplicitH = false;
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
         if(UseImplicitH)
@@ -927,13 +929,15 @@ namespace OpenBabel
     return(molwt);
   }
 
-  double OBMol::GetExactMass()
+  double OBMol::GetExactMass(bool implicitH)
   {
     double mass=0.0;
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 
     bool UseImplicitH = NumHvyAtoms() && (NumBonds()!=0 || NumAtoms()==1);
+    // Do not use implicit hydrogens if explicitly required not to
+    if (!implicitH) UseImplicitH = false;
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
         if(UseImplicitH)
@@ -949,7 +953,7 @@ namespace OpenBabel
   //! Stochoimetric formula in spaced format e.g. C 4 H 6 O 1
   //! No pair data is stored. Normally use without parameters: GetSpacedFormula()
   //! \since version 2.1
-  string OBMol::GetSpacedFormula(int ones, const char* sp)
+  string OBMol::GetSpacedFormula(int ones, const char* sp, bool implicitH)
   {
     //Default ones=0, sp=" ". 
     //Using ones=1 and sp="" will give unspaced formula (and no pair data entry)
@@ -971,6 +975,8 @@ namespace OpenBabel
       atomicCount[i] = 0;
 
     bool UseImplicitH = (NumBonds()!=0 || NumAtoms()==1);
+    // Do not use implicit hydrogens if explicitly required not to
+    if (!implicitH) UseImplicitH = false;
     bool HasHvyAtoms = NumHvyAtoms()>0;
     FOR_ATOMS_OF_MOL(a, *this)
       {
@@ -1055,7 +1061,7 @@ namespace OpenBabel
                           "Ran OpenBabel::SetFormula -- Hill order formula",
                           obAuditMsg);
 
-    string sformula = GetSpacedFormula(1,"");
+    string sformula = GetSpacedFormula(1, "");
 
     dp = new OBPairData;
     dp->SetAttribute(attr);

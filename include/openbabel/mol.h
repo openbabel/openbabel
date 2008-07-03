@@ -291,13 +291,13 @@ namespace OpenBabel
     //! \return the stochoimetric formula (e.g., C4H6O)
     std::string  GetFormula();
     //! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
-    std::string  GetSpacedFormula(int ones=0, const char* sp=" ");
+    std::string  GetSpacedFormula(int ones=0, const char* sp=" ", bool implicitH = true);
     //! \return the heat of formation for this molecule (in kcal/mol)
     double       GetEnergy() const { return _energy; }
     //! \return the standard molar mass given by IUPAC atomic masses (amu)
-    double       GetMolWt();
+    double       GetMolWt(bool implicitH = true);
     //! \return the mass given by isotopes (or most abundant isotope, if not specified)
-    double	 GetExactMass();
+    double	 GetExactMass(bool implicitH = true);
     //! \return the total charge on this molecule (i.e., 0 = neutral, +1, -1...)
     int		 GetTotalCharge();
     //! \return the total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
