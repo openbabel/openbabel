@@ -9,13 +9,18 @@
 
 TESTS="aromatic.pl atom bond cansmi cmlreadfile conversion data"
 TESTS="${TESTS} ffghemical ffmmff94 ffuff"
-TESTS="${TESTS} format formula formalcharge inchi.pl inchi2.pl"
+TESTS="${TESTS} format formula formalcharge"
 TESTS="${TESTS} internalcoord iterators" 
 TESTS="${TESTS} invalidsmarts invalidsmiles"
 TESTS="${TESTS} logp_psa math"
 TESTS="${TESTS} mol phmodel residue rings"
 TESTS="${TESTS} smarts smilesmatch unitcell"
 TESTS="${TESTS} cml.sh test-set.sh"
+if [ "x${srcdir}" != "x" ]; then
+  TESTS="${TESTS} ${srcdir}/inchi.pl ${srcdir}/inchi2.pl"
+else
+  TESTS="${TESTS} inchi.pl inchi2.pl"
+fi
 PROVE=prove
 
 echo "top srcdir: .${topsrcdir}."
@@ -30,10 +35,13 @@ if [ -d ../src/formats/.libs ]; then
     if [ "x${BABEL_DATADIR}" = "x" ]; then
 	      if [ "x${srcdir}" != "x" ]; then
 	          BABEL_DATADIR="${srcdir}/../data"
+		  TESTDATADIR="${srcdir}/files"
 	      else
 	          BABEL_DATADIR="`pwd`/../data"
+	          BABEL_DATADIR="`pwd`/files"
 	      fi
 	      export BABEL_DATADIR
+	      export TESTDATADIR
     fi
 fi
 

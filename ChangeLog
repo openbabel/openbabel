@@ -17,6 +17,8 @@
 	current directory.
 	* test/wrapper.sh: Use ${srcdir}, not ${top_srcdir} to set
 	$BABEL_DATADIR.
+	* test/wrapper.sh: Run inchi tests from source directory if ${srcdir}
+	is non-empty.  Set and export TESTDATADIR.
 
 2008-07-03  Noel O'Boyle  <baoilleach@gmail.com>
 
