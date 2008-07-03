@@ -108,7 +108,7 @@ endif(NOT WIN32)
 target_link_libraries(${BABEL_LIBRARY} ${libs} ${LIBXML2_LIBRARIES} ${ZLIB_LIBRARY})
 set_target_properties(${BABEL_LIBRARY} PROPERTIES
                                        VERSION ${BABEL_VERSION}
-                                       SOVERSION ${BABEL_MAJ_VER}
+                                       SOVERSION ${SOVERSION}
                                        DEFINE_SYMBOL MAKE_OBDLL
                       )
 install(TARGETS ${BABEL_LIBRARY}
