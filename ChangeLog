@@ -25,6 +25,8 @@
 
 2008-07-03  Marcus D. Hanwell  <marcus@cryos.org>
 
+	* CMakeLists.txt: Relaxed the CMake requirement to 2.4.7.
+
 	* include/openbabel/griddata.h, src/griddata.cpp: Added three new
 	getter functions to get the x, y and z axes.
 
