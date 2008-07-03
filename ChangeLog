@@ -4,6 +4,9 @@
 	not succeed in the perl and ruby directories.
 	* scripts/Makefile.in: Regenerated.
 
+	* data/Makefile.am (table_DATA): Added plugindefines.txt.
+	* data/Makefile.in: Regenerated.
+
 2008-07-03  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/ruby/README: Updated build instructions
