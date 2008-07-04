@@ -1,0 +1,169 @@
+######################################################################
+# Copyright OELIB:          OpenEye Scientific Software, Santa Fe,      
+#                           U.S.A., 1999,2000,2001                      
+# Copyright JOELIB/JOELib2: Dept. Computer Architecture, University of  
+#                           Tuebingen, Germany, 2001,2002,2003,2004,2005
+# Copyright JOELIB/JOELib2: ALTANA PHARMA AG, Konstanz, Germany,        
+#                           2003,2004,2005                              
+#                                                                       
+# Authors: Stephen Jelfs                                                                       
+#          Joerg Kurt Wegner, me@cheminformatics.eu         
+#                                                                       
+# This program is free software; you can redistribute it and/or modify  
+# it under the terms of the GNU General Public License as published by  
+# the Free Software Foundation version 2 of the License.                
+#                                                                       
+# This program is distributed in the hope that it will be useful,       
+# but WITHOUT ANY WARRANTY; without even the implied warranty of        
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         
+# GNU General Public License for more details.                          
+######################################################################
+# LopP Atomic Contributions
+# ref. Wildman, S.A. and Crippen, G.M., J. Chem. Inf. Comput. Sci., 
+#   1999, 39, 868-873.
+# Table below is adapted from above ref.
+######################################################################
+;hydrogen
+[*]	0.1125
+[#6]	0.123
+[#1]	0.123
+[O][CX4]	-0.2677
+[O]c	-0.2677
+[O][#5]	-0.2677
+[O][#14]	-0.2677
+[O][#15]	-0.2677
+[O][#33]	-0.2677
+[O][#50]	-0.2677
+[#5]	-0.2677
+[#14]	-0.2677
+[#15]	-0.2677
+[#16]	-0.2677
+[#50]	-0.2677
+[#7]	0.2142
+[O][#7]	0.2142
+[O]C=[#6]	0.298
+[O]C=[#7]	0.298
+[O]C=O	0.298
+[O]C=S	0.298
+[O]O	0.298
+[O]S	0.298
+;heavy
+[*]	0
+[#6]	0.0813
+[CH4]	0.1441
+[CH3]C	0.1441
+[CH2](C)C	0.1441
+[CH](C)(C)C	0
+[C](C)(C)(C)C	0
+[CH3][O,N,F,Cl,Br,#15,#16,#53;!a]	-0.2035
+[CH2X4][O,N,F,Cl,Br,#15,#16,#53;!a]	-0.2035
+[CHX4][O,N,F,Cl,Br,#15,#16,#53;!a]	-0.2051
+[CH0X4][O,N,F,Cl,Br,#15,#16,#53;!a]	-0.2051
+[C]=[A!#6]	-0.2783
+[CH2]=C	0.1551
+[CH1](=C)A	0.1551
+[CH0](=C)(A)A	0.1551
+[C](=C)=C	0.1551
+[CX2]#A	0.0017
+[CH3]c	0.0845
+[CH3][a!#6]	-0.1444
+[CH2X4]a	-0.0516
+[CHX4]a	0.1193
+[CH0X4]a	-0.0967
+[c][#5,#14,#15,#33,#34,#50,#80]	-0.5443
+[c][#9]	0
+[c][#17]	0.245
+[c][#35]	0.198
+[c][#53]	0
+[cH]	0.1581
+[c](:a)(:a):a	0.2955
+[c](:a)(:a)-a	0.2713
+[c](:a)(:a)-C	0.136
+[c](:a)(:a)-N	0.4619
+[c](:a)(:a)-O	0.5437
+[c](:a)(:a)-S	0.1893
+[c](:a)(:a)=C	-0.8186
+[c](:a)(:a)=N	-0.8186
+[c](:a)(:a)=O	-0.8186
+[C](=C)(a)A	0.264
+[C](=C)(c)a	0.264
+[CH](=C)a	0.264
+[C]=c	0.264
+[CX4][!#6;!#7;!#8;!#9;!#15;!#16;!#17;!#35;!#53;!#1] 0.2148
+[#7]	-0.4806
+[NH2+0]A	-1.019
+[NH+0](A)A	-0.7096
+[NH2+0]a	-1.027
+[NH+0](A)a	-0.5188
+[NH+0](a)a	-0.5188
+[NH+0]=A	0.0839
+[NH+0]=a	0.0839
+[N+0](=A)A	0.1836
+[N+0](=A)a	0.1836
+[N+0](=a)A	0.1836
+[N+0](=a)a	0.1836
+[N+0](A)(A)A	-0.3187
+[N+0](a)(A)A	-0.4458
+[N+0](a)(a)A	-0.4458
+[N+0](a)(a)a	-0.4458
+[N+0]#A	0.01508
+[NH3+*]	-1.95
+[NH2+*]	-1.95
+[NH+*]	-1.95
+[n+0]	-0.3239
+[n+*]	-1.119
+[NH0+*](A)(A)(A)A	-0.3396
+[NH0+*](=A)(A)A	-0.3396
+[NH0+*](=A)(A)a	-0.3396
+[NH0+*](=[#6])=[#7]	-0.3396
+[N+*]#A	0.2887
+[N-*]	0.2887
+[N+*](=[N-*])=N	0.2887
+[#8]	-0.1188
+[o]	0.1552
+[OH]	-0.2893
+[OH2]	-0.2893
+[O](C)C	-0.0684
+[OH0](C)[A!#6]	-0.0684
+[OH0]([A!#6])[A!#6]	-0.0684
+[O]([A;!#1])a	-0.4195
+[O](a)a	-0.4195
+[O]=[#8]	0.0335
+[O]=[#7]	0.0335
+[OX1-*][#7]	0.0335
+[OX1-*][#16]	-0.3339
+[OX1-*][#15;#33;#43;#53]	-1.189
+[O]=c	0.1788
+[O]=[CH]C	-0.1526
+[O]=C(C)C	-0.1526
+[O]=[CH0](C)[A;!6]	-0.1526
+[O]=[CH]N	-0.1526
+[O]=[CH]O	-0.1526
+[O]=[CH2]	-0.1526
+[O]=[CX2]=O	-0.1526
+[O]=[CH]c	0.1129
+[O]=C(C)c	0.1129
+[O]=C(c)c	0.1129
+[O]=[CH0](c)[a!#6]	0.1129
+[O]=[CH0](c)[A!#6]	0.1129
+[O]=[CH0](C)[a!#6]	0.1129
+[O]=C([A!#6])[A!#6]	0.4833
+[O]=C([A!#6])[a!#6]	0.4833
+[O]=C([a!#6])[a!#6]	0.4833
+[O-1]C(=O)	-1.326
+[#9-0]	0.4202
+[#17-0]	0.6895
+[#35-0]	0.8456
+[#53-0]	0.8857
+[#9-*]	-2.996
+[#17-*]	-2.996
+[#35-*]	-2.996
+[#53-*]	-2.996
+[#53+*]	-2.996
+[#15]	0.8612
+[S-0]	0.6482
+[S-*]	-0.0024
+[S+*]	-0.0024
+[s]	0.6237
+[B,Si,Ga,Ge,As,Se,Sn,Te,Pb,Nc,Nr,Kr,Xe,Rn]	-0.3808
+[Fe,Cu,Zn,Tc,Cd,Pt,Au,Hg]	-0.0025
