@@ -1,0 +1,168 @@
+######################################################################
+# Copyright OELIB:          OpenEye Scientific Software, Santa Fe,      
+#                           U.S.A., 1999,2000,2001                      
+# Copyright JOELIB/JOELib2: Dept. Computer Architecture, University of  
+#                           Tuebingen, Germany, 2001,2002,2003,2004,2005
+# Copyright JOELIB/JOELib2: ALTANA PHARMA AG, Konstanz, Germany,        
+#                           2003,2004,2005                              
+#                                                                       
+# Authors: Stephen Jelfs                                                                       
+#          Joerg Kurt Wegner, me@cheminformatics.eu         
+#                                                                       
+# This program is free software; you can redistribute it and/or modify  
+# it under the terms of the GNU General Public License as published by  
+# the Free Software Foundation version 2 of the License.                
+#                                                                       
+# This program is distributed in the hope that it will be useful,       
+# but WITHOUT ANY WARRANTY; without even the implied warranty of        
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         
+# GNU General Public License for more details.                          
+######################################################################
+# MR Atomic Contributions
+# ref. Wildman, S.A. and Crippen, G.M., J. Chem. Inf. Comput. 
+#   Sci., 1999, 39, 868-873.
+# Table below is adapted from above ref. 
+######################################################################
+;hydrogen
+[*]	1.112
+[#6]	1.057
+[#1]	1.057
+[O][CX4]	1.395
+[O]c	1.395
+[O][#5]	1.395
+[O][#14]	1.395
+[O][#15]	1.395
+[O][#33]	1.395
+[O][#50]	1.395
+[#5]	1.395
+[#14]	1.395
+[#15]	1.395
+[#16]	1.395
+[#50]	1.395
+[#7]	0.9627
+[O][#7]	0.9627
+[O]C=[#6]	1.805
+[O]C=[#7]	1.805
+[O]C=O	1.805
+[O]C=S	1.805
+[O]O	1.805
+[O]S	1.805
+;heavy
+[*]	0
+[#6]	3.243
+[CH4]	2.503
+[CH3]C	2.503
+[CH2](C)C	2.503
+[CH](C)(C)C	2.433
+[C](C)(C)(C)C	2.433
+[CH3][O,N,F,Cl,Br,#15,#16,#53;!a]	2.753
+[CH2X4][O,N,F,Cl,Br,#15,#16,#53;!a]	2.753
+[CHX4][O,N,F,Cl,Br,#15,#16,#53;!a]	2.731
+[CH0X4][O,N,F,Cl,Br,#15,#16,#53;!a]	2.731
+[C]=[A!#6]	5.007
+[CH2]=C	3.513
+[CH1](=C)A	3.513
+[CH0](=C)(A)A	3.513
+[C](=C)=C	3.513
+[CX2]#A	3.888
+[CH3]c	2.464
+[CH3][a!#6]	2.412
+[CH2X4]a	2.488
+[CHX4]a	2.582
+[CH0X4]a	2.576
+[c][#5,#14,#15,#33,#34,#50,#80]	4.041
+[c][#9]	3.257
+[c][#17]	3.564
+[c][#35]	3.18
+[c][#53]	3.104
+[cH]	3.35
+[c](:a)(:a):a	4.346
+[c](:a)(:a)-a	3.904
+[c](:a)(:a)-C	3.509
+[c](:a)(:a)-N	4.067
+[c](:a)(:a)-O	3.853
+[c](:a)(:a)-S	2.673
+[c](:a)(:a)=C	3.135
+[c](:a)(:a)=N	3.135
+[c](:a)(:a)=O	3.135
+[C](=C)(a)A	4.305
+[C](=C)(c)a	4.305
+[CH](=C)a	4.305
+[C]=c	4.305
+[CX4][!#6;!#7;!#8;!#9;!#15;!#16;!#17;!#35;!#53]	2.693
+[#7]	2.134
+[NH2+0]A	2.262
+[NH+0](A)A	2.173
+[NH2+0]a	2.827
+[NH+0](A)a	3
+[NH+0](a)a	3
+[NH+0]=A	1.757
+[NH+0]=a	1.757
+[N+0](=A)A	2.428
+[N+0](=A)a	2.428
+[N+0](=a)A	2.428
+[N+0](=a)a	2.428
+[N+0](A)(A)A	1.839
+[N+0](a)(A)A	2.819
+[N+0](a)(a)A	2.819
+[N+0](a)(a)a	2.819
+[N+0]#A	1.725
+[NH3+*]	2.134
+[NH2+*]	2.134
+[NH+*]	2.134
+[n+0]	2.202
+[n+*]	2.134
+[NH0+*](A)(A)(A)A	0.2604
+[NH0+*](=A)(A)A	0.2604
+[NH0+*](=A)(A)a	0.2604
+[NH0+*](=[#6])=[#7]	0.2604
+[N+*]#A	3.359
+[N-*]	3.359
+[N+*](=[N-*])=N	3.359
+[#8]	0.6865
+[o]	1.08
+[OH]	0.8238
+[OH2]	0.8238
+[O](C)C	1.085
+[OH0](C)[A!#6]	1.085
+[OH0]([A!#6])[A!#6]	1.085
+[O](A)a	1.182
+[O](a)a	1.182
+[O]=[#8]	3.367
+[O]=[#7]	3.367
+[OX1-*][#7]	3.367
+[OX1-*][#16]	0.7774
+[OX1-*][#15;#33;#43;#53]	0
+[O]=c	3.135
+[O]=[CH]C	0
+[O]=C(C)C	0
+[O]=[CH0](C)[A;!6]	0
+[O]=[CH]N	0
+[O]=[CH]O	0
+[O]=[CH2]	0
+[O]=[CX2]=O	0
+[O]=[CH]c	0.2215
+[O]=C(C)c	0.2215
+[O]=C(c)c	0.2215
+[O]=[CH0](c)[a!#6]	0.2215
+[O]=[CH0](c)[A!#6]	0.2215
+[O]=[CH0](C)[a!#6]	0.2215
+[O]=C([A!#6])[A!#6]	0.389
+[O]=C([A!#6])[a!#6]	0.389
+[O]=C([a!#6])[a!#6]	0.389
+[O-1]C(=O)	0.6865
+[#9-0]	1.108
+[#17-0]	5.853
+[#35-0]	8.927
+[#53-0]	14.02
+[#9-*]	1.108
+[#17-*]	5.853
+[#35-*]	8.927
+[#53-*]	14.02
+[#53+*]	14.02
+[#15]	6.920
+[S-0]	7.591
+[S-*]	7.365
+[S+*]	7.365
+[s]	6.691
+[B,Si,Ga,Ge,As,Se,Sn,Te,Pb,Nc,Nr,Kr,Xe,Rn]	5.754
