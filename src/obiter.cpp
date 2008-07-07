@@ -234,7 +234,7 @@ namespace OpenBabel
   OBMolAtomDFSIter OBMolAtomDFSIter::operator++(int)
   {
     OBMolAtomDFSIter tmp(*this);
-    return operator++();
+    operator++();
     return tmp;
   }
 
