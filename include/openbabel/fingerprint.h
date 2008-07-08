@@ -90,7 +90,11 @@ public:
       int andfp = vec1[i] & p2[i];
       int orfp = vec1[i] | p2[i];
       // Count bits
-#ifdef __GNUC__
+      /* GCC 3.4 supports a "population count" builtin, which on many targets is
+         implemented with a single instruction.  There is a fallback definition
+         in libgcc in case a target does not have one, which should be just as
+         good as the static function below.  */
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
       andbits += __builtin_popcount(andfp);
       orbits += __builtin_popcount(orfp);
 #else

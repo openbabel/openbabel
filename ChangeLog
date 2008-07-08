@@ -1,3 +1,8 @@
+2008-07-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/fingerprint.h, src/fingerprint.cpp: Make
+	sure that __builtin_popcount is only exposed for GCC 3.4 or later.
+
 2008-07-03  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPythonOBF/setup.py: Update setup.py to include
