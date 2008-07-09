@@ -1,3 +1,9 @@
+2008-07-09  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/pybel.py: Bug fix for make3D for linear molecules.
+	Fixes bug 2014055. Minor doc fixes. Remember to close output files
+	in Molecule.write().
+
 2008-07-03  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPythonOBF/setup.py: Update setup.py to include
