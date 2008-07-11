@@ -1,3 +1,13 @@
+2008-07-11  Chris Morley
+
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi
+	Set Env Var BABEL_DATADIR to installation directory. Safer than 
+	relying on finding the data files in the current directory.
+	
+	* include/openbabel/builder.h, src/builder.cpp: check whether
+	fragments.txt is loaded successfully and if not return false
+	from Build().
+
 2008-07-09  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/python/pybel.py: Bug fix for make3D for linear molecules.
