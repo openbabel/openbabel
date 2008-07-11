@@ -1,3 +1,9 @@
+2008-07-11  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-ruby.i: Updated the interface file to allow access
+	to OBFingerprint. Needed to ignore DescribeBits, which was causing
+	problems.
+
 2008-07-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/fingerprint.h, src/fingerprint.cpp: Make
