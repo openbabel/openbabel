@@ -65,12 +65,12 @@ namespace OpenBabel
   **/
   std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > OBBuilder::_fragments;
 
-  void OBBuilder::LoadFragments()  {
+  bool OBBuilder::LoadFragments()  {
     // open data/fragments.txt
     ifstream ifs;
     if (OpenDatafile(ifs, "fragments.txt").length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open fragments.txt", obError);
-      return;
+      return false;
     }
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
@@ -109,6 +109,7 @@ namespace OpenBabel
 
     // return the locale to the original one
     obLocale.RestoreLocale();
+    return true;
   }
  
   vector3 OBBuilder::GetNewBondVector(OBAtom *atom)
@@ -506,7 +507,8 @@ namespace OpenBabel
 
     //datafile is read only on first use of Build()
     if(_fragments.empty())
-      LoadFragments();
+      if(!LoadFragments())
+        return false;
 
     // Loop through  the database once and assign the coordinates from
     // the first (most complex) fragment.
