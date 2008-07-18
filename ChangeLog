@@ -1,3 +1,10 @@
+2008-07-19  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/opendxformat.cpp: Rename theGaussianCubeFormat global
+	variable to theOpenDXCubeFormat.
+
+	* src/formats/CMakeLists.txt: Added opendxformat to formats.
+
 2008-07-11  Chris Morley
 
 	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi

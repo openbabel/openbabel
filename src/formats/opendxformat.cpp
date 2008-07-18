@@ -75,8 +75,8 @@ namespace OpenBabel
 
 //------------------------------------------------------------------------------
 
-    // Global variable used to register Gaussian cube format.
-    OBOpenDXCubeFormat theGaussianCubeFormat;
+    // Global variable used to register OpenDX cube format.
+    OBOpenDXCubeFormat theOpenDXCubeFormat;
 
 //------------------------------------------------------------------------------
 bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
