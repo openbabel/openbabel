@@ -3,6 +3,8 @@
 	* src/formats/opendxformat.cpp: Rename theGaussianCubeFormat global
 	variable to theOpenDXCubeFormat.
 
+	* src/formats/CMakeLists.txt: Added opendxformat to formats.
+
 2008-07-11  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-ruby.i: Updated the interface file to allow access
