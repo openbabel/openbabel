@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/molchrg.h>
 #include <openbabel/phmodel.h>
+#include <openbabel/builder.h>
 
 #include <openbabel/math/matrix3x3.h>
 
@@ -30,10 +31,36 @@ GNU General Public License for more details.
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
+#ifndef ONE_OVER_SQRT3
+#define ONE_OVER_SQRT3  0.57735026918962576451
+#endif //SQRT_TWO_THIRDS
+#ifndef SQRT_TWO_THIRDS
+#define SQRT_TWO_THIRDS 0.81649658092772603272
+#endif //ONE_OVER_SQRT3
+
 using namespace std;
 
 namespace OpenBabel
 {
+
+  class OBAtomPrivate
+  {
+    public:
+      char                          ele;       //!< atomic number (type char to minimize space, allows for 0..255 elements)
+      char                          impval;    //!< implicit valence
+      char                          type[6];   //!< atomic type
+      short                         fcharge;   //!< formal charge
+      unsigned short                isotope;   //!< isotope (0 = most abundant)
+      short                         spinmultiplicity;//!< atomic spin, e.g., 2 for radical  1 or 3 for carbene
+
+      OBMol                        *parent;    //!< parent molecule (if any)
+      std::vector<OBBond*>          vbond;     //!< bonds to this atom -- assumed to be one of the endpoints
+
+      unsigned short                hyb;       //!< hybridization
+      unsigned short                flags;     //!< bitwise flags (e.g. aromaticity)
+      double                        pcharge;   //!< partial charge
+      OBResidue                    *residue;   //!< parent residue (if applicable)
+  };
 
   /** \class OBAtom atom.h <openbabel/atom.h>
       \brief Atom class
@@ -98,49 +125,60 @@ namespace OpenBabel
   extern OBPhModel        phmodel;
 
   //
-  // OBAtom member functions
+  // OBAtom protected member functions
   //
 
-  OBAtom::OBAtom()
+  int OBAtom::GetFlag() const
   {
-    _parent = (OBMol*)NULL;
+    return d->flags;
+  }
+      
+  void OBAtom::SetFlag(int flag)  
+  { 
+    d->flags |= flag;   
+  }
+      
+  bool OBAtom::HasFlag(int flag)  
+  {  
+    return ((d->flags & flag) ? true : false); 
+  }
+
+  //
+  // OBAtom public member functions
+  //
+
+  OBAtom::OBAtom() : d(new OBAtomPrivate)
+  {
+    m_pos = VZero;
+    d->parent = (OBMol*)NULL;
     Clear();
   }
 
   OBAtom::~OBAtom()
   {
-    if (_residue != NULL)
+    if (d->residue != NULL)
       {
-        _residue->RemoveAtom(this);
+        d->residue->RemoveAtom(this);
       }
-    /*
-      if (!_vdata.empty())
-      {
-      vector<OBGenericData*>::iterator m;
-      for (m = _vdata.begin();m != _vdata.end();++m)
-      delete *m;
-      _vdata.clear();
-      }
-    */
   }
 
   bool OBAtom::Clear()
   {
-    _c = (double**)NULL;
-    _cidx = 0;
-    _flags=0;
-    _idx = 0;
-    _hyb = 0;
-    _ele = (char)0;
-    _isotope = 0;
-    _spinmultiplicity=0; // CM 18 Sept 2003
-    _impval = 0;
-    _fcharge = 0;
-    _type[0] = '\0';
-    _pcharge = 0.0;
-    _vbond.clear();
-    _vbond.reserve(4);
-    _residue = (OBResidue*)NULL;
+    m_cptr = (double**)NULL;
+    m_idx = 0;
+    m_cidx = 0;
+    d->flags=0;
+    d->hyb = 0;
+    d->ele = (char)0;
+    d->isotope = 0;
+    d->spinmultiplicity = 0; // CM 18 Sept 2003
+    d->impval = 0;
+    d->fcharge = 0;
+    d->type[0] = '\0';
+    d->pcharge = 0.0;
+    d->vbond.clear();
+    d->vbond.reserve(4);
+    d->residue = (OBResidue*)NULL;
 
     return(OBBase::Clear());
   }
@@ -149,7 +187,7 @@ namespace OpenBabel
   //copy atom information
   //bond info is not copied here as ptrs may be invalid
   {
-    _idx = src.GetIdx();
+    m_idx = src.GetIdx();
     Duplicate(&src);
     return(*this);
   }
@@ -159,17 +197,17 @@ namespace OpenBabel
     if (!src)
       return;
       
-    _hyb = src->GetHyb();
-    _ele = src->GetAtomicNum();
-    _isotope = src->GetIsotope();
-    _fcharge = src->GetFormalCharge();
-    _spinmultiplicity = src->GetSpinMultiplicity();
-    strncpy(_type,src->GetType(), sizeof(_type) - 1);
-    _type[sizeof(_type) - 1] = '\0';
-    _pcharge = src->GetPartialCharge();
-    _v = src->GetVector();
-    _flags = src->GetFlag();
-    _residue = (OBResidue*)NULL;
+    d->hyb = src->GetHyb();
+    d->ele = src->GetAtomicNum();
+    d->isotope = src->GetIsotope();
+    d->fcharge = src->GetFormalCharge();
+    d->spinmultiplicity = src->GetSpinMultiplicity();
+    strncpy(d->type,src->GetType(), sizeof(d->type) - 1);
+    d->type[sizeof(d->type) - 1] = '\0';
+    d->pcharge = src->GetPartialCharge();
+    m_pos = src->GetVector();
+    d->flags = src->GetFlag();
+    d->residue = (OBResidue*)NULL;
     
     _vdata.clear();
     //Copy all the OBGenericData, providing the new atom
@@ -262,7 +300,7 @@ namespace OpenBabel
     for (a1 = BeginNbrAtom(i);a1;a1 = NextNbrAtom(i))
       if (includePandS || (!a1->IsPhosphorus() && !a1->IsSulfur()))
         for (a2 = a1->BeginNbrAtom(j);a2;a2 = a1->NextNbrAtom(j))
-          if (a2 != this && ((*j)->GetBO() == 2 || (*j)->GetBO() == 3 || (*j)->GetBO() == 5))
+          if (a2 != this && ((*j)->GetBondOrder() == 2 || (*j)->GetBondOrder() == 3 || (*j)->GetBondOrder() == 5))
             return(true);
 
     return(false);
@@ -273,7 +311,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if (bond->GetBO() == order)
+      if (bond->GetBondOrder() == order)
         return(true);
 
     return(false);
@@ -285,7 +323,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if (bond->GetBO() == order)
+      if (bond->GetBondOrder() == order)
         count++;
 
     return(count);
@@ -296,7 +334,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if (bond->GetBO() != 1)
+      if (bond->GetBondOrder() != 1)
         return(true);
 
     return(false);
@@ -344,85 +382,251 @@ namespace OpenBabel
     return(false);
   }
 
-  vector3 &OBAtom::GetVector()
-  {
-    if (!_c)
-      return(_v);
-
-    _v.Set((*_c)[_cidx],(*_c)[_cidx+1],(*_c)[_cidx+2]);
-    return(_v);
+  void OBAtom::SetIdx(unsigned int idx)    
+  { 
+    m_idx = idx; 
+    m_cidx = (idx - 1) * 3; 
+  }
+      
+  void OBAtom::SetHyb(int hyb)    
+  { 
+    d->hyb = hyb; 
+  }
+      
+  void OBAtom::SetAtomicNum(int atomicnum)
+  { 
+    d->ele = (char)atomicnum; 
+  }
+      
+  void OBAtom::SetImplicitValence(int val)
+  { 
+    d->impval = (char)val; 
+  }
+      
+  void OBAtom::IncrementImplicitValence()     
+  { 
+    d->impval++; 
+  }
+      
+  void OBAtom::DecrementImplicitValence()     
+  { 
+    d->impval--; 
+  }
+      
+  void OBAtom::SetFormalCharge(int fcharge)   
+  { 
+    d->fcharge = fcharge; 
+  }
+      
+  void OBAtom::SetSpinMultiplicity(short spin)
+  { 
+    d->spinmultiplicity = spin; 
+  }
+      
+  void OBAtom::SetPartialCharge(double pcharge)
+  { 
+    d->pcharge = pcharge; 
+  }
+      
+  void OBAtom::SetCoordPtr(double **c)        
+  { 
+    m_cptr = c; 
+    m_cidx = (GetIdx() - 1) * 3; 
   }
 
-  const vector3 &OBAtom::GetVector() const
-  {
-    if (!_c)
-      return(_v);
-
-    _v.Set((*_c)[_cidx],(*_c)[_cidx+1],(*_c)[_cidx+2]);
-    return(_v);
+  void OBAtom::SetResidue(OBResidue *res)     
+  { 
+    d->residue=res; 
   }
 
+  void OBAtom::SetParent(OBMol *ptr)
+  { 
+    d->parent=ptr; 
+  }
+      
+  void OBAtom::UnsetAromatic()                
+  { 
+    d->flags &= (~(OBAtomFlag::Aromatic)); 
+  }
+      
+  void OBAtom::UnsetStereo()
+  {
+    d->flags &= ~(OBAtomFlag::StereoC);
+    d->flags &= ~(OBAtomFlag::StereoAC);
+    d->flags &= ~(OBAtomFlag::ChiralPos);
+    d->flags &= ~(OBAtomFlag::ChiralNeg);
+    d->flags &= ~(OBAtomFlag::Chiral);
+  }
+      
+  void OBAtom::ClearCoordPtr()     
+  { 
+    m_cptr = NULL; 
+    m_cidx = 0; 
+  }
+  
+  int OBAtom::GetFormalCharge() const 
+  { 
+    return d->fcharge;
+  }
+      
+  unsigned int OBAtom::GetAtomicNum() const 
+  { 
+    return (unsigned int) d->ele; 
+  }
+      
+  unsigned short int OBAtom::GetIsotope() const 
+  { 
+    return d->isotope;    
+  }
+      
+  int OBAtom::GetSpinMultiplicity() const 
+  { 
+    return d->spinmultiplicity; 
+  }
+     
+  /* 
+  unsigned int OBAtom::GetIdx() const 
+  { 
+    return (int) d->idx;
+  }
+      
+  unsigned int OBAtom::GetCoordinateIdx() const 
+  { 
+    return (int) d->cidx; 
+  }
+  */
+      
+  unsigned int OBAtom::GetValence() const
+  {
+    return ((d->vbond.empty()) ? 0 : d->vbond.size());
+  }
+
+  double OBAtom::x() const 
+  {
+    if (m_cptr) return((*m_cptr)[m_cidx]);
+    else        return m_pos.x();
+  }
+  double OBAtom::y() const 
+  {
+    if (m_cptr) return((*m_cptr)[m_cidx+1]);
+    else        return m_pos.y();
+  }
+  double OBAtom::z() const 
+  {
+    if (m_cptr) return((*m_cptr)[m_cidx+2]);
+    else        return m_pos.z();
+  }
+  
+  /*
+  double* OBAtom::GetCoordinate()
+  {
+    if (d->c) return(&(*d->c)[d->cidx]);
+    else      return NULL;
+  }
+  */
+  
+  OBMol* OBAtom::GetParent()        
+  {
+    return (OBMol*) d->parent;
+  }
+      
+  OBBondIterator OBAtom::BeginBonds()
+  { 
+    return d->vbond.begin(); 
+  }
+  
+  OBBondIterator OBAtom::EndBonds()
+  { 
+    return d->vbond.end();   
+  }
+  
+  void OBAtom::NewResidue()
+  {
+    if (!d->residue)
+      d->residue = new OBResidue;
+  }
+  
+  void OBAtom::DeleteResidue(){
+    if (d->residue) {
+      delete d->residue;
+      d->residue = NULL; // Make sure to clear that a residue existed
+    }
+  }
+  
+  void OBAtom::AddBond(OBBond *bond) 
+  { 
+    d->vbond.push_back(bond); 
+  }
+  
+  void OBAtom::InsertBond(OBBondIterator &i, OBBond *bond)
+  {
+    d->vbond.insert(i, bond);
+  }
+  
+  void OBAtom::ClearBond() 
+  {
+    d->vbond.clear();
+  }
+
+  bool OBAtom::HasResidue()
+  { 
+    return (d->residue != NULL);    
+  }
+  
   void OBAtom::SetVector()
   {
-    //    obAssert(_c);
-    if (_c)
-      _v.Set((*_c)[_cidx],(*_c)[_cidx+1],(*_c)[_cidx+2]);
+    if (m_cptr)
+      m_pos = Eigen::Vector3d( (*m_cptr)[m_cidx], (*m_cptr)[m_cidx+1], (*m_cptr)[m_cidx+2] );
   }
 
-  void OBAtom::SetVector(const vector3 &v)
+  void OBAtom::SetVector(const Eigen::Vector3d &v)
   {
-    if (!_c)
-      _v = v;
+    if (!m_cptr)
+      m_pos = v;
     else
       {
-        (*_c)[_cidx  ] = v.x();
-        (*_c)[_cidx+1] = v.y();
-        (*_c)[_cidx+2] = v.z();
+        (*m_cptr)[m_cidx  ] = v.x();
+        (*m_cptr)[m_cidx+1] = v.y();
+        (*m_cptr)[m_cidx+2] = v.z();
       }
   }
 
   void OBAtom::SetVector(const double x,const double y,const double z)
   {
-    if (!_c)
-      _v.Set(x,y,z);
+    if (!m_cptr)
+      m_pos = Eigen::Vector3d(x, y, z);
     else
       {
-        (*_c)[_cidx  ] = x;
-        (*_c)[_cidx+1] = y;
-        (*_c)[_cidx+2] = z;
+        (*m_cptr)[m_cidx  ] = x;
+        (*m_cptr)[m_cidx+1] = y;
+        (*m_cptr)[m_cidx+2] = z;
       }
   }
 
   void OBAtom::SetType(const char *type)
   {
-    strncpy(_type,type, sizeof(_type) - 1);
-    _type[sizeof(_type) - 1] = '\0';
-    if (_ele == 1 && type[0] == 'D')
-      _isotope = 2;
+    strncpy(d->type,type, sizeof(d->type) - 1);
+    d->type[sizeof(d->type) - 1] = '\0';
+    if (d->ele == 1 && type[0] == 'D')
+      d->isotope = 2;
   }
 
-  void OBAtom::SetType(const string &type)
+  void OBAtom::SetType(const std::string &type)
   {
-    strncpy(_type,type.c_str(), sizeof(_type) - 1);
-    _type[sizeof(_type) - 1] = '\0';
-    if (_ele == 1 && type[0] == 'D')
-      _isotope = 2;
+    strncpy(d->type,type.c_str(), sizeof(d->type) - 1);
+    d->type[sizeof(d->type) - 1] = '\0';
+    if (d->ele == 1 && type[0] == 'D')
+      d->isotope = 2;
   }
 
   void OBAtom::SetIsotope(unsigned int iso)
   {
-    if (_ele == 1 && iso == 2)
+    if (d->ele == 1 && iso == 2)
       SetType("D");
-    else if (_ele == 1 && (iso == 1 || iso == 0))
+    else if (d->ele == 1 && (iso == 1 || iso == 0))
       SetType("H");
 
-    _isotope = iso;
-  }
-
-  OBAtom *OBAtom::GetNextAtom()
-  {
-    OBMol *mol = (OBMol*)GetParent();
-    return(((unsigned)GetIdx() == mol->NumAtoms())? NULL : mol->GetAtom(GetIdx()+1));
+    d->isotope = iso;
   }
 
   OBResidue *OBAtom::GetResidue()
@@ -432,19 +636,19 @@ namespace OpenBabel
 
   OBResidue *OBAtom::GetResidue(bool perception)
   {
-    if (_residue != NULL)
-      return _residue;
+    if (d->residue != NULL)
+      return d->residue;
     else if (perception && !((OBMol*)GetParent())->HasChainsPerceived())
       {
         ((OBMol*)GetParent())->SetChainsPerceived();
         if ( chainsparser.PerceiveChains(*((OBMol*)GetParent())) )
-          return _residue;
+          return d->residue;
         else
           {
-            if (_residue)
+            if (d->residue)
               {
-                delete _residue;
-                _residue = NULL;
+                delete d->residue;
+                d->residue = NULL;
               }
             return NULL;
           }
@@ -455,15 +659,15 @@ namespace OpenBabel
 
   double OBAtom::GetAtomicMass() const
   {
-    if (_isotope == 0)
-      return etab.GetMass(_ele);
+    if (d->isotope == 0)
+      return etab.GetMass(d->ele);
     else
-      return isotab.GetExactMass(_ele, _isotope);
+      return isotab.GetExactMass(d->ele, d->isotope);
   }
 
   double OBAtom::GetExactMass() const
   {
-    return isotab.GetExactMass(_ele, _isotope);
+    return isotab.GetExactMass(d->ele, d->isotope);
   }
 
   char *OBAtom::GetType()
@@ -473,7 +677,7 @@ namespace OpenBabel
       if (!mol->HasAtomTypesPerceived())
         atomtyper.AssignTypes(*((OBMol*)GetParent()));
 
-    if (strlen(_type) == 0) // Somehow we still don't have a type!
+    if (strlen(d->type) == 0) // Somehow we still don't have a type!
       {
         char num[6];
         string fromType = ttab.GetFromType(); // save previous types
@@ -482,15 +686,15 @@ namespace OpenBabel
         ttab.SetFromType("ATN");
         ttab.SetToType("INT");
         snprintf(num, 6, "%d", GetAtomicNum());
-        ttab.Translate(_type, num);
+        ttab.Translate(d->type, num);
 	
         ttab.SetFromType(fromType.c_str());
         ttab.SetToType(toType.c_str());
       }
-    if (_ele == 1 && _isotope == 2)
-      snprintf(_type, 6, "%s", "D");
+    if (d->ele == 1 && d->isotope == 2)
+      snprintf(d->type, 6, "%s", "D");
 
-    return(_type);
+    return(d->type);
   }
 
   unsigned int OBAtom::GetImplicitValence() const
@@ -499,7 +703,7 @@ namespace OpenBabel
     if (mol && !mol->HasImplicitValencePerceived())
       atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
 
-    return((unsigned int)_impval);
+    return((unsigned int)d->impval);
   }
 
   unsigned int OBAtom::GetHyb() const
@@ -509,7 +713,7 @@ namespace OpenBabel
     if (mol && !mol->HasHybridizationPerceived())
       atomtyper.AssignHyb(*mol);
 
-    return(_hyb);
+    return(d->hyb);
   }
 
 
@@ -541,9 +745,9 @@ namespace OpenBabel
   double OBAtom::GetPartialCharge()
   {
     if (!GetParent())
-      return(_pcharge);
+      return(d->pcharge);
     if (!((OBMol*)GetParent())->AutomaticPartialCharge())
-      return(_pcharge);
+      return(d->pcharge);
 
     if (!((OBMol*)GetParent())->HasPartialChargesPerceived())
       {
@@ -559,7 +763,7 @@ namespace OpenBabel
         gc.AssignPartialCharges(*((OBMol*)GetParent()));
       }
 
-    return(_pcharge);
+    return(d->pcharge);
   }
 
   //! Returns true if nitrogen is part of an amide
@@ -577,7 +781,7 @@ namespace OpenBabel
       {
         nbratom = bond->GetNbrAtom(atom);
         for (abbond = nbratom->BeginBond(j);abbond;abbond = nbratom->NextBond(j))
-          if (abbond->GetBO() == 2 &&
+          if (abbond->GetBondOrder() == 2 &&
               (((abbond->GetNbrAtom(nbratom))->GetAtomicNum() == 8) ||
                ((abbond->GetNbrAtom(nbratom))->GetAtomicNum() == 16)))
             return(true);
@@ -595,7 +799,7 @@ namespace OpenBabel
     OBBondIterator i;
 
     for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
-      if (atom->IsOxygen() && !(*i)->IsInRing() && (*i)->GetBO() == 2)
+      if (atom->IsOxygen() && !(*i)->IsInRing() && (*i)->GetBondOrder() == 2)
         return(true);
 
     return(false);
@@ -745,15 +949,15 @@ namespace OpenBabel
 
   bool OBAtom::IsAromatic() const
   {
-    if (((OBAtom*)this)->HasFlag(OB_AROMATIC_ATOM))
+    if (((OBAtom*)this)->HasFlag(OBAtomFlag::Aromatic))
       return(true);
 
-    OBMol	*mol = (OBMol*)((OBAtom*)this)->GetParent();
+    OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
 
     if (!mol->HasAromaticPerceived())
       {
         aromtyper.AssignAromaticFlags(*mol);
-        if (((OBAtom*)this)->HasFlag(OB_AROMATIC_ATOM))
+        if (((OBAtom*)this)->HasFlag(OBAtomFlag::Aromatic))
           return(true);
       }
 
@@ -762,14 +966,14 @@ namespace OpenBabel
 
   bool OBAtom::IsInRing() const
   {
-    if (((OBAtom*)this)->HasFlag(OB_RING_ATOM))
+    if (((OBAtom*)this)->HasFlag(OBAtomFlag::Ring))
       return(true);
 
     OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
     if (!mol->HasRingAtomsAndBondsPerceived())
       {
         mol->FindRingAtomsAndBonds();
-        if (((OBAtom*)this)->HasFlag(OB_RING_ATOM))
+        if (((OBAtom*)this)->HasFlag(OBAtomFlag::Ring))
           return(true);
       }
 
@@ -778,13 +982,13 @@ namespace OpenBabel
 
   bool OBAtom::IsChiral()
   {
-    if (HasFlag(OB_CHIRAL_ATOM))
+    if (HasFlag(OBAtomFlag::Chiral))
       return(true);
 
     if (!((OBMol*)GetParent())->HasChiralityPerceived())
       {
         ((OBMol*)GetParent())->FindChiralCenters();
-        if (HasFlag(OB_CHIRAL_ATOM))
+        if (HasFlag(OBAtomFlag::Chiral))
           return(true);
       }
 
@@ -800,7 +1004,7 @@ namespace OpenBabel
     if (!mol->HasSSSRPerceived())
       mol->FindSSSR();
 
-    if (!((OBAtom*)this)->HasFlag(OB_RING_ATOM))
+    if (!((OBAtom*)this)->HasFlag(OBAtomFlag::Ring))
       return(false);
 
     rlist = mol->GetSSSR();
@@ -872,10 +1076,10 @@ namespace OpenBabel
     return count;
   }
 
-  double	  OBAtom::SmallestBondAngle()
+  double OBAtom::SmallestBondAngle()
   {
     OBAtom *b, *c;
-    vector3 v1, v2;
+    Eigen::Vector3d v1, v2;
     double degrees, minDegrees;
     //    vector<OBAtom*>::iterator i;
     OBBondIterator j,k;
@@ -889,7 +1093,7 @@ namespace OpenBabel
           {
             v1 = b->GetVector() - GetVector();
             v2 = c->GetVector() - GetVector();
-            degrees = vectorAngle(v1, v2);
+            degrees = VectorAngle(v1, v2);
             if (degrees < minDegrees)
               minDegrees = degrees;
           }
@@ -897,10 +1101,10 @@ namespace OpenBabel
     return minDegrees;
   }
 
-  double	  OBAtom::AverageBondAngle()
+  double OBAtom::AverageBondAngle()
   {
     OBAtom *b, *c;
-    vector3 v1, v2;
+    Eigen::Vector3d v1, v2;
     double degrees, avgDegrees;
     //    vector<OBAtom*>::iterator i;
     OBBondIterator j,k;
@@ -915,7 +1119,7 @@ namespace OpenBabel
           {
             v1 = b->GetVector() - GetVector();
             v2 = c->GetVector() - GetVector();
-            degrees = vectorAngle(v1, v2);
+            degrees = VectorAngle(v1, v2);
             avgDegrees += degrees;
             n++;
           }
@@ -947,36 +1151,17 @@ namespace OpenBabel
   unsigned int OBAtom::BOSum() const
   {
     unsigned int bo;
-    unsigned int bosum=0;
+    unsigned int bosum = 0;
     OBBond *bond;
     OBBondIterator i;
 
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       {
-        bo = bond->GetBO();
+        bo = bond->GetBondOrder();
         bosum += (bo < 4) ? 2*bo : 3;
       }
 
     bosum /= 2;
-    return(bosum);
-  }
-
-  unsigned int OBAtom::KBOSum() const
-  {
-    OBBond *bond;
-    unsigned int bosum;
-    OBBondIterator i;
-
-    bosum = GetImplicitValence();
-
-    for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
-      {
-        if (bond->IsKDouble())
-          bosum++;
-        else if (bond->IsKTriple())
-          bosum += 2;
-      }
-
     return(bosum);
   }
 
@@ -987,8 +1172,8 @@ namespace OpenBabel
     if (mol && !mol->HasImplicitValencePerceived())
       atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
 
-    // _impval is assigned by the atomtyper -- same as calling GetImplicitValence()
-    int impval = _impval - GetValence();
+    // d->impval is assigned by the atomtyper -- same as calling GetImplicitValence()
+    int impval = d->impval - GetValence();
 
     // we need to modify this implicit valence if we're a radical center
     int mult = GetSpinMultiplicity();
@@ -1003,8 +1188,8 @@ namespace OpenBabel
 
   unsigned int OBAtom::ExplicitHydrogenCount(bool ExcludeIsotopes) const
   {
-    //If ExcludeIsotopes is true, H atoms with _isotope!=0 are not included.
-    //This excludes D, T and H when _isotope exlicitly set to 1 rather than the default 0.
+    //If ExcludeIsotopes is true, H atoms with d->isotope!=0 are not included.
+    //This excludes D, T and H when d->isotope exlicitly set to 1 rather than the default 0.
     int numH=0;
     OBAtom *atom;
     OBBondIterator i;
@@ -1018,10 +1203,10 @@ namespace OpenBabel
   bool OBAtom::DeleteBond(OBBond *bond)
   {
     OBBondIterator i;
-    for (i = _vbond.begin();i != _vbond.end();++i)
+    for (i = d->vbond.begin();i != d->vbond.end();++i)
       if ((OBBond*)bond == *i)
         {
-          _vbond.erase(i);
+          d->vbond.erase(i);
           return(true);
         }
     return(false);
@@ -1047,219 +1232,67 @@ namespace OpenBabel
 
   OBBond *OBAtom::BeginBond(OBBondIterator &i)
   {
-    i = _vbond.begin();
-    return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
+    i = d->vbond.begin();
+    return((i == d->vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
   }
 
   OBBond *OBAtom::NextBond(OBBondIterator &i)
   {
     i++;
-    return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
+    return((i == d->vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
   }
 
   OBAtom *OBAtom::BeginNbrAtom(OBBondIterator &i)
   {
-    i = _vbond.begin();
-    return((i != _vbond.end()) ? ((OBBond*) *i)->GetNbrAtom(this):NULL);
+    i = d->vbond.begin();
+    return((i != d->vbond.end()) ? ((OBBond*) *i)->GetNbrAtom(this):NULL);
   }
 
   OBAtom *OBAtom::NextNbrAtom(OBBondIterator &i)
   {
     i++;
-    return((i != _vbond.end()) ?  ((OBBond*) *i)->GetNbrAtom(this):NULL);
+    return((i != d->vbond.end()) ?  ((OBBond*) *i)->GetNbrAtom(this):NULL);
   }
 
   double OBAtom::GetDistance(OBAtom *b)
   {
-    return(( this->GetVector() - b->GetVector() ).length());
+    return(( this->GetVector() - b->GetVector() ).norm());
   }
 
-  double OBAtom::GetDistance(int b)
+  double OBAtom::GetDistance(unsigned int b)
   {
     OBMol *mol = (OBMol*)GetParent();
-    return(( this->GetVector() - mol->GetAtom(b)->GetVector() ).length());
+    return(( this->GetVector() - mol->GetAtom(b)->GetVector() ).norm());
   }
 
   double OBAtom::GetAngle(OBAtom *b, OBAtom *c)
   {
-    vector3 v1,v2;
+    Eigen::Vector3d v1,v2;
 
     v1 = this->GetVector() - b->GetVector();
     v2 = c->GetVector() - b->GetVector();
-    if (IsNearZero(v1.length(), 1.0e-3)
-      || IsNearZero(v2.length(), 1.0e-3)) {
+    if (IsNearZero(v1.norm(), 1.0e-3)
+      || IsNearZero(v2.norm(), 1.0e-3)) {
         return(0.0);
     }
 
-    return(vectorAngle(v1, v2));
+    return(VectorAngle(v1, v2));
   }
 
   double OBAtom::GetAngle(int b, int c)
   {
     OBMol *mol = (OBMol*)GetParent();
-    vector3 v1,v2;
+    Eigen::Vector3d v1,v2;
 
     v1 = this->GetVector() - mol->GetAtom(b)->GetVector();
     v2 = mol->GetAtom(c)->GetVector() - mol->GetAtom(b)->GetVector();
 
-    if (IsNearZero(v1.length(), 1.0e-3)
-      || IsNearZero(v2.length(), 1.0e-3)) {
+    if (IsNearZero(v1.norm(), 1.0e-3)
+      || IsNearZero(v2.norm(), 1.0e-3)) {
         return(0.0);
     }
 
-    return(vectorAngle(v1, v2));
-  }
-
-  bool OBAtom::GetNewBondVector(vector3 &v,double length)
-  {
-    // ***experimental code***
-
-    OBAtom *atom;
-    OBBondIterator i,j;
-    v = VZero;
-
-    if (GetValence() == 0)
-      {
-        v = VX;
-        v *= length;
-        v += GetVector();
-        // Check that the vector is still finite before returning
-        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
-          v.Set(0.0, 0.0, 0.0);
-        return(true);
-      }
-
-    if (GetValence() == 1)
-      {
-        vector3 vtmp,v1,v2;
-        atom = BeginNbrAtom(i);
-        if (atom)
-          vtmp = GetVector() - atom->GetVector();
-
-        if (GetHyb() == 2 || (IsOxygen() && HasAlphaBetaUnsat()))
-          {
-            bool quit = false;
-            OBAtom *a1,*a2;
-            v2 = VZero;
-            for (a1 = BeginNbrAtom(i);a1 && !quit;a1 = NextNbrAtom(i))
-              for (a2 = a1->BeginNbrAtom(j);a2 && !quit;a2 = a1->NextNbrAtom(j))
-                if (a1 && a2 && a2 != this)
-                  {
-                    v2 = a1->GetVector() - a2->GetVector();
-                    quit = true;
-                  }
-
-            if (v2.IsApprox(VZero, 1.0e-8))
-              {
-                v1 = cross(vtmp,VX);
-                v2 = cross(vtmp,VY);
-                if (v1.length() < v2.length())
-                  v1 = v2;
-              }
-            else
-              v1 = cross(vtmp,v2);
-
-            matrix3x3 m;
-            m.RotAboutAxisByAngle(v1,60.0);
-            v = m*vtmp;
-            v.normalize();
-          }
-        else if (GetHyb() == 3)
-          {
-            v1 = cross(vtmp,VX);
-            v2 = cross(vtmp,VY);
-            if (v1.length() < v2.length())
-              v1 = v2;
-            matrix3x3 m;
-            m.RotAboutAxisByAngle(v1,70.5);
-            v = m*vtmp;
-            v.normalize();
-          }
-        if (GetHyb() == 1)
-          v = vtmp;
-
-        v *= length;
-        v += GetVector();
-        // Check that the vector is still finite before returning
-        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
-          v.Set(0.0, 0.0, 0.0);
-        return(true);
-      }
-
-    if (GetValence() == 2)
-      {
-        vector3 v1,v2,vtmp,vsum,vnorm;
-        atom = BeginNbrAtom(i);
-        if (!atom)
-          return(false);
-        v1 = GetVector() - atom->GetVector();
-        atom = NextNbrAtom(i);
-        if (!atom)
-          return(false);
-        v2 = GetVector() - atom->GetVector();
-        v1.normalize();
-        v2.normalize();
-        vsum = v1+v2;
-        vsum.normalize();
-
-        if (GetHyb() == 2)
-          v = vsum;
-        else if (GetHyb() == 3)
-          {
-            vnorm = cross(v2,v1);
-            vnorm.normalize();
-
-#ifndef ONE_OVER_SQRT3
-#define ONE_OVER_SQRT3  0.57735026918962576451
-#endif //SQRT_TWO_THIRDS
-#ifndef SQRT_TWO_THIRDS
-#define SQRT_TWO_THIRDS 0.81649658092772603272
-#endif //ONE_OVER_SQRT3
-
-            vsum *= ONE_OVER_SQRT3;
-            vnorm *= SQRT_TWO_THIRDS;
-
-            v = vsum + vnorm;
-          }
-
-        v *= length;
-
-        v += GetVector();
-        // Check that the vector is still finite before returning
-        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
-          v.Set(0.0, 0.0, 0.0);
-        return(true);
-      }
-
-    if (GetValence() == 3)
-      {
-        vector3 vtmp,vsum;
-        OBAtom *atom;
-        OBBondIterator i;
-        for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
-          {
-            vtmp = GetVector() - atom->GetVector();
-            if (vtmp.length_2() < 0.1) { // atoms are nearly on top of each other
-              // Move the other atom a small random distance apart
-              vtmp.randomUnitVector();
-              vtmp *= length;
-              atom->SetVector(vtmp + GetVector());
-            } // Now this should be a real distance, not a zero vector
-            vtmp.normalize();
-            vtmp /= 3.0;
-            vsum += vtmp;
-          }
-        vsum.normalize();
-        v = vsum;
-        v *= length;
-        v += GetVector();
-        // Check that the vector is still finite before returning
-        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
-          v.Set(0.0, 0.0, 0.0);
-        return(true);
-      }
-
-    return(true);
+    return(VectorAngle(v1, v2));
   }
 
   bool OBAtom::HtoMethyl()
@@ -1296,7 +1329,7 @@ namespace OpenBabel
 
     OBAtom *hatom;
     br2 = etab.CorrectedBondRad(1,0);
-    vector3 v;
+    Eigen::Vector3d v;
 
     for (int j = 0;j < 3;++j)
       {
@@ -1304,7 +1337,7 @@ namespace OpenBabel
         hatom->SetAtomicNum(1);
         hatom->SetType("H");
 
-        GetNewBondVector(v,br1+br2);
+	v = OBBuilder::GetNewBondVector(hatom, br1 + br2);
         hatom->SetVector(v);
         mol->AddBond(GetIdx(),mol->NumAtoms(),1);
       }
@@ -1313,19 +1346,19 @@ namespace OpenBabel
     return(true);
   }
 
-  static void ApplyRotMatToBond(OBMol &mol,matrix3x3 &m,OBAtom *a1,OBAtom *a2)
+  static void ApplyRotMatToBond(OBMol &mol, Eigen::Quaternion<double> &m, OBAtom *a1, OBAtom *a2)
   {
     vector<int> children;
     mol.FindChildren(children,a1->GetIdx(),a2->GetIdx());
     children.push_back(a2->GetIdx());
-
-    vector3 v;
+                
+    Eigen::Vector3d v;
     vector<int>::iterator i;
     for (i = children.begin();i != children.end();++i)
       {
         v = mol.GetAtom(*i)->GetVector();
         v -= a1->GetVector();
-        v *= m;
+        v = m.toRotationMatrix() * v;
         v += a1->GetVector();
         mol.GetAtom(*i)->SetVector(v);
       }
@@ -1390,9 +1423,9 @@ namespace OpenBabel
           length = br1 + br2;
           if ((*i)->IsAromatic())
             length *= 0.93;
-          else if ((*i)->GetBO() == 2)
+          else if ((*i)->GetBondOrder() == 2)
             length *= 0.91;
-          else if ((*i)->GetBO() == 3)
+          else if ((*i)->GetBondOrder() == 3)
             length *= 0.87;
           ((OBBond*) *i)->SetLength(this, length);
         }
@@ -1400,8 +1433,8 @@ namespace OpenBabel
     if (GetValence() > 1)
       {
         double angle;
-        matrix3x3 m;
-        vector3 v1,v2,v3,v4,n,s;
+        Eigen::Quaternion<double> q;
+        Eigen::Vector3d v1,v2,v3,v4,n,s;
         OBAtom *r1,*r2,*r3,*a1,*a2,*a3,*a4;
         r1 = r2 = r3 = a1 = a2 = a3 = a4 = NULL;
 
@@ -1445,10 +1478,10 @@ namespace OpenBabel
                 v1.normalize();
                 v2 = a2->GetVector()-GetVector();
                 v2.normalize();
-                n = cross(v1,v2);
-                angle = vectorAngle(v1,v2)-targetAngle;
-                m.RotAboutAxisByAngle(n,-angle);
-                ApplyRotMatToBond(*mol,m,this,a1);
+                n = v1.cross(v2);
+                angle = VectorAngle(v1,v2) - targetAngle;
+                q = Eigen::AngleAxis<double>(angle * DEG_TO_RAD, n);
+                ApplyRotMatToBond(*mol, q, this, a1);
               }
           }
         else if (hyb == 2)
@@ -1463,10 +1496,10 @@ namespace OpenBabel
                 s = v1+v2;
                 s.normalize();
                 s *= -1.0;
-                n = cross(s,v3);
-                angle = vectorAngle(s,v3);
-                m.RotAboutAxisByAngle(n,angle);
-                ApplyRotMatToBond(*mol,m,this,a1);
+                n = s.cross(v3);
+                angle = VectorAngle(s,v3);
+                q = Eigen::AngleAxis<double>(-angle * DEG_TO_RAD, n);
+                ApplyRotMatToBond(*mol, q, this, a1);
               }
             else
               {
@@ -1476,10 +1509,10 @@ namespace OpenBabel
                     v1.normalize();
                     v2 = a2->GetVector()-GetVector();
                     v2.normalize();
-                    n = cross(v1,v2);
-                    angle = vectorAngle(v1,v2)-targetAngle;
-                    m.RotAboutAxisByAngle(n,-angle);
-                    ApplyRotMatToBond(*mol,m,this,a1);
+                    n = v1.cross(v2);
+                    angle = VectorAngle(v1,v2)-targetAngle;
+                    q = Eigen::AngleAxis<double>(angle * DEG_TO_RAD, n);
+                    ApplyRotMatToBond(*mol, q, this, a1);
                   }
                 if (a3)
                   {
@@ -1491,10 +1524,10 @@ namespace OpenBabel
                     s = v1+v2;
                     s.normalize();
                     s *= -1.0;
-                    n = cross(s,v3);
-                    angle = vectorAngle(s,v3);
-                    m.RotAboutAxisByAngle(n,angle);
-                    ApplyRotMatToBond(*mol,m,this,a3);
+                    n = s.cross(v3);
+                    angle = VectorAngle(s,v3);
+                    q = Eigen::AngleAxis<double>(-angle * DEG_TO_RAD, n);
+                    ApplyRotMatToBond(*mol, q, this, a3);
                   }
               }
           }
@@ -1512,10 +1545,10 @@ namespace OpenBabel
                 s = v1 + v2 + v3;
                 s *= -1.0;
                 s.normalize();
-                n = cross(s,v4);
-                angle = vectorAngle(s,v4);
-                m.RotAboutAxisByAngle(n,angle);
-                ApplyRotMatToBond(*mol,m,this,a1);
+                n = s.cross(v4);
+                angle = VectorAngle(s,v4);
+                q = Eigen::AngleAxis<double>(-angle * DEG_TO_RAD, n);
+                ApplyRotMatToBond(*mol, q, this, a1);
               }
             else if (r1 && r2 && !r3 && a1)
               {
@@ -1527,17 +1560,17 @@ namespace OpenBabel
                 s = v1+v2;
                 s *= -1.0;
                 s.normalize();
-                n = cross(v1,v2);
+                n = v1.cross(v2);
                 n.normalize();
                 s *= ONE_OVER_SQRT3; //1/sqrt(3)
                 n *= SQRT_TWO_THIRDS; //sqrt(2/3)
                 s += n;
                 s.normalize();
-                n = cross(s,v3);
-                angle = vectorAngle(s,v3);
-                m.RotAboutAxisByAngle(n,angle);
-                ApplyRotMatToBond(*mol,m,this,a1);
-
+                n = s.cross(v3);
+                angle = VectorAngle(s,v3);
+                q = Eigen::AngleAxis<double>(-angle * DEG_TO_RAD, n);
+                ApplyRotMatToBond(*mol, q, this, a1);
+ 
                 if (a2)
                   {
                     v1 = r1->GetVector()-GetVector();
@@ -1550,10 +1583,10 @@ namespace OpenBabel
                     s = v1 + v2 + v3;
                     s *= -1.0;
                     s.normalize();
-                    n = cross(s,v4);
-                    angle = vectorAngle(s,v4);
-                    m.RotAboutAxisByAngle(n,angle);
-                    ApplyRotMatToBond(*mol,m,this,a2);
+                    n = s.cross(v4);
+                    angle = VectorAngle(s,v4);
+                    q = Eigen::AngleAxis<double>(-angle * DEG_TO_RAD, n);
+                    ApplyRotMatToBond(*mol, q, this, a2);
                   }
               }
             else
@@ -1564,10 +1597,10 @@ namespace OpenBabel
                     v1.normalize();
                     v2 = a2->GetVector()-GetVector();
                     v2.normalize();
-                    n = cross(v1,v2);
-                    angle = vectorAngle(v1,v2)-targetAngle;
-                    m.RotAboutAxisByAngle(n,-angle);
-                    ApplyRotMatToBond(*mol,m,this,a1);
+                    n = v1.cross(v2);
+                    angle = VectorAngle(v1,v2)-targetAngle;
+                    q = Eigen::AngleAxis<double>(angle * DEG_TO_RAD, n);
+                    ApplyRotMatToBond(*mol, q, this, a1);
                   }
                 if (a3)
                   {
@@ -1579,16 +1612,16 @@ namespace OpenBabel
                     s = v1+v2;
                     s *= -1.0;
                     s.normalize();
-                    n = cross(v1,v2);
+                    n = v1.cross(v2);
                     n.normalize();
                     s *= ONE_OVER_SQRT3; //1/sqrt(3)
                     n *= SQRT_TWO_THIRDS; //sqrt(2/3)
                     s += n;
                     s.normalize();
-                    n = cross(s,v3);
-                    angle = vectorAngle(s,v3);
-                    m.RotAboutAxisByAngle(n,angle);
-                    ApplyRotMatToBond(*mol,m,this,a3);
+                    n = s.cross(v3);
+                    angle = VectorAngle(s,v3);
+                    q = Eigen::AngleAxis<double>(-angle * DEG_TO_RAD, n);
+                    ApplyRotMatToBond(*mol, q, this, a3);
                   }
               }
           }
@@ -1646,7 +1679,7 @@ namespace OpenBabel
     if (hcount)
       {
         int k;
-        vector3 v;
+        Eigen::Vector3d v;
         OBAtom *atom;
         double brsum = etab.CorrectedBondRad(1,0)+
           etab.CorrectedBondRad(GetAtomicNum(),GetHyb());
@@ -1655,7 +1688,7 @@ namespace OpenBabel
         mol->BeginModify();
         for (k = 0;k < hcount;++k)
           {
-            GetNewBondVector(v,brsum);
+	    v = OBBuilder::GetNewBondVector(this, brsum);
             atom = mol->NewAtom();
             atom->SetAtomicNum(1);
             atom->SetType("H");
@@ -1679,140 +1712,12 @@ namespace OpenBabel
     return NULL;
   }
 
-  /*Now in OBBase
-  // OBGenericData methods
-  bool OBAtom::HasData(string &s)
-  //returns true if the generic attribute/value pair exists
-  {
-  if (_vdata.empty())
-  return(false);
-
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(true);
-
-  return(false);
-  }
-
-  bool OBAtom::HasData(const char *s)
-  //returns true if the generic attribute/value pair exists
-  {
-  if (_vdata.empty())
-  return(false);
-
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(true);
-
-  return(false);
-  }
-
-  bool OBAtom::HasData(unsigned int dt)
-  //returns true if the generic attribute/value pair exists
-  {
-  if (_vdata.empty())
-  return(false);
-
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetDataType() == dt)
-  return(true);
-
-  return(false);
-  }
-
-  OBGenericData *OBAtom::GetData(string &s)
-  //returns the value given an attribute
-  {
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(*i);
-
-  return(NULL);
-  }
-
-  OBGenericData *OBAtom::GetData(const char *s)
-  //returns the value given an attribute
-  {
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(*i);
-
-  return(NULL);
-  }
-
-  OBGenericData *OBAtom::GetData(unsigned int dt)
-  {
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetDataType() == dt)
-  return(*i);
-  return(NULL);
-  }
-
-  void OBAtom::DeleteData(unsigned int dt)
-  {
-  vector<OBGenericData*> vdata;
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetDataType() == dt)
-  delete *i;
-  else
-  vdata.push_back(*i);
-  _vdata = vdata;
-  }
-
-  void OBAtom::DeleteData(vector<OBGenericData*> &vg)
-  {
-  vector<OBGenericData*> vdata;
-  vector<OBGenericData*>::iterator i,j;
-
-  bool del;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  {
-  del = false;
-  for (j = vg.begin();j != vg.end();++j)
-  if (*i == *j)
-  {
-  del = true;
-  break;
-  }
-  if (del)
-  delete *i;
-  else
-  vdata.push_back(*i);
-  }
-  _vdata = vdata;
-  }
-
-  void OBAtom::DeleteData(OBGenericData *gd)
-  {
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if (*i == gd)
-  {
-  delete *i;
-  _vdata.erase(i);
-  }
-
-  }
-  */
-
   bool OBAtom::IsHbondAcceptor()
   {
     // Changes from Liu Zhiguo
-    if (_ele == 8 || _ele == 9)
+    if (d->ele == 8 || d->ele == 9)
       return true;
-    if (_ele == 7) {
+    if (d->ele == 7) {
       // N+ ions and sp2 hybrid N with 3 valences should not be Hbond acceptors
       if (!((GetValence() == 4 && GetHyb() == 3) 
             || (GetValence() == 3 && GetHyb() == 2)))
@@ -1824,7 +1729,7 @@ namespace OpenBabel
   bool OBAtom::IsHbondDonor()
   {
     // return MatchesSMARTS("[$([#8,#7H,#9;!H0])]");
-    if (!(_ele == 7 || _ele == 8 || _ele == 9))
+    if (!(d->ele == 7 || d->ele == 8 || d->ele == 9))
       return false;
 
     OBAtom *nbr;
@@ -1852,6 +1757,25 @@ namespace OpenBabel
       }
 
     return(false);
+  }
+
+  unsigned int OBAtom::KBOSum() const
+  {
+    OBBond *bond;
+    unsigned int bosum;
+    OBBondIterator i;
+
+    bosum = GetImplicitValence();
+
+    for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
+      {
+        if (bond->IsKDouble())
+          bosum++;
+        else if (bond->IsKTriple())
+          bosum += 2;
+      }
+
+    return(bosum);
   }
 
 } // end namespace OpenBabel

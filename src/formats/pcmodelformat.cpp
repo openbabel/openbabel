@@ -206,7 +206,7 @@ namespace OpenBabel
               {
                 nbrIdx = nbr->GetIdx();
                 ofs << " " << nbrIdx << ","
-                    << (mol.GetBond(nbrIdx, atomIdx))->GetBO();
+                    << (mol.GetBond(nbrIdx, atomIdx))->GetBondOrder();
               }
           }
 

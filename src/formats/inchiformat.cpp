@@ -381,7 +381,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   OBAtom* patom;
   vector<inchi_Atom> inchiAtoms(mol.NumAtoms());
-  vector<OBNodeBase*>::iterator itr;
+  vector<OBAtom*>::iterator itr;
   for (patom = mol.BeginAtom(itr);patom;patom = mol.NextAtom(itr))
   {
     //OB atom index starts at 1; inchi atom index starts at 0
@@ -395,14 +395,14 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       Is0D=false;
     
     int nbonds = 0;
-    vector<OBEdgeBase*>::iterator itr;
+    vector<OBBond*>::iterator itr;
     OBBond *pbond;
     for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr))
     {
       // do each bond only once. Seems necessary to avoid problems with stereo
       if(pbond->GetNbrAtomIdx(patom)<patom->GetIdx()) continue;
       iat.neighbor[nbonds]      = pbond->GetNbrAtomIdx(patom)-1;
-      int bo = pbond->GetBO();
+      int bo = pbond->GetBondOrder();
       if(bo==5)
         bo=4;
       iat.bond_type[nbonds]     = bo;
@@ -447,7 +447,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Tetrahedral stereo
 //    mol.FindChiralCenters(); done above
     OBAtom* patom;
-    vector<OBNodeBase*>::iterator itr;
+    vector<OBAtom*>::iterator itr;
     if(mol.IsChiral())
     {
       for(patom = mol.BeginAtom(itr);patom;patom = mol.NextAtom(itr))
@@ -487,7 +487,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vector<OBBond*> UpDown;
     vector<OBBond*>::iterator uditr;
     OBBond *pbond;
-    vector<OBEdgeBase*>::iterator bitr;
+    vector<OBBond*>::iterator bitr;
     for (pbond = mol.BeginBond(bitr);pbond;pbond = mol.NextBond(bitr))
     {
      if(pbond->IsUp() || pbond->IsDown())

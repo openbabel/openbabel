@@ -22,7 +22,7 @@ GNU General Public License for more details.
 #define OB_GRID_H
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/math/vector3.h>
+#include <openbabel/math/vector.h>
 
 #include <iosfwd>
 #include <algorithm>
@@ -79,7 +79,7 @@ namespace OpenBabel
     }
 
     //! \return true if the point falls within the box
-    bool PointIsInBox(vector3 v)
+    bool PointIsInBox(Eigen::Vector3d v)
     {
       return (v.x() >= _xmin) && (v.x() <=_xmax) &&
       (v.y()>=_ymin) && (v.y()<=_ymax) &&
@@ -104,7 +104,7 @@ namespace OpenBabel
     double _spacing,_inv_spa; //!< spacing between grid points and its inverse
     double _halfSpace;        //!< half of the grid spacing
     //! Three axes (i.e., translation vectors like a unit cell)
-    vector3 _xAxis, _yAxis, _zAxis;
+    Eigen::Vector3d _xAxis, _yAxis, _zAxis;
 
   public:
 
@@ -119,7 +119,7 @@ namespace OpenBabel
     void Init(OBMol &box,double spacing, double pad=0.0);
 
     //! \return the minimum point in the grid.
-    vector3 GetMin() { return vector3(_xmin, _ymin, _zmin); }
+    Eigen::Vector3d GetMin() { return Eigen::Vector3d(_xmin, _ymin, _zmin); }
 
     //! Get the minimum point in the grid.
     //! \deprecated Will be removed.
@@ -132,7 +132,7 @@ namespace OpenBabel
     }
 
     //! \return the minimum point in the grid.
-    vector3 GetMax() { return vector3(_xmax, _ymax, _zmax); }
+    Eigen::Vector3d GetMax() { return Eigen::Vector3d(_xmax, _ymax, _zmax); }
 
     //! Get the maximum point in the grid.
     //! \deprecated Will be removed.
@@ -174,27 +174,26 @@ namespace OpenBabel
     }
 
     //! \return Position of the center of the grid.
-    vector3 GetMidpointVector()
+    Eigen::Vector3d GetMidpointVector()
     {
-      vector3 v;
-      v.Set(_midx,_midy,_midz);
+      Eigen::Vector3d v(_midx, _midy, _midz);
       return(v);
     }
 
     //! \return X axis direction.
-    vector3 GetXAxis() const
+    Eigen::Vector3d GetXAxis() const
     {
       return _xAxis;
     }
 
     //! \return Y axis direction.
-    vector3 GetYAxis() const
+    Eigen::Vector3d GetYAxis() const
     {
       return _yAxis;
     }
 
     //! \return Z axis direction.
-    vector3 GetZAxis() const
+    Eigen::Vector3d GetZAxis() const
     {
       return _zAxis;
     }
@@ -203,20 +202,20 @@ namespace OpenBabel
     void SetNumberOfPoints(int nx, int ny, int nz);
 
     //! Set the direction of the x axis.
-    void SetXAxis(vector3);
+    void SetXAxis(Eigen::Vector3d);
     //! Set the direction of the y axis.
-    void SetYAxis(vector3);
+    void SetYAxis(Eigen::Vector3d);
     //! Set the direction of the z axis.
-    void SetZAxis(vector3);
+    void SetZAxis(Eigen::Vector3d);
 
     //! Set the limits (i.e., the origin point and the axes)
     //! NOTE: You must set the number of points first,
     //!       with SetNumberOfPoints
     //!       so the grid spacing can be calculated
-    void SetLimits(const vector3& origin, const vector3& x, const vector3& y,
-                   const vector3& z);
+    void SetLimits(const Eigen::Vector3d& origin, const Eigen::Vector3d& x, const Eigen::Vector3d& y,
+                   const Eigen::Vector3d& z);
     //! \deprecated Will be removed.
-    //! \sa SetLimits(const vector3& origin, const vector3& x, const vector3& y, const vector3& z)
+    //! \sa SetLimits(const Eigen::Vector3d& origin, const Eigen::Vector3d& x, const Eigen::Vector3d& y, const Eigen::Vector3d& z)
     void SetLimits(const double origin[3], const double x[3], const double y[3],
                    const double z[3]);
 
@@ -261,9 +260,9 @@ namespace OpenBabel
     }
 
     //! \return Position of the center of the grid.
-    vector3 Center()
+    Eigen::Vector3d Center()
     {
-      return vector3(_midx,_midy,_midz);
+      return Eigen::Vector3d(_midx,_midy,_midz);
     }
 
     friend std::ostream& operator<< ( std::ostream&, const OBFloatGrid& ) ;
@@ -360,8 +359,8 @@ namespace OpenBabel
     virtual void   Config(std::string) {}
     virtual bool   Read(std::string)   {      return false;    }
     virtual bool   Write(std::string)  {      return false;    }
-    virtual vector3 Center()           {      return VZero;    }
-    virtual vector3 CenterMol(OBMol &) {      return VZero;    }
+    virtual Eigen::Vector3d Center()           {      return VZero;    }
+    virtual Eigen::Vector3d CenterMol(OBMol &) {      return VZero;    }
   };
 
 } // end namespace OpenBabel

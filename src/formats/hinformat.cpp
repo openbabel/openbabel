@@ -180,7 +180,7 @@ namespace OpenBabel
         ofs << buffer;
         for (bond = atom->BeginBond(j); bond; bond = atom->NextBond(j))
           {
-            switch(bond->GetBO())
+            switch(bond->GetBondOrder())
               {
               case 1 :
                 bond_char = 's';

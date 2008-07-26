@@ -4,6 +4,7 @@ bond.h - Handle OBBond class.
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
+Some portions Copyright (C) 2008 by Tim Vandermeersch
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -28,59 +29,74 @@ GNU General Public License for more details.
 #endif
 
 #include <openbabel/base.h>
-#include <openbabel/atom.h>
 
 namespace OpenBabel
 {
-
   class OBAtom;
+  class OBMol;
 
-  //! OBEdgeBase is declared for backwards-compatibility with 2.0 and earlier code
-  typedef OBBond OBEdgeBase;
-
-  //BOND Property Macros (flags)
-  //! An aromatic bond (regardless of bond order)
-#define OB_AROMATIC_BOND  (1<<1)
-  //! A solid black wedge in 2D representations -- i.e., "up" from the 2D plane
-#define OB_WEDGE_BOND     (1<<2)
-  //! A dashed "hash" bond in 2D representations -- i.e., "down" from the 2D plane
-#define OB_HASH_BOND      (1<<3)
-  //! A bond in a ring
-#define OB_RING_BOND      (1<<4)
-  //! The "upper" bond in a double bond cis/trans isomer (i.e., "/" in SMILES)
-#define OB_TORUP_BOND     (1<<5)
-  //! The "down" bond in a double bond cis/trans isomer (i.e., "\" in SMILES)
-#define OB_TORDOWN_BOND   (1<<6)
-  //! A Kekule single bond
-#define OB_KSINGLE_BOND   (1<<7)
-  //! A Kekule double bond
-#define OB_KDOUBLE_BOND   (1<<8)
-  //! A Kekule triple bond
-#define OB_KTRIPLE_BOND   (1<<9)
-  //! A bond which "closes" a ring when walking the molecular graph
-#define OB_CLOSURE_BOND   (1<<10)
-  // 11-16 currently unused
+  //! OBBond flags (Aromatic, InRing, ...)
+  namespace OBBondFlag {
+    enum {
+      //! An aromatic bond (regardless of bond order)
+      Aromatic = (1<<1),
+      //! A solid black wedge in 2D representations -- i.e., "up" from the 2D plane
+      Wedge    = (1<<2),
+      //! A dashed "hash" bond in 2D representations -- i.e., "down" from the 2D plane
+      Hash     = (1<<4),
+      //! A bond in a ring
+      Ring     = (1<<5),
+      //! The "upper" bond in a double bond cis/trans isomer (i.e., "/" in SMILES)
+      Up       = (1<<6),
+      //! The "down" bond in a double bond cis/trans isomer (i.e., "\" in SMILES)
+      Down     = (1<<7),
+      //! A Kekule single bond
+      Single   = (1<<8),
+      //! A Kekule double bond
+      Double   = (1<<9),
+      //! A Kekule triple bond
+      Triple   = (1<<10),
+      //! A bond which "closes" a ring when walking the molecular graph
+      Closure  = (1<<11)
+      // 11-16 currently unused
+    };
+  };
 
   // class introduction in bond.cpp
- class OBAPI OBBond: public OBBase
-    {
+  class OBBondPrivate;
+  class OBAPI OBBond: public OBBase
+  {
     protected:
-      unsigned int                _idx;   //!< Unique edge index used by GetIdx() and SetIdx()
-      OBMol                      *_parent;//!< The molecule which contains me (if any)
-      OBAtom                     *_bgn;   //!< I connect one node
-      OBAtom                     *_end;   //!< to another node
-
-      char                        _order; //!< Bond order (1, 2, 3, 5=aromatic)
-      unsigned short int          _flags; //!< Any flags for this bond
-
-      bool HasFlag(int flag)    { return((_flags & flag) != 0); }
-      void SetFlag(int flag)    { _flags |= flag;               }
-      void UnsetFlag(int flag)  { _flags &= (~(flag));          }
+      // Some protected data declared in the class itself so we can access it 
+      // through inline functions
+      unsigned int                m_idx;   //!< Unique edge index used by GetIdx() and SetIdx()
+      OBMol                      *m_parent;//!< The molecule which contains me (if any)
+      OBAtom                     *m_bgn;   //!< I connect one node
+      OBAtom                     *m_end;   //!< to another node
+      char                        m_order; //!< Bond order (1, 2, 3, 5=aromatic)
+      unsigned short int          m_flags; //!< Any flags for this bond
+      //! The private d pointer for which the content can be changed in 
+      //! futute versions without breaking binary compatibility.
+      OBBondPrivate * const d;
+     
+      /** 
+       * @return True id the @p flag is set.
+       */
+      bool HasFlag(int flag);
+      /** 
+       * Sets the bitwise @p flag
+       */
+      void SetFlag(int flag);
+      /** 
+       * Unsets the bitwise @p flag
+       */
+      void UnsetFlag(int flag);
+    
 
     public:
       //! Whether this bond has been visited by a graph algorithm
       /** \deprecated Use OBBitVec objects instead to be fully thread-safe. **/
-      bool Visit;
+      //bool Visit;
 
       //! Constructor
       OBBond();
@@ -92,25 +108,25 @@ namespace OpenBabel
       //! Set the internal bond index
       /** \warning This will not update the index in the parent OBMol.
           Intended mainly for internal use. Use with care. **/
-      void SetIdx(int idx)        {          _idx = idx;        }
+      void SetIdx(int idx);
       //! Set the bond order to @p order (i.e., 1 = single, 2 = double, 5 = aromatic)
       /** \deprecated Use SetBondOrder() instead. **/
       void SetBO(int order);
       //! Set the bond order to @p order (i.e., 1 = single, 2 = double, 5 = aromatic)
       void SetBondOrder(int order);
       //! Set the beginning atom of this bond to @p begin. Does not update @p begin.
-      void SetBegin(OBAtom *begin){          _bgn = begin;      }
+      void SetBegin(OBAtom *begin);
       //! Set the ending atom of this bond to @p end. Does not update @p end.
-      void SetEnd(OBAtom *end)    {          _end = end;        }
+      void SetEnd(OBAtom *end);    
       //! Set the parent molecule to @p ptr. Does not update parent.
-      void SetParent(OBMol *ptr)  {        _parent= ptr;        }
+      void SetParent(OBMol *ptr);
       //! Change the bond length to @p length, while keeping @p fixed stationary
       void SetLength(OBAtom *fixed,double length);
       //! Change the bond length to @p length, moving both atoms halfway
       //! \since version 2.2
       void SetLength(double length);
       //! Set the main bond information (i.e., when creating a bond)
-      void Set(int index, OBAtom* begin,OBAtom* end,int order,int flags);
+      void Set(int index, OBAtom* begin, OBAtom* end, int order, int flags);
       //! \deprecated Use SetBondOrder() instead
       void SetKSingle();
       //! \deprecated Use SetBondOrder() instead
@@ -118,73 +134,63 @@ namespace OpenBabel
       //! \deprecated Use SetBondOrder() instead
       void SetKTriple();
       //! Mark that this bond is aromatic. Does not update atoms or validate.
-      void SetAromatic()    { SetFlag(OB_AROMATIC_BOND); }
+      void SetAromatic()    { SetFlag(OBBondFlag::Aromatic); }
       //! Mark that this bond has 2D "hash" notation (i.e., goes in a negative Z direction from the beginning to end atoms)
-      void SetHash()        { SetFlag(OB_HASH_BOND);     }
+      void SetHash()        { SetFlag(OBBondFlag::Hash);     }
       //! Mark that this bond has 2D "wedge" notation (i.e., goes in a positive Z direction from the beginning to end atoms)
-      void SetWedge()       { SetFlag(OB_WEDGE_BOND);    }
+      void SetWedge()       { SetFlag(OBBondFlag::Wedge);    }
       //! Mark that this bond has an "up" torsion for double-bond stereochem (i.e., "/" in SMILES notation
-      void SetUp()          { SetFlag(OB_TORUP_BOND); UnsetFlag(OB_TORDOWN_BOND); }
+      void SetUp()          { SetFlag(OBBondFlag::Up); UnsetFlag(OBBondFlag::Down); }
       //! Mark that this bond has an "down" torsion for double-bond stereochem (i.e., "\" in SMILES notation
-      void SetDown()        { SetFlag(OB_TORDOWN_BOND); UnsetFlag(OB_TORUP_BOND);   }
+      void SetDown()        { SetFlag(OBBondFlag::Down); UnsetFlag(OBBondFlag::Up);   }
       //! Mark that this bond is in a ring. Primarily for internal use.
-      void SetInRing()      { SetFlag(OB_RING_BOND);     }
+      void SetInRing()      { SetFlag(OBBondFlag::Ring);     }
       //! Mark that this bond indicates a ring closure when walking the molecule
       /** \warning This is for internal use only. All closure bonds are marked
           automatically by lazy evaluation when requesting 
           OBBond::IsClosure() **/
-      void SetClosure()     { SetFlag(OB_CLOSURE_BOND);  }
+      void SetClosure()     { SetFlag(OBBondFlag::Closure);  }
       //! Clear any indication of 2D "hash" notation from SetHash()
-      void UnsetHash()      { UnsetFlag(OB_HASH_BOND);    }
+      void UnsetHash()      { UnsetFlag(OBBondFlag::Hash);    }
       //! Clear any indication of 2D "wedge" notation from SetWedge()
-      void UnsetWedge()     { UnsetFlag(OB_WEDGE_BOND);   }
+      void UnsetWedge()     { UnsetFlag(OBBondFlag::Wedge);   }
       //! Clear any indication of "/" double bond stereochemistry from SetUp()
-      void UnsetUp()        { UnsetFlag(OB_TORUP_BOND);   }
+      void UnsetUp()        { UnsetFlag(OBBondFlag::Up);   }
       //! Clear any indication of "\" double bond stereochemistry from SetDown()
-      void UnsetDown()      { UnsetFlag(OB_TORDOWN_BOND); }
+      void UnsetDown()      { UnsetFlag(OBBondFlag::Down); }
       //! Clear all aromaticity information for the bond
-      void UnsetAromatic()  { UnsetFlag(OB_AROMATIC_BOND);}
+      void UnsetAromatic()  { UnsetFlag(OBBondFlag::Aromatic);}
       //! Clear all Kekule information for the bond
-      void UnsetKekule()
-        {
-          _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-        }
+      void UnsetKekule();
       //@}
 
       //! \name Bond data request methods
       //@{
       //! \return The unique bond index in a molecule.
-      unsigned int     GetIdx()           const { return(_idx);  }
+      unsigned int GetIdx() const;
       //! \return The bond order for the bond
       /** \deprecated Use GetBondOrder() as this method may be removed. **/
-      unsigned int     GetBO()            const { return(_order); }
+      unsigned int GetBO() const;
       //! \return The bond order for the bond
-      unsigned int     GetBondOrder()     const { return(_order); }
+      unsigned int GetBondOrder() const;
       //! \return The set of property flags defined for this bond.
-      unsigned int     GetFlags()         const { return(_flags);      }
+      unsigned int GetFlags() const;
       //! \return The atom index for the end atom in this bond (from OBAtom::GetIdx()
-      unsigned int     GetBeginAtomIdx()  const 
-        { return (_bgn ? _bgn->GetIdx() : 0); }
+      unsigned int GetBeginAtomIdx() const; 
       //! \return The atom index for the end atom in this bond (from OBAtom::GetIdx()
-      unsigned int     GetEndAtomIdx()    const 
-        { return (_end ? _end->GetIdx() : 0); }
+      unsigned int GetEndAtomIdx() const;
       //! \return The "beginning" atom for this bond
-      OBAtom *GetBeginAtom()    { return(_bgn);    }
-      const OBAtom *GetBeginAtom() const 
-        { return(_bgn);    }
+      OBAtom *GetBeginAtom();
+      const OBAtom *GetBeginAtom() const; 
       //! \return The "end" atom for this bond
-      OBAtom *GetEndAtom()      { return(_end);    }
-      const OBAtom *GetEndAtom() const
-        { return(_end);    }
+      OBAtom *GetEndAtom();
+      const OBAtom *GetEndAtom() const;
       //! \return The neighboring atom to @p ptr (i.e., the end if @p ptr is the start)
       /** \warning If @p ptr is not part of the bond, the beginning atom
           will always be returned **/
-      OBAtom *GetNbrAtom(OBAtom *ptr)
-        {
-          return((ptr != _bgn)? _bgn : _end);
-        }
+      OBAtom *GetNbrAtom(OBAtom *ptr);
       //! \return The enclosing OBMol for this bond, or NULL if none is defined.
-      OBMol  *GetParent()                 {return(_parent);}
+      OBMol  *GetParent();
       //! \return The expected "equilibrium" length based on the covalent radii and bond order
       /** Length is given in Angstroms **/
       double  GetEquibLength() const;
@@ -193,13 +199,7 @@ namespace OpenBabel
       //! \return The index to the neighboring atom of @p ptr (i.e., the end if @p ptr is the start)
       /** \warning If @p ptr is not part of the bond, the beginning atom
           index will always be returned **/
-      unsigned int     GetNbrAtomIdx(OBAtom *ptr)
-        {
-          if (ptr!=_bgn)
-            return (_bgn ? _bgn->GetIdx() : 0); 
-          else
-            return (_end ? _end->GetIdx() : 0); 
-        }
+      unsigned int GetNbrAtomIdx(OBAtom *ptr);
       //@}
 
       //! \name property request methods
@@ -243,16 +243,16 @@ namespace OpenBabel
       bool IsClosure();
       /** \return Whether this is the "upper" bond in a double bond cis/trans
           isomer (i.e., "/" in SMILES) **/
-      bool IsUp()    {    return(HasFlag(OB_TORUP_BOND));    }
+      bool IsUp()    {    return(HasFlag(OBBondFlag::Up));    }
       /** \return Whether this is the "lower" bond in a double bond cis/trans
           isomer (i.e., "\" in SMILES) **/
-      bool IsDown()  {    return(HasFlag(OB_TORDOWN_BOND));  }
+      bool IsDown()  {    return(HasFlag(OBBondFlag::Down));  }
       /** \return Whether this bond is a "wedge" in 2D representations
           (i.e., goes in a positive Z direction from the beginning to end atoms) **/
-      bool IsWedge() {    return(HasFlag(OB_WEDGE_BOND));    }
+      bool IsWedge() {    return(HasFlag(OBBondFlag::Wedge));    }
       /** \return Whether this bond is a "hash" in 2D representations
           (i.e., goes in a negative Z direction from the beginning to end atoms) **/
-      bool IsHash()  {    return(HasFlag(OB_HASH_BOND));     }
+      bool IsHash()  {    return(HasFlag(OBBondFlag::Hash));     }
       //! \return whether the geometry around this bond "looks" unsaturated
       bool IsDoubleBondGeometry();
       //@}

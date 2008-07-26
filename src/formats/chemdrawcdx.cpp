@@ -231,11 +231,11 @@ namespace OpenBabel
                           {
                           case kCDXBondDisplay_WedgedHashBegin:
                           case kCDXBondDisplay_WedgeEnd:
-                            flags = OB_HASH_BOND;
+                            flags = OBBondFlag::Hash;
                             break;
                           case kCDXBondDisplay_WedgedHashEnd:
                           case kCDXBondDisplay_WedgeBegin:
-                            flags = OB_WEDGE_BOND;
+                            flags = OBBondFlag::Wedge;
                             break;
                           default:;
                           }
@@ -424,11 +424,11 @@ namespace OpenBabel
                           {
                           case kCDXBondDisplay_WedgedHashBegin:
                           case kCDXBondDisplay_WedgeEnd:
-                            flags = OB_HASH_BOND;
+                            flags = OBBondFlag::Hash;
                             break;
                           case kCDXBondDisplay_WedgedHashEnd:
                           case kCDXBondDisplay_WedgeBegin:
-                            flags = OB_WEDGE_BOND;
+                            flags = OBBondFlag::Wedge;
                             break;
                           default:;
                           }

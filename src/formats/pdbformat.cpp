@@ -470,13 +470,13 @@ namespace OpenBabel
         if (a->GetZ() < minZ)
           minZ = a->GetZ();
       }
-    vector3 transV = VZero;
+    Eigen::Vector3d transV = VZero;
     if (minX < -999.0)
-      transV.SetX(-1.0*minX - 900.0);
+      transV[0] = -1.0*minX - 900.0;
     if (minY < -999.0)
-      transV.SetY(-1.0*minY - 900.0);
+      transV[1] = -1.0*minY - 900.0;
     if (minZ < -999.0)
-      transV.SetZ(-1.0*minZ - 900.0);
+      transV[1] = -1.0*minZ - 900.0;
 
     // if minX, minY, or minZ was never changed, shift will be 0.0f
     // otherwise, move enough so that smallest coord is > -999.0f

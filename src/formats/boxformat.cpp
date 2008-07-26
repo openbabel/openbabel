@@ -86,7 +86,7 @@ bool BoxFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             string x = sbuf.substr(24,8);
             string y = sbuf.substr(32,8);
             string z = sbuf.substr(40,8);
-            vector3 v(atof(x.c_str()),atof(y.c_str()),atof(z.c_str()));
+            Eigen::Vector3d v(atof(x.c_str()),atof(y.c_str()),atof(z.c_str()));
             atom.SetVector(v);
             if (!mol.AddAtom(atom))
                 return(false);
@@ -122,33 +122,33 @@ bool BoxFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     double margin=1.0;
 
     char buffer[BUFF_SIZE];
-    vector3 vcenter,vmin,vmax,vmid,vdim;
+    Eigen::Vector3d vcenter,vmin,vmax,vmid,vdim;
 
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
-    vmax.Set(-10E10,-10E10,-10E10);
-    vmin.Set( 10E10, 10E10, 10E10);
+    vmax = Eigen::Vector3d(-10E10,-10E10,-10E10);
+    vmin = Eigen::Vector3d( 10E10, 10E10, 10E10);
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
         vcenter += atom->GetVector();
         if (atom->x() < vmin.x())
-            vmin.SetX(atom->x());
+            vmin[0] = atom->x();
         if (atom->y() < vmin.y())
-            vmin.SetY(atom->y());
+            vmin[1] = atom->y();
         if (atom->z() < vmin.z())
-            vmin.SetZ(atom->z());
+            vmin[2] = atom->z();
 
         if (atom->x() > vmax.x())
-            vmax.SetX(atom->x());
+            vmax[0] = atom->x();
         if (atom->y() > vmax.y())
-            vmax.SetY(atom->y());
+            vmax[1] = atom->y();
         if (atom->z() > vmax.z())
-            vmax.SetZ(atom->z());
+            vmax[2] = atom->z();
     }
     vcenter /= (double)mol.NumAtoms();
 
-    vector3 vmarg(margin,margin,margin);
+    Eigen::Vector3d vmarg(margin,margin,margin);
     vmin -= vmarg;
     vmax += vmarg;
     vdim = vmax - vmin;
@@ -164,7 +164,7 @@ bool BoxFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << buffer << endl;
     vdim /= 2.0;
 
-    vector3 vtmp;
+    Eigen::Vector3d vtmp;
     int j;
     for (j = 1;j <= 8;j++)
     {
@@ -174,27 +174,27 @@ bool BoxFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             vtmp = vmid-vdim;
             break;
         case 2:
-            vtmp.SetX(vmid.x()+vdim.x());
+            vtmp[0] = vmid.x() + vdim.x();
             break;
         case 3:
-            vtmp.SetZ(vmid.z()+vdim.z());
+            vtmp[2] = vmid.z() + vdim.z();
             break;
         case 4:
-            vtmp.SetX(vmid.x()-vdim.x());
+            vtmp[0] = vmid.x() - vdim.x();
             break;
         case 5:
             vtmp = vmid-vdim;
-            vtmp.SetY(vmid.y()+vdim.y());
+            vtmp[1] = vmid.y() + vdim.y();
             break;
         case 6:
             vtmp = vmid+vdim;
-            vtmp.SetZ(vmid.z()-vdim.z());
+            vtmp[2] = vmid.z() - vdim.z();
             break;
         case 7:
             vtmp = vmid+vdim;
             break;
         case 8:
-            vtmp.SetX(vmid.x()-vdim.x());
+            vtmp[0] = vmid.x() - vdim.x();
             break;
         }
         snprintf(buffer, BUFF_SIZE, "ATOM      %d  DUA BOX     1    %8.3f%8.3f%8.3f",

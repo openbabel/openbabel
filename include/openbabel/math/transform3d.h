@@ -32,37 +32,41 @@ namespace OpenBabel
       \since version 2.2
       \sa SpaceGroup
   */
-  class OBAPI transform3d: private matrix3x3, private vector3
+  class OBAPI transform3d: private Eigen::Matrix3d, private Eigen::Vector3d
     {
     public:
-      transform3d(void): matrix3x3(), vector3()
+      transform3d(void): Eigen::Matrix3d(), Eigen::Vector3d()
         {
         }
 
-      transform3d(const matrix3x3 &m, const vector3 &v): matrix3x3(m), vector3(v)
+      transform3d(const Eigen::Matrix3d &m, const Eigen::Vector3d &v): Eigen::Matrix3d(m), Eigen::Vector3d(v)
         {
           Normalize();
         }
         
-      transform3d(double s): matrix3x3(s), vector3()
+      transform3d(double s): Eigen::Matrix3d(s), Eigen::Vector3d()
         {
         }
 
       //! Constructs a matrix from row vectors
-      transform3d(vector3 row1,vector3 row2,vector3 row3,vector3 translation):
+      /*
+      transform3d(Eigen::Vector3d row1,Eigen::Vector3d row2,Eigen::Vector3d row3,Eigen::Vector3d translation):
         matrix3x3(row1, row2, row3), vector3(translation)
         {
           Normalize();
         }
+        */
 
       //! \brief Constructs a matrix from a 3x3-array of doubles
       /*! The first index represents the row, the second index the column */
-      transform3d(double d[3][3], double t[3]): matrix3x3(d), vector3(t)
+      /*
+      transform3d(double d[3][3], double t[3]): Eigen::Matrix3d(d), Eigen::Vector3d(t)
        {
          Normalize();
        }
+       */
 
-      vector3 operator *(const vector3 &);
+      Eigen::Vector3d operator *(const Eigen::Vector3d &);
 
       transform3d operator *(const transform3d &);
 

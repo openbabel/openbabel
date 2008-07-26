@@ -3,6 +3,7 @@ rotamer.h - Handle rotamer list data.
  
 Copyright (C) 1998-2000 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2008 Tim Vandermeersch
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -30,127 +31,306 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-  //! \brief Supports a set of rotamer coordinate sets for some number of potentially rotatable bonds
-  // Further class introduction in rotamer.cpp
- class OBAPI OBRotamerList : public OBGenericData
+  /** 
+   * @brief Supports a set of rotamer coordinate sets for some number of potentially rotatable bonds
+   * Further class introduction in rotamer.cpp
+   */
+  class OBAPI OBRotamerList : public OBGenericData
   {
-    //! Number of atoms in the base coordinate set (i.e., OBMol::NumAtoms())
-    unsigned int                         _NBaseCoords;
-    //! Base coordinate sets (i.e., existing conformers to be modified)
-    std::vector<double*>                 _c;
-    //! Individual bond rotors (from an OBRotor object or other)
-    std::vector<std::pair<OBAtom**,std::vector<int> > > _vrotor;
-    //! \brief Index of each rotor's different sampling states ("resolution")
-    //! Usually from OBRotor::GetResolution()
-    std::vector<std::vector<double> >    _vres;
-    //! Individual rotamer states (i.e., the array of rotor settings)
-    std::vector<unsigned char*>          _vrotamer;
+    private:
+      //! Number of atoms in the base coordinate set (i.e., OBMol::NumAtoms())
+      unsigned int m_numAtoms;
+      //! Base coordinates
+      double*      m_coords;
+      //! Individual bond rotors (from an OBRotor object or other)
+      //! unsigned int* should point to 4 atom indexes for the rotor
+      //! vector<int> is used to store the atoms that should be rotated for the rotor
+      std::vector<std::pair<unsigned int*,std::vector<int> > > m_rotors;
+      //! \brief Index of each rotor's different sampling states
+      //! Usually from OBRotor::GetTorsionValues()
+      std::vector<std::vector<double> >        m_torvals;
+      //! Individual rotamer states (i.e., the array of rotor settings)
+      std::vector<std::vector<unsigned char> > m_keys;
+      
+      /** 
+       * Set up a rotamer list based on the supplied reference atoms and the number of rotors
+       * @param mol The molecule to evaluate
+       * @param ref An array of the 4 dihedral atoms for each rotor
+       * @param nrotors The number of rotors (i.e., the size of ref / 4)
+       */
+      void Setup(OBMol &mol, unsigned int *ref, int nrotors);
+      /**
+       * Set all rotamer keys, does no error checking.
+       */
+      void SetRotamers(const std::vector<std::vector<unsigned char> > &keys) { m_keys = keys; }
+      /**
+       * @return A reference array (as used by AddRotamer() as a configuration of the individual rotor bonds
+       */
+      void GetReferenceArray(unsigned int*) const;
+      /** 
+       * Copies the coordinates, NOT the pointer, into this object
+       * @param coords The conformer set for the molecule
+       * @param N  The number of atoms in the molecule
+       */
+      void SetBaseCoordinates(double* coords, unsigned int N);
 
-    /*Because contains OBAtom*, these aren't meaningful without knowing the parent molecule
-      OBRotamerList(const OBRotamerList &cpy) : OBGenericData(cpy)
-      {}
-      OBRotamerList& operator =(const OBRotamerList &)
-      {
-      return *this;
-      }
-		*/
+    public:
+      /** 
+       * Constructor
+       */
+      OBRotamerList();
+      /**
+       * Destructor.
+       */
+      ~OBRotamerList();
+      /**
+       * overload OBGenericData::Clone()
+       */
+      virtual OBGenericData* Clone(OBBase* parent) const;
+      //! \name OBRotamerList modification methods
+      //@{
+      /**
+       * Set up a rotamer list based on an already created OBRotorList. Setup() will copy
+       * the molecule's current coordinates to be used as base coordinates. 
+       */
+      void Setup(OBMol&, OBRotorList&);
+      /**
+       * Add a rotamer to the list based on the supplied coordinate set as a double*. This
+       * functions will calculate the torsion angles for the rotors and add these to internal
+       * rotamer keys.
+       * @param coords The coordinates from which a rotor key will be generated.
+       * @return True if coords != 0.
+       * 
+       * This function can be used when you want to copy some rotamers (conformers) from your 
+       * mol:
+       * @code
+       * ...
+       * OBRotorList rl;
+       * rl.Setup(mol)
+       *
+       * OBRotamerList rml;
+       * rml.Setup(mol, rl);
+       *
+       * mol.SetConformer(3);
+       * if (!rml.AddRotamer(mol.GetCoordinates()))
+       *   cout << "Invalid key!" << endl;
+       *  
+       * mol.SetConformer(4);
+       * if (!rml.AddRotamer(mol.GetCoordinates()))
+       *   cout << "Invalid key!" << endl;
+       *
+       * // add some more rotamers
+       * vector<int> key(rml.NumRotors(), 0);
+       * if (!rml.AddRotamer(key))
+       *   cout << "Invalid key!" << endl;
+       *
+       * key[2] = 1;
+       * if (!rml.AddRotamer(key))
+       *   cout << "Invalid key!" << endl;
+       * ...
+       * mol.ExpandConformerList(mol, mol.GetConformers());
+       * @endcode
+       */
+      bool AddRotamer(double *coords);
+      /**
+       * Add a rotamer to the list based on the torsion angles in @p angles.
+       */
+      bool AddRotamer(std::vector<double> &angles);
+      /** 
+       * Add a rotamer to the list based on @p key as a configuration of the individual rotor bonds.
+       * The key should have a size of NumRotors(). 
+       *
+       * The elements are indexes into the torsion values from OBRotor::GetTorsionValues().
+       *
+       * @param key The key for the rotamer.
+       * @return True if the key is valid.
+       */ 
+      bool AddRotamer(std::vector<int> &key);
+      /** 
+       * Create a conformer list using the internal base set of coordinates.
+       * @return The set of coordinates by rotating the bonds in each rotamer.
+       */
+      std::vector<double*> CreateConformerList(OBMol& mol);
+      /** 
+       * Create a conformer list using the internal base set of coordinates.
+       * @return The set of coordinates as a reference in @p confs.
+       */
+      void ExpandConformerList(OBMol&mol, std::vector<double*> &confs);
+      /**
+       * Set the current coordinates for @p mol to the specified @p key.
+       * @param mol The molecule.
+       * @param key The rotamer key.
+       */ 
+      void SetCurrentCoordinates(OBMol &mol, std::vector<int> &key);
+      //@}
+      
+      //! \name OBRotamerList data request methods
+      //@{
+      /**
+       * @return The number of atoms in the base OBMol
+       */
+      unsigned int NumAtoms() const { return m_numAtoms; }
+      /**
+       * @return The number of rotatable bonds considered.
+       */
+      unsigned int NumRotors() const { return m_rotors.size(); }
+      /** 
+       * @return the number of rotamer (conformation) coordinate sets.
+       */
+      unsigned int NumRotamers() const { return m_keys.size(); }
+      /** 
+       * @return Pointer to a the base coordinates.
+       */
+      double* GetBaseCoordinates() const { return m_coords; }
+      //@}
+      
+      //! \name Iterator methods
+      //@{
+      std::vector<std::vector<unsigned char> >::iterator BeginRotamer() { return m_keys.begin(); }
+      std::vector<std::vector<unsigned char> >::iterator EndRotamer()   { return m_keys.end();   }
+      //@}
 
-  public:
-    OBRotamerList()
-      {
-        _NBaseCoords=0;
-        _type= OBGenericDataType::RotamerList;
-        _attr="RotamerList";
-      }
-		virtual OBGenericData* Clone(OBBase* parent) const;
-
-    ~OBRotamerList();
-    //! Set up a rotamer list based on an already created OBRotorList
-    void Setup(OBMol&,OBRotorList&);
-    //! Set up a rotamer list based on the supplied reference atoms and the number of rotors
-    //! \param mol The molecule to evaluate
-    //! \param ref An array of the 4 dihedral atoms for each rotor
-    //! \param nrotors The number of rotors (i.e., the size of ref / 4)
-    void Setup(OBMol &mol,unsigned char*ref,int nrotors);
-    //! \return the number of rotatable bonds considered
-    unsigned int NumRotors()   const
-    {
-      return (unsigned int)_vrotor.size();
-    }
-    //! \return the number of rotamer (conformation) coordinate sets
-    unsigned int NumRotamers() const
-    {
-      return (unsigned int)_vrotamer.size();
-    }
-    //! Add a rotamer to the list based on the supplied coordinate set as a double*
-    void AddRotamer(double*);
-    //! Add a rotamer to the list based on @p key as a configuration of the individual rotor bonds
-    void AddRotamer(int *key);
-    //! Add a rotamer to the list based on @p key as a configuration of the individual rotor bonds
-    void AddRotamer(std::vector<int> key);
-    //! Add a rotamer to the list based on @p key as a configuration of the individual rotor bonds
-    void AddRotamer(unsigned char *key);
-    //! Add @p nconf rotamers based on @p as an array of configurations much like AddRotamer()
-    void AddRotamers(unsigned char *arr,int nconf);
-    //! \return A reference array (as used by AddRotamer() as a configuration of the individual rotor bonds
-    void GetReferenceArray(unsigned char*) const;
-
-    //! \name Iterator methods
-    //@{
-    std::vector<unsigned char*>::iterator BeginRotamer()
-      {
-        return _vrotamer.begin();
-      }
-    std::vector<unsigned char*>::iterator EndRotamer()
-      {
-        return _vrotamer.end();
-      }
-    //@}
-
-    //! \brief Create a conformer list using the internal base set of coordinates
-    //! \return The set of coordinates by rotating the bonds in each rotamer
-    std::vector<double*> CreateConformerList(OBMol& mol);
-
-    //! \brief Create a conformer list using the internal base set of coordinates
-    //! \return The set of coordinates as a reference in @p confs
-    void ExpandConformerList(OBMol&mol,std::vector<double*>& confs);
-    
-    void SetCurrentCoordinates(OBMol &mol, std::vector<int> arr);
-
-    //! \brief Copies the mol's conformers (the coordinates, NOT the pointers)
-    //! into the object as base coordinates
-    void SetBaseCoordinateSets(OBMol& mol)
-    {
-      SetBaseCoordinateSets(mol.GetConformers(), mol.NumAtoms());
-    }
-
-    //! Copies the coordinates in bc, NOT the pointers, into this object
-    /** \param bc The conformer set for the molecule
-        \param N  The number of atoms in the molecule
-     **/
-    void SetBaseCoordinateSets(std::vector<double*> bc, unsigned int N);
-
-    //! \return The number of "base" coordinate sets (i.e., the number of conformers in the base OBMol)
-    unsigned int NumBaseCoordinateSets() const
-    {
-      return _c.size();
-    }
-
-    //! Get a pointer to a specific base pointer (i.e., specific conformer)
-    double *GetBaseCoordinateSet(unsigned int i) const
-    {
-      return (i<_c.size()) ? _c[i] : NULL;
-    }
-
-    //! \return The number of atoms in the base OBMol
-    unsigned int NumAtoms() const
-    {
-      return _NBaseCoords;
-    }
   };
 
-  //! Swap Byte instruction (i.e., handle transfers between endian forms)
-  int Swab(int);
+  /// @cond DEV
+  class rotor_digit {
+    public:
+      rotor_digit(unsigned int rs) : resolution_size(rs), state(0) {}
+      int get_state() { return state; }
+      unsigned int size() { return resolution_size; }
+      bool next()
+      {
+        if (state < (int)(resolution_size - 1)) {
+          state++;
+          return false;
+        } else
+          state = 0;
+        
+	return true;
+      }
+    private:
+      unsigned int resolution_size;
+      int state;
+  } typedef rotor_digit;
+  /// @endcond 
+  
+  /** @class OBRotamerKeys
+   *  @brief A class to generate all possible rotamer keys
+   */
+  class OBAPI OBRotamerKeys
+  {
+      /** 
+      @class OBRotamerKeys rotamer.h <openbabel/rotamer.h>
+      @brief A class to generate all possible rotamer keys.
+
+      This class can generate all possible rotor keys for a set of OBRotors 
+      which can all have their own resolution. Thanks to Yongjin Xu for this
+      patch. 
+
+      the code blow is taken from  OBForceField::SystematicRotorSearch():
+      \code
+      #include <openbabel/rotamer.h>
+      #include <openbabel/mol.h>
+
+      // See OBConversion class to fill the mol object.
+      OBMol mol;
+      OBRotorList rl;
+      OBRotamerList rotamers;
+
+      rl.Setup(mol);
+      rotamers.Setup(mol, rl);
+    
+      cout << "number of rotatable bonds: " <<  rl.Size() << endl;
+
+      if (!rl.Size()) { // only one conformer
+        cout << "generated only one conformer" << endl;
+        // exit here 
+      }
+
+      OBRotamerKeys keys;
+      OBRotorIterator ri;
+      OBRotor *rotor = rl.BeginRotor(ri);
+      for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) { // foreach rotor
+        rotorKeys.AddRotor(rotor->GetTorsionValues().size());
+      }
+    
+      while (rotorKeys.Next()) {
+        std::vector<int> rotorKey = rotorKeys.GetKey();
+        rotamers.AddRotamer(rotorKey);
+      }
+
+      rotamers.ExpandConformerList(mol, mol.GetConformers());
+      \endcode 
+      **/
+    public:
+      //! Constructor
+      OBRotamerKeys()
+      {
+        _vr.clear();
+      }
+      //! Clear all rotors
+      void Clear(){
+        _vr.clear();
+      }
+      //! Number of rotor keys (= number of possible conformers)
+      unsigned int NumKeys()
+      {
+	unsigned int numKeys = 0;
+	
+	while (Next())
+	  numKeys++;
+	
+	return numKeys; 
+      }
+      /**
+       * Add a rotor
+       * @param size the rotor resolution
+       */
+      void AddRotor(unsigned int size)
+      {
+        rotor_digit *rd;
+        rd = new rotor_digit(size);
+        _vr.push_back(*rd);
+      }
+      /**
+       * Select the next rotor key
+       * @return true if there are more rotor keys
+       */
+      bool Next()
+      {
+        if(_vr.size() == 0)
+          return false;
+        
+	bool carry = _vr[0].next();
+        unsigned int i = 1;
+        while (carry) {
+          if(i == _vr.size())
+            return false;
+          
+	  carry = _vr[i].next();
+          i++;
+        }
+        
+        return true;
+      }
+      /** 
+       * Get the currently selected rotor key
+       * @return current rotor key
+       */
+      std::vector<int>& GetKey()
+      {
+        rt.clear();
+        for(unsigned int i = 0; i < _vr.size(); i++){
+          rt.push_back(_vr[i].get_state());
+        }
+        
+	return rt;
+      }
+    private:
+      std::vector<rotor_digit> _vr;
+      std::vector<int> rt;
+  };
+
 
 }
 

@@ -65,7 +65,7 @@ namespace OpenBabel
     unsigned i;
     FOR_BONDS_OF_MOL(bond, *this)
       {
-        switch (bond->GetBO())
+        switch (bond->GetBondOrder())
           {
           case 2: bond->SetKDouble(); break;
           case 3: bond->SetKTriple(); break;
@@ -118,7 +118,7 @@ namespace OpenBabel
                 atom->SetFormalCharge(1);
                 atom2->SetFormalCharge(-1);
                 bond->SetKSingle();
-                bond->SetBO(1);
+                bond->SetBondOrder(1);
               }
               else {
                 electron[j] = 0;
@@ -227,9 +227,9 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(bond, *this)
       {
         //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";   
-        if (bond->GetBO()==5 ) {
+        if (bond->GetBondOrder()==5 ) {
           bond->SetKSingle();
-          bond->SetBO(1);
+          bond->SetBondOrder(1);
           //std::cout << "single\n";
         }
         //else
@@ -343,7 +343,7 @@ namespace OpenBabel
     for(i=0;i <NumBonds(); ++i) {
       bond = GetBond(i);    
       // std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";
-      if (bond->GetBO()==5 && bcurrentState[i] == DOUBLE) {
+      if (bond->GetBondOrder()==5 && bcurrentState[i] == DOUBLE) {
         if ( (bond->GetBeginAtom())->IsSulfur()
              && bond->GetEndAtom()->IsSulfur() ) {
           // no double bonds between aromatic sulfur atoms -- PR#1504089
@@ -351,13 +351,13 @@ namespace OpenBabel
         }
 
         bond->SetKDouble();
-        bond->SetBO(2);
+        bond->SetBondOrder(2);
         //std::cout << "double\n";
       }
       //else
       //std::cout << "single\n";
-      //else if (bond->IsAromatic() && bond->GetBO() != 2)
-      //  bond->SetBO(1);
+      //else if (bond->IsAromatic() && bond->GetBondOrder() != 2)
+      //  bond->SetBondOrder(1);
     }
 
     return;
@@ -556,7 +556,7 @@ namespace OpenBabel
       {
         natom = nbr->GetIdx();
         // if (!avisit[natom] && nbr->IsAromatic() && ((OBBond*) *i)->IsAromatic()) {
-        if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5 
+        if (!avisit[natom] && ((OBBond*) *i)->GetBondOrder()==5 
             && ((OBBond*) *i)->IsInRing()) {
           avisit.SetBitOn(natom);
           expandcycle(nbr, avisit);

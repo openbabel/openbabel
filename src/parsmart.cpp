@@ -2792,10 +2792,10 @@ namespace OpenBabel
                   ra2 = mol.GetAtom((*m)[r2]);
                   ra3 = mol.GetAtom((*m)[r3]);
                   ra4 = mol.GetAtom((*m)[r4]);
-                  double sign = CalcTorsionAngle(ra1->GetVector(),
-                                                 ra2->GetVector(),
-                                                 ra3->GetVector(),
-                                                 ra4->GetVector());
+                  double sign = VectorTorsion(ra1->GetVector(),
+                                              ra2->GetVector(),
+                                              ra3->GetVector(),
+                                              ra4->GetVector());
                   if (sign > 0.0 && pat->atom[j].chiral_flag == AL_ANTICLOCKWISE)
                     continue;
                   if (sign < 0.0 && pat->atom[j].chiral_flag == AL_CLOCKWISE)
@@ -2939,13 +2939,13 @@ namespace OpenBabel
             switch( expr->leaf.value )
               {
               case BT_SINGLE:
-                return(bond->GetBO() == 1 && !bond->IsAromatic());
+                return(bond->GetBondOrder() == 1 && !bond->IsAromatic());
               case BT_AROM:
                 return(bond->IsAromatic());
               case BT_DOUBLE:
-                return(bond->GetBO()==2 && !bond->IsAromatic());
+                return(bond->GetBondOrder()==2 && !bond->IsAromatic());
               case BT_TRIPLE:
-                return(bond->GetBO()==3);
+                return(bond->GetBondOrder()==3);
               case BT_RING:
                 return(bond->IsInRing());
               case BT_UP:
@@ -3012,7 +3012,7 @@ namespace OpenBabel
     return(_mlist);
   }
 
-  void OBSmartsPattern::WriteMapList(ostream &ofs)
+  void OBSmartsPattern::WriteMapList(std::ostream &ofs)
   {
     std::vector<std::vector<int> >::iterator i;
     std::vector<int>::iterator j;

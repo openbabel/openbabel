@@ -226,7 +226,6 @@ public:
         mol.ReserveAtoms(natoms);
         double x,y,z;
         char type[8];
-        vector3 v;
         OBAtom atom;
         int charge, scanArgs, stereo;
 
@@ -237,7 +236,6 @@ public:
           scanArgs = sscanf(buffer,"%lf %lf %lf %5s %*d %d %d",&x,&y,&z,type,&charge, &stereo);
           if (scanArgs <4)
             return(false);
-          v.SetX(x);v.SetY(y);v.SetZ(z);
           atom.SetVector(x, y, z);
           int iso=0;
           atom.SetAtomicNum(etab.GetAtomicNum(type,iso));
@@ -303,8 +301,8 @@ public:
           if (r1.size() >= 12) {  //handle wedge/hash data
             stereo = atoi((r1.substr(9,3)).c_str());
             if (stereo) {
-              if (stereo == 1) flag |= OB_WEDGE_BOND;
-              if (stereo == 6) flag |= OB_HASH_BOND;
+              if (stereo == 1) flag |= OBBondFlag::Wedge;
+              if (stereo == 6) flag |= OBBondFlag::Hash;
             }
           }
 
@@ -350,14 +348,14 @@ public:
               ifs.getline(buffer,BUFF_SIZE);
               if(*buffer!='?' && *buffer!='*')
               {
-                AliasData* ad = new AliasData();
+                OBAliasData* ad = new OBAliasData();
                 ad->SetAlias(buffer);
                 ad->SetOrigin(fileformatInput);
                 OBAtom* at = mol.GetAtom(atomnum);
                 if (at) {
                   at->SetData(ad);
                   at->SetAtomicNum(0);
-                  //The alias has now been added as a dummy atom with a AliasData object.
+                  //The alias has now been added as a dummy atom with a OBAliasData object.
                   ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
                 }
               }
@@ -525,11 +523,11 @@ public:
             return(false);
           }
 
-        // Check to see if there are any untyped aromatic bonds (GetBO == 5)
+        // Check to see if there are any untyped aromatic bonds (GetBondOrder == 5)
         // These must be kekulized first
         FOR_BONDS_OF_MOL(b, mol)
           {
-            if (b->GetBO() == 5)
+            if (b->GetBondOrder() == 5)
               {
                 mol.Kekulize();
                 break;
@@ -577,13 +575,13 @@ public:
               if(strcmp(dimension,"2D")==0)
                 {
                   int flag = bond->GetFlags();
-                  if (flag & OB_WEDGE_BOND) stereo=1;
-                  if (flag & OB_HASH_BOND ) stereo=6;
+                  if (flag & OBBondFlag::Wedge) stereo=1;
+                  if (flag & OBBondFlag::Hash ) stereo=6;
                 }
               snprintf(buff, BUFF_SIZE, "%3d%3d%3d%3d%3d%3d",
                        bond->GetBeginAtomIdx(),
                        bond->GetEndAtomIdx(),
-                       bond->GetBO(),
+                       bond->GetBondOrder(),
                        stereo,0,0);
               ofs << buff << endl;
             }
@@ -599,9 +597,9 @@ public:
             if(atom->GetFormalCharge())
               chgs.push_back(atom);
 
-            if(atom->HasData(AliasDataType))
+            if(atom->HasData(OBGenericDataType::AliasData))
             {
-              AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
+              OBAliasData* ad = static_cast<OBAliasData*>(atom->GetData(OBGenericDataType::AliasData));
               if(!ad->IsExpanded()) //do nothing with an expanded alias
                 ofs << "A  " << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
             }
@@ -827,11 +825,11 @@ public:
                 //TODO Bond Configuration 2 or 3D??
                 if (val == 1) 
                   {
-                    flag |= OB_WEDGE_BOND;
+                    flag |= OBBondFlag::Wedge;
                   }
                 else if (val == 3) 
                   {
-                    flag |= OB_HASH_BOND;
+                    flag |= OBBondFlag::Hash;
                   }
               }
           }
@@ -875,11 +873,11 @@ public:
   //////////////////////////////////////////////////////////
   bool MDLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
   {
-    // Check to see if there are any untyped aromatic bonds (GetBO == 5)
+    // Check to see if there are any untyped aromatic bonds (GetBondOrder == 5)
     // These must be kekulized first
     FOR_BONDS_OF_MOL(b, mol)
       {
-        if (b->GetBO() == 5)
+        if (b->GetBondOrder() == 5)
           {
             mol.Kekulize();
             break;
@@ -979,7 +977,7 @@ public:
                 bond = (OBBond*) *j;
                 ofs << "M  V30 "
                     << index++ << " "
-                    << bond->GetBO() << " "
+                    << bond->GetBondOrder() << " "
                     << bond->GetBeginAtomIdx() << " "
                     << bond->GetEndAtomIdx();
                 //TODO do the following stereo chemistry properly

@@ -90,15 +90,15 @@ namespace OpenBabel
                               const double v3[3])
   {
     // Convert to vectors and call the vector form of the function
-    vector3 originv(origin[0], origin[1], origin[2]);
-    vector3 x(v1[0], v1[1], v1[2]);
-    vector3 y(v2[0], v2[1], v2[2]);
-    vector3 z(v3[0], v3[1], v3[2]);
+    Eigen::Vector3d originv(origin[0], origin[1], origin[2]);
+    Eigen::Vector3d x(v1[0], v1[1], v1[2]);
+    Eigen::Vector3d y(v2[0], v2[1], v2[2]);
+    Eigen::Vector3d z(v3[0], v3[1], v3[2]);
     SetLimits(originv, x, y, z);
   }
 
-  void OBFloatGrid::SetLimits(const vector3& origin, const vector3& x,
-                              const vector3& y, const vector3& z)
+  void OBFloatGrid::SetLimits(const Eigen::Vector3d& origin, const Eigen::Vector3d& x,
+                              const Eigen::Vector3d& y, const Eigen::Vector3d& z)
   {
     // Using vectors instead of arrays of doubles
     _xmin = origin.x();
@@ -129,17 +129,17 @@ namespace OpenBabel
     _values.resize(nx*ny*nz);
   }
 
-  void OBFloatGrid::SetXAxis(vector3 v)
+  void OBFloatGrid::SetXAxis(Eigen::Vector3d v)
   {
     _xAxis = v;
   }
 
-  void OBFloatGrid::SetYAxis(vector3 v)
+  void OBFloatGrid::SetYAxis(Eigen::Vector3d v)
   {
     _yAxis = v;
   }
 
-  void OBFloatGrid::SetZAxis(vector3 v)
+  void OBFloatGrid::SetZAxis(Eigen::Vector3d v)
   {
     _zAxis = v;
   }

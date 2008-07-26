@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #define OB_MATRIX_H
 #include <openbabel/babelconfig.h>
 #include <vector>
-#include <math.h>
+#include <cmath>
 
 namespace OpenBabel
 {

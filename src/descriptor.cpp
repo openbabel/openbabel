@@ -37,7 +37,7 @@ namespace OpenBabel
      If noEval is true, the parsing is as normal but Predict is not called
      and the function returns false.
  **/
-bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval)
+bool OBDescriptor::Compare(OBBase* pOb, std::istream& optionText, bool noEval)
 {
   //Get comparison operator
   char ch1=0, ch2=0;
@@ -187,7 +187,7 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
 }
 
 //////////////////////////////////////////////////////////////
-string OBDescriptor::GetIdentifier(istream& optionText)
+std::string OBDescriptor::GetIdentifier(std::istream& optionText)
 {
   string descID;
   descID.clear();
@@ -213,7 +213,7 @@ string OBDescriptor::GetIdentifier(istream& optionText)
 
 ///Reads comparison operator and the following string. Return its value if possible else NaN
 //The comparison operator characters in ch1 and ch2 if found, 0 otherwise.
-double OBDescriptor::ParsePredicate(istream& optionText, char& ch1, char& ch2, string& svalue)
+double OBDescriptor::ParsePredicate(std::istream& optionText, char& ch1, char& ch2, std::string& svalue)
 {
   double val = std::numeric_limits<double>::quiet_NaN();
   ch2=0;
@@ -254,7 +254,7 @@ double OBDescriptor::ParsePredicate(istream& optionText, char& ch1, char& ch2, s
     !=mystring !="mystring" [Returns false indicating negate]
     There can be spaces or tabs after the operator = == !=  
  **/
-bool OBDescriptor::ReadStringFromFilter(istream& optionText, string& result)
+bool OBDescriptor::ReadStringFromFilter(std::istream& optionText, std::string& result)
 {
   bool error=false;
   bool ret=true;
@@ -327,7 +327,7 @@ double OBDescriptor::PredictAndSave(OBBase* pOb)
 }
 
 /// This default version provides a string representation of the numeric value
-double OBDescriptor::GetStringValue(OBBase* pOb, string& svalue)
+double OBDescriptor::GetStringValue(OBBase* pOb, std::string& svalue)
 {
   double val = Predict(pOb);
   if(val!=std::numeric_limits<double>::quiet_NaN())
@@ -339,7 +339,7 @@ double OBDescriptor::GetStringValue(OBBase* pOb, string& svalue)
   return val;
 }
 
-bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bool noEval, bool NoCompOK)
+bool OBDescriptor::CompareStringWithFilter(std::istream& optionText, std::string& sval, bool noEval, bool NoCompOK)
 {
   char ch1=0, ch2=0;
   string sfilterval;
@@ -389,7 +389,7 @@ bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bo
   }
 }
 
-void OBDescriptor::AddProperties(OBBase* pOb, const string& DescrList)
+void OBDescriptor::AddProperties(OBBase* pOb, const std::string& DescrList)
 {
   vector<string> vs;
   tokenize(vs, DescrList.c_str(), " \t\r\n,/-*&;:|%+");
@@ -404,7 +404,7 @@ void OBDescriptor::AddProperties(OBBase* pOb, const string& DescrList)
   }
 }
 
-void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
+void OBDescriptor::DeleteProperties(OBBase* pOb, const std::string& DescrList)
 {
   vector<string> vs;
   tokenize(vs, DescrList.c_str(), " \t\r\n,/-*&;:|%+");
@@ -452,7 +452,7 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
     return values;
   }
 
-  bool OBDescriptor::MatchPairData(OBBase* pOb, string& s)
+  bool OBDescriptor::MatchPairData(OBBase* pOb, std::string& s)
   {
     //If s matches a PairData attribute return true
     //else if s with all '_' replaced by spaces matches return true and s is now the form with spaces

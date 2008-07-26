@@ -243,7 +243,7 @@ namespace OpenBabel
           ofs << buffer;
           for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
             {
-              snprintf(buffer,BUFF_SIZE,"%6d",(*j)->GetBO());
+              snprintf(buffer,BUFF_SIZE,"%6d",(*j)->GetBondOrder());
               ofs << buffer;
             }
           ofs << endl;

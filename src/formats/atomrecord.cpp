@@ -179,7 +179,7 @@ namespace OpenBabel
     string xstr = sbuf.substr(24,8);
     string ystr = sbuf.substr(32,8);
     string zstr = sbuf.substr(40,8);
-    vector3 v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
+    Eigen::Vector3d v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
     atom.SetVector(v);
     atom.ForceImplH();
 

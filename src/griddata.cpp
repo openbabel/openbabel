@@ -66,8 +66,8 @@ namespace OpenBabel {
     OBGridData *gd = new OBGridData;
     gd->SetAttribute("Example Grid"); // the title of the grid -- e.g., for user display
     vector<int> voxels(3); // the number of voxels in each direction
-    vector3 origin; // the beginning x, y, z coordinate of the grid
-    vector<vector3> axes; // the xyz displacements for each of the grid axes
+    Eigen::Vector3d origin; // the beginning x, y, z coordinate of the grid
+    vector<Eigen::Vector3d> axes; // the xyz displacements for each of the grid axes
     ...
     gd->SetNumberOfPoints(voxels[0], voxels[1], voxels[2]);
     gd->SetLimits(origin, axes[0], axes[1], axes[2]);
@@ -108,7 +108,7 @@ namespace OpenBabel {
 
   void OBGridData::GetAxes( double x[3], double y[3], double z[3] ) const
   {
-    vector3 v1, v2, v3;
+    Eigen::Vector3d v1, v2, v3;
     v1 = d->floatGrid.GetXAxis();
     v2 = d->floatGrid.GetYAxis();
     v3 = d->floatGrid.GetZAxis();
@@ -118,22 +118,22 @@ namespace OpenBabel {
     z[0] = v3.x(); z[1] = v3.y(), z[2] = v3.z();
   }
 
-  vector3 OBGridData::GetXAxis() const
+  Eigen::Vector3d OBGridData::GetXAxis() const
   {
     return d->floatGrid.GetXAxis();
   }
 
-  vector3 OBGridData::GetYAxis() const
+  Eigen::Vector3d OBGridData::GetYAxis() const
   {
     return d->floatGrid.GetYAxis();
   }
 
-  vector3 OBGridData::GetZAxis() const
+  Eigen::Vector3d OBGridData::GetZAxis() const
   {
     return d->floatGrid.GetZAxis();
   }
 
-  void OBGridData::GetAxes( vector3 &v1, vector3 &v2, vector3 &v3 ) const
+  void OBGridData::GetAxes( Eigen::Vector3d &v1, Eigen::Vector3d &v2, Eigen::Vector3d &v3 ) const
   {
     v1 = d->floatGrid.GetXAxis();
     v2 = d->floatGrid.GetYAxis();
@@ -169,7 +169,7 @@ namespace OpenBabel {
     return d->floatGrid.GetValue(i, j, k);
   }
 
-  double OBGridData::GetValue(vector3 pos) const
+  double OBGridData::GetValue(Eigen::Vector3d pos) const
   {
     return d->floatGrid.Interpolate(pos.x(), pos.y(), pos.z());
   }
@@ -194,12 +194,12 @@ namespace OpenBabel {
     d->floatGrid.GetMin(o);
   }
 
-  vector3 OBGridData::GetOriginVector() const
+  Eigen::Vector3d OBGridData::GetOriginVector() const
   {
     return d->floatGrid.GetMin();
   }
 
-  vector3 OBGridData::GetMaxVector() const
+  Eigen::Vector3d OBGridData::GetMaxVector() const
   {
     return d->floatGrid.GetMax();
   }
@@ -235,8 +235,8 @@ namespace OpenBabel {
     d->floatGrid.SetLimits(origin, x, y, z);
   }
 
-  void OBGridData::SetLimits(const vector3 &origin, const vector3 &x,
-                             const vector3 &y, const vector3 &z)
+  void OBGridData::SetLimits(const Eigen::Vector3d &origin, const Eigen::Vector3d &x,
+                             const Eigen::Vector3d &y, const Eigen::Vector3d &z)
   {
     d->floatGrid.SetLimits(origin, x, y, z);
   }

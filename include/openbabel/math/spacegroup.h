@@ -56,7 +56,7 @@ namespace OpenBabel
           { return m_Hall;} 
         unsigned GetId() const
           { return m_id; }
-        std::list<vector3> Transform(const vector3 &v) const;
+        std::list<Eigen::Vector3d> Transform(const Eigen::Vector3d &v) const;
 
         transform3d const * BeginTransform(transform3dIterator &i) const;
         transform3d const * NextTransform(transform3dIterator &i) const;

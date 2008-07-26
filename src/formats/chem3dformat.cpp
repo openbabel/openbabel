@@ -174,7 +174,7 @@ namespace OpenBabel
     double divisor = 1.0;
     double Alpha,Beta,Gamma,A,B,C;
     bool has_fractional = false, has_divisor = false;
-    matrix3x3 m;
+    Eigen::Matrix3d m;
 
     vector<string> vs;
     ifs.getline(buffer,BUFF_SIZE);
@@ -195,13 +195,13 @@ namespace OpenBabel
           case 7 :
             sscanf(buffer,"%d%lf%lf%lf%lf%lf%lf",
                    &natoms,&Alpha,&Beta,&Gamma,&A,&B,&C);
-            m.FillOrth(Alpha,Beta,Gamma,A,B,C);
+            //m.FillOrth(Alpha,Beta,Gamma,A,B,C);
             has_fractional = true;
             break;
           case 8 :
             sscanf(buffer,"%d%lf%lf%lf%lf%lf%lf%lf",
                    &natoms,&Alpha,&Beta,&Gamma,&A,&B,&C,&exponent);
-            m.FillOrth(Alpha,Beta,Gamma,A,B,C);
+            //m.FillOrth(Alpha,Beta,Gamma,A,B,C);
             has_fractional = true;
             has_divisor = true;
             break;
@@ -221,7 +221,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     double x,y,z;
-    vector3 v;
+    Eigen::Vector3d v;
 
     unsigned int k;
     for (i = 1; i <= natoms; i++)
@@ -233,9 +233,9 @@ namespace OpenBabel
                &y,
                &z,
                tmp);
-        v.Set(x,y,z);
+        v = Eigen::Vector3d(x,y,z);
         if (has_fractional)
-          v *= m;
+          v = m * v;
         if (has_divisor)
           v/= divisor;
 

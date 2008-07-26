@@ -569,6 +569,7 @@ RECURSIVE              = NO
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
 EXCLUDE                = include/openbabel/babelconfig.h \
+                         include/openbabel/ffinternal.h \
                          src/babelconfig.h \
                          src/config.h \
                          src/zipstreamimpl.h \

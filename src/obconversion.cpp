@@ -198,7 +198,7 @@ namespace OpenBabel {
 
 //  OBFormat* OBConversion::pDefaultFormat=NULL;
 
-  OBConversion::OBConversion(istream* is, ostream* os) : 
+  OBConversion::OBConversion(std::istream* is, std::ostream* os) : 
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), CheckedForGzip(false),
@@ -373,7 +373,7 @@ namespace OpenBabel {
   }
 
   //////////////////////////////////////////////////////
-  int OBConversion::Convert(istream* is, ostream* os) 
+  int OBConversion::Convert(std::istream* is, std::ostream* os) 
   {
     if (is) { 
       pInStream=is;
@@ -760,7 +760,7 @@ namespace OpenBabel {
   /// Writes the object pOb but does not delete it afterwards.
   /// The output stream is lastingly changed if pos is not NULL
   /// Returns true if successful.
-  bool OBConversion::Write(OBBase* pOb, ostream* pos)
+  bool OBConversion::Write(OBBase* pOb, std::ostream* pos)
   {
     if(pos) pOutStream=pos;
 
@@ -828,7 +828,7 @@ namespace OpenBabel {
   /// Writes the object pOb but does not delete it afterwards.
   /// The output stream is lastingly changed to point to the file
   /// Returns true if successful.
-  bool OBConversion::WriteFile(OBBase* pOb, string filePath)
+  bool OBConversion::WriteFile(OBBase* pOb, std::string filePath)
   {
     if(!pOutFormat) return false;
 
@@ -978,7 +978,7 @@ namespace OpenBabel {
   }
 
   /////////////////////////////////////////////////
-  string OBConversion::BatchFileName(string& BaseName, string& InFile)
+  string OBConversion::BatchFileName(std::string& BaseName, std::string& InFile)
   {
     //Replaces * in BaseName by InFile without extension and path
     string ofname(BaseName);
@@ -1008,7 +1008,7 @@ namespace OpenBabel {
   }
 
   ////////////////////////////////////////////////
-  string OBConversion::IncrementedFileName(string& BaseName, const int Count)
+  string OBConversion::IncrementedFileName(std::string& BaseName, const int Count)
   {
     //Replaces * in BaseName by Count
     string ofname(BaseName);
@@ -1022,7 +1022,7 @@ namespace OpenBabel {
     return ofname;		
   }
   ////////////////////////////////////////////////////
-  bool OBConversion::CheckForUnintendedBatch(const string& infile, const string& outfile)
+  bool OBConversion::CheckForUnintendedBatch(const std::string& infile, const std::string& outfile)
   {
     //If infile == outfile issue error message and return false
     //If name without the extensions are the same issue warning and return true;
@@ -1323,7 +1323,7 @@ namespace OpenBabel {
     return Count;
   }
 
-  bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
+  bool OBConversion::OpenAndSetFormat(bool SetFormat, std::ifstream* is)
   {
     //Opens file using InFilename and sets pInFormat if requested
     if(!SetFormat)
@@ -1409,7 +1409,7 @@ namespace OpenBabel {
     return opa[typ];
   }
 
-  void OBConversion::RegisterOptionParam(string name, OBFormat* pFormat,
+  void OBConversion::RegisterOptionParam(std::string name, OBFormat* pFormat,
                                          int numberParams, Option_type typ)
   {
     //Gives error message if the number of parameters conflicts with an existing registration
@@ -1432,7 +1432,7 @@ namespace OpenBabel {
     OptionParamArray(typ)[name] = numberParams;
   }
 
-  int OBConversion::GetOptionParams(string name, Option_type typ)
+  int OBConversion::GetOptionParams(std::string name, Option_type typ)
   {
     //returns the number of parameters registered for the option, or 0 if not found
     map<string,int>::iterator pos;

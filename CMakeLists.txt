@@ -8,6 +8,7 @@ endif(COMMAND cmake_policy)
 
 include (CheckCXXCompilerFlag)
 include (MacroEnsureVersion)
+include (FindEigen)
 
 # Version numbering - should be bumped for each release
 set(BABEL_MAJ_VER   2)
@@ -56,6 +57,11 @@ if(ZLIB_FOUND)
   add_definitions(-DHAVE_LIBZ)
   include_directories(${ZLIB_INCLUDE_DIR})
 endif(ZLIB_FOUND)
+
+find_package(Eigen REQUIRED)
+if(EIGEN_FOUND)
+  include_directories(${EIGEN_INCLUDE_DIR})
+endif(EIGEN_FOUND)
 
 include(CheckIncludeFile)
 include(CheckIncludeFileCXX)

@@ -17,7 +17,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-  bool AliasData::Expand(OBMol& mol, const unsigned int atomindex)
+  bool OBAliasData::Expand(OBMol& mol, const unsigned int atomindex)
   {
     /*
     Interprets the alias text and adds atom as appropriate to mol.
@@ -39,8 +39,8 @@ namespace OpenBabel
     //Will parse ND2 DS CH-
 
     //(Adapt to use old code)
-    char* txt = new char[_alias.size()+1];
-    strcpy(txt, _alias.c_str());
+    char* txt = new char[m_alias.size()+1];
+    strcpy(txt, m_alias.c_str());
 
       if(*txt=='?') //Assume that it is harmless to ignore this alias
       return true;
@@ -64,7 +64,7 @@ namespace OpenBabel
     pAtom->SetAtomicNum(etab.GetAtomicNum(symb,iso));
     if(iso)
       pAtom->SetIsotope(iso);
-    _expandedatoms.push_back(atomindex);
+    m_expandedatoms.push_back(atomindex);
 
     while(*txt)
     {
@@ -92,7 +92,7 @@ namespace OpenBabel
       do //for each rep
       {
         OBAtom* newAtom = mol.NewAtom();
-        _expandedatoms.push_back(mol.NumAtoms());
+        m_expandedatoms.push_back(mol.NumAtoms());
         iso = 0;
         newAtom->SetAtomicNum(etab.GetAtomicNum(symb,iso));
         if(iso)

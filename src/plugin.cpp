@@ -34,7 +34,7 @@ namespace OpenBabel
   return PluginMap();//error: type not found; return plugins map
 }
 
-bool OBPlugin::ListAsVector(const char* PluginID, const char* param, vector<string>& vlist)
+bool OBPlugin::ListAsVector(const char* PluginID, const char* param, std::vector<std::string>& vlist)
 {
   PluginMapType::iterator itr;
   bool ret=true;
@@ -73,7 +73,7 @@ bool OBPlugin::ListAsVector(const char* PluginID, const char* param, vector<stri
   return ret;
 }
 
-void OBPlugin::List(const char* PluginID, const char* param, ostream* os)
+void OBPlugin::List(const char* PluginID, const char* param, std::ostream* os)
 {
   vector<string> vlist;
   if(!ListAsVector(PluginID,param, vlist))
@@ -99,7 +99,7 @@ string OBPlugin::FirstLine(const char* txt)
 }
 
 //Default version
-bool OBPlugin::Display(string& txt, const char* param, const char* ID)
+bool OBPlugin::Display(std::string& txt, const char* param, const char* ID)
 {
   //Use the provided ID if possible.
   if(ID)

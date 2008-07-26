@@ -93,7 +93,7 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 	
 	//identify fragments starting at every atom
 	OBAtom *patom;
-	vector<OBNodeBase*>::iterator i;
+	vector<OBAtom*>::iterator i;
 	for (patom = pmol->BeginAtom(i);patom;patom = pmol->NextAtom(i))
 	{
 		if(patom->IsHydrogen()) continue;
@@ -133,7 +133,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 	int bo=0;
 	if(pbond)
 	{
-		bo = pbond->IsAromatic() ? 5 : pbond->GetBO();
+		bo = pbond->IsAromatic() ? 5 : pbond->GetBondOrder();
 
 //		OBAtom* pprevat = pbond->GetNbrAtom(patom);
 //		if(patom->GetFormalCharge() && (patom->GetFormalCharge() == -pprevat->GetFormalCharge()))
@@ -143,7 +143,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 	curfrag.push_back(patom->GetAtomicNum());
 	levels[patom->GetIdx()-1] = level;
 
-	vector<OBEdgeBase*>::iterator itr;
+	vector<OBBond*>::iterator itr;
 	OBBond *pnewbond;
 //	PrintFpt(curfrag,(int)patom);
 	for (pnewbond = patom->BeginBond(itr);pnewbond;pnewbond = patom->NextBond(itr))

@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
+#include <openbabel/math/vector.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
@@ -63,7 +64,7 @@ namespace OpenBabel
       //
       \endcode
   **/
-  std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > OBBuilder::_fragments;
+  std::vector<std::pair<OBSmartsPattern*, std::vector<Eigen::Vector3d> > > OBBuilder::_fragments;
 
   bool OBBuilder::LoadFragments()  {
     // open data/fragments.txt
@@ -80,7 +81,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     vector<string> vs;
     OBSmartsPattern *sp = NULL;
-    vector<vector3> coords;
+    vector<Eigen::Vector3d> coords;
     while (ifs.getline(buffer, BUFF_SIZE)) {
       if (buffer[0] == '#') // skip comment line (at the top)
         continue;
@@ -89,7 +90,7 @@ namespace OpenBabel
       
       if (vs.size() == 1) { // SMARTS pattern
         if (sp != NULL)
-          _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+          _fragments.push_back(pair<OBSmartsPattern*, vector<Eigen::Vector3d> > (sp, coords));
         
         coords.clear();
         sp = new OBSmartsPattern;
@@ -99,27 +100,27 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
         }
       } else if (vs.size() == 3) { // XYZ coordinates
-        vector3 coord(atof(vs[0].c_str()), atof(vs[1].c_str()), atof(vs[2].c_str()));
+        Eigen::Vector3d coord(atof(vs[0].c_str()), atof(vs[1].c_str()), atof(vs[2].c_str()));
         coords.push_back(coord);
       }
  
     }
     
-    _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+    _fragments.push_back(pair<OBSmartsPattern*, vector<Eigen::Vector3d> > (sp, coords));
 
     // return the locale to the original one
     obLocale.RestoreLocale();
     return true;
   }
  
-  vector3 OBBuilder::GetNewBondVector(OBAtom *atom)
+  Eigen::Vector3d OBBuilder::GetNewBondVector(OBAtom *atom)
   {
     return GetNewBondVector(atom, 1.5);
   }
 
-  vector3 OBBuilder::GetNewBondVector(OBAtom *atom, double length) 
+  Eigen::Vector3d OBBuilder::GetNewBondVector(OBAtom *atom, double length) 
   {
-    vector3 bond1, bond2, bond3, v1, v2, newbond;
+    Eigen::Vector3d bond1, bond2, bond3, v1, v2, newbond;
     
     bond1 = VZero;
     bond2 = VZero;
@@ -136,29 +137,29 @@ namespace OpenBabel
       return newbond;
     }
 
-    // hyb * = 1
-    // ^^^^^^^^^
-    //   
-    //   (a-1)--a   --->   (a-1)--a--*        angle(a-1, a, *) = 180
-    //
-    // hyb * = 2
-    // ^^^^^^^^^
-    // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
-    //
-    //   (a-2)             (a-2)
-    //     \                 \
-    //    (a-1)==a   --->   (a-1)==a          angle(a-1, a, *) = 120
-    //                              \
-    //                               *
-    // hyb * = 3
-    // ^^^^^^^^^
-    // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
-    //
-    //   (a-2)             (a-2)
-    //     \                 \
-    //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109
-    //                              \
-    //                               *
+    // hyb * = 1                                                                //
+    // ^^^^^^^^^                                                                //
+    //                                                                          //
+    //   (a-1)--a   --->   (a-1)--a--*        angle(a-1, a, *) = 180            //
+    //                                                                          //
+    // hyb * = 2                                                                //
+    // ^^^^^^^^^                                                                //
+    // make sure we place the new atom trans to a-2 (if there is an a-2 atom)   //
+    //                                                                          //
+    //   (a-2)             (a-2)                                                //
+    //     \                 \                                                  //
+    //    (a-1)==a   --->   (a-1)==a          angle(a-1, a, *) = 120            //
+    //                              \                                           //
+    //                               *                                          //
+    // hyb * = 3                                                                //
+    // ^^^^^^^^^                                                                //
+    // make sure we place the new atom trans to a-2 (if there is an a-2 atom)   //
+    //                                                                          //
+    //   (a-2)             (a-2)                                                //
+    //     \                 \                                                  //
+    //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109            //
+    //                              \                                           //
+    //                               *                                          //
     if (atom->GetValence() == 1) {
       FOR_NBORS_OF_ATOM (nbr, atom) {
         bond1 = atom->GetVector() - nbr->GetVector();   
@@ -168,11 +169,11 @@ namespace OpenBabel
             bond2 = nbr->GetVector() - nbr2->GetVector();
       }
 
-      bond1 = bond1.normalize();
+      bond1.normalize();
       if (bond2 == VZero) {
 	// there is no a-2 atom
-	v1 = cross(bond1, VY);
-        v2 = cross(bond1, v1);
+	v1 = bond1.cross(VY);
+        v2 = bond1.cross(v1);
  
         if (atom->GetHyb() == 1)
           newbond = bond1;
@@ -181,14 +182,14 @@ namespace OpenBabel
         if (atom->GetHyb() == 3)
           newbond = bond1 - v2 * tan(DEG_TO_RAD*70.5);
         
-        newbond = newbond.normalize();
+        newbond.normalize();
         newbond *= length;
         newbond += atom->GetVector();
         return newbond;
       } else {
-        v1 = cross(bond1, bond2);
-        v2 = cross(bond1, v1);
-        v2 = v2.normalize();
+        v1 = bond1.cross(bond2);
+        v2 = bond1.cross(v1);
+        v2.normalize();
         
         if (atom->GetHyb() == 1)
           newbond = bond1;
@@ -197,18 +198,18 @@ namespace OpenBabel
         if (atom->GetHyb() == 3)
           newbond = bond1 - v2 * tan(DEG_TO_RAD*70.5);
         
-        newbond = newbond.normalize();
+        newbond.normalize();
         newbond *= length;
         newbond += atom->GetVector();
         return newbond;
       }
     }
     
-    //
-    //    \         \
-    //     X  --->   X--*
-    //    /         /
-    //
+    //                          //
+    //    \         \           //
+    //     X  --->   X--*       //
+    //    /         /           //
+    //                          //
     if (atom->GetValence() == 2) {
       FOR_NBORS_OF_ATOM (nbr, atom) {
         if (bond1 == VZero)
@@ -217,31 +218,31 @@ namespace OpenBabel
           bond2 = atom->GetVector() - nbr->GetVector();
       }
 
-      bond1 = bond1.normalize();
-      bond2 = bond2.normalize();
+      bond1.normalize();
+      bond2.normalize();
       v1 = bond1 + bond2;
-      v1 = v1.normalize();
+      v1.normalize();
      
       if (atom->GetHyb() == 2)
         newbond = v1;
       if (atom->GetHyb() == 3) {
-        v2 = cross(bond1, bond2);
+        v2 = bond1.cross(bond2);
         //v1 = v1.normalize();
         newbond = v2 + v1 * tan(DEG_TO_RAD*35.25);
       }
       
-      newbond = newbond.normalize();
+      newbond.normalize();
       newbond *= length;
       newbond += atom->GetVector();
       return newbond;
     }
     
     
-    //
-    //    \          \
-    //   --X  --->  --X--*
-    //    /          /
-    //
+    //                          //
+    //    \          \          //
+    //   --X  --->  --X--*      //
+    //    /          /          //
+    //                          //
     if (atom->GetValence() == 3) {
       FOR_NBORS_OF_ATOM (nbr, atom) {
         if (bond1 == VZero)
@@ -252,11 +253,11 @@ namespace OpenBabel
           bond3 = atom->GetVector() - nbr->GetVector();
       }
           
-      bond1 = bond1.normalize();
-      bond2 = bond2.normalize();
-      bond3 = bond3.normalize();
+      bond1.normalize();
+      bond2.normalize();
+      bond3.normalize();
       newbond = bond1 + bond2 + bond3;
-      newbond = newbond.normalize();
+      newbond.normalize();
       newbond *= length;
       newbond += atom->GetVector();
       return newbond;
@@ -269,7 +270,7 @@ namespace OpenBabel
   // fragment and the fragment itself. The fragment containing b will be 
   // rotated and translated. Atom a is the atom from 
   // the main molecule to which we want to connect atom b.
-  bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, vector3 &newpos, int bondOrder)
+  bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, Eigen::Vector3d &newpos, int bondOrder)
   {
     OBAtom *a = mol.GetAtom(idxA);
     OBAtom *b = mol.GetAtom(idxB);
@@ -283,15 +284,15 @@ namespace OpenBabel
     if (fragment == GetFragment(a))
       return false; // a and b are in the same fragment
 
-    vector3 posa = a->GetVector();
-    vector3 posb = b->GetVector();
+    Eigen::Vector3d posa = a->GetVector();
+    Eigen::Vector3d posb = b->GetVector();
     // 
     // translate fragment so that atom b is at the origin
     //
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
         // the atom is part of the fragment, translate it
-        vector3 tmpvec = mol.GetAtom(i)->GetVector();
+        Eigen::Vector3d tmpvec = mol.GetAtom(i)->GetVector();
         tmpvec -= posb;
         mol.GetAtom(i)->SetVector(tmpvec);
       }
@@ -299,60 +300,60 @@ namespace OpenBabel
     // 
     // rotate the fragment to align the bond directions Mol-a-b and a-b-fragment
     //
-    matrix3x3 xymat, xzmat, yzmat;
-    vector3 moldir = newpos - posa;
+    Eigen::Quaternion<double> q; 
+    Eigen::Vector3d moldir = newpos - posa;
     double xyang, yzang, xzang;
 
-    vector3 fragdir = GetNewBondVector(b); // b is at origin 
-    xyang = vectorAngle(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0));
-    if (cross(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0)).z() > 0) {
+    Eigen::Vector3d fragdir = GetNewBondVector(b); // b is at origin 
+    xyang = VectorAngle(Eigen::Vector3d(moldir.x(), moldir.y(), 0.0), Eigen::Vector3d(fragdir.x(), fragdir.y(), 0.0));
+    if (Eigen::Vector3d(moldir.x(), moldir.y(), 0.0).cross(Eigen::Vector3d(fragdir.x(), fragdir.y(), 0.0)).z() > 0) {
       xyang = 180 + xyang;
-    } else if (cross(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0)).z() < 0) {
+    } else if (Eigen::Vector3d(moldir.x(), moldir.y(), 0.0).cross(Eigen::Vector3d(fragdir.x(), fragdir.y(), 0.0)).z() < 0) {
       xyang = 180 - xyang;
     } else {
       xyang = 0.0;
     }
-    xymat.SetupRotMat(0.0, 0.0, xyang); 
+    q = Eigen::EulerAngles<double>(0.0, 0.0, -xyang * DEG_TO_RAD);
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
-        vector3 tmpvec = mol.GetAtom(i)->GetVector();
-        tmpvec *= xymat; //apply the rotation
+        Eigen::Vector3d tmpvec = mol.GetAtom(i)->GetVector();
+        tmpvec = q.toRotationMatrix() * tmpvec; //apply the rotation
         mol.GetAtom(i)->SetVector(tmpvec);
       }
     }
     
     fragdir = GetNewBondVector(b);
-    xzang = vectorAngle(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0));
-    if (cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)).z() > 0) {
+    xzang = VectorAngle(Eigen::Vector3d(moldir.x(), moldir.z(), 0.0), Eigen::Vector3d(fragdir.x(), fragdir.z(), 0.0));
+    if (Eigen::Vector3d(moldir.x(), moldir.z(), 0.0).cross(Eigen::Vector3d(fragdir.x(), fragdir.z(), 0.0)).z() > 0) {
       xzang = 180 - xzang;
-    } else if (cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)).z() < 0) {
+    } else if (Eigen::Vector3d(moldir.x(), moldir.z(), 0.0).cross(Eigen::Vector3d(fragdir.x(), fragdir.z(), 0.0)).z() < 0) {
       xzang = 180 + xzang;
     } else {
       xzang = 0.0;
     }
-    xzmat.SetupRotMat(0.0, xzang, 0.0); 
+    q = Eigen::EulerAngles<double>(0.0, -xzang * DEG_TO_RAD, 0.0);
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
-        vector3 tmpvec = mol.GetAtom(i)->GetVector();
-        tmpvec *= xzmat; //apply the rotation
+        Eigen::Vector3d tmpvec = mol.GetAtom(i)->GetVector();
+        tmpvec = q.toRotationMatrix() * tmpvec; //apply the rotation
         mol.GetAtom(i)->SetVector(tmpvec);
       }
     }
 
     fragdir = GetNewBondVector(b);
-    yzang = vectorAngle(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0));
-    if (cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)).z() > 0) {
+    yzang = VectorAngle(Eigen::Vector3d(moldir.y(), moldir.z(), 0.0), Eigen::Vector3d(fragdir.y(), fragdir.z(), 0.0));
+    if (Eigen::Vector3d(moldir.y(), moldir.z(), 0.0).cross(Eigen::Vector3d(fragdir.y(), fragdir.z(), 0.0)).z() > 0) {
       yzang = 180 + yzang;
-    } else if (cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)).z() < 0) {
+    } else if (Eigen::Vector3d(moldir.y(), moldir.z(), 0.0).cross(Eigen::Vector3d(fragdir.y(), fragdir.z(), 0.0)).z() < 0) {
       yzang = 180 - yzang;
     } else {
       yzang = 0.0;
     }
-    yzmat.SetupRotMat(yzang, 0.0, 0.0); 
+    q = Eigen::EulerAngles<double>(-yzang * DEG_TO_RAD, 0.0, 0.0);
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
-        vector3 tmpvec = mol.GetAtom(i)->GetVector();
-        tmpvec *= yzmat; //apply the rotation
+        Eigen::Vector3d tmpvec = mol.GetAtom(i)->GetVector();
+        tmpvec = q.toRotationMatrix() * tmpvec; //apply the rotation
         mol.GetAtom(i)->SetVector(tmpvec);
       }
     }
@@ -362,7 +363,7 @@ namespace OpenBabel
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
         // translate the fragment
-        vector3 tmpvec = mol.GetAtom(i)->GetVector();
+        Eigen::Vector3d tmpvec = mol.GetAtom(i)->GetVector();
         tmpvec += newpos;
         mol.GetAtom(i)->SetVector(tmpvec);
       }
@@ -382,25 +383,25 @@ namespace OpenBabel
 
   bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, int bondOrder)
   {
-    vector3 newpos = GetNewBondVector(mol.GetAtom(idxA));
+    Eigen::Vector3d newpos = GetNewBondVector(mol.GetAtom(idxA));
     return Connect(mol, idxA, idxB, newpos, bondOrder);
   }
 
 
     /* 
     matrix3x3 mat;
-    vector3 moldir = newpos - posa;
-    vector3 fragdir = GetNewBondVector(b); // b is at origin 
+    Eigen::Vector3d moldir = newpos - posa;
+    Eigen::Vector3d fragdir = GetNewBondVector(b); // b is at origin 
     moldir.normalize(); 
     fragdir.normalize(); 
     double angle = acos(dot(moldir, fragdir));
-    vector3 axis = cross(moldir, fragdir);
+    Eigen::Vector3d axis = cross(moldir, fragdir);
     axis.normalize();
 
     mat.RotAboutAxisByAngle(axis, angle);
     for (unsigned int i = 1; i <= _workMol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
-        vector3 tmpvec = _workMol.GetAtom(i)->GetVector();
+        Eigen::Vector3d tmpvec = _workMol.GetAtom(i)->GetVector();
         tmpvec *= mat; //apply the rotation
         _workMol.GetAtom(i)->SetVector(tmpvec);
       }
@@ -421,12 +422,16 @@ namespace OpenBabel
     OBBond *bond1 = mol.GetBond(idxA, idxB);
     OBBond *bond2 = mol.GetBond(idxC, idxD);
 
+    // make sure a-b and c-d are connected
+    if (bond1 == NULL || bond2 == NULL)
+      return false;
+
     // save the original bond orders
     int bondOrder1 = bond1->GetBondOrder();
     int bondOrder2 = bond2->GetBondOrder();
 
-    // make sure a-b and c-d are connected
-    if (bond1 == NULL || bond2 == NULL)
+    // make sure the orders are the same
+    if (bondOrder1 != bondOrder2)
       return false;
 
     // make sure the bonds are not in a ring 
@@ -438,8 +443,8 @@ namespace OpenBabel
     mol.DeleteBond(bond2);
 
     // save the original positions
-    vector3 posB = b->GetVector();
-    vector3 posD = d->GetVector();
+    Eigen::Vector3d posB = b->GetVector();
+    Eigen::Vector3d posD = d->GetVector();
 
     // connect the fragments
     if (!Connect(mol, idxA, idxD, posB, bondOrder2))
@@ -489,11 +494,11 @@ namespace OpenBabel
     OBBitVec vfrag; // Atoms that are part of a fragment found in the database.
                     // These atoms have coordinates, but the fragment still has 
                     // to be rotated and translated.
-    vector3 molvec, moldir;
-    vector<pair<OBSmartsPattern*, vector<vector3 > > >::iterator i;
+    Eigen::Vector3d molvec, moldir;
+    vector<pair<OBSmartsPattern*, vector<Eigen::Vector3d > > >::iterator i;
     vector<vector<int> >::iterator j;
     vector<int>::iterator k, k2, k3;
-    vector<vector3>::iterator l;
+    vector<Eigen::Vector3d>::iterator l;
     vector<vector<int> > mlist; // match list for fragments
  
     // copy the molecule to private data
@@ -612,6 +617,7 @@ namespace OpenBabel
 
     mol = workMol;
     mol.SetDimension(3);
+    mol.DeleteData(OBGenericDataType::TorsionData);
 
     return true;
   }
@@ -628,7 +634,7 @@ namespace OpenBabel
  
     OBAtom *a, *b, *c, *d;
     OBBond *ab, *bc, *cd;
-    vector<int> done;
+    vector<unsigned int> done;
 
     mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
     FOR_TORSIONS_OF_MOL(t, mol) {
@@ -677,7 +683,7 @@ namespace OpenBabel
 
       //cerr << a->GetIdx() << "-" << b->GetIdx() << "-" << c->GetIdx() << "-" << d->GetIdx() << endl;
 
-      double angle;
+      double angle = 0.0;
       if (ab->IsUp() && cd->IsUp())
         angle = 0.0;
       if (ab->IsUp() && cd->IsDown())
@@ -705,15 +711,15 @@ namespace OpenBabel
         vector<unsigned int> refs = cd->GetAtom4Refs(input);
 		if (refs.size() < 4)
           continue;
-        // We look along the refs[0]-center bond.
-        //
-        //  1                     1
-        //   \        eye        /
-        //    0--2    -->   0---C-<2
-        //   /                   \
-        //  3                     3
-        //
-        //  fig 1             fig2
+        // We look along the refs[0]-center bond.       //
+        //                                              //
+        //  1                     1                     //
+        //   \        eye        /                      //
+        //    0--2    -->   0---C-<2                    //
+        //   /                   \                      //
+        //  3                     3                     //
+        //                                              //
+        //  fig 1             fig2                      //
         OBAtom *a = mol.GetAtom(refs[0]);
         OBAtom *b = mol.GetAtom(refs[1]);
         OBAtom *c = mol.GetAtom(refs[2]);

@@ -27,9 +27,9 @@ namespace OpenBabel
 
   /*! 
   */
-  vector3 transform3d::operator *(const vector3 &v)
+  Eigen::Vector3d transform3d::operator *(const Eigen::Vector3d &v)
     {
-      return *static_cast <matrix3x3 *> (this) * v + *static_cast <vector3 *> (this);
+      return *static_cast <Eigen::Matrix3d *> (this) * v + *static_cast <Eigen::Vector3d *> (this);
     }
 
   /*! 
@@ -37,8 +37,8 @@ namespace OpenBabel
   transform3d transform3d::operator *(const transform3d &t)
     {
       return transform3d(
-                    *static_cast <matrix3x3 *> (this) * *static_cast <const matrix3x3 *> (&t),
-                    *this * *static_cast <const vector3 *> (&t)
+                    *static_cast <Eigen::Matrix3d *> (this) * *static_cast <const Eigen::Matrix3d *> (&t),
+                    *this * *static_cast <const Eigen::Vector3d *> (&t)
                   );
     }
 
@@ -48,8 +48,8 @@ namespace OpenBabel
     {
       ostringstream r;
       int n, i, j;
-      const matrix3x3 *m = static_cast <const matrix3x3 *> (this);
-      const vector3 *v = static_cast <const vector3 *> (this);
+      const Eigen::Matrix3d *m = static_cast <const Eigen::Matrix3d *> (this);
+      const Eigen::Vector3d *v = static_cast <const Eigen::Vector3d *> (this);
       bool neg, first;
       for (i = 0; i < 3; i++)
         {
@@ -114,8 +114,8 @@ namespace OpenBabel
   string transform3d::DescribeAsValues() const
     {
       ostringstream oss;
-      const matrix3x3 *m = static_cast <const matrix3x3 *> (this);
-      const vector3 *v = static_cast <const vector3 *> (this);
+      const Eigen::Matrix3d *m = static_cast <const Eigen::Matrix3d *> (this);
+      const Eigen::Vector3d *v = static_cast <const Eigen::Vector3d *> (this);
       oss << (*m)(0,0) << " " << (*m)(0,1) << " " << (*m)(0,2) << " " << v->x() << " ";
       oss << (*m)(1,0) << " " << (*m)(1,1) << " " << (*m)(1,2) << " " << v->y() << " ";
       oss << (*m)(2,0) << " " << (*m)(2,1) << " " << (*m)(2,2) << " " << v->z();
@@ -126,7 +126,7 @@ namespace OpenBabel
   */
   void transform3d::Normalize()
 	{
-      vector3 *vv = static_cast<vector3*>(this);
+      Eigen::Vector3d *vv = static_cast<Eigen::Vector3d*>(this);
       vv->x() -= floor (vv->x() + .01); /* .01 should work in all cases in
                                         this context */
       vv->y() -= floor (vv->y() + .01);

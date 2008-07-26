@@ -205,15 +205,15 @@ namespace OpenBabel
   //! If ReZero=false (the default is true) always make pseudo z coords and leave them in mol
   double CalcSignedVolume(OBMol &mol,OBAtom *atm, bool ReZeroZ)
   {
-    vector3 tmp_crd;
+    Eigen::Vector3d tmp_crd;
     vector<unsigned int> nbr_atms;
-    vector<vector3> nbr_crds;
+    vector<Eigen::Vector3d> nbr_crds;
     bool use_central_atom = false,is2D=false;
     //   double hbrad = etab.CorrectedBondRad(1,0);
            
     if (!ReZeroZ || !mol.Has3D()) //give pseudo Z coords if mol is 2D
       {
-        vector3 v,vz(0.0,0.0,1.0);
+        Eigen::Vector3d v,vz(0.0,0.0,1.0);
         is2D = true;
         OBAtom *nbr;
         OBBond *bond;
@@ -282,9 +282,9 @@ namespace OpenBabel
     for(unsigned int j=0;j < nbr_crds.size();++j) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
       {
         // are the coordinates zero to 6 or more significant figures
-        if (nbr_crds[j].IsApprox(VZero, 1.0e-6) && use_central_atom==false)
+        if (IsApprox(nbr_crds[j].norm(), 0.0, 1.0e-6) && use_central_atom==false)
           use_central_atom=true;
-        else if (nbr_crds[j].IsApprox(VZero, 1.0e-6))
+        else if (IsApprox(nbr_crds[j].norm(), 0.0, 1.0e-6))
           {
             obErrorLog.ThrowError(__FUNCTION__, "More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation", obInfo);
           }
@@ -309,13 +309,13 @@ namespace OpenBabel
     //re-zero pseudo-coords
     if (is2D && ReZeroZ)
       {
-        vector3 v;
+        Eigen::Vector3d v;
         OBAtom *atom;
         vector<OBAtom*>::iterator k;
         for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
           {
             v = atom->GetVector();
-            v.SetZ(0.0);
+            v[2] = (0.0);
             atom->SetVector(v);
           }
       }
@@ -324,13 +324,19 @@ namespace OpenBabel
   }
 
   //! Calculate a signed volume given a set of 4 coordinates
-  double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d)
+  double signed_volume(const Eigen::Vector3d &a, const Eigen::Vector3d &b, 
+      const Eigen::Vector3d &c, const Eigen::Vector3d &d)
   {
-    vector3 A,B,C;
+    Eigen::Vector3d A,B,C;
     A = b-a;
     B = c-a;
     C = d-a;
-    matrix3x3 m(A,B,C);
+    
+    Eigen::Matrix3d m;
+    m.row(0) = A;
+    m.row(1) = B;
+    m.row(2) = C;
+    
     return(m.determinant());
   }
 

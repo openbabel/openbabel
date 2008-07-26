@@ -28,7 +28,7 @@ GNU General Public License for more details.
 using namespace std;
 
 
-bool DLHandler::getConvDirectory(string& convPath)
+bool DLHandler::getConvDirectory(std::string& convPath)
 {
     char path[MAX_PATH+1];
 
@@ -85,7 +85,7 @@ const char* DLHandler::getFormatFilePattern()
 }
 
 
-bool DLHandler :: openLib(const string& lib_name)
+bool DLHandler :: openLib(const std::string& lib_name)
 {
 
     if(LoadLibrary(lib_name.c_str()))

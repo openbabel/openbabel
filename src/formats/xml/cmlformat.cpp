@@ -619,16 +619,16 @@ namespace OpenBabel
           if(usingFract)
             {
               //Coordinates are fractional
-              vector3 v;
-              v.Set(x, y, z);
-              v *= pUnitCell->GetOrthoMatrix();
+              Eigen::Vector3d v;
+              v = Eigen::Vector3d(x, y, z);
+              v = pUnitCell->GetOrthoMatrix() * v;
               pAtom->SetVector(v);
             }
           else
             pAtom->SetVector(x, y, z);
       }//each atom
     
-    if(aclass.size()>0)
+    if(aclass.Size()>0)
       _pmol->SetData((new OBAtomClassData(aclass)));
 
     _pmol->SetDimension(dim);
@@ -1290,8 +1290,8 @@ namespace OpenBabel
                 if(pUnitCell)
                   {
                     //Convert to fractional coordinates
-                    vector3 v = patom->GetVector();
-                    v *= pUnitCell->GetFractionalMatrix();
+                    Eigen::Vector3d v = patom->GetVector();
+                    v = pUnitCell->GetFractionalMatrix() * v;
                     X = v.x();
                     Y = v.y();
                     Z = v.z();
@@ -1526,7 +1526,7 @@ namespace OpenBabel
         vector<OBBond*>::iterator ib;
         for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
           {
-            int bo = pbond->GetBO();
+            int bo = pbond->GetBondOrder();
 
             if(!arrayform)
               {
@@ -1615,7 +1615,7 @@ namespace OpenBabel
           {
             for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
               {
-                if(pbond->GetBO()==2 || pbond->IsWedge() || pbond->IsHash())
+                if(pbond->GetBondOrder()==2 || pbond->IsWedge() || pbond->IsHash())
                   WriteBondStereo(pbond, atomIds);
               }
           }

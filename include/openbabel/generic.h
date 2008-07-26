@@ -299,8 +299,8 @@ namespace OpenBabel
 
   protected:
     double _a, _b, _c, _alpha, _beta, _gamma;
-    vector3 _offset; //!< offset for origin
-    vector3 _v1, _v2, _v3; //!< translation vectors
+    Eigen::Vector3d _offset; //!< offset for origin
+    Eigen::Vector3d _v1, _v2, _v3; //!< translation vectors
     std::string _spaceGroupName;
     const SpaceGroup* _spaceGroup;
     LatticeType _lattice;
@@ -327,10 +327,10 @@ namespace OpenBabel
                  const double alpha, const double beta, const double gamma)
     {   _a = a; _b = b; _c = c;
       _alpha = alpha; _beta = beta; _gamma = gamma; }
-    void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
+    void SetData(const Eigen::Vector3d v1, const Eigen::Vector3d v2, const Eigen::Vector3d v3);
 
     //! Set the offset to the origin to @p v1
-    void SetOffset(const vector3 v1) { _offset = v1; }
+    void SetOffset(const Eigen::Vector3d v1) { _offset = v1; }
 
     //! Set the space group for this unit cell.
     //! Does not create an OBSymmetryData entry
@@ -369,7 +369,7 @@ namespace OpenBabel
     //! \return angle gamma
     double GetGamma(){ return(_gamma);}
     //! \return any offset in the origin of the periodic boundaries
-    vector3 GetOffset() { return(_offset); }
+    Eigen::Vector3d GetOffset() { return(_offset); }
 
     //! \return the text representation of the space group for this unit cell
     const SpaceGroup* GetSpaceGroup() { return(_spaceGroup); }
@@ -384,13 +384,13 @@ namespace OpenBabel
     LatticeType GetLatticeType();
 
     //! \return v1, v2, v3 cell vectors
-    std::vector<vector3> GetCellVectors();
+    std::vector<Eigen::Vector3d> GetCellVectors();
     //! \return v1, v2, v3 cell vectors as a 3x3 matrix
-    matrix3x3	GetCellMatrix();
+    Eigen::Matrix3d	GetCellMatrix();
     //! \return The orthogonalization matrix, used for converting from fractional to Cartesian coords.
-    matrix3x3 GetOrthoMatrix();
+    Eigen::Matrix3d GetOrthoMatrix();
     //! \return The fractionalization matrix, used for converting from Cartesian to fractional coords.
-    matrix3x3 GetFractionalMatrix();
+    Eigen::Matrix3d GetFractionalMatrix();
 
     //! \return The numeric value of the given spacegroup
     int GetSpaceGroupNumber( std::string name = "" );
@@ -411,11 +411,11 @@ namespace OpenBabel
     //! Relative energies of conformers (preferably in kJ/mol)
     std::vector<double>                      _vEnergies;
     //! Atomic forces for each conformer
-    std::vector< std::vector< vector3 > >    _vForces;
+    std::vector< std::vector< Eigen::Vector3d > >    _vForces;
     //! Atomic velocities for each conformer (e.g., trajectories)
-    std::vector< std::vector< vector3 > >    _vVelocity;
+    std::vector< std::vector< Eigen::Vector3d > >    _vVelocity;
     //! Atomic displacements for each conformer (e.g., RMS distances)
-    std::vector< std::vector< vector3 > >    _vDisplace;
+    std::vector< std::vector< Eigen::Vector3d > >    _vDisplace;
     //! Additional data (as strings)
     std::vector<std::string>                 _vData;
     
@@ -429,19 +429,19 @@ namespace OpenBabel
 
     void SetDimension(std::vector<unsigned short> vd) { _vDimension = vd; }
     void SetEnergies(std::vector<double> ve) { _vEnergies = ve; }
-    void SetForces(std::vector< std::vector< vector3 > > vf) {_vForces = vf;}
-    void SetVelocities(std::vector< std::vector< vector3 > > vv)
+    void SetForces(std::vector< std::vector< Eigen::Vector3d > > vf) {_vForces = vf;}
+    void SetVelocities(std::vector< std::vector< Eigen::Vector3d > > vv)
     { _vVelocity = vv; }
-    void SetDisplacements(std::vector< std::vector< vector3 > > vd)
+    void SetDisplacements(std::vector< std::vector< Eigen::Vector3d > > vd)
     { _vDisplace = vd; }
     void SetData(std::vector<std::string> vdat) { _vData = vdat; }
 
     std::vector<unsigned short> GetDimension() { return _vDimension; }
     std::vector<double>         GetEnergies()  { return _vEnergies; }
-    std::vector< std::vector< vector3 > > GetForces() {return _vForces; }
-    std::vector< std::vector< vector3 > > GetVelocities()
+    std::vector< std::vector< Eigen::Vector3d > > GetForces() {return _vForces; }
+    std::vector< std::vector< Eigen::Vector3d > > GetVelocities()
       {return _vVelocity;}
-    std::vector< std::vector< vector3 > > GetDisplacements()
+    std::vector< std::vector< Eigen::Vector3d > > GetDisplacements()
       {return _vDisplace;}
     std::vector<std::string>    GetData() { return _vData; }
 
@@ -738,7 +738,7 @@ namespace OpenBabel
   {
   protected:
     //! Normal modes in 1/sqrt(a.u.)
-    std::vector< std::vector< vector3 > > _vLx;
+    std::vector< std::vector< Eigen::Vector3d > > _vLx;
     
     //! Harmonic frequencies in inverse centimeters
     std::vector<double>  _vFrequencies;
@@ -755,11 +755,11 @@ namespace OpenBabel
     
     OBVibrationData & operator=(const OBVibrationData &);
     
-    void SetData(const std::vector< std::vector< vector3 > > &,
+    void SetData(const std::vector< std::vector< Eigen::Vector3d > > &,
                  const std::vector<double> &,
                  const std::vector<double> &);
     
-    std::vector< std::vector< vector3 > > GetLx() const
+    std::vector< std::vector< Eigen::Vector3d > > GetLx() const
       { return this->_vLx; }
     std::vector<double> GetFrequencies() const
       { return this->_vFrequencies; }
@@ -809,14 +809,14 @@ namespace OpenBabel
    virtual OBGenericData* Clone(OBBase*) const
          {return new OBVectorData(*this);}
    void SetData(double x, double y, double z)
-     { _vec = vector3(x, y, z); }
-   void SetData(vector3 data)
+     { _vec = Eigen::Vector3d(x, y, z); }
+   void SetData(Eigen::Vector3d data)
      { _vec = data; }
-   vector3 GetData() const
+   Eigen::Vector3d GetData() const
      { return _vec; }
    
  protected:
-   vector3            _vec; //!< 3D vector to be stored
+   Eigen::Vector3d            _vec; //!< 3D vector to be stored
  };
  
    //! \class OBMatrixData generic.h <openbabel/generic.h>
@@ -829,13 +829,13 @@ namespace OpenBabel
     virtual ~OBMatrixData(){};
     virtual OBGenericData* Clone(OBBase*) const
           {return new OBMatrixData(*this);}
-    void SetData(matrix3x3 data)
+    void SetData(Eigen::Matrix3d data)
       { _matrix = data; }
-    matrix3x3 GetData() const
+    Eigen::Matrix3d GetData() const
       { return _matrix; }
 
   protected:
-    matrix3x3            _matrix; //!< 3x3 matrix to be stored
+    Eigen::Matrix3d            _matrix; //!< 3x3 matrix to be stored
   };
 
  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)

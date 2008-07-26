@@ -209,8 +209,8 @@ namespace OpenBabel
       // first, make begin.GetIdx < end.GetIdx
       OBBond* bond;
       OBAtom *atom;
-      vector<OBEdgeBase*>::iterator j;
-      vector<OBNodeBase*>::iterator i;
+      vector<OBBond*>::iterator j;
+      vector<OBAtom*>::iterator i;
       OBAtom *bgn, *end;
       for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j)) 
         {
@@ -266,7 +266,7 @@ namespace OpenBabel
     bool hasPartialCharges = false;
 
     //Vibrational data
-    std::vector< std::vector< vector3 > > Lx;
+    std::vector< std::vector< Eigen::Vector3d > > Lx;
     std::vector<double> Frequencies, Intensities;;
     //Rotational data
     std::vector<double> RotConsts(3);

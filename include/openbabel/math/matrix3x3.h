@@ -23,7 +23,7 @@ GNU General Public License for more details.
 
 #include <ostream>
 
-#include <openbabel/math/vector3.h> // includes rand.h, which includes <math.h>
+#include <openbabel/math/vector.h> // includes rand.h, which includes <math.h>
 #include <openbabel/oberror.h>
 
 #ifndef RAD_TO_DEG
@@ -39,11 +39,12 @@ namespace OpenBabel
   class OBRandom; // class introduction in rand.h
 
   // class introduction in matrix3x3.cpp
+  /*
   class OBAPI matrix3x3
     {
       //! Elements of the matrix
-      /*! This array holds the matrix. The first index refers to the
-        row, the second the column. */
+      //! This array holds the matrix. The first index refers to the
+      //!  row, the second the column. 
       double ele[3][3];
 
     public:
@@ -83,7 +84,7 @@ namespace OpenBabel
         }
 
       //! \brief Constructs a matrix from a 3x3-array of doubles
-      /*! The first index represents the row, the second index the column */
+      //! The first index represents the row, the second index the column 
       matrix3x3(double d[3][3])
         {
           // Loops are typically unrolled and/or vectorized
@@ -98,9 +99,9 @@ namespace OpenBabel
       ~matrix3x3() {}
 
       //! \brief Access function
-      /*! Writes the matrix into the 1-dimensional array m, row by
-        row. The array must be able to hold 9 doubles, otherwise your
-        program will segfault. */
+      //! Writes the matrix into the 1-dimensional array m, row by
+      //  row. The array must be able to hold 9 doubles, otherwise your
+      //  program will segfault. 
       void GetArray(double *m)
         {
           for (unsigned int i = 0; i < 3; ++i)
@@ -108,15 +109,15 @@ namespace OpenBabel
               m[3*i+j] = ele[i][j];
         }
 
-      /*! \return a constant reference to an element of the matrix.
-          row and column must be between 0 and 2. No check is done. */
+      /! \return a constant reference to an element of the matrix.
+      //    row and column must be between 0 and 2. No check is done. 
       const double & operator() (int row, int column ) const
       {
         return ele[row][column];
       }
 
-      /*! \return a non-constant reference to an element of the matrix.
-          row and column must be between 0 and 2. No check is done. */
+      //! \return a non-constant reference to an element of the matrix.
+      //    row and column must be between 0 and 2. No check is done. 
       double & operator() (int row, int column )
       {
         return ele[row][column];
@@ -142,7 +143,7 @@ namespace OpenBabel
       bool isSymmetric(void) const;
 
       //! Checks if a matrix is orthogonal
-      /*! This method checks if a matrix is orthogonal, i.e.
+      //! This method checks if a matrix is orthogonal, i.e.
         if all column vectors are normalized and
         are mutually orthogonal. A matrix is orthogonal if,
         and only if the transformation it describes is orthonormal.
@@ -155,7 +156,7 @@ namespace OpenBabel
         *this * transpose()
         \endcode
         is a unit matrix. The criterion is therefore numerically quite
-        tight. */
+        tight. 
       bool isOrthogonal(void) const
         {
           return (*this * transpose()).isUnitMatrix();
@@ -168,9 +169,9 @@ namespace OpenBabel
       bool isUnitMatrix(void) const;
 
       //! Access function
-      /*! \warning row or column are not in the range 0..2, zero is returned
-       *! \deprecated use the constant operator() instead
-       */
+      /! \warning row or column are not in the range 0..2, zero is returned
+       ! \deprecated use the constant operator() instead
+       
       double Get(int row,int column) const
         {
 #ifdef OB_OLD_MATH_CHECKS
@@ -184,9 +185,9 @@ namespace OpenBabel
         }
 
       //! Access function
-      /*! \warning if row or column are not in the range 0..2, nothing will happen
-       *! \deprecated use the non-constant operator() instead
-       */
+      /! \warning if row or column are not in the range 0..2, nothing will happen
+       ! \deprecated use the non-constant operator() instead
+       /
       void Set(int row,int column, double v)
         {
 #ifdef OB_OLD_MATH_CHECKS
@@ -198,8 +199,8 @@ namespace OpenBabel
         }
 
       //! Access function
-      /*! \warning If column is not in the range 0..2, the vector
-        remains unchanged and an exception is thrown. */
+      /! \warning If column is not in the range 0..2, the vector
+        remains unchanged and an exception is thrown. 
       void SetColumn(int column, const vector3 &v)
 #ifdef OB_OLD_MATH_CHECKS
   throw(OBError)
@@ -207,8 +208,8 @@ namespace OpenBabel
       ;
 
       //! Access function
-      /*! \warning If column is not in the range 0..2, the vector
-        remains unchanged and an exception is thrown. */
+      ! \warning If column is not in the range 0..2, the vector
+        remains unchanged and an exception is thrown. 
       void SetRow(int row, const vector3 &v)
 #ifdef OB_OLD_MATH_CHECKS
   throw(OBError)
@@ -216,8 +217,8 @@ namespace OpenBabel
       ;
 
       //! Access function
-      /*! \warning If col is not in the range 0..2, an exception is
-        thrown. */
+      /! \warning If col is not in the range 0..2, an exception is
+        thrown. /
       vector3 GetColumn(unsigned int col) const
 #ifdef OB_OLD_MATH_CHECKS
   throw(OBError)
@@ -225,8 +226,8 @@ namespace OpenBabel
       ;
 
       //! Access function
-      /*! \warning If row is not in the range 0..2, an exception is
-        thrown. */
+      /! \warning If row is not in the range 0..2, an exception is
+        thrown. /
       vector3 GetRow(unsigned int row) const
 #ifdef OB_OLD_MATH_CHECKS
   throw(OBError)
@@ -290,8 +291,8 @@ namespace OpenBabel
 #ifndef SWIG
   OBAPI vector3 center_coords(double*,int);
 #endif
+*/
 }
-
 #endif // OB_MATRIX3x3_H
 
 //! \file matrix3x3.h

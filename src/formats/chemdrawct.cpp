@@ -93,7 +93,7 @@ namespace OpenBabel
         snprintf(buffer, BUFF_SIZE, "%3d%3d%3d%3d",
                  bond->GetBeginAtomIdx(),
                  bond->GetEndAtomIdx(),
-                 bond->GetBO(), bond->GetBO());
+                 bond->GetBondOrder(), bond->GetBondOrder());
         ofs << buffer << endl;
       }
     return(true);

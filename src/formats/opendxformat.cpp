@@ -130,10 +130,10 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       y = atof(vs[2].c_str());
       z = atof(vs[3].c_str());
     }
-    vector3 origin(x, y, z);
+    Eigen::Vector3d origin(x, y, z);
 
     // now three lines with the x, y, and z axes
-    vector<vector3> axes;
+    vector<Eigen::Vector3d> axes;
     for (unsigned int i = 0; i < 3; ++i) {
       if (!ifs.getline(buffer, BUFF_SIZE) || !EQn(buffer, "delta", 5))
         return false;
@@ -144,7 +144,7 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         x = atof(vs[1].c_str());
         y = atof(vs[2].c_str());
         z = atof(vs[3].c_str());
-        axes.push_back(vector3(x, y, z));
+        axes.push_back(Eigen::Vector3d(x, y, z));
       }
     }    
 

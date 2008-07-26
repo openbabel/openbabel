@@ -20,8 +20,9 @@ GNU General Public License for more details.
 #include <string>
 #include <map>
 
-#include <openbabel/parsmart.h>
+//#include <openbabel/parsmart.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/ffinternal.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 
@@ -31,9 +32,7 @@ namespace OpenBabel
   {
     public:
       int bt; // bondtype (BTIJ)
-      double kb, r0, rab, delta;
-      
-      template<bool> void Compute();
+      double kb, r0;
   };
   
   class OBFFAngleCalculationMMFF94 : public OBFFCalculation3 
@@ -41,56 +40,41 @@ namespace OpenBabel
     public:
       int at; //angletype (ATIJK)
       bool linear;
-      double ka, theta, theta0, delta;
- 
-      template<bool> void Compute();
+      double ka, theta0;
   };
   
   class OBFFStrBndCalculationMMFF94 : public OBFFCalculation3 
   {
     public:
       int sbt; //strbndtype (SBTIJK)
-      double kbaABC, kbaCBA, theta0, rab0, rbc0, delta_theta, delta_rab, delta_rbc;
-      double theta, rab, rbc;
-      double force_ab_a[3], force_ab_b[3], force_bc_b[3], force_bc_c[3]; 
-      double force_abc_a[3], force_abc_b[3], force_abc_c[3];
- 
-      template<bool> void Compute();
+      double kbaABC, kbaCBA, theta0, rab0, rbc0;
   };
 
   class OBFFTorsionCalculationMMFF94 : public OBFFCalculation4 
   {
     public:
       int tt; //torsiontype (TTIJKL)
-      double v1, v2, v3, tor, cosine;
-      
-      template<bool> void Compute();
+      double v1, v2, v3;
   };
 
   class OBFFOOPCalculationMMFF94 : public OBFFCalculation4
   {
     public:
-      double koop, angle;
-     
-      template<bool> void Compute();
+      double koop;
   };
 
   class OBFFVDWCalculationMMFF94 : public OBFFCalculation2
   {
     public:
-      int aDA, bDA; // hydrogen donor/acceptor (A=1, D=2, neither=0)
-      double rab, epsilon, alpha_a, alpha_b, Na, Nb, Aa, Ab, Ga, Gb;
-      double R_AB, R_AB7/*, erep, erep7, eattr*/;
-
-      template<bool> void Compute();
+      //int aDA, bDA; // hydrogen donor/acceptor (A=1, D=2, neither=0)
+      double epsilon /*, alpha_a, alpha_b, Na, Nb, Aa, Ab, Ga, Gb*/;
+      double R_AB, R_AB7;
   };
 
   class OBFFElectrostaticCalculationMMFF94 : public OBFFCalculation2
   {
     public:
-      double qq, rab;
-
-      template<bool> void Compute();
+      double qq;
   };
 
   // Class OBForceFieldMMFF94
@@ -120,8 +104,6 @@ namespace OpenBabel
       bool SetTypes();
       //! fill OBFFXXXCalculation vectors
       bool SetupCalculations();
-      //! Setup pointers in OBFFXXXCalculation vectors
-      bool SetupPointers();
       //!  Sets formal charges
       bool SetFormalCharges();
       //!  Sets partial charges
@@ -224,31 +206,23 @@ namespace OpenBabel
       std::vector<OBFFElectrostaticCalculationMMFF94> _electrostaticcalculations;
 
       bool mmff94s;
+      char _logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
       
     public:
       //! Constructor
       explicit OBForceFieldMMFF94(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
-        _init = false;
-        _rvdw = 7.0;
-        _rele = 15.0;
-        _pairfreq = 15;
-        _cutoff = false;
-        _linesearch = LineSearchType::Simple;
 	if (!strncmp(ID, "MMFF94s", 7)) {
           mmff94s = true;
-          _parFile = std::string("mmff94s.ff");
+          SetParameterFile(std::string("mmff94s.ff"));
 	} else {
           mmff94s = false;
-          _parFile = std::string("mmff94.ff");
+          SetParameterFile(std::string("mmff94.ff"));
 	}
       }
       
       //! Destructor
       virtual ~OBForceFieldMMFF94();
-      
-      //! Assignment
-      OBForceFieldMMFF94 &operator = (OBForceFieldMMFF94 &);
       
       //!Clone the current instance. May be desirable in multithreaded environments
       virtual OBForceFieldMMFF94* MakeNewInstance()

@@ -26,7 +26,7 @@ GNU General Public License for more details.
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
+#include <cmath>
 
 #include <openbabel/rand.h>
 

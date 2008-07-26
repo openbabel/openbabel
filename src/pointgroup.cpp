@@ -26,7 +26,7 @@ GNU General Public License for more details.
 #include <iostream>
 
 #include <string>
-#include <math.h>
+#include <cmath>
 
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795028841971694
@@ -964,9 +964,9 @@ namespace OpenBabel {
     StatTotal++ ;
     /* First, do a quick sanity check */
 
-    vector3 supportVec(support[0], support[1], support[2]);
-    ris = vector3(_mol->GetAtom(i+1)->GetVector() - supportVec).length();
-    rjs = vector3(_mol->GetAtom(j+1)->GetVector() - supportVec).length();
+    Eigen::Vector3d supportVec(support[0], support[1], support[2]);
+    ris = Eigen::Vector3d(_mol->GetAtom(i+1)->GetVector() - supportVec).norm();
+    rjs = Eigen::Vector3d(_mol->GetAtom(j+1)->GetVector() - supportVec).norm();
     
     if( fabs( ris - rjs ) > TolerancePrimary ){
       StatEarly++ ;
@@ -1403,8 +1403,8 @@ namespace OpenBabel {
         center[1] = (a1->y() + a2->z()) / 2.0;
         center[2] = (a1->z() + a2->y()) / 2.0;        
         
-        r = (vector3(center[0], center[1], center[2]) 
-            - vector3(CenterOfSomething[0], CenterOfSomething[1], CenterOfSomething[2])).length();
+        r = (Eigen::Vector3d(center[0], center[1], center[2]) 
+            - Eigen::Vector3d(CenterOfSomething[0], CenterOfSomething[1], CenterOfSomething[2])).norm();
         
         if( r > 5*TolerancePrimary ){ /* It's Ok to use CenterOfSomething */
           if( ( axis = init_c2_axis( i, j, CenterOfSomething ) ) != NULL ){
@@ -1423,7 +1423,7 @@ namespace OpenBabel {
          *  middle of the other pair.
          */
         for( k = 0 ; k < _mol->NumAtoms() ; k++ ){
-          if( ( axis = init_c2_axis( i, j, _mol->GetAtom(k+1)->GetVector().AsArray() ) ) != NULL ){
+          if( ( axis = init_c2_axis( i, j, &_mol->GetAtom(k+1)->GetVector()[0] ) ) != NULL ){
             NormalAxesCount++ ;
             NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
             if( NormalAxes == NULL ){

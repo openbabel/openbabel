@@ -140,20 +140,20 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
     buf = _pxmlConv->GetAttribute("Display");
     if (buf.length())
     {
-	  if (buf == "WedgeEnd")
+      if (buf == "WedgeEnd")
       {
         invert_ends = true;
-        Flag = OB_WEDGE_BOND;
-	  }
+        Flag = OBBondFlag::Wedge;
+      }
       else if (buf == "WedgeBegin")
-        Flag = OB_WEDGE_BOND;
+        Flag = OBBondFlag::Wedge;
       else if (buf == "WedgedHashBegin")
       {
         invert_ends = true;
-        Flag = OB_HASH_BOND;
+        Flag = OBBondFlag::Hash;
 	  }
       else if (buf == "Hash" || buf == "WedgedHashEnd")
-        Flag = OB_HASH_BOND;
+        Flag = OBBondFlag::Hash;
     }
     buf = _pxmlConv->GetAttribute("B");
     if (buf.length())
@@ -296,7 +296,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     xmlTextWriterWriteFormatAttribute(writer(), C_BEGIN , "%d", patom->GetIdx() + _offset);
 	patom = pbond->GetEndAtom();
     xmlTextWriterWriteFormatAttribute(writer(), C_END , "%d", patom->GetIdx() + _offset);
-	n = pbond->GetBO();
+	n = pbond->GetBondOrder();
     if (n != 1)
     {
       xmlTextWriterWriteFormatAttribute(writer(), C_ORDER , "%d", n);

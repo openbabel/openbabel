@@ -297,37 +297,37 @@ namespace OpenBabel
   **\param v3 The z-vector
   **\see OBUnitCell::GetCellVectors
   */
-  void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
+  void OBUnitCell::SetData(const Eigen::Vector3d v1, const Eigen::Vector3d v2, const Eigen::Vector3d v3)
   {
-    _a = v1.length();
-    _b = v2.length();
-    _c = v3.length();
-    _alpha = vectorAngle(v2, v3);
-    _beta = vectorAngle(v1, v3);
-    _gamma = vectorAngle(v1, v2);
+    _a = v1.norm();
+    _b = v2.norm();
+    _c = v3.norm();
+    _alpha = VectorAngle(v2, v3);
+    _beta = VectorAngle(v1, v3);
+    _gamma = VectorAngle(v1, v2);
     _v1 = v1;
     _v2 = v2;
     _v3 = v3;
   }
 
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertNotionalIntoCartesianCoordinates">blue-obelisk:convertNotionalIntoCartesianCoordinates</a>
-  vector<vector3> OBUnitCell::GetCellVectors()
+  vector<Eigen::Vector3d> OBUnitCell::GetCellVectors()
   {
-    vector<vector3> v;
+    vector<Eigen::Vector3d> v;
     v.reserve(3);
 
-    if (IsNegligible(_v1.length(), 1.0, 1.0e-9) &&
-        IsNegligible(_v2.length(), 1.0, 1.0e-9) &&
-        IsNegligible(_v3.length(), 1.0, 1.0e-9))
+    if (IsNegligible(_v1.norm(), 1.0, 1.0e-9) &&
+        IsNegligible(_v2.norm(), 1.0, 1.0e-9) &&
+        IsNegligible(_v3.norm(), 1.0, 1.0e-9))
       {
-        vector3 temp;
-        matrix3x3 m = GetOrthoMatrix();
+        Eigen::Vector3d temp;
+        Eigen::Matrix3d m = GetOrthoMatrix();
 
-        temp = vector3(1.0, 0.0, 0.0);
+        temp = Eigen::Vector3d(1.0, 0.0, 0.0);
         v.push_back(m * temp);
-        temp = vector3(0.0, 1.0, 0.0);
+        temp = Eigen::Vector3d(0.0, 1.0, 0.0);
         v.push_back(m * temp);
-        temp = vector3(0.0, 0.0, 1.0);
+        temp = Eigen::Vector3d(0.0, 0.0, 1.0);
         v.push_back(m * temp);
       }
     else
@@ -340,34 +340,53 @@ namespace OpenBabel
     return v;
   }
 
-  matrix3x3 OBUnitCell::GetCellMatrix()
+  Eigen::Matrix3d OBUnitCell::GetCellMatrix()
   {
-    matrix3x3 m;
+    Eigen::Matrix3d m;
 
-    if (IsNegligible(_v1.length(), 1.0, 1.0e-9) &&
-        IsNegligible(_v2.length(), 1.0, 1.0e-9) &&
-        IsNegligible(_v3.length(), 1.0, 1.0e-9))
+    if (IsNegligible(_v1.norm(), 1.0, 1.0e-9) &&
+        IsNegligible(_v2.norm(), 1.0, 1.0e-9) &&
+        IsNegligible(_v3.norm(), 1.0, 1.0e-9))
       {
         m = GetOrthoMatrix();
       }
     else
       {
-        vector3 v1, v2, v3;
-        v1 = _v1;
-        v2 = _v2;
-        v3 = _v3;
-        m = matrix3x3(v1,v2,v3);
+        m.row(0) = _v1;
+        m.row(1) = _v2;
+        m.row(2) = _v3;
       }
     return m;
   }
 
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#calculateOrthogonalisationMatrix">blue-obelisk:calculateOrthogonalisationMatrix</a>
-  matrix3x3 OBUnitCell::GetOrthoMatrix()
+  Eigen::Matrix3d OBUnitCell::GetOrthoMatrix()
   {
-    matrix3x3 m;
-  
-    // already here, let's not duplicate the work
-    m.FillOrth(_alpha, _beta, _gamma, _a, _b, _c);
+    Eigen::Matrix3d m;
+    double V;
+
+    _alpha *= DEG_TO_RAD;
+    _beta  *= DEG_TO_RAD;
+    _gamma *= DEG_TO_RAD;
+
+    // from the PDB specification:
+    //  http://www.rcsb.org/pdb/docs/format/pdbguide2.2/part_75.html
+
+    // since we'll ultimately divide by (a * b), we've factored those out here
+    V = _c * sqrt(1 - SQUARE(cos(_alpha)) - SQUARE(cos(_beta)) - SQUARE(cos(_gamma))
+                 + 2 * cos(_alpha) * cos(_beta) * cos(_gamma));
+
+    m[0,0] = _a;
+    m[0,1] = _b * cos(_gamma);
+    m[0,2] = _c * cos(_beta);
+
+    m[1,0] = 0.0;
+    m[1,1] = _b * sin(_gamma);
+    m[1,2] = _c * ( cos(_alpha) - cos(_beta) * cos(_gamma) ) / sin(_gamma);
+
+    m[2,0] = 0.0;
+    m[2,1] = 0.0;
+    m[2,2] = V / (sin(_gamma)); // again, we factored out A * B when defining V
 
     return m;
   }
@@ -375,9 +394,9 @@ namespace OpenBabel
   // Based on code in PyMMLib: http://pymmlib.sf.net/
   //! Matrix to convert from Cartesian to fractional
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertCartesianIntoFractionalCoordinates">blue-obelisk:convertCartesianIntoFractionalCoordinates</a> 
-  matrix3x3 OBUnitCell::GetFractionalMatrix()
+  Eigen::Matrix3d OBUnitCell::GetFractionalMatrix()
   {
-    matrix3x3 m;
+    Eigen::Matrix3d m;
     double sinAlpha, sinBeta, sinGamma;
     double cosAlpha, cosBeta, cosGamma;
     double v;
@@ -392,15 +411,15 @@ namespace OpenBabel
     v = sqrt(1 - SQUARE(cosAlpha) - SQUARE(cosBeta) - SQUARE(cosGamma) +
              2 * cosAlpha*cosBeta*cosGamma);
 
-    m.Set(0,0,  1.0 / _a);
-    m.Set(0,1,  -cosGamma / (_a * sinGamma) );
-    m.Set(0,2,  (cosGamma * cosAlpha - cosBeta) / (_a * v * sinGamma) );
-    m.Set(1,0,  0.0);
-    m.Set(1,1,  1.0 / (_b * sinGamma) );
-    m.Set(1,2,  (cosGamma * cosBeta - cosAlpha) / (_b * v * sinGamma) );
-    m.Set(2,0,  0.0);
-    m.Set(2,1,  0.0);
-    m.Set(2,2,  sinGamma / (_c * v) );
+    m[0,0] = 1.0 / _a;
+    m[0,1] = -cosGamma / (_a * sinGamma);
+    m[0,2] = (cosGamma * cosAlpha - cosBeta) / (_a * v * sinGamma);
+    m[1,0] = 0.0;
+    m[1,1] = 1.0 / (_b * sinGamma);
+    m[1,2] = (cosGamma * cosBeta - cosAlpha) / (_b * v * sinGamma);
+    m[2,0] = 0.0;
+    m[2,1] = 0.0;
+    m[2,2] = sinGamma / (_c * v) ;
 
     return m;
   }
@@ -552,9 +571,9 @@ namespace OpenBabel
     const SpaceGroup *sg = GetSpaceGroup(); // the actual space group and transformations for this unit cell
     
     // For each atom, we loop through: convert the coords back to inverse space, apply the transformations and create new atoms
-    vector3 uniqueV, newV;
-    list<vector3> transformedVectors; // list of symmetry-defined copies of the atom
-    list<vector3>::iterator transformIterator;
+    Eigen::Vector3d uniqueV, newV;
+    list<Eigen::Vector3d> transformedVectors; // list of symmetry-defined copies of the atom
+    list<Eigen::Vector3d>::iterator transformIterator;
     OBAtom *newAtom;
     list<OBAtom*> atoms; // keep the current list of unique atoms -- don't double-create
     FOR_ATOMS_OF_MOL(atom, *mol)
@@ -563,7 +582,7 @@ namespace OpenBabel
     list<OBAtom*>::iterator i;
     for (i = atoms.begin(); i != atoms.end(); ++i) {
       uniqueV = (*i)->GetVector();
-      uniqueV *= GetFractionalMatrix();
+      uniqueV = GetFractionalMatrix() * uniqueV;
         
       transformedVectors = sg->Transform(uniqueV);
       for (transformIterator = transformedVectors.begin();
@@ -1367,7 +1386,7 @@ namespace OpenBabel
 **\param vFrequencies Harmonic frequencies in inverse centimeters
 **\param vIntensities Infrared absorption intensities in KM/Mole
 */
-void OBVibrationData::SetData(const std::vector< std::vector< vector3 > > & vLx,
+void OBVibrationData::SetData(const std::vector< std::vector< Eigen::Vector3d > > & vLx,
                               const std::vector<double> & vFrequencies,
                               const std::vector<double> & vIntensities)
 {

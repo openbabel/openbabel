@@ -217,7 +217,7 @@ namespace OpenBabel
 }
 
   /////////////////////////////////////////////////////////
-  bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned int>& SeekposMap,
+  bool FastSearch::FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
                                double MinTani)
   {
     vector<unsigned int> targetfp;
@@ -240,7 +240,7 @@ namespace OpenBabel
   }
 
   /////////////////////////////////////////////////////////
-  bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned int>& SeekposMap,
+  bool FastSearch::FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
                                int nCandidates)
   {
     ///If nCandidates is zero or omitted the original size of the multimap is used
@@ -278,7 +278,7 @@ namespace OpenBabel
   }
 
   /////////////////////////////////////////////////////////
-  string FastSearch::ReadIndex(istream* pIndexstream)
+  string FastSearch::ReadIndex(std::istream* pIndexstream)
   {
     //Reads fs index from istream into member variables
     _index.Read(pIndexstream);
@@ -291,7 +291,7 @@ namespace OpenBabel
   }
 
   //////////////////////////////////////////////////////////
-  string FastSearch::ReadIndexFile(string IndexFilename)
+  string FastSearch::ReadIndexFile(std::string IndexFilename)
   {
     ifstream ifs(IndexFilename.c_str(),ios::binary);
     if(ifs)
@@ -304,7 +304,7 @@ namespace OpenBabel
   }
 
   //////////////////////////////////////////////////////////
-  bool FptIndex::Read(istream* pIndexstream)
+  bool FptIndex::Read(std::istream* pIndexstream)
   {
     pIndexstream->read((char*)&(header), sizeof(FptIndexHeader));
     pIndexstream->seekg(header.headerlength);//allows header length to be changed
@@ -345,7 +345,7 @@ namespace OpenBabel
   }
 
   //*******************************************************
-  FastSearchIndexer::FastSearchIndexer(string& datafilename, ostream* os, 
+  FastSearchIndexer::FastSearchIndexer(std::string& datafilename, std::ostream* os, 
                                        std::string& fpid, int FptBits)
   {
     ///Starts indexing process

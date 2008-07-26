@@ -24,7 +24,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/base.h>
-#include <openbabel/math/vector3.h>
+#include <openbabel/math/vector.h>
 
 #include <vector>
 
@@ -55,13 +55,13 @@ namespace OpenBabel {
     /// direction.
     void GetAxes(double x[3], double y[3], double z[3]) const;
     //! \return X axis direction.
-    vector3 GetXAxis() const;
+    Eigen::Vector3d GetXAxis() const;
     //! \return Y axis direction.
-    vector3 GetYAxis() const;
+    Eigen::Vector3d GetYAxis() const;
     //! \return Z axis direction.
-    vector3 GetZAxis() const;
+    Eigen::Vector3d GetZAxis() const;
     /// \return the three axes parallel to the grid edges
-    void GetAxes(vector3 &v1, vector3 &v2, vector3 &v3) const;
+    void GetAxes(Eigen::Vector3d &v1, Eigen::Vector3d &v2, Eigen::Vector3d &v3) const;
     /// \return number of points along the three axes parallel to the grid edges.
     void GetNumberOfPoints(int &nx, int &ny, int &nz) const;
     /// \return total number of points in the grid.
@@ -73,21 +73,21 @@ namespace OpenBabel {
     /// \return the value at position i, j, k in the grid.
     double GetValue(int i, int j, int k) const;
     /// \return the value at a position in the grid (by interpolation)
-    double GetValue (vector3 pos) const;
+    double GetValue (Eigen::Vector3d pos) const;
     /// \return the unit of measure for grid spacings.
     Unit GetUnit() const;
     /// \return the minimum value of all points in the grid.
     double GetMinValue() const;
     /// \return the maximum value of all points in the grid.
     double GetMaxValue() const;
-    /// \return vector3 of the origin (i.e., the minimum x, y, and z coords of the grid).
-    vector3 GetOriginVector() const;
+    /// \return Eigen::Vector3d of the origin (i.e., the minimum x, y, and z coords of the grid).
+    Eigen::Vector3d GetOriginVector() const;
     /// \param o set to the origin (i.e., the minimum x, y, and z coords of the grid).
     /// \deprecated Will be removed.
     /// \sa GetOriginVector()
     void GetOriginVector(double o[3]) const;
     /// \return The maximum point in the grid.
-    vector3 GetMaxVector() const;
+    Eigen::Vector3d GetMaxVector() const;
     /// \return the unrestricted flag.
     bool GetUnrestricted() const;
     /// \return the number of symmetries.
@@ -103,10 +103,10 @@ namespace OpenBabel {
     /// NOTE: You must set the number of points first,
     ///       with SetNumberOfPoints
     ///       so the grid spacing can be calculated
-    void SetLimits(const vector3 &origin, const vector3 &x, const vector3 &y,
-                   const vector3 &z);
+    void SetLimits(const Eigen::Vector3d &origin, const Eigen::Vector3d &x, const Eigen::Vector3d &y,
+                   const Eigen::Vector3d &z);
     /// \deprecated Will be removed.
-    /// \sa SetLimits(const vector3 &origin, const vector3 &x, const vector3 &y, const vector3 &z)
+    /// \sa SetLimits(const Eigen::Vector3d &origin, const Eigen::Vector3d &x, const Eigen::Vector3d &y, const Eigen::Vector3d &z)
     void SetLimits(const double origin[3], const double x[3], const double y[3],
                    const double z[3]);
     /// Set an individual value, grid must have been initialised

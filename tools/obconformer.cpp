@@ -88,9 +88,10 @@ int main(int argc,char *argv[])
       conv.Read(&mol);
 
       pFF->Setup(mol);
-      pFF->WeightedRotorSearch(weightSteps, geomSteps);
+      pFF->SystematicRotorSearch(geomSteps);
+      //pFF->WeightedRotorSearch(weightSteps, geomSteps);
       pFF->ConjugateGradients(geomSteps); // final cleanup
-      pFF->UpdateCoordinates(mol);
+      pFF->GetCoordinates(mol);
       conv.Write(&mol);
     } // while reading molecules
   

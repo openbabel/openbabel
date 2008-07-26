@@ -80,7 +80,7 @@ namespace OpenBabel
     string str;
     double x,y,z;
     OBAtom *atom;
-    vector3 v1,v2,v3;
+    Eigen::Vector3d v1,v2,v3;
     vector<string> vs;
 
     ifs.getline(buffer,BUFF_SIZE);
@@ -100,21 +100,21 @@ namespace OpenBabel
         x = atof((char*)vs[0].c_str()) * BOHR_TO_ANGSTROM;
         y = atof((char*)vs[1].c_str()) * BOHR_TO_ANGSTROM;
         z = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
-        v1.Set(x,y,z);
+        v1 = Eigen::Vector3d(x,y,z);
         ifs.getline(buffer,BUFF_SIZE);
         tokenize(vs,buffer);
 	if (vs.size() < 3) return false; // timvdm 18/06/2008
         x = atof((char*)vs[0].c_str()) * BOHR_TO_ANGSTROM;
         y = atof((char*)vs[1].c_str()) * BOHR_TO_ANGSTROM;
         z = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
-        v2.Set(x,y,z);
+        v2 = Eigen::Vector3d(x,y,z);
         ifs.getline(buffer,BUFF_SIZE);
         tokenize(vs,buffer);
 	if (vs.size() < 3) return false; // timvdm 18/06/2008
         x = atof((char*)vs[0].c_str()) * BOHR_TO_ANGSTROM;
         y = atof((char*)vs[1].c_str()) * BOHR_TO_ANGSTROM;
         z = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
-        v3.Set(x,y,z);
+        v3 = Eigen::Vector3d(x,y,z);
 
         OBUnitCell *uc = new OBUnitCell;
         uc->SetOrigin(fileformatInput);
@@ -175,8 +175,8 @@ namespace OpenBabel
     if (mol.HasData(OBGenericDataType::UnitCell))
       {
         OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
-        vector<vector3> v = uc->GetCellVectors();
-        vector3 v1;
+        vector<Eigen::Vector3d> v = uc->GetCellVectors();
+        Eigen::Vector3d v1;
 
         ofs << "$cell vectors" << endl;
         v1 = v[0] * ANGSTROM_TO_BOHR;

@@ -236,8 +236,8 @@ namespace OpenBabel
 
                 snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4d %10.3f",
                         a->GetIdx(), b->GetIdx(),c->GetIdx(),d->GetIdx(),
-                        CalcTorsionAngle(a->GetVector(), b->GetVector(),
-                                         c->GetVector(), d->GetVector()));
+                        VectorTorsion(a->GetVector(), b->GetVector(),
+                                      c->GetVector(), d->GetVector()));
                 ofs << buffer << "\n";
               }
           }
@@ -247,7 +247,7 @@ namespace OpenBabel
   void ReportFormat::WriteAngles(ostream &ofs,OBMol &mol)
   {
     // Alas, we still need to sort these to only list unique entries...
-    vector3 v1, v2;
+    Eigen::Vector3d v1, v2;
     OBAtom *a, *b, *c, *d;
     OBBond *bond1, *bond2, *bond3;
     vector<OBBond*>::iterator i, j, k;
@@ -271,7 +271,7 @@ namespace OpenBabel
                 snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4s %4s %4s %10.3f",
                         a->GetIdx(),b->GetIdx(),c->GetIdx(),
                         a->GetType(),b->GetType(),c->GetType(),
-                        vectorAngle(v1, v2));
+                        VectorAngle(v1, v2));
                 ofs << buffer << "\n";
 
                 for (bond3 = c->BeginBond(k); bond3; bond3 = c->NextBond(k))
@@ -286,7 +286,7 @@ namespace OpenBabel
                       snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4s %4s %4s %10.3f",
                               b->GetIdx(),c->GetIdx(),d->GetIdx(),
                               b->GetType(),c->GetType(),d->GetType(),
-                              vectorAngle(v1, v2));
+                              VectorAngle(v1, v2));
                       ofs << buffer << "\n";
                     }
               }

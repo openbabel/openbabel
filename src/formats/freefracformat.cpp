@@ -115,13 +115,13 @@ namespace OpenBabel
     uc->SetOrigin(fileformatInput);
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
     mol.SetData(uc);
-    matrix3x3 m = uc->GetOrthoMatrix();
+    Eigen::Matrix3d m = uc->GetOrthoMatrix();
 
     mol.BeginModify();
 
     string str;
     double x,y,z;
-    vector3 v;
+    Eigen::Vector3d v;
     int atomicNum;
     OBAtom *atom;
 
@@ -153,8 +153,8 @@ namespace OpenBabel
             y = atof(vs[2].c_str());
             z = atof(vs[3].c_str());
           }
-        v.Set(x, y, z);
-        v *= m;	// get cartesian coordinates -- multiply by orthogonalization matrix
+        v = Eigen::Vector3d(x, y, z);
+        v = m * v;	// get cartesian coordinates -- multiply by orthogonalization matrix
         atom->SetVector(v);
 
         atom->SetAtomicNum(atomicNum);
@@ -204,12 +204,12 @@ namespace OpenBabel
         ofs << buffer << "\n";
       }
 
-    vector3 v;
+    Eigen::Vector3d v;
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         v = atom->GetVector();
         if (uc != NULL)
-          v *= uc->GetFractionalMatrix();
+          v = uc->GetFractionalMatrix() * v;
 
         snprintf(buffer, BUFF_SIZE, "%s %10.5f%10.5f%10.5f",
                  etab.GetSymbol(atom->GetAtomicNum()),

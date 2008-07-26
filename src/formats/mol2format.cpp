@@ -147,7 +147,6 @@ namespace OpenBabel
     mol.ReserveAtoms(natoms);
 
     int i;
-    vector3 v;
     OBAtom atom;
     bool hasPartialCharges=false;
     double x,y,z,pcharge;
@@ -450,7 +449,7 @@ namespace OpenBabel
         else if (bond->IsAmide())
           strcpy(label,"am");
         else
-          snprintf(label,BUFF_SIZE,"%d",bond->GetBO());
+          snprintf(label,BUFF_SIZE,"%d",bond->GetBondOrder());
 
         snprintf(buffer, BUFF_SIZE,"%6d%6d%6d%3s%2s",
                  bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),

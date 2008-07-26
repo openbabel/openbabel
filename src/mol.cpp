@@ -203,135 +203,34 @@ namespace OpenBabel
 
   double OBMol::GetTorsion(int a,int b,int c,int d)
   {
-    return(CalcTorsionAngle(((OBAtom*)_vatom[a-1])->GetVector(),
-                            ((OBAtom*)_vatom[b-1])->GetVector(),
-                            ((OBAtom*)_vatom[c-1])->GetVector(),
-                            ((OBAtom*)_vatom[d-1])->GetVector()));
+    return(VectorTorsion(((OBAtom*)_vatom[a-1])->GetVector(),
+                         ((OBAtom*)_vatom[b-1])->GetVector(),
+                         ((OBAtom*)_vatom[c-1])->GetVector(),
+                         ((OBAtom*)_vatom[d-1])->GetVector()));
   }
 
   void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, double ang)
   {
-    vector<int> tor;
-    vector<int> atoms;
-
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::SetTorsion", obAuditMsg);
+    int tor[4];
+    tor[0] = a->GetIdx();
+    tor[1] = b->GetIdx();
+    tor[2] = c->GetIdx();
+    tor[3] = d->GetIdx();
 
-    tor.push_back(a->GetCIdx());
-    tor.push_back(b->GetCIdx());
-    tor.push_back(c->GetCIdx());
-    tor.push_back(d->GetCIdx());
-
+    vector<int> atoms;
     FindChildren(atoms, b->GetIdx(), c->GetIdx());
-    int j;
-    for (j = 0 ; (unsigned)j < atoms.size() ; j++ )
-      atoms[j] = (atoms[j] - 1) * 3;
 
-    double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
-    double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
-    double c1mag,c2mag,radang,costheta,m[9];
-    double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
-
-    //calculate the torsion angle
-
-    v1x = _c[tor[0]]   - _c[tor[1]];
-    v2x = _c[tor[1]]   - _c[tor[2]];
-    v1y = _c[tor[0]+1] - _c[tor[1]+1];
-    v2y = _c[tor[1]+1] - _c[tor[2]+1];
-    v1z = _c[tor[0]+2] - _c[tor[1]+2];
-    v2z = _c[tor[1]+2] - _c[tor[2]+2];
-    v3x = _c[tor[2]]   - _c[tor[3]];
-    v3y = _c[tor[2]+1] - _c[tor[3]+1];
-    v3z = _c[tor[2]+2] - _c[tor[3]+2];
-
-
-    c1x = v1y*v2z - v1z*v2y;
-    c2x = v2y*v3z - v2z*v3y;
-    c1y = -v1x*v2z + v1z*v2x;
-    c2y = -v2x*v3z + v2z*v3x;
-    c1z = v1x*v2y - v1y*v2x;
-    c2z = v2x*v3y - v2y*v3x;
-    c3x = c1y*c2z - c1z*c2y;
-    c3y = -c1x*c2z + c1z*c2x;
-    c3z = c1x*c2y - c1y*c2x;
-
-    c1mag = SQUARE(c1x)+SQUARE(c1y)+SQUARE(c1z);
-    c2mag = SQUARE(c2x)+SQUARE(c2y)+SQUARE(c2z);
-    if (c1mag*c2mag < 0.01)
-      costheta = 1.0; //avoid div by zero error
-    else
-      costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
-
-    if (costheta < -0.999999)
-      costheta = -0.999999;
-    if (costheta >  0.999999)
-      costheta =  0.999999;
-
-    if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0)
-      radang = -acos(costheta);
-    else
-      radang = acos(costheta);
-
-    //
-    // now we have the torsion angle (radang) - set up the rot matrix
-    //
-
-    //find the difference between current and requested
-    rotang = ang - radang;
-
-    sn = sin(rotang);
-    cs = cos(rotang);
-    t = 1 - cs;
-    //normalize the rotation vector
-    mag = sqrt(SQUARE(v2x)+SQUARE(v2y)+SQUARE(v2z));
-    x = v2x/mag;
-    y = v2y/mag;
-    z = v2z/mag;
-
-    //set up the rotation matrix
-    m[0]= t*x*x + cs;
-    m[1] = t*x*y + sn*z;
-    m[2] = t*x*z - sn*y;
-    m[3] = t*x*y - sn*z;
-    m[4] = t*y*y + cs;
-    m[5] = t*y*z + sn*x;
-    m[6] = t*x*z + sn*y;
-    m[7] = t*y*z - sn*x;
-    m[8] = t*z*z + cs;
-
-    //
-    //now the matrix is set - time to rotate the atoms
-    //
-    tx = _c[tor[1]];
-    ty = _c[tor[1]+1];
-    tz = _c[tor[1]+2];
-    vector<int>::iterator i;
-    for (i = atoms.begin(); i != atoms.end(); ++i)
-      {
-        j = *i;
-
-        _c[j] -= tx;
-        _c[j+1] -= ty;
-        _c[j+2]-= tz;
-        x = _c[j]*m[0] + _c[j+1]*m[1] + _c[j+2]*m[2];
-        y = _c[j]*m[3] + _c[j+1]*m[4] + _c[j+2]*m[5];
-        z = _c[j]*m[6] + _c[j+1]*m[7] + _c[j+2]*m[8];
-        _c[j] = x;
-        _c[j+1] = y;
-        _c[j+2] = z;
-        _c[j] += tx;
-        _c[j+1] += ty;
-        _c[j+2] += tz;
-      }
+    OpenBabel::SetTorsion(_c, tor, ang, atoms); 
   }
-
 
   double OBMol::GetTorsion(OBAtom *a,OBAtom *b,OBAtom *c,OBAtom *d)
   {
-    return(CalcTorsionAngle(a->GetVector(),
-                            b->GetVector(),
-                            c->GetVector(),
-                            d->GetVector()));
+    return(VectorTorsion(a->GetVector(),
+                         b->GetVector(),
+                         c->GetVector(),
+                         d->GetVector()));
   }
 
   void OBMol::ContigFragList(std::vector<std::vector<int> >&cfl)
@@ -1072,7 +971,7 @@ namespace OpenBabel
     return sformula;
   }
 
-  void OBMol::SetFormula(string molFormula)
+  void OBMol::SetFormula(std::string molFormula)
   {
     string attr = "Formula";
     OBPairData *dp = (OBPairData *) GetData(attr);
@@ -1273,7 +1172,7 @@ namespace OpenBabel
     for (bond = src.BeginBond(j) ; bond ; bond = src.NextBond(j)) {
       AddBond(bond->GetBeginAtomIdx() + prevatms, 
               bond->GetEndAtomIdx() + prevatms, 
-              bond->GetBO(), bond->GetFlags());
+              bond->GetBondOrder(), bond->GetFlags());
     }
 
     // Now update all copied residues too
@@ -1403,7 +1302,10 @@ namespace OpenBabel
     for (idx=0,atom = BeginAtom(j);atom;atom = NextAtom(j),++idx)
       {
         atom->SetIdx(idx+1);
-        (atom->GetVector()).Get(&_c[idx*3]);
+        //(atom->GetVector()).Get(&_c[idx*3]);
+        _c[idx*3] = atom->GetVector()[0];
+        _c[idx*3+1] = atom->GetVector()[1];
+        _c[idx*3+2] = atom->GetVector()[2];
         atom->SetCoordPtr(&_c);
       }
     _vconf.push_back(c);
@@ -1481,7 +1383,7 @@ namespace OpenBabel
 
 #define OBAtomIncrement 100
 
-    if (_vatom.empty() || _natoms+1 >= (signed)_vatom.size())
+    if (_vatom.empty() || _natoms+1 >= _vatom.size())
       {
         _vatom.resize(_natoms+OBAtomIncrement);
         vector<OBAtom*>::iterator j;
@@ -1809,7 +1711,7 @@ namespace OpenBabel
     int idx;
     if (atom->GetIdx() != NumAtoms())
       {
-        idx = atom->GetCIdx();
+        idx = atom->GetCoordinateIdx();
         int size = NumAtoms()-atom->GetIdx();
         vector<double*>::iterator k;
         for (k = _vconf.begin();k != _vconf.end();++k)
@@ -1918,7 +1820,7 @@ namespace OpenBabel
     IncrementMod();
 
     int m,n;
-    vector3 v;
+    Eigen::Vector3d v;
     vector<pair<OBAtom*,int> >::iterator k;
     double hbrad = etab.CorrectedBondRad(1,0);
 
@@ -2040,7 +1942,7 @@ namespace OpenBabel
     IncrementMod();
 
     int m,n;
-    vector3 v;
+    Eigen::Vector3d v;
     vector<pair<OBAtom*,int> >::iterator k;
     double hbrad = etab.CorrectedBondRad(1,0);
 
@@ -2260,7 +2162,7 @@ namespace OpenBabel
     vector<OBBond*>::iterator j;
     bool done = true;
     for (bond = atom->BeginBond(j);bond;bond = atom->NextBond(j))
-      if (bond->GetBO() == 5)
+      if (bond->GetBondOrder() == 5)
         {
           done = false;
           break;
@@ -2272,10 +2174,10 @@ namespace OpenBabel
     OBAtom *nbr;
     vector<OBBond*> vb;
     for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
-      if ((*j)->GetBO() == 5)
+      if ((*j)->GetBondOrder() == 5)
         {
           vb.push_back(*j);
-          ((OBBond *)*j)->SetBO(1);
+          ((OBBond *)*j)->SetBondOrder(1);
           ((OBBond *)*j)->SetKSingle();
         }
 
@@ -2288,11 +2190,11 @@ namespace OpenBabel
             if (GetCurrentValence(nbr) <= maxv[nbr->GetIdx()])
               {
                 ((OBBond*)*j)->SetKDouble();
-                ((OBBond*)*j)->SetBO(2);
+                ((OBBond*)*j)->SetBondOrder(2);
                 if (ExpandKekule(mol,va,i+1,maxv,secondpass))
                   return(true);
                 ((OBBond*)*j)->SetKSingle();
-                ((OBBond*)*j)->SetBO(1);
+                ((OBBond*)*j)->SetBondOrder(1);
               }
           }
 
@@ -2331,11 +2233,11 @@ namespace OpenBabel
                 if (GetCurrentValence(nbr) <= maxv[nbr->GetIdx()])
                   {
                     ((OBBond*)*j)->SetKDouble();
-                    ((OBBond*)*j)->SetBO(2);
+                    ((OBBond*)*j)->SetBondOrder(2);
                     if (ExpandKekule(mol,va,i+1,maxv,secondpass))
                       return(true);
                     ((OBBond*)*j)->SetKSingle();
-                    ((OBBond*)*j)->SetBO(1);
+                    ((OBBond*)*j)->SetBondOrder(1);
                   }
               }
             maxv[atom->GetIdx()]--;
@@ -2356,7 +2258,7 @@ namespace OpenBabel
     for (j = vb.begin();j != vb.end();++j)
       {
         ((OBBond*)*j)->SetKSingle();
-        ((OBBond*)*j)->SetBO(5);
+        ((OBBond*)*j)->SetBondOrder(5);
       }
 
     return(false);
@@ -2454,7 +2356,7 @@ namespace OpenBabel
     vector<bool> varo;
     varo.resize(NumAtoms()+1,false);
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      switch (bond->GetBO())
+      switch (bond->GetBondOrder())
         {
         case 2:
           bond->SetKDouble();
@@ -2521,7 +2423,7 @@ namespace OpenBabel
 
           if (atom->IsNitrogen() || atom->IsSulfur())
             for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-              if (nbr->IsOxygen() && (*i)->GetBO() == 2)
+              if (nbr->IsOxygen() && (*i)->GetBondOrder() == 2)
                 maxv[atom->GetIdx()] += 2;
         }
 
@@ -2582,11 +2484,11 @@ namespace OpenBabel
 
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       if (bond->IsKSingle())
-        bond->SetBO(1);
+        bond->SetBondOrder(1);
       else if (bond->IsKDouble())
-        bond->SetBO(2);
+        bond->SetBondOrder(2);
       else if (bond->IsKTriple())
-        bond->SetBO(3);
+        bond->SetBondOrder(3);
 
     return(true);
   }
@@ -2749,11 +2651,11 @@ namespace OpenBabel
   {
     return(AddBond(bond.GetBeginAtomIdx(),
                    bond.GetEndAtomIdx(),
-                   bond.GetBO(),
+                   bond.GetBondOrder(),
                    bond.GetFlags()));
   }
 
-  void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)
+  void OBMol::Align(OBAtom *a1,OBAtom *a2,Eigen::Vector3d &p1,Eigen::Vector3d &p2)
   {
     vector<int> children;
 
@@ -2765,18 +2667,18 @@ namespace OpenBabel
     children.push_back(a2->GetIdx());
 
     //find the rotation vector and angle
-    vector3 v1,v2,v3;
+    Eigen::Vector3d v1,v2,v3;
     v1 = p2 - p1;
     v2 = a2->GetVector() - a1->GetVector();
-    v3 = cross(v1,v2);
-    double angle = vectorAngle(v1,v2);
+    v3 = v1.cross(v2);
+    double angle = VectorAngle(v1,v2);
 
     //find the rotation matrix
-    matrix3x3 m;
-    m.RotAboutAxisByAngle(v3,angle);
+    Eigen::Quaternion<double> q;
+    q = Eigen::AngleAxis<double>(-angle * DEG_TO_RAD, v3);
 
     //rotate atoms
-    vector3 v;
+    Eigen::Vector3d v;
     OBAtom *atom;
     vector<int>::iterator i;
     for (i = children.begin();i != children.end();++i)
@@ -2784,7 +2686,7 @@ namespace OpenBabel
         atom = GetAtom(*i);
         v = atom->GetVector();
         v -= a1->GetVector();
-        v *= m;   //rotate the point
+        v = q.toRotationMatrix() * v; //rotate the point
         v += p1;  //translate the vector
         atom->SetVector(v);
       }
@@ -3076,7 +2978,7 @@ namespace OpenBabel
       {
         c = GetConformer(j);
         for (k=0,i = va.begin();i != va.end();i++,++k)
-          memcpy((char*)&ctmp[k*3],(char*)&c[((OBAtom*)*i)->GetCIdx()],sizeof(double)*3);
+          memcpy((char*)&ctmp[k*3],(char*)&c[((OBAtom*)*i)->GetCoordinateIdx()],sizeof(double)*3);
         memcpy((char*)c,(char*)ctmp,sizeof(double)*3*NumAtoms());
       }
 
@@ -3126,7 +3028,11 @@ namespace OpenBabel
 
     for (j = 0, atom = BeginAtom(i) ; atom ; atom = NextAtom(i), ++j)
       {
-        (atom->GetVector()).Get(&c[j*3]);
+        //(atom->GetVector()).Get(&c[j*3]);
+        Eigen::Vector3d vec = atom->GetVector();
+        c[j*3] = vec[0];
+        c[j*3+1] = vec[1];
+        c[j*3+2] = vec[2];
         pair<OBAtom*,double> entry(atom, atom->GetVector().z());
         zsortedAtoms.push_back(entry);
         bondCount.push_back(atom->GetValence());
@@ -3272,7 +3178,7 @@ namespace OpenBabel
                           "Ran OpenBabel::PerceiveBondOrders", obAuditMsg);
 
     OBAtom *atom, *b, *c;
-    vector3 v1, v2;
+    Eigen::Vector3d v1, v2;
     double angle;//, dist1, dist2;
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;//,k;
@@ -3416,7 +3322,7 @@ namespace OpenBabel
               for(loop = 0; loop < loopSize; ++loop)
                 {
                   //		cout << " set aromatic " << path[loop] << endl;
-                  (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
+                  (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBondOrder(5);
                   (GetBond(path[loop], path[(loop+1) % loopSize]))->UnsetKekule();
                 }
           }
@@ -3487,7 +3393,7 @@ namespace OpenBabel
                   }
               }
             if (c)
-              (atom->GetBond(c))->SetBO(3);
+              (atom->GetBond(c))->SetBondOrder(3);
           }
         else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
                   && atom->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
@@ -3523,7 +3429,7 @@ namespace OpenBabel
                   }
               }
             if (c)
-              (atom->GetBond(c))->SetBO(2);
+              (atom->GetBond(c))->SetBondOrder(2);
           }
       } // pass 6
 
@@ -3577,7 +3483,7 @@ namespace OpenBabel
 
   }
 
-  vector3 OBMol::Center(int nconf)
+  Eigen::Vector3d OBMol::Center(int nconf)
   {
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::Center", obAuditMsg);
@@ -3599,8 +3505,8 @@ namespace OpenBabel
     y /= (double)NumAtoms();
     z /= (double)NumAtoms();
 
-    vector3 vtmp;
-    vector3 v(x,y,z);
+    Eigen::Vector3d vtmp;
+    Eigen::Vector3d v(x,y,z);
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
@@ -3613,7 +3519,7 @@ namespace OpenBabel
 
 
   /*! this method adds the vector v to all atom positions in all conformers */
-  void OBMol::Translate(const vector3 &v)
+  void OBMol::Translate(const Eigen::Vector3d &v)
   {
     for (int i = 0;i < NumConformers();++i)
       Translate(v,i);
@@ -3622,7 +3528,7 @@ namespace OpenBabel
   /*! this method adds the vector v to all atom positions in the
     conformer nconf. If nconf == OB_CURRENT_CONFORMER, then the atom
     positions in the current conformer are translated. */
-  void OBMol::Translate(const vector3 &v,int nconf)
+  void OBMol::Translate(const Eigen::Vector3d &v,int nconf)
   {
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::Translate", obAuditMsg);
@@ -3789,7 +3695,7 @@ namespace OpenBabel
                 else 
                   ++chg2;
                 pNbratom->SetFormalCharge(chg2);
-                pbond->SetBO(pbond->GetBO()+1);
+                pbond->SetBondOrder(pbond->GetBondOrder()+1);
               }
           }		
       }
@@ -3905,7 +3811,7 @@ namespace OpenBabel
       if(pos!=AtomMap.end())
         //if bond belongs to current fragment make a similar one in new molecule
         newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
-                       b->GetBO(), b->GetFlags());
+                       b->GetBondOrder(), b->GetFlags());
     }
 
     //return newmol;

@@ -3,6 +3,7 @@ rotamer.cpp - Handle rotamer list data.
  
 Copyright (C) 1998, 1999, 2000-2002 OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2008 by Tim Vandermeersch
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -16,12 +17,9 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include <openbabel/babelconfig.h>
-
 #include <openbabel/rotamer.h>
-
-#define OB_TITLE_SIZE     254
-#define OB_BINARY_SETWORD 32
 
 using namespace std;
 
@@ -52,24 +50,28 @@ namespace OpenBabel
       // How many rotatable bonds are there?
       cerr << " Number of rotors: " << rl.Size() << endl;
 
-      // indexed from 1, rotorKey[0] = 0
-      std::vector<int> rotorKey(rl.Size() + 1, 0);
+      std::vector<int> rotorKey(rl.Size(), 0);
 
       // each entry represents the configuration of a rotor
-      // e.g. indexes into OBRotor::GetResolution() -- the different angles
+      // e.g. indexes into OBRotor::GetTorsionValues() -- the different angles
       //   to sample for a rotamer search
-      for (unsigned int i = 0; i < rl.Size() + 1; ++i)
-      rotorKey[i] = 0; // could be anything from 0 .. OBRotor->GetResolution().size()
+      for (unsigned int i = 0; i < rl.Size(); ++i)
+      rotorKey[i] = 0; // could be anything from 0 .. OBRotor->GetTorsionValues().size()
       // -1 is for no rotation
 
       // The OBRotamerList can generate conformations (i.e., coordinate sets)
       OBRotamerList rotamers;
-      rotamers.SetBaseCoordinateSets(mol);
       rotamers.Setup(mol, rl);
 
-      rotamers.AddRotamer(rotorKey);
+      // keys can be invalid because they don't have the right size
+      // or because one of their values is not a valid index for the 
+      // matching OBRotor::GetTorsionValues()
+      if (!rotamers.AddRotamer(rotorKey))
+        cout << "Invalid key!" << endl;
+      
       rotorKey[1] = 2; // switch one rotor
-      rotamers.AddRotamer(rotorKey);
+      if (!rotamers.AddRotamer(rotorKey))
+        cout << "Invalid key!" << endl;
 
       rotamers.ExpandConformerList(mol, mol.GetConformers());
 
@@ -78,15 +80,11 @@ namespace OpenBabel
       conv.Write(&mol);
 
       mol.SetConformer(1); // rotorKey 0, 2, ...
+      conv.Write(&mol);
 
       \endcode
 
   **/
-
-  //test byte ordering
-  static int SINT = 0x00000001;
-  static unsigned char *STPTR = (unsigned char*)&SINT;
-  const bool SwabInt = (STPTR[0]!=0);
 
 #if !HAVE_RINT
   inline double rint(double x)
@@ -95,22 +93,55 @@ namespace OpenBabel
   }
 #endif
 
-  void SetRotorToAngle(double *c,OBAtom **ref,double ang,vector<int> atoms);
-
-  int Swab(int i)
+  //////////////////////////////////////////////////////
+  //
+  // Private member functions
+  //
+  //////////////////////////////////////////////////////
+  
+  void OBRotamerList::Setup(OBMol &mol, unsigned int *ref, int nrotors)
   {
-    unsigned char tmp[4],c;
-    memcpy(tmp,(char*)&i,sizeof(int));
-    c = tmp[0];
-    tmp[0] = tmp[3];
-    tmp[3] = c;
-    c = tmp[1];
-    tmp[1] = tmp[2];
-    tmp[2] = c;
-    memcpy((char*)&i,tmp,sizeof(int));
-    return(i);
+    //clear the old stuff out if necessary
+    m_torvals.clear();
+    m_keys.clear();
+
+    vector<pair<unsigned int*,vector<int> > >::iterator k;
+    for (k = m_rotors.begin();k != m_rotors.end();++k)
+      delete [] k->first;
+    m_rotors.clear();
+
+    //create the new list
+    vector<int> children;
+    unsigned int *atomlist;
+    for (unsigned int i = 0; i < nrotors; ++i) {
+      atomlist = new unsigned int [4];
+      atomlist[0] = ref[i*4  ];
+      atomlist[1] = ref[i*4+1];
+      atomlist[2] = ref[i*4+2];
+      atomlist[3] = ref[i*4+3];
+      mol.FindChildren(children, atomlist[1], atomlist[2]);
+      m_rotors.push_back(pair<unsigned int*,vector<int> > (atomlist, children));
+    }
+  }
+ 
+  void OBRotamerList::GetReferenceArray(unsigned int *ref) const
+  {
+    vector<pair<unsigned int*,vector<int> > >::const_iterator i;
+    unsigned int j;
+    for (j = 0, i = m_rotors.begin(); i != m_rotors.end(); ++i) {
+      ref[j++] = i->first[0];
+      ref[j++] = i->first[1];
+      ref[j++] = i->first[2];
+      ref[j++] = i->first[3];
+    }
   }
 
+  //////////////////////////////////////////////////////
+  //
+  // Puplic member functions
+  //
+  //////////////////////////////////////////////////////
+ 
   OBGenericData* OBRotamerList::Clone(OBBase* newparent) const
   {
     //Since the class contains OBAtom pointers, the new copy use
@@ -121,265 +152,190 @@ namespace OpenBabel
     new_rml->_attr = _attr;
     new_rml->_type = _type;
 
-    //Set base coordinates
-    unsigned int k,l;
-    vector<double*> bc;
-    double *c=NULL;
-    double *cc=NULL;
-    for (k=0 ; k<NumBaseCoordinateSets() ; ++k)
-      {
-        c = new double [3*NumAtoms()];
-        cc = GetBaseCoordinateSet(k);
-        for (l=0 ; l<3*NumAtoms() ; ++l)
-					c[l] = cc[l];
-        bc.push_back(c);
-      }
-    if (NumBaseCoordinateSets())
-			new_rml->SetBaseCoordinateSets(bc,NumAtoms());
+    //Set the base coordinates
+    new_rml->SetBaseCoordinates(GetBaseCoordinates(), NumAtoms());
 
     //Set reference array
-    unsigned char *ref = new unsigned char [NumRotors()*4];
-    if (ref)
-      {
-        GetReferenceArray(ref);
-        new_rml->Setup(*newmol,ref,NumRotors()); 
-        delete [] ref;
-      }
+    unsigned int *ref = new unsigned int [NumRotors()*4];
+    if (ref) {
+      GetReferenceArray(ref);
+      new_rml->Setup(*newmol, ref, NumRotors()); 
+      delete [] ref;
+    }
 
     //Set Rotamers
-    unsigned char *rotamers = new unsigned char [(NumRotors()+1)*NumRotamers()];
-    if (rotamers)
-      {
-        vector<unsigned char*>::const_iterator kk;
-        unsigned int idx=0;
-        for (kk = _vrotamer.begin();kk != _vrotamer.end();++kk)
-          {
-            memcpy(&rotamers[idx],(const unsigned char*)*kk,sizeof(unsigned char)*(NumRotors()+1));
-            idx += sizeof(unsigned char)*(NumRotors()+1);
-          }
-        new_rml->AddRotamers(rotamers,NumRotamers());
-        delete [] rotamers;
-      }
+    new_rml->SetRotamers(m_keys);
+    
     return new_rml;
   }
 
+  OBRotamerList::OBRotamerList() : m_numAtoms(0), m_coords(0)
+  {
+    _type = OBGenericDataType::RotamerList;
+    _attr = "RotamerList";
+  }
+ 
   OBRotamerList::~OBRotamerList()
   {
-    vector<unsigned char*>::iterator i;
-    for (i = _vrotamer.begin();i != _vrotamer.end();++i)
-      delete [] *i;
-
-    vector<pair<OBAtom**,vector<int> > >::iterator j;
-    for (j = _vrotor.begin();j != _vrotor.end();++j)
+    vector<pair<unsigned int*,vector<int> > >::iterator j;
+    for (j = m_rotors.begin();j != m_rotors.end();++j)
       delete [] j->first;
 
     //Delete the interal base coordinate list
-    unsigned int k;
-    for (k=0 ; k<_c.size() ; ++k)
-      delete [] _c[k];
+    if (m_coords)
+      delete [] m_coords;
   }
 
-  void OBRotamerList::GetReferenceArray(unsigned char *ref)const
-  {
-    int j;
-		vector<pair<OBAtom**,vector<int> > >::const_iterator i;
-    for (j=0,i = _vrotor.begin();i != _vrotor.end();++i)
-      {
-        ref[j++] = (unsigned char)(i->first[0])->GetIdx();
-        ref[j++] = (unsigned char)(i->first[1])->GetIdx();
-        ref[j++] = (unsigned char)(i->first[2])->GetIdx();
-        ref[j++] = (unsigned char)(i->first[3])->GetIdx();
-      }
-  }
-
-  void OBRotamerList::Setup(OBMol &mol,OBRotorList &rl)
+  void OBRotamerList::Setup(OBMol &mol, OBRotorList &rl)
   {
     //clear the old stuff out if necessary
-    _vres.clear();
-    vector<unsigned char*>::iterator j;
-    for (j = _vrotamer.begin();j != _vrotamer.end();++j)
-      delete [] *j;
-    _vrotamer.clear();
+    m_torvals.clear();
+    m_keys.clear();
 
-    vector<pair<OBAtom**,vector<int> > >::iterator k;
-    for (k = _vrotor.begin();k != _vrotor.end();++k)
+    // set the base coordinates
+    SetBaseCoordinates(mol.GetCoordinates(), mol.NumAtoms());
+    
+    // delete the atoms references
+    vector<pair<unsigned int*, vector<int> > >::iterator k;
+    for (k = m_rotors.begin(); k != m_rotors.end(); ++k)
       delete [] k->first;
-    _vrotor.clear();
+    m_rotors.clear();
 
     //create the new list
     OBRotor *rotor;
     vector<OBRotor*>::iterator i;
     vector<int> children;
 
-    int ref[4];
-    OBAtom **atomlist;
-    for (rotor = rl.BeginRotor(i);rotor;rotor = rl.NextRotor(i))
-      {
-        atomlist = new OBAtom* [4];
-        rotor->GetDihedralAtoms(ref);
-        atomlist[0] = mol.GetAtom(ref[0]);
-        atomlist[1] = mol.GetAtom(ref[1]);
-        atomlist[2] = mol.GetAtom(ref[2]);
-        atomlist[3] = mol.GetAtom(ref[3]);
-        mol.FindChildren(children,ref[1],ref[2]);
-        _vrotor.push_back(pair<OBAtom**,vector<int> > (atomlist,children));
-        _vres.push_back(rotor->GetResolution());
-      }
+    unsigned int ref[4];
+    unsigned int *atomlist;
+    for (rotor = rl.BeginRotor(i);rotor;rotor = rl.NextRotor(i)) {
+      atomlist = new unsigned int [4];
+      rotor->GetDihedralAtoms(ref);
+      atomlist[0] = ref[0];
+      atomlist[1] = ref[1];
+      atomlist[2] = ref[2];
+      atomlist[3] = ref[3];
+      mol.FindChildren(children, ref[1], ref[2]);
+      m_rotors.push_back(pair<unsigned int*,vector<int> > (atomlist, children));
+      m_torvals.push_back(rotor->GetTorsionValues());
+    }
 
     vector<double>::iterator n;
     vector<vector<double> >::iterator m;
-    for (m = _vres.begin();m != _vres.end();++m)
+    for (m = m_torvals.begin();m != m_torvals.end();++m)
       for (n = m->begin();n != m->end();++n)
         *n *= RAD_TO_DEG;
   }
 
-  void OBRotamerList::Setup(OBMol &mol,unsigned char *ref,int nrotors)
+
+  bool OBRotamerList::AddRotamer(double *c)
   {
-    //clear the old stuff out if necessary
-    _vres.clear();
-    vector<unsigned char*>::iterator j;
-    for (j = _vrotamer.begin();j != _vrotamer.end();++j)
-      delete [] *j;
-    _vrotamer.clear();
+    if (!c)
+      return false;
 
-    vector<pair<OBAtom**,vector<int> > >::iterator k;
-    for (k = _vrotor.begin();k != _vrotor.end();++k)
-      delete [] k->first;
-    _vrotor.clear();
+    unsigned int idx, size;
+    double angle;
+    const double res = 255.0 / 360.0; // make sure we can fit 360 in a byte
+    Eigen::Vector3d v1, v2, v3, v4;
 
-    //create the new list
-    int i;
-    vector<int> children;
+    vector<unsigned char> key(m_rotors.size());
 
-    int refatoms[4];
-    OBAtom **atomlist;
-    for (i = 0; i < nrotors; ++i)
+    vector<pair<unsigned int*,vector<int> > >::iterator i;
+    for (size = 0, i = m_rotors.begin(); i != m_rotors.end(); ++i, ++size)
       {
-        atomlist = new OBAtom* [4];
-        refatoms[0] = (int)ref[i*4  ];
-        refatoms[1] = (int)ref[i*4+1];
-        refatoms[2] = (int)ref[i*4+2];
-        refatoms[3] = (int)ref[i*4+3];
-        mol.FindChildren(children,refatoms[1],refatoms[2]);
-        atomlist[0] = mol.GetAtom(refatoms[0]);
-        atomlist[1] = mol.GetAtom(refatoms[1]);
-        atomlist[2] = mol.GetAtom(refatoms[2]);
-        atomlist[3] = mol.GetAtom(refatoms[3]);
-        _vrotor.push_back(pair<OBAtom**,vector<int> > (atomlist,children));
-      }
+        idx = (i->first[0] - 1) * 3;
+        v1 = Eigen::Vector3d(c[idx],c[idx+1],c[idx+2]);
+        idx = (i->first[1] - 1) * 3;
+        v2 = Eigen::Vector3d(c[idx],c[idx+1],c[idx+2]);
+        idx = (i->first[2] - 1) * 3;
+        v3 = Eigen::Vector3d(c[idx],c[idx+1],c[idx+2]);
+        idx = (i->first[3] - 1) * 3;
+        v4 = Eigen::Vector3d(c[idx],c[idx+1],c[idx+2]);
 
-  }
-
-  void OBRotamerList::AddRotamer(double *c)
-  {
-    int idx,size;
-    double angle,res=255.0/360.0;
-    vector3 v1,v2,v3,v4;
-
-    unsigned char *rot = new unsigned char [_vrotor.size()+1];
-    rot[0] = (char) 0;
-
-    vector<pair<OBAtom**,vector<int> > >::iterator i;
-    for (size=1,i = _vrotor.begin();i != _vrotor.end();++i,++size)
-      {
-        idx = (i->first[0])->GetCIdx();
-        v1.Set(c[idx],c[idx+1],c[idx+2]);
-        idx = (i->first[1])->GetCIdx();
-        v2.Set(c[idx],c[idx+1],c[idx+2]);
-        idx = (i->first[2])->GetCIdx();
-        v3.Set(c[idx],c[idx+1],c[idx+2]);
-        idx = (i->first[3])->GetCIdx();
-        v4.Set(c[idx],c[idx+1],c[idx+2]);
-
-        angle = CalcTorsionAngle(v1,v2,v3,v4);
+        angle = VectorTorsion(v1, v2, v3, v4);
         while (angle < 0.0)
           angle += 360.0;
         while (angle > 360.0)
           angle -= 360.0;
-        rot[size] = (unsigned char)rint(angle*res);
+        key[size] = (unsigned char)rint(angle*res);
       }
 
-    _vrotamer.push_back(rot);
+    m_keys.push_back(key);
+
+    return true;
   }
 
-  void OBRotamerList::AddRotamer(int *arr)
+  bool OBRotamerList::AddRotamer(std::vector<double> &angles)
   {
-    unsigned int i;
-    double angle,res=255.0/360.0;
-
-    unsigned char *rot = new unsigned char [_vrotor.size()+1];
-    rot[0] = (unsigned char)arr[0];
-
-    for (i = 0;i < _vrotor.size();++i)
-      {
-        angle = _vres[i][arr[i+1]];
-        while (angle < 0.0)
-          angle += 360.0;
-        while (angle > 360.0)
-          angle -= 360.0;
-        rot[i+1] = (unsigned char)rint(angle*res);
-      }
-    _vrotamer.push_back(rot);
-  }
-
-  void OBRotamerList::AddRotamer(std::vector<int> arr)
-  {
-    unsigned int i;
-    double angle,res=255.0/360.0;
+    double angle;
+    const double res = 255.0 / 360.0; // make sure we can fit 360 in a byte
     
-    if (arr.size() != (_vrotor.size() + 1))
-      return; // wrong size key
+    if (angles.size() != m_rotors.size())
+      return false; // wrong size 
 
-    unsigned char *rot = new unsigned char [_vrotor.size()+1];
-    rot[0] = (unsigned char)arr[0];
+    vector<unsigned char> rot(m_rotors.size());
+    for (unsigned int i = 0; i < m_rotors.size(); ++i) { // for rotors
+      angle = angles[i];
 
-    for (i = 0;i < _vrotor.size();++i)
-      {
-        angle = _vres[i][arr[i+1]];
-        while (angle < 0.0)
-          angle += 360.0;
-        while (angle > 360.0)
-          angle -= 360.0;
-        rot[i+1] = (unsigned char)rint(angle*res);
-      }
-    _vrotamer.push_back(rot);
+      while (angle < 0.0)
+        angle += 360.0;
+      while (angle > 360.0)
+        angle -= 360.0;
+
+      rot[i] = (unsigned char)rint(angle*res);
+    }
+  
+    m_keys.push_back(rot);
+    
+    return true;
   }
-
-  void OBRotamerList::AddRotamer(unsigned char *arr)
+  
+  bool OBRotamerList::AddRotamer(std::vector<int> &key)
   {
-    unsigned int i;
-    double angle,res=255.0/360.0;
+    double angle;
+    const double res = 255.0 / 360.0; // make sure we can fit 360 in a byte
+    
+    if (key.size() != m_rotors.size())
+      return false; // wrong size key
 
-    unsigned char *rot = new unsigned char [_vrotor.size()+1];
-    rot[0] = (unsigned char)arr[0];
+    vector<unsigned char> rot(m_rotors.size());
+    for (unsigned int i = 0; i < m_rotors.size(); ++i) { // for rotors
+      if (key[i] < 0) {
+        unsigned int idx;
+        Eigen::Vector3d v1,v2,v3,v4;
 
-    for (i = 0;i < _vrotor.size();++i)
-      {
-        angle = _vres[i][(int)arr[i+1]];
-        while (angle < 0.0)
-          angle += 360.0;
-        while (angle > 360.0)
-          angle -= 360.0;
-        rot[i+1] = (unsigned char)rint(angle*res);
+        // this rotor should not be rotated, so we calculate the 
+        // angle and store it.
+        idx = (m_rotors[i].first[0] - 1) * 3;
+        v1 = Eigen::Vector3d( m_coords[idx], m_coords[idx+1], m_coords[idx+2] );
+        idx = (m_rotors[i].first[1] - 1) * 3;
+        v2 = Eigen::Vector3d( m_coords[idx], m_coords[idx+1], m_coords[idx+2] );
+        idx = (m_rotors[i].first[2] - 1) * 3;
+        v3 = Eigen::Vector3d( m_coords[idx], m_coords[idx+1], m_coords[idx+2] );
+        idx = (m_rotors[i].first[3] - 1) * 3;
+        v4 = Eigen::Vector3d( m_coords[idx], m_coords[idx+1], m_coords[idx+2] );
+        
+        angle = VectorTorsion(v1, v2, v3, v4);
+      } else if (key[i] >= (int)m_torvals[i].size()) {
+        return false; // invalid index
+      } else {
+        angle = m_torvals[i][key[i]]; // valid key
       }
-    _vrotamer.push_back(rot);
+
+      while (angle < 0.0)
+        angle += 360.0;
+      while (angle > 360.0)
+        angle -= 360.0;
+
+      rot[i] = (unsigned char)rint(angle*res);
+    }
+
+    m_keys.push_back(rot);
+    
+    return true;
   }
 
-  void OBRotamerList::AddRotamers(unsigned char *arr,int nrotamers)
-  {
-    unsigned int size;
-    int i;
-
-    size = (unsigned int)_vrotor.size()+1;
-    for (i = 0;i < nrotamers;++i)
-      {
-        unsigned char *rot = new unsigned char [size];
-        memcpy(rot,&arr[i*size],sizeof(char)*size);
-        _vrotamer.push_back(rot);
-      }
-  }
-
-  void OBRotamerList::ExpandConformerList(OBMol &mol,vector<double*> &clist)
+  void OBRotamerList::ExpandConformerList(OBMol &mol, vector<double*> &clist)
   {
     vector<double*> tmpclist = CreateConformerList(mol);
 
@@ -393,190 +349,80 @@ namespace OpenBabel
   //! Create a conformer list using the internal base set of coordinates
   vector<double*> OBRotamerList::CreateConformerList(OBMol& mol)
   {
-    unsigned int j;
-    double angle,invres=360.0/255.0;
-    unsigned char *conf;
+    double angle;
+    const double invres = 360.0 / 255.0;
+    vector<unsigned char> key;
     vector<double*> tmpclist;
-    vector<unsigned char*>::iterator i;
+    vector<vector<unsigned char> >::iterator i;
 
-    for (i = _vrotamer.begin();i != _vrotamer.end();++i)
-      {
-        conf = *i;
-        double *c = new double [mol.NumAtoms()*3];
-        memcpy(c,_c[(int)conf[0]],sizeof(double)*mol.NumAtoms()*3);
+    for (i = m_keys.begin(); i != m_keys.end(); ++i) {
+      key = *i;
+      double *c = new double [mol.NumAtoms() * 3];
+      // copy the base coordinates to c
+      memcpy(c, m_coords, sizeof(double) * mol.NumAtoms() * 3);
 
-        for (j = 0;j < _vrotor.size();++j)
-          {
-            angle = invres*((double)conf[j+1]);
-            if (angle > 180.0)
-              angle -= 360.0;
-            SetRotorToAngle(c,_vrotor[j].first,angle,_vrotor[j].second);
-          }
-        tmpclist.push_back(c);
+      // set the torsions based on the keys
+      for (unsigned int j = 0; j < m_rotors.size(); ++j) {
+        // convert angle from char (0 ... 255) to double (-180.0 ... 180.0)
+        angle = invres * ((double) key[j]);
+        if (angle > 180.0)
+          angle -= 360.0;
+           
+        SetTorsion(c, m_rotors[j].first, DEG_TO_RAD * angle, m_rotors[j].second);
       }
+      
+      tmpclist.push_back(c);
+    }
 
     return tmpclist;
   }
   
   //! Change the current coordinate set
   //! \since version 2.2
-  void OBRotamerList::SetCurrentCoordinates(OBMol &mol, std::vector<int> arr)
+  void OBRotamerList::SetCurrentCoordinates(OBMol &mol, std::vector<int> &key)
   {
     unsigned int i;
     double angle;
     
-    if (arr.size() != (_vrotor.size() + 1))
+    if (key.size() != (m_rotors.size()))
       return; // wrong size key
     
-    double *rot = new double [_vrotor.size()+1];
-    rot[0] = arr[0];
+    double *rot = new double [m_rotors.size()];
     
     double *c = mol.GetCoordinates();
-    for (i = 0;i < _vrotor.size();++i)
-      {
-				if (arr[i+1] == -1) // skip this rotor
-					continue;
-				else {
-        	angle = _vres[i][arr[i+1]];
-        	while (angle < 0.0)
-          	angle += 360.0;
-        	while (angle > 360.0)
-          	angle -= 360.0;
-	        SetRotorToAngle(c,_vrotor[i].first,angle,_vrotor[i].second);
-				} // set an angle
-      } // for rotors
+    for (i = 0;i < m_rotors.size();++i) {
+      if (key[i] == -1) // skip this rotor
+        continue;
+      else {
+    	angle = m_torvals[i][key[i]];
+      	
+        while (angle < 0.0)
+       	  angle += 360.0;
+    	while (angle > 360.0)
+     	  angle -= 360.0;
+        
+        SetTorsion(c, m_rotors[i].first, DEG_TO_RAD * angle, m_rotors[i].second);
+      } // set an angle
+    } // for rotors
   }
 
   //Copies the coordinates in bc, NOT the pointers, into the object
-  void OBRotamerList::SetBaseCoordinateSets(vector<double*> bc, unsigned int N)
+  void OBRotamerList::SetBaseCoordinates(double* coords, unsigned int N)
   {
-    unsigned int i,j;
-
     //Clear out old data
-    for (i=0 ; i<_c.size() ; ++i)
-      delete [] _c[i];
-    _c.clear();
-
-    //Copy new data
-    double *c = NULL;
-    double *cc= NULL;
-    for (i=0 ; i<bc.size() ; ++i)
-      {
-        c = new double [3*N];
-        cc = bc[i];
-        for (j=0 ; j<3*N ; ++j)
-          c[j] = cc[j];
-        _c.push_back(c);
-      }
-    _NBaseCoords = N;
-  }
-
-  //! Rotate the coordinates of 'atoms'
-  //! such that tor == ang.
-  //! Atoms in 'tor' should be ordered such that the 3rd atom is 
-  //! the pivot around which atoms rotate (ang is in degrees)
-  //! \todo This code is identical to OBMol::SetTorsion() and should be combined
-  void SetRotorToAngle(double *c, OBAtom **ref,double ang,vector<int> atoms)
-  {
-    double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
-    double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
-    double c1mag,c2mag,radang,costheta,m[9];
-    double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
-
-    int tor[4];
-    tor[0] = ref[0]->GetCIdx();
-    tor[1] = ref[1]->GetCIdx();
-    tor[2] = ref[2]->GetCIdx();
-    tor[3] = ref[3]->GetCIdx();
-
-    //
-    //calculate the torsion angle
-    //
-    v1x = c[tor[0]]   - c[tor[1]];   v2x = c[tor[1]]   - c[tor[2]];
-    v1y = c[tor[0]+1] - c[tor[1]+1]; v2y = c[tor[1]+1] - c[tor[2]+1];
-    v1z = c[tor[0]+2] - c[tor[1]+2]; v2z = c[tor[1]+2] - c[tor[2]+2];
-    v3x = c[tor[2]]   - c[tor[3]];
-    v3y = c[tor[2]+1] - c[tor[3]+1];
-    v3z = c[tor[2]+2] - c[tor[3]+2];
-
-    c1x = v1y*v2z - v1z*v2y;   c2x = v2y*v3z - v2z*v3y;
-    c1y = -v1x*v2z + v1z*v2x;  c2y = -v2x*v3z + v2z*v3x;
-    c1z = v1x*v2y - v1y*v2x;   c2z = v2x*v3y - v2y*v3x;
-    c3x = c1y*c2z - c1z*c2y;
-    c3y = -c1x*c2z + c1z*c2x;
-    c3z = c1x*c2y - c1y*c2x; 
-  
-    c1mag = c1x*c1x + c1y*c1y + c1z*c1z;
-    c2mag = c2x*c2x + c2y*c2y + c2z*c2z;
-    if (c1mag*c2mag < 0.01) costheta = 1.0; //avoid div by zero error
-    else costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
-
-    if (costheta < -0.999999) costheta = -0.999999;
-    if (costheta >  0.999999) costheta =  0.999999;
-			      
-    if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0) radang = -acos(costheta);
-    else                                     radang = acos(costheta);
-
-    //
-    // now we have the torsion angle (radang) - set up the rot matrix
-    //
-
-    //find the difference between current and requested
-    rotang = (DEG_TO_RAD*ang) - radang; 
-
-    sn = sin(rotang); cs = cos(rotang);t = 1 - cs;
-    //normalize the rotation vector
-    mag = sqrt(v2x*v2x + v2y*v2y + v2z*v2z);
-    if (mag < 0.1) mag = 0.1; // avoid divide by zero error
-    x = v2x/mag; y = v2y/mag; z = v2z/mag;
-  
-    //set up the rotation matrix
-    m[0]= t*x*x + cs;     m[1] = t*x*y + sn*z;  m[2] = t*x*z - sn*y;
-    m[3] = t*x*y - sn*z;  m[4] = t*y*y + cs;    m[5] = t*y*z + sn*x;
-    m[6] = t*x*z + sn*y;  m[7] = t*y*z - sn*x;  m[8] = t*z*z + cs;
-
-    //
-    //now the matrix is set - time to rotate the atoms
-    //
-    tx = c[tor[1]];ty = c[tor[1]+1];tz = c[tor[1]+2];
-    vector<int>::iterator i;int j;
-    for (i = atoms.begin();i != atoms.end();++i)
-      {
-        j = ((*i)-1)*3;
-        c[j] -= tx;c[j+1] -= ty;c[j+2]-= tz;
-        x = c[j]*m[0] + c[j+1]*m[1] + c[j+2]*m[2];
-        y = c[j]*m[3] + c[j+1]*m[4] + c[j+2]*m[5];
-        z = c[j]*m[6] + c[j+1]*m[7] + c[j+2]*m[8];
-        c[j] = x; c[j+1] = y; c[j+2] = z;
-        c[j] += tx;c[j+1] += ty;c[j+2] += tz;
-      }
-  }
-
-  int PackCoordinate(double c[3],double max[3])
-  {
-    int tmp;
-    double cf;
-    cf = c[0];
-    tmp  = ((int)(cf*max[0])) << 20;
-    cf = c[1];
-    tmp |= ((int)(cf*max[1])) << 10;
-    cf = c[2];
-    tmp |= ((int)(cf*max[2]));
-    return(tmp);
-  }
-
-  void UnpackCoordinate(double c[3],double max[3],int tmp)
-  {
-    double cf;
-    cf = (double)(tmp>>20);
-    c[0] = cf;
-    c[0] *= max[0];
-    cf = (double)((tmp&0xffc00)>>10);
-    c[1] = cf;
-    c[1] *= max[1];
-    cf = (double)(tmp&0x3ff);
-    c[2] = cf;
-    c[2] *= max[2];
+    if (m_coords)
+      delete [] m_coords;
+    
+    if (coords) {
+      m_numAtoms = N;
+      //Copy new data
+      m_coords = new double [3*N];
+      for (unsigned int j = 0; j < 3*N; ++j)
+        m_coords[j] = coords[j];
+    } else {
+      m_numAtoms = 0;
+      m_coords = 0;
+    }
   }
 
 } //namespace OpenBabel

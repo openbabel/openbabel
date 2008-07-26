@@ -28,7 +28,7 @@ GNU General Public License for more details.
 #  define EXTERN extern
 #endif
 
-#include <math.h>
+#include <cmath>
 #include <float.h>
 
 #include <vector>
@@ -44,7 +44,7 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/data.h>
 #include <openbabel/chains.h>
-#include <openbabel/math/vector3.h>
+#include <openbabel/math/vector.h>
 #include <openbabel/bitvec.h>
 #include <openbabel/residue.h>
 #include <openbabel/ring.h>
@@ -401,9 +401,9 @@ namespace OpenBabel
     //! Translate all conformers to the inertial frame-of-reference
     void ToInertialFrame();
     //! Translates all conformers in the molecule by the supplied vector
-    void Translate(const vector3 &v);
+    void Translate(const Eigen::Vector3d &v);
     //! Translates one conformer in the molecule by the supplied vector
-    void Translate(const vector3 &v, int conf);
+    void Translate(const Eigen::Vector3d &v, int conf);
     //! Rotate all conformers using the supplied matrix @p u (a 3x3 array of double)
     void Rotate(const double u[3][3]);
     //! Rotate all conformers using the supplied matrix @p m (a linear 3x3 row-major array of double)
@@ -458,7 +458,7 @@ namespace OpenBabel
     bool AssignSpinMultiplicity(bool NoImplicitH=false);
     //! \return the center of the supplied conformer @p nconf
     //! \see Center() to actually center all conformers at the origin
-    vector3 Center(int nconf);
+    Eigen::Vector3d Center(int nconf);
     /*! Set the torsion defined by these atoms, rotating bonded neighbors
      *  \par ang The torsion angle in radians
      *  WARNING: SetTorsion takes an angle in radians while GetTorsion returns it
@@ -488,7 +488,7 @@ namespace OpenBabel
     //! Each vector<int> contains the atom numbers of a contig fragment
     void ContigFragList(std::vector<std::vector<int> >&);
     //! Aligns atom a on p1 and atom b along p1->p2 vector
-    void Align(OBAtom*,OBAtom*,vector3&,vector3&);
+    void Align(OBAtom*,OBAtom*,Eigen::Vector3d&,Eigen::Vector3d&);
     //! Adds single bonds based on atom proximity
     void ConnectTheDots();
     //! Attempts to perceive multiple bonds based on geometries

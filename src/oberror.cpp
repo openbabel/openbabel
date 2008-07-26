@@ -32,11 +32,11 @@ namespace OpenBabel
 
   OBMessageHandler obErrorLog;
 
-  OBError::OBError( const string &method, 
-                    const string &errorMsg, 
-                    const string &explanation,
-                    const string &possibleCause,
-                    const string &suggestedRemedy,
+  OBError::OBError( const std::string &method, 
+                    const std::string &errorMsg, 
+                    const std::string &explanation,
+                    const std::string &possibleCause,
+                    const std::string &suggestedRemedy,
                     const obMessageLevel level) :
     _method(method), _errorMsg(errorMsg), _explanation(explanation),
     _possibleCause(possibleCause), _suggestedRemedy(suggestedRemedy),

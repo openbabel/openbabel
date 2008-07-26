@@ -68,7 +68,7 @@ namespace OpenBabel
     is empty, and the values are placed in [1...mol.NumAtoms()].
   */
 
-  void patty::read_rules(const string &infile)
+  void patty::read_rules(const std::string &infile)
   {
     ifstream ifs, ifs1, *ifsP;
     vector<string> vs;
@@ -228,7 +228,7 @@ namespace OpenBabel
   }
 
 
-  int patty::type_to_int(const string &type, bool failOnUndefined)
+  int patty::type_to_int(const std::string &type, bool failOnUndefined)
   {
     int result;
 

@@ -100,7 +100,7 @@ namespace OpenBabel
     //! \param norm1 The normal of the best-fit plane for this ring
     //! \param norm2 -1 * norm1 (i.e., the opposite direction of norm1)
     //! \return True (success)
-    bool findCenterAndNormal(vector3 & center, vector3 &norm1, vector3 &norm2);
+    bool findCenterAndNormal(Eigen::Vector3d & center, Eigen::Vector3d &norm1, Eigen::Vector3d &norm2);
   private:
     char _type[30];   //!< ring type
   };

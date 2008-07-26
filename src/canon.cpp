@@ -124,7 +124,7 @@ static unsigned int GetValence(OBAtom *atom, OBBitVec &frag_atoms)
   OBBond *bond;
   OBAtom *nbr;
 
-  vector<OBEdgeBase*>::iterator bi;
+  vector<OBBond*>::iterator bi;
   for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
     nbr = bond->GetNbrAtom(atom);
     if (frag_atoms.BitIsSet(nbr->GetIdx()))
@@ -147,7 +147,7 @@ static unsigned int GetHvyValence(OBAtom *atom, OBBitVec &frag_atoms)
   OBBond *bond;
   OBAtom *nbr;
 
-  vector<OBEdgeBase*>::iterator bi;
+  vector<OBBond*>::iterator bi;
   for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
     nbr = bond->GetNbrAtom(atom);
     if (frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen()))
@@ -178,7 +178,7 @@ static unsigned int GetHvyBondSum(OBAtom *atom, OBBitVec &frag_atoms)
   OBBond *bond;
   OBAtom *nbr;
 
-  vector<OBEdgeBase*>::iterator bi;
+  vector<OBBond*>::iterator bi;
   for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
     nbr = bond->GetNbrAtom(atom);
     if (frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen())) {
@@ -227,8 +227,8 @@ static bool GetGTDVector(OBMol *pmol,
   OBBitVec used, curr, next;
   OBAtom *atom, *atom1;
   OBBond *bond;
-  vector<OBNodeBase*>::iterator ai;
-  vector<OBEdgeBase*>::iterator j;
+  vector<OBAtom*>::iterator ai;
+  vector<OBBond*>::iterator j;
 
   next.Clear();
 
@@ -346,7 +346,7 @@ static void GetGIVector(OBMol *pmol,
 
   int i;
   OBAtom *atom;
-  vector<OBNodeBase*>::iterator ai;
+  vector<OBAtom*>::iterator ai;
   for (i=0, atom = pmol->BeginAtom(ai); atom; atom = pmol->NextAtom(ai)) {
     vid[i] = 0;
     if (frag_atoms.BitIsOn(atom->GetIdx())) {
@@ -402,7 +402,7 @@ static void CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,
 {
   int m,id;
   OBAtom *atom, *nbr;
-  vector<OBEdgeBase*>::iterator nbr_iter;
+  vector<OBBond*>::iterator nbr_iter;
   vector<unsigned int>::iterator k;
   vector<pair<OBAtom*,unsigned int> >::iterator vp_iter;
 
@@ -549,7 +549,7 @@ static int CalculateSymmetry(OBMol *pmol,
                              vector<pair<OBAtom*, unsigned int> > &symmetry_classes)
 {
   vector<unsigned int> vgi;
-  vector<OBNodeBase*>::iterator j;
+  vector<OBAtom*>::iterator j;
   OBAtom *atom;
 
   // How many atoms, and how many do we care about?
@@ -628,7 +628,7 @@ static void BreakChiralTies(OBMol *pmol,
 
 
   // Loop over all atoms...
-  vector<OBNodeBase*>::iterator ai, aj;
+  vector<OBAtom*>::iterator ai, aj;
   for (OBAtom *atom = pmol->BeginAtom(ai); atom; atom = pmol->NextAtom(ai)) {
   
     int idx = atom->GetIdx();
@@ -714,10 +714,10 @@ static void BreakChiralTies(OBMol *pmol,
     OBAtom *ref_atom              = sorted_neighbors[0].first;
     vector<OBAtom*> ref_neighbors = sorted_neighbors[0].second;
 
-    double t1 = CalcTorsionAngle(ref_neighbors[0]->GetVector(),
-                                 ref_neighbors[1]->GetVector(),
-                                 ref_neighbors[2]->GetVector(),
-                                 ref_neighbors[3]->GetVector());
+    double t1 = VectorTorsion(ref_neighbors[0]->GetVector(),
+                              ref_neighbors[1]->GetVector(),
+                              ref_neighbors[2]->GetVector(),
+                              ref_neighbors[3]->GetVector());
 
     vector<OBAtom*> symclass1, symclass2;
     symclass1.push_back(ref_atom);
@@ -725,10 +725,10 @@ static void BreakChiralTies(OBMol *pmol,
     for (int i = 1; i < sorted_neighbors.size(); i++) {
       OBAtom *atom             = sorted_neighbors[i].first;
       vector<OBAtom*>neighbors = sorted_neighbors[i].second;
-      double t2 = CalcTorsionAngle(neighbors[0]->GetVector(),
-                                   neighbors[1]->GetVector(),
-                                   neighbors[2]->GetVector(),
-                                   neighbors[3]->GetVector());
+      double t2 = VectorTorsion(neighbors[0]->GetVector(),
+                                neighbors[1]->GetVector(),
+                                neighbors[2]->GetVector(),
+                                neighbors[3]->GetVector());
 
       if (t1*t2 >= 0.0)
         symclass1.push_back(atom);      // t1 & t2 have same signs ==> same chirality
@@ -1093,7 +1093,7 @@ void CanonicalLabels(OBMol *pmol,
                      vector<unsigned int> &canonical_labels)    // on input: symclasses
 {
   vector<pair<OBAtom*,unsigned int> > atom_sym_classes, vp1, vp2;
-  vector<OBNodeBase*>::iterator j;
+  vector<OBAtom*>::iterator j;
   unsigned int nclass1, nclass2; //number of classes
   int i;
 

@@ -193,7 +193,7 @@ namespace OpenBabel
 
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {
-        switch(bond->GetBO())
+        switch(bond->GetBondOrder())
           {
           case 1 :
             strcpy(bond_string,"SINGLE");

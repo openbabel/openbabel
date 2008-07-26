@@ -110,7 +110,7 @@ namespace OpenBabel
     // Get Type Bonds, BondOrder, X, Y, Z
 
     double x,y,z;
-    vector3 v;
+    Eigen::Vector3d v;
     char temp_type[10];
     int i,j;
     double charge;
@@ -140,9 +140,7 @@ namespace OpenBabel
               }
           }
 
-        v.SetX(x);
-        v.SetY(y);
-        v.SetZ(z);
+        v = Eigen::Vector3d(x, y, z);
         atom.SetVector(v);
 
         string str = temp_type,str1;
@@ -170,8 +168,8 @@ namespace OpenBabel
     OBBond *bond;
     vector<OBBond*>::iterator bi;
     for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
-      if (bond->GetBO() == 5 && !bond->IsInRing())
-        bond->SetBO(1);
+      if (bond->GetBondOrder() == 5 && !bond->IsInRing())
+        bond->SetBondOrder(1);
 
     if ( natoms != (signed)mol.NumAtoms() )
       return(false);
@@ -230,7 +228,7 @@ namespace OpenBabel
         ofs << buffer;
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
           {
-            snprintf(buffer, BUFF_SIZE, " %5d %1d",nbr->GetIdx(),(*j)->GetBO());
+            snprintf(buffer, BUFF_SIZE, " %5d %1d",nbr->GetIdx(),(*j)->GetBondOrder());
             ofs << buffer;
           }
         for (k=atom->GetValence();k < 6;k++)

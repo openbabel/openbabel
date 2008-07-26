@@ -84,7 +84,7 @@ bool CCCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     int end,order;
     double x,y,z;
     OBAtom atom;
-    vector3 v;
+    Eigen::Vector3d v;
     vector<string> vs;
     char element[3];
     element[2] = '\0';
@@ -98,7 +98,7 @@ bool CCCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         element[1] = (buffer[1] != ' ') ? buffer[1]:'\0';
         atom.SetAtomicNum(etab.GetAtomicNum(element));
         sscanf(&buffer[15],"%lf%lf%lf",&x,&y,&z);
-        v.Set(x,y,z);
+        v = Eigen::Vector3d(x,y,z);
         atom.SetVector(v);
 
         if (!mol.AddAtom(atom))

@@ -123,7 +123,7 @@ int main(int argc,char **argv)
       pFF->WeightedRotorSearch(250, 50);
       pFF->SteepestDescent(500, 1.0e-6);
 
-      pFF->UpdateCoordinates(mol);
+      pFF->GetCoordinates(mol);
       //pFF->ValidateGradients();
       //pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
       //pFF->Energy();

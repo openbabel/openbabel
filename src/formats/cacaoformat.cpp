@@ -76,7 +76,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     int natoms;
     double A,B,C,Alpha,Beta,Gamma;
-    matrix3x3 m;
+    Eigen::Matrix3d m;
 
     ifs.getline(buffer,BUFF_SIZE);
     mol.SetTitle(buffer);
@@ -110,7 +110,7 @@ namespace OpenBabel
     int i;
     double x,y,z;
     OBAtom *atom;
-    vector3 v;
+    Eigen::Vector3d v;
 
     mol.BeginModify();
 
@@ -126,8 +126,8 @@ namespace OpenBabel
         x = atof((char*)vs[1].c_str());
         y = atof((char*)vs[2].c_str());
         z = atof((char*)vs[3].c_str());
-        v.Set(x,y,z);
-        v *= m;
+        v = Eigen::Vector3d(x,y,z);
+        v = m * v;
 
         atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
         atom->SetVector(v);
@@ -230,7 +230,7 @@ namespace OpenBabel
         for (j = 1;j < i;j++)
           {
             a2 = mol.GetAtom(j);
-            r = (a1->GetVector()-a2->GetVector()).length_2();
+            r = (a1->GetVector()-a2->GetVector()).norm2();
             if ((r < sum) && (vit[j]->_a != a2) && (vit[j]->_b != a2))
               {
                 sum = r;
@@ -252,7 +252,7 @@ namespace OpenBabel
       }
 
     OBAtom *a,*b,*c;
-    vector3 v1,v2;
+    Eigen::Vector3d v1,v2;
     for (i = 2;i <= mol.NumAtoms();i++)
       {
         atom = mol.GetAtom(i);
@@ -261,12 +261,12 @@ namespace OpenBabel
         c = vit[i]->_c;
         v1 = atom->GetVector() - a->GetVector();
         v2 = b->GetVector() - a->GetVector();
-        vit[i]->_ang = vectorAngle(v1,v2);
-        vit[i]->_tor = CalcTorsionAngle(atom->GetVector(),
+        vit[i]->_ang = VectorAngle(v1,v2);
+        vit[i]->_tor = VectorTorsion(atom->GetVector(),
                                         a->GetVector(),
                                         b->GetVector(),
                                         c->GetVector());
-        vit[i]->_dst = (vit[i]->_a->GetVector() - atom->GetVector()).length();
+        vit[i]->_dst = (vit[i]->_a->GetVector() - atom->GetVector()).norm();
       }
 
   }
@@ -317,7 +317,7 @@ namespace OpenBabel
     OBMol &mol = *pmol;
 
     unsigned int i;
-    vector3 v;
+    Eigen::Vector3d v;
     char tmptype[16],buffer[BUFF_SIZE];
 
     if (mol.Empty())

@@ -136,10 +136,10 @@ namespace OpenBabel
 
   /*! 
    */
-  void SpaceGroup::AddTransform(const string &s)
+  void SpaceGroup::AddTransform(const std::string &s)
   {
-    matrix3x3 m;
-    vector3 v;
+    Eigen::Matrix3d m;
+    Eigen::Vector3d v;
     istringstream iss(s);
     locale cLocale("C");
     iss.imbue(cLocale);
@@ -227,14 +227,14 @@ namespace OpenBabel
 
   /*! 
    */
-  list<vector3> SpaceGroup::Transform(const vector3 &v) const
+  list<Eigen::Vector3d> SpaceGroup::Transform(const Eigen::Vector3d &v) const
   {
     static double prec = 2e-5;
-    list<vector3> res;
+    list<Eigen::Vector3d> res;
     transform3dIterator i, iend = m_transforms.end();
     for (i = m_transforms.begin(); i!= iend; i++)
       {
-        vector3 t;
+        Eigen::Vector3d t;
         t = *(*i) * v;
         if (t.x() < 0.)
           t.x() += 1.;
@@ -248,7 +248,7 @@ namespace OpenBabel
           t.z() += 1.;
         if (t.z() > 1.)
           t.z() += 1.;
-        list<vector3>::iterator j, jend = res.end();
+        list<Eigen::Vector3d>::iterator j, jend = res.end();
         bool duplicate = false;
         for (j = res.begin(); j != jend; j++)
           if (fabs(t.x() - (*j).x()) < prec &&
@@ -290,7 +290,7 @@ namespace OpenBabel
 
   /*! 
    */
-  const SpaceGroup * SpaceGroup::GetSpaceGroup (const string &name)
+  const SpaceGroup * SpaceGroup::GetSpaceGroup (const std::string &name)
   {
     if (!_SpaceGroups.Inited())
       _SpaceGroups.Init();

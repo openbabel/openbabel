@@ -545,7 +545,7 @@ namespace OpenBabel
     return(rval);
   }
 
-  bool OBTypeTable::Translate(string &to, const string &from)
+  bool OBTypeTable::Translate(std::string &to, const std::string &from)
   {
     if (!_init)
       Init();
@@ -571,7 +571,7 @@ namespace OpenBabel
     return(false);
   }
 
-  std::string OBTypeTable::Translate(const string &from)
+  std::string OBTypeTable::Translate(const std::string &from)
   {
     if (!_init)
       Init();
@@ -650,7 +650,7 @@ namespace OpenBabel
     OBAtom *a1,*a2;
     OBResidue *r1,*r2;
     vector<OBAtom*>::iterator i,j;
-    vector3 v;
+    Eigen::Vector3d v;
 
     int bo;
     string skipres = ""; // Residue Number to skip
@@ -718,12 +718,12 @@ namespace OpenBabel
           {
             OBBond *bond;
             bond = (OBBond*)*(a1->BeginBonds());
-            if (bond->GetBO() == 2)
+            if (bond->GetBondOrder() == 2)
               {
                 a1->SetType("O2");
                 a1->SetHyb(2);
               }
-            else if (bond->GetBO() == 1)
+            else if (bond->GetBondOrder() == 1)
               {
                 a1->SetType("O-");
                 a1->SetHyb(3);
@@ -796,7 +796,7 @@ namespace OpenBabel
       }
   }
 
-  bool OBResidueData::SetResName(const string &s)
+  bool OBResidueData::SetResName(const std::string &s)
   {
     if (!_init)
       Init();
@@ -814,7 +814,7 @@ namespace OpenBabel
     return(false);
   }
 
-  int OBResidueData::LookupBO(const string &s)
+  int OBResidueData::LookupBO(const std::string &s)
   {
     if (_resnum == -1)
       return(0);
@@ -827,7 +827,7 @@ namespace OpenBabel
     return(0);
   }
 
-  int OBResidueData::LookupBO(const string &s1, const string &s2)
+  int OBResidueData::LookupBO(const std::string &s1, const std::string &s2)
   {
     if (_resnum == -1)
       return(0);
@@ -843,7 +843,7 @@ namespace OpenBabel
     return(0);
   }
 
-  bool OBResidueData::LookupType(const string &atmid,string &type,int &hyb)
+  bool OBResidueData::LookupType(const std::string &atmid,std::string &type,int &hyb)
   {
     if (_resnum == -1)
       return(false);

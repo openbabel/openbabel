@@ -78,7 +78,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     //  int natoms; CM
     double A,B,C,Alpha,Beta,Gamma;
-    matrix3x3 m;
+    Eigen::Matrix3d m;
 
     ifs.getline(buffer,BUFF_SIZE);
     mol.SetTitle(buffer);
@@ -109,7 +109,7 @@ namespace OpenBabel
     double x,y,z;
     char type[16], *j;
     OBAtom *atom;
-    vector3 v;
+    Eigen::Vector3d v;
 
     //skip until FVAR found
     while (ifs.getline(buffer,BUFF_SIZE) &&!EQn(buffer,"FVAR",4))
@@ -130,8 +130,8 @@ namespace OpenBabel
         x = atof((char*)vs[2].c_str());
         y = atof((char*)vs[3].c_str());
         z = atof((char*)vs[4].c_str());
-        v.Set(x,y,z);
-        v *= m;
+        v = Eigen::Vector3d(x,y,z);
+        v = m * v;
 
         strncpy(type,vs[0].c_str(), sizeof(type));
         type[sizeof(type) - 1] = '\0';

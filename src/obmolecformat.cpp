@@ -410,7 +410,7 @@ namespace OpenBabel
       every time the index is read.
   **/
   bool OBMoleculeFormat::ReadNameIndex(NameIndexType& index,
-                                       const string& datafilename, OBFormat* pInFormat)
+                                       const std::string& datafilename, OBFormat* pInFormat)
   {
     struct headertype
     {

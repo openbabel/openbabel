@@ -25,6 +25,9 @@ using namespace std;
 
 namespace OpenBabel
 {
+  class OBBondPrivate 
+  {
+  };
 
   extern OBAromaticTyper  aromtyper;
 
@@ -43,23 +46,40 @@ namespace OpenBabel
       IsHash().
   */
 
+  bool OBBond::HasFlag(int flag)
+  { 
+    return((m_flags & flag) != 0); 
+  }
+  
+  void OBBond::SetFlag(int flag)
+  { 
+    m_flags |= flag;               
+  }
+  
+  void OBBond::UnsetFlag(int flag)
+  { 
+    m_flags &= (~(flag));          
+  }
+
+
   // *******************************
   // *** OBBond member functions ***
   // *******************************
 
-  OBBond::OBBond()
+  OBBond::OBBond() : d(new OBBondPrivate)
   {
-    _idx=0;
-    _order=0;
-    _flags=0;
-    _bgn=NULL;
-    _end=NULL;
+    m_idx = 0;
+    m_order = 0;
+    m_flags = 0;
+    m_bgn = NULL;
+    m_end = NULL;
     _vdata.clear();
   }
 
   OBBond::~OBBond()
   {
     // OBGenericData handled in OBBase parent class.
+    delete d;
   }
 
   /** Mark the main information for a bond
@@ -85,14 +105,14 @@ namespace OpenBabel
 
   void OBBond::SetBondOrder(int order)
   {
-    _order = (char)order;
+    m_order = (char)order;
     if (order == 5)
       {
         SetAromatic();
-        if (_bgn)
-          _bgn->SetAromatic();
-        if (_end)
-          _end->SetAromatic();
+        if (m_bgn)
+          m_bgn->SetAromatic();
+        if (m_end)
+          m_end->SetAromatic();
       }
     else
       {
@@ -111,7 +131,7 @@ namespace OpenBabel
   {
     unsigned int i;
     OBMol *mol = (OBMol*)fixed->GetParent();
-    vector3 v1,v2,v3,v4,v5;
+    Eigen::Vector3d v1,v2,v3,v4,v5;
     vector<int> children;
 
     obErrorLog.ThrowError(__FUNCTION__,
@@ -159,9 +179,9 @@ namespace OpenBabel
 
   bool OBBond::IsRotor()
   {
-    return(_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1 &&
-           _order == 1 && !IsInRing() && _bgn->GetHyb() != 1 &&
-           _end->GetHyb() != 1);
+    return(m_bgn->GetHvyValence() > 1 && m_end->GetHvyValence() > 1 &&
+           m_order == 1 && !IsInRing() && m_bgn->GetHyb() != 1 &&
+           m_end->GetHyb() != 1);
   }
 
   bool OBBond::IsAmide()
@@ -169,16 +189,16 @@ namespace OpenBabel
     OBAtom *a1,*a2;
     a1 = a2 = NULL;
 
-    if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
+    if (m_bgn->GetAtomicNum() == 6 && m_end->GetAtomicNum() == 7)
       {
-        a1 = (OBAtom*)_bgn;
-        a2 = (OBAtom*)_end;
+        a1 = (OBAtom*) m_bgn;
+        a2 = (OBAtom*) m_end;
       }
 
-    if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
+    if (m_bgn->GetAtomicNum() == 7 && m_end->GetAtomicNum() == 6)
       {
-        a1 = (OBAtom*)_end;
-        a2 = (OBAtom*)_bgn;
+        a1 = (OBAtom*) m_end;
+        a2 = (OBAtom*) m_bgn;
       }
 
     if (!a1 || !a2)
@@ -200,16 +220,16 @@ namespace OpenBabel
     OBAtom *a1,*a2;
     a1 = a2 = NULL;
 
-    if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
+    if (m_bgn->GetAtomicNum() == 6 && m_end->GetAtomicNum() == 7)
       {
-        a1 = (OBAtom*)_bgn;
-        a2 = (OBAtom*)_end;
+        a1 = (OBAtom*)m_bgn;
+        a2 = (OBAtom*)m_end;
       }
 
-    if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
+    if (m_bgn->GetAtomicNum() == 7 && m_end->GetAtomicNum() == 6)
       {
-        a1 = (OBAtom*)_end;
-        a2 = (OBAtom*)_bgn;
+        a1 = (OBAtom*)m_end;
+        a2 = (OBAtom*)m_bgn;
       }
 
     if (!a1 || !a2)
@@ -233,16 +253,16 @@ namespace OpenBabel
     OBAtom *a1,*a2;
     a1 = a2 = NULL;
 
-    if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
+    if (m_bgn->GetAtomicNum() == 6 && m_end->GetAtomicNum() == 7)
       {
-        a1 = (OBAtom*)_bgn;
-        a2 = (OBAtom*)_end;
+        a1 = (OBAtom*)m_bgn;
+        a2 = (OBAtom*)m_end;
       }
 
-    if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
+    if (m_bgn->GetAtomicNum() == 7 && m_end->GetAtomicNum() == 6)
       {
-        a1 = (OBAtom*)_end;
-        a2 = (OBAtom*)_bgn;
+        a1 = (OBAtom*)m_end;
+        a2 = (OBAtom*)m_bgn;
       }
 
     if (!a1 || !a2)
@@ -265,16 +285,16 @@ namespace OpenBabel
     OBAtom *a1,*a2;
     a1 = a2 = NULL;
 
-    if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8)
+    if (m_bgn->GetAtomicNum() == 6 && m_end->GetAtomicNum() == 8)
       {
-        a1 = (OBAtom*)_bgn;
-        a2 = (OBAtom*)_end;
+        a1 = (OBAtom*)m_bgn;
+        a2 = (OBAtom*)m_end;
       }
 
-    if (_bgn->GetAtomicNum() == 8 && _end->GetAtomicNum() == 6)
+    if (m_bgn->GetAtomicNum() == 8 && m_end->GetAtomicNum() == 6)
       {
-        a1 = (OBAtom*)_end;
-        a2 = (OBAtom*)_bgn;
+        a1 = (OBAtom*)m_end;
+        a2 = (OBAtom*)m_bgn;
       }
 
     if (!a1 || !a2)
@@ -296,8 +316,8 @@ namespace OpenBabel
     if (GetBO() != 2)
       return(false);
 
-    if ((_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8) ||
-        (_bgn->GetAtomicNum() == 8 && _end->GetAtomicNum() == 6))
+    if ((m_bgn->GetAtomicNum() == 6 && m_end->GetAtomicNum() == 8) ||
+        (m_bgn->GetAtomicNum() == 8 && m_end->GetAtomicNum() == 6))
       return(true);
 
     return(false);
@@ -305,7 +325,7 @@ namespace OpenBabel
 
   bool OBBond::IsSingle()
   {
-    if (HasFlag(OB_AROMATIC_BOND))
+    if (HasFlag(OBBondFlag::Aromatic))
       return(false);
 
     if (!((OBMol*)GetParent())->HasAromaticPerceived())
@@ -313,7 +333,7 @@ namespace OpenBabel
         aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
       }
 
-    if ((this->GetBondOrder()==1) && !(HasFlag(OB_AROMATIC_BOND)))
+    if ((this->GetBondOrder()==1) && !(HasFlag(OBBondFlag::Aromatic)))
       return(true);
 
     return(false);
@@ -321,7 +341,7 @@ namespace OpenBabel
 
   bool OBBond::IsDouble()
   {
-    if	(HasFlag(OB_AROMATIC_BOND))
+    if	(HasFlag(OBBondFlag::Aromatic))
       return(false);
 
     if (!((OBMol*)GetParent())->HasAromaticPerceived())
@@ -329,7 +349,7 @@ namespace OpenBabel
         aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
       }
 
-    if ((this->GetBondOrder()==2) && !(HasFlag(OB_AROMATIC_BOND)))
+    if ((this->GetBondOrder()==2) && !(HasFlag(OBBondFlag::Aromatic)))
       return(true);
 
     return(false);
@@ -337,7 +357,7 @@ namespace OpenBabel
 
   bool OBBond::IsTriple()
   {
-    if	(HasFlag(OB_AROMATIC_BOND))
+    if	(HasFlag(OBBondFlag::Aromatic))
       return(false);
 
     if (!((OBMol*)GetParent())->HasAromaticPerceived())
@@ -345,7 +365,7 @@ namespace OpenBabel
         aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
       }
 
-    if ((this->GetBondOrder()==3) && !(HasFlag(OB_AROMATIC_BOND)))
+    if ((this->GetBondOrder()==3) && !(HasFlag(OBBondFlag::Aromatic)))
       return(true);
 
     return(false);
@@ -353,14 +373,14 @@ namespace OpenBabel
 
   bool OBBond::IsAromatic() const
   {
-    if (((OBBond*)this)->HasFlag(OB_AROMATIC_BOND))
+    if (((OBBond*)this)->HasFlag(OBBondFlag::Aromatic))
       return(true);
 
     OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
     if (!mol->HasAromaticPerceived())
       {
         aromtyper.AssignAromaticFlags(*mol);
-        if (((OBBond*)this)->HasFlag(OB_AROMATIC_BOND))
+        if (((OBBond*)this)->HasFlag(OBBondFlag::Aromatic))
           return(true);
       }
 
@@ -377,23 +397,23 @@ namespace OpenBabel
     vector<OBBond*>::iterator i,j;
     // We concentrate on sp2 atoms with valence up to 3 and ignore the rest (like sp1 or S,P)
     // As this is called from PerceiveBondOrders, GetHyb() may still be undefined.
-    if (_bgn->GetHyb()==1 || _bgn->GetValence()>3||
-        _end->GetHyb()==1 || _end->GetValence()>3)
+    if (m_bgn->GetHyb()==1 || m_bgn->GetValence()>3||
+        m_end->GetHyb()==1 || m_end->GetValence()>3)
       return(true);
 
-    for (nbrStart = static_cast<OBAtom*>(_bgn)->BeginNbrAtom(i); nbrStart;
-         nbrStart = static_cast<OBAtom*>(_bgn)->NextNbrAtom(i))
+    for (nbrStart = static_cast<OBAtom*>(m_bgn)->BeginNbrAtom(i); nbrStart;
+         nbrStart = static_cast<OBAtom*>(m_bgn)->NextNbrAtom(i))
       {
-        if (nbrStart != _end)
+        if (nbrStart != m_end)
           { 
-            for (nbrEnd = static_cast<OBAtom*>(_end)->BeginNbrAtom(j);
-                 nbrEnd; nbrEnd = static_cast<OBAtom*>(_end)->NextNbrAtom(j))
+            for (nbrEnd = static_cast<OBAtom*>(m_end)->BeginNbrAtom(j);
+                 nbrEnd; nbrEnd = static_cast<OBAtom*>(m_end)->NextNbrAtom(j))
               {
-                if (nbrEnd != _bgn)
+                if (nbrEnd != m_bgn)
                   {
-                    torsion=fabs(CalcTorsionAngle(nbrStart->GetVector(),
-                                                  static_cast<OBAtom*>(_bgn)->GetVector(),
-                                                  static_cast<OBAtom*>(_end)->GetVector(),
+                    torsion=fabs(VectorTorsion(nbrStart->GetVector(),
+                                                  static_cast<OBAtom*>(m_bgn)->GetVector(),
+                                                  static_cast<OBAtom*>(m_end)->GetVector(),
                                                   nbrEnd->GetVector()));
 
                     // >12&&<168 not enough
@@ -412,62 +432,62 @@ namespace OpenBabel
 
   void OBBond::SetKSingle()
   {
-    _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-    _flags |= OB_KSINGLE_BOND;
+    m_flags &= (~(OBBondFlag::Single|OBBondFlag::Double|OBBondFlag::Triple));
+    m_flags |= OBBondFlag::Single;
   }
 
   void OBBond::SetKDouble()
   {
-    _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-    _flags |= OB_KDOUBLE_BOND;
+    m_flags &= (~(OBBondFlag::Single|OBBondFlag::Double|OBBondFlag::Triple));
+    m_flags |= OBBondFlag::Double;
   }
 
   void OBBond::SetKTriple()
   {
-    _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-    _flags |= OB_KTRIPLE_BOND;
+    m_flags &= (~(OBBondFlag::Single|OBBondFlag::Double|OBBondFlag::Triple));
+    m_flags |= OBBondFlag::Triple;
   }
 
   bool OBBond::IsKSingle()
   {
-    if (_flags & OB_KSINGLE_BOND)
+    if (m_flags & OBBondFlag::Single)
       return(true);
     if (!((OBMol*)GetParent())->HasKekulePerceived())
       ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
 
-    return((_flags & OB_KSINGLE_BOND) != 0) ? true : false;
+    return((m_flags & OBBondFlag::Single) != 0) ? true : false;
   }
 
   bool OBBond::IsKDouble()
   {
-    if (_flags & OB_KDOUBLE_BOND)
+    if (m_flags & OBBondFlag::Double)
       return(true);
     if (!((OBMol*)GetParent())->HasKekulePerceived())
       ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
 
-    return((_flags & OB_KDOUBLE_BOND) != 0) ? true : false;
+    return((m_flags & OBBondFlag::Double) != 0) ? true : false;
   }
 
   bool OBBond::IsKTriple()
   {
-    if (_flags & OB_KTRIPLE_BOND)
+    if (m_flags & OBBondFlag::Triple)
       return(true);
     if (!((OBMol*)GetParent())->HasKekulePerceived())
       ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
 
-    return((_flags & OB_KTRIPLE_BOND) != 0) ? true : false;
+    return((m_flags & OBBondFlag::Triple) != 0) ? true : false;
   }
 
   bool OBBond::IsInRing() const
   {
-    if (((OBBond*)this)->HasFlag(OB_RING_BOND))
+    if (((OBBond*)this)->HasFlag(OBBondFlag::Ring))
       return(true);
 
     OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
     if (!mol->HasRingAtomsAndBondsPerceived())
       {
         mol->FindRingAtomsAndBonds();
-        if (((OBBond*)this)->HasFlag(OB_RING_BOND))
+        if (((OBBond*)this)->HasFlag(OBBondFlag::Ring))
           return(true);
       }
 
@@ -480,7 +500,7 @@ namespace OpenBabel
     if (!mol)
       return(false);
     if (mol->HasClosureBondsPerceived())
-      return(HasFlag(OB_CLOSURE_BOND));
+      return(HasFlag(OBBondFlag::Closure));
 
     mol->SetClosureBondsPerceived();
 
@@ -528,7 +548,7 @@ namespace OpenBabel
       if (!ubonds[bond->GetIdx()])
         bond->SetClosure();
 
-    return(HasFlag(OB_CLOSURE_BOND));
+    return(HasFlag(OBBondFlag::Closure));
   }
 
   double OBBond::GetEquibLength() const
@@ -567,133 +587,98 @@ namespace OpenBabel
     return(sqrt(d2));
   }
 
-  /*Now in OBBase
-  // OBGenericData methods
-  bool OBBond::HasData(string &s)
-  //returns true if the generic attribute/value pair exists
+  void OBBond::SetIdx(int idx)
+  {          
+    m_idx = idx;        
+  }
+      
+  void OBBond::SetBegin(OBAtom *begin)
+  {          
+    m_bgn = begin;      
+  }
+      
+  void OBBond::SetEnd(OBAtom *end)    
   {
-  if (_vdata.empty())
-  return(false);
-
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(true);
-
-  return(false);
+    m_end = end;        
+  }
+      
+  void OBBond::SetParent(OBMol *ptr)  
+  {
+    m_parent= ptr;
+  }
+      
+  void OBBond::UnsetKekule()
+  {
+    m_flags &= (~(OBBondFlag::Single|OBBondFlag::Double|OBBondFlag::Triple));
+  }
+  
+  unsigned int OBBond::GetIdx() const 
+  { 
+    return m_idx;  
   }
 
-  bool OBBond::HasData(const char *s)
-  //returns true if the generic attribute/value pair exists
-  {
-  if (_vdata.empty())
-  return(false);
-
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(true);
-
-  return(false);
+  unsigned int OBBond::GetBO() const
+  { 
+    return m_order; 
   }
-
-  bool OBBond::HasData(unsigned int dt)
-  //returns true if the generic attribute/value pair exists
-  {
-  if (_vdata.empty())
-  return(false);
-
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetDataType() == dt)
-  return(true);
-
-  return(false);
+  
+  unsigned int OBBond::GetBondOrder() const
+  { 
+    return m_order; 
   }
-
-  OBGenericData *OBBond::GetData(string &s)
-  //returns the value given an attribute
-  {
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(*i);
-
-  return(NULL);
+  
+  unsigned int OBBond::GetFlags() const
+  { 
+    return m_flags;      
   }
-
-  OBGenericData *OBBond::GetData(const char *s)
-  //returns the value given an attribute
-  {
-  vector<OBGenericData*>::iterator i;
-
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetAttribute() == s)
-  return(*i);
-
-  return(NULL);
+  
+  unsigned int OBBond::GetBeginAtomIdx() const 
+  { 
+    return (m_bgn ? m_bgn->GetIdx() : 0); 
   }
-
-  OBGenericData *OBBond::GetData(unsigned int dt)
-  {
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetDataType() == dt)
-  return(*i);
-  return(NULL);
+  
+  unsigned int OBBond::GetEndAtomIdx() const 
+  { 
+    return (m_end ? m_end->GetIdx() : 0); 
   }
-
-  void OBBond::DeleteData(unsigned int dt)
-  {
-  vector<OBGenericData*> vdata;
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if ((*i)->GetDataType() == dt)
-  delete *i;
-  else
-  vdata.push_back(*i);
-  _vdata = vdata;
+  
+  OBAtom* OBBond::GetBeginAtom()
+  { 
+    return(m_bgn);
   }
-
-  void OBBond::DeleteData(vector<OBGenericData*> &vg)
-  {
-  vector<OBGenericData*> vdata;
-  vector<OBGenericData*>::iterator i,j;
-
-  bool del;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  {
-  del = false;
-  for (j = vg.begin();j != vg.end();++j)
-  if (*i == *j)
-  {
-  del = true;
-  break;
+  
+  const OBAtom* OBBond::GetBeginAtom() const 
+  { 
+    return(m_bgn);
   }
-  if (del)
-  delete *i;
-  else
-  vdata.push_back(*i);
+  
+  OBAtom* OBBond::GetEndAtom()
+  { 
+    return(m_end);
   }
-  _vdata = vdata;
+  
+  const OBAtom* OBBond::GetEndAtom() const
+  { 
+    return(m_end);    
   }
-
-  void OBBond::DeleteData(OBGenericData *gd)
+  
+  OBAtom *OBBond::GetNbrAtom(OBAtom *ptr)
   {
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();++i)
-  if (*i == gd)
+    return((ptr != m_bgn)? m_bgn : m_end);
+  }
+  
+  OBMol* OBBond::GetParent()
   {
-  delete *i;
-  _vdata.erase(i);
+    return m_parent;
   }
-
+  
+  unsigned int OBBond::GetNbrAtomIdx(OBAtom *ptr)
+  {
+    if (ptr != m_bgn)
+      return (m_bgn ? m_bgn->GetIdx() : 0); 
+    else
+      return (m_end ? m_end->GetIdx() : 0); 
   }
-  */
 
 } // end namespace OpenBabel
 

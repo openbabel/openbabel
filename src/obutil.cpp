@@ -121,7 +121,7 @@ namespace OpenBabel
   //! \return the geometric centroid to an array of coordinates in double* format
   //!  and center the coordinates to the origin. Operates on the first "size" 
   //!  coordinates in the array.
-  vector3 center_coords(double *c, unsigned int size)
+  Eigen::Vector3d center_coords(double *c, unsigned int size)
   {
     if (size == 0)
       {
@@ -144,7 +144,7 @@ namespace OpenBabel
         c[i*3+1] -= y;
         c[i*3+2] -= z;
       }
-    vector3 v(x,y,z);
+    Eigen::Vector3d v(x,y,z);
     return(v);
   }
 
@@ -436,7 +436,7 @@ namespace OpenBabel
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#zmatrixCoordinatesIntoCartesianCoordinates">blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates</a>
   void InternalToCartesian(std::vector<OBInternalCoord*> &vic,OBMol &mol)
   {
-    vector3 n,nn,v1,v2,v3,avec,bvec,cvec;
+    Eigen::Vector3d n,nn,v1,v2,v3,avec,bvec,cvec;
     double dst = 0.0, ang = 0.0, tor = 0.0;
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
@@ -494,8 +494,8 @@ namespace OpenBabel
 
         v1 = avec - bvec;
         v2 = avec - cvec;
-        n = cross(v1,v2);
-        nn = cross(v1,n);
+        n = v1.cross(v2);
+        nn = v1.cross(n);
         n.normalize();
         nn.normalize();
 
@@ -542,8 +542,8 @@ namespace OpenBabel
           }
         else if (atom->GetIdx() == 3)
           {
-            if( (atom->GetVector()-mol.GetAtom(2)->GetVector()).length_2()
-                <(atom->GetVector()-mol.GetAtom(1)->GetVector()).length_2())
+            if( (atom->GetVector()-mol.GetAtom(2)->GetVector()).norm2()
+                <(atom->GetVector()-mol.GetAtom(1)->GetVector()).norm2())
               {
                 vic[atom->GetIdx()]->_a = mol.GetAtom(2);
                 vic[atom->GetIdx()]->_b = mol.GetAtom(1);
@@ -559,7 +559,7 @@ namespace OpenBabel
         ref = mol.GetAtom(1);
         for(nbr = mol.BeginAtom(j);nbr && (i != j);nbr = mol.NextAtom(j))
           {
-            r = (atom->GetVector()-nbr->GetVector()).length_2();
+            r = (atom->GetVector()-nbr->GetVector()).norm2();
             if((r < sum) && (vic[nbr->GetIdx()]->_a != nbr) &&
                (vic[nbr->GetIdx()]->_b != nbr))
               {
@@ -591,7 +591,7 @@ namespace OpenBabel
 
     //fill in geometries
     unsigned int k;
-    vector3 v1,v2;
+    Eigen::Vector3d v1,v2;
     OBAtom *a,*b,*c;
     for (k = 2;k <= mol.NumAtoms();++k)
       {
@@ -600,16 +600,16 @@ namespace OpenBabel
         b = vic[k]->_b;
         c = vic[k]->_c;
         v1 = atom->GetVector() - a->GetVector();
-        vic[k]->_dst = v1.length();
+        vic[k]->_dst = v1.norm();
         if (k == 2)
           continue;
 
         v2 = b->GetVector()    - a->GetVector();
-        vic[k]->_ang = vectorAngle(v1,v2);
+        vic[k]->_ang = VectorAngle(v1,v2);
         if (k == 3)
           continue;
 
-        vic[k]->_tor = CalcTorsionAngle(atom->GetVector(),
+        vic[k]->_tor = VectorTorsion(atom->GetVector(),
                                         a->GetVector(),
                                         b->GetVector(),
                                         c->GetVector());
@@ -630,12 +630,12 @@ namespace OpenBabel
             {
               v1 = atom->GetVector() - a->GetVector();
               v2 = b->GetVector() - a->GetVector();
-              ang = fabs(vectorAngle(v1,v2));
+              ang = fabs(VectorAngle(v1,v2));
               if (ang < 5.0 || ang > 175.0)
                 continue;
                 
               // Also check length considerations -- don't bother if the length > 10.0 Angstroms
-              if (v1.length_2() > 99.999)
+              if (v1.norm2() > 99.999)
                 continue;
 
               for (c = mol.BeginAtom(m);c && c->GetIdx() < atom->GetIdx();c = mol.NextAtom(m))
@@ -647,9 +647,9 @@ namespace OpenBabel
               vic[k]->_a = a;
               vic[k]->_b = b;
               vic[k]->_c = c;
-              vic[k]->_dst = v1.length();
-              vic[k]->_ang = vectorAngle(v1,v2);
-              vic[k]->_tor = CalcTorsionAngle(atom->GetVector(),
+              vic[k]->_dst = v1.norm();
+              vic[k]->_ang = VectorAngle(v1,v2);
+              vic[k]->_tor = VectorTorsion(atom->GetVector(),
                                               a->GetVector(),
                                               b->GetVector(),
                                               c->GetVector());
@@ -716,7 +716,7 @@ namespace OpenBabel
 
     /* diagonalize c */
 
-    matrix3x3::jacobi(4, c, d, v);
+    //matrix3x3::jacobi(4, c, d, v);
 
     /* extract the desired quaternion */
 

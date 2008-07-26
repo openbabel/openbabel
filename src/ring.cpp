@@ -283,7 +283,7 @@ namespace OpenBabel
         delete *i;
   }
 
-  bool OBRingSearch::SaveUniqueRing(deque<int> &d1,deque<int> &d2)
+  bool OBRingSearch::SaveUniqueRing(std::deque<int> &d1, std::deque<int> &d2)
   {
     vector<int> path;
     OBBitVec bv;
@@ -568,16 +568,16 @@ namespace OpenBabel
     return(_atom->GetIdx());
   }
 
-  bool OBRing::findCenterAndNormal(vector3 & center, vector3 &norm1, vector3 &norm2)
+  bool OBRing::findCenterAndNormal(Eigen::Vector3d & center, Eigen::Vector3d &norm1, Eigen::Vector3d &norm2)
   {
     OBMol *mol= this->_parent;
     int j= 0;
     const int nA= this->_path.size();
-    vector3 tmp;
+    Eigen::Vector3d tmp;
 
-    center.Set(0.0,0.0,0.0);
-    norm1.Set(0.0,0.0,0.0);
-    norm2.Set(0.0,0.0,0.0);
+    center = VZero;
+    norm1 = VZero;
+    norm2 = VZero;
     for (j = 0; j != nA; ++j)
       {
         center += (mol->GetAtom(_path[j]))->GetVector();
@@ -586,9 +586,9 @@ namespace OpenBabel
 
     for (j = 0; j != nA; ++j)
       {
-        vector3 v1= (mol->GetAtom(_path[j]))->GetVector() - center;
-        vector3 v2= (mol->GetAtom(_path[j+1==nA?0:j+1]))->GetVector() - center;
-        tmp= cross(v1,v2);
+        Eigen::Vector3d v1= (mol->GetAtom(_path[j]))->GetVector() - center;
+        Eigen::Vector3d v2= (mol->GetAtom(_path[j+1==nA?0:j+1]))->GetVector() - center;
+        tmp= v1.cross(v2);
         norm1+= tmp;
       }
     norm1/= double(nA);

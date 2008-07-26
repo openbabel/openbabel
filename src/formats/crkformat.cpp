@@ -450,7 +450,7 @@ namespace OpenBabel
         OBBond *bnd=mol.GetBond(m);
 
         int from=bnd->GetBeginAtom()->GetIdx(),to=bnd->GetEndAtom()->GetIdx();
-        double order=bnd->GetBO();
+        double order=bnd->GetBondOrder();
         if (bnd->IsAromatic())
           order=1.5;
         int style=0;

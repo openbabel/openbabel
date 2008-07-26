@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 #include <openbabel/chiral.h>
 #include <openbabel/atomclass.h>
+#include <openbabel/builder.h>
 
 #include <openbabel/canon.h>
 
@@ -325,10 +326,10 @@ namespace OpenBabel {
               _order = 5;
               break;
             case '/':
-              _bondflags |= OB_TORDOWN_BOND;   // initial mark, see FixCisTransBonds() below 
+              _bondflags |= OBBondFlag::Down;   // initial mark, see FixCisTransBonds() below 
               break;
             case '\\':
-              _bondflags |= OB_TORUP_BOND;     // initial mark, see FixCisTransBonds() below 
+              _bondflags |= OBBondFlag::Up;     // initial mark, see FixCisTransBonds() below 
               break;
             default:
               if (!ParseSimple(mol))
@@ -345,7 +346,7 @@ namespace OpenBabel {
       CapExternalBonds(mol);
 
     //Save atom class values in OBGenericData object if there are any
-    if(_classdata.size()>0)
+    if(_classdata.Size()>0)
       mol.SetData(new OBAtomClassData(_classdata));
 
     // Check to see if we've balanced out all ring closures
@@ -380,7 +381,7 @@ namespace OpenBabel {
         OBBond* bond = mol.GetBond(*itr);
         if(!bond->GetBeginAtom()->IsAromatic() && !bond->GetEndAtom()->IsAromatic())
           {
-            bond->SetBO(2);
+            bond->SetBondOrder(2);
             mol.UnsetImplicitValencePerceived();
           }
       }
@@ -579,11 +580,11 @@ namespace OpenBabel {
       {
         int j = depth-1;
         bond=mol.GetBond(_path[j--]);
-        bond->SetBO(5);
+        bond->SetBondOrder(5);
         while( j >= 0 )
           {
             bond=mol.GetBond(_path[j--]);
-            bond->SetBO(5);
+            bond->SetBondOrder(5);
             if(bond->GetBeginAtom() == atom || bond->GetEndAtom() == atom)
               break;
           }
@@ -1729,12 +1730,12 @@ namespace OpenBabel {
         _ptr++;
         break;
       case '/': //chiral, but _order still == 1
-        _bondflags |= OB_TORDOWN_BOND;
+        _bondflags |= OBBondFlag::Down;
         _ptr++;
         break;
         _ptr++;
       case '\\': // chiral, but _order still == 1
-        _bondflags |= OB_TORUP_BOND;
+        _bondflags |= OBBondFlag::Up;
         _ptr++;
         break;
       default: // no bond indicator just leave order = 1
@@ -2158,7 +2159,7 @@ namespace OpenBabel {
   void OBMol2Cansmi::CorrectAromaticAmineCharge(OBMol &mol)
   {
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     _aromNH.clear();
     _aromNH.resize(mol.NumAtoms()+1);
@@ -2184,14 +2185,14 @@ namespace OpenBabel {
   void OBMol2Cansmi::AssignCisTrans(OBMol *pmol)
   {
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j, k;
+    vector<OBBond*>::iterator j, k;
 
     FOR_BONDS_OF_MOL(dbi, pmol) {
 
       bond = &(*dbi);
 
       // Not double, or in a ring?  Skip it.
-      if (bond->GetBO() != 2 || bond->IsInRing())
+      if (bond->GetBondOrder() != 2 || bond->IsInRing())
         continue;
 
       OBAtom *b = bond->GetBeginAtom();
@@ -2227,15 +2228,15 @@ namespace OpenBabel {
       }
 
       // Calculate the torsion angle between the "substituent" atoms.  This is an
-      // odd use of the CalcTorsionAngle() function.  It measures how much you'd
+      // odd use of the VectorTorsion() function.  It measures how much you'd
       // have to twist around the double bond to bring both substituents to the
       // same side.  Cis bonds are already on the same side, so they'll have a
       // torsion angle of zero.  Trans bonds are opposite, so you'd have to twist
       // around the double bond by 180 degrees.  So small (near zero) means cis,
       // and large (near 180) means trans.  This is cool because it also works in
       // any 3D orientation.
-      double angle = fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(),
-                                           c->GetVector(),d->GetVector()));
+      double angle = fabs(VectorTorsion(a->GetVector(),b->GetVector(),
+                                        c->GetVector(),d->GetVector()));
 
       if (((OBBond*)*j)->IsUp() || ((OBBond*)*j)->IsDown()) //stereo already assigned
         {
@@ -2414,11 +2415,11 @@ namespace OpenBabel {
                      (bond->GetEndAtom())->HasDoubleBond() )
                   strcat(symbol,"/");
               }
-              if (bond->GetBO() == 2 && !bond->IsAromatic())
+              if (bond->GetBondOrder() == 2 && !bond->IsAromatic())
                 strcat(symbol,"=");
-              if (bond->GetBO() == 2 && bond->IsAromatic())
+              if (bond->GetBondOrder() == 2 && bond->IsAromatic())
                 strcat(symbol,":");
-              if (bond->GetBO() == 3)
+              if (bond->GetBondOrder() == 3)
                 strcat(symbol,"#");
               sprintf(symbol,"%s%d",symbol,externalBond->first);
               break;
@@ -2722,10 +2723,10 @@ namespace OpenBabel {
     // is positive or negative.  (Note: GetVector() is a bad name; it should
     // be called GetXYZ()).
 
-    torsion = CalcTorsionAngle(chiral_neighbors[0]->GetVector(),
-                               chiral_neighbors[1]->GetVector(),
-                               chiral_neighbors[2]->GetVector(),
-                               chiral_neighbors[3]->GetVector());
+    torsion = VectorTorsion(chiral_neighbors[0]->GetVector(),
+                            chiral_neighbors[1]->GetVector(),
+                            chiral_neighbors[2]->GetVector(),
+                            chiral_neighbors[3]->GetVector());
 
     strcpy(stereo,(torsion < 0.0) ? "@" : "@@");
 
@@ -2746,7 +2747,7 @@ namespace OpenBabel {
                                     vector<unsigned int> &canonical_order,
                                     OBCanSmiNode *node)
   {
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBAtom *nbr, *atom;
     vector<OBAtom *> sort_nbrs;
     vector<OBAtom *>::iterator ai;
@@ -2860,7 +2861,7 @@ namespace OpenBabel {
     vector<OBBondClosureInfo> vp_closures;
     vector<OBBond*> vbonds;
     vector<OBBond*>::iterator bi;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBBond *bond1, *bond2;
     OBAtom *nbr1, *nbr2;
     int nbr1_canorder, nbr2_canorder;
@@ -2904,7 +2905,7 @@ namespace OpenBabel {
       bond1 = *bi;
       _ubonds.SetBitOn(bond1->GetIdx());
       int digit = GetUnusedIndex();
-      int bo = (bond1->IsAromatic())? 1 : bond1->GetBO();
+      int bo = (bond1->IsAromatic())? 1 : bond1->GetBondOrder();
       _vopen.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
       vp_closures.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
     }
@@ -3092,8 +3093,8 @@ namespace OpenBabel {
             strcat(buffer, bs);	// append "/" or "\"
           }
           else {
-            if (bci->bond->GetBO() == 2 && !bci->bond->IsAromatic())  strcat(buffer,"=");
-            if (bci->bond->GetBO() == 3)                              strcat(buffer,"#");
+            if (bci->bond->GetBondOrder() == 2 && !bci->bond->IsAromatic())  strcat(buffer,"=");
+            if (bci->bond->GetBondOrder() == 3)                              strcat(buffer,"#");
           }
         }
         if (bci->ringdigit > 9) strcat(buffer,"%");
@@ -3118,9 +3119,9 @@ namespace OpenBabel {
         cc[1] = '\0';
         strcat(buffer, cc);
       }
-      else if (bond->GetBO() == 2 && !bond->IsAromatic())
+      else if (bond->GetBondOrder() == 2 && !bond->IsAromatic())
         strcat(buffer,"=");
-      else if (bond->GetBO() == 3)
+      else if (bond->GetBondOrder() == 3)
         strcat(buffer,"#");
 
       ToCansmilesString(node->GetChildNode(i),buffer, frag_atoms, symmetry_classes, canonical_order);
@@ -3166,7 +3167,7 @@ namespace OpenBabel {
     OBAtom *atom;
     OBCanSmiNode *root;
     buffer[0] = '\0';
-    vector<OBNodeBase*>::iterator ai;
+    vector<OBAtom*>::iterator ai;
     vector<unsigned int> symmetry_classes, canonical_order;
 
     //Pointer to Atom Class data set if -xa option and the molecule has any; NULL otherwise.
@@ -3269,8 +3270,9 @@ namespace OpenBabel {
       //      OBAtom *atom;
       for (i = atomList.begin(); i != atomList.end(); ++i) {
         // Get the (x,y,z) coordinates where best to put the H
-        vector3 v;
-        (*i)->GetNewBondVector(v, 1.0);   // Returns (x,y,z) of the "empty" area, for a new bond
+        Eigen::Vector3d v;
+        v = OBBuilder::GetNewBondVector(*i, 1.0);   // Returns (x,y,z) of the "empty" area, for a new bond
+        //(*i)->GetNewBondVector(v, 1.0);   // Returns (x,y,z) of the "empty" area, for a new bond
 
 #if DEBUG
         cout << "AddHydrogenToChiralCenters: Adding H to atom " << atom->GetIdx() << "\n";
@@ -3365,7 +3367,7 @@ namespace OpenBabel {
           if (!atom->IsChiral()) continue;
           if (m2s.GetSmilesValence(atom) < 3) continue;
 
-          vector3 v;
+          Eigen::Vector3d v;
           OBAtom *nbr;
           //          OBBond *bond;
 
@@ -3383,15 +3385,15 @@ namespace OpenBabel {
             v = nbr->GetVector();
             if (bond->GetBeginAtom() == atom) {       // The pointy end is at the central atom
               if (bond->IsWedge())
-                v.SetZ(z);
+                v[2] = z;
               else if (bond->IsHash())
-                v.SetZ(-z);
+                v[2] = -z;
             }
             else {                                    // The pointy end is at the neighbor atom
               if (bond->IsWedge())
-                v.SetZ(-z);
+                v[2] = -z;
               else if (bond->IsHash())
-                v.SetZ(z);
+                v[2] = z;
             }
             nbr->SetVector(v);
           }
@@ -3406,8 +3408,8 @@ namespace OpenBabel {
       // all stereo-center and cis/trans information.
       OBBond *bond;
       OBAtom *atom;
-      vector<OBEdgeBase*>::iterator bi;
-      vector<OBNodeBase*>::iterator ai;
+      vector<OBBond*>::iterator bi;
+      vector<OBAtom*>::iterator ai;
       for (bond = pmol->BeginBond(bi); bond; bond = pmol->NextBond(bi)) {
         bond->UnsetUp();
         bond->UnsetDown();
@@ -3416,9 +3418,9 @@ namespace OpenBabel {
       }
       for (atom = pmol->BeginAtom(ai); atom; atom = pmol->NextAtom(ai)) {
         atom->UnsetStereo();
-        vector3 v = atom->GetVector();
+        Eigen::Vector3d v = atom->GetVector();
         if (v[2] != 0.0) {
-          v.SetZ(0.0);
+          v[2] = 0.0;
           atom->SetVector(v);
         }
       }

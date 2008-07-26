@@ -81,7 +81,7 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBBase::HasData(const string &s)
+  bool OBBase::HasData(const std::string &s)
     //returns true if the generic attribute/value pair exists
   {
     if (_vdata.empty())
@@ -119,7 +119,7 @@ namespace OpenBabel
   }
 
   //! \return the value given an attribute name
-  OBGenericData *OBBase::GetData(const string &s)
+  OBGenericData *OBBase::GetData(const std::string &s)
   {
     OBDataIterator i;
 
@@ -232,7 +232,7 @@ namespace OpenBabel
         }
   }
 
-  bool OBBase::DeleteData(const string& s)
+  bool OBBase::DeleteData(const std::string& s)
   {
     OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)

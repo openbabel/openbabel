@@ -205,7 +205,7 @@ void OBPhModel::CorrectForPH(OBMol &mol, double pH)
 
     For storing and converting chemical reaction files, use the OBReaction class.
  **/
-bool OBChemTsfm::Init(string &bgn,string &end)
+bool OBChemTsfm::Init(std::string &bgn, std::string &end)
 {
     if (!_bgn.Init(bgn))
         return(false);
@@ -332,7 +332,7 @@ bool OBChemTsfm::Apply(OBMol &mol)
                     continue;
                 }
 
-                bond->SetBO(j->second);
+                bond->SetBondOrder(j->second);
             }
     }
 

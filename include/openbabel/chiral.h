@@ -32,7 +32,7 @@ OBAPI void construct_c_matrix(OBMol &mol, std::vector<std::vector<double > > &m)
 //! Calculate the signed volume for an atom.
 OBAPI double CalcSignedVolume(OBMol &mol,OBAtom*,bool ReZeroZ=true);
 
-OBAPI double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d);
+OBAPI double signed_volume(const Eigen::Vector3d &a, const Eigen::Vector3d &b, const Eigen::Vector3d &c, const Eigen::Vector3d &d);
 OBAPI void GetChirality(OBMol &mol, std::vector<int> &chirality);
 
 //! Calculates parity of a vector of 4 items

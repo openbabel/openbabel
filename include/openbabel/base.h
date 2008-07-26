@@ -3,6 +3,7 @@ base.h - Base class for OpenBabel objects
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2008 by Tim Vandermeersch
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -30,22 +31,22 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-
   //Forward declaration of the base class for OBMol OBReaction, OBAtom, etc.
   //Declaration later in this file.
-class OBBase;
+  class OBBase;
 
-  //! \brief Classification of data stored via OBGenericData class and subclasses.
-  //!
-  //! OBGenericDataType can be used as a faster, direct access to a particular category
-  //! instead of the slower access via GetData(std::string), which must loop
-  //! through all data to find a match with the supplied key. It is implemented
-  //! as a set of unsigned integer constants for maximum flexibility and future
-  //! expansion.
-  //! 
-  //! CustomData0 through CustomData15 are data slots that are not used in 
-  //! OpenBabel directly and are meant for use in derivative programs.
-  //! Macro definitions can be used to define what each data slot is used in your code.
+  /** @brief Classification of data stored via OBGenericData class and subclasses.
+
+      OBGenericDataType can be used as a faster, direct access to a particular category
+      instead of the slower access via GetData(std::string), which must loop
+      through all data to find a match with the supplied key. It is implemented
+      as a set of unsigned integer constants for maximum flexibility and future
+      expansion.
+   
+      CustomData0 through CustomData15 are data slots that are not used in 
+      OpenBabel directly and are meant for use in derivative programs.
+      Macro definitions can be used to define what each data slot is used in your code.
+  */
   namespace OBGenericDataType
   {
     enum
@@ -59,7 +60,8 @@ class OBBase;
       //! Energetics data (e.g., total energy, heat of formation, etc.)
       EnergyData    =      2,
 
-      //! Storing text comments (one per molecule, atom, bond, etc.) (for other data, e.g., author, keyword, ... use OBPairData)
+      //! Storing text comments (one per molecule, atom, bond, etc.) 
+      //! (for other data, e.g., author, keyword, ... use OBPairData)
       CommentData   =      3,
 
       //! Arbitrary information about conformers, i.e., OBConformerData
@@ -130,6 +132,12 @@ class OBBase;
       
       //! Matrix data (i.e., a 3x3 matrix like a rotation or quadrupole moment)
       MatrixData =        26,
+      
+      //! Alias data (i.e., COOH, Me, ...)
+      AliasData =         27,
+
+      //! Atom class data (i.e., :1 or :2 and so on, used for SMIRKS)
+      AtomClassData =     28,
 
       // space for up to 2^14 more entries...
 
@@ -160,9 +168,8 @@ class OBBase;
     external             //!< Added by an external program
   };
 
-  //! \brief Base class for generic data
-  // Class introduction in generic.cpp
-  // This base class declaration  has no dependence on mol.h
+  /** @brief Base class for generic data
+   */
   class OBAPI OBGenericData
   {
   protected:
@@ -170,146 +177,181 @@ class OBBase;
     unsigned int _type;  //!< attribute type -- declared for each subclass
     DataOrigin   _source;//!< source of data for accounting
   public:
+    /**
+     * Constructor.
+     */
     OBGenericData(const std::string attr = "undefined",
                   const unsigned int type =  OBGenericDataType::UndefinedData,
                   const DataOrigin source = any);
-    //Use default copy constructor and assignment operators
-    //OBGenericData(const OBGenericData&);
-		
-    /* Virtual constructors added. see 
-       http://www.parashift.com/c++-faq-lite/abcs.html#faq-22.5
-       to allow copying given only a base class OBGenericData pointer.
-       It may be necessary to cast the return pointer to the derived class
-       type, since we are doing without Covariant Return Types 
-       http://www.parashift.com/c++-faq-lite/virtual-functions.html#faq-20.8
-    
-       A derived class may return NULL if copying is inappropriate */
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const
-    { return NULL; } 
-    virtual ~OBGenericData()    {}
-    //Use default copy constructor and assignment operators
-    //OBGenericData& operator=(const OBGenericData &src);
-
-    //! Set the attribute (key), which can be used to retrieve this data
-    void                      SetAttribute(const std::string &v)
-    {        _attr = v;        }
-    //! Set the origin of this data, which can be used to filter the data
+    /** 
+     * Virtual constructors added. see 
+     * http://www.parashift.com/c++-faq-lite/abcs.html#faq-22.5
+     * to allow copying given only a base class OBGenericData pointer.
+     * It may be necessary to cast the return pointer to the derived class
+     * type, since we are doing without Covariant Return Types 
+     * http://www.parashift.com/c++-faq-lite/virtual-functions.html#faq-20.8
+     *
+     * A derived class may return NULL if copying is inappropriate 
+     */
+    virtual OBGenericData* Clone(OBBase* /*parent*/) const { return NULL; } 
+    /**
+     * Destructor.
+     */
+    virtual ~OBGenericData() {}
+    /** 
+     * Set the attribute (key), which can be used to retrieve this data.
+     */
+    void SetAttribute(const std::string &v) { _attr = v; }
+    /** 
+     * Set the origin of this data, which can be used to filter the data.
+     */
     void SetOrigin(const DataOrigin s) { _source = s; }
-    //! \return The attribute (key), which can be used to retrieve this data
-    virtual const std::string &GetAttribute()  const
-    {        return(_attr);    }
-    //! \return the data type for this object as defined in OBGenericDataType
-    unsigned int                GetDataType()    const
-    {        return(_type);    }
-    //! \brief Base class returns a default value (the attribute type) 
-    //! but should never be called
-    virtual const std::string &GetValue()  const
-    {			return _attr; }
-    virtual DataOrigin GetOrigin() const
-    {     return _source; }
+    /** 
+     * @return The attribute (key), which can be used to retrieve this data.
+     */
+    virtual const std::string &GetAttribute()  const { return _attr; }
+    /** 
+     * @return the data type for this object as defined in OBGenericDataType.
+     */
+    unsigned int GetDataType() const { return _type; }
+    /** 
+     * Base class returns a default value (the attribute type)
+     * but should never be called.
+     */
+    virtual const std::string &GetValue()  const { return _attr; }
+    /**
+     * Get the origin of this data, which can be used to filter the data.
+     */
+    virtual DataOrigin GetOrigin() const { return _source; }
   };
 
   //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
   typedef std::vector<OBGenericData*>::iterator OBDataIterator;
   
-  //! Base Class
-  // introduction in base.cpp
   class OBAPI OBBase
-    {
+  {
     public:
+      /**
+       * Destructor.
+       */
       virtual ~OBBase()
-        {
-          if (!_vdata.empty())
-            {
-              std::vector<OBGenericData*>::iterator m;
-              for (m = _vdata.begin();m != _vdata.end();m++)
-                delete *m;
-              _vdata.clear();
-            }
+      {
+        if (!_vdata.empty()) {
+          std::vector<OBGenericData*>::iterator m;
+          for (m = _vdata.begin();m != _vdata.end();m++)
+            delete *m;
+          
+          _vdata.clear();
         }
-
-      //! \brief Clear any and all data associated with this object
+      }
+      /** 
+       * Clear any and all data associated with this object.
+       */
       virtual bool Clear();
-
-      //! Perform a set of transformations specified by the user
-      //!
-      //! Typically these are program options to filter or modify an object
-      //! For example, see OBMol::DoTransformations() and OBMol::ClassDescription()
+      /** 
+       * Perform a set of transformations specified by the user.
+       * Typically these are program options to filter or modify an object.
+       * For example, see OBMol::DoTransformations() and OBMol::ClassDescription().
+       */
       virtual OBBase* DoTransformations(const std::map<std::string,std::string>* /*pOptions*/)
-        {
-          return this;
-        } 
-
-      //Base type does nothing
-      //! \return A list of descriptions of command-line options for DoTransformations()
-      static const char* ClassDescription()
-        {
-          return "";
-        } 
-
-      //! \brief By default clears the object. Called from ReadMolecule of most format classes
+      { return this; } 
+      /**
+       * @return A list of descriptions of command-line options for DoTransformations().
+       */
+      static const char* ClassDescription() { return ""; } 
+      /** 
+       * @brief By default clears the object. Called from ReadMolecule of most format classes.
+       */
       template< class T >
       T* CastAndClear(bool clear=true)
-        {
-          T* pOb = dynamic_cast<T*>(this);
-          if(pOb && clear)// Clear only if this is of target class
-            Clear();
-          return pOb;
-        }
-
-
-      //! \name Generic data handling methods (via OBGenericData)
+      {
+        T* pOb = dynamic_cast<T*>(this);
+        if(pOb && clear)// Clear only if this is of target class
+          Clear();
+        return pOb;
+      }
+      
+      //! @name Generic data handling methods (via OBGenericData)
       //@{
-      //! \return whether the generic attribute/value pair exists
-      bool                              HasData(const std::string &);
-      //! \return whether the generic attribute/value pair exists
-      bool                              HasData(const char *);
-      //! \return whether the generic attribute/value pair exists, for a given OBGenericDataType
-      bool                              HasData(const unsigned int type);
-      //! Delete any data matching the given OBGenericDataType
-      void                              DeleteData(unsigned int type);
-      //! Delete the given generic data from this object
-      void                              DeleteData(OBGenericData*);
-      //! Delete all of the given generic data from this object
-      void                              DeleteData(std::vector<OBGenericData*>&);
-      //! Deletes the generic data with the specified attribute, returning false if not found
-      bool                              DeleteData(const std::string& s);
-      //! Adds a data object; does nothing if d==NULL
-      void                              SetData(OBGenericData *d)
-        {
-          if(d) _vdata.push_back(d);
-        }
-      //! Adds a copy of a data object; does nothing if d == NULL
-      //! \since version 2.2
-      void                              CloneData(OBGenericData *d);
-      //! \return the number of OBGenericData items attached to this molecule.
-      unsigned int                      DataSize() const 
-        { return(_vdata.size()); }
-      //! \return the first matching data for a given type from OBGenericDataType
-      //!    or NULL if nothing matches
-      OBGenericData                    *GetData(const unsigned int type);
-      //! \return any data matching the given attribute name or NULL if nothing matches
-      OBGenericData                    *GetData(const std::string&);
-      //! \return any data matching the given attribute name or NULL if nothing matches
-      OBGenericData                    *GetData(const char *);
-      //! \return the all matching data for a given type from OBGenericDataType
-      //!    or an empty vector if nothing matches
-      //! \since version 2.2
-      std::vector<OBGenericData*>       GetAllData(const unsigned int type);
-      //! \return all data, suitable for iterating
-      std::vector<OBGenericData*>      &GetData() { return(_vdata); }
-      //! \return all data with a specific origin, suitable for iterating
-      std::vector<OBGenericData*>      GetData(DataOrigin source);
-      //! \return An iterator pointing to the beginning of the data
-      OBDataIterator  BeginData()
-        { return(_vdata.begin());        }
-      //! \return An iterator pointing to the end of the data
-      OBDataIterator  EndData()
-        { return(_vdata.end());          }
+      /** 
+       * @return Whether the generic attribute/value pair exists.
+       */
+      bool HasData(const std::string &);
+      /** 
+       * @return Whether the generic attribute/value pair exists.
+       */
+      bool HasData(const char *);
+      /** 
+       * @return whether the generic attribute/value pair exists, for a given OBGenericDataType.
+       */
+      bool HasData(const unsigned int type);
+      /** 
+       * Delete any data matching the given OBGenericDataType.
+       */
+      void DeleteData(unsigned int type);
+      /** 
+       * Delete the given generic data from this object.
+       */
+      void DeleteData(OBGenericData*);
+      /** 
+       * Delete all of the given generic data from this object.
+       */
+      void DeleteData(std::vector<OBGenericData*>&);
+      /** 
+       * Deletes the generic data with the specified attribute, returning false if not found.
+       */
+      bool DeleteData(const std::string& s);
+      /** 
+       * Adds a data object; does nothing if d==NULL.
+       */
+      void SetData(OBGenericData *d) { if(d) _vdata.push_back(d); }
+      /** 
+       * Adds a copy of a data object; does nothing if d == NULL.
+       * @since version 2.2
+       */
+      void CloneData(OBGenericData *d);
+      /** 
+       * @return The number of OBGenericData items attached to this object.
+       */
+      unsigned int DataSize() const { return _vdata.size(); }
+      /** 
+       * @return the first matching data for a given type from OBGenericDataType
+       * or NULL if nothing matches.
+       */
+      OBGenericData* GetData(const unsigned int type);
+      /** 
+       * @return any data matching the given attribute name or NULL if nothing matches.
+       */
+      OBGenericData* GetData(const std::string&);
+      /** 
+       * @return any data matching the given attribute name or NULL if nothing matches.
+       */
+      OBGenericData* GetData(const char *);
+      /** 
+       * @return the all matching data for a given type from OBGenericDataType
+       * or an empty vector if nothing matches.
+       * @since version 2.2
+       */
+      std::vector<OBGenericData*> GetAllData(const unsigned int type);
+      /** 
+       * @return all data, suitable for iterating.
+       */
+      std::vector<OBGenericData*>& GetData() { return _vdata; }
+      /** 
+       * @return all data with a specific origin, suitable for iterating.
+       */
+      std::vector<OBGenericData*> GetData(DataOrigin source);
+      /** 
+       * @return An iterator pointing to the beginning of the data.
+       */
+      OBDataIterator BeginData() { return _vdata.begin(); }
+      /** 
+       * @return An iterator pointing to the end of the data.
+       */
+      OBDataIterator EndData() { return(_vdata.end()); }
       //@}
     protected:
       std::vector<OBGenericData*> _vdata; //!< Custom data
-
     };
 
 } //namespace OpenBabel

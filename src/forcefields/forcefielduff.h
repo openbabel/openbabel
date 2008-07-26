@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <map>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/ffinternal.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 
@@ -31,9 +32,7 @@ namespace OpenBabel
   {
     public:
       double bt; // bond order (e.g., 1.41 for amide)
-      double kb, r0, rab, delta;
- 
-      template<bool> void Compute();
+      double kb, r0;
   };
   
   class OBFFAngleCalculationUFF : public OBFFCalculation3 
@@ -41,13 +40,11 @@ namespace OpenBabel
     public:
       int at; //angletype (ATIJK)
       bool linear;
-      double ka, theta0, theta, delta;
+      double ka, theta0;
       double c0, c1, c2;
       double zi, zk, rij, rjk, rik;
       double cosT0; // cos theta0
       int coord, n;
- 
-      template<bool> void Compute();
   };
   
   class OBFFTorsionCalculationUFF : public OBFFCalculation4 
@@ -55,36 +52,27 @@ namespace OpenBabel
     public:
       int n;
       double tt; //torsiontype (i.e. b-c bond order)
-      double V, tor, cosNPhi0;
-      
-      template<bool> void Compute();
- 
+      double V, cosNPhi0;
   };
 
   class OBFFOOPCalculationUFF : public OBFFCalculation4 
   {
     public:
-      double koop, angle;
+      double koop;
       double c0, c1, c2;
-     
-      template<bool> void Compute();
   };  
   
   class OBFFVDWCalculationUFF : public OBFFCalculation2
   {
     public:
       bool is14, samering;
-      double ka, Ra, kb, Rb, kab, rab;
- 
-      template<bool> void Compute();
+      double ka, Ra, kb, Rb, kab;
   };
 
   class OBFFElectrostaticCalculationUFF : public OBFFCalculation2 
   {
     public:
-      double qq, rab;
-
-      template<bool> void Compute();
+      double qq;
   };
 
   // Class OBForceFieldUFF
@@ -115,17 +103,13 @@ namespace OpenBabel
     std::vector<OBFFOOPCalculationUFF>           _oopcalculations;
     std::vector<OBFFVDWCalculationUFF>           _vdwcalculations;
     std::vector<OBFFElectrostaticCalculationUFF> _electrostaticcalculations;
+    
+    char _logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
  
   public:
     //! Constructor
     explicit OBForceFieldUFF(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
     {
-      _init = false;
-      _rvdw = 7.0;
-      _rele = 15.0;
-      _pairfreq = 10;
-      _cutoff = false;
-      _linesearch = LineSearchType::Simple;
     }
       
     //! Destructor

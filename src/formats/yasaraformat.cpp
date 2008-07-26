@@ -400,7 +400,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     dstatom=mol.NewAtom();
     dstatom->SetAtomicNum(element);
     dstatom->SetType(mob_elementsym[element]);
-    vector3 pos(int32le(srcatom->posx)*-FMTOA,int32le(srcatom->posy)*FMTOA,
+    Eigen::Vector3d pos(int32le(srcatom->posx)*-FMTOA,int32le(srcatom->posy)*FMTOA,
                 int32le(srcatom->posz)*FMTOA);
     dstatom->SetVector(pos);
     if (!mob_hasres(srcatom,&id))
@@ -545,7 +545,7 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //printf("Babel atom %d with %d links:\n",i,links);
     for (linkedatom=srcatom->BeginNbrAtom(iter);linkedatom;linkedatom=srcatom->NextNbrAtom(iter))
     { storeint32le(buffer,linkedatom->GetIdx()-1);
-      bondorder=(*iter)->GetBO();
+      bondorder=(*iter)->GetBondOrder();
       //printf("  Order %d\n",bondorder);
       if (bondorder==4) bondorder=MOB_LINKQUADRUPLE;
       else if (bondorder==5) bondorder=MOB_LINKRESONANCE50;

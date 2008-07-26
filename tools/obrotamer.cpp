@@ -73,7 +73,6 @@ int main(int argc,char *argv[])
   
   OBRotorList rl;
   OBRotamerList rotamers;
-  int *rotorKey = NULL;
   OBRandom rand;
   rand.TimeSeed();
 
@@ -87,17 +86,16 @@ int main(int argc,char *argv[])
       cerr << " Number of rotatable bonds: " << rl.Size() << endl;
 
       // indexed from 1, rotorKey[0] = 0
-      std::vector<int> rotorKey(rl.Size() + 1, 0);
+      std::vector<int> rotorKey(rl.Size(), 0);
 
       // each entry represents the configuration of a rotor
-      // e.g. indexes into OBRotor::GetResolution()
+      // e.g. indexes into OBRotor::GetTorsionValues()
       //       (the different angles to sample from the OBRotorRules database)
       OBRotorIterator ri;
       OBRotor *rotor = rl.BeginRotor(ri);
-      for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri))
-        rotorKey[i] = rand.NextInt() % rotor->GetResolution().size();
+      for (int i = 0; i < rl.Size(); ++i, rotor = rl.NextRotor(ri))
+        rotorKey[i] = rand.NextInt() % rotor->GetTorsionValues().size();
 
-      rotamers.SetBaseCoordinateSets(mol);
       rotamers.Setup(mol, rl);
       rotamers.AddRotamer(rotorKey);
 

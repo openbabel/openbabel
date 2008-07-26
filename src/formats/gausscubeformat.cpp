@@ -202,13 +202,13 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false;
     }
-    vector3 origin(x, y, z);
+    Eigen::Vector3d origin(x, y, z);
     origin *= BOHR_TO_ANGSTROM;
 
     // The next three lines contain the number of voxels in x, y and z along
     // with the three cube cell axes.
     vector<int> voxels(3);
-    vector<vector3> axes(3);
+    vector<Eigen::Vector3d> axes(3);
     bool angstroms = true;
     for (int i = 0; i < 3; i++)
     {
@@ -281,7 +281,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         return false;
       }
-      axes[i] = vector3(x, y, z);
+      axes[i] = Eigen::Vector3d(x, y, z);
       axes[i] *= BOHR_TO_ANGSTROM;
     }
 

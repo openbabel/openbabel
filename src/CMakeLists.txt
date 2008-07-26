@@ -24,7 +24,7 @@ set(math_srcs
     math/matrix3x3.cpp
     math/spacegroup.cpp
     math/transform3d.cpp
-    math/vector3.cpp
+    math/vector.cpp
 )
 
 set(ops_srcs

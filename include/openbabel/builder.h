@@ -43,8 +43,8 @@ namespace OpenBabel
        *  \param atom Atom for which we want a new neighbour location.
        *  \returns The position for the new atom.
        */  
-      static vector3 GetNewBondVector(OBAtom *atom);
-      static vector3 GetNewBondVector(OBAtom *atom, double length);
+      static Eigen::Vector3d GetNewBondVector(OBAtom *atom);
+      static Eigen::Vector3d GetNewBondVector(OBAtom *atom, double length);
       /*! The mol object contains all connectivity information (atomic numbers, bonds, bond orders, ..) 
        *  but no 3D coordinates. Build generates these coordinates and assigns them.
        *  \param mol Molecule with the connectivity (from smiles for example). The coordinates are also
@@ -62,7 +62,7 @@ namespace OpenBabel
        *  \returns true if succesful or fails when failed (most likely cause 
        *  for failing: a and b are in the same fragment, they are connected)
        */
-      static bool Connect(OBMol &mol, int a, int b, vector3 &newpos, int bondOrder = 1);
+      static bool Connect(OBMol &mol, int a, int b, Eigen::Vector3d &newpos, int bondOrder = 1);
       /*! Atoms a and b are part of two fragments that are not connected in mol.
        *  Connect will translate and rotate the fragment that contains b so that
        *  a and b are seperated by a bond. This bond is also added.
@@ -124,7 +124,7 @@ namespace OpenBabel
  
     private:
       //! used to hold the fragments loaded in the constructor
-      static std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _fragments;
+      static std::vector<std::pair<OBSmartsPattern*, std::vector<Eigen::Vector3d> > > _fragments;
   }; // class OBBuilder
 
 }// namespace OpenBabel

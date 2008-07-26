@@ -50,7 +50,7 @@ int matchFiles (SCANDIR_CONST struct dirent *entry_p)
 	return false;
 }
 
-bool DLHandler::getConvDirectory(string& convPath)
+bool DLHandler::getConvDirectory(std::string& convPath)
 {
   //Need to provide the directory from which this shared library was loaded.
   //This is the default directory for format shared library files.
@@ -155,7 +155,7 @@ int DLHandler::findFiles (std::vector<std::string>& file_list,const std::string 
     return findFiles(file_list,filename, "");
 }
 
-bool DLHandler::openLib(const string& lib_name)
+bool DLHandler::openLib(const std::string& lib_name)
 {
   return dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_GLOBAL) != 0;
 }

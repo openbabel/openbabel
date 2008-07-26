@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <map>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/ffinternal.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 
@@ -30,44 +31,34 @@ namespace OpenBabel
   {
     public:
       int bt; // bondtype (BTIJ)
-      double kb, r0, rab, delta;
-      
-      template<bool> void Compute();
+      double kb, r0;
   };
   
   class OBFFAngleCalculationGhemical : public OBFFCalculation3
   {
     public:
-      double ka, theta, theta0, delta;
- 
-      template<bool> void Compute();
+      double ka, theta0;
   };
   
   class OBFFTorsionCalculationGhemical : public OBFFCalculation4
   {
     public:
       int tt; //torsiontype (TTIJKL)
-      double V, s, n, tor;
+      double V, s, n;
       double k1, k2, k3;
- 
-      template<bool> void Compute();
   };
 
   class OBFFVDWCalculationGhemical : public OBFFCalculation2
   {
     public:
       bool is14, samering;
-      double ka, Ra, kb, Rb, kab, rab;
-
-      template<bool> void Compute();
+      double ka, Ra, kb, Rb, kab;
   };
 
   class OBFFElectrostaticCalculationGhemical : public OBFFCalculation2
   {
     public:
-      double qq, rab;
-
-      template<bool> void Compute();
+      double qq;
   };
 
   // Class OBForceFieldGhemical
@@ -84,7 +75,7 @@ namespace OpenBabel
       //! fill OBFFXXXCalculation vectors
       bool SetupCalculations();
       //! Setup pointers in OBFFXXXCalculation vectors
-      bool SetupPointers();
+      //bool SetupPointers();
       //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
       OBFFParameter* GetParameterGhemical(int type, const char* a, const char* b, 
           const char* c, const char* d, std::vector<OBFFParameter> &parameter);
@@ -103,23 +94,16 @@ namespace OpenBabel
       std::vector<OBFFVDWCalculationGhemical>           _vdwcalculations;
       std::vector<OBFFElectrostaticCalculationGhemical> _electrostaticcalculations;
     
+      char _logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
+    
     public:
       //! Constructor
       explicit OBForceFieldGhemical(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
       {
-        _init = false;
-        _rvdw = 7.0;
-        _rele = 15.0;
-        _pairfreq = 10;
-        _cutoff = false;
-        _linesearch = LineSearchType::Simple;
       }
       
       //! Destructor
       virtual ~OBForceFieldGhemical();
-      
-      //! Assignment
-      OBForceFieldGhemical &operator = (OBForceFieldGhemical &);
       
       //! Get the description for this force field
       const char* Description() 

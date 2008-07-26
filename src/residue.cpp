@@ -977,7 +977,7 @@ namespace OpenBabel
     _idx = idx;
   }
 
-  void OBResidue::SetName(const string &name)
+  void OBResidue::SetName(const std::string &name)
   {
     _resname = name;
     SetResidueKeys(_resname.c_str(), _reskey, _aakey);
@@ -990,12 +990,12 @@ namespace OpenBabel
     _resnum = temp.str();
   }
 
-  void OBResidue::SetNum(const string resnum)
+  void OBResidue::SetNum(const std::string resnum)
   {
     _resnum = resnum;
   }
 
-  void OBResidue::SetAtomID(OBAtom *atom, const string &id)
+  void OBResidue::SetAtomID(OBAtom *atom, const std::string &id)
   {
     for ( unsigned int i = 0 ; i < _atoms.size() ; ++i )
       if (_atoms[i] == atom)
