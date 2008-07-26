@@ -1,0 +1,33 @@
+Several small programs are available as exe files.
+For syntax info execute them without parameters.
+
+nbabel - alternative commandline interface for babel.
+It has a more UNIX-like syntax, requiring the output file
+to be specified as a -O option. This has the side -effect of
+simplifying the handling of options in the code, and could be
+the favored direction for the future.
+
+obchiral    - print molecular chirality information
+obconformer - superimpose two molecules based on a SMARTS pattern
+obenergy    - calculate the energy for a molecule using a forcefield
+obfit       - superimpose a set of molecules on the atoms of a reference molecule
+obminimize  - minimize the energy for a molecule
+obmm        - openbabel molecular mechanics program
+obprobe     - calculate the energy of adding a probe atom
+obprop      - print standard molecular properties
+obrotamer - generate a random rotamer for a given molecule
+obrotate    - batch-rotate dihedral angles matching SMARTS patterns
+obseq       - residue sequence information for biomolecules
+obsym       - 3D Point Group Symmetry
+
+See http://openbabel.org/wiki/Guides or 
+http://openbabel.org/wiki/Tutorial:Other_Tools
+for further details of some of the above programs
+
+The following are not implemented in Windows:
+obgrep     - babel has the same functionality;
+           - uses the unavailable getopt function
+obgen      - babel has the same functionality (--gen3D)
+obxyz      - uses the unavailable getopt function
+obfragment - is not routinely used
+obdoc      - is not routinely used

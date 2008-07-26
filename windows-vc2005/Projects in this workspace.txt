@@ -1,0 +1,61 @@
+The projects in this workspace are intended for Visual Studio 2005 (VC8).
+The various builds all use the same cross-platform source code.
+
+---------------------------------------------------------------------------------------
+Single DLL build    openbabel.sln
+
+OpenBabelDLL
+This makes OpenBabelDLL.dll (or the debug version OpenBabelDLLD.dll) 
+which contains all of Openbabel except the user interface. This DLL 
+could be used to access OB's chemical core classes (#include mol.h 
+and #include obconversion.h) in the calling program, or just the 
+conversion capabilities, when only obconversion.h needs to be included.
+
+OBComLn
+This makes a babel.exe which has the command line interface and calls
+OpenBabelDLL.dll.
+
+OBGUII
+This makes OBGUII.exe which has the wxWidgets GUI interface and calls 
+OpenBabelDLL.dll. wxWidgets needs to have been installed.
+
+On VC8 Release builds the babel.exe, OBGUII.exe, OpenBabelDLL.dll and 
+OpenBabel.lib are put in the OpenBabelDLL folder. In Debug 
+builds they are in the OpenBabelDLL\debug subfolder. 
+LIBINCHI.DLL, LIBXML2.DLL, ICONV.DLL, and ZLIB1.DLL also need to be 
+in the executable folder or on the path specified by the PATH 
+environment variable. 
+
+OBPython
+This uses SWIG to generate an interface so that OpenBabel can be used.
+from Python.
+
+---------------------------------------------------------------------------------------
+Multiple DLL build    openbabelOBF.sln
+
+This build produces several DLLs and obf files. The latter are also DLLs
+but are loaded when the program starts. The latter provides a method to
+add additional formats and other plugin features without recompiling the
+program.
+
+OBDLL    API, Chemical core
+OBConv   File conversion
+OBError  Error handling, plugins, etc.
+OBDESC   Descriptos
+OBFPRT   Fingerprints, forcefields
+
+OBCommonFormats smiles, mdl, mol2, pdb formats
+OBMoreFormats   most of the formats
+OBXMLFormats    CML, PubChem, reaction formats
+OBInchi         InChI format
+OBMCDL          MCDL format
+OBUtilFormats   molreport, png, povray formats, etc.
+FastSearch      fastsearch, fingerprint formats
+gen3D           gen3D op
+
+OBConsole  Command-line iterface
+OBGUI      GUI interface
+
+OBPythonOBF     Uses SWIG to generate Python interface.
+
+

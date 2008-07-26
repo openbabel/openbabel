@@ -1,0 +1,59 @@
+##############################################################################
+#                                                                            #
+#	                Open Babel file: aromatic.txt                            # #                                                                            #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Some portions Copyright (c) 2001-2005 Geoffrey R. Hutchison               #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# SMARTS patterns with minimum and maximum pi-electrons contributed to an    #
+#   aromatic system (used by typer.cpp:OBAromaticTyper)                      #
+# The LAST PATTERN MATCHED is used to assign values, so that patterns should #
+#   be ordered from more general to more specific                            #
+#                                                                            #
+##############################################################################
+
+#PATTERN		MIN	MAX
+
+#carbon patterns
+[#6rD2]			1	1
+# exo ketone or alcohol -- don't know which
+[#6rD3]~!@[#8]		0	1
+[#6rD2+,#6rD3+]		1	1
+[#6r]=@*		1	1
+[#6rD3]=!@*		1	1
+# external double bonds to hetero atoms contribute no electrons to the 
+# aromatic systems -- quinoid systems are non-aromatic, e.g. 1,4-benzoquinone
+[#6rD3]=!@[!#6]		0	0
+[#6rD3-]		2	2
+
+#nitrogen patterns
+[#7rD2]			1	2
+[#7rD3]                 1       2
+[#7r](-@*)-@*  		1	2
+[#7rD2]=@*		1	1
+[#7rD3+]		1	1
+[#7rD3]=O		1	1
+[#7rD2-]		2	2
+
+#oxygen patterns
+[#8r]			2	2
+[#8r+]			1	1
+
+#sulfur patterns
+[#16rD2]		2	2
+[#16rD2+]		1	1
+[#16rD3]=!@O		2	2
+
+#other misc patterns
+# Accounts Chem Res 1978 11 p. 153
+# phosphole, phosphabenzene (not v. aromatic)
+[#15rD3]		2	2
+# selenophene
+[#34rD2]		2	2
+# arsabenzene, etc. (*really* not v. aromatic)
+#[#33rD3]		2	2
+# tellurophene, etc. (*really* not v. aromatic)
+#[#52rD2]		2	2
+# stilbabenzene, etc. (very little aromatic character)
+#[#51rD3]		2	2
