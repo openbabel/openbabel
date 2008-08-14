@@ -13,7 +13,7 @@ dist-hook:
 	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
 	-(cd $(distdir)/ruby; $(MAKE) distclean)
 	(cd $(distdir)/java; rm -f *.so *.o *.class)
-	(cd $(distdir)/java; rm -f *.jnilib *.jar)
+	(cd $(distdir)/java; rm -f *.jnilib)
 
 # build the scripting language interfaces if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG
@@ -49,8 +49,14 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 	mv python/ob.py python/openbabel.py;
 
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
-	$(SWIG) -small -O -java -naturalvar -templatereduce -c++ -o $@ \
-	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
+        (cd java; rm -rf org; mkdir org; mkdir org/openbabel)
+	$(SWIG) -small -O -java -package org.openbabel \
+	  -outdir java/org/openbabel -naturalvar -templatereduce -c++ -o $@ \
+	  -I$(top_srcdir)/include -I$(top_builddir)/include $<;
+	$(JAVAHOME)/bin/javac org/openbabel/*.java
+	(cd java; find . -name '*.class' -print > classes.list)
+	(cd java; $(JAVAHOME)/bin/jar cf openbabel.jar @classes.list)
+        (cd java; rm -rf org)
 
 csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
 	$(SWIG) -small -O -csharp -naturalvar -templatereduce -c++ -o $@ \

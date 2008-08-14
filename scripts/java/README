@@ -1,9 +1,8 @@
-Open Babel for Java (JNI) 0.9
---------------------
+Open Babel for Java
+-------------------
 
 This directory contains a set of SWIG-generated interface classes for
-using the Open Babel C++ library from Java. It is currently
-experimental and has not been thoroughly tested.
+using the Open Babel C++ library from Java.
 
 The Open Babel wiki pages on Java give information on compiling and
 running Java programs with Open Babel:
@@ -11,30 +10,33 @@ http://openbabel.sourceforge.net/wiki/Java
 
 *** Linux Compilation
 
-To compile on Debian 4.0, run the following steps:
-$ export JAVA=/home/noel/Tools/jdk1.5.0_15
+  First of all, set some environment variables (remember to change the paths to correspond to your system):
+$ export JAVAHOME=/home/noel/Tools/jdk1.5.0_15
+$ export OB_JAVADIR=/home/noel/Tools/openbabel-2.2.0/scripts/java
+$ export OB_LIBDIR=/home/noel/tree/lib # The install location of libopenbabel.so
 
-I installed OB into /home/noel/tree (/lib)
-$ export tree=/home/noel/tree 
+  Next, compile the Java bindings:
+$ cd $OB_JAVADIR
+$ g++ -c -fpic openbabel_java.cpp -I../../include -I$JAVAHOME/include -I$JAVAHOME/include/linux
+$ export LD_LIBRARY_PATH=$OB_LIBDIR
+$ g++ -shared -L$OB_LIBDIR openbabel_java.o -lopenbabel -o libopenbabel.so
 
-$ cd /home/noel/Tools/openbabel/scripts/java
-$ $JAVA/bin/javac *.java
-$ g++ -c -fpic openbabel_java.cpp -I../../include -I$JAVA/include -I$JAVA/include/linux
-$ g++ -shared -L$tree/lib openbabel_java.o -lopenbabel -o libopenbabel.so
-$ export LD_LIBRARY_PATH=.:$tree/lib
-$ LD_PRELOAD=$tree/lib/libopenbabel.so $JAVA/bin/java OBTest
+  Compile and run the test program:
+$ export CLASSPATH=.:$OB_JAVADIR/openbabel.jar
+$ $JAVAHOME/bin/javac OBTest.java
+$ export LD_LIBRARY_PATH=$OB_JAVADIR:$OB_LIBDIR
+$ $JAVAHOME/bin/java OBTest
 
+  If you get the output "Benzene has 0 atoms", you need to preload the OpenBabel library as follows:
+$ LD_PRELOAD=$OB_LIBDIR/libopenbabel.so $JAVAHOME/bin/java OBTest
 
-*** Mac OS X Compliation
+*** Mac OS X Compilation
 
 % javac *.java
 % g++ -c -I/System/Library/Frameworks/JavaVM.framework/Headers \
 openbabel_java.cpp
 % g++ -dynamiclib -o libopenbabel.jnilib openbabel_java.o \
 -framework JavaVM -L/usr/local/lib -lopenbabel
-
-
-*** Running Programs
 
 To run the OBTest program:
 % java OBTest

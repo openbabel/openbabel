@@ -1,3 +1,8 @@
+2008-08-14  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/Makefile.am: Generate a jar file for the Java SWIG bindings
+	* scripts/java/README, OBTest.java: Updated
+
 2008-07-19  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/opendxformat.cpp: Rename theGaussianCubeFormat global
