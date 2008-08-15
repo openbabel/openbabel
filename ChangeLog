@@ -1,5 +1,9 @@
 2008-08-15  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* scripts/Makefile.am: Correct errors in generation of jar file
+
+2008-08-15  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* windows-vc2005/openbabel.sln: Removed from repository
 	* windows-vc2005/*/*.vcproj: Set optimization to /O2 and whole program
 	optimization to true
