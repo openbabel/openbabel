@@ -1,3 +1,9 @@
+2008-08-15  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* windows-vc2005/openbabel.sln: Removed from repository
+	* windows-vc2005/*/*.vcproj: Set optimization to /O2 and whole program
+	optimization to true
+
 2008-08-14  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/Makefile.am: Generate a jar file for the Java SWIG bindings

@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="OBConv"
 	ProjectGUID="{B448CA7F-F8C4-4148-9165-39045A92EF63}"
+	RootNamespace="OBConv"
 	>
 	<Platforms>
 		<Platform
@@ -50,6 +51,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="../../include"
 				PreprocessorDefinitions="NDEBUG;USING_DYNAMIC_LIBS;WIN32;_WINDOWS;_USRDLL;OBCONV_EXPORTS;HAVE_CONFIG_H"
 				StringPooling="true"

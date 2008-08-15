@@ -104,7 +104,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Running javac"
-				CommandLine="$(JAVABASE)\bin\javac *.java"
+				CommandLine="$(JAVABASE)\bin\javac *.java&#x0D;&#x0A;"
 				Outputs="OBMol.class"
 			/>
 			<Tool
@@ -118,6 +118,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="2"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="..\..\include;..;../../src; $(JAVABASE)\include; $(JAVABASE)\include\win32"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;__KCC;USING_DYNAMIC_LIBS"
 				RuntimeLibrary="2"

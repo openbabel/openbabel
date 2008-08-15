@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="OBDLL"
 	ProjectGUID="{510039BF-48BF-42AF-8827-EFCEFC15CFD2}"
+	RootNamespace="OBDLL"
 	>
 	<Platforms>
 		<Platform
@@ -151,7 +152,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="4"
+				Optimization="2"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="../../include;../../data"
 				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_USRDLL;__KCC;USING_DYNAMIC_LIBS;OBDLL_EXPORTS;HAVE_CONFIG_H"
 				RuntimeLibrary="2"

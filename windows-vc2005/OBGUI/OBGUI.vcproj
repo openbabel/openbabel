@@ -161,6 +161,7 @@
 				AdditionalOptions="/EHsc "
 				Optimization="2"
 				InlineFunctionExpansion="1"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\msvc&quot;;..\..\src\gui;..\..\include;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;__WXMSW__;_WINDOWS;NOPCH;wxUSE_NO_MANIFEST"
 				StringPooling="true"

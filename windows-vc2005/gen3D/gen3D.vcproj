@@ -124,6 +124,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="2"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="../../include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;$(ProjectName)_EXPORTS;USING_DYNAMIC_LIBS"
 				RuntimeLibrary="2"

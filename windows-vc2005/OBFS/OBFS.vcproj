@@ -155,6 +155,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="../../include"
 				PreprocessorDefinitions="NDEBUG;USING_DYNAMIC_LIBS;WIN32;_WINDOWS;_USRDLL;HAVE_CONFIG_H;"
 				StringPooling="true"
