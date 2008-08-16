@@ -1,3 +1,12 @@
+2008-08-16  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* windows-vc2005/setenv.txt: Sets some environment variables needed
+	for compiling the SWIG bindings, and then starts OpenBabelOBF.sln. The
+	user should copy setenv.txt to setenv.bat locally before editing the
+	variable values.
+	* windows-vc2005/OBJava/*: Update the Java build so that it generates
+	a jar file with the correct org/openbabel structure.
+
 2008-08-15  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/Makefile.am: Correct errors in generation of jar file

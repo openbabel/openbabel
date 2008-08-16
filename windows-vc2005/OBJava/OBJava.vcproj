@@ -100,12 +100,14 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Remove any existing java or class files"
+				CommandLine="del /Q &quot;$(ProjectDir)org\openbabel\*&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Running javac"
-				CommandLine="$(JAVABASE)\bin\javac *.java&#x0D;&#x0A;"
-				Outputs="OBMol.class"
+				Description=""
+				CommandLine=""
+				Outputs=""
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -120,7 +122,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\..\include;..;../../src; $(JAVABASE)\include; $(JAVABASE)\include\win32"
+				AdditionalIncludeDirectories="..\..\include;..;../../src; $(JAVA_HOME)\include; $(JAVA_HOME)\include\win32"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;__KCC;USING_DYNAMIC_LIBS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -170,6 +172,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Running objava.bat"
+				CommandLine="objava.bat"
 			/>
 		</Configuration>
 	</Configurations>
@@ -197,7 +201,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Swigify"
-					CommandLine="swig -java -c++ -I&quot;../../src&quot; -I&quot;../../include&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+					CommandLine="swig -java -c++ -package org.openbabel -outdir org/openbabel -I&quot;../../src&quot; -I&quot;../../include&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 					Outputs="$(ProjDir)\$(InputName)_wrap.cpp"
 				/>
 			</FileConfiguration>
