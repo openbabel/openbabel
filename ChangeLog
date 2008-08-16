@@ -1,5 +1,13 @@
 2008-08-16  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* windows-vc2005/setenv.txt: Add environment variable CSHARP required
+	for compiling the .NET bindings
+	* windows-vc2005/OBCSharp/*: Update the CSharp build so that it
+	automatically creates the OBDotNet.dll assembly (namespace OpenBabel)
+	(thanks to Matt Sprague for the command line)
+
+2008-08-16  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* windows-vc2005/setenv.txt: Sets some environment variables needed
 	for compiling the SWIG bindings, and then starts OpenBabelOBF.sln. The
 	user should copy setenv.txt to setenv.bat locally before editing the

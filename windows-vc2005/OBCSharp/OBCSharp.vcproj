@@ -100,6 +100,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Delete existing CSharp files"
+				CommandLine="del /Q &quot;$(ProjectDir)*.cs&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -164,6 +166,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Running obdotnet.bat"
+				CommandLine="obdotnet.bat"
 			/>
 		</Configuration>
 	</Configurations>
@@ -191,8 +195,8 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Swigify"
-					CommandLine="swig -csharp -c++ -I&quot;../../src&quot; -I&quot;../../include&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-					Outputs="$(ProjDir)\$(InputName)_wrap.cpp"
+					CommandLine="swig -csharp -c++ -namespace OpenBabel -I&quot;../../src&quot; -I&quot;../../include&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+					Outputs="$(ProjectDir)openbabel-csharp_wrap.cpp"
 				/>
 			</FileConfiguration>
 		</File>
