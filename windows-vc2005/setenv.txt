@@ -1,4 +1,5 @@
 @echo off
+set PYTHON_DIR=C:\Program Files\Python25
 set CSHARP=C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727
 set JAVA_HOME=C:\Program Files\Java\jdk1.5.0_15
 start OpenBabelOBF.sln

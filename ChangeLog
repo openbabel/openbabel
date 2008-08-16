@@ -1,5 +1,11 @@
 2008-08-16  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* windows-vc2005/setenv.txt: Add environment variable PYTHON_DIR 
+	* windows-vc2005/OBPython/*: Update the Python build so that it
+	automatically creates a Python distribution.
+
+2008-08-16  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* windows-vc2005/setenv.txt: Add environment variable CSHARP required
 	for compiling the .NET bindings
 	* windows-vc2005/OBCSharp/*: Update the CSharp build so that it

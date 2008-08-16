@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\..\include;..;../../src;&quot;$(PYTHON_INCLUDE)&quot;"
+				AdditionalIncludeDirectories="..\..\include;..;../../src;&quot;$(PYTHON_DIR)\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;__KCC;USING_DYNAMIC_LIBS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				OutputFile="_openbabel.pyd"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(PYTHON_LIB_PATH)"
+				AdditionalLibraryDirectories="$(PYTHON_DIR)\libs"
 				GenerateManifest="true"
 				GenerateDebugInformation="false"
 				SubSystem="2"
@@ -95,8 +95,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy python files to directory containing *.dll and *.obf"
-				CommandLine="copy *.py* ..\"
+				Description="Running obpython.bat"
+				CommandLine="obpython.bat"
 			/>
 		</Configuration>
 	</Configurations>
