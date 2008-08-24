@@ -100,8 +100,11 @@ namespace OpenBabel
   // flags 18-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
+  /// @addtogroup core Core classes 
+  //@{
+
   // class introduction in mol.cpp
- class OBAPI OBMol: public OBBase
+  class OBAPI OBMol: public OBBase
   {
   protected:
     int                           _flags;	//!< bitfield of flags
@@ -181,30 +184,55 @@ namespace OpenBabel
     //! Add a new atom to this molecule (like AddAtom)
     //! Calls BeginModify() before insertion and EndModify() after insertion
     bool InsertAtom(OBAtom &);
-    //! Add a new bond to the molecule with the specified parameters
-    //! \param beginIdx  the atom index of the "start" atom
-    //! \param endIdx    the atom index of the "end" atom
-    //! \param order     the bond order (see OBBond::GetBO())
-    //! \param flags     any bond flags such as stereochemistry (default = none)
-    //! \param insertpos the position index to insert the bond (default = none)
-    //! \return Whether the new bond creation was successful
+    /** 
+     * @brief Add a new bond to the molecule with the specified parameters.
+     * 
+     * @param beginIdx the atom index of the "start" atom.
+     * @param endIdx the atom index of the "end" atom.
+     * @param order the bond order (see OBBond::GetBO()).
+     * @param flags any bond flags such as stereochemistry (default = none).
+     * @param insertpos insertpos the position index to insert the bond (default = none).
+     *
+     * @return Whether the new bond creation was successful.
+     */
     bool AddBond(int beginIdx, int endIdx, int order, 
                  int flags=0,int insertpos=-1);
-    //! Add the specified residue to this molecule and update connections
-    //! \return Whether the method was successful
-    bool AddBond(OBBond&);
-    //! Add the specified residue to this molecule and update connections
-    //! \return Whether the method was successful
-    bool AddResidue(OBResidue&);
-
-    //! Create a new OBAtom in this molecule and ensure connections.
-    //! (e.g. OBAtom::GetParent()
-    OBAtom    *NewAtom();
-    //! Create a new OBBond in this molecule and ensure connections.
-    //! (e.g. OBBond::GetParent()
-    OBBond    *NewBond();
-    //! Create a new OBResidue in this molecule and ensure connections.
-    OBResidue *NewResidue();
+    /** 
+     * @brief Add the specified residue to this molecule and update connections.
+     *
+     * @param bond The bond.
+     *
+     * @return Whether the method was successful.
+     */
+    bool AddBond(OBBond &bond);
+    /** 
+     * @brief Add the specified residue to this molecule and update connections.
+     * 
+     * @param residue The residue.
+     * 
+     * @return Whether The method was successful.
+     */
+    bool AddResidue(OBResidue &residue);
+    /** 
+     * @brief Create a new OBAtom in this molecule and ensure connections.
+     * (e.g. OBAtom::GetParent()
+     * 
+     * @return The new atom. 
+     */
+    OBAtom* NewAtom();
+    /** 
+     * @brief Create a new OBBond in this molecule and ensure connections.
+     * (e.g. OBBond::GetParent() 
+     * 
+     * @return The new bond
+     */
+    OBBond* NewBond();
+    /** 
+     * @brief Create a new OBResidue in this molecule and ensure connections.
+     * 
+     * @return The new residue.
+     */
+    OBResidue* NewResidue();
     //! Deletes an atom from this molecule and all appropriate bonds.
     //! Updates the molecule and atom and bond indexes accordingly.
     //! \warning Does not update any residues which may contain this atom
@@ -650,6 +678,8 @@ namespace OpenBabel
     //@}
 
   };
+
+  //@} group
 
   // Utility function prototypes
   //tokenize and Trim declarations moved to base.h

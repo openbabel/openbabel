@@ -26,6 +26,9 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  /// @addtogroup data Data classes 
+  //@{
+
   /** @class OBAliasData alias.h <openbabel/alias.h>
       @brief Indicate atoms as aliases for larger functional groups
       @since version 2.2
@@ -44,7 +47,7 @@ namespace OpenBabel
   */
   class OBAPI OBAliasData : public OBGenericData
   {
-    protected:
+    private:
       std::string               m_alias;         //!< the alias
       std::vector<unsigned int> m_expandedatoms; //!< the atoms for this alias, if any
     public:
@@ -98,7 +101,9 @@ namespace OpenBabel
       //@}
   };
 
-} //namespace
+  //@} group
+
+} // namespace
 
 #endif // OB_ALIAS_H
 

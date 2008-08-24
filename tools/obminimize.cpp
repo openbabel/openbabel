@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/minimize.h>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
@@ -193,8 +194,10 @@ int main(int argc,char **argv)
   pFF->SetElectrostaticCutOff(rele);    
   pFF->SetUpdateFrequency(freq);    
   pFF->EnableCutOff(cut); 
+  
+  OBMinimize mini(pFF);
   if (newton)
-    pFF->SetLineSearchType(LineSearchType::Newton2Num); 
+    mini.SetLineSearchType(LineSearchType::Newton2Num); 
  
   OBMol mol;
 
@@ -215,16 +218,16 @@ int main(int argc,char **argv)
 
     bool done = true;
     if (sd) {
-      pFF->SteepestDescentInitialize(steps, crit);
+      mini.SteepestDescentInitialize(steps, crit);
     } else {
-      pFF->ConjugateGradientsInitialize(steps, crit);
+      mini.ConjugateGradientsInitialize(steps, crit);
     }    
 
     while (done) {
       if (sd)
-        done = pFF->SteepestDescentTakeNSteps(1);
+        done = mini.SteepestDescentTakeNSteps(1);
       else
-        done = pFF->ConjugateGradientsTakeNSteps(1);
+        done = mini.ConjugateGradientsTakeNSteps(1);
  
       if (pFF->DetectExplosion()) {
         cerr << "explosion has occured!" << endl;

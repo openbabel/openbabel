@@ -83,12 +83,12 @@ bool FenskeZmatFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     double r,w,t;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-        a = vic[atom->GetIdx()]->_a;
-        b = vic[atom->GetIdx()]->_b;
-        c = vic[atom->GetIdx()]->_c;
-        r = vic[atom->GetIdx()]->_dst;
-        w = vic[atom->GetIdx()]->_ang;
-        t = vic[atom->GetIdx()]->_tor;
+        a = vic[atom->GetIdx()]->m_a;
+        b = vic[atom->GetIdx()]->m_b;
+        c = vic[atom->GetIdx()]->m_c;
+        r = vic[atom->GetIdx()]->m_dst;
+        w = vic[atom->GetIdx()]->m_ang;
+        t = vic[atom->GetIdx()]->m_tor;
         //  16 = sizeof(type)
         strncpy(type,etab.GetSymbol(atom->GetAtomicNum()), 16);
         type[15] = '\0';

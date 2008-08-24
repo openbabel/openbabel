@@ -211,13 +211,13 @@ namespace OpenBabel
     for (atom = mol.BeginAtom(ai);atom;atom = mol.NextAtom(ai))
       vit.push_back(new OBInternalCoord (atom));
 
-    vit[1]->_a = &dummy1;
-    vit[1]->_b = &dummy2;
+    vit[1]->m_a = &dummy1;
+    vit[1]->m_b = &dummy2;
     if (vit.size() > 2) {
-      vit[2]->_b = &dummy1;
-      vit[2]->_c = &dummy2;
+      vit[2]->m_b = &dummy1;
+      vit[2]->m_c = &dummy2;
       if  (vit.size() > 3) {
-        vit[3]->_c = &dummy1;
+        vit[3]->m_c = &dummy1;
       }
     }
 
@@ -231,24 +231,24 @@ namespace OpenBabel
           {
             a2 = mol.GetAtom(j);
             r = (a1->GetVector()-a2->GetVector()).norm2();
-            if ((r < sum) && (vit[j]->_a != a2) && (vit[j]->_b != a2))
+            if ((r < sum) && (vit[j]->m_a != a2) && (vit[j]->m_b != a2))
               {
                 sum = r;
                 ref = a2;
               }
           }
-        vit[i]->_a = ref;
+        vit[i]->m_a = ref;
       }
 
     for (i = 3;i <= mol.NumAtoms();i++)
-      vit[i]->_b = vit[vit[i]->_a->GetIdx()]->_a;
+      vit[i]->m_b = vit[vit[i]->m_a->GetIdx()]->m_a;
 
     for (i = 4;i <= mol.NumAtoms();i++)
       {
-        if (vit[i]->_b && vit[i]->_b->GetIdx())
-          vit[i]->_c = vit[vit[i]->_b->GetIdx()]->_b;
+        if (vit[i]->m_b && vit[i]->m_b->GetIdx())
+          vit[i]->m_c = vit[vit[i]->m_b->GetIdx()]->m_b;
         else
-          vit[i]->_c = &dummy1;
+          vit[i]->m_c = &dummy1;
       }
 
     OBAtom *a,*b,*c;
@@ -256,17 +256,17 @@ namespace OpenBabel
     for (i = 2;i <= mol.NumAtoms();i++)
       {
         atom = mol.GetAtom(i);
-        a = vit[i]->_a;
-        b = vit[i]->_b;
-        c = vit[i]->_c;
+        a = vit[i]->m_a;
+        b = vit[i]->m_b;
+        c = vit[i]->m_c;
         v1 = atom->GetVector() - a->GetVector();
         v2 = b->GetVector() - a->GetVector();
-        vit[i]->_ang = VectorAngle(v1,v2);
-        vit[i]->_tor = VectorTorsion(atom->GetVector(),
+        vit[i]->m_ang = VectorAngle(v1,v2);
+        vit[i]->m_tor = VectorTorsion(atom->GetVector(),
                                         a->GetVector(),
                                         b->GetVector(),
                                         c->GetVector());
-        vit[i]->_dst = (vit[i]->_a->GetVector() - atom->GetVector()).norm();
+        vit[i]->m_dst = (vit[i]->m_a->GetVector() - atom->GetVector()).norm();
       }
 
   }
@@ -343,13 +343,13 @@ namespace OpenBabel
         strncpy(tmptype,etab.GetSymbol(mol.GetAtom(i)->GetAtomicNum()), sizeof(tmptype));
         tmptype[sizeof(tmptype) - 1] = '\0';
 
-        if (vit[i]->_tor < 0.0)
-          vit[i]->_tor += 360.0;
+        if (vit[i]->m_tor < 0.0)
+          vit[i]->m_tor += 360.0;
         snprintf(buffer, BUFF_SIZE, "%2d,%d,%2s%7.3f,%7.3f,%7.3f",
-                 vit[i]->_a->GetIdx(),i,tmptype,
-                 vit[i]->_dst,
-                 vit[i]->_ang,
-                 vit[i]->_tor);
+                 vit[i]->m_a->GetIdx(),i,tmptype,
+                 vit[i]->m_dst,
+                 vit[i]->m_ang,
+                 vit[i]->m_tor);
         ofs << buffer << endl;
       }
 

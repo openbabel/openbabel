@@ -146,9 +146,9 @@ namespace OpenBabel
 		string type;
 		FOR_ATOMS_OF_MOL(atom, mol)
       {
-        a = vic[atom->GetIdx()]->_a;
-        b = vic[atom->GetIdx()]->_b;
-        c = vic[atom->GetIdx()]->_c;
+        a = vic[atom->GetIdx()]->m_a;
+        b = vic[atom->GetIdx()]->m_b;
+        c = vic[atom->GetIdx()]->m_c;
 
 				type = etab.GetSymbol(atom->GetAtomicNum());
 				if (atom->GetIsotope() != 0) {
@@ -190,11 +190,11 @@ namespace OpenBabel
 		
 		FOR_ATOMS_OF_MOL(atom, mol)
       {
-        r = vic[atom->GetIdx()]->_dst;
-        w = vic[atom->GetIdx()]->_ang;
+        r = vic[atom->GetIdx()]->m_dst;
+        w = vic[atom->GetIdx()]->m_ang;
 				if (w < 0.0)
 					w += 360.0;
-        t = vic[atom->GetIdx()]->_tor;
+        t = vic[atom->GetIdx()]->m_tor;
 				if (t < 0.0)
 					t += 360.0;
 
@@ -315,26 +315,26 @@ namespace OpenBabel
 
           case 2:
           if (vs.size() < 3) {return false;}
-          vic[j]->_a = mol.GetAtom(atoi(vs[1].c_str()));
-          vic[j]->_dst = variables[vs[2].c_str()];
+          vic[j]->m_a = mol.GetAtom(atoi(vs[1].c_str()));
+          vic[j]->m_dst = variables[vs[2].c_str()];
           break;
 
           case 3:
           if (vs.size() < 5) {return false;}
-          vic[j]->_a = mol.GetAtom(atoi(vs[1].c_str()));
-          vic[j]->_dst = variables[vs[2].c_str()];
-          vic[j]->_b = mol.GetAtom(atoi(vs[3].c_str()));
-          vic[j]->_ang = variables[vs[4].c_str()];
+          vic[j]->m_a = mol.GetAtom(atoi(vs[1].c_str()));
+          vic[j]->m_dst = variables[vs[2].c_str()];
+          vic[j]->m_b = mol.GetAtom(atoi(vs[3].c_str()));
+          vic[j]->m_ang = variables[vs[4].c_str()];
           break;
 
           default:
           if (vs.size() < 7) {return false;}
-          vic[j]->_a = mol.GetAtom(atoi(vs[1].c_str()));
-          vic[j]->_dst = variables[vs[2].c_str()];
-          vic[j]->_b = mol.GetAtom(atoi(vs[3].c_str()));
-          vic[j]->_ang = variables[vs[4].c_str()];
-          vic[j]->_c = mol.GetAtom(atoi(vs[5].c_str()));
-          vic[j]->_tor = variables[vs[6].c_str()];
+          vic[j]->m_a = mol.GetAtom(atoi(vs[1].c_str()));
+          vic[j]->m_dst = variables[vs[2].c_str()];
+          vic[j]->m_b = mol.GetAtom(atoi(vs[3].c_str()));
+          vic[j]->m_ang = variables[vs[4].c_str()];
+          vic[j]->m_c = mol.GetAtom(atoi(vs[5].c_str()));
+          vic[j]->m_tor = variables[vs[6].c_str()];
         }
       }
 		}

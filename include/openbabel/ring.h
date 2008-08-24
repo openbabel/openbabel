@@ -109,6 +109,7 @@ namespace OpenBabel
   //! \return true if a.size() > b.size()
   OBAPI bool CompareRingSize(const OBRing *,const OBRing *);
 
+/// @cond DEV
 
   /** \class OBRingSearch ring.h <openbabel/ring.h>
       \brief Internal class to facilitate OBMol::FindSSSR()
@@ -169,6 +170,8 @@ namespace OpenBabel
     //! Recursively find the root of this tree, building up a vector of OBAtom nodes.
     void PathToRoot(std::vector<OBAtom*>&);
   };
+
+/// @endcond
 
 } // end namespace OpenBabel
 

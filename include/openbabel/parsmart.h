@@ -35,6 +35,7 @@ namespace OpenBabel
   // mark this so that SWIG will not attempt to wrap for scripting languages
 
 #ifndef SWIG
+/// @cond DEV
 
   //! \union _AtomExpr parsmart.h <openbabel/parsmart.h>
   //! \brief An internal (SMARTS parser) atomic expression
@@ -154,6 +155,8 @@ namespace OpenBabel
   // (but this is private and not wrapped for scripting languages)
   struct Pattern;
 #endif
+
+/// @endcond
 
   // class introduction in parsmart.cpp
   //! \brief SMARTS (SMiles ARbitrary Target Specification) substructure searching

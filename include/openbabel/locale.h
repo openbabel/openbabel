@@ -31,18 +31,29 @@ namespace OpenBabel
   class OBLocalePrivate;
 
   // more detailed descriptions and documentation in locale.cpp
-  //! \brief Handle the locale for numeric data parsing
+  /** @brief Handle the locale for numeric data parsing.
+   */
   class OBERROR OBLocale {
-  public:
-
-    OBLocale();
-    ~OBLocale();
-
-    void SetLocale();
-    void RestoreLocale();
+    public:
+      /** 
+       * @brief Constructor. 
+       */
+      OBLocale();
+      /** 
+       * @brief Destructor.
+       */
+      ~OBLocale();
+      /** 
+       * @brief Set the local for number parsing to avoid locale issues. 
+       */
+      void SetLocale();
+      /** 
+       * @brief Return the locale to the original one.
+       */
+      void RestoreLocale();
     
-  protected:
-    OBLocalePrivate* d;
+    protected:
+      OBLocalePrivate* d;
   };
 
   //global definitions
@@ -52,5 +63,5 @@ namespace OpenBabel
 } // namespace OpenBabel
 #endif // OB_LOCALE_H
 
-//! \file locale.h
-//! \brief Handle internal numeric locale issues -- parse data in "C"
+//! @file locale.h
+//! @brief Handle internal numeric locale issues -- parse data in "C"

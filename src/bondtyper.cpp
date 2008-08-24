@@ -78,7 +78,7 @@ namespace OpenBabel
               {
                 bovector.push_back( atoi((char *)vs[i].c_str()) );
               }
-            _fgbonds.push_back(pair<OBSmartsPattern*,vector<int> >
+            m_fgbonds.push_back(pair<OBSmartsPattern*,vector<int> >
                                (sp, bovector));
           }
         else
@@ -92,7 +92,7 @@ namespace OpenBabel
   OBBondTyper::~OBBondTyper()
   {
     vector<pair<OBSmartsPattern*, vector<int> > >::iterator i;
-    for (i = _fgbonds.begin();i != _fgbonds.end();++i)
+    for (i = m_fgbonds.begin();i != m_fgbonds.end();++i)
       {
         delete i->first;
         i->first = NULL;
@@ -115,7 +115,7 @@ namespace OpenBabel
     unsigned int j;
 
     // Loop through for all the functional groups and assign bond orders
-    for (i = _fgbonds.begin();i != _fgbonds.end();++i)
+    for (i = m_fgbonds.begin();i != m_fgbonds.end();++i)
       {
         currentPattern = i->first;
         assignments = i->second;
@@ -125,7 +125,7 @@ namespace OpenBabel
             mlist = currentPattern->GetUMapList();
             for (matches = mlist.begin(); matches != mlist.end(); ++matches)
               {
-                // Now loop through the bonds to assign from _fgbonds
+                // Now loop through the bonds to assign from m_fgbonds
                 for (j = 0; j < assignments.size(); j += 3)
                   {
                     // along the assignments vector: atomID1 atomID2 bondOrder
@@ -237,8 +237,8 @@ namespace OpenBabel
 
 } //namespace OpenBabel;
 
-//! \file bondtyper.cpp
-//! \brief Bond typer to perceive connectivity and bond orders/types.
-//! \todo Needs to add aromatic ring bond order assignment.
+//! @file bondtyper.cpp
+//! @brief Bond typer to perceive connectivity and bond orders/types.
+//! @todo Needs to add aromatic ring bond order assignment.
 //!   Eventually need to migrate OBMol::PerceiveBondOrders(),
 //!   OBMol::ConnectTheDots(), and possibly some of the Kekulize routines

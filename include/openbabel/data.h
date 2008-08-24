@@ -31,13 +31,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-
   class OBAtom;
   class OBMol;
   class OBBitVec;
 
-  /** \class OBGlobalDataBase data.h <openbabel/data.h>
-      \brief Base data table class, handles reading data files
+  /** @class OBGlobalDataBase data.h <openbabel/data.h>
+      @brief Base data table class, handles reading data files
       
       Base data table class--reads ASCII data files in various formats
       -# Checks for the environment variable _envvar (defaults to "BABEL_DATADIR")
@@ -45,14 +44,14 @@ namespace OpenBabel
       -# Checks for the directory _dir (def. determined by the build environment)
       - Tries the subdirectory corresponding to this version, then the main directory
       -# Reverts to the compiled-in default data
-  **/
+   */
   class OBAPI OBGlobalDataBase
-    {
+  {
     protected:
-      bool         _init;		//!< Whether the data been read already
-      const char  *_dataptr;//!< Default data table if file is unreadable
-      std::string  _filename;//!< File to search for
-      std::string  _dir;		//!< Data directory for file if _envvar fails
+      bool         _init;	//!< Whether the data been read already
+      const char  *_dataptr;    //!< Default data table if file is unreadable
+      std::string  _filename;   //!< File to search for
+      std::string  _dir;        //!< Data directory for file if _envvar fails
       std::string  _subdir;	//!< Subdirectory (if using environment variable)
       std::string  _envvar;	//!< Environment variable to check first
 

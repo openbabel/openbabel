@@ -64,7 +64,7 @@ namespace OpenBabel
       //
       \endcode
   **/
-  std::vector<std::pair<OBSmartsPattern*, std::vector<Eigen::Vector3d> > > OBBuilder::_fragments;
+  std::vector<std::pair<OBSmartsPattern*, std::vector<Eigen::Vector3d> > > OBBuilder::m_fragments;
 
   bool OBBuilder::LoadFragments()  {
     // open data/fragments.txt
@@ -90,7 +90,7 @@ namespace OpenBabel
       
       if (vs.size() == 1) { // SMARTS pattern
         if (sp != NULL)
-          _fragments.push_back(pair<OBSmartsPattern*, vector<Eigen::Vector3d> > (sp, coords));
+          m_fragments.push_back(pair<OBSmartsPattern*, vector<Eigen::Vector3d> > (sp, coords));
         
         coords.clear();
         sp = new OBSmartsPattern;
@@ -106,7 +106,7 @@ namespace OpenBabel
  
     }
     
-    _fragments.push_back(pair<OBSmartsPattern*, vector<Eigen::Vector3d> > (sp, coords));
+    m_fragments.push_back(pair<OBSmartsPattern*, vector<Eigen::Vector3d> > (sp, coords));
 
     // return the locale to the original one
     obLocale.RestoreLocale();
@@ -270,7 +270,7 @@ namespace OpenBabel
   // fragment and the fragment itself. The fragment containing b will be 
   // rotated and translated. Atom a is the atom from 
   // the main molecule to which we want to connect atom b.
-  bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, Eigen::Vector3d &newpos, int bondOrder)
+  bool OBBuilder::Connect(OBMol &mol, unsigned int idxA, unsigned int idxB, Eigen::Vector3d &newpos, int bondOrder)
   {
     OBAtom *a = mol.GetAtom(idxA);
     OBAtom *b = mol.GetAtom(idxB);
@@ -313,7 +313,8 @@ namespace OpenBabel
     } else {
       xyang = 0.0;
     }
-    q = Eigen::EulerAngles<double>(0.0, 0.0, -xyang * DEG_TO_RAD);
+    //q = Eigen::EulerAngles<double>(0.0, 0.0, -xyang * DEG_TO_RAD);
+    q = Eigen::AngleAxisd(-xyang * DEG_TO_RAD, Eigen::Vector3d::UnitZ());
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
         Eigen::Vector3d tmpvec = mol.GetAtom(i)->GetVector();
@@ -331,7 +332,8 @@ namespace OpenBabel
     } else {
       xzang = 0.0;
     }
-    q = Eigen::EulerAngles<double>(0.0, -xzang * DEG_TO_RAD, 0.0);
+    //q = Eigen::EulerAngles<double>(0.0, -xzang * DEG_TO_RAD, 0.0);
+    q = Eigen::AngleAxisd(-xzang * DEG_TO_RAD, Eigen::Vector3d::UnitY());
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
         Eigen::Vector3d tmpvec = mol.GetAtom(i)->GetVector();
@@ -349,7 +351,8 @@ namespace OpenBabel
     } else {
       yzang = 0.0;
     }
-    q = Eigen::EulerAngles<double>(-yzang * DEG_TO_RAD, 0.0, 0.0);
+    //q = Eigen::EulerAngles<double>(-yzang * DEG_TO_RAD, 0.0, 0.0);
+    q = Eigen::AngleAxisd(-yzang * DEG_TO_RAD, Eigen::Vector3d::UnitX());
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
         Eigen::Vector3d tmpvec = mol.GetAtom(i)->GetVector();
@@ -381,7 +384,7 @@ namespace OpenBabel
     return true;
   }
 
-  bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, int bondOrder)
+  bool OBBuilder::Connect(OBMol &mol, unsigned int idxA, unsigned int idxB, int bondOrder)
   {
     Eigen::Vector3d newpos = GetNewBondVector(mol.GetAtom(idxA));
     return Connect(mol, idxA, idxB, newpos, bondOrder);
@@ -408,7 +411,7 @@ namespace OpenBabel
     }
     */
 
-  bool OBBuilder::Swap(OBMol &mol, int idxA, int idxB, int idxC, int idxD)
+  bool OBBuilder::Swap(OBMol &mol, unsigned int idxA, unsigned int idxB, unsigned int idxC, unsigned int idxD)
   {
     OBAtom *a = mol.GetAtom(idxA);
     OBAtom *b = mol.GetAtom(idxB);
@@ -511,13 +514,13 @@ namespace OpenBabel
     workMol.SetHybridizationPerceived();
 
     //datafile is read only on first use of Build()
-    if(_fragments.empty())
+    if(m_fragments.empty())
       if(!LoadFragments())
         return false;
 
     // Loop through  the database once and assign the coordinates from
     // the first (most complex) fragment.
-    for (i = _fragments.begin();i != _fragments.end();++i) {
+    for (i = m_fragments.begin();i != m_fragments.end();++i) {
       if (i->first != NULL && i->first->Match(mol)) { 
         mlist = i->first->GetMapList();
           

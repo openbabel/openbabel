@@ -160,6 +160,7 @@ namespace OpenBabel
       CustomData15 = 16399
     };
   } // end namespace
+  
   enum DataOrigin {
     any,                 //!< Undefined or unspecified (default) 
     fileformatInput,     //!< Read from an input file

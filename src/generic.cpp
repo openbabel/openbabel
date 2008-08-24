@@ -186,38 +186,37 @@ namespace OpenBabel
   //member functions for OBCommentData class
   //
 
-  OBCommentData::OBCommentData():
-    OBGenericData("Comment", OBGenericDataType::CommentData)
-  { }
+  OBCommentData::OBCommentData() :
+      OBGenericData("Comment", OBGenericDataType::CommentData)
+  {  }
 
   OBCommentData::OBCommentData(const OBCommentData &src) :
-    OBGenericData(src), _data(src._data)
+      OBGenericData(src), m_data(src.m_data)
   {  }
 
   //
   //member functions for OBExternalBond class
   //
-  OBExternalBond::OBExternalBond(OBAtom *atom,OBBond *bond,int idx):
-    _idx(idx), _atom(atom), _bond(bond)
+  OBExternalBond::OBExternalBond(OBAtom *atom, OBBond *bond, int idx):
+      m_idx(idx), m_atom(atom), m_bond(bond)
   {  }
 
   OBExternalBond::OBExternalBond(const OBExternalBond &src):
-    _idx(src._idx), _atom(src._atom), _bond(src._bond)
-  { }
+      m_idx(src.m_idx), m_atom(src.m_atom), m_bond(src.m_bond)
+  {  }
 
   //
   //member functions for OBExternalBondData class
   //
 
   OBExternalBondData::OBExternalBondData():
-    OBGenericData("ExternalBondData", OBGenericDataType::ExternalBondData,
-                  perceived)
-  { }
+      OBGenericData("ExternalBondData", OBGenericDataType::ExternalBondData, perceived)
+  {  }
 
-  void OBExternalBondData::SetData(OBAtom *atom,OBBond *bond,int idx)
+  void OBExternalBondData::SetData(OBAtom *atom, OBBond *bond, int idx)
   {
     OBExternalBond xb(atom,bond,idx);
-    _vexbnd.push_back(xb);
+    m_vexbnd.push_back(xb);
   }
 
   //
@@ -225,8 +224,8 @@ namespace OpenBabel
   //
 
   OBPairData::OBPairData() :
-    OBGenericData("PairData", OBGenericDataType::PairData)
-  { }
+      OBGenericData("PairData", OBGenericDataType::PairData)
+  {  }
 
   //
   //member functions for OBVirtualBond class
@@ -234,12 +233,12 @@ namespace OpenBabel
 
   OBVirtualBond::OBVirtualBond():
     OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData, perceived),
-    _bgn(0), _end(0), _ord(0), _stereo(0)
+    m_bgn(0), m_end(0), m_ord(0), m_stereo(0)
   {  }
 
   OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo):
     OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData, perceived),
-    _bgn(bgn), _end(end), _ord(ord), _stereo(stereo)
+    m_bgn(bgn), m_end(end), m_ord(ord), m_stereo(stereo)
   {  }
 
   //
@@ -247,19 +246,19 @@ namespace OpenBabel
   //
   OBUnitCell::OBUnitCell():
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
-    _a(0.0), _b(0.0), _c(0.0), _alpha(0.0), _beta(0.0), _gamma(0.0),
-    _spaceGroup( NULL ), _lattice(Undefined)
+    m_a(0.0), m_b(0.0), m_c(0.0), m_alpha(0.0), m_beta(0.0), m_gamma(0.0),
+    m_spaceGroup( NULL ), m_lattice(Undefined)
   {  }
 
   OBUnitCell::OBUnitCell(const OBUnitCell &src) :
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
-    _a(src._a), _b(src._b), _c(src._c), 
-    _alpha(src._alpha), _beta(src._beta), _gamma(src._gamma),
-    _offset(src._offset),
-    _v1(src._v1), _v2(src._v2), _v3(src._v3),
-    _spaceGroupName(src._spaceGroupName),
-    _spaceGroup(src._spaceGroup),
-    _lattice(src._lattice)
+    m_a(src.m_a), m_b(src.m_b), m_c(src.m_c), 
+    m_alpha(src.m_alpha), m_beta(src.m_beta), m_gamma(src.m_gamma),
+    m_offset(src.m_offset),
+    m_v1(src.m_v1), m_v2(src.m_v2), m_v3(src.m_v3),
+    m_spaceGroupName(src.m_spaceGroupName),
+    m_spaceGroup(src.m_spaceGroup),
+    m_lattice(src.m_lattice)
   {  }
 
   OBUnitCell & OBUnitCell::operator=(const OBUnitCell &src)
@@ -267,26 +266,26 @@ namespace OpenBabel
     if(this == &src)
       return(*this);
 
-    _a = src._a;
-    _b = src._b;
-    _c = src._c;
-    _alpha = src._alpha;
-    _beta = src._beta;
-    _gamma = src._gamma;
-    _offset = src._offset;
+    m_a = src.m_a;
+    m_b = src.m_b;
+    m_c = src.m_c;
+    m_alpha = src.m_alpha;
+    m_beta = src.m_beta;
+    m_gamma = src.m_gamma;
+    m_offset = src.m_offset;
 
-    _v1 = src._v1;
-    _v2 = src._v2;
-    _v3 = src._v3;
+    m_v1 = src.m_v1;
+    m_v2 = src.m_v2;
+    m_v3 = src.m_v3;
 
-    _spaceGroup = src._spaceGroup;
-    _spaceGroupName = src._spaceGroupName;
-    _lattice = src._lattice;
+    m_spaceGroup = src.m_spaceGroup;
+    m_spaceGroupName = src.m_spaceGroupName;
+    m_lattice = src.m_lattice;
 
     return(*this);
   }
 
-	/*!
+  /*!
   ** The angles and lengths of the unitcell will be calculated from the
   ** vectors @p v1, @p v2 and @p v3. Those vectors will as well be
   ** stored internally.
@@ -299,15 +298,15 @@ namespace OpenBabel
   */
   void OBUnitCell::SetData(const Eigen::Vector3d v1, const Eigen::Vector3d v2, const Eigen::Vector3d v3)
   {
-    _a = v1.norm();
-    _b = v2.norm();
-    _c = v3.norm();
-    _alpha = VectorAngle(v2, v3);
-    _beta = VectorAngle(v1, v3);
-    _gamma = VectorAngle(v1, v2);
-    _v1 = v1;
-    _v2 = v2;
-    _v3 = v3;
+    m_a = v1.norm();
+    m_b = v2.norm();
+    m_c = v3.norm();
+    m_alpha = VectorAngle(v2, v3);
+    m_beta = VectorAngle(v1, v3);
+    m_gamma = VectorAngle(v1, v2);
+    m_v1 = v1;
+    m_v2 = v2;
+    m_v3 = v3;
   }
 
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertNotionalIntoCartesianCoordinates">blue-obelisk:convertNotionalIntoCartesianCoordinates</a>
@@ -316,9 +315,9 @@ namespace OpenBabel
     vector<Eigen::Vector3d> v;
     v.reserve(3);
 
-    if (IsNegligible(_v1.norm(), 1.0, 1.0e-9) &&
-        IsNegligible(_v2.norm(), 1.0, 1.0e-9) &&
-        IsNegligible(_v3.norm(), 1.0, 1.0e-9))
+    if (IsNegligible(m_v1.norm(), 1.0, 1.0e-9) &&
+        IsNegligible(m_v2.norm(), 1.0, 1.0e-9) &&
+        IsNegligible(m_v3.norm(), 1.0, 1.0e-9))
       {
         Eigen::Vector3d temp;
         Eigen::Matrix3d m = GetOrthoMatrix();
@@ -332,9 +331,9 @@ namespace OpenBabel
       }
     else
       {
-        v.push_back(_v1);
-        v.push_back(_v2);
-        v.push_back(_v3);
+        v.push_back(m_v1);
+        v.push_back(m_v2);
+        v.push_back(m_v3);
       }
 
     return v;
@@ -344,17 +343,17 @@ namespace OpenBabel
   {
     Eigen::Matrix3d m;
 
-    if (IsNegligible(_v1.norm(), 1.0, 1.0e-9) &&
-        IsNegligible(_v2.norm(), 1.0, 1.0e-9) &&
-        IsNegligible(_v3.norm(), 1.0, 1.0e-9))
+    if (IsNegligible(m_v1.norm(), 1.0, 1.0e-9) &&
+        IsNegligible(m_v2.norm(), 1.0, 1.0e-9) &&
+        IsNegligible(m_v3.norm(), 1.0, 1.0e-9))
       {
         m = GetOrthoMatrix();
       }
     else
       {
-        m.row(0) = _v1;
-        m.row(1) = _v2;
-        m.row(2) = _v3;
+        m.row(0) = m_v1;
+        m.row(1) = m_v2;
+        m.row(2) = m_v3;
       }
     return m;
   }
@@ -365,28 +364,28 @@ namespace OpenBabel
     Eigen::Matrix3d m;
     double V;
 
-    _alpha *= DEG_TO_RAD;
-    _beta  *= DEG_TO_RAD;
-    _gamma *= DEG_TO_RAD;
+    m_alpha *= DEG_TO_RAD;
+    m_beta  *= DEG_TO_RAD;
+    m_gamma *= DEG_TO_RAD;
 
     // from the PDB specification:
     //  http://www.rcsb.org/pdb/docs/format/pdbguide2.2/part_75.html
 
     // since we'll ultimately divide by (a * b), we've factored those out here
-    V = _c * sqrt(1 - SQUARE(cos(_alpha)) - SQUARE(cos(_beta)) - SQUARE(cos(_gamma))
-                 + 2 * cos(_alpha) * cos(_beta) * cos(_gamma));
+    V = m_c * sqrt(1 - SQUARE(cos(m_alpha)) - SQUARE(cos(m_beta)) - SQUARE(cos(m_gamma))
+                 + 2 * cos(m_alpha) * cos(m_beta) * cos(m_gamma));
 
-    m[0,0] = _a;
-    m[0,1] = _b * cos(_gamma);
-    m[0,2] = _c * cos(_beta);
+    m(0,0) = m_a;
+    m(0,1) = m_b * cos(m_gamma);
+    m(0,2) = m_c * cos(m_beta);
 
-    m[1,0] = 0.0;
-    m[1,1] = _b * sin(_gamma);
-    m[1,2] = _c * ( cos(_alpha) - cos(_beta) * cos(_gamma) ) / sin(_gamma);
+    m(1,0) = 0.0;
+    m(1,1) = m_b * sin(m_gamma);
+    m(1,2) = m_c * ( cos(m_alpha) - cos(m_beta) * cos(m_gamma) ) / sin(m_gamma);
 
-    m[2,0] = 0.0;
-    m[2,1] = 0.0;
-    m[2,2] = V / (sin(_gamma)); // again, we factored out A * B when defining V
+    m(2,0) = 0.0;
+    m(2,1) = 0.0;
+    m(2,2) = V / (sin(m_gamma)); // again, we factored out A * B when defining V
 
     return m;
   }
@@ -401,25 +400,25 @@ namespace OpenBabel
     double cosAlpha, cosBeta, cosGamma;
     double v;
 
-    sinAlpha = sin(_alpha * DEG_TO_RAD);
-    sinBeta = sin(_beta * DEG_TO_RAD);
-    sinGamma = sin(_gamma * DEG_TO_RAD);
-    cosAlpha = cos(_alpha * DEG_TO_RAD);
-    cosBeta = cos(_beta * DEG_TO_RAD);
-    cosGamma = cos(_gamma * DEG_TO_RAD);
+    sinAlpha = sin(m_alpha * DEG_TO_RAD);
+    sinBeta = sin(m_beta * DEG_TO_RAD);
+    sinGamma = sin(m_gamma * DEG_TO_RAD);
+    cosAlpha = cos(m_alpha * DEG_TO_RAD);
+    cosBeta = cos(m_beta * DEG_TO_RAD);
+    cosGamma = cos(m_gamma * DEG_TO_RAD);
 
     v = sqrt(1 - SQUARE(cosAlpha) - SQUARE(cosBeta) - SQUARE(cosGamma) +
              2 * cosAlpha*cosBeta*cosGamma);
 
-    m[0,0] = 1.0 / _a;
-    m[0,1] = -cosGamma / (_a * sinGamma);
-    m[0,2] = (cosGamma * cosAlpha - cosBeta) / (_a * v * sinGamma);
-    m[1,0] = 0.0;
-    m[1,1] = 1.0 / (_b * sinGamma);
-    m[1,2] = (cosGamma * cosBeta - cosAlpha) / (_b * v * sinGamma);
-    m[2,0] = 0.0;
-    m[2,1] = 0.0;
-    m[2,2] = sinGamma / (_c * v) ;
+    m(0,0) = 1.0 / m_a;
+    m(0,1) = -cosGamma / (m_a * sinGamma);
+    m(0,2) = (cosGamma * cosAlpha - cosBeta) / (m_a * v * sinGamma);
+    m(1,0) = 0.0;
+    m(1,1) = 1.0 / (m_b * sinGamma);
+    m(1,2) = (cosGamma * cosBeta - cosAlpha) / (m_b * v * sinGamma);
+    m(2,0) = 0.0;
+    m(2,1) = 0.0;
+    m(2,2) = sinGamma / (m_c * v) ;
 
     return m;
   }
@@ -434,8 +433,8 @@ namespace OpenBabel
 	  //	168-194 Hexagonal
 	  //	195-230 Cubic
 
-      if ( spacegroup == 0  && _spaceGroup)
-          spacegroup = _spaceGroup->GetId();
+      if ( spacegroup == 0  && m_spaceGroup)
+          spacegroup = m_spaceGroup->GetId();
 	  
 	  if ( spacegroup <= 0 )
 		  return OBUnitCell::Undefined;
@@ -475,43 +474,43 @@ namespace OpenBabel
   
   OBUnitCell::LatticeType OBUnitCell::GetLatticeType()
   {
-    if (_lattice != Undefined)
-      return _lattice;
-    else if (_spaceGroup != NULL)
-      return GetLatticeType(_spaceGroup->GetId());
+    if (m_lattice != Undefined)
+      return m_lattice;
+    else if (m_spaceGroup != NULL)
+      return GetLatticeType(m_spaceGroup->GetId());
 
     unsigned int rightAngles = 0;
-    if (IsApprox(_alpha, 90.0, 1.0e-3)) rightAngles++;
-    if (IsApprox(_beta,  90.0, 1.0e-3)) rightAngles++;
-    if (IsApprox(_gamma, 90.0, 1.0e-3)) rightAngles++;
+    if (IsApprox(m_alpha, 90.0, 1.0e-3)) rightAngles++;
+    if (IsApprox(m_beta,  90.0, 1.0e-3)) rightAngles++;
+    if (IsApprox(m_gamma, 90.0, 1.0e-3)) rightAngles++;
 
     switch (rightAngles)
       {
       case 3:
-        if (IsApprox(_a, _b, 1.0e-4) && IsApprox(_b, _c, 1.0e-4))
-          _lattice = Cubic;
-        else if (IsApprox(_a, _b, 1.0e-4) || IsApprox(_b, _c, 1.0e-4))
-          _lattice = Tetragonal;
+        if (IsApprox(m_a, m_b, 1.0e-4) && IsApprox(m_b, m_c, 1.0e-4))
+          m_lattice = Cubic;
+        else if (IsApprox(m_a, m_b, 1.0e-4) || IsApprox(m_b, m_c, 1.0e-4))
+          m_lattice = Tetragonal;
         else
-          _lattice = Orthorhombic;
+          m_lattice = Orthorhombic;
         break;
       case 2:
-        if ( (IsApprox(_alpha, 120.0, 1.0e-3) 
-              || IsApprox(_beta, 120.0, 1.0e-3) 
-              || IsApprox(_gamma, 120.0f, 1.0e-3))
-             && (IsApprox(_a, _b, 1.0e-4) || IsApprox(_b, _c, 1.0e-4)) )
-          _lattice = Hexagonal;
+        if ( (IsApprox(m_alpha, 120.0, 1.0e-3) 
+              || IsApprox(m_beta, 120.0, 1.0e-3) 
+              || IsApprox(m_gamma, 120.0f, 1.0e-3))
+             && (IsApprox(m_a, m_b, 1.0e-4) || IsApprox(m_b, m_c, 1.0e-4)) )
+          m_lattice = Hexagonal;
         else
-          _lattice = Monoclinic;
+          m_lattice = Monoclinic;
         break;
       default:
-        if (IsApprox(_a, _b, 1.0e-4) && IsApprox(_b, _c, 1.0e-4))
-          _lattice = Rhombohedral;
+        if (IsApprox(m_a, m_b, 1.0e-4) && IsApprox(m_b, m_c, 1.0e-4))
+          m_lattice = Rhombohedral;
         else
-          _lattice = Triclinic;
+          m_lattice = Triclinic;
       }
 
-    return _lattice;
+    return m_lattice;
   }
 
   int OBUnitCell::GetSpaceGroupNumber( std::string name)
@@ -552,10 +551,10 @@ namespace OpenBabel
 
     if (name.length () == 0)
 	  {
-        if (_spaceGroup != NULL)
-          return _spaceGroup->GetId();
+        if (m_spaceGroup != NULL)
+          return m_spaceGroup->GetId();
         else
-          name = _spaceGroupName;
+          name = m_spaceGroupName;
       }
     static const int numStrings = sizeof( spacegroups ) / sizeof( spacegroups[0] );
     for ( int i = 0; i < numStrings; ++i ) {
@@ -610,37 +609,37 @@ namespace OpenBabel
     switch ( GetLatticeType() )
       {
       case Triclinic:
-        result = _a * _b * _c 
+        result = m_a * m_b * m_c 
           * sqrt(1
-                 - SQUARE(cos( _alpha ))
-                 - SQUARE(cos( _beta ))
-                 - SQUARE(cos( _gamma ))
-                 + 2 * cos( _alpha ) * cos( _beta ) * cos( _gamma )
+                 - SQUARE(cos( m_alpha ))
+                 - SQUARE(cos( m_beta ))
+                 - SQUARE(cos( m_gamma ))
+                 + 2 * cos( m_alpha ) * cos( m_beta ) * cos( m_gamma )
                  );
         break;
       case Monoclinic:
-        result = _a * _b * _c * sin( _beta );
+        result = m_a * m_b * m_c * sin( m_beta );
         break;
       case Orthorhombic:
-        result = _a * _b * _c;
+        result = m_a * m_b * m_c;
         break;
       case Tetragonal:
-        result = _a * _a * _c;
+        result = m_a * m_a * m_c;
         break;
       case Rhombohedral:
-        result = _a * _a * _a
+        result = m_a * m_a * m_a
           * sqrt(1
-                 - SQUARE(cos( _alpha ))
-                 - SQUARE(cos( _beta ))
-                 - SQUARE(cos( _gamma ))
-                 + 2 * cos( _alpha ) * cos( _beta ) * cos( _gamma )
+                 - SQUARE(cos( m_alpha ))
+                 - SQUARE(cos( m_beta ))
+                 - SQUARE(cos( m_gamma ))
+                 + 2 * cos( m_alpha ) * cos( m_beta ) * cos( m_gamma )
                  );
         break;
       case Hexagonal:
-        result = pow( 3.0, 0.333333333 ) * _a * _a * _c / 2;
+        result = pow( 3.0, 0.333333333 ) * m_a * m_a * m_c / 2;
         break;
       case Cubic:
-        result = _a * _a * _a;
+        result = m_a * m_a * m_a;
         break;
       default:
         result = 0.0;
@@ -658,7 +657,7 @@ namespace OpenBabel
 
   OBSymmetryData::OBSymmetryData(const OBSymmetryData &src) :
     OBGenericData(src._attr, src._type, src._source), 
-    _pointGroup(src._pointGroup), _spaceGroup(src._spaceGroup)
+    m_pointGroup(src.m_pointGroup), m_spaceGroup(src.m_spaceGroup)
   {  }
 
   OBSymmetryData & OBSymmetryData::operator=(const OBSymmetryData &src)
@@ -666,8 +665,8 @@ namespace OpenBabel
     if(this == &src)
       return(*this);
 
-    _pointGroup = src._pointGroup;
-    _spaceGroup = src._spaceGroup;
+    m_pointGroup = src.m_pointGroup;
+    m_spaceGroup = src.m_spaceGroup;
     _source = src._source;
 
     return(*this);
@@ -679,10 +678,10 @@ namespace OpenBabel
 
   OBConformerData::OBConformerData(const OBConformerData &src) :
     OBGenericData("Conformers", OBGenericDataType::ConformerData),
-    _vDimension(src._vDimension),
-    _vEnergies(src._vEnergies), _vForces(src._vForces),
-    _vVelocity(src._vVelocity), _vDisplace(src._vDisplace),
-    _vData(src._vData)
+    m_vDimension(src.m_vDimension),
+    m_vEnergies(src.m_vEnergies), m_vForces(src.m_vForces),
+    m_vVelocity(src.m_vVelocity), m_vDisplace(src.m_vDisplace),
+    m_vData(src.m_vData)
   {  }
 
   OBConformerData & OBConformerData::operator=(const OBConformerData &src)
@@ -692,12 +691,12 @@ namespace OpenBabel
     
     _source = src._source;
 
-    _vDimension = src._vDimension;
-    _vEnergies = src._vEnergies;
-    _vForces = src._vForces;
-    _vVelocity = src._vVelocity;
-    _vDisplace = src._vDisplace;
-    _vData = src._vData;
+    m_vDimension = src.m_vDimension;
+    m_vEnergies = src.m_vEnergies;
+    m_vForces = src.m_vForces;
+    m_vVelocity = src.m_vVelocity;
+    m_vDisplace = src.m_vDisplace;
+    m_vData = src.m_vData;
 
     return(*this);
   }
@@ -709,7 +708,7 @@ namespace OpenBabel
   OBRingData::OBRingData() :
     OBGenericData("RingData", OBGenericDataType::RingData)
   {
-    _vr.clear();
+    m_vr.clear();
   }
 
   /*!
@@ -718,14 +717,14 @@ namespace OpenBabel
   */
   OBRingData::OBRingData(const OBRingData &src)
     :	OBGenericData(src),	//chain to base class
-      _vr(src._vr)				//chain to member classes
+      m_vr(src.m_vr)				//chain to member classes
   {
     //no other memeber data
     //memory management
 
     vector<OBRing*>::iterator ring;
 
-    for(ring = _vr.begin();ring != _vr.end();++ring)
+    for(ring = m_vr.begin();ring != m_vr.end();++ring)
       {
         OBRing *newring = new OBRing;
         (*newring) = (**ring);	//copy data to new object
@@ -736,7 +735,7 @@ namespace OpenBabel
   OBRingData::~OBRingData()
   {
     vector<OBRing*>::iterator ring;
-    for (ring = _vr.begin();ring != _vr.end();++ring)
+    for (ring = m_vr.begin();ring != m_vr.end();++ring)
       {
         delete *ring;
       }
@@ -760,15 +759,15 @@ namespace OpenBabel
 
     //memory management
     vector<OBRing*>::iterator ring;
-    for(ring = _vr.begin();ring != _vr.end();++ring)
+    for(ring = m_vr.begin();ring != m_vr.end();++ring)
       {
         delete &*ring;	//deallocate old rings to prevent memory leak
       }
 
-    _vr.clear();
-    _vr = src._vr;	//copy vector properties
+    m_vr.clear();
+    m_vr = src.m_vr;	//copy vector properties
 
-    for(ring = _vr.begin();ring != _vr.end();++ring)
+    for(ring = m_vr.begin();ring != m_vr.end();++ring)
       {
         if(*ring == 0)
           continue;
@@ -783,238 +782,178 @@ namespace OpenBabel
 
   OBRing *OBRingData::BeginRing(std::vector<OBRing*>::iterator &i)
   {
-    i = _vr.begin();
-    return((i == _vr.end()) ? (OBRing*)NULL : (OBRing*)*i);
+    i = m_vr.begin();
+    return((i == m_vr.end()) ? (OBRing*)NULL : (OBRing*)*i);
   }
 
   OBRing *OBRingData::NextRing(std::vector<OBRing*>::iterator &i)
   {
-    i = _vr.begin();
-    return((i == _vr.end()) ? (OBRing*)NULL : (OBRing*)*i);
+    i = m_vr.begin();
+    return((i == m_vr.end()) ? (OBRing*)NULL : (OBRing*)*i);
   }
 
   //
   //member functions for OBAngle class - stores all angles
   //
 
-  /*!
-  **\brief Angle default constructor
-  */
   OBAngle::OBAngle():
-    _vertex(NULL), _termini(NULL, NULL), _radians(0.0)
+    m_vertex(NULL), m_termini(NULL, NULL), m_radians(0.0)
   {  }
 
-  /*!
-  **\brief Angle constructor
-  */
   OBAngle::OBAngle(OBAtom *vertex,OBAtom *a,OBAtom *b):
-    _vertex(vertex), _termini(a, b)
+    m_vertex(vertex), m_termini(a, b)
   {
     SortByIndex();
   }
 
-  /*!
-  **\brief OBAngle copy constructor
-  */
   OBAngle::OBAngle(const OBAngle &src):
-    _vertex(src._vertex), _termini(src._termini), _radians(src._radians)
+    m_vertex(src.m_vertex), m_termini(src.m_termini), m_radians(src.m_radians)
   {  }
 
-  /*!
-  **\brief OBAngle assignment operator
-  */
   OBAngle& OBAngle::operator = (const OBAngle &src)
   {
     if (this == &src)
       return(*this);
 
-    _vertex         = src._vertex;
-    _termini.first  = src._termini.first;
-    _termini.second = src._termini.second;
-    _radians        = src._radians;
+    m_vertex         = src.m_vertex;
+    m_termini.first  = src.m_termini.first;
+    m_termini.second = src.m_termini.second;
+    m_radians        = src.m_radians;
 
     return(*this);
   }
 
-  /*!
-  **\brief Return OBAngle to its original state
-  */
   void OBAngle::Clear()
   {
-    _vertex         = 0;
-    _termini.first  = 0;
-    _termini.second = 0;
-    _radians        = 0.0;
+    m_vertex         = 0;
+    m_termini.first  = 0;
+    m_termini.second = 0;
+    m_radians        = 0.0;
     return;
   }
 
-  /*!
-  **\brief Sets the 3 atoms in the angle
-  ** Parameters are pointers to each OBAtom
-  */
   void OBAngle::SetAtoms(OBAtom *vertex,OBAtom *a,OBAtom *b)
   {
-    _vertex         = vertex;
-    _termini.first  = a;
-    _termini.second = b;
+    m_vertex         = vertex;
+    m_termini.first  = a;
+    m_termini.second = b;
     SortByIndex();
     return;
   }
 
-  /*!
-  **\brief Sets the 3 atoms in the angle
-  **\param atoms a triple of OBAtom pointers, the first must be the vertex
-  */
   void OBAngle::SetAtoms(triple<OBAtom*,OBAtom*,OBAtom*> &atoms)
   {
-    _vertex         = atoms.first;
-    _termini.first  = atoms.second;
-    _termini.second = atoms.third;
+    m_vertex         = atoms.first;
+    m_termini.first  = atoms.second;
+    m_termini.second = atoms.third;
     SortByIndex();
     return;
   }
 
-  /*!
-  **\brief Retrieves the 3 atom pointer for the angle (vertex first)
-  **\return triple of OBAtom pointers 
-  */
   triple<OBAtom*,OBAtom*,OBAtom*> OBAngle::GetAtoms()
   {
     triple<OBAtom*,OBAtom*,OBAtom*> atoms;
-    atoms.first  = _vertex;
-    atoms.second = _termini.first;
-    atoms.third  = _termini.second;
+    atoms.first  = m_vertex;
+    atoms.second = m_termini.first;
+    atoms.third  = m_termini.second;
     return(atoms);
   }
 
-  /*!
-  **\brief sorts atoms in angle by order of indices
-  */
   void OBAngle::SortByIndex()
   {
     OBAtom *tmp;
 
-    if(_termini.first->GetIdx() > _termini.second->GetIdx())
+    if(m_termini.first->GetIdx() > m_termini.second->GetIdx())
       {
-        tmp             = _termini.first;
-        _termini.first  = _termini.second;
-        _termini.second = tmp;
+        tmp              = m_termini.first;
+        m_termini.first  = m_termini.second;
+        m_termini.second = tmp;
       }
   }
 
-  /*!
-  **\brief OBAngle equality operator, is same angle, NOT same value
-  **\return boolean equality
-  */
   bool OBAngle::operator ==(const OBAngle &other)
   {
-    return ((_vertex         == other._vertex)        &&
-            (_termini.first  == other._termini.first) &&
-            (_termini.second == other._termini.second));
+    return ((m_vertex         == other.m_vertex)        &&
+            (m_termini.first  == other.m_termini.first) &&
+            (m_termini.second == other.m_termini.second));
   }
 
   //
   //member functions for OBAngleData class - stores OBAngle set
   //
 
-  /*!
-  **\brief OBAngleData constructor
-  */
   OBAngleData::OBAngleData()
     :	OBGenericData("AngleData", OBGenericDataType::AngleData)
   {  }
 
-  /*!
-  **\brief OBAngleData copy constructor
-  */
   OBAngleData::OBAngleData(const OBAngleData &src)
-    :	OBGenericData(src), _angles(src._angles)
+    :	OBGenericData(src), m_angles(src.m_angles)
   {  }
 
-  /*!
-  **\brief OBAngleData assignment operator
-  */
   OBAngleData& OBAngleData::operator =(const OBAngleData &src)
   {
     if (this == &src)
       return(*this);
 
     _source = src._source;
-    _angles = src._angles;
+    m_angles = src.m_angles;
 
     return(*this);
   }
 
-  /*!
-  **\brief sets OBAngleData to its original state
-  */
   void OBAngleData::Clear()
   {
-    _angles.clear();
+    m_angles.clear();
     return;
   }
 
-  /*!
-  **\brief Adds a new angle to OBAngleData
-  */
   void OBAngleData::SetData(OBAngle &angle)
   {
-    _angles.push_back(angle);
+    m_angles.push_back(angle);
     return;
   }
 
-  /*!
-  **\brief Fills an array with the indices of the atoms in the angle (vertex first)
-  **\param angles pointer to the pointer to an array of angles atom indices
-  **\return True if successful
-  */
   bool OBAngleData::FillAngleArray(std::vector<std::vector<unsigned int> > &angles)
   {
-    if(_angles.empty())
+    if(m_angles.empty())
       return(false);
 
     vector<OBAngle>::iterator angle;
     
     angles.clear();
-    angles.resize(_angles.size());
+    angles.resize(m_angles.size());
 
     unsigned int ct = 0;
 
-    for( angle=_angles.begin(); angle!=_angles.end(); angle++,ct++)
+    for( angle = m_angles.begin(); angle != m_angles.end(); angle++,ct++)
       {
         angles[ct].resize(3);
-        angles[ct][0] = angle->_vertex->GetIdx() - 1;
-        angles[ct][1] = angle->_termini.first->GetIdx() - 1;
-        angles[ct][2] = angle->_termini.second->GetIdx() - 1;
+        angles[ct][0] = angle->m_vertex->GetIdx() - 1;
+        angles[ct][1] = angle->m_termini.first->GetIdx() - 1;
+        angles[ct][2] = angle->m_termini.second->GetIdx() - 1;
       }
  
     return(true);
   }
   
-  /*!
-  **\brief Fills an array with the indices of the atoms in the angle (vertex first)
-  **\param angles pointer to the pointer to an array of angles atom indices
-  **\param size the current number of rows in the array
-  **\return int The number of angles
-  */
-  unsigned int OBAngleData::FillAngleArray(int **angles, unsigned int &size)
+ unsigned int OBAngleData::FillAngleArray(int **angles, unsigned int &size)
   {
-    if(_angles.size() > size)
+    if(m_angles.size() > size)
       {
         delete [] *angles;
-        *angles = new int[_angles.size()*3];
-        size    = (unsigned int)_angles.size();
+        *angles = new int[m_angles.size()*3];
+        size    = (unsigned int)m_angles.size();
       }
 
     vector<OBAngle>::iterator angle;
     int angleIdx = 0;
-    for( angle=_angles.begin(); angle!=_angles.end(); ++angle)
+    for( angle=m_angles.begin(); angle!=m_angles.end(); ++angle)
       {
-        *angles[angleIdx++] = angle->_vertex->GetIdx();
-        *angles[angleIdx++] = angle->_termini.first->GetIdx();
-        *angles[angleIdx++] = angle->_termini.second->GetIdx();
+        *angles[angleIdx++] = angle->m_vertex->GetIdx();
+        *angles[angleIdx++] = angle->m_termini.first->GetIdx();
+        *angles[angleIdx++] = angle->m_termini.second->GetIdx();
       }
-    return (unsigned int)_angles.size();
+    return (unsigned int)m_angles.size();
   }
   
   //
@@ -1027,17 +966,17 @@ namespace OpenBabel
   OBTorsion::OBTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d)
   {
     triple<OBAtom*,OBAtom*,double> ad(a,d,0.0);
-    _ads.push_back(ad);
+    m_ads.push_back(ad);
 
-    _bc.first  = b;
-    _bc.second = c;
+    m_bc.first  = b;
+    m_bc.second = c;
   }
 
   /*!
   **\brief OBTorsion copy constructor
   */
   OBTorsion::OBTorsion(const OBTorsion &src)
-    :	_bc(src._bc), _ads(src._ads)
+    :	m_bc(src.m_bc), m_ads(src.m_ads)
   {}
 
   /*!
@@ -1047,13 +986,13 @@ namespace OpenBabel
   {
     quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> abcd;
 
-    abcd.second = _bc.first;
-    abcd.third  = _bc.second;
+    abcd.second = m_bc.first;
+    abcd.third  = m_bc.second;
 
     vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > torsions;
     vector<triple<OBAtom*,OBAtom*,double> >::iterator ad;
 
-    for(ad = _ads.begin();ad != _ads.end();++ad)
+    for(ad = m_ads.begin();ad != m_ads.end();++ad)
       {
         abcd.first = ad->first;
         abcd.fourth = ad->second;
@@ -1071,67 +1010,48 @@ namespace OpenBabel
     if (this == &src)
       return(*this);
 
-    _bc  = src._bc;
-    _ads = src._ads;
+    m_bc  = src.m_bc;
+    m_ads = src.m_ads;
 
     return(*this);
   }
 
-  /*!
-  **\brief Returns the OBTorsion to its original state
-  */
   void OBTorsion::Clear()
   {
-    _bc.first  = 0;
-    _bc.second = 0;
-    _ads.erase(_ads.begin(),_ads.end());
+    m_bc.first  = 0;
+    m_bc.second = 0;
+    m_ads.erase(m_ads.begin(), m_ads.end());
   }
 
-  /*!
-  **\brief Sets the angle of a torsion in OBTorsion
-  **\param radians the value to assign to the torsion
-  **\param index the index into the torsion of the OBTorsion
-  **\return boolean success
-  */
   bool OBTorsion::SetAngle(double radians,unsigned int index)
   {
-    if(index >= _ads.size())
+    if(index >= m_ads.size())
       return(false);
 
-    _ads[index].third = radians;
+    m_ads[index].third = radians;
 
     return(true);
   }
 
-  /*!
-  **\brief Obtains the angle of a torsion in OBTorsion
-  **\param radians the value of the angle is set here
-  **\param index the index into the torsion of the OBTorsion
-  **\return boolean success
-  */
   bool OBTorsion::GetAngle(double &radians, unsigned int index)
   {
-    if(index >= _ads.size())
+    if(index >= m_ads.size())
       return false;
-    radians = _ads[index].third;
+    radians = m_ads[index].third;
     return true;
   }
 
   unsigned int OBTorsion::GetBondIdx()
   {
-    return(_bc.first->GetBond(_bc.second)->GetIdx());
+    return(m_bc.first->GetBond(m_bc.second)->GetIdx());
   }
 
-  /*!
-  **\brief determines if torsion has only protons on either the a or d end
-  **\return boolean 
-  */
   bool OBTorsion::IsProtonRotor()
   {
     bool Aprotor = true;
     bool Dprotor = true;
     vector<triple<OBAtom*,OBAtom*,double> >::iterator ad;
-    for(ad = _ads.begin();ad != _ads.end() && (Aprotor || Dprotor);++ad)
+    for(ad = m_ads.begin();ad != m_ads.end() && (Aprotor || Dprotor);++ad)
       {
         if(!ad->first->IsHydrogen())
           Aprotor = false;
@@ -1141,42 +1061,36 @@ namespace OpenBabel
     return (Aprotor || Dprotor);
   }
 
-  /*!
-  **\brief adds a new torsion to the OBTorsion object
-  */
   bool OBTorsion::AddTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d)
   {
-    if(!Empty() && (b != _bc.first || c != _bc.second))
+    if(!Empty() && (b != m_bc.first || c != m_bc.second))
       return(false);
 
     if(Empty())
       {
-        _bc.first  = b;
-        _bc.second = c;
+        m_bc.first  = b;
+        m_bc.second = c;
       }
 
     triple<OBAtom*,OBAtom*,double> ad(a,d,0.0);
-    _ads.push_back(ad);
+    m_ads.push_back(ad);
 
     return(true);
   }
 
-  /*!
-  **\brief adds a new torsion to the OBTorsion object
-  */
   bool OBTorsion::AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &atoms)
   {
-    if(!Empty() && (atoms.second != _bc.first || atoms.third != _bc.second))
+    if(!Empty() && (atoms.second != m_bc.first || atoms.third != m_bc.second))
       return(false);
 
     if(Empty())
       {
-        _bc.first  = atoms.second;
-        _bc.second = atoms.third;
+        m_bc.first  = atoms.second;
+        m_bc.second = atoms.third;
       }
 
     triple<OBAtom*,OBAtom*,double> ad(atoms.first,atoms.fourth,0.0);
-    _ads.push_back(ad);
+    m_ads.push_back(ad);
 
     return(true);
   }
@@ -1190,7 +1104,7 @@ namespace OpenBabel
   //member functions for OBTorsionData class - stores OBTorsion set
   //
   OBTorsionData::OBTorsionData(const OBTorsionData &src)
-    :	OBGenericData(src), _torsions(src._torsions)
+    :	OBGenericData(src), m_torsions(src.m_torsions)
   {  }
 
   OBTorsionData& OBTorsionData::operator =(const OBTorsionData &src)
@@ -1201,29 +1115,24 @@ namespace OpenBabel
     OBGenericData::operator =(src);
 
     _source = src._source;
-    _torsions = src._torsions;
+    m_torsions = src.m_torsions;
 
     return(*this);
   }
 
   void OBTorsionData::Clear()
   {
-    _torsions.clear();
+    m_torsions.clear();
   }
 
   void OBTorsionData::SetData(OBTorsion &torsion)
   {
-    _torsions.push_back(torsion);
+    m_torsions.push_back(torsion);
   }
 
-  /*!
-  **\brief Fills a vector with the indices of the atoms in torsions (ordered abcd)
-  **\param torsions reference to the vector of abcd atom sets
-  **\return boolean success
-  */
   bool OBTorsionData::FillTorsionArray(std::vector<std::vector<unsigned int> > &torsions)
   {
-    if(_torsions.empty())
+    if(m_torsions.empty())
       return(false);
 
     vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > tmpquads,quads;
@@ -1231,7 +1140,7 @@ namespace OpenBabel
     vector<OBTorsion>::iterator torsion;
 
     //generate set of all 4 atom abcd's from torsion structure
-    for (torsion = _torsions.begin();torsion != _torsions.end();++torsion)
+    for (torsion = m_torsions.begin();torsion != m_torsions.end();++torsion)
       {
         tmpquads = torsion->GetTorsions();
         for(thisQuad = tmpquads.begin();thisQuad != tmpquads.end();++thisQuad)
@@ -1262,85 +1171,102 @@ namespace OpenBabel
   //
   bool OBChiralData::SetAtom4Refs(std::vector<unsigned int> atom4refs, atomreftype t)
   {
-    if (atom4refs.size()>4)
-      {
-        obErrorLog.ThrowError(__FUNCTION__, "More than 4 atoms in atom4refs", obDebug);
-        return(false);
-      }
-    switch(t){
-    case input: _atom4refs = atom4refs;break;
-    case output:_atom4refo = atom4refs;break;
-    case calcvolume:_atom4refc = atom4refs;break;
-    default: 
-      obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
+    if (atom4refs.size() > 4) {
+      obErrorLog.ThrowError(__FUNCTION__, "More than 4 atoms in atom4refs", obDebug);
       return(false);
     }
+    
+    switch (t) {
+      case input: 
+        m_atom4refs = atom4refs;
+        break;
+      case output:
+        m_atom4refo = atom4refs;
+        break;
+      case calcvolume:
+        m_atom4refc = atom4refs;
+        break;
+      default: 
+        obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
+        return(false);
+    }
+
     return (true);
   }
 
   int OBChiralData::AddAtomRef(unsigned int atomref, atomreftype t)
   {
-    switch(t){
-    case input: _atom4refs.push_back(atomref);break;
-    case output: _atom4refo.push_back(atomref);break;
-    case calcvolume:_atom4refc.push_back(atomref);break;
-    default:
-      obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
-      return(false);
+    switch (t) {
+      case input: 
+        m_atom4refs.push_back(atomref);
+        break;
+      case output: 
+        m_atom4refo.push_back(atomref);
+        break;
+      case calcvolume:
+        m_atom4refc.push_back(atomref);
+        break;
+      default:
+        obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
+        return(false);
     }
               
-    return (_atom4refs.size());
+    return (m_atom4refs.size());
   }
 
   unsigned int OBChiralData::GetAtomRef(int a, atomreftype t)
   {
-    switch(t){
-    case input: return(_atom4refs[a]);break;
-    case output: return(_atom4refo[a]);break;
-    case calcvolume: return(_atom4refc[a]);break;
+    switch (t) {
+    case input: 
+      return(m_atom4refs[a]);
+      break;
+    case output: 
+      return(m_atom4refo[a]);
+      break;
+    case calcvolume: 
+      return(m_atom4refc[a]);
+      break;
     default:
       obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
       return(false);
     }  
   }
+
   std::vector<unsigned int> OBChiralData::GetAtom4Refs(atomreftype t) const
   {
-    switch (t){
-    case output:
-      return(_atom4refo);
-      break;
-    case input:
-      return(_atom4refs);
-      break;
-    case calcvolume:
-      return(_atom4refc);
-      break;
-    default:
-      obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
-      return(_atom4refo);
+    switch (t) {
+      case output:
+        return(m_atom4refo);
+        break;
+      case input:
+        return(m_atom4refs);
+        break;
+      case calcvolume:
+        return(m_atom4refc);
+        break;
+      default:
+        obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
+        return(m_atom4refo);
     }
   }
 
   unsigned int OBChiralData::GetSize(atomreftype t) const
   {
-    switch (t)
-      {
+    switch (t) {
       case output:
-        return(unsigned int)_atom4refo.size();
+        return(unsigned int)m_atom4refo.size();
         break;
       case input:
-        return(unsigned int)_atom4refs.size();
+        return(unsigned int)m_atom4refs.size();
         break;
       case calcvolume:
-        return(unsigned int)_atom4refc.size();
+        return(unsigned int)m_atom4refc.size();
       default:
         obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
         return(0);
       }
   }
 
-  // Chiral data is a perceived data type. We might read in some chiral info
-  // but this class derives and converts from whatever is read
   OBChiralData::OBChiralData()
     : OBGenericData("ChiralData", OBGenericDataType::ChiralData, perceived)
   {  }
@@ -1348,10 +1274,10 @@ namespace OpenBabel
   OBChiralData::OBChiralData(const OBChiralData &src)
     : OBGenericData(src)
   {
-    _atom4refs = src._atom4refs;
-    _atom4refo = src._atom4refo;
-    _atom4refc = src._atom4refc;
-    parity     = src.parity;
+    m_atom4refs = src.m_atom4refs;
+    m_atom4refo = src.m_atom4refo;
+    m_atom4refc = src.m_atom4refc;
+    m_parity    = src.m_parity;
   }
 
   OBChiralData & OBChiralData::operator=(const OBChiralData &src)
@@ -1361,46 +1287,39 @@ namespace OpenBabel
 
     _source = src._source;
 
-    _atom4refs = src._atom4refs;
-    _atom4refo = src._atom4refo;
-    _atom4refc = src._atom4refc;
-    parity=src.parity;
+    m_atom4refs = src.m_atom4refs;
+    m_atom4refo = src.m_atom4refo;
+    m_atom4refc = src.m_atom4refc;
+    m_parity    = src.m_parity;
     return(*this);
   }
 
   void OBChiralData::Clear()
   {
-    _atom4refs.clear();
-    parity=0;
-    _atom4refo.clear();
-    _atom4refc.clear();
+    m_atom4refs.clear();
+    m_parity = 0;
+    m_atom4refo.clear();
+    m_atom4refc.clear();
   }
 
 //
 //member functions for OBVibrationData class
 //
 
-/*!
-**\brief Assign the data
-**\param vLx Normal modes in 1/sqrt(a.u.)
-**\param vFrequencies Harmonic frequencies in inverse centimeters
-**\param vIntensities Infrared absorption intensities in KM/Mole
-*/
+
 void OBVibrationData::SetData(const std::vector< std::vector< Eigen::Vector3d > > & vLx,
                               const std::vector<double> & vFrequencies,
                               const std::vector<double> & vIntensities)
 {
-  this->_vLx = vLx;
-  this->_vFrequencies = vFrequencies;
-  this->_vIntensities = vIntensities;
+  this->m_vLx = vLx;
+  this->m_vFrequencies = vFrequencies;
+  this->m_vIntensities = vIntensities;
 }
 
-/*!
-**\brief Get the number of frequencies
-*/
+
 unsigned int OBVibrationData::GetNumberOfFrequencies() const
 {
-  return !this->_vFrequencies.empty() ? this->_vFrequencies.size() - 1 : 0;
+  return !this->m_vFrequencies.empty() ? this->m_vFrequencies.size() - 1 : 0;
 }
 
 } //end namespace OpenBabel

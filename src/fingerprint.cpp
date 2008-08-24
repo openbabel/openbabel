@@ -127,16 +127,16 @@ namespace OpenBabel
     ///The positions of the candidate matching molecules in the original datafile are returned.
 	
     vector<unsigned int> vecwords;
-    _pFP->GetFingerprint(pOb,vecwords, _index.header.words * OBFingerprint::Getbitsperint());
+    m_pFP->GetFingerprint(pOb,vecwords, m_index.header.words * OBFingerprint::Getbitsperint());
 	
     vector<unsigned int>candidates; //indices of matches from fingerprint screen
     candidates.reserve(MaxCandidates);
 
-    unsigned int dataSize = _index.header.nEntries;
-    //	GetFingerprint(mol, vecwords, _index.header.words, _index.header.fptype); 
+    unsigned int dataSize = m_index.header.nEntries;
+    //	GetFingerprint(mol, vecwords, m_index.header.words, m_index.header.fptype); 
 	
-    unsigned int words = _index.header.words;
-    unsigned int* nextp = &_index.fptdata[0];
+    unsigned int words = m_index.header.words;
+    unsigned int* nextp = &m_index.fptdata[0];
     unsigned int* ppat0 = &vecwords[0];
     register unsigned int* p;
     register unsigned int* ppat;
@@ -160,7 +160,7 @@ namespace OpenBabel
           }
       }
 
-    if(i<_index.header.nEntries) //premature end to search
+    if(i<m_index.header.nEntries) //premature end to search
       {
         stringstream errorMsg;
         errorMsg << "Stopped looking after " << i << " molecules." << endl;
@@ -170,7 +170,7 @@ namespace OpenBabel
     vector<unsigned int>::iterator itr;
     for(itr=candidates.begin();itr!=candidates.end();++itr)
       {
-        SeekPositions.push_back(_index.seekdata[*itr]);
+        SeekPositions.push_back(m_index.seekdata[*itr]);
       }
     return true;
   }
@@ -181,13 +181,13 @@ namespace OpenBabel
 {
 //Similar to FastSearch::Find() except that successful candidates have all bits the same as the target
   vector<unsigned int> vecwords;
-  _pFP->GetFingerprint(pOb,vecwords, _index.header.words * OBFingerprint::Getbitsperint());
+  m_pFP->GetFingerprint(pOb,vecwords, m_index.header.words * OBFingerprint::Getbitsperint());
 
   vector<unsigned int>candidates; //indices of matches from fingerprint screen
 
-  unsigned int dataSize = _index.header.nEntries;
-  unsigned int words = _index.header.words;
-  unsigned int* nextp = &_index.fptdata[0]; // start of next FP in index
+  unsigned int dataSize = m_index.header.nEntries;
+  unsigned int words = m_index.header.words;
+  unsigned int* nextp = &m_index.fptdata[0]; // start of next FP in index
   unsigned int* ppat0 = &vecwords[0];       // start of target FP
   register unsigned int* p;                 // current position in index
   register unsigned int* ppat;              // current position in target FP
@@ -211,7 +211,7 @@ namespace OpenBabel
   vector<unsigned int>::iterator itr;
   for(itr=candidates.begin();itr!=candidates.end();++itr)
     {
-      SeekPositions.push_back(_index.seekdata[*itr]);
+      SeekPositions.push_back(m_index.seekdata[*itr]);
     }
   return true;
 }
@@ -221,11 +221,11 @@ namespace OpenBabel
                                double MinTani)
   {
     vector<unsigned int> targetfp;
-    _pFP->GetFingerprint(pOb,targetfp, _index.header.words * OBFingerprint::Getbitsperint());
+    m_pFP->GetFingerprint(pOb,targetfp, m_index.header.words * OBFingerprint::Getbitsperint());
 
-    unsigned int words = _index.header.words;
-    unsigned int dataSize = _index.header.nEntries;
-    unsigned int* nextp = &_index.fptdata[0];
+    unsigned int words = m_index.header.words;
+    unsigned int dataSize = m_index.header.nEntries;
+    unsigned int* nextp = &m_index.fptdata[0];
     register unsigned int* p;
     register unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
@@ -234,7 +234,7 @@ namespace OpenBabel
         nextp += words;
         double tani = OBFingerprint::Tanimoto(targetfp,p);
         if(tani>MinTani)
-          SeekposMap.insert(pair<const double, unsigned int>(tani,_index.seekdata[i]));
+          SeekposMap.insert(pair<const double, unsigned int>(tani,m_index.seekdata[i]));
       }	
     return true;
   }
@@ -256,11 +256,11 @@ namespace OpenBabel
       return false;
 
     vector<unsigned int> targetfp;
-    _pFP->GetFingerprint(pOb,targetfp, _index.header.words * OBFingerprint::Getbitsperint());
+    m_pFP->GetFingerprint(pOb,targetfp, m_index.header.words * OBFingerprint::Getbitsperint());
 
-    unsigned int words = _index.header.words;
-    unsigned int dataSize = _index.header.nEntries;
-    unsigned int* nextp = &_index.fptdata[0];
+    unsigned int words = m_index.header.words;
+    unsigned int dataSize = m_index.header.nEntries;
+    unsigned int* nextp = &m_index.fptdata[0];
     register unsigned int* p;
     register unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
@@ -270,7 +270,7 @@ namespace OpenBabel
         double tani = OBFingerprint::Tanimoto(targetfp,p);
         if(tani>SeekposMap.begin()->first)
           {	
-            SeekposMap.insert(pair<const double, unsigned int>(tani,_index.seekdata[i]));
+            SeekposMap.insert(pair<const double, unsigned int>(tani,m_index.seekdata[i]));
             SeekposMap.erase(SeekposMap.begin());
           }
       }	
@@ -281,13 +281,13 @@ namespace OpenBabel
   string FastSearch::ReadIndex(std::istream* pIndexstream)
   {
     //Reads fs index from istream into member variables
-    _index.Read(pIndexstream);
+    m_index.Read(pIndexstream);
 
-    _pFP = _index.CheckFP();	
-    if(!_pFP)
-      *(_index.header.datafilename) = '\0';
+    m_pFP = m_index.CheckFP();	
+    if(!m_pFP)
+      *(m_index.header.datafilename) = '\0';
 
-    return _index.header.datafilename; //will be empty on error
+    return m_index.header.datafilename; //will be empty on error
   }
 
   //////////////////////////////////////////////////////////
@@ -349,42 +349,42 @@ namespace OpenBabel
                                        std::string& fpid, int FptBits)
   {
     ///Starts indexing process
-    _indexstream = os;
-    _nbits=FptBits;
-    _pindex= new FptIndex;
-    _pindex->header.headerlength = sizeof(FptIndexHeader);
-    strncpy(_pindex->header.fpid,fpid.c_str(),15);
-    _pindex->header.fpid[15]='\0'; //ensure fpid is terminated at 15 characters.
-    strncpy(_pindex->header.datafilename, datafilename.c_str(), 255);
+    m_indexstream = os;
+    m_nbits=FptBits;
+    m_pindex= new FptIndex;
+    m_pindex->header.headerlength = sizeof(FptIndexHeader);
+    strncpy(m_pindex->header.fpid,fpid.c_str(),15);
+    m_pindex->header.fpid[15]='\0'; //ensure fpid is terminated at 15 characters.
+    strncpy(m_pindex->header.datafilename, datafilename.c_str(), 255);
 
     //check that fingerprint type is available
-    _pFP = _pindex->CheckFP();	
+    m_pFP = m_pindex->CheckFP();	
   }
 
   /////////////////////////////////////////////////////////////
   FastSearchIndexer::FastSearchIndexer(FptIndex* pindex, std::ostream* os)
   {
     //Uses existing index
-    _indexstream = os;
-    _pindex = pindex;
-    _nbits  = _pindex->header.words * OBFingerprint::Getbitsperint();
+    m_indexstream = os;
+    m_pindex = pindex;
+    m_nbits  = m_pindex->header.words * OBFingerprint::Getbitsperint();
 
     //check that fingerprint type is available
-    _pFP = _pindex->CheckFP();	
+    m_pFP = m_pindex->CheckFP();	
   }
 
   /////////////////////////////////////////////////////////////
   FastSearchIndexer::~FastSearchIndexer()
   {
     ///Saves index file
-    _pindex->header.nEntries = _pindex->seekdata.size();
-    _indexstream->write((const char*)&_pindex->header, sizeof(FptIndexHeader));
-    _indexstream->write((const char*)&_pindex->fptdata[0], _pindex->fptdata.size()*sizeof(unsigned int));
-    _indexstream->write((const char*)&_pindex->seekdata[0], _pindex->seekdata.size()*sizeof(unsigned int));
-    if(!_indexstream)
+    m_pindex->header.nEntries = m_pindex->seekdata.size();
+    m_indexstream->write((const char*)&m_pindex->header, sizeof(FptIndexHeader));
+    m_indexstream->write((const char*)&m_pindex->fptdata[0], m_pindex->fptdata.size()*sizeof(unsigned int));
+    m_indexstream->write((const char*)&m_pindex->seekdata[0], m_pindex->seekdata.size()*sizeof(unsigned int));
+    if(!m_indexstream)
       obErrorLog.ThrowError(__FUNCTION__,
                             "Difficulty writing index", obWarning);
-    delete _pindex;
+    delete m_pindex;
   }
 
   ///////////////////////////////////////////////////////////////
@@ -393,14 +393,14 @@ namespace OpenBabel
     ///Adds a fingerprint
 	
     vector<unsigned int> vecwords;
-    if(!_pFP)
+    if(!m_pFP)
       return false;
-    if(_pFP->GetFingerprint(pOb, vecwords, _nbits))
+    if(m_pFP->GetFingerprint(pOb, vecwords, m_nbits))
       {
-        _pindex->header.words = vecwords.size(); //Use size as returned from fingerprint
-        for(unsigned int i=0;i<_pindex->header.words;++i)
-          _pindex->fptdata.push_back(vecwords[i]);
-        _pindex->seekdata.push_back(seekpos);
+        m_pindex->header.words = vecwords.size(); //Use size as returned from fingerprint
+        for(unsigned int i=0;i<m_pindex->header.words;++i)
+          m_pindex->fptdata.push_back(vecwords[i]);
+        m_pindex->seekdata.push_back(seekpos);
         return true;	
       }
     obErrorLog.ThrowError(__FUNCTION__, "Failed to make a fingerprint", obWarning);

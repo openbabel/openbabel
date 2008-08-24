@@ -51,7 +51,7 @@ namespace OpenBabel
   class OBFFVDWCalculationGhemical : public OBFFCalculation2
   {
     public:
-      bool is14, samering;
+      bool is14;
       double ka, Ra, kb, Rb, kab;
   };
 
@@ -74,8 +74,8 @@ namespace OpenBabel
       bool SetPartialCharges();
       //! fill OBFFXXXCalculation vectors
       bool SetupCalculations();
-      //! Setup pointers in OBFFXXXCalculation vectors
-      //bool SetupPointers();
+      bool SetupBondedCalculations();
+      bool SetupNonBondedCalculations();
       //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
       OBFFParameter* GetParameterGhemical(int type, const char* a, const char* b, 
           const char* c, const char* d, std::vector<OBFFParameter> &parameter);

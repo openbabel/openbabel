@@ -380,12 +380,12 @@ namespace OpenBabel
       atom = mol.NewAtom();
         
       OBInternalCoord *coord = new OBInternalCoord;
-      //vic[atom->GetIdx()]->_dst = atof(vs[1].c_str());
-      //vic[atom->GetIdx()]->_ang = atof(vs[3].c_str());
-      //vic[atom->GetIdx()]->_tor = atof(vs[5].c_str());
-      coord->_dst = atof(vs[1].c_str());
-      coord->_ang = atof(vs[3].c_str());
-      coord->_tor = atof(vs[5].c_str());
+      //vic[atom->GetIdx()]->m_dst = atof(vs[1].c_str());
+      //vic[atom->GetIdx()]->m_ang = atof(vs[3].c_str());
+      //vic[atom->GetIdx()]->m_tor = atof(vs[5].c_str());
+      coord->m_dst = atof(vs[1].c_str());
+      coord->m_ang = atof(vs[3].c_str());
+      coord->m_tor = atof(vs[5].c_str());
       vic.push_back(coord);
 
       indices.push_back(atoi(vs[7].c_str()));
@@ -398,19 +398,19 @@ namespace OpenBabel
     int idx = 0;
     FOR_ATOMS_OF_MOL (a, mol) {
       if ((indices[idx] > 0) && (indices[idx] <= mol.NumAtoms()))
-        vic[a->GetIdx()]->_a = mol.GetAtom(indices[idx]);
+        vic[a->GetIdx()]->m_a = mol.GetAtom(indices[idx]);
       else
-        vic[a->GetIdx()]->_a = NULL;
+        vic[a->GetIdx()]->m_a = NULL;
       
       if ((indices[idx+1] > 0) && (indices[idx+1] <= mol.NumAtoms()))
-        vic[a->GetIdx()]->_b = mol.GetAtom(indices[idx+1]);
+        vic[a->GetIdx()]->m_b = mol.GetAtom(indices[idx+1]);
       else
-        vic[a->GetIdx()]->_b = NULL;
+        vic[a->GetIdx()]->m_b = NULL;
 
       if ((indices[idx+2] > 0) && (indices[idx+2] <= mol.NumAtoms()))
-        vic[a->GetIdx()]->_c = mol.GetAtom(indices[idx+2]);
+        vic[a->GetIdx()]->m_c = mol.GetAtom(indices[idx+2]);
       else
-        vic[a->GetIdx()]->_c = NULL;
+        vic[a->GetIdx()]->m_c = NULL;
       
       idx += 3;
     }
@@ -486,12 +486,12 @@ namespace OpenBabel
 
     double r,w,t;
     FOR_ATOMS_OF_MOL (atom, mol) {
-      a = vic[atom->GetIdx()]->_a;
-      b = vic[atom->GetIdx()]->_b;
-      c = vic[atom->GetIdx()]->_c;
-      r = vic[atom->GetIdx()]->_dst;
-      w = vic[atom->GetIdx()]->_ang;
-      t = vic[atom->GetIdx()]->_tor;
+      a = vic[atom->GetIdx()]->m_a;
+      b = vic[atom->GetIdx()]->m_b;
+      c = vic[atom->GetIdx()]->m_c;
+      r = vic[atom->GetIdx()]->m_dst;
+      w = vic[atom->GetIdx()]->m_ang;
+      t = vic[atom->GetIdx()]->m_tor;
 	
       strncpy(type, etab.GetSymbol(atom->GetAtomicNum()), 16);
       type[15] = '\0';

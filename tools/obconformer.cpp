@@ -30,6 +30,7 @@ GNU General Public License for more details.
 #include <openbabel/obutil.h>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/minimize.h>
 
 #include <stdio.h>
 #include <iostream>
@@ -90,7 +91,8 @@ int main(int argc,char *argv[])
       pFF->Setup(mol);
       pFF->SystematicRotorSearch(geomSteps);
       //pFF->WeightedRotorSearch(weightSteps, geomSteps);
-      pFF->ConjugateGradients(geomSteps); // final cleanup
+      OBMinimize mini(pFF);
+      mini.ConjugateGradients(geomSteps); // final cleanup
       pFF->GetCoordinates(mol);
       conv.Write(&mol);
     } // while reading molecules

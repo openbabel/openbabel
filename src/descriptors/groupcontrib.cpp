@@ -38,9 +38,9 @@ namespace OpenBabel
   {
    //Adds name of datafile containing SMARTS strings to the description
     static string txt;
-    txt =  _descr;
+    txt =  m_descr;
     txt += "\n Datafile: ";
-    txt += _filename;
+    txt += m_filename;
     txt += "\nOBGroupContrib is definable";
     return txt.c_str();
   } 
@@ -52,7 +52,7 @@ namespace OpenBabel
     // open data file
     ifstream ifs;
 
-    if (OpenDatafile(ifs, _filename).length() == 0) {
+    if (OpenDatafile(ifs, m_filename).length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, " Could not find contribution data file.", obError);
       return false;
     }
@@ -64,10 +64,10 @@ namespace OpenBabel
     bool heavy = false;
     string ln;
     while(getline(ifs,ln)){
-      if(ln[0]=='#') continue;
-      if(ln.find(";heavy")!=string::npos)
+      if(ln[0] == '#') continue;
+      if(ln.find(";heavy") != string::npos)
         heavy=true;
-      if(ln[0]==';') continue;
+      if(ln[0] == ';') continue;
       tokenize(vs, ln);
 
       if (vs.size() < 2)
@@ -78,9 +78,9 @@ namespace OpenBabel
       if (sp->Init(vs[0])) 
       {
         if (heavy)
-          _contribsHeavy.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
+          m_contribsHeavy.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
         else
-          _contribsHydrogen.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
+          m_contribsHydrogen.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
       }
       else
       {
@@ -112,10 +112,10 @@ namespace OpenBabel
     mol.AddHydrogens(false, false);
 
     //Read in data, unless it has already been done.
-    if(_contribsHeavy.empty() && _contribsHydrogen.empty())
+    if(m_contribsHeavy.empty() && m_contribsHydrogen.empty())
       ParseFile();
 
-    vector<vector<int> > _mlist; // match list for atom typing
+    vector<vector<int> > mlist; // match list for atom typing
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*, double> >::iterator i;
     
@@ -128,10 +128,10 @@ namespace OpenBabel
 
     // atom contributions
     //cout << "atom contributions:" << endl;
-    for (i = _contribsHeavy.begin();i != _contribsHeavy.end();++i) {
+    for (i = m_contribsHeavy.begin();i != m_contribsHeavy.end();++i) {
       if (i->first->Match(tmpmol)) {
-        _mlist = i->first->GetMapList();
-        for (j = _mlist.begin();j != _mlist.end();++j) {
+        mlist = i->first->GetMapList();
+        for (j = mlist.begin();j != mlist.end();++j) {
 	  atomValues[(*j)[0] - 1] = i->second;
 	  //cout << (*j)[0] << " = " << i->first->GetSMARTS() << " : " << i->second << endl;
         }
@@ -143,10 +143,10 @@ namespace OpenBabel
     
     // hydrogen contributions
     //cout << "hydrogen contributions:" << endl;
-    for (i = _contribsHydrogen.begin();i != _contribsHydrogen.end();++i) {
+    for (i = m_contribsHydrogen.begin();i != m_contribsHydrogen.end();++i) {
       if (i->first->Match(tmpmol)) {
-        _mlist = i->first->GetMapList();
-        for (j = _mlist.begin();j != _mlist.end();++j) {
+        mlist = i->first->GetMapList();
+        for (j = mlist.begin();j != mlist.end();++j) {
 	  int Hcount = tmpmol.GetAtom((*j)[0])->GetValence() - tmpmol.GetAtom((*j)[0])->GetHvyValence();
 	  hydrogenValues[(*j)[0] - 1] = i->second * Hcount;
 	  //cout << (*j)[0] << " = " << i->first->GetSMARTS() << " : " << i->second << endl;
@@ -157,7 +157,7 @@ namespace OpenBabel
     // total atomic and hydrogen contribution
     double total = 0.0;
 
-    for (int index = 0; index < tmpmol.NumAtoms(); index++) {
+    for (unsigned int index = 0; index < tmpmol.NumAtoms(); index++) {
       if (tmpmol.GetAtom(index+1)->IsHydrogen())
         continue;
 
@@ -193,7 +193,7 @@ namespace OpenBabel
   OBGroupContrib theMR("MR", "mr.txt",
     "molar refractivity");
 
-//! \file groupcontrib.cpp
-//! \brief Handle logP, PSA and other group-based prediction algorithms.
+//! @file groupcontrib.cpp
+//! @brief Handle logP, PSA and other group-based prediction algorithms.
 
-  }//namespace
+}//namespace

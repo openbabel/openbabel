@@ -103,7 +103,7 @@ namespace OpenBabel
     SetBondOrder(order);
   }
 
-  void OBBond::SetBondOrder(int order)
+  void OBBond::SetBondOrder(unsigned int order)
   {
     m_order = (char)order;
     if (order == 5)
@@ -325,7 +325,7 @@ namespace OpenBabel
 
   bool OBBond::IsSingle()
   {
-    if (HasFlag(OBBondFlag::Aromatic))
+    if (HasFlag(OBBondFlag::AromaticBond))
       return(false);
 
     if (!((OBMol*)GetParent())->HasAromaticPerceived())
@@ -333,7 +333,7 @@ namespace OpenBabel
         aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
       }
 
-    if ((this->GetBondOrder()==1) && !(HasFlag(OBBondFlag::Aromatic)))
+    if ((this->GetBondOrder()==1) && !(HasFlag(OBBondFlag::AromaticBond)))
       return(true);
 
     return(false);
@@ -341,7 +341,7 @@ namespace OpenBabel
 
   bool OBBond::IsDouble()
   {
-    if	(HasFlag(OBBondFlag::Aromatic))
+    if	(HasFlag(OBBondFlag::AromaticBond))
       return(false);
 
     if (!((OBMol*)GetParent())->HasAromaticPerceived())
@@ -349,7 +349,7 @@ namespace OpenBabel
         aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
       }
 
-    if ((this->GetBondOrder()==2) && !(HasFlag(OBBondFlag::Aromatic)))
+    if ((this->GetBondOrder()==2) && !(HasFlag(OBBondFlag::AromaticBond)))
       return(true);
 
     return(false);
@@ -357,7 +357,7 @@ namespace OpenBabel
 
   bool OBBond::IsTriple()
   {
-    if	(HasFlag(OBBondFlag::Aromatic))
+    if	(HasFlag(OBBondFlag::AromaticBond))
       return(false);
 
     if (!((OBMol*)GetParent())->HasAromaticPerceived())
@@ -365,7 +365,7 @@ namespace OpenBabel
         aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
       }
 
-    if ((this->GetBondOrder()==3) && !(HasFlag(OBBondFlag::Aromatic)))
+    if ((this->GetBondOrder()==3) && !(HasFlag(OBBondFlag::AromaticBond)))
       return(true);
 
     return(false);
@@ -373,14 +373,14 @@ namespace OpenBabel
 
   bool OBBond::IsAromatic() const
   {
-    if (((OBBond*)this)->HasFlag(OBBondFlag::Aromatic))
+    if (((OBBond*)this)->HasFlag(OBBondFlag::AromaticBond))
       return(true);
 
     OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
     if (!mol->HasAromaticPerceived())
       {
         aromtyper.AssignAromaticFlags(*mol);
-        if (((OBBond*)this)->HasFlag(OBBondFlag::Aromatic))
+        if (((OBBond*)this)->HasFlag(OBBondFlag::AromaticBond))
           return(true);
       }
 
@@ -587,42 +587,12 @@ namespace OpenBabel
     return(sqrt(d2));
   }
 
-  void OBBond::SetIdx(int idx)
-  {          
-    m_idx = idx;        
-  }
-      
-  void OBBond::SetBegin(OBAtom *begin)
-  {          
-    m_bgn = begin;      
-  }
-      
-  void OBBond::SetEnd(OBAtom *end)    
-  {
-    m_end = end;        
-  }
-      
-  void OBBond::SetParent(OBMol *ptr)  
-  {
-    m_parent= ptr;
-  }
-      
   void OBBond::UnsetKekule()
   {
     m_flags &= (~(OBBondFlag::Single|OBBondFlag::Double|OBBondFlag::Triple));
   }
   
-  unsigned int OBBond::GetIdx() const 
-  { 
-    return m_idx;  
-  }
-
   unsigned int OBBond::GetBO() const
-  { 
-    return m_order; 
-  }
-  
-  unsigned int OBBond::GetBondOrder() const
   { 
     return m_order; 
   }
@@ -642,34 +612,9 @@ namespace OpenBabel
     return (m_end ? m_end->GetIdx() : 0); 
   }
   
-  OBAtom* OBBond::GetBeginAtom()
-  { 
-    return(m_bgn);
-  }
-  
-  const OBAtom* OBBond::GetBeginAtom() const 
-  { 
-    return(m_bgn);
-  }
-  
-  OBAtom* OBBond::GetEndAtom()
-  { 
-    return(m_end);
-  }
-  
-  const OBAtom* OBBond::GetEndAtom() const
-  { 
-    return(m_end);    
-  }
-  
   OBAtom *OBBond::GetNbrAtom(OBAtom *ptr)
   {
     return((ptr != m_bgn)? m_bgn : m_end);
-  }
-  
-  OBMol* OBBond::GetParent()
-  {
-    return m_parent;
   }
   
   unsigned int OBBond::GetNbrAtomIdx(OBAtom *ptr)

@@ -111,7 +111,7 @@ namespace OpenBabel
     //#ifdef _OPENMP
     //#pragma omp parallel for reduction(+:energy)
     //#endif
-    for (int i = 0; i < _bondcalculations.size(); ++i) {
+    for (int i = 0; i < (int)_bondcalculations.size(); ++i) {
       if (OBForceField::IgnoreCalculation(_bondcalculations[i].a->GetIdx(), _bondcalculations[i].b->GetIdx())) {
         continue;
       }
@@ -199,7 +199,7 @@ namespace OpenBabel
     //#ifdef _OPENMP
     //#pragma omp parallel for reduction(+:energy)
     //#endif
-    for (int i = 0; i < _anglecalculations.size(); ++i) {
+    for (int i = 0; i < (int)_anglecalculations.size(); ++i) {
       if (OBForceField::IgnoreCalculation(_anglecalculations[i].a->GetIdx(), 
             _anglecalculations[i].b->GetIdx(), _anglecalculations[i].c->GetIdx())) {
         continue;
@@ -310,7 +310,7 @@ namespace OpenBabel
     //#ifdef _OPENMP
     //#pragma omp parallel for reduction(+:energy) 
     //#endif
-    for (int i = 0; i < _strbndcalculations.size(); ++i) {
+    for (int i = 0; i < (int)_strbndcalculations.size(); ++i) {
       if (OBForceField::IgnoreCalculation(_strbndcalculations[i].a->GetIdx(), 
             _strbndcalculations[i].b->GetIdx(), _strbndcalculations[i].c->GetIdx())) {
         continue;
@@ -443,7 +443,7 @@ namespace OpenBabel
     //#ifdef _OPENMP
     //#pragma omp parallel for reduction(+:energy) 
     //#endif
-    for (int i = 0; i < _torsioncalculations.size(); ++i) {
+    for (int i = 0; i < (int)_torsioncalculations.size(); ++i) {
       if (OBForceField::IgnoreCalculation(_torsioncalculations[i].a->GetIdx(), _torsioncalculations[i].b->GetIdx(), 
             _torsioncalculations[i].c->GetIdx(), _torsioncalculations[i].d->GetIdx())) {
         continue;
@@ -545,7 +545,7 @@ namespace OpenBabel
     //#ifdef _OPENMP
     //#pragma omp parallel for reduction(+:energy) 
     //#endif
-    for (int i = 0; i < _oopcalculations.size(); ++i) {
+    for (int i = 0; i < (int)_oopcalculations.size(); ++i) {
       if (OBForceField::IgnoreCalculation(_oopcalculations[i].a->GetIdx(), _oopcalculations[i].b->GetIdx(), 
             _oopcalculations[i].c->GetIdx(), _oopcalculations[i].d->GetIdx())) {
         continue;
@@ -629,7 +629,7 @@ namespace OpenBabel
     //#ifdef _OPENMP
     //#pragma omp parallel for reduction(+:energy)
     //#endif
-    for (int i = 0; i < _vdwcalculations.size(); ++i) {
+    for (int i = 0; i < (int)_vdwcalculations.size(); ++i) {
       // Cut-off check
       if (IsCutOffEnabled())
         if (!GetVDWPairs().BitIsSet(i)) 
@@ -724,7 +724,7 @@ namespace OpenBabel
     //#ifdef _OPENMP
     //#pragma omp parallel for reduction(+:energy)
     //#endif
-    for (int i = 0; i < _electrostaticcalculations.size(); ++i) {
+    for (int i = 0; i < (int)_electrostaticcalculations.size(); ++i) {
       // Cut-off check
       if (IsCutOffEnabled())
         if (!GetElePairs().BitIsSet(i)) 
@@ -1333,6 +1333,7 @@ namespace OpenBabel
     vector<OBRing*>::iterator ri;
     vector<int>::iterator rj;
     int n, index, ringsize, first_rj, prev_rj, pi_electrons;
+    first_rj = prev_rj = index = 0;
     for (ri = vr.begin();ri != vr.end();++ri) { // for each ring
       ringsize = (*ri)->Size();
       
@@ -3794,7 +3795,7 @@ namespace OpenBabel
   {
     OBMol *mol = GetMolecule();
     Eigen::Vector3d numgrad, anagrad, err;
-    int coordIdx;
+    int idx;
     
     bool passed = true; // set to false if any component fails
     
@@ -3807,15 +3808,15 @@ namespace OpenBabel
     cout << "----------------------------------------------------------------------------------------" << endl;
     //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
    
-    double *gradientPtr = GetGradientPtr();
+    vector<Eigen::Vector3d> gradients = GetGradients();
 
     FOR_ATOMS_OF_MOL (a, mol) {
-      coordIdx = (a->GetIdx() - 1) * 3;
+      idx = (a->GetIdx() - 1);
       
       // OBFF_ENERGY
-      numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
+      //numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
       Energy(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -3823,10 +3824,10 @@ namespace OpenBabel
       OBFFLog(_logbuf);
 
       // OBFF_EBOND
-      numgrad = NumericalDerivative(&*a, OBFF_EBOND);
+      //numgrad = NumericalDerivative(&*a, OBFF_EBOND);
       ClearGradients();
       E_Bond(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -3836,10 +3837,10 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EANGLE
-      numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
+      //numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
       ClearGradients();
       E_Angle(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -3849,10 +3850,10 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_ESTRBND
-      numgrad = NumericalDerivative(&*a, OBFF_ESTRBND);
+      //numgrad = NumericalDerivative(&*a, OBFF_ESTRBND);
       ClearGradients();
       E_StrBnd(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    strbnd  (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -3862,10 +3863,10 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_ETORSION
-      numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
+      //numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
       ClearGradients();
       E_Torsion(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -3875,10 +3876,10 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EOOP
-      numgrad = NumericalDerivative(&*a, OBFF_EOOP);
+      //numgrad = NumericalDerivative(&*a, OBFF_EOOP);
       ClearGradients();
       E_OOP(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -3889,10 +3890,10 @@ namespace OpenBabel
       //        passed = false;
 
       // OBFF_EVDW
-      numgrad = NumericalDerivative(&*a, OBFF_EVDW);
+      //numgrad = NumericalDerivative(&*a, OBFF_EVDW);
       ClearGradients();
       E_VDW(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -3902,10 +3903,10 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_EELECTROSTATIC
-      numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
+      //numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
       ClearGradients();
       E_Electrostatic(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 

@@ -456,10 +456,10 @@ namespace OpenBabel
         if (index >= vic.size() || !vic[index])
           return;
 
-        if (vic[index]->_a) // make sure we have a valid ptr
+        if (vic[index]->m_a) // make sure we have a valid ptr
           {
-            avec = vic[index]->_a->GetVector();
-            dst = vic[index]->_dst;
+            avec = vic[index]->m_a->GetVector();
+            dst = vic[index]->m_dst;
           }
         else
           {
@@ -468,10 +468,10 @@ namespace OpenBabel
             continue;
           }
 
-        if (vic[index]->_b)
+        if (vic[index]->m_b)
           {
-            bvec = vic[index]->_b->GetVector();
-            ang = vic[index]->_ang * DEG_TO_RAD;
+            bvec = vic[index]->m_b->GetVector();
+            ang = vic[index]->m_ang * DEG_TO_RAD;
           }
         else
           {
@@ -480,10 +480,10 @@ namespace OpenBabel
             continue;
           }
 
-        if (vic[index]->_c)
+        if (vic[index]->m_c)
           {
-            cvec = vic[index]->_c->GetVector();
-            tor = vic[index]->_tor * DEG_TO_RAD;
+            cvec = vic[index]->m_c->GetVector();
+            tor = vic[index]->m_tor * DEG_TO_RAD;
           }
         else
           {
@@ -537,7 +537,7 @@ namespace OpenBabel
           continue;
         else if (atom->GetIdx() == 2)
           {
-            vic[atom->GetIdx()]->_a = mol.GetAtom(1);
+            vic[atom->GetIdx()]->m_a = mol.GetAtom(1);
             continue;
           }
         else if (atom->GetIdx() == 3)
@@ -545,13 +545,13 @@ namespace OpenBabel
             if( (atom->GetVector()-mol.GetAtom(2)->GetVector()).norm2()
                 <(atom->GetVector()-mol.GetAtom(1)->GetVector()).norm2())
               {
-                vic[atom->GetIdx()]->_a = mol.GetAtom(2);
-                vic[atom->GetIdx()]->_b = mol.GetAtom(1);
+                vic[atom->GetIdx()]->m_a = mol.GetAtom(2);
+                vic[atom->GetIdx()]->m_b = mol.GetAtom(1);
               }
             else
               {
-                vic[atom->GetIdx()]->_a = mol.GetAtom(1);
-                vic[atom->GetIdx()]->_b = mol.GetAtom(2);
+                vic[atom->GetIdx()]->m_a = mol.GetAtom(1);
+                vic[atom->GetIdx()]->m_b = mol.GetAtom(2);
               }
             continue;
           }
@@ -560,31 +560,31 @@ namespace OpenBabel
         for(nbr = mol.BeginAtom(j);nbr && (i != j);nbr = mol.NextAtom(j))
           {
             r = (atom->GetVector()-nbr->GetVector()).norm2();
-            if((r < sum) && (vic[nbr->GetIdx()]->_a != nbr) &&
-               (vic[nbr->GetIdx()]->_b != nbr))
+            if((r < sum) && (vic[nbr->GetIdx()]->m_a != nbr) &&
+               (vic[nbr->GetIdx()]->m_b != nbr))
               {
                 sum = r;
                 ref = nbr;
               }
           }
 
-        vic[atom->GetIdx()]->_a = ref;
+        vic[atom->GetIdx()]->m_a = ref;
         if (ref->GetIdx() >= 3)
           {
-            vic[atom->GetIdx()]->_b = vic[ref->GetIdx()]->_a;
-            vic[atom->GetIdx()]->_c = vic[ref->GetIdx()]->_b;
+            vic[atom->GetIdx()]->m_b = vic[ref->GetIdx()]->m_a;
+            vic[atom->GetIdx()]->m_c = vic[ref->GetIdx()]->m_b;
           }
         else
           {
             if(ref->GetIdx()== 1)
               {
-                vic[atom->GetIdx()]->_b = mol.GetAtom(2);
-                vic[atom->GetIdx()]->_c = mol.GetAtom(3);
+                vic[atom->GetIdx()]->m_b = mol.GetAtom(2);
+                vic[atom->GetIdx()]->m_c = mol.GetAtom(3);
               }
             else
               {//ref->GetIdx()== 2
-                vic[atom->GetIdx()]->_b = mol.GetAtom(1);
-                vic[atom->GetIdx()]->_c = mol.GetAtom(3);
+                vic[atom->GetIdx()]->m_b = mol.GetAtom(1);
+                vic[atom->GetIdx()]->m_c = mol.GetAtom(3);
               }
           }
       }
@@ -596,20 +596,20 @@ namespace OpenBabel
     for (k = 2;k <= mol.NumAtoms();++k)
       {
         atom = mol.GetAtom(k);
-        a = vic[k]->_a;
-        b = vic[k]->_b;
-        c = vic[k]->_c;
+        a = vic[k]->m_a;
+        b = vic[k]->m_b;
+        c = vic[k]->m_c;
         v1 = atom->GetVector() - a->GetVector();
-        vic[k]->_dst = v1.norm();
+        vic[k]->m_dst = v1.norm();
         if (k == 2)
           continue;
 
         v2 = b->GetVector()    - a->GetVector();
-        vic[k]->_ang = VectorAngle(v1,v2);
+        vic[k]->m_ang = VectorAngle(v1,v2);
         if (k == 3)
           continue;
 
-        vic[k]->_tor = VectorTorsion(atom->GetVector(),
+        vic[k]->m_tor = VectorTorsion(atom->GetVector(),
                                         a->GetVector(),
                                         b->GetVector(),
                                         c->GetVector());
@@ -620,7 +620,7 @@ namespace OpenBabel
     double ang;
     for (k = 2;k <= mol.NumAtoms();++k)
       {
-        ang = fabs(vic[k]->_ang);
+        ang = fabs(vic[k]->m_ang);
         if (ang > 5.0 && ang < 175.0)
           continue;
         atom = mol.GetAtom(k);
@@ -644,15 +644,15 @@ namespace OpenBabel
               if (!c)
                 continue;
 
-              vic[k]->_a = a;
-              vic[k]->_b = b;
-              vic[k]->_c = c;
-              vic[k]->_dst = v1.norm();
-              vic[k]->_ang = VectorAngle(v1,v2);
-              vic[k]->_tor = VectorTorsion(atom->GetVector(),
-                                              a->GetVector(),
-                                              b->GetVector(),
-                                              c->GetVector());
+              vic[k]->m_a = a;
+              vic[k]->m_b = b;
+              vic[k]->m_c = c;
+              vic[k]->m_dst = v1.norm();
+              vic[k]->m_ang = VectorAngle(v1,v2);
+              vic[k]->m_tor = VectorTorsion(atom->GetVector(),
+                                               a->GetVector(),
+                                               b->GetVector(),
+                                               c->GetVector());
               done = true;
             }
       }

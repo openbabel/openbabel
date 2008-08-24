@@ -1244,22 +1244,22 @@ namespace OpenBabel
     OBMol *mol = GetMolecule();
     Eigen::Vector3d numgrad, anagrad, err;
     bool passed = true; // set to false if any component fails
-    int coordIdx;
+    int idx;
     
     OBFFLog("\nV A L I D A T E   G R A D I E N T S\n\n");
     OBFFLog("ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERROR (%)   \n");
     OBFFLog("----------------------------------------------------------------------------------------\n");
     //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
   
-    double *gradientPtr = GetGradientPtr();
+    vector<Eigen::Vector3d> gradients = GetGradients();
 
     FOR_ATOMS_OF_MOL (a, mol) {
-      coordIdx = (a->GetIdx() - 1) * 3;
+      idx = (a->GetIdx() - 1);
 
       // OBFF_ENERGY (i.e., overall)
-      numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
+      //numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
       Energy(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1267,10 +1267,10 @@ namespace OpenBabel
       OBFFLog(_logbuf);
       
       // OBFF_EBOND
-      numgrad = NumericalDerivative(&*a, OBFF_EBOND);
+      //numgrad = NumericalDerivative(&*a, OBFF_EBOND);
       ClearGradients();
       E_Bond(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1280,10 +1280,10 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EANGLE
-      numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
+      //numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
       ClearGradients();
       E_Angle(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1293,10 +1293,10 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_ETORSION
-      numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
+      //numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
       ClearGradients();
       E_Torsion(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1307,10 +1307,10 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EOOP
-      numgrad = NumericalDerivative(&*a, OBFF_EOOP);
+      //numgrad = NumericalDerivative(&*a, OBFF_EOOP);
       ClearGradients();
       E_OOP(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1320,10 +1320,10 @@ namespace OpenBabel
 //        passed = false;
         
       // OBFF_EVDW
-      numgrad = NumericalDerivative(&*a, OBFF_EVDW);
+      //numgrad = NumericalDerivative(&*a, OBFF_EVDW);
       ClearGradients();
       E_VDW(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1333,10 +1333,10 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_EELECTROSTATIC
-      numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
+      //numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
       ClearGradients();
       E_Electrostatic(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = gradients[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 

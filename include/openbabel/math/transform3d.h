@@ -43,11 +43,12 @@ namespace OpenBabel
         {
           Normalize();
         }
-        
+       
+     /* 
       transform3d(double s): Eigen::Matrix3d(s), Eigen::Vector3d()
         {
         }
-
+*/
       //! Constructs a matrix from row vectors
       /*
       transform3d(Eigen::Vector3d row1,Eigen::Vector3d row2,Eigen::Vector3d row3,Eigen::Vector3d translation):

@@ -31,9 +31,9 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-  /** 
-   * @brief Supports a set of rotamer coordinate sets for some number of potentially rotatable bonds
-   * Further class introduction in rotamer.cpp
+  /** @class OBRotamerList rotamer.cpp <openbabel/rotamer.h> 
+      @brief Supports a set of rotamer coordinate sets for some number of potentially rotatable bonds
+      Further class introduction in rotamer.cpp
    */
   class OBAPI OBRotamerList : public OBGenericData
   {

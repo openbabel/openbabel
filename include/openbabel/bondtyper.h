@@ -25,33 +25,49 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-// class introduction in bondtyper.cpp
-// Used for "perceiving" bonds, e.g. in XYZ or QM files with no bond info.
-class OBAPI OBBondTyper : public OBGlobalDataBase
-{
-    //! SMARTS patterns for functional group typing
-    std::vector<std::pair<OBSmartsPattern*, std::vector<int> > >	_fgbonds;
-public:
-    OBBondTyper();
-    ~OBBondTyper();
+  /** @class OBBondTyper bondtyper.cpp <openbabel/bondtyper.h>
+      @brief Used for "perceiving" bonds, e.g. in XYZ or QM files with 
+      no bond info.
+  */
+  class OBAPI OBBondTyper : public OBGlobalDataBase
+  {
+    protected:
+      //! SMARTS patterns for functional group typing
+      std::vector<std::pair<OBSmartsPattern*, std::vector<int> > > m_fgbonds;
+    public:
+      /**
+       * Constructor.
+       */
+      OBBondTyper();
+      /**
+       * Destructor.
+       */
+      ~OBBondTyper();
 
-    //! \name OBBondTyper Database Utilities
-    //@{
-    void ParseLine(const char*);
-    //! \return the size of the database (for error checking)
-    unsigned int GetSize()                 { return _fgbonds.size();}
-    //@}
+      //! @name OBBondTyper Database Utilities
+      //@{
+      /**
+       * Parse a line from the database file.
+       */
+      void ParseLine(const char*);
+      /**
+       * @return the size of the database (for error checking).
+       */
+      unsigned int GetSize() { return m_fgbonds.size(); }
+      //@}
     
-    //! \name Bond Perception Routines
-    //@{
-    //! Assign bonds to functional groups based on the bond typer database
-    void AssignFunctionalGroupBonds(OBMol &mol);
-    //@}
-};
+      //! \name Bond Perception Routines
+      //@{
+      /** 
+       * Assign bonds to functional groups based on the bond typer database.
+       */
+      void AssignFunctionalGroupBonds(OBMol &mol);
+      //@}
+  };
 
 }
 
 #endif // OB_BONDTYPER_H
 
-//! \file bondtyper.h
-//! \brief Bond typer to perceive connectivity and bond orders/types.
+//! @file bondtyper.h
+//! @brief Bond typer to perceive connectivity and bond orders/types.

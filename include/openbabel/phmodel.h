@@ -3,6 +3,7 @@ phmodel.h - Read pH rules and assign charges.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2008 by Tim Vandermeersch
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -26,43 +27,56 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-// class introduction in phmodel.cpp
-class OBAPI OBChemTsfm
-{
-    std::vector<int>                            _vadel;
-    std::vector<std::pair<int,int> >            _vele;
-    std::vector<std::pair<int,int> >            _vchrg;
-    std::vector<std::pair<int,int> >            _vbdel;
-    std::vector<std::pair<std::pair<int,int>,int> >  _vbond;
-    OBSmartsPattern _bgn,_end;
-public:
-    OBChemTsfm()    {}
-    ~OBChemTsfm()   {}
-    //! Initialize this transformation with the supplied SMARTS patterns
-    bool Init(std::string&start, std::string &end);
-    //! Apply this transformation to all matches in the supplied OBMol
-    bool Apply(OBMol&);
-    /*! Is this transformation an acid dissociation?
-     *  \code
-     *      Ka 
-     *  HA ----> A(-)         (the H(+) will be deleted)
-     *  \endcode
-     *
-     *  IsAcid() will check the charge in the end SMARTS pattern.
-     *  \return true if the charge is less than 0 (-1).
-     */
-    bool IsAcid();
-    /*! Is this a transformation to the conjugated acid from a base?
-     *  \code
-     *      Ka 
-     *  HA ----> A(-)         (the H(+) will be deleted)
-     *  \endcode
-     *
-     *  IsBase() will check the charge in the end SMARTS pattern.
-     *  \return true if the charge is higher than 0 (+1).
-     */
-    bool IsBase();
-};
+  // class introduction in phmodel.cpp
+  class OBAPI OBChemTsfm
+  {
+    private:
+      std::vector<int>                            m_vadel;
+      std::vector<std::pair<int,int> >            m_vele;
+      std::vector<std::pair<int,int> >            m_vchrg;
+      std::vector<std::pair<int,int> >            m_vbdel;
+      std::vector<std::pair<std::pair<int,int>,int> >  m_vbond;
+      OBSmartsPattern  m_bgn, m_end; //!< smarts patterns for this transformation
+    public:
+      /**
+       * Constructor.
+       */
+      OBChemTsfm() {}
+      /**
+       * Destructor.
+       */
+      ~OBChemTsfm() {}
+      /** 
+       * Initialize this transformation with the supplied SMARTS patterns.
+       */
+      bool Init(std::string &start, std::string &end);
+      /**
+       * Apply this transformation to all matches in the supplied OBMol.
+       */
+      bool Apply(OBMol&);
+      /** 
+       * Is this transformation an acid dissociation?
+       * @code
+       *     Ka 
+       * HA ----> A(-)         (the H(+) will be deleted)
+       * @endcode
+       *
+       * IsAcid() will check the charge in the end SMARTS pattern.
+       * @return true if the charge is less than 0 (-1).
+       */
+      bool IsAcid();
+      /** 
+       * Is this a transformation to the conjugated acid from a base?
+       * @code
+       *     Ka 
+       * B: ----> BH(+)        (the H(+) will be added)
+       * @endcode
+       *
+       * IsBase() will check the charge in the end SMARTS pattern.
+       * @return true if the charge is higher than 0 (+1).
+       */
+      bool IsBase();
+  };
 
 /*! \brief Corrections for pH used by OBMol::CorrectForPH()
  *

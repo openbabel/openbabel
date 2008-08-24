@@ -78,7 +78,7 @@ namespace OpenBabel
 
         sp = new OBSmartsPattern;
         if (sp->Init(vs[1]))
-          _vinthyb.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
+          m_vinthyb.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
         else
           {
             delete sp;
@@ -98,7 +98,7 @@ namespace OpenBabel
 
         sp = new OBSmartsPattern;
         if (sp->Init(vs[1]))
-          _vimpval.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
+          m_vimpval.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
         else
           {
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse IMPVAL line in atom type table from atomtyp.txt", obInfo);
@@ -117,7 +117,7 @@ namespace OpenBabel
           }
         sp = new OBSmartsPattern;
         if (sp->Init(vs[1]))
-          _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
+          m_vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
         else
           {
             delete sp;
@@ -131,19 +131,19 @@ namespace OpenBabel
   OBAtomTyper::~OBAtomTyper()
   {
     vector<pair<OBSmartsPattern*,int> >::iterator i;
-    for (i = _vinthyb.begin();i != _vinthyb.end();++i)
+    for (i = m_vinthyb.begin();i != m_vinthyb.end();++i)
       {
         delete i->first;
         i->first = NULL;
       }
-    for (i = _vimpval.begin();i != _vimpval.end();++i)
+    for (i = m_vimpval.begin();i != m_vimpval.end();++i)
       {
         delete i->first;
         i->first = NULL;
       }
 
     vector<pair<OBSmartsPattern*,string> >::iterator j;
-    for (j = _vexttyp.begin();j != _vexttyp.end();++j)
+    for (j = m_vexttyp.begin();j != m_vexttyp.end();++j)
       {
         delete j->first;
         j->first = NULL;
@@ -164,11 +164,11 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,string> >::iterator i;
 
-    for (i = _vexttyp.begin();i != _vexttyp.end();++i)
+    for (i = m_vexttyp.begin();i != m_vexttyp.end();++i)
       if (i->first->Match(mol))
         {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j)
+          m_mlist = i->first->GetMapList();
+          for (j = m_mlist.begin();j != m_mlist.end();++j)
             mol.GetAtom((*j)[0])->SetType(i->second);
         }
 
@@ -213,11 +213,11 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,int> >::iterator i;
 
-    for (i = _vinthyb.begin();i != _vinthyb.end();++i)
+    for (i = m_vinthyb.begin();i != m_vinthyb.end();++i)
       if (i->first->Match(mol))
         {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j)
+          m_mlist = i->first->GetMapList();
+          for (j = m_mlist.begin();j != m_mlist.end();++j)
             mol.GetAtom((*j)[0])->SetHyb(i->second);
         }
   }
@@ -247,11 +247,11 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,int> >::iterator i;
 
-    for (i = _vimpval.begin();i != _vimpval.end();++i)
+    for (i = m_vimpval.begin();i != m_vimpval.end();++i)
       if (i->first->Match(mol))
         {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j)
+          m_mlist = i->first->GetMapList();
+          for (j = m_mlist.begin();j != m_mlist.end();++j)
             mol.GetAtom((*j)[0])->SetImplicitValence(i->second);
         }
 
@@ -335,7 +335,7 @@ namespace OpenBabel
       }
       sp = new OBSmartsPattern;
       if (sp->Init(vs[2]))
-        _ringtyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[1]));
+        m_ringtyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[1]));
       else {
         delete sp;
         sp = NULL;
@@ -348,7 +348,7 @@ namespace OpenBabel
   OBRingTyper::~OBRingTyper()
   {
     vector<pair<OBSmartsPattern*,string> >::iterator i;
-    for (i = _ringtyp.begin();i != _ringtyp.end();++i) {
+    for (i = m_ringtyp.begin();i != m_ringtyp.end();++i) {
         delete i->first;
         i->first = NULL;
     }
@@ -372,10 +372,10 @@ namespace OpenBabel
     vector<OBRing*> rlist = mol.GetSSSR();
 
     int member_count;
-    for (i2 = _ringtyp.begin();i2 != _ringtyp.end();++i2) { // for each ring type
+    for (i2 = m_ringtyp.begin();i2 != m_ringtyp.end();++i2) { // for each ring type
       if (i2->first->Match(mol)) {
-        _mlist = i2->first->GetMapList();
-        for (j2 = _mlist.begin();j2 != _mlist.end();++j2) { // for each found match
+        m_mlist = i2->first->GetMapList();
+        for (j2 = m_mlist.begin();j2 != m_mlist.end();++j2) { // for each found match
 
           for (i = rlist.begin();i != rlist.end();++i) { // for each ring
             member_count = 0;
@@ -437,8 +437,8 @@ namespace OpenBabel
         sp = new OBSmartsPattern();
         if (sp->Init(temp_buffer))
           {
-            _vsp.push_back(sp);
-            _verange.push_back(pair<int,int>
+            m_vsp.push_back(sp);
+            m_verange.push_back(pair<int,int>
                                (atoi((char*)vs[1].c_str()),
                                 atoi((char*)vs[2].c_str())));
           }
@@ -457,7 +457,7 @@ namespace OpenBabel
   OBAromaticTyper::~OBAromaticTyper()
   {
     vector<OBSmartsPattern*>::iterator i;
-    for (i = _vsp.begin();i != _vsp.end();++i)
+    for (i = m_vsp.begin();i != m_vsp.end();++i)
       {
         delete *i;
         *i = NULL;
@@ -475,12 +475,12 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::AssignAromaticFlags", obAuditMsg);
 
-    _vpa.clear();
-    _vpa.resize(mol.NumAtoms()+1);
-    _velec.clear();
-    _velec.resize(mol.NumAtoms()+1);
-    _root.clear();
-    _root.resize(mol.NumAtoms()+1);
+    m_vpa.clear();
+    m_vpa.resize(mol.NumAtoms()+1);
+    m_velec.clear();
+    m_velec.resize(mol.NumAtoms()+1);
+    m_root.clear();
+    m_root.resize(mol.NumAtoms()+1);
 
     OBBond *bond;
     OBAtom *atom;
@@ -498,14 +498,14 @@ namespace OpenBabel
     vector<OBSmartsPattern*>::iterator k;
 
     //mark atoms as potentially aromatic
-    for (idx=0,k = _vsp.begin();k != _vsp.end();++k,++idx)
+    for (idx=0,k = m_vsp.begin();k != m_vsp.end();++k,++idx)
       if ((*k)->Match(mol))
         {
-          _mlist = (*k)->GetMapList();
-          for (m = _mlist.begin();m != _mlist.end();++m)
+          m_mlist = (*k)->GetMapList();
+          for (m = m_mlist.begin();m != m_mlist.end();++m)
             {
-              _vpa[(*m)[0]] = true;
-              _velec[(*m)[0]] = _verange[idx];
+              m_vpa[(*m)[0]] = true;
+              m_velec[(*m)[0]] = m_verange[idx];
             }
         }
 
@@ -514,7 +514,7 @@ namespace OpenBabel
       {
         if (atom->GetImplicitValence() > 3)
           {
-            _vpa[atom->GetIdx()] = false;
+            m_vpa[atom->GetIdx()] = false;
             continue;
           }
 
@@ -525,14 +525,14 @@ namespace OpenBabel
           case 7:
           case 8:
             if (atom->GetHyb() != 2)
-              _vpa[atom->GetIdx()] = false;
+              m_vpa[atom->GetIdx()] = false;
             break;
           }
       }
 
     //propagate potentially aromatic atoms
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      if (_vpa[atom->GetIdx()])
+      if (m_vpa[atom->GetIdx()])
         PropagatePotentialAromatic(atom);
 
     //select root atoms
@@ -541,10 +541,10 @@ namespace OpenBabel
     ExcludeSmallRing(mol); //remove 3 membered rings from consideration
 
     //loop over root atoms and look for aromatic rings
-    _visit.clear();
-    _visit.resize(mol.NumAtoms()+1);
+    m_visit.clear();
+    m_visit.resize(mol.NumAtoms()+1);
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      if (_root[atom->GetIdx()])
+      if (m_root[atom->GetIdx()])
         CheckAromaticity(atom,14);
 
     //for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
@@ -556,19 +556,6 @@ namespace OpenBabel
     //cerr << bond->GetIdx() << ' ' << bond->IsAromatic() << endl;
   }
   
-  /** \brief Traverse a potentially aromatic cycle starting at @p root.
-      \return  True if the cycle is likely aromatic
-      \param root  The initial, "root" atom in traversing this ring
-      \param atom  The current atom to visit and check
-      \param prev  The bond traversed in moving to this @p atom
-      \param er    The min and max number of pi electrons for this ring
-      \param depth The maximum number of atoms to visit in a ring (e.g., 6)
-
-      This method traverses a potentially aromatic ring, adding up the possible
-      pi electrons for each atom. At the end (e.g., when @p atom == @p root)
-      the Huekel 4n+2 rule is checked to see if there is a possible electronic
-      configuration which corresponds to aromaticity.
-   **/
   bool OBAromaticTyper::TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev, 
                                       std::pair<int,int> &er,int depth)
   {
@@ -582,20 +569,20 @@ namespace OpenBabel
         return(false);
       }
 
-    if (!depth || !_vpa[atom->GetIdx()] || _visit[atom->GetIdx()])
+    if (!depth || !m_vpa[atom->GetIdx()] || m_visit[atom->GetIdx()])
       return(false);
 
     bool result = false;
 
     depth--;
-    er.first  += _velec[atom->GetIdx()].first;
-    er.second += _velec[atom->GetIdx()].second;
+    er.first  += m_velec[atom->GetIdx()].first;
+    er.second += m_velec[atom->GetIdx()].second;
 
-    _visit[atom->GetIdx()] = true;
+    m_visit[atom->GetIdx()] = true;
     OBAtom *nbr;
     vector<OBBond*>::iterator i;
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-      if (*i != prev && (*i)->IsInRing() && _vpa[nbr->GetIdx()])
+      if (*i != prev && (*i)->IsInRing() && m_vpa[nbr->GetIdx()])
         {
           if (TraverseCycle(root,nbr,(OBBond*)(*i),er,depth))
             {
@@ -604,12 +591,12 @@ namespace OpenBabel
             }
         }
 
-    _visit[atom->GetIdx()] = false;
+    m_visit[atom->GetIdx()] = false;
     if (result)
       atom->SetAromatic();
 
-    er.first  -= _velec[atom->GetIdx()].first;
-    er.second -= _velec[atom->GetIdx()].second;
+    er.first  -= m_velec[atom->GetIdx()].first;
+    er.second -= m_velec[atom->GetIdx()].second;
 
     return(result);
   }
@@ -623,7 +610,7 @@ namespace OpenBabel
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
       if ((*i)->IsInRing()) // check all rings, regardless of assumed aromaticity
         {
-          erange = _velec[atom->GetIdx()];
+          erange = m_velec[atom->GetIdx()];
 
           if (TraverseCycle(atom,nbr,(OBBond *)*i,erange,depth-1))
             {
@@ -640,35 +627,19 @@ namespace OpenBabel
     vector<OBBond*>::iterator i;
 
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-      if ((*i)->IsInRing() && _vpa[nbr->GetIdx()])
+      if ((*i)->IsInRing() && m_vpa[nbr->GetIdx()])
         count++;
 
     if (count < 2)
       {
-        _vpa[atom->GetIdx()] = false;
+        m_vpa[atom->GetIdx()] = false;
         if (count == 1)
           for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-            if ((*i)->IsInRing() && _vpa[nbr->GetIdx()])
+            if ((*i)->IsInRing() && m_vpa[nbr->GetIdx()])
               PropagatePotentialAromatic(nbr);
       }
   }
 
-  /**
-   * \brief Select the root atoms for traversing atoms in rings.
-   *
-   * Picking only the begin atom of a closure bond can cause
-   * difficulties when the selected atom is an inner atom
-   * with three neighbour ring atoms. Why ? Because this atom
-   * can get trapped by the other atoms when determining aromaticity,
-   * because a simple visited flag is used in the
-   * OBAromaticTyper::TraverseCycle() method.
-   *
-   * Ported from JOELib, copyright Joerg Wegner, 2003 under the GPL version 2
-   *
-   * @param mol the molecule
-   * @param avoidInnerRingAtoms inner closure ring atoms with more than 2 neighbours will be avoided
-   *
-   */
   void OBAromaticTyper::SelectRootAtoms(OBMol &mol, bool avoidInnerRingAtoms)
   {
     OBBond *bond;
@@ -697,7 +668,7 @@ namespace OpenBabel
           // pick beginning atom at closure bond
           // this is really ready, isn't it ! ;-)
           rootAtom = bond->GetBeginAtomIdx();
-          _root[rootAtom] = true;
+          m_root[rootAtom] = true;
 
           // EXTENDED APPROACH
           if (avoidInnerRingAtoms)
@@ -757,7 +728,7 @@ namespace OpenBabel
                                   else
                                     {
                                       // second root atom in this ring ?
-                                      if (_root[tmp[j]] == true)
+                                      if (m_root[tmp[j]] == true)
                                         {
                                           // when there is a second root
                                           // atom this ring can not be
@@ -805,10 +776,10 @@ namespace OpenBabel
                       if ((newRoot != -1) && (rootAtom != newRoot))
                         {
                           // unset root atom
-                          _root[rootAtom] = false;
+                          m_root[rootAtom] = false;
 
                           // pick new root atom
-                          _root[newRoot] = true;
+                          m_root[newRoot] = true;
                         }
                     } // if (ringNbrs > 2)
 
@@ -824,13 +795,13 @@ namespace OpenBabel
     vector<OBBond*>::iterator j,k;
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      if (_root[atom->GetIdx()])
+      if (m_root[atom->GetIdx()])
         for (nbr1 = atom->BeginNbrAtom(j);nbr1;nbr1 = atom->NextNbrAtom(j))
-          if ((*j)->IsInRing() && _vpa[nbr1->GetIdx()])
+          if ((*j)->IsInRing() && m_vpa[nbr1->GetIdx()])
             for (nbr2 = nbr1->BeginNbrAtom(k);nbr2;nbr2 = nbr1->NextNbrAtom(k))
-              if (nbr2 != atom && (*k)->IsInRing() && _vpa[nbr2->GetIdx()])
+              if (nbr2 != atom && (*k)->IsInRing() && m_vpa[nbr2->GetIdx()])
                 if (atom->IsConnected(nbr2))
-                  _root[atom->GetIdx()] = false;
+                  m_root[atom->GetIdx()] = false;
   }
 
 } //namespace OpenBabel;

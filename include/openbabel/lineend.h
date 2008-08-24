@@ -30,87 +30,107 @@ General Public License for more details.
 namespace OpenBabel
 {
 
-/*! \class FilteringInputStreambuf lineend.h <openbabel/lineend.h>
-  \brief Delivers characters from an istream or streambuf from a source
-  while filtering
+  /** @class FilteringInputStreambuf lineend.h <openbabel/lineend.h>
+      @brief Delivers characters from an istream or streambuf from a source
+      while filtering
 
-  Based on an article by James Kanze, "Filtering Streambufs"
-  http://kanze.james.neuf.fr/articles/fltrsbf1.html
+      Based on an article by James Kanze, "Filtering Streambufs"
+      http://kanze.james.neuf.fr/articles/fltrsbf1.html
   
-  A FilteringInputStreambuf delivers characters on request to an istream
-  or a destination rdbuf(). It receives them from a source rdbuf.
-  In doing the transfer it filters them in a way decided by the class
-  specified in template parameter Extractor.
+      A FilteringInputStreambuf delivers characters on request to an istream
+      or a destination rdbuf(). It receives them from a source rdbuf.
+      In doing the transfer it filters them in a way decided by the class
+      specified in template parameter Extractor.
   
-  seekg and tellg requests from the stream are passed through to source rdbuf.
-  This allows return to a position in the input data that was previously noted.
-  This is adequate to allow OpenBabel's fastsearch indexing, but may 
-  not be good enough for some other applications that use random access.
+      seekg and tellg requests from the stream are passed through to source rdbuf.
+      This allows return to a position in the input data that was previously noted.
+      This is adequate to allow OpenBabel's fastsearch indexing, but may 
+      not be good enough for some other applications that use random access.
   
-  A class LineEndingExtractor converts DOS and MAC line endings to the
-  UNIX line ending.
+      A class LineEndingExtractor converts DOS and MAC line endings to the
+      UNIX line ending.
   
-  This filtering process is potentially extendable, with a chain of
-  FilteringInputStreambufs each carrying out its filtering task.
-  For instance a decompression streambuf could feed a LineEnding filter,
-  which in tern was read by an input stream.
-*/
+      This filtering process is potentially extendable, with a chain of
+      FilteringInputStreambufs each carrying out its filtering task.
+      For instance a decompression streambuf could feed a LineEnding filter,
+      which in tern was read by an input stream.
+   */
   template< class Extractor >
   class FilteringInputStreambuf : public std::streambuf
   {
-  public:
-    FilteringInputStreambuf(
-      std::streambuf*        source = NULL ,
-      bool                   deleteWhenFinished = false 
-      ) ;
-    virtual                 ~FilteringInputStreambuf()
-    {
-      //sync(); comment out so can be deleted in OBConversion destructor
-    };
-    virtual int              overflow( int ) {return EOF;};
-    virtual int              underflow() ;
-    virtual int              sync() ;
-
-    //Pass the random acess functions to the source rdbuf and synchronize
-    virtual std::streampos   seekoff(std::streamoff off, std::ios_base::seekdir way,
-      std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
-    {
-      std::streampos ret = mySource->pubseekoff(off, way, which);
-//      sync();
-      return ret;
-    };
-
-    virtual std::streampos   seekpos(std::streampos sp, 
-      std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
-    {
-      std::streampos ret = mySource->pubseekpos(sp, which);
-//      sync();
-      return ret;
-    };
-
-    /// Returns current source.
-    std::streambuf* GetSource()const
-    {
-      return mySource;
-    };
-
-    ///Changes the source
-    void SetSource(std::streambuf* newsource)
-    {
-      mySource = newsource;
-      setg( &myBuffer , &myBuffer , &myBuffer + 1 ) ;
-    }
-
-//    Extractor&   extractor() {return myExtractor;};
-
-  private:
-    std::streambuf*          mySource ;
-    Extractor                myExtractor ;
-    char                     myBuffer ;
-    bool                     myDeleteWhenFinished ;
-  } ;
+    public:
+      /** 
+       * @brief Constructor.
+       * 
+       * @param source Stream to filter.
+       * @param deleteWhenFinished
+       */
+      FilteringInputStreambuf(std::streambuf *source = NULL, bool deleteWhenFinished = false);
+      /** 
+       * @brief iDestructor.
+       */
+      virtual ~FilteringInputStreambuf()
+      {
+        //sync(); comment out so can be deleted in OBConversion destructor
+      };
+      virtual int overflow( int ) { return EOF; };
+      virtual int underflow();
+      virtual int sync();
+      /** 
+       * @brief Pass the random acess functions to the source rdbuf and synchronize
+       * 
+       * @param off
+       * @param way
+       * @param which
+       * 
+       * @return 
+       */
+      virtual std::streampos seekoff(std::streamoff off, std::ios_base::seekdir way,
+          std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
+      {
+        std::streampos ret = mySource->pubseekoff(off, way, which);
+        // sync();
+        return ret;
+      };
+      /** 
+       * @brief 
+       * 
+       * @param sp
+       * @param which
+       * 
+       * @return 
+       */
+      virtual std::streampos seekpos(std::streampos sp, 
+          std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
+      {
+        std::streampos ret = mySource->pubseekpos(sp, which);
+        // sync();
+        return ret;
+      };
+      /** 
+       * @return The current source.
+       */
+      std::streambuf* GetSource() const { return mySource; };
+      /** 
+       * @brief Set the source.
+       */
+      void SetSource(std::streambuf* newsource)
+      {
+        mySource = newsource;
+        setg( &myBuffer , &myBuffer , &myBuffer + 1 ) ;
+      }
+      
+      // Extractor& extractor() { return myExtractor; };
+    
+    private:
+      std::streambuf*          mySource ;
+      Extractor                myExtractor ;
+      char                     myBuffer ;
+      bool                     myDeleteWhenFinished ;
+  };
 
 //*******************************************************
+  
   template< class Extractor >
   FilteringInputStreambuf< Extractor >::FilteringInputStreambuf(
     std::streambuf*        source ,
@@ -162,32 +182,45 @@ namespace OpenBabel
   }
 
 //*********************************************
-/// \class LineEndingExtractor lineend.h <openbabel/lineend.h>
-  /// \brief Replaces CRLF (DOS) and CR (Mac OS 9) line endings by LF (POSIX)
-class OBCONV LineEndingExtractor
-{
-public:
-  int operator()( std::streambuf& src )
+
+  /** @class LineEndingExtractor lineend.h <openbabel/lineend.h>
+      @brief Replaces CRLF (DOS) and CR (Mac OS 9) line endings by LF (POSIX)
+   */
+  class OBCONV LineEndingExtractor
   {
-    int ch( src.sbumpc() ) ;
-    switch (ch)
-    {
-      case 13: //CR or CRLF
-        if(src.sgetc() == 10)
-          src.sbumpc(); //CRLF
-        //fall through
-      case 10: //LF
-        return '\n';
-        break;
-      default:
-        return ch;
-    }
-  }
-  void finalize( std::streambuf& ) {}
-};
+    public:
+      /** 
+       * @brief 
+       * 
+       * @return 
+       */
+      int operator()( std::streambuf& src )
+      {
+        int ch( src.sbumpc() ) ;
+        switch (ch)
+        {
+          case 13: //CR or CRLF
+            if(src.sgetc() == 10)
+              src.sbumpc(); //CRLF
+            //fall through
+          case 10: //LF
+            return '\n';
+            break;
+          default:
+            return ch;
+        }
+      }
+      /** 
+       * @brief 
+       * 
+       * @param std::streambuf&
+       */
+      void finalize( std::streambuf& ) {}
+  };
 
 } //namespace
 
 #endif //OB_LINEEND_H
-//! \file lineend.h
-//! \brief Translate line endings automatically (UNIX, Classic Mac, DOS)
+
+//! @file lineend.h
+//! @brief Translate line endings automatically (UNIX, Classic Mac, DOS)

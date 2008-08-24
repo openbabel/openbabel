@@ -8,16 +8,15 @@ endif(COMMAND cmake_policy)
 
 include (CheckCXXCompilerFlag)
 include (MacroEnsureVersion)
-include (FindEigen)
 
 # Version numbering - should be bumped for each release
-set(BABEL_MAJ_VER   2)
-set(BABEL_MIN_VER   2)
+set(BABEL_MAJ_VER   3)
+set(BABEL_MIN_VER   0)
 set(BABEL_PATCH_VER 0)
 if(WIN32)
-  set(BABEL_LIBRARY   openbabel-2)
+  set(BABEL_LIBRARY   openbabel3)
 else(WIN32)
-  set(BABEL_LIBRARY   openbabel)
+  set(BABEL_LIBRARY   openbabel3)
 endif(WIN32)
 set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
@@ -58,10 +57,10 @@ if(ZLIB_FOUND)
   include_directories(${ZLIB_INCLUDE_DIR})
 endif(ZLIB_FOUND)
 
-find_package(Eigen REQUIRED)
-if(EIGEN_FOUND)
-  include_directories(${EIGEN_INCLUDE_DIR})
-endif(EIGEN_FOUND)
+find_package(Eigen2 REQUIRED)
+if(EIGEN2_FOUND)
+  include_directories(${EIGEN2_INCLUDE_DIR})
+endif(EIGEN2_FOUND)
 
 include(CheckIncludeFile)
 include(CheckIncludeFileCXX)
@@ -137,9 +136,9 @@ endif (CMAKE_COMPILER_IS_GNUCXX)
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${CMAKE_SOURCE_DIR}/src/config.h.cmake ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
-install(FILES ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION include/openbabel-2.0/openbabel)
-configure_file(${CMAKE_SOURCE_DIR}/openbabel-2.0.pc.cmake ${CMAKE_BINARY_DIR}/openbabel-2.0.pc @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB}/pkgconfig)
+install(FILES ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION include/openbabel-3.0/openbabel)
+configure_file(${CMAKE_SOURCE_DIR}/openbabel-3.0.pc.cmake ${CMAKE_BINARY_DIR}/openbabel-3.0.pc @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/openbabel-3.0.pc DESTINATION ${LIB}/pkgconfig)
 
 include_directories(${CMAKE_BINARY_DIR}/include
                     ${CMAKE_SOURCE_DIR}/data

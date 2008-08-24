@@ -29,6 +29,9 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  /// @addtogroup data Data classes 
+  //@{
+  
   /** @class OBAtomClassData atomclass.h <openbabel/atomclass.h>
       @brief Handle atom classes in reaction SMILES/SMIRKS
       @since version 2.2
@@ -97,11 +100,13 @@ namespace OpenBabel
        */
       unsigned int Size() { return m_map.size(); }
       //@}
+  };
 
-};
+  //@} group
+
 } //namespace
 
 #endif // OB_ATOMCLASS_H
 
-//! \file atomclass.h
-//! \brief Handle atom classes in reaction SMILES/SMIRKS
+//! @file atomclass.h
+//! @brief Handle atom classes in reaction SMILES/SMIRKS

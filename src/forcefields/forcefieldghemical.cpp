@@ -38,26 +38,29 @@ namespace OpenBabel
       OBFFLog(" I    J     TYPE   LENGTH     LENGTH     CONSTANT      DELTA      ENERGY\n");
       OBFFLog("------------------------------------------------------------------------\n");
     }
- 
+
+    unsigned int idxA, idxB;
     double rab, delta, delta2, e;
     Eigen::Vector3d Fa, Fb;
     for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i) {
-      if (OBForceField::IgnoreCalculation(i->a->GetIdx(), i->b->GetIdx())) {
+      idxA = i->a->GetIdx() - 1;
+      idxB = i->b->GetIdx() - 1;
+      if (OBForceField::IgnoreCalculation(idxA+1, idxB+1)) {
         continue;
       }
- 
+
       if (gradients) {
-        rab = VectorBondDerivative(i->a->GetVector(), i->b->GetVector(), Fa, Fb);
+        rab = VectorBondDerivative(GetPositions()[idxA], GetPositions()[idxB], Fa, Fb);
         delta = rab - i->r0;
       
         const double dE = 2.0 * i->kb * delta;
       
         Fa *= dE;
         Fb *= dE;
-        AddGradient(Fa, i->a->GetIdx());
-        AddGradient(Fb, i->b->GetIdx());
+        GetGradients()[idxA] += Fa;
+        GetGradients()[idxB] += Fb;
       } else {
-        const Eigen::Vector3d ab = i->a->GetVector() - i->b->GetVector();
+        const Eigen::Vector3d ab = GetPositions()[idxA] - GetPositions()[idxB];
         rab = ab.norm();
         delta = rab - i->r0;
       }
@@ -95,15 +98,19 @@ namespace OpenBabel
       OBFFLog("-----------------------------------------------------------------------------\n");
     }
   
+    unsigned int idxA, idxB, idxC;
     double theta, delta, delta2, e;
     Eigen::Vector3d Fa, Fb, Fc;
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); ++i) {
-      if (OBForceField::IgnoreCalculation(i->a->GetIdx(), i->b->GetIdx(), i->c->GetIdx())) {
+      idxA = i->a->GetIdx() - 1;
+      idxB = i->b->GetIdx() - 1;
+      idxC = i->c->GetIdx() - 1;
+      if (OBForceField::IgnoreCalculation(idxA+1, idxB+1, idxC+1)) {
         continue;
       }
  
       if (gradients) {
-        theta = VectorAngleDerivative(i->a->GetVector(), i->b->GetVector(), i->c->GetVector(), Fa, Fb, Fc);
+        theta = VectorAngleDerivative(GetPositions()[idxA], GetPositions()[idxB], GetPositions()[idxC], Fa, Fb, Fc);
         delta = theta - i->theta0;
       
         const double dE = RAD_TO_DEG * 2.0 * i->ka * delta;
@@ -111,12 +118,12 @@ namespace OpenBabel
         Fa *= dE;
         Fb *= dE;
         Fc *= dE;
-        AddGradient(Fa, i->a->GetIdx());
-        AddGradient(Fb, i->b->GetIdx());
-        AddGradient(Fc, i->c->GetIdx());
+        GetGradients()[idxA] += Fa;
+        GetGradients()[idxB] += Fb;
+        GetGradients()[idxC] += Fc;
       } else {
-        const Eigen::Vector3d ab = i->a->GetVector() - i->b->GetVector();
-        const Eigen::Vector3d bc = i->c->GetVector() - i->b->GetVector();
+        const Eigen::Vector3d ab = GetPositions()[idxA] - GetPositions()[idxB];
+        const Eigen::Vector3d bc = GetPositions()[idxC] - GetPositions()[idxB];
         theta = VectorAngle(ab, bc);
         delta = theta - i->theta0;
       }
@@ -156,16 +163,21 @@ namespace OpenBabel
       OBFFLog("----------------------------------------------------------------\n");
     }
   
+    unsigned int idxA, idxB, idxC, idxD;
     double tor, e;
     Eigen::Vector3d Fa, Fb, Fc, Fd;
     for (i = _torsioncalculations.begin(); i != _torsioncalculations.end(); ++i) {
-      if (OBForceField::IgnoreCalculation(i->a->GetIdx(), i->b->GetIdx(), i->c->GetIdx(), i->d->GetIdx())) {
+      idxA = i->a->GetIdx() - 1;
+      idxB = i->b->GetIdx() - 1;
+      idxC = i->c->GetIdx() - 1;
+      idxD = i->d->GetIdx() - 1;
+      if (OBForceField::IgnoreCalculation(idxA+1, idxB+1, idxC+1, idxD+1)) {
         continue;
       }
  
       if (gradients) {
-        tor = DEG_TO_RAD * VectorTorsionDerivative(i->a->GetVector(), i->b->GetVector(), i->c->GetVector(), 
-            i->d->GetVector(), Fa, Fb, Fc, Fd);
+        tor = DEG_TO_RAD * VectorTorsionDerivative(GetPositions()[idxA], GetPositions()[idxB],
+            GetPositions()[idxC], GetPositions()[idxD], Fa, Fb, Fc, Fd);
         if (!isfinite(tor))
           tor = 1.0e-3;
       
@@ -179,13 +191,13 @@ namespace OpenBabel
         Fb *= dE;
         Fc *= dE;
         Fd *= dE;
-        AddGradient(Fa, i->a->GetIdx());
-        AddGradient(Fb, i->b->GetIdx());
-        AddGradient(Fc, i->c->GetIdx());
-        AddGradient(Fd, i->d->GetIdx());
+        GetGradients()[idxA] += Fa;
+        GetGradients()[idxB] += Fb;
+        GetGradients()[idxC] += Fc;
+        GetGradients()[idxD] += Fd;
       } else {
-        tor = DEG_TO_RAD * VectorTorsion(i->a->GetVector(), i->b->GetVector(), 
-            i->c->GetVector(), i->d->GetVector());
+        tor = DEG_TO_RAD * VectorTorsion(GetPositions()[idxA], GetPositions()[idxB],
+            GetPositions()[idxC], GetPositions()[idxD]);
         if (!isfinite(tor)) // stop any NaN or infinity
           tor = 1.0e-3; // rather than NaN
       }
@@ -230,6 +242,7 @@ namespace OpenBabel
       //          XX   XX     -000.000  -000.000  -000.000  -000.000
     }
     
+    unsigned int idxA, idxB;
     unsigned int j = 0;
     double rab, term, term6, term7, term12, term13, e, dE;
     Eigen::Vector3d Fa, Fb;
@@ -239,12 +252,14 @@ namespace OpenBabel
         if (!GetVDWPairs().BitIsSet(j)) 
           continue;
 
-      if (OBForceField::IgnoreCalculation(i->a->GetIdx(), i->b->GetIdx())) {
+      idxA = i->a->GetIdx() - 1;
+      idxB = i->b->GetIdx() - 1;
+      if (OBForceField::IgnoreCalculation(idxA+1, idxB+1)) {
         continue;
       }
  
       if (gradients) {
-        rab = VectorDistanceDerivative(i->a->GetVector(), i->b->GetVector(), Fa, Fb);
+        rab = VectorDistanceDerivative(GetPositions()[idxA], GetPositions()[idxB], Fa, Fb);
         term = rab / i->ka;
 
         term6 = term * term * term; // ^3
@@ -255,10 +270,10 @@ namespace OpenBabel
         dE = - (12.0 / i->ka) * (1.0 / term13) + (6.0 / i->ka) * (1.0 / term7);
         Fa *= dE;
         Fb *= dE;
-        AddGradient(Fa, i->a->GetIdx());
-        AddGradient(Fb, i->b->GetIdx());
+        GetGradients()[idxA] += Fa;
+        GetGradients()[idxB] += Fb;
       } else {
-        const Eigen::Vector3d ab = i->a->GetVector() - i->b->GetVector();
+        const Eigen::Vector3d ab = GetPositions()[idxA] - GetPositions()[idxB];
         rab = ab.norm();
         term = rab / i->ka;
 
@@ -299,6 +314,7 @@ namespace OpenBabel
       //            XX   XX     -000.000  -000.000  -000.000  
     }
 
+    unsigned int idxA, idxB;
     unsigned int j = 0;
     double rab, e;
     double rab2, dE;
@@ -309,22 +325,24 @@ namespace OpenBabel
         if (!GetElePairs().BitIsSet(j)) 
           continue;
  
-      if (OBForceField::IgnoreCalculation(i->a->GetIdx(), i->b->GetIdx())) {
+      idxA = i->a->GetIdx() - 1;
+      idxB = i->b->GetIdx() - 1;
+      if (OBForceField::IgnoreCalculation(idxA+1, idxB+1)) {
         continue;
       }
  
       if (gradients) {
-        rab = VectorDistanceDerivative(i->a->GetVector(), i->b->GetVector(), Fa, Fb);
+        rab = VectorDistanceDerivative(GetPositions()[idxA], GetPositions()[idxB], Fa, Fb);
         //const double rab2 = rab * rab;
         rab2 = rab * rab;
         //const double dE = -(i->qq) / rab2;
         dE = -(i->qq) / rab2;
         Fa *= dE;
         Fb *= dE;
-        AddGradient(Fa, i->a->GetIdx());
-        AddGradient(Fb, i->b->GetIdx());
+        GetGradients()[idxA] += Fa;
+        GetGradients()[idxB] += Fb;
       } else {
-        const Eigen::Vector3d ab = i->a->GetVector() - i->b->GetVector();
+        const Eigen::Vector3d ab = GetPositions()[idxA] - GetPositions()[idxB];
         rab = ab.norm();
       }
     
@@ -360,12 +378,22 @@ namespace OpenBabel
 
   bool OBForceFieldGhemical::SetupCalculations()
   {
-    OBFFParameter *parameter;
-    OBAtom *a, *b, *c, *d;
-    
     IF_OBFF_LOGLVL_LOW
       OBFFLog("\nS E T T I N G   U P   C A L C U L A T I O N S\n\n");
 
+    if (!SetupBondedCalculations())
+      return false;
+    if (!SetupNonBondedCalculations())
+      return false;
+   
+    return true; 
+  }
+
+  bool OBForceFieldGhemical::SetupBondedCalculations()
+  {
+    OBFFParameter *parameter;
+    OBAtom *a, *b, *c, *d;
+    
     OBMol *mol = GetMolecule();
     OBFFConstraints constraints = GetConstraints();
     vector<OBBitVec> intraGroup = GetIntraGroup();
@@ -421,7 +449,8 @@ namespace OpenBabel
             _bondcalculations.push_back(bondcalc);
 
             IF_OBFF_LOGLVL_LOW {
-              snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND PARAMETERS FOR BOND %s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType());
+              snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND PARAMETERS FOR BOND %s-%s, USING DEFAULT PARAMETERS\n", 
+                  a->GetType(), b->GetType());
               OBFFLog(_logbuf);
             }
 
@@ -484,7 +513,8 @@ namespace OpenBabel
               _anglecalculations.push_back(anglecalc);
             
               IF_OBFF_LOGLVL_LOW {
-                snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND PARAMETERS FOR ANGLE %s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType());
+                snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND PARAMETERS FOR ANGLE %s-%s-%s, USING DEFAULT PARAMETERS\n", 
+                    a->GetType(), b->GetType(), c->GetType());
                 OBFFLog(_logbuf);
               }
 
@@ -563,7 +593,8 @@ namespace OpenBabel
               _torsioncalculations.push_back(torsioncalc);
 
               IF_OBFF_LOGLVL_LOW {
-                snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND PARAMETERS FOR TORSION %s-%s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType(), d->GetType());
+                snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND PARAMETERS FOR TORSION %s-%s-%s-%s, "
+                    "USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType(), d->GetType());
                 OBFFLog(_logbuf);
               }
 
@@ -612,7 +643,20 @@ namespace OpenBabel
 
       _torsioncalculations.push_back(torsioncalc);     
     }
+  
+    return true;
+  } 
+
+  bool OBForceFieldGhemical::SetupNonBondedCalculations()
+  {
+    OBAtom *a, *b;
     
+    OBMol *mol = GetMolecule();
+    OBFFConstraints constraints = GetConstraints();
+    vector<OBBitVec> interGroup = GetInterGroup();
+    vector<pair<OBBitVec, OBBitVec> > interGroups = GetInterGroups();
+ 
+ 
     // 
     // VDW Calculations
     //
@@ -657,7 +701,8 @@ namespace OpenBabel
         vdwcalc.ka = 0.042;
 	
         IF_OBFF_LOGLVL_LOW {
-          snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", a->GetType());
+          snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", 
+              a->GetType());
           OBFFLog(_logbuf);
         }
       } else {
@@ -671,7 +716,8 @@ namespace OpenBabel
         vdwcalc.kb = 0.042;
         
         IF_OBFF_LOGLVL_LOW {
-          snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", b->GetType());
+          snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", 
+              b->GetType());
           OBFFLog(_logbuf);
         }
       } else {
@@ -689,26 +735,6 @@ namespace OpenBabel
       // 1-4 scaling
       if (a->IsOneFour(b))
         vdwcalc.kab *= 0.5;
-      /*
-        vdwcalc.is14 = false;
-        FOR_NBORS_OF_ATOM (nbr, a)
-        FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-        FOR_NBORS_OF_ATOM (nbr3, &*nbr2)
-        if (b == &*nbr3) {
-        vdwcalc.is14 = true;
-        vdwcalc.kab *= 0.5;
-        }
-      */
-
-      // not sure why this is needed, but validation showed it works...
-      /*
-        if (a->IsInRingSize(6) && b->IsInRingSize(6) && IsInSameRing(a, b))
-        vdwcalc.samering = true;
-        else if ((a->IsInRingSize(5) || a->IsInRingSize(4)) && (b->IsInRingSize(5) || b->IsInRingSize(4)))
-        vdwcalc.samering = true;
-        else
-        vdwcalc.samering = false;
-      */
 
       vdwcalc.ka = (vdwcalc.Ra + vdwcalc.Rb) * pow(1.0 * vdwcalc.kab , 1.0 / 12.0);
       vdwcalc.kb = (vdwcalc.Ra + vdwcalc.Rb) * pow(2.0 * vdwcalc.kab , 1.0 / 6.0);
@@ -1091,7 +1117,7 @@ namespace OpenBabel
   {
     OBMol *mol = GetMolecule();
     Eigen::Vector3d numgrad, anagrad, err;
-    int coordIdx;
+    int idx;
     
     bool passed = true; // set to false if any component fails
     
@@ -1100,15 +1126,14 @@ namespace OpenBabel
     OBFFLog("----------------------------------------------------------------------------------------\n");
     //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
 
-    double *gradientPtr = GetGradientPtr();
-   
+
     FOR_ATOMS_OF_MOL (a, mol) {
-      coordIdx = (a->GetIdx() - 1) * 3;
+      idx = (a->GetIdx() - 1);
 
       // OBFF_ENERGY
-      numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
+      //numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
       Energy(); // compute
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = GetGradients()[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1116,10 +1141,10 @@ namespace OpenBabel
       OBFFLog(_logbuf);
       
       // OBFF_EBOND
-      numgrad = NumericalDerivative(&*a, OBFF_EBOND);
+      //numgrad = NumericalDerivative(&*a, OBFF_EBOND);
       ClearGradients();
       E_Bond();
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = GetGradients()[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1130,10 +1155,10 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EANGLE
-      numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
+      //numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
       ClearGradients();
       E_Angle();
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = GetGradients()[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1143,10 +1168,10 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_ETORSION
-      numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
+      //numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
       ClearGradients();
       E_Torsion();
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = GetGradients()[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1156,10 +1181,10 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_EVDW
-      numgrad = NumericalDerivative(&*a, OBFF_EVDW);
+      //numgrad = NumericalDerivative(&*a, OBFF_EVDW);
       ClearGradients();
       E_VDW();
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = GetGradients()[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
@@ -1169,10 +1194,10 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_EELECTROSTATIC
-      numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
+      //numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
       ClearGradients();
       E_Electrostatic();
-      anagrad = Eigen::Vector3d(gradientPtr[coordIdx], gradientPtr[coordIdx+1], gradientPtr[coordIdx+2]);
+      anagrad = GetGradients()[idx];
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 

@@ -29,11 +29,10 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  
   class OBAtom;
   
-  /** \class OBInternalCoord internalcoord.h <openbabel/internalcoord.h>
-      \brief Used to transform from z-matrix to cartesian coordinates.
+  /** @class OBInternalCoord internalcoord.h <openbabel/internalcoord.h>
+      @brief Used to transform from z-matrix to cartesian coordinates.
 
       Used with OpenBabel::InternalToCartesian and
       OpenBabel::CartesianToInternal methods. Does not perform any actions
@@ -43,7 +42,7 @@ namespace OpenBabel
       atoms, which need not be bonded in any fashion. A rough sketch of the
       a, b, and c atoms would be:
 
-      \code
+      @code
           '*'
          /
         /
@@ -51,27 +50,27 @@ namespace OpenBabel
            /
           /
          c
-      \endcode
+      @endcode
 
       where the OBInternalCoord record reflects the '*' atom.
 
-      \warning Does not detect if NULL pointers are used. You should be careful.
-   **/
+      @warning Does not detect if NULL pointers are used. You should be careful.
+   */
   class OBAPI OBInternalCoord
   {
-  public:
-    //class members
-    OBAtom *_a;   //!< First connection for this atom (i.e., distance)
-    OBAtom *_b;   //!< Second reference atom (i.e., angle)
-    OBAtom *_c;   //!< Third reference atom (i.e., dihedral / torsion angle)
-    double  _dst; //!< Distance between this atom and _a
-    double  _ang; //!< Angle between this, _a, and _b (i.e., _a is the vertex)
-    double  _tor; //!< Torsional/dihedral angle between this, _a, _b, and _c
+    public:
+      //class members
+      OBAtom *m_a;   //!< First connection for this atom (i.e., distance)
+      OBAtom *m_b;   //!< Second reference atom (i.e., angle)
+      OBAtom *m_c;   //!< Third reference atom (i.e., dihedral / torsion angle)
+      double  m_dst; //!< Distance between this atom and _a
+      double  m_ang; //!< Angle between this, _a, and _b (i.e., _a is the vertex)
+      double  m_tor; //!< Torsional/dihedral angle between this, _a, _b, and _c
 
-    //! Constructor
-  OBInternalCoord(OBAtom *a= NULL, OBAtom *b= NULL, OBAtom *c= NULL,
-                  double dst = 0.0, double ang = 0.0, double tor = 0.0) :
-    _a(a), _b(b), _c(c), _dst(dst), _ang(ang), _tor(tor)
+      //! Constructor
+    OBInternalCoord(OBAtom *a= NULL, OBAtom *b= NULL, OBAtom *c= NULL,
+        double dst = 0.0, double ang = 0.0, double tor = 0.0) :
+    m_a(a), m_b(b), m_c(c), m_dst(dst), m_ang(ang), m_tor(tor)
       {}
   };
   
@@ -79,6 +78,6 @@ namespace OpenBabel
 
 #endif // OB_INTERNALCOORD_H
 
-//! \file internalcoord.h
-//! \brief Declaration of OBInternalCoord class, conversion between Cartesian
+//! @file internalcoord.h
+//! @brief Declaration of OBInternalCoord class, conversion between Cartesian
 //!        and Z-matrix form

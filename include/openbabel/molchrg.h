@@ -23,48 +23,98 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-class GasteigerState;
+  class GasteigerState;
 
-// class introduction in molchrg.cpp
-class OBAPI OBGastChrg
-{
-  std::vector <GasteigerState*> _gsv; //!< vector of internal GasteigerState (for each atom)
+  // class introduction in molchrg.cpp
+  class OBAPI OBGastChrg
+  {
+    protected:
+      std::vector <GasteigerState*> m_gsv; //!< vector of internal GasteigerState (for each atom)
+      
+      /** 
+       * @brief Set initial partial charges in @p mol.
+       * 
+       * @param mol The molecule.
+       *
+       * Carbonyl O => -0.5
+       * Phosphate O => -0.666
+       * Sulfate O => -0.5
+       * All other atoms are set to have their initial charge from their formal charge.
+       */
+      void InitialPartialCharges(OBMol &mol);
+      /** 
+       * @brief 
+       * 
+       * @param atom
+       * @param a
+       * @param b
+       * @param c
+       * 
+       * @return 
+       */
+      bool GasteigerSigmaChi(OBAtom *atom, double &a, double &b, double &c);
 
-    void InitialPartialCharges(OBMol &);
-    bool GasteigerSigmaChi(OBAtom *,double &,double &,double &);
+    public:
+      /** 
+       * @brief Constructor.
+       */
+      OBGastChrg() {}
+      /** 
+       * @brief Destructor.
+       */
+      ~OBGastChrg();
+      /** 
+       * @brief Assign partial charges to this OBMol, setting each OBAtom partial charge.
+       * 
+       * @param mol The molecule
+       */
+      bool AssignPartialCharges(OBMol &mol);
+      /** 
+       * @brief Resize the internal GasteigerState vector to match the size of 
+       * the molecule.
+       * 
+       * @param size The new size
+       */
+      void GSVResize(int size);
+  };
 
-public:
-    OBGastChrg()    {}
-    ~OBGastChrg();
-
-    //! Assign partial charges to this OBMol, setting each OBAtom partial charge
-    bool AssignPartialCharges(OBMol &);
-    //! Resize the internal GasteigerState vector to match the size of the molecule
-    void GSVResize(int);
-};
-
-//! \class GasteigerState molchrg.h <openbabel/molchrg.h>
-//! \brief Helper class for OBGastChrg which stores the Gasteiger states of a given atom
-class OBAPI GasteigerState
-{
-public:
-    GasteigerState();
-    ~GasteigerState() {}
-
-    void SetValues(double _a,double _b,double _c,double _q)
-    {
+  /** @class GasteigerState molchrg.h <openbabel/molchrg.h>
+      @brief Helper class for OBGastChrg which stores the Gasteiger states 
+      of a given atom
+   */
+  class OBAPI GasteigerState
+  {
+    public:
+      /** 
+       * @brief Constructor.
+       */
+      GasteigerState();
+      /** 
+       * @brief Destructor.
+       */
+      ~GasteigerState() {}
+      /** 
+       * @brief Set the values. 
+       * 
+       * @param _a
+       * @param _b
+       * @param _c
+       * @param _q
+       */
+      void SetValues(double _a,double _b,double _c,double _q)
+      {
         a = _a;
         b = _b;
         c = _c;
         denom=a+b+c;
         q = _q;
-    }
+      }
 
-    double a, b, c;
-    double denom;
-    double chi;
-    double q;
-};
+      double a, b, c;
+      double denom;
+      double chi;
+      double q;
+  };
 
 }
 
@@ -74,5 +124,5 @@ public:
 
 #endif // OB_MOLCHRG_H
 
-//! \file molchrg.h
-//! \brief Assign Gasteiger partial charges.
+//! @file molchrg.h
+//! @brief Assign Gasteiger partial charges.

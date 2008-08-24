@@ -54,7 +54,7 @@ namespace OpenBabel
       //! Atom is in a 3-membered ring
       Ring3         = (1<<2),
       //! Atom is aromatic
-      Aromatic      = (1<<3),
+      AromaticAtom  = (1<<3),
       //! Atom is in a ring
       Ring          = (1<<4),
       //! Atom has clockwise SMILES chiral stereochemistry (i.e., "@@")
@@ -78,10 +78,13 @@ namespace OpenBabel
     };
   };
 
+  /// @addtogroup core Core classes 
+  //@{
+
   class OBAtomPrivate;
   class OBAPI OBAtom: public OBBase
   {
-    protected:   
+    private:   
       // Some protected data declared in the class itself so we can access it 
       // through inline functions
       unsigned int              m_idx;  //!< unique node index (GetIdx(), SetIdx())
@@ -212,7 +215,7 @@ namespace OpenBabel
       /** 
        * Mark atom as being aromatic.
        */
-      void SetAromatic() { SetFlag(OBAtomFlag::Aromatic); }
+      void SetAromatic() { SetFlag(OBAtomFlag::AromaticAtom); }
       /** 
        * Clear aromatic information from the atom.
        */
@@ -747,11 +750,13 @@ namespace OpenBabel
       //! @todo remove this functions...
       unsigned int KBOSum() const;
   
-    }; // class OBAtom
+  }; // class OBAtom
+  
+  //@} group
 
 }// namespace OpenBabel
 
 #endif   // OB_ATOM_H
 
-//! \file atom.h
-//! \brief Handle atoms
+//! @file atom.h
+//! @brief Handle atoms

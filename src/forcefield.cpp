@@ -85,6 +85,8 @@ GNU General Public License for more details.
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
 
+#include <openbabel/minimize.h>
+
 using namespace std;
 
 namespace OpenBabel
@@ -97,11 +99,13 @@ namespace OpenBabel
     bool 	init; //!< Used to make sure we only parse the parameter file once, when needed
     std::string	parFile; //! < parameter file name
     bool 	validSetup; //!< was the last call to Setup succesfull
-    double	*gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
+    //double	*gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
+    //std::vector<Eigen::Vector3d> positions;
+    //std::vector<Eigen::Vector3d> gradients;
     // logging variables
     std::ostream* logos; //!< Output for logfile
     char 	logbuf[BUFF_SIZE]; //!< Temporary buffer for logfile output
-    int 	loglvl; //!< Log level for output
+    //int 	loglvl; //!< Log level for output
     int 	origLogLevel;
     // conformer genereation (rotor search) variables
     int 	current_conformer; //!< used to hold i for current conformer (needed by UpdateConformers)
@@ -109,7 +113,7 @@ namespace OpenBabel
     // minimization variables
     double 	econv, e_n1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     int 	cstep, nsteps; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    double 	*grad1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    std::vector<Eigen::Vector3d> grad1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     unsigned int ncoords; //!< Number of coordinates for conjugate gradients
     int         linesearch; //!< LineSearch type
     // molecular dynamics variables
@@ -121,7 +125,7 @@ namespace OpenBabel
     static unsigned int fixAtom; //!< SetFixAtom()/UnsetFixAtom()
     static unsigned int ignoreAtom; //!< SetIgnoreAtom()/UnsetIgnoreAtom()
     // cut-off variables
-    bool 	cutoff; //!< true = cut-off enabled
+    //bool 	cutoff; //!< true = cut-off enabled
     double 	rvdw; //!< VDW cut-off distance
     double 	rele; //!< Electrostatic cut-off distance
     OBBitVec	vdwpairs; //!< VDW pairs that should be calculated
@@ -517,28 +521,28 @@ namespace OpenBabel
 
   OBFFConstraints::OBFFConstraints()
   {
-    _factor = 50000.0;
+    m_factor = 50000.0;
   }
      
   OBFFConstraints::~OBFFConstraints()
   {
-     _constraints.clear();
-     _ignored.Clear();
-     _fixed.Clear();
-     _Xfixed.Clear();
-     _Yfixed.Clear();
-     _Zfixed.Clear();
+     m_constraints.clear();
+     m_ignored.Clear();
+     m_fixed.Clear();
+     m_Xfixed.Clear();
+     m_Yfixed.Clear();
+     m_Zfixed.Clear();
   }
     
   OBFFConstraints& OBFFConstraints::operator=(const OBFFConstraints &ai) 
   {
     if (this != &ai) {
-      _constraints = ai._constraints;
-      _ignored = ai._ignored;
-      _fixed = ai._fixed;
-      _Xfixed = ai._Xfixed;
-      _Yfixed = ai._Yfixed;
-      _Zfixed = ai._Zfixed;
+      m_constraints = ai.m_constraints;
+      m_ignored = ai.m_ignored;
+      m_fixed = ai.m_fixed;
+      m_Xfixed = ai.m_Xfixed;
+      m_Yfixed = ai.m_Yfixed;
+      m_Zfixed = ai.m_Zfixed;
     }
     return *this;
   }
@@ -547,7 +551,7 @@ namespace OpenBabel
   {
     vector<OBFFConstraint>::iterator i;
     
-    for (i = _constraints.begin(); i != _constraints.end(); ++i) {
+    for (i = m_constraints.begin(); i != m_constraints.end(); ++i) {
       i->a = mol.GetAtom(i->ia);
       i->b = mol.GetAtom(i->ib);
       i->c = mol.GetAtom(i->ic);
@@ -561,7 +565,7 @@ namespace OpenBabel
 
     Eigen::Vector3d grad(0.0, 0.0, 0.0);
     
-    for (i = _constraints.begin(); i != _constraints.end(); ++i)
+    for (i = m_constraints.begin(); i != m_constraints.end(); ++i)
       grad += i->GetGradient(a);
 
     return grad;
@@ -569,17 +573,17 @@ namespace OpenBabel
   
   void OBFFConstraints::Clear()
   {
-    _constraints.clear();
-    _ignored.Clear();
-    _fixed.Clear();
-    _Xfixed.Clear();
-    _Yfixed.Clear();
-    _Zfixed.Clear();
+    m_constraints.clear();
+    m_ignored.Clear();
+    m_fixed.Clear();
+    m_Xfixed.Clear();
+    m_Yfixed.Clear();
+    m_Zfixed.Clear();
   }
   
   int OBFFConstraints::Size() const
   {
-    return _constraints.size();
+    return m_constraints.size();
   }
   
   double OBFFConstraints::GetConstraintEnergy()
@@ -587,7 +591,7 @@ namespace OpenBabel
     vector<OBFFConstraint>::iterator i;
     double constraint_energy = 0.0;
        
-    for (i = _constraints.begin(); i != _constraints.end(); ++i)
+    for (i = m_constraints.begin(); i != m_constraints.end(); ++i)
       if ( (i->type == OBFF_CONST_DISTANCE) || (i->type == OBFF_CONST_ANGLE) || 
            (i->type == OBFF_CONST_TORSION) ) {
         Eigen::Vector3d Fa, Fb, Fc, Fd;
@@ -652,21 +656,21 @@ namespace OpenBabel
     vector<OBFFConstraint>::iterator i;
     int n = 0;
 
-    for (i = _constraints.begin(); i != _constraints.end(); ++n, ++i) {
+    for (i = m_constraints.begin(); i != m_constraints.end(); ++n, ++i) {
       if (n == index) {
         if (i->type == OBFF_CONST_IGNORE)
-          _ignored.SetBitOff(i->ia);
+          m_ignored.SetBitOff(i->ia);
         if (i->type == OBFF_CONST_ATOM)
-          _fixed.SetBitOff(i->ia);
+          m_fixed.SetBitOff(i->ia);
         if (i->type == OBFF_CONST_ATOM_X)
-          _Xfixed.SetBitOff(i->ia);
+          m_Xfixed.SetBitOff(i->ia);
         if (i->type == OBFF_CONST_ATOM_Y)
-          _Yfixed.SetBitOff(i->ia);
+          m_Yfixed.SetBitOff(i->ia);
         if (i->type == OBFF_CONST_ATOM_Z)
-          _Zfixed.SetBitOff(i->ia);
+          m_Zfixed.SetBitOff(i->ia);
 
  
-        _constraints.erase(i);
+        m_constraints.erase(i);
         break;
       }
     }
@@ -674,66 +678,66 @@ namespace OpenBabel
   
   void OBFFConstraints::SetFactor(double factor)
   {
-    _factor = factor;
+    m_factor = factor;
   }
 
   double OBFFConstraints::GetFactor()
   {
-    return _factor;
+    return m_factor;
   }
 
   void OBFFConstraints::AddIgnore(int a)
   {
-    _ignored.SetBitOn(a);
+    m_ignored.SetBitOn(a);
 
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_IGNORE; // constraint type
     constraint.ia   = a; // atom to fix
-    _constraints.push_back(constraint);
+    m_constraints.push_back(constraint);
   }
   
   void OBFFConstraints::AddAtomConstraint(int a)
   {
-    _fixed.SetBitOn(a);
+    m_fixed.SetBitOn(a);
 
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM; // constraint type
     constraint.ia   = a; // atom to fix
-    constraint.factor = _factor;
-    _constraints.push_back(constraint);
+    constraint.factor = m_factor;
+    m_constraints.push_back(constraint);
   }
   
   void OBFFConstraints::AddAtomXConstraint(int a)
   {
-    _Xfixed.SetBitOn(a);
+    m_Xfixed.SetBitOn(a);
 
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM_X; // constraint type
     constraint.ia   = a; // atom to fix
-    constraint.factor = _factor;
-    _constraints.push_back(constraint);
+    constraint.factor = m_factor;
+    m_constraints.push_back(constraint);
   }
   
   void OBFFConstraints::AddAtomYConstraint(int a)
   {
-    _Yfixed.SetBitOn(a);
+    m_Yfixed.SetBitOn(a);
 
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM_Y; // constraint type
     constraint.ia   = a; // atom to fix
-    constraint.factor = _factor;
-    _constraints.push_back(constraint);
+    constraint.factor = m_factor;
+    m_constraints.push_back(constraint);
   } 
   
   void OBFFConstraints::AddAtomZConstraint(int a)
   {
-    _Zfixed.SetBitOn(a);
+    m_Zfixed.SetBitOn(a);
 
     OBFFConstraint constraint;
     constraint.type = OBFF_CONST_ATOM_Z; // constraint type
     constraint.ia   = a; // atom to fix
-    constraint.factor = _factor;
-    _constraints.push_back(constraint);
+    constraint.factor = m_factor;
+    m_constraints.push_back(constraint);
   }
   
   void OBFFConstraints::AddDistanceConstraint(int a, int b, double length)
@@ -743,8 +747,8 @@ namespace OpenBabel
     constraint.ia   = a; // atom a
     constraint.ib   = b; // atom b
     constraint.constraint_value = length; // bond length
-    constraint.factor = _factor;
-    _constraints.push_back(constraint);
+    constraint.factor = m_factor;
+    m_constraints.push_back(constraint);
   }
   
   void OBFFConstraints::AddAngleConstraint(int a, int b, int c, double angle)
@@ -755,8 +759,8 @@ namespace OpenBabel
     constraint.ib   = b; // atom b
     constraint.ic   = c; // atom c
     constraint.constraint_value = angle; // angle
-    constraint.factor = _factor;
-    _constraints.push_back(constraint);
+    constraint.factor = m_factor;
+    m_constraints.push_back(constraint);
   }
   
   void OBFFConstraints::AddTorsionConstraint(int a, int b, int c, int d, double torsion)
@@ -768,81 +772,81 @@ namespace OpenBabel
     constraint.ic   = c; // atom c
     constraint.id   = d; // atom d
     constraint.constraint_value = torsion; // torsion
-    constraint.factor = _factor;
-    _constraints.push_back(constraint);
+    constraint.factor = m_factor;
+    m_constraints.push_back(constraint);
   }
   
   int OBFFConstraints::GetConstraintType(unsigned int index) const
   {
-    if (index >= _constraints.size())
+    if (index >= m_constraints.size())
       return 0;
 
-    return _constraints[index].type; 
+    return m_constraints[index].type; 
   }
   
   double OBFFConstraints::GetConstraintValue(unsigned int index) const 
   {
-    if (index >= _constraints.size())
+    if (index >= m_constraints.size())
       return 0;
 
-    return _constraints[index].constraint_value; 
+    return m_constraints[index].constraint_value; 
   }
   
   int OBFFConstraints::GetConstraintAtomA(unsigned int index) const
   {
-    if (index >= _constraints.size())
+    if (index >= m_constraints.size())
       return 0;
 
-    return _constraints[index].ia; 
+    return m_constraints[index].ia; 
   }
   
   int OBFFConstraints::GetConstraintAtomB(unsigned int index) const
   {
-    if (index >= _constraints.size())
+    if (index >= m_constraints.size())
       return 0;
 
-    return _constraints[index].ib; 
+    return m_constraints[index].ib; 
   }
   
   int OBFFConstraints::GetConstraintAtomC(unsigned int index) const
   {
-    if (index >= _constraints.size())
+    if (index >= m_constraints.size())
       return 0;
 
-    return _constraints[index].ic; 
+    return m_constraints[index].ic; 
   }
   
   int OBFFConstraints::GetConstraintAtomD(unsigned int index) const
   {
-    if (index >= _constraints.size())
+    if (index >= m_constraints.size())
       return 0;
 
-    return _constraints[index].id; 
+    return m_constraints[index].id; 
   }
   
   bool OBFFConstraints::IsIgnored(unsigned int index)
   {
-    return _ignored.BitIsSet(index);
+    return m_ignored.BitIsSet(index);
   }
   
   bool OBFFConstraints::IsFixed(unsigned int index)
   {
-    return _fixed.BitIsSet(index);
+    return m_fixed.BitIsSet(index);
   }
   
   bool OBFFConstraints::IsXFixed(unsigned int index)
   {
-    return _Xfixed.BitIsSet(index);
+    return m_Xfixed.BitIsSet(index);
   }
   
   bool OBFFConstraints::IsYFixed(unsigned int index)
   {
-    return _Yfixed.BitIsSet(index);
+    return m_Yfixed.BitIsSet(index);
   }
   
   bool OBFFConstraints::IsZFixed(unsigned int index)
   {
-    return _Zfixed.BitIsSet(index);
+    return m_Zfixed.BitIsSet(index);
   }
   
   //////////////////////////////////////////////////////////////////////////////////
@@ -914,11 +918,6 @@ namespace OpenBabel
     return true;
   }
     
-  int OBForceField::GetLogLevel() 
-  { 
-    return d->loglvl; 
-  }
-    
   void OBForceField::OBFFLog(std::string msg)
   {
     if (!d->logos)
@@ -948,20 +947,29 @@ namespace OpenBabel
       ParseParamFile();
       d->init = true;
       d->velocityPtr = NULL;       
-      d->gradientPtr = NULL;       
+      //d->gradientPtr = NULL;       
     }    
 
     if (IsSetupNeeded(mol)) {
       d->mol = mol;
-      d->ncoords = d->mol.NumAtoms() * 3;
+      d->ncoords = mol.NumAtoms() * 3;
+      
+      GetPositions().clear();
+      GetPositions().reserve(mol.NumAtoms());
+      FOR_ATOMS_OF_MOL (atom, mol)
+        GetPositions().push_back(atom->GetVector());
 
       if (d->velocityPtr)
         delete [] d->velocityPtr;
       d->velocityPtr = NULL;       
 
+      /*
       if (d->gradientPtr)
         delete [] d->gradientPtr;
       d->gradientPtr = new double[d->ncoords];
+      */
+      GetGradients().resize(d->mol.NumAtoms());
+      
 
       if (d->mol.NumAtoms() && d->constraints.Size())
         d->constraints.Setup(d->mol);
@@ -1001,7 +1009,7 @@ namespace OpenBabel
       ParseParamFile();
       d->init = true;
       d->velocityPtr = NULL;       
-      d->gradientPtr = NULL;       
+      //d->gradientPtr = NULL;       
     }    
 
     if (IsSetupNeeded(mol)) {
@@ -1012,9 +1020,17 @@ namespace OpenBabel
         delete [] d->velocityPtr;
       d->velocityPtr = NULL;       
 
+      GetPositions().clear();
+      GetPositions().reserve(mol.NumAtoms());
+      FOR_ATOMS_OF_MOL (atom, mol)
+        GetPositions().push_back(atom->GetVector());
+
+      /*
       if (d->gradientPtr)
         delete [] d->gradientPtr;
       d->gradientPtr = new double[d->ncoords];
+      */
+      GetGradients().resize(d->mol.NumAtoms());
 
       d->constraints = constraints;
       if (d->mol.NumAtoms() && d->constraints.Size())
@@ -1062,7 +1078,7 @@ namespace OpenBabel
  
   bool OBForceField::SetLogLevel(int level)
   {
-    d->loglvl = level;
+    m_loglvl = level;
     return true;
   }
   
@@ -1154,14 +1170,17 @@ namespace OpenBabel
     OBConformerData *cd = (OBConformerData*) mol.GetData(OBGenericDataType::ConformerData);
     cd->SetEnergies(d->energies);
     
-    vector<Eigen::Vector3d> forces;
     vector<vector<Eigen::Vector3d> > confForces;
+    /*
+    vector<Eigen::Vector3d> forces;
     for (unsigned int i = 0; i < d->mol.NumAtoms(); ++i) {
       const int coordIdx = i * 3;
       forces.push_back(Eigen::Vector3d(d->gradientPtr[coordIdx], 
           d->gradientPtr[coordIdx+1], d->gradientPtr[coordIdx+2]));
     }
     confForces.push_back(forces);
+    */
+    confForces.push_back(GetGradients());
     cd->SetForces(confForces);
 
     return true;
@@ -1278,34 +1297,50 @@ namespace OpenBabel
  
   void OBForceField::AddGradient(const Eigen::Vector3d &grad, int idx) 
   { 
+    GetGradients()[idx-1] += grad;
+    /*
     const int coordIdx = (idx - 1) * 3;
     
     for (unsigned int i = 0; i < 3; ++i) {
       d->gradientPtr[coordIdx + i] += grad[i];
     }
+    */
   }
     
   Eigen::Vector3d OBForceField::GetGradient(OBAtom *a) 
   { 
+    return GetGradients()[a->GetIdx()-1];
+    /*
     const int coordIdx = (a->GetIdx() - 1) * 3;
       
     Eigen::Vector3d v(d->gradientPtr[coordIdx], d->gradientPtr[coordIdx+1], d->gradientPtr[coordIdx+2]);
       
     return v;
+    */
+  }
+
+  /* 
+  std::vector<Eigen::Vector3d>& OBForceField::GetPositions() 
+  { 
+    return GetPositions();
   }
     
-  double* OBForceField::GetGradientPtr() 
+  std::vector<Eigen::Vector3d>& OBForceField::GetGradients() 
   { 
-    return d->gradientPtr;
+    //return d->gradientPtr;
+    return GetGradients();
   }
+  */
     
   void OBForceField::ClearGradients() 
   { 
     // We cannot use memset because IEEE floating point representations
     // are not guaranteed by C/C++ standard, but this loop can be
     // unrolled or vectorized by compilers
-    for (unsigned int i = 0; i < d->ncoords; ++i)
-      d->gradientPtr[i] = 0.0;
+    //for (unsigned int i = 0; i < d->ncoords; ++i)
+      //d->gradientPtr[i] = 0.0;
+    for (unsigned int i = 0; i < GetGradients().size(); ++i)
+      GetGradients()[i] = Eigen::Vector3d::Zero();
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -1321,7 +1356,7 @@ namespace OpenBabel
     OBRotorIterator ri;
     OBRotor *rotor;
 
-    d->origLogLevel = d->loglvl;
+    d->origLogLevel = m_loglvl;
 
     rl.Setup(d->mol);
     //rotamers.SetBaseCoordinates(d->mol);
@@ -1344,7 +1379,8 @@ namespace OpenBabel
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
  
-      ConjugateGradients(geomSteps); // final energy minimizatin for best conformation
+      OBMinimize mini(this);
+      mini.ConjugateGradients(geomSteps); // final energy minimizatin for best conformation
       
       return 1; // there are no more conformers
     }
@@ -1395,9 +1431,10 @@ namespace OpenBabel
 
     d->mol.SetConformer(d->current_conformer); // select conformer
     
-    d->loglvl = OBFF_LOGLVL_NONE;
-    ConjugateGradients(geomSteps); // energy minimization for conformer
-    d->loglvl = d->origLogLevel;
+    m_loglvl = OBFF_LOGLVL_NONE;
+    OBMinimize mini(this);
+    mini.ConjugateGradients(geomSteps); // energy minimization for conformer
+    m_loglvl = d->origLogLevel;
     
     d->energies.push_back(Energy(false)); // calculate and store energy
       
@@ -1425,7 +1462,7 @@ namespace OpenBabel
 
     OBRandom generator;
     generator.TimeSeed();
-    d->origLogLevel = d->loglvl;
+    d->origLogLevel = m_loglvl;
 
     if (d->mol.GetCoordinates() == NULL)
       return;
@@ -1452,9 +1489,10 @@ namespace OpenBabel
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
  
-      d->loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
-      d->loglvl = d->origLogLevel;
+      m_loglvl = OBFF_LOGLVL_NONE;
+      OBMinimize mini(this);
+      mini.ConjugateGradients(geomSteps); // energy minimization for conformer
+      m_loglvl = d->origLogLevel;
 
       return;
     }
@@ -1506,9 +1544,10 @@ namespace OpenBabel
     
     d->mol.SetConformer(d->current_conformer); // select conformer
 
-    d->loglvl = OBFF_LOGLVL_NONE;
-    ConjugateGradients(geomSteps); // energy minimization for conformer
-    d->loglvl = d->origLogLevel;
+    m_loglvl = OBFF_LOGLVL_NONE;
+    OBMinimize mini(this);
+    mini.ConjugateGradients(geomSteps); // energy minimization for conformer
+    m_loglvl = d->origLogLevel;
     
     d->energies.push_back(Energy(false)); // calculate and store energy
       
@@ -1582,7 +1621,7 @@ namespace OpenBabel
 
     OBRandom generator;
     generator.TimeSeed();
-    int origLogLevel = d->loglvl;
+    int origLogLevel = m_loglvl;
 
     if (d->mol.GetCoordinates() == NULL)
       return;
@@ -1609,9 +1648,10 @@ namespace OpenBabel
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
  
-      d->loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
-      d->loglvl = origLogLevel;
+      m_loglvl = OBFF_LOGLVL_NONE;
+      OBMinimize mini(this);
+      mini.ConjugateGradients(geomSteps); // energy minimization for conformer
+      m_loglvl = origLogLevel;
 
       return;
     }
@@ -1651,9 +1691,10 @@ namespace OpenBabel
         rotorKey[i] = j;
         rotamers.SetCurrentCoordinates(d->mol, rotorKey);
         
-        d->loglvl = OBFF_LOGLVL_NONE;
-        SteepestDescent(geomSteps); // energy minimization for conformer
-        d->loglvl = origLogLevel;
+        m_loglvl = OBFF_LOGLVL_NONE;
+        OBMinimize mini(this);
+        mini.SteepestDescent(geomSteps); // energy minimization for conformer
+        m_loglvl = origLogLevel;
         currentE = Energy(false);
 
         if (j == 0) 
@@ -1733,9 +1774,10 @@ namespace OpenBabel
       }
       rotamers.SetCurrentCoordinates(d->mol, rotorKey);
 
-      d->loglvl = OBFF_LOGLVL_NONE;
-      SteepestDescent(geomSteps); // energy minimization for conformer
-      d->loglvl = origLogLevel;
+      m_loglvl = OBFF_LOGLVL_NONE;
+      OBMinimize mini(this);
+      mini.SteepestDescent(geomSteps); // energy minimization for conformer
+      m_loglvl = origLogLevel;
       currentE = Energy(false);
 
       IF_OBFF_LOGLVL_LOW {
@@ -2109,12 +2151,7 @@ namespace OpenBabel
   
   void OBForceField::EnableCutOff(bool enable)
   {
-      d->cutoff = enable;
-  }
-    
-  bool OBForceField::IsCutOffEnabled()
-  {
-    return d->cutoff;
+      m_cutoff = enable;
   }
     
   void OBForceField::SetVDWCutOff(double r)
@@ -2265,190 +2302,6 @@ namespace OpenBabel
     return d->interGroups;
   }
 
-  //////////////////////////////////////////////////////////////////////////////////
-  //
-  // Energy Minimization  (XXXX07)
-  //
-  //////////////////////////////////////////////////////////////////////////////////
-  
-  void OBForceField::SetLineSearchType(int type)
-  {
-    d->linesearch = type;
-  }
-    
-  int OBForceField::GetLineSearchType()
-  {
-    return d->linesearch;
-  }
- 
-  // LineSearch 
-  //
-  // Based on the ghemical code (conjgrad.cpp)
-  //
-  // Implements several enhancements:
-  // 1) Switch to smarter line search method (e.g., Newton's method in 1D)
-  //  x(n+1) = x(n) - F(x) / F'(x)   -- can be done numerically
-  // 2) Switch to line search for one step of the entire molecule!
-  //   This dramatically cuts down on the number of Energy() calls.
-  //  (and is more correct anyway)
-  double OBForceField::Newton2NumLineSearch(double *direction)
-  {
-    double e_n1, e_n2, e_n3;
-    double *origCoords = new double [d->ncoords];
-
-    double opt_step = 0.0;
-    double opt_e = d->e_n1; // get energy calculated by sd or cg
-    const double def_step = 0.025; // default step
-    const double max_step = 5.0; // don't move further than 0.3 Angstroms
-    
-    double sum = 0.0;
-    for (unsigned int c = 0; c < d->ncoords; ++c) {
-      if (isfinite(direction[c])) { 
-        sum += direction[c] * direction[c];
-      } else {
-        // make sure we don't have NaN or infinity
-        direction[c] = 0.0;
-      }
-    }
-
-    double scale = sqrt(sum);
-    if (IsNearZero(scale)) {
-      cout << "WARNING: too small \"scale\" at Newton2NumLineSearch" << endl;
-      scale = 1.0e-70; // try to avoid "division by zero" conditions
-    }
-
-    double step = def_step / scale;
-    double max_scl = max_step / scale;
-    
-    // Save the current position, before we take a step
-    memcpy((char*)origCoords,(char*)d->mol.GetCoordinates(),sizeof(double)*d->ncoords);
-    
-    int newton = 0;
-    while (true) {
-      // Take step X(n) + step
-      LineSearchTakeStep(origCoords, direction, step);
-      e_n1 = Energy(false) + d->constraints.GetConstraintEnergy();
-
-      if (e_n1 < opt_e) {
-        opt_step = step;
-        opt_e = e_n1;
-      }
-
-      if (newton++ > 3) 
-        break;
-      double delta = step * 0.001;
-      
-      // Take step X(n) + step + delta
-      LineSearchTakeStep(origCoords, direction, step+delta);
-      e_n2 = Energy(false) + d->constraints.GetConstraintEnergy();
- 
-      // Take step X(n) + step + delta * 2.0
-      LineSearchTakeStep(origCoords, direction, step+delta*2.0);
-      e_n3 = Energy(false) + d->constraints.GetConstraintEnergy();
-      
-      double denom = e_n3 - 2.0 * e_n2 + e_n1; // f'(x)
-      if (denom != 0.0) {
-        step = fabs(step - delta * (e_n2 - e_n1) / denom);
-        if (step > max_scl) {
-          cout << "WARNING: damped steplength " << step << " to " << max_scl << endl;
-          step = max_scl;
-        }
-      } else {
-        break;
-      }
-    }
-    
-    if (opt_step == 0.0) { // if we still don't have any valid steplength, try a very small step
-      step = 0.001 * def_step / scale;
-      
-      // Take step X(n) + step
-      LineSearchTakeStep(origCoords, direction, step);
-      e_n1 = Energy(false) + d->constraints.GetConstraintEnergy();
-
-      if (e_n1 < opt_e) {
-        opt_step = step;
-        opt_e = e_n1;
-      }
-      
-    }
-
-    // Take optimal step 
-    LineSearchTakeStep(origCoords, direction, opt_step);
-
-    return opt_step * scale;
-  }
-  
-  void OBForceField::LineSearchTakeStep(double* origCoords, double *direction, double step)
-  {
-    double *currentCoords = d->mol.GetCoordinates();
-
-    for (unsigned int c = 0; c < d->ncoords; ++c) {
-      if (isfinite(direction[c])) { 
-        currentCoords[c] = origCoords[c] + direction[c] * step;
-      }
-    }
-  }
-
-  double OBForceField::LineSearch(double *currentCoords, double *direction)
-  {
-    unsigned int numCoords = d->mol.NumAtoms() * 3;
-    double e_n1, e_n2, step, alpha, tempStep;
-    double *lastStep = new double [numCoords];
-
-    alpha = 0.0; // Scale factor along direction vector
-    step = 0.2;
-    double trustRadius = 0.3; // don't move further than 0.3 Angstroms
-    
-    e_n1 = Energy(false) + d->constraints.GetConstraintEnergy();
-    
-    unsigned int i;
-    for (i=0; i < 10; ++i) {
-      // Save the current position, before we take a step
-      memcpy((char*)lastStep,(char*)currentCoords,sizeof(double)*numCoords);
-      
-      // Vectorizing this would be a big benefit
-      // Need to look up using BLAS or Eigen or whatever
-      for (unsigned int c = 0; c < numCoords; ++c) {
-        if (isfinite(direction[c])) { 
-          // make sure we don't have NaN or infinity
-          tempStep = direction[c] * step;
-
-          if (tempStep > trustRadius) // positive big step
-            currentCoords[c] += trustRadius;
-          else if (tempStep < -1.0 * trustRadius) // negative big step
-            currentCoords[c] -= trustRadius;
-          else
-            currentCoords[c] += direction[c] * step;
-        }
-      }
-    
-      e_n2 = Energy(false) + d->constraints.GetConstraintEnergy();
-      
-      // convergence criteria: A higher precision here 
-      // only takes longer with the same result.
-      if (IsNear(e_n2, e_n1, 1.0e-3))
-        break;
-
-      if (e_n2 > e_n1) { // decrease stepsize
-        step *= 0.1;
-        // move back to the last step
-        memcpy((char*)currentCoords,(char*)lastStep,sizeof(double)*numCoords);
-      } else if (e_n2 < e_n1) {  // increase stepsize
-        e_n1 = e_n2;
-        alpha += step; // we've moved some distance
-        step *= 2.15;
-        if (step > 1.0)
-          step = 1.0;
-      }
-      
-    }
-    //cout << "LineSearch steps: " << i << endl;
-
-    delete [] lastStep;
-
-    return alpha;
-  }
-  
   bool OBForceField::DetectExplosion()
   {
     FOR_ATOMS_OF_MOL (atom, d->mol) {
@@ -2466,623 +2319,6 @@ namespace OpenBabel
     }
         
     return false;
-  }
-  
-  void OBForceField::SteepestDescentInitialize(int steps, double econv) 
-  {
-    d->nsteps = steps;
-    d->cstep = 0;
-    d->econv = econv;
-
-    if (d->cutoff)
-      UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
-
-    d->e_n1 = Energy() + d->constraints.GetConstraintEnergy();
-    
-    IF_OBFF_LOGLVL_LOW {
-      OBFFLog("\nS T E E P E S T   D E S C E N T\n\n");
-      snprintf(d->logbuf, BUFF_SIZE, "STEPS = %d\n\n",  steps);
-      OBFFLog(d->logbuf);
-      OBFFLog("STEP n       E(n)         E(n-1)    \n");
-      OBFFLog("------------------------------------\n");
-      snprintf(d->logbuf, BUFF_SIZE, " %4d    %8.3f      ----\n", d->cstep, d->e_n1);
-      OBFFLog(d->logbuf);
-    }
- 
-  }
- 
-  bool OBForceField::SteepestDescentTakeNSteps(int n) 
-  {
-    d->ncoords = d->mol.NumAtoms() * 3;
-    double e_n2, alpha;
-    Eigen::Vector3d dir;
-
-    for (int i = 1; i <= n; i++) {
-      d->cstep++;
-
-      FOR_ATOMS_OF_MOL (a, d->mol) {
-        unsigned int idx = a->GetIdx();
-        unsigned int coordIdx = (idx - 1) * 3;
-
-        if (d->constraints.IsFixed(idx) || (d->fixAtom == idx) || (d->ignoreAtom == idx)) {
-          d->gradientPtr[coordIdx] = 0.0;
-          d->gradientPtr[coordIdx+1] = 0.0;
-          d->gradientPtr[coordIdx+2] = 0.0;
-        } else {
-          if (!HasAnalyticalGradients()) {
-            // use numerical gradients
-            dir = NumericalDerivative(&*a) + d->constraints.GetGradient(a->GetIdx());
-          } else {
-            // use analytical gradients
-            dir = GetGradient(&*a) + d->constraints.GetGradient(a->GetIdx());
-          }
- 
-          if (!d->constraints.IsXFixed(idx))
-            d->gradientPtr[coordIdx] = dir.x();
-          else
-            d->gradientPtr[coordIdx] = 0.0;
-
-          if (!d->constraints.IsYFixed(idx))
-            d->gradientPtr[coordIdx+1] = dir.y();
-          else
-            d->gradientPtr[coordIdx+1] = 0.0;
-
-          if (!d->constraints.IsZFixed(idx))
-            d->gradientPtr[coordIdx+2] = dir.z();
-          else
-            d->gradientPtr[coordIdx+2] = 0.0;
-        }
-      }
-      // perform a linesearch
-      switch (d->linesearch) {
-        case LineSearchType::Newton2Num:
-          alpha = Newton2NumLineSearch(d->gradientPtr);
-          break;
-        default:
-        case LineSearchType::Simple:
-          alpha = LineSearch(d->mol.GetCoordinates(), d->gradientPtr);
-          break;
-      }
-      e_n2 = Energy() + d->constraints.GetConstraintEnergy();
-      
-      if ((d->cstep % d->pairfreq == 0) && d->cutoff)
-        UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
-
-      IF_OBFF_LOGLVL_LOW {
-        if (d->cstep % 10 == 0) {
-          snprintf(d->logbuf, BUFF_SIZE, " %4d    %8.5f    %8.5f\n", d->cstep, e_n2, d->e_n1);
-          OBFFLog(d->logbuf);
-        }
-      }
-
-      if (IsNear(e_n2, d->e_n1, d->econv)) {
-        IF_OBFF_LOGLVL_LOW
-          OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
-        return false;
-      }
-      
-      if (d->nsteps == d->cstep) {
-        return false;
-      }
-
-      d->e_n1 = e_n2;
-    }
-
-    return true;  // no convergence reached
-  }
- 
-  void OBForceField::SteepestDescent(int steps, double econv) 
-  {
-    SteepestDescentInitialize(steps, econv);
-    SteepestDescentTakeNSteps(steps);
-  }
-
-  void OBForceField::ConjugateGradientsInitialize(int steps, double econv)
-  {
-    double e_n2, alpha;
-    Eigen::Vector3d dir;
-
-    d->cstep = 0;
-    d->nsteps = steps;
-    d->econv = econv;
-    d->ncoords = d->mol.NumAtoms() * 3;
-
-    if (d->cutoff)
-      UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
-
-    d->e_n1 = Energy() + d->constraints.GetConstraintEnergy();
-    
-    IF_OBFF_LOGLVL_LOW {
-      OBFFLog("\nC O N J U G A T E   G R A D I E N T S\n\n");
-      snprintf(d->logbuf, BUFF_SIZE, "STEPS = %d\n\n",  steps);
-      OBFFLog(d->logbuf);
-      OBFFLog("STEP n     E(n)       E(n-1)    \n");
-      OBFFLog("--------------------------------\n");
-    }
-
-    if (d->grad1 != NULL)
-      delete [] d->grad1;
-    d->grad1 = new double[d->ncoords];
-    memset(d->grad1, '\0', sizeof(double)*d->ncoords);
-
-    // Take the first step (same as steepest descent because there is no 
-    // gradient from the previous step.
-    FOR_ATOMS_OF_MOL (a, d->mol) {
-      unsigned int idx = a->GetIdx();
-      unsigned int coordIdx = (idx - 1) * 3;
- 
-      if (d->constraints.IsFixed(idx) || (d->fixAtom == idx) || (d->ignoreAtom == idx)) {
-        d->gradientPtr[coordIdx] = 0.0;
-        d->gradientPtr[coordIdx+1] = 0.0;
-        d->gradientPtr[coordIdx+2] = 0.0;
-      } else {
-        if (!HasAnalyticalGradients()) {
-          // use numerical gradients
-          dir = NumericalDerivative(&*a) + d->constraints.GetGradient(a->GetIdx());
-        } else {
-          // use analytical gradients
-          dir = GetGradient(&*a) + d->constraints.GetGradient(a->GetIdx());
-        }
- 
-        if (!d->constraints.IsXFixed(idx))
-          d->gradientPtr[coordIdx] = dir.x();
-        else
-          d->gradientPtr[coordIdx] = 0.0;
-
-        if (!d->constraints.IsYFixed(idx))
-          d->gradientPtr[coordIdx+1] = dir.y();
-        else
-          d->gradientPtr[coordIdx+1] = 0.0;
-
-        if (!d->constraints.IsZFixed(idx))
-          d->gradientPtr[coordIdx+2] = dir.z();
-        else
-          d->gradientPtr[coordIdx+2] = 0.0;
-      }
-    }
-    // perform a linesearch
-    switch (d->linesearch) {
-      case LineSearchType::Newton2Num:
-        alpha = Newton2NumLineSearch(d->gradientPtr);
-        break;
-      default:
-      case LineSearchType::Simple:
-        alpha = LineSearch(d->mol.GetCoordinates(), d->gradientPtr);
-        break;
-    }
-    e_n2 = Energy() + d->constraints.GetConstraintEnergy();
-      
-    IF_OBFF_LOGLVL_LOW {
-      snprintf(d->logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", 1, e_n2, d->e_n1);
-      OBFFLog(d->logbuf);
-    }
- 
-    // save the direction and energy
-    memcpy(d->grad1, d->gradientPtr, sizeof(double) * d->ncoords);
-    d->e_n1 = e_n2;
-  }
-  
-  bool OBForceField::ConjugateGradientsTakeNSteps(int n)
-  {
-    double e_n2;
-    double g2g2, g1g1, beta, alpha;
-    Eigen::Vector3d grad2, dir2;
-    Eigen::Vector3d grad1, dir1; // temporaries to perform dot product, etc.
-    
-    if (d->ncoords != d->mol.NumAtoms() * 3)
-      return false;
-
-    e_n2 = 0.0;
-    
-    for (int i = 1; i <= n; i++) {
-      d->cstep++;
-     
-      FOR_ATOMS_OF_MOL (a, d->mol) {
-        unsigned int idx = a->GetIdx();
-        unsigned int coordIdx = (a->GetIdx() - 1) * 3;
-
-        if (d->constraints.IsFixed(idx) || (d->fixAtom == idx) || (d->ignoreAtom == idx)) {
-          d->grad1[coordIdx] = 0.0;
-          d->grad1[coordIdx+1] = 0.0;
-          d->grad1[coordIdx+2] = 0.0;
-        } else {
-          if (!HasAnalyticalGradients()) {
-            // use numerical gradients
-            grad2 = NumericalDerivative(&*a) + d->constraints.GetGradient(a->GetIdx());
-          } else {
-            // use analytical gradients
-            grad2 = GetGradient(&*a) + d->constraints.GetGradient(a->GetIdx());
-          }
- 
-          // Fletcher-Reeves formula for Beta
-          // http://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method
-          // NOTE: We make sure to reset and use the steepest descent direction
-          //   after NumAtoms steps
-          if (d->cstep % d->mol.NumAtoms() != 0) {
-            g2g2 = grad2.dot(grad2);
-            grad1 = Eigen::Vector3d(d->grad1[coordIdx], d->grad1[coordIdx+1], d->grad1[coordIdx+2]);
-            g1g1 = grad1.dot(grad1);
-            beta = g2g2 / g1g1;
-            grad2 += beta * grad1;
-          } 
- 
-          if (!d->constraints.IsXFixed(idx))
-            d->grad1[coordIdx] = grad2.x();
-          else
-            d->grad1[coordIdx] = 0.0;
-
-          if (!d->constraints.IsYFixed(idx))
-            d->grad1[coordIdx+1] = grad2.y();
-          else
-            d->grad1[coordIdx+1] = 0.0;
-
-          if (!d->constraints.IsZFixed(idx))
-            d->grad1[coordIdx+2] = grad2.z();
-          else
-            d->grad1[coordIdx+2] = 0.0;
-        }
-      }
-      // perform a linesearch
-      switch (d->linesearch) {
-        case LineSearchType::Newton2Num:
-          alpha = Newton2NumLineSearch(d->grad1);
-          break;
-        default:
-        case LineSearchType::Simple:
-          alpha = LineSearch(d->mol.GetCoordinates(), d->grad1);
-          break;
-      }
-      // save the direction
-      memcpy(d->grad1, d->gradientPtr, sizeof(double) * d->ncoords);
- 
-      e_n2 = Energy() + d->constraints.GetConstraintEnergy();
-	
-      if ((d->cstep % d->pairfreq == 0) && d->cutoff)
-        UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
-
-      if (IsNear(e_n2, d->e_n1, d->econv)) {
-        IF_OBFF_LOGLVL_LOW {
-          snprintf(d->logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", d->cstep, e_n2, d->e_n1);
-          OBFFLog(d->logbuf);
-          OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED\n");
-        }
-        return false;
-      }
-
-      IF_OBFF_LOGLVL_LOW {
-        if (d->cstep % 10 == 0) {
-          snprintf(d->logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", d->cstep, e_n2, d->e_n1);
-          OBFFLog(d->logbuf);
-        }
-      }
- 
-      if (d->nsteps == d->cstep)
-        return false;
-
-      d->e_n1 = e_n2;
-    }
-
-    return true; // no convergence reached
-  }
-  
-  void OBForceField::ConjugateGradients(int steps, double econv)
-  {
-    ConjugateGradientsInitialize(steps, econv);
-    ConjugateGradientsTakeNSteps(steps); // ConjugateGradientsInitialize takes the first step
-  }
-  
-  //  
-  //         f(1) - f(0)
-  // f'(0) = -----------      f(1) = f(0+h)
-  //              h
-  //
-  Eigen::Vector3d OBForceField::NumericalDerivative(OBAtom *atom, int terms)
-  {
-    Eigen::Vector3d va, grad;
-    double e_orig, e_plus_delta, delta, dx, dy, dz;
-
-    delta = 1.0e-5;
-
-    va = atom->GetVector();
-
-    if (terms & OBFF_ENERGY)
-      e_orig = Energy(false);
-    else {
-      e_orig = 0.0;
-      if (terms & OBFF_EBOND)
-        e_orig += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_orig += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_orig += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_orig += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_orig += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_orig += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_orig += E_Electrostatic(false);
-    }
-    
-    // X direction
-    atom->SetVector(va.x() + delta, va.y(), va.z());
-
-    if (terms & OBFF_ENERGY)
-      e_plus_delta = Energy(false);
-    else {
-      e_plus_delta = 0.0;
-      if (terms & OBFF_EBOND)
-        e_plus_delta += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_plus_delta += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_plus_delta += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_plus_delta += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_plus_delta += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_plus_delta += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_plus_delta += E_Electrostatic(false);
-    }
-    
-    dx = (e_plus_delta - e_orig) / delta;
-    
-    // Y direction
-    atom->SetVector(va.x(), va.y() + delta, va.z());
-    
-    if (terms & OBFF_ENERGY)
-      e_plus_delta = Energy(false);
-    else {
-      e_plus_delta = 0.0;
-      if (terms & OBFF_EBOND)
-        e_plus_delta += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_plus_delta += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_plus_delta += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_plus_delta += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_plus_delta += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_plus_delta += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_plus_delta += E_Electrostatic(false);
-    }
- 
-    dy = (e_plus_delta - e_orig) / delta;
-    
-    // Z direction
-    atom->SetVector(va.x(), va.y(), va.z() + delta);
-    
-    if (terms & OBFF_ENERGY)
-      e_plus_delta = Energy(false);
-    else {
-      e_plus_delta = 0.0;
-      if (terms & OBFF_EBOND)
-        e_plus_delta += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_plus_delta += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_plus_delta += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_plus_delta += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_plus_delta += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_plus_delta += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_plus_delta += E_Electrostatic(false);
-    }
- 
-    dz = (e_plus_delta - e_orig) / delta;
-
-    // reset coordinates to original
-    atom->SetVector(va.x(), va.y(), va.z());
-
-    grad = Eigen::Vector3d(-dx, -dy, -dz);
-    return (grad);
-  }
-  
-  //  
-  //         f(2) - 2f(1) + f(0)
-  // f'(0) = -------------------      f(1) = f(0+h)
-  //                 h^2              f(1) = f(0+2h)
-  //
-  Eigen::Vector3d OBForceField::NumericalSecondDerivative(OBAtom *atom, int terms)
-  {
-    Eigen::Vector3d va, grad;
-    double e_0, e_1, e_2, delta, dx, dy, dz;
-
-    delta = 1.0e-5;
-
-    va = atom->GetVector();
-
-    // calculate f(0)
-    if (terms & OBFF_ENERGY)
-      e_0 = Energy(false);
-    else {
-      e_0 = 0.0;
-      if (terms & OBFF_EBOND)
-        e_0 += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_0 += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_0 += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_0 += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_0 += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_0 += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_0 += E_Electrostatic(false);
-    }
-    
-    // 
-    // X direction
-    //
-    
-    // calculate f(1)
-    atom->SetVector(va.x() + delta, va.y(), va.z());
-
-    if (terms & OBFF_ENERGY)
-      e_1 = Energy(false);
-    else {
-      e_1 = 0.0;
-      if (terms & OBFF_EBOND)
-        e_1 += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_1 += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_1 += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_1 += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_1 += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_1 += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_1 += E_Electrostatic(false);
-    }
-    
-    // calculate f(2)
-    atom->SetVector(va.x() + 2 * delta, va.y(), va.z());
-
-    if (terms & OBFF_ENERGY)
-      e_2 = Energy(false);
-    else {
-      e_2 = 0.0;
-      if (terms & OBFF_EBOND)
-        e_2 += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_2 += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_2 += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_2 += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_2 += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_2 += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_2 += E_Electrostatic(false);
-    }
-    
-    dx = (e_2 - 2 * e_1 + e_0) / (delta * delta);
-    
-    // 
-    // Y direction
-    //
-    
-    // calculate f(1)
-    atom->SetVector(va.x(), va.y() + delta, va.z());
-
-    if (terms & OBFF_ENERGY)
-      e_1 = Energy(false);
-    else {
-      e_1 = 0.0;
-      if (terms & OBFF_EBOND)
-        e_1 += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_1 += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_1 += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_1 += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_1 += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_1 += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_1 += E_Electrostatic(false);
-    }
-    
-    // calculate f(2)
-    atom->SetVector(va.x(), va.y() + 2 * delta, va.z());
-
-    if (terms & OBFF_ENERGY)
-      e_2 = Energy(false);
-    else {
-      e_2 = 0.0;
-      if (terms & OBFF_EBOND)
-        e_2 += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_2 += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_2 += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_2 += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_2 += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_2 += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_2 += E_Electrostatic(false);
-    }
-    
-    dy = (e_2 - 2 * e_1 + e_0) / (delta * delta);
-
-    // 
-    // Z direction
-    //
-    
-    // calculate f(1)
-    atom->SetVector(va.x(), va.y(), va.z() + delta);
-
-    if (terms & OBFF_ENERGY)
-      e_1 = Energy(false);
-    else {
-      e_1 = 0.0;
-      if (terms & OBFF_EBOND)
-        e_1 += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_1 += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_1 += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_1 += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_1 += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_1 += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_1 += E_Electrostatic(false);
-    }
-    
-    // calculate f(2)
-    atom->SetVector(va.x(), va.y(), va.z() + 2 * delta);
-
-    if (terms & OBFF_ENERGY)
-      e_2 = Energy(false);
-    else {
-      e_2 = 0.0;
-      if (terms & OBFF_EBOND)
-        e_2 += E_Bond(false);
-      if (terms & OBFF_EANGLE)
-        e_2 += E_Angle(false);
-      if (terms & OBFF_ESTRBND)
-        e_2 += E_StrBnd(false);
-      if (terms & OBFF_ETORSION)
-        e_2 += E_Torsion(false);
-      if (terms & OBFF_EOOP)
-        e_2 += E_OOP(false);
-      if (terms & OBFF_EVDW)
-        e_2 += E_VDW(false);
-      if (terms & OBFF_EELECTROSTATIC)
-        e_2 += E_Electrostatic(false);
-    }
-    
-    dz = (e_2 - 2 * e_1 + e_0) / (delta * delta);
-
-    // reset coordinates to original
-    atom->SetVector(va.x(), va.y(), va.z());
-
-    grad = Eigen::Vector3d(-dx, -dy, -dz);
-    return (grad);
   }
   
   //////////////////////////////////////////////////////////////////////////////////
@@ -3234,7 +2470,7 @@ namespace OpenBabel
           if (HasAnalyticalGradients())
             force = GetGradient(&*a) + d->constraints.GetGradient(a->GetIdx());
           else
-            force = NumericalDerivative(&*a) + d->constraints.GetGradient(a->GetIdx());
+            force = /*NumericalDerivative(&*a) +*/ d->constraints.GetGradient(a->GetIdx());
 
           pos = a->GetVector();
           coordIdx = (a->GetIdx() - 1) * 3;
@@ -3259,7 +2495,7 @@ namespace OpenBabel
           if (HasAnalyticalGradients())
             force = GetGradient(&*a) + d->constraints.GetGradient(a->GetIdx());
           else
-            force = NumericalDerivative(&*a) + d->constraints.GetGradient(a->GetIdx());
+            force = /*NumericalDerivative(&*a) +*/ d->constraints.GetGradient(a->GetIdx());
           
           // a(i+1) = F(i+1) / m
           accel = force / (1000 * a->GetAtomicMass());
@@ -3438,7 +2674,7 @@ namespace OpenBabel
     d->rvdw = 7.0;
     d->rele = 15.0;
     d->pairfreq = 10;
-    d->cutoff = false;
+    m_cutoff = false;
     d->linesearch = LineSearchType::Simple;
   }
   
@@ -3452,10 +2688,12 @@ namespace OpenBabel
  
   OBForceField::~OBForceField()
   {
+    /*
     if (d->grad1 != NULL) {
       delete [] d->grad1;
       d->grad1 = NULL;
     }
+    */
   }
 
 

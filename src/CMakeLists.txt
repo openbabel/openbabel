@@ -77,6 +77,7 @@ set(openbabel_srcs
     transform.cpp
     typer.cpp
     obmolecformat.cpp
+    minimize.cpp
 )
 
 if(BUILD_SHARED)

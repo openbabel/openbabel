@@ -31,6 +31,7 @@ GNU General Public License for more details.
 #include <openbabel/plugin.h>
 #include <openbabel/grid.h>
 #include <openbabel/griddata.h>
+#include <openbabel/obfunction.h>
 #include <float.h>
 
 namespace OpenBabel
@@ -74,136 +75,211 @@ namespace OpenBabel
 #define IF_OBFF_LOGLVL_HIGH   if(GetLogLevel() >= OBFF_LOGLVL_HIGH)
 
   //! The type of line search to be used for optimization -- simple or Newton numeric
-  struct LineSearchType 
+  namespace LineSearchType 
   {
     enum {
       Simple, Newton2Num 
     };
   };
   
-  //! \class OBFFConstraints forcefield.h <openbabel/forcefield.h>
-  //! \brief Internal class for OBForceField to handle constraints
-  //! \since version 2.2
   class OBFFConstraint;
+  
+  /** @class OBFFConstraints forcefield.h <openbabel/forcefield.h>
+      @brief Internal class for OBForceField to handle constraints
+      @since version 2.2
+   */
   class OBFPRT OBFFConstraints
   {
-  public:
-    //! Constructor
-    OBFFConstraints();
-    //! Destructor
-    ~OBFFConstraints();
-    //! Clear all constraints
-    void Clear();
-    //! Get the constraint energy
-    double GetConstraintEnergy();
-    //! Get the constraint gradient for atom with index a
-    Eigen::Vector3d GetGradient(int a);
-    //! Get the constrain gradient for the atom
-    OBFFConstraints& operator=(const OBFFConstraints &ai); 
+    friend class OBForceField;
 
-    /*! Translate indices to OBAtom* objects, this function is called from OBForceField::Setup,
-     *  this function doesn't have to be called from anywhere else.
-     */
-    void Setup(OBMol &mol);
+    public:
+      /** 
+       * @brief Constructor.
+       */
+      OBFFConstraints();
+      /** 
+       * @brief Destructor.
+       */
+      ~OBFFConstraints();
+      /**
+       * @brief Assignment operator.
+       */
+      OBFFConstraints& operator=(const OBFFConstraints &ai); 
+      /**
+       *  @brief Clear all constraints
+       */
+      void Clear();
+      /** 
+       * @return The constraint energy.
+       */
+      double GetConstraintEnergy();
+  
+      /////////////////////////////////////////////////////////////////////////
+      // Set Constraints                                                     //
+      /////////////////////////////////////////////////////////////////////////
+      //! \name Methods to set constraints
+      //@{
+      /** 
+       * @brief Set Constraint factor.
+       */
+      void SetFactor(double factor);
+      /** 
+       * @brief Ignore the atom while setting up calculations.
+       */
+      void AddIgnore(int a);
+      /** 
+       * @brief Fix the position of an atom.
+       */
+      void AddAtomConstraint(int a);
+      /** 
+       * @brief Fix the x coordinate of the atom position.
+       */
+      void AddAtomXConstraint(int a);
+      /** 
+       * @brief Fix the y coordinate of the atom position.
+       */
+      void AddAtomYConstraint(int a);
+      /** 
+       * @brief Fix the z coordinate of the atom position.
+       */
+      void AddAtomZConstraint(int a);
+      /** 
+       * @brief Constrain the bond length a-b.
+       */
+      void AddDistanceConstraint(int a, int b, double length);
+      /** 
+       * @brief Constrain the angle a-b-c.
+       */
+      void AddAngleConstraint(int a, int b, int c, double angle);
+      /** 
+       * @brief Constrain the torsion angle a-b-c-d.
+       */
+      void AddTorsionConstraint(int a, int b, int c, int d, double torsion);
+      /** 
+       * @brief Delete a constraint.
+       *
+       * @param index constraint index.
+       */
+      void DeleteConstraint(int index);
+      //@}
+      /////////////////////////////////////////////////////////////////////////
+      // Get Constraints                                                     //
+      /////////////////////////////////////////////////////////////////////////
+      //! \name Methods to get information about set constraints
+      //@{
+      /** 
+       * @return The constraint factor.
+       */
+      double GetFactor();
+      /** 
+       * @returns the number of set constraints.
+       */
+      int Size() const;
+      /** 
+       * The following constraint types are known: OBFF_CONST_IGNORE (ignore 
+       * the atom while setting up calculations, forcefield implementations 
+       * need to check this value in their setup function), OBFF_CONST_ATOM
+       * (fix atom position), OBFF_CONST_ATOM_X (fix x coordinate), 
+       * OBFF_CONST_ATOM_Y (fix y coordinate), OBFF_CONST_ATOM_Z (fix z 
+       * coordinate), OBFF_CONST_BOND (constrain bond length), OBFF_CONST_ANGLE
+       * (constrain angle), OBFF_CONST_TORSION (constrain torsion angle)
+       *  
+       *  @return the constraint type
+       */
+      int GetConstraintType(unsigned int index) const;
+      /** 
+       * @return The constraint value, this can be a bond length, angle or 
+       * torsion angle depending on the constraint type.
+       */
+      double GetConstraintValue(unsigned int index) const;
+      /** 
+       * @param index Constraint index.
+       * 
+       * @return The constraint atom a (or fixed atom)
+       */
+      int GetConstraintAtomA(unsigned int index) const;
+      /** 
+       * @param index Constraint index.
+       * 
+       * @return The constraint atom b.
+       */
+      int GetConstraintAtomB(unsigned int index) const;
+      /** 
+       * @param index Constraint index.
+       * 
+       * @return The constraint atom c.
+       */
+      int GetConstraintAtomC(unsigned int index) const;
+      /** 
+       * @param index Constraint index.
+       * 
+       * @return The constraint atom d.
+       */
+      int GetConstraintAtomD(unsigned int index) const;
+      /** 
+       * @param a Atom index.
+       * 
+       * @return True if this atom is ignored.
+       */
+      bool IsIgnored(unsigned int a);
+      /** 
+       * @param a Atom index.
+       *
+       * @return True if this atom is fixed.
+       */
+      bool IsFixed(unsigned int a);
+      /** 
+       * @param a Atom index.
+       *
+       * @return True if the x coordinate for this atom is fixed.
+       */
+      bool IsXFixed(unsigned int a);
+      /** 
+       * @param a Atom index.
+       *
+       * @return True if the y coordinate for this atom is fixed.
+       */
+      bool IsYFixed(unsigned int a);
+      /** 
+       * @param a Atom index.
+       *
+       * @return True if the z coordinate for this atom is fixed.
+       */
+      bool IsZFixed(unsigned int a);
+      //@}
 
-    /////////////////////////////////////////////////////////////////////////
-    // Set Constraints                                                     //
-    /////////////////////////////////////////////////////////////////////////
-    //! \name Methods to set constraints
-    //@{
-    //! Set Constraint factor
-    void SetFactor(double factor);
-    //! Ignore the atom while setting up calculations
-    void AddIgnore(int a);
-    //! Fix the position of an atom
-    void AddAtomConstraint(int a);
-    //! Fix the x coordinate of the atom position
-    void AddAtomXConstraint(int a);
-    //! Fix the y coordinate of the atom position
-    void AddAtomYConstraint(int a);
-    //! Fix the z coordinate of the atom position
-    void AddAtomZConstraint(int a);
-    //! Constrain the bond length a-b
-    void AddDistanceConstraint(int a, int b, double length);
-    //! Constrain the angle a-b-c
-    void AddAngleConstraint(int a, int b, int c, double angle);
-    //! Constrain the torsion angle a-b-c-d
-    void AddTorsionConstraint(int a, int b, int c, int d, double torsion);
-    //! Delete a constraint
-    //! \par index constraint index
-    void DeleteConstraint(int index);
-    //@}
-    /////////////////////////////////////////////////////////////////////////
-    // Get Constraints                                                     //
-    /////////////////////////////////////////////////////////////////////////
-    //! \name Methods to get information about set constraints
-    //@{
-    //! Get Constraint factor
-    double GetFactor();
-    //! \returns the number of set constraints
-    int Size() const;
-    /*! The following constraint types are known: OBFF_CONST_IGNORE (ignore 
-     *  the atom while setting up calculations, forcefield implementations 
-     *  need to check this value in their setup function), OBFF_CONST_ATOM
-     *  (fix atom position), OBFF_CONST_ATOM_X (fix x coordinate), 
-     *  OBFF_CONST_ATOM_Y (fix y coordinate), OBFF_CONST_ATOM_Z (fix z 
-     *  coordinate), OBFF_CONST_BOND (constrain bond length), OBFF_CONST_ANGLE
-     *  (constrain angle), OBFF_CONST_TORSION (constrain torsion angle)
-     *  \return the constraint type
-     */
-    int GetConstraintType(unsigned int index) const;
-    /*! \return The constraint value, this can be a bond length, angle or 
-     *   torsion angle depending on the constraint type.
-     */
-    double GetConstraintValue(unsigned int index) const;
-    //! \return The constraint atom a (or fixed atom)
-    //! \par index constraint index
-    int GetConstraintAtomA(unsigned int index) const;
-    //! \return The constraint atom b
-    //! \par index constraint index
-    int GetConstraintAtomB(unsigned int index) const;
-    //! \return The constraint atom c
-    //! \par index constraint index
-    int GetConstraintAtomC(unsigned int index) const;
-    //! \return The constraint atom d
-    //! \par index constraint index
-    int GetConstraintAtomD(unsigned int index) const;
-    //! \return true if this atom is ignored
-    //! \par a atom index
-    bool IsIgnored(unsigned int a);
-    //! \return true if this atom is fixed
-    //! \par a atom index
-    bool IsFixed(unsigned int a);
-    //! \return true if the x coordinate for this atom is fixed
-    //! \par a atom index
-    bool IsXFixed(unsigned int a);
-    //! \return true if the y coordinate for this atom is fixed
-    //! \par a atom index
-    bool IsYFixed(unsigned int a);
-    //! \return true if the z coordinate for this atom is fixed
-    //! \par a atom index
-    bool IsZFixed(unsigned int a);
-    //! \return the ignored atom indexes as bitvec. (used in 
-    //! OBForceField::Setup() to determine if a call to 
-    //! OBForceField::SetupCalculations() is needed)
-    OBBitVec GetIgnoredBitVec() { return _ignored; }
-    //@}
+    protected: 
+      /**
+       * @return The constraint gradient for atom with index @p a.
+       */
+      Eigen::Vector3d GetGradient(int a);
+      /** 
+       * @brief Translate indices to OBAtom* objects, this function is called 
+       * from OBForceField::Setup,this function doesn't have to be called 
+       * from anywhere else.
+       */
+      void Setup(OBMol &mol);
+      /** 
+       * @return the ignored atom indexes as bitvec. (used in 
+       * OBForceField::Setup() to determine if a call to 
+       * OBForceField::SetupCalculations() is needed).
+       */
+      OBBitVec GetIgnoredBitVec() { return m_ignored; }
  
-  private:
-    std::vector<OBFFConstraint> _constraints;
-    OBBitVec	_ignored;
-    OBBitVec	_fixed;
-    OBBitVec	_Xfixed;
-    OBBitVec	_Yfixed;
-    OBBitVec	_Zfixed;
-    double _factor;
+      std::vector<OBFFConstraint> m_constraints;
+      OBBitVec m_ignored;
+      OBBitVec m_fixed;
+      OBBitVec m_Xfixed;
+      OBBitVec m_Yfixed;
+      OBBitVec m_Zfixed;
+      double   m_factor;
   };
  
   // Class OBForceField
   // class introduction in forcefield.cpp
   class OBFFParameter;
   class OBForceFieldPrivate;
-  class OBFPRT OBForceField : public OBPlugin
+  class OBFPRT OBForceField : public OBPlugin, public OBFunction
   {
   
     // Plugin stuff, replaces MAKE_PLUGIN(OBForceField)
@@ -223,7 +299,10 @@ namespace OpenBabel
     /// @endcond
 
     protected:
-
+      bool m_cutoff; //!< true = cut-off enabled
+      int m_loglvl; //!< Log level for output
+      //std::vector<Eigen::Vector3d> m_positions;
+      //std::vector<Eigen::Vector3d> m_gradients;
       /*! 
       Get the correct OBFFParameter from a OBFFParameter vector.
        
@@ -266,229 +345,312 @@ namespace OpenBabel
       use: torsion parameters, ...
     */
     OBFFParameter* GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
-    //! see GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)
+    /** 
+     * see GetParameter(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter).
+     */
     OBFFParameter* GetParameter(const char* a, const char* b, const char* c, const char* d, 
         std::vector<OBFFParameter> &parameter);
-    //! Get index for vector<OBFFParameter> ...
+    /** 
+     * Get index for vector<OBFFParameter> ...
+     */
     int GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
-           
-    /*! Calculate the potential energy function derivative numerically with 
-     *  repect to the coordinates of atom with index a (this vector is the gradient)
+    /** 
+     * @brief Calculate the potential energy function derivative numerically with 
+     * repect to the coordinates of atom with index a (this vector is the gradient)
      *
-     * \param a  provides coordinates
-     * \param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, 
+     * @param a  provides coordinates
+     * @param terms OBFF_ENERGY, OBFF_EBOND, OBFF_EANGLE, OBFF_ESTRBND, OBFF_ETORSION, 
      * OBFF_EOOP, OBFF_EVDW, OBFF_ELECTROSTATIC
-     * \return the negative gradient of atom a
+     * 
+     * @return the negative gradient of atom a
      */
     Eigen::Vector3d NumericalDerivative(OBAtom *a, int terms = OBFF_ENERGY);
     //! OB 3.0
     Eigen::Vector3d NumericalSecondDerivative(OBAtom *a, int terms = OBFF_ENERGY);
-    
-    /* 
-     *   NEW gradients functions
-     */ 
-    /*! Add grad to the gradient for atom with index idx
+    /*! 
+     * @brief Add @p p grad to the gradient for atom with index @p idx
      */
     void AddGradient(const Eigen::Vector3d &grad, int idx);
-    /*! Get the gradient for atom a.
+    /** 
+     * @brief Get the gradient for atom @p a.
      */
     Eigen::Vector3d GetGradient(OBAtom *a); 
-    /*! Get the pointer to the gradients
-     */
-    double* GetGradientPtr(); 
-    /*! Set all gradients to zero
+    /**
+     * @brief Set all gradients to zero
      */
     void ClearGradients(); 
-
-    /*! Check if two atoms are in the same ring. [NOTE: this function uses SSSR, 
-     *  this means that not all rings are found for bridged rings. This causes 
-     *  some problems with the MMFF94 validation.]
-     *  \param a atom a
-     *  \param b atom b
-     *  \return true if atom a and b are in the same ring
+    /** 
+     * @brief Check if two atoms are in the same ring. [NOTE: this function uses SSSR, 
+     * this means that not all rings are found for bridged rings. This causes 
+     * some problems with the MMFF94 validation.]
+     *  
+     * @param a Atom a.
+     * @param b Atom b.
+     * 
+     * @return True if atom a and b are in the same ring
      */
     bool IsInSameRing(OBAtom* a, OBAtom* b);
-    
+    /**
+     * @brief Get the intra groups bitvec vector.
+     */
     std::vector<OBBitVec>& GetIntraGroup();
+    /**
+     * @brief Get the inter groups bitvec vector.
+     */ 
     std::vector<OBBitVec>& GetInterGroup();
+    /**
+     * @brief Get the inter groups bitvec vector.
+     */
     std::vector<std::pair<OBBitVec, OBBitVec> >& GetInterGroups();
+    /**
+     * @brief Get the VDW pairs bitvec.
+     */
     OBBitVec& GetVDWPairs();
+    /**
+     * @brief Get the Electrostatic pairs bitvec.
+     */
     OBBitVec& GetElePairs();
     
-    OBForceFieldPrivate * const d;
-  public:
-    //! Destructor
-    virtual ~OBForceField();
+    OBForceFieldPrivate * const d; //!< the d-pointer
 
-    /*! \param ID forcefield id (Ghemical, MMFF94, UFF, ...).
-     *  \return A pointer to a forcefield (the default if ID is empty), or NULL if not available.
+  public:
+    /** 
+     * @brief Destructor.
+     */
+    virtual ~OBForceField();
+    /** 
+     * @param ID forcefield id (Ghemical, MMFF94, UFF, ...).
+     * 
+     * @return A pointer to a forcefield (the default if ID is empty), or 
+     * NULL if not available.
      */
     static OBForceField* FindForceField(const std::string& ID)
     { 
       return FindType(ID.c_str());
     } 
-    /*! \param ID forcefield id (Ghemical, MMFF94, UFF, ...).
-     *  \return A pointer to a forcefield (the default if ID is empty), or NULL if not available.
+    /** 
+     * @param ID forcefield id (Ghemical, MMFF94, UFF, ...).
+     * 
+     * @return A pointer to a forcefield (the default if ID is empty), or 
+     * NULL if not available.
      */
     static OBForceField* FindForceField(const char *ID)
     {
       return FindType(ID);
     }
-    /*
-     * Set the parameter file
+    /**
+     * @brief Set the parameter file
      */
     void SetParameterFile(const std::string &filename);
-    /*
-     * Get the parameter file
+    /**
+     * @brief Get the parameter file
      */
     std::string& GetParameterFile();
-    /*! \return The unit (kcal/mol, kJ/mol, ...) in which the energy is expressed as std::string.
+    /** 
+     * @return The unit (kcal/mol, kJ/mol, ...) in which the energy is 
+     * expressed as std::string.
      */  
     virtual std::string GetUnit() { return std::string("au"); }
-    /* Does this force field have analytical gradients defined for all
+    /** 
+     * @brief Does this force field have analytical gradients defined for all
      * calculation components (bonds, angles, non-bonded, etc.)
      * If this is true, code should default to using OBFF_ANALYTICAL_GRADIENT
      * for SteepestDescent() or ConjugateGradients().
      * \return True if all analytical gradients are implemented.
      */
     virtual bool HasAnalyticalGradients() { return false; }
-    /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Keep current constraints.
-     *  \param mol The OBMol object that contains the atoms and bonds.
-     *  \return True if succesfull.
+    /** 
+     * @brief Setup the forcefield for mol (assigns atom types, charges, etc.). 
+     * Keep current constraints.
+     * 
+     * @param mol The OBMol object that contains the atoms and bonds.
+     * 
+     * @return True if succesfull.
      */
     bool Setup(OBMol &mol); 
-    /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Use new constraints. 
-     *  \param mol The OBMol object that contains the atoms and bonds.
-     *  \param constraints The OBFFConstraints object that contains the constraints.
-     *  \return True if succesfull.
+    /** 
+     * @brief Setup the forcefield for mol (assigns atom types, charges, etc.). 
+     * Use new constraints. 
+     * 
+     * @param mol The OBMol object that contains the atoms and bonds.
+     * @param constraints The OBFFConstraints object that contains the constraints.
+     * 
+     * @return True if succesfull.
      */
     bool Setup(OBMol &mol, OBFFConstraints &constraints);
-    /*! Load the parameters (this function is overloaded by the individual forcefields,
-     *  and is called autoamically from OBForceField::Setup()).
+    /** 
+     * @brief Load the parameters (this function is overloaded by the individual 
+     * forcefields, and is called autoamically from OBForceField::Setup()).
      */
     // move to protected in future version
     virtual bool ParseParamFile() { return false; } 
-    /*! Set the atom types (this function is overloaded by the individual forcefields,
-     *  and is called autoamically from OBForceField::Setup()).
+    /** 
+     * @brief Set the atom types (this function is overloaded by the individual 
+     * forcefields, and is called autoamically from OBForceField::Setup()).
      */
     // move to protected in future version
     virtual bool SetTypes() { return false; }
-    /*! Set the formal charges (this function is overloaded by the individual forcefields,
-     *  and is called autoamically from OBForceField::Setup()).
+    /** 
+     * @brief Set the formal charges (this function is overloaded by the individual 
+     * forcefields, and is called autoamically from OBForceField::Setup()).
      */
     // move to protected in future version
     virtual bool SetFormalCharges() { return false; }
-    /*! Set the partial charges (this function is overloaded by the individual forcefields,
-     *  and is called autoamically from OBForceField::Setup()).
+    /** 
+     * @brief Set the partial charges (this function is overloaded by the individual 
+     * forcefields, and is called autoamically from OBForceField::Setup()).
      */
     // move to protected in future version
     virtual bool SetPartialCharges() { return false; }
-    /*! Setup the calculations (this function is overloaded by the individual forcefields,
-     *  and is called autoamically from OBForceField::Setup()).
+    /** 
+     * @brief Setup the calculations (this function is overloaded by the individual 
+     * forcefields, and is called autoamically from OBForceField::Setup()).
      */
     // move to protected in future version
     virtual bool SetupCalculations() { return false; }
-    /*! Compare the internal forcefield OBMol object to mol. If the two have the
-     *  same number of atoms and bonds, and all atomic numbers are the same, 
-     *  this function returns false, and no call to Setup is needed.
-     *  \return True if Setup needs to be called.
+    /** 
+     * @brief Compare the internal forcefield OBMol object to mol. If the two have the
+     * same number of atoms and bonds, and all atomic numbers are the same, 
+     * this function returns false, and no call to Setup is needed.
+     * 
+     * @return True if Setup needs to be called.
      */
     bool IsSetupNeeded(OBMol &mol);
-    /*!
-     * Get the molecule stored in the force field.
+    /**
+     * @brief Get the molecule stored in the force field.
      */
     OBMol* GetMolecule();
-    /*! Get the force atom types. The atom types will be added to 
-     *  the atoms of mol as OBPairData. The attribute will be "FFAtomType".
+    /** 
+     * @brief Get the force atom types. The atom types will be added to 
+     * the atoms of mol as OBPairData. The attribute will be "FFAtomType".
      *
-     *  \code
-     *  ...
-     *  pFF->Setup(&mol);
-     *  pFF->GetAtomTypes(&mol);
-     *  FOR_ATOMS_OF_MOL (atom, mol) {
-     *    OBPairData *type = (OBPairData*) atom->GetData("FFAtomType");
-     *    if (type)
-     *      cout << "atom " << atom->GetIdx() << " : " << type->GetValue() << endl;
-     *  }
-     *  ...
-     *  \endcode
+     * @code
+     * ...
+     * pFF->Setup(&mol);
+     * pFF->GetAtomTypes(&mol);
+     * FOR_ATOMS_OF_MOL (atom, mol) {
+     *   OBPairData *type = (OBPairData*) atom->GetData("FFAtomType");
+     *   if (type)
+     *     cout << "atom " << atom->GetIdx() << " : " << type->GetValue() << endl;
+     * }
+     * ...
+     * @endcode
      */
     bool GetAtomTypes(OBMol &mol);
-    /*! Get the force field formal charges. The formal charges will be added to 
-     *  the atoms of mol as OBPairData. The attribute will be "FFPartialCharge".
+    /** 
+     * @brief Get the force field formal charges. The formal charges will be 
+     * added to the atoms of mol as OBPairData. The attribute will be 
+     * "FFPartialCharge".
      *
-     *  \code
-     *  ...
-     *  pFF->Setup(&mol);
-     *  pFF->GetPartialCharges(&mol);
-     *  FOR_ATOMS_OF_MOL (atom, mol) {
-     *    OBPairData *chg = (OBPairData*) atom->GetData("FFPartialCharge");
-     *    if (chg)
-     *      cout << "atom " << atom->GetIdx() << " : " << chg->GetValue() << endl;
-     *  }
-     *  ...
-     *  \endcode
+     * @code
+     * ...
+     * pFF->Setup(&mol);
+     * pFF->GetPartialCharges(&mol);
+     * FOR_ATOMS_OF_MOL (atom, mol) {
+     *   OBPairData *chg = (OBPairData*) atom->GetData("FFPartialCharge");
+     *   if (chg)
+     *     cout << "atom " << atom->GetIdx() << " : " << chg->GetValue() << endl;
+     * }
+     * ...
+     * @endcode
      */
     bool GetPartialCharges(OBMol &mol);
-    /*! Get coordinates for current conformer and attach OBConformerData with energies, forces, ... to mol.
-     *  \param mol The OBMol object to copy the coordinates to (from OBForceField::_mol).
-     *  \return True if succesfull.
+    /** 
+     * @brief Get coordinates for current conformer and attach OBConformerData 
+     * with energies, forces, ... to mol.
+     * 
+     * @param mol The OBMol object to copy the coordinates to (from OBForceField::_mol).
+     * 
+     * @return True if succesfull.
      */
     bool GetCoordinates(OBMol &mol);
-    /*! Get coordinates for all conformers and attach OBConformerData with energies, forces, ... to mol.
-     *  \param mol The OBMol object to copy the coordinates to (from OBForceField::_mol).
-     *  \return True if succesfull.
+    /** 
+     * @brief Get coordinates for all conformers and attach OBConformerData with 
+     * energies, forces, ... to mol.
+     * 
+     * @param mol The OBMol object to copy the coordinates to (from OBForceField::_mol).
+     * 
+     * @return True if succesfull.
      */
     bool GetConformers(OBMol &mol);
-    /*! Set coordinates for current conformer.
-     *  \param mol the OBMol object to copy the coordinates from (to OBForceField::_mol).
-     *  \return true if succesfull.
+    /** 
+     * @brief Set coordinates for current conformer.
+     * 
+     * @param mol the OBMol object to copy the coordinates from (to OBForceField::_mol).
+     * 
+     * @return true if succesfull.
      */
     bool SetCoordinates(OBMol &mol);
-    /*! Set coordinates for all conformers.
-     *  \param mol The OBMol object to copy the coordinates from (to OBForceField::_mol).
-     *  \return True if succesfull.
+    /** 
+     * @brief Set coordinates for all conformers.
+     *  
+     * @param mol The OBMol object to copy the coordinates from (to OBForceField::_mol).
+     * 
+     * @return True if succesfull.
      */
     bool SetConformers(OBMol &mol);
-    /*! Create a grid with spacing p step and p padding. Place a probe atom of type probe at every grid point,
-     *  calculate the energy and store it in the grid. These grids can then be used to create isosurfaces to
-     *  identify locations where the probe atom has favourable interactions with the molecule.
-     *  \param step The grid step size in A..
-     *  \param padding The padding for the grid in A.
-     *  \param type The force field atom type for the probe.
-     *  \param pchg The partial charge for the probe atom.
-     *  \return Pointer to the grid constaining the results.
+    /** 
+     * @brief Create a grid with spacing p step and p padding. Place a probe 
+     * atom of type probe at every grid point, calculate the energy and store 
+     * it in the grid. These grids can then be used to create isosurfaces to
+     * identify locations where the probe atom has favourable interactions 
+     * with the molecule.
+     * 
+     * @param step The grid step size in A..
+     * @param padding The padding for the grid in A.
+     * @param type The force field atom type for the probe.
+     * @param pchg The partial charge for the probe atom.
+     * 
+     * @return Pointer to the grid constaining the results.
      */
     OBGridData *GetGrid(double step, double padding, const char *type, double pchg);
-
+    /** 
+     * @brief Get the pointer to the gradients.
+     */
+    //double* GetGradientPtr(); 
+    //std::vector<Eigen::Vector3d>&  GetPositions() { return m_positions; } 
+    //std::vector<Eigen::Vector3d>&  GetGradients() { return m_gradients; } 
+ 
     /////////////////////////////////////////////////////////////////////////
     // Interacting groups                                                  //
     /////////////////////////////////////////////////////////////////////////
       
     //! \name Methods for specifying interaction groups
     //@{
-    /*! Enable intra-molecular interactions for group (bonds, angles, strbnd, torsions, oop). 
-     *  This function should be called before Setup().
-     *  \param group OBBitVec with bits set for the indexes of the atoms which make up the group.
+    /** 
+     * @brief Enable intra-molecular interactions for group (bonds, angles, 
+     * strbnd, torsions, oop). This function should be called before Setup().
+     *
+     * @param group OBBitVec with bits set for the indexes of the atoms which 
+     * make up the group.
      */
     void AddIntraGroup(OBBitVec &group);
-    /*! Enable inter-molecular interactions for group (non-bonded: vdw & ele).
-     *  This function should be called before Setup().
-     *  \param group OBBitVec with bits set for the indexes of the atoms which make up the group.
+    /** 
+     * @brief Enable inter-molecular interactions for group (non-bonded: vdw & 
+     * ele). This function should be called before Setup().
+     *
+     * @param group OBBitVec with bits set for the indexes of the atoms which 
+     * make up the group.
      */
     void AddInterGroup(OBBitVec &group);
-    /*! Enable inter-molecular interactions between group1 and group2 (non-bonded: vdw & ele). 
-     *  Note that this function doesn't enable bonded interactions in either group. Non-bonded 
-     *  interactions in the groups itself are also not enabled.
-     *  This function should be called before Setup().
-     *  \param group1 OBBitVec with bits set for the indexes of the atoms which make up the first group.
-     *  \param group2 OBBitVec with bits set for the indexes of the atoms which make up the second group.
+    /** 
+     * @brief Enable inter-molecular interactions between group1 and group2 
+     * (non-bonded: vdw & ele). Note that this function doesn't enable bonded 
+     * interactions in either group. Non-bonded interactions in the groups 
+     * itself are also not enabled. This function should be called before Setup().
+     *
+     * @param group1 OBBitVec with bits set for the indexes of the atoms which 
+     * make up the first group.
+     * @param group2 OBBitVec with bits set for the indexes of the atoms which 
+     * make up the second group.
      */
     void AddInterGroups(OBBitVec &group1, OBBitVec &group2);
-    /*! Clear all previously specified groups.
+    /** 
+     * @brief Clear all previously specified groups.
      */
     void ClearGroups(); 
-    /*! \return true if there are groups.
+    /** 
+     * @return True if there are groups.
      */ 
     bool HasGroups(); 
     //@}
@@ -499,53 +661,73 @@ namespace OpenBabel
       
     //! \name Methods for Cut-off distances
     //@{
-    /*! Enable or disable Cut-offs. Cut-offs are disabled by default.
-     *  \param enable Enable when true, disable when false.
+    /** 
+     * @brief Enable or disable Cut-offs. Cut-offs are disabled by default.
+     *  
+     * @param enable Enable when true, disable when false.
      */
     void EnableCutOff(bool enable);
-    /*! \return True if Cut-off distances are used.
+    /** 
+     * @return True if Cut-off distances are used.
      */
-    bool IsCutOffEnabled();
-    /*! Set the VDW cut-off distance to r. Note that this does not enable cut-off distances.
-     *  \param r The VDW cut-off distance to be used in A.
+    bool IsCutOffEnabled() { return m_cutoff; }
+    /*! 
+     * @brief Set the VDW cut-off distance to r. Note that this does not 
+     * enable cut-off distances.
+     * 
+     * @param r The VDW cut-off distance to be used in A.
      */
     void SetVDWCutOff(double r);
-    /*! Get the VDW cut-off distance.
-     *  \return The VDW cut-off distance in A.
+    /** 
+     * @brief Get the VDW cut-off distance.
+     * 
+     * @return The VDW cut-off distance in A.
      */
     double GetVDWCutOff();
-    /*! Set the Electrostatic cut-off distance to r. Note that this does not 
-     *  enable cut-off distances.
-     *  \param r The electrostatic cut-off distance to be used in A.
+    /** 
+     * @brief Set the Electrostatic cut-off distance to r. Note that this 
+     * does not enable cut-off distances.
+     *
+     * @param r The electrostatic cut-off distance to be used in A.
      */
     void SetElectrostaticCutOff(double r);
-    /*! Get the Electrostatic cut-off distance.
-     *  \return The electrostatic cut-off distance in A.
+    /** 
+     * @brief Get the Electrostatic cut-off distance.
+     * 
+     * @return The electrostatic cut-off distance in A.
      */
     double GetElectrostaticCutOff();
-    /*! Set the frequency by which non-bonded pairs are updated. Values from 10 to 20
-     *  are recommended. Too low will decrease performance, too high will cause 
-     *  non-bonded interactions within cut-off not to be calculated.
-     *  \param f The pair list update frequency.
+    /** 
+     * @brief Set the frequency by which non-bonded pairs are updated. Values 
+     * from 10 to 20 are recommended. Too low will decrease performance, too 
+     * high will cause non-bonded interactions within cut-off not to be 
+     * calculated.
+     *
+     * @param f The pair list update frequency.
      */ 
     void SetUpdateFrequency(int f);
-    /*! Get the frequency by which non-bonded pairs are updated.
-     *  \return The pair list update frequency.
+    /** 
+     * @brief Get the frequency by which non-bonded pairs are updated.
+     *
+     * @return The pair list update frequency.
      */ 
     int GetUpdateFrequency();
-    /*! Set the bits in _vdwpairs and _elepairs to 1 for interactions that 
-     *  are within cut-off distance. This function is called in minimizing
-     *  algorithms such as SteepestDescent and ConjugateGradients. 
+    /** 
+     * @brief Set the bits in _vdwpairs and _elepairs to 1 for interactions that 
+     * are within cut-off distance. This function is called in minimizing
+     * algorithms such as SteepestDescent and ConjugateGradients. 
      */ 
     void UpdatePairsSimple();
     //void UpdatePairsGroup(); TODO
-
-    /*! Get the number of non-bonded pairs in _mol.
-     *  \return The number of pairs currently enabled (within cut-off distance)
+    /** 
+     * @brief Get the number of non-bonded pairs in _mol.
+     *
+     * @return The number of pairs currently enabled (within cut-off distance)
      */ 
     unsigned int GetNumPairs();
-    /*! Set bits in range 0..._numpairs-1 to 1. Using this means there will
-     *  be no cut-off. (not-working: see code for more information.
+    /** 
+     * @brief Set bits in range 0..._numpairs-1 to 1. Using this means there will
+     * be no cut-off. (not-working: see code for more information.
      */ 
     void EnableAllPairs()
     {
@@ -559,64 +741,93 @@ namespace OpenBabel
     // Energy Evaluation                                                   //
     /////////////////////////////////////////////////////////////////////////
       
+    double Eval(bool gradients = true) 
+    {
+      return Energy(gradients);
+    }
+
     //! \name Methods for energy evaluation
     //@{
-    /*! \param gradients Set to true when the gradients need to be calculated 
-     *  (needs to be done before calling GetGradient()).
-     *  \return Total energy.
-     *   \par Output to log:
+    /** 
+     * @param gradients Set to true when the gradients need to be calculated 
+     * (needs to be done before calling GetGradient()).
+     * 
+     * @return Total energy.
+     * 
+     * @par Output to log:
      *    OBFF_LOGLVL_NONE:   none \n
      *    OBFF_LOGLVL_LOW:    none \n
      *    OBFF_LOGLVL_MEDIUM: energy for indivudual energy terms \n
      *    OBFF_LOGLVL_HIGH:   energy for individual energy interactions \n
      */
     virtual double Energy(bool gradients = true) { return 0.0f; }
-    /*! \param gradients Set to true when the gradients need to be calculated 
-     *  (needs to be done before calling GetGradient()).
-     *  \return Bond stretching energy.
-     *   \par Output to log:
+    /** 
+     * @param gradients Set to true when the gradients need to be calculated 
+     * (needs to be done before calling GetGradient()).
+     * 
+     * @return Bond stretching energy.
+     * 
+     * @par Output to log:
      *    see Energy()
      */
     virtual double E_Bond(bool gradients = true) { return 0.0f; }
-    /*! \param gradients Set to true when the gradients need to be calculated 
+    /** 
+     * @param gradients Set to true when the gradients need to be calculated 
      *  (needs to be done before calling GetGradient()).
-     *  \return Angle bending energy.
-     *  \par Output to log:
-     *   see Energy()
+     *  
+     * @return Angle bending energy.
+     *  
+     * @par Output to log:
+     *    see Energy()
      */
     virtual double E_Angle(bool gradients = true) { return 0.0f; }
-    /*! \param gradients Set to true when the gradients need to be calculated 
-     *  (needs to be done before calling GetGradient()).
-     *  \return Stretch bending energy.
-     *   \par Output to log:
+    /** 
+     * @param gradients Set to true when the gradients need to be calculated 
+     * (needs to be done before calling GetGradient()).
+     * 
+     * @return Stretch bending energy.
+     * 
+     * @par Output to log:
      *    see Energy()
      */ 
     virtual double E_StrBnd(bool gradients = true) { return 0.0f; }
-    /*! \param gradients Set to true when the gradients need to be calculated 
-     *  (needs to be done before calling GetGradient()).
-     *  \return Torsional energy.
-     *    \par Output to log:
+    /** 
+     * @param gradients Set to true when the gradients need to be calculated 
+     * (needs to be done before calling GetGradient()).
+     * 
+     * @return Torsional energy.
+     * 
+     * @par Output to log:
      *	  see Energy()
      */ 
     virtual double E_Torsion(bool gradients = true) { return 0.0f; }
-    /*! \param gradients Set to true when the gradients need to be calculated 
-     *  (needs to be done before calling GetGradient()).
-     *  \return Out-Of-Plane bending energy.
-     *   \par Output to log:
+    /** 
+     * @param gradients Set to true when the gradients need to be calculated 
+     * (needs to be done before calling GetGradient()).
+     * 
+     * @return Out-Of-Plane bending energy.
+     * 
+     * @par Output to log:
      *	  see Energy()
      */ 
     virtual double E_OOP(bool gradients = true) { return 0.0f; }
-    /*! \param gradients Set to true when the gradients need to be calculated 
-     *  (needs to be done before calling GetGradient()).
-     *  \return Van der Waals energy.
-     *   \par Output to log:
+    /** 
+     * @param gradients Set to true when the gradients need to be calculated 
+     * (needs to be done before calling GetGradient()).
+     * 
+     * @return Van der Waals energy.
+     * 
+     * @par Output to log:
      *	  see Energy()
      */ 
     virtual double E_VDW(bool gradients = true) { return 0.0f; }
-    /*! \param gradients Set to true when the gradients need to be calculated 
-     *  (needs to be done before calling GetGradient()).
-     *  \return Electrostatic energy.
-     *   \par Output to log:
+    /** 
+     * @param gradients Set to true when the gradients need to be calculated 
+     * (needs to be done before calling GetGradient()).
+     * 
+     * @return Electrostatic energy.
+     * 
+     * @par Output to log:
      *	  see Energy()
      */ 
     virtual double E_Electrostatic(bool gradients = true) { return 0.0f; }
@@ -628,58 +839,71 @@ namespace OpenBabel
       
     //! \name Methods for logging
     //@{
-    /*! Print the atom types to the log.
+    /** 
+     * @brief Print the atom types to the log.
      */
     void PrintTypes();
-    /*! Print the formal charges to the log (atom.GetPartialCharge(), 
+    /** 
+     * @brief Print the formal charges to the log (atom.GetPartialCharge(), 
      *  MMFF94 FC's are not always int).
      */ 
     void PrintFormalCharges();
-    /*! Print the partial charges to the log.
+    /** 
+     * @brief Print the partial charges to the log.
      */ 
     void PrintPartialCharges();
-    /*! Print the velocities to the log.
+    /** 
+     * @brief Print the velocities to the log.
      */ 
     void PrintVelocities();
-    /*! Set the stream for logging (can also be &cout for logging to screen).
-     *  \param pos Stream (when pos is 0, std::cout wil be used).
-     *  \return True if succesfull.
+    /** 
+     * @brief Set the stream for logging (can also be &cout for logging to screen).
+     * 
+     * @param pos Stream (when pos is 0, std::cout wil be used).
+     * 
+     * @return True if succesfull.
      */
     bool SetLogFile(std::ostream *pos);
-    /*! Set the log level (OBFF_LOGLVL_NONE, OBFF_LOGLVL_LOW, OBFF_LOGLVL_MEDIUM, OBFF_LOGLVL_HIGH).
-     *  Inline if statements for logging are available: 
-     *  \code
-     *  #define IF_OBFF_LOGLVL_LOW    if(GetLogLevel() >= OBFF_LOGLVL_LOW)
-     *  #define IF_OBFF_LOGLVL_MEDIUM if(GetLogLevel() >= OBFF_LOGLVL_MEDIUM)
-     *  #define IF_OBFF_LOGLVL_HIGH   if(GetLogLevel() >= OBFF_LOGLVL_HIGH)
-     *  \endcode
+    /** 
+     * @brief Set the log level (OBFF_LOGLVL_NONE, OBFF_LOGLVL_LOW, OBFF_LOGLVL_MEDIUM, OBFF_LOGLVL_HIGH).
+     * Inline if statements for logging are available: 
+     * @code
+     * #define IF_OBFF_LOGLVL_LOW    if(GetLogLevel() >= OBFF_LOGLVL_LOW)
+     * #define IF_OBFF_LOGLVL_MEDIUM if(GetLogLevel() >= OBFF_LOGLVL_MEDIUM)
+     * #define IF_OBFF_LOGLVL_HIGH   if(GetLogLevel() >= OBFF_LOGLVL_HIGH)
+     * @endcode
      *
-     *  example:
-     *  \code
-     *  SetLogLevel(OBFF_LOGLVL_MEDIUM);
-     *  IF_OBFF_LOGLVL_HIGH {
-     *    OBFFLog("this text will NOT be logged...\n");
-     *  }
+     * example:
+     * @code
+     * SetLogLevel(OBFF_LOGLVL_MEDIUM);
+     * IF_OBFF_LOGLVL_HIGH {
+     *   OBFFLog("this text will NOT be logged...\n");
+     * }
      *
-     *  IF_OBFF_LOGLVL_LOW {
-     *    OBFFLog"this text will be logged...\n");
-     *  }
+     * IF_OBFF_LOGLVL_LOW {
+     *   OBFFLog"this text will be logged...\n");
+     * }
      *
-     *  IF_OBFF_LOGLVL_MEDIUM {
-     *    OBFFLog("this text will also be logged...\n");
-     *  }
-     *  \endcode
+     * IF_OBFF_LOGLVL_MEDIUM {
+     *   OBFFLog("this text will also be logged...\n");
+     * }
+     * @endcode
      */
     bool SetLogLevel(int level);
-    /*! \return The log level.
+    /** 
+     * @return The log level.
      */ 
-    int GetLogLevel();
-    /*! Print msg to the logfile.
-     *  \param msg The message to print.
+    int GetLogLevel() { return m_loglvl; }
+    /** 
+     * @brief Print msg to the logfile.
+     * 
+     * @param msg The message to print.
      */
     void OBFFLog(std::string msg);
-    /*! Print msg to the logfile.
-     *  \param msg The message to print.
+    /** 
+     * @brief Print msg to the logfile.
+     * 
+     * @param msg The message to print.
      */
     void OBFFLog(const char *msg);
     //@}
@@ -690,19 +914,22 @@ namespace OpenBabel
       
     //! \name Methods for structure generation
     //@{
-    //! Generate coordinates for the molecule (distance geometry). (OB 3.0).
+    /**
+     * @brief Generate coordinates for the molecule (distance geometry). (OB 3.0).
+     */
     void DistanceGeometry();
-    /*! Generate conformers for the molecule (systematicaly rotating torsions).
+    /** 
+     * @brief Generate conformers for the molecule (systematicaly rotating torsions).
      *  
-     *  The initial starting structure here is important, this structure should be
-     *  minimized for the best results. SystematicRotorSearch works by rotating around
-     *  the rotatable bond in a molecule (see OBRotamerList class). This rotating generates 
-     *  multiple conformers. The energy for all these conformers is then evaluated and the 
-     *  lowest energy conformer is selected.
+     * The initial starting structure here is important, this structure should be
+     * minimized for the best results. SystematicRotorSearch works by rotating around
+     * the rotatable bond in a molecule (see OBRotamerList class). This rotating generates 
+     * multiple conformers. The energy for all these conformers is then evaluated and the 
+     * lowest energy conformer is selected.
      *
-     *  \param geomSteps The number of steps to take during geometry optimization.
+     * @param geomSteps The number of steps to take during geometry optimization.
      *        
-     *	\par Output to log:
+     * @par Output to log:
      *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
      *	too much information about the energy calculations needed for this function will interfere with the output for
      *	this function. \n\n
@@ -712,41 +939,47 @@ namespace OpenBabel
      *  OBFF_LOGLVL_HIGH:   See note above. \n 
      */
     void SystematicRotorSearch(unsigned int geomSteps = 2500);
-    /*! Generate conformers for the molecule by systematicaly rotating torsions. To be used in combination with 
-     *  SystematicRotorSearchNexConformer().
+    /** 
+     * @brief Generate conformers for the molecule by systematicaly rotating torsions. To be used in combination with 
+     * SystematicRotorSearchNexConformer().
      *
-     *  example:
-     *  \code
-     *  // pFF is a pointer to a OBForceField class 
-     *  pFF->SystematicRotorSearchInitialize(300);
-     *  while (pFF->SystematicRotorSearchNextConformer(300)) {
-     *    // do some updating in your program (show last generated conformer, ...)
-     *  }
-     *  \endcode
+     * example:
+     * @code
+     * // pFF is a pointer to a OBForceField class 
+     * pFF->SystematicRotorSearchInitialize(300);
+     * while (pFF->SystematicRotorSearchNextConformer(300)) {
+     *   // do some updating in your program (show last generated conformer, ...)
+     * }
+     * @endcode
      * 
-     *  If you don't need any updating in your program, SystematicRotorSearch() is recommended.
+     * If you don't need any updating in your program, SystematicRotorSearch() is recommended.
      *
-     *  \param geomSteps The number of steps to take during geometry optimization.
-     *  \return The number of conformers.
+     * @param geomSteps The number of steps to take during geometry optimization.
+     * 
+     * @return The number of conformers.
      */
     int SystematicRotorSearchInitialize(unsigned int geomSteps = 2500);
-    /*! Evaluate the next conformer. 
-     *  \param geomSteps The number of steps to take during geometry optimization.
-     *  \return True if there are more conformers.
+    /** 
+     * @brief Evaluate the next conformer. 
+     * 
+     * @param geomSteps The number of steps to take during geometry optimization.
+     * 
+     * @return True if there are more conformers.
      */ 
     bool SystematicRotorSearchNextConformer(unsigned int geomSteps = 2500);
-    /*! Generate conformers for the molecule (randomly rotating torsions).
+    /** 
+     * @brief Generate conformers for the molecule (randomly rotating torsions).
      *  
-     *  The initial starting structure here is important, this structure should be
-     *  minimized for the best results. RandomRotorSearch works by randomly rotating around
-     *  the rotatable bonds in a molecule (see OBRotamerList class). This rotating generates 
-     *  multiple conformers. The energy for all these conformers is then evaluated and the 
-     *  lowest energy conformer is selected.
+     * The initial starting structure here is important, this structure should be
+     * minimized for the best results. RandomRotorSearch works by randomly rotating around
+     * the rotatable bonds in a molecule (see OBRotamerList class). This rotating generates 
+     * multiple conformers. The energy for all these conformers is then evaluated and the 
+     * lowest energy conformer is selected.
      *
-     *  \param conformers The number of random conformers to consider during the search.
-     *  \param geomSteps The number of steps to take during geometry optimization for each conformer.
+     * @param conformers The number of random conformers to consider during the search.
+     * @param geomSteps The number of steps to take during geometry optimization for each conformer.
      *        
-     *	\par Output to log:
+     * @par Output to log:
      *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
      *	too much information about the energy calculations needed for this function will interfere with the output for
      *	this function. \n\n
@@ -756,42 +989,47 @@ namespace OpenBabel
      *  OBFF_LOGLVL_HIGH:   See note above. \n 
      */
     void RandomRotorSearch(unsigned int conformers, unsigned int geomSteps = 2500);
-    /*! Generate conformers for the molecule by randomly rotating torsions. To be used in combination with 
-     *  RandomRotorSearchNexConformer().
+    /** 
+     * @brief Generate conformers for the molecule by randomly rotating torsions. To be used in combination with 
+     * RandomRotorSearchNexConformer().
      *
-     *  example:
-     *  \code
-     *  // pFF is a pointer to a OBForceField class 
-     *  pFF->RandomRotorSearchInitialize(300);
-     *  while (pFF->RandomRotorSearchNextConformer(300)) {
-     *    // do some updating in your program (show last generated conformer, ...)
-     *  }
-     *  \endcode
+     * example:
+     * @code
+     * // pFF is a pointer to a OBForceField class 
+     * pFF->RandomRotorSearchInitialize(300);
+     * while (pFF->RandomRotorSearchNextConformer(300)) {
+     *   // do some updating in your program (show last generated conformer, ...)
+     * }
+     * @endcode
      * 
-     *  If you don't need any updating in your program, RandomRotorSearch() is recommended.
+     * If you don't need any updating in your program, RandomRotorSearch() is recommended.
      *
-     *  \param conformers The number of random conformers to consider during the search
-     *  \param geomSteps The number of steps to take during geometry optimization
+     * @param conformers The number of random conformers to consider during the search
+     * @param geomSteps The number of steps to take during geometry optimization
      */
     void RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps = 2500);
-    /*! Evaluate the next conformer. 
-     *  \param geomSteps The number of steps to take during geometry optimization.
-     *  \return True if there are more conformers.
+    /** 
+     * @brief Evaluate the next conformer. 
+     * 
+     * @param geomSteps The number of steps to take during geometry optimization.
+     * 
+     * @return True if there are more conformers.
      */ 
     bool RandomRotorSearchNextConformer(unsigned int geomSteps = 2500);
-    /*! Generate conformers for the molecule (randomly rotating torsions).
+    /** 
+     * @brief Generate conformers for the molecule (randomly rotating torsions).
      *  
-     *  The initial starting structure here is important, this structure should be
-     *  minimized for the best results. WeightedRotorSearch works by randomly rotating around
-     *  the rotatable bonds in a molecule (see OBRotamerList class). Unlike RandomRotorSearch()
-     *  the random choice of torsions is reweighted based on the energy of the generated conformer.
-     *  Over time, the generated conformers for each step should become increasingly better.
-     *  The lowest energy conformer is selected.
+     * The initial starting structure here is important, this structure should be
+     * minimized for the best results. WeightedRotorSearch works by randomly rotating around
+     * the rotatable bonds in a molecule (see OBRotamerList class). Unlike RandomRotorSearch()
+     * the random choice of torsions is reweighted based on the energy of the generated conformer.
+     * Over time, the generated conformers for each step should become increasingly better.
+     * The lowest energy conformer is selected.
      *
-     * \param conformers The number of random conformers to consider during the search.
-     * \param geomSteps The number of steps to take during geometry optimization for each conformer.
+     * @param conformers The number of random conformers to consider during the search.
+     * @param geomSteps The number of steps to take during geometry optimization for each conformer.
      *        
-     *	\par Output to log:
+     * @par Output to log:
      *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
      *	too much information about the energy calculations needed for this function will interfere with the output for
      *	this function. \n\n
@@ -803,180 +1041,19 @@ namespace OpenBabel
     void WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps);
 
     /////////////////////////////////////////////////////////////////////////
-    // Energy Minimization                                                 //
-    /////////////////////////////////////////////////////////////////////////
-      
-    //! \name Methods for energy minimization
-    //@{
-    /*! Set the LineSearchType. The default type is LineSearchType::Simple.
-     *  \param type The LineSearchType to be used in SteepestDescent and ConjugateGradients.
-     */ 
-    void SetLineSearchType(int type);
-    /*! Get the LineSearchType.
-     *  \return The current LineSearchType.
-     */ 
-    int GetLineSearchType();
-    /*! Perform a linesearch for the entire molecule in direction p direction. 
-     *  This function is called when using LineSearchType::Simple.
-     * 
-     *  \param currentCoords Start coordinates.
-     *  \param direction The search direction.
-     *  \return alpha, The scale of the step we moved along the direction vector.
-     *
-     *  \par Output to log:
-     *  OBFF_LOGLVL_NONE:   none \n
-     *  OBFF_LOGLVL_LOW:    none \n
-     *  OBFF_LOGLVL_MEDIUM: none \n
-     *  OBFF_LOGLVL_HIGH:   none \n
-     */
-    double LineSearch(double *currentCoords, double *direction);
-    /*! Perform a linesearch for the entire molecule.
-     *  This function is called when using LineSearchType::Newton2Num.
-     *
-     *  \param direction The search direction.
-     *  \return alpha, The scale of the step we moved along the direction vector.
-     *
-     *  \par Output to log:
-     *  OBFF_LOGLVL_NONE:   none \n
-     *  OBFF_LOGLVL_LOW:    none \n
-     *  OBFF_LOGLVL_MEDIUM: none \n
-     *  OBFF_LOGLVL_HIGH:   none \n
-     */
-    double Newton2NumLineSearch(double *direction);
-    /*! Set the coordinates of the atoms to origCoord + step.
-     *  \param origCoords Start coordinates.
-     *  \param direction The search direction.
-     *  \param step The step to take.
-     */
-    void   LineSearchTakeStep(double *origCoords, double *direction, double step);
-    /*! Perform steepest descent optimalization for steps steps or until convergence criteria is reached.
-     * 
-     *  \param steps The number of steps.
-     *  \param econv Energy convergence criteria. (defualt is 1e-6)
-     *
-     *  \par Output to log:
-     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-     *  too much information about the energy calculations needed for the minimization will interfere with the list 
-     *  of energies for succesive steps. \n\n
-     *  OBFF_LOGLVL_NONE:   none \n
-     *  OBFF_LOGLVL_LOW:    header including number of steps and first step \n
-     *  OBFF_LOGLVL_MEDIUM: see note above \n
-     *  OBFF_LOGLVL_HIGH:   see note above \n 
-     */
-    void SteepestDescent(int steps, double econv = 1e-6f);
-    /*! Initialize steepest descent optimalization, to be used in combination with SteepestDescentTakeNSteps().
-     * 
-     *  example:
-     *  \code
-     *  // pFF is a pointer to a OBForceField class 
-     *  pFF->SteepestDescentInitialize(100, 1e-5f);
-     *  while (pFF->SteepestDescentTakeNSteps(5)) {
-     *    // do some updating in your program (redraw structure, ...)
-     *  }
-     *  \endcode
-     *
-     *  If you don't need any updating in your program, SteepestDescent() is recommended.
-     *
-     *  \param steps The number of steps.
-     *  \param econv Energy convergence criteria. (defualt is 1e-6)
-     *
-     *  \par Output to log:
-     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-     *  too much information about the energy calculations needed for the minimization will interfere with the list 
-     *  of energies for succesive steps. \n\n
-     *  OBFF_LOGLVL_NONE:   none \n
-     *  OBFF_LOGLVL_LOW:    header including number of steps \n
-     *  OBFF_LOGLVL_MEDIUM: see note above \n
-     *  OBFF_LOGLVL_HIGH:   see note above \n
-     */
-    void SteepestDescentInitialize(int steps = 1000, double econv = 1e-6f);
-    /*! Take n steps in a steepestdescent optimalization that was previously initialized with SteepestDescentInitialize().
-     *  
-     *  \param n The number of steps to take.
-     *  \return False if convergence or the number of steps given by SteepestDescentInitialize() has been reached.
-     * 
-     *  \par Output to log:
-     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-     *  too much information about the energy calculations needed for the minimization will interfere with the list 
-     *  of energies for succesive steps. \n\n
-     *  OBFF_LOGLVL_NONE:   none \n
-     *  OBFF_LOGLVL_LOW:    step number, energy and energy for the previous step \n
-     *  OBFF_LOGLVL_MEDIUM: see note above \n
-     *  OBFF_LOGLVL_HIGH:   see note above \n
-     */
-    bool SteepestDescentTakeNSteps(int n);
-    /*! Perform conjugate gradient optimalization for steps steps or until convergence criteria is reached.
-     * 
-     *  \param steps The number of steps. 
-     *  \param econv Energy convergence criteria. (defualt is 1e-6)
-     *
-     *  \par Output to log:
-     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-     *  too much information about the energy calculations needed for the minimization will interfere with the list 
-     *  of energies for succesive steps. \n\n
-     *  OBFF_LOGLVL_NONE:   none \n
-     *  OBFF_LOGLVL_LOW:    information about the progress of the minimization \n
-     *  OBFF_LOGLVL_MEDIUM: see note above \n
-     *  OBFF_LOGLVL_HIGH:   see note above \n
-     */
-    void ConjugateGradients(int steps, double econv = 1e-6f);
-    /*! Initialize conjugate gradient optimalization and take the first step, to be 
-     *  used in combination with ConjugateGradientsTakeNSteps().
-     * 
-     *  example:
-     *  \code
-     *  // pFF is a pointer to a OBForceField class 
-     *  pFF->ConjugateGradientsInitialize(100, 1e-5f);
-     *  while (pFF->ConjugateGradientsTakeNSteps(5)) {
-     *    // do some updating in your program (redraw structure, ...)
-     *  }
-     *  \endcode
-     * 
-     *  If you don't need any updating in your program, ConjugateGradients() is recommended.
-     *
-     *  \param steps The number of steps.
-     *  \param econv Energy convergence criteria. (defualt is 1e-6)
-     * 
-     *  \par Output to log:
-     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-     *  too much information about the energy calculations needed for the minimization will interfere with the list 
-     *  of energies for succesive steps. \n\n
-     *  OBFF_LOGLVL_NONE:   none \n
-     *  OBFF_LOGLVL_LOW:    header including number of steps and first step \n
-     *  OBFF_LOGLVL_MEDIUM: see note above \n
-     *  OBFF_LOGLVL_HIGH:   see note above \n
-     */
-    void ConjugateGradientsInitialize(int steps = 1000, double econv = 1e-6f);
-    /*! Take n steps in a conjugate gradient optimalization that was previously 
-     *  initialized with ConjugateGradientsInitialize().
-     *
-     *  \param n The number of steps to take.
-     *  \return False if convergence or the number of steps given by ConjugateGradientsInitialize() has been reached.
-     *  
-     *  \par Output to log:
-     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
-     *  too much information about the energy calculations needed for the minimization will interfere with the list 
-     *  of energies for succesive steps. \n\n
-     *  OBFF_LOGLVL_NONE:   none \n
-     *  OBFF_LOGLVL_LOW:    step number, energy and energy for the previous step \n
-     *  OBFF_LOGLVL_MEDIUM: see note above \n
-     *  OBFF_LOGLVL_HIGH:   see note above \n
-    */
-    bool ConjugateGradientsTakeNSteps(int n);
-    //@}
-    
-    /////////////////////////////////////////////////////////////////////////
     // Molecular Dynamics                                                  //
     /////////////////////////////////////////////////////////////////////////
       
     //! \name Methods for molecular dynamics
     //@{
-    /*! Generate starting velocities with a Maxwellian distribution.
+    /** 
+     * @brief Generate starting velocities with a Maxwellian distribution.
      */
     void GenerateVelocities();
-    /*! Correct the velocities so that the following is true:
+    /** 
+     * @brief Correct the velocities so that the following is true:
      *  
-     *  \code
+     * @code
      *        3N
      *       ----
      *  0.5  \    m_i * v_i^2 = 0.5 * Ndf * kB * T = E_kin
@@ -990,23 +1067,24 @@ namespace OpenBabel
      *  Ndf : number of degrees of freedom (3 * number of atoms)
      *  kB : Boltzmann's constant
      *  T : temperature
-     *  \endcode
+     * @endcode
      *  
      */
     void CorrectVelocities();
-    /*! Take n steps at temperature T. If no velocities are set, they will be generated.
+    /** 
+     * @brief Take n steps at temperature T. If no velocities are set, they will be generated.
      *
-     *  example:
-     *  \code
+     * example:
+     * @code
      *  // pFF is a pointer to a OBForceField class 
      *  while (pFF->MolecularDynamicsTakeNSteps(5, 300)) {
      *    // do some updating in your program (redraw structure, ...)
      *  }
-     * \endcode
+     * @endcode
      *
-     *  \param n The number of steps to take.
-     *  \param T Absolute temperature in Kelvin.
-     *  \param timestep The time step in picoseconds. (10e-12 s)
+     * @param n The number of steps to take.
+     * @param T Absolute temperature in Kelvin.
+     * @param timestep The time step in picoseconds. (10e-12 s)
      */
     void MolecularDynamicsTakeNSteps(int n, double T, double timestep = 0.001);
     //@}
@@ -1017,45 +1095,78 @@ namespace OpenBabel
       
     //! \name Methods for constraints
     //@{
-    /*! Get the current constraints.
-     *  \return The current constrains stored in the force field.
+    /** 
+     * @brief Get the current constraints.
+     * 
+     * @return The current constrains stored in the force field.
      */ 
     OBFFConstraints& GetConstraints();
-    /*! Set the constraints.
-     *  \param constraints The new constraints to be used.
+    /** 
+     * @brief Set the constraints.
+     * 
+     * @param constraints The new constraints to be used.
      */
     void SetConstraints(OBFFConstraints& constraints);
-    /*! Fix the atom position until UnsetFixAtom() is called. This function 
-     *  can be used in programs that allow the user to interact with a molecule
-     *  that is being minimized without having to check if the atom is already 
-     *  fixed in the constraints set by Setup() or SetConstraints(). Using this 
-     *  makes sure the selected atom follows the mouse cursur.
-     *  \param index The index for the atom to fix.
+    /** 
+     * @brief Fix the atom position until UnsetFixAtom() is called. This function 
+     * can be used in programs that allow the user to interact with a molecule
+     * that is being minimized without having to check if the atom is already 
+     * fixed in the constraints set by Setup() or SetConstraints(). Using this 
+     * makes sure the selected atom follows the mouse cursur.
+     *  
+     * @param index The index for the atom to fix.
      */
     void SetFixAtom(int index);
-    /*! Undo last SetFixAtom. This function will not remove the fix atom 
-     *  constraint for this atom if set by Setup() or SetConstraints().
+    /** 
+     * @brief Undo last SetFixAtom. This function will not remove the fix atom 
+     * constraint for this atom if set by Setup() or SetConstraints().
      */
     void UnsetFixAtom();
-    /*! Ignore the atom until UnsetIgnoreAtom() is called. This function 
-     *  can be used in programs that allow the user to interact with a molecule
-     *  that is being minimized without having to check if the atom is already 
-     *  ignored in the constraints set by Setup() or SetConstraints(). Using this 
-     *  makes sure, in drawing mode, you can close rings without your newly 
-     *  created puching the other atoms away.
-     *  \param index The index for the atom to ignore.
+    /** 
+     * @brief Ignore the atom until UnsetIgnoreAtom() is called. This function 
+     * can be used in programs that allow the user to interact with a molecule
+     * that is being minimized without having to check if the atom is already 
+     * ignored in the constraints set by Setup() or SetConstraints(). Using this 
+     * makes sure, in drawing mode, you can close rings without your newly 
+     * created puching the other atoms away.
+     * 
+     * @param index The index for the atom to ignore.
      */
     void SetIgnoreAtom(int index);
-    /*! Undo last SetIgnoreAtom. This function will not remove the ignore atom 
-     *  constraint for this atom if set by Setup() or SetConstraints().
+    /** 
+     * @brief Undo last SetIgnoreAtom. This function will not remove the ignore atom 
+     * constraint for this atom if set by Setup() or SetConstraints().
      */
     void UnsetIgnoreAtom();
-   
-    //! internal function 
+    /** 
+     * @brief 
+     * 
+     * @param a
+     * @param b
+     * 
+     * @return 
+     */
     static bool IgnoreCalculation(unsigned int a, unsigned int b);
-    //! internal function 
+    /** 
+     * @brief 
+     * 
+     * @param a
+     * @param b
+     * @param c
+     * 
+     * @return 
+     */
     static bool IgnoreCalculation(unsigned int a, unsigned int b, unsigned int c);
-    //! internal function 
+    /** 
+     * @brief 
+     * 
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * 
+     * @return 
+     */
     static bool IgnoreCalculation(unsigned int a, unsigned int b, unsigned int c, unsigned int d);
     //@}
 
@@ -1068,15 +1179,17 @@ namespace OpenBabel
     //@{
     //! (debugging)
     bool DetectExplosion();
-    /*! 
-      Validate the analytical gradients by comparing them to numerical ones. This function has to
-      be implemented force field specific. (debugging)
-    */
+    /** 
+     * @brief Validate the analytical gradients by comparing them to 
+     * numerical ones. This function has to be implemented force field 
+     * specific. (debugging)
+     */
     virtual bool ValidateGradients() { return false; }
-    /*! 
-      Calculate the error of the analytical gradient (debugging)
-      \return  error = fabs(numgrad - anagrad) / anagrad * 100% 
-    */
+    /** 
+     * @brief Calculate the error of the analytical gradient (debugging)
+     * 
+     * @return  error = fabs(numgrad - anagrad) / anagrad * 100% 
+     */
     Eigen::Vector3d ValidateGradientError(Eigen::Vector3d &numgrad, Eigen::Vector3d &anagrad);
     //@}
      
@@ -1086,5 +1199,5 @@ namespace OpenBabel
 
 #endif   // OB_FORCEFIELD_H
 
-//! \file forcefield.h
-//! \brief Handle forcefields
+//! @file forcefield.h
+//! @brief Handle forcefields

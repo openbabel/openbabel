@@ -34,18 +34,18 @@ namespace OpenBabel
 {
 
   // Global OBPhModel for assigning formal charges and hydrogen addition rules
-OBPhModel phmodel;
-extern OBAtomTyper atomtyper;
+  OBPhModel phmodel;
+  extern OBAtomTyper atomtyper;
 
-OBPhModel::OBPhModel()
-{
+  OBPhModel::OBPhModel()
+  {
     _init = false;
     _dir = BABEL_DATADIR;
     _envvar = "BABEL_DATADIR";
     _filename = "phmodel.txt";
     _subdir = "data";
     _dataptr = PhModelData;
-}
+  }
 
 OBPhModel::~OBPhModel()
 {
@@ -193,137 +193,143 @@ void OBPhModel::CorrectForPH(OBMol &mol, double pH)
 }
 
 
-// Portions of this documentation adapted from the JOELib docs, written by
-// Joerg Wegner
-/** \class OBChemTsfm phmodel.h <openbabel/phmodel.h>
-    \brief SMARTS based structural modification (chemical transformation)
+  // Portions of this documentation adapted from the JOELib docs, written by
+  // Joerg Wegner
+  /** @class OBChemTsfm phmodel.h <openbabel/phmodel.h>
+      @brief SMARTS based structural modification (chemical transformation)
  
-    Transformation of chemical structures can be used for pH value correction
-    (i.e. via OBPhModel and OBMol::CorrectForPH()). The OBChemTsfm class
-    defines SMARTS based TRANSFORM patterns to delete atoms, change atom types,
-    atom formal charges, and bond types.
+      Transformation of chemical structures can be used for pH value correction
+      (i.e. via OBPhModel and OBMol::CorrectForPH()). The OBChemTsfm class
+      defines SMARTS based TRANSFORM patterns to delete atoms, change atom types,
+      atom formal charges, and bond types.
 
-    For storing and converting chemical reaction files, use the OBReaction class.
- **/
-bool OBChemTsfm::Init(std::string &bgn, std::string &end)
-{
-    if (!_bgn.Init(bgn))
-        return(false);
+      For storing and converting chemical reaction files, use the OBReaction class.
+   */
+  bool OBChemTsfm::Init(std::string &bgn, std::string &end)
+  {
+    if (!m_bgn.Init(bgn))
+      return false;
+    
     if (!end.empty())
-        if (!_end.Init(end))
-            return(false);
+        if (!m_end.Init(end))
+            return false;
 
     //find atoms to be deleted
-    unsigned int i,j;
+    unsigned int i, j;
     int vb;
     bool found;
-    for (i = 0;i < _bgn.NumAtoms();++i)
-        if ((vb = _bgn.GetVectorBinding(i)))
-        {
-            found = false;
-            for (j = 0;j < _end.NumAtoms();++j)
-                if (vb == _end.GetVectorBinding(j))
-                {
-                    found = true;
-                    break;
-                }
-
-            if (!found)
-	      _vadel.push_back(i);
+    for (i = 0;i < m_bgn.NumAtoms();++i) {
+      if ((vb = m_bgn.GetVectorBinding(i))) {
+        found = false;
+        for (j = 0;j < m_end.NumAtoms();++j) {
+          if (vb == m_end.GetVectorBinding(j)) {
+            found = true;
+            break;
+          }
         }
+
+        if (!found)
+	  m_vadel.push_back(i);
+      }
+    }
 
     //find elements to be changed
     int ele;
-    for (i = 0;i < _bgn.NumAtoms();++i)
-        if ((vb = _bgn.GetVectorBinding(i)) != 0)
-        {
-            ele = _bgn.GetAtomicNum(i);
-            for (j = 0;j < _end.NumAtoms();++j)
-                if (vb == _end.GetVectorBinding(j))
-                    if (ele != _end.GetAtomicNum(j))
-                    {
-                        _vele.push_back(pair<int,int> (i,_end.GetAtomicNum(j)));
-                        break;
-                    }
+    for (i = 0;i < m_bgn.NumAtoms();++i) {
+      if ((vb = m_bgn.GetVectorBinding(i)) != 0) {
+        ele = m_bgn.GetAtomicNum(i);
+        
+        for (j = 0;j < m_end.NumAtoms();++j) {
+          if (vb == m_end.GetVectorBinding(j)) {
+            
+            if (ele != m_end.GetAtomicNum(j)) {
+              m_vele.push_back(pair<int,int> (i,m_end.GetAtomicNum(j)));
+              break;
+            }
+          }
         }
+
+      }
+    }
 
     //find charges to modify
     int chrg;
-    for (i = 0;i < _bgn.NumAtoms();++i)
-        if ((vb = _bgn.GetVectorBinding(i)))
-        {
-            chrg = _bgn.GetCharge(i);
-            for (j = 0;j < _end.NumAtoms();++j)
-                if (vb == _end.GetVectorBinding(j))
-                    if (chrg != _end.GetCharge(j))
-                        _vchrg.push_back(pair<int,int> (i,_end.GetCharge(j)));
+    for (i = 0;i < m_bgn.NumAtoms();++i) {
+      if ((vb = m_bgn.GetVectorBinding(i))) {
+        chrg = m_bgn.GetCharge(i);
+        
+        for (j = 0;j < m_end.NumAtoms();++j) {
+          if (vb == m_end.GetVectorBinding(j)) {
+            if (chrg != m_end.GetCharge(j))
+              m_vchrg.push_back(pair<int,int> (i,m_end.GetCharge(j)));
+          }
         }
+      
+      }
+    }
 
     //find bonds to be modified
     //find bonds to be modified
     int bsrc,bdst,bord,bvb1,bvb2;
     int esrc,edst,eord,evb1,evb2;
 
-    for (i = 0;i < _bgn.NumBonds();++i)
-    {
-        _bgn.GetBond(bsrc,bdst,bord,i);
-        bvb1 = _bgn.GetVectorBinding(bsrc);
-        bvb2 = _bgn.GetVectorBinding(bdst);
-        if (!bvb1 || !bvb2)
-            continue;
+    for (i = 0;i < m_bgn.NumBonds();++i) {
+      m_bgn.GetBond(bsrc,bdst,bord,i);
+      bvb1 = m_bgn.GetVectorBinding(bsrc);
+      bvb2 = m_bgn.GetVectorBinding(bdst);
+      if (!bvb1 || !bvb2)
+        continue;
 
-        for (j = 0;j < _end.NumBonds();++j)
-        {
-            _end.GetBond(esrc,edst,eord,j);
-            evb1 = _end.GetVectorBinding(esrc);
-            evb2 = _end.GetVectorBinding(edst);
-            if ((bvb1 == evb1 && bvb2 == evb2) || (bvb1 == evb2 && bvb2 == evb1))
-            {
-                if (bord == eord)
-                    break; //nothing to modify if bond orders identical
-                _vbond.push_back(pair<pair<int,int>,int> (pair<int,int> (bsrc,bdst),eord));
-                break;
-            }
+      for (j = 0;j < m_end.NumBonds();++j) {
+        m_end.GetBond(esrc,edst,eord,j);
+        evb1 = m_end.GetVectorBinding(esrc);
+        evb2 = m_end.GetVectorBinding(edst);
+        if ((bvb1 == evb1 && bvb2 == evb2) || (bvb1 == evb2 && bvb2 == evb1)) {
+          if (bord == eord)
+            break; //nothing to modify if bond orders identical
+          m_vbond.push_back(pair<pair<int,int>,int> (pair<int,int> (bsrc,bdst),eord));
+          break;
         }
+      }
     }
 
     //make sure there is some kind of transform to do here
-    if (_vadel.empty() && _vchrg.empty() && _vbond.empty())
-        return(false);
+    if (m_vadel.empty() && m_vchrg.empty() && m_vbond.empty())
+      return false;
 
-    return(true);
-}
+    return true;
+  }
 
 bool OBChemTsfm::Apply(OBMol &mol)
 {
-    if (!_bgn.Match(mol))
+    if (!m_bgn.Match(mol))
         return(false);
 
-    vector<vector<int> > mlist = _bgn.GetUMapList();
+    vector<vector<int> > mlist = m_bgn.GetUMapList();
 
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::OBChemTransform", obAuditMsg);
 
-    if (!_vchrg.empty()) //modify charges
+    if (!m_vchrg.empty()) //modify charges
     {
         vector<vector<int> >::iterator i;
         vector<pair<int,int> >::iterator j;
 
         for (i = mlist.begin();i != mlist.end();++i)
-            for (j = _vchrg.begin();j != _vchrg.end();++j)
+            for (j = m_vchrg.begin();j != m_vchrg.end();++j)
                 if (j->first < (signed)i->size()) //goof proofing
                     mol.GetAtom((*i)[j->first])->SetFormalCharge(j->second);
 
         mol.UnsetImplicitValencePerceived();
     }
 
-    if (!_vbond.empty()) //modify bond orders
+    if (!m_vbond.empty()) //modify bond orders
     {
         OBBond *bond;
         vector<vector<int> >::iterator i;
         vector<pair<pair<int,int>,int> >::iterator j;
         for (i = mlist.begin();i != mlist.end();++i)
-            for (j = _vbond.begin();j != _vbond.end();++j)
+            for (j = m_vbond.begin();j != m_vbond.end();++j)
             {
                 bond = mol.GetBond((*i)[j->first.first],(*i)[j->first.second]);
                 if (!bond)
@@ -336,16 +342,16 @@ bool OBChemTsfm::Apply(OBMol &mol)
             }
     }
 
-    if (!_vadel.empty() || !_vele.empty()) //delete atoms and change elements
+    if (!m_vadel.empty() || !m_vele.empty()) //delete atoms and change elements
     {
         vector<int>::iterator j;
         vector<vector<int> >::iterator i;
 
-        if (!_vele.empty())
+        if (!m_vele.empty())
         {
             vector<pair<int,int> >::iterator k;
             for (i = mlist.begin();i != mlist.end();++i)
-                for (k = _vele.begin();k != _vele.end();++k)
+                for (k = m_vele.begin();k != m_vele.end();++k)
                     mol.GetAtom((*i)[k->first])->SetAtomicNum(k->second);
         }
 
@@ -354,7 +360,7 @@ bool OBChemTsfm::Apply(OBMol &mol)
         vector<OBAtom*> vdel;
         vda.resize(mol.NumAtoms()+1,false);
         for (i = mlist.begin();i != mlist.end();++i)
-            for (j = _vadel.begin();j != _vadel.end();++j)
+            for (j = m_vadel.begin();j != m_vadel.end();++j)
                 if (!vda[(*i)[*j]])
                 {
                     vda[(*i)[*j]] = true;
@@ -371,16 +377,16 @@ bool OBChemTsfm::Apply(OBMol &mol)
 
 bool OBChemTsfm::IsAcid()
 {
-  //cout << _bgn.GetSMARTS() << " >> " << _end.GetSMARTS() << endl;
-  //cout << "  NumAtoms = " << _end.NumAtoms() << endl;
+  //cout << m_bgn.GetSMARTS() << " >> " << m_end.GetSMARTS() << endl;
+  //cout << "  NumAtoms = " << m_end.NumAtoms() << endl;
 
-  if (_bgn.NumAtoms() > _end.NumAtoms())  // O=CO[#1:1] >> O=CO
+  if (m_bgn.NumAtoms() > m_end.NumAtoms())  // O=CO[#1:1] >> O=CO
     return true;
 
-  for (int i = 0; i < _end.NumAtoms(); ++i) {
-    //cout << "    _end(" << i << ")  " << _end.GetCharge(i) << endl;
-    //cout << "    _bgn(" << i << ")  " << _bgn.GetCharge(i) << endl;
-    if (_end.GetCharge(i) < 0)
+  for (unsigned int i = 0; i < m_end.NumAtoms(); ++i) {
+    //cout << "    m_end(" << i << ")  " << m_end.GetCharge(i) << endl;
+    //cout << "    m_bgn(" << i << ")  " << m_bgn.GetCharge(i) << endl;
+    if (m_end.GetCharge(i) < 0)
       return true;
   }
   
@@ -389,13 +395,13 @@ bool OBChemTsfm::IsAcid()
 
 bool OBChemTsfm::IsBase()
 {
-  //cout << _bgn.GetSMARTS() << " >> " << _end.GetSMARTS() << endl;
-  //cout << "  NumAtoms = " << _end.NumAtoms() << endl;
+  //cout << m_bgn.GetSMARTS() << " >> " << m_end.GetSMARTS() << endl;
+  //cout << "  NumAtoms = " << m_end.NumAtoms() << endl;
 
-  for (int i = 0; i < _end.NumAtoms(); ++i) {
-    //cout << "    _end(" << i << ")  " << _end.GetCharge(i) << endl;
-    //cout << "    _bgn(" << i << ")  " << _bgn.GetCharge(i) << endl;
-    if (_end.GetCharge(i) > 0)
+  for (unsigned int i = 0; i < m_end.NumAtoms(); ++i) {
+    //cout << "    m_end(" << i << ")  " << m_end.GetCharge(i) << endl;
+    //cout << "    m_bgn(" << i << ")  " << m_bgn.GetCharge(i) << endl;
+    if (m_end.GetCharge(i) > 0)
       return true;
   }
 

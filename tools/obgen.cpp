@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/minimize.h>
 #include <openbabel/builder.h>
 #include <unistd.h>
 
@@ -119,9 +120,10 @@ int main(int argc,char **argv)
         exit (-1);
       }
  
-      pFF->SteepestDescent(500, 1.0e-4); 
+      OBMinimize mini(pFF);
+      mini.SteepestDescent(500, 1.0e-4); 
       pFF->WeightedRotorSearch(250, 50);
-      pFF->SteepestDescent(500, 1.0e-6);
+      mini.SteepestDescent(500, 1.0e-6);
 
       pFF->GetCoordinates(mol);
       //pFF->ValidateGradients();

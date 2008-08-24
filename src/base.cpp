@@ -248,7 +248,6 @@ namespace OpenBabel
   }
 
 
-
   /*! \mainpage API Documentation
 
   \section base Introduction

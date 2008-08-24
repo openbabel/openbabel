@@ -301,7 +301,7 @@ bool GAMESSUKFormat::ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &t
     	   if (tokens.size() < 3) {return false;}
     	   
     	   // Specify the atom that defines the distance to this one
-    	   vic[*zmatLineCount]->_a = mol.GetAtom(atoi(tokens[1].c_str()));
+    	   vic[*zmatLineCount]->m_a = mol.GetAtom(atoi(tokens[1].c_str()));
     	   
     	   // Get the distance
     	   	var = strtod((char*)tokens[2].c_str(), &endptr);
@@ -310,14 +310,14 @@ bool GAMESSUKFormat::ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &t
     			if (variables.find(tokens[2])==variables.end()) return false;
     			var = variables[tokens[2]];
     		}
-    		vic[*zmatLineCount]->_dst = var;
+    		vic[*zmatLineCount]->m_dst = var;
     	   break;
 
        case 2:
     	   if (tokens.size() < 5) {return false;}
     	   
     	   // Specify the atom that defines the distance to this one
-    	   vic[*zmatLineCount]->_a = mol.GetAtom(atoi(tokens[1].c_str()));
+    	   vic[*zmatLineCount]->m_a = mol.GetAtom(atoi(tokens[1].c_str()));
     	   // Get the distance
     	   	var = strtod((char*)tokens[2].c_str(), &endptr);
     		if (endptr == (char*)tokens[2].c_str()) {
@@ -325,10 +325,10 @@ bool GAMESSUKFormat::ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &t
     			if (variables.find(tokens[2])==variables.end()) return false;
     			var = variables[tokens[2]];
     		}
-    		vic[*zmatLineCount]->_dst = var;
+    		vic[*zmatLineCount]->m_dst = var;
     		
     		// Specify atom defining angle
-    	   vic[*zmatLineCount]->_b = mol.GetAtom(atoi(tokens[3].c_str()));
+    	   vic[*zmatLineCount]->m_b = mol.GetAtom(atoi(tokens[3].c_str()));
     	   // Get the angle
     	   	var = strtod((char*)tokens[4].c_str(), &endptr);
     		if (endptr == (char*)tokens[4].c_str()) {
@@ -336,13 +336,13 @@ bool GAMESSUKFormat::ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &t
     			if (variables.find(tokens[4])==variables.end()) return false;
     			var = variables[tokens[4]];
     		}
-    		vic[*zmatLineCount]->_ang = var;   	   
+    		vic[*zmatLineCount]->m_ang = var;   	   
     	   break;
 
        default:
     	   if (tokens.size() < 7) {return false;}
     	   
-    	   vic[*zmatLineCount]->_a = mol.GetAtom(atoi(tokens[1].c_str()));
+    	   vic[*zmatLineCount]->m_a = mol.GetAtom(atoi(tokens[1].c_str()));
     	   // Get the distance
     	   	var = strtod((char*)tokens[2].c_str(), &endptr);
     		if (endptr == (char*)tokens[2].c_str()) {
@@ -350,9 +350,9 @@ bool GAMESSUKFormat::ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &t
     			if (variables.find(tokens[2])==variables.end()) return false;
     			var = variables[tokens[2]];
     		}
-    		vic[*zmatLineCount]->_dst = var;    	   
+    		vic[*zmatLineCount]->m_dst = var;    	   
     	   
-    	   vic[*zmatLineCount]->_b = mol.GetAtom(atoi(tokens[3].c_str()));
+    	   vic[*zmatLineCount]->m_b = mol.GetAtom(atoi(tokens[3].c_str()));
     	   // Get the angle
     	   	var = strtod((char*)tokens[4].c_str(), &endptr);
     		if (endptr == (char*)tokens[4].c_str()) {
@@ -360,9 +360,9 @@ bool GAMESSUKFormat::ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &t
     			if (variables.find(tokens[4])==variables.end()) return false;
     			var = variables[tokens[4]];
     		}
-    		vic[*zmatLineCount]->_ang = var;      	   
+    		vic[*zmatLineCount]->m_ang = var;      	   
     	   
-    	   vic[*zmatLineCount]->_c = mol.GetAtom(atoi(tokens[5].c_str()));	
+    	   vic[*zmatLineCount]->m_c = mol.GetAtom(atoi(tokens[5].c_str()));	
     	   // Get the torsion angle
     	   	var = strtod((char*)tokens[6].c_str(), &endptr);
     		if (endptr == (char*)tokens[6].c_str()) {
@@ -370,7 +370,7 @@ bool GAMESSUKFormat::ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &t
     			if (variables.find(tokens[6])==variables.end()) return false;
     			var = variables[tokens[6]];
     		}
-    		vic[*zmatLineCount]->_tor = var;
+    		vic[*zmatLineCount]->m_tor = var;
      }
     
     (*zmatLineCount)++;

@@ -157,19 +157,25 @@ namespace OpenBabel
   }
   Template;
 
-  //! Generic template for peptide residue backbone
+  /** 
+   * Generic template for peptide residue backbone. \n
+   * col 1: bitmask \n
+   * col 2: element number \n
+   * col 3: neighbour count \n
+   * col 4-7: 1-4 bitmasks for neighbour atoms (-6 means carbon) 
+   */
   static Template Peptide[MAXPEPTIDE] = {
-    /* N     */    {  0x0001, 7, 2, 0x0030, 0x0100,      0, 0 },
-    /* NTer  */    {  0x0002, 7, 1, 0x0030,      0,      0, 0 },
-    /* NPro  */    {  0x0004, 7, 3, 0x0030, 0x0100,     -6, 0 },
-    /* NPT   */    {  0x0008, 7, 2, 0x0030,     -6,      0, 0 },
-    /* CA    */    {  0x0010, 6, 3, 0x000F, 0x0700,     -6, 0 },
-    /* CAGly */    {  0x0020, 6, 2, 0x0003, 0x0700,      0, 0 },
-    /* C     */    {  0x0100, 6, 3, 0x0030, 0x1000, 0x0005, 0 },
-    /* CTer  */    {  0x0200, 6, 2, 0x0030, 0x1000,      0, 0 },
-    /* COXT  */    {  0x0400, 6, 3, 0x0030, 0x1000, 0x2000, 0 },
-    /* O     */    {  0x1000, 8, 1, 0x0700,      0,      0, 0 },
-    /* OXT   */    {  0x2000, 8, 1, 0x0400,      0,      0, 0 }
+    /* N     */    {  0x0001, 7, 2, 0x0030, 0x0100,      0, 0 }, //!< N
+    /* NTer  */    {  0x0002, 7, 1, 0x0030,      0,      0, 0 }, //!< NTre
+    /* NPro  */    {  0x0004, 7, 3, 0x0030, 0x0100,     -6, 0 }, //!< NPro
+    /* NPT   */    {  0x0008, 7, 2, 0x0030,     -6,      0, 0 }, //!< NPT
+    /* CA    */    {  0x0010, 6, 3, 0x000F, 0x0700,     -6, 0 }, //!< CA
+    /* CAGly */    {  0x0020, 6, 2, 0x0003, 0x0700,      0, 0 }, //!< CAGly
+    /* C     */    {  0x0100, 6, 3, 0x0030, 0x1000, 0x0005, 0 }, //!< C
+    /* CTer  */    {  0x0200, 6, 2, 0x0030, 0x1000,      0, 0 }, //!< CTer
+    /* COXT  */    {  0x0400, 6, 3, 0x0030, 0x1000, 0x2000, 0 }, //!< COXT
+    /* O     */    {  0x1000, 8, 1, 0x0700,      0,      0, 0 }, //!< O
+    /* OXT   */    {  0x2000, 8, 1, 0x0400,      0,      0, 0 }  //!< OXT
   };
 
   //! Generic template for peptide nucleotide backbone
@@ -282,9 +288,11 @@ namespace OpenBabel
   }
   ResidType;
 
-  //! Side chains for recognized amino acids using a pseudo-SMARTS syntax
-  //!  for branching and bonds. Numbers indicate atom types defined by 
-  //!  ChainsAtomName global array above
+  /** 
+   * Side chains for recognized amino acids using a pseudo-SMARTS syntax
+   * for branching and bonds. Numbers indicate atom types defined by 
+   * OpenBabel::ChainsAtomName global array above.
+   */
   static ResidType AminoAcids[AMINOMAX] = {
     { "ILE", "1-4(-9-14)-10"                        },
     { "VAL", "1-4(-9)-10"                           },
@@ -313,9 +321,11 @@ namespace OpenBabel
   /* Amino-N-Butyric Acid (ABA): 1-4-7                PDB Example: 1BBO */
   /* Selenic Acid (SEC):         1-4-"SEG "(-15)-18   PDB Example: 1GP1 */
 
-  //! Side chains for recognized nucleotides using a pseudo-SMARTS syntax
-  //!  for branching and bonds. Numbers indicate atom types defined by 
-  //!  ChainsAtomName global array above
+  /** 
+   * Side chains for recognized nucleotides using a pseudo-SMARTS syntax
+   * for branching and bonds. Numbers indicate atom types defined by 
+   * OpenBabel::ChainsAtomName global array above.
+   */
   static ResidType Nucleotides[NUCLEOMAX] = {
     { "  A", "49-50-51-52-53-54(-56)-57-58-61-62(-53)-50"      },
     { "  C", "49-57-58(-59)-61-62(-64)-65-67-57"               },
@@ -784,8 +794,6 @@ namespace OpenBabel
   //! Setup parsing for this molecule -- 
   void OBChainsParser::SetupMol(OBMol &mol)
   {
-    CleanupMol();
-
     int i;
     int asize = mol.NumAtoms();
     int bsize = mol.NumBonds();
@@ -1065,15 +1073,12 @@ namespace OpenBabel
   bool OBChainsParser::DetermineConnectedChains(OBMol &mol)
   {
     int resid;
-    int resno;
-    int count;
-    int size;
+    unsigned int size;
     unsigned int i, idx;
-    unsigned int numAtoms;
 
-    resno    = 1;
-    count    = 0;
-    numAtoms = mol.NumAtoms();
+    int resno = 1; 
+    int count = 0;
+    unsigned int numAtoms = mol.NumAtoms();
 
     OBAtom *atom;
     vector<OBAtom *>::iterator a;
@@ -1115,27 +1120,31 @@ namespace OpenBabel
     return true;
   }
 
-  int OBChainsParser::RecurseChain(OBMol &mol, int i, int c)
+  ///@todo atom index
+  unsigned int OBChainsParser::RecurseChain(OBMol &mol, unsigned int i, int c)
   {
     OBAtom *atom, *nbr;
     vector<OBBond *>::iterator b;
-    int result, index;
+    unsigned int result, index;
 
-    atom      = mol.GetAtom(i+1);
+    atom = mol.GetAtom(i + 1);
+
+    // ignore hydrogens
     if (atom->IsHydrogen() )
       return 0;
 
     result    = 1;
     chains[i] = c;
 
-    for (nbr = atom->BeginNbrAtom(b); nbr; nbr = atom->NextNbrAtom(b))
-      {
-        index = nbr->GetIdx() - 1;
-        if (chains[index] == ' ')
-          result += RecurseChain(mol, index,c);
-      }
+    // recurse till we have all atoms for this chain
+    for (nbr = atom->BeginNbrAtom(b); nbr; nbr = atom->NextNbrAtom(b)) {
+      index = nbr->GetIdx() - 1;
+      if (chains[index] == ' ')
+        result += RecurseChain(mol, index, c);
+    }
 
-    return (result);
+    // and return how many we found
+    return result;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -1198,8 +1207,8 @@ namespace OpenBabel
     OBAtom *na,*nb,*nc,*nd;
     OBAtom *atom, *nbr;
     bool change, result;
-    int count;
-    unsigned int i, idx;
+    int i, count;
+    unsigned int idx;
 
     vector<OBAtom *>::iterator a;
     vector<OBBond *>::iterator b;
@@ -1325,14 +1334,14 @@ namespace OpenBabel
     return( false );
   }
 
-  void OBChainsParser::TracePeptideChain(OBMol &mol, int i, int r)
+  void OBChainsParser::TracePeptideChain(OBMol &mol, unsigned int i, int r)
   {
-    int neighbour[4];
-    int na,nb,nc;
+    unsigned int neighbour[4];
+    unsigned int na,nb,nc;
     OBAtom *atom, *nbr;
     int count;
     int j,k;
-    int idx;
+    unsigned int idx;
     
     j = k = 0; // ignore warning
 
@@ -1470,7 +1479,7 @@ namespace OpenBabel
         resids[j] = i;
   }
 
-  int OBChainsParser::IdentifyResidue(void *tree, OBMol &mol, int seed,
+  int OBChainsParser::IdentifyResidue(void *tree, OBMol &mol, unsigned int seed,
                                       int resno)
   {
     ByteCode *ptr;
@@ -1621,10 +1630,10 @@ namespace OpenBabel
     return true;
   }
 
-  void OBChainsParser::TraceNucleicChain(OBMol &mol, int i, int r)
+  void OBChainsParser::TraceNucleicChain(OBMol &mol, unsigned int i, int r)
   {
-    int neighbour[4];
-    int na,nb,nc;
+    unsigned int neighbour[4];
+    unsigned int na,nb,nc;
     int count;
     int j,k;
 

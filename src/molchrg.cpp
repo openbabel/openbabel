@@ -77,7 +77,7 @@ namespace OpenBabel
       {
         if (!GasteigerSigmaChi(atom,a,b,c))
           return(false);
-        _gsv[atom->GetIdx()]->SetValues(a,b,c,atom->GetPartialCharge());
+        m_gsv[atom->GetIdx()]->SetValues(a,b,c,atom->GetPartialCharge());
       }
 
     double alpha,charge,denom;
@@ -91,10 +91,10 @@ namespace OpenBabel
       {
         alpha *= OB_GASTEIGER_DAMP;
 
-        for( j=1;j < _gsv.size();++j)
+        for( j=1;j < m_gsv.size();++j)
           {
-            charge = _gsv[j]->q;
-            _gsv[j]->chi = (_gsv[j]->c*charge+_gsv[j]->b)*charge+_gsv[j]->a;
+            charge = m_gsv[j]->q;
+            m_gsv[j]->chi = (m_gsv[j]->c*charge+m_gsv[j]->b)*charge+m_gsv[j]->a;
           }
 
         for (bond = mol.BeginBond(k);bond;bond = mol.NextBond(k))
@@ -102,38 +102,33 @@ namespace OpenBabel
             src = bond->GetBeginAtom();
             dst = bond->GetEndAtom();
 
-            if (_gsv[src->GetIdx()]->chi >= _gsv[dst->GetIdx()]->chi)
+            if (m_gsv[src->GetIdx()]->chi >= m_gsv[dst->GetIdx()]->chi)
               {
                 if (dst->IsHydrogen())
                   denom = double(OB_GASTEIGER_DENOM);
                 else
-                  denom = _gsv[dst->GetIdx()]->denom;
+                  denom = m_gsv[dst->GetIdx()]->denom;
               }
             else
               {
                 if (src->IsHydrogen())
                   denom = double(OB_GASTEIGER_DENOM);
                 else
-                  denom = _gsv[src->GetIdx()]->denom;
+                  denom = m_gsv[src->GetIdx()]->denom;
               }
 
-            charge = (_gsv[src->GetIdx()]->chi - _gsv[dst->GetIdx()]->chi)/denom;
-            _gsv[src->GetIdx()]->q -= alpha*charge;
-            _gsv[dst->GetIdx()]->q += alpha*charge;
+            charge = (m_gsv[src->GetIdx()]->chi - m_gsv[dst->GetIdx()]->chi)/denom;
+            m_gsv[src->GetIdx()]->q -= alpha*charge;
+            m_gsv[dst->GetIdx()]->q += alpha*charge;
           }
       }
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      atom->SetPartialCharge(_gsv[atom->GetIdx()]->q);
+      atom->SetPartialCharge(m_gsv[atom->GetIdx()]->q);
 
     return(true);
   }
 
-  //! Set initial partial charges in @p mol
-  //! Carbonyl O => -0.5
-  //! Phosphate O => -0.666
-  //! Sulfate O => -0.5
-  //! All other atoms are set to have their initial charge from their formal charge
   void OBGastChrg::InitialPartialCharges(OBMol &mol)
   {
     OBAtom *atom;
@@ -302,18 +297,18 @@ namespace OpenBabel
   void OBGastChrg::GSVResize(int size)
   {
     vector <GasteigerState*>::iterator i;
-    for (i = _gsv.begin();i != _gsv.end();++i)
+    for (i = m_gsv.begin();i != m_gsv.end();++i)
       delete *i;
-    _gsv.clear();
+    m_gsv.clear();
 
     for (int j = 0;j < size;++j)
-      _gsv.push_back(new GasteigerState);
+      m_gsv.push_back(new GasteigerState);
   }
 
   OBGastChrg::~OBGastChrg()
   {
     vector <GasteigerState*>::iterator i;
-    for (i = _gsv.begin();i != _gsv.end();++i)
+    for (i = m_gsv.begin();i != m_gsv.end();++i)
       delete *i;
   }
 

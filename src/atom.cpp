@@ -446,7 +446,7 @@ namespace OpenBabel
       
   void OBAtom::UnsetAromatic()                
   { 
-    d->flags &= (~(OBAtomFlag::Aromatic)); 
+    d->flags &= (~(OBAtomFlag::AromaticAtom)); 
   }
       
   void OBAtom::UnsetStereo()
@@ -949,7 +949,7 @@ namespace OpenBabel
 
   bool OBAtom::IsAromatic() const
   {
-    if (((OBAtom*)this)->HasFlag(OBAtomFlag::Aromatic))
+    if (((OBAtom*)this)->HasFlag(OBAtomFlag::AromaticAtom))
       return(true);
 
     OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
@@ -957,7 +957,7 @@ namespace OpenBabel
     if (!mol->HasAromaticPerceived())
       {
         aromtyper.AssignAromaticFlags(*mol);
-        if (((OBAtom*)this)->HasFlag(OBAtomFlag::Aromatic))
+        if (((OBAtom*)this)->HasFlag(OBAtomFlag::AromaticAtom))
           return(true);
       }
 
