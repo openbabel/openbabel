@@ -26,8 +26,8 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
-#include <openbabel/forcefield.h>
-#include <openbabel/minimize.h>
+#include <openbabel/obforcefield.h>
+#include <openbabel/obminimize.h>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif

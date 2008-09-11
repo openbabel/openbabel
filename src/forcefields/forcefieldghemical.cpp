@@ -16,11 +16,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include "forcefieldghemical.h"
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include <openbabel/locale.h>
 
-#include "forcefieldghemical.h"
 
 using namespace std;
 
@@ -1026,17 +1027,27 @@ namespace OpenBabel
  
     if (gradients) {
       ClearGradients();
-      energy  = E_Bond<true>();
-      energy += E_Angle<true>();
-      energy += E_Torsion<true>();
-      energy += E_VDW<true>();
-      energy += E_Electrostatic<true>();
+      if (m_terms & BondTerm)
+        energy  = E_Bond<true>();
+      if (m_terms & AngleTerm)
+        energy += E_Angle<true>();
+      if (m_terms & TorsionTerm)
+        energy += E_Torsion<true>();
+      if (m_terms & VDWTerm)
+        energy += E_VDW<true>();
+      if (m_terms & EleTerm)
+        energy += E_Electrostatic<true>();
     } else {
-      energy  = E_Bond<false>();
-      energy += E_Angle<false>();
-      energy += E_Torsion<false>();
-      energy += E_VDW<false>();
-      energy += E_Electrostatic<false>();
+      if (m_terms & BondTerm)
+        energy  = E_Bond<false>();
+      if (m_terms & AngleTerm)
+        energy += E_Angle<false>();
+      if (m_terms & TorsionTerm)
+        energy += E_Torsion<false>();
+      if (m_terms & VDWTerm)
+        energy += E_VDW<false>();
+      if (m_terms & EleTerm)
+        energy += E_Electrostatic<false>();
     }
 
     IF_OBFF_LOGLVL_MEDIUM {
@@ -1131,7 +1142,7 @@ namespace OpenBabel
       idx = (a->GetIdx() - 1);
 
       // OBFF_ENERGY
-      //numgrad = NumericalDerivative(&*a, OBFF_ENERGY);
+      numgrad = NumericalDerivative(idx);
       Energy(); // compute
       anagrad = GetGradients()[idx];
       err = ValidateGradientError(numgrad, anagrad);
@@ -1140,8 +1151,12 @@ namespace OpenBabel
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       
+      SetAllTermsEnabled(false);
+      
       // OBFF_EBOND
-      //numgrad = NumericalDerivative(&*a, OBFF_EBOND);
+      SetTermEnabled(BondTerm, true);
+      numgrad = NumericalDerivative(idx);
+      SetTermEnabled(BondTerm, false);
       ClearGradients();
       E_Bond();
       anagrad = GetGradients()[idx];
@@ -1155,7 +1170,9 @@ namespace OpenBabel
         passed = false;
       
       // OBFF_EANGLE
-      //numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
+      SetTermEnabled(AngleTerm, true);
+      numgrad = NumericalDerivative(idx);
+      SetTermEnabled(AngleTerm, false);
       ClearGradients();
       E_Angle();
       anagrad = GetGradients()[idx];
@@ -1168,7 +1185,9 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_ETORSION
-      //numgrad = NumericalDerivative(&*a, OBFF_ETORSION);
+      SetTermEnabled(TorsionTerm, true);
+      numgrad = NumericalDerivative(idx);
+      SetTermEnabled(TorsionTerm, false);
       ClearGradients();
       E_Torsion();
       anagrad = GetGradients()[idx];
@@ -1181,7 +1200,9 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_EVDW
-      //numgrad = NumericalDerivative(&*a, OBFF_EVDW);
+      SetTermEnabled(VDWTerm, true);
+      numgrad = NumericalDerivative(idx);
+      SetTermEnabled(VDWTerm, false);
       ClearGradients();
       E_VDW();
       anagrad = GetGradients()[idx];
@@ -1194,7 +1215,9 @@ namespace OpenBabel
         passed = false;
 
       // OBFF_EELECTROSTATIC
-      //numgrad = NumericalDerivative(&*a, OBFF_EELECTROSTATIC);
+      SetTermEnabled(EleTerm, true);
+      numgrad = NumericalDerivative(idx);
+      SetTermEnabled(EleTerm, false);
       ClearGradients();
       E_Electrostatic();
       anagrad = GetGradients()[idx];
@@ -1205,6 +1228,9 @@ namespace OpenBabel
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
         passed = false;
+    
+      
+      SetAllTermsEnabled(true);
     }
 
     return passed; // are all components good enough?

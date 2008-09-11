@@ -29,8 +29,8 @@ GNU General Public License for more details.
 #include <openbabel/rotor.h>
 #include <openbabel/obutil.h>
 
-#include <openbabel/forcefield.h>
-#include <openbabel/minimize.h>
+#include <openbabel/obforcefield.h>
+#include <openbabel/obminimize.h>
 
 #include <stdio.h>
 #include <iostream>

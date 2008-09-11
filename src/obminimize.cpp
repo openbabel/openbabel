@@ -19,7 +19,8 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
-#include <openbabel/minimize.h>
+#include <openbabel/obminimize.h>
+#include <openbabel/obutil.h>
 
 using namespace std;
 
@@ -77,12 +78,9 @@ namespace OpenBabel
   // 2) Switch to line search for one step of the entire molecule!
   //   This dramatically cuts down on the number of Energy() calls.
   //  (and is more correct anyway)
-  //double OBMinimize::Newton2NumLineSearch(double *direction)
-  /*
   double OBMinimize::Newton2NumLineSearch(std::vector<Eigen::Vector3d> &direction)
   {
     double e_n1, e_n2, e_n3;
-    //double *origCoords = new double [d->ncoords];
     vector<Eigen::Vector3d> origCoords;
 
     double opt_step = 0.0;
@@ -91,7 +89,7 @@ namespace OpenBabel
     const double max_step = 5.0; // don't move further than 0.3 Angstroms
     
     double sum = 0.0;
-    for (unsigned int c = 0; c < d->mol.NumAtoms(); ++c) {
+    for (unsigned int c = 0; c < direction.size(); ++c) {
       if (isfinite( direction[c].norm2() )) { 
         sum += direction[c].norm2();
       } else {
@@ -110,13 +108,13 @@ namespace OpenBabel
     double max_scl = max_step / scale;
     
     // Save the current position, before we take a step
-    memcpy((char*)origCoords,(char*)d->mol.GetCoordinates(),sizeof(double)*d->ncoords);
+    origCoords = d->forcefield->GetPositions();
     
     int newton = 0;
     while (true) {
       // Take step X(n) + step
       LineSearchTakeStep(origCoords, direction, step);
-      e_n1 = Energy(false) + d->constraints.GetConstraintEnergy();
+      e_n1 = d->forcefield->Eval(false);
 
       if (e_n1 < opt_e) {
         opt_step = step;
@@ -129,11 +127,11 @@ namespace OpenBabel
       
       // Take step X(n) + step + delta
       LineSearchTakeStep(origCoords, direction, step+delta);
-      e_n2 = Energy(false) + d->constraints.GetConstraintEnergy();
+      e_n2 = d->forcefield->Eval(false);
  
       // Take step X(n) + step + delta * 2.0
       LineSearchTakeStep(origCoords, direction, step+delta*2.0);
-      e_n3 = Energy(false) + d->constraints.GetConstraintEnergy();
+      e_n3 = d->forcefield->Eval(false);
       
       double denom = e_n3 - 2.0 * e_n2 + e_n1; // f'(x)
       if (denom != 0.0) {
@@ -152,7 +150,7 @@ namespace OpenBabel
       
       // Take step X(n) + step
       LineSearchTakeStep(origCoords, direction, step);
-      e_n1 = Energy(false) + d->constraints.GetConstraintEnergy();
+      e_n1 = d->forcefield->Eval(false);
 
       if (e_n1 < opt_e) {
         opt_step = step;
@@ -167,17 +165,15 @@ namespace OpenBabel
     return opt_step * scale;
   }
   
-  void OBMinimize::LineSearchTakeStep(double* origCoords, double *direction, double step)
+  void OBMinimize::LineSearchTakeStep(std::vector<Eigen::Vector3d> &origCoords, 
+      std::vector<Eigen::Vector3d> &direction, double step)
   {
-    double *currentCoords = d->mol.GetCoordinates();
-
-    for (unsigned int c = 0; c < d->ncoords; ++c) {
-      if (isfinite(direction[c])) { 
-        currentCoords[c] = origCoords[c] + direction[c] * step;
-      }
+    for (unsigned int c = 0; c < direction.size(); ++c) {
+      // this is already checked in Newton2NumLineSearch
+      //if (isfinite(direction[c].norm2)) 
+      d->forcefield->GetPositions()[c] = origCoords[c] + direction[c] * step;
     }
   }
-  */
 
   double OBMinimize::LineSearch(std::vector<Eigen::Vector3d> &currentCoords, std::vector<Eigen::Vector3d> &direction)
   {
@@ -190,12 +186,11 @@ namespace OpenBabel
     double trustRadius = 0.3; // don't move further than 0.3 Angstroms
     double trustRadius2 = 0.9; // use norm2() instead of norm() to avoid sqrt() calls
     
-    e_n1 = d->forcefield->Energy(false);
+    e_n1 = d->forcefield->Eval(false);
     
     unsigned int i;
     for (i=0; i < 10; ++i) {
       // Save the current position, before we take a step
-      //memcpy((char*)lastStep,(char*)currentCoords,sizeof(double)*numCoords);
       lastStep = currentCoords;
       
       // Vectorizing this would be a big benefit
@@ -214,7 +209,7 @@ namespace OpenBabel
         }
       }
     
-      e_n2 = d->forcefield->Energy(false);
+      e_n2 = d->forcefield->Eval(false);
       
       // convergence criteria: A higher precision here 
       // only takes longer with the same result.
@@ -247,7 +242,7 @@ namespace OpenBabel
     d->cstep = 0;
     d->econv = econv;
 
-    d->e_n1 = d->forcefield->Energy();
+    d->e_n1 = d->forcefield->Eval();
     
     if (d->forcefield->GetLogLevel() >= OBFF_LOGLVL_LOW) {
       d->forcefield->OBFFLog("\nS T E E P E S T   D E S C E N T\n\n");
@@ -268,23 +263,23 @@ namespace OpenBabel
       d->cstep++;
 
       if (!d->forcefield->HasAnalyticalGradients()) {
+        // use numerical gradients
         for (unsigned int idx = 0; idx < d->forcefield->GetPositions().size(); ++idx) {
-          // use numerical gradients
-          d->forcefield->GetGradients()[idx] = NumericalDerivative(idx);
+          d->forcefield->GetGradients()[idx] = d->forcefield->NumericalDerivative(idx);
         } 
       }
       
       // perform a linesearch
       switch (d->linesearch) {
         case LineSearchType::Newton2Num:
-          //alpha = Newton2NumLineSearch(GetGradients());
+          alpha = Newton2NumLineSearch(d->forcefield->GetGradients());
           break;
         default:
         case LineSearchType::Simple:
           alpha = LineSearch(d->forcefield->GetPositions(), d->forcefield->GetGradients());
           break;
       }
-      e_n2 = d->forcefield->Energy();
+      e_n2 = d->forcefield->Eval();
       
       if (d->forcefield->GetLogLevel() >= OBFF_LOGLVL_LOW) {
         if (d->cstep % 10 == 0) {
@@ -323,7 +318,7 @@ namespace OpenBabel
     d->nsteps = steps;
     d->econv = econv;
 
-    d->e_n1 = d->forcefield->Energy();
+    d->e_n1 = d->forcefield->Eval();
     
     if (d->forcefield->GetLogLevel() >= OBFF_LOGLVL_LOW) {
       d->forcefield->OBFFLog("\nC O N J U G A T E   G R A D I E N T S\n\n");
@@ -343,21 +338,21 @@ namespace OpenBabel
     if (!d->forcefield->HasAnalyticalGradients()) {
       for (unsigned int idx = 0; idx < d->forcefield->GetPositions().size(); ++idx) {
         // use numerical gradients
-        d->forcefield->GetGradients()[idx] = NumericalDerivative(idx);
+        d->forcefield->GetGradients()[idx] = d->forcefield->NumericalDerivative(idx);
       }
     }
     
     // perform a linesearch
     switch (d->linesearch) {
       case LineSearchType::Newton2Num:
-        //alpha = Newton2NumLineSearch(GetGradients());
+        alpha = Newton2NumLineSearch(d->forcefield->GetGradients());
         break;
       default:
       case LineSearchType::Simple:
         alpha = LineSearch(d->forcefield->GetPositions(), d->forcefield->GetGradients());
         break;
     }
-    e_n2 = d->forcefield->Energy();
+    e_n2 = d->forcefield->Eval();
       
     if (d->forcefield->GetLogLevel() >= OBFF_LOGLVL_LOW) {
       snprintf(d->logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", 1, e_n2, d->e_n1);
@@ -384,7 +379,7 @@ namespace OpenBabel
       for (unsigned int idx = 0; idx < d->forcefield->GetPositions().size(); ++idx) {
           if (!d->forcefield->HasAnalyticalGradients()) {
             // use numerical gradients
-            grad2 = NumericalDerivative(idx);
+            grad2 = d->forcefield->NumericalDerivative(idx);
           } else {
             // use analytical gradients
             grad2 = d->forcefield->GetGradients()[idx];
@@ -396,7 +391,6 @@ namespace OpenBabel
           //   after NumAtoms steps
           if (d->cstep % d->forcefield->GetPositions().size() != 0) {
             g2g2 = grad2.dot(grad2);
-            //grad1 = Eigen::Vector3d(d->grad1[coordIdx], d->grad1[coordIdx+1], d->grad1[coordIdx+2]);
             grad1 = d->grad1[idx];
             g1g1 = grad1.dot(grad1);
             beta = g2g2 / g1g1;
@@ -408,7 +402,7 @@ namespace OpenBabel
       // perform a linesearch
       switch (d->linesearch) {
         case LineSearchType::Newton2Num:
-          //alpha = Newton2NumLineSearch(d->grad1);
+          alpha = Newton2NumLineSearch(d->grad1);
           break;
         default:
         case LineSearchType::Simple:
@@ -418,7 +412,7 @@ namespace OpenBabel
       // save the direction
       d->grad1 = d->forcefield->GetGradients();
  
-      e_n2 = d->forcefield->Energy();
+      e_n2 = d->forcefield->Eval();
 	
       if (IsNear(e_n2, d->e_n1, d->econv)) {
         if (d->forcefield->GetLogLevel() >= OBFF_LOGLVL_LOW) {
@@ -451,111 +445,7 @@ namespace OpenBabel
     ConjugateGradientsTakeNSteps(steps); // ConjugateGradientsInitialize takes the first step
   }
   
-  //  
-  //         f(1) - f(0)
-  // f'(0) = -----------      f(1) = f(0+h)
-  //              h
-  //
-  Eigen::Vector3d OBMinimize::NumericalDerivative(unsigned int idx) // start at 0!!
-  {
-    Eigen::Vector3d va, grad;
-    double e_orig, e_plus_delta, delta, dx, dy, dz;
-
-    delta = 1.0e-5;
-    va = d->forcefield->GetPositions()[idx];
-
-    e_orig = d->forcefield->Energy(false);
-    
-    // X direction
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x() + delta, va.y(), va.z());
-    e_plus_delta = d->forcefield->Energy(false);
-    dx = (e_plus_delta - e_orig) / delta;
-    
-    // Y direction
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x(), va.y() + delta, va.z());
-    e_plus_delta = d->forcefield->Energy(false);
-    dy = (e_plus_delta - e_orig) / delta;
-    
-    // Z direction
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x(), va.y(), va.z() + delta);
-    e_plus_delta = d->forcefield->Energy(false);
-    dz = (e_plus_delta - e_orig) / delta;
-
-    // reset coordinates to original
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x(), va.y(), va.z());
-
-    grad = Eigen::Vector3d(-dx, -dy, -dz);
-    return (grad);
-  }
-  
-  //  
-  //         f(2) - 2f(1) + f(0)
-  // f'(0) = -------------------      f(1) = f(0+h)
-  //                 h^2              f(1) = f(0+2h)
-  //
-  Eigen::Vector3d OBMinimize::NumericalSecondDerivative(unsigned int idx)
-  {
-    Eigen::Vector3d va, grad;
-    double e_0, e_1, e_2, delta, dx, dy, dz;
-
-    delta = 1.0e-5;
-
-    va = d->forcefield->GetPositions()[idx];
-
-    // calculate f(0)
-    e_0 = d->forcefield->Energy(false);
-    
-    // 
-    // X direction
-    //
-    
-    // calculate f(1)
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x() + delta, va.y(), va.z());
-    e_1 = d->forcefield->Energy(false);
-    
-    // calculate f(2)
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x() + 2 * delta, va.y(), va.z());
-    e_2 = d->forcefield->Energy(false);
-    
-    dx = (e_2 - 2 * e_1 + e_0) / (delta * delta);
-    
-    // 
-    // Y direction
-    //
-    
-    // calculate f(1)
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x(), va.y() + delta, va.z());
-    e_1 = d->forcefield->Energy(false);
-    
-    // calculate f(2)
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x(), va.y() + 2 * delta, va.z());
-    e_2 = d->forcefield->Energy(false);
-    
-    dy = (e_2 - 2 * e_1 + e_0) / (delta * delta);
-
-    // 
-    // Z direction
-    //
-    
-    // calculate f(1)
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x(), va.y(), va.z() + delta);
-    e_1 = d->forcefield->Energy(false);
-    
-    // calculate f(2)
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x(), va.y(), va.z() + 2 * delta);
-    e_2 = d->forcefield->Energy(false);
-    
-    dz = (e_2 - 2 * e_1 + e_0) / (delta * delta);
-
-    // reset coordinates to original
-    d->forcefield->GetPositions()[idx] = Eigen::Vector3d(va.x(), va.y(), va.z());
-
-    grad = Eigen::Vector3d(-dx, -dy, -dz);
-    return (grad);
-  }
-  
 } // end namespace OpenBabel
 
-
-//! \file forcefield.cpp
+//! \file obminimize.cpp
 //! \brief Handle OBMinimize class

@@ -18,9 +18,8 @@ GNU General Public License for more details.
 
 #include <vector>
 #include <string>
-#include <map>
 
-#include <openbabel/forcefield.h>
+#include <openbabel/obforcefield.h>
 #include <openbabel/ffinternal.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>

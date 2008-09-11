@@ -78,10 +78,12 @@ namespace OpenBabel
   }
 
   //! Comparison for doubles: returns fabs(a) < epsilon
+  /*
   bool IsNearZero(const double &a, const double epsilon)
   {
     return (fabs(a) < epsilon);
   }
+  */
   
   //! Comparison for nan (not a number)
   bool IsNan(const double &a)

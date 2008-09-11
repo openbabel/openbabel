@@ -189,7 +189,12 @@ namespace OpenBabel
    * backwards compatibility.
    * \deprecated
    */
-  OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
+  //OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
+  OBAPI inline bool IsNearZero(const double &a, const double epsilon=2e-6)
+  {
+    return (fabs(a) < epsilon);
+  }
+ 
   OBAPI bool IsNan(const double &);
   /**
    * \return true if \a a is much smaller than \a b. More precisely:

@@ -28,7 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
-#include <openbabel/forcefield.h>
+#include <openbabel/obforcefield.h>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
@@ -140,7 +140,7 @@ int main(int argc,char **argv)
     }
     
     OBGridData* gd = pFF->GetGrid(step, padding, type, pchg);
-    mol.SetData(gd);
+    mol.SetData((OBGenericData*)gd);
 
     ofstream ofs;
     snprintf(buffer, BUFF_SIZE, "%s_%s_%f.cube", basename.c_str(), type, pchg);

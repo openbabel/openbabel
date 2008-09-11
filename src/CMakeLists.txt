@@ -48,7 +48,7 @@ set(openbabel_srcs
     data.cpp
     descriptor.cpp
     fingerprint.cpp
-    forcefield.cpp
+    obforcefield.cpp
     format.cpp
     generic.cpp
     grid.cpp
@@ -59,6 +59,7 @@ set(openbabel_srcs
     molchrg.cpp
     mol.cpp
     obconversion.cpp
+    obcutoffgrid.cpp
     oberror.cpp
     obiter.cpp
     obutil.cpp
@@ -77,7 +78,8 @@ set(openbabel_srcs
     transform.cpp
     typer.cpp
     obmolecformat.cpp
-    minimize.cpp
+    obfunction.cpp
+    obminimize.cpp
 )
 
 if(BUILD_SHARED)

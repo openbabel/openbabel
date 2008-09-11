@@ -313,7 +313,6 @@ namespace OpenBabel
     } else {
       xyang = 0.0;
     }
-    //q = Eigen::EulerAngles<double>(0.0, 0.0, -xyang * DEG_TO_RAD);
     q = Eigen::AngleAxisd(-xyang * DEG_TO_RAD, Eigen::Vector3d::UnitZ());
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
@@ -332,7 +331,6 @@ namespace OpenBabel
     } else {
       xzang = 0.0;
     }
-    //q = Eigen::EulerAngles<double>(0.0, -xzang * DEG_TO_RAD, 0.0);
     q = Eigen::AngleAxisd(-xzang * DEG_TO_RAD, Eigen::Vector3d::UnitY());
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
@@ -351,7 +349,6 @@ namespace OpenBabel
     } else {
       yzang = 0.0;
     }
-    //q = Eigen::EulerAngles<double>(-yzang * DEG_TO_RAD, 0.0, 0.0);
     q = Eigen::AngleAxisd(-yzang * DEG_TO_RAD, Eigen::Vector3d::UnitX());
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {

@@ -40,7 +40,8 @@ namespace OpenBabel
  class OBAPI OBGrid: public OBBase
   {
   protected:
-    double _xmin,_xmax,_ymin,_ymax,_zmin,_zmax; //!< the min/max axes in XYZ axes (i.e., the box)
+    double _xmin,_xmax,_ymin;
+    double _ymax,_zmin,_zmax; //!< the min/max axes in XYZ axes (i.e., the box)
 
   public:
     OBGrid() {}
@@ -99,7 +100,7 @@ namespace OpenBabel
   protected:
     std::vector<double> _values;   //!< floating point values
     int   *_ival;             //!< for integer values (deprecated)
-    double _midz,_midx,_midy; //!< center of grid in world coordinates
+    Eigen::Vector3d m_center; //!< center of grid in world coordinates
     int _ydim,_xdim,_zdim;    //!< grid dimensions
     double _spacing,_inv_spa; //!< spacing between grid points and its inverse
     double _halfSpace;        //!< half of the grid spacing
@@ -176,8 +177,7 @@ namespace OpenBabel
     //! \return Position of the center of the grid.
     Eigen::Vector3d GetMidpointVector()
     {
-      Eigen::Vector3d v(_midx, _midy, _midz);
-      return(v);
+      return m_center;
     }
 
     //! \return X axis direction.
@@ -262,7 +262,7 @@ namespace OpenBabel
     //! \return Position of the center of the grid.
     Eigen::Vector3d Center()
     {
-      return Eigen::Vector3d(_midx,_midy,_midz);
+      return m_center;
     }
 
     friend std::ostream& operator<< ( std::ostream&, const OBFloatGrid& ) ;
@@ -286,45 +286,6 @@ namespace OpenBabel
 #ifndef OBLipoGrid
 #define OBLipoGrid 0x02 /* lipophilicity? */
 #endif //OBLipoGrid
-
-  //! \class OBProxGrid grid.h <openbabel/grid.h>
-  //! \brief A grid for determining the proximity of a given point to atoms in an OBMol
-  //! \deprecated May be removed in the future, since docking is not a key feature
- class OBAPI OBProxGrid: public OBGrid
-  {
-  protected:
-    int _gridtype;
-    int _nxinc,_nyinc,_nzinc,_maxinc;
-    double _inc;
-    std::vector<std::vector<int> > cell;
-
-  public:
-
-    OBProxGrid(int gridtype=0)
-      {
-        _gridtype=gridtype;
-      }
-    ~OBProxGrid()
-      {}
-    void Setup(OBMol &mol,OBMol &box, double cutoff,double resolution = 0.5);
-    void Setup(OBMol &mol,OBMol &box, double cutoff,
-               std::vector<bool> &use,double resolution = 0.5);
-    std::vector<int> *GetProxVector(double,double,double);
-    std::vector<int> *GetProxVector(double*);
-
-    bool LipoGrid()
-    {
-      return((_gridtype&OBLipoGrid) ? true : false);
-    }
-    bool PolarGrid()
-    {
-      return(_gridtype&OBPolarGrid);
-    }
-    void SetGridType(int gridtype)
-    {
-      _gridtype = gridtype;
-    }
-  };
 
   // scoring function used: PLP = Piecewise Linear Potential or ChemScore algorithm
   typedef enum { Undefined = -1, PLP, ChemScore } score_t;
