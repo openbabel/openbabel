@@ -22,7 +22,8 @@ using namespace std;
 namespace OpenBabel
 {
 
-class OBCOMMON OBAPIInterface : public OBFormat
+//class OBCOMMON OBAPIInterface : public OBFormat
+class OBAPIInterface : public OBFormat
 {
 public:
   OBAPIInterface()

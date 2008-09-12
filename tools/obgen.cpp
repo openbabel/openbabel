@@ -30,7 +30,7 @@ GNU General Public License for more details.
 #include <openbabel/obforcefield.h>
 #include <openbabel/obminimize.h>
 #include <openbabel/builder.h>
-#include <unistd.h>
+//#include <unistd.h>
 
 using namespace std;
 using namespace OpenBabel;

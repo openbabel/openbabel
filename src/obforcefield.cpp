@@ -71,10 +71,10 @@ GNU General Public License for more details.
 
 ***********************************************************************/
 
-#include <openbabel/obcutoffgrid.h>
 
 #include <openbabel/obforcefield.h>
 #include <openbabel/ffinternal.h>
+#include <openbabel/obcutoffgrid.h>
 
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>

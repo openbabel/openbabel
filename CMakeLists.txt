@@ -73,6 +73,7 @@ check_include_file(sys/time.h   HAVE_SYS_TIME_H)
 check_include_file(time.h       HAVE_TIME_H)
 check_include_file_cxx(sstream  HAVE_SSTREAM)
 
+check_symbol_exists(isfinite      "math.h"     HAVE_ISFINITE)
 check_symbol_exists(rint          "math.h"     HAVE_RINT)
 check_symbol_exists(snprintf      "stdio.h"    HAVE_SNPRINTF)
 check_symbol_exists(sranddev      "stdlib.h"   HAVE_SRANDDEV)
