@@ -1,3 +1,11 @@
+2008-09-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: Check OBForceField::_validSetup flas before
+	doing anything that may cause a segfault. (Fixes: #2059299)
+
+	* src/forcefields/forcefield*.h: Set _validSetup to false in
+	constructor.
+
 2008-08-16  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* windows-vc2005/setenv.txt: Add environment variable PYTHON_DIR 

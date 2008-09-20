@@ -1181,6 +1181,9 @@ namespace OpenBabel
 
   int OBForceField::SystematicRotorSearchInitialize(unsigned int geomSteps)
   {
+    if (!_validSetup)
+      return 0;
+
     OBRotorList rl;
     OBRotamerList rotamers;
     OBRotorIterator ri;
@@ -1240,6 +1243,9 @@ namespace OpenBabel
   
   bool OBForceField::SystematicRotorSearchNextConformer(unsigned int geomSteps) 
   {
+    if (!_validSetup)
+      return 0;
+    
     char _logbuf[100];
     
     if (_current_conformer >=  _mol.NumConformers()) { // done
@@ -1288,6 +1294,9 @@ namespace OpenBabel
 
   void OBForceField::RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps) 
   {
+    if (!_validSetup)
+      return;
+ 
     OBRotorList rl;
     OBRotamerList rotamers;
     OBRotorIterator ri;
@@ -1355,6 +1364,9 @@ namespace OpenBabel
 
   bool OBForceField::RandomRotorSearchNextConformer(unsigned int geomSteps) 
   {
+    if (!_validSetup)
+      return 0;
+ 
     char _logbuf[100];
     
     if (_current_conformer >=  _mol.NumConformers()) { // done
@@ -1449,6 +1461,9 @@ namespace OpenBabel
   
   void OBForceField::WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps)
   {
+    if (!_validSetup)
+      return;
+ 
     OBRotorList rl;
     OBRotamerList rotamers;
     OBRotorIterator ri;
@@ -1669,6 +1684,9 @@ namespace OpenBabel
 
   void OBForceField::DistanceGeometry() 
   {
+    if (!_validSetup)
+      return;
+ 
     int N = _mol.NumAtoms();
     int i = 0;
     int j = 0;
@@ -2507,6 +2525,9 @@ namespace OpenBabel
   
   void OBForceField::SteepestDescentInitialize(int steps, double econv, int method) 
   {
+    if (!_validSetup)
+      return;
+ 
     _nsteps = steps;
     _cstep = 0;
     _econv = econv;
@@ -2530,6 +2551,9 @@ namespace OpenBabel
  
   bool OBForceField::SteepestDescentTakeNSteps(int n) 
   {
+    if (!_validSetup)
+      return 0;
+ 
     int _ncoords = _mol.NumAtoms() * 3;
     double e_n2, alpha;
     vector3 dir;
@@ -2610,6 +2634,9 @@ namespace OpenBabel
  
   void OBForceField::SteepestDescent(int steps, double econv, int method) 
   {
+    if (!_validSetup)
+      return;
+ 
     SteepestDescentInitialize(steps, econv, method);
     SteepestDescentTakeNSteps(steps);
   }
@@ -2617,6 +2644,9 @@ namespace OpenBabel
   void OBForceField::ConjugateGradientsInitialize(int steps, double econv, 
                                                   int method)
   {
+    if (!_validSetup)
+      return;
+ 
     double e_n2, alpha;
     vector3 dir;
 
@@ -2702,6 +2732,9 @@ namespace OpenBabel
   
   bool OBForceField::ConjugateGradientsTakeNSteps(int n)
   {
+    if (!_validSetup)
+      return 0;
+ 
     double e_n2;
     double g2g2, g1g1, beta, alpha;
     vector3 grad2, dir2;
@@ -3253,6 +3286,9 @@ namespace OpenBabel
   
   void OBForceField::MolecularDynamicsTakeNSteps(int n, double T, double timestep, int method)
   {
+    if (!_validSetup)
+      return;
+ 
     int coordIdx;
     double timestep2;
     vector3 force, pos, accel;
