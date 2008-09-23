@@ -4,7 +4,7 @@
 #   
 # There can be any number of lines containing only whitespace and 
 #   comment between objects, but none within an object.
-# Lines which have \n at the end have this replaced by a new line
+# Lines which have "\n" at the end have this replaced by a new line
 #   character and the next line is concatenated.
 
 SmartsDescriptor
@@ -28,3 +28,7 @@ CompoundFilter
 L5                           # ID
 HBD<5 HBA1<10 MW<500 logP<5  # definition in terms of other descriptors or properties
 Lipinski Rule of Five        # description
+
+PatternFP
+MACCS          #ID of this fingerprint type
+MACCS.txt      #File containing the SMARTS patterns
