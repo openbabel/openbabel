@@ -1,3 +1,12 @@
+2008-09-23  Chris Morley
+	
+	* src/fingerprints/finger3.cpp: enhanced PatternFP which can take
+	extra parameters and file format.
+	
+	* data/MACCS.txt; data for new MACCS fingerprint (from RDKit)
+	
+	* data/plugindefines.txt; definition of MACCS fingerprint.
+	
 2008-07-19  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/opendxformat.cpp: Rename theGaussianCubeFormat global
