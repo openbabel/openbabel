@@ -1,5 +1,7 @@
 === How to use OBDotNet from IronPython ===
 
+First of all, unzip the OBDotNet distribution, and set the environment variable BABEL_DATADIR to point to the data folder contained within.
+
 If running IronPython in the unzipped OBDotNet folder, you can use the following to initialise OBDotNet:
 
 >>> import clr

@@ -1,5 +1,149 @@
-%module openbabel
+//Rename GetType methods. GetType() is a member of the base C# object
+//and should retain its default meaning in all derived classes
+%rename(GetAtomType) OpenBabel::OBAtom::GetType();
+%rename(GetBondType) OpenBabel::OBBond::GetType();
+%rename(GetFormatType) OpenBabel::OBFormat::GetType();
+%rename(GetRingType) OpenBabel::OBRing::GetType();
+%rename(SetAtomType) OpenBabel::OBAtom::SetType(const char *);
+%rename(SetBondType) OpenBabel::OBBond::SetType(const char *);
+%rename(SetFormatType) OpenBabel::OBFormat::SetType(const char *);
+%rename(SetRingType) OpenBabel::OBRing::SetType(const char *);
 
+//renamed to avoid confusion with similarly named types in
+//the System.Windows.Media.Media3d namespace and because all C# class names should start with a capital
+//letter
+%rename(OBVector3) *::vector3;
+%rename(OBMatrix3x3) OpenBabel::matrix3x3;
+%rename(OBTransform3d) OpenBabel::transform3d;
+
+//renamed these because all public methods of a C# class should start with
+//a capital letter. As swig for c# matures this may become uneccesary.
+%rename(DistSq) OpenBabel::vector3::distSq(const vector3 &) const;
+%rename(RandomUnitVector) OpenBabel::vector3::randomUnitVector(OBRandom *);
+%rename(RandomUnitVector) OpenBabel::vector3::randomUnitVector();
+%rename(Normalize) OpenBabel::vector3::normalize();
+//changed this name slightly to match DistSq(vector3)
+%rename(LengthSq) OpenBabel::vector3::length_2() const;
+%rename(Length) OpenBabel::vector3::length() const;
+%rename(CreateOrthoVector) OpenBabel::vector3::createOrthoVector(vector3 &) const;
+
+//marks certain classes as partial for people who want to add methods and properties
+//when using OBDotNet to build their own apis (ChemSharp will provide an example of this)
+//this change can be made to other classes if needed in the future.
+%typemap(csclassmodifiers) OpenBabel::OBAtom "public partial class"
+%typemap(csclassmodifiers) OpenBabel::OBMol "public partial class"
+%typemap(csclassmodifiers) OpenBabel::OBBond "public partial class"
+%typemap(csclassmodifiers) OpenBabel::matrix3x3 "public partial class"
+%typemap(csclassmodifiers) OpenBabel::OBRing "public partial class"
+%typemap(csclassmodifiers) OpenBabel::vector3 "public partial class"
+%typemap(csclassmodifiers) OpenBabel::OBElementTable "public partial class"
+
+//adds the ignored operators back into the OBVector3 class
+//with companion methods for use by .Net languages that don't support operator
+//overloading
+%typemap(cscode) OpenBabel::vector3
+%{
+	public static OBVector3 Add(OBVector3 vecA, OBVector3 vecB)
+	{
+		return new OBVector3(vecA.x()+vecB.x(), vecA.y()+vecB.y(),vecA.z()+vecB.z());
+	}
+	
+	public static OBVector3 operator +(OBVector3 vecA, OBVector3 vecB)
+	{
+		return new OBVector3(vecA.x()+vecB.x(), vecA.y()+vecB.y(),vecA.z()+vecB.z());
+	}  
+	
+	public static OBVector3 Mul(double d, OBVector3 vec)
+	{
+		return new OBVector3(d*vec.x(),d*vec.y(),d*vec.z());
+	}
+	
+	public static OBVector3 operator *(double d, OBVector3 vec)
+	{
+		return new OBVector3(d*vec.x(),d*vec.y(),d*vec.z());
+	}
+
+	public static OBVector3 operator *(OBVector3 vec, double d)
+	{
+		return new OBVector3(d*vec.x(),d*vec.y(),d*vec.z());
+	}
+		
+	public static OBVector3 Sub(OBVector3 vecA, OBVector3 vecB)
+	{
+		return new OBVector3(vecA.x()-vecB.x(), vecA.y()-vecB.y(),vecA.z()-vecB.z());
+	}
+	
+	public static OBVector3 operator -(OBVector3 vecA, OBVector3 vecB)
+	{
+		return new OBVector3(vecA.x()-vecB.x(), vecA.y()-vecB.y(),vecA.z()-vecB.z());
+	}
+	
+	public void Negate()
+	{
+		SetX(-x());
+		SetY(-y());
+		SetZ(-z());	
+	}
+	
+	public static OBVector3 operator -(OBVector3 vec)
+	{
+		return new OBVector3(-vec.x(),-vec.y(),-vec.z());
+	}
+
+	public double this[int index]
+	{
+		get
+		{
+		if(index == 0)
+			return x();
+		else if(index == 1)
+			return y();
+		else if(index == 2)
+			return z();
+		else
+			throw new IndexOutOfRangeException("Largest allowable index is 2");		
+		}
+	}
+%}
+
+%include "carrays.i"
+
+%define WRAP_ARRAY(TYPE, NAME)
+%array_class(TYPE,NAME)
+%typemap(cstype) TYPE * "NAME"
+
+%typemap(csout, excode=SWIGEXCODE) TYPE * 
+{
+	IntPtr cPtr = $imcall;$excode
+	$csclassname ret = null;
+	if (cPtr != IntPtr.Zero)
+	{
+        ret = new $csclassname(cPtr,true);
+	}
+	return NAME.frompointer(ret);
+}
+%typemap(csin, pre="     $csclassname temp$csinput = $csinput.cast();")
+	TYPE * "$csclassname.getCPtr(temp$csinput)"
+	
+%typemap(csvarin, excode=SWIGEXCODE2) TYPE * %{
+set
+{
+    $csclassname tempvalue = value.cast();
+    $imcall;$excode
+} %}
+
+%typemap(csvarout, excode=SWIGEXCODE2) TYPE * %{
+get
+{
+    IntPtr cPtr = $imcall;
+    $csclassname tmp = new $csclassname(cPtr,true);$excode
+    return NAME.frompointer(tmp);
+} %}
+%enddef
+
+WRAP_ARRAY(double,double_array)
+
+%module openbabel
 %{
 // used to set import/export for Cygwin DLLs
 #ifdef WIN32
@@ -39,6 +183,13 @@
 
 %}
 
+%module VecMath
+%{
+#include <openbabel/math/vector3.h>
+#include <openbabel/math/matrix3x3.h>
+#include <openbabel/math/transform3d.h>
+%}
+
 %ignore *::operator=;
 %ignore *::operator++;
 %ignore *::operator-=;
@@ -49,36 +200,45 @@
 %ignore *::operator <<;
 %ignore *::operator==;
 %ignore *::operator-;
-%ignore *::operator*;
+//%ignore *::operator*;
 %ignore *::operator !=;
 
-%include "std_vector.i"
 %include "std_string.i"
+%include "std_map.i"
+%include "std_vector.i"
 
-
-%template (vectorInt)		  std::vector<int>;
+%template (vectorInt)             std::vector<int>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(vectorInt, std::vector<int>);
+// Note that the following line will fail if the space between 
+// the two greater-than signs is removed!
+%template (vvInt)                 std::vector<std::vector<int> >;
 %template (vectorUnsignedInt)     std::vector<unsigned int>;
-//SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(vector, std::vector<int>);
-//%template (vvInt)		      std::vector<std::vector<int>>;
-%template (vectorDouble) 	std::vector<double>;
-%template (vectorString)		  std::vector<std::string>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(vector3, OpenBabel::vector3);
-%template (vVector3)		  std::vector<OpenBabel::vector3>;
+%template (vectorDouble)          std::vector<double>;
+%template (vectorString)          std::vector<std::string>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBVector3, OpenBabel::vector3);
+%template (vectorOBVector3)              std::vector<OpenBabel::vector3>;
 
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBMol, OpenBabel::OBMol);
-%template (vectorMol)		  std::vector<OpenBabel::OBMol>;
+%template (vectorMol)     std::vector<OpenBabel::OBMol>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond);
-%template (vectorBond)		std::vector<OpenBabel::OBBond>;
+%template (vectorBond)    std::vector<OpenBabel::OBBond>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBResidue, OpenBabel::OBResidue);
-%template (vectorResidue)	std::vector<OpenBabel::OBResidue>;
+%template (vectorResidue) std::vector<OpenBabel::OBResidue>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing);
-%template (vectorRing)		std::vector<OpenBabel::OBRing>;
+%template (vectorRing)    std::vector<OpenBabel::OBRing>;
 
 // Note that vectors of pointers need slightly different syntax
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing*);
-%template (vectorpRing)		std::vector<OpenBabel::OBRing*>;
+%template (vectorpRing)   std::vector<OpenBabel::OBRing*>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBGenericData, OpenBabel::OBGenericData*);
-%template (vectorData)    std::vector<OpenBabel::OBGenericData*>;
+%template (vectorpData)    std::vector<OpenBabel::OBGenericData*>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBInternalCoord, OpenBabel::OBInternalCoord*);
+%template (vectorpInternalCoord)		std::vector<OpenBabel::OBInternalCoord*>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBAtom, OpenBabel::OBAtom*);
+%template (vectorpAtom)		std::vector<OpenBabel::OBAtom*>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
+%template (vectorpBond)		std::vector<OpenBabel::OBBond*>;
+
 
 %import <openbabel/babelconfig.h>
 

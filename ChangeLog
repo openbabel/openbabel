@@ -1,5 +1,14 @@
 2008-09-26  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* scripts/openbabel-csharp.i: Updated with Matt's comprehensive
+	changes to increase compatability with CSharp
+	* windows-vc2005/OBCSharp/IronPython_Instructions.txt: Set
+	BABEL_DATADIR when using IronPython
+	* windows-vc2005/OBCSharp/obdotnet.bat: Copy the data directory when
+	making the distribution
+
+2008-09-26  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* windows-vc2005/OBCSharp/obdotnet.bat: Update the CSharp build so
 	that it automatically creates a distribution for release
 	* windows-vc2005/OBCSharp/IronPython_Instructions.txt: How to use the
