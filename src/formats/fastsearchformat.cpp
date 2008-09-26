@@ -454,6 +454,14 @@ have the same name as the datafile. Use the form:\n \
 
         //erase -s option in GeneralOptions since it will be rewritten
         pConv->RemoveOption("s",OBConversion::GENOPTIONS);
+        if(patternMol.Empty())
+        {
+          obErrorLog.ThrowError(__FUNCTION__, 
+            "Could not make a molecule from " + smarts.str()
+            + "\nThis needs to be valid SMILES when using fastsearch."
+            "You can use the more versatile SMARTS in a normal substructure search." , obError);
+            return false;
+        }
       }
     else
       {
