@@ -1,3 +1,8 @@
+2008-10-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: Fix OBForceField::GetAtomTypes() and
+	OBForceField::GetPartialCharges()
+
 2008-09-26  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-csharp.i: Updated with Matt's comprehensive

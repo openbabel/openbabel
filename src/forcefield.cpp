@@ -992,15 +992,17 @@ namespace OpenBabel
     if (_mol.NumAtoms() != mol.NumAtoms())
       return false;
     
-    FOR_ATOMS_OF_MOL (atom, _mol) {
-      if (atom->HasData("FFAtomType")) {
-        OBPairData *data = (OBPairData*) atom->GetData("FFAtomType");
-	data->SetValue(atom->GetType());
+    FOR_ATOMS_OF_MOL (intAtom, _mol) {
+      OBAtom *extAtom = mol.GetAtom(intAtom->GetIdx());
+      
+      if (extAtom->HasData("FFAtomType")) {
+        OBPairData *data = (OBPairData*) extAtom->GetData("FFAtomType");
+	data->SetValue(intAtom->GetType());
       } else {
         OBPairData *data = new OBPairData();
        	data->SetAttribute("FFAtomType");
-	data->SetValue(atom->GetType());
-        atom->SetData(data);
+	data->SetValue(intAtom->GetType());
+        extAtom->SetData(data);
       }
     }
 
@@ -1013,16 +1015,19 @@ namespace OpenBabel
       return false;
     
     ostringstream out;
-    FOR_ATOMS_OF_MOL (atom, _mol) {
-      out << atom->GetPartialCharge();
-      if (atom->HasData("FFPartialCharge")) {
-        OBPairData *data = (OBPairData*) atom->GetData("FFPartialCharge");
+    FOR_ATOMS_OF_MOL (intAtom, _mol) {
+      OBAtom *extAtom = mol.GetAtom(intAtom->GetIdx());
+      
+      out.str("");
+      out << intAtom->GetPartialCharge();
+      if (extAtom->HasData("FFPartialCharge")) {
+        OBPairData *data = (OBPairData*) extAtom->GetData("FFPartialCharge");
 	data->SetValue(out.str());
       } else {
         OBPairData *data = new OBPairData();
        	data->SetAttribute("FFPartialCharge");
 	data->SetValue(out.str());
-        atom->SetData(data);
+        extAtom->SetData(data);
       }
     }
 
