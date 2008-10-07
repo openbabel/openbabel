@@ -125,7 +125,10 @@ public:
           ngrp = (num + div -1)/div--; //rounds up
           num -= ngrp;
           while(ngrp--)
-            numMatches > div ? SetBit(fp,i++) : i++;
+            if (numMatches > div) {
+              SetBit(fp,i);
+            }
+          i++;
         }
       }
       n += ppat->numbits;
