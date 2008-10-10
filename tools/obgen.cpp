@@ -29,7 +29,6 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
 #include <openbabel/builder.h>
-#include <unistd.h>
 
 using namespace std;
 using namespace OpenBabel;

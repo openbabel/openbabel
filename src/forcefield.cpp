@@ -992,15 +992,17 @@ namespace OpenBabel
     if (_mol.NumAtoms() != mol.NumAtoms())
       return false;
     
-    FOR_ATOMS_OF_MOL (atom, _mol) {
-      if (atom->HasData("FFAtomType")) {
-        OBPairData *data = (OBPairData*) atom->GetData("FFAtomType");
-	data->SetValue(atom->GetType());
+    FOR_ATOMS_OF_MOL (intAtom, _mol) {
+      OBAtom *extAtom = mol.GetAtom(intAtom->GetIdx());
+      
+      if (extAtom->HasData("FFAtomType")) {
+        OBPairData *data = (OBPairData*) extAtom->GetData("FFAtomType");
+	data->SetValue(intAtom->GetType());
       } else {
         OBPairData *data = new OBPairData();
        	data->SetAttribute("FFAtomType");
-	data->SetValue(atom->GetType());
-        atom->SetData(data);
+	data->SetValue(intAtom->GetType());
+        extAtom->SetData(data);
       }
     }
 
@@ -1013,16 +1015,19 @@ namespace OpenBabel
       return false;
     
     ostringstream out;
-    FOR_ATOMS_OF_MOL (atom, _mol) {
-      out << atom->GetPartialCharge();
-      if (atom->HasData("FFPartialCharge")) {
-        OBPairData *data = (OBPairData*) atom->GetData("FFPartialCharge");
+    FOR_ATOMS_OF_MOL (intAtom, _mol) {
+      OBAtom *extAtom = mol.GetAtom(intAtom->GetIdx());
+      
+      out.str("");
+      out << intAtom->GetPartialCharge();
+      if (extAtom->HasData("FFPartialCharge")) {
+        OBPairData *data = (OBPairData*) extAtom->GetData("FFPartialCharge");
 	data->SetValue(out.str());
       } else {
         OBPairData *data = new OBPairData();
        	data->SetAttribute("FFPartialCharge");
 	data->SetValue(out.str());
-        atom->SetData(data);
+        extAtom->SetData(data);
       }
     }
 
@@ -1181,6 +1186,9 @@ namespace OpenBabel
 
   int OBForceField::SystematicRotorSearchInitialize(unsigned int geomSteps)
   {
+    if (!_validSetup)
+      return 0;
+
     OBRotorList rl;
     OBRotamerList rotamers;
     OBRotorIterator ri;
@@ -1240,7 +1248,8 @@ namespace OpenBabel
   
   bool OBForceField::SystematicRotorSearchNextConformer(unsigned int geomSteps) 
   {
-    char _logbuf[100];
+    if (!_validSetup)
+      return 0;
     
     if (_current_conformer >=  _mol.NumConformers()) { // done
       // Select conformer with lowest energy
@@ -1288,6 +1297,9 @@ namespace OpenBabel
 
   void OBForceField::RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps) 
   {
+    if (!_validSetup)
+      return;
+ 
     OBRotorList rl;
     OBRotamerList rotamers;
     OBRotorIterator ri;
@@ -1355,8 +1367,9 @@ namespace OpenBabel
 
   bool OBForceField::RandomRotorSearchNextConformer(unsigned int geomSteps) 
   {
-    char _logbuf[100];
-    
+    if (!_validSetup)
+      return 0;
+ 
     if (_current_conformer >=  _mol.NumConformers()) { // done
       // Select conformer with lowest energy
       int best_conformer = 0;
@@ -1449,6 +1462,9 @@ namespace OpenBabel
   
   void OBForceField::WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps)
   {
+    if (!_validSetup)
+      return;
+ 
     OBRotorList rl;
     OBRotamerList rotamers;
     OBRotorIterator ri;
@@ -1669,6 +1685,9 @@ namespace OpenBabel
 
   void OBForceField::DistanceGeometry() 
   {
+    if (!_validSetup)
+      return;
+ 
     int N = _mol.NumAtoms();
     int i = 0;
     int j = 0;
@@ -1888,8 +1907,6 @@ namespace OpenBabel
  
     // output result of triangle smoothing
     IF_OBFF_LOGLVL_LOW {
-      char _logbuf[100];
-
       OBFFLog("RANDOM DISTANCE MATRIX BETWEEN LIMITS\n\n");
       for (i=0; i<N; i++) {
         OBFFLog("[");
@@ -1912,8 +1929,6 @@ namespace OpenBabel
     
     // output metric matrix
     IF_OBFF_LOGLVL_LOW {
-      char _logbuf[100];
-
       OBFFLog("METRIC MATRIX\n\n");
       for (i=0; i<N; i++) {
         OBFFLog("[");
@@ -2403,7 +2418,6 @@ namespace OpenBabel
     OBAtom *atom = new OBAtom;
     vector3 grad;
     double e_n1, e_n2;
-    char _logbuf[100];
     
     atom->SetVector(9.0, 9.0, 0.0);
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
@@ -2447,7 +2461,6 @@ namespace OpenBabel
     double e_n1, e_n2;
     double g2g2, g1g1, g2g1;
     bool firststep;
-    char _logbuf[100];
 
     firststep = true;
     atom->SetVector(9.0, 9.0, 0.0);
@@ -2507,6 +2520,9 @@ namespace OpenBabel
   
   void OBForceField::SteepestDescentInitialize(int steps, double econv, int method) 
   {
+    if (!_validSetup)
+      return;
+ 
     _nsteps = steps;
     _cstep = 0;
     _econv = econv;
@@ -2530,6 +2546,9 @@ namespace OpenBabel
  
   bool OBForceField::SteepestDescentTakeNSteps(int n) 
   {
+    if (!_validSetup)
+      return 0;
+ 
     int _ncoords = _mol.NumAtoms() * 3;
     double e_n2, alpha;
     vector3 dir;
@@ -2610,6 +2629,9 @@ namespace OpenBabel
  
   void OBForceField::SteepestDescent(int steps, double econv, int method) 
   {
+    if (!_validSetup)
+      return;
+ 
     SteepestDescentInitialize(steps, econv, method);
     SteepestDescentTakeNSteps(steps);
   }
@@ -2617,6 +2639,9 @@ namespace OpenBabel
   void OBForceField::ConjugateGradientsInitialize(int steps, double econv, 
                                                   int method)
   {
+    if (!_validSetup)
+      return;
+ 
     double e_n2, alpha;
     vector3 dir;
 
@@ -2702,6 +2727,9 @@ namespace OpenBabel
   
   bool OBForceField::ConjugateGradientsTakeNSteps(int n)
   {
+    if (!_validSetup)
+      return 0;
+ 
     double e_n2;
     double g2g2, g1g1, beta, alpha;
     vector3 grad2, dir2;
@@ -3253,6 +3281,9 @@ namespace OpenBabel
   
   void OBForceField::MolecularDynamicsTakeNSteps(int n, double T, double timestep, int method)
   {
+    if (!_validSetup)
+      return;
+ 
     int coordIdx;
     double timestep2;
     vector3 force, pos, accel;

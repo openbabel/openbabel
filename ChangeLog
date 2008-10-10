@@ -1,3 +1,21 @@
+2008-10-11  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp, src/forcefields/forcefieldmmff94.cpp: Remove
+	redefinition of _logbuf[BUFF_SIZE+1] (This and Chris' previous commit 
+	fixes: #2150390)
+
+	* src/forcefield.cpp: Fix OBForceField::GetAtomTypes() and
+	OBForceField::GetPartialCharges()
+
+	* src/forcefield.cpp: Check OBForceField::_validSetup flas before
+	doing anything that may cause a segfault. (Fixes: #2059299)
+
+	* src/forcefields/forcefield*.h: Set _validSetup to false in
+	constructor.
+
+	* CMakeLists.txt, src/config.h.cmake: apply patch from Christian
+	Ehrlicher to fix cmake MSVC compilation.
+
 2008-10-10  Chris Morley
 
 	* src/fingerprints/finger3.cpp: rearrange
