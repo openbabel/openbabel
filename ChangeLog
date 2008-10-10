@@ -1,5 +1,10 @@
 2008-10-11  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/forcefields/forcefielduff.cpp: Fix minor output bug reported by
+	Tapani Kinnunen (Fixes: #2144142)
+
+2008-10-11  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* src/forcefield.cpp, src/forcefields/forcefieldmmff94.cpp: Remove
 	redefinition of _logbuf[BUFF_SIZE+1] (This and Chris' previous commit 
 	fixes: #2150390)
