@@ -1,3 +1,16 @@
+2008-10-10  Chris Morley
+
+	* src/fingerprints/finger3.cpp: rearrange
+	a) so that div and div-- do not appear in same statement, which
+	is illegal (Andrew Dalke).
+	b) replace ternary conditional, which did not compile in gcc
+	It's a pity the Microsoft compiler did not warn about either of these.
+	
+	The preferred file format no longer needs a comment as first line.
+
+	* src/formats/chemkinformat.cpp(ReadReactionQualifierLines):
+	correct error similar to b) above flagged in bug #2150390	 
+	
 2008-09-26  Chris Morley
 
 	* src/formats/fastsearchformat.cpp: Improved error message when

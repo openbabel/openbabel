@@ -122,7 +122,7 @@ public:
         int i = n;
         while(num)
         {
-          ngrp = (num + div -1)/div--; //rounds up
+          ngrp = (num -1)/div-- +1; //rounds up
           num -= ngrp;
           while(ngrp--)
             if (numMatches > div) {
@@ -159,9 +159,9 @@ public:
     bool smartsfirst = (Trim(line)=="#Comments after SMARTS");
     
     _bitcount=0;
-    while(ifs.good())
+    do
     {
-      if( getline(ifs,line) && Trim(line).size() > 0 && line[0]!='#')
+      if(Trim(line).size()>0 && line[0]!='#')
       {
         pattern p;
         p.numbits=1; p.numoccurrences=0; //default values
@@ -198,7 +198,7 @@ public:
         _pats.push_back(p);
         _bitcount += p.numbits;
       }
-    }
+    }while(getline(ifs,line));
  
     if (ifs)
       ifs.close();
