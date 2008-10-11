@@ -1,3 +1,8 @@
+2008-10-10  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-perl.i: Replaced the C++ iterators by Perl classes
+	which can be used for iteration natively in Perl.
+
 2008-10-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Fix OBForceField::GetAtomTypes() and

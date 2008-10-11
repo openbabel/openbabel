@@ -127,7 +127,9 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %ignore OBMolAngleIter(OBMol &);
 %ignore OBMolAtomIter(OBMol &);
 %ignore OBMolAtomBFSIter(OBMol &);
+%ignore OBMolAtomBFSIter(OBMol &, int);
 %ignore OBMolAtomDFSIter(OBMol &);
+%ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolBondIter(OBMol &);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);
@@ -135,7 +137,53 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
 
-
 %ignore *::operator=;
+
+%perlcode %{
+# http://www.perl.com/pub/a/2005/06/16/iterators.html
+sub gen_iterator {
+    my $iterator_function = shift;
+    return sub {
+        my $iter = new $iterator_function(shift);
+
+        my ($current_state, $done);
+
+        return sub {
+            # code to calculate $next_state or $done;
+            return undef if $done;
+            my $next_state = $iter->deref();
+            $iter->inc();
+            if (!$iter->good()) {$done = 1;};
+            return $current_state = $next_state;
+        };
+    };
+}
+%}
+
+%define MAKE_ITER_CLASS(itername, renamediter)
+%rename itername renamediter;
+%perlcode %{
+package Chemistry::OpenBabel::itername;
+
+sub new {
+   my $pkg = shift;
+   my $self = Chemistry::OpenBabel::gen_iterator(Chemistry::OpenBabel::renamediter)->(shift);
+   bless($self, $pkg);
+}
+%}
+%enddef
+
+MAKE_ITER_CLASS(OBAtomAtomIter, _OBAtomAtomIter)
+MAKE_ITER_CLASS(OBAtomBondIter, _OBAtomBondIter)
+MAKE_ITER_CLASS(OBMolAngleIter, _OBMolAngleIter)
+MAKE_ITER_CLASS(OBMolAtomIter, _OBMolAtomIter)
+MAKE_ITER_CLASS(OBMolAtomBFSIter, _OBMolAtomBFSIter)
+MAKE_ITER_CLASS(OBMolAtomDFSIter, _OBMolAtomDFSIter)
+MAKE_ITER_CLASS(OBMolBondIter, _OBMolBondIter)
+MAKE_ITER_CLASS(OBMolPairIter, _OBMolPairIter)
+MAKE_ITER_CLASS(OBMolRingIter, _OBMolRingIter)
+MAKE_ITER_CLASS(OBMolTorsionIter, _OBMolTorsionIter)
+MAKE_ITER_CLASS(OBResidueAtomIter, _OBResidueAtomIter)
+MAKE_ITER_CLASS(OBFingerprintIter, _OBFingerprintIter)
 
 %include <openbabel/obiter.h>
