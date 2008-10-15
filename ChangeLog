@@ -1,3 +1,9 @@
+2008-10-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefieldmmff94.cpp: Accept both forms for sulfon
+	and nitro groups: N(=O)O, N(=O)=O, S(O)O, S(=O)(=O) are now all valid
+	and typed correctly.
+
 2008-10-11  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefielduff.cpp: Fix minor output bug reported by
