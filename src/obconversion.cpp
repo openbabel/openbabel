@@ -504,8 +504,8 @@ namespace OpenBabel {
     //Output last object
     m_IsLast= !MoreFilesToCome;
 
-    //Output is deferred until the end with -C option
-    if(pOutFormat && (!IsOption("C",GENOPTIONS) || m_IsLast))
+    //Output is always occurs at the end with the --OutputAtEnd option
+    if(pOutFormat && (!IsOption("OutputAtEnd",GENOPTIONS) || m_IsLast))
       if(pOb1 && !pOutFormat->WriteChemObject(this))
         Index--;
 	
@@ -1489,6 +1489,33 @@ namespace OpenBabel {
     else
      OptionsArray[typ]=pSourceConv->OptionsArray[typ];
   }
+
+  int OBConversion::NumInputObjects()
+  {
+    //check that the input format supports SkipObjects()
+    if(GetInFormat()->SkipObjects(0, this)==0)
+    {
+      obErrorLog.ThrowError(__FUNCTION__,
+        "Input format does not have a SkipObjects function.", obError);
+      return -1;
+    }
+
+    istream& ifs = *GetInStream();
+    //Save position of the input stream 
+    streampos pos = ifs.tellg();
+
+    ifs.seekg(0); //rewind
+    OBFormat* pFormat = GetInFormat();
+    int count=0; 
+    while(ifs && pFormat->SkipObjects(1, this)>0)
+      ++count;
+
+    ifs.clear(); //clear eof
+    ifs.seekg(pos); //restore old position
+    return count;
+  }
+
+
 
   //The following function and typedef are deprecated, and are present only
   //for backward compatibility.

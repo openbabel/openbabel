@@ -198,10 +198,10 @@ class OBFPRT FastSearchIndexer
 public:
   ///\brief Constructor with a new index
   FastSearchIndexer(std::string& datafilename, std::ostream* os, std::string& fpid,
-      int FptBits=0);
+      int FptBits=0, int nmols=0);
 
   ///\brief Constructor using existing index
-  FastSearchIndexer(FptIndex* pindex, std::ostream* os);
+  FastSearchIndexer(FptIndex* pindex, std::ostream* os, int nmols=0);
   
   ~FastSearchIndexer();
 

@@ -51,11 +51,14 @@ namespace OpenBabel {
     virtual int SkipObjects(int n, OBConversion* pConv)
     {
       if(n==0) return 1; //already points after current line
-      string temp;
       istream& ifs = *pConv->GetInStream();
-      int i;
-      for(i=0;i<n && ifs.good();i++)
-        getline(ifs, temp);
+      int i=0;
+      while(i<n && ifs.good())
+      {
+        if(!isNotSmiles(ifs.peek()))
+          i++;
+        ifs.ignore(numeric_limits<streamsize>::max(),'\n');
+      }
       return ifs.good() ? 1 : -1; 
     }
 

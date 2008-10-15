@@ -273,6 +273,10 @@ namespace OpenBabel {
       /// is appropriately singular or plural.
       void ReportNumberConverted(int count, OBFormat* pFormat=NULL);
 
+      /// \return the number of objects in the inputstream, 
+      /// or -1 if error or if SkipObjects for the input format is not implemented
+      int NumInputObjects();
+
 
 protected:
       ///Replaces * in BaseName by InFile without extension and path

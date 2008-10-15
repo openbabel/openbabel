@@ -346,7 +346,7 @@ namespace OpenBabel
 
   //*******************************************************
   FastSearchIndexer::FastSearchIndexer(string& datafilename, ostream* os, 
-                                       std::string& fpid, int FptBits)
+                                       std::string& fpid, int FptBits, int nmols)
   {
     ///Starts indexing process
     _indexstream = os;
@@ -357,17 +357,29 @@ namespace OpenBabel
     _pindex->header.fpid[15]='\0'; //ensure fpid is terminated at 15 characters.
     strncpy(_pindex->header.datafilename, datafilename.c_str(), 255);
 
+    if(nmols>0)
+    {
+      //Reserve space for the vectors to contain the requested number of entries
+      _pindex->fptdata.reserve(nmols);
+      _pindex->seekdata.reserve(nmols);
+    }
+
     //check that fingerprint type is available
     _pFP = _pindex->CheckFP();	
   }
 
   /////////////////////////////////////////////////////////////
-  FastSearchIndexer::FastSearchIndexer(FptIndex* pindex, std::ostream* os)
+  FastSearchIndexer::FastSearchIndexer(FptIndex* pindex, std::ostream* os, int nmols)
   {
-    //Uses existing index
+    //nmols is new total number of molecules 
     _indexstream = os;
     _pindex = pindex;
     _nbits  = _pindex->header.words * OBFingerprint::Getbitsperint();
+    if(nmols!=0)
+    {
+      _pindex->fptdata.reserve(nmols);
+      _pindex->seekdata.reserve(nmols);
+    }
 
     //check that fingerprint type is available
     _pFP = _pindex->CheckFP();	

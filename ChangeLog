@@ -1,3 +1,25 @@
+2008-10-15  Chris Morley
+
+	* include/openbabel/obconversion.h, src/obconversion.cpp:
+	New function for counting the number of molecules in an input file.
+	Make option to force output at end more general (for sort).
+	
+	* include/openbabel/fingerprint.h, src/fingerprint.cpp:
+	Add extra parameter to FastSearchIndexer constructor to
+	allow vectors to be pre-sized.
+	
+	* src/formats/fastsearchformat.cpp(ReadChemObject): change the way
+	the last result molecule is flagged (for sort).
+	(WriteChemObject) Make index updating work with GUI by detecting
+	a ofstream object rather than cout.
+	Count number of molecules in input file, report it and use it
+	to pre-size the fingerprint and seekposition vectors.
+	
+	* src/formats/smilesformat.cpp(SkipObjects): make compatible with
+	previous interpretation changes. (Lines which start with non-SMILES
+	character are ignored.)
+
+
 2008-10-15  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefields/forcefieldmmff94.cpp: Accept both forms for sulfon

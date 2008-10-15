@@ -272,8 +272,7 @@ namespace OpenBabel {
                   *pConv->GetOutStream() << "** " << ln << endl;
                 }
               pConv->SetOneObjectOnly();
-              if(itr+1 != SeekPositions.end())
-                pConv->SetMoreFilesToCome();//so that not seen as last on output 
+              pConv->SetLast(itr+1 == SeekPositions.end());
               pConv->Convert(NULL,NULL);
             }
       }
@@ -287,11 +286,13 @@ namespace OpenBabel {
 
     bool update = pConv->IsOption("u")!=NULL;
 
-    ostream* pOs = pConv->GetOutStream();// with named index it is already open
-    bool NewOstreamUsed=false;
+    static ostream* pOs;
+    static bool NewOstreamUsed;
     if(fsi==NULL)
       {
         //First pass sets up FastSearchIndexer object
+        pOs = pConv->GetOutStream();// with named index it is already open
+        NewOstreamUsed=false;
         string mes("prepare an");
         if(update)
           mes = "update the";
@@ -315,7 +316,8 @@ namespace OpenBabel {
 		
         FptIndex* pidx; //used with update
 
-        if(pOs==&cout)
+        //if(pOs==&cout) did not work with GUI
+        if(!dynamic_cast<ofstream*>(pOs))
           {
             //No index filename specified
             //Derive index name from datafile name
@@ -356,9 +358,10 @@ namespace OpenBabel {
             if(update)
               {
                 obErrorLog.ThrowError(__FUNCTION__,
-                  "Currently, updating	can only be done with index files that \
-have the same name as the datafile. Use the form:\n \
-	babel datafile.xxx -ofs -xu", obError);
+                  "Currently, updating is only done on index files that"
+                  "have the same name as the datafile.\n"
+                  "Do not specify an output file; use the form:\n"
+	                "   babel datafile.xxx -ofs -xu", obError);
                 return false;
               }
           }
@@ -384,16 +387,20 @@ have the same name as the datafile. Use the form:\n \
         if(pos!=string::npos)
           datafilename=datafilename.substr(pos+1);
 
+        int nmols = pConv->NumInputObjects();
+        if(nmols>0)
+          clog << "\nIt contains " << nmols << " molecules" << flush;
+
         if(update)
           {
-            fsi = new FastSearchIndexer(pidx,pOs);//using existing index
+            fsi = new FastSearchIndexer(pidx, pOs, nmols);//using existing index
 
             //Seek to position in datafile of last of old objects
             LastSeekpos = *(pidx->seekdata.end()-1);
             pConv->GetInStream()->seekg(LastSeekpos);
           }
         else
-          fsi = new FastSearchIndexer(datafilename, pOs, fpid, nbits);
+          fsi = new FastSearchIndexer(datafilename, pOs, fpid, nbits, nmols);
 		
         obErrorLog.StopLogging();
       }
