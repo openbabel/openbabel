@@ -1,5 +1,10 @@
 2008-10-15  Chris Morley
 
+	* src/fingerprint.cpp: correct yesterdays commit which used
+	the wrong size to reserve for the fingerprint vector.	
+	
+2008-10-15  Chris Morley
+
 	* include/openbabel/obconversion.h, src/obconversion.cpp:
 	New function for counting the number of molecules in an input file.
 	Make option to force output at end more general (for sort).

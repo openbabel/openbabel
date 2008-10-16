@@ -357,12 +357,8 @@ namespace OpenBabel
     _pindex->header.fpid[15]='\0'; //ensure fpid is terminated at 15 characters.
     strncpy(_pindex->header.datafilename, datafilename.c_str(), 255);
 
-    if(nmols>0)
-    {
-      //Reserve space for the vectors to contain the requested number of entries
-      _pindex->fptdata.reserve(nmols);
-      _pindex->seekdata.reserve(nmols);
-    }
+    //just a hint to reserve size of vectors; definitive value set in destructor
+    _pindex->header.nEntries = nmols;
 
     //check that fingerprint type is available
     _pFP = _pindex->CheckFP();	
@@ -375,11 +371,9 @@ namespace OpenBabel
     _indexstream = os;
     _pindex = pindex;
     _nbits  = _pindex->header.words * OBFingerprint::Getbitsperint();
-    if(nmols!=0)
-    {
-      _pindex->fptdata.reserve(nmols);
-      _pindex->seekdata.reserve(nmols);
-    }
+
+    //just a hint to reserve size of vectors; definitive value set in destructor
+    _pindex->header.nEntries = nmols;
 
     //check that fingerprint type is available
     _pFP = _pindex->CheckFP();	
@@ -410,6 +404,13 @@ namespace OpenBabel
     if(_pFP->GetFingerprint(pOb, vecwords, _nbits))
       {
         _pindex->header.words = vecwords.size(); //Use size as returned from fingerprint
+        if(_pindex->fptdata.empty() && _pindex->header.nEntries!=0) 
+        {
+          //Reserve size of vectors at start to avoid multiple realloction and copying later.
+          //Done here rather than in constructor because needs the size of the fingerprint.
+          _pindex->fptdata.reserve(_pindex->header.nEntries * _pindex->header.words);
+          _pindex->seekdata.reserve(_pindex->header.nEntries);
+        }
         for(unsigned int i=0;i<_pindex->header.words;++i)
           _pindex->fptdata.push_back(vecwords[i]);
         _pindex->seekdata.push_back(seekpos);
