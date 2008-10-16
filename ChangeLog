@@ -1,5 +1,10 @@
 2008-10-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/forcefields/forcefieldmmff94.cpp: Remove _logbuf[100] (Fixes
+	#2022120)
+
+2008-10-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* src/builder.cpp: fix bugs with linear molecules. (Fixes #2119034 & #2013814)
 
 2008-10-15  Chris Morley
