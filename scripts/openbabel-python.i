@@ -37,6 +37,8 @@
 #include <openbabel/alias.h>
 #include <openbabel/atomclass.h>
 
+#include <openbabel/kinetics.h>
+#include <openbabel/rotamer.h>
 
 
 %}
@@ -113,16 +115,35 @@ VECTORTEMPLATE_WRAP(pOBGenericData, OpenBabel::OBGenericData*)
 
 }
 
-
+%define CAST_GENERICDATA_TO(subclass)
 %inline %{
-OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
-	return (OpenBabel::OBPairData *) data;
-}
-
-OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
-	return (OpenBabel::OBUnitCell *) data;
+OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
+    return (OpenBabel::OB ## subclass *) data;
 }
 %}
+%enddef
+CAST_GENERICDATA_TO(AngleData)
+CAST_GENERICDATA_TO(AtomClassData)
+CAST_GENERICDATA_TO(ChiralData)
+CAST_GENERICDATA_TO(CommentData)
+CAST_GENERICDATA_TO(ConformerData)
+CAST_GENERICDATA_TO(ExternalBondData)
+CAST_GENERICDATA_TO(GridData)
+CAST_GENERICDATA_TO(MatrixData)
+CAST_GENERICDATA_TO(NasaThermoData)
+CAST_GENERICDATA_TO(PairData)
+// CAST_GENERICDATA_TO(PairTemplate)
+CAST_GENERICDATA_TO(RateData)
+CAST_GENERICDATA_TO(RotamerList)
+CAST_GENERICDATA_TO(RotationData)
+CAST_GENERICDATA_TO(SerialNums)
+CAST_GENERICDATA_TO(SetData)
+CAST_GENERICDATA_TO(SymmetryData)
+CAST_GENERICDATA_TO(TorsionData)
+CAST_GENERICDATA_TO(UnitCell)
+CAST_GENERICDATA_TO(VectorData)
+CAST_GENERICDATA_TO(VibrationData)
+CAST_GENERICDATA_TO(VirtualBond)
 
 // These methods are renamed to valid Python method names, as otherwise
 // they cannot be used from Python

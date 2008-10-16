@@ -1,3 +1,8 @@
+2008-10-16  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-python.i: Added casting methods for all of the
+	different types of OBGenericData
+
 2008-10-10  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-perl.i: Replaced the C++ iterators by Perl classes
