@@ -1,5 +1,10 @@
 2008-10-17  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
+	* src/forcefield.cpp: in OBForceField::GetGrid(), calculate grid size 
+	before adding probe atom. 
+
+2008-10-17  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
 	* include/openbabel/chains.h, src/chains.cpp: some changes from
 	experimental branch, mainly documentation and some bug fixes.
 

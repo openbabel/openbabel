@@ -4104,6 +4104,20 @@ namespace OpenBabel
   OBGridData* OBForceField::GetGrid(double step, double padding, const char* type, double pchg)
   {
     cout << "OBForceFieldMMFF94::GetGrid(" << step << ", " << type << ")" << endl;
+    OBFloatGrid fgrid;
+    fgrid.Init(_mol, step, padding);
+    vector3 min;
+    unsigned int xDim, yDim, zDim, xyzDim;
+
+    min = fgrid.GetMin();
+
+    xDim = fgrid.GetXdim();
+    yDim = fgrid.GetYdim();
+    zDim = fgrid.GetZdim();
+    xyzDim = xDim * yDim * zDim;
+
+    cout << "xDim = " << xDim << ", yDim = " << yDim << ", zDim = " << zDim << endl;
+
     // Add the probe atom
     _mol.BeginModify();
     OBAtom *atom = _mol.NewAtom();
@@ -4117,21 +4131,6 @@ namespace OpenBabel
 
     atom = _mol.GetAtom(index);
     double *pos = atom->GetCoordinate();
-
-    cout << "NumAtoms = " <<_mol.NumAtoms() << endl;
-
-    OBFloatGrid fgrid;
-    fgrid.Init(_mol, step, padding);
-    vector3 min;
-    int xDim, yDim, zDim;
-
-    min = fgrid.GetMin();
-
-    xDim = fgrid.GetXdim();
-    yDim = fgrid.GetYdim();
-    zDim = fgrid.GetZdim();
-
-    cout << "xDim = " << xDim << ", yDim = " << yDim << ", zDim = " << zDim << endl;
 
     vector3 coord;
     double evdw, eele;
@@ -4147,11 +4146,11 @@ namespace OpenBabel
     grid->SetLimits(min, xAxis, yAxis, zAxis);
     
     // VDW surface
-    for (int i = 0; i < xDim; ++i) {
+    for (unsigned int i = 0; i < xDim; ++i) {
       coord.SetX(min[0] + i * step);
-      for (int j = 0; j < yDim; ++j) {
+      for (unsigned int j = 0; j < yDim; ++j) {
         coord.SetY(min[1] + j * step);
-        for (int k = 0; k < zDim; ++k)
+        for (unsigned int k = 0; k < zDim; ++k)
         {
           coord.SetZ(min[2] + k * step);
           minDistance = 1.0E+10;
@@ -4177,14 +4176,18 @@ namespace OpenBabel
     } // x-axis
 
 
-    for (int i = 0; i < xDim; ++i) {
+    unsigned int count = 0;
+    for (unsigned int i = 0; i < xDim; ++i) {
       coord.SetX(min[0] + i * step);
-      for (int j = 0; j < yDim; ++j) {
+      for (unsigned int j = 0; j < yDim; ++j) {
         coord.SetY(min[1] + j * step);
-        for (int k = 0; k < zDim; ++k)
+        for (unsigned int k = 0; k < zDim; ++k)
         {
 	  coord.SetZ(min[2] + k * step);
           
+          count++;
+          cout << "\r" << count << "/" << xyzDim;
+
 	  if (grid->GetValue(i, j, k) == 0.0) {
 	    pos[0] = coord.x();
 	    pos[1] = coord.y();
@@ -4196,6 +4199,8 @@ namespace OpenBabel
         } // z-axis
       } // y-axis
     } // x-axis
+
+    cout << endl;
     
     _mol.BeginModify();
     _mol.DeleteAtom(atom);
