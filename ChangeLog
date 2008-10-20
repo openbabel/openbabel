@@ -1,3 +1,22 @@
+2008-10-20  Chris Morley
+
+	Path
+include/openbabel/descriptor.h
+	* include/openbabel/obmolecformat.h, src/descriptor.cpp:
+	New functions to sort molecules, Sort(), OutputSortedMols()
+	and LessThan()
+	
+src/descriptors/filters.cpp
+src/obmolecformat.cpp
+
+	* include/openbabel/plugin.h: Add virtual funtion Init() 
+
+
+	* include/openbabel/mol.h, src/mol.cpp: extra flag to indicate
+	is a pattern, not a complete molecule. SetIsPatternStructure()
+	Previously described, but somehow not committed.
+
+
 2008-10-17  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: in OBForceField::GetGrid(), calculate grid size 

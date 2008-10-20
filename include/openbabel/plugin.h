@@ -75,6 +75,10 @@ public:
   ///parameters(ID, filename, description) for a constructor, and the rest data.
   virtual OBPlugin* MakeInstance(const std::vector<std::string>&){return NULL;}
 
+  ///Initialize the plugin.
+  ///The default version does nothing.
+  virtual void Init(){};
+
   ///Get a pointer to a plugin from its type and ID. Return NULL if not found. Not cast to Type*
   static OBPlugin* GetPlugin(const char* Type, const char* ID)
   { return BaseFindType(GetTypeMap(Type), ID); }

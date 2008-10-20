@@ -59,9 +59,19 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval)
     return DoComparison(ch1, ch2, val, filterval);
   }
   optionText.setstate(std::ios::badbit); //shows error
-  obErrorLog.ThrowError(__FUNCTION__, "Error in filter string" , obError);
+  obErrorLog.ThrowError(__FUNCTION__, "Error in filter string" , obError, onceOnly);
   return false;
 }
+
+  /** The default implementation here of this virtual function is suitable
+      for OBDescriptor classes which return a double value.
+      Does not use a cache, so may not be appropriate if evaluation of the 
+      descriptor is lengthy.
+  **/
+  bool OBDescriptor::LessThan(OBBase* pOb1, OBBase* pOb2)
+  {
+     return Predict(pOb1) < Predict(pOb2);
+  }
 
 /// Interprets the --filter option string and returns the combined result of all the comparisons it contains  
 /**
@@ -105,7 +115,7 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
       optionText >> ch;
       if(ch!=')')
       {
-        obErrorLog.ThrowError(__FUNCTION__, "Missing ')' in filter string", obError);
+        obErrorLog.ThrowError(__FUNCTION__, "Missing ')' in filter string", obError, onceOnly);
         return retFromCompare;
       }
     }
@@ -116,7 +126,7 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
       else
       {
         string mes("Filter string has erroneous character : ");
-        obErrorLog.ThrowError(__FUNCTION__, mes + ch, obError);
+        obErrorLog.ThrowError(__FUNCTION__, mes + ch, obError, onceOnly);
         optionText.setstate(std::ios::badbit); //shows error
         return false;
       }
@@ -300,7 +310,7 @@ bool OBDescriptor::ReadStringFromFilter(istream& optionText, string& result)
   }
   
   if(optionText.fail())
-    obErrorLog.ThrowError(__FUNCTION__, "Error reading string from filter", obError);
+    obErrorLog.ThrowError(__FUNCTION__, "Error reading string from filter", obError, onceOnly);
   
   return ret;
 }
@@ -381,7 +391,7 @@ bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bo
       else
       {
         // '*' is some other character. Not not currently supported.
-        obErrorLog.ThrowError("--filter option", "Wild card * can only be the first or last character.", obError);
+        obErrorLog.ThrowError("--filter option", "Wild card * can only be the first or last character.", obError, onceOnly);
         return false;
       }
     }
@@ -400,7 +410,7 @@ void OBDescriptor::AddProperties(OBBase* pOb, const string& DescrList)
     if(pDescr)
       pDescr->PredictAndSave(pOb);
     else
-      obErrorLog.ThrowError(__FUNCTION__, *itr + " not recognized as a descriptor", obError);
+      obErrorLog.ThrowError(__FUNCTION__, *itr + " not recognized as a descriptor", obError, onceOnly);
   }
 }
 
@@ -442,7 +452,7 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
         if(!pDesc) 
         {
           obErrorLog.ThrowError(__FUNCTION__, 
-            *itr + " not recognized as either a property or a descriptor", obError);
+            *itr + " not recognized as either a property or a descriptor", obError, onceOnly);
           return values;
         }
         pDesc->GetStringValue(pOb, thisvalue);
@@ -473,6 +483,33 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
     }
     return false;
   }
+
+/*Not currently part of base descriptor class. Possible issues with use of a static member variable. 
+void OBDescriptor::GetCachedValue(OBBase* pOb, string& s)
+{
+  map<OBBase*, string>::iterator itr;
+  itr = cache.find(pOb);
+  if(itr!=cache.end())
+    s = itr->second;
+  else
+  {
+    GetStringValue(pOb, s);
+    cache[pOb] =s;
+  }
+}
+void OBDescriptor::GetCachedValue(OBBase* pOb, double& val)
+{
+  map<OBBase*, double>::iterator itr;
+  itr = cache.find(pOb);
+  if(itr!=cache.end())
+    val = itr->second;
+  else
+  {
+    val = Predict(pOb);
+    cache[pOb] =val;
+  }
+}
+*/
 
 bool OBDescriptor::Display(std::string&txt, const char* param, const char* ID)
 {

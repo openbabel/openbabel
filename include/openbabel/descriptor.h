@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <limits>
 
+
 #include <openbabel/plugin.h>
 
 namespace OpenBabel
@@ -53,6 +54,10 @@ class OBAPI OBDescriptor : public OBPlugin
   ///If the parameter is a descriptor ID, displays the verbose description for that descriptor only
   /// e.g. babel -L descriptors HBA1
   virtual bool Display(std::string&txt, const char* param, const char* ID=NULL);
+
+  /// Comparison of the values of the descriptor. Used in sorting.
+  virtual bool LessThan(OBBase* pOb1, OBBase* pOb2);
+
 
   /// Interprets the --filter option string and returns the combined result of all the comparisons it contains  
   static bool FilterCompare(OBBase* pOb, std::istream& ss, bool noEval);
@@ -89,7 +94,6 @@ protected:
 
   /// \return true if s (with or without _ replaced by spaces) is a PairData attribute. On return s is the form which matches.
   static bool MatchPairData(OBBase* pOb, std::string& s);
-
 };
 
 template <class T>

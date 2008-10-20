@@ -27,6 +27,8 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
 #include <typeinfo>
+#include <openbabel/descriptor.h>
+#include <set>
 
 namespace OpenBabel {
 
@@ -49,15 +51,24 @@ namespace OpenBabel {
     if interaction with the framework is required during the execution 
     of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
 **/
+
+class LessThan : public std::binary_function<OBBase*, OBBase*, bool>
+{
+  //Work is done by the LessThan function in the descriptor that was provide to this function's constructor 
+public:
+  LessThan(OBDescriptor* pDesc, bool rev) : _pDesc(pDesc), _rev(rev){}
+  bool operator()(OBBase* pOb1 , OBBase* pOb2) const
+  {
+     return _rev ? _pDesc->LessThan(pOb1, pOb2) : _pDesc->LessThan(pOb2, pOb1);
+  }
+private:
+  OBDescriptor* _pDesc;
+  bool _rev;
+};
+//////////////////////////////////////////////////////////////////////
+
 class OBCOMMON OBMoleculeFormat : public OBFormat
 {
-private:
-  static bool OptionsRegistered;
-  static std::map<std::string, OBMol*> IMols;
-  static OBMol* _jmol; //!< Accumulates molecules with the -j option
-  static std::vector<OBMol> MolArray; //!< Used in --separate option
-  static bool StoredMolsReady; //!< Used in --separate option
-
 public:
 
   OBMoleculeFormat()
@@ -65,15 +76,17 @@ public:
     if(!OptionsRegistered)
     {
       OptionsRegistered=true;
-      OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
-      OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
-      OBConversion::RegisterOptionParam("title", this, 1,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("addtotitle", this, 1,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("property", this, 2, OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("C",        this, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("j",        this, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("join",     this, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("separate", this, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("b",         this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("s",         this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("title",     this, 1, OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("addtotitle",this, 1, OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("property",  this, 2, OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("C",         this, 0, OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("j",         this, 0, OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("join",      this, 0, OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("separate",  this, 0, OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("sort",      this, 1, OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("revsort",   this, 1, OBConversion::GENOPTIONS);
 
       //The follow are OBMol options, which should not be in OBConversion.
       //But here isn't entirely appropriate either, since one could have
@@ -120,6 +133,9 @@ public:
   //! \return the OBMol which combines @p pFirst and @p pSecond (i.e.)
   static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
   //@}
+  
+  //!Stores each molecule and after the last one outputs them all in an order decided by the descriptor. 
+  static bool OBMoleculeFormat::Sort(OBMol* pmol, const char* DescID,  OBConversion* pConv, OBFormat* pF );
 
 #ifdef _MSC_VER
   typedef stdext::hash_map<std::string, unsigned> NameIndexType;
@@ -136,7 +152,18 @@ public:
   {
     return typeid(OBMol*);
   }
-//////////////////////////////////////////////////////////////
+
+private:
+  //For sorting
+  static bool OutputSortedMols(OBConversion* pConv);
+
+  static bool OptionsRegistered;
+  static std::map<std::string, OBMol*> IMols;
+  static OBMol* _jmol; //!< Accumulates molecules with the -j option
+  static std::vector<OBMol> MolArray; //!< Used in --separate option
+  static bool StoredMolsReady; //!< Used in --separate option
+  static std::vector<OBBase*> _mols;//!< Used in --sort option
+  static OBDescriptor* _pDesc;
 
 };
 

@@ -1334,8 +1334,10 @@ namespace OpenBabel
       delete [] *k;
     _vconf.clear();
 
+    //Clear flags except OB_PATTERN_STRUCTURE which is left the same
+    _flags &= OB_PATTERN_STRUCTURE;
+
     _c = (double*) NULL;
-    _flags = 0;
     _mod = 0;
 
     // Clean up generic data via the base class
@@ -2112,6 +2114,9 @@ namespace OpenBabel
       return(true);
 
     SetSpinMultiplicityAssigned();
+
+    if(HasFlag(OB_PATTERN_STRUCTURE))// not a real molecule, just a pattern
+      return true;
 
     if(NumBonds()==0 && NumAtoms()!=1)
       {
