@@ -219,16 +219,18 @@ namespace OpenBabel
 "-c Center Coordinates\n"
 "-C Combine mols in first file with others having same name\n"
 "--filter <filterstring> Filter: convert only when tests are true:\n"
+"--sort <descr> Sort by value of descriptor, largest first\n"
+"--revsort <descr> Sort by value of descriptor, smallest first\n"
 "--add <list> Add properties from descriptors:\n"
 "--delete <list> Delete properties in list:\n"
-"--append <list> Appends properties or descriptors in list to title:\n"
+"--append <list> Append properties or descriptors in list to title:\n"
 "-s\"smarts\" Convert only molecules matching SMARTS:\n"
 "-v\"smarts\" Convert only molecules NOT matching SMARTS:\n"
 "--join Join all input molecules into a single output molecule\n"
 "--separate Output disconnected fragments separately\n"
 "--property <attrib> <value> add or replace a property (SDF)\n"
 "--title <title> Add or replace molecule title\n"
-"--addtotitle <text> Append to title\n"
+"--addtotitle <text> Append text to title\n"
 "--addformula Append formula to title\n" ;
 
     //Append lines from OBOp plugins that work with OBMol

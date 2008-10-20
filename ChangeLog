@@ -1,14 +1,29 @@
 2008-10-20  Chris Morley
+	
+	* include/openbabel/mcdlutil.h, src/mcdlutil.cpp: New files
+	which use MCDL library to generate 2D coordinates
+	
+	* src/formats/MCDLformat.cpp: some code moved to the above files.
+	
+	* src/ops/gen2D.cpp: wrapper op for --gen2d 
+	
+	* data/templates.sdf: New file with example template
+	
+	* src/transform.cpp: help on --sort and --revsort
 
-	Path
-include/openbabel/descriptor.h
-	* include/openbabel/obmolecformat.h, src/descriptor.cpp:
+2008-10-20  Chris Morley
+	 
+	* include/openbabel/obmolecformat.h, src/obmolecformat.cpp:
 	New functions to sort molecules, Sort(), OutputSortedMols()
 	and LessThan()
 	
-src/descriptors/filters.cpp
-src/obmolecformat.cpp
-
+	* include/openbabel/descriptor.h, src/descriptor.cpp: New
+	virtual function LessThan() and default implementation.
+	Make several error messages once only.
+	
+	* src/descriptors/filters.cpp: Add LessThan functions for TitleFilter
+	and more complex one + GetCachedValue() + Init() for InChIFilter.
+	 
 	* include/openbabel/plugin.h: Add virtual funtion Init() 
 
 
