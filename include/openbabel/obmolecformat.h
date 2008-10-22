@@ -135,7 +135,7 @@ public:
   //@}
   
   //!Stores each molecule and after the last one outputs them all in an order decided by the descriptor. 
-  static bool OBMoleculeFormat::Sort(OBMol* pmol, const char* DescID,  OBConversion* pConv, OBFormat* pF );
+  static bool Sort(OBMol* pmol, const char* DescID,  OBConversion* pConv, OBFormat* pF );
 
 #ifdef _MSC_VER
   typedef stdext::hash_map<std::string, unsigned> NameIndexType;

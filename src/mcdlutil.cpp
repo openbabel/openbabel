@@ -489,10 +489,10 @@ int TSingleAtom::valencyConversion() {
 
   //Default hydrogen
   k1=nv;
-  k1=k1-currvalence-abs(nc)-rl;
+  k1=k1-currvalence-fabs(nc)-rl;
   if (k1<0) k1=0;
   k2=hVal[na];
-  k2=k2-currvalence-abs(nc)-rl;
+  k2=k2-currvalence-fabs(nc)-rl;
   if (k2<0) k2=0;
   if (k1 == k2) result=0; else if (k1 < k2) result=1; else result=2;
   return result;
@@ -543,7 +543,7 @@ bool TSingleAtom::atomEquivalent(TSingleAtom * structure, TSingleAtom * query,
   i=nHQuery;
   if (i>0) {   //if explicitly defined H is accociated with query atom
     j=structure->nv;
-    k=abs(structure->nc);
+    k=fabs(structure->nc);
     if (k>9) k=k-9;
     j=j-structure->currvalence-k;
     if (j<0) j=0;
@@ -895,15 +895,15 @@ void TSimpleMolecule::bondUnitVector(int bn, double& xv, double& yv) {
     x1=getAtom(getAtom(na1)->ac[i])->rx-s1;
     y1=getAtom(getAtom(na1)->ac[i])->ry-s2;
     y2=x1*r2-y1*r1;
-    if (y2 != 0) si=si+y2/abs(y2);
+    if (y2 != 0) si=si+y2/fabs(y2);
   }
   for (i=0; i<getAtom(na2)->nb; i++) if (getAtom(na2)->ac[i] != na1) {
     x1=getAtom(getAtom(na2)->ac[i])->rx-s3;
     y1=getAtom(getAtom(na2)->ac[i])->ry-s4;
     y2=x1*r2-y1*r1;
-    if (y2 != 0) si=si+y2/abs(y2);
+    if (y2 != 0) si=si+y2/fabs(y2);
   }
-  if (si != 0) si=si/abs(si); else si=1;
+  if (si != 0) si=si/fabs(si); else si=1;
   xv=-r2*si; yv=r1*si;
 }
 
@@ -1040,7 +1040,7 @@ bool TSimpleMolecule::unitVectorCoincident(int aN, double xV, double yV) {
     if (s1 > 0.00001) {
       r1=r1/s1;
       r2=r2/s1;
-      if ((abs(r1-xV) < 0.1) && (abs(r2-yV) < 0.1)) result=true;
+      if ((fabs(r1-xV) < 0.1) && (fabs(r2-yV) < 0.1)) result=true;
     };
     if (result) break;
   };
@@ -1090,7 +1090,7 @@ void TSimpleMolecule::unitVector(int aN, double& xV, double& yV) {
       if (s2 == 0) s2=1;
       r3=r3/s2; r4=r4/s2;
       si=r2*r3-r4*r1;
-      if (si != 0) si=si/abs(si); else si=1;
+      if (si != 0) si=si/fabs(si); else si=1;
     }
     s3=sqrt(3.0)/2.0;
     s4=-0.5;
@@ -1132,10 +1132,10 @@ void TSimpleMolecule::unitVector(int aN, double& xV, double& yV) {
         s2=xm[i]*xm[i1]+ym[i]*ym[i1];
         s3=xm[i]*xm[i2]+ym[i]*ym[i2];
         test=false;
-        if (abs(s1+0.5) < 0.05) {  //two bonds form 120 degrees angle
-          test=(abs(s2-sQ3)<0.05) || (abs(s3-sQ3)<0.05);
-          if (! test) test=((abs(s2) < 0.05) && (abs(s3+sQ3)<0.05))
-                              || ((abs(s3)<0.05) && (abs(s2+sQ3)<0.05));
+        if (fabs(s1+0.5) < 0.05) {  //two bonds form 120 degrees angle
+          test=(fabs(s2-sQ3)<0.05) || (fabs(s3-sQ3)<0.05);
+          if (! test) test=((fabs(s2) < 0.05) && (fabs(s3+sQ3)<0.05))
+                              || ((fabs(s3)<0.05) && (fabs(s2+sQ3)<0.05));
         }
 		i++;
       } while (! (test || (i == 3)));
@@ -1183,7 +1183,7 @@ void TSimpleMolecule::unitVector(int aN, double& xV, double& yV) {
             yV=-0.9238795;
             return;
           }
-          r1=abs(r1/s1); r2=abs(r2/s1);
+          r1=fabs(r1/s1); r2=fabs(r2/s1);
           if (r1 < r3) {r3=r1; nB1=i;}
           if (r2 < r3) {r3=r2; nB1=i;}
         }
@@ -1227,8 +1227,8 @@ void TSimpleMolecule::unitVector(int aN, double& xV, double& yV) {
     };
   };
   //Correction of angles, closed to 0, 30, 60, 90 degrees to exact values
-  if (getAtom(aN)->nb < 6) for (i=0; i<4; i++) if ((abs(abs(xV)-sc[i])<0.04)
-   && (abs(abs(yV)-cc[i]) < 0.04)) {
+  if (getAtom(aN)->nb < 6) for (i=0; i<4; i++) if ((fabs(fabs(xV)-sc[i])<0.04)
+   && (fabs(fabs(yV)-cc[i]) < 0.04)) {
     if (xV < 0) xV=-sc[i]; else xV=sc[i];
     if (yV < 0) yV=-cc[i]; else yV=cc[i];
   }
@@ -1930,7 +1930,7 @@ void TSimpleMolecule::twoAtomUnitVector(int na1, int na2, double & xv, double & 
       x1=getAtom(k)->rx-s1;
       y1=getAtom(k)->ry-s2;
       y2=x1*r2-y1*r1;
-      if (y2 != 0) si=si+y2/abs(y2);
+      if (y2 != 0) si=si+y2/fabs(y2);
     };
   };
   for (i=0; i<getAtom(na2)->nb; i++) {
@@ -1939,10 +1939,10 @@ void TSimpleMolecule::twoAtomUnitVector(int na1, int na2, double & xv, double & 
       x1=getAtom(k)->rx-s3;
       y1=getAtom(k)->ry-s4;
       y2=x1*r2-y1*r1;
-      if (y2 != 0) si=si+y2/abs(y2);
+      if (y2 != 0) si=si+y2/fabs(y2);
     };
   };
-  if (si != 0) si=si/abs(si); else si=1;
+  if (si != 0) si=si/fabs(si); else si=1;
   xv=-r2*si; yv=r1*si;
 };
 
@@ -2474,7 +2474,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
           };
         };
         if (dsTP[i]==1) {     //chain fragment
-          if ((abs(ux) <= 0.00001) && (abs(uy) <= 0.00001)) {
+          if ((fabs(ux) <= 0.00001) && (fabs(uy) <= 0.00001)) {
              bnEx=-1;
              for (j=0; j<bk[k1].nb; j++) {
                n=bk[k1].adjusted[j];
@@ -2615,7 +2615,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
               if ((ux1==0) && (uy1==0)) ux1=1;
               fi=PI/3;
               cf=uy*ux1-ux*uy1;
-              if (cf != 0) fi=fi*cf/abs(cf);
+              if (cf != 0) fi=fi*cf/fabs(cf);
             };
             ux1=ux*cos(fi)+uy*sin(fi);
             uy1=-ux*sin(fi)+uy*cos(fi);
@@ -2685,7 +2685,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
         fi=2*PI/(double)cs;
         ux2=ux+ux1*cos((1.0+add)*fi)+uy1*sin((1.0+add)*fi);
         uy2=uy-ux1*sin((1.0+add)*fi)+uy1*cos((1.0+add)*fi);
-        if ((abs(getAtom(dsNA2[i])->rx-ux2)<0.01) && (abs(getAtom(dsNA2[i])->ry-uy2)<0.01)) fi=-fi;
+        if ((fabs(getAtom(dsNA2[i])->rx-ux2)<0.01) && (fabs(getAtom(dsNA2[i])->ry-uy2)<0.01)) fi=-fi;
         //FAtom's coordinates calculation
         for (j=0; j<nb; j++) {
           getAtom(dsATN[i+j-0])->rx=ux+ux1*cos((j+1)*fi)+uy1*sin((j+1)*fi);
@@ -2821,7 +2821,7 @@ double xDistPoint(double x1, double y1, double x2, double y2, double x0, double 
   r1=sqrt(xx*xx+yy*yy);
   yMin=yMin-0.1*r1; yMax=yMax+0.1*r1;
   d=y2-y1;
-  if (abs(d) < 1E-8) {
+  if (fabs(d) < 1E-8) {
     result=1E9;
     return result;
   };
@@ -2851,7 +2851,7 @@ bool overlapped(double x1A, double y1A, double x2A, double y2A,
   bool result=false;
 
   r=y2A-y1A;
-  if (abs(r) > 1E-9) {
+  if (fabs(r) > 1E-9) {
     a1=1/r;
     cY=-y1A/r;
   } else {
@@ -2863,7 +2863,7 @@ bool overlapped(double x1A, double y1A, double x2A, double y2A,
     };
   };
   r=x2A-x1A;
-  if (abs(r) > 1E-9) {
+  if (fabs(r) > 1E-9) {
     b1=1/r;
     cX=x1A/r;
   } else {
@@ -2877,7 +2877,7 @@ bool overlapped(double x1A, double y1A, double x2A, double y2A,
   b1=-b1;
   c1=cX+cY;
   r=y2B-y1B;
-  if (abs(r) > 1E-9) {
+  if (fabs(r) > 1E-9) {
     a2=1/r;
     cY=-y1B/r;
   } else {
@@ -2889,7 +2889,7 @@ bool overlapped(double x1A, double y1A, double x2A, double y2A,
     };
   };
   r=x2B-x1B;
-  if (abs(r) > 1E-9) {
+  if (fabs(r) > 1E-9) {
     b2=1/r;
     cX=x1B/r;
   } else {
@@ -2904,13 +2904,13 @@ bool overlapped(double x1A, double y1A, double x2A, double y2A,
   c2=cX+cY;
   r1=b1*c2-b2*c1;
   r2=a1*b2-a2*b1;
-  if (abs(r2) > 1E-9) y=r1/r2; else {
+  if (fabs(r2) > 1E-9) y=r1/r2; else {
     y=1E9;
     if (r1 < 0) y=-y;
   };
   r1=c1*a2-c2*a1;
   r2=a1*b2-a2*b1;
-  if (abs(r2) > 1E-9) x=r1/r2; else {
+  if (fabs(r2) > 1E-9) x=r1/r2; else {
     x=1E9;
     if (r1 < 0) x=-x;
   };
@@ -2954,10 +2954,10 @@ bool overlapped(double x1A, double y1A, double x2A, double y2A,
     yMax=yMax+delta;
     result=((x >= xMin) && (x <= xMax) && (y >= yMin) && (y <= yMax));
   };
-  if (! result) result=(abs(xDistPoint(x1A,y1A,x2A,y2A,x1B,y1B)) < delta);
-  if (! result) result=(abs(xDistPoint(x1A,y1A,x2A,y2A,x2B,y2B)) < delta);
-  if (! result) result=(abs(xDistPoint(x1B,y1B,x2B,y2B,x1A,y1A)) < delta);
-  if (! result) result=(abs(xDistPoint(x1B,y1B,x2B,y2B,x2A,y2A)) < delta);
+  if (! result) result=(fabs(xDistPoint(x1A,y1A,x2A,y2A,x1B,y1B)) < delta);
+  if (! result) result=(fabs(xDistPoint(x1A,y1A,x2A,y2A,x2B,y2B)) < delta);
+  if (! result) result=(fabs(xDistPoint(x1B,y1B,x2B,y2B,x1A,y1A)) < delta);
+  if (! result) result=(fabs(xDistPoint(x1B,y1B,x2B,y2B,x2A,y2A)) < delta);
   return result;
 };
 
@@ -3422,9 +3422,9 @@ int TSimpleMolecule::correctOverlapped() {
           n=-i;
         };
       };
-      if (abs(n) != 0) {
-        bondEnlarge(abs(n));
-        if (n < 0) flipSmall(abs(n));
+      if (fabs(n) != 0) {
+        bondEnlarge(fabs(n));
+        if (n < 0) flipSmall(fabs(n));
       };
     };
     result=k;
@@ -3720,7 +3720,7 @@ int TSimpleMolecule::correctOverlapped() {
 	  if (hVal[i] > 0) {
         if (aRad[i] != 0) hVal[i]=hVal[i]-1;  //returns 0 for non-radical and 2 for radical
 		if (aPosition[i] == 5) hVal[i]=hVal[i]-aCharge[i];           //B 
-		else if (aPosition[i] == 6) hVal[i]=hVal[i]-abs(aCharge[i]); //C
+		else if (aPosition[i] == 6) hVal[i]=hVal[i]-fabs(aCharge[i]); //C
 		else hVal[i]=hVal[i]+aCharge[i];  //Heteroatoms
         if (hVal[i] < 0) hVal[i]=0;
 	  };
@@ -3766,7 +3766,7 @@ int TSimpleMolecule::correctOverlapped() {
         if (sa->GetSpinMultiplicity() != 0) hVal[i-1]=hVal[i-1]-1;  //returns 0 for non-radical and 2 for radical
 		k=sa->GetFormalCharge();
 		if (sa->IsHeteroatom()) hVal[i-1]=hVal[i-1]+k;
-        else if (na == 6) hVal[i-1]=hVal[i-1]-abs(k);
+        else if (na == 6) hVal[i-1]=hVal[i-1]-fabs(k);
         else hVal[i-1]=hVal[i-1]-k;
         if (hVal[i-1] < 0) hVal[i-1]=0;
 	  };
@@ -3808,11 +3808,11 @@ class TEditedMolecule: public TSimpleMolecule {
     void removeHydrogen(std::vector<int> * qHydr, std::vector<int> * qEnumerator);
     void atomBondChange();
     bool stereoBondChange();
-    void TEditedMolecule::directBondAss(int& bnq, bool& test, bool& test1, const bool beq[NBONDSMAX][NBONDSMAX],
+    void directBondAss(int& bnq, bool& test, bool& test1, const bool beq[NBONDSMAX][NBONDSMAX],
       const bool aeq[NATOMSMAX][NATOMSMAX], std::vector<int>& bqcounter, std::vector<int>& aqtested, 
       std::vector<int>& bstested, std::vector<int>& bqtested, std::vector<int>& astested, 
       const std::vector<int> ager, const neigbourlist bqconn, const neigbourlist bsconn, TSimpleMolecule * smol);
-    bool TEditedMolecule::allQueryPresent(const std::vector<int> qA, const std::vector<int> qB,
+    bool allQueryPresent(const std::vector<int> qA, const std::vector<int> qB,
       int nA, int nB);
   public:
     static int const NOOTHER_MASK=1; 
@@ -4583,7 +4583,7 @@ void TEditedMolecule::removeHydrogen(std::vector<int> * qHydr, std::vector<int> 
         for (j=0; j<qEnumerator->size(); j++) {
           if ((*qEnumerator)[j] == i) (*qEnumerator)[j]=-i1; else
           if ((*qEnumerator)[j] > i)  (*qEnumerator)[j]=(*qEnumerator)[j]-1; else
-          if (((*qEnumerator)[j] < 0) && (abs((*qEnumerator)[j]) > i)) (*qEnumerator)[j]=(*qEnumerator)[j]+1;
+          if (((*qEnumerator)[j] < 0) && (fabs((*qEnumerator)[j]) > i)) (*qEnumerator)[j]=(*qEnumerator)[j]+1;
         };
       };
       if ((i1 > 0) && (qHydr != NULL)) (*qHydr)[i1]=(*qHydr)[i1]+1;
@@ -5011,7 +5011,7 @@ private:
   void selectFragmentConfiguration(TSimpleMolecule * sm, std::vector<int>* atomList);
   void rescaleSingleFragment(TSimpleMolecule * sm, std::vector<int>* atomList, int alCount, PartFragmentDefinition& pf, double offset);
   void arrangeMolecules(std::vector<PartFragmentDefinition *>& extendedList, double aspOptimal);
-  bool TemplateRedraw::loadTemplates();
+  bool loadTemplates();
 };
 
 //Initialization of static member variable
@@ -5167,10 +5167,10 @@ void TemplateRedraw::rotateBondVertically(TSimpleMolecule * sm, const std::vecto
   r=sqrt(rX*rX+rY*rY);
   if (r != 0) {
     rX=rX/r; rY=rY/r;
-    if (abs(rX) < 0.00001) {
+    if (fabs(rX) < 0.00001) {
       s1=xuValue/rY;
       c1=-yuValue/rY;
-    } else if (abs(rY) < 0.00001) {
+    } else if (fabs(rY) < 0.00001) {
       s1=yuValue/rX;
       c1=xuValue/rX;
     } else {
@@ -5200,8 +5200,8 @@ void TemplateRedraw::rotateBondVertically(TSimpleMolecule * sm, const std::vecto
     n2=sm->getBond(n)->at[1];
     //no. vert. bonds
     r=coorY[n1]-coorY[n2];
-    if (abs(r) > 0) {
-      r=abs((coorX[n1]-coorX[n2])/r);
+    if (fabs(r) > 0) {
+      r=fabs((coorX[n1]-coorX[n2])/r);
       if (r < 0.02) nVert++;
     };
   };
@@ -5452,9 +5452,9 @@ void TemplateRedraw::arrangeFragments(std::vector<PartFragmentDefinition *>& lis
       xNew=x+efInterest->fragWidth; if (xMax > xNew) xNew=xMax;
       yNew=y+efInterest->fragHeight; if (yMax > yNew) yNew=yMax;
       r=(yNew-yMin)/(xNew-xMin);
-      if (abs(r-aspOptimal) < aspDelta) {
+      if (fabs(r-aspOptimal) < aspDelta) {
         xNice=x; yNice=y;
-        aspDelta=abs(r-aspOptimal);
+        aspDelta=fabs(r-aspOptimal);
       };
     };
     x=ef->fragLeft;
@@ -5468,9 +5468,9 @@ void TemplateRedraw::arrangeFragments(std::vector<PartFragmentDefinition *>& lis
       xNew=x+efInterest->fragWidth; if (xMax > xNew) xNew=xMax;
       yNew=y+efInterest->fragHeight; if (yMax > yNew) yNew=yMax;
       r=(yNew-yMin)/(xNew-xMin);
-      if (abs(r-aspOptimal) < aspDelta) {
+      if (fabs(r-aspOptimal) < aspDelta) {
         xNice=x; yNice=y;
-        aspDelta=abs(r-aspOptimal);
+        aspDelta=fabs(r-aspOptimal);
       };
     };
   };
@@ -5479,17 +5479,17 @@ void TemplateRedraw::arrangeFragments(std::vector<PartFragmentDefinition *>& lis
   xNew=x+efInterest->fragWidth; if (xMax > xNew) xNew=xMax;
   yNew=y+efInterest->fragHeight; if (yMax > yNew) yNew=yMax;
   r=(yNew-yMin)/(xNew-xMin);
-  if (abs(r-aspOptimal) < aspDelta) {
+  if (fabs(r-aspOptimal) < aspDelta) {
     xNice=x; yNice=y;
-    aspDelta=abs(r-aspOptimal);
+    aspDelta=fabs(r-aspOptimal);
   };
   x=0; y=yMax;
   xNew=x+efInterest->fragWidth; if (xMax > xNew) xNew=xMax;
   yNew=y+efInterest->fragHeight; if (yMax > yNew) yNew=yMax;
   r=(yNew-yMin)/(xNew-xMin);
-  if (abs(r-aspOptimal) < aspDelta) {
+  if (fabs(r-aspOptimal) < aspDelta) {
     xNice=x; yNice=y;
-    aspDelta=abs(r-aspOptimal);
+    aspDelta=fabs(r-aspOptimal);
   };
   efInterest->fragLeft=xNice; efInterest->fragTop=yNice;
   list[fragNo]=efInterest;
@@ -5533,7 +5533,7 @@ void TemplateRedraw::arrangeMolecules(std::vector<PartFragmentDefinition *>& ext
     minX=ef->fragWidth;
     maxY=ef->fragHeight+efTemp->fragHeight;
     r1=maxY/minX;
-    if (abs(r-aspOptimal) < abs(r1-aspOptimal)) {
+    if (fabs(r-aspOptimal) < fabs(r1-aspOptimal)) {
       if (ef->fragHeight > efTemp->fragHeight) {
         efTemp->fragLeft=ef->fragWidth;
         extendedList[1]=efTemp;

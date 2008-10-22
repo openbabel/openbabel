@@ -1,3 +1,11 @@
+2008-10-17  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/CMakeLists.txt: Add gen2D.cpp and mcdlutil.cpp
+	
+	* src/mcdlutil.cpp: Replace all calls to abs(double) with fabs(double)
+
+	* src/formats/MCDLformat.cpp: Replace string.npos with string::npos
+
 2008-10-20  Chris Morley
 	
 	* include/openbabel/mcdlutil.h, src/mcdlutil.cpp: New files

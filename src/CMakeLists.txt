@@ -29,6 +29,7 @@ set(math_srcs
 
 set(ops_srcs
   ops/addpolarh.cpp
+  ops/gen2D.cpp
   ops/gen3d.cpp
   ops/loader.cpp
   ops/optransform.cpp
@@ -56,6 +57,7 @@ set(openbabel_srcs
     kekulize.cpp
     locale.cpp
     matrix.cpp
+    mcdlutil.cpp
     molchrg.cpp
     mol.cpp
     obconversion.cpp

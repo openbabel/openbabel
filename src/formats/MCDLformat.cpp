@@ -1387,7 +1387,9 @@ private:
   n=-1;
   while (test) {
     n=instring.find(substring,n+1);
-    if (n == string.npos) test=false; else {
+    if (n == string::npos) 
+      test=false; 
+    else {
         result=n;
     };
   };
