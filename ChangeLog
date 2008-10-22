@@ -1,4 +1,8 @@
-2008-10-17  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+2008-10-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefield*.h: Fix MakeNewInstance().
+
+2008-10-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/CMakeLists.txt: Add gen2D.cpp and mcdlutil.cpp
 	

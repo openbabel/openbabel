@@ -128,7 +128,10 @@ namespace OpenBabel
       }
 
       //!Clone the current instance. May be desirable in multithreaded environments
-      virtual OBForceFieldGhemical* MakeNewInstance(){ return new OBForceFieldGhemical(*this); }
+      virtual OBForceFieldGhemical* MakeNewInstance()
+      { 
+        return new OBForceFieldGhemical(_id, false); 
+      }
 
       //! Get the unit in which the energy is expressed
       std::string GetUnit() 
