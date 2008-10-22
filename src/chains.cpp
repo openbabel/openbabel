@@ -896,7 +896,7 @@ namespace OpenBabel
       } else if (atom->IsHydrogen()) {
         if (hcounts[i]) {
           snprintf(buffer, BUFF_SIZE, "H%.2s%c", ChainsAtomName[atomids[i]]+2, hcounts[i]+'0');
-	  cout << "buffer[1] = " << buffer << endl;
+	  //cout << "buffer[1] = " << buffer << endl;
           if (buffer[2] == ' ') {
             buffer[2] = buffer[3];
             buffer[3] = '\0';
@@ -905,24 +905,24 @@ namespace OpenBabel
             buffer[1] = buffer[2];
             buffer[2] = '\0';
 	  }
-	  cout << "  (1) --> = " << buffer << endl;
+	  //cout << "  (1) --> = " << buffer << endl;
 	} else {
           snprintf(buffer, BUFF_SIZE, "H%.2s", ChainsAtomName[atomids[i]]+2);
-	  cout << "buffer[2] = " << buffer << endl;
+	  //cout << "buffer[2] = " << buffer << endl;
         }
       } else {
         snprintf(buffer, BUFF_SIZE, "%.4s", ChainsAtomName[atomids[i]]);
-	cout << "buffer[3] = " << buffer << endl;
+	//cout << "buffer[3] = " << buffer << endl;
       }
 
       if (buffer[3] == ' ')
         buffer[3] = '\0';
 	  
-      cout << "  (2) --> = " << buffer << endl;
+      //cout << "  (2) --> = " << buffer << endl;
 
       atomid = (buffer[0] == ' ') ? buffer + 1 : buffer;
       
-      cout << "  (3) --> = " << buffer << endl;
+      //cout << "  (3) --> = " << buffer << endl;
 
       if (resmap[chains[i]].find(resnos[i]) != resmap[chains[i]].end()) {
         residue = resmap[chains[i]][resnos[i]];

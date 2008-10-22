@@ -583,12 +583,12 @@ namespace OpenBabel
     return *this;
   }
 
-	double CalculateBondDistance(OBFFParameter *i, OBFFParameter *j, double bondorder)
-	{
-		double ri, rj;
-		double chiI, chiJ;
-		double rbo, ren;
-		ri = i->_dpar[0];
+  double CalculateBondDistance(OBFFParameter *i, OBFFParameter *j, double bondorder)
+  {
+    double ri, rj;
+    double chiI, chiJ;
+    double rbo, ren;
+    ri = i->_dpar[0];
     rj = j->_dpar[0];
     chiI = i->_dpar[8];
     chiJ = j->_dpar[8];
@@ -601,8 +601,8 @@ namespace OpenBabel
     // From equation 2
     // NOTE: See http://towhee.sourceforge.net/forcefields/uff.html
     // There is a typo in the published paper
-		return(ri + rj + rbo - ren);
-	}
+    return(ri + rj + rbo - ren);
+  }
 
   bool OBForceFieldUFF::SetupCalculations()
   {
@@ -654,7 +654,16 @@ namespace OpenBabel
       parameterA = GetParameterUFF(a->GetType(), _ffparams);
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
 			
-			bondcalc.r0 = CalculateBondDistance(parameterA, parameterB, bondorder);
+      if (parameterA == NULL || parameterB == NULL) { 
+        IF_OBFF_LOGLVL_LOW {
+          snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n", 
+              a->GetIdx(), b->GetIdx());
+          OBFFLog(_logbuf);
+        }
+        return false;
+      }
+ 
+      bondcalc.r0 = CalculateBondDistance(parameterA, parameterB, bondorder);
 
       // here we fold the 1/2 into the kij from equation 1a
       // Otherwise, this is equation 6 from the UFF paper.
@@ -707,6 +716,16 @@ namespace OpenBabel
       parameterA = GetParameterUFF(a->GetType(), _ffparams);
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
       parameterC = GetParameterUFF(c->GetType(), _ffparams);
+
+      if (parameterA == NULL || parameterB == NULL || parameterC == NULL) { 
+        IF_OBFF_LOGLVL_LOW {
+          snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ANGLE %d-%d-%d (IDX)...\n", 
+              a->GetIdx(), b->GetIdx(), c->GetIdx());
+          OBFFLog(_logbuf);
+        }
+        return false;
+      }
+ 
 
       anglecalc.coord = parameterB->_ipar[0]; // coordination of central atom
 
@@ -798,6 +817,15 @@ namespace OpenBabel
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
       parameterC = GetParameterUFF(c->GetType(), _ffparams);
 
+      if (parameterB == NULL || parameterC == NULL) { 
+        IF_OBFF_LOGLVL_LOW {
+          snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR TORSION X-%d-%d-X (IDX)...\n", 
+              b->GetIdx(), c->GetIdx());
+          OBFFLog(_logbuf);
+        }
+        return false;
+      }
+ 
       if (parameterB->_ipar[0] == 3 && parameterC->_ipar[0] == 3) {
         // two sp3 centers
         phi0 = 60.0;
@@ -1065,6 +1093,15 @@ namespace OpenBabel
       parameterA = GetParameterUFF(a->GetType(), _ffparams);
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
 
+      if (parameterA == NULL || parameterB == NULL) { 
+        IF_OBFF_LOGLVL_LOW {
+          snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR VDW INTERACTION %d-%d (IDX)...\n", 
+              a->GetIdx(), b->GetIdx());
+          OBFFLog(_logbuf);
+        }
+        return false;
+      }
+ 
       vdwcalc.Ra = parameterA->_dpar[2];
       vdwcalc.ka = parameterA->_dpar[3];
       vdwcalc.Rb = parameterB->_dpar[2];
