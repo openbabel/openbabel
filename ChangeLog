@@ -1,3 +1,15 @@
+2008-10-27  Chris Morley
+
+	* mcdlutil.cpp: Replace all calls to fabs with abs. 
+	Remove internal templates and template molecule sorting; all
+	template molecules are now in templates.sdf which has to be sorted,
+	largest first.
+	
+	* data/templates.sdf: 147 molecules, sorted
+	
+	* obconversion.cpp(Convert): make OutputAtEnd option work with
+	multiple input files.
+
 2008-10-23  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/chains.cpp: Remove debug output.

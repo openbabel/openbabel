@@ -505,8 +505,9 @@ namespace OpenBabel {
     m_IsLast= !MoreFilesToCome;
 
     //Output is always occurs at the end with the --OutputAtEnd option
-    if(pOutFormat && (!IsOption("OutputAtEnd",GENOPTIONS) || m_IsLast))
-      if(pOb1 && !pOutFormat->WriteChemObject(this))
+    bool oae = IsOption("OutputAtEnd",GENOPTIONS)!=NULL;
+    if(pOutFormat && (!oae || m_IsLast))
+      if((oae || pOb1) && !pOutFormat->WriteChemObject(this))
         Index--;
 	
     //Put AddChemObject() into non-queue mode
