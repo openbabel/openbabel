@@ -1,3 +1,8 @@
+2008-10-31  Chris Morley
+
+	* src/formats/getinchi.cpp: prevent failure when input contains
+	"InChI>InChI=...", which actually occurred in an SDF file.
+
 2008-10-27  Chris Morley
 
 	* mcdlutil.cpp: Replace all calls to fabs with abs. 
