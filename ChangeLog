@@ -1,3 +1,9 @@
+2008-11-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/pqrformat.cpp: Apply patch from Mikael Lund to read in
+	partial charges and radii. The radii are added to the atoms as
+	OBPairData with attribute "Radius".
+
 2008-10-31  Chris Morley
 
 	* src/formats/getinchi.cpp: prevent failure when input contains

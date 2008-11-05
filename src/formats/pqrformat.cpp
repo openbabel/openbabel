@@ -66,7 +66,7 @@ namespace OpenBabel
   // In atomrecord.cpp (shared with PDB format)
   bool ParseAtomRecord(char *, OBMol &, int);
   double ParseAtomCharge(char *, OBMol &);
-
+  double ParseAtomRadius(char *, OBMol &);
   /////////////////////////////////////////////////////////////////
  	int PQRFormat::SkipObjects(int n, OBConversion* pConv)
   {
@@ -98,7 +98,7 @@ namespace OpenBabel
     int chainNum = 1;
     char buffer[BUFF_SIZE];
     OBBitVec bs;
-    vector<double> charges;
+    vector<double> charges, radii;
     string line, key, value;
 
     mol.SetTitle(title);
@@ -124,8 +124,9 @@ namespace OpenBabel
             if (EQn(buffer,"ATOM",4))
               bs.SetBitOn(mol.NumAtoms());
 
-            // Read in the partial charge too
+            // Read in the partial charge and radius too
             charges.push_back( ParseAtomCharge(buffer, mol) );
+            radii.push_back( ParseAtomRadius(buffer, mol) );
             continue;
           }
         }
@@ -152,6 +153,18 @@ namespace OpenBabel
       a->SetPartialCharge(charges[a->GetIdx() - 1]);
 
       cerr << " charge : " << charges[a->GetIdx() - 1] << endl;
+
+      if (!a->HasData("Radius")) {
+        std::ostringstream s;
+        s << radii[ a->GetIdx()-1 ];
+        OBPairData *p = new OBPairData;
+        p->SetAttribute("Radius");
+        p->SetValue( s.str() );
+        a->SetData(p);
+      }
+
+      cerr << " radius : " << radii[a->GetIdx() - 1] << endl;
+
     }
     mol.SetPartialChargesPerceived();
 
@@ -183,5 +196,19 @@ namespace OpenBabel
     return 0.0;
   }
 
+  double ParseAtomRadius(char *buffer, OBMol &mol)
+  {
+    vector<string> vs;
+    tokenize(vs,buffer);
+
+    OBAtom *atom = mol.GetAtom(mol.NumAtoms());
+
+    if (vs.size() == 10)
+      return atof(vs[9].c_str());
+    else if (vs.size() == 11)
+      return atof(vs[10].c_str());
+
+    return 0.0;
+  }
 
 } //namespace OpenBabel
