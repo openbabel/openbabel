@@ -1,3 +1,10 @@
+2008-11-12  Chris Morley
+
+	* src/mscdlutil.cpp, data/templates.sdf: revert to previous
+	version	with templates internal, since external templates
+	did not seem to be always applied.
+	#define nRotBondsMax 20 (from 24) which should improve performance.
+
 2008-11-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/formats/pqrformat.cpp: Apply patch from Mikael Lund to read in

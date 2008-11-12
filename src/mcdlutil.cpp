@@ -45,7 +45,7 @@ typedef adjustedlist neigbourlist[NATOMSMAX];
 
 #define PI 3.141592653589793238462
 #define blDenominator 4.0   //Controls bond legth in bondEnlarge
-#define nRotBondsMax 24     //Determines no. rotating bonds in correctOverlapped
+#define nRotBondsMax 20     //Determines no. rotating bonds in correctOverlapped
 
 #define NELEMMCDL 121
     //Hydrogen valencies. Zero dummy element is the first 
@@ -167,7 +167,6 @@ const int hetero[NHETERO] = {7,8,14,15,16,33,34,51,52,84};
 #define DEFAULTBONDLENGTH 1.44
 #define NDATABASE_MOLECULES 147
 
-/* no internal templates
 const string strData[NDATABASE_MOLECULES]= {
 "05A53816506A53810000A00008692A99998857A6567442806020101030401050203050504",
 "06A25008659A74998659A99994330A74990000A25000000A00004330100203030405060106060406020305010305020104",
@@ -317,7 +316,7 @@ const string strData[NDATABASE_MOLECULES]= {
 "42A17323500A17326499A08665999A17327499A17322500A08664000A08665000A08662000A00002500A00003500A00006499A00007499A08667999A43302000A34641500A51961500A25982000A43307999A34648499A51968499A25987999A69286499A77935999A69287499A69283500A77934000A69282500A60622000A77935000A60627999A51960500A43300000A34640500A86593500A86592500A77932000A77937999A86597499A86596499A34649499A43309999A5196949948020302040105010603070706050808090910061011121213130403111415141615171705181918201921210422232224252625272728281626292923243030203132323333151631343535363627263424373738383923391940404141422042",
 "60A21159049A17778821A32689182A51019771A54399999A39459638A05577213A35427935A65078888A71849343A47678759A11047581A85878461A82498233A95786811A90306443A08305967A55447753A98515564A63245965A23246328A67698577A37587292A06883953A19256703A01416446A47485643A17834689A00004435A80685310A77586929A31054538A35284033A08213556A02733187A12641538A20943069A51044356A60942706A16031765A33451110A47510228A43082245A91646046A50851240A67475461A75283670A30831422A79273295A87472418A26680656A44130000A63102064A65830816A59060361A90224032A97103553A77360950A92952786A8075117890010201060112020302070304030804050409050605100611071707260818082109140918101310221122112312251226131413151416151915441619163017211724182019572030203821322231232523272435243725282629273327462833283429342935304931443146323732383343344035363640365137483839394539494041414241434252425443534456454845554647475347564851495050575058515252555354546055585659575958605960",
  };
-*/
+
 #define NBONDTYPES 11
 
 const int bondValence[NBONDTYPES] = {1,2,3,1,1,0,0,0,1,1,1};
@@ -5046,23 +5045,24 @@ bool TemplateRedraw::loadTemplates() {
     mol.SetIsPatternStructure();
     while (conv.Read(&mol)) {
       sm.readOBMol(&mol);
-	  for (i=0; i<sm.nAtoms(); i++) {
-		if (sm.getAtom(i)->na != 1) sm.getAtom(i)->na=ANY_ATOM;
-		sm.getAtom(i)->nc=0;
-	  };
-	  for (i=0; i<sm.nBonds(); i++) {
-		na1=sm.getBond(i)->at[0];
-		na2=sm.getBond(i)->at[1];
-		test=((sm.getAtom(na1)->na != 1) && (sm.getAtom(na2)->na != 1));
-		if (test) sm.getBond(i)->tb=ANY_BOND;  //ANY bons
-	  };
+      mol.Clear();
+	    for (i=0; i<sm.nAtoms(); i++) {
+		    if (sm.getAtom(i)->na != 1) sm.getAtom(i)->na=ANY_ATOM;
+		    sm.getAtom(i)->nc=0;
+	    }
+	    for (i=0; i<sm.nBonds(); i++) {
+		    na1=sm.getBond(i)->at[0];
+		    na2=sm.getBond(i)->at[1];
+		    test=((sm.getAtom(na1)->na != 1) && (sm.getAtom(na2)->na != 1));
+		    if (test) sm.getBond(i)->tb=ANY_BOND;  //ANY bons
+	    }
       sm.defineAtomConn();
       sm.allAboutCycles();
-	  em=new TEditedMolecule();
-	  em->prepareQuery(sm);
- 	  queryData.push_back(em);
-    };
-	result=true;
+	    em=new TEditedMolecule();
+	    em->prepareQuery(sm);
+ 	    queryData.push_back(em);
+    }
+	 result=true;
    obErrorLog.ThrowError(__FUNCTION__, "Read OK " + filename, obInfo);
   }
   // else {obErrorLog.ThrowError(__FUNCTION__, "Cannot find " + filename, obWarning);}
@@ -5072,29 +5072,25 @@ bool TemplateRedraw::loadTemplates() {
 
 TemplateRedraw::TemplateRedraw(){
   if(queryData.empty()) //Load internal and external templates only once
-    loadTemplates();
-/* no internal templates
   {
-    TEditedMolecule sm;
-    TEditedMolecule * em;
-    //Load external.. 
-    if(!loadTemplates())
-    {
-      //...and internal templates
-      for (int i=0; i<NDATABASE_MOLECULES; i++) {
-      sm.setCoordinatesString(strData[i]);
-      sm.defineAtomConn();
-      sm.allAboutCycles();
-      em=new TEditedMolecule();
-      em->prepareQuery(sm);
-	    queryData.push_back(em);
-      }
-    }
-    /* no sorting
     int i,j;
+    TEditedMolecule * em;
     TEditedMolecule * em1;
     TEditedMolecule * em2;
+    TEditedMolecule sm;
     bool test;
+
+    //Load external.. 
+    loadTemplates();
+    //...and internal templates
+    for (i=0; i<NDATABASE_MOLECULES; i++) {
+    sm.setCoordinatesString(strData[i]);
+    sm.defineAtomConn();
+    sm.allAboutCycles();
+    em=new TEditedMolecule();
+    em->prepareQuery(sm);
+	  queryData.push_back(em);
+    }
     if (queryData.size()>1) for (i=0; i<(queryData.size()-1); i++) for (j=i+1; j<queryData.size(); j++) {
       test=false;
 	  em1=(TEditedMolecule *)queryData[i];
@@ -5108,7 +5104,7 @@ TemplateRedraw::TemplateRedraw(){
 	    queryData[j]=em1;
       }
     }
-  }*/
+  }
 }
 
 void TemplateRedraw::clear() {
