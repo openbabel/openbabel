@@ -1,3 +1,11 @@
+2008-11-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/Makefile.am, src/ops/Makefile.am: Build mcdlutil.cpp and
+	gen2D.cpp plugin.
+
+	* configure.in: Update to indicate that trunk is not 2.2.0
+	build. (May go into a 2.3 or 3.0 build.)
+
 2008-11-12  Chris Morley
 
 	* src/mscdlutil.cpp, data/templates.sdf: revert to previous

@@ -27,7 +27,8 @@ libopenbabel_la_SOURCES = \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
     griddata.cpp grid.cpp \
 		locale.cpp \
-		kekulize.cpp matrix.cpp mol.cpp \
+		kekulize.cpp matrix.cpp mcdlutil.cpp \
+		mol.cpp \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
 		obmolecformat.cpp obutil.cpp \
