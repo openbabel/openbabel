@@ -47,11 +47,17 @@
  #ifndef OBFPTR
   #define OBFPTR   OB_EXPORT
  #endif
+ #ifndef OBMCDL
+  #define OBMCDL   OB_EXPORT
+ #endif
 
 #else   // defined(MAKE_OBDLL)
 
  #ifndef EXTERN
   #define EXTERN   OB_IMPORT extern
+ #endif
+ #ifndef OBAPI
+  #define OBAPI    OB_IMPORT
  #endif
  #ifndef OBCOMMON
   #define OBCOMMON OB_IMPORT
@@ -68,8 +74,8 @@
  #ifndef OBFPTR
   #define OBFPTR   OB_IMPORT
  #endif
- #ifndef OBAPI
-  #define OBAPI    OB_IMPORT
+ #ifndef OBMCDL
+  #define OBMCDL   OB_IMPORT
  #endif
 
 #endif
