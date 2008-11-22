@@ -7,6 +7,9 @@
 	atomic numbers are unsigned (i.e., values above 127 are
 	OK). PR#2289628.
 
+	* src/formats/pdbformat.cpp: Patch from Francois-Xavier Coudert to
+	write CRYST1 records when unit cell data is present. PR#2023510.
+
 2008-11-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/Makefile.am, src/ops/Makefile.am: Build mcdlutil.cpp and
