@@ -18,6 +18,8 @@ echo "Running automake"
 automake $AMFLAGS
 echo "Running autoconf"
 autoconf
+echo "Running autoreconf"
+autoreconf
 
 echo "======================================"
 echo "Now you are ready to run './configure'"

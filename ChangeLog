@@ -1,3 +1,11 @@
+2008-11-22  Geoff Hutchison  <ghutchis@Iridium.chem.pitt.edu>
+
+	* src/formats/Makefile.am: Update to fix PR#2022153 -- don't build
+	InChI format if --disable-inchi is picked.
+
+	* configure.in, *: Update for 2.2.1 version numbering and current
+	autotools bug fixes.
+
 2008-10-16  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-python.i: Added casting methods for all of the

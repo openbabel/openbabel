@@ -25,7 +25,7 @@ libopenbabel_la_SOURCES = \
 		bondtyper.cpp canon.cpp builder.cpp \
 		chains.cpp chiral.cpp data.cpp descriptor.cpp \
 		fingerprint.cpp forcefield.cpp format.cpp generic.cpp \
-    griddata.cpp grid.cpp \
+		griddata.cpp grid.cpp \
 		locale.cpp \
 		kekulize.cpp matrix.cpp mol.cpp \
 		molchrg.cpp \
@@ -35,12 +35,12 @@ libopenbabel_la_SOURCES = \
 		parsmart.cpp \
 		patty.cpp phmodel.cpp plugin.cpp \
 		pointgroup.cpp \
-    rand.cpp residue.cpp ring.cpp \
+		rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp \
 		tokenst.cpp typer.cpp \
 		transform.cpp $(dlhandler)
 
-libopenbabel_la_LDFLAGS = -version-info 3:0:0 -no-undefined
+libopenbabel_la_LDFLAGS = -version-info 3:1:0 -no-undefined
 
 if BUILD_SHARED
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)/$(VERSION)\" -DUSING_DYNAMIC_LIBS

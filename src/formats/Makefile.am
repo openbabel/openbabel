@@ -91,7 +91,7 @@ formats_LTLIBRARIES = \
 	freefracformat.la gamessformat.la gamessukformat.la \
 	gaussformat.la ghemicalformat.la \
 	gausscubeformat.la gausszmatformat.la \
-	gromos96format.la hinformat.la inchiformat.la \
+	gromos96format.la hinformat.la \
 	jaguarformat.la mdlformat.la mmcifformat.la mmodformat.la \
 	mpdformat.la mol2format.la moldenformat.la molreportformat.la \
 	mopacformat.la msiformat.la msmsformat.la \
@@ -106,6 +106,9 @@ formats_LTLIBRARIES = \
 if HAVE_SHARED_POINTER
 formats_LTLIBRARIES += chemdrawcdxformat.la chemkinformat.la \
                           rxnformat.la rsmiformat.la
+endif
+if BUILD_INCHI
+formats_LTLIBRARIES += inchiformat.la
 endif
 
 APIInterface_la_SOURCES = APIInterface.cpp
