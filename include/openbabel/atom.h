@@ -80,7 +80,7 @@ namespace OpenBabel
  class OBAPI OBAtom: public OBBase
     {
     protected:
-      char                          _ele;       //!< atomic number (type char to minimize space -- allows for 0..255 elements)
+      unsigned char                 _ele;       //!< atomic number (type unsigned char to minimize space -- allows for 0..255 elements)
       char                          _impval;    //!< implicit valence
       char                          _type[6];   //!< atomic type
       short                         _fcharge;   //!< formal charge
