@@ -275,6 +275,7 @@ namespace OpenBabel {
 
       /// \return the number of objects in the inputstream, 
       /// or -1 if error or if SkipObjects for the input format is not implemented
+      /// Adjusts for the value of -f and -l options (first and last objects).
       int NumInputObjects();
 
 

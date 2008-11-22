@@ -1,3 +1,30 @@
+2008-11-22  Chris Morley
+
+	* include/openbabel/text.h: NEW boring and trivial class OBText,
+	derived from OBBase. This was proposed last year for formats
+	which contained mixed content, like cdx, but has other uses. 
+
+	* src/formats/xml/textformat.cpp: NEW input format for the above
+	
+	* src/formats/xml/cmlreactformat.cpp: makes use of OBText class
+	to insert its output into boilerplate text provided in a file.
+	
+	* include/openbabel/mol.h, src/mol.cpp(Has2D): add an extra
+	parameter to change from "has 2D or 3D" to "has 2D". Correct bug
+	which gave the wrong answer for some linear molecules.	
+	
+	* include/openbabel/obconversion.h, src/obconversion.cpp
+	(NumInputObjects): now adjusts for values of -f and -l options
+
+	* src/formats/xml/xml.cpp(GetDerived):correct bug which did not
+	update the XMLConversion object even when the base OBConversion
+	had changed (bug#2283422).	
+
+	* src/formats/smilesformat.cpp*(SkipObjects): make work properly
+	for files without a new line at the end.
+	 
+	* src/ops/gen2D.cpp, src/ops/gen3d.cpp: set the molecule dimension.
+
 2008-11-21  Geoff Hutchison  <ghutchis@Iridium.chem.pitt.edu>
 
 	* src/data.cpp (GetAtomicNum): Fix bug with patch supplied by

@@ -53,13 +53,15 @@ namespace OpenBabel {
       if(n==0) return 1; //already points after current line
       istream& ifs = *pConv->GetInStream();
       int i=0;
+      if(ifs.eof())
+        return -1;
       while(i<n && ifs.good())
       {
         if(!isNotSmiles(ifs.peek()))
           i++;
         ifs.ignore(numeric_limits<streamsize>::max(),'\n');
       }
-      return ifs.good() ? 1 : -1; 
+      return ifs ? 1 : -1; 
     }
 
   private:

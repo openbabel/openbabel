@@ -47,6 +47,7 @@ bool OpGen3D::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
 
   OBBuilder builder;
   builder.Build(*pmol);
+  pmol->SetDimension(3);
 
   return true;
 }

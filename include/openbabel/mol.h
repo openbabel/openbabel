@@ -512,8 +512,8 @@ namespace OpenBabel
 
     //! \name Methods to check for existence of properties
     //@{
-    //! Are there non-zero coordinates in two dimensions (i.e. X and Y)?
-    bool Has2D();
+    //! Are there non-zero coordinates in two dimensions (i.e. X and Y)- and, if Not3D is true, no Z coordinates?
+    bool Has2D(bool Not3D=false);
     //! Are there non-zero coordinates in all three dimensions (i.e. X, Y, Z)?
     bool Has3D();
     //! Are there any non-zero coordinates?

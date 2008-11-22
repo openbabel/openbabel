@@ -52,6 +52,7 @@ bool OpGen2D::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
     return false;
 
   generateDiagram(pmol);
+  pmol->SetDimension(2);
 
   return true;
 }

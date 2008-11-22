@@ -2969,7 +2969,7 @@ namespace OpenBabel
     return(false);
   }
 
-  bool OBMol::Has2D()
+  bool OBMol::Has2D(bool Not3D)
   {
     bool hasX,hasY;
     OBAtom *atom;
@@ -2982,10 +2982,11 @@ namespace OpenBabel
           hasX = true;
         if (!hasY && !IsNearZero(atom->y()))
           hasY = true;
-
-        if (hasX && hasY)
-          return(true);
+        if(Not3D && atom->z())
+          return false;
       }
+      if (hasX || hasY) //was && but this excluded vertically or horizontally aligned linear mols 
+          return(true);
     return(false);
   }
 

@@ -37,6 +37,7 @@ GNU General Public License for more details.
 #include <string>
 #include <map>
 #include <locale>
+#include <limits>
 
 #include <stdlib.h>
 
@@ -1493,6 +1494,13 @@ namespace OpenBabel {
 
   int OBConversion::NumInputObjects()
   {
+    istream& ifs = *GetInStream();
+    ifs.clear(); //it may have been at eof
+    //Save position of the input stream 
+    streampos pos = ifs.tellg();
+    if(!ifs)
+      return -1;
+
     //check that the input format supports SkipObjects()
     if(GetInFormat()->SkipObjects(0, this)==0)
     {
@@ -1501,18 +1509,28 @@ namespace OpenBabel {
       return -1;
     }
 
-    istream& ifs = *GetInStream();
-    //Save position of the input stream 
-    streampos pos = ifs.tellg();
+    //counts objects only between the values of -f and -l options
+    int nfirst=1, nlast=numeric_limits<int>::max();
+    const char* p;
+    if(p=IsOption("f", GENOPTIONS))
+      nfirst=atoi(p);
+    if(p=IsOption("l", GENOPTIONS))
+      nlast=atoi(p);
 
     ifs.seekg(0); //rewind
+    //Compressed files currently show an error here.***TAKE CHANCE: RESET ifs**** 
+    ifs.clear();
+
     OBFormat* pFormat = GetInFormat();
-    int count=0; 
-    while(ifs && pFormat->SkipObjects(1, this)>0)
+    int count=0;
+    //skip each object but stop after nlast objects 
+    while(ifs && pFormat->SkipObjects(1, this)>0  && count<nlast)
       ++count;
 
     ifs.clear(); //clear eof
     ifs.seekg(pos); //restore old position
+
+    count -= nfirst-1;
     return count;
   }
 

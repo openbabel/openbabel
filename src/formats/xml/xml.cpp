@@ -126,6 +126,7 @@ namespace OpenBabel
     else
       {
         //pConv has already had an extended copy made 
+        *pConv->GetAuxConv() = *pConv; //ensure they have the same OBConversion data
         pxmlConv = dynamic_cast<XMLConversion*>(pConv->GetAuxConv());
         if (!pxmlConv)
           return NULL;
