@@ -58,7 +58,10 @@
 	write CRYST1 records when unit cell data is present. PR#2023510.
 
 	* src/generic.cpp (OBUnitCell::GetLatticeType): Fix bug reported
-	(and patched) by Jonathan Coome.
+	(and patched) by Jonathan Coome. PR#2100535.
+
+	* configure.in, config.* ac*.m4, Makefile.am, Makefile.in: Remove
+	autotools build files. Use Cmake instead.
 
 2008-11-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
