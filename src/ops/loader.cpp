@@ -67,11 +67,15 @@ public:
     {
       //More general version
       vector<string> textlines(1);
-      while(ifs && !ReadLine(ifs, textlines[0])); //get first non-blank line
+      while(ifs && !ReadLine(ifs, textlines[0], true)); //get first non-blank line
       if(!ifs)
         break;
-      while(ReadLine(ifs, ln)) //get subsequent lines
+      int linecount=0;
+      //Remove comments only from first 4 lines of an entry
+      //because SMARTS patterns can contain the # character.
+      while(ReadLine(ifs, ln, ++linecount<=4 )) //get subsequent lines
       {
+
         //Concatenate with next line if ends with "\n". Otherwise each in separate string
         if(ln.size()>=2 && ln.substr(ln.size()-2)=="\\n")
           ln.replace(ln.size()-2, 2,"\n");//replace "\n" by '\n'
@@ -112,7 +116,7 @@ private:
   static OBPlugin* FindDef(const char* ID);
 
   //return true if non-empty line read, false if empty line read or eof or error
-  static bool ReadLine(std::istream& ifs, std::string& ln);
+  static bool ReadLine(std::istream& ifs, std::string& ln, bool removeComments);
 
 private:
   const char* _filename;
@@ -133,13 +137,16 @@ OBDefine placeholderOBDefine;
 
 //Read line and remove comments
   //Return true if non-empty line read, false if empty line read or eof or error
-  bool OBDefine::ReadLine(istream& ifs, string& ln)
+  bool OBDefine::ReadLine(istream& ifs, string& ln, bool removeComments)
   {
     if(getline(ifs, ln))
     {
-      string::size_type pos = ln.find('#');
-      if(pos!=string::npos)
-        ln.erase(pos);
+      if(removeComments)
+      {
+        string::size_type pos = ln.find('#');
+        if(pos!=string::npos)
+          ln.erase(pos);
+      }
       Trim(ln);
       return !ln.empty();
     }

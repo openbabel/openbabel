@@ -1,5 +1,16 @@
 2008-11-22  Chris Morley
 
+	* src/ops/loader.cpp: do not remove comments after 4th line of
+	an entry in plugindefines.tx. SMARTS uses '#'!
+	
+	* src/ops/optransform.cpp: revamp parsing.
+	
+	* src/phmodel.cpp(OBChemTsfm::Init): correct bug in which some
+	kinds of transform were not taken into account when checking
+	whether there was anything to do.
+
+2008-11-22  Chris Morley
+
 	* include/openbabel/text.h: NEW boring and trivial class OBText,
 	derived from OBBase. This was proposed last year for formats
 	which contained mixed content, like cdx, but has other uses. 
