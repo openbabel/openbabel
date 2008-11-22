@@ -999,6 +999,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\text.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\math\transform3d.h"
 				>
 			</File>

@@ -2406,12 +2406,12 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
     ly=getBond(sCHB1)->at[1];
     if (ly == sCHA1) {
       lx=getBond(sCHB1)->at[1];
-      lx=getBond(sCHB1)->at[0];
+      ly=getBond(sCHB1)->at[0];
     };
     atomSecond=ly;
     //for group it is necessary to calculate unit vector direction
     uvX=getAtom(ly)->rx-getAtom(lx)->rx;
-    uvX=getAtom(ly)->ry-getAtom(lx)->ry;
+    uvY=getAtom(ly)->ry-getAtom(lx)->ry;
     bondLengthOld=sqrt(uvX*uvX+uvY*uvY);
     if (bondLengthOld<0.01) bondLengthOld=1;
     uvX=uvX/bondLengthOld;
@@ -2760,7 +2760,7 @@ void TSimpleMolecule::getMolfile(std::ostream & data) {
       default: charge=0; break;
     }
     snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
-      sa->rx, sa->ry, 0.0, (aSymb[sa->na]), 0,charge,0,0,0);    
+      sa->rx, sa->ry, 0.0, (aSymb[sa->na]).c_str(), 0,charge,0,0,0);    
     data << buff << endl;
   };
   for (int i=0; i<nBonds(); i++) {
@@ -7158,6 +7158,65 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
     };
   };
 };
+
+//****************************************************************************
+//Group redraw - generate 2D coordinates  for chemical group
+//****************************************************************************
+  int OBMCDL groupRedraw(OBMol * pmol, int bondN, int atomN) {
+    //bondN - index of acyclic bond in pmol (zero-based). atomN - index of atom attached to bond bondN to start redraw from it (1-based)
+    //returns 0 - all OK, =1 - number of atoms or bond are outside defined, = 2-cyclic bond 
+    TSimpleMolecule sm;
+	int result=0;
+	std::vector<int> allAtomList(NATOMSMAX);
+	std::vector<int> atomList(NATOMSMAX);
+	std::vector<int> bondList(NBONDSMAX);
+    OBAtom * atom;
+	int i,n,at,atEx,na,nb;
+
+    sm.readOBMol(pmol);
+	atomN--; //TSimpleMolecule: numeration of atoms is started from 0, while for OBMOl from 1;
+	if ((bondN >= sm.nBonds())  || (bondN < 0) || (atomN >= sm.nAtoms()) || (atomN < 0)) {
+      result=1;
+	  return result;
+	};
+	if (sm.getBond(bondN)->db > 0) {   
+      result=2;
+	  return result;
+	};
+	for (i=0; i<sm.nAtoms(); i++) allAtomList[i]=0;
+	n=0;
+	if (sm.getBond(bondN)->at[0] == atomN) {
+      at=sm.getBond(bondN)->at[0];
+      atEx=sm.getBond(bondN)->at[1];
+	} else {
+      at=sm.getBond(bondN)->at[1];
+      atEx=sm.getBond(bondN)->at[0];
+	};
+	na=0;
+	if (sm.makeFragment(na,atomList,at,atEx)) {
+      for (i=0; i<na; i++) allAtomList[atomList[i]]=1;
+	  nb=0;
+	  for (i=0; i<sm.nBonds(); i++) if ((allAtomList[sm.getBond(i)->at[0]] == 1) && (allAtomList[sm.getBond(i)->at[1]] == 1)) {
+        bondList[nb]=i;
+		nb++;
+	  };
+	  sm.redraw(atomList,bondList,na,nb,3,atomN,bondN,false);
+	  //Setting OBMOL coordinates
+	  for (int i=0; i<na; i++) {
+        n=atomList[i]; 
+        atom=pmol->GetAtom(n+1);  //1-based
+        atom->SetVector(sm.getAtom(n)->rx,sm.getAtom(n)->ry,0.0);
+      };
+	} else result=3;  //unknown error
+	return result;
+  };
+
+//****************************************************************************
+//assept a lot of structures on input and remove duplicates and non-connected
+//****************************************************************************
+  int canonizeMCDL(const std::string atomBlock, std::vector<std::string> & structureList) {
+    return 0;
+  };
 
 
 //****************************************************************************

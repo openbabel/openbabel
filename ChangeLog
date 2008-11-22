@@ -1,5 +1,14 @@
 2008-11-22  Chris Morley
 
+	* src/mcdlutil.cpp: Small bug fixes from Sergei Trepalin
+	
+	* windows-vc2005/babelconfig.h, windows-vc2005/OBDLL/OBDLL.vcproj,
+	windows-vc2005/OBMCDL/MCDL.vcproj, 
+	windows-vc2005/OBUtilFormats/OBUtilFormats.vcproj: Windows
+	build updated to make groupRedraw() callable.
+
+2008-11-22  Chris Morley
+
 	* src/ops/loader.cpp: do not remove comments after 4th line of
 	an entry in plugindefines.tx. SMARTS uses '#'!
 	
