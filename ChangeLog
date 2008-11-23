@@ -1,3 +1,10 @@
+2008-11-23  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* OBCSharp: (1) Changed name of dll to openbabelcsharp.dll to avoid
+	clashes	with other scripting languages in future, (2) Added Matt's
+	Assembly Info, (3) Added Matt's signed key, (4) Updated install
+	instructions for IronPython usage
+
 2008-11-22  Geoff Hutchison  <ghutchis@Iridium.chem.pitt.edu>
 
 	* src/formats/Makefile.am: Update to fix PR#2022153 -- don't build

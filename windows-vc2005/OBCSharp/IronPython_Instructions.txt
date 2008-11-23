@@ -1,20 +1,24 @@
 === How to use OBDotNet from IronPython ===
 
-First of all, unzip the OBDotNet distribution, and set the environment variable BABEL_DATADIR to point to the data folder contained within.
+(1) Unzip the OBDotNet distribution
 
-If running IronPython in the unzipped OBDotNet folder, you can use the following to initialise OBDotNet:
+(2) Set the environment variable BABEL_DATADIR to point to the data folder contained within
 
+You can test it by running IronPython in the OBDotNet folder:
 >>> import clr
 >>> clr.AddReference("OBDotNet")
 
-Otherwise, you need to need to:
-  (1) add the OBDotNet distribution folder to the PATH environment variable
-  (2) include the full path to the OBDotNet.dll when adding the reference, as follows (note the 'r' at the start):
+To complete the installation:
 
+(3) Add the OBDotNet distribution folder to the PATH environment variable
+
+(4) Install the OBDotNet Assembly using "Control Panel", "Administrative Tools", "Microsoft .Net Framework 2.0", right-click "Assembly Cache", choose "Add", and find the OBDotNet.dll.
+
+Now you should be able to run IronPython in any folder and the following should work:
 >>> import clr
->>> clr.AddReferenceToFileAndPath(r"C:\Tools\OpenBabel\ob-22x\windows-vc2005\OBCSharp\OBDotNet-0.1\OBDotNet.dll")
+>>> clr.AddReference("OBDotNet")
 
-Once the reference to OBDotNet has been added, you can import and use the OpenBabel bindings just like from CPython:
+Once the reference to OBDotNet has been added, you can import and use the OpenBabel bindings just like from CPython. The following lines calculate the molecular weight of propane:
 
 >>> import OpenBabel as ob
 >>> conv = ob.OBConversion()

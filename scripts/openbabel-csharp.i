@@ -143,7 +143,7 @@ get
 
 WRAP_ARRAY(double,double_array)
 
-%module openbabel
+%module openbabelcsharp
 %{
 // used to set import/export for Cygwin DLLs
 #ifdef WIN32
