@@ -128,6 +128,22 @@ if (CMAKE_COMPILER_IS_GNUCXX)
   endif (HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_1 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR)
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
+# this is adapted from KDE's FindKDE4Internal.cmake : default the build type to
+# "release with debug info".
+#
+# We will define two other build types: Debug and Release.
+# These names are case-insensitive i.e. you can do -DCMAKE_BUILD_TYPE=debug
+if (NOT CMAKE_BUILD_TYPE)
+   set(CMAKE_BUILD_TYPE RelWithDebInfo)
+endif (NOT CMAKE_BUILD_TYPE)
+
+#define various build types
+if (CMAKE_COMPILER_IS_GNUCXX)
+  set (CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+  set (CMAKE_CXX_FLAGS_DEBUG   "-g3 -fno-inline")
+endif (CMAKE_COMPILER_IS_GNUCXX)
+
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${CMAKE_SOURCE_DIR}/src/config.h.cmake ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
