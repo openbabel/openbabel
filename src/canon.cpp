@@ -494,9 +494,12 @@ static void CountAndRenumberClasses(vector<pair<OBAtom*,unsigned int> > &vp,
 *
 * DESCRIPTION:
 *       This is the core of symmetry analysis.  Starting with a set of
-*       classes on each atom, it "spreads" 
+*       classes on each atom, it "spreads" them using a sum-of-invarients
+*       of each atom's class and its neighbors' classes.  This iterates
+*       until a stable solution is found (further spreading doesn't
+*       change the answer).
 *       
-* RETURNS: (static void)
+* RETURNS: The number of distinct symmetry classes found.
 ***************************************************************************/
 
 static int ExtendInvarients(vector<pair<OBAtom*, unsigned int> > &symmetry_classes,
