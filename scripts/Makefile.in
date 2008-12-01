@@ -416,7 +416,7 @@ dist-hook:
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(JAVA_HOME)/bin/javac java/org/openbabel/*.java
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd java; ls org/openbabel/*.class > classes.list)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd java; $(JAVA_HOME)/bin/jar cf openbabel.jar @classes.list)
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@        (cd java; rm -rf org classes.list)
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd java; rm -rf org classes.list)
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -csharp -naturalvar -templatereduce -c++ -o $@ \

@@ -36,6 +36,7 @@ host_triplet = @host@
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am__append_3 = chemdrawcdxformat.la chemkinformat.la \
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@                          rxnformat.la rsmiformat.la
 
+@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@am__append_4 = inchiformat.la
 subdir = src/formats
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -394,7 +395,8 @@ inchiformat_la_OBJECTS = $(am_inchiformat_la_OBJECTS)
 inchiformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(inchiformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_inchiformat_la_rpath = -rpath $(formatsdir)
+@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@am_inchiformat_la_rpath = -rpath \
+@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@	$(formatsdir)
 jaguarformat_la_LIBADD =
 am__jaguarformat_la_SOURCES_DIST = jaguarformat.cpp
 @BUILD_SHARED_TRUE@am_jaguarformat_la_OBJECTS = jaguarformat.lo
@@ -1092,21 +1094,21 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	gaussformat.la ghemicalformat.la \
 @BUILD_SHARED_TRUE@	gausscubeformat.la gausszmatformat.la \
 @BUILD_SHARED_TRUE@	gromos96format.la hinformat.la \
-@BUILD_SHARED_TRUE@	inchiformat.la jaguarformat.la mdlformat.la \
-@BUILD_SHARED_TRUE@	mmcifformat.la mmodformat.la mpdformat.la \
-@BUILD_SHARED_TRUE@	mol2format.la moldenformat.la \
-@BUILD_SHARED_TRUE@	molreportformat.la mopacformat.la \
-@BUILD_SHARED_TRUE@	msiformat.la msmsformat.la mpqcformat.la \
-@BUILD_SHARED_TRUE@	nwchemformat.la pcmodelformat.la \
-@BUILD_SHARED_TRUE@	pngformat.la pdbformat.la povrayformat.la \
-@BUILD_SHARED_TRUE@	pqrformat.la opendxformat.la qchemformat.la \
+@BUILD_SHARED_TRUE@	jaguarformat.la mdlformat.la mmcifformat.la \
+@BUILD_SHARED_TRUE@	mmodformat.la mpdformat.la mol2format.la \
+@BUILD_SHARED_TRUE@	moldenformat.la molreportformat.la \
+@BUILD_SHARED_TRUE@	mopacformat.la msiformat.la msmsformat.la \
+@BUILD_SHARED_TRUE@	mpqcformat.la nwchemformat.la \
+@BUILD_SHARED_TRUE@	pcmodelformat.la pngformat.la pdbformat.la \
+@BUILD_SHARED_TRUE@	povrayformat.la pqrformat.la \
+@BUILD_SHARED_TRUE@	opendxformat.la qchemformat.la \
 @BUILD_SHARED_TRUE@	reportformat.la shelxformat.la \
 @BUILD_SHARED_TRUE@	smilesformat.la thermoformat.la \
 @BUILD_SHARED_TRUE@	tinkerformat.la titleformat.la \
 @BUILD_SHARED_TRUE@	turbomoleformat.la unichemformat.la \
 @BUILD_SHARED_TRUE@	viewmolformat.la xedformat.la xtcformat.la \
 @BUILD_SHARED_TRUE@	xyzformat.la yasaraformat.la zindoformat.la \
-@BUILD_SHARED_TRUE@	$(am__append_3)
+@BUILD_SHARED_TRUE@	$(am__append_3) $(am__append_4)
 @BUILD_SHARED_TRUE@APIInterface_la_SOURCES = APIInterface.cpp
 @BUILD_SHARED_TRUE@APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 @BUILD_SHARED_TRUE@CSRformat_la_SOURCES = CSRformat.cpp 
