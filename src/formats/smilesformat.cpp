@@ -54,11 +54,11 @@ namespace OpenBabel {
       istream& ifs = *pConv->GetInStream();
       int i=0;
       while(i<n && ifs.good())
-      {
-        if(!isNotSmiles(ifs.peek()))
-          i++;
-        ifs.ignore(numeric_limits<streamsize>::max(),'\n');
-      }
+        {
+          if(!isNotSmiles(ifs.peek()))
+            i++;
+          ifs.ignore(numeric_limits<streamsize>::max(),'\n');
+        }
       return ifs.good() ? 1 : -1; 
     }
 
@@ -97,7 +97,7 @@ namespace OpenBabel {
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
         "  t  Molecule name only\n"
-	"  x  append X/Y coordinates in canonical-SMILES order\n"
+        "  x  append X/Y coordinates in canonical-SMILES order\n"
         "\n";
     }
 
@@ -2321,7 +2321,7 @@ namespace OpenBabel {
                                       vector<OBAtom*>&chiral_neighbors,
                                       vector<unsigned int> &symmetry_classes,
                                       char *buffer,
-				      bool isomeric)
+                                      bool isomeric)
   {
     char symbol[10];
     bool bracketElement = false;
@@ -2472,7 +2472,7 @@ namespace OpenBabel {
       if (writeExplicitHydrogen) 
         hcount = atom->ExplicitHydrogenCount();
       else
-	// if "isomeric", doesn't count isotopic H
+        // if "isomeric", doesn't count isotopic H
         hcount = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(isomeric);
       if (hcount != 0) {
         strcat(buffer,"H");
@@ -3160,12 +3160,12 @@ namespace OpenBabel {
   {		
     FOR_ATOMS_OF_MOL(atom, *pMol) {
       if (frag_atoms.BitIsOn(atom->GetIdx())) {
-	labels.push_back(atom->GetIdx() - 1);
-	symmetry_classes.push_back(atom->GetIdx() - 1);
+        labels.push_back(atom->GetIdx() - 1);
+        symmetry_classes.push_back(atom->GetIdx() - 1);
       }
       else{
-	labels.push_back(2147483647); //to match situation when canonical ordering. Just a big number?
-	symmetry_classes.push_back(2147483647);
+        labels.push_back(2147483647); //to match situation when canonical ordering. Just a big number?
+        symmetry_classes.push_back(2147483647);
       }
     }
   }
@@ -3214,10 +3214,10 @@ namespace OpenBabel {
       root_atom = NULL;
       for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
         int idx = atom->GetIdx();
-        if (!atom->IsHydrogen()           // don't start with a hydrogen
-            && !_uatoms[idx]              // skip atoms already used (for fragments)
-            && frag_atoms.BitIsOn(idx)    // skip atoms not in this fragment
-            //&& !atom->IsChiral()        // don't use chiral atoms as root node
+        if (!atom->IsHydrogen()       // don't start with a hydrogen
+            && !_uatoms[idx]          // skip atoms already used (for fragments)
+            && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+            //&& !atom->IsChiral()    // don't use chiral atoms as root node
             && canonical_order[idx-1] < lowest_canorder) {
           root_atom = atom;
           lowest_canorder = canonical_order[idx-1];
@@ -3230,8 +3230,8 @@ namespace OpenBabel {
       if (root_atom == NULL) {
         for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
           int idx = atom->GetIdx();
-          if (!_uatoms[idx]                         // skip atoms already used (for fragments)
-              && frag_atoms.BitIsOn(idx)            // skip atoms not in this fragment
+          if (!_uatoms[idx]           // skip atoms already used (for fragments)
+              && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
               && canonical_order[idx-1] < lowest_canorder) {
             root_atom = atom;
             lowest_canorder = canonical_order[idx-1];
@@ -3262,7 +3262,9 @@ namespace OpenBabel {
     if (_atmorder.size()) {
       stringstream temp;
       vector<int>::iterator can_iter = _atmorder.begin();
-      temp << (*can_iter++);
+      if (can_iter != _atmorder.end()) {
+        temp << (*can_iter++);
+      }
 
       for (; can_iter != _atmorder.end(); ++can_iter) {
         if (*can_iter <= mol.NumAtoms())
@@ -3534,9 +3536,9 @@ namespace OpenBabel {
     // with 1's so that the SMILES will be for the whole molecule.
     else {
       FOR_ATOMS_OF_MOL(a, mol)
-	{
-	  fragatoms.SetBitOn(a->GetIdx());
-	}
+        {
+          fragatoms.SetBitOn(a->GetIdx());
+        }
     }
 
     if (mol.NumAtoms() > 0) {
@@ -3550,17 +3552,17 @@ namespace OpenBabel {
         ofs << '\t' <<  mol.GetTitle();
 
       if (pConv->IsOption("x") && mol.HasData("Canonical Atom Order")) {
-	vector<string> vs;
-	string canorder = mol.GetData("Canonical Atom Order")->GetValue();
-	tokenize(vs, canorder);
-	ofs << '\t';
-	for (int i = 0; i < vs.size(); i++) {
-	  int idx = atoi(vs[i].c_str());
-	  OBAtom *atom = mol.GetAtom(idx);
-	  if (i > 0)
-	    ofs << ",";
-	  ofs << atom->GetX() << "," << atom->GetY();
-	}
+        vector<string> vs;
+        string canorder = mol.GetData("Canonical Atom Order")->GetValue();
+        tokenize(vs, canorder);
+        ofs << '\t';
+        for (int i = 0; i < vs.size(); i++) {
+          int idx = atoi(vs[i].c_str());
+          OBAtom *atom = mol.GetAtom(idx);
+          if (i > 0)
+            ofs << ",";
+          ofs << atom->GetX() << "," << atom->GetY();
+        }
       }
 
       if(!pConv->IsOption("nonewline"))
