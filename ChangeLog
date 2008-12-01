@@ -1,3 +1,8 @@
+2008-12-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/pdbformat.cpp: Add support for reading CRYST1
+	records, contributed by Francois-Xavier Coudert. PR#2343128.
+
 2008-11-22  Chris Morley
 
 	* src/mcdlutil.cpp: Small bug fixes from Sergei Trepalin
