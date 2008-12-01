@@ -222,10 +222,6 @@ namespace OpenBabel
     int HOMO = 0;
     vector<double> orbitals;
 
-    // Read multiple conformers (e.g. for geometry optimization or IRC
-    bool addConformers = pConv->IsOption("c",OBConversion::INOPTIONS)!=NULL;
-    bool readOneConformer = false;
-
     // must build generic data while we parse then add at the end.
     OBSetData *gmsset = new OBSetData();
     gmsset->SetAttribute("gamess");
@@ -236,15 +232,9 @@ namespace OpenBabel
       {
         if(strstr(buffer,"ATOMIC                      COORDINATES (BOHR)") != NULL)
           {
-            if (addConformers && readOneConformer) { // add another
-              double *c = new double [mol.NumAtoms()*3];
-              mol.AddConformer(c);
-              mol.SetConformer(mol.NumConformers());
-            } else if (!addConformers) {
-              mol.Clear();
-              mol.BeginModify();
-            }
-            readOneConformer = true;
+            mol.Clear();
+            mol.BeginModify();
+
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
@@ -265,15 +255,9 @@ namespace OpenBabel
           }
         else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL)
           {
-            if (addConformers && readOneConformer) { // add another
-              double *c = new double [mol.NumAtoms()*3];
-              mol.AddConformer(c);
-              mol.SetConformer(mol.NumConformers());
-            } else if (!addConformers) {
-              mol.Clear();
-              mol.BeginModify();
-            }
-            readOneConformer = true;
+            mol.Clear();
+            mol.BeginModify();
+
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);	// ---------------
             ifs.getline(buffer,BUFF_SIZE);
@@ -326,6 +310,22 @@ namespace OpenBabel
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 atom->SetPartialCharge(atof(vs[2].c_str()));
+
+                if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+                tokenize(vs,buffer);
+              }
+          }
+        else if(strstr(buffer,"TOTAL MULLIKEN") != NULL)
+          {
+            hasPartialCharges = true;
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            while (vs.size() >= 4)
+              { // atom number, atomic symbol, mulliken pop, charge
+                atom = mol.GetAtom(atoi(vs[0].c_str()));
+                atom->SetPartialCharge(atof(vs[3].c_str()));
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
@@ -426,7 +426,8 @@ namespace OpenBabel
           }
         */
       }
-    // cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
+    //    cerr << " HOMO " << HOMO - 1 << " LUMO " << HOMO << " size: " << orbitals.size() << endl;
+    //    cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
       mol.EndModify();
