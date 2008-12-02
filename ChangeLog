@@ -108,6 +108,29 @@
 	* include/openbabel/fingerprint.h, src/fingerprint.cpp: Make
 	sure that __builtin_popcount is only exposed for GCC 3.4 or later.
 
+2008-07-19  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/opendxformat.cpp: Rename theGaussianCubeFormat global
+	variable to theOpenDXCubeFormat.
+
+	* src/formats/CMakeLists.txt: Added opendxformat to formats.
+
+2008-07-11  Chris Morley
+
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi
+	Set Env Var BABEL_DATADIR to installation directory. Safer than 
+	relying on finding the data files in the current directory.
+	
+	* include/openbabel/builder.h, src/builder.cpp: check whether
+	fragments.txt is loaded successfully and if not return false
+	from Build().
+
+2008-07-09  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/pybel.py: Bug fix for make3D for linear molecules.
+	Fixes bug 2014055. Minor doc fixes. Remember to close output files
+	in Molecule.write().
+
 2008-07-03  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPythonOBF/setup.py: Update setup.py to include
