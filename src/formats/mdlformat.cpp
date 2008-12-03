@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 #include <openbabel/chiral.h>
 #include <openbabel/alias.h>
+#include <openbabel/tokenst.h>
 
 using namespace std;
 namespace OpenBabel
@@ -65,15 +66,12 @@ Write Options, e.g. -x3\n \
     virtual int SkipObjects(int n, OBConversion* pConv)
     {
       if(n==0) n++;
-      string temp;
       istream& ifs = *pConv->GetInStream();
       do
-        {
-          getline(ifs,temp,'$');
-          if(ifs.good())
-            getline(ifs, temp);
-        }while(ifs.good() && temp.substr(0,3)=="$$$" && --n);
-      return ifs.good() ? 1 : -1;       
+      {
+        ignore(ifs, "$$$$\n");   
+      }while(ifs && --n);
+      return ifs.good() ? 1 : -1;
     }
 
     ////////////////////////////////////////////////////
@@ -160,7 +158,7 @@ public:
 		if( !ifs.good() || ifs.peek() == EOF ) return( false );
 
     if (!ifs.getline(buffer,BUFF_SIZE)) {
-      errorMsg << "WARNING: Problems reading a MDL file\n";
+     errorMsg << "WARNING: Problems reading a MDL file\n";
       errorMsg << "Cannot read title line\n";
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
       return(false);
@@ -168,9 +166,13 @@ public:
     mol.SetTitle(buffer);
   
     if (!ifs.getline(buffer,BUFF_SIZE)) {
-      errorMsg << "WARNING: Problems reading a MDL file\n";
-      errorMsg << "Cannot read creator/dimension line line\n";
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+      string temp(buffer);
+      Trim(temp);
+      if (!temp.empty()) {//don't warn on trailing blank lines
+        errorMsg << "WARNING: Problems reading a MDL file\n";
+        errorMsg << "Cannot read creator/dimension line line\n";
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+      }
       return(false);
     }
     

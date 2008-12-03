@@ -30,8 +30,11 @@ namespace OpenBabel
   // Utility function prototypes
   OBERROR bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n\r");
   OBERROR bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n\r", int limit=-1);
-  // Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
+  //! Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
   OBERROR std::string& Trim(std::string& txt);
+
+  //!Read and discard all characters from input stream up to, and including, a string
+  OBERROR std::istream& ignore(std::istream& ifs, const std::string& txt);
 
   //! Opens a datafile in a directory where OpenBabel expects to find it.
   // full documentation in tokenst.cpp

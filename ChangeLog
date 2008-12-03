@@ -1,3 +1,17 @@
+2008-12-02  Chris Morley
+	* src/tokenst.cpp, include/openbabel/tokenst.h: Add function
+	to ignore istream up to a specified string.
+	
+	* src/formats/mdlformat.cppReadMolecule): give no warning if
+	there are blank lines at the end of the file.
+	(SkipObjects): rewrite to prevent confusion by $ chars in
+	properties. Should hve been done long ago.
+
+	* src/mcdlutil.cpp, include/openbabel/mcdlutil.h:  more bug
+	fixes from Sergey Trepalin. Performs better, but still some
+	memory leaks.
+	
+
 2008-12-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp: Add support for reading CRYST1

@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <limits>
 #include <cstring>
 #include <openbabel/tokenst.h>
 
@@ -146,6 +147,25 @@ namespace OpenBabel
       txt.erase();
     return txt;
   }
+
+  //!Read and discard all characters from input stream upto the occurence of a string
+  //! \param txt (which is also discarded), or the end of the stream. \returns the stream. 
+  istream& ignore(istream& ifs, const string& txt)
+  {
+    while(ifs)
+    {
+      ifs.ignore(numeric_limits<std::streamsize>::max(),txt[0]);
+      size_t i=1;
+      while(ifs && ifs.get()==txt[i++])
+      {
+        if(i==txt.size())
+          return ifs;
+      }
+      ifs.unget();
+    }
+    return ifs; //at eof
+  }
+
 
     /** Opens the filestream with the first file called @p filename
      found by looking 

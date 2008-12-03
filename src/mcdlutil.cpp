@@ -1,6 +1,7 @@
 /* -*-C++-*-
 
 **********************************************************************
+
 Copyright (C) 2007,2008 by Sergei V. Trepalin sergey_trepalin@chemical-block.com
 Copyright (C) 2007,2008 by Andrei Gakh andrei.gakh@nnsa.doe.gov
 
@@ -17,7 +18,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************
 */
-
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include <openbabel/mcdlutil.h>
@@ -47,7 +47,6 @@ typedef adjustedlist neigbourlist[NATOMSMAX];
 #define blDenominator 4.0   //Controls bond legth in bondEnlarge
 #define nRotBondsMax 20     //Determines no. rotating bonds in correctOverlapped
 
-#define NELEMMCDL 121
     //Hydrogen valencies. Zero dummy element is the first 
 	const int hVal[NELEMMCDL] = {  
 	0,1,0,0,0,3,4,3,2,1,
@@ -153,7 +152,7 @@ const int metals[NMETALS] = {
   64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,91,
   92,93,94,95,96,97,98,99,100,101,102,103};
 
-#define A B
+//#define A B   ??? - 
 const int lightMetals[NLIGHT_METALS] = {
   3,4,11,12,13,19,20,21,22,23,24,25,26,27,28,29,30,31,37,38};
 const int heavyMetals[NHEAVY_METALS] = {
@@ -2042,7 +2041,10 @@ void TSimpleMolecule::defA(int& currNumDef, int atomClean, int sPN, int baseCycl
  //analyze chain fragments
   int i,j,k,rC;
 
+
+
   if (currNumDef==atomClean) return;
+
   for (i=0; i<atomClean; i++) if (atomDefine[listAtomClean[i]]==0)
   if (getAtom(listAtomClean[i])->nb > 0) for (j=0; j<getAtom(listAtomClean[i])->nb; j++) {
     k=getAtom(listAtomClean[i])->ac[j]; 
@@ -2075,7 +2077,7 @@ void TSimpleMolecule::defA(int& currNumDef, int atomClean, int sPN, int baseCycl
       while (atomDefine[listAtomClean[i]] != 0) i++;
       i=listAtomClean[i];
     };
-  } else i=listAtomClean[atomClean];
+  } else i=listAtomClean[atomClean-1];
   //for group-first atom, from which group started, is selected}
   dsATN[currNumDef]=i;
   atomDefine[dsATN[currNumDef]]=1;
@@ -2293,8 +2295,6 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
 
   //Lx,Ly,Button:integer;
 
-
-
   if ((atomClean<1) || (bondClean==0)) return;
   defineAtomConn();
   allAboutCycles();
@@ -2310,6 +2310,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
   uvX=0;
   uvY=0;
   atomSecond=0;
+
   for (i=0; i<bondClean; i++) {
     vaweBond(listBondClean[i],bk,cs,atomDefine); //If I-th bond belongs to cycle}
 	
@@ -2333,7 +2334,6 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
     };
 	
   };
-
 
   for (i=0; i<baseCycle; i++) { //making atom list in those order, as they will be defined at cycles}
     cycleDefine[i]=0;
@@ -2400,6 +2400,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
     };
     if (bondLengthOld<0.01) bondLengthOld=1;
   } else {
+
 	xCenterOld=getAtom(sCHA1)->rx; //{CHA1 - To atom connected, CHB1-splitting bond}
     yCenterOld=getAtom(sCHA1)->ry;
 	lx=getBond(sCHB1)->at[0];
@@ -2416,6 +2417,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
     if (bondLengthOld<0.01) bondLengthOld=1;
     uvX=uvX/bondLengthOld;
     uvY=uvY/bondLengthOld;
+
   };
   
   for (i=0; i<nAtoms(); i++) atomDefine[i]=0; //flags-zero value OK
@@ -2436,6 +2438,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
   }; //end recursion}
 
   for (i=0; i<nAtoms(); i++) atomDefine[i]=0;
+
   if ((spn<3) || (spn==4)) {     //checking already cleaned atoms...
     for (i=0; i<nAtoms(); i++) atomDefine[i]=1;
     for (i=0; i<atomClean; i++) {
@@ -2449,7 +2452,9 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
   };
 
   i=0;
+
   if (atomClean>=1) while (i<atomClean) {
+
     switch (dsTP[i]) {
       case 0:{
         atomDefine[dsATN[i]]=1; //old coordinates of the atom are used}
@@ -2599,6 +2604,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
               };
             };
           } else {
+
             if (bk[dsNA1[i]].nb == 2) {  //two-connected fragment
                //Search for triple bond or for two double-bonds
               n1=bk[dsNA1[i]].adjusted[0];
@@ -2663,6 +2669,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
       } else break;
       case 3:
       case 4: {
+
         twoAtomUnitVector(dsNA1[i],dsNA2[i],ux,uy,atomDefine);
         //calculation of an optimal side to add new fragment
         ux1=getAtom(dsNA1[i])->rx-getAtom(dsNA2[i])->rx;
@@ -2703,6 +2710,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
     i++;
   }
   bondLengthNew=0;
+
   //Rescaling and shift of structure
   for (i=0; i<bondClean; i++)  bondLengthNew=bondLengthNew+bondLength(listBondClean[i]);
   bondLengthNew=bondLengthNew/(double)bondClean;
@@ -2731,6 +2739,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
     };
     xCenterNew=0;
     yCenterNew=0;
+
   };
   if (spn != 4) for (i=0; i<atomClean; i++) {   //New screen coordinates
     getAtom(listAtomClean[i])->rx=getAtom(listAtomClean[i])->rx-xCenterNew+xCenterOld;
@@ -7162,8 +7171,9 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 //****************************************************************************
 //Group redraw - generate 2D coordinates  for chemical group
 //****************************************************************************
-  int OBMCDL groupRedraw(OBMol * pmol, int bondN, int atomN) {
+  int OBMCDL groupRedraw(OBMol * pmol, int bondN, int atomN, bool atomNInGroup) {
     //bondN - index of acyclic bond in pmol (zero-based). atomN - index of atom attached to bond bondN to start redraw from it (1-based)
+    //atomNInGroup - if true it is assumed, that atom atomN, attached to bond bondN is inside group to be redrawn, false otherwise
     //returns 0 - all OK, =1 - number of atoms or bond are outside defined, = 2-cyclic bond 
     TSimpleMolecule sm;
 	int result=0;
@@ -7179,9 +7189,15 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
       result=1;
 	  return result;
 	};
+
 	if (sm.getBond(bondN)->db > 0) {   
       result=2;
 	  return result;
+	};
+	if (! atomNInGroup) {
+	  n=sm.getBond(bondN)->at[0];
+      if (n == atomN) n=sm.getBond(bondN)->at[1];
+      atomN=n;
 	};
 	for (i=0; i<sm.nAtoms(); i++) allAtomList[i]=0;
 	n=0;
@@ -7194,13 +7210,16 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 	};
 	na=0;
 	if (sm.makeFragment(na,atomList,at,atEx)) {
+	  //addition of atom in non-cleaned fragment at last position
+	  atomList[na]=atEx;
+      na++;
       for (i=0; i<na; i++) allAtomList[atomList[i]]=1;
 	  nb=0;
 	  for (i=0; i<sm.nBonds(); i++) if ((allAtomList[sm.getBond(i)->at[0]] == 1) && (allAtomList[sm.getBond(i)->at[1]] == 1)) {
         bondList[nb]=i;
 		nb++;
 	  };
-	  sm.redraw(atomList,bondList,na,nb,3,atomN,bondN,false);
+	  sm.redraw(atomList,bondList,na,nb,3,atEx,bondN,false);
 	  //Setting OBMOL coordinates
 	  for (int i=0; i<na; i++) {
         n=atomList[i]; 
@@ -7210,10 +7229,94 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 	} else result=3;  //unknown error
 	return result;
   };
-
+/*
+  int groupRedrawFrameAtom(OBMol * pmol, int bondN, int atomInFrame) {
+    int atomN;
+	atomN=pmol->GetBond(bondN)->GetBeginAtomIdx();
+	if (atomN == atomInFrame) atomN=pmol->GetBond(bondN)->GetEndAtomIdx();
+	int result=groupRedraw(pmol,bondN,atomN);
+	return result;
+  };
+*/
 //****************************************************************************
 //assept a lot of structures on input and remove duplicates and non-connected
 //****************************************************************************
+  bool parseFormula(const std::string formulaString, std::vector <int>& enumber, int & valency) {
+    //vector<string> items;
+    int i,n,k,n1,n2;//,j,nStart;
+    string s;
+    bool test;
+    string asym;
+    string value=formulaString;
+    
+    valency=-1;
+
+    for (i=0; i<NELEMMCDL; i++) enumber[i]=0;
+
+    for (i=1; i<NELEMMCDL; i++) if (aSymb[i].length()==2) {
+      test=true;
+      asym=aSymb[i];
+      while (test) {
+        test=false;
+        n=indexOf(value,asym);
+        if (n>=0) {
+          test=true;
+          value=value.substr(0,n)+value.substr(n+asym.length(),value.length());
+          k=1;
+          if (n<value.length()) if ((value.at(n)>='0') && (value.at(n)<='9')) {
+            n1=n;
+            n2=n;
+            while ((n2<(value.length()-1)) && (value.at(n2)>='0') && (value.at(n2)<='9')) n2++;
+            if (! ((value.at(n2)>='0') && (value.at(n2)<='9'))) n2--;
+            s=value.substr(n1,n2+1);
+            k=atoi(s.c_str());
+            value=value.substr(0,n1)+value.substr(n2+1,value.length());
+          };
+          enumber[i]=enumber[i]+k;
+	      if ((n == 0) && (valency == -1)) valency=i;
+        };
+      };
+    };
+    for (i=1; i<NELEMMCDL; i++) if (aSymb[i].length() == 1) {
+      test=true;
+      asym=aSymb[i];
+      while (test) {
+        test=false;
+        n=indexOf(value,asym);
+        if (n>=0) {
+          test=true;
+          value=value.substr(0,n)+value.substr(n+asym.length(),value.length());
+          k=1;
+          if (n<value.length()) if ((value.at(n)>='0') && (value.at(n)<='9')) {
+            n1=n;
+            n2=n;
+            while ((n2<(value.length()-1)) && (value.at(n2)>='0') && (value.at(n2)<='9')) n2++;
+            if (! ((value.at(n2)>='0') && (value.at(n2)<='9'))) n2--;
+            s=value.substr(n1,n2+1);
+            k=atoi(s.c_str());
+            value=value.substr(0,n1)+value.substr(n2+1,value.length());
+          };
+          enumber[i]=enumber[i]+k;
+  		  if ((n == 0) && (valency == -1)) valency=i;
+        };
+      };
+    };
+    if (valency > 0) {
+      n=valency;
+	  valency=hVal[n];
+	  if (valency == 0) valency=1;
+	  for (i=1; i<NELEMMCDL; i++) if ((i != n) && (enumber[i] > 0)) {  
+        k=hVal[i];
+	    if (k == 0) k=1;
+	    k=k*enumber[i];
+        valency=valency-k;
+	  };
+	  if (valency <= 0) valency=1;
+    };
+    return (value.length() == 0);
+  };
+
+
   int canonizeMCDL(const std::string atomBlock, std::vector<std::string> & structureList) {
     return 0;
   };
@@ -7244,3 +7347,4 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 
 //! \file mcdlutil.cpp
 //! \utilities for mcdl format, might be useful for another
+
