@@ -41,7 +41,12 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Crystallographic Information File\n ";
+        "Crystallographic Information File\n\n"
+        "Read Options e.g. -b:\n"
+        "  v  Verbose CIF conversion\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n"
+        "  B  Use bonds listed in CIF file from _geom_bond_* records (overrides option b) \n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -153,6 +158,8 @@ namespace OpenBabel
     /// Extract all atomic positions. Will generate cartesian from fractional
     /// coordinates or vice-versa if only cartesian coordinates are available.
     void ExtractAtomicPositions(const bool verbose=false);
+    /// Extract listed bond distances, from _geom_bond_* loops
+    void ExtractBonds(const bool verbose=false);
     /// Generate fractional coordinates from cartesian ones for all atoms
     /// CIFData::CalcMatrices() must be called first
     void Cartesian2FractionalCoord();
@@ -206,6 +213,16 @@ namespace OpenBabel
     };
     /// Atoms, if any are found
     std::vector<CIFAtom> mvAtom;
+    /// Bond distance record
+    struct CIFBond
+    {
+      /// Label of the two bonded atoms
+      std::string mLabel1,mLabel2;
+      /// distance
+      float mDistance;
+    };
+    /// Atoms, if any are found
+    std::vector<CIFBond> mvBond;
     /// Fractionnal2Cartesian matrix
     float mOrthMatrix[3][3];
     /// Cartesian2Fractionnal matrix
@@ -254,6 +271,7 @@ namespace OpenBabel
     this->ExtractUnitCell(verbose);
     this->ExtractSpacegroup(verbose);
     this->ExtractAtomicPositions(verbose);
+    this->ExtractBonds(verbose);
   }
    
   void CIFData::ExtractUnitCell(const bool verbose)
@@ -540,7 +558,7 @@ namespace OpenBabel
             // Now be somewhat verbose
             if(verbose)
               {
-                cout << "Found "<<nb<<" atoms. Waouh !"<<endl;
+                cout << "Found "<<nb<<" atoms."<<endl;
                 for(unsigned int i=0;i<nb;++i)
                   {
                     cout<<mvAtom[i].mLabel<<" "<<mvAtom[i].mSymbol;
@@ -562,7 +580,33 @@ namespace OpenBabel
           }
       }
   }
-   
+
+  void CIFData::ExtractBonds(const bool verbose)
+  {
+    map<ci_string,string>::const_iterator positem;
+    for(map<set<ci_string>,map<ci_string,vector<string> > >::const_iterator loop=mvLoop.begin(); loop!=mvLoop.end();++loop)
+      {
+        //if(mvBond.size()>0) break;// Only allow one bond list
+        map<ci_string,vector<string> >::const_iterator poslabel1,poslabel2,posdist;
+        poslabel1=loop->second.find("_geom_bond_atom_site_label_1");
+        poslabel2=loop->second.find("_geom_bond_atom_site_label_2");
+        posdist=loop->second.find("_geom_bond_distance");
+        if( (poslabel1!=loop->second.end()) && (poslabel2!=loop->second.end()) && (posdist!=loop->second.end()))
+          {
+            if(verbose) cout<<"Found _geom_bond* record..."<<endl;
+            const unsigned long nb=poslabel1->second.size();
+            mvBond.resize(nb);
+            for(unsigned int i=0;i<nb;++i)
+              {
+                mvBond[i].mLabel1=poslabel1->second[i];
+                mvBond[i].mLabel2=poslabel2->second[i];
+                mvBond[i].mDistance=CIFNumeric2Float(posdist->second[i]);
+                if(verbose) cout<<"  d("<<mvBond[i].mLabel1<<"-"<<mvBond[i].mLabel2<<")="<<mvBond[i].mDistance<<endl;
+              }
+          }
+      }
+  }
+
   void CIFData::CalcMatrices(const bool verbose)
   {
     if(mvLatticePar.size()==0) return;//:TODO: throw error
@@ -909,9 +953,10 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
       return false;
+    bool verbose=false;
+    if (pConv->IsOption("v",OBConversion::INOPTIONS)) verbose=true;
 
-    CIF cif(*pConv->GetInStream(),true,false);
-
+    CIF cif(*pConv->GetInStream(),true,verbose);
     // Loop on all data blocks until we find one structure :TODO: handle multiple structures
     for(map<string,CIFData>::iterator pos=cif.mvData.begin();pos!=cif.mvData.end();++pos)
       if(pos->second.mvAtom.size()>0)
@@ -941,11 +986,14 @@ namespace OpenBabel
 
           if(pos->second.mFormula!="") pmol->SetFormula(pos->second.mFormula);
 
+          // Keep a map linking the cif atom label to the obatom*, for bond interpretation later
+          std::map<std::string,OBAtom *> vLabelOBatom;
+          
           const unsigned int nbatoms=pos->second.mvAtom.size();
           pmol->ReserveAtoms(nbatoms);
           for(vector<CIFData::CIFAtom>::const_iterator posat=pos->second.mvAtom.begin();posat!=pos->second.mvAtom.end();++posat)
             {
-              // Problem: posat->mSymbol is not garanteed to actually be a symbol
+              // Problem: posat->mSymbol is not guaranteed to actually be a symbol
               // see http://www.iucr.org/iucr-top/cif/cifdic_html/1/cif_core.dic/Iatom_type_symbol.html
               // Try to strip the string to have a better chance to have a valid symbol
               // This is not guaranteed to work still, as the CIF standard allows about any string...
@@ -959,6 +1007,8 @@ namespace OpenBabel
                 }
               
               OBAtom *atom  = pmol->NewAtom();
+              
+              vLabelOBatom.insert(make_pair(posat->mLabel,atom));
               
               if(tmpSymbol.size()>nbc)
                 {// Try to find a formal charge in the symbol
@@ -988,6 +1038,29 @@ namespace OpenBabel
             }
           if (!pConv->IsOption("b",OBConversion::INOPTIONS))
             pmol->ConnectTheDots();
+          if (pConv->IsOption("B",OBConversion::INOPTIONS))
+            {
+              for(vector<CIFData::CIFBond>::const_iterator posbond=pos->second.mvBond.begin();posbond!=pos->second.mvBond.end();++posbond)
+                {// Add bonds present in the cif and not detected by ConnectTheDots()
+                  std::map<std::string,OBAtom *>::iterator posat1,posat2;
+                  posat1=vLabelOBatom.find(posbond->mLabel1);
+                  posat2=vLabelOBatom.find(posbond->mLabel2);
+                  if(posat1!=vLabelOBatom.end() && posat2!=vLabelOBatom.end())
+                    {
+                      if(verbose) cout<<"  Adding cif bond ? "<<posat1->first<<"-"<<posat2->first;
+                      if(pmol->GetBond(posat1->second,posat2->second)==NULL)
+                        {
+                           if(verbose) cout<<"  :Bond added !"<<endl;
+                           OBBond * bond=pmol->NewBond();
+                           bond->SetBegin(posat1->second);
+                           bond->SetEnd(posat2->second);
+                           bond->SetBondOrder(1);
+                           bond->SetLength(double(posbond->mDistance));
+                        }
+                       else if(verbose) cout<<"  :Bond already present.. "<<endl;
+                    }
+                }
+            }
           if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
             pmol->PerceiveBondOrders();
           pmol->EndModify();
