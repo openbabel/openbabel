@@ -1,3 +1,8 @@
+2008-12-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/element.txt, data/atomtyp.txt: Minor changes. Allow boron
+	to have 4 bonds and adjust implicit valence for several elements.
+
 2008-11-23  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* OBCSharp: (1) Changed name of dll to openbabelcsharp.dll to avoid
