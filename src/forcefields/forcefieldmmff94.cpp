@@ -1944,7 +1944,7 @@ namespace OpenBabel
       }
       // 3 neighbours
       if (atom->GetValence() == 3) {
-        if (atom->BOSum() == 4) {
+        if (atom->BOSum() >= 4) { // > because we accept -N(=O)=O as a valid nitro group
           oxygenCount = nitrogenCount = doubleBondTo = 0;
 	  
           FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -2324,10 +2324,26 @@ namespace OpenBabel
               return 32; // Single terminal oxygen on sulfur, One of 2 terminal O's on sulfur, 
               // One of 3 terminal O's on sulfur, Terminal O in sulfate anion, 
               // (O-S, O2S, O3S, O4S)
-            } else { 
+            } else {
               // O==S
-              return 7; // Doubly bonded sulfoxide oxygen, O=S on sulfur doubly bonded 
-              // to, e.g., C (O=S, O=S=)
+             
+              // are all sulfur nbr atoms carbon?
+              bool isSulfoxide = true;
+              FOR_NBORS_OF_ATOM (nbr2, &*nbr) {
+                if (atom == &*nbr2) 
+                  continue;
+
+                if (nbr->GetBond(&*nbr2)->IsDouble() && !nbr2->IsOxygen())
+                  return 7; // O=S on sulfur doubly bonded to, e.g., C (O=S=)
+
+                if (nbr2->IsOxygen() && nbr2->GetValence() == 0)
+                  isSulfoxide = false;
+              }
+              
+              if (isSulfoxide)
+                return 7; // Doubly bonded sulfoxide oxygen (O=S)
+              else
+                return 32; // (O2S, O3S, O4S)
             }
           }
 

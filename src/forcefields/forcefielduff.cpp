@@ -390,7 +390,7 @@ namespace OpenBabel
      }
 
      IF_OBFF_LOGLVL_HIGH {
-       snprintf(_logbuf, BUFF_SIZE, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.3f\n", energy);
+       snprintf(_logbuf, BUFF_SIZE, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
        OBFFLog(_logbuf);
      }
      return energy;

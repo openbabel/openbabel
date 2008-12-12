@@ -1251,8 +1251,6 @@ namespace OpenBabel
     if (!_validSetup)
       return 0;
     
-    char _logbuf[100];
-    
     if (_current_conformer >=  _mol.NumConformers()) { // done
       // Select conformer with lowest energy
       int best_conformer = 0;
@@ -1372,8 +1370,6 @@ namespace OpenBabel
     if (!_validSetup)
       return 0;
  
-    char _logbuf[100];
-    
     if (_current_conformer >=  _mol.NumConformers()) { // done
       // Select conformer with lowest energy
       int best_conformer = 0;
@@ -1911,8 +1907,6 @@ namespace OpenBabel
  
     // output result of triangle smoothing
     IF_OBFF_LOGLVL_LOW {
-      char _logbuf[100];
-
       OBFFLog("RANDOM DISTANCE MATRIX BETWEEN LIMITS\n\n");
       for (i=0; i<N; i++) {
         OBFFLog("[");
@@ -1935,8 +1929,6 @@ namespace OpenBabel
     
     // output metric matrix
     IF_OBFF_LOGLVL_LOW {
-      char _logbuf[100];
-
       OBFFLog("METRIC MATRIX\n\n");
       for (i=0; i<N; i++) {
         OBFFLog("[");
@@ -2426,7 +2418,6 @@ namespace OpenBabel
     OBAtom *atom = new OBAtom;
     vector3 grad;
     double e_n1, e_n2;
-    char _logbuf[100];
     
     atom->SetVector(9.0, 9.0, 0.0);
     e_n1 = atom->x() * atom->x() + 2 * (atom->y() * atom->y());
@@ -2470,7 +2461,6 @@ namespace OpenBabel
     double e_n1, e_n2;
     double g2g2, g1g1, g2g1;
     bool firststep;
-    char _logbuf[100];
 
     firststep = true;
     atom->SetVector(9.0, 9.0, 0.0);
