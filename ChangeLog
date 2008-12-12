@@ -18,6 +18,27 @@
 	* configure.in, *: Update for 2.2.1 version numbering and current
 	autotools bug fixes.
 
+2008-10-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefield*.h: Fix MakeNewInstance().
+
+2008-10-17  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: in OBForceField::GetGrid(), calculate grid size 
+	before adding probe atom. 
+
+	* src/formats/atomrecord.cpp: Interpret HG11, HE11, ... as hydrogen
+	atoms at position gamma and epsilon. Previously these atom ids were
+	interpreted as Hg and He atoms. (Fixes: #2002557 & #2026265)
+
+2008-10-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefields/forcefieldmmff94.cpp: Remove _logbuf[100] (Fixes
+	#2022120)
+
+	* src/builder.cpp: fix bugs with linear molecules. (Fixes #2119034
+	& #2013814)
+
 2008-10-16  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-python.i: Added casting methods for all of the

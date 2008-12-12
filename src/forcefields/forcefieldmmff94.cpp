@@ -3869,7 +3869,7 @@ namespace OpenBabel
     vector<int> types;
     vector<double> fcharges, pcharges;
     vector<double> bond_lengths;
-    char buffer[150], _logbuf[100];
+    char buffer[150];
     bool molfound, atomfound, bondfound, fchgfound, pchgfound;
     double etot, ebond, eangle, eoop, estbn, etor, evdw, eeq;
     double termcount; //1=bond, 2=angle, 3=strbnd, 4=torsion, 5=oop

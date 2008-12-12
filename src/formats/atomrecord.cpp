@@ -107,7 +107,10 @@ namespace OpenBabel
             if (atmid == "AE2")
               type = "N";
           }
-        if (atmid.substr(0,2) == "HH") // ARG
+        // fix: #2002557
+        if (atmid[0] == 'H' && 
+            (atmid[1] == 'D' || atmid[1] == 'E' || 
+             atmid[1] == 'G' || atmid[1] == 'H')) // HD, HE, HG, HH, ..
           type = "H";
       }
     else //must be hetatm record

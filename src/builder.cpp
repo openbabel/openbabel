@@ -160,7 +160,10 @@ namespace OpenBabel
     //                               *
     if (atom->GetValence() == 1) {
       FOR_NBORS_OF_ATOM (nbr, atom) {
-        bond1 = atom->GetVector() - nbr->GetVector();   
+        bond1 = atom->GetVector() - nbr->GetVector();
+
+        if (nbr->GetHyb() == 1) // Fix #2119034 & #2013814
+          continue;
         
         FOR_NBORS_OF_ATOM (nbr2, &*nbr)
           if (&*nbr2 != atom)
