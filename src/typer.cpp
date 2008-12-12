@@ -187,7 +187,8 @@ namespace OpenBabel
               strncasecmp(nbr->GetType(),"Ng+", 3) == 0)
             ++guanidineN;
         }
-        atom->SetType("C+");
+        if (guanidineN == 3)
+          atom->SetType("C+");
 
       } // end C2 carbon for guanidinium
 
