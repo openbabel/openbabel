@@ -28,11 +28,32 @@
 	* scripts/openbabel-perl.i: Replaced the C++ iterators by Perl classes
 	which can be used for iteration natively in Perl.
 
+2008-10-10  Chris Morley
+
+	* src/fingerprints/finger3.cpp: rearrange
+	a) so that div and div-- do not appear in same statement, which
+	is illegal (Andrew Dalke).
+	b) replace ternary conditional, which did not compile in gcc
+	It's a pity the Microsoft compiler did not warn about either of these.
+	
+	The preferred file format no longer needs a comment as first line.
+
+	* src/formats/chemkinformat.cpp(ReadReactionQualifierLines):
+	correct error similar to b) above flagged in bug #2150390	 
+
 2008-10-04  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Fix OBForceField::GetAtomTypes() and
 	OBForceField::GetPartialCharges()
+	
+2008-09-26  Chris Morley
 
+	* src/formats/fastsearchformat.cpp: Improved error message when
+	 target is SMARTS rather than SMILES. Bug #2129841
+	 
+	* src/formats/getinchi.cpp: small mod to avoid occasionally seeing
+	 a "quoted" InChI when there isn't one. (There ARE none in the wild.)
+		
 2008-09-26  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-csharp.i: Updated with Matt's comprehensive
@@ -49,6 +70,15 @@
 	* windows-vc2005/OBCSharp/IronPython_Instructions.txt: How to use the
 	OBDotNet distribution from IronPython
 
+2008-09-23  Chris Morley
+	
+	* src/fingerprints/finger3.cpp: enhanced PatternFP which can take
+	extra parameters and file format.
+	
+	* data/MACCS.txt; data for new MACCS fingerprint (from RDKit)
+	
+	* data/plugindefines.txt; definition of MACCS fingerprint.
+	
 2008-09-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Check OBForceField::_validSetup flas before

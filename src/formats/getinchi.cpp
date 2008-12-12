@@ -175,8 +175,8 @@ string GetInChI(istream& is)
           state = match_inchi;
           qch = lastch;
         }
-        lastch = ch;
       }
+      lastch = ch;
     }
     
     else if(ch=='<')

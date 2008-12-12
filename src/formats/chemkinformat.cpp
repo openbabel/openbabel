@@ -628,7 +628,10 @@ bool ChemKinFormat::ReadReactionQualifierLines(istream& ifs, OBReaction* pReact)
       //not "END". Has an even number of tokens.
       //3-body efficiencies
       for(int i=0;i<toks.size()-1;++i)//also incremented in body to retrieve id,val pairs
-        pRD->SetEfficiency(toks[i++], atof(toks[i].c_str()));
+      {
+        string sp(toks[i++]);
+        pRD->SetEfficiency(sp, atof(toks[i].c_str()));
+      }
     }
   }
   return ifs!=NULL;

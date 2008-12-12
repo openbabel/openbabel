@@ -61,6 +61,10 @@ namespace OpenBabel {
 "    babel index.fs -sSMILES outfile.yyy -t0.7  (Tanimoto >0.7)\n"
 "    babel index.fs -sSMILES outfile.yyy -t15   (best 15 molecules)\n"
 "  The structure spec can be a molecule from a file: -Spatternfile.zzz\n\n"
+"Note that the parameter of the -s option needs to be a valid SMILES\n"
+"molecule when using fastsearch. You can use the more versatile SMARTS\n"
+"in a normal substructure search.\n\n"
+
 "Write Options (when making index) e.g. -xfFP3\n"
 " f# Fingerprint type\n"
 " N# Fold fingerprint to # bits\n"
@@ -70,7 +74,7 @@ namespace OpenBabel {
 " a  Add Tanimoto coeff to title in similarity search\n"
 " l# Maximum number of candidates. Default<4000>\n"
 " e  Exact match\n"
-" S\"filename\"  Structure spec in a file (rather than as SMARTS):\n\n"
+" S\"filename\"  Structure spec in a file:\n\n"
 ;
     };
 
@@ -454,6 +458,14 @@ have the same name as the datafile. Use the form:\n \
 
         //erase -s option in GeneralOptions since it will be rewritten
         pConv->RemoveOption("s",OBConversion::GENOPTIONS);
+        if(patternMol.Empty())
+        {
+          obErrorLog.ThrowError(__FUNCTION__, 
+            "Could not make a molecule from " + smarts.str()
+            + "\nThis needs to be valid SMILES when using fastsearch."
+            "You can use the more versatile SMARTS in a normal substructure search." , obError);
+            return false;
+        }
       }
     else
       {
