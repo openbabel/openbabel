@@ -234,6 +234,7 @@ string GetInChI(istream& is)
         }
         else
         {
+          is.unget(); //It may be the start of a real "InChI="
           result.erase();
           state = before_inchi;
         }

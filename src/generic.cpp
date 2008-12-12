@@ -425,27 +425,27 @@ namespace OpenBabel
               spacegroup == 2 )
 		  return OBUnitCell::Triclinic;
 	  
-	  else if ( spacegroup >= 3 ||
+	  else if ( spacegroup >= 3 &&
               spacegroup <= 15 )
 		  return OBUnitCell::Monoclinic;
 	  
-	  else if ( spacegroup >= 16 ||
+	  else if ( spacegroup >= 16 &&
               spacegroup <= 74 )
 		  return OBUnitCell::Orthorhombic;
 	  
-	  else if ( spacegroup >= 75 ||
+	  else if ( spacegroup >= 75 &&
               spacegroup <= 142 )
 		  return OBUnitCell::Tetragonal;
 	  
-	  else if ( spacegroup >= 143 ||
+	  else if ( spacegroup >= 143 &&
               spacegroup <= 167 )
 		  return OBUnitCell::Rhombohedral;
 	  
-	  else if ( spacegroup >= 168 ||
+	  else if ( spacegroup >= 168 &&
               spacegroup <= 194 )
 		  return OBUnitCell::Hexagonal;
 	  
-	  else if ( spacegroup >= 195 ||
+	  else if ( spacegroup >= 195 &&
               spacegroup <= 230 )
 		  return OBUnitCell::Cubic;
 

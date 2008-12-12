@@ -320,7 +320,7 @@ namespace OpenBabel
 
     vector<OBElement*>::iterator i;
     for (i = _element.begin();i != _element.end();++i)
-      if (!strncasecmp(sym,(*i)->GetSymbol(),2))
+      if (!strncasecmp(sym,(*i)->GetSymbol(),3))
         return((*i)->GetAtomicNum());
     if (strcasecmp(sym, "D") == 0)
       {

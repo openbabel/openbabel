@@ -10,13 +10,39 @@
 	Assembly Info, (3) Added Matt's signed key, (4) Updated install
 	instructions for IronPython usage
 
-2008-11-22  Geoff Hutchison  <ghutchis@Iridium.chem.pitt.edu>
+2008-11-22  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/Makefile.am: Update to fix PR#2022153 -- don't build
 	InChI format if --disable-inchi is picked.
 
 	* configure.in, *: Update for 2.2.1 version numbering and current
 	autotools bug fixes.
+
+2008-11-21  Geoff Hutchison  <babel@geoffhutchison.net>
+
+	* src/data.cpp (GetAtomicNum): Fix bug with patch supplied by
+	Wayne Volkmuth (PR#2289021). Crashes with 3-character element.
+
+	* include/openbabel/atom.h: Patch from Wayne Volkmuth to ensure
+	atomic numbers are unsigned (i.e., values above 127 are
+	OK). PR#2289628.
+
+	* src/formats/pdbformat.cpp: Patch from Francois-Xavier Coudert to
+	write CRYST1 records when unit cell data is present. PR#2023510.
+
+	* src/generic.cpp (OBUnitCell::GetLatticeType): Fix bug reported
+	(and patched) by Jonathan Coome.
+
+2008-11-05  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/formats/pqrformat.cpp: Apply patch from Mikael Lund to read in
+	partial charges and radii. The radii are added to the atoms as
+	OBPairData with attribute "Radius".
+
+2008-10-31  Chris Morley
+
+	* src/formats/getinchi.cpp: prevent failure when input contains
+	"InChI>InChI=...", which actually occurred in an SDF file.
 
 2008-10-22  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
