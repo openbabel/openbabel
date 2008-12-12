@@ -135,17 +135,36 @@ namespace OpenBabel
           continue;
         }
 
+        // crystal cells
+        if (EQn(buffer,"CRYST1",6)) {
+          float a, b, c, alpha, beta, gamma;
+          string group = "";
+          
+          sscanf (&(buffer[6]), "%9f%9f%9f%7f%7f%7f", &a, &b, &c,
+                  &alpha, &beta, &gamma);
+          buffer[66] = '\0';
+          group += &(buffer[55]);
+          Trim (group);
+          
+          OBUnitCell *pCell=new OBUnitCell;
+          pCell->SetOrigin(fileformatInput);
+          pCell->SetData(a,b,c,alpha,beta,gamma);
+          pCell->SetSpaceGroup(group);
+          pmol->SetData(pCell);
+          continue;
+        }
+        
         // another record type, add it as an OBPairData entry
         line = buffer;
         // if the file is valid, all lines should have more than 6 characters
         if (line.length() < 6)
-		  {
+          {
             stringstream errorMsg;
             errorMsg << "ERROR: not a valid PDB file" << endl;
             obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
             return false;
           }
-       key = line.substr(0,6); // the first 6 characters are the record name
+        key = line.substr(0,6); // the first 6 characters are the record name
         Trim(key);
         value = line.substr(6);
         
@@ -442,9 +461,9 @@ namespace OpenBabel
     int model_num = 0;
     if (!pConv->IsLast() || pConv->GetOutputIndex() > 1)
       { // More than one molecule record
-      model_num = pConv->GetOutputIndex(); // MODEL 1-based index
-      snprintf(buffer, BUFF_SIZE, "MODEL %8d", model_num);
-      ofs << buffer << endl;
+        model_num = pConv->GetOutputIndex(); // MODEL 1-based index
+        snprintf(buffer, BUFF_SIZE, "MODEL %8d", model_num);
+        ofs << buffer << endl;
       }
 
     if (strlen(mol.GetTitle()) > 0)
@@ -460,15 +479,15 @@ namespace OpenBabel
     // and Z value (supposed to be 1)
     if (pmol->HasData(OBGenericDataType::UnitCell))
       {
-	OBUnitCell *pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
+        OBUnitCell *pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
 	
-	snprintf(buffer, BUFF_SIZE,
-		 "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s 1",
-		 pUC->GetA(), pUC->GetB(), pUC->GetC(),
-		 pUC->GetAlpha(), pUC->GetBeta(), pUC->GetGamma(),
-		 pUC->GetSpaceGroup() ?
-		 pUC->GetSpaceGroup()->GetHMName().c_str() : "P1");
-	ofs << buffer << endl;
+        snprintf(buffer, BUFF_SIZE,
+                 "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s 1",
+                 pUC->GetA(), pUC->GetB(), pUC->GetC(),
+                 pUC->GetAlpha(), pUC->GetBeta(), pUC->GetGamma(),
+                 pUC->GetSpaceGroup() ?
+                 pUC->GetSpaceGroup()->GetHMName().c_str() : "P1");
+        ofs << buffer << endl;
       }
 
     // before we write any records, we should check to see if any coord < -1000
@@ -520,7 +539,7 @@ namespace OpenBabel
             het = res->IsHetAtom(atom);
             snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
             snprintf(type_name,5,"%s",(char*)res->GetAtomID(atom).c_str());
-	    the_chain = res->GetChain();
+            the_chain = res->GetChain();
 
             //two char. elements are on position 13 and 14 one char. start at 14
             if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
@@ -536,12 +555,12 @@ namespace OpenBabel
                 else
                   {
                     /*
-		    type_name[4] = type_name[3];
-                    type_name[3] = type_name[2];
-                    type_name[2] = type_name[1];
-                    type_name[1] = type_name[0];
-                    type_name[0] = type_name[4];
-		    */
+                      type_name[4] = type_name[3];
+                      type_name[3] = type_name[2];
+                      type_name[2] = type_name[1];
+                      type_name[1] = type_name[0];
+                      type_name[0] = type_name[4];
+                    */
                     type_name[4] = '\0';
                   }
               }
@@ -562,7 +581,7 @@ namespace OpenBabel
                  i,
                  type_name,
                  the_res,
-		 the_chain,
+                 the_chain,
                  res_num,
                  atom->GetX(),
                  atom->GetY(),

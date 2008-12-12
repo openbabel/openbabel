@@ -39,6 +39,8 @@ bool OpTransform::Initialize()
   _dataLoaded=true;
   _transforms.clear();
   ifstream ifs;
+  if(ifs.is_open())
+    ifs.close();
   char charBuffer[BUFF_SIZE];
 
   // Set the locale for number parsing to avoid locale issues: PR#1785463
@@ -81,20 +83,24 @@ void OpTransform::ParseLine(const char *buffer)
 
   if (EQn(buffer,"TRANSFORM",7))
   {
-    tokenize(vs,buffer);
+    //Split into TRANSFORM reactantSMARTS ProductSMARTS
+    tokenize(vs, buffer, " >\t\n");
     OBChemTsfm tr;
-    if (vs.empty() || vs.size() < 4 || vs[1].empty() || vs[3].empty())
+    if (vs.empty() || vs.size() < 3 || vs[1].empty() || vs[2].empty())
     {
       string mes("Could not parse line:\n");
       obErrorLog.ThrowError(__FUNCTION__, mes + buffer, obWarning);
     }
-    if(!tr.Init(vs[1],vs[3]))
-    {
-      string mes("Could not make valid transform from the line:\n");
-      obErrorLog.ThrowError(__FUNCTION__, mes + buffer, obWarning);
-    }
     else
-      _transforms.push_back(tr);
+    {
+      if(!tr.Init(vs[1],vs[2]))
+      {
+        string mes("Could not make valid transform from the line:\n");
+        obErrorLog.ThrowError(__FUNCTION__, mes + buffer, obWarning);
+      }
+      else
+        _transforms.push_back(tr);
+    }
   }
 }
 bool OpTransform::Do(OBBase* pOb, OpMap*, const char*)

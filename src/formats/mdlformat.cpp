@@ -231,12 +231,20 @@ public:
         int charge, scanArgs, stereo;
 
         for (i = 0;i < natoms;i++) {
-          if (!ifs.getline(buffer,BUFF_SIZE))
+          if (!ifs.getline(buffer,BUFF_SIZE)) {
+	    errorMsg << "WARNING: Problems reading a MDL file\n";
+	    errorMsg << "Not enough atoms to match atom count (" << natoms << ") in counts line\n";
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
             return(false);
+	  }
 
           scanArgs = sscanf(buffer,"%lf %lf %lf %5s %*d %d %d",&x,&y,&z,type,&charge, &stereo);
-          if (scanArgs <4)
+          if (scanArgs <4) {
+	    errorMsg << "WARNING: Problems reading a MDL file\n";
+	    errorMsg << "Missing data following atom specification in atom block\n";
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
             return(false);
+	  }
           v.SetX(x);v.SetY(y);v.SetZ(z);
           atom.SetVector(x, y, z);
           int iso=0;
@@ -289,15 +297,26 @@ public:
         unsigned int start,end,order,flag;
         for (i = 0;i < nbonds;i++) {
           flag = 0;
-          if (!ifs.getline(buffer,BUFF_SIZE))
+          if (!ifs.getline(buffer,BUFF_SIZE)) {
+	    errorMsg << "WARNING: Problems reading a MDL file\n";
+	    errorMsg << "Not enough bonds to match bond count (" << nbonds << ") in counts line\n";
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
             return(false);
+	  }
           r1 = buffer;
-          start = atoi((r1.substr(0,3)).c_str());
-          end = atoi((r1.substr(3,3)).c_str());
-          order = atoi((r1.substr(6,3)).c_str());
+	  start = end = order = 0;
+	  if (r1.size() >= 9) {
+	    start = atoi((r1.substr(0,3)).c_str());
+	    end = atoi((r1.substr(3,3)).c_str());
+	    order = atoi((r1.substr(6,3)).c_str());
+	  }
           if (start == 0 || end == 0 || order == 0 ||
-              start > mol.NumAtoms() || end > mol.NumAtoms())
+              start > mol.NumAtoms() || end > mol.NumAtoms()) {
+	    errorMsg << "WARNING: Problems reading a MDL file\n";
+	    errorMsg << "Invalid bond specification, atom numbers or bond order are wrong.\n";
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
             return false;
+	  }
 
           order = (order == 4) ? 5 : order;
           if (r1.size() >= 12) {  //handle wedge/hash data
@@ -308,7 +327,12 @@ public:
             }
           }
 
-          if (!mol.AddBond(start+offset,end+offset,order,flag)) return(false);
+          if (!mol.AddBond(start+offset,end+offset,order,flag)) {
+	    errorMsg << "WARNING: Problems reading a MDL file\n";
+	    errorMsg << "Invalid bond specification\n";
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	    return(false);
+	  }
 
           // after adding a bond to atom # "start+offset"
           // search to see if atom is bonded to a chiral atom
@@ -366,7 +390,9 @@ public:
             if(strncmp(buffer,"M  CHG",6) && strncmp(buffer,"M  RAD",6) && strncmp(buffer,"M  ISO",6))
               continue;
             r1 = buffer;
-            int n = atoi((r1.substr(6,3)).c_str()); //entries on this line
+            int n = -1;
+	    if (r1.size() >= 9)
+	      n = atoi((r1.substr(6,3)).c_str()); //entries on this line
             if(n<=0 || n>8 || 6+n*8>r1.size()) //catch ill-formed line
             {
               obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + r1, obError);

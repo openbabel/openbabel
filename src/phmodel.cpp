@@ -288,7 +288,7 @@ bool OBChemTsfm::Init(string &bgn,string &end)
     }
 
     //make sure there is some kind of transform to do here
-    if (_vadel.empty() && _vchrg.empty() && _vbond.empty())
+    if (_vadel.empty() && _vchrg.empty() && _vbond.empty() && _vele.empty())
         return(false);
 
     return(true);

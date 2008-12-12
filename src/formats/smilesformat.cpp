@@ -53,9 +53,14 @@ namespace OpenBabel {
       if(n==0) return 1; //already points after current line
       string temp;
       istream& ifs = *pConv->GetInStream();
-      int i;
-      for(i=0;i<n && ifs.good();i++)
-        getline(ifs, temp);
+
+      int i=0;
+      while(i<n && ifs.good())
+        {
+          if(!isNotSmiles(ifs.peek()))
+            i++;
+          ifs.ignore(numeric_limits<streamsize>::max(),'\n');
+        }
       return ifs.good() ? 1 : -1; 
     }
 
@@ -78,6 +83,7 @@ namespace OpenBabel {
       OBConversion::RegisterOptionParam("r", this);
       OBConversion::RegisterOptionParam("a", this);
       OBConversion::RegisterOptionParam("h", this);
+      OBConversion::RegisterOptionParam("x", this);
     }
     virtual const char* Description()
     {
@@ -93,6 +99,7 @@ namespace OpenBabel {
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
         "  t  Molecule name only\n"
+        "  x  append X/Y coordinates in canonical-SMILES order\n"
         "\n";
     }
 
@@ -1618,9 +1625,7 @@ namespace OpenBabel {
               }
           }
         mol.UnsetAromaticPerceived();
-        
         mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
-        
         if(chiralWatch) // if chiral atom need to add its previous into atom4ref
           {
             if (_mapcd[atom] == NULL)
@@ -2052,7 +2057,7 @@ namespace OpenBabel {
                                 vector<unsigned int> &canonical_order,
                                 OBCanSmiNode *node);
     void         CorrectAromaticAmineCharge(OBMol&);
-    void         CreateFragCansmiString(OBMol&, OBBitVec&, char *);
+    void         CreateFragCansmiString(OBMol&, OBBitVec&, bool, char *);
     bool         GetChiralStereo(OBCanSmiNode*,
                                  vector<OBAtom*>&chiral_neighbors,
                                  vector<unsigned int> &symmetry_classes,
@@ -2060,7 +2065,8 @@ namespace OpenBabel {
     bool         GetSmilesElement(OBCanSmiNode*,
                                   vector<OBAtom*>&chiral_neighbors,
                                   vector<unsigned int> &symmetry_classes,
-                                  char*);
+                                  char*,
+                                  bool isomeric);
     int          GetSmilesValence(OBAtom *atom);
     int          GetUnusedIndex();
     vector<OBBondClosureInfo>
@@ -2073,7 +2079,8 @@ namespace OpenBabel {
                                    char *buffer,
                                    OBBitVec &frag_atoms,
                                    vector<unsigned int> &symmetry_classes,
-                                   vector<unsigned int> &canonical_order);
+                                   vector<unsigned int> &canonical_order,
+                                   bool isomeric);
 
     std::string &GetOutputOrder()
     {
@@ -2315,11 +2322,13 @@ namespace OpenBabel {
   bool OBMol2Cansmi::GetSmilesElement(OBCanSmiNode *node,
                                       vector<OBAtom*>&chiral_neighbors,
                                       vector<unsigned int> &symmetry_classes,
-                                      char *buffer)
+                                      char *buffer,
+                                      bool isomeric)
   {
     char symbol[10];
     bool bracketElement = false;
     bool normalValence = true;
+    bool writeExplicitHydrogen = false;
 
     OBAtom *atom = node->GetAtom();
 
@@ -2352,7 +2361,7 @@ namespace OpenBabel {
     if (atom->GetFormalCharge() != 0) //bracket charged elements
       bracketElement = true;
 
-    if(atom->GetIsotope())
+    if(isomeric && atom->GetIsotope())
       bracketElement = true;
 
     //If the molecule has Atom Class data and -xa option set and atom has data
@@ -2375,8 +2384,10 @@ namespace OpenBabel {
     }
 
     //Output as [CH3][CH3] rather than CC if -xh option has been specified
-    if(_pconv->IsOption("h")!=NULL)
+    if (!bracketElement && _pconv && _pconv->IsOption("h") && atom->ExplicitHydrogenCount() > 0) {
       bracketElement = true;
+      writeExplicitHydrogen = true;
+    }
 
     if (!bracketElement) {
 
@@ -2436,7 +2447,7 @@ namespace OpenBabel {
     // Bracketed atoms, e.g. [Pb], [OH-], [C@]
 
     strcpy(buffer, "[");
-    if (atom->GetIsotope()) {
+    if (isomeric && atom->GetIsotope()) {
       char iso[4];
       sprintf(iso,"%d",atom->GetIsotope());
       strcat(buffer,iso);
@@ -2454,9 +2465,17 @@ namespace OpenBabel {
     if (stereo[0] != '\0')
       strcat(buffer, stereo);
 
-    // Add extra hydrogens
+    // Add extra hydrogens.  If this is a bracket-atom *only* because the
+    // "-xh" option was specified, then we're writing a SMARTS, so we
+    // write the explicit hydrogen atom count only.  Otherwise we write
+    // the proper total number of hydrogens.
     if (!atom->IsHydrogen()) {      
-      int hcount = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount();
+      int hcount;
+      if (writeExplicitHydrogen) 
+        hcount = atom->ExplicitHydrogenCount();
+      else
+        // if "isomeric", doesn't count isotopic H
+        hcount = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(isomeric);
       if (hcount != 0) {
         strcat(buffer,"H");
         if (hcount > 1) {
@@ -2654,7 +2673,6 @@ namespace OpenBabel {
                                      vector<unsigned int> &symmetry_classes,
                                      char *stereo)
   {
-    bool is2D=false;
     double torsion;
     OBAtom *atom = node->GetAtom();
     OBMol *mol = (OBMol*) atom->GetParent();
@@ -2752,7 +2770,7 @@ namespace OpenBabel {
     vector<OBAtom *>::iterator ai;
     OBBond *bond;
     OBCanSmiNode *next;
-    int idx;//, canorder;
+    int idx;
 
     atom = node->GetAtom();
 
@@ -2770,9 +2788,11 @@ namespace OpenBabel {
     for (nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
 
       idx = nbr->GetIdx();
-      if (   (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr))
-             || _uatoms[idx]
-             || !frag_atoms.BitIsOn(idx))
+      if (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr)) {
+        _uatoms.SetBitOn(nbr->GetIdx());        // mark suppressed hydrogen, so it won't be considered
+        continue;                               // later when looking for more fragments.
+      }
+      if (_uatoms[idx] || !frag_atoms.BitIsOn(idx))
         continue;
 
       OBBond *nbr_bond = atom->GetBond(nbr);
@@ -2826,7 +2846,7 @@ namespace OpenBabel {
    *       the form of a vector of digit/OBBond* pair.  Some of the digits may
    *       be for newly-opened rings (the matching digit occurs later in the
    *       SMILES string), and some may be for closing rings (the matching
-   *       digit occurred earlier in the string).
+   *       digit occured earlier in the string).
    *
    *       Canonicalization requires that atoms with more than one digit
    *       have the digits assigned in a canonical fashion.  For example,
@@ -2904,7 +2924,7 @@ namespace OpenBabel {
       bond1 = *bi;
       _ubonds.SetBitOn(bond1->GetIdx());
       int digit = GetUnusedIndex();
-      int bo = (bond1->IsAromatic())? 1 : bond1->GetBO();
+      int bo = (bond1->IsAromatic())? 1 : bond1->GetBO();  // CJ: why was this line added?  bo is never used?
       _vopen.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
       vp_closures.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
     }
@@ -2977,6 +2997,9 @@ namespace OpenBabel {
     if (atom->IsHydrogen())
       return atom->GetValence();
 
+    if (_pconv && _pconv->IsOption("h"))
+      return atom->GetValence();
+
     FOR_NBORS_OF_ATOM(nbr, atom) {
       if (  !nbr->IsHydrogen()
             || nbr->GetIsotope() != 0
@@ -3011,7 +3034,8 @@ namespace OpenBabel {
                                        char *buffer,
                                        OBBitVec &frag_atoms,
                                        vector<unsigned int> &symmetry_classes,
-                                       vector<unsigned int> &canonical_order)
+                                       vector<unsigned int> &canonical_order,
+                                       bool isomeric)
   {
     OBAtom *atom = node->GetAtom();
     vector<OBAtom *> chiral_neighbors;
@@ -3076,7 +3100,7 @@ namespace OpenBabel {
     }
 
     // Write the current atom to the string
-    GetSmilesElement(node, chiral_neighbors, symmetry_classes, buffer+strlen(buffer));
+    GetSmilesElement(node, chiral_neighbors, symmetry_classes, buffer+strlen(buffer), isomeric);
 
     _atmorder.push_back(atom->GetIdx());  //store the atom ordering
 
@@ -3107,8 +3131,6 @@ namespace OpenBabel {
     OBBond *bond;
     for (int i = 0;i < node->Size();i++) {
       bond = node->GetChildBond(i);
-      int up   = bond->IsUp();
-      int down = bond->IsDown();
       if (i+1 < node->Size()) {
         strcat(buffer,"(");
       }
@@ -3123,32 +3145,32 @@ namespace OpenBabel {
       else if (bond->GetBO() == 3)
         strcat(buffer,"#");
 
-      ToCansmilesString(node->GetChildNode(i),buffer, frag_atoms, symmetry_classes, canonical_order);
+      ToCansmilesString(node->GetChildNode(i),buffer, frag_atoms, symmetry_classes, canonical_order, isomeric);
       if (i+1 < node->Size()) strcat(buffer,")");
     }
   }
 
-	/****************************************************************************
+  /****************************************************************************
    * FUNCTION: StandardLabels
    * 
    * DESCRIPTION:
    *        Creates a set of non-canonical labels for the fragment atoms
    * ***************************************************************************/
-	void StandardLabels(OBMol *pMol, OBBitVec &frag_atoms, 
+  void StandardLabels(OBMol *pMol, OBBitVec &frag_atoms, 
                       vector<unsigned int> &symmetry_classes,
                       vector<unsigned int> &labels)
-	{		
-		FOR_ATOMS_OF_MOL(atom, *pMol) {
-			if (frag_atoms.BitIsOn(atom->GetIdx())) {
-				labels.push_back(atom->GetIdx() - 1);
-				symmetry_classes.push_back(atom->GetIdx() - 1);
+  {		
+    FOR_ATOMS_OF_MOL(atom, *pMol) {
+      if (frag_atoms.BitIsOn(atom->GetIdx())) {
+        labels.push_back(atom->GetIdx() - 1);
+        symmetry_classes.push_back(atom->GetIdx() - 1);
       }
       else{
-				labels.push_back(2147483647); //to match situation when canonical ordering. Just a big number?
-				symmetry_classes.push_back(2147483647);
-	    }
-		}
-	}
+        labels.push_back(2147483647); //to match situation when canonical ordering. Just a big number?
+        symmetry_classes.push_back(2147483647);
+      }
+    }
+  }
 
   /***************************************************************************
    * FUNCTION: CreateFragCansmiString
@@ -3161,7 +3183,7 @@ namespace OpenBabel {
    *       atoms and repeats the process.
    ***************************************************************************/
 
-  void OBMol2Cansmi::CreateFragCansmiString(OBMol &mol, OBBitVec &frag_atoms, char *buffer)
+  void OBMol2Cansmi::CreateFragCansmiString(OBMol &mol, OBBitVec &frag_atoms, bool isomeric, char *buffer)
   {
     OBAtom *atom;
     OBCanSmiNode *root;
@@ -3175,11 +3197,11 @@ namespace OpenBabel {
 
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
-		if (_canonicalOutput)
-   		CanonicalLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
-		else {
-			StandardLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
-		}
+    if (_canonicalOutput)
+      CanonicalLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+    else {
+      StandardLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+    }
 
     // OUTER LOOP: Handles dot-disconnected structures.  Finds the 
     // lowest unmarked canorder atom, and starts there to generate a SMILES.
@@ -3194,16 +3216,33 @@ namespace OpenBabel {
       root_atom = NULL;
       for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
         int idx = atom->GetIdx();
-        if (!atom->IsHydrogen()           // don't start with a hydrogen
-            && !_uatoms[idx]              // skip atoms already used (for fragments)
-            && frag_atoms.BitIsOn(idx)            // skip atoms not in this fragment
-            //&& !atom->IsChiral()                // don't use chiral atoms as root node
+        if (!atom->IsHydrogen()       // don't start with a hydrogen
+            && !_uatoms[idx]          // skip atoms already used (for fragments)
+            && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+            //&& !atom->IsChiral()    // don't use chiral atoms as root node
             && canonical_order[idx-1] < lowest_canorder) {
           root_atom = atom;
           lowest_canorder = canonical_order[idx-1];
         }
       }
-      if (lowest_canorder == 999999)
+
+      // If we didn't pick an atom, it is because the fragment is made
+      // entirely of hydrogen atoms (e.g. [H][H]).  Repeat the loop but
+      // allow hydrogens this time.
+      if (root_atom == NULL) {
+        for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
+          int idx = atom->GetIdx();
+          if (!_uatoms[idx]           // skip atoms already used (for fragments)
+              && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+              && canonical_order[idx-1] < lowest_canorder) {
+            root_atom = atom;
+            lowest_canorder = canonical_order[idx-1];
+          }
+        }
+      }
+
+      // No atom found?  We've done all fragments.
+      if (root_atom == NULL) 
         break;
 
       // Clear out closures in case structure is dot disconnected
@@ -3215,8 +3254,7 @@ namespace OpenBabel {
       root = new OBCanSmiNode (root_atom);
 
       BuildCanonTree(mol, frag_atoms, canonical_order, root);
-      // Find Closure bonds
-      ToCansmilesString(root, buffer, frag_atoms, symmetry_classes, canonical_order);
+      ToCansmilesString(root, buffer, frag_atoms, symmetry_classes, canonical_order, isomeric);
       delete root;
     }
 
@@ -3226,7 +3264,9 @@ namespace OpenBabel {
     if (_atmorder.size()) {
       stringstream temp;
       vector<int>::iterator can_iter = _atmorder.begin();
-      temp << (*can_iter++);
+      if (can_iter != _atmorder.end()) {
+        temp << (*can_iter++);
+      }
 
       for (; can_iter != _atmorder.end(); ++can_iter) {
         if (*can_iter <= mol.NumAtoms())
@@ -3367,7 +3407,6 @@ namespace OpenBabel {
 
           vector3 v;
           OBAtom *nbr;
-          //          OBBond *bond;
 
           FOR_BONDS_OF_ATOM(bond, atom) {
 
@@ -3425,8 +3464,8 @@ namespace OpenBabel {
     }
 
     // If the fragment includes ordinary hydrogens, get rid of them.
-    // They won't appear in the SMILES (unless they're attached to a chiral
-    // center) anyway.
+    // They won't appear in the SMILES anyway (unless they're attached to
+    // a chiral center, or it's something like [H][H]).
     FOR_ATOMS_OF_MOL(iatom, *pmol) {
       OBAtom *atom = &(*iatom);
       if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen() 
@@ -3435,7 +3474,7 @@ namespace OpenBabel {
       }
     }
 
-    m2s.CreateFragCansmiString(*pmol, frag_atoms, buffer);
+    m2s.CreateFragCansmiString(*pmol, frag_atoms, iso, buffer);
     if (iso) {
       pmol->Clear();
       delete pmol;
@@ -3484,21 +3523,50 @@ namespace OpenBabel {
       return(false);
     }
 
-    // We're outputting a full molecule
-    // so we pass a bitvec for all atoms
-    OBBitVec allbits(mol.NumAtoms());
-    FOR_ATOMS_OF_MOL(a, mol) {
-      allbits.SetBitOn(a->GetIdx());
+    // If there is data attached called "SMILES_Fragment", then it's
+    // an ascii OBBitVec, representing the atoms of a fragment.  The
+    // SMILES generated will only include these fragment atoms.
+
+    OBBitVec fragatoms(mol.NumAtoms());
+
+    OBPairData *dp = (OBPairData *) mol.GetData("SMILES_Fragment");
+    if (dp) {
+      fragatoms.FromString(dp->GetValue(), mol.NumAtoms());
+    }
+
+    // If no "SMILES_Fragment" data, fill the entire OBBitVec
+    // with 1's so that the SMILES will be for the whole molecule.
+    else {
+      FOR_ATOMS_OF_MOL(a, mol)
+        {
+          fragatoms.SetBitOn(a->GetIdx());
+        }
     }
 
     if (mol.NumAtoms() > 0) {
-      CreateCansmiString(mol, buffer, allbits, !pConv->IsOption("i"), pConv);
+      CreateCansmiString(mol, buffer, fragatoms, !pConv->IsOption("i"), pConv);
     }
 
     ofs << buffer;
     if(!pConv->IsOption("smilesonly")) {
+
       if(!pConv->IsOption("n"))
         ofs << '\t' <<  mol.GetTitle();
+
+      if (pConv->IsOption("x") && mol.HasData("Canonical Atom Order")) {
+        vector<string> vs;
+        string canorder = mol.GetData("Canonical Atom Order")->GetValue();
+        tokenize(vs, canorder);
+        ofs << '\t';
+        for (int i = 0; i < vs.size(); i++) {
+          int idx = atoi(vs[i].c_str());
+          OBAtom *atom = mol.GetAtom(idx);
+          if (i > 0)
+            ofs << ",";
+          ofs << atom->GetX() << "," << atom->GetY();
+        }
+      }
+
       if(!pConv->IsOption("nonewline"))
         ofs << endl;
     }
