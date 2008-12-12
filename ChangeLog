@@ -1,4 +1,10 @@
+2008-12-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+ 	* data/element.txt, data/atomtyp.txt: Minor changes. Allow boron
+	to have 4 bonds and adjust implicit valence for several elements.
+
 2008-12-02  Chris Morley
+
 	* src/tokenst.cpp, include/openbabel/tokenst.h: Add function
 	to ignore istream up to a specified string.
 	
@@ -11,7 +17,6 @@
 	fixes from Sergey Trepalin. Performs better, but still some
 	memory leaks.
 	
-
 2008-12-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp: Add support for reading CRYST1

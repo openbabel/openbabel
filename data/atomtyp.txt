@@ -53,6 +53,8 @@ INTHYB  [Te]            3  # sp3 hybridization Te
 #
 #IMPLICIT VALENCE RULES
 #
+IMPVAL  [#5]			3 # Generic boron
+
 IMPVAL	[#6^3]			4
 IMPVAL	[#6^2]			3
 IMPVAL	[#6^1]			2
@@ -60,11 +62,6 @@ IMPVAL  [#6^3-]			3
 IMPVAL  [#6^2-]			2
 IMPVAL  [#6^1-]			1 #CM for isocyanides
 IMPVAL  [c+]                    2
-
-IMPVAL [#8] 2
-IMPVAL [#8-] 1
-IMPVAL [#8+] 3
-IMPVAL [$([#8]=*)] 1
 
 IMPVAL	[N^3]			3
 IMPVAL	[N^3+]			4
@@ -86,9 +83,15 @@ IMPVAL	[n]			2
 IMPVAL	[n-]			2
 IMPVAL  [n+]			3
 
+IMPVAL [#8]                     2 # Generic O
+IMPVAL [#8-]                    1
+IMPVAL [#8+]                    3
+IMPVAL [$([#8]=*)]              1
+
 IMPVAL  [#9D0]		  1
 IMPVAL  [#9D0-]		  0 #[F-]
 
+IMPVAL  [#13]                   3 # generic Al
 IMPVAL  [#14]                   4 # regular sp3 Si
 
 IMPVAL	[#15D4]			4
@@ -110,13 +113,22 @@ IMPVAL  [$([#16D2](=O)-O)]	3 # e.g. O[S]=O
 
 IMPVAL  [#17D0]		  1
 IMPVAL  [#17D0-]	  0 #[Cl-]
+
+IMPVAL  [#31]                   3
+IMPVAL  [#32]                   4
+
+IMPVAL  [#33]                   3
+IMPVAL  [as]			3
+
+IMPVAL  [#34]                   2
+
 IMPVAL  [#35D0]		  1
 IMPVAL  [#35D0-]	  0 #[Br-]
+
+IMPVAL  [#52]                   2
 IMPVAL  [#53D0]		  1
 IMPVAL  [#53D0-]	  0 #[I-]
 
-IMPVAL  [#5]			3
-IMPVAL  [as]			3
 #
 #EXTERNAL TYPE RULES
 #
