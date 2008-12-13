@@ -1,7 +1,14 @@
+2008-12-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/outformat.cpp: New format to read files with
+	extensions .dat, .log, .out and try to guess the format based on
+	contents. Currently works with many GAMESS, Gaussian, MOPAC,
+	Q-Chem, Jaguar, and MPQC files.
+
 2008-12-13  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/formats/Makefile.am: Make build of pngformat.la dependent on
-	presence of zlib.h.
+	presence of zlib.h, fixes PR#2012669.
 
 2008-12-13  Noel O'Boyle  <baoilleach@gmail.com>
 	

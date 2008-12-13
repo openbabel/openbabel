@@ -55,6 +55,7 @@ set(formats
     msmsformat
     nwchemformat
     opendxformat
+    outformat
     pcmodelformat
     pdbformat
     pngformat

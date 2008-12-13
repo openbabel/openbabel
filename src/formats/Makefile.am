@@ -64,7 +64,8 @@ libformats_la_SOURCES = \
 	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmcifformat.cpp \
 	mmodformat.cpp mol2format.cpp molreport.cpp mopacformat.cpp \
 	moldenformat.cpp msmsformat.cpp \
-	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
+	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp outformat.cpp \
+	pcmodelformat.cpp \
 	pngformat.cpp atomrecord.cpp \
 	pdbformat.cpp povrayformat.cpp pqrformat.cpp qchemformat.cpp reportformat.cpp \
 	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
@@ -95,8 +96,8 @@ formats_LTLIBRARIES = \
 	jaguarformat.la mdlformat.la mmcifformat.la mmodformat.la \
 	mpdformat.la mol2format.la moldenformat.la molreportformat.la \
 	mopacformat.la msiformat.la msmsformat.la \
-	mpqcformat.la nwchemformat.la pcmodelformat.la \
-	pdbformat.la \
+	mpqcformat.la nwchemformat.la outformat.la \
+	pcmodelformat.la pdbformat.la \
 	povrayformat.la pqrformat.la opendxformat.la \
 	qchemformat.la reportformat.la \
 	shelxformat.la smilesformat.la thermoformat.la \
@@ -296,8 +297,11 @@ pqrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 opendxformat_la_SOURCES = opendxformat.cpp
 opendxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
+outformat_la_SOURCES = outformat.cpp
+outformat_la_LDFLAGS = -module -avoid-version -no-undefined  ../libopenbabel.la
+
 qchemformat_la_SOURCES = qchemformat.cpp 
-qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 pngformat_la_SOURCES = pngformat.cpp 
 pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
