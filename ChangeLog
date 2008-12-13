@@ -1,4 +1,9 @@
 2008-12-13  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/formats/Makefile.am: Make build of pngformat.la dependent on
+	presence of zlib.h.
+
+2008-12-13  Noel O'Boyle  <baoilleach@gmail.com>
 	
 	* scripts/Makefile.am,in, scripts/ruby/README: The Makefile should not
 	be trying to build the Ruby extensions (at least, none of the others

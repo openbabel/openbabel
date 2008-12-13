@@ -96,7 +96,7 @@ formats_LTLIBRARIES = \
 	mpdformat.la mol2format.la moldenformat.la molreportformat.la \
 	mopacformat.la msiformat.la msmsformat.la \
 	mpqcformat.la nwchemformat.la pcmodelformat.la \
-	pngformat.la pdbformat.la \
+	pdbformat.la \
 	povrayformat.la pqrformat.la opendxformat.la \
 	qchemformat.la reportformat.la \
 	shelxformat.la smilesformat.la thermoformat.la \
@@ -109,6 +109,9 @@ formats_LTLIBRARIES += chemdrawcdxformat.la chemkinformat.la \
 endif
 if BUILD_INCHI
 formats_LTLIBRARIES += inchiformat.la
+endif
+if BUILD_ZLIB
+formats_LTLIBRARIES += pngformat.la
 endif
 
 APIInterface_la_SOURCES = APIInterface.cpp
