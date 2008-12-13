@@ -1,3 +1,11 @@
+2008-12-13  Noel O'Boyle  <baoilleach@gmail.com>
+	
+	* scripts/Makefile.am,in, scripts/ruby/README: The Makefile should not
+	be trying to build the Ruby extensions (at least, none of the others
+	do). I've updated the README to	describe how to use the OpenBabel
+	build tree to build the extension, rather than relying on an
+	installed OpenBabel.
+
 2008-12-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/element.txt, data/atomtyp.txt: Minor changes. Allow boron

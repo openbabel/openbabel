@@ -14,28 +14,21 @@ This code was automatically generated with SWIG and provides access to almost al
 More details can also be found at the Open Babel website:
 <http://openbabel.sourceforge.net/wiki/Ruby/>
 
-INSTALLATION
+=== INSTALLATION ===
 
-To install this module globally, first install Open Babel. Then invoke the following commands:
-
-$ ruby extconf.rb
+To compile this module, run the following commands:
+$ ruby extconf.rb --with-openbabel-include=../../include --with-openbabel-lib=../../src/.libs
 $ make
-# make install
 
-To install this module locally in ~/tree, first install Open Babel. Then invoke the following commands:
+If you wish to install the module locally, set the environment variable DESTDIR to an appropriate location. To install the module, use the following command (as root, if installing globally):
 
-$ ruby extconf.rb 
-   (use the option --with-openbabel-dir=~/tree
-    if OpenBabel was installed locally)
-$ make
-$ export DESTDIR=~/tree
 $ make install
+
+=== USE ===
+
+If OpenBabel is installed locally, then set LD_LIBRARY_PATH to the directory containing libopenbabel.so. If the OpenBabel Ruby module is installed locally in $tree, then set RUBYLIB using a command similar to the following:
+
 $ export RUBYLIB=~/tree/usr/local/lib/site_ruby/1.8/i486-linux/
-
-
-USE
-
-If OpenBabel is installed locally, then set LD_LIBRARY_PATH to the directory containing libopenbabel.so.
 
 The module can be easily tested from irb (interactive ruby):
 
@@ -61,7 +54,7 @@ OpenBabel::OBResidueIndex::_7MG -> OpenBabel::OBResidueIndex::U7MG
 OpenBabel::OBResidueIndex::_5MU -> OpenBabel::OBResidueIndex::U5MU
 OpenBabel::OBResidueIndex::_5MC -> OpenBabel::OBResidueIndex::U5MC
 
-USING SWIG TO GENERATE THE WRAPPER C++ CODE
+=== USING SWIG TO GENERATE THE WRAPPER C++ CODE ===
 
 Given the "openbabel-ruby.i" interface file (contained in this directory's 
 parent directory), wrapper code can be generated with SWIG. From the directory
@@ -82,7 +75,7 @@ Open Babel makefiles. Make sure you run ./configure with the
 --enable-maintainer-mode flag when building Open Babel to enable rebuilding
 these scripting interfaces.
 
-COPYRIGHT AND LICENSE
+=== COPYRIGHT AND LICENSE ===
 
 Copyright (C) 2007 Geoffrey R. Hutchison  <babel@geoffhutchison.net> 
     and Richard L. Apodaca <rich_apodaca@yahoo.com>
