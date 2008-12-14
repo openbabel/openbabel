@@ -1,3 +1,14 @@
+2008-12-14  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* configure.in: Conditional compile of CSharp bindings (only for
+	enable-maintainer-mode) if mcs is found
+	* scripts/java/README: Small corrections
+	* scripts/Makefile.am: Compile the CSharp bindings into a .NET
+	assembly
+	* scripts/csharp/example.py, example.cs, README: Instructions for
+	compiling the CSharp bindings, as well as example C# and IronPython
+	programs to show its use
+
 2008-12-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/outformat.cpp: New format to read files with
