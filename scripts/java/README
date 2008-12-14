@@ -1,8 +1,9 @@
 Open Babel for Java
 -------------------
 
-This directory contains a set of SWIG-generated interface classes for
-using the Open Babel C++ library from Java.
+This directory contains a compiled Java jar file with SWIG-generated
+interface classes for using the Open Babel C++ library from Java or from any
+other language that runs on the JVM such as Jython or JRuby.
 
 The Open Babel wiki pages on Java give information on compiling and
 running Java programs with Open Babel:
@@ -32,12 +33,9 @@ $ LD_PRELOAD=$OB_LIBDIR/libopenbabel.so $JAVAHOME/bin/java OBTest
 
 *** Mac OS X Compilation
 
-% javac *.java
+As for Linux, but use the following instructions to compile the bindings. Also, replace LD_LIBRARY_PATH with DYLD_LIBRARY_PATH.
+
 % g++ -c -I/System/Library/Frameworks/JavaVM.framework/Headers \
 openbabel_java.cpp
 % g++ -dynamiclib -o libopenbabel.jnilib openbabel_java.o \
 -framework JavaVM -L/usr/local/lib -lopenbabel
-
-To run the OBTest program:
-% java OBTest
-

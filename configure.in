@@ -124,6 +124,7 @@ AC_PATH_PROG(PERL, perl)
 AC_PATH_PROG(PROVE, prove)
 AC_PATH_PROG(PYTHON, python)
 AC_PATH_PROG(RUBY, ruby)
+AC_PATH_PROG(CSHARP, mcs)
 
 dnl Conditionally build docs, scripts, etc.
 
@@ -181,6 +182,7 @@ fi
 AM_CONDITIONAL(BUILD_SCRIPTS, test "$SCRIPTING" = "yes")
 
 AM_CONDITIONAL(BUILD_RUBY, test x"$RUBY" != "x")
+AM_CONDITIONAL(BUILD_CSHARP, test x"$CSHARP" != "x")
 
 dnl libtool
 dnl You can set the shared library version in src/Makefile.am

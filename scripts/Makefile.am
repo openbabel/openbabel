@@ -58,9 +58,15 @@ java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 	(cd java; $(JAVA_HOME)/bin/jar cf openbabel.jar @classes.list)
 	(cd java; rm -rf org classes.list)
 
+if BUILD_CSHARP
 csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
-	$(SWIG) -small -O -csharp -naturalvar -templatereduce -c++ -o $@ \
+	$(SWIG) -small -O -csharp -templatereduce -c++ -o $@ \
+	-namespace OpenBabel -outdir csharp \
 	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
+	(cd csharp; mv example.cs example.tmp);
+	(cd csharp; mcs /optimize /target:library /out:OBDotNet.dll *.cs);
+	(cd csharp; rm *.cs; mv example.tmp example.cs);
+endif # BUILD_CSHARP
 
 if BUILD_RUBY
 BUILT_SOURCES += ruby/openbabel_ruby.cpp
