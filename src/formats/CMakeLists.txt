@@ -35,6 +35,7 @@ set(formats
     fingerprintformat
     freefracformat
     gamessformat
+    gamessukformat
     gaussformat
     gausscubeformat
     gausszmatformat
