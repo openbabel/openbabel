@@ -5,9 +5,9 @@ This directory contains OBDotNet.dll, a .NET assembly suitable for
 using the Open Babel C++ library from any .NET language (C#,
 IronPython, IronRuby and so on).
 
-The Open Babel wiki pages on CSharp give information on compiling and
-running Java programs with Open Babel:
-http://openbabel.sourceforge.net/wiki/CSharp
+The Open Babel wiki pages give information on using the .NET
+languages with OpenBabel:
+  http://openbabel.org/wiki/OBDotNet
 
 *** Linux Compilation
 
