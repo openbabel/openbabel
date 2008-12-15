@@ -64,6 +64,7 @@ CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
+CSHARP = @CSHARP@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
@@ -418,9 +419,13 @@ dist-hook:
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd java; $(JAVA_HOME)/bin/jar cf openbabel.jar @classes.list)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd java; rm -rf org classes.list)
 
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -csharp -naturalvar -templatereduce -c++ -o $@ \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
+@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
+@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -csharp -templatereduce -c++ -o $@ \
+@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	-namespace OpenBabel -outdir csharp \
+@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
+@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd csharp; mv example.cs example.tmp);
+@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd csharp; mcs /optimize /target:library /out:OBDotNet.dll *.cs);
+@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd csharp; rm *.cs; mv example.tmp example.cs);
 
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -ruby -naturalvar -autorename -c++ -o $@ \
