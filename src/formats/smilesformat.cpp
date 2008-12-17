@@ -25,6 +25,8 @@ GNU General Public License for more details.
 
 #include <openbabel/canon.h>
 
+#include <limits>
+
 using namespace std;
 
 namespace OpenBabel {
@@ -53,6 +55,8 @@ namespace OpenBabel {
       if(n==0) return 1; //already points after current line
       string temp;
       istream& ifs = *pConv->GetInStream();
+      if (ifs.eof())
+        return -1;
 
       int i=0;
       while(i<n && ifs.good())
@@ -61,7 +65,7 @@ namespace OpenBabel {
             i++;
           ifs.ignore(numeric_limits<streamsize>::max(),'\n');
         }
-      return ifs.good() ? 1 : -1; 
+      return ifs ? 1 : -1; 
     }
 
   private:
