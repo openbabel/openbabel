@@ -1,5 +1,10 @@
 2008-12-17  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* scripts/java/README, OBTest.java: More fixes to docs, and replaced
+	the test file with something more substantial.
+
+2008-12-17  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* scripts/openbabel-csharp.i: Added support for casting to different
 	data types, and added ignore for OBMol::SetData (use CloneData instead) 
 
