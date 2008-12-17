@@ -1,3 +1,8 @@
+2008-12-17  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-csharp.i: Added support for casting to different
+	data types, and added ignore for OBMol::SetData (use CloneData instead) 
+
 2008-12-15  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/csharp/README: Minor corrections

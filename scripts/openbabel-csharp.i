@@ -181,6 +181,9 @@ WRAP_ARRAY(double,double_array)
 #include <openbabel/alias.h>
 #include <openbabel/atomclass.h>
 
+#include <openbabel/kinetics.h>
+#include <openbabel/rotamer.h>
+
 %}
 
 %module VecMath
@@ -250,7 +253,38 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 %include <openbabel/math/transform3d.h>
 %include <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
+
 %include <openbabel/generic.h>
+%define CAST_GENERICDATA_TO(subclass)
+%extend OpenBabel::OBGenericData {
+    OpenBabel::OB ## subclass *To ## subclass() {
+	    return (OpenBabel::OB ## subclass *) $self;
+    }
+};
+%enddef
+CAST_GENERICDATA_TO(AngleData)
+CAST_GENERICDATA_TO(AtomClassData)
+CAST_GENERICDATA_TO(ChiralData)
+CAST_GENERICDATA_TO(CommentData)
+CAST_GENERICDATA_TO(ConformerData)
+CAST_GENERICDATA_TO(ExternalBondData)
+CAST_GENERICDATA_TO(GridData)
+CAST_GENERICDATA_TO(MatrixData)
+CAST_GENERICDATA_TO(NasaThermoData)
+CAST_GENERICDATA_TO(PairData)
+// CAST_GENERICDATA_TO(PairTemplate)
+CAST_GENERICDATA_TO(RateData)
+CAST_GENERICDATA_TO(RotamerList)
+CAST_GENERICDATA_TO(RotationData)
+CAST_GENERICDATA_TO(SerialNums)
+CAST_GENERICDATA_TO(SetData)
+CAST_GENERICDATA_TO(SymmetryData)
+CAST_GENERICDATA_TO(TorsionData)
+CAST_GENERICDATA_TO(UnitCell)
+CAST_GENERICDATA_TO(VectorData)
+CAST_GENERICDATA_TO(VibrationData)
+CAST_GENERICDATA_TO(VirtualBond)
+
 %include <openbabel/griddata.h> // Needs to come after generic.h
 
 %include <openbabel/chains.h>
@@ -266,6 +300,7 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 %include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
+%ignore OpenBabel::OBMol::SetData;
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
@@ -294,6 +329,8 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 %ignore OBMolAtomIter(OBMol &);
 %ignore OBMolAtomBFSIter(OBMol &);
 %ignore OBMolAtomDFSIter(OBMol &);
+%ignore OBMolAtomBFSIter(OBMol &, int);
+%ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolBondIter(OBMol &);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);
