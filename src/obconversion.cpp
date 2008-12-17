@@ -37,6 +37,7 @@ GNU General Public License for more details.
 #include <string>
 #include <map>
 #include <locale>
+#include <limits>
 
 #include <stdlib.h>
 
