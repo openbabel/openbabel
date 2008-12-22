@@ -37,9 +37,12 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Output format\n"
-        "Read Gaussian, GAMESS, Q-Chem, MOPAC, etc. file.out"
-        "files by detecting contents\n\n";
+        "Generic Output file format\n"
+        "Read ADF, Gaussian, GAMESS, Q-Chem, MOPAC, etc. file.out"
+        "files by detecting contents\n"
+        "Read Options e.g. -as\n"
+        "   s  Output single bonds only\n"
+        "   b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -93,6 +96,14 @@ namespace OpenBabel
       } else if (strstr(buffer,"Welcome to Q-Chem") != NULL) {
         // Q-Chem output
         pFormat = pConv->FindFormat("qcout");
+        break;
+      } else if (strstr(buffer,"Amsterdam Density Functional") != NULL) {
+        // ADF output
+        pFormat = pConv->FindFormat("adfout");
+        break;
+      } else if (strstr(buffer,"Northwest Computational Chemistry") != NULL) {
+        // NWChem output
+        pFormat = pConv->FindFormat("nwo");
         break;
       } else if (strstr(buffer,"MPQC: Massively Parallel Quantum Chemistry") != NULL) {
         // MPQC output
