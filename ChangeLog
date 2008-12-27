@@ -1,3 +1,10 @@
+2008-12-27  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-python.i: (1) Accessing SetData now raises an
+	Exception pointing the user to CloneData instead, (2) Ignore some
+	new shadowed classes and methods, (3) Copy some global variables from
+	cvar into the main namespace
+
 2008-12-17  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/java/README, OBTest.java: More fixes to docs, and replaced

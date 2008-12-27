@@ -159,6 +159,9 @@ CAST_GENERICDATA_TO(VirtualBond)
 %import <openbabel/math/matrix3x3.h>
 
 %import <openbabel/math/spacegroup.h>
+
+# CloneData should be used instead of the following method
+%ignore OpenBabel::OBBase::SetData;
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h> // Needs to come after generic.h
@@ -176,7 +179,9 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
+
 %include <openbabel/mol.h>
+
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>
@@ -184,6 +189,10 @@ CAST_GENERICDATA_TO(VirtualBond)
 
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
+
+# Ignore shadowed methods
+%ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
+%ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 %include <openbabel/forcefield.h>
 
 %include <openbabel/op.h>
@@ -204,6 +213,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 %ignore OBMolAtomIter(OBMol &);
 %ignore OBMolAtomBFSIter(OBMol &);
 %ignore OBMolAtomDFSIter(OBMol &);
+%ignore OBMolAtomBFSIter(OBMol &, int);
+%ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolBondIter(OBMol &);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);
@@ -322,6 +333,17 @@ def double_array(mylist):
     return c
 %}
 
+# Copy some of the global variables in cvar into the openbabel namespace
+
+%pythoncode %{
+obErrorLog = cvar.obErrorLog
+ttab = cvar.ttab
+etab = cvar.etab
+isotab = cvar.isotab
+atomtyper = cvar.atomtyper
+aromtyper = cvar.aromtyper
+%}
+
 # Functions to set the log file to std::cout and std::cerr
        
 %ignore OBForceField::SetLogFile(std::ostream *pos);
@@ -335,6 +357,10 @@ def double_array(mylist):
   {
     self->SetLogFile(&std::cerr);
   }
-};    
+};
 
-
+%pythoncode %{
+def exception(*args):
+	raise Exception, "Use OBMol.CloneData instead. OBMol.SetData is only for use from C++."
+OBMol.SetData = exception
+%}
