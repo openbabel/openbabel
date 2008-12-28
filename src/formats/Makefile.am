@@ -305,6 +305,7 @@ qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 pngformat_la_SOURCES = pngformat.cpp 
 pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+pngformat_la_LIBADD = -lz
 
 reportformat_la_SOURCES = reportformat.cpp 
 reportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 

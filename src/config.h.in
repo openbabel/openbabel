@@ -55,9 +55,6 @@
 /* Define to 1 if you have the <fstream.h> header file. */
 #undef HAVE_FSTREAM_H
 
-/* Define to 1 if you have the <iconv.h> header file. */
-#undef HAVE_ICONV_H
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
@@ -147,9 +144,6 @@
 
 /* Define to 1 if you have the <xlocale.h> header file. */
 #undef HAVE_XLOCALE_H
-
-/* Define to 1 if you have the <zlib.h> header file. */
-#undef HAVE_ZLIB_H
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */

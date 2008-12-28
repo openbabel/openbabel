@@ -18583,7 +18583,6 @@ $as_echo "$as_me: error: either specify a valid zlib installation with --with-zl
 fi
 
 
-
 { $as_echo "$as_me:$LINENO: checking for inflateEnd in -lz" >&5
 $as_echo_n "checking for inflateEnd in -lz... " >&6; }
 if test "${ac_cv_lib_z_inflateEnd+set}" = set; then
@@ -18650,34 +18649,24 @@ fi
 { $as_echo "$as_me:$LINENO: result: $ac_cv_lib_z_inflateEnd" >&5
 $as_echo "$ac_cv_lib_z_inflateEnd" >&6; }
 if test "x$ac_cv_lib_z_inflateEnd" = x""yes; then
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBZ 1
-_ACEOF
-
-  LIBS="-lz $LIBS"
-
+  zlib_cv_libz=yes
+else
+  zlib_cv_libz=no
 fi
 
 
-
-
-for ac_header in zlib.h iconv.h
-do
-as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-  { $as_echo "$as_me:$LINENO: checking for $ac_header" >&5
-$as_echo_n "checking for $ac_header... " >&6; }
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+if test "${ac_cv_header_zlib_h+set}" = set; then
+  { $as_echo "$as_me:$LINENO: checking for zlib.h" >&5
+$as_echo_n "checking for zlib.h... " >&6; }
+if test "${ac_cv_header_zlib_h+set}" = set; then
   $as_echo_n "(cached) " >&6
 fi
-ac_res=`eval 'as_val=${'$as_ac_Header'}
-		 $as_echo "$as_val"'`
-	       { $as_echo "$as_me:$LINENO: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
+{ $as_echo "$as_me:$LINENO: result: $ac_cv_header_zlib_h" >&5
+$as_echo "$ac_cv_header_zlib_h" >&6; }
 else
   # Is the header compilable?
-{ $as_echo "$as_me:$LINENO: checking $ac_header usability" >&5
-$as_echo_n "checking $ac_header usability... " >&6; }
+{ $as_echo "$as_me:$LINENO: checking zlib.h usability" >&5
+$as_echo_n "checking zlib.h usability... " >&6; }
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -18685,7 +18674,7 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 $ac_includes_default
-#include <$ac_header>
+#include <zlib.h>
 _ACEOF
 rm -f conftest.$ac_objext
 if { (ac_try="$ac_compile"
@@ -18718,15 +18707,15 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 $as_echo "$ac_header_compiler" >&6; }
 
 # Is the header present?
-{ $as_echo "$as_me:$LINENO: checking $ac_header presence" >&5
-$as_echo_n "checking $ac_header presence... " >&6; }
+{ $as_echo "$as_me:$LINENO: checking zlib.h presence" >&5
+$as_echo_n "checking zlib.h presence... " >&6; }
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <$ac_header>
+#include <zlib.h>
 _ACEOF
 if { (ac_try="$ac_cpp conftest.$ac_ext"
 case "(($ac_try" in
@@ -18760,25 +18749,25 @@ $as_echo "$ac_header_preproc" >&6; }
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc:$ac_cxx_preproc_warn_flag in
   yes:no: )
-    { $as_echo "$as_me:$LINENO: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&5
-$as_echo "$as_me: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { $as_echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the compiler's result" >&5
-$as_echo "$as_me: WARNING: $ac_header: proceeding with the compiler's result" >&2;}
+    { $as_echo "$as_me:$LINENO: WARNING: zlib.h: accepted by the compiler, rejected by the preprocessor!" >&5
+$as_echo "$as_me: WARNING: zlib.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { $as_echo "$as_me:$LINENO: WARNING: zlib.h: proceeding with the compiler's result" >&5
+$as_echo "$as_me: WARNING: zlib.h: proceeding with the compiler's result" >&2;}
     ac_header_preproc=yes
     ;;
   no:yes:* )
-    { $as_echo "$as_me:$LINENO: WARNING: $ac_header: present but cannot be compiled" >&5
-$as_echo "$as_me: WARNING: $ac_header: present but cannot be compiled" >&2;}
-    { $as_echo "$as_me:$LINENO: WARNING: $ac_header:     check for missing prerequisite headers?" >&5
-$as_echo "$as_me: WARNING: $ac_header:     check for missing prerequisite headers?" >&2;}
-    { $as_echo "$as_me:$LINENO: WARNING: $ac_header: see the Autoconf documentation" >&5
-$as_echo "$as_me: WARNING: $ac_header: see the Autoconf documentation" >&2;}
-    { $as_echo "$as_me:$LINENO: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&5
-$as_echo "$as_me: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&2;}
-    { $as_echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the preprocessor's result" >&5
-$as_echo "$as_me: WARNING: $ac_header: proceeding with the preprocessor's result" >&2;}
-    { $as_echo "$as_me:$LINENO: WARNING: $ac_header: in the future, the compiler will take precedence" >&5
-$as_echo "$as_me: WARNING: $ac_header: in the future, the compiler will take precedence" >&2;}
+    { $as_echo "$as_me:$LINENO: WARNING: zlib.h: present but cannot be compiled" >&5
+$as_echo "$as_me: WARNING: zlib.h: present but cannot be compiled" >&2;}
+    { $as_echo "$as_me:$LINENO: WARNING: zlib.h:     check for missing prerequisite headers?" >&5
+$as_echo "$as_me: WARNING: zlib.h:     check for missing prerequisite headers?" >&2;}
+    { $as_echo "$as_me:$LINENO: WARNING: zlib.h: see the Autoconf documentation" >&5
+$as_echo "$as_me: WARNING: zlib.h: see the Autoconf documentation" >&2;}
+    { $as_echo "$as_me:$LINENO: WARNING: zlib.h:     section \"Present But Cannot Be Compiled\"" >&5
+$as_echo "$as_me: WARNING: zlib.h:     section \"Present But Cannot Be Compiled\"" >&2;}
+    { $as_echo "$as_me:$LINENO: WARNING: zlib.h: proceeding with the preprocessor's result" >&5
+$as_echo "$as_me: WARNING: zlib.h: proceeding with the preprocessor's result" >&2;}
+    { $as_echo "$as_me:$LINENO: WARNING: zlib.h: in the future, the compiler will take precedence" >&5
+$as_echo "$as_me: WARNING: zlib.h: in the future, the compiler will take precedence" >&2;}
     ( cat <<\_ASBOX
 ## ------------------------------------------------------ ##
 ## Report this to openbabel-discuss@lists.sourceforge.net ##
@@ -18787,29 +18776,23 @@ _ASBOX
      ) | sed "s/^/$as_me: WARNING:     /" >&2
     ;;
 esac
-{ $as_echo "$as_me:$LINENO: checking for $ac_header" >&5
-$as_echo_n "checking for $ac_header... " >&6; }
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+{ $as_echo "$as_me:$LINENO: checking for zlib.h" >&5
+$as_echo_n "checking for zlib.h... " >&6; }
+if test "${ac_cv_header_zlib_h+set}" = set; then
   $as_echo_n "(cached) " >&6
 else
-  eval "$as_ac_Header=\$ac_header_preproc"
+  ac_cv_header_zlib_h=$ac_header_preproc
 fi
-ac_res=`eval 'as_val=${'$as_ac_Header'}
-		 $as_echo "$as_val"'`
-	       { $as_echo "$as_me:$LINENO: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
+{ $as_echo "$as_me:$LINENO: result: $ac_cv_header_zlib_h" >&5
+$as_echo "$ac_cv_header_zlib_h" >&6; }
 
 fi
-as_val=`eval 'as_val=${'$as_ac_Header'}
-		 $as_echo "$as_val"'`
-   if test "x$as_val" = x""yes; then
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
+if test "x$ac_cv_header_zlib_h" = x""yes; then
+  zlib_cv_zlib_h=yes
+else
+  zlib_cv_zlib_h=no
 fi
 
-done
 
  if test "$zlib_cv_libz" = "yes" -a "$zlib_cv_zlib_h" = "yes"; then
   BUILD_ZLIB_TRUE=
@@ -22235,7 +22218,16 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
 
 
   case $ac_file$ac_mode in
-    "depfiles":C) test x"$AMDEP_TRUE" != x"" || for mf in $CONFIG_FILES; do
+    "depfiles":C) test x"$AMDEP_TRUE" != x"" || # Autoconf 2.62 quotes --file arguments for eval, but not when files
+# are listed without --file.  Let's play safe and only enable the eval
+# if we detect the quoting.
+case $CONFIG_FILES in
+*\'*) eval set x "$CONFIG_FILES" ;;
+*)   set x $CONFIG_FILES ;;
+esac
+shift
+for mf
+do
   # Strip MF so we end up with the name of the file.
   mf=`echo "$mf" | sed -e 's/:.*$//'`
   # Check whether this is an Automake generated Makefile or not.
