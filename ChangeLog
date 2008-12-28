@@ -1,3 +1,11 @@
+2008-12-28  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-java.i: Move to openbabel_java.so or .dll, rather
+	than openbabel.so or .dll (breaks Linux Java bindings temporarily) to
+	avoid clashes with other scripting language dlls
+	* windows-vc2005/OBJava/OBJava.vcproj: Move to openbabel_java.dll and
+	correct hard-coded path to Java include directories
+
 2008-12-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, src/formats/Makefile.am: Update checking for zlib

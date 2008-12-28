@@ -1,4 +1,4 @@
-%module openbabel
+%module openbabel_java
 
 %{
 // used to set import/export for Cygwin DLLs

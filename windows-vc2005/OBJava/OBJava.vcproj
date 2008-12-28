@@ -140,9 +140,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="openbabel.dll"
+				OutputFile="openbabel_java.dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="C:\Program Files\Java\jdk1.5.0_15\lib"
+				AdditionalLibraryDirectories="$(JAVA_HOME)\lib"
 				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
