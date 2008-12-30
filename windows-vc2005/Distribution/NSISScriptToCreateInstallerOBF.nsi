@@ -525,12 +525,17 @@ Section "Dummy Section" SecDummy
   File ..\libxml2.dll
   File ..\iconv.dll
   File ..\libinchi.dll
-  File ..\..\data\SMARTS_InteLigand.txt
-  File ..\..\data\Patterns.txt
-  File ..\..\data\psa.txt
-  File ..\..\data\mr.txt
-  File ..\..\data\logp.txt
+  File ..\..\data\aromatic.txt
+  File ..\..\data\atomtyp.txt
+  File ..\..\data\bondtyp.txt
+  File ..\..\data\element.txt
+  File ..\..\data\fragments.txt
   File ..\..\data\ghemical.prm
+  File ..\..\data\isotope.txt
+  File ..\..\data\isotope-small.txt
+  File ..\..\data\logp.txt
+  File ..\..\data\mmff94.ff
+  File ..\..\data\mmff94s.ff
   File ..\..\data\mmffang.par
   File ..\..\data\mmffbndk.par
   File ..\..\data\mmffbond.par
@@ -541,13 +546,22 @@ Section "Dummy Section" SecDummy
   File ..\..\data\mmffpbci.par
   File ..\..\data\mmffprop.par
   File ..\..\data\mmffstbn.par
+  File ..\..\data\mmffs_oop.par
+  File ..\..\data\mmffs_tor.par
   File ..\..\data\mmfftor.par
   File ..\..\data\mmffvdw.par
-  File ..\..\data\fragments.txt
+  File ..\..\data\mr.txt
+  File ..\..\data\Patterns.txt
+  File ..\..\data\phmodel.txt
   File ..\..\data\plugindefines.txt
+  File ..\..\data\psa.txt
+  File ..\..\data\resdata.txt
+  File ..\..\data\ringtyp.txt
+  File ..\..\data\SMARTS_InteLigand.txt
   File ..\..\data\space-groups.txt
   File ..\..\data\space-groups.xsl
-  File ..\..\data\ringtyp.txt
+  File ..\..\data\torlib.txt
+  File ..\..\data\types.txt
   File ..\..\data\UFF.prm
   File ..\babel.exe
   File ..\OBGUI.exe
@@ -582,6 +596,9 @@ Section "Dummy Section" SecDummy
   File ToolsPrograms.txt
   File ..\..\src\GUI\OpenBabelGUI.html
   File vcredist_x86.exe
+
+  File ..\OBJava\openbabel.jar
+  File ..\OBJava\openbabel_java.dll
   
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
@@ -627,17 +644,25 @@ Section "Uninstall"
 
   ;ADD YOUR OWN FILES HERE...
   Delete "$INSTDIR\150mols.smi"
+  Delete "$INSTDIR\aromatic.txt"
+  Delete "$INSTDIR\atomtyp.txt"
   Delete "$INSTDIR\babel.exe"
+  Delete "$INSTDIR\bondtyp.txt"
+  Delete "$INSTDIR\element.txt"
   Delete "$INSTDIR\FastSearch.obf"
   Delete "$INSTDIR\FourSmallMols.cml"
   Delete "$INSTDIR\fragments.txt"
   Delete "$INSTDIR\gen3D.obf"
   Delete "$INSTDIR\ghemical.prm"
   Delete "$INSTDIR\iconv.dll"
+  Delete "$INSTDIR\isotope.txt"
+  Delete "$INSTDIR\isotope-small.txt"
   Delete "$INSTDIR\libinchi.dll"
   Delete "$INSTDIR\libxml2.dll"
   Delete "$INSTDIR\License.txt"
   Delete "$INSTDIR\logp.txt"
+  Delete "$INSTDIR\mmff94.ff"
+  Delete "$INSTDIR\mmff94s.ff"
   Delete "$INSTDIR\mmffang.par"
   Delete "$INSTDIR\mmffbndk.par"
   Delete "$INSTDIR\mmffbond.par"
@@ -648,6 +673,8 @@ Section "Uninstall"
   Delete "$INSTDIR\mmffpbci.par"
   Delete "$INSTDIR\mmffprop.par"
   Delete "$INSTDIR\mmffstbn.par"
+  Delete "$INSTDIR\mmffs_oop.par"
+  Delete "$INSTDIR\mmffs_tor.par"
   Delete "$INSTDIR\mmfftor.par"
   Delete "$INSTDIR\mmffvdw.par"
   Delete "$INSTDIR\mr.txt"
@@ -678,16 +705,22 @@ Section "Uninstall"
   Delete "$INSTDIR\OBUtil.obf"
   Delete "$INSTDIR\OBXML.obf"
   Delete "$INSTDIR\OpenBabelGUI.html"
+  Delete "$INSTDIR\openbabel.jar"
+  Delete "$INSTDIR\openbabel_java.dll"
   Delete "$INSTDIR\oxamide.cml"
   Delete "$INSTDIR\patterns.txt"
+  Delete "$INSTDIR\phmodel.txt"
   Delete "$INSTDIR\plugindefines.txt"
   Delete "$INSTDIR\psa.txt"
+  Delete "$INSTDIR\resdata.txt"
   Delete "$INSTDIR\ringtyp.txt"
   Delete "$INSTDIR\serotonin.mol"
   Delete "$INSTDIR\SMARTS_InteLigand.txt"
   Delete "$INSTDIR\space-groups.txt"
   Delete "$INSTDIR\space-groups.xsl"
   Delete "$INSTDIR\ToolsPrograms.txt"
+  Delete "$INSTDIR\torlib.txt"
+  Delete "$INSTDIR\types.txt"
   Delete "$INSTDIR\UFF.prm"
   Delete "$INSTDIR\Uninstall.exe"
   Delete "$INSTDIR\vcredist_x86.exe"

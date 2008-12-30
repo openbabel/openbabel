@@ -1,5 +1,14 @@
 2008-12-30  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:
+	Updated to install the Java bindings as well as several missing data
+	files. Also removed the old NSIS script.
+	* windows-vc2005/Distribution/CheckInstallerScript.py: Double click
+	this Python script to perform some sanity checks of the files
+	installed and uninstalled by the NSIS script installer
+
+2008-12-30  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* scripts/java/OBTest.java, README: Finish the move to using
 	openbabel_java.so, rather than openbabel.so
 
