@@ -19,7 +19,7 @@ $ export OB_LIBDIR=/home/noel/tree/lib # The install location of libopenbabel.so
   Next, compile the Java bindings:
 $ cd $OB_JAVADIR
 $ g++ -c -fpic openbabel_java.cpp -I../../include -I$JAVA_HOME/include -I$JAVA_HOME/include/linux
-$ g++ -shared openbabel_java.o -L../../src/.libs -lopenbabel -o libopenbabel.so
+$ g++ -shared openbabel_java.o -L../../src/.libs -lopenbabel -o libopenbabel_java.so
 
   Compile and run the test program:
 $ export CLASSPATH=.:$OB_JAVADIR/openbabel.jar

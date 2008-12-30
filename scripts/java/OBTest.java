@@ -4,7 +4,7 @@ public class OBTest
 {
  public OBTest()
  {
-   System.loadLibrary("openbabel");
+   System.loadLibrary("openbabel_java");
  }
 
  public void run()

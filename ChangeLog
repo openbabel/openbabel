@@ -1,3 +1,8 @@
+2008-12-30  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/java/OBTest.java, README: Finish the move to using
+	openbabel_java.so, rather than openbabel.so
+
 2008-12-28  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-java.i: Move to openbabel_java.so or .dll, rather
