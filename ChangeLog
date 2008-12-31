@@ -1,3 +1,11 @@
+2008-12-31  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/setup.py: Bump to 1.4
+	* windows-vc2005/setenv.txt, windows-vc2005/OBPythonOBF/obpython.bat,
+	setup.py, openbabel_postinstall.py (deleted), OBPythonOBF.vcproj: Bump
+	to 1.4, make separate configurations for different Python versions,
+	only install the .pyd and .py files
+
 2008-12-30  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:

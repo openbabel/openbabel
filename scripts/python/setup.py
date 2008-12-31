@@ -68,7 +68,7 @@ obExtension = Extension('_openbabel',
                         )
 
 setup(name='openbabel',
-      version='1.3',
+      version='1.4',
       author='Noel O\'Boyle',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/',

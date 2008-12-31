@@ -15,28 +15,13 @@ or related areas.
 shutil.copy("../../scripts/python/pybel.py", ".")
 
 setup(name='openbabel-python',
-      version='1.3',
+      version='1.4',
       author='The Open Babel development team',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/wiki/Python',
       license='http://www.gnu.org/copyleft/gpl.html',
-      scripts=["openbabel_postinstall.py"],
       py_modules=['openbabel', 'pybel'],
-      # libinchi.dll is required but will be supplied by the OBGui
-      data_files=[('Lib/site-packages',
-                   ['_openbabel.pyd', '../OBConv.dll',
-                    '../libxml2.dll', '../OBDLL.dll',
-                    '../zlib1.dll', '../OBFPRT.obf',
-                    '../OBDESC.obf', '../obcommon.obf',
-                    '../OBMore.obf', '../OBXML.obf',
-                    '../OBUtil.obf', '../OBInchi.obf',
-                    '../OBMCDL.obf', '../gen3D.obf',
-                    '../oberror.dll']),
-                  ('Lib/site-packages/openbabel_data',
-                   glob.glob("../../data/*.txt") +
-                   glob.glob("../../data/*.par") +
-                   glob.glob("../../data/*.ff"))
-                 ],
+      data_files=[('Lib/site-packages', ['_openbabel.pyd'])],
       description = 'openbabel: Python interface to the Open Babel chemistry library',
       classifiers=[
       'Development Status :: 5 - Production/Stable',
