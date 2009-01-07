@@ -32,6 +32,29 @@
 	* src/formats/pdbformat.cpp: Add support for reading CRYST1
 	records, contributed by Francois-Xavier Coudert. PR#2343128.
 
+2008-11-24  Craig James <cjames@emolecules.com>
+
+	* src/canon.cpp: Trivial change: updated a couple of incomplete
+	comments.
+
+	* src/formats/mdlformat.cpp: Added informative error messages for
+	several errors, such as not enough atoms in atom block, not enough
+	bonds in bond block, invalid bond spec, etc.  These errors were
+	detected before, but failed silently.
+
+	* src/formats/smilesformat.cpp: Added several features.  New "x"
+	option causes the X/Y coordinates to be appended to a canonical
+	SMILES output, in canonical order.  Added the ability to create a
+	canonical SMILES of a fragment (this was in the original
+	cansmilesformat.cpp, but didn't make it into smilesformat.cpp).
+	Added the "h" option that prints explicit hydrogens as [H] even if
+	they aren't normally part of a canonical SMILES.  Made the "i"
+	option (print chirality/isotopes in canonical SMILES) work
+	correctly; it was being ignored.  Took out a few obsolete
+	statements here and there that were useless (computed values that
+	were never used).  Fixed a bug that could cause a crash if a
+	molecule consisted entirely of hydrogen atoms.
+
 2008-11-22  Chris Morley
 
 	* src/mcdlutil.cpp: Small bug fixes from Sergei Trepalin
