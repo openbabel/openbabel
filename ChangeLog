@@ -9,6 +9,9 @@
 	* src/formats/outformat.cpp: Add comments about single bonds and
 	bond orders (which are followed by all QM output formats).
 
+	* src/formats/gamessformat.cpp: Add patch from Albert DeFusco for
+	GAMESS EFP fragments. PR#2484103.
+
 2008-12-31  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/python/setup.py: Bump to 1.4

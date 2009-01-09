@@ -37,6 +37,7 @@ namespace OpenBabel
     {
       OBConversion::RegisterFormat("gam",this);
       OBConversion::RegisterFormat("gamout",this);
+      OBConversion::RegisterFormat("gamess",this);
     }
 
     virtual const char* Description() //required
@@ -252,7 +253,49 @@ namespace OpenBabel
                   break;
                 tokenize(vs,buffer);
               }
-          }
+	  }
+	else if(strstr(buffer,"MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != NULL)
+	    {
+		    /*This set of EFP coordinates belongs only to the
+		     * conformer directly above this (ATOMIC   COORDINATES (BOHR))
+		     */
+		    ifs.getline(buffer,BUFF_SIZE);      // column headings
+		    ifs.getline(buffer,BUFF_SIZE);
+		    ifs.getline(buffer,BUFF_SIZE);
+		    tokenize(vs,buffer);
+		    while(vs.size() == 6)
+		    {
+			    int atomicNum;
+			    /* For the included EFP1 potentials,
+			     * the atom name may start with "Z"
+			     * or have a non-zero nuclear charge
+			     */
+			    if (atof((char*)vs[5].c_str()) > 0.0) {
+			    	    atom = mol.NewAtom();
+				    atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str()); 
+			    atom->SetAtomicNum(atomicNum);
+			    x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
+			    y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
+			    z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
+			    atom->SetVector(x,y,z);
+
+			    }
+			    else if (vs[0].substr(0,1) == "Z") {
+				    atom = mol.NewAtom();
+				    atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
+			    atom->SetAtomicNum(atomicNum);
+			    x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
+			    y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
+			    z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
+			    atom->SetVector(x,y,z);
+
+			    }
+			    if (!ifs.getline(buffer,BUFF_SIZE))
+				    break;
+			    tokenize(vs,buffer);
+		    }
+	    }
+
         else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL)
           {
             mol.Clear();
@@ -276,6 +319,43 @@ namespace OpenBabel
                   break;
                 tokenize(vs,buffer);
               }
+	    if(strstr(buffer,"COORDINATES OF FRAGMENT") != NULL)
+	    {
+		    ifs.getline(buffer,BUFF_SIZE);      // column headings
+		    ifs.getline(buffer,BUFF_SIZE);
+		    ifs.getline(buffer,BUFF_SIZE);
+		    //ifs.getline(buffer,BUFF_SIZE);    //FRAGNAME
+		    tokenize(vs,buffer);
+		    //while(vs.size() == 4)
+		    while(vs.size() > 0) {
+			    if (vs.size() == 1) {
+			    	vector<string> vs2;
+			    	char delim[] = "=";
+			    	tokenize(vs2,buffer,delim);
+			    }
+			    else {
+			    	atom = mol.NewAtom();
+			    	/* For the included EFP1 potentials,
+			     	* the atom name may start with "Z"
+			     	*/
+			    	int atomicNum;
+			    	if ( vs[0].substr(0,1) == "Z" ) 
+				    	atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str()); 
+			    	else 
+				    	atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str()); 
+			    	atom->SetAtomicNum(atomicNum);
+			    	x = atof((char*)vs[1].c_str());
+			    	y = atof((char*)vs[2].c_str());
+			    	z = atof((char*)vs[3].c_str());
+			    	atom->SetVector(x,y,z);
+			    }
+			    
+
+			    if (!ifs.getline(buffer,BUFF_SIZE))
+				    break;
+			    tokenize(vs,buffer);
+		    }
+	    }
           }
         else if(strstr(buffer,"ELECTROSTATIC MOMENTS") != NULL)
           {
@@ -637,6 +717,35 @@ namespace OpenBabel
                   break;
               }
           }
+	if(strstr(buffer,"$EFRAG") != NULL)
+	{
+		while (strstr(buffer,"FRAGNAME") == NULL)
+		{
+			//read $EFRAG parameters
+			if(!ifs.getline(buffer,BUFF_SIZE))
+				break;
+		}
+		while(strstr(buffer,"$END") == NULL)
+		{
+			tokenize(vs,buffer);
+			if(vs.size() == 4)
+			{
+				atom = mol.NewAtom();
+				int atomicNum;
+				if( vs[0].substr(0,1) == "Z" || vs[0].substr(0,1) == "z" ) 
+					atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
+				else
+					  atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
+				atom->SetAtomicNum(atomicNum);
+				x = atof((char*)vs[1].c_str());
+				y = atof((char*)vs[2].c_str());
+				z = atof((char*)vs[3].c_str());
+				atom->SetVector(x,y,z);
+			}
+			if(!ifs.getline(buffer,BUFF_SIZE))
+				break;
+      		}
+	}
       }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
@@ -741,7 +850,7 @@ namespace OpenBabel
     //  OBAtom *atom;
     FOR_ATOMS_OF_MOL(atom, mol)
       {
-        snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %8.5f  %8.5f  %8.5f ",
+        snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %14.10f  %14.10f  %14.10f ",
                  etab.GetSymbol(atom->GetAtomicNum()),
                  atom->GetAtomicNum(),
                  atom->GetX(),
