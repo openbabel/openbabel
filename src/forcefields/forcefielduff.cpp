@@ -1072,6 +1072,31 @@ namespace OpenBabel {
         continue;
       }
 
+      if (b->GetValence() > 3) // no OOP for hypervalent atoms
+        continue;
+
+      // skip this oop if the atoms are ignored 
+      if ( _constraints.IsIgnored(a->GetIdx()) ||
+           _constraints.IsIgnored(b->GetIdx()) ||
+           _constraints.IsIgnored(c->GetIdx()) ||
+           _constraints.IsIgnored(d->GetIdx()) ) 
+        continue;
+
+      // if there are any groups specified, 
+      // check if the four oop atoms are in a single intraGroup
+      if (HasGroups()) {
+        bool validOOP = false;
+        for (unsigned int i=0; i < _intraGroup.size(); ++i) {
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) &&
+              _intraGroup[i].BitIsOn(b->GetIdx()) && 
+              _intraGroup[i].BitIsOn(c->GetIdx()) &&
+              _intraGroup[i].BitIsOn(d->GetIdx()))
+            validOOP = true;
+        }
+        if (!validOOP)
+          continue;
+      }
+
       a = NULL;
       c = NULL;
       d = NULL;
@@ -1120,24 +1145,7 @@ namespace OpenBabel {
 	  
       if ((a == NULL) || (c == NULL) || (d == NULL))
         continue;
- 
-      // skip this oop if the atoms are ignored 
-      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
-           _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
-        continue;
- 
-      // if there are any groups specified, check if the four oop atoms are in a single intraGroup
-      if (HasGroups()) {
-        bool validOOP = false;
-        for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
-              _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
-            validOOP = true;
-        }
-        if (!validOOP)
-          continue;
-      }
- 
+   
       if (EQn(b->GetType(), "C_2", 3) || EQn(b->GetType(), "C_R", 3)) {
         oopcalc.c0 = 1.0;
         oopcalc.c1 = -1.0;
