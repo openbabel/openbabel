@@ -35,8 +35,8 @@ using namespace std;
 // As well, the main UFF paper:
 // Rappe, A. K., et. al.; J. Am. Chem. Soc. (1992) 114(25) p. 10024-10035.
 
-namespace OpenBabel
-{
+namespace OpenBabel {
+
   template<bool gradients>
   void OBFFBondCalculationUFF::Compute()
   {
@@ -165,7 +165,6 @@ namespace OpenBabel
       default: // general (sp3) coordination
         dE = -ka * (c1*sinT + 2.0 * c2*sin(2.0 * theta));
       }
-      
       
       da *= dE; // da = dTheta/dx * dE/dTheta
       db *= dE; // da = dTheta/dx * dE/dTheta
@@ -593,7 +592,7 @@ namespace OpenBabel
     chiI = i->_dpar[8];
     chiJ = j->_dpar[8];
 
-    // precompute the equilibrium geometry
+    // Precompute the equilibrium bond distance
     // From equation 3
     rbo = -0.1332*(ri+rj)*log(bondorder);
     // From equation 4
@@ -603,24 +602,71 @@ namespace OpenBabel
     // There is a typo in the published paper
     return(ri + rj + rbo - ren);
   }
+  
+  bool OBForceFieldUFF::SetupVDWCalculation(OBAtom *a, OBAtom *b, OBFFVDWCalculationUFF &vdwcalc)
+  {
+    OBFFParameter *parameterA, *parameterB;
+    parameterA = GetParameterUFF(a->GetType(), _ffparams);
+    parameterB = GetParameterUFF(b->GetType(), _ffparams);
+
+    if (parameterA == NULL || parameterB == NULL) { 
+      IF_OBFF_LOGLVL_LOW {
+        snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR VDW INTERACTION %d-%d (IDX)...\n", 
+            a->GetIdx(), b->GetIdx());
+        OBFFLog(_logbuf);
+      }
+      return false;
+    }
+
+    vdwcalc.Ra = parameterA->_dpar[2];
+    vdwcalc.ka = parameterA->_dpar[3];
+    vdwcalc.Rb = parameterB->_dpar[2];
+    vdwcalc.kb = parameterB->_dpar[3];
+
+    vdwcalc.a = &*a;
+    vdwcalc.b = &*b;
+   
+    //this calculations only need to be done once for each pair, 
+    //we do them now and save them for later use
+    vdwcalc.kab = KCAL_TO_KJ * sqrt(vdwcalc.ka * vdwcalc.kb);
+    
+    // 1-4 scaling
+    // This isn't mentioned in the UFF paper, but is common for other methods
+    //       if (a->IsOneFour(b))
+    //         vdwcalc.kab *= 0.5;
+
+    // ka now represents the xij in equation 20 -- the expected vdw distance
+    vdwcalc.ka = sqrt(vdwcalc.Ra * vdwcalc.Rb);
+    
+    vdwcalc.SetupPointers();
+    return true;
+  }
 
   bool OBForceFieldUFF::SetupCalculations()
   {
     OBFFParameter *parameterA, *parameterB, *parameterC;
     OBAtom *a, *b, *c, *d;
+    double bondorder;
+    OBFFBondCalculationUFF bondcalc;
+    OBFFAngleCalculationUFF anglecalc;
+    OBFFTorsionCalculationUFF torsioncalc;
+    OBFFOOPCalculationUFF oopcalc;
+    OBFFVDWCalculationUFF vdwcalc;
     
     IF_OBFF_LOGLVL_LOW
       OBFFLog("\nS E T T I N G   U P   C A L C U L A T I O N S\n\n");
- 
+
+    // Clear previous calculations
+    _bondcalculations.clear();
+    _anglecalculations.clear();
+    _torsioncalculations.clear();
+    _oopcalculations.clear();
+    _vdwcalculations.clear();
+
     // 
     // Bond Calculations
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP BOND CALCULATIONS...\n");
-    
-    OBFFBondCalculationUFF bondcalc;
-    double bondorder;
-
-    _bondcalculations.clear();
     
     FOR_BONDS_OF_MOL(bond, _mol) {
       a = bond->GetBeginAtom();
@@ -640,29 +686,29 @@ namespace OpenBabel
         if (!validBond)
           continue;
       }
- 
+
       bondorder = bond->GetBondOrder(); 
       if (bond->IsAromatic())
         bondorder = 1.5;
       if (bond->IsAmide())
         bondorder = 1.41;
-      
+
       bondcalc.a = a;
       bondcalc.b = b;
       bondcalc.bt = bondorder;
 
       parameterA = GetParameterUFF(a->GetType(), _ffparams);
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
-			
+
       if (parameterA == NULL || parameterB == NULL) { 
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n", 
               a->GetIdx(), b->GetIdx());
           OBFFLog(_logbuf);
         }
-        return false;
+        continue;
       }
- 
+
       bondcalc.r0 = CalculateBondDistance(parameterA, parameterB, bondorder);
 
       // here we fold the 1/2 into the kij from equation 1a
@@ -680,21 +726,20 @@ namespace OpenBabel
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP ANGLE CALCULATIONS...\n");
- 
-    OBFFAngleCalculationUFF anglecalc;
- 
-    _anglecalculations.clear();
-    
+      
     double sinT0;
 		double rab, rbc, rac;
 		OBBond *bondPtr;
+    int coordination;
     FOR_ANGLES_OF_MOL(angle, _mol) {
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
       
       // skip this angle if the atoms are ignored 
-      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) || _constraints.IsIgnored(c->GetIdx()) ) 
+      if ( _constraints.IsIgnored(a->GetIdx()) 
+           || _constraints.IsIgnored(b->GetIdx()) 
+           || _constraints.IsIgnored(c->GetIdx()) ) 
         continue;
  
       // if there are any groups specified, check if the three angle atoms are in a single intraGroup
@@ -727,16 +772,107 @@ namespace OpenBabel
       }
  
 
-      anglecalc.coord = parameterB->_ipar[0]; // coordination of central atom
+      coordination = parameterB->_ipar[0]; // coordination of central atom
+      // Check to see if coordination is really correct
+      // if not (e.g., 5- or 7- or 8-coord...)
+      // then create approximate angle bending terms
+      if (b->GetValence() > 4) {
+        coordination = b->GetValence();
+      }
+      // Possible hypervalent compounds
+      int valenceElectrons = 0;
+      switch(b->GetAtomicNum())
+        {
+        case 15:
+        case 33:
+        case 51:
+        case 83:
+          // old "group 5": P, As, Sb, Bi
+          valenceElectrons = 5;
+          break;
+        case 16:
+        case 34:
+        case 52:
+        case 84:
+          // old "group 6": S, Se, Te, Po
+          valenceElectrons = 6;
+          break;
+        case 35:
+        case 53:
+        case 85:
+          // old "group 7": Br, I, At
+          valenceElectrons = 7;
+          break;
+        case 36:
+        case 54:
+        case 86:
+          // hypervalent noble gases (Kr, Xe, Rn)
+          valenceElectrons = 8;
+          break;
+        }
+      if (valenceElectrons) {
+        // calculate the number of lone pairs
+        // e.g. for IF3 => "T-shaped"
+        double lonePairs = (valenceElectrons - b->BOSum()) / 2.0;
+        int sites = (int)ceil(lonePairs); // we actually need to round up here -- single e- take room too.
+        coordination = b->GetValence() + sites;
+      }
 
+      if (coordination != parameterB->_ipar[0]) {
+        IF_OBFF_LOGLVL_LOW {
+          snprintf(_logbuf, BUFF_SIZE, "    CORRECTED COORDINATION FOR ANGLE %d-%d-%d (IDX)... WAS %d NOW %d\n", 
+                   a->GetIdx(), b->GetIdx(), c->GetIdx(), parameterB->_ipar[0], coordination);
+          OBFFLog(_logbuf);
+        }
+      }
+
+      double currentTheta;
+      if (coordination >= 7) {
+        // large coordination sphere (e.g., [ReH9]-2 or [Ce(NO3)6]-2)
+        // just resort to using VDW 1-3 interactions to push atoms into place
+        // there's not much else we can do without real parameters
+        if (SetupVDWCalculation(a, c, vdwcalc)) {
+          _vdwcalculations.push_back(vdwcalc);
+        }
+        // we're not installing an angle term for this set
+        // we can't even approximate one
+        continue;
+
+      } else if (coordination == 5) { // trigonal bipyramidal
+        currentTheta =  a->GetAngle(&*b, &*c);
+
+        anglecalc.c0 = 1.0;
+        if (currentTheta > 150.0) { // axial ligands = linear
+          anglecalc.coord = 1; // like sp
+          anglecalc.theta0 = 180.0;
+          anglecalc.c1 = 1.0;
+        } else if (currentTheta < 150.0 && currentTheta > 100.0) { // equatorial
+          anglecalc.coord = 2; // like sp2
+          anglecalc.theta0 = 120.0;
+          anglecalc.c1 = -1.0;
+        } else if (currentTheta < 100.0) { // axial-equatorial ligands
+          anglecalc.coord = 4; // like sq. planar or octahedral
+          anglecalc.theta0 = 90.0;
+          anglecalc.c1 = 1.0;
+        }
+        anglecalc.c2 = 0.0;
+
+        // Also add a VDW 1-3 interaction to distort slightly
+        if (SetupVDWCalculation(a, c, vdwcalc)) {
+          _vdwcalculations.push_back(vdwcalc);
+        }
+      } else { // normal coordination: sp, sp2, sp3, square planar, octahedral
+        anglecalc.coord = coordination;
+        anglecalc.theta0 = parameterB->_dpar[1];
+        sinT0 = sin(anglecalc.theta0 * DEG_TO_RAD);
+        anglecalc.c2 = 1.0 / (4.0 * sinT0 * sinT0);
+        anglecalc.c1 = -4.0 * anglecalc.c2 * anglecalc.cosT0;
+        anglecalc.c0 = anglecalc.c2*(2.0*anglecalc.cosT0*anglecalc.cosT0 + 1.0);
+      }
+
+      anglecalc.cosT0 = cos(anglecalc.theta0 * DEG_TO_RAD);
       anglecalc.zi = parameterA->_dpar[5];
       anglecalc.zk = parameterC->_dpar[5];
-      anglecalc.theta0 = parameterB->_dpar[1];
-      anglecalc.cosT0 = cos(anglecalc.theta0 * DEG_TO_RAD);
-      sinT0 = sin(anglecalc.theta0 * DEG_TO_RAD);
-      anglecalc.c2 = 1.0 / (4.0 * sinT0 * sinT0);
-      anglecalc.c1 = -4.0 * anglecalc.c2 * anglecalc.cosT0;
-      anglecalc.c0 = anglecalc.c2*(2.0*anglecalc.cosT0*anglecalc.cosT0 + 1.0);
 
 			// Precompute the force constant
 			bondPtr = _mol.GetBond(a,b);
@@ -771,11 +907,8 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP TORSION CALCULATIONS...\n");
  
-    OBFFTorsionCalculationUFF torsioncalc;
     double torsiontype;
     double phi0 = 0.0;
-
-    _torsioncalculations.clear();
  
     double vi, vj;
     FOR_TORSIONS_OF_MOL(t, _mol) {
@@ -919,9 +1052,6 @@ namespace OpenBabel
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP OOP CALCULATIONS...\n");
-    OBFFOOPCalculationUFF oopcalc;
-
-    _oopcalculations.clear();
  
     double phi;
     // The original Rappe paper in JACS isn't very clear about the parameters
@@ -1051,11 +1181,7 @@ namespace OpenBabel
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP VAN DER WAALS CALCULATIONS...\n");
-    
-    OBFFVDWCalculationUFF vdwcalc;
-
-    _vdwcalculations.clear();
-    
+        
     FOR_PAIRS_OF_MOL(p, _mol) {
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
@@ -1090,44 +1216,14 @@ namespace OpenBabel
         continue;
       }
 
-      parameterA = GetParameterUFF(a->GetType(), _ffparams);
-      parameterB = GetParameterUFF(b->GetType(), _ffparams);
-
-      if (parameterA == NULL || parameterB == NULL) { 
-        IF_OBFF_LOGLVL_LOW {
-          snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR VDW INTERACTION %d-%d (IDX)...\n", 
-              a->GetIdx(), b->GetIdx());
-          OBFFLog(_logbuf);
-        }
-        return false;
+      if (SetupVDWCalculation(a, b, vdwcalc)) {
+        _vdwcalculations.push_back(vdwcalc);
       }
- 
-      vdwcalc.Ra = parameterA->_dpar[2];
-      vdwcalc.ka = parameterA->_dpar[3];
-      vdwcalc.Rb = parameterB->_dpar[2];
-      vdwcalc.kb = parameterB->_dpar[3];
-
-      vdwcalc.a = &*a;
-      vdwcalc.b = &*b;
-     
-      //this calculations only need to be done once for each pair, 
-      //we do them now and save them for later use
-      vdwcalc.kab = KCAL_TO_KJ * sqrt(vdwcalc.ka * vdwcalc.kb);
-      
-      // 1-4 scaling
-      // This isn't mentioned in the UFF paper, but is common for other methods
-      //       if (a->IsOneFour(b))
-      //         vdwcalc.kab *= 0.5;
-
-      // ka now represents the xij in equation 20 -- the expected vdw distance
-      vdwcalc.ka = sqrt(vdwcalc.Ra * vdwcalc.Rb);
-      
-      vdwcalc.SetupPointers();
-      _vdwcalculations.push_back(vdwcalc);
     }
     
     // NOTE: No electrostatics are set up
-    // If you want electrostatics with UFF (not a good idea), you will need to call SetupElectrostatics
+    // If you want electrostatics with UFF, you will need to call 
+    // SetupElectrostatics() manually
     
     return true;
   }

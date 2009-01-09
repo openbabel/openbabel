@@ -1,3 +1,14 @@
+2009-01-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp,
+	src/forcefields/forcefielduff.h: Add support for 5-coordinate
+	and other unusual coordination environments (including lone pairs
+	for hypervalent species). Not perfect, but much better than
+	before.
+
+	* src/formats/outformat.cpp: Add comments about single bonds and
+	bond orders (which are followed by all QM output formats).
+
 2008-12-31  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/python/setup.py: Bump to 1.4
