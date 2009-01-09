@@ -39,7 +39,10 @@ namespace OpenBabel
       return
         "Generic Output file format\n"
         "Read ADF, Gaussian, GAMESS, Q-Chem, MOPAC, etc. file.out"
-        "files by detecting contents\n\n";
+        "files by detecting contents\n"
+        "Read Options e.g. -as\n"
+        "   s  Output single bonds only\n"
+        "   b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()
