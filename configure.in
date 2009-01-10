@@ -125,6 +125,8 @@ AC_PATH_PROG(PROVE, prove)
 AC_PATH_PROG(PYTHON, python)
 AC_PATH_PROG(RUBY, ruby)
 AC_PATH_PROG(CSHARP, mcs)
+AC_PATH_PROG(JAVAC, javac)
+AC_PATH_PROG(JAR, jar)
 
 dnl Conditionally build docs, scripts, etc.
 
@@ -181,6 +183,7 @@ SCRIPTING="yes"
 fi
 AM_CONDITIONAL(BUILD_SCRIPTS, test "$SCRIPTING" = "yes")
 
+AM_CONDITIONAL(BUILD_JAVA, test x"$JAVAC" != "x")
 AM_CONDITIONAL(BUILD_RUBY, test x"$RUBY" != "x")
 AM_CONDITIONAL(BUILD_CSHARP, test x"$CSHARP" != "x")
 

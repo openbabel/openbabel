@@ -1,3 +1,8 @@
+2009-01-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, scripts/Makefile.am: Check for javac and jar at
+	configure time. Do not run them unless present. Solves PR#2426622.
+
 2009-01-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.cpp,

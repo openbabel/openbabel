@@ -48,15 +48,17 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 	cat python/openbabel.py >>python/ob.py;
 	mv python/ob.py python/openbabel.py;
 
+if BUILD_JAVA
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 	(cd java; rm -rf org; mkdir org; mkdir org/openbabel)
 	$(SWIG) -small -O -java -package org.openbabel \
 	  -outdir java/org/openbabel -naturalvar -templatereduce -c++ -o $@ \
 	  -I$(top_srcdir)/include -I$(top_builddir)/include $<;
-	$(JAVA_HOME)/bin/javac java/org/openbabel/*.java
+	$(JAVAC) java/org/openbabel/*.java
 	(cd java; ls org/openbabel/*.class > classes.list)
-	(cd java; $(JAVA_HOME)/bin/jar cf openbabel.jar @classes.list)
+	(cd java; $(JAR) cf openbabel.jar @classes.list)
 	(cd java; rm -rf org classes.list)
+endif #BUILD_JAVA
 
 if BUILD_CSHARP
 csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
@@ -64,7 +66,7 @@ csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
 	-namespace OpenBabel -outdir csharp \
 	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
 	(cd csharp; mv example.cs example.tmp);
-	(cd csharp; mcs /optimize /target:library /out:OBDotNet.dll *.cs);
+	(cd csharp; $(MCS) /optimize /target:library /out:OBDotNet.dll *.cs);
 	(cd csharp; rm *.cs; mv example.tmp example.cs);
 endif # BUILD_CSHARP
 
