@@ -287,12 +287,14 @@ namespace OpenBabel {
     
     for (_ptr=_buffer;*_ptr;_ptr++)
       {
+        //        cerr << " parsing " << _ptr << endl;
+
         if (*_ptr<0 || isspace(*_ptr))
           continue;
         else if (isdigit(*_ptr) || *_ptr == '%') //ring open/close
           {
             if(!ParseRingBond(mol))
-              return false;;
+              return false;
             continue;
           }
         else if(*_ptr == '&') //external bond
@@ -1856,15 +1858,16 @@ namespace OpenBabel {
           if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
             {
               (ChiralSearch->second)->AddAtomRef((*j)[1], input);
-              // cerr << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
+              // cerr << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second << endl;
             }
           if (cs2!=_mapcd.end() && cs2->second != NULL)
             {
-              //              (cs2->second)->AddAtomRef(_prev,input);
               //Ensure that the closure atom index is inserted at the position
               //decided when the ring closure digit was encountered.
               //The order needs to be SMILES atom order, not OB atom index order.
               vector<unsigned int> refs = (cs2->second)->GetAtom4Refs(input);
+              // make sure the vector is large enough for the insert call
+              refs.resize((*j)[4] + 1);
               refs.insert(refs.begin()+(*j)[4], _prev);
               (cs2->second)->SetAtom4Refs(refs, input);
               // cerr <<"Added ring opening "<<_prev<<" to "<<cs2->second<<endl;

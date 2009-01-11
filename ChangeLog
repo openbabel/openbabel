@@ -1,5 +1,9 @@
 2009-01-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/formats/smilesformat.cpp: Address crash in SMILES import
+	with chiral ring closures. ChiralSearch vectors were too
+	small. Should address PR#2498047.
+
 	* configure.in, scripts/Makefile.am: Check for javac and jar at
 	configure time. Do not run them unless present. Solves PR#2426622.
 
