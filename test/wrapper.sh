@@ -8,7 +8,7 @@
 # wrapper.sh --verbose # display full output of tests while running
 
 TESTS="aromatic.pl atom bond cansmi cmlreadfile conversion data"
-TESTS="${TESTS} ffghemical ffmmff94 ffuff"
+#TESTS="${TESTS} ffghemical ffmmff94 ffuff"
 TESTS="${TESTS} format formula formalcharge"
 TESTS="${TESTS} internalcoord iterators" 
 TESTS="${TESTS} invalidsmarts invalidsmiles"
