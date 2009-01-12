@@ -244,7 +244,7 @@ public:
     ss.ignore(dum, '\'');
     getline(ss, p.smartsstring, '\'');
     if(p.smartsstring[0]=='?') //ignore patterns with SMARTS '?'
-      return false;
+      p.smartsstring="[999]";//this seems to match nothing;  was return false;
     ss.ignore(dum,',');
     ss >> p.numoccurrences;
     ss.ignore(dum,'#');
