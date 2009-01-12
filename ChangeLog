@@ -1,3 +1,9 @@
+2009-01-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/gzmatformat.cpp: Address PR#2056697 for Gaussian
+	z-matrix with embedded numbers (no variables) or no "Variables:"
+	line.
+
 2009-01-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/smilesformat.cpp: Address crash in SMILES import

@@ -253,6 +253,7 @@ namespace OpenBabel
     unsigned int spin = 1;
 		unsigned int blankLines = 0;
 		bool readVariables = false; // are we reading variables yet?
+    bool foundVariables = false; // have we seen actual text for a variable line?
 		map<string, double> variables; // map from variable name to value
     vector<string> atomLines; // save atom lines to re-parse after reading variables
 
@@ -280,8 +281,14 @@ namespace OpenBabel
 		
 		// We read through atom lines and cache them (into atomLines)
 		while (ifs.getline(buffer,BUFF_SIZE)) {
-			if (strlen(buffer) == 0)
-				break;
+			if (strlen(buffer) == 0) {
+        if (foundVariables)
+          break; // blank line after variable section
+        else {
+          readVariables = true;
+          continue;
+        }
+      }
 				
 			if (strcasestr(buffer, "VARIABLE") != NULL) {
 				readVariables = true;
@@ -292,6 +299,7 @@ namespace OpenBabel
 			  tokenize(vs, buffer, "= \t\n");
 			  if (vs.size() >= 2) {
           variables[vs[0]] = atof(vs[1].c_str());
+          foundVariables = true;
 //          cerr << "var: " << vs[0] << " " << vs[1] << endl;
         }
 			}
@@ -301,6 +309,8 @@ namespace OpenBabel
       }
 		} // end while
 		
+    char *endptr;
+    double temp;
 		if (atomLines.size() > 0) {
       int i, j;
       for (i = 0; i < atomLines.size(); ++i) {
@@ -309,32 +319,41 @@ namespace OpenBabel
         atom = mol.NewAtom();
         atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
         
-        switch (j) {
-          case 1:
-          break;
+        if (j == 1) {
+          continue; // first atom, just create it
+        }
 
-          case 2:
+        if (j >= 2) {
           if (vs.size() < 3) {return false;}
           vic[j]->_a = mol.GetAtom(atoi(vs[1].c_str()));
-          vic[j]->_dst = variables[vs[2].c_str()];
-          break;
+          
+          temp = strtod((char*)vs[2].c_str(), &endptr);
+          if (endptr != (char*)vs[2].c_str())
+            vic[j]->_dst = temp;
+          else
+            vic[j]->_dst = variables[vs[2].c_str()];
+        }
 
-          case 3:
+        if (j >= 3) {
           if (vs.size() < 5) {return false;}
-          vic[j]->_a = mol.GetAtom(atoi(vs[1].c_str()));
-          vic[j]->_dst = variables[vs[2].c_str()];
           vic[j]->_b = mol.GetAtom(atoi(vs[3].c_str()));
-          vic[j]->_ang = variables[vs[4].c_str()];
-          break;
 
-          default:
+          temp = strtod((char*)vs[4].c_str(), &endptr);
+          if (endptr != (char*)vs[4].c_str())
+            vic[j]->_ang = temp;
+          else
+            vic[j]->_ang = variables[vs[4].c_str()];
+        }
+
+        if (j >= 4) {
           if (vs.size() < 7) {return false;}
-          vic[j]->_a = mol.GetAtom(atoi(vs[1].c_str()));
-          vic[j]->_dst = variables[vs[2].c_str()];
-          vic[j]->_b = mol.GetAtom(atoi(vs[3].c_str()));
-          vic[j]->_ang = variables[vs[4].c_str()];
           vic[j]->_c = mol.GetAtom(atoi(vs[5].c_str()));
-          vic[j]->_tor = variables[vs[6].c_str()];
+
+          temp = strtod((char*)vs[6].c_str(), &endptr);
+          if (endptr != (char*)vs[6].c_str())
+            vic[j]->_ang = temp;
+          else
+            vic[j]->_ang = variables[vs[6].c_str()];
         }
       }
 		}
