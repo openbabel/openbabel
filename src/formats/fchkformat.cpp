@@ -532,8 +532,8 @@ namespace OpenBabel
                   << " \"IBond\" section(s).";
         obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
                               error_msg.str(),
-                              obError);
-        return false;
+                              obWarning);
+        MxBond = -1;
       }
     }
 
