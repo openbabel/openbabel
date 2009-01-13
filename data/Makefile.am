@@ -10,7 +10,7 @@ table_DATA = \
 		mmffpbci.par mmffdef.par \
 		mmffvdw.par mmffstbn.par mmffbndk.par mmffprop.par mmffbond.par \
 		mmffdfsb.par mmffs_oop.par mmffs_tor.par mmff94.ff mmff94s.ff\
-		logp.txt psa.txt mr.txt plugindefines.txt
+		logp.txt psa.txt mr.txt plugindefines.txt MACCS.txt
 
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h \

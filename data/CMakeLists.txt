@@ -10,6 +10,7 @@ set(to_install
     isotope-small.txt
     isotope.txt
     logp.txt
+    MACCS.txt
     mmff94.ff
     mmff94s.ff
     mmffang.par

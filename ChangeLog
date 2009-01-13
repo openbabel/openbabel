@@ -263,8 +263,9 @@
 	 target is SMARTS rather than SMILES. Bug #2129841
 	 
 	* src/formats/getinchi.cpp: small mod to avoid occasionally seeing
-	 a "quoted" InChI when there isn't one. (There ARE none in the wild.)
-		
+	 a "quoted" InChI when there isn't one. (There ARE none in the
+	 wild.)
+
 2008-09-26  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-csharp.i: Updated with Matt's comprehensive
