@@ -388,17 +388,17 @@ dist-hook:
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
 	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
 	-(cd $(distdir)/ruby; $(MAKE) distclean)
-	(cd $(distdir)/java; rm -f *.so *.o *.class)
+	(cd $(distdir)/java; rm -f *.so *.o *.class *.java)
 	(cd $(distdir)/java; rm -f *.jnilib)
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@perl/openbabel_perl.cpp: openbabel-perl.i $(script_headers)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -perl5 -c++ -templatereduce -naturalvar -o $@ \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-I$(top_srcdir)/include -I$(top_builddir)/include $<;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-I$(top_srcdir)/include -I$(top_builddir)/include -outdir perl $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/openbabel_python.cpp: openbabel-python.i $(script_headers)
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -python -templatereduce -naturalvar \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -small -O -python -templatereduce -naturalvar -outdir python \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "import sys" >python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
@@ -426,7 +426,7 @@ dist-hook:
 @BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	-namespace OpenBabel -outdir csharp \
 @BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
 @BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd csharp; mv example.cs example.tmp);
-@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd csharp; $(MCS) /optimize /target:library /out:OBDotNet.dll *.cs);
+@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd csharp; $(CSHARP) /optimize /target:library /out:OBDotNet.dll *.cs);
 @BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd csharp; rm *.cs; mv example.tmp example.cs);
 
 @BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@ruby/openbabel_ruby.cpp: openbabel-ruby.i $(script_headers)

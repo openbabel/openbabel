@@ -12,7 +12,7 @@ dist-hook:
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
 	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
 	-(cd $(distdir)/ruby; $(MAKE) distclean)
-	(cd $(distdir)/java; rm -f *.so *.o *.class)
+	(cd $(distdir)/java; rm -f *.so *.o *.class *.java)
 	(cd $(distdir)/java; rm -f *.jnilib)
 
 # build the scripting language interfaces if --enable-maintainer-mode was set
@@ -30,12 +30,12 @@ script_headers = $(script_includes)/mol.h $(script_includes)/obconversion.h \
 
 perl/openbabel_perl.cpp: openbabel-perl.i $(script_headers)
 	$(SWIG) -small -O -perl5 -c++ -templatereduce -naturalvar -o $@ \
-		-I$(top_srcdir)/include -I$(top_builddir)/include $<;
+		-I$(top_srcdir)/include -I$(top_builddir)/include -outdir perl $<;
 	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
 python/openbabel_python.cpp: openbabel-python.i $(script_headers)
-	$(SWIG) -small -O -python -templatereduce -naturalvar \
+	$(SWIG) -small -O -python -templatereduce -naturalvar -outdir python \
 		-c++ -o $@ -I$(top_srcdir)/include -I$(top_builddir)/include $<;
 	echo "import sys" >python/ob.py;
 	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
@@ -66,7 +66,7 @@ csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
 	-namespace OpenBabel -outdir csharp \
 	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
 	(cd csharp; mv example.cs example.tmp);
-	(cd csharp; $(MCS) /optimize /target:library /out:OBDotNet.dll *.cs);
+	(cd csharp; $(CSHARP) /optimize /target:library /out:OBDotNet.dll *.cs);
 	(cd csharp; rm *.cs; mv example.tmp example.cs);
 endif # BUILD_CSHARP
 
