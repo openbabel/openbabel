@@ -28,7 +28,7 @@ GNU General Public License for more details.
   #define shared_ptr boost::shared_ptr
 #else
   #include <tr1/memory>
-  typedef std::tr1::shared_ptr shared_ptr;
+  #define shared_ptr std::tr1::shared_ptr
 #endif
 
 namespace OpenBabel
