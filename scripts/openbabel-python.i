@@ -361,6 +361,6 @@ aromtyper = cvar.aromtyper
 
 %pythoncode %{
 def exception(*args):
-	raise Exception, "Use OBMol.CloneData instead. OBMol.SetData is only for use from C++."
+    raise Exception("Use OBMol.CloneData instead. OBMol.SetData is only for use from C++.")
 OBMol.SetData = exception
 %}

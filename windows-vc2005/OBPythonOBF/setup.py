@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from distutils.core import *
-import os, shutil, glob
+import os, sys, shutil, glob
 
 about = """Open Babel is a chemical toolbox designed to speak the
 many languages of chemical data. It's an open, collaborative project
@@ -12,7 +12,8 @@ or related areas.
 # The following line is necessary because only one 'root package' location
 # is possible: either "." or "../../scripts/python", but not both.
 # The root package location is set by "package_dir" and defaults to "."
-shutil.copy("../../scripts/python/pybel.py", ".")
+shutil.copyfile("../../scripts/python/pybel_py%d.x.py" % sys.version_info[0],
+                "pybel.py")
 
 setup(name='openbabel-python',
       version='1.4',

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from distutils.core import *
-import os,sys
+import os,sys,shutil
 
 about = """The Open Babel package provides a Python wrapper
 to the Open Babel C++ chemistry library. Open Babel is a project
@@ -67,6 +67,8 @@ obExtension = Extension('_openbabel',
                         libraries=['openbabel']
                         )
 
+shutil.copyfile("pybel_py%d.x.py" % sys.version_info[0], "pybel.py")
+
 setup(name='openbabel',
       version='1.4',
       author='Noel O\'Boyle',
@@ -99,3 +101,4 @@ setup(name='openbabel',
       long_description = about,
       )
 
+os.remove("pybel.py")

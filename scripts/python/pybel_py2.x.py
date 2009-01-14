@@ -63,9 +63,9 @@ def readfile(format, filename):
     obconversion = ob.OBConversion()
     formatok = obconversion.SetInFormat(format)
     if not formatok:
-        raise ValueError,"%s is not a recognised OpenBabel format" % format
+        raise ValueError("%s is not a recognised OpenBabel format" % format)
     if not os.path.isfile(filename):
-        raise IOError, "No such file: '%s'" % filename
+        raise IOError("No such file: '%s'" % filename)
     obmol = ob.OBMol()
     notatend = obconversion.ReadFile(obmol,filename)
     while notatend:
@@ -90,12 +90,12 @@ def readstring(format, string):
 
     formatok = obconversion.SetInFormat(format)
     if not formatok:
-        raise ValueError,"%s is not a recognised OpenBabel format" % format
+        raise ValueError("%s is not a recognised OpenBabel format" % format)
 
     success = obconversion.ReadString(obmol, string)
     if not success:
-        raise IOError, "Failed to convert '%s' to format '%s'" % (
-            string, format)
+        raise IOError("Failed to convert '%s' to format '%s'" % (
+            string, format))
     return Molecule(obmol)
 
 class Outputfile(object):
@@ -119,11 +119,11 @@ class Outputfile(object):
         self.format = format
         self.filename = filename
         if not overwrite and os.path.isfile(self.filename):
-            raise IOError, "%s already exists. Use 'overwrite=True' to overwrite it." % self.filename
+            raise IOError("%s already exists. Use 'overwrite=True' to overwrite it." % self.filename)
         self.obConversion = ob.OBConversion()
         formatok = self.obConversion.SetOutFormat(self.format)
         if not formatok:
-            raise ValueError,"%s is not a recognised OpenBabel format" % format
+            raise ValueError("%s is not a recognised OpenBabel format" % format)
         self.total = 0 # The total number of molecules written to the file
     
     def write(self, molecule):
@@ -133,7 +133,7 @@ class Outputfile(object):
            molecule
         """
         if not self.filename:
-            raise IOError, "Outputfile instance is closed."
+            raise IOError("Outputfile instance is closed.")
 
         if self.total==0:
             self.obConversion.WriteFile(molecule.OBMol, self.filename)
@@ -218,7 +218,7 @@ class Molecule(object):
             if unitcell:
                 return ob.toUnitCell(unitcell)
             else:
-                raise AttributeError, "Molecule has no attribute 'unitcell'"
+                raise AttributeError("Molecule has no attribute 'unitcell'")
         elif attr in self._getmethods:
             # Call the OB Method to find the attribute value
             return getattr(self.OBMol, self._getmethods[attr])()
@@ -228,7 +228,7 @@ class Molecule(object):
             else:
                 return (0, self.write("can").split()[0])
         else:
-            raise AttributeError, "Molecule has no attribute '%s'" % attr
+            raise AttributeError("Molecule has no attribute '%s'" % attr)
 
     def __iter__(self):
         """Iterate over the Atoms of the Molecule.
@@ -257,7 +257,7 @@ class Molecule(object):
             try:
                 desc = _descdict[descname]
             except KeyError:
-                raise ValueError, "%s is not a recognised Open Babel descriptor type" % descname
+                raise ValueError("%s is not a recognised Open Babel descriptor type" % descname)
             ans[descname] = desc.Predict(self.OBMol)
         return ans
     
@@ -275,7 +275,7 @@ class Molecule(object):
         try:
             fingerprinter = _fingerprinters[fptype]
         except KeyError:
-            raise ValueError, "%s is not a recognised Open Babel Fingerprint type" % fptype
+            raise ValueError("%s is not a recognised Open Babel Fingerprint type" % fptype)
         fingerprinter.GetFingerprint(self.OBMol, fp)
         return Fingerprint(fp)
 
@@ -295,11 +295,11 @@ class Molecule(object):
         obconversion = ob.OBConversion()
         formatok = obconversion.SetOutFormat(format)
         if not formatok:
-            raise ValueError,"%s is not a recognised OpenBabel format" % format
+            raise ValueError("%s is not a recognised OpenBabel format" % format)
 
         if filename:
             if not overwrite and os.path.isfile(filename):
-                raise IOError, "%s already exists. Use 'overwrite=True' to overwrite it." % filename
+                raise IOError("%s already exists. Use 'overwrite=True' to overwrite it." % filename)
             obconversion.WriteFile(self.OBMol,filename)
             obconversion.CloseOutFile()
         else:
@@ -317,7 +317,7 @@ class Molecule(object):
         to have explicit hydrogens. If not, call addh().
         """
         
-	if not (self.OBMol.HasNonZeroCoords()):
+        if not (self.OBMol.HasNonZeroCoords()):
             self.make3D()
         ff = _forcefields[forcefield]
         ff.Setup(self.OBMol)
@@ -383,7 +383,7 @@ class Molecule(object):
                             "generation and depiction. OASA is part of BKChem. "
                             "See installation instructions for more "
                             "information.")
-            raise ImportError, errormessage
+            raise ImportError(errormessage)
         mol = oasa.molecule()
         for atom in self.atoms:
             v = mol.create_vertex()
@@ -471,7 +471,7 @@ class Molecule(object):
                                     "Library not found, but is required for image "
                                     "display. See installation instructions for "
                                     "more information.")
-                    raise ImportError, errormessage
+                    raise ImportError(errormessage)
                 root = tk.Tk()
                 root.title((hasattr(self, "title") and self.title)
                            or self.__str__().rstrip())
@@ -533,7 +533,7 @@ class Atom(object):
         elif attr in self._getmethods:
             return getattr(self.OBAtom, self._getmethods[attr])()
         else:
-            raise AttributeError, "Atom has no attribute %s" % attr
+            raise AttributeError("Atom has no attribute %s" % attr)
 
     def __str__(self):
         """Create a string representation of the atom.
@@ -589,7 +589,7 @@ class Fingerprint(object):
             # Create a bits attribute on-the-fly
             return _findbits(self.fp, ob.OBFingerprint.Getbitsperint())
         else:
-            raise AttributeError, "Fingerprint has no attribute %s" % attr
+            raise AttributeError("Fingerprint has no attribute %s" % attr)
     def __str__(self):
         return ", ".join([str(x) for x in self.fp])
 
@@ -617,7 +617,7 @@ class Smarts(object):
         self.obsmarts = ob.OBSmartsPattern()
         success = self.obsmarts.Init(smartspattern)
         if not success:
-            raise IOError, "Invalid SMARTS pattern"
+            raise IOError("Invalid SMARTS pattern")
     def findall(self,molecule):
         """Find all matches of the SMARTS pattern to a particular molecule.
         
@@ -660,7 +660,7 @@ class MoleculeData(object):
         return [ob.toPairData(x) for x in self._mol.GetData() if x.GetDataType()==ob.PairData or x.GetDataType()==ob.CommentData]
     def _testforkey(self, key):
         if not key in self:
-            raise KeyError, "'%s'" % key
+            raise KeyError("'%s'" % key)
     def keys(self):
         return [x.GetAttribute() for x in self._data()]
     def values(self):
