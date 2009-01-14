@@ -1,3 +1,10 @@
+2009-01-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/pdbformat.cpp, src/formats/pqrformat.cpp: Patch
+	contributed by Pierre-Louis Bonicoli PR#2503113. Take elements
+	from the PDB 'element column' in preference to guessing based on
+	atom type names (which are unreliable).
+
 2009-01-14  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPythonOBF/OBPythonOBF.vcproj: Minor fix to

@@ -62,12 +62,12 @@ namespace OpenBabel
 
   //Make an instance of the format class
   PDBFormat thePDBFormat;
-
-  /////////////////////////////////////////////////////////////////
-
-  // Now in atomrecord.cpp (shared with PQR format)
-  bool ParseAtomRecord(char *, OBMol &,int);
-  bool ParseConectRecord(char *,OBMol &);
+  
+  ////////////////////////////////////////////////////
+  /// Utility functions
+  static bool parseAtomRecord(char *buffer, OBMol & mol, int chainNum);
+  static bool parseConectRecord(char *buffer, OBMol & mol);
+  static bool readIntegerFromRecord(char *buffer, unsigned int columnAsSpecifiedInPDB, long int *target);
 
   //extern OBResidueData    resdat; now in mol.h
 
@@ -124,14 +124,20 @@ namespace OpenBabel
         }
         if (EQn(buffer,"ATOM",4) || EQn(buffer,"HETATM",6))
           {
-            ParseAtomRecord(buffer,mol,chainNum);
+            if( ! parseAtomRecord(buffer,mol,chainNum))
+              {
+                stringstream errorMsg;
+                errorMsg << "WARNING: Problems reading a PDB file\n"
+                         << "  Problems reading a ATOM/HETATM record.\n";
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
+              }
             if (EQn(buffer,"ATOM",4))
               bs.SetBitOn(mol.NumAtoms());
             continue;
           }
 
         if (EQn(buffer,"CONECT",6)) {
-          ParseConectRecord(buffer,mol);
+          parseConectRecord(buffer,mol);
           continue;
         }
 
@@ -277,7 +283,7 @@ namespace OpenBabel
     Hydrogen bonds and salt bridges are ignored. --Stefan Kebekus.
   */
 
-  bool ParseConectRecord(char *buffer,OBMol &mol)
+  bool parseConectRecord(char *buffer,OBMol &mol)
   {
     stringstream errorMsg;
     string clearError;
@@ -576,7 +582,17 @@ namespace OpenBabel
           }
 
         element_name = etab.GetSymbol(atom->GetAtomicNum());
-        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
+        
+        int charge = atom->GetFormalCharge();
+        char scharge[3] = { ' ', ' ', '\0' };
+        if(0 != charge)
+          {
+            snprintf(scharge, 3, "%+d", charge);
+            char tmp = scharge[1];
+            scharge[1] = scharge[0];
+            scharge[0] = tmp;
+          }
+        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s%2s\n",
                  het?"HETATM":"ATOM  ",
                  i,
                  type_name,
@@ -586,7 +602,8 @@ namespace OpenBabel
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ(),
-                 element_name);
+                 element_name,
+                 scharge);
         ofs << buffer;
       }
 
@@ -636,6 +653,232 @@ namespace OpenBabel
 
     return(true);
   }
+  
+  ////////////////////////////////////////////////////////////////
+  static bool parseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/)
+  /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,a2,a2)" */
+  {
+    string sbuf = &buffer[6];
+    if (sbuf.size() < 48)
+      return(false);
 
+    bool hetatm = (EQn(buffer,"HETATM",6)) ? true : false;
+    bool elementFound = false;
+
+    /* serial number */
+    string serno = sbuf.substr(0,5);
+
+    /* atom name */
+    string atmid = sbuf.substr(6,4);
+    
+    /* chain */
+    char chain = sbuf.substr(15,1)[0];
+
+    /* element */
+    string element;
+    if (sbuf.size() > 71)
+      {
+        element = sbuf.substr(70,2);
+        if(element[0] == ' ')
+          element.erase(0, 1);
+      }
+    else
+      {
+        element = "  ";
+      }
+
+    if ("  " == element)
+      {
+        stringstream errorMsg;
+        errorMsg << "WARNING: Problems reading a PDB file\n"
+                 << "  Problems reading a HETATM or ATOM record.\n"
+                 << "  According to the PDB specification,\n"
+                 << "  columns 77-78 should contain the element symbol of an atom.\n";
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      } else {
+      elementFound = true;
+    }
+    
+    // charge - optional
+    string scharge;
+    if (sbuf.size() > 73)
+      {
+        scharge = sbuf.substr(72,2);
+      }
+
+    //trim spaces on the right and left sides
+    while (!atmid.empty() && atmid[0] == ' ')
+      atmid = atmid.erase(0, 1);
+
+    while (!atmid.empty() && atmid[atmid.size()-1] == ' ')
+      atmid = atmid.substr(0,atmid.size()-1);
+
+    /* residue name */
+    string resname = sbuf.substr(11,3);
+    if (resname == "   ")
+      resname = "UNK";
+    else
+      {
+        while (!resname.empty() && resname[0] == ' ')
+          resname = resname.substr(1,resname.size()-1);
+
+        while (!resname.empty() && resname[resname.size()-1] == ' ')
+          resname = resname.substr(0,resname.size()-1);
+      }
+
+    string type;
+    if (!elementFound) {
+      // OK, we have to fall back to determining the element from the atom type
+      // This is unreliable, but there's no other choice
+      if (EQn(buffer,"ATOM",4)) {
+        type = atmid.substr(0,2);
+        if (isdigit(type[0])) {
+          // sometimes non-standard files have, e.g 11HH
+          if (!isdigit(type[1])) type = atmid.substr(1,1);
+          else type = atmid.substr(2,1); 
+        } else if (sbuf[6] == ' ' &&
+                   strncasecmp(type.c_str(), "Zn", 2) != 0 &&
+                   strncasecmp(type.c_str(), "Fe", 2) != 0 ||
+                   isdigit(type[1]))	//type[1] is digit in Platon
+          type = atmid.substr(0,1);     // one-character element
+
+
+        if (resname.substr(0,2) == "AS" || resname[0] == 'N') {
+          if (atmid == "AD1")
+            type = "O";
+          if (atmid == "AD2")
+            type = "N";
+        }
+        if (resname.substr(0,3) == "HIS" || resname[0] == 'H') {
+          if (atmid == "AD1" || atmid == "AE2")
+            type = "N";
+          if (atmid == "AE1" || atmid == "AD2")
+            type = "C";
+        }
+        if (resname.substr(0,2) == "GL" || resname[0] == 'Q') {
+          if (atmid == "AE1")
+            type = "O";
+          if (atmid == "AE2")
+            type = "N";
+        }
+        // fix: #2002557
+        if (atmid[0] == 'H' && 
+            (atmid[1] == 'D' || atmid[1] == 'E' || 
+             atmid[1] == 'G' || atmid[1] == 'H')) // HD, HE, HG, HH, ..
+          type = "H";
+      } else { //must be hetatm record
+        if (isalpha(element[1]) && (isalpha(element[0]) || (element[0] == ' '))) {
+          if (isalpha(element[0]))
+            type = element.substr(0,2);
+          else
+            type = element.substr(1,1);
+
+          if (type.size() == 2)
+            type[1] = tolower(type[1]);
+        } else { // no element column to use
+          if (isalpha(atmid[0])) {
+            if (atmid.size() > 2 && (atmid[2] == '\0' || atmid[2] == ' '))
+              type = atmid.substr(0,2);
+            else if (atmid[0] == 'A') // alpha prefix
+              type = atmid.substr(1, atmid.size() - 1);
+            else
+              type = atmid.substr(0,1);
+          } else if (atmid[0] == ' ')
+            type = atmid.substr(1,1); // one char element
+          else
+            type = atmid.substr(1,2);
+
+          // Some cleanup steps
+          if (atmid == resname) {
+            type = atmid;
+            if (type.size() == 2)
+              type[1] = tolower(type[1]);
+          } else
+            if (resname == "ADR" || resname == "COA" || resname == "FAD" ||
+                resname == "GPG" || resname == "NAD" || resname == "NAL" ||
+                resname == "NDP" || resname == "ABA") {
+              if (type.size() > 1)
+                type = type.substr(0,1);
+              //type.erase(1,type.size()-1);
+            } else // other residues
+              if (isdigit(type[0])){
+                type = type.substr(1,1);
+              }
+              else
+                if (type.size() > 1 && isdigit(type[1]))
+                  type = type.substr(0,1);
+                else
+                  if (type.size() > 1 && isalpha(type[1])) {
+                    if (type[0] == 'O' && type[1] == 'H')
+                      type = type.substr(0,1); // no "Oh" element (e.g. 1MBN)
+                    else if(isupper(type[1])) {
+                      type[1] = tolower(type[1]);
+                    }
+                  }
+        }
+
+      } // HETATM records
+    } // no element column to use
+
+    OBAtom atom;
+    /* X, Y, Z */
+    string xstr = sbuf.substr(24,8);
+    string ystr = sbuf.substr(32,8);
+    string zstr = sbuf.substr(40,8);
+    vector3 v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
+    atom.SetVector(v);
+    atom.ForceImplH();
+
+    // useful for debugging unknown atom types (e.g., PR#1577238)
+    //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << etab.GetAtomicNum(element.c_str()) << endl;
+    if (elementFound)
+      atom.SetAtomicNum(etab.GetAtomicNum(element.c_str()));
+    else // use our old-style guess from athe atom type
+      atom.SetAtomicNum(etab.GetAtomicNum(type.c_str()));
+
+    if ( (! scharge.empty()) && "  " != scharge)
+      {
+        const char reorderCharge[3] = { scharge[1], scharge[0], '\0' };
+        const int charge = atoi(reorderCharge);
+        atom.SetFormalCharge(charge);
+      }
+    else {
+      atom.SetFormalCharge(0);
+    }
+
+    /* residue sequence number */
+    string resnum = sbuf.substr(16,4);
+    OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
+    if (res == NULL || res->GetName() != resname 
+        || res->GetNumString() != resnum)
+      {
+        vector<OBResidue*>::iterator ri;
+        for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
+          if (res->GetName() == resname 
+              && res->GetNumString() == resnum
+              && static_cast<int>(res->GetChain()) == chain)
+            break;
+
+        if (res == NULL) {
+          res = mol.NewResidue();
+          res->SetChain(chain);
+          res->SetName(resname);
+          res->SetNum(resnum);
+        }
+      }
+
+    if (!mol.AddAtom(atom))
+      return(false);
+    else {
+      OBAtom *atom = mol.GetAtom(mol.NumAtoms());
+
+      res->AddAtom(atom);
+      res->SetSerialNum(atom, atoi(serno.c_str()));
+      res->SetAtomID(atom, sbuf.substr(6,4));
+      res->SetHetAtom(atom, hetatm);
+
+      return(true);
+    }
+  } // end reading atom records
 
 } //namespace OpenBabel

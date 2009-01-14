@@ -78,10 +78,6 @@ set(formats
     zindoformat
 )
 
-# Additional files for PDB and PQR formats
-set(pdbformat_additional_sources atomrecord.cpp)
-set(pqrformat_additional_sources atomrecord.cpp)
-
 if(Boost_FOUND)
   set(formats
     ${formats}

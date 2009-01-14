@@ -66,7 +66,7 @@ libformats_la_SOURCES = \
 	moldenformat.cpp msmsformat.cpp \
 	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp outformat.cpp \
 	pcmodelformat.cpp \
-	pngformat.cpp atomrecord.cpp \
+	pngformat.cpp  \
 	pdbformat.cpp povrayformat.cpp pqrformat.cpp qchemformat.cpp reportformat.cpp \
 	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
 	tinkerformat.cpp titleformat.cpp \
@@ -285,13 +285,13 @@ nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.l
 pcmodelformat_la_SOURCES = pcmodelformat.cpp 
 pcmodelformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-pdbformat_la_SOURCES = pdbformat.cpp atomrecord.cpp 
+pdbformat_la_SOURCES = pdbformat.cpp 
 pdbformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 povrayformat_la_SOURCES = povrayformat.cpp 
 povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
-pqrformat_la_SOURCES = pqrformat.cpp atomrecord.cpp 
+pqrformat_la_SOURCES = pqrformat.cpp 
 pqrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 opendxformat_la_SOURCES = opendxformat.cpp
