@@ -483,7 +483,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Running SWIG to generate openbabel-python_wrap.cpp"
-					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir $(ProjectDir) -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
+					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
 					AdditionalDependencies="../OBDLL.lib;../OBConv.lib;../OBDESC.lib;../oberror.lib;../obcommon.lib"
 					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
 				/>
@@ -494,7 +494,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Running SWIG to generate openbabel-python_wrap.cpp"
-					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir $(ProjectDir) -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 					AdditionalDependencies="../OBDLL.lib;../OBConv.lib;../OBDESC.lib;../oberror.lib;../obcommon.lib"
 					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
 				/>
@@ -505,7 +505,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Running SWIG to generate openbabel-python_wrap.cpp"
-					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir $(ProjectDir) -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
+					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
 					AdditionalDependencies="../OBDLL.lib;../OBConv.lib;../OBDESC.lib;../oberror.lib;../obcommon.lib"
 					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
 				/>
@@ -516,7 +516,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Running SWIG to generate openbabel-python_wrap.cpp"
-					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir $(ProjectDir) -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
+					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
 					AdditionalDependencies="../OBDLL.lib;../OBConv.lib;../OBDESC.lib;../oberror.lib;../obcommon.lib"
 					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
 				/>

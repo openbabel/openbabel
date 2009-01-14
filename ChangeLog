@@ -1,5 +1,13 @@
 2009-01-14  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* windows-vc2005/OBPythonOBF/OBPythonOBF.vcproj: Minor fix to
+	outdir (had trouble with paths with spaces)
+	* windows-vc2005/OBCSharp/OBCSharp.vcproj: Moving to Swig 1.3.37
+	* scripts/csharp/example.py: Partial revert of r2833 to bring back my
+	IronPython example script
+
+2009-01-14  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* scripts/python/pybel.py split into pybel_py2.x.py, pybel_py3.x.py:
 	Adding support for Python 3.
 	* scripts/openbabel-python.i, scripts/python/examples/testpybel.py,
