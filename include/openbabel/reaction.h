@@ -24,9 +24,11 @@ GNU General Public License for more details.
 
 #ifdef USE_BOOST
   #include <boost/shared_ptr.hpp>
-  namespace std{ namespace tr1=::boost; }
+  //namespace std{ namespace tr1=::boost; }
+  #define shared_ptr boost::shared_ptr
 #else
   #include <tr1/memory>
+  #define shared_ptr std::tr1::shared_ptr
 #endif
 
 namespace OpenBabel
@@ -41,10 +43,10 @@ namespace OpenBabel
 class OBReaction : public OBBase
 {
 private:
-  std::vector<std::tr1::shared_ptr<OBMol> > _reactants;
-  std::vector<std::tr1::shared_ptr<OBMol> > _products;
-  std::tr1::shared_ptr<OBMol> _ts; 
-  std::tr1::shared_ptr<OBMol> _agent; 
+  std::vector<shared_ptr<OBMol> > _reactants;
+  std::vector<shared_ptr<OBMol> > _products;
+  shared_ptr<OBMol> _ts; 
+  shared_ptr<OBMol> _agent; 
   std::string _title;
   std::string _comment;
   bool _reversible;
@@ -58,37 +60,37 @@ public:
   int NumProducts()const
   { return _products.size(); }
   
-  void AddReactant(const std::tr1::shared_ptr<OBMol> sp)
+  void AddReactant(const shared_ptr<OBMol> sp)
   { _reactants.push_back(sp); }
   
-  void AddProduct(const std::tr1::shared_ptr<OBMol> sp)
+  void AddProduct(const shared_ptr<OBMol> sp)
   { _products.push_back(sp); }
 
-  void SetTransitionState(const std::tr1::shared_ptr<OBMol> sp)
+  void SetTransitionState(const shared_ptr<OBMol> sp)
   { _ts = sp; }
 
-  void AddAgent(const std::tr1::shared_ptr<OBMol> sp)
+  void AddAgent(const shared_ptr<OBMol> sp)
   { _agent = sp; }
   
-  std::tr1::shared_ptr<OBMol> GetReactant(const unsigned i)
+  shared_ptr<OBMol> GetReactant(const unsigned i)
   {
-    std::tr1::shared_ptr<OBMol> sp;
+    shared_ptr<OBMol> sp;
     if(i<_reactants.size())
       sp = _reactants[i];
     return sp; //returns empty if out of range
   }
-  std::tr1::shared_ptr<OBMol> GetProduct(const unsigned i)
+  shared_ptr<OBMol> GetProduct(const unsigned i)
   {
-    std::tr1::shared_ptr<OBMol> sp;
+    shared_ptr<OBMol> sp;
     if(i<_products.size())
       sp = _products[i];
     return sp; //returns empty if out of range
   }
 
-  std::tr1::shared_ptr<OBMol> GetTransitionState()const
+  shared_ptr<OBMol> GetTransitionState()const
   { return _ts; }
 
-  std::tr1::shared_ptr<OBMol> GetAgent()const
+  shared_ptr<OBMol> GetAgent()const
   { return _agent; }
 
   std::string GetTitle()	const { return _title; }
