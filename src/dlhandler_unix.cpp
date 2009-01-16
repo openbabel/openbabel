@@ -19,6 +19,7 @@ GNU General Public License for more details.
 
 #include <openbabel/dlhandler.h>
 #include <openbabel/babelconfig.h>
+#include <openbabel/oberror.h>
 
 #include <unistd.h>
 #include <dirent.h>
@@ -62,7 +63,9 @@ bool DLHandler::getConvDirectory(string& convPath)
   return true;
 }
 
-int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string& pattern, const std::string& path)
+int DLHandler::findFiles (std::vector <std::string>& file_list,
+                          const std::string& pattern, 
+                          const std::string& path)
 {
   string currentPath;
   vector<string> paths, vs;
@@ -92,27 +95,8 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
   if (paths.empty())
     paths.push_back("./"); // defaults to current directory
   
-  /* Old method using scandir. Replaced with readdir (below) as for example
+  /* Our old code used scandir. Replaced with readdir (below) as for example
    * Solaris pre 10 doesn't implement scandir.
-   
-   struct dirent **entries_pp;
-   int count;
-   
-   for (unsigned int i = 0; i < paths.size(); ++i)
-   {
-   currentPath = paths[i];
-   count = scandir (currentPath.c_str(), &entries_pp, SCANDIR_T matchFiles, NULL);
-   
-   for(int i=0; i<count; ++i)
-   {
-   file_list.push_back(currentPath + getSeparator() + (entries_pp[i])->d_name);
-   free(entries_pp[i]);
-   }
-   }
-   
-   if (entries_pp)
-   free(entries_pp);
-   *
    */
   
   DIR *dp;
@@ -140,7 +124,8 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
   return file_list.size();
 }
 
-int DLHandler::findFiles (std::vector<std::string>& file_list,const std::string &filename)
+int DLHandler::findFiles (std::vector<std::string>& file_list,
+                          const std::string &filename)
 {
   if(filename.find_first_of("*?")==string::npos)
     {
@@ -157,7 +142,14 @@ int DLHandler::findFiles (std::vector<std::string>& file_list,const std::string 
 
 bool DLHandler::openLib(const string& lib_name)
 {
-  return dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_GLOBAL) != 0;
+  bool success = (dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_GLOBAL) != 0);
+  if (!success) {
+    char buffer[BUFF_SIZE];
+    snprintf(buffer, BUFF_SIZE, "%s did not load properly.\n Error: %s",
+             lib_name.c_str(), dlerror());
+    OpenBabel::obErrorLog.ThrowError(__FUNCTION__, buffer, OpenBabel::obError);
+  }
+  return success;
 }
 
 const char* DLHandler::getFormatFilePattern()
