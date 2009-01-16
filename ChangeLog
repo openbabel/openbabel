@@ -1,3 +1,14 @@
+2009-01-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/dlhandler_unix.cpp (openLib): Handle error reporting here --
+	which will allow more informative messages to users, rather than
+	just "did not load properly."
+
+	* src/obconversion.cpp: Disable error messages, as per above.
+
+	* src/parsmart.cpp: Remove some unused code, and add comments
+	towards support of fragment SMARTS, e.g. (*).(*).
+
 2009-01-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp, src/formats/pqrformat.cpp: Patch

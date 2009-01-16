@@ -31,64 +31,62 @@ namespace OpenBabel
 
   /*! \class OBSmartsPattern parsmart.h <openbabel/parsmart.h>
 
-  Substructure search is an incredibly useful tool in the context of a
-  small molecule programming library. Having an efficient substructure
-  search engine reduces the amount of hard code needed for molecule
-  perception, as well as increases the flexibility of certain
-  operations. For instance, atom typing can be easily performed based on
-  hard coded rules of element type and bond orders (or
-  hybridization). Alternatively, atom typing can also be done by
-  matching a set of substructure rules read at run time. In the latter
-  case customization based on application (such as changing the pH)
-  becomes a facile operation. Fortunately for Open Babel and its users,
-  Roger Sayle donated a SMARTS parser which became the basis for SMARTS
-  matching in Open Babel.
+    Substructure search is an incredibly useful tool in the context of a
+    small molecule programming library. Having an efficient substructure
+    search engine reduces the amount of hard code needed for molecule
+    perception, as well as increases the flexibility of certain
+    operations. For instance, atom typing can be easily performed based on
+    hard coded rules of element type and bond orders (or
+    hybridization). Alternatively, atom typing can also be done by
+    matching a set of substructure rules read at run time. In the latter
+    case customization based on application (such as changing the pH)
+    becomes a facile operation. Fortunately for Open Babel and its users,
+    Roger Sayle donated a SMARTS parser which became the basis for SMARTS
+    matching in Open Babel.
 
-  For more information on the SMARTS support in Open Babel, see the wiki page:
-  http://openbabel.sourceforge.net/wiki/SMARTS
+    For more information on the SMARTS support in Open Babel, see the wiki page:
+    http://openbabel.sourceforge.net/wiki/SMARTS
 
-  The SMARTS matcher, or OBSmartsPattern, is a separate object which can
-  match patterns in the OBMol class. The following code demonstrates how
-  to use the OBSmartsPattern class:
-  \code
-  OBMol mol;
-  ...
-  OBSmartsPattern sp;
-  sp.Init("CC");
-  sp.Match(mol);
-  vector<vector<int> > maplist;
-  maplist = sp.GetMapList();
-  //or maplist = sp.GetUMapList();
-  //print out the results
-  vector<vector<int> >::iterator i;
-  vector<int>::iterator j;
-  for (i = maplist.begin();i != maplist.end();++i)
-  {
-     for (j = i->begin();j != i->end();++j)
-        cout << j << ' `;
-     cout << endl;
-  }
-  \endcode
+    The SMARTS matcher, or OBSmartsPattern, is a separate object which can
+    match patterns in the OBMol class. The following code demonstrates how
+    to use the OBSmartsPattern class:
+    \code
+    OBMol mol;
+    ...
+    OBSmartsPattern sp;
+    sp.Init("CC");
+    sp.Match(mol);
+    vector<vector<int> > maplist;
+    maplist = sp.GetMapList();
+    //or maplist = sp.GetUMapList();
+    //print out the results
+    vector<vector<int> >::iterator i;
+    vector<int>::iterator j;
+    for (i = maplist.begin();i != maplist.end();++i)
+    {
+    for (j = i->begin();j != i->end();++j)
+    cout << j << ' `;
+    cout << endl;
+    }
+    \endcode
 
-  The preceding code reads in a molecule, initializes a SMARTS pattern
-  of two single-bonded carbons, and locates all instances of the
-  pattern in the molecule. Note that calling the Match() function
-  does not return the results of the substructure match. The results
-  from a match are stored in the OBSmartsPattern, and a call to
-  GetMapList() or GetUMapList() must be made to extract the
-  results. The function GetMapList() returns all matches of a
-  particular pattern while GetUMapList() returns only the unique
-  matches. For instance, the pattern [OD1]~C~[OD1] describes a
-  carboxylate group. This pattern will match both atom number
-  permutations of the carboxylate, and if GetMapList() is called, both
-  matches will be returned. If GetUMapList() is called only unique
-  matches of the pattern will be returned. A unique match is defined as
-  one which does not cover the identical atoms that a previous match
-  has covered.
+    The preceding code reads in a molecule, initializes a SMARTS pattern
+    of two single-bonded carbons, and locates all instances of the
+    pattern in the molecule. Note that calling the Match() function
+    does not return the results of the substructure match. The results
+    from a match are stored in the OBSmartsPattern, and a call to
+    GetMapList() or GetUMapList() must be made to extract the
+    results. The function GetMapList() returns all matches of a
+    particular pattern while GetUMapList() returns only the unique
+    matches. For instance, the pattern [OD1]~C~[OD1] describes a
+    carboxylate group. This pattern will match both atom number
+    permutations of the carboxylate, and if GetMapList() is called, both
+    matches will be returned. If GetUMapList() is called only unique
+    matches of the pattern will be returned. A unique match is defined as
+    one which does not cover the identical atoms that a previous match
+    has covered.
 
   */
-
-  std::vector<std::pair<Pattern*,std::vector<bool> > > RSCACHE; //recursive smarts cache
 
   typedef struct
   {
@@ -97,7 +95,7 @@ namespace OpenBabel
     int aromflag;
     double weight;
   }
-  Element;
+    Element;
 
 #define ELEMMAX  104
 
@@ -107,7 +105,7 @@ namespace OpenBabel
     int       closure[100];
     int       closindex;
   }
-  ParseState;
+    ParseState;
 
 #define ATOMEXPRPOOL  1
 #define BONDEXPRPOOL  1
@@ -174,6 +172,10 @@ namespace OpenBabel
 
   static char Buffer[BUFF_SIZE];
   static char Descr[BUFF_SIZE];
+  //recursive smarts cache
+  std::vector<std::pair<Pattern*,std::vector<bool> > > RSCACHE;
+  // list of fragment patterns (e.g., (*).(*)
+  std::vector<Pattern*> Fragments;
 
   static bool match(OBMol &mol,Pattern *pat,std::vector<std::vector<int> > &mlist,bool single=false);
   static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom);
@@ -225,8 +227,7 @@ namespace OpenBabel
       case(AE_NOT):   result->mon.arg = CopyAtomExpr(expr->mon.arg);
         break;
       
-      case(AE_RECUR): result->recur.recur = CopyPattern(
-                                                        (Pattern*)expr->recur.recur );
+      case(AE_RECUR): result->recur.recur = CopyPattern((Pattern*)expr->recur.recur );
         break;
       
       case(AE_LEAF):  result->leaf.prop = expr->leaf.prop;
@@ -257,7 +258,7 @@ namespace OpenBabel
         if (expr)
           {
             //free(expr);
-	    delete expr;
+            delete expr;
             expr = (AtomExpr*)NULL;
           }
       }
@@ -419,7 +420,7 @@ namespace OpenBabel
         if (expr)
           {
             //free(expr);
-	    delete expr;
+            delete expr;
             expr = (BondExpr*)NULL;
           }
       }
@@ -475,7 +476,6 @@ namespace OpenBabel
   {
     Pattern *ptr;
   
-    //ptr = (Pattern*)malloc(sizeof(Pattern));
     ptr = new Pattern;
     if( !ptr )
       FatalAllocationError("pattern");
@@ -504,14 +504,12 @@ namespace OpenBabel
         size = (int)(pat->aalloc*sizeof(AtomSpec));
         if( pat->atom )
           {
-            //pat->atom = (AtomSpec*)realloc(pat->atom,size);
-	    AtomSpec *tmp = new AtomSpec[pat->aalloc];
+            AtomSpec *tmp = new AtomSpec[pat->aalloc];
             copy(pat->atom, pat->atom + pat->aalloc - ATOMPOOL, tmp);
             delete [] pat->atom;
             pat->atom = tmp;
           }
         else
-          //pat->atom = (AtomSpec*)malloc(size);
           pat->atom = new AtomSpec[pat->aalloc];
         if( !pat->atom )
           FatalAllocationError("atom pool");
@@ -535,14 +533,12 @@ namespace OpenBabel
         size = (int)(pat->balloc*sizeof(BondSpec));
         if( pat->bond )
           {
-            //pat->bond = (BondSpec*)realloc(pat->bond,size);
-	    BondSpec *tmp = new BondSpec[pat->balloc];
+            BondSpec *tmp = new BondSpec[pat->balloc];
             copy(pat->bond, pat->bond + pat->balloc - BONDPOOL, tmp);
             delete [] pat->bond;
             pat->bond = tmp;
           }
         else
-          //pat->bond = (BondSpec*)malloc(size);
           pat->bond = new BondSpec[pat->balloc];
         if( !pat->bond )
           FatalAllocationError("bond pool");
@@ -1296,10 +1292,10 @@ namespace OpenBabel
 
     if (bsym == '/')
       return BuildBondLeaf(BL_TYPE,BT_SINGLE);
-      // return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_UPUNSPEC : BT_UP);
+    //      return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_UPUNSPEC : BT_UP);
     if (bsym == '\\')
       return BuildBondLeaf(BL_TYPE,BT_SINGLE);
-      // return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_DOWNUNSPEC : BT_DOWN);
+    //      return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_DOWNUNSPEC : BT_DOWN);
 
     switch(bsym)
       {
@@ -1422,7 +1418,7 @@ namespace OpenBabel
     register int index;
   
     bexpr = (BondExpr*)0;
-  
+
     while( *LexPtr )
       {
         switch( *LexPtr++ )
@@ -1432,7 +1428,7 @@ namespace OpenBabel
             return ParseSMARTSError(pat,bexpr);
             prev = -1;
             break;
-	  
+
           case('-'):  case('='):  case('#'):
           case(':'):  case('~'):  case('@'):
           case('/'):  case('\\'): case('!'):
@@ -1477,10 +1473,10 @@ namespace OpenBabel
             return pat;
 	  
           case('%'):  if( prev == -1 )
-            {
-              LexPtr--;
-              return ParseSMARTSError(pat,bexpr);
-            }
+              {
+                LexPtr--;
+                return ParseSMARTSError(pat,bexpr);
+              }
 	  
             if( isdigit(LexPtr[0]) && isdigit(LexPtr[1]) )
               {
@@ -1758,6 +1754,9 @@ namespace OpenBabel
       
         if( *LexPtr != '.' )
           return SMARTSError(result);
+
+        // Here's where we'd handle fragments
+        //        cerr << " conjunction " << LexPtr[0] << endl;
         LexPtr++;
       }
   
@@ -1808,35 +1807,6 @@ namespace OpenBabel
     *dst = '\0';
   
     return ParseSMARTSString(Buffer);
-  }
-
-  /*==============================*/
-  /*  SMARTS Component Traversal  */
-  /*==============================*/
-
-  static void TraverseSMARTS( Pattern *pat, int i )
-  {
-    register int j,k;
-  
-    pat->atom[i].visit = true;
-    for( j=0; j<pat->bcount; j++ )
-      if( pat->bond[j].visit == -1 )
-        {
-          if( pat->bond[j].src == i )
-            {
-              pat->bond[j].visit = i;
-              k = pat->bond[j].dst;
-              if( !pat->atom[k].visit )
-                TraverseSMARTS(pat,k);
-            }
-          else if( pat->bond[j].dst == i )
-            {
-              pat->bond[j].visit = i;
-              k = pat->bond[j].src;
-              if( !pat->atom[k].visit )
-                TraverseSMARTS(pat,k);
-            }
-        }
   }
 
   /*============================*/
@@ -2388,137 +2358,6 @@ namespace OpenBabel
     return BuildAtomNot(expr);
   }
 
-  /*==============================*/
-  /*  Canonical Bond Expressions  */
-  /*==============================*/
-
-  static int GetBondLeafIndex( BondExpr *expr )
-  {
-    if( expr->leaf.prop == BL_CONST )
-      {
-        if( expr->leaf.value )
-          {
-            return( BS_ALL );
-          }
-        else
-          return( 0 );
-      }
-    else /* expr->leaf.prop == BL_TYPE */
-      switch( expr->leaf.value )
-        {
-        case(BT_SINGLE):     return( BS_SINGLE );
-        case(BT_DOUBLE):     return( BS_DOUBLE );
-        case(BT_TRIPLE):     return( BS_TRIPLE );
-        case(BT_AROM):       return( BS_AROM );
-        case(BT_UP):         return( BS_UP );
-        case(BT_DOWN):       return( BS_DOWN );
-        case(BT_UPUNSPEC):   return( BS_UPUNSPEC );
-        case(BT_DOWNUNSPEC): return( BS_DOWNUNSPEC );
-        case(BT_RING):       return( BS_RING );
-        }
-    return 0;
-  }
-
-  static int GetBondExprIndex( BondExpr *expr )
-  {
-    register int lft,rgt;
-    register int arg;
-  
-    switch( expr->type )
-      {
-      case(BE_LEAF):   return GetBondLeafIndex(expr);
-      
-      case(BE_NOT):    arg = GetBondExprIndex(expr->mon.arg);
-        return( arg ^ BS_ALL );
-      
-      case(BE_ANDHI):
-      case(BE_ANDLO):  lft = GetBondExprIndex(expr->bin.lft);
-        rgt = GetBondExprIndex(expr->bin.rgt);
-        return( lft & rgt );
-      
-      case(BE_OR):     lft = GetBondExprIndex(expr->bin.lft);
-        rgt = GetBondExprIndex(expr->bin.rgt);
-        return( lft | rgt );
-      }
-    /* Avoid Compiler Warning */
-    return 0;
-  }
-
-// This function isn't used anywhere
-//   static BondExpr *NotBondExpr( BondExpr *expr )
-//   {
-//     register BondExpr *result;
-//   
-//     if( expr->type == BE_LEAF )
-//       {
-//         if( expr->leaf.prop == BL_CONST )
-//           {
-//             expr->leaf.value = !expr->leaf.value;
-//             return expr;
-//           }
-//       }
-//     else if( expr->type == BE_NOT )
-//       {
-//         result = expr->mon.arg;
-//         expr->mon.arg = (BondExpr*)0;
-//         FreeBondExpr(expr);
-//         return result;
-//       }
-//     return BuildBondNot(expr);
-//   }
-
-
-// This function isn't used anywhere
-//   static BondExpr *TransformBondExpr( BondExpr *expr )
-//   {
-//     register BondExpr *lft,*rgt;
-//     register BondExpr *arg;
-//  
-//     if( expr->type == BE_LEAF )
-//       {
-//         return expr;
-//       }
-//     else if( expr->type == BE_NOT )
-//       {
-//         arg = expr->mon.arg;
-//         arg = TransformBondExpr(arg);
-//         expr->mon.arg = (BondExpr*)0;
-//         FreeBondExpr(expr);
-//         return NotBondExpr(arg);
-//       }
-//     else if( expr->type == BE_ANDHI )
-//       {
-//         lft = expr->bin.lft;
-//         rgt = expr->bin.rgt;
-//         lft = TransformBondExpr(lft);
-//         rgt = TransformBondExpr(rgt);
-//         expr->bin.lft = lft;
-//         expr->bin.rgt = rgt;
-//         return expr;
-//       }
-//     else if( expr->type == BE_ANDLO )
-//       {
-//         lft = expr->bin.lft;
-//         rgt = expr->bin.rgt;
-//         lft = TransformBondExpr(lft);
-//         rgt = TransformBondExpr(rgt);
-//         expr->bin.lft = lft;
-//         expr->bin.rgt = rgt;
-//         return expr;
-//       }
-//     else if( expr->type == BE_OR )
-//       {
-//         lft = expr->bin.lft;
-//         rgt = expr->bin.rgt;
-//         lft = TransformBondExpr(lft);
-//         rgt = TransformBondExpr(rgt);
-//         expr->bin.lft = lft;
-//         expr->bin.rgt = rgt;
-//         return expr;
-//       }
-//     return expr;
-//   }
-
 
   //**********************************
   //********Pattern Matching**********
@@ -2558,16 +2397,18 @@ namespace OpenBabel
     if(_pat == NULL)
       return false;
     if(_pat->hasExplicitH) //The SMARTS pattern contains [H]
-    {
-      //Do matching on a copy of mol with explict hydrogens
-      OBMol tmol = mol;
-      tmol.AddHydrogens(false,false);
-      return(match(tmol,_pat,_mlist,single));
-    }
+      {
+        //Do matching on a copy of mol with explict hydrogens
+        OBMol tmol = mol;
+        tmol.AddHydrogens(false,false);
+        return(match(tmol,_pat,_mlist,single));
+      }
     return(match(mol,_pat,_mlist,single));
   }
 
-  bool OBSmartsPattern::RestrictedMatch(OBMol &mol,std::vector<std::pair<int,int> > &pr,bool single)
+  bool OBSmartsPattern::RestrictedMatch(OBMol &mol,
+                                        std::vector<std::pair<int,int> > &pr,
+                                        bool single)
   {
     bool ok;
     std::vector<std::vector<int> > mlist;
@@ -2596,7 +2437,7 @@ namespace OpenBabel
     return((_mlist.empty()) ? false:true);
   }
 
-  bool OBSmartsPattern::RestrictedMatch(OBMol &mol,OBBitVec &vres,bool single)
+  bool OBSmartsPattern::RestrictedMatch(OBMol &mol,OBBitVec &vres, bool single)
   {
     bool ok;
     std::vector<int>::iterator j;
@@ -2630,7 +2471,8 @@ namespace OpenBabel
     return((_mlist.empty()) ? false:true);
   }
 
-  void SetupAtomMatchTable(std::vector<std::vector<bool> > &ttab,Pattern *pat,OBMol &mol)
+  void SetupAtomMatchTable(std::vector<std::vector<bool> > &ttab,
+                           Pattern *pat, OBMol &mol)
   {
     int i;
   
@@ -2646,7 +2488,8 @@ namespace OpenBabel
           ttab[i][atom->GetIdx()] = true;
   }
 
-  static void FastSingleMatch(OBMol &mol,Pattern *pat,std::vector<std::vector<int> > &mlist)
+  static void FastSingleMatch(OBMol &mol,Pattern *pat,
+                              std::vector<std::vector<int> > &mlist)
   {
     OBAtom *atom,*a1,*nbr;
     std::vector<OBAtom*>::iterator i;
@@ -2738,7 +2581,8 @@ namespace OpenBabel
   }
 
 
-  static bool match(OBMol &mol,Pattern *pat,std::vector<std::vector<int> > &mlist,bool single)
+  static bool match(OBMol &mol,Pattern *pat,
+                    std::vector<std::vector<int> > &mlist,bool single)
   {
     mlist.clear();
     if (!pat || pat->acount == 0)
@@ -2916,7 +2760,9 @@ namespace OpenBabel
               for (j = mlist.begin();j != mlist.end();++j)
                 vb[(*j)[0]] = true;
 	  
-            RSCACHE.push_back(std::pair<Pattern*,std::vector<bool> > ((Pattern*)expr->recur.recur,vb));
+            RSCACHE.push_back(std::pair<Pattern*,
+                              std::vector<bool> > ((Pattern*)expr->recur.recur,
+                                                   vb));
 	  
             return(vb[atom->GetIdx()]);
           }
@@ -3075,12 +2921,11 @@ namespace OpenBabel
         mlist.push_back(_map);
         return;
       }
-  
+
     if (_pat->bond[bidx].grow) //match the next bond
       {
-        int src,dst;
-        src = _pat->bond[bidx].src;
-        dst = _pat->bond[bidx].dst;
+        int src = _pat->bond[bidx].src;
+        int dst = _pat->bond[bidx].dst;
       
         if (_map[src] <= 0 || _map[src] > (signed)_mol->NumAtoms())
           return;
@@ -3282,34 +3127,6 @@ namespace OpenBabel
     src = _pat->bond[idx].src;
     dst = _pat->bond[idx].dst;
     ord = GetExprOrder(_pat->bond[idx].expr);
-  }
-
-  void SmartsLexReplace(std::string &s,std::vector<std::pair<std::string,std::string> > &vlex)
-  {
-    size_t j,pos;
-    std::string token,repstr;
-    std::vector<std::pair<std::string,std::string> >::iterator i;
-  
-    for (pos = 0,pos = s.find("$",pos);pos < s.size();pos = s.find("$",pos))
-      //for (pos = 0,pos = s.find("$",pos);pos != std::string::npos;pos = s.find("$",pos))
-      {
-        pos++;
-        for (j = pos;j < s.size();++j)
-          if (!isalpha(s[j]) && !isdigit(s[j]) && s[j] != '_')
-            break;
-        if (pos == j)
-          continue;
-      
-        token = s.substr(pos,j-pos);
-        for (i = vlex.begin();i != vlex.end();++i)
-          if (token == i->first)
-            {
-              repstr = "(" + i->second + ")";
-              s.replace(pos,j-pos,repstr);
-              j = 0;
-            }
-        pos = j;
-      }
   }
 
 } // end namespace OpenBabel
