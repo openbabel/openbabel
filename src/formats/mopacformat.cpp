@@ -76,6 +76,7 @@ namespace OpenBabel
     vector<double> charges;
     bool hasPartialCharges = false;
     double energy;
+    OBVectorData *dipoleMoment = NULL;
 
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
@@ -130,6 +131,27 @@ namespace OpenBabel
                 tokenize(vs,buffer);
                 if (vs.size() < 1) vs.push_back(string()); // timvdm 18/06/2008
               }
+            // Now we should be at DIPOLE line
+            ifs.getline(buffer,BUFF_SIZE);	// POINT CHARGE
+            ifs.getline(buffer,BUFF_SIZE);	// HYBRID
+            ifs.getline(buffer,BUFF_SIZE);	// SUM
+            tokenize(vs, buffer);
+            if (vs.size() == 5) {
+              if (dipoleMoment)
+                delete dipoleMoment;
+
+              dipoleMoment = new OBVectorData;
+              double x, y, z;
+              x = atof(vs[1].c_str());
+              y = atof(vs[2].c_str());
+              z = atof(vs[3].c_str());
+              dipoleMoment->SetData(x, y, z);
+              dipoleMoment->SetAttribute("Dipole Moment");
+              dipoleMoment->SetOrigin(fileformatInput);
+            }
+
+            if (!ifs.getline(buffer,BUFF_SIZE))
+              break;
           }
       }
 
@@ -140,7 +162,8 @@ namespace OpenBabel
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
-    if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS) 
+        && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
     mol.EndModify();
@@ -159,6 +182,9 @@ namespace OpenBabel
         dp->SetOrigin(perceived);
         mol.SetData(dp);
       }
+    if (dipoleMoment)
+      mol.SetData(dipoleMoment);
+
     mol.SetTitle(title);
 
     return(true);
