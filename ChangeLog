@@ -1,3 +1,9 @@
+2009-01-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/fragments.txt: Expanded ring template database -- 2500 of
+	the most frequent rings (including three-membered rings like
+	cyclopropane or epoxides). Fixes PR#2043319.
+
 2009-01-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/dlhandler_unix.cpp (openLib): Handle error reporting here --
