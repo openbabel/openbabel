@@ -1,3 +1,11 @@
+2009-01-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/cifformat.cpp: Fix for PR#2100215. Difficult bug -- file is
+	missing a ';' on line 189. Other CIF programs had difficulty,
+	including CIFTOOLS. Handle such non-standard files by issuing
+	warnings when a ; line is not properly terminated and we find a
+	new tag.
+
 2009-01-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/fragments.txt: Expanded ring template database -- 2500 of

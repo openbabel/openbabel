@@ -773,11 +773,17 @@ namespace OpenBabel
         in.get(lastc);
         while(in.peek()!=';')
           {
+            if (in.peek() == '_') {
+              cout << "WARNING: Trying to read a SemiColonTextField but found a new tag !" << endl;
+              warning = true;
+              break;
+            }
             string tmp;
             getline(in,tmp);
             value+=tmp+" ";
           }
-        in.get(lastc);
+        if (!warning)
+          in.get(lastc);
         if(vv) cout<<"SemiColonTextField:"<<value<<endl;
         if(warning && !vv) cout<<"SemiColonTextField:"<<value<<endl;
         return value;
@@ -878,14 +884,16 @@ namespace OpenBabel
                 if(in.peek()=='_') break;
                 if(in.peek()=='#')
                   {// Comment (in a loop ??)
+                    const std::ios::pos_type pos=in.tellg();
                     string tmp;
                     getline(in,tmp);
                     if(block=="") mvComment.push_back(tmp);
                     else mvData[block].mvComment.push_back(tmp);
                     lastc='\r';
                     if(vv) cout<<"Comment in a loop (?):"<<tmp<<endl;
-                    continue;
-                  };
+                    in.seekg(pos);
+                    break;
+                  }
                 const std::ios::pos_type pos=in.tellg();
                 in>>tmp;
                 if(vv) cout<<"WHATNEXT? "<<tmp;
