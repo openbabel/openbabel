@@ -131,6 +131,11 @@ IMPVAL  [#53D0-]	        0 #[I-]
 #
 #EXTERNAL TYPE RULES
 #
+
+# Tinker OH hydrogens for MM2
+# Fixes PR# 1839274
+EXTTYP  [#1][#8]        HO
+
 EXTTYP	[#7^3]					N3
 EXTTYP	[#7X4]					N3+
 EXTTYP	[#7^2]					Npl

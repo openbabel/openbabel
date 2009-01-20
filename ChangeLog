@@ -6,6 +6,9 @@
 	warnings when a ; line is not properly terminated and we find a
 	new tag.
 
+	* data/atomtyp.txt: Add an external type for O-H hydrogens for
+	Tinker/MM2. Solves PR#1839274.
+
 2009-01-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/fragments.txt: Expanded ring template database -- 2500 of
