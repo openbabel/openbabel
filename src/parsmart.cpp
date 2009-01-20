@@ -94,8 +94,7 @@ namespace OpenBabel
     int organic;
     int aromflag;
     double weight;
-  }
-    Element;
+  } Element;
 
 #define ELEMMAX  104
 
@@ -104,8 +103,7 @@ namespace OpenBabel
     BondExpr *closord[100];
     int       closure[100];
     int       closindex;
-  }
-    ParseState;
+  } ParseState;
 
 #define ATOMEXPRPOOL  1
 #define BONDEXPRPOOL  1
@@ -3128,7 +3126,35 @@ namespace OpenBabel
     dst = _pat->bond[idx].dst;
     ord = GetExprOrder(_pat->bond[idx].expr);
   }
-
+  
+  void SmartsLexReplace(std::string &s,std::vector<std::pair<std::string,std::string> > &vlex)
+  {
+    size_t j,pos;
+    std::string token,repstr;
+    std::vector<std::pair<std::string,std::string> >::iterator i;
+  
+    for (pos = 0,pos = s.find("$",pos);pos < s.size();pos = s.find("$",pos))
+      //for (pos = 0,pos = s.find("$",pos);pos != std::string::npos;pos = s.find("$",pos))
+      {
+        pos++;
+        for (j = pos;j < s.size();++j)
+          if (!isalpha(s[j]) && !isdigit(s[j]) && s[j] != '_')
+            break;
+        if (pos == j)
+          continue;
+      
+        token = s.substr(pos,j-pos);
+        for (i = vlex.begin();i != vlex.end();++i)
+          if (token == i->first)
+            {
+              repstr = "(" + i->second + ")";
+              s.replace(pos,j-pos,repstr);
+              j = 0;
+            }
+        pos = j;
+      }
+  }
+  
 } // end namespace OpenBabel
 
 //! \file parsmart.cpp
