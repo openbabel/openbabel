@@ -1,3 +1,9 @@
+2009-01-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/format.h (OpenBabel): Fix PR#2070342. Make
+	sure format modules properly inherit GetMIMEType(). Breaks library
+	ABI, which is fine for v2.3.
+
 2008-12-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/outformat.cpp: New format to read files with

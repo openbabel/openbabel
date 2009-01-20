@@ -106,7 +106,7 @@ class OBCONV OBFormat : public OBPlugin
     virtual const char* SpecificationURL() { return ""; }
 
     /// @brief Chemical MIME type associated with this file type (if any)
-    const char* GetMIMEType() { return pMime; }
+    virtual const char* GetMIMEType() { return pMime; }
 
     /// @brief Decribes the capabilities of the format (Read only etc.)
  
