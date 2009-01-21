@@ -502,6 +502,7 @@ namespace OpenBabel
     OBMol workMol = mol;
     
     // delete all bonds in the working molecule
+    // we will add them back at the end
     while (workMol.NumBonds())
       workMol.DeleteBond(workMol.GetBond(0));
     
@@ -535,7 +536,7 @@ namespace OpenBabel
             atom->SetVector(i->second[counter]);
             counter++;
           }
-            
+
           // add the bonds for the fragment
           for (k = j->begin(); k != j->end(); ++k) {
             index = *k;
@@ -605,6 +606,17 @@ namespace OpenBabel
         workMol.AddBond(*bond);
       }
 
+    }
+
+    // Ensure all bonds from the old molecule exist in the new molecule
+    int beginIdx, endIdx;
+    FOR_BONDS_OF_MOL(b, mol) {
+      beginIdx = b->GetBeginAtomIdx();
+      endIdx = b->GetEndAtomIdx();
+      if (!workMol.GetBond(beginIdx, endIdx)) {
+        // We need to duplicate the old bond
+        workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
+      }
     }
     
     // correct the chirality

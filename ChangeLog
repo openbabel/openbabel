@@ -1,3 +1,8 @@
+2009-01-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/builder.cpp (Build): Make sure all bonds are copied into the
+	newly-built molecule.
+
 2009-01-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/cifformat.cpp: Fix for PR#2100215. Difficult bug -- file is
