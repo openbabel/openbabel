@@ -1072,8 +1072,10 @@ namespace OpenBabel
           if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
             pmol->PerceiveBondOrders();
           pmol->EndModify();
+          pmol->SetAutomaticFormalCharge(false); // we should have set formal charges
           return true;
         }
+
     // If we got here, no structure was found
     obErrorLog.ThrowError(__FUNCTION__, "Problems reading a CIF file: no structure found !" , obWarning);
     return(false);
