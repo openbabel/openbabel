@@ -236,10 +236,11 @@ AM_CONDITIONAL(BUILD_XML, test x"$XML_LIBS" != "x")
 AC_CHECK_LIB(inchi, GetINCHI, LIBINCHI="-linchi", LIBINCHI="")
 AM_CONDITIONAL(BUILD_INCHI, test x"$LIBINCHI" = "x" -o "$inchi" = "yes")
 
-CHECK_ZLIB
 AC_CHECK_LIB(z, inflateEnd, [zlib_cv_libz=yes], [zlib_cv_libz=no])
 AC_CHECK_HEADER(zlib.h, [zlib_cv_zlib_h=yes], [zlib_cv_zlib_h=no])
 AM_CONDITIONAL(BUILD_ZLIB, [test "$zlib_cv_libz" = "yes" -a "$zlib_cv_zlib_h" = "yes"])
+# define HAVE_LIBZ
+AC_CHECK_LIB(z, inflateEnd)
 
 dnl Checks for header files.
 AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
