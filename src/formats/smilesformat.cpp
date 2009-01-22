@@ -2340,13 +2340,21 @@ namespace OpenBabel {
     OBAtom *atom = node->GetAtom();
 
     int bosum = atom->KBOSum();
+    int maxBonds = etab.GetMaxBonds(atom->GetAtomcNum());
+    // default -- bracket if we have more bonds than possible
+    // we have some special cases below
+    bracketElement = !(normalValence = (bosum > maxBonds));
 
     switch (atom->GetAtomicNum()) {
     case 0: break;
-    case 5: break;
+    case 5: 
+      bracketElement = !(normalValence = (bosum > 3));
+      break;
     case 6: break;
     case 7:
-      if (atom->IsAromatic() && atom->GetHvyValence() == 2 && atom->GetImplicitValence() == 3) {
+      if (atom->IsAromatic() 
+          && atom->GetHvyValence() == 2 
+          & atom->GetImplicitValence() == 3) {
         bracketElement = !(normalValence = false);
         break;
       }
