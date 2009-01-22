@@ -1,3 +1,10 @@
+2009-01-22  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* windows-vc2005/Distribution/CheckInstallerScript.py,
+	NSISScriptToCreateInstallerOBF.nsi: Update Python script to check for
+	.prm files, and update installer to include MACCS.txt and missing .prm
+	file.
+
 2009-01-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/builder.cpp (Build): Make sure all bonds are copied into the

@@ -4,10 +4,12 @@ try:
 except ImportError:
     from sets import Set as set
 
+extns = ['txt', 'par', 'ff', 'prm']
+
 def get_data_files():
-    # All .txt, .par and .ff files in ../../../data
+    # All .txt, .par, .prm and .ff files in ../../../data
     datafiles = []
-    for ext in ['txt', 'par', 'ff']:
+    for ext in extns:
         files = [x.split("\\")[-1].lower() for x in
                  glob.glob("..\\..\\data\\*." + ext)]
         datafiles.extend(files)
@@ -52,6 +54,6 @@ if __name__ == "__main__":
     print
     print "The following files should be installed...but are not:", datafiles - installedfiles
     print
-    installeddatafiles = set([x for x in installedfiles if x.split(".")[-1] in ['ff', 'par', 'txt']])
-    print "The following .txt, .par, or .ff files are installed but are not datafiles (they may still be legit):", installeddatafiles - datafiles
+    installeddatafiles = set([x for x in installedfiles if x.split(".")[-1] in extns])
+    print "The following .txt, .par, .prm or .ff files are installed but are not datafiles (they may still be legit):", installeddatafiles - datafiles
     raw_input()

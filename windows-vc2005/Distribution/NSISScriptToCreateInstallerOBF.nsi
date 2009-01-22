@@ -534,6 +534,8 @@ Section "Dummy Section" SecDummy
   File ..\..\data\isotope.txt
   File ..\..\data\isotope-small.txt
   File ..\..\data\logp.txt
+  File ..\..\data\MACCS.txt
+  File ..\..\data\mm2.prm
   File ..\..\data\mmff94.ff
   File ..\..\data\mmff94s.ff
   File ..\..\data\mmffang.par
@@ -661,6 +663,8 @@ Section "Uninstall"
   Delete "$INSTDIR\libxml2.dll"
   Delete "$INSTDIR\License.txt"
   Delete "$INSTDIR\logp.txt"
+  Delete "$INSTDIR\MACCS.txt"
+  Delete "$INSTDIR\mm2.prm"
   Delete "$INSTDIR\mmff94.ff"
   Delete "$INSTDIR\mmff94s.ff"
   Delete "$INSTDIR\mmffang.par"
