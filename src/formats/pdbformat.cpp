@@ -681,6 +681,9 @@ namespace OpenBabel
         element = sbuf.substr(70,2);
         if(element[0] == ' ')
           element.erase(0, 1);
+        
+        if(!isalpha(element[0]))
+          element = "  ";
       }
     else
       {
