@@ -146,8 +146,8 @@ namespace OpenBabel {
       break;
     default: // general (sp3) coordination
       energy = ka*(c0 + c1*cosT + c2*(2.0*cosT*cosT - 1.0)); // use cos 2t = (2cos^2 - 1)
-    }  
-        
+    }
+   
     if (gradients) {
       double sinT = sin(theta);
       
@@ -742,7 +742,8 @@ namespace OpenBabel {
            || _constraints.IsIgnored(c->GetIdx()) ) 
         continue;
  
-      // if there are any groups specified, check if the three angle atoms are in a single intraGroup
+      // if there are any groups specified,
+      // check if the three angle atoms are in a single intraGroup
       if (HasGroups()) {
         bool validAngle = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
@@ -814,8 +815,12 @@ namespace OpenBabel {
         // calculate the number of lone pairs
         // e.g. for IF3 => "T-shaped"
         double lonePairs = (valenceElectrons - b->BOSum()) / 2.0;
-        int sites = (int)ceil(lonePairs); // we actually need to round up here -- single e- take room too.
+        // we actually need to round up here -- single e- take room too.
+        int sites = (int)ceil(lonePairs);
         coordination = b->GetValence() + sites;
+        if (coordination <= 4) { // normal valency
+          coordination = parameterB->_ipar[0];
+        }
       }
 
       if (coordination != parameterB->_ipar[0]) {
@@ -896,6 +901,7 @@ namespace OpenBabel {
       } else { // normal coordination: sp, sp2, sp3, square planar, octahedral
         anglecalc.coord = coordination;
         anglecalc.theta0 = parameterB->_dpar[1];
+        anglecalc.cosT0 = cos(anglecalc.theta0 * DEG_TO_RAD);
         sinT0 = sin(anglecalc.theta0 * DEG_TO_RAD);
         anglecalc.c2 = 1.0 / (4.0 * sinT0 * sinT0);
         anglecalc.c1 = -4.0 * anglecalc.c2 * anglecalc.cosT0;
