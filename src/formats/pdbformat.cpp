@@ -839,11 +839,14 @@ namespace OpenBabel
     else // use our old-style guess from athe atom type
       atom.SetAtomicNum(etab.GetAtomicNum(type.c_str()));
 
-    if ( (! scharge.empty()) && "  " != scharge)
+    if ( (! scharge.empty()) && "  " != scharge )
       {
-        const char reorderCharge[3] = { scharge[1], scharge[0], '\0' };
-        const int charge = atoi(reorderCharge);
-        atom.SetFormalCharge(charge);
+        if ( isdigit(scharge[0]) && ('+' == scharge[1] || '-' == scharge[1]) )
+          {
+            const char reorderCharge[3] = { scharge[1], scharge[0], '\0' };
+            const int charge = atoi(reorderCharge);
+            atom.SetFormalCharge(charge);
+          }
       }
     else {
       atom.SetFormalCharge(0);
