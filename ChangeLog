@@ -1,3 +1,33 @@
+2009-01-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp: Ensure H-O-H, H-S-H, and
+	similar bond angles are done correctly. Fixes PR#2527588.
+
+	* src/formats/pdbformat.cpp: Further refinements to parsing ATOM
+	records, contributed by Pierre-Louis Bonicoli for PR#2527225.
+
+	* configure.in, acinclude.m4, configure: Properly check for gzip
+	support. Fixes PR#2527272.
+
+	* src/formats/smilesformat.cpp: Add a check for atoms with unusual
+	valence (e.g., B with >3 bonds, C with 5, etc.). As requested for
+	CIF translation.
+
+	* src/formats/cifformat.cpp: Turn off automatic formal
+	charges. Add a pass to look for typical ions and correct their
+	formal charges.
+
+	* data/atomtyp.txt: Add implicit valence and hybridization rules
+	for most main-group elements.
+
+	* src/ops/gen3d: Add a cleanup step with MMFF94 or UFF, including
+	quick conformer searching. Should provide better results for most
+	people.
+
+	* src/builder.cpp: Add new function GetCorrectedBondVector() which
+	scales new bonds based on elements provided and bond order (e.g.,
+	similar to OBBond::GetEquibLength).
+
 2009-01-22  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* windows-vc2005/Distribution/CheckInstallerScript.py,

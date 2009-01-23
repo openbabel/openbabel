@@ -111,6 +111,25 @@ namespace OpenBabel
     obLocale.RestoreLocale();
   }
  
+  vector3 GetCorrectedBondVector(OBAtom *atom1, OBAtom *atom2, int bondOrder = 1)
+  {
+    double bondLength = 0.0;
+
+    // We create an estimate of the bond length based on the two atoms
+    bondLength += etab.CorrectedBondRad(atom1->GetAtomicNum(), atom1->GetHyb());
+    bondLength += etab.CorrectedBondRad(atom2->GetAtomicNum(), atom2->GetHyb());
+
+    // These are based on OBBond::GetEquibLength
+    if (bondOrder == -1) // aromatic
+      bondLength *= 0.93;
+    else if (bondOrder == 2)
+      bondLength *= 0.91;
+    else if (bondOrder == 3)
+      bondLength *= 0.87;
+
+    return OBBuilder::GetNewBondVector(atom1, bondLength);
+  }
+
   vector3 OBBuilder::GetNewBondVector(OBAtom *atom)
   {
     return GetNewBondVector(atom, 1.5);
@@ -271,7 +290,9 @@ namespace OpenBabel
   // fragment and the fragment itself. The fragment containing b will be 
   // rotated and translated. Atom a is the atom from 
   // the main molecule to which we want to connect atom b.
-  bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, vector3 &newpos, int bondOrder)
+  // NOTE: newpos now uses CorrectedBondVector, so we don't do that below
+  bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, 
+                          vector3 &newpos, int bondOrder)
   {
     OBAtom *a = mol.GetAtom(idxA);
     OBAtom *b = mol.GetAtom(idxB);
@@ -384,7 +405,7 @@ namespace OpenBabel
 
   bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, int bondOrder)
   {
-    vector3 newpos = GetNewBondVector(mol.GetAtom(idxA));
+    vector3 newpos = GetCorrectedBondVector(mol.GetAtom(idxA), mol.GetAtom(idxB), bondOrder);
     return Connect(mol, idxA, idxB, newpos, bondOrder);
   }
 
@@ -587,7 +608,13 @@ namespace OpenBabel
    
       // get the position for the new atom, this is done with GetNewBondVector
       if (prev != NULL) {
-        molvec = GetNewBondVector(workMol.GetAtom(prev->GetIdx()));
+        int bondType = a->GetBond(prev)->GetBO();
+        if (a->GetBond(prev)->IsAromatic())
+          bondType = -1;
+
+        molvec = GetCorrectedBondVector(workMol.GetAtom(prev->GetIdx()),
+                                        workMol.GetAtom(a->GetIdx()),
+                                        bondType);
         moldir = molvec - workMol.GetAtom(prev->GetIdx())->GetVector();
       } else {
         molvec = VX;
