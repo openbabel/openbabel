@@ -950,10 +950,68 @@ namespace OpenBabel
     return v;
   }
 
-  //############################## END CIF CLASSES####################################################
+  //################ END CIF CLASSES######################################
 
   //Make an instance of the format class
   CIFFormat theCIFFormat;
+
+  // Look for lone ions, and correct their formal charges
+  void CorrectFormalCharges(OBMol *mol)
+  {
+    if (!mol)
+      return;
+    
+    // First look for NR4, PR4 ions,
+    // or bare halides, alkali and alkaline earth metal ions
+    FOR_ATOMS_OF_MOL(atom, *mol) {
+      
+      if ((atom->GetAtomicNum() == 7 || atom->GetAtomicNum() == 15) 
+          && atom->BOSum() == 4) {
+        // check if we should make a positive charge?
+        // i.e., 4 non-metal neighbors
+        bool nonMetalNeighbors = true;
+        FOR_NBORS_OF_ATOM(neighbor, &*atom) {
+          switch (neighbor->GetAtomicNum()) {
+          case 1:
+          case 5: case 6: case 7: case 8: case 9:
+          case 14: case 15: case 16: case 17:
+          case 33: case 34: case 35:
+          case 53:
+            continue; // good non-metals
+          default:
+            nonMetalNeighbors = false;
+            break; // stop looking
+          }
+        }
+        if (nonMetalNeighbors) // 4 non-metals, e.g. NH4+
+          atom->SetFormalCharge(+1);
+      }
+
+      // Now look for simple atomic ions like Na, Li, F, Cl, Br...
+      // if we have bonds or an existing formal charge, keep going
+      if (atom->GetValence() > 0 || atom->GetFormalCharge() != 0)
+        continue;
+
+      switch(atom->GetAtomicNum()) {
+      case 3: case 11: case 19: case 37: case 55: case 87:
+        // Alkali ions
+        atom->SetFormalCharge(+1);
+        break;
+      case 4: case 12: case 20: case 38: case 56: case 88:
+        // Alkaline earth ions
+        atom->SetFormalCharge(+2);
+        break;
+      case 9: case 17: case 35: case 53: case 85:
+        // Halides
+        atom->SetFormalCharge(-1);
+        break;
+      }
+    }
+
+    // TODO: we should also look for typical small ions
+    // NO3-, ClO4-, SO3, CO3, BF4, PF6, triflate
+    // Also check azide, nitro groups
+  }
 
   /////////////////////////////////////////////////////////////////
   bool CIFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -1073,6 +1131,7 @@ namespace OpenBabel
             pmol->PerceiveBondOrders();
           pmol->EndModify();
           pmol->SetAutomaticFormalCharge(false); // we should have set formal charges
+          CorrectFormalCharges(pmol); // Look for lone Na -> Na+, etc.
           return true;
         }
 
