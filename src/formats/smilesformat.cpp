@@ -2354,7 +2354,7 @@ namespace OpenBabel {
     case 7:
       if (atom->IsAromatic() 
           && atom->GetHvyValence() == 2 
-          & atom->GetImplicitValence() == 3) {
+          && atom->GetImplicitValence() == 3) {
         bracketElement = !(normalValence = false);
         break;
       }
