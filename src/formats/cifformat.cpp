@@ -492,7 +492,7 @@ namespace OpenBabel
         posx=loop->second.find("_atom_site_fract_x");
         posy=loop->second.find("_atom_site_fract_y");
         posz=loop->second.find("_atom_site_fract_z");
-        unsigned int nb;
+        unsigned int nb = 0;
         if( (posx!=loop->second.end()) && (posy!=loop->second.end()) && (posz!=loop->second.end()))
           {
             nb=posx->second.size();
@@ -955,6 +955,27 @@ namespace OpenBabel
   //Make an instance of the format class
   CIFFormat theCIFFormat;
 
+  // Helper function for CorrectFormatCharges
+  // Is this atom an oxygen in a water molecule
+  // We know the oxygen is connected to one ion, but check for non-hydrogens
+  // Returns: true if the atom is an oxygen and connected to two hydrogens and up to one other atom
+  bool isWaterOxygen(OBAtom *atom)
+  {
+    if (!atom->IsOxygen())
+      return false;
+     
+    int nonHydrogenCount = 0;
+    int hydrogenCount = 0;
+    FOR_NBORS_OF_ATOM(neighbor, *atom) {
+      if (!neighbor->IsHydrogen())
+        nonHydrogenCount++;
+      else
+        hydrogenCount++;
+    }
+    
+    return (hydrogenCount == 2 && nonHydrogenCount <= 1);
+  }
+
   // Look for lone ions, and correct their formal charges
   void CorrectFormalCharges(OBMol *mol)
   {
@@ -986,11 +1007,24 @@ namespace OpenBabel
         if (nonMetalNeighbors) // 4 non-metals, e.g. NH4+
           atom->SetFormalCharge(+1);
       }
-
+      
       // Now look for simple atomic ions like Na, Li, F, Cl, Br...
-      // if we have bonds or an existing formal charge, keep going
-      if (atom->GetValence() > 0 || atom->GetFormalCharge() != 0)
+      // If we have an existing formal charge, keep going
+      if (atom->GetFormalCharge() != 0)
         continue;
+
+      // If we're connected to anything besides H2O, keep going
+      if (atom->GetValence() != 0) {
+        int nonWaterBonds = 0;
+        FOR_NBORS_OF_ATOM(neighbor, &*atom) {
+          if (!isWaterOxygen(&*neighbor)) {
+            nonWaterBonds = 1;
+            break;
+          }
+        }
+        if (nonWaterBonds)
+          continue; // look at another atom
+      }
 
       switch(atom->GetAtomicNum()) {
       case 3: case 11: case 19: case 37: case 55: case 87:
@@ -1007,10 +1041,6 @@ namespace OpenBabel
         break;
       }
     }
-
-    // TODO: we should also look for typical small ions
-    // NO3-, ClO4-, SO3, CO3, BF4, PF6, triflate
-    // Also check azide, nitro groups
   }
 
   /////////////////////////////////////////////////////////////////
@@ -1064,7 +1094,7 @@ namespace OpenBabel
               // Try to strip the string to have a better chance to have a valid symbol
               // This is not guaranteed to work still, as the CIF standard allows about any string...
               string tmpSymbol=posat->mSymbol;
-              int nbc=0;
+              unsigned int nbc=0;
               if((tmpSymbol.size()==1) && isalpha(tmpSymbol[0])) nbc=1;
               else if(tmpSymbol.size()>=2)
                 {
