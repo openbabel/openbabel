@@ -2316,6 +2316,28 @@ namespace OpenBabel {
   }
 
 
+  // Helper function
+  // Is this atom an oxygen in a water molecule
+  // We know the oxygen is connected to one ion, but check for non-hydrogens
+  // Returns: true if the atom is an oxygen and connected to two hydrogens + one coordinated atom
+  bool isWaterOxygen(OBAtom *atom)
+  {
+    if (!atom->IsOxygen())
+      return false;
+     
+    int nonHydrogenCount = 0;
+    int hydrogenCount = 0;
+    FOR_NBORS_OF_ATOM(neighbor, *atom) {
+      if (!neighbor->IsHydrogen())
+        nonHydrogenCount++;
+      else
+        hydrogenCount++;
+    }
+    
+    return (hydrogenCount == 2 && nonHydrogenCount == 1);
+  }
+
+
   /***************************************************************************
    * FUNCTION: GetSmilesElement
    *
@@ -2396,6 +2418,13 @@ namespace OpenBabel {
       //For radicals output bracket form anyway unless r option specified
       if(!(_pconv && _pconv->IsOption ("r")))
         bracketElement = true;
+    }
+    
+    // Add brackets and explicit hydrogens for coordinated water molecules
+    // PR#2505562
+    if (isWaterOxygen(atom)) {
+      bracketElement = true;
+      writeExplicitHydrogen = true;
     }
 
     //Output as [CH3][CH3] rather than CC if -xh option has been specified

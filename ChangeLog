@@ -1,3 +1,17 @@
+2009-01-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/element.txt, data/element.h: Change maxbonds for P to 6
+	(e.g. PF6-).
+
+	* src/formats/smilesformat.cpp: Mark coordinated water molecules
+	as [OH2] to address PR#2505562.
+
+	* src/formats/cifformat.cpp: Assign formal charges to halides and
+	alkali when coordinated to a water molecule.
+
+	* src/formats/pdbformat.cpp: Add -ac option to ignore CONECT
+	records, contributed by Izhar.
+	
 2009-01-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.cpp: Ensure H-O-H, H-S-H, and
