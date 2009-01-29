@@ -41,7 +41,8 @@ namespace OpenBabel
         "Protein Data Bank format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
-        "  b  Disable bonding entirely\n\n";
+        "  b  Disable bonding entirely\n"
+        "  c  Ignore CONECT records\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -137,8 +138,11 @@ namespace OpenBabel
           }
 
         if (EQn(buffer,"CONECT",6)) {
-          parseConectRecord(buffer,mol);
-          continue;
+          // Don't parse a CONECT record if the user tells us to ignore them
+          if (!pConv->IsOption("c",OBConversion::INOPTIONS)) {
+            parseConectRecord(buffer,mol);
+            continue;
+          }
         }
 
         // crystal cells
