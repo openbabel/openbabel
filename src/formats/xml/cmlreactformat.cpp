@@ -95,6 +95,7 @@ private:
   bool MolsHaveBeenAdded; //separate OBMols during output
   OBRateData* _pRD; //used on input
   string _text; //used on output to delay text so it can be after reactions
+  ostream* _pOut;//used on output to save the original output stream
 };
 
 //Make an instance of the format class
@@ -308,11 +309,16 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
     //more than one place using the -C option. Thermodynamic data can also be 
     //upgraded from that in molecules in OBReaction object (and so in Chemkin or
     //CMLReact input file) by including a separate file with updates.
+
+    if(pConv->GetOutputIndex()==1)
+    {
+      _pOut = pConv->GetOutStream();//Save the original output stream       
+      OMols.clear();
+    }
+
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol!=NULL)
     {
-      if(pConv->GetOutputIndex()==1)
-        OMols.clear();
       shared_ptr<OBMol> sp(pmol);
       AddMolToList(sp, OMols);
       pConv->SetOutputIndex(-1); //Signals that molecules have been added
@@ -347,17 +353,14 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
       if(ptext==NULL)
         return false;
       string::size_type pos = 0;
-      *pConv->GetOutStream() << ptext->GetText(pos); //Output text up to insertion point
-      _text = ptext->GetText(pos); //Save text after insertion point to be output at the end
+      string frontText(ptext->GetText(pos));
+      *_pOut << frontText;//Output(to orig outstream) text up to insertion point
+      _text = ptext->GetText(pos);  //Save text after insertion point to be output at the end
 
       //if any of the text contains an xml declaration, do not write again
       // and also omit <cml>...</cml> wrapper
-      if(ptext->GetText().find("<?xml ")!=string::npos)
-      {
-        //need to obtain _pxmlConv here. It doesn't matter if GetDerived is called again
-        _pxmlConv = XMLConversion::GetDerived(pConv,false);
-        _pxmlConv->AddOption("ReactionsNotStandalone");
-      }
+      if(frontText.find("<?xml ")!=string::npos)
+        pConv->AddOption("ReactionsNotStandalone");
       
       pConv->SetOutputIndex(pConv->GetOutputIndex()-1);//not an output we want to count
       return true;
@@ -376,8 +379,7 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
 
   if(pConv->IsLast() && !_text.empty())
   {
-
-    *pConv->GetOutStream() << _text;
+    *_pOut << _text; //Last part of an OBText object to original output stream
     _text.clear();
   }
 
@@ -419,11 +421,11 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   static const xmlChar C_REACTANTLIST[] = "reactantList";
   static const xmlChar C_PRODUCTLIST[]  = "productList";
   static const xmlChar C_REF[]          = "ref";
-  static const xmlChar C_TITLE[]        = "title";
+  static const xmlChar C_TITLE[]        = "id"; //"title";
+  static const xmlChar C_REVERSIBLE[]   = "reversible";
+
   
   bool list = _pxmlConv->IsOption("l")==NULL; //Output with molecules in a separate list
-
-  ostream* pOut = pConv->GetOutStream(); //the original output stream
 
   xmlChar* prefix = BAD_CAST _pxmlConv->IsOption("N");
   xmlChar* altprefix = _pxmlConv->IsOption("M") ? BAD_CAST "obr" : NULL;
@@ -455,6 +457,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   //For first reaction
   if(pConv->GetOutputIndex()==1) //OBConversion::Convert() is still using original pConv
   {
+    _pOut = pConv->GetOutStream();//Save the original output stream 
     if(list)
     {
       //Use a temporary stringstream for list format so that moleculeList can be first
@@ -463,6 +466,8 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         OMols.clear();
 
       _pxmlConv->SetOutStream(&ssout);
+      //Do also for original object; GetDerived() copies the old to the new on subsequent reactions
+      pConv->SetOutStream(&ssout); 
     }
     if(!_pxmlConv->IsOption("x") && !_pxmlConv->IsOption("ReactionsNotStandalone"))
     {
@@ -473,7 +478,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     if(list)
     {
-      if(!_pxmlConv->IsOption("ReactionsNotStandalone"))
+      if(!pConv->IsOption("ReactionsNotStandalone"))
       {
         xmlTextWriterStartElementNS(writer(), prefix, C_LISTWRAPPER, uri);
       if(altprefix)
@@ -489,6 +494,8 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   xmlTextWriterStartElementNS(writer(), prefix, C_REACTION, NULL);
   if(!pReact->GetTitle().empty())
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", pReact->GetTitle().c_str());
+  if(pReact->IsReversible())
+    xmlTextWriterWriteFormatAttribute(writer(), C_REVERSIBLE,"%s", "true");
 
   xmlTextWriterStartElementNS(writer(), prefix, C_REACTANTLIST, NULL);
   unsigned i;
@@ -587,7 +594,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       footerPos = s.find("</cml");
       if(footerPos==string::npos)// cml tag may have been supressed
         footerPos = s.size();
-      *pOut << s.substr(0, reaclistPos)                      //header
+      *_pOut << s.substr(0, reaclistPos)                      //header
             << s.substr(mollistPos, footerPos-mollistPos)    //moleculeList
             << s.substr(reaclistPos, mollistPos-reaclistPos) //reactionList
             << s.substr(footerPos) << endl;                  //footer

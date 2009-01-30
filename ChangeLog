@@ -1,3 +1,24 @@
+2009-01-30  Chris Morley
+
+	* src/formats/chemkinformat.cpp: Move initialization into a
+	separate function Init()
+	
+	Change option -al to -aL (Reactions have labels) to avoid conflict
+	with other formats
+	
+	* src/formats/xml/cmlformat.cpp: Correct floatg error in CML1 output.
+	Added generic WriteScalarProperties()
+	Output molecular spinMultiplicity as a property, not an attribute.
+	On outputing a property, if the title has a namespace use dictRef
+	rather than title.
+	Output (non-zero) energy from OBMOl::GetEnergy as a property in kJ/mol
+	Output a negative vibrational frequency as imaginaryFrequency
+		 
+	* src/formats/xml/cmlreactformat.cpp: Ensure OBText strings go to
+	the original output stream. (Stream may change to output moleculeList
+	first.)
+	Add reversible attribute on reactions.
+
 2009-01-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/format.h (OpenBabel): Fix PR#2070342. Make
