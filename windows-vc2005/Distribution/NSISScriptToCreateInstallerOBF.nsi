@@ -454,7 +454,7 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.2.0
+  !define OBVersion 2.2.1
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
