@@ -122,7 +122,7 @@ namespace OpenBabel
     void WriteThermo(OBMol& mol, bool& propertyListWritten);
     string GetMolID();//for error mesaages
     bool WriteInChI(OBMol& mol);
-    bool CMLFormat::WriteScalarProperty(OBMol& mol, const char* title, double value,
+    bool WriteScalarProperty(OBMol& mol, const char* title, double value,
       const char* dictref=NULL, const char* units=NULL, const char* convention=NULL);
 
     bool WriteVibrationData(OBMol& mol);
