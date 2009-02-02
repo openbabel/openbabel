@@ -35,7 +35,6 @@ set(formats
     fingerprintformat
     freefracformat
     gamessformat
-    gamessukformat
     gaussformat
     gausscubeformat
     gausszmatformat
@@ -116,6 +115,7 @@ endif(LIBXML2_FOUND)
 if(NOT WIN32)
   set(formats
     ${formats}
+    gamessukformat
     xtcformat
   )
 endif(NOT WIN32)
