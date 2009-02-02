@@ -122,9 +122,6 @@ namespace OpenBabel
     void WriteThermo(OBMol& mol, bool& propertyListWritten);
     string GetMolID();//for error mesaages
     bool WriteInChI(OBMol& mol);
-    bool CMLFormat::WriteScalarProperty(OBMol& mol, const char* title, double value,
-      const char* dictref=NULL, const char* units=NULL, const char* convention=NULL);
-
     bool WriteVibrationData(OBMol& mol);
     bool WriteRotationData(OBMol& mol);
 
@@ -1120,7 +1117,7 @@ namespace OpenBabel
     //CML1
     static const xmlChar C_STRING[]       = "string";
     static const xmlChar C_INTEGER[]      = "integer";
-    static const xmlChar C_FLOAT[]        = "float";
+    static const xmlChar C_FLOAT[]        = "floatg";
     static const xmlChar C_BUILTIN[]      = "builtin";
     static const xmlChar C_STRINGARRAY[]  = "stringArray";
     static const xmlChar C_INTEGERARRAY[] = "integerArray";
@@ -1231,6 +1228,11 @@ namespace OpenBabel
             xmlTextWriterEndElement(writer());//name
           }
       }
+
+    //spinMultiplicity is written as an attribute of <molecule> only when it is not 1 and the molecule has bonds
+    int smult = mol.GetTotalSpinMultiplicity();
+    if(smult!=1 && numbonds!=0)
+      xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%d", smult);
 
     if(_pxmlConv->IsOption("m") && _pxmlConv->GetOutputIndex()==1) //only on first molecule
       WriteMetadataList();
@@ -1625,7 +1627,6 @@ namespace OpenBabel
 
     if(_pxmlConv->IsOption("p"))
       WriteProperties(mol, propertyListWritten);
-
     if(propertyListWritten)
       xmlTextWriterEndElement(writer());//propertList
 
@@ -1830,12 +1831,12 @@ namespace OpenBabel
 
   void CMLFormat::WriteProperties(OBMol& mol, bool& propertyListWritten)
   {
-    static const xmlChar C_DICTREF[]      = "dictRef";
+    // static const xmlChar C_DICTREF[]      = "dictRef";
     static const xmlChar C_PROPERTYLIST[] = "propertyList";
     static const xmlChar C_PROPERTY[]     = "property";
     static const xmlChar C_SCALAR[]       = "scalar";
     static const xmlChar C_TITLE[]        = "title";
-    
+
     vector<OBGenericData*>::iterator k;
     vector<OBGenericData*> vdata = mol.GetData();
     for (k = vdata.begin();k != vdata.end();k++)
@@ -1850,11 +1851,8 @@ namespace OpenBabel
                 propertyListWritten=true;
               }
             xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
-            //Title is now on <property>. If the attribute name has a namespace, use dictRef instead.
-            string att((*k)->GetAttribute());
-            xmlTextWriterWriteFormatAttribute(writer(), 
-              (att.find(':')==string::npos) ? C_TITLE : C_DICTREF,
-              "%s",att.c_str());
+            //Title is now on <property>
+            xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",(*k)->GetAttribute().c_str());
             xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
             //Title used to be on <scalar>...
             //xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",(*k)->GetAttribute().c_str());
@@ -1863,24 +1861,11 @@ namespace OpenBabel
             xmlTextWriterEndElement(writer());//property
           }
       }
-
-    static const double CALSTOJOULES = 4.1816;
-    //Energy is output when it is not zero
-    //This is the molecular energy, probably originally in Hartrees, 
-    // stored in OB as kcal/mol, but output here in kJ/mol
-    if(mol.GetEnergy()<-1e-3)//will be negative if assigned     
-      WriteScalarProperty(mol, "Energy", mol.GetEnergy() * CALSTOJOULES,
-        "me:ZPE", "kJ/mol", "computational");
-
-    //spinMultiplicity is written only when it is not 1
-    int smult = mol.GetTotalSpinMultiplicity();
-    if(smult!=1)
-      WriteScalarProperty(mol, "SpinMultiplicity", smult, "me:spinMultiplicity");
-
     if(mol.HasData(OBGenericDataType::VibrationData))
       WriteVibrationData(mol);
     if(mol.HasData(OBGenericDataType::RotationData))
       WriteRotationData(mol);
+
   }
 
   void CMLFormat::WriteThermo(OBMol& mol, bool& propertyListWritten)
@@ -1988,23 +1973,10 @@ namespace OpenBabel
 
     xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s","cm-1");
-
-    double imaginaryFrequency = 0.0;
-    //A negative frequency is output separately as an imaginary frequency (for transition states)
     for(int i=0; i<vd->GetNumberOfFrequencies(); ++i)
-    {
-      double freq = vd->GetFrequencies()[i];
-      if(freq>0.0)
-        xmlTextWriterWriteFormatString(writer(),"%.2lf ", freq);
-      else
-        imaginaryFrequency = -freq;
-    }
+      xmlTextWriterWriteFormatString(writer(),"%.lf ", vd->GetFrequencies()[i]);
     xmlTextWriterEndElement(writer());//array
     xmlTextWriterEndElement(writer());//property
-
-    if(imaginaryFrequency>0.0)
-      WriteScalarProperty(mol, "ImaginaryFrequency", imaginaryFrequency, "me:imFreqs", "cm-1");
-    
     return true;
   }
 
@@ -2028,7 +2000,7 @@ namespace OpenBabel
     const double WAVENUM_TO_GHZ=30.0;
     for(int i=0; i<3; ++i)
       if(rd->GetRotConsts()[i]!=0.0)
-        xmlTextWriterWriteFormatString(writer(),"%.3lf ", rd->GetRotConsts()[i]/WAVENUM_TO_GHZ);
+        xmlTextWriterWriteFormatString(writer(),"%.1f ", rd->GetRotConsts()[i]/WAVENUM_TO_GHZ);
     xmlTextWriterEndElement(writer());//array
     xmlTextWriterEndElement(writer());//property
     xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
@@ -2037,32 +2009,6 @@ namespace OpenBabel
 
     xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
     xmlTextWriterWriteFormatString(writer(),"%d ", rd->GetSymmetryNumber());
-    xmlTextWriterEndElement(writer());//scalar
-    xmlTextWriterEndElement(writer());//property
-    return true;
-  }
-
-
-  bool CMLFormat::WriteScalarProperty(OBMol& mol, 
-    const char* title, double value, const char* dictref, const char* units, const char* convention)
-  {
-    static const xmlChar C_PROPERTY[]     = "property";
-    static const xmlChar C_SCALAR[]       = "scalar";
-    static const xmlChar C_DICTREF[]      = "dictRef";
-    static const xmlChar C_UNITS[]        = "units";
-    static const xmlChar C_TITLE[]        = "title";
-    static const xmlChar C_CONVENTION[]   = "convention";
-
-    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
-    xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",title);
-    if(dictref)
-      xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s",dictref);
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
-    if(units)
-      xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s",units);
-    if(convention)
-      xmlTextWriterWriteFormatAttribute(writer(), C_CONVENTION,"%s",convention);
-    xmlTextWriterWriteFormatString(writer(),"%.2lf ", value);
     xmlTextWriterEndElement(writer());//scalar
     xmlTextWriterEndElement(writer());//property
     return true;
@@ -2087,7 +2033,6 @@ namespace OpenBabel
     delete pOb;
     return ret;
   }
-
 
 
 }//namespace

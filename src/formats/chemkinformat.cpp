@@ -43,17 +43,16 @@ public:
     OBConversion::RegisterFormat("ck",this);
     OBConversion::RegisterOptionParam("s", this); //no params
     OBConversion::RegisterOptionParam("t", this);
-    Init();
   }
 
   virtual const char* Description()
   {
       return
 "ChemKin format\n"
-"Input Options e.g. -aL\n"
+"Input Options e.g. -ai\n"
 "f <file> File with standard thermo data: default therm.dat\n"
 "z Use standard thermo only\n"
-"L Reactions have labels (Usually optional)\n"
+"l Reactions have labels(Usually optional)\n"
 "\n"
 "Output options e.g. -xs\n"
 "s Simple output: reactions only\n"
@@ -72,7 +71,6 @@ public:
     return typeid(OBReaction*);
   };
 private:
-  void              Init();
   ///\return -1 eof or error; +1 reactionline found; 0 otherwise
   int               ReadLine(istream& ifs);
   bool              ReadHeader(istream& ifs, OBConversion* pConv);
@@ -188,7 +186,17 @@ bool ChemKinFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   if(pConv->IsFirstInput())
   {
-    Init();
+    //initialize the member variables used during input
+    ln.clear();
+    AUnitsFactor = 1.0;
+    EUnitsFactor = 1.0;
+    SpeciesListed=false;
+    IMols.clear();
+    //Special species name
+    shared_ptr<OBMol> sp(new OBMol);
+    sp.get()->SetTitle("M");
+    IMols["M"] = sp;
+
     if(!ReadHeader(ifs, pConv))
     {
       obErrorLog.ThrowError(__FUNCTION__, "Unexpected end of file or file reading error", obError);
@@ -204,20 +212,6 @@ bool ChemKinFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   //return true if reaction has either reactants or products
   return pReact->NumReactants() + pReact->NumProducts()>0;
-}
-
-/////////////////////////////////////////////////
-void ChemKinFormat::Init()
-{    //initialize the member variables used during input
-    ln.clear();
-    AUnitsFactor = 1.0;
-    EUnitsFactor = 1.0;
-    SpeciesListed=false;
-    IMols.clear();
-    //Special species name
-    shared_ptr<OBMol> sp(new OBMol);
-    sp.get()->SetTitle("M");
-    IMols["M"] = sp;
 }
 
 /////////////////////////////////////////////////
@@ -402,7 +396,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
       if(isalpha(firstr[0][0]))
       {
         //Starts with letter, so could be a label. Further tests...
-        if(pConv->IsOption("L",OBConversion::INOPTIONS)//this option mandates a label
+        if(pConv->IsOption("l",OBConversion::INOPTIONS)//this option mandates a label
           || firstr.size()>2                           //case 3 above
           || (SpeciesListed && !IMols.count(*itr)))    // there is a species list and it is not a species name
         {
@@ -415,7 +409,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
           obErrorLog.ThrowError(__FUNCTION__, 
             "In " + ln + 
             "\nThe string " + firstr[0] + " has been assumed NOT to be a label\n"
-            "If it should be, use the -aL option which mandates labels on reactions.\n"
+            "If it should be, use the -al option which mandates labels on reactions.\n"
             "A species missing from the SPECIES section, if one is used, can also give this error",
             obWarning);
       } 

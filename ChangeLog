@@ -1,21 +1,3 @@
-2009-01-29  Chris Morley
-
-	* include/openbabel/mol.h, src/mol.cpp:
-	a) allow mol files to be handled programatically as molecular 
-	patterns, not molecules.
-	b) optionally allow has2D() to be  false if has 3D coordinates.
-
-	* src/formats/chemkinformat.cpp, src/formats/xml/cmlformat.cpp,
-	src/formats/xml/cmlreactformat.cpp: as in r2867 trunk
-	
-	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:
-	Update version to 2.1.1
-
-	* windows-vc2005/OBCommonFormats/OBCommonFormats.vcproj:
-	remove src/formats/atomrecord.cpp
-	
-	* windows-vc2005/OpenBabelOBF.sln: just formatting changes, I think
-
 2009-01-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/element.txt, data/element.h: Change maxbonds for P to 6

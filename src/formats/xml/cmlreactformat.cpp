@@ -16,7 +16,6 @@ GNU General Public License for more details.
 #include "openbabel/reaction.h"
 #include "openbabel/xml.h"
 #include "openbabel/kinetics.h"
-#include "openbabel/text.h"
 
 using namespace std;
 //using std::tr1::shared_ptr;
@@ -94,8 +93,6 @@ private:
   ostringstream ssout; //temporary output
   bool MolsHaveBeenAdded; //separate OBMols during output
   OBRateData* _pRD; //used on input
-  string _text; //used on output to delay text so it can be after reactions
-  ostream* _pOut;//used on output to save the original output stream
 };
 
 //Make an instance of the format class
@@ -309,64 +306,37 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
     //more than one place using the -C option. Thermodynamic data can also be 
     //upgraded from that in molecules in OBReaction object (and so in Chemkin or
     //CMLReact input file) by including a separate file with updates.
-
-    if(pConv->GetOutputIndex()==1)
-    {
-      _pOut = pConv->GetOutStream();//Save the original output stream       
-      OMols.clear();
-    }
-
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol!=NULL)
-    {
-      shared_ptr<OBMol> sp(pmol);
-      AddMolToList(sp, OMols);
-      pConv->SetOutputIndex(-1); //Signals that molecules have been added
+    if(pmol==NULL)
+      return false;
+    if(pConv->GetOutputIndex()==1)
+      OMols.clear();
+    shared_ptr<OBMol> sp(pmol);
+    AddMolToList(sp, OMols);
+    pConv->SetOutputIndex(-1); //Signals that molecules have been added
 
-      bool ret=true;
-      if(pConv->IsLast())
+    bool ret=true;
+    if(pConv->IsLast())
+    {
+      //Only molecules have been supplied; output them via CMLFormat
+      OBFormat* pCMLFormat = pConv->FindFormat("cml");
+      if(pCMLFormat==NULL)
       {
-        //Only molecules have been supplied; output them via CMLFormat
-        OBFormat* pCMLFormat = pConv->FindFormat("cml");
-        if(pCMLFormat==NULL)
-        {
-          obErrorLog.ThrowError(__FUNCTION__,
-            "CML format for molecules is needed by CMLReactformat and is not available\n",obError);
-            return false;
-        }
-        unsigned int n=0;
-        MolMap::iterator mapitr;
-        for(mapitr=OMols.begin();mapitr!=OMols.end() && ret; ++mapitr)
-        {
-          pConv->SetOutputIndex(++n);      //we have to increment and
-          pConv->SetLast(n==OMols.size()); //setLast manually because we are not using Convert()
-          ret = pCMLFormat->WriteMolecule(mapitr->second.get(), pConv);
-        }
+        obErrorLog.ThrowError(__FUNCTION__,
+          "CML format for molecules is needed by CMLReactformat and is not available\n",obError);
+          return false;
       }
-      return ret;
+      unsigned int n=0;
+      MolMap::iterator mapitr;
+      for(mapitr=OMols.begin();mapitr!=OMols.end() && ret; ++mapitr)
+      {
+        pConv->SetOutputIndex(++n);      //we have to increment and
+        pConv->SetLast(n==OMols.size()); //setLast manually because we are not using Convert()
+        ret = pCMLFormat->WriteMolecule(mapitr->second.get(), pConv);
+      }
     }
-    else  
-    //If sent text as an OBText object, output the text up to the insertion point
-    //and the rest of the text in _text. The content of _text is output at the end.
-    {
-      OBText* ptext = dynamic_cast<OBText*>(pOb);
-      if(ptext==NULL)
-        return false;
-      string::size_type pos = 0;
-      string frontText(ptext->GetText(pos));
-      *_pOut << frontText;//Output(to orig outstream) text up to insertion point
-      _text = ptext->GetText(pos);  //Save text after insertion point to be output at the end
-
-      //if any of the text contains an xml declaration, do not write again
-      // and also omit <cml>...</cml> wrapper
-      if(frontText.find("<?xml ")!=string::npos)
-        pConv->AddOption("ReactionsNotStandalone");
-      
-      pConv->SetOutputIndex(pConv->GetOutputIndex()-1);//not an output we want to count
-      return true;
-    }
+    return ret;
   }
-
   bool ret=false;
   ret=WriteMolecule(pReact,pConv);
 
@@ -376,13 +346,6 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
   obErrorLog.ThrowError(__FUNCTION__, auditMsg, obAuditMsg);
 
   delete pOb;
-
-  if(pConv->IsLast() && !_text.empty())
-  {
-    *_pOut << _text; //Last part of an OBText object to original output stream
-    _text.clear();
-  }
-
   return ret;
 }
 
@@ -421,11 +384,11 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   static const xmlChar C_REACTANTLIST[] = "reactantList";
   static const xmlChar C_PRODUCTLIST[]  = "productList";
   static const xmlChar C_REF[]          = "ref";
-  static const xmlChar C_TITLE[]        = "id"; //"title";
-  static const xmlChar C_REVERSIBLE[]   = "reversible";
-
+  static const xmlChar C_TITLE[]        = "title";
   
   bool list = _pxmlConv->IsOption("l")==NULL; //Output with molecules in a separate list
+
+  ostream* pOut = pConv->GetOutStream(); //the original output stream
 
   xmlChar* prefix = BAD_CAST _pxmlConv->IsOption("N");
   xmlChar* altprefix = _pxmlConv->IsOption("M") ? BAD_CAST "obr" : NULL;
@@ -457,7 +420,6 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   //For first reaction
   if(pConv->GetOutputIndex()==1) //OBConversion::Convert() is still using original pConv
   {
-    _pOut = pConv->GetOutStream();//Save the original output stream 
     if(list)
     {
       //Use a temporary stringstream for list format so that moleculeList can be first
@@ -466,8 +428,6 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         OMols.clear();
 
       _pxmlConv->SetOutStream(&ssout);
-      //Do also for original object; GetDerived() copies the old to the new on subsequent reactions
-      pConv->SetOutStream(&ssout); 
     }
     if(!_pxmlConv->IsOption("x") && !_pxmlConv->IsOption("ReactionsNotStandalone"))
     {
@@ -478,12 +438,10 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     if(list)
     {
-      if(!pConv->IsOption("ReactionsNotStandalone"))
-      {
-        xmlTextWriterStartElementNS(writer(), prefix, C_LISTWRAPPER, uri);
+      xmlTextWriterStartElementNS(writer(), prefix, C_LISTWRAPPER, uri);
       if(altprefix)
         xmlTextWriterWriteAttributeNS(writer(),BAD_CAST "xmlns",altprefix,NULL,alturi);
-      }
+
       xmlTextWriterStartElementNS(writer(), prefix, C_REACTIONLIST, NULL);
     }
     else if(!_pxmlConv->IsLast() && !_pxmlConv->IsOption("ReactionsNotStandalone"))
@@ -494,8 +452,6 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   xmlTextWriterStartElementNS(writer(), prefix, C_REACTION, NULL);
   if(!pReact->GetTitle().empty())
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", pReact->GetTitle().c_str());
-  if(pReact->IsReversible())
-    xmlTextWriterWriteFormatAttribute(writer(), C_REVERSIBLE,"%s", "true");
 
   xmlTextWriterStartElementNS(writer(), prefix, C_REACTANTLIST, NULL);
   unsigned i;
@@ -579,9 +535,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       }
       xmlTextWriterEndElement(writer());//moleculeList
 
-      if(!_pxmlConv->IsOption("ReactionsNotStandalone"))
-        xmlTextWriterEndElement(writer());//LISTWRAPPER
-
+      xmlTextWriterEndElement(writer());//LISTWRAPPER
       xmlTextWriterEndDocument(writer());
       OutputToStream();
 
@@ -592,9 +546,8 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       if(reaclistPos!=string::npos)
         mollistPos = s.find("<moleculeList",reaclistPos+1);
       footerPos = s.find("</cml");
-      if(footerPos==string::npos)// cml tag may have been supressed
-        footerPos = s.size();
-      *_pOut << s.substr(0, reaclistPos)                      //header
+
+      *pOut << s.substr(0, reaclistPos)                      //header
             << s.substr(mollistPos, footerPos-mollistPos)    //moleculeList
             << s.substr(reaclistPos, mollistPos-reaclistPos) //reactionList
             << s.substr(footerPos) << endl;                  //footer

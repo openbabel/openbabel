@@ -1334,10 +1334,8 @@ namespace OpenBabel
       delete [] *k;
     _vconf.clear();
 
-    //Clear flags except OB_PATTERN_STRUCTURE which is left the same
-    _flags &= OB_PATTERN_STRUCTURE;
-
     _c = (double*) NULL;
+    _flags = 0;
     _mod = 0;
 
     // Clean up generic data via the base class
@@ -2114,9 +2112,6 @@ namespace OpenBabel
       return(true);
 
     SetSpinMultiplicityAssigned();
-
-    if(HasFlag(OB_PATTERN_STRUCTURE))// not a real molecule, just a pattern
-      return true;
 
     if(NumBonds()==0 && NumAtoms()!=1)
       {
@@ -2969,7 +2964,7 @@ namespace OpenBabel
     return(false);
   }
 
-  bool OBMol::Has2D(bool Not3D)
+  bool OBMol::Has2D()
   {
     bool hasX,hasY;
     OBAtom *atom;
@@ -2982,11 +2977,10 @@ namespace OpenBabel
           hasX = true;
         if (!hasY && !IsNearZero(atom->y()))
           hasY = true;
-        if(Not3D && atom->z())
-          return false;
-      }
-      if (hasX || hasY) //was && but this excluded vertically or horizontally aligned linear mols 
+
+        if (hasX && hasY)
           return(true);
+      }
     return(false);
   }
 

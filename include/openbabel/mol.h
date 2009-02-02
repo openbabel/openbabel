@@ -97,9 +97,7 @@ namespace OpenBabel
 #define OB_TSPIN_MOL             (1<<17)
   //! Ring typing has been performed. See OBRingTyper
 #define OB_RINGTYPES_MOL         (1<<18)
-  //! A pattern, not a complete molecule.
-#define OB_PATTERN_STRUCTURE     (1<<19)
-  // flags 19-32 unspecified
+  // flags 18-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
   // class introduction in mol.cpp
@@ -391,7 +389,7 @@ namespace OpenBabel
     virtual OBBase*    DoTransformations(const std::map<std::string,std::string>* pOptions);
     // Ditto (documentation on transformation options)
     static const char* ClassDescription();
-    //! Clear all information from a molecule except OB_PATTERN_STRUCTURE left unchanged
+    //! Clear all information from a molecule
     bool Clear();
     //! Renumber the atoms of this molecule according to the order in the supplied vector
     void RenumberAtoms(std::vector<OBAtom*>&);
@@ -458,9 +456,6 @@ namespace OpenBabel
     bool CorrectForPH(double pH=7.4);
     // docs in mol.cpp
     bool AssignSpinMultiplicity(bool NoImplicitH=false);
-    //! The OBMol is a pattern, not a complete molecule. Left unchanged by Clear(). 
-    void   SetIsPatternStructure()       { SetFlag(OB_PATTERN_STRUCTURE);}
-
     //! \return the center of the supplied conformer @p nconf
     //! \see Center() to actually center all conformers at the origin
     vector3 Center(int nconf);
@@ -512,8 +507,8 @@ namespace OpenBabel
 
     //! \name Methods to check for existence of properties
     //@{
-    //! Are there non-zero coordinates in two dimensions (i.e. X and Y)- and, if Not3D is true, no Z coordinates?
-    bool Has2D(bool Not3D=false);
+    //! Are there non-zero coordinates in two dimensions (i.e. X and Y)?
+    bool Has2D();
     //! Are there non-zero coordinates in all three dimensions (i.e. X, Y, Z)?
     bool Has3D();
     //! Are there any non-zero coordinates?
