@@ -117,6 +117,12 @@ namespace OpenBabel
     int charge = 0;
     unsigned int spin = 1;
     bool hasPartialCharges = false;
+    bool hasDipoleMoment = false;
+    vector3 dipoleMoment;
+    bool hasVibData = false;
+    vector<double> frequencies;
+    vector<double> intensities;
+    vector< vector<vector3> > displacements;
 
     mol.BeginModify();
 
@@ -151,36 +157,78 @@ namespace OpenBabel
             tokenize(vs,buffer);
             if (vs.size() >= 6) 
               {
-                OBVectorData *dipoleMoment = new OBVectorData;
-                dipoleMoment->SetAttribute("Dipole Moment");
                 double x, y, z;
                 x = atof(vs[1].c_str());
                 y = atof(vs[3].c_str());
                 z = atof(vs[5].c_str());
-                dipoleMoment->SetData(x, y, z);
-                dipoleMoment->SetOrigin(fileformatInput);
-                mol.SetData(dipoleMoment);
+                dipoleMoment.Set(x, y, z);
               }
             if (!ifs.getline(buffer,BUFF_SIZE)) break;
           }
-          else if(strstr(buffer,"Mulliken Net Atomic Charges") != NULL)
-            {
-              hasPartialCharges = true;
-              ifs.getline(buffer,BUFF_SIZE);	// (blank)
-              ifs.getline(buffer,BUFF_SIZE);	// column headings
-              ifs.getline(buffer,BUFF_SIZE);	// -----------------
-              ifs.getline(buffer,BUFF_SIZE);
-              tokenize(vs,buffer);
-              while (vs.size() >= 3)
-                {
-                  atom = mol.GetAtom(atoi(vs[0].c_str()));
-                  atom->SetPartialCharge(atof(vs[2].c_str()));
+        else if(strstr(buffer,"Mulliken Net Atomic Charges") != NULL)
+          {
+            hasPartialCharges = true;
+            ifs.getline(buffer,BUFF_SIZE);	// (blank)
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE);	// -----------------
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            while (vs.size() >= 3)
+              {
+                atom = mol.GetAtom(atoi(vs[0].c_str()));
+                atom->SetPartialCharge(atof(vs[2].c_str()));
+                
+                if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+                tokenize(vs,buffer);
+              }
+          }
+        else if(strstr(buffer,"Frequency:") != NULL)
+          {
+            hasVibData = true;
+            // We'll only see this data once -- several modes per "section"
+            // (e.g., 2 or 3 across)
+            tokenize(vs,buffer);
+            for(int i=1; i < vs.size(); ++i)
+              frequencies.push_back(atof(vs[i].c_str()));
 
-                  if (!ifs.getline(buffer,BUFF_SIZE))
-                    break;
-                  tokenize(vs,buffer);
-                }
+            ifs.getline(buffer,BUFF_SIZE);	// IR active
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            for(int i=1; i < vs.size(); ++i)
+              intensities.push_back(atof(vs[i].c_str()));
+
+            ifs.getline(buffer,BUFF_SIZE);	// Raman active
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE);	// actual displacement data
+            tokenize(vs, buffer);
+            vector<vector3> vib1, vib2, vib3;
+            double x, y, z;
+            while (vs.size() > 3) {
+              for (int i = 1; i < vs.size(); i += 3) {
+                x = atof(vs[i].c_str());
+                y = atof(vs[i+1].c_str());
+                z = atof(vs[i+2].c_str());
+
+                if (i == 1)
+                  vib1.push_back(vector3(x, y, z));
+                else if (i == 4)
+                  vib2.push_back(vector3(x, y, z));
+                else if (i == 7)
+                  vib3.push_back(vector3(x, y, z));
+              }
+
+              if (!ifs.getline(buffer, BUFF_SIZE))
+                break;
+              tokenize(vs,buffer);
             }
+            displacements.push_back(vib1);
+            if (vib2.size())
+              displacements.push_back(vib2);
+            if (vib3.size())
+              displacements.push_back(vib3);
+          }
+
         // In principle, the final geometry in cartesians is exactly the same
         // as this geometry, so we shouldn't lose any information
         // but we grab the charge and spin from this $molecule block
@@ -199,39 +247,6 @@ namespace OpenBabel
                 charge = atoi(vs[0].c_str());
                 spin = atoi(vs[1].c_str());
               }
-
-            // Uncomment this if you want to test the z-matrix parsing.
-            //  	  ifs.getline(buffer,BUFF_SIZE);  
-            //           coord = new OBInternalCoord();
-            //           internals.push_back(coord);
-            //           index = 1;
-            //           vector<OBAtom*>::iterator i;
-            //           for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
-            //                 tokenize(vs,buffer);
-            //                 atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
-
-            //                 tokenize(vs,buffer);
-            //                 coord = new OBInternalCoord();
-            //                 if (index > 1)
-            //                 {
-            //                         coord->_a = mol.GetAtom(atoi(vs[2].c_str()));
-            //                         coord->_dst = atof(vs[3].c_str());
-            //                 }
-            //                 if (index > 2)
-            //                 {
-            //                         coord->_b = mol.GetAtom(atoi(vs[4].c_str()));
-            //                         coord->_ang = atof(vs[5].c_str());
-            //                 }
-            //                 if (index > 3)
-            //                 {
-            //                         coord->_c = mol.GetAtom(atoi(vs[6].c_str()));
-            //                         coord->_tor = atof(vs[7].c_str());
-            //                 }
-            //                 index++;
-            //                 ifs.getline(buffer,BUFF_SIZE);
-            //                 internals.push_back(coord);
-            //           }  // end for
-            //          InternalToCartesian(internals, mol);
           } // end (OPTIMIZATION CONVERGED)
       } // end while
 
@@ -246,15 +261,27 @@ namespace OpenBabel
       mol.PerceiveBondOrders();
 
     mol.EndModify();
-
+  
     if (hasPartialCharges) {
       mol.SetPartialChargesPerceived();
       // Annotate that partial charges come from Q-Chem Mulliken
       OBPairData *dp = new OBPairData;
       dp->SetAttribute("PartialCharges");
       dp->SetValue("Mulliken");
-      dp->SetOrigin(perceived);
+      dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
+    }
+    if (hasDipoleMoment) {
+      OBVectorData *dmData = new OBVectorData;
+      dmData->SetAttribute("Dipole Moment");
+      dmData->SetData(dipoleMoment);
+      dmData->SetOrigin(fileformatInput);
+      mol.SetData(dmData);
+    }
+    if (hasVibData) {
+      OBVibrationData *vd = new OBVibrationData;
+      vd->SetData(displacements, frequencies, intensities);
+      mol.SetData(vd);
     }
     mol.SetTotalCharge(charge);
     mol.SetTotalSpinMultiplicity(spin);
@@ -275,8 +302,8 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-//    unsigned int i;
-//    OBAtom *atom;
+    //    unsigned int i;
+    //    OBAtom *atom;
 
     ofs << "$comment" << endl;
     ofs << mol.GetTitle() << endl;
