@@ -12,8 +12,10 @@ dist-hook:
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
 	(cd $(distdir)/python; rm -rf build; rm -f *.pyc *.so)
 	-(cd $(distdir)/ruby; $(MAKE) distclean)
-	(cd $(distdir)/java; rm -f *.so *.o *.class *.java)
+	(cd $(distdir)/java; rm -f *.so *.o *.class)
 	(cd $(distdir)/java; rm -f *.jnilib)
+	(cd $(distdir)/java; rm -rf META_INF)
+	(cd $(distdir)/java; find . -name "*.java" -print | grep -v OBTest | xargs rm -f)
 
 # build the scripting language interfaces if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG
