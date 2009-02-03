@@ -183,6 +183,25 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
+        else if (strstr(buffer, "ISOTROPIC") != NULL 
+                 && strstr(buffer, "ATOM") != NULL) // NMR suemmary
+          {
+            ifs.getline(buffer, BUFF_SIZE); // -------
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs,buffer);
+            while (vs.size() >= 5)
+              {
+                atom = mol.GetAtom(atoi(vs[2].c_str()));
+                OBPairData *nmrShift = new OBPairData();
+                nmrShift->SetAttribute("NMR Isotropic Shift");
+                nmrShift->SetValue(vs[3]);
+                atom->SetData(nmrShift);
+
+                if (!ifs.getline(buffer, BUFF_SIZE))
+                  break;
+                tokenize(vs, buffer);
+              }
+          }
         else if(strstr(buffer,"Frequency:") != NULL)
           {
             hasVibData = true;
