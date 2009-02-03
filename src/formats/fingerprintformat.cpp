@@ -67,7 +67,7 @@ namespace OpenBabel
       hexoutput=true;
 
     string fpid;
-    int nbits=0;
+    int nbits= 512;
     const char* p=pConv->IsOption("f");
     if(p)
       {
@@ -75,7 +75,12 @@ namespace OpenBabel
         fpid = fpid.substr(0,fpid.find('"'));
       }
 
-    OBFingerprint* pFP = OBFingerprint::FindFingerprint(fpid.c_str());
+    OBFingerprint* pFP;
+    if (!fpid.empty()) 
+      pFP = OBFingerprint::FindFingerprint(fpid.c_str());
+    else
+      pFP = OBFingerprint::FindFingerprint("FP4");
+
     if(!pFP)
       {
         stringstream errorMsg;
@@ -117,7 +122,7 @@ namespace OpenBabel
       return true;
     }
 
-    if(hexoutput && pConv->GetOutputIndex()==1)
+    if(hexoutput && pConv->GetOutputIndex()<=1)
       {
         unsigned int i, bitsset=0;
         for (i=0;i<fptvec.size();++i)
@@ -129,7 +134,7 @@ namespace OpenBabel
         ofs  << "   " << bitsset << " bits set "; 
       }
 
-    if(pConv->GetOutputIndex()==1)
+    if(pConv->GetOutputIndex()<=1)
       {
         //store the fingerprint and name of first molecule
         firstfp=fptvec;
