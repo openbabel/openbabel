@@ -64,6 +64,7 @@ namespace OpenBabel
   // class introduction in bond.cpp
  class OBAPI OBBond: public OBBase
     {
+    friend class OBMol;
     protected:
       unsigned int                _idx;   //!< Unique edge index used by GetIdx() and SetIdx()
       OBMol                      *_parent;//!< The molecule which contains me (if any)

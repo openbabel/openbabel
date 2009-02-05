@@ -1386,8 +1386,15 @@ namespace OpenBabel
     if (_mod)
       return;
 
-    if (nukePerceivedData)
+    if (nukePerceivedData) {
       _flags = 0;
+      OBBond *bond;
+      vector<OBBond*>::iterator k;
+      for (bond = BeginBond(k);bond;bond = NextBond(k)) {
+        bond->UnsetFlag(OB_RING_BOND);
+       //bond->UnsetAromatic(); should probably also be done
+      }
+    }
     _c = NULL;
 
     if (Empty())

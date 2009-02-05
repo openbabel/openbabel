@@ -1,3 +1,14 @@
+2009-02-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/bond.h: Add "friend OBMol" to allow OBMol to
+	unset flags on bonds.
+
+	* src/mol.cpp (EndModify): Unset ring bond membership. Fixes bug
+	#2568349.
+
+	* src/formats/pdbformat.cpp: Add more warnings for strange ATOM
+	records, contributed by Pierre-Louis.
+
 2009-01-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/element.txt, data/element.h: Change maxbonds for P to 6
@@ -18,7 +29,7 @@
 	similar bond angles are done correctly. Fixes PR#2527588.
 
 	* src/formats/pdbformat.cpp: Further refinements to parsing ATOM
-	records, contributed by Pierre-Louis Bonicoli for PR#2527225.
+	records, contributed by Pierre-Louis Bonicoli for PR#2 27225.
 
 	* configure.in, acinclude.m4, configure: Properly check for gzip
 	support. Fixes PR#2527272.
