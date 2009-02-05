@@ -1159,6 +1159,7 @@ namespace OpenBabel
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //OBChiralData for all atoms copied, TV 2008
+  //Zeros all flags except OB_TCHARGE_MOL and OB_TSPIN_MOL and OB_PATTERN_STRUCTURE which are copied
   {
     OBMol &src = (OBMol &)source;
     vector<OBAtom*>::iterator i;
@@ -1180,8 +1181,20 @@ namespace OpenBabel
     this->_title  = src.GetTitle();
     this->_energy = src.GetEnergy();
     this->_dimension = src.GetDimension();
+    this->SetTotalCharge(src.GetTotalCharge()); //also sets a flag
+    this->SetTotalSpinMultiplicity(src.GetTotalSpinMultiplicity()); //also sets a flag
+
+    EndModify(); //zeros flags!
+
+    if (src.HasFlag(OB_PATTERN_STRUCTURE))
+      this->SetFlag(OB_PATTERN_STRUCTURE);
+    if (src.HasFlag(OB_TSPIN_MOL))
+      this->SetFlag(OB_TSPIN_MOL);
+    if (src.HasFlag(OB_TCHARGE_MOL))
+      this->SetFlag(OB_TCHARGE_MOL);
+
+    //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
     
-    EndModify();
 
     //Copy Residue information
     unsigned int NumRes = src.NumResidues();
@@ -1389,7 +1402,14 @@ namespace OpenBabel
       return;
 
     if (nukePerceivedData)
+    {
       _flags = 0;
+      OBBond *bond;
+      vector<OBBond*>::iterator k;
+      for (bond = BeginBond(k);bond;bond = NextBond(k))
+        bond->SetInRing(false);
+        //bond->UnsetAromatic(); should probably also be done
+    }
     _c = NULL;
 
     if (Empty())

@@ -128,7 +128,7 @@ namespace OpenBabel
       //! Mark that this bond has an "down" torsion for double-bond stereochem (i.e., "\" in SMILES notation
       void SetDown()        { SetFlag(OB_TORDOWN_BOND); UnsetFlag(OB_TORUP_BOND);   }
       //! Mark that this bond is in a ring. Primarily for internal use.
-      void SetInRing()      { SetFlag(OB_RING_BOND);     }
+      void SetInRing(bool set=true) { if(set)SetFlag(OB_RING_BOND); else UnsetFlag(OB_RING_BOND);}
       //! Mark that this bond indicates a ring closure when walking the molecule
       /** \warning This is for internal use only. All closure bonds are marked
           automatically by lazy evaluation when requesting 

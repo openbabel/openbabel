@@ -1,3 +1,13 @@
+2009-02-05  Chris Morley
+		
+	* include/openbabel/bond.h: Added parameter to SetInRing to allow
+	it to be unset. (No other public way to do this.)
+	
+	* src/mol.cpp:(EndModify): Clear all OBBond (OB_RING_BOND)flags to
+	fix bug #2568349 	
+	(operator=): Copied flags OB_TCHARGE_MOL, OB_TSPIN_MOL and
+	OB_PATTERN_STRUCTURE manually because all flags are cleared.
+	
 2009-01-30  Chris Morley
 
 	* src/formats/chemkinformat.cpp: Move initialization into a
