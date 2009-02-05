@@ -667,7 +667,7 @@ namespace OpenBabel
       return(false);
 
     bool hetatm = (EQn(buffer,"HETATM",6)) ? true : false;
-    bool elementFound = false;
+    bool elementFound = false; // true if correct element found in col 77-78
 
     /* serial number */
     string serno = sbuf.substr(0,5);
@@ -679,32 +679,34 @@ namespace OpenBabel
     char chain = sbuf.substr(15,1)[0];
 
     /* element */
-    string element;
+    string element = "  ";
     if (sbuf.size() > 71)
       {
         element = sbuf.substr(70,2);
-        if(element[0] == ' ')
-          element.erase(0, 1);
-        
-        if(!isalpha(element[0]))
-          element = "  ";
-      }
-    else
-      {
-        element = "  ";
+        if (isalpha(element[1]))
+          {
+            if (element[0] == ' ')
+              {
+                element.erase(0, 1);
+                elementFound = true;
+              }
+            else if (isalpha(element[0]))
+              {
+                elementFound = true;
+              }
+          }
       }
 
-    if ("  " == element)
+    if (!elementFound)
       {
         stringstream errorMsg;
         errorMsg << "WARNING: Problems reading a PDB file\n"
                  << "  Problems reading a HETATM or ATOM record.\n"
                  << "  According to the PDB specification,\n"
-                 << "  columns 77-78 should contain the element symbol of an atom.\n";
+                 << "  columns 77-78 should contain the element symbol of an atom.\n"
+                 << "  but OpenBabel found '" << element << "' (atom " << mol.NumAtoms()+1 << ")";
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-      } else {
-      elementFound = true;
-    }
+      }
     
     // charge - optional
     string scharge;
@@ -850,6 +852,16 @@ namespace OpenBabel
             const char reorderCharge[3] = { scharge[1], scharge[0], '\0' };
             const int charge = atoi(reorderCharge);
             atom.SetFormalCharge(charge);
+          }
+        else
+          {
+            stringstream errorMsg;
+            errorMsg << "WARNING: Problems reading a PDB file\n"
+                     << "  Problems reading a HETATM or ATOM record.\n"
+                     << "  According to the PDB specification,\n"
+                     << "  columns 79-80 should contain charge of the atom\n"
+                     << "  but OpenBabel found '" << scharge << "' (atom " << mol.NumAtoms()+1 << ").";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
           }
       }
     else {
