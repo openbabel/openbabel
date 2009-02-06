@@ -107,7 +107,7 @@ namespace OpenBabel
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
 
-    char buffer[BUFF_SIZE];
+    char buffer[BUFF_SIZE], tag[BUFF_SIZE];
     string str,str1;
     double x,y,z;
     OBAtom *atom;
@@ -184,7 +184,7 @@ namespace OpenBabel
               }
           }
         else if (strstr(buffer, "ISOTROPIC") != NULL 
-                 && strstr(buffer, "ATOM") != NULL) // NMR suemmary
+                 && strstr(buffer, "ATOM") != NULL) // NMR summary
           {
             ifs.getline(buffer, BUFF_SIZE); // -------
             ifs.getline(buffer, BUFF_SIZE);
@@ -194,7 +194,13 @@ namespace OpenBabel
                 atom = mol.GetAtom(atoi(vs[2].c_str()));
                 OBPairData *nmrShift = new OBPairData();
                 nmrShift->SetAttribute("NMR Isotropic Shift");
-                nmrShift->SetValue(vs[3]);
+
+                // We want to round this to 2 decimals
+                // So convert to a float and print it as a new string
+                float shift = atof(vs[3].c_str());
+                snprintf(tag, BUFF_SIZE, "%7.2f", shift);
+
+                nmrShift->SetValue(tag);
                 atom->SetData(nmrShift);
 
                 if (!ifs.getline(buffer, BUFF_SIZE))
