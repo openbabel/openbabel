@@ -2365,7 +2365,7 @@ namespace OpenBabel {
     int maxBonds = etab.GetMaxBonds(atom->GetAtomicNum());
     // default -- bracket if we have more bonds than possible
     // we have some special cases below
-    bracketElement = !(normalValence = (bosum > maxBonds));
+    bracketElement = !(normalValence = (bosum <= maxBonds));
 
     switch (atom->GetAtomicNum()) {
     case 0: break;
