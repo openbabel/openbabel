@@ -755,7 +755,7 @@ namespace OpenBabel
   string CIFReadValue(stringstream &in,char &lastc)
   {
     bool vv=false;//very verbose ?
-    string value;
+    string value("");
     while(!isgraph(in.peek())) in.get(lastc);
     while(in.peek()=='#')
       {//discard these comments for now
@@ -764,6 +764,11 @@ namespace OpenBabel
         lastc='\r';
         while(!isgraph(in.peek())) in.get(lastc);
       }
+    if(in.peek()=='_') {
+      if (vv)
+        cout << "WARNING: Trying to read a value but found a new tag !" << endl;
+      return value;
+    }
     if(in.peek()==';')
       {//SemiColonTextField
         bool warning=!iseol(lastc);
