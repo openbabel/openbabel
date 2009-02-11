@@ -162,4 +162,5 @@ add_subdirectory(doc)
 add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(tools)
+add_subdirectory(scripts)
 
