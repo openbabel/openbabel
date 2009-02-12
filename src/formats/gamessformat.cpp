@@ -225,6 +225,9 @@ namespace OpenBabel
 
     vector<double> frequencies, intensities;
     vector< vector<vector3> > displacements;
+    int lowFreqModes = 6; // the number of modes to ignore
+    int numFreq, numIntens, numDisp; // GAMESS prints rotations & transl., which we ignore
+    numFreq = numIntens = numDisp = 0;
 
     // must build generic data while we parse then add at the end.
     OBSetData *gmsset = new OBSetData();
@@ -423,17 +426,28 @@ namespace OpenBabel
             else if (vs.size() == 8) //beta
               HOMO = atoi(vs[7].c_str());
           }
+        else if (strstr(buffer, "TAKEN AS ROTATIONS AND TRANSLATIONS") != NULL)
+          {
+            tokenize(vs, buffer);
+            if (vs.size() < 4)
+              break;
+            lowFreqModes = atoi(vs[3].c_str());
+          }
         else if (strstr(buffer,"FREQUENCY") != NULL)
           {
             tokenize(vs, buffer);
             for (unsigned int i = 1; i < vs.size(); ++i) {
-              frequencies.push_back(atof(vs[i].c_str()));
+              ++numFreq;
+              if (numFreq > lowFreqModes)
+                frequencies.push_back(atof(vs[i].c_str()));
             }
             ifs.getline(buffer, BUFF_SIZE); // reduced mass
             ifs.getline(buffer, BUFF_SIZE);
             tokenize(vs, buffer);
             for (unsigned int i = 1; i < vs.size(); ++i) {
-              intensities.push_back(atof(vs[i].c_str()));
+              ++numIntens;
+              if (numIntens > lowFreqModes)
+                intensities.push_back(atof(vs[i].c_str()));
             }
             ifs.getline(buffer, BUFF_SIZE); // blank
 
@@ -443,7 +457,7 @@ namespace OpenBabel
             vector<vector3> displacement;
             for (unsigned int i = 0; i < newModes; ++i) {
               displacements.push_back(displacement);
-            } 
+            }
 
             ifs.getline(buffer, BUFF_SIZE);
             tokenize(vs, buffer);
@@ -470,8 +484,12 @@ namespace OpenBabel
               }
 
               // OK, now we have x, y, z for all new modes for one atom
-              for (unsigned int i = 0; i < modeCount - 1;  ++i) {
-                displacements[prevModeCount + i].push_back(vector3(x[i], y[i], z[i]));
+              if (displacements.size()) {
+                for (unsigned int i = 0; i < modeCount - 1;  ++i) {
+                  ++numDisp;
+                  if (numDisp > lowFreqModes)
+                    displacements[prevModeCount + i].push_back(vector3(x[i], y[i], z[i]));
+                }
               }
 
               // Next set of atoms
