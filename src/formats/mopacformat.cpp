@@ -77,6 +77,9 @@ namespace OpenBabel
     bool hasPartialCharges = false;
     double energy;
     OBVectorData *dipoleMoment = NULL;
+    bool readingVibrations = false;
+    vector< vector<vector3> > displacements; // vibrational displacements
+    vector<double> frequencies, intensities;
 
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
@@ -153,6 +156,70 @@ namespace OpenBabel
             if (!ifs.getline(buffer,BUFF_SIZE))
               break;
           }
+        else if(strstr(buffer,"MASS-WEIGHTED COORDINATE ANALYSIS") != NULL)
+          { // the correct vibrations -- earlier bits aren't mass-weighted
+            readingVibrations = true;
+            cerr << " found vibrations " << endl;
+            if (!ifs.getline(buffer,BUFF_SIZE))
+              break;
+          }
+        else if (readingVibrations && strstr(buffer, "Root No.") != NULL)
+          {
+            cerr << " reading vibrations" << endl;
+
+            ifs.getline(buffer, BUFF_SIZE); // blank line
+            ifs.getline(buffer, BUFF_SIZE); // symmetry labels (for OB-2.3)
+            ifs.getline(buffer, BUFF_SIZE); // blank
+            ifs.getline(buffer, BUFF_SIZE); // frequencies
+            tokenize(vs, buffer);
+            for (unsigned int i = 0; i < vs.size(); ++i) {
+              frequencies.push_back(atof(vs[i].c_str()));
+              intensities.push_back(0.0);
+            }
+            ifs.getline(buffer, BUFF_SIZE); // blank
+
+            // now real work
+            int prevModeCount = displacements.size();
+            int newModes = frequencies.size() - displacements.size();
+            vector<vector3> displacement;
+            for (unsigned int i = 0; i < newModes; ++i) {
+              displacements.push_back(displacement);
+            } 
+
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs, buffer);
+            int modeCount = vs.size();
+            vector<double> x, y, z;
+            while(modeCount > 1) {
+              x.clear();
+              for (unsigned int i = 1; i < modeCount; ++i) {
+                x.push_back(atof(vs[i].c_str()));
+              }
+              y.clear();
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs, buffer);
+              for (unsigned int i = 1; i < modeCount; ++i) {
+                y.push_back(atof(vs[i].c_str()));
+              }
+              
+              z.clear();
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs, buffer);
+              for (unsigned int i = 1; i < modeCount; ++i) {
+                z.push_back(atof(vs[i].c_str()));
+              }
+
+              // OK, now we have x, y, z for all new modes for one atom
+              for (unsigned int i = 0; i < modeCount - 1;  ++i) {
+                displacements[prevModeCount + i].push_back(vector3(x[i], y[i], z[i]));
+              }
+
+              // Next set of atoms
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs, buffer);
+              modeCount = vs.size();
+            }
+          }
       }
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
@@ -179,11 +246,18 @@ namespace OpenBabel
         OBPairData *dp = new OBPairData;
         dp->SetAttribute("PartialCharges");
         dp->SetValue("Mulliken");
-        dp->SetOrigin(perceived);
+        dp->SetOrigin(fileformatInput);
         mol.SetData(dp);
       }
     if (dipoleMoment)
       mol.SetData(dipoleMoment);
+    if (frequencies.size() != 0) { // we found some vibrations
+      OBVibrationData *vd = new OBVibrationData;
+      vd->SetData(displacements, frequencies, intensities);
+      vd->SetOrigin(fileformatInput);
+      mol.SetData(vd);
+    }
+
 
     mol.SetTitle(title);
 

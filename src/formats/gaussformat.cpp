@@ -267,7 +267,7 @@ namespace OpenBabel
 
     //Vibrational data
     std::vector< std::vector< vector3 > > Lx;
-    std::vector<double> Frequencies, Intensities;;
+    std::vector<double> Frequencies, Intensities;
     //Rotational data
     std::vector<double> RotConsts(3);
     int RotSymNum;
@@ -356,15 +356,43 @@ namespace OpenBabel
         {
           //The info should appear only once as several blocks starting with this line
           tokenize(vs, buffer);
-          for(int i=2; i<vs.size(); ++i)
+          for(unsigned int i=2; i<vs.size(); ++i)
             Frequencies.push_back(atof(vs[i].c_str()));
           ifs.getline(buffer,BUFF_SIZE); //Red. masses
           ifs.getline(buffer,BUFF_SIZE); //Frc consts
           ifs.getline(buffer,BUFF_SIZE); //IR Inten
           tokenize(vs, buffer);
-          for(int i=3; i<vs.size(); ++i)
+          for(unsigned int i=3; i<vs.size(); ++i)
             Intensities.push_back(atof(vs[i].c_str()));
-          //** Lx yet to be done **
+
+          ifs.getline(buffer, BUFF_SIZE); // column labels
+          ifs.getline(buffer, BUFF_SIZE); // actual displacement data
+          tokenize(vs, buffer);
+          vector<vector3> vib1, vib2, vib3;
+          double x, y, z;
+          while(vs.size() > 5) {
+            for (unsigned int i = 2; i < vs.size(); i += 3) {
+              x = atof(vs[i].c_str());
+              y = atof(vs[i+1].c_str());
+              z = atof(vs[i+2].c_str());
+              
+              if (i == 2)
+                vib1.push_back(vector3(x, y, z));
+              else if (i == 5)
+                vib2.push_back(vector3(x, y, z));
+              else if (i == 8)
+                vib3.push_back(vector3(x, y, z));
+            }
+            
+            if (!ifs.getline(buffer, BUFF_SIZE))
+              break;
+            tokenize(vs,buffer);
+          }
+          Lx.push_back(vib1);
+          if (vib2.size())
+            Lx.push_back(vib2);
+          if (vib3.size())
+            Lx.push_back(vib3);
         }
 
         else if(strstr(buffer, " This molecule is "))//rotational data
@@ -429,7 +457,7 @@ namespace OpenBabel
       OBPairData *dp = new OBPairData;
       dp->SetAttribute("PartialCharges");
       dp->SetValue("Mulliken");
-      dp->SetOrigin(perceived);
+      dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
     mol.SetTotalCharge(charge);
