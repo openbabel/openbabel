@@ -159,14 +159,11 @@ namespace OpenBabel
         else if(strstr(buffer,"MASS-WEIGHTED COORDINATE ANALYSIS") != NULL)
           { // the correct vibrations -- earlier bits aren't mass-weighted
             readingVibrations = true;
-            cerr << " found vibrations " << endl;
             if (!ifs.getline(buffer,BUFF_SIZE))
               break;
           }
         else if (readingVibrations && strstr(buffer, "Root No.") != NULL)
           {
-            cerr << " reading vibrations" << endl;
-
             ifs.getline(buffer, BUFF_SIZE); // blank line
             ifs.getline(buffer, BUFF_SIZE); // symmetry labels (for OB-2.3)
             ifs.getline(buffer, BUFF_SIZE); // blank
@@ -174,7 +171,6 @@ namespace OpenBabel
             tokenize(vs, buffer);
             for (unsigned int i = 0; i < vs.size(); ++i) {
               frequencies.push_back(atof(vs[i].c_str()));
-              intensities.push_back(0.0);
             }
             ifs.getline(buffer, BUFF_SIZE); // blank
 
@@ -219,6 +215,16 @@ namespace OpenBabel
               tokenize(vs, buffer);
               modeCount = vs.size();
             }
+          }
+        else if (readingVibrations && strstr(buffer, "T-DIPOLE") != NULL)
+          {
+            unsigned int currentIntensity = intensities.size();
+            tokenize(vs, buffer);
+            if (vs.size() < 2)
+              break;
+
+            double transDipole = atof(vs[1].c_str());
+            intensities.push_back(frequencies[currentIntensity] * transDipole * transDipole);
           }
       }
 
