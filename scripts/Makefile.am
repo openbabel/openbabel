@@ -60,7 +60,7 @@ java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 	(cd java; ls org/openbabel/*.class > classes.list)
 	(cd java; $(JAR) cf openbabel.jar @classes.list)
 	(cd java; rm -rf org classes.list)
-endif #BUILD_JAVA
+endif BUILD_JAVA
 
 if BUILD_CSHARP
 csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
