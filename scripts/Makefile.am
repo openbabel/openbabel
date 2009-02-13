@@ -22,8 +22,7 @@ dist-hook:
 
 if MAINTAINER_MODE
 if BUILD_SWIG
-BUILT_SOURCES = perl/openbabel_perl.cpp python/openbabel_python.cpp \
-	java/openbabel_java.cpp csharp/openbabel_csharp.cpp
+BUILT_SOURCES = perl/openbabel_perl.cpp python/openbabel_python.cpp
 
 script_includes = $(top_srcdir)/include/openbabel
 script_headers = $(script_includes)/mol.h $(script_includes)/obconversion.h \
@@ -51,6 +50,8 @@ python/openbabel_python.cpp: openbabel-python.i $(script_headers)
 	mv python/ob.py python/openbabel.py;
 
 if BUILD_JAVA
+BUILT_SOURCES += java/openbabel_java.cpp
+
 java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 	(cd java; rm -rf org; mkdir org; mkdir org/openbabel)
 	$(SWIG) -small -O -java -package org.openbabel \
@@ -63,6 +64,8 @@ java/openbabel_java.cpp: openbabel-java.i $(script_headers)
 endif BUILD_JAVA
 
 if BUILD_CSHARP
+BUILT_SOURCES += csharp/openbabel_csharp.cpp
+
 csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
 	$(SWIG) -small -O -csharp -templatereduce -c++ -o $@ \
 	-namespace OpenBabel -outdir csharp \

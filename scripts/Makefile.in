@@ -30,7 +30,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@am__append_1 = ruby/openbabel_ruby.cpp
+@BUILD_JAVA_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@am__append_1 = java/openbabel_java.cpp
+@BUILD_CSHARP_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@am__append_2 = csharp/openbabel_csharp.cpp
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@am__append_3 = ruby/openbabel_ruby.cpp
 subdir = scripts
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -197,9 +199,9 @@ EXTRA_DIST = openbabel-perl.i perl \
 # and SWIG is available -- please use the most recent version of SWIG
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@BUILT_SOURCES = perl/openbabel_perl.cpp \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	python/openbabel_python.cpp \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	java/openbabel_java.cpp \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	csharp/openbabel_csharp.cpp \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(am__append_1)
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(am__append_1) \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(am__append_2) \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(am__append_3)
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@script_includes = $(top_srcdir)/include/openbabel
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@script_headers = $(script_includes)/mol.h $(script_includes)/obconversion.h \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(script_includes)/atom.h $(script_includes)/bond.h \
