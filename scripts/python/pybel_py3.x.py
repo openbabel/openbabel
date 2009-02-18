@@ -1,3 +1,15 @@
+"""
+pybel - A Python module for accessing OpenBabel
+
+Global variables:
+  ob - the underlying SWIG bindings for OpenBabel
+  informats - a dictionary of supported input formats
+  outformats - a dictionary of supported output formats
+  descs - a list of supported descriptors
+  fps - a list of supported fingerprint types
+  forcefields - a list of supported forcefields
+"""
+
 import math
 import os.path
 import tempfile
@@ -22,37 +34,44 @@ def _formatstodict(list):
     return dict(broken)
 _obconv = ob.OBConversion()
 informats = _formatstodict(_obconv.GetSupportedInputFormat())
+"""A dictionary of supported input formats"""
 outformats = _formatstodict(_obconv.GetSupportedOutputFormat())
+"""A dictionary of supported output formats"""
 
 def _getplugins(findplugin, names):
     plugins = dict([(x, findplugin(x)) for x in names if findplugin(x)])
     return plugins
 
 descs = ['LogP', 'MR', 'TPSA']
+"""A list of supported descriptors"""
 _descdict = _getplugins(ob.OBDescriptor.FindType, descs)
 fps = ['FP2', 'FP3', 'FP4']
+"""A list of supported fingerprint types"""
 _fingerprinters = _getplugins(ob.OBFingerprint.FindFingerprint, fps)
-forcefields = ['UFF', 'MMFF94', 'Ghemical']
+forcefields = ['uff', 'mmff94', 'ghemical']
+"""A list of supported forcefields"""
 _forcefields = _getplugins(ob.OBForceField.FindType, forcefields)
 operations = ['Gen3D']
+"""A list of supported operations"""
 _operations = _getplugins(ob.OBOp.FindType, operations)
 
 def readfile(format, filename):
     """Iterate over the molecules in a file.
 
     Required parameters:
-       format
+       format - see the informats variable for a list of available
+                input formats
        filename
 
-    You can access the first molecule in a file using:
+    You can access the first molecule in a file using the __next__() method
+    of the iterator:
         mol = readfile("smi", "myfile.smi").__next__()
         
     You can make a list of the molecules in a file using:
-        mols = [mol for mol in readfile("smi", "myfile.smi")]
+        mols = list(readfile("smi", "myfile.smi"))
         
     You can iterate over the molecules in a file as shown in the
-    following code snippet...
-
+    following code snippet:
     >>> atomtotal = 0
     >>> for mol in readfile("sdf","head.sdf"):
     ...     atomtotal += len(mol.atoms)
@@ -77,9 +96,11 @@ def readstring(format, string):
     """Read in a molecule from a string.
 
     Required parameters:
-       format
+       format - see the informats variable for a list of available
+                input formats
        string
 
+    Example:
     >>> input = "C1=CC=CS1"
     >>> mymol = readstring("smi",input)
     >>> len(mymol.atoms)
@@ -107,13 +128,17 @@ class Outputfile(object):
     class.
     
     Required parameters:
-       format
+       format - see the outformats variable for a list of available
+                output formats
        filename
+
     Optional parameters:
-       overwrite (default is False) -- if the output file already exists,
-                                       should it be overwritten?
+       overwrite -- if the output file already exists, should it
+                   be overwritten? (default is False)
+                   
     Methods:
-       write(molecule), close()
+       write(molecule)
+       close()
     """
     def __init__(self, format, filename, overwrite=False):
         self.format = format
@@ -147,44 +172,23 @@ class Outputfile(object):
         self.filename = None
 
 class Molecule(object):
-    """Represent a Pybel molecule.
+    """Represent a Pybel Molecule.
 
     Required parameter:
-       OBMol -- an Open Babel OBMol
-       or
-       Molecule -- any type of cinfony Molecule (e.g. one from cinfony.rdkit)
-
-    If a cinfony Molecule is provided it will be converted into a pybel Molecule.       
+       OBMol -- an Open Babel OBMol or any type of cinfony Molecule
     
     Attributes:
-       atoms, charge, data, dim, energy, exactmass, flags, formula, 
-       mod, molwt, spin, sssr, title, unitcell.
+       atoms, charge, conformers, data, dim, energy, exactmass, formula, 
+       molwt, spin, sssr, title, unitcell.
     (refer to the Open Babel library documentation for more info).
     
     Methods:
        addh(), calcfp(), calcdesc(), draw(), localopt(), make3D(), removeh(),
        write() 
       
-    The original Open Babel molecule can be accessed using the attribute:
+    The underlying Open Babel molecule can be accessed using the attribute:
        OBMol
     """
-    _getmethods = {
-        'conformers':'GetConformers',
-        # 'coords':'GetCoordinates', you can access the coordinates the atoms elsewhere
-        # 'data':'GetData', has been removed
-        'dim':'GetDimension',
-        'energy':'GetEnergy',
-        'exactmass':'GetExactMass',
-        'flags':'GetFlags',
-        'formula':'GetFormula',
-        # 'internalcoord':'GetInternalCoord', # Causes SWIG warning
-        'mod':'GetMod',
-        'molwt':'GetMolWt',
-        'sssr':'GetSSSR',
-        'title':'GetTitle',
-        'charge':'GetTotalCharge',
-        'spin':'GetTotalSpinMultiplicity'
-    }
     _cinfony = True
 
     def __init__(self, OBMol):
@@ -199,36 +203,45 @@ class Molecule(object):
 
         self.OBMol = OBMol
  
-    def __getattr__(self, attr):
-        """Return the value of an attribute
-
-        Note: The values are calculated on-the-fly. You may want to store the value in
-        a variable if you repeatedly access the same attribute.
-        """
-        # This function is not accessed in the case of OBMol
-        if attr == "atoms":
-            # Create an atoms attribute on-the-fly
+    @property
+    def atoms(self):
             return [ Atom(self.OBMol.GetAtom(i+1)) for i in range(self.OBMol.NumAtoms()) ]
-        elif attr == "data":
-            # Create a data attribute on-the-fly
-            return MoleculeData(self.OBMol)
-        elif attr == "unitcell":
-            # Create a unitcell attribute on-the-fly
+    @property
+    def charge(self): return self.OBMol.GetTotalCharge()
+    @property
+    def conformers(self): return self.OBMol.GetConformers()
+    @property
+    def data(self): return MoleculeData(self.OBMol)
+    @property
+    def dim(self): return self.OBMol.GetDimension()
+    @property
+    def energy(self): return self.OBMol.GetEnergy()
+    @property
+    def exactmass(self): return self.OBMol.GetExactMass()
+    @property
+    def formula(self): return self.OBMol.GetFormula()
+    @property
+    def molwt(self): return self.OBMol.GetMolWt()
+    @property
+    def spin(self): return self.OBMol.GetTotalSpinMultiplicity()
+    @property
+    def sssr(self): return self.OBMol.GetSSSR()
+    def _gettitle(self): return self.OBMol.GetTitle()
+    def _settitle(self, val): self.OBMol.SetTitle(val)
+    title = property(_gettitle, _settitle)
+    @property
+    def unitcell(self):
             unitcell = self.OBMol.GetData(ob.UnitCell)
             if unitcell:
                 return ob.toUnitCell(unitcell)
             else:
                 raise AttributeError("Molecule has no attribute 'unitcell'")
-        elif attr in self._getmethods:
-            # Call the OB Method to find the attribute value
-            return getattr(self.OBMol, self._getmethods[attr])()
-        elif attr == "_exchange":
+    @property
+    def _exchange(self):
             if self.OBMol.HasNonZeroCoords():
                 return (1, self.write("mol"))
             else:
                 return (0, self.write("can").split()[0])
-        else:
-            raise AttributeError("Molecule has no attribute '%s'" % attr)
 
     def __iter__(self):
         """Iterate over the Atoms of the Molecule.
@@ -237,8 +250,7 @@ class Molecule(object):
            for atom in mymol:
                print atom
         """
-        for atom in self.atoms:
-            yield atom
+        return iter(self.atoms)
 
     def calcdesc(self, descnames=[]):
         """Calculate descriptor values.
@@ -246,9 +258,9 @@ class Molecule(object):
         Optional parameter:
            descnames -- a list of names of descriptors
 
-        If descnames is not specified, the full list of Open Babel
-        descriptors is calculated. See pybel.descs for a list
-        of available descriptors.
+        If descnames is not specified, all available descriptors are
+        calculated. See the descs variable for a list of available
+        descriptors.
         """
         if not descnames:
             descnames = descs
@@ -265,11 +277,9 @@ class Molecule(object):
         """Calculate a molecular fingerprint.
         
         Optional parameters:
-           fptype -- the name of the Open Babel fingerprint type.
-
-        If fptype is not specified, the FP2 fingerprint type
-        is used. See the Open Babel library documentation for more
-        details.
+           fptype -- the fingerprint type (default is "FP2"). See the
+                     fps variable for a list of of available fingerprint
+                     types.
         """
         fp = ob.vectorUnsignedInt()
         try:
@@ -279,18 +289,21 @@ class Molecule(object):
         fingerprinter.GetFingerprint(self.OBMol, fp)
         return Fingerprint(fp)
 
-    def write(self, format="SMI", filename=None, overwrite=False):
+    def write(self, format="smi", filename=None, overwrite=False):
         """Write the molecule to a file or return a string.
         
         Optional parameters:
-           format -- default is "SMI"
+           format -- see the informats variable for a list of available
+                     output formats (default is "smi")
            filename -- default is None
-           overwite -- default is False
+           overwite -- if the output file already exists, should it
+                       be overwritten? (default is False)
 
         If a filename is specified, the result is written to a file.
         Otherwise, a string is returned containing the result.
-        The overwrite flag is ignored if a filename is not specified.
-        It controls whether to overwrite an existing file.
+
+        To write multiple molecules to the same file you should use
+        the Outputfile class.
         """
         obconversion = ob.OBConversion()
         formatok = obconversion.SetOutFormat(format)
@@ -305,22 +318,25 @@ class Molecule(object):
         else:
             return obconversion.WriteString(self.OBMol)
 
-    def localopt(self, forcefield="MMFF94", steps=500):
+    def localopt(self, forcefield="mmff94", steps=500):
         """Locally optimize the coordinates.
         
         Optional parameters:
-           forcefield -- default is "MMFF94"
+           forcefield -- default is "mmff94". See the forcefields variable
+                         for a list of available forcefields.
            steps -- default is 500
 
         If the molecule does not have any coordinates, make3D() is
         called before the optimization. Note that the molecule needs
         to have explicit hydrogens. If not, call addh().
         """
-        
-        if not (self.OBMol.HasNonZeroCoords()):
-            self.make3D()
+        forcefield = forcefield.lower()
+        if self.dim != 3:
+            self.make3D(forcefield)
         ff = _forcefields[forcefield]
-        ff.Setup(self.OBMol)
+        success = ff.Setup(self.OBMol)
+        if not success:
+            return
         ff.SteepestDescent(steps)
         ff.GetCoordinates(self.OBMol)
     
@@ -334,11 +350,12 @@ class Molecule(object):
 ##            ff.WeightedRotorSearch(numrots, int(math.log(numrots + 1) * steps))
 ##        ff.GetCoordinates(self.OBMol)
     
-    def make3D(self, forcefield="MMFF94", steps=50):
+    def make3D(self, forcefield = "mmff94", steps = 50):
         """Generate 3D coordinates.
         
         Optional parameters:
-           forcefield -- default is "MMFF94"
+           forcefield -- default is "mmff94". See the forcefields variable
+                         for a list of available forcefields.
            steps -- default is 50
 
         Once coordinates are generated, hydrogens are added and a quick
@@ -346,6 +363,7 @@ class Molecule(object):
         MMFF94 forcefield. Call localopt() if you want
         to improve the coordinates further.
         """
+        forcefield = forcefield.lower()
         _operations['Gen3D'].Do(self.OBMol)
         self.addh()
         self.localopt(forcefield, steps)
@@ -405,7 +423,7 @@ class Molecule(object):
                          e)
         # I'm sure there's a more elegant way to do the following, but here goes...
         # let's set the stereochemistry around double bonds
-        self.write("smi") # Perceive UP/DOWNness
+        self.write("can") # Perceive UP/DOWNness
         for bond in ob.OBMolBondIter(self.OBMol):
             ends = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
             if bond.GetBO() == 2:
@@ -494,7 +512,7 @@ class Atom(object):
     Attributes:
        atomicmass, atomicnum, cidx, coords, coordidx, exactmass,
        formalcharge, heavyvalence, heterovalence, hyb, idx,
-       implicitvalence, index, isotope, partialcharge, spin, type,
+       implicitvalence, isotope, partialcharge, spin, type,
        valence, vector.
 
     (refer to the Open Babel library documentation for more info).
@@ -503,45 +521,48 @@ class Atom(object):
        OBAtom
     """
     
-    _getmethods = {
-        'atomicmass':'GetAtomicMass',
-        'atomicnum':'GetAtomicNum',
-        'cidx':'GetCIdx',
-        'coordidx':'GetCoordinateIdx',
-        # 'data':'GetData', has been removed
-        'exactmass':'GetExactMass',
-        'formalcharge':'GetFormalCharge',
-        'heavyvalence':'GetHvyValence',
-        'heterovalence':'GetHeteroValence',
-        'hyb':'GetHyb',
-        'idx':'GetIdx',
-        'implicitvalence':'GetImplicitValence',
-        'isotope':'GetIsotope',
-        'partialcharge':'GetPartialCharge',
-        'spin':'GetSpinMultiplicity',
-        'type':'GetType',
-        'valence':'GetValence',
-        'vector':'GetVector',
-        }
-
     def __init__(self, OBAtom):
         self.OBAtom = OBAtom
         
-    def __getattr__(self, attr):
-        if attr == "coords":
+    @property
+    def coords(self):
             return (self.OBAtom.GetX(), self.OBAtom.GetY(), self.OBAtom.GetZ())
-        elif attr in self._getmethods:
-            return getattr(self.OBAtom, self._getmethods[attr])()
-        else:
-            raise AttributeError("Atom has no attribute %s" % attr)
+    @property
+    def atomicmass(self): return self.OBAtom.GetAtomicMass()
+    @property
+    def atomicnum(self): return self.OBAtom.GetAtomicNum()
+    @property
+    def cidx(self): return self.OBAtom.GetCIdx()
+    @property
+    def coordidx(self): return self.OBAtom.GetCoordinateIdx()
+    @property
+    def exactmass(self): return self.OBAtom.GetExactMass()
+    @property
+    def formalcharge(self): return self.OBAtom.GetFormalCharge()
+    @property
+    def heavyvalence(self): return self.OBAtom.GetHvyValence()
+    @property
+    def heterovalence(self): return self.OBAtom.GetHeteroValence()
+    @property
+    def hyb(self): return self.OBAtom.GetHyb()
+    @property
+    def idx(self): return self.OBAtom.GetIdx()
+    @property
+    def implicitvalence(self): return self.OBAtom.GetImplicitValence()
+    @property
+    def isotope(self): return self.OBAtom.GetIsotope()
+    @property
+    def partialcharge(self): return self.OBAtom.GetPartialCharge()
+    @property
+    def spin(self): return self.OBAtom.GetSpinMultiplicity()
+    @property
+    def type(self): return self.OBAtom.GetType()
+    @property
+    def valence(self): return self.OBAtom.GetValence()
+    @property
+    def vector(self): return self.OBAtom.GetVector()
 
     def __str__(self):
-        """Create a string representation of the atom.
-
-        >>> a = Atom()
-        >>> print a
-        Atom: 0 (0.0, 0.0, 0.0)
-        """
         c = self.coords
         return "Atom: %d (%.2f %.2f %.2f)" % (self.atomicnum, c[0], c[1], c[2])
 
@@ -569,10 +590,10 @@ class Fingerprint(object):
     """A Molecular Fingerprint.
     
     Required parameters:
-       obFingerprint -- a vector calculated by OBFingerprint.FindFingerprint()
+       fingerprint -- a vector calculated by OBFingerprint.FindFingerprint()
 
     Attributes:
-       fp -- the original obFingerprint
+       fp -- the underlying fingerprint object
        bits -- a list of bits set in the Fingerprint
 
     Methods:
@@ -580,16 +601,13 @@ class Fingerprint(object):
        given two Fingerprints 'a', and 'b', the Tanimoto coefficient is given by:
           tanimoto = a | b
     """
-    def __init__(self, obFingerprint):
-        self.fp = obFingerprint
+    def __init__(self, fingerprint):
+        self.fp = fingerprint
     def __or__(self, other):
         return ob.OBFingerprint.Tanimoto(self.fp, other.fp)
-    def __getattr__(self, attr):
-        if attr == "bits":
-            # Create a bits attribute on-the-fly
+    @property
+    def bits(self):
             return _findbits(self.fp, ob.OBFingerprint.Getbitsperint())
-        else:
-            raise AttributeError("Fingerprint has no attribute %s" % attr)
     def __str__(self):
         return ", ".join([str(x) for x in self.fp])
 
@@ -637,7 +655,7 @@ class MoleculeData(object):
     that the data is retrieved on-the-fly from the underlying OBMol.
 
     Example:
-    >>> mol = readfile("sdf", 'head.sdf').__next__()
+    >>> mol = readfile("sdf", 'head.sdf').next()
     >>> data = mol.data
     >>> print data
     {'Comment': 'CORINA 2.61 0041  25.10.2001', 'NSC': '1'}

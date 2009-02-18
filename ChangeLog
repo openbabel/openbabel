@@ -1,3 +1,8 @@
+2009-02-18  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/pybel_py2.x.py, pybel_py3.x.py: Synch with cinfony.
+	Long overdue.
+
 2009-02-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/bond.h: Add "friend OBMol" to allow OBMol to
