@@ -117,6 +117,10 @@ class TestToolkit(myTestCase):
         self.head[0].localopt()
         newcoords = self.head[0].atoms[0].coords
         self.assertNotEqual(oldcoords, newcoords)
+        # Make sure that make3D() is called for molecules without coordinates
+        mol = self.mols[0]
+        mol.localopt()
+        self.assertNotEqual(mol.atoms[3].coords, (0., 0., 0.))
 
     def testMake3D(self):
         """Test that 3D coordinate generation does something"""
@@ -302,12 +306,19 @@ M  END
         test = "Atom: 8 (-0.07 5.24 0.03)"
         self.assertEqual(str(self.atom), test)
 
+    def invalidSMARTStest(self):
+        # Should raise IOError
+        return self.toolkit.Smarts("[#NOEL][#NOEL]")
+
     def testSMARTS(self):
         """Searching for ethyl groups in triethylamine"""
         mol = self.toolkit.readstring("smi", "CCN(CC)CC")
         smarts = self.toolkit.Smarts("[#6][#6]")
         ans = smarts.findall(mol)
         self.assertEqual(len(ans), 3)
+	ob.obErrorLog.SetMessageLevel(ob.obError)
+        self.assertRaises(IOError, self.invalidSMARTStest)
+	ob.obErrorLog.SetMessageLevel(ob.obWarning)
 
     def testAddh(self):
         """Adding and removing hydrogens"""

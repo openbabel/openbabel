@@ -655,7 +655,7 @@ class MoleculeData(object):
     that the data is retrieved on-the-fly from the underlying OBMol.
 
     Example:
-    >>> mol = readfile("sdf", 'head.sdf').next()
+    >>> mol = readfile("sdf", 'head.sdf').__next__()
     >>> data = mol.data
     >>> print data
     {'Comment': 'CORINA 2.61 0041  25.10.2001', 'NSC': '1'}

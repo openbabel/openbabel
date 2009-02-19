@@ -1,3 +1,9 @@
+2009-02-19  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/pybel_py3.x.py: Docstring correction
+	* scripts/python/pybelapi.html: Update
+	* scripts/python/examples/testpybel.py: Improve coverage
+
 2009-02-18  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/python/pybel_py2.x.py, pybel_py3.x.py: Synch with cinfony.
