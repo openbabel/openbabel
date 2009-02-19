@@ -1,5 +1,12 @@
 2009-02-19  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* Windows Installer: Some changes to how environment variables are set
+	to play nicer with the Python extensions. Bumped up version number.
+	* babelconfig.h: Bumped up version number reported by (Windows) babel
+	* scripts/python/examples/testpybel.py: Minor correction
+
+2009-02-19  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* scripts/python/pybel_py3.x.py: Docstring correction
 	* scripts/python/pybelapi.html: Update
 	* scripts/python/examples/testpybel.py: Improve coverage

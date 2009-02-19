@@ -12,7 +12,7 @@
 #define HAVE_LIBZ 1 //Compression enabled...
 #define DISABLE_WRITE_COMPRESSION 1 //...but not for output
 
-#define BABEL_VERSION  "2.2.0"
+#define BABEL_VERSION  "2.2.1"
 
 #define BABEL_DATADIR "."
 

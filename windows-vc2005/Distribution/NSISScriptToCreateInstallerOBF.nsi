@@ -87,7 +87,8 @@ Function AddToPath
       Push $1
       Call Trim
       Pop $1
-      StrCpy $0 "$1;$0"
+      ;StrCpy $0 "$1;$0" Edited by Noel - add to front of PATH
+      StrCpy $0 "$0;$1"
     AddToPath_NTdoIt:
       WriteRegExpandStr ${WriteEnvStr_RegKey} "PATH" $0
       SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
@@ -238,7 +239,8 @@ Function AddToEnvVar
     StrCmp $3 ";" 0 +2 # if last char == ;
       StrCpy $2 $2 -1 # remove last char
     StrCmp $2 "" AddToEnvVar_NTdoIt
-      StrCpy $1 "$2;$1"
+      ; StrCpy $1 "$2;$1" Noel - Don't add - set the value
+      StrCpy $1 "$2"
     AddToEnvVar_NTdoIt:
       WriteRegExpandStr ${WriteEnvStr_RegKey} $0 $1
       SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
@@ -454,7 +456,7 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.2.0
+  !define OBVersion 2.2.1
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
@@ -624,7 +626,12 @@ Section "Dummy Section" SecDummy
   Push $INSTDIR
   Call AddToPath
 
-  WriteRegStr HKCU "Environment" "BABEL_DATADIR" "$INSTDIR" 
+  ; Set env var BABEL_DATADIR
+  ; Old way: WriteRegStr HKCU "Environment" "BABEL_DATADIR" "$INSTDIR" 
+  ; New way: Works immediately
+  Push "BABEL_DATADIR"
+  Push $INSTDIR
+  Call AddToEnvVar
 
 SectionEnd
 
@@ -757,6 +764,11 @@ Section "Uninstall"
 
   DeleteRegKey /ifempty HKCU "Software\OpenBabel ${OBVERSION}"
   DeleteRegKey          HKCU "Software\OpenBabelGUI"
+
+  ; Remove env var
+  push "BABEL_DATADIR"
+  push $INSTDIR
+  Call un.RemoveFromEnvVar
   DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
 
 SectionEnd

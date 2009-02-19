@@ -316,9 +316,9 @@ M  END
         smarts = self.toolkit.Smarts("[#6][#6]")
         ans = smarts.findall(mol)
         self.assertEqual(len(ans), 3)
-	ob.obErrorLog.SetMessageLevel(ob.obError)
+        self.toolkit.ob.obErrorLog.SetOutputLevel(self.toolkit.ob.obError)
         self.assertRaises(IOError, self.invalidSMARTStest)
-	ob.obErrorLog.SetMessageLevel(ob.obWarning)
+        self.toolkit.ob.obErrorLog.SetOutputLevel(self.toolkit.ob.obWarning)
 
     def testAddh(self):
         """Adding and removing hydrogens"""
