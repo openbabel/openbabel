@@ -40,7 +40,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    { return "";}; //optional
+    { return "http://www.centrcn.umontreal.ca/accelrys/life/insight2000.1/formats980/Files980TOC.doc.html";}; //optional
 
     virtual const char* GetMIMEType() 
     { return "chemical/x-msi-car"; };

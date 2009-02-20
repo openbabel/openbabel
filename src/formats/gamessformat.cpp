@@ -35,7 +35,7 @@ namespace OpenBabel
     //Register this format type ID
     GAMESSOutputFormat()
     {
-      OBConversion::RegisterFormat("gam",this);
+      OBConversion::RegisterFormat("gam", this, "chemical/x-gamess-output");
       OBConversion::RegisterFormat("gamout",this);
     }
 
