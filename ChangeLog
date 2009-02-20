@@ -1,3 +1,10 @@
+2009-02-20  Chris Morley
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:
+	env var BABEL_DATDIR wasn't being overwritten, so now deleted first
+	
+	* windows-vc2005/OBCommonFormats/OBCommonFormats.vcproj:
+	removed atomrecord.cpp
+
 2009-02-19  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* Windows Installer: Some changes to how environment variables are set

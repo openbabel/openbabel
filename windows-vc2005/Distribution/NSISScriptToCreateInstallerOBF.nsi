@@ -627,6 +627,9 @@ Section "Dummy Section" SecDummy
   Call AddToPath
 
   ; Set env var BABEL_DATADIR
+  ; First remove any existing value
+  DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
+
   ; Old way: WriteRegStr HKCU "Environment" "BABEL_DATADIR" "$INSTDIR" 
   ; New way: Works immediately
   Push "BABEL_DATADIR"
