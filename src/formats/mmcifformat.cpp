@@ -33,6 +33,9 @@ namespace OpenBabel
       OBConversion::RegisterFormat("mmcif", this, "chemical/x-mmcif");
       // Uncomment the following line, and this file will handle all CIF formats
       // OBConversion::RegisterFormat("cif", this, "chemical/x-cif");
+      
+      OBConversion::RegisterOptionParam("s", this);
+      OBConversion::RegisterOptionParam("b", this);
     }
 
     virtual const char* Description() //required
@@ -144,6 +147,7 @@ namespace OpenBabel
       {
       ChainNum = other.ChainNum;
       ResNum = other.ResNum;
+      return (* this);
       }
     bool operator< (const CIFResidueID & other) const
       {
@@ -218,7 +222,7 @@ namespace OpenBabel
       unsigned long  as_unsigned() const
         { return strtoul(as_text.c_str(), 0, 10); }
       };
-    CIFLexer(istream * in)
+    CIFLexer(std::istream * in)
     :input(in)
       {
       last_char = 0;
@@ -562,6 +566,8 @@ namespace OpenBabel
                 if (atom_type_tag < (* colx))
                   atom_type_tag = (* colx);
                 break;
+              default:
+                break;
                 }
               }
             if (use_cartn)
@@ -830,7 +836,7 @@ namespace OpenBabel
         id.append(1, (char)toupper(* p));
     if (id.empty())
       {
-      snprintf(buffer, BUFF_SIZE, "T%d", time(0));
+      snprintf(buffer, BUFF_SIZE, "T%lu", (unsigned long)time(0));
       id.assign(buffer);
       }
     ofs << "# --------------------------------------------------------------------------" << endl;
@@ -898,7 +904,7 @@ namespace OpenBabel
         string resname(pRes->GetName()), atomname(pRes->GetAtomID(atom));
         if (atomname.empty())
           {
-          snprintf(buffer, BUFF_SIZE, "%s%u", etab.GetSymbol(atom->GetAtomicNum()), site_id);
+          snprintf(buffer, BUFF_SIZE, "%s%lu", etab.GetSymbol(atom->GetAtomicNum()), (unsigned long)site_id);
           atomname.assign(buffer);
           }
         if (resname.empty())
