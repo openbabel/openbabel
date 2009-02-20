@@ -214,13 +214,17 @@ namespace OpenBabel
             // We'll only see this data once -- several modes per "section"
             // (e.g., 2 or 3 across)
             tokenize(vs,buffer);
-            for(int i=1; i < vs.size(); ++i)
+            for(unsigned int i=1; i < vs.size(); ++i)
               frequencies.push_back(atof(vs[i].c_str()));
 
-            ifs.getline(buffer,BUFF_SIZE);	// IR active
+            ifs.getline(buffer,BUFF_SIZE); // IR active or force constant
+            if (strstr(buffer, "Force Cnst:") != NULL) {
+              ifs.getline(buffer, BUFF_SIZE); // now reduced mass
+              ifs.getline(buffer, BUFF_SIZE); // now IR active
+            }
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
-            for(int i=1; i < vs.size(); ++i)
+            for(unsigned int i=1; i < vs.size(); ++i)
               intensities.push_back(atof(vs[i].c_str()));
 
             ifs.getline(buffer,BUFF_SIZE);	// Raman active
@@ -230,7 +234,11 @@ namespace OpenBabel
             vector<vector3> vib1, vib2, vib3;
             double x, y, z;
             while (vs.size() > 3) {
-              for (int i = 1; i < vs.size(); i += 3) {
+              if (strstr(buffer, "TransDip") != NULL) {
+                ifs.getline(buffer, BUFF_SIZE);
+                break;
+              }
+              for (unsigned int i = 1; i+2 < vs.size(); i += 3) {
                 x = atof(vs[i].c_str());
                 y = atof(vs[i+1].c_str());
                 z = atof(vs[i+2].c_str());
