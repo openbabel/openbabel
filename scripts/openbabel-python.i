@@ -145,10 +145,9 @@ CAST_GENERICDATA_TO(VectorData)
 CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
 
-// These methods are renamed to valid Python method names, as otherwise
-// they cannot be used from Python
+// This method is renamed to a valid Python method name, as otherwise
+// it cannot be used from Python
 %rename(inc)   *::operator++;
-%rename(good)  *::operator bool;
 
 %import <openbabel/babelconfig.h>
 
@@ -254,7 +253,7 @@ class OBIter(object):
     def __init__(self, *params):
         self.iter = self.OBiterator(*params)
         self.finished = False
-        if not self.iter.good():
+        if not self.iter.__bool__():
             self.finished = True
 
     def __iter__(self):
@@ -264,7 +263,7 @@ class OBIter(object):
         if not self.finished:
             b = self.iter.__ref__()
             self.iter.inc()
-            if not self.iter.good():
+            if not self.iter.__bool__():
                 # There is nothing left to iterate over
                 self.finished = True
             return b
@@ -277,7 +276,7 @@ class OBIterWithDepth(OBIter):
             b = self.iter.__ref__()
             depth = self.iter.CurrentDepth()
             self.iter.inc()
-            if not self.iter.good():
+            if not self.iter.__bool__():
                 # There is nothing left to iterate over
                 self.finished = True
             return b, depth

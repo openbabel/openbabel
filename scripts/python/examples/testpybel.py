@@ -404,6 +404,11 @@ Energy = 0
         self.assertEqual(len(self.mols[0].atoms), 4)
         self.assertRaises(AttributeError, self.RSaccesstest)
 
+    def testIterators(self):
+        """Check out the OB iterators"""
+        numatoms = len(list(self.toolkit.ob.OBMolAtomIter(self.mols[0].OBMol)))
+        self.assertEqual(numatoms, 4)
+
 class TestOBPybel(TestPybel):
     toolkit = obpybel
 

@@ -1,3 +1,12 @@
+2009-02-22  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/examples/testpybel.py, openbabel-python.i: Just
+	discovered a regression in latest SWIG. It didn't rename the bool()
+	method, with the result that all Python iterators were failing. It
+	turns out that this isn't necessary in the first place, so we can
+	workaround. I've added a test to testpybel.py to check for any
+	problems in future.
+
 2009-02-20  Chris Morley
 	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:
 	env var BABEL_DATDIR wasn't being overwritten, so now deleted first
