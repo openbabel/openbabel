@@ -3870,7 +3870,7 @@ namespace OpenBabel
 
       OBChiralData *newCD = new OBChiralData;
       OBAtom *a0, *a1, *a2, *a3; // old atom references
-      if (oldCD->GetSize(input)) {
+      if (oldCD->GetSize(input) == 4) {
         a0 = this->GetAtom(oldCD->GetAtomRef(0, input));
         a1 = this->GetAtom(oldCD->GetAtomRef(1, input));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, input));
@@ -3881,7 +3881,7 @@ namespace OpenBabel
         newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
       }
 
-      if (oldCD->GetSize(output)) {
+      if (oldCD->GetSize(output) == 4) {
         a0 = this->GetAtom(oldCD->GetAtomRef(0, output));
         a1 = this->GetAtom(oldCD->GetAtomRef(1, output));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, output));
@@ -3892,7 +3892,7 @@ namespace OpenBabel
         newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
       }
 
-      if (oldCD->GetSize(calcvolume)) {
+      if (oldCD->GetSize(calcvolume) == 4) {
         a0 = this->GetAtom(oldCD->GetAtomRef(0, calcvolume));
         a1 = this->GetAtom(oldCD->GetAtomRef(1, calcvolume));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, calcvolume));
