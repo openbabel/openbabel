@@ -3875,10 +3875,10 @@ namespace OpenBabel
         a1 = this->GetAtom(oldCD->GetAtomRef(1, input));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, input));
         a3 = this->GetAtom(oldCD->GetAtomRef(3, input));
-        newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
-        newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
-        newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
-        newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
+        if (a0) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
+        if (a1) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
+        if (a2) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
+        if (a3) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
       }
 
       if (oldCD->GetSize(output) == 4) {
@@ -3886,10 +3886,10 @@ namespace OpenBabel
         a1 = this->GetAtom(oldCD->GetAtomRef(1, output));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, output));
         a3 = this->GetAtom(oldCD->GetAtomRef(3, output));
-        newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
-        newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
-        newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
-        newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
+        if (a0) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
+        if (a1) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
+        if (a2) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
+        if (a3) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
       }
 
       if (oldCD->GetSize(calcvolume) == 4) {
@@ -3897,10 +3897,10 @@ namespace OpenBabel
         a1 = this->GetAtom(oldCD->GetAtomRef(1, calcvolume));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, calcvolume));
         a3 = this->GetAtom(oldCD->GetAtomRef(3, calcvolume));
-        newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
-        newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
-        newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
-        newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
+        if (a0) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
+        if (a1) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
+        if (a2) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
+        if (a3) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
       }
 
       newAtom->SetData(newCD);
