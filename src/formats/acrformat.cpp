@@ -34,7 +34,7 @@ namespace OpenBabel
     //Register this format type ID in the constructor
     ACRFormat()
     {
-      OBConversion::RegisterFormat("acr",this);
+      OBConversion::RegisterFormat("acr", this, "chemical/x-acr");
       //		OBConversion::RegisterOptionParam("f", this, 1);
       //		OBConversion::RegisterOptionParam("n", this);
       OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
