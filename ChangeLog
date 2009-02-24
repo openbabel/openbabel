@@ -1,3 +1,9 @@
+2009-02-24  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/grid.cpp: Fixed some off by one errors in the way the max vector
+	and spacing were calculated. More work is needed to make this work
+	with grids aligned along arbitrary axes.
+
 2009-02-22  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/python/examples/testpybel.py, openbabel-python.i: Just

@@ -111,12 +111,12 @@ namespace OpenBabel
     SetZAxis(z);
 
     // Now set the max and mid as well as spacing
-    _xmax = _xmin + _xdim * x.x() + _xdim * y.x() + _xdim * z.x();
-    _ymax = _ymin + _ydim * x.y() + _ydim * y.y() + _ydim * z.y();
-    _zmax = _zmin + _zdim * x.z() + _zdim * y.z() + _zdim * z.z();
-    _spacing = (_xmax - _xmin)/_xdim + (_ymax - _ymin)/_ydim +
-               (_zmax - _zmin)/_zdim;
-    _spacing /= 3.0;
+    _xmax = _xmin + (_xdim-1) * (x.x() + y.x() + z.x());
+    _ymax = _ymin + (_ydim-1) * (x.y() + y.y() + z.y());
+    _zmax = _zmin + (_zdim-1) * (x.z() + y.z() + z.z());
+    // FIXME If we want support for cubes aligned along arbitrary axes then
+    // averaging the x, y and z directions will not work. Just use x for now.
+    _spacing = (_xmax - _xmin)/(_xdim-1);
     _halfSpace= _spacing/2.0;
     _inv_spa=1.0/_spacing;
   }
