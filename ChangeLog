@@ -1,8 +1,20 @@
+2009-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.cpp (Separate): Fix crash with Separate
+	(PR#2553217). Currently uses defensive programming. This
+	particular test file seems to have problems. 
+
 2009-02-24  Marcus D. Hanwell  <marcus@cryos.org>
 
 	* src/grid.cpp: Fixed some off by one errors in the way the max vector
 	and spacing were calculated. More work is needed to make this work
 	with grids aligned along arbitrary axes.
+
+2009-02-27  Kevin Shepherd <kshepherd1@users.sourceforge.net>
+	
+	* src/formats/acrformat.cpp, src/formats/carformat.cpp
+	src/formats/gamessformat.cpp, src/formats/mmcifformat.cpp: Compile
+	warnings and minor additions to format information.
 
 2009-02-22  Noel O'Boyle  <baoilleach@gmail.com>
 
@@ -14,11 +26,17 @@
 	problems in future.
 
 2009-02-20  Chris Morley
+	
 	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:
 	env var BABEL_DATDIR wasn't being overwritten, so now deleted first
 	
 	* windows-vc2005/OBCommonFormats/OBCommonFormats.vcproj:
 	removed atomrecord.cpp
+
+2009-02-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/qchemformat.cpp: Fix painful crash with Q-Chem 3.2
+	output files when trying to parse vibrations.
 
 2009-02-19  Noel O'Boyle  <baoilleach@gmail.com>
 
@@ -37,6 +55,33 @@
 
 	* scripts/python/pybel_py2.x.py, pybel_py3.x.py: Synch with cinfony.
 	Long overdue.
+
+2009-02-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/Makefile.am, scripts/Makefile.in: Fix: don't attempt to
+	build Java or C# unless appropriate configure flags were set.
+
+2009-02-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/gamessformat.cpp, src/formats/mopacformat.cpp,
+	src/formats/gaussianformat.cpp, src/formats/qchemformat.cpp:
+	Import vibrational data from several QM formats.
+
+	* src/formats/cifformat.cpp: Fix problems reading CIF files with
+	empty tags. Can lead to a crash.
+
+2009-02-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp: Fix crash with OOP
+	calculations (e.g., C(O)(=O)C.
+
+	* src/formats/fchkformat.cpp: Use 16-character fields for
+	coordinates to handle Q-Chem fchk files.
+
+	* src/formats/smilesformat.cpp: Fix problem with bracketing every
+	atom. Logic was wrong.
+
+	* src/formats/qchemformat.cpp: Change formatting of NMR strings.
 
 2009-02-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

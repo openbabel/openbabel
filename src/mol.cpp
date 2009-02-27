@@ -2061,7 +2061,7 @@ namespace OpenBabel
               {
                 SetConformer(n);
                 //atom->GetNewBondVector(v,bondlen);
-		v = OBBuilder::GetNewBondVector(atom,bondlen);
+                v = OBBuilder::GetNewBondVector(atom,bondlen);
                 _c[(NumAtoms())*3]   = v.x();
                 _c[(NumAtoms())*3+1] = v.y();
                 _c[(NumAtoms())*3+2] = v.z();
@@ -3835,6 +3835,7 @@ namespace OpenBabel
 
     OBMolAtomDFSIter iter( this, StartIndex );
     OBMol newMol;
+    int fragments = 0;
     while( GetNextFragment( iter, newMol ) ) {
       result.push_back( newMol );
       newMol.Clear();
@@ -3846,7 +3847,6 @@ namespace OpenBabel
   bool OBMol::GetNextFragment( OBMolAtomDFSIter& iter, OBMol& newmol ) {
     if( ! iter ) return false;
 
-    //iOBMol newmol;
     newmol.SetDimension(GetDimension());
     map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
     map<OBAtom*, OBChiralData*> ChiralMap; // key is from old mol
@@ -3860,6 +3860,7 @@ namespace OpenBabel
         ChiralMap[pnext] = cd;
     }while((iter++).next());
 
+
     // update any OBChiralData records
     map<OBAtom*, OBChiralData*>::iterator ChiralSearch;
     for (ChiralSearch = ChiralMap.begin(); ChiralSearch != ChiralMap.end(); ++ChiralSearch) {
@@ -3867,18 +3868,21 @@ namespace OpenBabel
       OBChiralData *oldCD = ChiralSearch->second;
       OBAtom *newAtom = AtomMap[oldAtom];
       if (newAtom == NULL) continue; // shouldn't happen, but be defensive
+      if (oldCD == NULL) continue; // similarly
 
       OBChiralData *newCD = new OBChiralData;
+      if (newCD == NULL) continue; // out of memory error
+
       OBAtom *a0, *a1, *a2, *a3; // old atom references
       if (oldCD->GetSize(input) == 4) {
         a0 = this->GetAtom(oldCD->GetAtomRef(0, input));
         a1 = this->GetAtom(oldCD->GetAtomRef(1, input));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, input));
         a3 = this->GetAtom(oldCD->GetAtomRef(3, input));
-        if (a0) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
-        if (a1) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
-        if (a2) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
-        if (a3) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
+        if (a0 && AtomMap[a0]) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
+        if (a1 && AtomMap[a1]) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
+        if (a2 && AtomMap[a2]) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
+        if (a3 && AtomMap[a3]) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
       }
 
       if (oldCD->GetSize(output) == 4) {
@@ -3886,10 +3890,10 @@ namespace OpenBabel
         a1 = this->GetAtom(oldCD->GetAtomRef(1, output));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, output));
         a3 = this->GetAtom(oldCD->GetAtomRef(3, output));
-        if (a0) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
-        if (a1) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
-        if (a2) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
-        if (a3) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
+        if (a0 && AtomMap[a0]) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
+        if (a1 && AtomMap[a1]) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
+        if (a2 && AtomMap[a2]) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
+        if (a3 && AtomMap[a3]) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
       }
 
       if (oldCD->GetSize(calcvolume) == 4) {
@@ -3897,10 +3901,10 @@ namespace OpenBabel
         a1 = this->GetAtom(oldCD->GetAtomRef(1, calcvolume));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, calcvolume));
         a3 = this->GetAtom(oldCD->GetAtomRef(3, calcvolume));
-        if (a0) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
-        if (a1) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
-        if (a2) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
-        if (a3) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
+        if (a0 && AtomMap[a0]) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
+        if (a1 && AtomMap[a1]) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
+        if (a2 && AtomMap[a2]) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
+        if (a3 && AtomMap[a3]) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
       }
 
       newAtom->SetData(newCD);
@@ -3909,13 +3913,12 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(b, this) {
       map<OBAtom*, OBAtom*>::iterator pos;
       pos = AtomMap.find(b->GetBeginAtom());
-      if(pos!=AtomMap.end())
+      if(pos!=AtomMap.end() && AtomMap[b->GetEndAtom()])
         //if bond belongs to current fragment make a similar one in new molecule
         newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
                        b->GetBO(), b->GetFlags());
     }
 
-    //return newmol;
     return( true );
   }
 
