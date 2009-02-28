@@ -3437,6 +3437,7 @@ namespace OpenBabel
     vector<int> sorted;
     int iter, max;
     double maxElNeg, shortestBond, currentElNeg;
+    double bondLength, testLength;
 
     for (atom = BeginAtom(i) ; atom ; atom = NextAtom(i))
       {
@@ -3488,7 +3489,16 @@ namespace OpenBabel
                         (b->GetAtomicNum() == 7 && b->BOSum() + 2 > 3))
                       continue;
 
-                    shortestBond = (atom->GetBond(b))->GetLength();
+                    // Test terminal bonds against expected triple bond lengths
+                    bondLength = (atom->GetBond(b))->GetLength();
+                    if (b->GetValence() == 1) {
+                      testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
+                        + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
+                      if (bondLength > 0.9 * testLength)
+                        continue; // too long, ignore it
+                    }
+
+                    shortestBond = bondLength;
                     maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
                     c = b; // save this atom for later use
                   }
@@ -3523,6 +3533,15 @@ namespace OpenBabel
                     if (b->HasNonSingleBond() ||
                         (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
                       continue;
+
+                    // Test terminal bonds against expected double bond lengths
+                    bondLength = (atom->GetBond(b))->GetLength();
+                    if (b->GetValence() == 1) {
+                      testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
+                        + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
+                      if (bondLength > 0.93 * testLength)
+                        continue; // too long, ignore it
+                    }
 
                     shortestBond = (atom->GetBond(b))->GetLength();
                     maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
