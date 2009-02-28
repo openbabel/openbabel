@@ -3457,18 +3457,18 @@ namespace OpenBabel
     sort(sortedAtoms.begin(), sortedAtoms.end(), SortAtomZ);
 
     max = sortedAtoms.size();
-
     for (iter = 0 ; iter < max ; iter++ )
       {
         atom = sortedAtoms[iter].first;
+        // Possible sp-hybrids
         if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
              && atom->BOSum() + 2  <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))
              )
           {
+
             // loop through the neighbors looking for a hybrid or terminal atom
             // (and pick the one with highest electronegativity first)
             // *or* pick a neighbor that's a terminal atom
-
             if (atom->HasNonSingleBond() ||
                 (atom->GetAtomicNum() == 7 && atom->BOSum() + 2 > 3))
               continue;
@@ -3491,7 +3491,7 @@ namespace OpenBabel
 
                     // Test terminal bonds against expected triple bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
-                    if (b->GetValence() == 1) {
+                    if (atom->GetValence() == 1 || b->GetValence() == 1) {
                       testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
                         + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
                       if (bondLength > 0.9 * testLength)
@@ -3506,6 +3506,7 @@ namespace OpenBabel
             if (c)
               (atom->GetBond(c))->SetBO(3);
           }
+        // Possible sp2-hybrid atoms
         else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
                   && atom->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
           {
@@ -3536,7 +3537,7 @@ namespace OpenBabel
 
                     // Test terminal bonds against expected double bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
-                    if (b->GetValence() == 1) {
+                    if (atom->GetValence() == 1 || b->GetValence() == 1) {
                       testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
                         + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
                       if (bondLength > 0.93 * testLength)
