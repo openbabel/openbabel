@@ -1,0 +1,15 @@
+Revision history for Chemistry::OpenBabel.
+
+1.2  Apr 07 2007
+        - Corresponds to Open Babel, version 2.1 release.
+	- Now can be built outside the Open Babel source tree.
+	- Now includes access to just about everything, including fingerprints, force fields,
+      conversions, etc.
+1.1  Apr 17 2006 
+	- Now includes access to rings, SMARTS patterns, and vector3 coordinate class
+	- Corresponds to Open Babel, version 2.0.1 release.
+1.0  Nov 26 2005
+        - First public release.
+	- Offers access to OBMol, OBConversion, and OBGlobalDatabase classes
+	(i.e., anything in mol.h, obconversion.h or data.h)
+	- Corresponds to Open Babel version 2.0 release.

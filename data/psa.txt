@@ -1,0 +1,68 @@
+######################################################################
+# Copyright OELIB:          OpenEye Scientific Software, Santa Fe,      
+#                           U.S.A., 1999,2000,2001                      
+# Copyright JOELIB/JOELib2: Dept. Computer Architecture, University of  
+#                           Tuebingen, Germany, 2001,2002,2003,2004,2005
+# Copyright JOELIB/JOELib2: ALTANA PHARMA AG, Konstanz, Germany,        
+#                           2003,2004,2005                              
+#                                                                       
+# Authors: Stephen Jelfs                                                                       
+#          Joerg Kurt Wegner, me@cheminformatics.eu         
+#                                                                       
+# This program is free software; you can redistribute it and/or modify  
+# it under the terms of the GNU General Public License as published by  
+# the Free Software Foundation version 2 of the License.                
+#                                                                       
+# This program is distributed in the hope that it will be useful,       
+# but WITHOUT ANY WARRANTY; without even the implied warranty of        
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         
+# GNU General Public License for more details.                          
+######################################################################
+# Atomic Contributions to Polar Surface Area PSA
+# ref. Ertl P., Rohde R., Selzer P., J. Med. Chem. 2000, 43, 3714-3717
+######################################################################
+;heavy
+[*]	0.00
+[N](-*)(-*)-*	3.24
+[N](-*)=*	12.36
+[N]#*	23.79
+[N](-*)(=*)=*	11.68
+[N](=*)#*	13.60
+[N]1(-*)-*-*1	3.01
+[NH](-*)-*	12.03
+[NH]1-*-*1	21.94
+[NH]=*	23.85
+[NH2]-*	26.02
+[N+](-*)(-*)(-*)-*	0.00
+[N+](-*)(-*)=*	3.01
+[N+](-*)#*	4.36
+[NH+](-*)(-*)-*	4.44
+[NH+](-*)=*	13.97
+[NH2+](-*)-*	16.61
+[NH2+]=*	25.59
+[NH3+]-*	27.64
+[n](:*):*	12.89
+[n](:*)(:*):*	4.41
+[n](-*)(:*):*	4.93
+[n](=*)(:*):*	8.39
+[nH](:*):*	15.79
+[n+](:*)(:*):*	4.10
+[n+](-*)(:*):*	3.88
+[nH+](:*):*	14.14
+[O](-*)-*	9.23
+[O]1-*-*1	12.53
+[O]=*	17.07
+[OH]-*	20.23
+[O-]-*	23.06
+[o](:*):*	13.14
+[S](-*)-*	25.30
+[S]=*	32.09
+[S](-*)(-*)=*	19.21
+[S](-*)(-*)(=*)=*	8.38
+[SH]-*	38.80
+[s](:*):*	28.24
+[s](=*)(:*):*	21.70
+[P](-*)(-*)-*	13.59
+[P](-*)=*	34.14
+[P](-*)(-*)(-*)=*	9.81
+[PH](-*)(-*)=*	23.47
