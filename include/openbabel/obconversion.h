@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <string>
 #include <vector>
 #include <map>
+#include <strings.h>
 
 #include <openbabel/dlhandler.h>
 #include <openbabel/oberror.h>

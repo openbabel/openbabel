@@ -12,6 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <numeric>
+#include <typeinfo>
 
 // No diagnoalization yet. Perhaps for 2.2 -GRH
 // #include <eigen/matrix.h>

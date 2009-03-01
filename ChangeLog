@@ -1,3 +1,17 @@
+2009-03-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/residue.cpp, src/fingerprint.cpp, src/zipstreamimpl.h,
+	src/obconversion.cpp, src/dlhandler_unix.cpp,
+	src/formats/rxnformat.cpp, src/formats/fchkformat.cpp,
+	tools/babel.cpp, include/openbabel/xml.h,
+	include/openbabel/obconversion.h,
+	include/openbabel/obmolecformat.h, include/openbabel/data.h:
+	Fix #includes to handle GCC-4.3 and 4.4. Thanks to Rathann
+	Mierzejewski.
+
+	* src/pointgroup.cpp, src/formats/xtcformat.cpp: Remove calls to
+	exit() uncovered by Rathann.
+
 2009-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp (Separate): Fix crash with Separate

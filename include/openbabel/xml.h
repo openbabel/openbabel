@@ -13,6 +13,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include <typeinfo>
+
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>

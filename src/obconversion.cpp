@@ -38,6 +38,7 @@ GNU General Public License for more details.
 #include <map>
 #include <locale>
 #include <limits>
+#include <typeinfo>
 
 #include <stdlib.h>
 

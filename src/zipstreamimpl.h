@@ -31,6 +31,8 @@ Altered by: Geoffrey Hutchison 2005 for Open Babel project
             minor namespace modifications, VC++ compatibility
 */
 
+#include <cstring>
+
 //*****************************************************************************
 //  template class basic_zip_streambuf
 //*****************************************************************************

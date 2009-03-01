@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <algorithm>
 #include <iosfwd>
-#include <vector>
+#include <cstring>
 #include <fstream>
 
 #include <openbabel/fingerprint.h>

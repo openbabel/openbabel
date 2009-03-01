@@ -251,7 +251,8 @@ namespace OpenBabel {
 
     if( atom_used == NULL ){
       fprintf( stderr, "Out of memory for tagging array in establish_pairs()\n" ) ;
-      exit( EXIT_FAILURE ) ;
+      return 0;
+      //      exit( EXIT_FAILURE ) ;
     }
     for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
       if( elem->transform[i] >= _mol->NumAtoms() ){ /* No symmetric atom yet          */

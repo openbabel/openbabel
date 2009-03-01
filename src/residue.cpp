@@ -26,6 +26,8 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 // File Includes
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <cstring>
+
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/residue.h>

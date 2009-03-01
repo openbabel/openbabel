@@ -16,6 +16,7 @@ GNU General Public License for more details.
 #include "openbabel/babelconfig.h"
 #include <string>
 #include <iomanip>
+#include <typeinfo>
 #include "openbabel/mol.h"
 #include "openbabel/obconversion.h"
 #include "openbabel/reaction.h"

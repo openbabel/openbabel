@@ -23,7 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <stdio.h>
-
+#include <cstring>
 #include <fstream>
 #include <vector>
 #include <string>

@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <dlfcn.h>
 #include <cstring>
 #include <cstdlib>
+#include <cstdio>
 
 using namespace std;
 
