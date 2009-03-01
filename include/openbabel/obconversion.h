@@ -1,7 +1,7 @@
 /**********************************************************************
 obconversion.h - Handle file conversions. Declaration of OBFormat, OBConversion
 
-Copyright (C) 2004-2005 by Chris Morley
+Copyright (C) 2004-2009 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -28,7 +28,9 @@ GNU General Public License for more details.
 #include <string>
 #include <vector>
 #include <map>
+#ifdef HAVE_STRINGS_H
 #include <strings.h>
+#endif
 
 #include <openbabel/dlhandler.h>
 #include <openbabel/oberror.h>
