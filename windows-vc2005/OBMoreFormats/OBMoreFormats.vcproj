@@ -399,7 +399,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\opendxformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\pcmodelformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\pqrformat.cpp"
 				>
 			</File>
 			<File
@@ -432,6 +440,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\xedformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\xtcformat.cpp"
 				>
 			</File>
 			<File

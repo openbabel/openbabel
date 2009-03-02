@@ -1,3 +1,8 @@
+2009-03-02  Chris Morley
+
+	Added xtcformat,pqrformat,opendxformat,gamessukformat to
+	Visual Studio build.
+	 
 2009-03-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/residue.cpp, src/fingerprint.cpp, src/zipstreamimpl.h,
