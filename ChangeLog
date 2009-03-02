@@ -1,7 +1,8 @@
 2009-03-02  Chris Morley
 
-	Added xtcformat,pqrformat,opendxformat,gamessukformat to
-	Visual Studio build.
+	Added xtcformat,pqrformat,opendxformat to Visual Studio build.
+	Could not add gamessukformat because it uses <regex.h>
+	and did not have time to find a workaround (Boost probably).
 	 
 2009-03-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
