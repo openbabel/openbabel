@@ -1,5 +1,12 @@
 2009-03-02  Daniel Leidert <daniel.leidert@wgdd.de>
 
+	* doc/babel.1, doc/obchiral.1, doc/obconformer.1, doc/obenergy.1,
+	doc/obfit.1, doc/obgen.1, doc/obgrep.1, doc/obminimize.1,
+	doc/obprobe.1, doc/obprop.1, doc/obrotamer.1, doc/obrotate.1,
+	doc/roundtrip.1: Prevent hyphenation of URLs. Fixed an mdoc issue.
+
+2009-03-02  Daniel Leidert <daniel.leidert@wgdd.de>
+
 	* src/formats/smilesformat.cpp: Correct use of sprintf().
 	http://lists.debian.org/debian-devel/2008/12/msg01079.html
 
