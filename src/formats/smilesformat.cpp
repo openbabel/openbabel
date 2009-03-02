@@ -2475,7 +2475,7 @@ namespace OpenBabel {
                 strcat(symbol,":");
               if (bond->GetBO() == 3)
                 strcat(symbol,"#");
-              sprintf(symbol,"%s%d",symbol,externalBond->first);
+              sprintf(symbol+strlen(symbol),"%d",externalBond->first);
               break;
             }
           }
