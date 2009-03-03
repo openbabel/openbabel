@@ -462,25 +462,30 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE);
             tokenize(vs, buffer);
             int modeCount = vs.size() - 3;
+            double massNormalization;
             vector<double> x, y, z;
             while(modeCount > 1) {
+              // 1/sqrt(atomic mass)
+              atom = mol.GetAtom(atoi(vs[0].c_str()));
+              massNormalization = 1 / sqrt( atom->GetAtomicMass() );
+
               x.clear();
               // not a typo -- e.g., atom number, atom label, x, then data
               for (unsigned int i = 3; i < vs.size(); ++i) {
-                x.push_back(atof(vs[i].c_str()));
+                x.push_back(massNormalization * atof(vs[i].c_str()));
               }
               y.clear();
               ifs.getline(buffer, BUFF_SIZE);
               tokenize(vs, buffer);
               for (unsigned int i = 1; i < vs.size(); ++i) {
-                y.push_back(atof(vs[i].c_str()));
+                y.push_back(massNormalization * atof(vs[i].c_str()));
               }
               
               z.clear();
               ifs.getline(buffer, BUFF_SIZE);
               tokenize(vs, buffer);
               for (unsigned int i = 1; i < vs.size(); ++i) {
-                z.push_back(atof(vs[i].c_str()));
+                z.push_back(massNormalization * atof(vs[i].c_str()));
               }
 
               // OK, now we have x, y, z for all new modes for one atom
