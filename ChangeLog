@@ -1,3 +1,8 @@
+2009-03-07  Daniel Leidert <daniel.leidert@wgdd.de>
+
+	* include/iconv.h, src/formats/xml/iconv.h, src/strncasecmp.c: Fixed
+	FSF address.
+
 2009-03-02  Daniel Leidert <daniel.leidert@wgdd.de>
 
 	* doc/babel.1, doc/obchiral.1, doc/obconformer.1, doc/obenergy.1,
