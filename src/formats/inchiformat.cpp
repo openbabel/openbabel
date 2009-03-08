@@ -57,10 +57,10 @@ public:
     "InChI format\n"
     "IUPAC/NIST molecular identifier\n"
     "Write options, e.g. -xat\n"
-    " n do not use 'recommended' InChI options\n"
+    //" n do not use 'recommended' InChI options\n"
     " X <Option string> List of additional InChI options\n"
-    " F include fixed hydrogen layer\n"
-    " M include bonds to metal\n"
+    //" F include fixed hydrogen layer\n"
+    //" M include bonds to metal\n"
     " t add molecule name\n"
     " a output auxilliary information\n"
     " K output InChIKey\n"
@@ -179,7 +179,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   inchi_OutputStruct out;
 
   //Call the conversion routine in InChI code
-  int ret = GetStructFromINCHI( &inp, &out );
+  int ret = GetStructFromStdINCHI( &inp, &out );
 
   if (ret!=inchi_Ret_OKAY)
   {
@@ -328,7 +328,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   }
   
   pmol->EndModify();
-  FreeStructFromINCHI( &out );
+  FreeStructFromStdINCHI( &out );
   return true;
 }
 
@@ -560,37 +560,41 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   inchi_Output inout;
   memset(&inout,0,sizeof(inchi_Output));
 
-  int ret = GetINCHI(&inp, &inout);
+  int ret = GetStdINCHI(&inp, &inout);
 
   delete[] opts;
   if(ret!=inchi_Ret_OKAY)
   {
-    string mes(inout.szMessage);
-    if(pConv->IsOption("w")) 
+    if(inout.szMessage)
     {
-      string::size_type pos;
-      string targ[3];
-      targ[0] = "Omitted undefined stereo";
-      targ[1] = "Charges were rearranged";
-      targ[2] = "Proton(s) added/removed";
-      for(int i=0;i<3;++i)
+      string mes(inout.szMessage);
+      if(pConv->IsOption("w")) 
       {
-        pos = mes.find(targ[i]);
-        if(pos!=string::npos)
+        string::size_type pos;
+        string targ[3];
+        targ[0] = "Omitted undefined stereo";
+        targ[1] = "Charges were rearranged";
+        targ[2] = "Proton(s) added/removed";
+        for(int i=0;i<3;++i)
         {
-          mes.erase(pos,targ[i].size());
-          if(mes[pos]==';')
-            mes[pos]=' ';
+          pos = mes.find(targ[i]);
+          if(pos!=string::npos)
+          {
+            mes.erase(pos,targ[i].size());
+            if(mes[pos]==';')
+              mes[pos]=' ';
+          }
         }
       }
+      Trim(mes);
+      if(!mes.empty())
+        obErrorLog.ThrowError("InChI code", molID.str() + ':' + mes, obWarning);
     }
-    Trim(mes);
-    if(!mes.empty())
-      obErrorLog.ThrowError("InChI code", molID.str() + ':' + mes, obWarning);
 
     if(ret!=inchi_Ret_WARNING)
     {
-      FreeINCHI(&inout);
+      obErrorLog.ThrowError("InChI code", "InChI generation failed", obError);
+      FreeStdINCHI(&inout);
       return false;
     }
   }
@@ -598,8 +602,8 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   string ostring = inout.szInChI;
   if(pConv->IsOption("K")) //Generate InChIKey and add after InChI on same line
   {
-    char szINCHIKey[26];
-    GetINCHIKeyFromINCHI(inout.szInChI, szINCHIKey);
+    char szINCHIKey[28];
+    GetStdINCHIKeyFromStdINCHI(inout.szInChI, szINCHIKey);
     ostring = szINCHIKey;
   }
   if(pConv->IsOption("t"))
@@ -653,7 +657,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     }
   }
 
-  FreeINCHI(&inout);
+  FreeStdINCHI(&inout);
   return true;
 }
 
@@ -925,10 +929,11 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 char* InChIFormat::GetInChIOptions(OBConversion* pConv, bool Reading)
 {
   vector<string> optsvec; //the InChi options
+  /* In Standard InChI these are not used
   if(!Reading && !pConv->IsOption("n"))
     //without -xn option, the default is to write using these 'recommended' options
     tokenize(optsvec, "FixedH RecMet SPXYZ SAsXYZ Newps Fb Fnud");
-
+  */
   char* opts;
   OBConversion::Option_type opttyp = Reading ? OBConversion::INOPTIONS : OBConversion::OUTOPTIONS;
   const char* copts = pConv->IsOption("X", opttyp);
@@ -940,6 +945,7 @@ char* InChIFormat::GetInChIOptions(OBConversion* pConv, bool Reading)
     copy(useropts.begin(), useropts.end(), back_inserter(optsvec));
   }
 
+  /* In Standard InChI these are not used
   //Add a couple InChI options built in to OB
   if(opttyp==OBConversion::OUTOPTIONS)
   {
@@ -954,7 +960,7 @@ char* InChIFormat::GetInChIOptions(OBConversion* pConv, bool Reading)
       optsvec.push_back(tmp2);
     }
   }
-  
+  */
 
 #ifdef WIN32
     string ch(" /");

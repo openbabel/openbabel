@@ -1,3 +1,15 @@
+2009-03-08  Chris Morley
+
+	  Standard InChI (1.02final)
+	* src/formats/inchiformat.cpp, include/inchi_api.h:
+	Several function names changed, removed most of the options code
+	Works with the precompiled Windows files windows-vc2005/libstdinchi.dll,
+	windows-vc2005/libstdinchi.lib, windows-vc2005/OBInchi/OBInchi.vcproj
+	
+	* The inchi API files have been uploaded to
+	  include/inchi102, and  src/formats/inchi102	
+	** but the building of inchi files needs to be sorted out for linux **
+
 2009-03-07  Daniel Leidert <daniel.leidert@wgdd.de>
 
 	* include/iconv.h, src/formats/xml/iconv.h, src/strncasecmp.c: Fixed
