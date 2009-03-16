@@ -411,7 +411,7 @@ namespace OpenBabel
     for(unsigned int k=0; boundedAtomsSerialNumbersValid[k]; k++)
       {
         // Find atom that is connected to, write an error message
-        OBAtom *connectedAtom = 0L;
+        OBAtom *connectedAtom = NULL;
         for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) {
           // again, atoms may not have residues, but if they do, check serials
           if (a1->GetResidue() != NULL &&
@@ -422,7 +422,7 @@ namespace OpenBabel
               break;
             }
         }
-        if (connectedAtom == 0L)
+        if (connectedAtom == NULL)
           {
             errorMsg << "WARNING: Problems reading a PDB file:\n"
                      << "  Problems reading a CONECT record.\n"
@@ -438,9 +438,11 @@ namespace OpenBabel
 
         // Figure the bond order
         unsigned char order = 0;
-        while(boundedAtomsSerialNumbersValid[k+order+1] && (boundedAtomsSerialNumbers[k+order]
-                                                            == boundedAtomsSerialNumbers[k+order+1]))
+        while(     boundedAtomsSerialNumbersValid[k+order+1] 
+               && (boundedAtomsSerialNumbers[k+order] == boundedAtomsSerialNumbers[k+order+1]) )
+        {
           order++;
+        }
         k += order;
 	
         // Generate the bond
@@ -625,15 +627,22 @@ namespace OpenBabel
         int currentValence = 0;
         for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
           {
-            snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
-            ofs << buffer;
-            if (++currentValence % 4 == 0) {
-              // Add the trailing space to finish this record
-              ofs << "                                       \n";
-              // write the start of a new CONECT record
-              snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
-              ofs << buffer;              
-            }
+            unsigned int order = mol.GetBond(atom, nbr)->GetBondOrder();
+            unsigned int it_order = 0;
+            for( it_order = 0; it_order < order; it_order++ )
+              {
+                snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
+                ofs << buffer;
+                currentValence++;
+                if (currentValence % 4 == 0) 
+                  {
+                    // Add the trailing space to finish this record
+                    ofs << "                                       \n";
+                    // write the start of a new CONECT record
+                    snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
+                    ofs << buffer;              
+                  }
+              }
           }
 
         // Add trailing spaces

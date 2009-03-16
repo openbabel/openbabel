@@ -1,3 +1,8 @@
+2009-03-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/pdbformat.cpp: Patch from Pierre-Louis to fix
+	problem with multiple bonds in CONECT records. Fixes PR#2680300.
+
 2009-03-07  Daniel Leidert <daniel.leidert@wgdd.de>
 
 	* include/iconv.h, src/formats/xml/iconv.h, src/strncasecmp.c: Fixed
