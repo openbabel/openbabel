@@ -1,3 +1,10 @@
+2009-03-17  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/formats/smilesformat.cpp: Canonical smiles were copying the
+	Clockwiseness of the original smiles. This was correct 50% of the
+	time. Now it works out the correct Clockwiseness based on the
+	rearrangement of the groups. Fixes PR#2581919.
+
 2009-03-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp: Patch from Pierre-Louis to fix

@@ -2721,6 +2721,10 @@ namespace OpenBabel {
     OBAtom *atom = node->GetAtom();
     OBMol *mol = (OBMol*) atom->GetParent();
 
+    // If no chiral neighbors were passed in, we're done
+    if (chiral_neighbors.size() < 4)
+      return false;
+
     // If the molecule has no coordinates but DOES have chirality specified, it
     // must have come from a SMILES.  In this case, the atoms' GetIdx() values 
     // will be in the same order they appeared in the original SMILES, so we
@@ -2739,28 +2743,58 @@ namespace OpenBabel {
 
     if (!mol->HasNonZeroCoords()) {               // no coordinates?
 
-      // NOTE: THIS SECTION IS WRONG.  IT'S JUST A COPY OF THE ORIGINAL OPENBABEL
-      // CODE, AND DOESN'T ACCOUNT FOR THE FACT THAT THE CANONICAL SMILES IS REORDERED.
-      // NEEDS TO BE REWRITTEN, BUT IN COORDINATION WITH A REWRITE OF CHIRALITY IN
-      // THE smilesformat.cpp FILE.  -- CJ
-
       if (!atom->HasChiralitySpecified())         //   and no chirality on this atom?
         return(false);                            //   not a chiral atom -- all done.
 
       // Ok, it's a chiral atom, so we need to get the A, B, C, D atoms, in the order in
-      // which they appeared in the original SMILES.  (NYI!!)
-      if (atom->IsClockwise())
-        strcpy(stereo,"@@");
-      else if (atom->IsAntiClockwise())
-        strcpy(stereo,"@");
-      else
+      // which they appeared in the original SMILES.
+      
+      // orig_orient and orient are True if Clockwise, False if AntiClockwise
+      bool orig_orient = atom->IsClockwise();
+      if (!orig_orient && !atom->IsAntiClockwise())
         return(false);
+
+      int nbr_ids[4];
+      for(int i=0;i<4;i++)
+        nbr_ids[i] = chiral_neighbors[i]->GetIdx();
+
+      // Normalise IDs to contain just the numbers 0-->3 in the same relative order
+      // ...converts [1, 4, 6, 2] to [0, 2, 3, 1] to the hashcode 231
+      int old_min_val = -1;
+      int min_idx = 0;
+      int min_val;
+      for(int j=0;j<4;j++) {
+        min_val = 99999999; // Make sure it's big enough! (Luckily SMILES currently has a max limit of 1000)
+        for(int i=0;i<4;i++) {
+          if (nbr_ids[i] < min_val && nbr_ids[i] > old_min_val) {
+            min_val = nbr_ids[i];
+            min_idx = i;
+          }
+        }
+        nbr_ids[min_idx] = j;
+        old_min_val = min_val;
+      }
+
+      // Compare nbr_ids against a known set of rearrangements of ids that 
+      // preserve the orientation (note: orientation 0123 is the original orientation)
+      bool orient;
+      int hashcode = nbr_ids[0] * 1000 + nbr_ids[1] * 100 +
+                     nbr_ids[2] * 10   + nbr_ids[3];
+      if (hashcode==1032 || hashcode==3021 || hashcode==2013 || hashcode==3210
+          || hashcode==1320 || hashcode==3102 || hashcode==123 || hashcode==231
+          || hashcode==312 || hashcode==2301 || hashcode==1203 || hashcode==2130)
+        orient = orig_orient;
+      else
+        orient = !orig_orient;
+        
+      if (orient)
+        strcpy(stereo,"@@");
+      else
+        strcpy(stereo,"@");
       return(true);
     }
 
-    // If no chiral neighbors were passed in, we're done
-    if (chiral_neighbors.size() < 4)
-      return false;
+    // At this point, the molecule must have coordinates
 
     // If any of the neighbors have the same symmetry class, we're done.
     for (int i = 0; i < chiral_neighbors.size(); i++) {
@@ -3093,7 +3127,9 @@ namespace OpenBabel {
     // in the order in which they'll appear in the canonical SMILES string.  This is more
     // complex than you'd guess because of implicit/explicit H and ring-closure digits.
 
-    bool is_chiral = AtomIsChiral(atom);
+    // It might be a good idea to redefine AtomIsChiral, but it's also called from
+    // AddHydrogenToChiralCenters
+    bool is_chiral = AtomIsChiral(atom) || atom->IsClockwise() || atom->IsAntiClockwise();
     if (is_chiral) {
 
       // If there's a parent node, it's the first atom in the ordered neighbor-vector
