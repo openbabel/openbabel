@@ -1,3 +1,10 @@
+2009-03-19  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/formats/smilesformat.cpp: Canonical smiles were inverting
+	the stereochemistry in the case of ring closure bonds on the chiral
+	centre. Fixed by changing approach to use original OBChiralData, and 
+	parity function as suggested by Tim.
+
 2009-03-17  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/formats/smilesformat.cpp: Canonical smiles were copying the

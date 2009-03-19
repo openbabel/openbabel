@@ -2749,45 +2749,34 @@ namespace OpenBabel {
       // Ok, it's a chiral atom, so we need to get the A, B, C, D atoms, in the order in
       // which they appeared in the original SMILES.
       
-      // orig_orient and orient are True if Clockwise, False if AntiClockwise
+      // orig_orient and can_orient are True if Clockwise, False if AntiClockwise
       bool orig_orient = atom->IsClockwise();
       if (!orig_orient && !atom->IsAntiClockwise())
         return(false);
 
-      int nbr_ids[4];
-      for(int i=0;i<4;i++)
+      // Get the parity of the IDs around the chiral atom in the original molecule
+      //  - typically 0123 (i.e. even), but can be odd (0132, etc.) in the case of a ring
+      //    closure
+      // and compare to the parity of the IDs in the chiral molecule. If they are
+      // the same, then the cansmiles string has the same clockwiseness.
+      OBChiralData *cd = (OBChiralData *) atom->GetData(OBGenericDataType::ChiralData);
+      vector <unsigned int> arefs = cd->GetAtom4Refs(input);
+      int smi_parity = GetParity4Ref(arefs);
+
+      vector <unsigned int> nbr_ids(4);
+      for(int i=0;i<nbr_ids.size();i++)
         nbr_ids[i] = chiral_neighbors[i]->GetIdx();
+      int can_parity = GetParity4Ref(nbr_ids);
+      // **Assumption**: That nbr_ids and arefs contain the same atom IDs
+      //                 (but possibly in a different order)
 
-      // Normalise IDs to contain just the numbers 0-->3 in the same relative order
-      // ...converts [1, 4, 6, 2] to [0, 2, 3, 1] to the hashcode 231
-      int old_min_val = -1;
-      int min_idx = 0;
-      int min_val;
-      for(int j=0;j<4;j++) {
-        min_val = 99999999; // Make sure it's big enough! (Luckily SMILES currently has a max limit of 1000)
-        for(int i=0;i<4;i++) {
-          if (nbr_ids[i] < min_val && nbr_ids[i] > old_min_val) {
-            min_val = nbr_ids[i];
-            min_idx = i;
-          }
-        }
-        nbr_ids[min_idx] = j;
-        old_min_val = min_val;
-      }
-
-      // Compare nbr_ids against a known set of rearrangements of ids that 
-      // preserve the orientation (note: orientation 0123 is the original orientation)
-      bool orient;
-      int hashcode = nbr_ids[0] * 1000 + nbr_ids[1] * 100 +
-                     nbr_ids[2] * 10   + nbr_ids[3];
-      if (hashcode==1032 || hashcode==3021 || hashcode==2013 || hashcode==3210
-          || hashcode==1320 || hashcode==3102 || hashcode==123 || hashcode==231
-          || hashcode==312 || hashcode==2301 || hashcode==1203 || hashcode==2130)
-        orient = orig_orient;
+      bool can_orient;
+      if (smi_parity==can_parity)
+        can_orient = orig_orient;
       else
-        orient = !orig_orient;
+        can_orient = !orig_orient;
         
-      if (orient)
+      if (can_orient)
         strcpy(stereo,"@@");
       else
         strcpy(stereo,"@");
