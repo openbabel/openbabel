@@ -1867,7 +1867,9 @@ namespace OpenBabel {
               //The order needs to be SMILES atom order, not OB atom index order.
               vector<unsigned int> refs = (cs2->second)->GetAtom4Refs(input);
               // make sure the vector is large enough for the insert call
-              refs.resize((*j)[4] + 1);
+              if (refs.size() < (*j)[4] + 1) {
+                refs.resize((*j)[4] + 1);
+              }
               refs.insert(refs.begin()+(*j)[4], _prev);
               (cs2->second)->SetAtom4Refs(refs, input);
               // cerr <<"Added ring opening "<<_prev<<" to "<<cs2->second<<endl;

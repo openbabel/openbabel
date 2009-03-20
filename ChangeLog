@@ -1,3 +1,9 @@
+2009-03-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/smilesformat.cpp: Fix for previous commit on 2009-01-10.
+	"ChiralSearch vectors were too small. Should address PR#2498047."
+	Only increase size -- don't throw away data with resize() call.
+
 2009-03-19  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/formats/smilesformat.cpp: Canonical smiles were inverting
