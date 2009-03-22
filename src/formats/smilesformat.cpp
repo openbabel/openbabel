@@ -189,6 +189,7 @@ namespace OpenBabel {
     void FindOrphanAromaticAtoms(OBMol &mol); //CM 18 Sept 2003
     void FixCisTransBonds(OBMol &);
     void CorrectUpDownMarks(OBBond *, OBAtom *);
+    int NumConnections(OBAtom *);
   };
 
   /////////////////////////////////////////////////////////////////
@@ -287,7 +288,7 @@ namespace OpenBabel {
     
     for (_ptr=_buffer;*_ptr;_ptr++)
       {
-        //        cerr << " parsing " << _ptr << endl;
+        //cerr << " parsing " << _ptr << endl;
 
         if (*_ptr<0 || isspace(*_ptr))
           continue;
@@ -785,8 +786,11 @@ namespace OpenBabel {
         ChiralSearch=_mapcd.find(mol.GetAtom(_prev));
         if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
           {
-            (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
-            // cerr << "Line 800: Adding "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
+            vector<unsigned int> refs = (ChiralSearch->second)->GetAtom4Refs(input);
+            int insertpos = NumConnections(ChiralSearch->first) - 1;
+            refs[insertpos] = mol.NumAtoms();
+            (ChiralSearch->second)->SetAtom4Refs(refs, input);
+            //cerr << "NB6: Line 800: Adding "<<mol.NumAtoms()<<" at "<<insertpos<<" to "<<ChiralSearch->second<<endl;
           }
       }
 
@@ -1518,6 +1522,7 @@ namespace OpenBabel {
     int clval=0;
     char tmpc[2];
     tmpc[1] = '\0';
+    vector<unsigned int> arefs(4, -1); // Value comes up as 4294967295 (unsigned)
     for (_ptr++;*_ptr && *_ptr != ']';_ptr++)
       {
         switch(*_ptr)
@@ -1526,6 +1531,7 @@ namespace OpenBabel {
             _ptr++;
             chiralWatch=true;
             _mapcd[atom]= new OBChiralData;
+            (_mapcd[atom])->SetAtom4Refs(arefs, input);
             if (*_ptr == '@')
               atom->SetClockwiseStereo();
             else
@@ -1634,18 +1640,23 @@ namespace OpenBabel {
         mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
         if(chiralWatch) // if chiral atom need to add its previous into atom4ref
           {
-            if (_mapcd[atom] == NULL)
-              _mapcd[atom]= new OBChiralData;
-    
-            (_mapcd[atom])->AddAtomRef((unsigned int)_prev,input);
-            // cerr <<"line 1622: Added atom ref "<<_prev<<" to "<<_mapcd[atom]<<endl;
+            vector<unsigned int> refs = (_mapcd[atom])->GetAtom4Refs(input);
+            // Assertion:
+            // int insertpos = NumConnections(atom) - 1;
+            // assert(insertpos == 0); // We've just added a bond between previous and current
+            refs[0] = _prev;
+            (_mapcd[atom])->SetAtom4Refs(refs, input);
+            //cerr <<"NB7: line 1622: Added atom ref "<<_prev<<" at " << 0 << " to "<<_mapcd[atom]<<endl;
           }
         map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
         ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
         if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
           {
-            (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
-            // cerr <<"line 1629: Added atom ref "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
+            vector<unsigned int> refs = (ChiralSearch->second)->GetAtom4Refs(input);
+            int insertpos = NumConnections(ChiralSearch->first) - 1;
+            refs[insertpos] = mol.NumAtoms();
+            (ChiralSearch->second)->SetAtom4Refs(refs, input);
+            //cerr <<"NB4: line 1629: Added atom ref "<<mol.NumAtoms()<<" at " << insertpos << " to "<<ChiralSearch->second<<endl;
           }
       }          
 
@@ -1667,9 +1678,15 @@ namespace OpenBabel {
         if(chiralWatch)
           {
             if (_mapcd[mol.GetAtom(_prev)] != NULL)
-              (_mapcd[mol.GetAtom(_prev)])->AddAtomRef(mol.NumAtoms(),input);
-            // cerr << "line 1652: Added atom ref "<<mol.NumAtoms()<<" to "<<_mapcd[mol.GetAtom(_prev)]<<endl;
-                       
+            {
+              vector<unsigned int> refs = (_mapcd[mol.GetAtom(_prev)])->GetAtom4Refs(input);
+              int insertpos = NumConnections(mol.GetAtom(_prev)) - 1;
+              // Assertion: It *must* be in position 1 (typically) or 0 (where no preceding group)
+              // assert(insertpos == 1 || insertpos == 0);
+              refs[insertpos] = mol.NumAtoms();
+              (_mapcd[mol.GetAtom(_prev)])->SetAtom4Refs(refs, input);
+              //cerr << "NB5: line 1652: Added atom ref "<<mol.NumAtoms()<<" at " << insertpos << " to "<<_mapcd[mol.GetAtom(_prev)]<<endl;
+            }
           }
       }
     chiralWatch=false;
@@ -1784,8 +1801,11 @@ namespace OpenBabel {
             ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
             if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
               {
-                (ChiralSearch->second)->AddAtomRef((*j)[1], input);
-                // cerr << "Added external "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
+                vector<unsigned int> refs = (ChiralSearch->second)->GetAtom4Refs(input);
+                int insertpos = NumConnections(ChiralSearch->first) - 1;
+                refs[insertpos] = (*j)[1];
+                (ChiralSearch->second)->SetAtom4Refs(refs, input);
+                //cerr << "NB1: Added external "<<(*j)[1]<<" at "<<insertpos<<" to "<<ChiralSearch->second<<endl;
               }
             
             _extbond.erase(j);
@@ -1857,22 +1877,23 @@ namespace OpenBabel {
           cs2=_mapcd.find(mol.GetAtom((*j)[1]));
           if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
             {
-              (ChiralSearch->second)->AddAtomRef((*j)[1], input);
-              // cerr << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second << endl;
+              vector<unsigned int> refs = (ChiralSearch->second)->GetAtom4Refs(input);
+              int insertpos = NumConnections(ChiralSearch->first) - 1;
+              refs[insertpos] = (*j)[1];
+              (ChiralSearch->second)->SetAtom4Refs(refs, input);
+              //cerr << "NB3: Added ring closure "<<(*j)[1]<<" at "<<insertpos<<" to "<<ChiralSearch->second << endl;
             }
           if (cs2!=_mapcd.end() && cs2->second != NULL)
             {
               //Ensure that the closure atom index is inserted at the position
               //decided when the ring closure digit was encountered.
               //The order needs to be SMILES atom order, not OB atom index order.
+
               vector<unsigned int> refs = (cs2->second)->GetAtom4Refs(input);
-              // make sure the vector is large enough for the insert call
-              if (refs.size() < (*j)[4] + 1) {
-                refs.resize((*j)[4] + 1);
-              }
-              refs.insert(refs.begin()+(*j)[4], _prev);
+              int insertpos = (*j)[4];
+              refs[insertpos] = mol.NumAtoms();
               (cs2->second)->SetAtom4Refs(refs, input);
-              // cerr <<"Added ring opening "<<_prev<<" to "<<cs2->second<<endl;
+              //cerr <<"NB2: Added ring opening "<<_prev<<" at "<<(*j)[4]<<" to "<<cs2->second<<endl;
             }
             
           //CM ensure neither atoms in ring closure is a radical centre
@@ -1899,18 +1920,27 @@ namespace OpenBabel {
         return false;
       }
 
-    vtmp[4] = atom->GetValence(); //store position to insert closure bond
-    for (j = _rclose.begin();j != _rclose.end();j++) //correct for multiple closure bonds to a single atom
-      if ((*j)[1] == _prev)
-        vtmp[4]++;
-
+    vtmp[4] = NumConnections(atom) ; //store position to insert closure bond
     _rclose.push_back(vtmp);
     _order = 1;
     _bondflags = 0;
 
     return(true);
   }
-
+  
+  // NumConnections finds the number of connections already made to
+  // a particular atom. This is used to figure out the correct position
+  // to insert an atom ID into atom4refs
+  int OBSmilesParser::NumConnections(OBAtom *atom) {
+    int val = atom->GetValence();
+    int idx = atom->GetIdx();
+    vector<vector<int> >::iterator j;
+    for (j = _rclose.begin();j != _rclose.end();j++) //correct for multiple closure bonds to a single atom
+      if ((*j)[1] == idx)
+        val++;
+    return val;
+  }
+  
   static bool IsCisOrTransH(OBAtom *atom)
   {
     if (!atom->IsHydrogen())
