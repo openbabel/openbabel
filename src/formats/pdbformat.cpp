@@ -624,17 +624,14 @@ namespace OpenBabel
         snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
         ofs << buffer;
         // Write out up to 4 real bonds per line PR#1711154
-        int currentValence = 0;
+        unsigned int currentValence = 0;
         for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
           {
             unsigned int order = mol.GetBond(atom, nbr)->GetBondOrder();
             unsigned int it_order = 0;
             for( it_order = 0; it_order < order; it_order++ )
               {
-                snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
-                ofs << buffer;
-                currentValence++;
-                if (currentValence % 4 == 0) 
+                if (0 != currentValence && 0 == currentValence % 4)
                   {
                     // Add the trailing space to finish this record
                     ofs << "                                       \n";
@@ -642,16 +639,23 @@ namespace OpenBabel
                     snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
                     ofs << buffer;              
                   }
+                currentValence++;
+                snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
+                ofs << buffer;
               }
           }
 
         // Add trailing spaces
-        int remainingValence = atom->GetValence() % 4;
-        for (int count = 0; count < (4 - remainingValence); count++) {
-          snprintf(buffer, BUFF_SIZE, "     ");
-          ofs << buffer;
-        }
-        ofs << "                                       \n";
+        unsigned int remainingValence = currentValence % 4;
+        if( 0 < remainingValence )
+          {
+            for (int count = 0; count < (4 - remainingValence); count++) 
+              {
+                snprintf(buffer, BUFF_SIZE, "     ");
+                ofs << buffer;
+              }
+          }
+        ofs << "                                                 \n";
       }
 
     snprintf(buffer, BUFF_SIZE, "MASTER        0    0    0    0    0    0    0    0 ");
