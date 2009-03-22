@@ -2326,14 +2326,38 @@ namespace OpenBabel {
     // in which case "up" means '\' and "down" means '/'.
     //
     // Note that there's an ambiguity: What if both ends of the bond are
-    // double-bonded atoms?  In this case, the first one takes precedence.
+    // double-bonded atoms?  In this case, the first one takes precedence
+    // but only if the other end of the first double bond also
+    // has double-bond stereochemistry set. This is handle situations like
+    // where in "O=C/C=C/", the first "/" does not refer to "O=C".
 
     if (!bond || (!bond->IsUp() && !bond->IsDown()))
       return '\0';
 
     OBAtom *atom = node->GetAtom();
 
-    if (atom->HasDoubleBond()) {		// double-bonded atom is first in the SMILES?
+    // Does the other end of the double bond to which atom may belong also
+    // have cis/trans stereo?
+    bool dbl_has_stereo = false;
+    if (atom->HasDoubleBond()) {
+      // Get the double bond
+      FOR_BONDS_OF_ATOM(dbi, atom) {
+        if (dbi->GetBO() == 2 && dbi->GetIdx()!=bond->GetIdx()) { // Should be able to do this without Idx :-/
+          //cerr << "Bond:" << dbi->GetIdx() << " with BO "<<dbi->GetBO() << endl;
+          // Get the bonds at the other end of the double bond
+          FOR_BONDS_OF_ATOM(ebi, dbi->GetNbrAtom(atom)) {
+            if (ebi->GetIdx()!=dbi->GetIdx() && ebi->GetBO()==1 &&
+                (ebi->IsUp() || ebi->IsDown())) {
+                  //cerr << "Far bonds:" << ebi->GetIdx() << "with BO " << ebi->GetBO() << endl;
+                  dbl_has_stereo = true;
+            }
+          }
+        }
+      }
+    }
+
+    if (atom->HasDoubleBond() && dbl_has_stereo) {
+      // double-bonded atom is first in the SMILES, and has cis/trans stereo
       if (bond->IsUp())
         return '/';
       else

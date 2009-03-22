@@ -1,5 +1,10 @@
 2009-03-22  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* src/formats/smilesformat.cpp: Added some extra logic to SMILES writer
+	for cis/trans bonds. Fixes a number of stereochemistry inversions.
+
+2009-03-22  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* src/formats/smilesformat.cpp: Rewrote the SMILES parsing code to set
 	entries in atom4refs directly, rather than adding to the end of the
 	current atom4refs.
