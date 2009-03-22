@@ -3,6 +3,9 @@
 	* src/formats/pdbformat.cpp: Corrected patch from Pierre-Louis to
 	ensure 80-character CONECT records.
 
+	* CMakeLists.txt, scripts/CMakeLists.txt: Backport changes to
+	build script modules from trunk.
+
 2009-03-22  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/formats/smilesformat.cpp: Added some extra logic to SMILES writer
