@@ -79,6 +79,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %rename(inc)   *::operator++;
 %rename(good)  *::operator bool;
 %rename(deref) *::operator->;
+%ignore *::DescribeBits;
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
@@ -93,7 +94,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/griddata.h>
 
 %import <openbabel/chains.h>
-%import <openbabel/bitvec.h>
+//# %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
 
 %include <openbabel/plugin.h>
@@ -109,7 +110,7 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 
-#%include <openbabel/fingerprint.h>
+%include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
 %include <openbabel/forcefield.h>
 
@@ -127,8 +128,8 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %ignore OBAtomBondIter(OBAtom &);
 %ignore OBMolAngleIter(OBMol &);
 %ignore OBMolAtomIter(OBMol &);
-%ignore OBMolAtomBFSIter(OBMol &);
-%ignore OBMolAtomDFSIter(OBMol &);
+%ignore OBMolAtomBFSIter;
+%ignore OBMolAtomDFSIter;
 %ignore OBMolBondIter(OBMol &);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);

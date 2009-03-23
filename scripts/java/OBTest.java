@@ -1,3 +1,5 @@
+import org.openbabel.*
+
 public class OBTest
 {
   public OBTest()
