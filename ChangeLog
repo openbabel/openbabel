@@ -1,6 +1,6 @@
 2009-03-08  Chris Morley
 
-	  Standard InChI (1.02final)
+        Standard InChI (1.02final)
 	* src/formats/inchiformat.cpp, include/inchi_api.h:
 	Several function names changed, removed most of the options code
 	Works with the precompiled Windows files windows-vc2005/libstdinchi.dll,
