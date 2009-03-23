@@ -1,6 +1,6 @@
 if(WITH_INCHI)
   add_definitions(-DINCHI_LINK_AS_DLL)
-  add_subdirectory(inchi)
+  add_subdirectory(inchi102)
 endif(WITH_INCHI)
 
 set(formats
@@ -92,6 +92,7 @@ if(Boost_FOUND)
 endif(Boost_FOUND)
 
 if(WITH_INCHI)
+  include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
   set(formats
     ${formats}
     inchiformat
