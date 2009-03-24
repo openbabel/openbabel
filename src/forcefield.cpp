@@ -1251,6 +1251,8 @@ namespace OpenBabel
     if (!_validSetup)
       return 0;
     
+    char _logbuf[100];
+    
     if (_current_conformer >=  _mol.NumConformers()) { // done
       // Select conformer with lowest energy
       int best_conformer = 0;
@@ -1370,6 +1372,8 @@ namespace OpenBabel
     if (!_validSetup)
       return 0;
  
+    char _logbuf[100];
+    
     if (_current_conformer >=  _mol.NumConformers()) { // done
       // Select conformer with lowest energy
       int best_conformer = 0;

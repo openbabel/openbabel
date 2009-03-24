@@ -386,7 +386,15 @@
 	* data/MACCS.txt; data for new MACCS fingerprint (from RDKit)
 	
 	* data/plugindefines.txt; definition of MACCS fingerprint.
-	
+
+2008-09-20  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: Check OBForceField::_validSetup flas before
+	doing anything that may cause a segfault. (Fixes: #2059299)
+
+	* src/forcefields/forcefield*.h: Set _validSetup to false in
+	constructor.
+
 2008-07-19  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/opendxformat.cpp: Rename theGaussianCubeFormat global
