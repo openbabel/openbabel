@@ -19,6 +19,6 @@ set_target_properties(inchi PROPERTIES
 )
 install(TARGETS inchi
                 inchi DESTINATION bin
-                LIBRARY DESTINATION lib
-                ARCHIVE DESTINATION lib
+                LIBRARY DESTINATION ${LIB}
+                ARCHIVE DESTINATION ${LIB}
 )

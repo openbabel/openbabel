@@ -1,6 +1,6 @@
 project(openbabel)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
-cmake_minimum_required(VERSION 2.4.7)
+cmake_minimum_required(VERSION 2.6.0)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
@@ -21,13 +21,11 @@ endif(WIN32)
 set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
 if(NOT LIB_INSTALL_DIR)
-  set(LIB          "lib")   ## FIXME: add lib suffix!
-else(NOT LIB_INSTALL_DIR)
-  set(LIB ${LIB_INSTALL_DIR})
+  set(LIB "lib")   ## FIXME: add lib suffix!
 endif(NOT LIB_INSTALL_DIR)
 
 option(WITH_INCHI   "build inchi lib" ON)
-option(BUILD_SHARED "enable static build support" ON)
+option(BUILD_SHARED "enable shared build support" ON)
 if(BUILD_SHARED)
   set(BUILD_TYPE SHARED)
   set(PLUGIN_TYPE MODULE)
@@ -98,6 +96,9 @@ if (CMAKE_COMPILER_IS_GNUCXX)
   if (CMAKE_SYSTEM_NAME MATCHES Linux)
     set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
     set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_SHARED_LINKER_FLAGS}")
+    set (CMAKE_MODULE_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
+    set (CMAKE_MODULE_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_SHARED_LINKER_FLAGS}")
+    set (CMAKE_EXE_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
     set (CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_EXE_LINKER_FLAGS}")
   endif (CMAKE_SYSTEM_NAME MATCHES Linux)
   # Now check if we can use visibility to selectively export symbols
@@ -143,7 +144,6 @@ if (CMAKE_COMPILER_IS_GNUCXX)
   set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
   set (CMAKE_CXX_FLAGS_DEBUG   "-g3 -fno-inline")
 endif (CMAKE_COMPILER_IS_GNUCXX)
-
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${CMAKE_SOURCE_DIR}/src/config.h.cmake ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
