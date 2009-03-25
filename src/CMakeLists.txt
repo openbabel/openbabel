@@ -115,9 +115,9 @@ set_target_properties(${BABEL_LIBRARY} PROPERTIES
                                        DEFINE_SYMBOL MAKE_OBDLL
                       )
 install(TARGETS ${BABEL_LIBRARY}
-                RUNTIME DESTINATION bin
-                LIBRARY DESTINATION ${LIB}
-                ARCHIVE DESTINATION ${LIB}
+                RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+                LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+                ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
 )
 
 add_subdirectory(formats)

@@ -20,9 +20,23 @@ else(WIN32)
 endif(WIN32)
 set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
-if(NOT LIB_INSTALL_DIR)
-  set(LIB "lib")   ## FIXME: add lib suffix!
-endif(NOT LIB_INSTALL_DIR)
+
+
+# Set up our path handling, inspired by the path handling used in KDE
+set(BIN_INSTALL_DIR      "bin"
+    CACHE PATH "Install dir for binaries")
+set(LIB_SUFFIX "" CACHE STRING "Suffix of the directory name, e.g. 64 for lib64")
+if(UNIX)
+  set(LIB_INSTALL_DIR    "lib${LIB_SUFFIX}"
+      CACHE PATH "Install dir for libraries")
+  set(PLUGIN_INSTALL_DIR "${LIB_INSTALL_DIR}/openbabel/${BABEL_VERSION}"
+      CACHE PATH "Install dir for plugins")
+else(UNIX) # Windows - bin dir = lib dir to load libraries
+  set(LIB_INSTALL_DIR    "${BIN_INSTALL_DIR}"
+      CACHE PATH "Install dir for libraries")
+  set(PLUGIN_INSTALL_DIR "lib${LIB_SUFFIX}/openbabel/${BABEL_VERSION}"
+      CACHE PATH "Install dir for plugins")
+endif(UNIX)
 
 option(WITH_INCHI   "build inchi lib" ON)
 option(BUILD_SHARED "enable shared build support" ON)
@@ -88,7 +102,7 @@ if(NOT WIN32)
     }
    " SCANDIR_NEEDS_CONST)
 
-   set(OB_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${LIB}/openbabel/${BABEL_VERSION})
+   set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${PLUGIN_INSTALL_DIR}")
 endif(NOT WIN32)
 
 # Add some visibility support when using GCC
@@ -129,6 +143,18 @@ if (CMAKE_COMPILER_IS_GNUCXX)
   endif (HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_1 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR)
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
+# Some rpath handling for Linux and Mac
+if(UNIX)
+  if(APPLE)
+    set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
+  else(APPLE)
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
+    set(CMAKE_SKIP_BUILD_RPATH FALSE)
+    set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+  endif(APPLE)
+endif(UNIX)
+
 # this is adapted from KDE's FindKDE4Internal.cmake : default the build type to
 # "release with debug info".
 #
@@ -149,7 +175,7 @@ file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${CMAKE_SOURCE_DIR}/src/config.h.cmake ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION include/openbabel-2.0/openbabel)
 configure_file(${CMAKE_SOURCE_DIR}/openbabel-2.0.pc.cmake ${CMAKE_BINARY_DIR}/openbabel-2.0.pc @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB}/pkgconfig)
+install(FILES ${CMAKE_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 
 include_directories(${CMAKE_BINARY_DIR}/include
                     ${CMAKE_SOURCE_DIR}/data

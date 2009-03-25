@@ -144,8 +144,8 @@ foreach(format ${formats})
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION bin
-                  LIBRARY DESTINATION ${LIB}/openbabel/${BABEL_VERSION}
-                  ARCHIVE DESTINATION ${LIB}/openbabel/${BABEL_VERSION})
+                  LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR}
+                  ARCHIVE DESTINATION ${PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
                         OUTPUT_NAME ${format}
                         PREFIX ""
@@ -157,8 +157,8 @@ foreach(format ${xml_formats})
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION bin
-                  LIBRARY DESTINATION ${LIB}/openbabel/${BABEL_VERSION}
-                  ARCHIVE DESTINATION ${LIB}/openbabel/${BABEL_VERSION})
+                  LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR}
+                  ARCHIVE DESTINATION ${PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
                         OUTPUT_NAME ${format}
                         PREFIX ""
