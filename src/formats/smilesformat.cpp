@@ -1522,7 +1522,7 @@ namespace OpenBabel {
     int clval=0;
     char tmpc[2];
     tmpc[1] = '\0';
-    vector<unsigned int> arefs(4, -1); // Value comes up as 4294967295 (unsigned)
+    vector<unsigned int> arefs(4, UINT_MAX);
     for (_ptr++;*_ptr && *_ptr != ']';_ptr++)
       {
         switch(*_ptr)

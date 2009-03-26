@@ -1,3 +1,8 @@
+2009-03-26  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/formats/smilesformat.cpp: Use UINT_MAX for unassigned values
+	instead of -1
+
 2009-03-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp: Corrected patch from Pierre-Louis to
