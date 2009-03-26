@@ -14,22 +14,25 @@
  */
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <math.h>
-#include <float.h>
-#include <string.h>
-#include <ctype.h>
+#ifndef __INCHI_DLL_MAIN_H__
+#define __INCHI_DLL_MAIN_H__
 
-#include "mode.h"
+#if _MSC_VER > 1000
+#pragma once
+#endif /* _MSC_VER > 1000 */
 
-#include "incomdef.h"   /*^^^ comdef.h renamed to incomdef.h (avoid collision with MS comdef.h) */
-#include "util.h"
-#include "readmol.h"
-#include "ichi_io.h"
-#include "ichicomp.h"
-#include "inpdef.h"
+#if defined(_WIN32) && defined(_MSC_VER) && defined(_USRDLL)
+
+/*#define WIN32_LEAN_AND_MEAN */  /* Exclude rarely-used stuff from Windows headers */
+#include <windows.h>
+
+#define  INCHI_DLLMAIN_TYPE APIENTRY
+
+#else  /* not a Win32 DLL under MS VC++ */
+
+#define  INCHI_DLLMAIN_TYPE
+
+#endif
 
 
-#include "lreadmol.h"
+#endif /* __INCHI_DLL_MAIN_H__ */

@@ -1,3 +1,8 @@
+if(WITH_INCHI)
+  add_definitions(-DINCHI_LINK_AS_DLL -DINCHI_LIBRARY)
+  add_subdirectory(inchi102)
+endif(WITH_INCHI)
+
 set(formats
     APIInterface
     CSRformat

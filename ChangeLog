@@ -1,3 +1,9 @@
+2009-03-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/inchi102, src/fomats/inchi102: Fix compile/link for
+	Linux/Mac of InChI 1.02. Make sure in the future to import the
+	InChI DLL code. (I'm not sure what the other code is, honestly).
+
 2009-03-08  Chris Morley
 
         Standard InChI (1.02final)

@@ -14,6 +14,8 @@
  */
 
 
+
+
 #ifndef __MODE_H__
 #define __MODE_H__
 
@@ -24,9 +26,6 @@
 extern "C" {
 #endif
 #endif
-
-
-
 
 
 /*
@@ -49,15 +48,8 @@ INCHI_LIB           wInChI
 
 */
 
-/*^^^ */
-#if 0
-#ifndef INCHI_LIB
-#define INCHI_LIB 1
-#endif
-#endif
-    
-#define INCLUDE_V102_FEATURES 1
 
+#define INCLUDE_V102_FEATURES 1
 #ifdef INCLUDE_V102_FEATURES
 
 #define BUILD_CINCHI_WITH_INCHIKEY 1
@@ -75,15 +67,19 @@ INCHI_LIB           wInChI
 
 /*^^^ */
 
+
 /* uncomment to unconditionally force ANSI-89 C, no Win32 specific code */
-/*#define INCHI_ANSI_ONLY*/
+#define INCHI_ANSI_ONLY
 
 #ifdef INCHI_ANSI_ONLY
-/* #define ADD_NON_ANSI_FUNCTIONS */ /* uncomment to add stricmp(), etc., see util.c */
+#define ADD_NON_ANSI_FUNCTIONS */ /* uncomment to add stricmp(), etc., see util.c */
 #endif
 
+
+
+
 /* uncomment to create a library for using INChI API described in inchi_api.h */
-/* #define INCHI_LIBRARY */
+#define INCHI_LIBRARY
 
 /* uncomment to use INChI library as a Win32 DLL or to eliminate stricmp duplication */
 /* #define INCHI_LINK_AS_DLL */
@@ -144,7 +140,6 @@ INCHI_LIB           wInChI
 #endif
 
 #define ACD_LABS_VERSION 0    /* always 0 */
-
 
 #ifndef ADD_CMLPP
 /* this allows ADD_CMLPP be #defined in a makefile */
@@ -256,14 +251,24 @@ INCHI_LIB           wInChI
 #define FIX_CPOINT_BOND_CAP2          0
 
 
+
+#define INCLUDE_V102_FEATURES 1
+
 /* Ensure that all v. 1.02-final fixes and additions are in place */
+
 #ifdef INCLUDE_V102_FEATURES
 
+#ifndef ALLOW_STDINCHI_SHORTCUT 
+#define ALLOW_STDINCHI_SHORTCUT       1  /*^^^ (Jan-Feb 2008) */
+#endif
 #ifndef FIX_OXOANION_DRAWING
 #define FIX_OXOANION_DRAWING          1  /*^^^ post-1.02b */
 #endif
 #ifndef FIX_AMIDINIUM_DRAWING
-#define FIX_AMIDINIUM_DRAWING			1  /*^^^ post-1.02b */
+#define FIX_AMIDINIUM_DRAWING         1  /*^^^ post-1.02b */
+#endif
+#ifndef FIX_TRANSPOSITION_CHARGE_BUG
+#define FIX_TRANSPOSITION_CHARGE_BUG  1  /* (2008-01-02) fix bug that leads to missed charge in some cases when /o is present */
 #endif
 
 #ifndef FIX_TERM_H_CHRG_BUG
@@ -273,9 +278,7 @@ INCHI_LIB           wInChI
                                  neutralizing H but not adjusting charge of heavy atom */
 #endif
 
-#ifndef FIX_TRANSPOSITION_CHARGE_BUG
-#define FIX_TRANSPOSITION_CHARGE_BUG  1	/* (2008-01-02) fix bug that leads to missed charge in some cases when /o is present */
-#endif
+
 #ifndef FIX_ISO_FIXEDH_BUG
 #define FIX_ISO_FIXEDH_BUG            1 /* (2007-09-24) 1=> Fix bug: missing fixed-H iso segment in case of single removed D(+) */
 #endif
@@ -293,10 +296,12 @@ INCHI_LIB           wInChI
 #endif
 #ifndef FIX_I2I_STEREOCONVERSION_BUG3
 #define FIX_I2I_STEREOCONVERSION_BUG3 1 /* (2008-04-10)   1=> Fix bug of i2i conversion */
-                                        /* (missed repeating /s in FI after F for multi-component case) */
+									    /* (missed repeating /s in FI after F for multi-component case) */
 #endif
 
+
 #endif
+
 
 #if( !defined(INCHI_LIBRARY) && !defined(INCHI_MAIN) )
 #define I2S_MODIFY_OUTPUT             1  /* 1=> Allow various InChI2InChI output types from cInChI */
@@ -857,11 +862,11 @@ INCHI_LIB           wInChI
 
 #define TG_FLAG_KETO_ENOL_TAUT           0x00080000   /* turn on keto-enol tautomerism detection */
 #define TG_FLAG_1_5_TAUT                 0x00100000   /* turn on 1,5 tautomerism detection */
-
+               
 /*^^^ FB2 */
 #define TG_FLAG_FIX_ISO_FIXEDH_BUG       0x00200000   /* fix bug found after v.102b (isotopic H representation)  */
 #define TG_FLAG_FIX_TERM_H_CHRG_BUG      0x00400000   /* fix bug found after v.102b (moving H charge in 'remove_terminal_HDT') */
-                                       
+                        
 /* output bTautFlags flags */          
                                        
 #define TG_FLAG_MOVE_HPLUS2NEUTR_DONE    0x00000001   /* protons have been moved to neutralize */
@@ -920,7 +925,7 @@ typedef struct tagOutputString {
 } INCHI_OUTPUT;
 
 
-
+/*^^^ Post-1.02b */
 typedef struct tagOutputStream 
 {
     /* output is directed either to resizable string buffer: */
@@ -933,7 +938,6 @@ typedef struct tagOutputStream
 #define INCHI_IOSTREAM_NONE 0
 #define INCHI_IOSTREAM_STRING 1
 #define INCHI_IOSTREAM_FILE 2
-
 
 
 /* memory leaks tracking */
