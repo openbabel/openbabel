@@ -156,11 +156,30 @@ namespace OpenBabel
                   }
               }
           }
+        else if(strstr(buffer,"Dipole Moments (Debye)") != NULL)
+          {
+            ifs.getline(buffer,BUFF_SIZE); // actual components   X ###  Y #### Z ###
+            tokenize(vs,buffer);
+            if (vs.size() >= 8) 
+              {
+                OBVectorData *dipoleMoment = new OBVectorData;
+                dipoleMoment->SetAttribute("Dipole Moment");
+                double x, y, z;
+                x = atof(vs[1].c_str());
+                y = atof(vs[3].c_str());
+                z = atof(vs[5].c_str());
+                dipoleMoment->SetData(x, y, z);
+                dipoleMoment->SetOrigin(fileformatInput);
+                mol.SetData(dipoleMoment);
+              }
+            if (!ifs.getline(buffer,BUFF_SIZE)) break;
+          }
       }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
-    if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS) 
+        && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
     mol.EndModify();

@@ -492,7 +492,7 @@ namespace OpenBabel
         posx=loop->second.find("_atom_site_fract_x");
         posy=loop->second.find("_atom_site_fract_y");
         posz=loop->second.find("_atom_site_fract_z");
-        unsigned int nb;
+        unsigned int nb = 0;
         if( (posx!=loop->second.end()) && (posy!=loop->second.end()) && (posz!=loop->second.end()))
           {
             nb=posx->second.size();
@@ -755,7 +755,7 @@ namespace OpenBabel
   string CIFReadValue(stringstream &in,char &lastc)
   {
     bool vv=false;//very verbose ?
-    string value;
+    string value("");
     while(!isgraph(in.peek())) in.get(lastc);
     while(in.peek()=='#')
       {//discard these comments for now
@@ -764,6 +764,11 @@ namespace OpenBabel
         lastc='\r';
         while(!isgraph(in.peek())) in.get(lastc);
       }
+    if(in.peek()=='_') {
+      if (vv)
+        cout << "WARNING: Trying to read a value but found a new tag !" << endl;
+      return value;
+    }
     if(in.peek()==';')
       {//SemiColonTextField
         bool warning=!iseol(lastc);
@@ -773,11 +778,17 @@ namespace OpenBabel
         in.get(lastc);
         while(in.peek()!=';')
           {
+            if (in.peek() == '_') {
+              cout << "WARNING: Trying to read a SemiColonTextField but found a new tag !" << endl;
+              warning = true;
+              break;
+            }
             string tmp;
             getline(in,tmp);
             value+=tmp+" ";
           }
-        in.get(lastc);
+        if (!warning)
+          in.get(lastc);
         if(vv) cout<<"SemiColonTextField:"<<value<<endl;
         if(warning && !vv) cout<<"SemiColonTextField:"<<value<<endl;
         return value;
@@ -878,14 +889,16 @@ namespace OpenBabel
                 if(in.peek()=='_') break;
                 if(in.peek()=='#')
                   {// Comment (in a loop ??)
+                    const std::ios::pos_type pos=in.tellg();
                     string tmp;
                     getline(in,tmp);
                     if(block=="") mvComment.push_back(tmp);
                     else mvData[block].mvComment.push_back(tmp);
                     lastc='\r';
                     if(vv) cout<<"Comment in a loop (?):"<<tmp<<endl;
-                    continue;
-                  };
+                    in.seekg(pos);
+                    break;
+                  }
                 const std::ios::pos_type pos=in.tellg();
                 in>>tmp;
                 if(vv) cout<<"WHATNEXT? "<<tmp;
@@ -942,10 +955,98 @@ namespace OpenBabel
     return v;
   }
 
-  //############################## END CIF CLASSES####################################################
+  //################ END CIF CLASSES######################################
 
   //Make an instance of the format class
   CIFFormat theCIFFormat;
+
+  // Helper function for CorrectFormatCharges
+  // Is this atom an oxygen in a water molecule
+  // We know the oxygen is connected to one ion, but check for non-hydrogens
+  // Returns: true if the atom is an oxygen and connected to two hydrogens and up to one other atom
+  bool isWaterOxygen(OBAtom *atom)
+  {
+    if (!atom->IsOxygen())
+      return false;
+     
+    int nonHydrogenCount = 0;
+    int hydrogenCount = 0;
+    FOR_NBORS_OF_ATOM(neighbor, *atom) {
+      if (!neighbor->IsHydrogen())
+        nonHydrogenCount++;
+      else
+        hydrogenCount++;
+    }
+    
+    return (hydrogenCount == 2 && nonHydrogenCount <= 1);
+  }
+
+  // Look for lone ions, and correct their formal charges
+  void CorrectFormalCharges(OBMol *mol)
+  {
+    if (!mol)
+      return;
+    
+    // First look for NR4, PR4 ions,
+    // or bare halides, alkali and alkaline earth metal ions
+    FOR_ATOMS_OF_MOL(atom, *mol) {
+      
+      if ((atom->GetAtomicNum() == 7 || atom->GetAtomicNum() == 15) 
+          && atom->BOSum() == 4) {
+        // check if we should make a positive charge?
+        // i.e., 4 non-metal neighbors
+        bool nonMetalNeighbors = true;
+        FOR_NBORS_OF_ATOM(neighbor, &*atom) {
+          switch (neighbor->GetAtomicNum()) {
+          case 1:
+          case 5: case 6: case 7: case 8: case 9:
+          case 14: case 15: case 16: case 17:
+          case 33: case 34: case 35:
+          case 53:
+            continue; // good non-metals
+          default:
+            nonMetalNeighbors = false;
+            break; // stop looking
+          }
+        }
+        if (nonMetalNeighbors) // 4 non-metals, e.g. NH4+
+          atom->SetFormalCharge(+1);
+      }
+      
+      // Now look for simple atomic ions like Na, Li, F, Cl, Br...
+      // If we have an existing formal charge, keep going
+      if (atom->GetFormalCharge() != 0)
+        continue;
+
+      // If we're connected to anything besides H2O, keep going
+      if (atom->GetValence() != 0) {
+        int nonWaterBonds = 0;
+        FOR_NBORS_OF_ATOM(neighbor, &*atom) {
+          if (!isWaterOxygen(&*neighbor)) {
+            nonWaterBonds = 1;
+            break;
+          }
+        }
+        if (nonWaterBonds)
+          continue; // look at another atom
+      }
+
+      switch(atom->GetAtomicNum()) {
+      case 3: case 11: case 19: case 37: case 55: case 87:
+        // Alkali ions
+        atom->SetFormalCharge(+1);
+        break;
+      case 4: case 12: case 20: case 38: case 56: case 88:
+        // Alkaline earth ions
+        atom->SetFormalCharge(+2);
+        break;
+      case 9: case 17: case 35: case 53: case 85:
+        // Halides
+        atom->SetFormalCharge(-1);
+        break;
+      }
+    }
+  }
 
   /////////////////////////////////////////////////////////////////
   bool CIFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -998,7 +1099,7 @@ namespace OpenBabel
               // Try to strip the string to have a better chance to have a valid symbol
               // This is not guaranteed to work still, as the CIF standard allows about any string...
               string tmpSymbol=posat->mSymbol;
-              int nbc=0;
+              unsigned int nbc=0;
               if((tmpSymbol.size()==1) && isalpha(tmpSymbol[0])) nbc=1;
               else if(tmpSymbol.size()>=2)
                 {
@@ -1064,8 +1165,11 @@ namespace OpenBabel
           if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
             pmol->PerceiveBondOrders();
           pmol->EndModify();
+          pmol->SetAutomaticFormalCharge(false); // we should have set formal charges
+          CorrectFormalCharges(pmol); // Look for lone Na -> Na+, etc.
           return true;
         }
+
     // If we got here, no structure was found
     obErrorLog.ThrowError(__FUNCTION__, "Problems reading a CIF file: no structure found !" , obWarning);
     return(false);

@@ -1401,7 +1401,7 @@ namespace OpenBabel
     if (_mod)
       return;
 
-    if (nukePerceivedData)
+    if (nukePerceivedData) {
     {
       _flags = 0;
       OBBond *bond;
@@ -2076,7 +2076,7 @@ namespace OpenBabel
               {
                 SetConformer(n);
                 //atom->GetNewBondVector(v,bondlen);
-		v = OBBuilder::GetNewBondVector(atom,bondlen);
+                v = OBBuilder::GetNewBondVector(atom,bondlen);
                 _c[(NumAtoms())*3]   = v.x();
                 _c[(NumAtoms())*3+1] = v.y();
                 _c[(NumAtoms())*3+2] = v.z();
@@ -2895,28 +2895,6 @@ namespace OpenBabel
       }
   }
 
-  /*NF
-    istream& operator>> (istream &ifs, OBMol &mol)
-    {
-    bool retcode = OBFileFormat::ReadMolecule(ifs, mol);
- 
-    if (!retcode)
-    {
-    if (mol.GetMod())
-    mol.EndModify();
-    mol.Clear();
-    }
- 
-    return(ifs);
-    }
- 
-    ostream& operator<< (ostream &ofs, OBMol &mol)
-    {
-    OBFileFormat::WriteMolecule(ofs, mol);
-    return(ofs);
-    }
-  */
-
   OBMol::OBMol()
   {
     _natoms = _nbonds = 0;
@@ -3456,6 +3434,7 @@ namespace OpenBabel
     vector<int> sorted;
     int iter, max;
     double maxElNeg, shortestBond, currentElNeg;
+    double bondLength, testLength;
 
     for (atom = BeginAtom(i) ; atom ; atom = NextAtom(i))
       {
@@ -3475,18 +3454,18 @@ namespace OpenBabel
     sort(sortedAtoms.begin(), sortedAtoms.end(), SortAtomZ);
 
     max = sortedAtoms.size();
-
     for (iter = 0 ; iter < max ; iter++ )
       {
         atom = sortedAtoms[iter].first;
+        // Possible sp-hybrids
         if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
              && atom->BOSum() + 2  <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))
              )
           {
+
             // loop through the neighbors looking for a hybrid or terminal atom
             // (and pick the one with highest electronegativity first)
             // *or* pick a neighbor that's a terminal atom
-
             if (atom->HasNonSingleBond() ||
                 (atom->GetAtomicNum() == 7 && atom->BOSum() + 2 > 3))
               continue;
@@ -3507,7 +3486,16 @@ namespace OpenBabel
                         (b->GetAtomicNum() == 7 && b->BOSum() + 2 > 3))
                       continue;
 
-                    shortestBond = (atom->GetBond(b))->GetLength();
+                    // Test terminal bonds against expected triple bond lengths
+                    bondLength = (atom->GetBond(b))->GetLength();
+                    if (atom->GetValence() == 1 || b->GetValence() == 1) {
+                      testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
+                        + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
+                      if (bondLength > 0.9 * testLength)
+                        continue; // too long, ignore it
+                    }
+
+                    shortestBond = bondLength;
                     maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
                     c = b; // save this atom for later use
                   }
@@ -3515,6 +3503,7 @@ namespace OpenBabel
             if (c)
               (atom->GetBond(c))->SetBO(3);
           }
+        // Possible sp2-hybrid atoms
         else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
                   && atom->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
           {
@@ -3542,6 +3531,15 @@ namespace OpenBabel
                     if (b->HasNonSingleBond() ||
                         (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
                       continue;
+
+                    // Test terminal bonds against expected double bond lengths
+                    bondLength = (atom->GetBond(b))->GetLength();
+                    if (atom->GetValence() == 1 || b->GetValence() == 1) {
+                      testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
+                        + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
+                      if (bondLength > 0.93 * testLength)
+                        continue; // too long, ignore it
+                    }
 
                     shortestBond = (atom->GetBond(b))->GetLength();
                     maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
@@ -3854,6 +3852,7 @@ namespace OpenBabel
 
     OBMolAtomDFSIter iter( this, StartIndex );
     OBMol newMol;
+    int fragments = 0;
     while( GetNextFragment( iter, newMol ) ) {
       result.push_back( newMol );
       newMol.Clear();
@@ -3865,7 +3864,6 @@ namespace OpenBabel
   bool OBMol::GetNextFragment( OBMolAtomDFSIter& iter, OBMol& newmol ) {
     if( ! iter ) return false;
 
-    //iOBMol newmol;
     newmol.SetDimension(GetDimension());
     map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
     map<OBAtom*, OBChiralData*> ChiralMap; // key is from old mol
@@ -3879,6 +3877,7 @@ namespace OpenBabel
         ChiralMap[pnext] = cd;
     }while((iter++).next());
 
+
     // update any OBChiralData records
     map<OBAtom*, OBChiralData*>::iterator ChiralSearch;
     for (ChiralSearch = ChiralMap.begin(); ChiralSearch != ChiralMap.end(); ++ChiralSearch) {
@@ -3886,40 +3885,43 @@ namespace OpenBabel
       OBChiralData *oldCD = ChiralSearch->second;
       OBAtom *newAtom = AtomMap[oldAtom];
       if (newAtom == NULL) continue; // shouldn't happen, but be defensive
+      if (oldCD == NULL) continue; // similarly
 
       OBChiralData *newCD = new OBChiralData;
+      if (newCD == NULL) continue; // out of memory error
+
       OBAtom *a0, *a1, *a2, *a3; // old atom references
-      if (oldCD->GetSize(input)) {
+      if (oldCD->GetSize(input) == 4) {
         a0 = this->GetAtom(oldCD->GetAtomRef(0, input));
         a1 = this->GetAtom(oldCD->GetAtomRef(1, input));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, input));
         a3 = this->GetAtom(oldCD->GetAtomRef(3, input));
-        newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
-        newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
-        newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
-        newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
+        if (a0 && AtomMap[a0]) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
+        if (a1 && AtomMap[a1]) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
+        if (a2 && AtomMap[a2]) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
+        if (a3 && AtomMap[a3]) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
       }
 
-      if (oldCD->GetSize(output)) {
+      if (oldCD->GetSize(output) == 4) {
         a0 = this->GetAtom(oldCD->GetAtomRef(0, output));
         a1 = this->GetAtom(oldCD->GetAtomRef(1, output));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, output));
         a3 = this->GetAtom(oldCD->GetAtomRef(3, output));
-        newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
-        newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
-        newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
-        newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
+        if (a0 && AtomMap[a0]) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
+        if (a1 && AtomMap[a1]) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
+        if (a2 && AtomMap[a2]) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
+        if (a3 && AtomMap[a3]) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
       }
 
-      if (oldCD->GetSize(calcvolume)) {
+      if (oldCD->GetSize(calcvolume) == 4) {
         a0 = this->GetAtom(oldCD->GetAtomRef(0, calcvolume));
         a1 = this->GetAtom(oldCD->GetAtomRef(1, calcvolume));
         a2 = this->GetAtom(oldCD->GetAtomRef(2, calcvolume));
         a3 = this->GetAtom(oldCD->GetAtomRef(3, calcvolume));
-        newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
-        newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
-        newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
-        newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
+        if (a0 && AtomMap[a0]) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
+        if (a1 && AtomMap[a1]) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
+        if (a2 && AtomMap[a2]) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
+        if (a3 && AtomMap[a3]) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
       }
 
       newAtom->SetData(newCD);
@@ -3928,13 +3930,12 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(b, this) {
       map<OBAtom*, OBAtom*>::iterator pos;
       pos = AtomMap.find(b->GetBeginAtom());
-      if(pos!=AtomMap.end())
+      if(pos!=AtomMap.end() && AtomMap[b->GetEndAtom()])
         //if bond belongs to current fragment make a similar one in new molecule
         newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
                        b->GetBO(), b->GetFlags());
     }
 
-    //return newmol;
     return( true );
   }
 

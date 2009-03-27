@@ -78,6 +78,7 @@ include(CheckCSourceCompiles)
 check_include_file(conio.h      HAVE_CONIO_H)
 check_include_file(sys/time.h   HAVE_SYS_TIME_H)
 check_include_file(time.h       HAVE_TIME_H)
+check_include_file(strings.h   HAVE_STRINGS_H)
 check_include_file_cxx(sstream  HAVE_SSTREAM)
 
 check_symbol_exists(rint          "math.h"     HAVE_RINT)

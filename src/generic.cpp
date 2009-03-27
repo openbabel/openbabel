@@ -1243,9 +1243,9 @@ namespace OpenBabel
   //
   bool OBChiralData::SetAtom4Refs(std::vector<unsigned int> atom4refs, atomreftype t)
   {
-    if (atom4refs.size()>4)
+    if (atom4refs.size() != 4)
       {
-        obErrorLog.ThrowError(__FUNCTION__, "More than 4 atoms in atom4refs", obDebug);
+        obErrorLog.ThrowError(__FUNCTION__, "Incorrect number of atoms atom4refs, should be 4", obDebug);
         return(false);
       }
     switch(t){

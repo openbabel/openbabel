@@ -38,6 +38,7 @@ GNU General Public License for more details.
 #include <map>
 #include <locale>
 #include <limits>
+#include <typeinfo>
 
 #include <stdlib.h>
 
@@ -308,8 +309,9 @@ namespace OpenBabel {
       {
         if(DLHandler::openLib(*itr))
           count++;
-        else
-          obErrorLog.ThrowError(__FUNCTION__, *itr + " did not load properly", obError);
+        // Error handling is now handled by DLHandler itself
+        //        else
+        //          obErrorLog.ThrowError(__FUNCTION__, *itr + " did not load properly", obError);
       }
 #else
     count = 1; //avoid calling this function several times

@@ -37,6 +37,7 @@ namespace OpenBabel
     {
       OBConversion::RegisterFormat("gam", this, "chemical/x-gamess-output");
       OBConversion::RegisterFormat("gamout",this);
+      OBConversion::RegisterFormat("gamess",this);
     }
 
     virtual const char* Description() //required
@@ -222,6 +223,12 @@ namespace OpenBabel
     int HOMO = 0;
     vector<double> orbitals;
 
+    vector<double> frequencies, intensities;
+    vector< vector<vector3> > displacements;
+    int lowFreqModes = 6; // the number of modes to ignore
+    int numFreq, numIntens, numDisp; // GAMESS prints rotations & transl., which we ignore
+    numFreq = numIntens = numDisp = 0;
+
     // must build generic data while we parse then add at the end.
     OBSetData *gmsset = new OBSetData();
     gmsset->SetAttribute("gamess");
@@ -253,6 +260,48 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
+        else if(strstr(buffer,"MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != NULL)
+          {
+            /*This set of EFP coordinates belongs only to the
+             * conformer directly above this (ATOMIC   COORDINATES (BOHR))
+             */
+            ifs.getline(buffer,BUFF_SIZE);      // column headings
+            ifs.getline(buffer,BUFF_SIZE);
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            while(vs.size() == 6)
+              {
+                int atomicNum;
+                /* For the included EFP1 potentials,
+                 * the atom name may start with "Z"
+                 * or have a non-zero nuclear charge
+                 */
+                if (atof((char*)vs[5].c_str()) > 0.0) {
+                  atom = mol.NewAtom();
+                  atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str()); 
+                  atom->SetAtomicNum(atomicNum);
+                  x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
+                  y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
+                  z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
+                  atom->SetVector(x,y,z);
+
+                }
+                else if (vs[0].substr(0,1) == "Z") {
+                  atom = mol.NewAtom();
+                  atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
+                  atom->SetAtomicNum(atomicNum);
+                  x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
+                  y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
+                  z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
+                  atom->SetVector(x,y,z);
+
+                }
+                if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+                tokenize(vs,buffer);
+              }
+          }
+
         else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL)
           {
             mol.Clear();
@@ -275,6 +324,43 @@ namespace OpenBabel
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
+              }
+            if(strstr(buffer,"COORDINATES OF FRAGMENT") != NULL)
+              {
+                ifs.getline(buffer,BUFF_SIZE);      // column headings
+                ifs.getline(buffer,BUFF_SIZE);
+                ifs.getline(buffer,BUFF_SIZE);
+                //ifs.getline(buffer,BUFF_SIZE);    //FRAGNAME
+                tokenize(vs,buffer);
+                //while(vs.size() == 4)
+                while(vs.size() > 0) {
+                  if (vs.size() == 1) {
+                    vector<string> vs2;
+                    char delim[] = "=";
+                    tokenize(vs2,buffer,delim);
+                  }
+                  else {
+                    atom = mol.NewAtom();
+                    /* For the included EFP1 potentials,
+                     * the atom name may start with "Z"
+                     */
+                    int atomicNum;
+                    if ( vs[0].substr(0,1) == "Z" ) 
+                      atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str()); 
+                    else 
+                      atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str()); 
+                    atom->SetAtomicNum(atomicNum);
+                    x = atof((char*)vs[1].c_str());
+                    y = atof((char*)vs[2].c_str());
+                    z = atof((char*)vs[3].c_str());
+                    atom->SetVector(x,y,z);
+                  }
+			    
+
+                  if (!ifs.getline(buffer,BUFF_SIZE))
+                    break;
+                  tokenize(vs,buffer);
+                }
               }
           }
         else if(strstr(buffer,"ELECTROSTATIC MOMENTS") != NULL)
@@ -339,6 +425,83 @@ namespace OpenBabel
               HOMO = atoi(vs[6].c_str());
             else if (vs.size() == 8) //beta
               HOMO = atoi(vs[7].c_str());
+          }
+        else if (strstr(buffer, "TAKEN AS ROTATIONS AND TRANSLATIONS") != NULL)
+          {
+            tokenize(vs, buffer);
+            if (vs.size() < 4)
+              break;
+            lowFreqModes = atoi(vs[3].c_str());
+          }
+        else if (strstr(buffer,"FREQUENCY") != NULL)
+          {
+            tokenize(vs, buffer);
+            for (unsigned int i = 1; i < vs.size(); ++i) {
+              ++numFreq;
+              if (numFreq > lowFreqModes)
+                frequencies.push_back(atof(vs[i].c_str()));
+            }
+            ifs.getline(buffer, BUFF_SIZE); // reduced mass
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs, buffer);
+            for (unsigned int i = 1; i < vs.size(); ++i) {
+              ++numIntens;
+              if (numIntens > lowFreqModes)
+                intensities.push_back(atof(vs[i].c_str()));
+            }
+            ifs.getline(buffer, BUFF_SIZE); // blank
+
+            // now real work -- read displacements
+            int prevModeCount = displacements.size();
+            int newModes = frequencies.size() - displacements.size();
+            vector<vector3> displacement;
+            for (unsigned int i = 0; i < newModes; ++i) {
+              displacements.push_back(displacement);
+            }
+
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs, buffer);
+            int modeCount = vs.size() - 3;
+            double massNormalization;
+            vector<double> x, y, z;
+            while(modeCount > 1) {
+              // 1/sqrt(atomic mass)
+              atom = mol.GetAtom(atoi(vs[0].c_str()));
+              massNormalization = 1 / sqrt( atom->GetAtomicMass() );
+
+              x.clear();
+              // not a typo -- e.g., atom number, atom label, x, then data
+              for (unsigned int i = 3; i < vs.size(); ++i) {
+                x.push_back(massNormalization * atof(vs[i].c_str()));
+              }
+              y.clear();
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs, buffer);
+              for (unsigned int i = 1; i < vs.size(); ++i) {
+                y.push_back(massNormalization * atof(vs[i].c_str()));
+              }
+              
+              z.clear();
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs, buffer);
+              for (unsigned int i = 1; i < vs.size(); ++i) {
+                z.push_back(massNormalization * atof(vs[i].c_str()));
+              }
+
+              // OK, now we have x, y, z for all new modes for one atom
+              if (displacements.size()) {
+                for (unsigned int i = 0; i < modeCount - 1;  ++i) {
+                  ++numDisp;
+                  if (numDisp > lowFreqModes)
+                    displacements[prevModeCount + i].push_back(vector3(x[i], y[i], z[i]));
+                }
+              }
+
+              // Next set of atoms
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs, buffer);
+              modeCount = vs.size() - 3;
+            }
           }
         else if (strstr(buffer,"EIGENVECTORS") != NULL ||
                  strstr(buffer,"MOLECULAR ORBITALS") != NULL)
@@ -582,9 +745,17 @@ namespace OpenBabel
       OBPairData *dp = new OBPairData;
       dp->SetAttribute("PartialCharges");
       dp->SetValue("Mulliken");
-      dp->SetOrigin(perceived);
+      dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
+    if (frequencies.size() != 0) { // we found some vibrations
+      OBVibrationData *vd = new OBVibrationData;
+      vd->SetData(displacements, frequencies, intensities);
+      vd->SetOrigin(fileformatInput);
+      mol.SetData(vd);
+    }
+
+
     mol.SetTitle(title);
     return(true);
   }
@@ -634,6 +805,35 @@ namespace OpenBabel
                   }
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+              }
+          }
+        if(strstr(buffer,"$EFRAG") != NULL)
+          {
+            while (strstr(buffer,"FRAGNAME") == NULL)
+              {
+                //read $EFRAG parameters
+                if(!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+              }
+            while(strstr(buffer,"$END") == NULL)
+              {
+                tokenize(vs,buffer);
+                if(vs.size() == 4)
+                  {
+                    atom = mol.NewAtom();
+                    int atomicNum;
+                    if( vs[0].substr(0,1) == "Z" || vs[0].substr(0,1) == "z" ) 
+                      atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
+                    else
+                      atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
+                    atom->SetAtomicNum(atomicNum);
+                    x = atof((char*)vs[1].c_str());
+                    y = atof((char*)vs[2].c_str());
+                    z = atof((char*)vs[3].c_str());
+                    atom->SetVector(x,y,z);
+                  }
+                if(!ifs.getline(buffer,BUFF_SIZE))
                   break;
               }
           }
@@ -741,7 +941,7 @@ namespace OpenBabel
     //  OBAtom *atom;
     FOR_ATOMS_OF_MOL(atom, mol)
       {
-        snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %8.5f  %8.5f  %8.5f ",
+        snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %14.10f  %14.10f  %14.10f ",
                  etab.GetSymbol(atom->GetAtomicNum()),
                  atom->GetAtomicNum(),
                  atom->GetX(),

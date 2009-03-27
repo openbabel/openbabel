@@ -1,4 +1,282 @@
-2009-03-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2009-03-07  Daniel Leidert <daniel.leidert@wgdd.de>
+
+	* include/iconv.h, src/formats/xml/iconv.h, src/strncasecmp.c: Fixed
+	FSF address.
+
+2009-03-02  Daniel Leidert <daniel.leidert@wgdd.de>
+
+	* doc/babel.1, doc/obchiral.1, doc/obconformer.1, doc/obenergy.1,
+	doc/obfit.1, doc/obgen.1, doc/obgrep.1, doc/obminimize.1,
+	doc/obprobe.1, doc/obprop.1, doc/obrotamer.1, doc/obrotate.1,
+	doc/roundtrip.1: Prevent hyphenation of URLs. Fixed an mdoc issue.
+
+2009-03-02  Daniel Leidert <daniel.leidert@wgdd.de>
+
+	* src/formats/smilesformat.cpp: Correct use of sprintf().
+	http://lists.debian.org/debian-devel/2008/12/msg01079.html
+
+2009-03-02  Chris Morley
+
+	Added xtcformat,pqrformat,opendxformat to Visual Studio build.
+	Could not add gamessukformat because it uses <regex.h>
+	and did not have time to find a workaround (Boost probably).
+	 
+2009-03-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/residue.cpp, src/fingerprint.cpp, src/zipstreamimpl.h,
+	src/obconversion.cpp, src/dlhandler_unix.cpp,
+	src/formats/rxnformat.cpp, src/formats/fchkformat.cpp,
+	tools/babel.cpp, include/openbabel/xml.h,
+	include/openbabel/obconversion.h,
+	include/openbabel/obmolecformat.h, include/openbabel/data.h:
+	Fix #includes to handle GCC-4.3 and 4.4. Thanks to Rathann
+	Mierzejewski.
+
+	* src/pointgroup.cpp, src/formats/xtcformat.cpp: Remove calls to
+	exit() uncovered by Rathann.
+
+2009-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.cpp (Separate): Fix crash with Separate
+	(PR#2553217). Currently uses defensive programming. This
+	particular test file seems to have problems. 
+
+2009-02-24  Marcus D. Hanwell  <marcus@cryos.org>
+
+	* src/grid.cpp: Fixed some off by one errors in the way the max vector
+	and spacing were calculated. More work is needed to make this work
+	with grids aligned along arbitrary axes.
+
+2009-02-27  Kevin Shepherd <kshepherd1@users.sourceforge.net>
+	
+	* src/formats/acrformat.cpp, src/formats/carformat.cpp
+	src/formats/gamessformat.cpp, src/formats/mmcifformat.cpp: Compile
+	warnings and minor additions to format information.
+
+2009-02-22  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/examples/testpybel.py, openbabel-python.i: Just
+	discovered a regression in latest SWIG. It didn't rename the bool()
+	method, with the result that all Python iterators were failing. It
+	turns out that this isn't necessary in the first place, so we can
+	workaround. I've added a test to testpybel.py to check for any
+	problems in future.
+
+2009-02-20  Chris Morley
+	
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi:
+	env var BABEL_DATDIR wasn't being overwritten, so now deleted first
+	
+	* windows-vc2005/OBCommonFormats/OBCommonFormats.vcproj:
+	removed atomrecord.cpp
+
+2009-02-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/qchemformat.cpp: Fix painful crash with Q-Chem 3.2
+	output files when trying to parse vibrations.
+
+2009-02-19  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* Windows Installer: Some changes to how environment variables are set
+	to play nicer with the Python extensions. Bumped up version number.
+	* babelconfig.h: Bumped up version number reported by (Windows) babel
+	* scripts/python/examples/testpybel.py: Minor correction
+
+2009-02-19  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/pybel_py3.x.py: Docstring correction
+	* scripts/python/pybelapi.html: Update
+	* scripts/python/examples/testpybel.py: Improve coverage
+
+2009-02-18  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/pybel_py2.x.py, pybel_py3.x.py: Synch with cinfony.
+	Long overdue.
+
+>>>>>>> .merge-right.r2912
+2009-02-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/Makefile.am, scripts/Makefile.in: Fix: don't attempt to
+	build Java or C# unless appropriate configure flags were set.
+
+2009-02-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/gamessformat.cpp, src/formats/mopacformat.cpp,
+	src/formats/gaussianformat.cpp, src/formats/qchemformat.cpp:
+	Import vibrational data from several QM formats.
+
+	* src/formats/cifformat.cpp: Fix problems reading CIF files with
+	empty tags. Can lead to a crash.
+
+2009-02-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp: Fix crash with OOP
+	calculations (e.g., C(O)(=O)C.
+
+	* src/formats/fchkformat.cpp: Use 16-character fields for
+	coordinates to handle Q-Chem fchk files.
+
+	* src/formats/smilesformat.cpp: Fix problem with bracketing every
+	atom. Logic was wrong.
+
+	* src/formats/qchemformat.cpp: Change formatting of NMR strings.
+
+2009-02-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/bond.h: Add "friend OBMol" to allow OBMol to
+	unset flags on bonds.
+
+	* src/mol.cpp (EndModify): Unset ring bond membership. Fixes bug
+	#2568349.
+
+	* src/formats/pdbformat.cpp: Add more warnings for strange ATOM
+	records, contributed by Pierre-Louis.
+
+>>>>>>> .merge-right.r2885
+2009-01-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/element.txt, data/element.h: Change maxbonds for P to 6
+	(e.g. PF6-).
+
+	* src/formats/smilesformat.cpp: Mark coordinated water molecules
+	as [OH2] to address PR#2505562.
+
+	* src/formats/cifformat.cpp: Assign formal charges to halides and
+	alkali when coordinated to a water molecule.
+
+	* src/formats/pdbformat.cpp: Add -ac option to ignore CONECT
+	records, contributed by Izhar.
+	
+2009-01-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp: Ensure H-O-H, H-S-H, and
+	similar bond angles are done correctly. Fixes PR#2527588.
+
+	* src/formats/pdbformat.cpp: Further refinements to parsing ATOM
+	records, contributed by Pierre-Louis Bonicoli for PR#2 27225.
+
+	* configure.in, acinclude.m4, configure: Properly check for gzip
+	support. Fixes PR#2527272.
+
+	* src/formats/smilesformat.cpp: Add a check for atoms with unusual
+	valence (e.g., B with >3 bonds, C with 5, etc.). As requested for
+	CIF translation.
+
+	* src/formats/cifformat.cpp: Turn off automatic formal
+	charges. Add a pass to look for typical ions and correct their
+	formal charges.
+
+	* data/atomtyp.txt: Add implicit valence and hybridization rules
+	for most main-group elements.
+
+	* src/ops/gen3d: Add a cleanup step with MMFF94 or UFF, including
+	quick conformer searching. Should provide better results for most
+	people.
+
+	* src/builder.cpp: Add new function GetCorrectedBondVector() which
+	scales new bonds based on elements provided and bond order (e.g.,
+	similar to OBBond::GetEquibLength).
+
+2009-01-22  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* windows-vc2005/Distribution/CheckInstallerScript.py,
+	NSISScriptToCreateInstallerOBF.nsi: Update Python script to check for
+	.prm files, and update installer to include MACCS.txt and missing .prm
+	file.
+
+>>>>>>> .merge-right.r2866
+2009-01-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/builder.cpp (Build): Make sure all bonds are copied into the
+	newly-built molecule.
+
+2009-01-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/cifformat.cpp: Fix for PR#2100215. Difficult bug -- file is
+	missing a ';' on line 189. Other CIF programs had difficulty,
+	including CIFTOOLS. Handle such non-standard files by issuing
+	warnings when a ; line is not properly terminated and we find a
+	new tag.
+
+	* data/atomtyp.txt: Add an external type for O-H hydrogens for
+	Tinker/MM2. Solves PR#1839274.
+
+2009-01-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/fragments.txt: Expanded ring template database -- 2500 of
+	the most frequent rings (including three-membered rings like
+	cyclopropane or epoxides). Fixes PR#2043319.
+
+2009-01-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/dlhandler_unix.cpp (openLib): Handle error reporting here --
+	which will allow more informative messages to users, rather than
+	just "did not load properly."
+
+	* src/obconversion.cpp: Disable error messages, as per above.
+
+	* src/parsmart.cpp: Remove some unused code, and add comments
+	towards support of fragment SMARTS, e.g. (*).(*).
+
+>>>>>>> .merge-right.r2849
+2009-01-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/pdbformat.cpp, src/formats/pqrformat.cpp: Patch
+	contributed by Pierre-Louis Bonicoli PR#2503113. Take elements
+	from the PDB 'element column' in preference to guessing based on
+	atom type names (which are unreliable).
+
+2009-01-14  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* windows-vc2005/OBPythonOBF/OBPythonOBF.vcproj: Minor fix to
+	outdir (had trouble with paths with spaces)
+	* windows-vc2005/OBCSharp/OBCSharp.vcproj: Moving to Swig 1.3.37
+	* scripts/csharp/example.py: Partial revert of r2833 to bring back my
+	IronPython example script
+
+2009-01-14  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/pybel.py split into pybel_py2.x.py, pybel_py3.x.py:
+	Adding support for Python 3.
+	* scripts/openbabel-python.i, scripts/python/examples/testpybel.py,
+	scripts/python/setup.py, windows-vc2005/OBPythonOBF/setup.py: Adding
+	support for Python 3.
+	* windows-vc2005/OBPythonOBF/OBPythonOBF.vcproj: Moving to SWIG
+	1.3.37 (need to specify -outdir).
+
+>>>>>>> .merge-right.r2836
+2009-01-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/gzmatformat.cpp: Address PR#2056697 for Gaussian
+	z-matrix with embedded numbers (no variables) or no "Variables:"
+	line.
+
+2009-01-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/smilesformat.cpp: Address crash in SMILES import
+	with chiral ring closures. ChiralSearch vectors were too
+	small. Should address PR#2498047.
+
+	* configure.in, scripts/Makefile.am: Check for javac and jar at
+	configure time. Do not run them unless present. Solves PR#2426622.
+
+>>>>>>> .merge-right.r2831
+2009-01-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp,
+	src/forcefields/forcefielduff.h: Add support for 5-coordinate
+	and other unusual coordination environments (including lone pairs
+	for hypervalent species). Not perfect, but much better than
+	before.
+
+	* src/formats/outformat.cpp: Add comments about single bonds and
+	bond orders (which are followed by all QM output formats).
+
+	* src/formats/gamessformat.cpp: Add patch from Albert DeFusco for
+	GAMESS EFP fragments. PR#2484103.
+
+2008-12-31  Noel O'Boyle  <baoilleach@gmail.com>
+>>>>>>> .merge-right.r2820
 
 	* include/inchi102, src/fomats/inchi102: Fix compile/link for
 	Linux/Mac of InChI 1.02. Make sure in the future to import the

@@ -17,10 +17,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
-#include <iostream>
-#include<openbabel/op.h>
-#include<openbabel/mol.h>
+#include <openbabel/op.h>
+#include <openbabel/mol.h>
 #include <openbabel/builder.h>
+#include <openbabel/forcefield.h>
 
 namespace OpenBabel
 {
@@ -48,6 +48,20 @@ bool OpGen3D::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
   OBBuilder builder;
   builder.Build(*pmol);
   pmol->SetDimension(3);
+
+  OBForceField* pFF = OBForceField::FindForceField("MMFF94");
+  if (!pFF)
+    return true;
+
+  pmol->AddHydrogens(false, true); // Add some hydrogens before running MMFF
+  if (!pFF->Setup(*pmol)) {
+    pFF = OBForceField::FindForceField("UFF");
+    if (!pFF || !pFF->Setup(*pmol)) return true; // can't use either MMFF94 or UFF
+  }
+  pFF->SteepestDescent(500, 1.0e-4);
+  pFF->WeightedRotorSearch(250, 50);
+  pFF->SteepestDescent(500, 1.0e-6);
+  pFF->UpdateCoordinates(*pmol);
 
   return true;
 }

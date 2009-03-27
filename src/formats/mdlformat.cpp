@@ -52,7 +52,7 @@ Write Options, e.g. -x3\n \
  m  write no properties\n \
 ";
     };
-/* 2  output V2000 (default) or\n \ */
+    /* 2  output V2000 (default) or\n \ */
 
     virtual const char* SpecificationURL()
     {return "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";};
@@ -96,40 +96,40 @@ Write Options, e.g. -x3\n \
     vector<string> vs;
   };
 
-//**************************************
-class MOLFormat : public MDLFormat
-{
-public:
-  //Register this format type ID
-  MOLFormat() 
+  //**************************************
+  class MOLFormat : public MDLFormat
   {
-    OBConversion::RegisterFormat("mol",this, "chemical/x-mdl-molfile");
-    OBConversion::RegisterFormat("mdl",this, "chemical/x-mdl-molfile");
-    OBConversion::RegisterOptionParam("2", this);
-    OBConversion::RegisterOptionParam("3", this);
-  }
-};
+  public:
+    //Register this format type ID
+    MOLFormat() 
+    {
+      OBConversion::RegisterFormat("mol",this, "chemical/x-mdl-molfile");
+      OBConversion::RegisterFormat("mdl",this, "chemical/x-mdl-molfile");
+      OBConversion::RegisterOptionParam("2", this);
+      OBConversion::RegisterOptionParam("3", this);
+    }
+  };
   //Make an instance of the format class
   MOLFormat theMOLFormat;
 
-//*************************************
-class SDFormat : public MDLFormat
-{
-public:
-  SDFormat()
+  //*************************************
+  class SDFormat : public MDLFormat
   {
-     OBConversion::RegisterFormat("sd",this, "chemical/x-mdl-sdfile");
-     OBConversion::RegisterFormat("sdf",this, "chemical/x-mdl-sdfile");
-  }
+  public:
+    SDFormat()
+    {
+      OBConversion::RegisterFormat("sd",this, "chemical/x-mdl-sdfile");
+      OBConversion::RegisterFormat("sdf",this, "chemical/x-mdl-sdfile");
+    }
 
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
-  {
-    //The sd option ensures that a $$$$ is written at the end of the file
-    pConv->AddOption("sd",OBConversion::OUTOPTIONS);
-    return MDLFormat::WriteMolecule(pOb, pConv);
-  }
-};
-//Make an instance of the format class
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
+    {
+      //The sd option ensures that a $$$$ is written at the end of the file
+      pConv->AddOption("sd",OBConversion::OUTOPTIONS);
+      return MDLFormat::WriteMolecule(pOb, pConv);
+    }
+  };
+  //Make an instance of the format class
   SDFormat theSDFormat;
 
   /////////////////////////////////////////////////////////////////
@@ -234,19 +234,19 @@ public:
 
         for (i = 0;i < natoms;i++) {
           if (!ifs.getline(buffer,BUFF_SIZE)) {
-	    errorMsg << "WARNING: Problems reading a MDL file\n";
-	    errorMsg << "Not enough atoms to match atom count (" << natoms << ") in counts line\n";
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+            errorMsg << "WARNING: Problems reading a MDL file\n";
+            errorMsg << "Not enough atoms to match atom count (" << natoms << ") in counts line\n";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
             return(false);
-	  }
+          }
 
           scanArgs = sscanf(buffer,"%lf %lf %lf %5s %*d %d %d",&x,&y,&z,type,&charge, &stereo);
           if (scanArgs <4) {
-	    errorMsg << "WARNING: Problems reading a MDL file\n";
-	    errorMsg << "Missing data following atom specification in atom block\n";
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+            errorMsg << "WARNING: Problems reading a MDL file\n";
+            errorMsg << "Missing data following atom specification in atom block\n";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
             return(false);
-	  }
+          }
           v.SetX(x);v.SetY(y);v.SetZ(z);
           atom.SetVector(x, y, z);
           int iso=0;
@@ -300,25 +300,25 @@ public:
         for (i = 0;i < nbonds;i++) {
           flag = 0;
           if (!ifs.getline(buffer,BUFF_SIZE)) {
-	    errorMsg << "WARNING: Problems reading a MDL file\n";
-	    errorMsg << "Not enough bonds to match bond count (" << nbonds << ") in counts line\n";
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+            errorMsg << "WARNING: Problems reading a MDL file\n";
+            errorMsg << "Not enough bonds to match bond count (" << nbonds << ") in counts line\n";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
             return(false);
-	  }
+          }
           r1 = buffer;
-	  start = end = order = 0;
-	  if (r1.size() >= 9) {
-	    start = atoi((r1.substr(0,3)).c_str());
-	    end = atoi((r1.substr(3,3)).c_str());
-	    order = atoi((r1.substr(6,3)).c_str());
-	  }
+          start = end = order = 0;
+          if (r1.size() >= 9) {
+            start = atoi((r1.substr(0,3)).c_str());
+            end = atoi((r1.substr(3,3)).c_str());
+            order = atoi((r1.substr(6,3)).c_str());
+          }
           if (start == 0 || end == 0 || order == 0 ||
               start > mol.NumAtoms() || end > mol.NumAtoms()) {
-	    errorMsg << "WARNING: Problems reading a MDL file\n";
-	    errorMsg << "Invalid bond specification, atom numbers or bond order are wrong.\n";
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+            errorMsg << "WARNING: Problems reading a MDL file\n";
+            errorMsg << "Invalid bond specification, atom numbers or bond order are wrong.\n";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
             return false;
-	  }
+          }
 
           order = (order == 4) ? 5 : order;
           if (r1.size() >= 12) {  //handle wedge/hash data
@@ -330,11 +330,11 @@ public:
           }
 
           if (!mol.AddBond(start+offset,end+offset,order,flag)) {
-	    errorMsg << "WARNING: Problems reading a MDL file\n";
-	    errorMsg << "Invalid bond specification\n";
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-	    return(false);
-	  }
+            errorMsg << "WARNING: Problems reading a MDL file\n";
+            errorMsg << "Invalid bond specification\n";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+            return(false);
+          }
 
           // after adding a bond to atom # "start+offset"
           // search to see if atom is bonded to a chiral atom
@@ -371,45 +371,45 @@ public:
                 continue;
               }
             if(buffer[0]=='A') //alias
-            {
-              int atomnum = atoi(buffer+2);
-              ifs.getline(buffer,BUFF_SIZE);
-              if(*buffer!='?' && *buffer!='*')
               {
-                AliasData* ad = new AliasData();
-                ad->SetAlias(buffer);
-                ad->SetOrigin(fileformatInput);
-                OBAtom* at = mol.GetAtom(atomnum);
-                if (at) {
-                  at->SetData(ad);
-                  at->SetAtomicNum(0);
-                  //The alias has now been added as a dummy atom with a AliasData object.
-                  ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
-                }
+                int atomnum = atoi(buffer+2);
+                ifs.getline(buffer,BUFF_SIZE);
+                if(*buffer!='?' && *buffer!='*')
+                  {
+                    AliasData* ad = new AliasData();
+                    ad->SetAlias(buffer);
+                    ad->SetOrigin(fileformatInput);
+                    OBAtom* at = mol.GetAtom(atomnum);
+                    if (at) {
+                      at->SetData(ad);
+                      at->SetAtomicNum(0);
+                      //The alias has now been added as a dummy atom with a AliasData object.
+                      ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
+                    }
+                  }
+                continue;
               }
-              continue;
-            }
             if(strncmp(buffer,"M  CHG",6) && strncmp(buffer,"M  RAD",6) && strncmp(buffer,"M  ISO",6))
               continue;
             r1 = buffer;
             int n = -1;
-	    if (r1.size() >= 9)
-	      n = atoi((r1.substr(6,3)).c_str()); //entries on this line
+            if (r1.size() >= 9)
+              n = atoi((r1.substr(6,3)).c_str()); //entries on this line
             if(n<=0 || n>8 || 6+n*8>r1.size()) //catch ill-formed line
-            {
-              obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + r1, obError);
+              {
+                obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + r1, obError);
                 return false;
-            }
+              }
             int pos = 10;
             for(;n>0;n--,pos+=8)
               {
                 int atomnumber = atoi((r1.substr(pos,3)).c_str());
                 OBAtom* at;
                 if (atomnumber==0 || (at=mol.GetAtom(atomnumber+offset))==NULL)
-                {
-                  obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + r1, obError);
+                  {
+                    obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + r1, obError);
                     return false;
-                }
+                  }
 
                 at=mol.GetAtom(atomnumber+offset); //atom numbers start at 1
                 int value = atoi((r1.substr(pos+4,3)).c_str());
@@ -421,8 +421,8 @@ public:
                   at->SetIsotope(value);
                 //Although not done here,according to the specification, 
                 //previously set formal charges should be reset to zero
-                }
-                // Lines setting several other properties are not implemented
+              }
+            // Lines setting several other properties are not implemented
           }
       }
     mol.AssignSpinMultiplicity();
@@ -572,17 +572,17 @@ public:
         vector<OBAtom*>::iterator i;
         int charge=0; //Charge is now output in a M CHG statement
         for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
-/*          switch (atom->GetFormalCharge()) {
-          case 1: charge = 3; break;
-          case 2: charge = 2; break;
-          case 3: charge = 1; break;
-          case -1: charge = 5; break;
-          case -2: charge = 6; break;
-          case -3: charge = 7; break;
-          default:
-            charge=0; break;
-          }
-*/
+          /*          switch (atom->GetFormalCharge()) {
+                      case 1: charge = 3; break;
+                      case 2: charge = 2; break;
+                      case 3: charge = 1; break;
+                      case -1: charge = 5; break;
+                      case -2: charge = 6; break;
+                      case -3: charge = 7; break;
+                      default:
+                      charge=0; break;
+                      }
+          */
           snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
                    atom->GetX(),
                    atom->GetY(),
@@ -628,11 +628,11 @@ public:
               chgs.push_back(atom);
 
             if(atom->HasData(AliasDataType))
-            {
-              AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
-              if(!ad->IsExpanded()) //do nothing with an expanded alias
-                ofs << "A  " << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
-            }
+              {
+                AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
+                if(!ad->IsExpanded()) //do nothing with an expanded alias
+                  ofs << "A  " << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
+              }
 
           }
         if(rads.size())
@@ -678,10 +678,10 @@ public:
                 //Since partial charges are not output
                 //in this format, don't need the annotation
                 if((*k)->GetAttribute()!="PartialCharges")
-                {
-                  ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
-                  ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
-                }
+                  {
+                    ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
+                    ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
+                  }
               }
           }
       }
@@ -733,7 +733,7 @@ public:
           //not currently implemented
           else if(vs[3]=="RGROUP")
           //not currently implemented
-        */
+          */
       }while(DoMany && ifs.good());
     //  if(is3D){mol.SetDimension(3);cout<<"SetDim to 3"<<endl;}
     //  else if(is2D){mol.SetDimension(2);cout<<"SetDim to 2"<<endl;}
@@ -884,19 +884,19 @@ public:
     return true;
   }
 
-////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////
   bool MDLFormat::ReadCollectionBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
   {
     //Not currently implemented
     obErrorLog.ThrowError(__FUNCTION__, 
-      "COLLECTION blocks are not currently implemented and their contents ae ignored.", obWarning);
+                          "COLLECTION blocks are not currently implemented and their contents ae ignored.", obWarning);
     for(;;)
-    {
-      if(!ReadV3000Line(ifs,vs))
-        return false;
-      if(vs[2]=="END")
-        break;
-    }
+      {
+        if(!ReadV3000Line(ifs,vs))
+          return false;
+        if(vs[2]=="END")
+          break;
+      }
     return true;
   }
 

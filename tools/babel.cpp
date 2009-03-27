@@ -42,6 +42,7 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #include <openbabel/obconversion.h>
 #include <openbabel/plugin.h>
 #include <cstdlib>
+#include <cstring>
 
 using namespace std;
 using namespace OpenBabel;

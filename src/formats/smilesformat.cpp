@@ -286,12 +286,14 @@ namespace OpenBabel {
     
     for (_ptr=_buffer;*_ptr;_ptr++)
       {
+        //        cerr << " parsing " << _ptr << endl;
+
         if (*_ptr<0 || isspace(*_ptr))
           continue;
         else if (isdigit(*_ptr) || *_ptr == '%') //ring open/close
           {
             if(!ParseRingBond(mol))
-              return false;;
+              return false;
             continue;
           }
         else if(*_ptr == '&') //external bond
@@ -1855,15 +1857,16 @@ namespace OpenBabel {
           if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
             {
               (ChiralSearch->second)->AddAtomRef((*j)[1], input);
-              // cerr << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
+              // cerr << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second << endl;
             }
           if (cs2!=_mapcd.end() && cs2->second != NULL)
             {
-              //              (cs2->second)->AddAtomRef(_prev,input);
               //Ensure that the closure atom index is inserted at the position
               //decided when the ring closure digit was encountered.
               //The order needs to be SMILES atom order, not OB atom index order.
               vector<unsigned int> refs = (cs2->second)->GetAtom4Refs(input);
+              // make sure the vector is large enough for the insert call
+              refs.resize((*j)[4] + 1);
               refs.insert(refs.begin()+(*j)[4], _prev);
               (cs2->second)->SetAtom4Refs(refs, input);
               // cerr <<"Added ring opening "<<_prev<<" to "<<cs2->second<<endl;
@@ -2312,6 +2315,28 @@ namespace OpenBabel {
   }
 
 
+  // Helper function
+  // Is this atom an oxygen in a water molecule
+  // We know the oxygen is connected to one ion, but check for non-hydrogens
+  // Returns: true if the atom is an oxygen and connected to two hydrogens + one coordinated atom
+  bool isWaterOxygen(OBAtom *atom)
+  {
+    if (!atom->IsOxygen())
+      return false;
+     
+    int nonHydrogenCount = 0;
+    int hydrogenCount = 0;
+    FOR_NBORS_OF_ATOM(neighbor, *atom) {
+      if (!neighbor->IsHydrogen())
+        nonHydrogenCount++;
+      else
+        hydrogenCount++;
+    }
+    
+    return (hydrogenCount == 2 && nonHydrogenCount == 1);
+  }
+
+
   /***************************************************************************
    * FUNCTION: GetSmilesElement
    *
@@ -2336,13 +2361,21 @@ namespace OpenBabel {
     OBAtom *atom = node->GetAtom();
 
     int bosum = atom->KBOSum();
+    int maxBonds = etab.GetMaxBonds(atom->GetAtomicNum());
+    // default -- bracket if we have more bonds than possible
+    // we have some special cases below
+    bracketElement = !(normalValence = (bosum <= maxBonds));
 
     switch (atom->GetAtomicNum()) {
     case 0: break;
-    case 5: break;
+    case 5: 
+      bracketElement = !(normalValence = (bosum > 3));
+      break;
     case 6: break;
     case 7:
-      if (atom->IsAromatic() && atom->GetHvyValence() == 2 && atom->GetImplicitValence() == 3) {
+      if (atom->IsAromatic() 
+          && atom->GetHvyValence() == 2 
+          && atom->GetImplicitValence() == 3) {
         bracketElement = !(normalValence = false);
         break;
       }
@@ -2384,6 +2417,13 @@ namespace OpenBabel {
       //For radicals output bracket form anyway unless r option specified
       if(!(_pconv && _pconv->IsOption ("r")))
         bracketElement = true;
+    }
+    
+    // Add brackets and explicit hydrogens for coordinated water molecules
+    // PR#2505562
+    if (isWaterOxygen(atom)) {
+      bracketElement = true;
+      writeExplicitHydrogen = true;
     }
 
     //Output as [CH3][CH3] rather than CC if -xh option has been specified

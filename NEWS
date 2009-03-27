@@ -1,15 +1,35 @@
+Open Babel 2.2.1 (2009-03-01)
+
+What's New from 2.2.0:
+
+This release represents a major bug-fix release and is a stable
+upgrade, strongly recommended for all users of Open Babel. While there
+may not be many new features, many crashes and other bugs have been
+fixed since 2.2.0.
+
+- Improved scripting interfaces, including Python 3 support and improved
+  Java and C# support.
+- Added support for MACCS fingerprints. Thanks to the RDKit project.
+- Many fixes and enhancements to the force field code. In particular,
+  the UFF force field implementation should handle many more molecules.
+- Improved 3D coordinate generation, particularly with ring
+  fragments. You can give this a try with the obgen utility.
+- Fixed a variety of PDB import errors with atom types.
+- Added support for reading charges and radii from PQR file formats.
+- Added support for reading and writing unit cells in PDB formats.
+- New "output" file format for taking generic ".out", ".log", and
+  ".dat" files and reading with appropriate file type based on
+  contents. Currently works extremely well for quantum chemistry
+  packages.
+- Added improved error handling and reporting when unable to load file
+  formats.
+- Improved CIF file format support.
+- Many, many, many additional bug fixes and small enhancements.
+
+
 Open Babel 2.2.0 (2008-07-04)
 
 What's New from 2.1.1:
-
-This release represents a major update and should be a stable upgrade,
-strongly recommended for all users of Open Babel. Highlights include
-improved force fields and coordinate generation, conformer searching,
-enhanced plugins including molecular descriptors, filters, and
-command-line transformations. Many formats are improved or added,
-including CIF, mmCIF, Gaussian cube, PQR, OpenDX cubes, and
-more. Improved developer API and scripting support and many, many bug
-fixes are also included.
 
 - New support for 3D coordinate generation using the OBBuilder class.
     Note that this code directly supports non-chiral compounds
@@ -82,11 +102,6 @@ Open Babel 2.1.1 (2007-07-07)
 
 What's New from 2.1.0:
 
-This release represents a bug-fix release and should be a stable upgrade,
-highly recommended for all users of Open Babel. A large number of bugs
-have been fixed, so even users who have not had problems with 2.1.0
-are encouraged to upgrade. 
-
 - Improved scripting support, including dictionary-support for
    OBGenericData in pybel, casting from OBUnitCell, etc. Improved
    access to OBRings from OBMol.GetSSSR().
@@ -113,9 +128,6 @@ are encouraged to upgrade.
 - A large number of additional fixes, including some rare crashes.
 
 Open Babel 2.1.0    (2007-04-07)
-
-This release continues the Open Babel version 2 series, introducing
-new features and file formats without breaking compatibility.
 
 What's New from 2.0.2:
 
@@ -174,11 +186,6 @@ New File Formats:
 Open Babel 2.0.2 (2006-07-24)
 
 What's New from 2.0.1:
-
-This release represents a bug-fix release and should be a stable upgrade,
-recommended for all users of Open Babel. A large number of bugs have
-been fixed, so even users who have not had problems with 2.0.1 are
-encouraged to upgrade.
 
 - Substantial fixes to the SMILES and SMARTS parsing support, thanks
   to a variety of bug reports.
@@ -357,10 +364,6 @@ New File Formats:
 
   -Import: ShelX
   -Export: ZINDO input
-
-A big thanks to all who helped contribute to this release,
-especially those reporting bugs, suggesting features, and donating
-files to the test suite. All of this is greatly appreciated!
 
 
 Open Babel 1.100.0 (2002-12-12)

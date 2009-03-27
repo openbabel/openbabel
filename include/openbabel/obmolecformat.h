@@ -23,6 +23,8 @@ GNU General Public License for more details.
   #include <hash_map>
 #endif
 
+#include <typeinfo>
+
 #include <openbabel/mol.h>
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
