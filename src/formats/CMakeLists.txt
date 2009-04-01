@@ -83,7 +83,7 @@ if(Boost_FOUND)
 endif(Boost_FOUND)
 
 if(WITH_INCHI)
-  add_definitions(-DINCHI_LINK_AS_DLL -DINCHI_LIBRARY)
+  add_definitions(-DINCHI_LINK_AS_DLL)
   add_subdirectory(inchi102)
   include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
   set(formats
