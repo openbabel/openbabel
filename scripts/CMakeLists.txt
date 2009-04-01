@@ -41,7 +41,7 @@ include_directories(
 set_source_files_properties(openbabel-python.i PROPERTIES CPLUSPLUS ON)
 set(CMAKE_SWIG_FLAGS -small -O -python -templatereduce -naturalvar)
 swig_add_module(_openbabel c++ openbabel-python.i)
-swig_link_libraries(_openbabel openbabel)
+swig_link_libraries(_openbabel openbabel ${PYTHON_LIBRARIES}) 
 
 # find site-packages dir...
 execute_process(COMMAND ${PYTHON_EXECUTABLE} -c 
