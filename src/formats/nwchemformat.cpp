@@ -1,6 +1,7 @@
 /**********************************************************************
 Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
+Some portions Copyright (C) 2009 by Michael Banck
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -104,6 +105,10 @@ namespace OpenBabel
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
 
+    //Vibrational data
+    std::vector< std::vector< vector3 > > Lx;
+    std::vector<double> Frequencies, Intensities;
+
     char buffer[BUFF_SIZE];
     string str;
     double x,y,z;
@@ -139,11 +144,71 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           } // if "output coordinates"
+        if(strstr(buffer,"P.Frequency") != NULL)
+          {
+            // freq and vib are auxiliary vectors which hold the data for
+            // every block of 6 vibrations.
+            vector<double> freq;
+            vector<vector<vector3> > vib;
+            tokenize(vs,buffer);
+            for(unsigned int i=1; i<vs.size(); ++i)
+                freq.push_back(atof(vs[i].c_str()));
+            ifs.getline(buffer,BUFF_SIZE);     // blank line
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+	    while(vs.size() > 2) {
+              vector<double> x, y, z;
+              for (unsigned int i = 1; i < vs.size(); i++)
+                x.push_back(atof(vs[i].c_str()));
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs,buffer);
+              for (unsigned int i = 1; i < vs.size(); i++)
+                y.push_back(atof(vs[i].c_str()));
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs,buffer);
+              for (unsigned int i = 1; i < vs.size(); i++)
+                z.push_back(atof(vs[i].c_str()));
+              for (unsigned int i = 0; i < freq.size(); i++) {
+                vib.push_back(vector<vector3>());
+                vib[i].push_back(vector3(x[i], y[i], z[i]));
+              }
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs,buffer);
+            } // while
+            for (unsigned int i = 0; i < freq.size(); i++) {
+              if (freq[i] > 10.0) {
+                // skip rotational and translational modes
+	        Frequencies.push_back(freq[i]);
+                Lx.push_back(vib[i]);
+              }
+            }
+         } // if "P.Frequency"
+       if(strstr(buffer,"Projected Infra Red Intensities") != NULL)
+         {
+           ifs.getline(buffer, BUFF_SIZE); // table header
+           ifs.getline(buffer, BUFF_SIZE); // table delimiter
+           ifs.getline(buffer, BUFF_SIZE);
+           tokenize(vs,buffer);
+           while (vs.size() == 7) {
+             if (atof(vs[1].c_str()) > 10.0)
+                Intensities.push_back(atof(vs[5].c_str()));
+             ifs.getline(buffer, BUFF_SIZE);
+             tokenize(vs,buffer);
+           }            
+         } // if "Projected Infra Red Intensities"
       } // while
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
       mol.EndModify();
       return false;
+    }
+
+    //Attach vibrational data, if there is any, to molecule
+    if(Frequencies.size()>0)
+    {
+      OBVibrationData* vd = new OBVibrationData;
+      vd->SetData(Lx, Frequencies, Intensities);
+      mol.SetData(vd);
     }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
