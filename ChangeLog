@@ -1,3 +1,17 @@
+2009-04-06  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/formats/smilesformat.cpp: Handle cis/trans symbols correctly
+	during reading and writing. Uses Tim's stereochemistry code which I
+	inserted into the start of the file. Some notes about the code:
+	(1) The legacy code did not set cis/trans bonds in rings. Don't know
+	why, but I didn't change this for the moment.
+	(2) The series of cis/trans symbols in an output SMILES string is
+	canonical in the sense that the first symbol in any independent
+	stereo system is always a forward slash.
+	(3) Cis/trans symbols for ring openings/closures are shown for the
+	digit attached to the double bond. (I recommend that this be part of
+	the OpenSMILES specification.)
+
 2009-03-26  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/formats/smilesformat.cpp: Use UINT_MAX for unassigned values
