@@ -3,6 +3,9 @@
 	* src/formats/nwchemformat.cpp (ReadMolecule): Added frequencies
 	and IR intensities support.  Fixes PR#2728437.
 
+	* src/formats/moldenformat.cpp (ReadMolecule): Added frequencies
+	and IR intensities support.  Closes PR#2737715.
+
 2009-04-06  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/formats/smilesformat.cpp: Handle cis/trans symbols correctly
