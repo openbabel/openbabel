@@ -6,6 +6,10 @@
 	* src/formats/moldenformat.cpp (ReadMolecule): Added frequencies
 	and IR intensities support.  Closes PR#2737715.
 
+	* src/formats/molproformat.cpp: New file.  Closes PR#2731625.
+	* src/formats/Makefile.am: Updated.
+	* src/formats/Makefile.in: Regenerated.
+
 2009-04-06  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/formats/smilesformat.cpp: Handle cis/trans symbols correctly

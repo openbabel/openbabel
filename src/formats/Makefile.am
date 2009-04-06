@@ -63,7 +63,7 @@ libformats_la_SOURCES = \
 	getinchi.cpp \
 	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmcifformat.cpp \
 	mmodformat.cpp mol2format.cpp molreport.cpp mopacformat.cpp \
-	moldenformat.cpp msmsformat.cpp \
+	moldenformat.cpp molproformat.cpp msmsformat.cpp \
 	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp outformat.cpp \
 	pcmodelformat.cpp \
 	pngformat.cpp  \
@@ -95,7 +95,7 @@ formats_LTLIBRARIES = \
 	gromos96format.la hinformat.la \
 	jaguarformat.la mdlformat.la mmcifformat.la mmodformat.la \
 	mpdformat.la mol2format.la moldenformat.la molreportformat.la \
-	mopacformat.la msiformat.la msmsformat.la \
+	mopacformat.la molproformat.la msiformat.la msmsformat.la \
 	mpqcformat.la nwchemformat.la outformat.la \
 	pcmodelformat.la pdbformat.la \
 	povrayformat.la pqrformat.la opendxformat.la \
@@ -266,6 +266,9 @@ moldenformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.l
 
 mopacformat_la_SOURCES = mopacformat.cpp 
 mopacformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+
+molproformat_la_SOURCES = molproformat.cpp 
+molproformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
 mpdformat_la_SOURCES = mpdformat.cpp 
 mpdformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
