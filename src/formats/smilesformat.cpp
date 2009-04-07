@@ -1125,7 +1125,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         if(lookup!=refs.end()) { // Atom i is in this OBCisTransStereo
           // Set the up and down for all of the stereo bonds in this chiral data
           // For the moment, ignore existing IsUp() or IsDown() values
-          std::vector<OBBond *> refbonds(4, NULL);
+          std::vector<OBBond *> refbonds(4, static_cast<OBBond*>(NULL));
           refbonds[0] = mol.GetBond(refs[0], ChiralSearch->GetBegin());
           if (refs[1]!=OBStereo::ImplicitId) // Could be a hydrogen
             refbonds[1] = mol.GetBond(refs[1], ChiralSearch->GetBegin());
@@ -3207,7 +3207,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
           (ChiralSearch->GetBegin()==centeratom || ChiralSearch->GetEnd()==centeratom))
         { // Atoms endatom and centeratom are in this OBCisTransStereo
           
-          std::vector<OBBond *> refbonds(4, NULL);
+          std::vector<OBBond *> refbonds(4, static_cast<OBBond*>(NULL));
           refbonds[0] = mol->GetBond(refs[0], ChiralSearch->GetBegin());
           if (refs[1]!=OBStereo::ImplicitId) // Could be a hydrogen
             refbonds[1] = mol->GetBond(refs[1], ChiralSearch->GetBegin());
