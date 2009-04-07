@@ -1,5 +1,10 @@
 2009-04-07  Michael Banck  <mbanck@gmx.net>
 
+	* src/formats/molproformat.cpp (ReadMolecule): Added dipole 
+	moments.
+
+2009-04-07  Michael Banck  <mbanck@gmx.net>
+
 	* src/formats/nwchemformat.cpp (ReadMolecule): Added frequencies
 	and IR intensities support.  Fixes PR#2728437.
 

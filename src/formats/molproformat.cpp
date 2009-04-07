@@ -214,7 +214,22 @@ namespace OpenBabel
               Intensities.push_back(intens[i]);
               Lx.push_back(vib[i]);
             }  
-         } // if "Normal Modes"
+          } // if "Normal Modes"
+        if(strstr(buffer,"STATE") != NULL && strstr(buffer,"DIPOLE MOMENT") != NULL)
+          {
+            tokenize(vs,buffer);
+            if (vs.size() == 8) {
+              OBVectorData *dipoleMoment = new OBVectorData;
+              dipoleMoment->SetAttribute("Dipole Moment");
+              double x, y, z;
+              x = atof(vs[5].c_str());
+              y = atof(vs[6].c_str());
+              z = atof(vs[7].c_str());
+              dipoleMoment->SetData(x, y, z);
+              dipoleMoment->SetOrigin(fileformatInput);
+              mol.SetData(dipoleMoment);
+            } 
+          } // "STATE" && "DIPOLE MOMENT"
       } // while
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
