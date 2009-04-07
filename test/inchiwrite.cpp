@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  cout << "1.." << count << " # molecules converted\n";
+  cout << "1.." << count << "\n # molecules converted\n";
 
   //Compare ssout with the correct InChIs
   int nfail=0;

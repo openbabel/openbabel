@@ -58,7 +58,7 @@ int main(int argc,char *argv[])
 
   bond1.SetBegin(&begin1);
   bond1.SetEnd(&end1);
-  cout << "ok 4\n";
+  cout << "ok 3\n";
 
   return(0);
 }
