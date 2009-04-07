@@ -365,7 +365,12 @@ namespace OpenBabel
           for(unsigned int i=3; i<vs.size(); ++i)
             Intensities.push_back(atof(vs[i].c_str()));
 
-          ifs.getline(buffer, BUFF_SIZE); // column labels
+          ifs.getline(buffer, BUFF_SIZE); // column labels or Raman intensity
+          if(strstr(buffer, "Raman Activ")) {
+            ifs.getline(buffer, BUFF_SIZE); // Depolar (P)
+            ifs.getline(buffer, BUFF_SIZE); // Depolar (U)
+            ifs.getline(buffer, BUFF_SIZE); // column labels
+          }
           ifs.getline(buffer, BUFF_SIZE); // actual displacement data
           tokenize(vs, buffer);
           vector<vector3> vib1, vib2, vib3;
