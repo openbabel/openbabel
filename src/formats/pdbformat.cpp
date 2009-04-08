@@ -558,8 +558,8 @@ namespace OpenBabel
               {
                 if (strlen(type_name) < 4)
                   {
-                    char tmp[16];
-                    strncpy(tmp, type_name, 16);
+                    char tmp[10];
+                    strncpy(tmp, type_name, 10);
                     snprintf(padded_name, sizeof(padded_name), " %-3s", tmp);
                     strncpy(type_name,padded_name,4);
                     type_name[4] = '\0';

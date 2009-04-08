@@ -80,7 +80,7 @@ namespace OpenBabel {
     enum View
     {
       ViewFrom = 1, //!< view from the atom (id parameter) towards the center atom
-      ViewTowards = 2, //!< view from center atom towards the atom (id paramter)
+      ViewTowards = 2 //!< view from center atom towards the atom (id paramter)
     };
 
     /**
@@ -3816,7 +3816,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
       OBBond *nbr_bond = atom->GetBond(nbr);
       int new_needs_bsymbol = nbr_bond->IsDouble() || nbr_bond->IsTriple();
 
-      for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ai++) {
+      for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) {
         bond = atom->GetBond(*ai);
         int sorted_needs_bsymbol = bond->IsDouble() || bond->IsTriple();
         if (new_needs_bsymbol && !sorted_needs_bsymbol) {
@@ -3838,7 +3838,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     _uatoms.SetBitOn(atom->GetIdx());     //mark the atom as visited
 
     // Build the next layer of nodes, in canonical order
-    for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ai++) {
+    for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) {
       nbr = *ai;
       idx = nbr->GetIdx();
       if (_uatoms[idx])   // depth-first search may have used this atom since
@@ -3922,7 +3922,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
       nbr1_canorder = canonical_order[nbr1->GetIdx()-1];
 
       // Insert into the bond-vector in canonical order (by neighbor atom order)
-      for (bi = vbonds.begin(); bi != vbonds.end(); bi++) {
+      for (bi = vbonds.begin(); bi != vbonds.end(); ++bi) {
         bond2 = *bi;
         nbr2 = bond2->GetNbrAtom(atom);
         nbr2_canorder = canonical_order[nbr2->GetIdx()-1];
@@ -3938,7 +3938,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
 
     // If we found new open bonds, assign a bond-closure digits to each one,
     // add it to _vopen, and add it to the return vector.
-    for (bi = vbonds.begin(); bi != vbonds.end(); bi++) {
+    for (bi = vbonds.begin(); bi != vbonds.end(); ++bi) {
       bond1 = *bi;
       _ubonds.SetBitOn(bond1->GetIdx());
       int digit = GetUnusedIndex();
@@ -4509,7 +4509,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     m2s.CreateFragCansmiString(*pmol, frag_atoms, iso, buffer);
     if (iso) {
       pmol->Clear();
-      delete pmol;
+      delete pmol; // we created this as a temporary
     }
 
     // Could also save canonical bond order if anyone desires

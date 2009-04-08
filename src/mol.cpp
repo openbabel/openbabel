@@ -3082,12 +3082,12 @@ namespace OpenBabel
     for (j = 0;j < NumConformers();++j)
       {
         c = GetConformer(j);
-        for (k=0,i = va.begin();i != va.end();i++,++k)
+        for (k=0,i = va.begin();i != va.end(); ++i,++k)
           memcpy((char*)&ctmp[k*3],(char*)&c[((OBAtom*)*i)->GetCIdx()],sizeof(double)*3);
         memcpy((char*)c,(char*)ctmp,sizeof(double)*3*NumAtoms());
       }
 
-    for (k=1,i = va.begin();i != va.end();i++,++k)
+    for (k=1,i = va.begin();i != va.end(); ++i,++k)
       (*i)->SetIdx(k);
 
     delete [] ctmp;

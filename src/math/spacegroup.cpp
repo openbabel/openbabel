@@ -71,7 +71,7 @@ namespace OpenBabel
       SPACE_GROUP_ID,
       SPACE_GROUP_HALL,
       SPACE_GROUP_HM,
-      SPACE_GROUP_TRANSFORM,
+      SPACE_GROUP_TRANSFORM
     };
 
   void SpaceGroups::ParseLine(const char* line)
