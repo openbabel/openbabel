@@ -109,6 +109,10 @@ namespace OpenBabel
         // MPQC output
         pFormat = pConv->FindFormat("mpqc");
         break;
+      } else if (strstr(buffer,"PROGRAM SYSTEM MOLPRO") != NULL) {
+        // MOLPRO output
+        pFormat = pConv->FindFormat("mpo");
+        break;
       } else if ((strstr(buffer,"Schrodinger, Inc.") != NULL) &&
                  (strstr(buffer,"Jaguar") != NULL)) {
         // Jaguar

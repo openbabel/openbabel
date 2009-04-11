@@ -1,3 +1,8 @@
+2009-04-11  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/outformat.cpp (ReadMolecule): Added MOLPRO output
+	file detection.
+
 2009-04-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/rotamer.cpp, src/math/spacegroup.cpp, src/mol.cpp,
