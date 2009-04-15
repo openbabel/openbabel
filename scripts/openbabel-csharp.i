@@ -18,6 +18,10 @@
 %rename(OBMatrix3x3) OpenBabel::matrix3x3;
 %rename(OBTransform3d) OpenBabel::transform3d;
 
+%rename(AtomRefType) atomreftype;
+%rename(ErrorQualifier) errorQualifier;
+%rename(OBMessageLevel) obMessageLevel;
+
 //renamed these because all public methods of a C# class should start with
 //a capital letter. As swig for c# matures this may become uneccesary.
 %rename(DistSq) OpenBabel::vector3::distSq(const vector3 &) const;
@@ -30,15 +34,12 @@
 %rename(CreateOrthoVector) OpenBabel::vector3::createOrthoVector(vector3 &) const;
 
 //marks certain classes as partial for people who want to add methods and properties
-//when using OBDotNet to build their own apis (ChemSharp will provide an example of this)
+//when using OBDotNet to build their own apis
 //this change can be made to other classes if needed in the future.
 %typemap(csclassmodifiers) OpenBabel::OBAtom "public partial class"
 %typemap(csclassmodifiers) OpenBabel::OBMol "public partial class"
 %typemap(csclassmodifiers) OpenBabel::OBBond "public partial class"
-%typemap(csclassmodifiers) OpenBabel::matrix3x3 "public partial class"
 %typemap(csclassmodifiers) OpenBabel::OBRing "public partial class"
-%typemap(csclassmodifiers) OpenBabel::vector3 "public partial class"
-%typemap(csclassmodifiers) OpenBabel::OBElementTable "public partial class"
 
 //adds the ignored operators back into the OBVector3 class
 //with companion methods for use by .Net languages that don't support operator
@@ -127,9 +128,67 @@
 		get{return new OBVector3(0,0,0);}
 	}
 %}
+  
+//simplified public Downcast method
+//this is defined up here because something
+//lower down in the file interferes with it
+//
+%typemap(cscode) OpenBabel::OBGenericData
+%{
+
+  public virtual DType Downcast<DType>() where DType : OBGenericData
+  {
+      string derivedType = typeof(DType).Name;
+      derivedType = derivedType.StartsWith("OB") ? derivedType.Substring(2) :derivedType;
+      string castMethodName = "";
+      
+      castMethodName = string.Format("{0}{1}","To",derivedType);
+      
+      System.Reflection.MethodInfo castMethod = typeof(OBGenericData).GetMethod(castMethodName);
+      
+      if(castMethod == null)
+        throw new InvalidCastException("No explicit downcast is defined for " + derivedType);
+      
+      return (DType)castMethod.Invoke(this,null);
+   }
+%}
+
+//disable Downcast method in derived types
+%define DISABLE_DOWNCAST(CSCLASS)
+%typemap(cscode) OpenBabel::CSCLASS
+%{
+  public override DType Downcast<DType>()
+  {
+      throw new NotImplementedException("Downcast<DTYPE> is not implemented in " + "CSCLASS");
+   }
+%}
+%enddef
+DISABLE_DOWNCAST(AliasData);
+DISABLE_DOWNCAST(OBAngleData);
+DISABLE_DOWNCAST(OBAtomClassData);
+DISABLE_DOWNCAST(OBChiralData);
+DISABLE_DOWNCAST(OBCommentData);
+DISABLE_DOWNCAST(OBConformerData);
+DISABLE_DOWNCAST(OBExternalBondData);
+DISABLE_DOWNCAST(OBGridData);
+DISABLE_DOWNCAST(OBMatrixData);
+DISABLE_DOWNCAST(OBNasaThermoData);
+DISABLE_DOWNCAST(OBPairData);
+DISABLE_DOWNCAST(OBPairTemplate);
+DISABLE_DOWNCAST(OBRateData);
+DISABLE_DOWNCAST(OBRotamerList);
+DISABLE_DOWNCAST(OBRotationData);
+DISABLE_DOWNCAST(OBSerialNums);
+DISABLE_DOWNCAST(OBSetData);
+DISABLE_DOWNCAST(OBSymmetryData);
+DISABLE_DOWNCAST(OBTorsionData);
+DISABLE_DOWNCAST(OBUnitCell);
+DISABLE_DOWNCAST(OBVectorData);
+DISABLE_DOWNCAST(OBVibrationData);
+DISABLE_DOWNCAST(OBVirtualBond);
+
 
 %include "carrays.i"
-
 %define WRAP_ARRAY(TYPE, NAME)
 %array_class(TYPE,NAME)
 %typemap(cstype) TYPE * "NAME"
@@ -162,12 +221,18 @@ get
     return NAME.frompointer(tmp);
 } %}
 %enddef
+WRAP_ARRAY(double,CDoubleArray);
 
-WRAP_ARRAY(double,double_array);
-
-
-%include "std_pair.i"
-
+//**Trying to set up array marshalling in pinvoke class.
+//Finishing this is a priority for v0.3.
+//
+//%include "arrays_csharp.i"
+//CSHARP_ARRAYS(double, double)
+//OpenBabel::OBMol::AddConformer(double* f);
+//%apply double INPUT[] { double* c }
+//OpenBabel::OBMol::SetCoordinates(double* c);
+//%apply double INPUT[] { double* arg0,double* arg1 }
+//OpenBabel::get_rmat(double* arg0, double* arg1, int arg3);
 
 %ignore OpenBabel::OBRingSearch;
 %ignore OpenBabel::OBSSMatch;
@@ -175,7 +240,8 @@ WRAP_ARRAY(double,double_array);
 %ignore OpenBabel::CharPtrLess;
 %ignore OpenBabel::obLogBuf;
 %ignore OpenBabel::OBMol::SetTitle(std::string &);
-%ignore OpenBabel::OBFingerPrint::Tanimoto(const std::vector<unsigned int>&, const unsigned int*);
+//I can't get this overload to be ignored.
+%ignore OpenBabel::OBFingerPrint::Tanimoto(const std::vector<unsigned int>&, const unsigned int* );
 %ignore OpenBabel::OBRing::SetType(std::string &);
 %ignore OpenBabel::OBAngle::SetAtoms(triple<OBAtom*,OBAtom*,OBAtom*> &);
 %ignore OpenBabel::OBTorsion::AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &);
@@ -195,69 +261,42 @@ WRAP_ARRAY(double,double_array);
 //type info could be marshalled to a C# struct if it is
 //required later.
 %ignore OpenBabel::OBFormat::GetType();
-
-//ignored to remove failed mapping of maps and because C# classes
-//aren't going to be used by the babel program 
-%ignore OpenBabel::OBOp;
+ 
+//remove ignore to access OBOp for using Gen3D but still ignore unsupported
+//methods
+%ignore OpenBabel::OBOp::DoOps(OBBase*, OpMap*);
+%ignore OpenBabel::OBOp::Do(OBBase*, OpMap*, const char*);
+%ignore OpenBabel::OBOp::Do(OBBase*,OpMap*);
 %ignore OpenBabel::OBBase::DoTransformations(const std::map<std::string, std::string>*);
 
 
-//ignored because IO doesn't really belong in this class and streams don't work yet 
+//ignored because streams don't work yet 
 //*** check if this is ignored without the & operator in the sig
 %ignore OpenBabel::OBSmartsPattern::WriteMapList(std::ostream);
+//***not being ignored
+%ignore OpenBabel::OBConversion::GetInPos() const;
+%ignore OpenBabel::FastSearchIndexer::Add(OBBase*, std::streampos);
 
-//ignore some deprecated methods
-%ignore OpenBabel::OBAtom::GetNextAtom();
-%ignore OpenBabel::OBMol::CreateAtom();
-%ignore OpenBabel::OBMol::CreateBond();
-%ignore OpenBabel::OBMol::CreateResidue();
-%ignore OpenBabel::OBMol::GetFirstAtom();
-%ignore OpenBabel::OBMol::HasAromaticCorrected();
-%ignore OpenBabel::ThrowError(char*);
-%ignore OpenBabel::ThrowError(std::string &);
-%ignore OpenBabel::OBConversion::GetNextFormat(Formatpos&, const char*&,OBFormat*&);
-%ignore OpenBabel::OBAtom::GetCIdx();
-%ignore OpenBabel::OBAtom::GetNextAtom();
-%ignore OpenBabel::OBAtom::KBOSum();
-%ignore OpenBabel::OBBond::Visit;
-%ignore OpenBabel::OBBond::SetBO(int);
-%ignore OpenBabel::OBBond::GetBO();
-%ignore OpenBabel::OBBond::SetKSingle();
-%ignore OpenBabel::OBBond::SetKDouble();
-%ignore OpenBabel::OBBond::SetKTriple();
-%ignore OpenBabel::OBBond::IsKSingle();
-%ignore OpenBabel::OBBond::IsKDouble();
-%ignore OpenBabel::OBBond::IsKTriple();
-%ignore OpenBabel::OBResidueData::LookupBO(const std::string &);
-%ignore OpenBabel::OBResidueData::AssignBonds(OBMol &,OBBitVec &);
-%ignore OpenBabel::OBFloatGrid::GetMin(double *);
-%ignore OpenBabel::OBFloatGrid::GetMax(double *);
-%ignore OpenBabel::OBFloatGrid::GetSpacing(double &);
-%ignore OpenBabel::OBFloatGrid::GetDim(int *);
-%ignore OpenBabel::OBFloatGrid::SetLimits(const double[3], const double[3], const double[3],const double[3]);
-%ignore OpenBabel::OBFloatGrid::GetVals();
-%ignore OpenBabel::OBFloatGrid::SetVals(double *);
-%ignore OpenBabel::OBRing::PathSize();
-%ignore OpenBabel::OBTypeTable::Translate(char *, const char *);
-%ignore OpenBabel::OBAtomTyper::CorrectAromaticNitrogens(OBMol &);
-%ignore OpenBabel::OBConversion::GetNextFormat(Formatpos&, const char*&,OBFormat*&);
-%ignore OpenBabel::OBBitVec::Empty();
-%ignore OpenBabel::OBBitVec::BitIsOn(int);
-%ignore OpenBabel::OBForceField::UpdateCoordinates(OBMol &);
-%ignore OpenBabel::OBForceField::UpdateConformers(OBMol &);
-%ignore OpenBabel::OBProxGrid;
-%ignore OpenBabel::OBScoreGrid;
-%ignore OpenBabel::score_t;
+//ignore until std::pair<int,int> is wrapped successfuly
+%ignore OpenBabel::OBAromaticTyper;
+%ignore OpenBabel::aromtyper;
 
-//moved these to static methods of the OBVector3 class which should
-//be more intuitive for C# programmers
-%ignore OpenBabel::VX;
-%ignore OpenBabel::VY;
-%ignore OpenBabel::VZ;
-%ignore OpenBabel::VZero;
+
+//No longer ignoring the deprecated methods.
+//I've decided there is no real point to doing so.
+
+//ignore until std::pair is wrapped correctly
+//or add overloads using the extend directive that take
+//std::vector<std::vector<int>> 
+%ignore OpenBabel::OBSmartsPattern::RestrictedMatch(OBMol &, std::vector<std::pair<int,int> > &, bool);
+%ignore OpenBabel::OBSmartsPattern::RestrictedMatch(OBMol &, std::vector<std::pair<int,int> > &);
+
+
+//%ignore OpenBabel::OBRotor::SetDihedralAtoms(int[4]);
+
 
 //ignoring the clone method of OBGenericData and its subclasses
-//must implementing class just return null and if we really want to 
+//most implementing class just return null and if we really want to 
 //clone we can do it on the managed side and implement a proper ICloneable/Clone
 %ignore *::Clone(OBBase*) const;
 
@@ -280,6 +319,64 @@ WRAP_ARRAY(double,double_array);
 %ignore OpenBabel::ElemDesc;
 %ignore OpenBabel::Residue;
 
+//wrappers for ElemDesc and Residue global arrays with readonly
+//collections this is a temporary work around until I write an immutable
+//list type that can be declared with an object initializer
+%pragma(csharp) moduleimports=
+%{
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Runtime.InteropServices;
+%}
+
+%pragma(csharp) modulecode=
+%{
+	private static readonly IList<string> elemDesc = new List<string>()
+	{
+		" N  "," CA "," C  "," O  ",@" C\ "," OT ",
+		" S  "," P  "," O1P"," O2P", " O5*"," C5*"," C4*",
+		" O4*"," C3*"," O3*"," C2*"," O2*"," C1*"," CA2",
+		" SG "," N1 "," N2 "," N3 "," N4 "," N6 "," O2 "," O4 "," O6 ",
+	};
+	
+	public static ReadOnlyCollection<string> ElemDesc
+	{
+		get{return new ReadOnlyCollection<string>(elemDesc);}
+	} 
+
+	private static readonly IList<string> residue = new List<string>()
+	{
+    "ALA", /* 8.4% */     "GLY", /* 8.3% */
+    "LEU", /* 8.0% */     "SER", /* 7.5% */
+    "VAL", /* 7.1% */     "THR", /* 6.4% */
+    "LYS", /* 5.8% */     "ASP", /* 5.5% */
+    "ILE", /* 5.2% */     "ASN", /* 4.9% */
+    "GLU", /* 4.9% */     "PRO", /* 4.4% */
+    "ARG", /* 3.8% */     "PHE", /* 3.7% */
+    "GLN", /* 3.5% */     "TYR", /* 3.5% */
+    "HIS", /* 2.3% */     "CYS", /* 2.0% */
+    "MET", /* 1.8% */     "TRP", /* 1.4% */
+    "ASX", "GLX", "PCA", "HYP",
+    "  A", "  C", "  G", "  T",
+    "  U", " +U", "  I", "1MA",
+    "5MC", "OMC", "1MG", "2MG",
+    "M2G", "7MG", "OMG", " YG",
+    "H2U", "5MU", "PSU",
+    "UNK", "ACE", "FOR", "HOH",
+    "DOD", "SO4", "PO4", "NAD",
+    "COA", "NAP", "NDP"
+	};
+	
+	public static ReadOnlyCollection<string> Residue
+	{
+		get{return new ReadOnlyCollection<string>(residue);}
+	}	
+%}
+
+//make the module class static
+%pragma(csharp) modulemodifiers="public static class"
+
 //Ignore these global constants to streamline the
 //imclass and avoid using unmanaged function calls 
 //to retrieve global variables with constant values. 
@@ -293,20 +390,28 @@ WRAP_ARRAY(double,double_array);
 //how to mod the wrappers in  std_map.i.
 %ignore OpenBabel::OBPlugin::Begin(const char*);
 %ignore OpenBabel::OBPlugin::End(const char*);
-
 //***OBPlugin::GetMap() is not being ignored
 %ignore OpenBabel::OBPlugin::GetMap() const;
 %ignore OpenBabel::OBConversion::GetOptions(Option_type);
 
 //ignore this constructor and method, multi-dimensional arrays are
 //not well supported within .Net interop
-%ignore OpenBabel::matrix3x3(double[3][3]);
-%ignore OpenBabel::transform3d(double[3][3], double[3]);
+%ignore matrix3x3(double[3][3]);
+%ignore transform3d(double[3][3], double[3]);
+%ignore OpenBabel::OBMol::Rotate(const double[3][3]);
+%ignore OpenBabel::ob_make_rmat(double[3][3],double[9]);
+%ignore OpenBabel::qtrfit (double *,double *,int size,double[3][3]);
+%ignore OpenBabel::OBAngleData::FillAngleArray(int**, unsigned int&);
+%ignore OpenBabel::SpaceGroup::Transform(const vector3 &) const;
+%ignore OpenBabel::SpaceGroup::NextTransform(transform3dIterator &i) const;
+%ignore OpenBabel::SpaceGroup::BeginTransform(transform3dIterator &i) const;
 
-//ignore these methods that return an iterator
+//ignore these methods using iterators
 //swig has issues wrapping the iterators and the
 //anonymous IEnumerables added to some typemaps replace
 //these methods where necessary.
+%ignore OpenBabel::OBBase::BeginData();
+%ignore OpenBabel::OBBase::EndData();
 %ignore OpenBabel::OBMol::BeginAtom(OBAtomIterator &);
 %ignore OpenBabel::OBMol::NextAtom(OBAtomIterator &);
 %ignore OpenBabel::OBMol::BeginBond(OBBondIterator &);
@@ -321,11 +426,6 @@ WRAP_ARRAY(double,double_array);
 %ignore OpenBabel::OBMol::EndBonds();
 %ignore OpenBabel::OBMol::BeginResidues();
 %ignore OpenBabel::OBMol::EndResidues();
-
-//***conformer methods not yet replaced
-%ignore OpenBabel::OBMol::BeginConformer(std::vector<double*>::iterator&);
-%ignore OpenBabel::OBMol::NextConformer(std::vector<double*>::iterator&);
-
 %ignore OpenBabel::OBAtom::BeginAtoms();
 %ignore OpenBabel::OBAtom::EndAtoms();
 %ignore OpenBabel::OBAtom::BeginBonds();
@@ -334,29 +434,42 @@ WRAP_ARRAY(double,double_array);
 %ignore OpenBabel::OBAtom::NextBond(OBBondIterator &);
 %ignore OpenBabel::OBAtom::BeginNbrAtom(OBAtomIterator &);
 %ignore OpenBabel::OBAtom::NextNbrAtom(OBAtomIterator &);
+%ignore OpenBabel::OBAtom::BeginNbrAtom(OBBondIterator &);
+%ignore OpenBabel::OBAtom::NextNbrAtom(OBBondIterator &);
+%ignore OpenBabel::OBAtom::InsertBond(OBBondIterator &,OBBond*);
+%ignore OpenBabel::OBResidue::BeginAtoms();
+%ignore OpenBabel::OBResidue::EndAtoms();
+%ignore OpenBabel::OBResidue::BeginAtom(std::vector<OBAtom*>::iterator &);
+%ignore OpenBabel::OBResidue::NextAtom(std::vector<OBAtom*>::iterator &);
 
-//***should OBSmartsPattern be Enumerable?
+//use C#  mol.GetConformers()added below
+%ignore OpenBabel::OBMol::BeginConformer(std::vector<double*>::iterator&);
+%ignore OpenBabel::OBMol::NextConformer(std::vector<double*>::iterator&);
+%ignore OpenBabel::OBMol::GetConformers();
+
+//Use OBSmartsPattern.GetMapList().GetEnumerator() 
+//to obtain an equivalent iterator.
 %ignore OpenBabel::OBSmartsPattern::BeginMList();
 %ignore OpenBabel::OBSmartsPattern::EndMList();
 
-//***these are not yet replaced, should OBSetData be Enumberable?
+//Use OBSetData.GetData().GetEnumerator()
+//to obtain an equivalent iterator.
 %ignore OpenBabel::OBSetData::GetBegin();
 %ignore OpenBabel::OBSetData::GetEnd();
 
-//*** not yet replaced with enumerables
+//Use OBRingData.GetAllData().GetEnumerator() 
+//to obtain an equivalent iterator.
 %ignore OpenBabel::OBRingData::BeginRings();
 %ignore OpenBabel::OBRingData::EndRings();
 %ignore OpenBabel::OBRingData::BeginRing(std::vector<OBRing*>::iterator &);
 %ignore OpenBabel::OBRingData::NextRing(std::vector<OBRing*>::iterator &);
 
 
-
 //these methods provide C# IEnumerables to allow easy iteration and
-//enable the use of generic extension methods.
+//enable LINQ queries.
 %typemap(csimports) OpenBabel::OBMol "
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 "
 %typemap(cscode) OpenBabel::OBMol
@@ -391,11 +504,37 @@ using System.Runtime.InteropServices;
 		}
 	}
 	
-	public IEnumerable<OBRing> Rings()
+	//Temporary workaround until the std::vector<double*>
+	//proxy is functional. The proxy class will implement
+	//IEnumerable<CDoubleArray> any code using this method
+	//will remain compatible with future versions.
+	public IEnumerable<CDoubleArray> GetConformers()
 	{
-		return GetSSSR().Cast<OBRing>();
+		int n = NumConformers();
+		
+		if(n == 0)
+			yield return null;
+		
+		for(int i = 0; i < n; i++)
+			yield return GetConformer(i);
 	}
 	
+	
+	//note - this method could potentially trigger 
+	//GC issues by deleting CDoubleArray instances referenced
+	//elsewhere in the code. 
+	public void SetConformers(IEnumerable<CDoubleArray> confs)
+	{	
+		int n = NumConformers();
+		
+		if(n != 0)
+			for(int i=0;i<n;i++)
+				DeleteConformer(i);
+				
+		foreach(CDoubleArray cda in confs)
+			AddConformer(cda);
+	}
+		
 %}
 
 %typemap(csimports) OpenBabel::OBAtom "
@@ -423,7 +562,8 @@ using System.Runtime.InteropServices;
 		{
 			yield return iter.Current;
 		}
-	}
+	}	
+
 %}
 
 %module openbabelcsharp
@@ -465,19 +605,13 @@ using System.Runtime.InteropServices;
 #include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
+//#include <openbabel/reaction.h>
+#include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
 
 %}
 
-%module VecMath
-%{
-#include <openbabel/math/vector3.h>
-#include <openbabel/math/matrix3x3.h>
-#include <openbabel/math/transform3d.h>
-%}
-
-
-
+//ignore some currently unsupported operators
 %ignore *::operator=;
 %ignore *::operator-=;
 %ignore *::operator+=;
@@ -490,25 +624,26 @@ using System.Runtime.InteropServices;
 %ignore *::operator !=;
 
 %include "std_string.i"
-%include "std_map.i"
-%include "std_vector.i"
+%include "generic_std_vector.i"
 
 %template (VectorInt)             std::vector<int>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorInt, std::vector<int>);
 // Note that the following line will fail if the space between 
 // the two greater-than signs is removed!
-%template (VectorVecInt)                 std::vector<std::vector<int> >;
-
-//**why does this not wrap correctly???
-//%template (vvUInt)                std::vector<std::vector<unsigned int> >;
+%template (VectorVecInt)     std::vector<std::vector<int> >;
+%template (VectorUInt)            std::vector<unsigned int>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorUInt,std::vector<unsigned int>);
+%template (VectorVecUInt)         std::vector<std::vector<unsigned int> >;
 %template (VectorUShort)	      std::vector<unsigned short>;
-%template (VectorUInt)     std::vector<unsigned int>;
 %template (VectorDouble)          std::vector<double>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorDouble,std::vector<double>);
+%template (VectorVecDouble)		  std::vector<std::vector<double> >;
 %template (VectorString)          std::vector<std::string>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBVector3, OpenBabel::vector3);
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBVector3,OpenBabel::vector3);
 %template (VectorOBVector3)              std::vector<OpenBabel::vector3>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorOBVector3,std::vector<OpenBabel::vector3>);
+%template (VectorVecOBVector3)    std::vector<std::vector<OpenBabel::vector3> >;
 
-//**check this after build
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBExternalBond,OpenBabel::OBExternalBond);
 %template (VectorOBExternalBond)	std::vector<OpenBabel::OBExternalBond>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBMol, OpenBabel::OBMol);
@@ -522,6 +657,7 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing);
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBTorsion, OpenBabel::OBTorsion);
 %template (VectorTorsion)     std::vector<OpenBabel::OBTorsion>;
 
+
 // Note that vectors of pointers need slightly different syntax
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing*);
 %template (VectorpRing)   std::vector<OpenBabel::OBRing*>;
@@ -533,7 +669,13 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBAtom, OpenBabel::OBAtom*);
 %template (VectorpAtom)		std::vector<OpenBabel::OBAtom*>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 %template (VectorpBond)		std::vector<OpenBabel::OBBond*>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRotor, OpenBabel::OBRotor*);
+%template (VectorpRotor)		std::vector<OpenBabel::OBRotor*>;
 
+//the typemap for wrapping std::vector<double*> is going to need
+//some customization to work with the CDoubleArray type.
+//SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(CDoubleArray,double*);
+//%template (VectorpDouble)		  std::vector<double*>;
 
 %import <openbabel/babelconfig.h>
 
@@ -547,35 +689,68 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 %include <openbabel/base.h>
 
 %include <openbabel/generic.h>
+
+//replacement for method return unsupported std::pair
+//GetBC() is not being ignored
+%ignore OpenBabel::OBTorsion::GetBC();
+%extend OpenBabel::OBTorsion
+{
+	std::vector<OpenBabel::OBAtom*> GetBCAtoms()
+	{
+		std::vector<OpenBabel::OBAtom*> bcAtoms(2);
+        
+		bcAtoms[0] = self->GetBC().first;
+		bcAtoms[1] = self->GetBC().second;
+		
+		return bcAtoms;
+	}
+};
+
+//FastSearch won't be fully functional until we figure out
+//how to handle streams.
+//We'd also have to do our own implementation of the multimap wrapper
+%ignore OpenBabel::FastSearch::FindSimilar(OBBase*, multimap<double, unsigned int>&,int);
+%ignore OpenBabel::FastSearch::FindSimilar(OBBase*, multimap<double, unsigned int>&,double);
+
+//individual cast methods are private as the child classes
+//do not need to inherit them. A C# Downcast<T> method
+//is defined above.
+//%csmethodifier must proceed %extend declaration
 %define CAST_GENERICDATA_TO(subclass)
+%csmethodmodifiers OpenBabel::OBGenericData::To ## subclass() "private";
 %extend OpenBabel::OBGenericData {
     OpenBabel::OB ## subclass *To ## subclass() {
 	    return (OpenBabel::OB ## subclass *) $self;
     }
 };
 %enddef
-CAST_GENERICDATA_TO(AngleData)
-CAST_GENERICDATA_TO(AtomClassData)
-CAST_GENERICDATA_TO(ChiralData)
-CAST_GENERICDATA_TO(CommentData)
-CAST_GENERICDATA_TO(ConformerData)
-CAST_GENERICDATA_TO(ExternalBondData)
-CAST_GENERICDATA_TO(GridData)
-CAST_GENERICDATA_TO(MatrixData)
-CAST_GENERICDATA_TO(NasaThermoData)
-CAST_GENERICDATA_TO(PairData)
-// CAST_GENERICDATA_TO(PairTemplate)
-CAST_GENERICDATA_TO(RateData)
-CAST_GENERICDATA_TO(RotamerList)
-CAST_GENERICDATA_TO(RotationData)
-CAST_GENERICDATA_TO(SerialNums)
-CAST_GENERICDATA_TO(SetData)
-CAST_GENERICDATA_TO(SymmetryData)
-CAST_GENERICDATA_TO(TorsionData)
-CAST_GENERICDATA_TO(UnitCell)
-CAST_GENERICDATA_TO(VectorData)
-CAST_GENERICDATA_TO(VibrationData)
-CAST_GENERICDATA_TO(VirtualBond)
+
+//why is AliasData not supported?
+CAST_GENERICDATA_TO(AngleData);
+CAST_GENERICDATA_TO(AtomClassData);
+CAST_GENERICDATA_TO(ChiralData);
+CAST_GENERICDATA_TO(CommentData);
+CAST_GENERICDATA_TO(ConformerData);
+CAST_GENERICDATA_TO(ExternalBondData);
+CAST_GENERICDATA_TO(GridData);
+CAST_GENERICDATA_TO(MatrixData);
+CAST_GENERICDATA_TO(NasaThermoData);
+CAST_GENERICDATA_TO(PairData);
+// CAST_GENERICDATA_TO(PairTemplate);
+CAST_GENERICDATA_TO(RateData);
+CAST_GENERICDATA_TO(RotamerList);
+CAST_GENERICDATA_TO(RotationData);
+//OBSerialNum class will not be functional until std::map wrappers
+//are functional.
+//CAST_GENERICDATA_TO(SerialNums);
+CAST_GENERICDATA_TO(SetData);
+CAST_GENERICDATA_TO(SymmetryData);
+CAST_GENERICDATA_TO(TorsionData);
+CAST_GENERICDATA_TO(UnitCell);
+CAST_GENERICDATA_TO(VectorData);
+CAST_GENERICDATA_TO(VibrationData);
+CAST_GENERICDATA_TO(VirtualBond);
+
 
 %include <openbabel/griddata.h> // Needs to come after generic.h
 
@@ -596,6 +771,9 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
+%include <openbabel/kinetics.h>
+%include <openbabel/rotor.h>
+//%include <openbabel/rotamer.h>
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 
@@ -650,6 +828,7 @@ using System.Runtime.InteropServices;
 %{
 	protected bool iterating;
 
+
 	public virtual RETYPE Current
 	{
 		get{return iterating ? __ref__() : null;}
@@ -701,8 +880,5 @@ WRAPITERATOR(OBMolTorsionIter,OpenBabel::OBTorsionIter,VectorUInt);
 WRAPITERATOR(OBResidueIter,OpenBabel::OBResidueIter,OBResidue);
 WRAPITERATOR(OBResidueAtomIter,OpenBabel::OBResidueAtomIter,OBAtom);
 WRAPITERATOR(OBMolPairIter,OpenBabel::OBMolPairIter,VectorUInt)
-
-//***add CurrentDepth to BFS iterator
-
 
 %include <openbabel/obiter.h>
