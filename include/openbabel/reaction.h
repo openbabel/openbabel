@@ -105,6 +105,18 @@ public:
   {
     return " reactions\n";
   }
+
+  bool Clear()
+  {
+    _reactants.clear();
+    _products.clear();
+    _ts.reset();
+    _agent.reset();
+    _title.clear();
+    _comment.clear();
+    _reversible = false;
+    return true;
+  }
 };
 
 

@@ -115,14 +115,14 @@ SmiReactFormat theSmiReactFormat;
 bool SmiReactFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
   //It's really a reaction, not a molecule.
-  //Doesn't make a new OBReactionObject, but does make mew reactant and product OBMols
-  OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-
-  istream &ifs = *pConv->GetInStream();
+  //Doesn't make a new OBReaction object, but does make mew reactant and product OBMols
+  OBReaction* pReact = pOb->CastAndClear<OBReaction>();
 
   OBFormat* pSmiFormat = OBConversion::FindFormat("SMI");
-  if(!pSmiFormat)
+  if(!pSmiFormat || !pReact)
     return false;
+
+  istream &ifs = *pConv->GetInStream();
 
   //Read reactant
   shared_ptr<OBMol> spReactant(new OBMol);

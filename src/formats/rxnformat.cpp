@@ -115,10 +115,10 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
     //It's really a reaction, not a molecule.
     //Doesn't make a new OBReactionObject, but does make mew reactant and product OBMols
-    OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
+   OBReaction* pReact = pOb->CastAndClear<OBReaction>();
 
     OBFormat* pMolFormat = pConv->FindFormat("MOL");
-    if(pMolFormat==NULL)
+    if(pMolFormat==NULL || !pReact)
         return false;
 
     //	OBConversion MolConv(*pConv); //new copy to use to read associated MOL

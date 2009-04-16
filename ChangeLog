@@ -1,3 +1,9 @@
+2009-04-16  Chris Morley <c.morley@gaseq.co.uk>
+
+	* include/openbabel/reaction.h, src/formats/rsmiformat.cpp,
+	src/formats/rxnformat.cpp: add Clear() function for OBReaction and
+	apply it via CastAndClear<OBReaction>() in the formats before reading.
+
 2009-03-07  Daniel Leidert <daniel.leidert@wgdd.de>
 
 	* include/iconv.h, src/formats/xml/iconv.h, src/strncasecmp.c: Fixed
