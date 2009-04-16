@@ -1,3 +1,9 @@
+//File taken from current SWIG SVN Trunk
+//https://swig.svn.sourceforge.net/svnroot/swig/trunk/Lib/csharp/std_vector.i
+//The only changes are the addition of a ForEach method like the one defined 
+//for System.Collections.Generic.List<T> and moving the CollectionModifiedException
+//thrown by the Enumerator from Current to MoveNext() to avoid a known bug.
+
 /* -----------------------------------------------------------------------------
  * See the LICENSE file for information on copyright, usage and redistribution
  * of SWIG, and the README file for authors - http://www.swig.org/release.html.
