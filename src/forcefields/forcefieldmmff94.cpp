@@ -2336,7 +2336,7 @@ namespace OpenBabel
                 if (nbr->GetBond(&*nbr2)->IsDouble() && !nbr2->IsOxygen())
                   return 7; // O=S on sulfur doubly bonded to, e.g., C (O=S=)
 
-                if (nbr2->IsOxygen() && nbr2->GetValence() == 0)
+                if (nbr2->IsOxygen() && nbr2->GetValence() == 1)
                   isSulfoxide = false;
               }
               
