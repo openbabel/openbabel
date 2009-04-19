@@ -21,6 +21,8 @@
 %rename(AtomRefType) atomreftype;
 %rename(ErrorQualifier) errorQualifier;
 %rename(OBMessageLevel) obMessageLevel;
+%rename(Rate_Type) rate_type;
+%rename(Reaction_Type) reaction_type;
 
 //renamed these because all public methods of a C# class should start with
 //a capital letter. As swig for c# matures this may become uneccesary.
@@ -187,12 +189,27 @@ DISABLE_DOWNCAST(OBVectorData);
 DISABLE_DOWNCAST(OBVibrationData);
 DISABLE_DOWNCAST(OBVirtualBond);
 
+//extra method to provide access to a rotor
+//iterator
+%ignore OpenBabel::OBRotorList::BeginRotors();
+%ignore OpenBabel::OBRotorList::EndRotors();
+%ignore OpenBabel::OBRotorList::BeginRotor(OBRotorIterator &);
+%ignore OpenBabel::OBRotorList::NextRotor(OBRotorIterator &);
+%extend OpenBabel::OBRotorList
+{
+	std::vector<OpenBabel::OBRotor*> GetRotors()
+	{
+		std::vector<OpenBabel::OBRotor*> rotors($self->BeginRotors(),$self->EndRotors());
+		return rotors;
+	}
+};
 
 %include "carrays.i"
 %define WRAP_ARRAY(TYPE, NAME)
+//can't seal array classes because of the dispose method
+//%typemap(csclassmodifiers) NAME "public sealed class"
 %array_class(TYPE,NAME)
 %typemap(cstype) TYPE * "NAME"
-
 %typemap(csout, excode=SWIGEXCODE) TYPE * 
 {
 	IntPtr cPtr = $imcall;$excode
@@ -222,6 +239,9 @@ get
 } %}
 %enddef
 WRAP_ARRAY(double,CDoubleArray);
+WRAP_ARRAY(int, CIntArray);
+WRAP_ARRAY(unsigned char, CByteArray);
+WRAP_ARRAY(unsigned int, CUIntArray);
 
 //**Trying to set up array marshalling in pinvoke class.
 //Finishing this is a priority for v0.3.
@@ -290,7 +310,7 @@ WRAP_ARRAY(double,CDoubleArray);
 //std::vector<std::vector<int>> 
 %ignore OpenBabel::OBSmartsPattern::RestrictedMatch(OBMol &, std::vector<std::pair<int,int> > &, bool);
 %ignore OpenBabel::OBSmartsPattern::RestrictedMatch(OBMol &, std::vector<std::pair<int,int> > &);
-
+%ignore OpenBabel::SmartsLexReplace(std::string &,std::vector<std::pair<std::string,std::string> > &);
 
 //%ignore OpenBabel::OBRotor::SetDihedralAtoms(int[4]);
 
@@ -390,9 +410,11 @@ WRAP_ARRAY(double,CDoubleArray);
 //how to mod the wrappers in  std_map.i.
 %ignore OpenBabel::OBPlugin::Begin(const char*);
 %ignore OpenBabel::OBPlugin::End(const char*);
+
 //***OBPlugin::GetMap() is not being ignored
 %ignore OpenBabel::OBPlugin::GetMap() const;
 %ignore OpenBabel::OBConversion::GetOptions(Option_type);
+%ignore OpenBabel::OBConversion::GetNextFormat(Formatpos&, const char*&,OBFormat*&);
 
 //ignore this constructor and method, multi-dimensional arrays are
 //not well supported within .Net interop
@@ -463,7 +485,7 @@ WRAP_ARRAY(double,CDoubleArray);
 %ignore OpenBabel::OBRingData::EndRings();
 %ignore OpenBabel::OBRingData::BeginRing(std::vector<OBRing*>::iterator &);
 %ignore OpenBabel::OBRingData::NextRing(std::vector<OBRing*>::iterator &);
-
+%ignore OpenBabel::Swab(int);
 
 //these methods provide C# IEnumerables to allow easy iteration and
 //enable LINQ queries.
@@ -501,6 +523,16 @@ using System.Runtime.InteropServices;
 		while(iter.MoveNext())
 		{
 			yield return iter.Current;
+		}
+	}
+	
+	public IEnumerable<OBMol> Fragments()
+	{
+		OBMolAtomDFSIter iter = new OBMolAtomDFSIter(this);
+		OBMol ret = new OBMol();
+		while(GetNextFragment(iter,ret))
+		{
+			yield return ret;
 		}
 	}
 	
@@ -566,6 +598,8 @@ using System.Runtime.InteropServices;
 
 %}
 
+//Changed module class name to comply with
+//C# naming conventions
 %module openbabelcsharp
 %{
 // used to set import/export for Cygwin DLLs
@@ -605,6 +639,8 @@ using System.Runtime.InteropServices;
 #include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
+//OBReaction can't be mapped properly
+//until shared_ptr is mapped
 //#include <openbabel/reaction.h>
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
@@ -695,7 +731,7 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRotor, OpenBabel::OBRotor*);
 %ignore OpenBabel::OBTorsion::GetBC();
 %extend OpenBabel::OBTorsion
 {
-	std::vector<OpenBabel::OBAtom*> GetBCAtoms()
+	std::vector<OpenBabel::OBAtom*> GetBC()
 	{
 		std::vector<OpenBabel::OBAtom*> bcAtoms(2);
         
@@ -704,6 +740,17 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRotor, OpenBabel::OBRotor*);
 		
 		return bcAtoms;
 	}
+};
+
+//extending typemap to work around
+//lack of support for void*
+%extend OpenBabel::OBRotor
+{
+	int* GetRotAtoms()
+	{
+		return (int*)$self->GetRotAtoms();	
+	}
+	
 };
 
 //FastSearch won't be fully functional until we figure out
@@ -724,6 +771,8 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRotor, OpenBabel::OBRotor*);
     }
 };
 %enddef
+
+%typemap(cstype) OpenBabel::OBRotamerList* "OBRotamerList";
 
 //why is AliasData not supported?
 CAST_GENERICDATA_TO(AngleData);
@@ -773,7 +822,7 @@ CAST_GENERICDATA_TO(VirtualBond);
 %include <openbabel/parsmart.h>
 %include <openbabel/kinetics.h>
 %include <openbabel/rotor.h>
-//%include <openbabel/rotamer.h>
+%include <openbabel/rotamer.h>
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 
@@ -784,6 +833,14 @@ CAST_GENERICDATA_TO(VirtualBond);
 %include <openbabel/op.h>
 
 %include <openbabel/bitvec.h>
+
+//wrapping boost::shared_ptr
+//this does not work yet
+//%include <boost/shared_ptr.hpp> 
+//%include "boost_shared_ptr.i"
+//%include "shared_ptr.i"
+//SWIG_SHARED_PTR_TYPEMAPS(OBMolSharedPtr, ,OpenBabel::OBMol)
+//%include <openbabel/reaction.h>
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)
