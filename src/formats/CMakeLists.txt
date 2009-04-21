@@ -1,7 +1,3 @@
-if(WITH_INCHI)
-  add_definitions(-DINCHI_LINK_AS_DLL)
-  add_subdirectory(inchi)
-endif(WITH_INCHI)
 
 set(formats
     APIInterface
@@ -89,6 +85,9 @@ if(Boost_FOUND)
 endif(Boost_FOUND)
 
 if(WITH_INCHI)
+  add_definitions(-DINCHI_LINK_AS_DLL)
+  add_subdirectory(inchi)
+  include_directories(${CMAKE_SOURCE_DIR}/include/inchi)
   set(formats
     ${formats}
     inchiformat
@@ -144,9 +143,9 @@ foreach(format ${formats})
     ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
-                  RUNTIME DESTINATION bin
-                  LIBRARY DESTINATION ${LIB}/openbabel/${BABEL_VERSION}
-                  ARCHIVE DESTINATION ${LIB}/openbabel/${BABEL_VERSION})
+                  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+                  LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR}
+                  ARCHIVE DESTINATION ${PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
                         OUTPUT_NAME ${format}
                         PREFIX ""
@@ -157,9 +156,9 @@ foreach(format ${xml_formats})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
-                  RUNTIME DESTINATION bin
-                  LIBRARY DESTINATION ${LIB}/openbabel/${BABEL_VERSION}
-                  ARCHIVE DESTINATION ${LIB}/openbabel/${BABEL_VERSION})
+                  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+                  LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR}
+                  ARCHIVE DESTINATION ${PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
                         OUTPUT_NAME ${format}
                         PREFIX ""
