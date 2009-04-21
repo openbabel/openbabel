@@ -1,3 +1,7 @@
+2009-04-21  Chris Morley <c.morley@gaseq.co.uk>
+
+	* src/alias.cpp: Added code to handle isotopic atoms to fix 2777494
+
 2009-04-16  Chris Morley <c.morley@gaseq.co.uk>
 
 	* include/openbabel/reaction.h, src/formats/rsmiformat.cpp,

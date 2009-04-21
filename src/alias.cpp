@@ -12,6 +12,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
+#include <sstream>
+#include <string>
 #include <openbabel/alias.h>
 
 namespace OpenBabel
@@ -23,12 +25,28 @@ namespace OpenBabel
     Interprets the alias text and adds atom as appropriate to mol.
     Tries the following in turn until one is sucessful:
     1) Looks up alias in fragments.txt (not implemented yet)
-    2) Parse as simple formula
+    2) if starts with number treat as isotope+element e.g. 2H
+    3) Parse as simple formula
     Returns false if none are successful.
     */
 
     //Look up alias name here, add atoms as appropriate and return true if successful
     //else...
+
+    //parse as isotopic atom
+    if(isdigit(_alias[0]))
+    {
+      std::stringstream ss(_alias);
+      int iso;
+      std::string el;
+      ss >> iso >>el;
+      OBAtom* pAtom = mol.GetAtom(atomindex);
+      if(!pAtom)
+        return false;
+      pAtom->SetIsotope(iso);
+      pAtom->SetAtomicNum(etab.GetAtomicNum(el.c_str(),iso));
+      return true;
+    }
 
     //Crude implementation of formula parse
     //This should really not alter the molecule until the parsing has been
