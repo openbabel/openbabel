@@ -654,6 +654,74 @@ namespace OpenBabel
     return fragment; 
   }
 
+  // Handle the case of 2D molecules
+  // Currently just a helper function since we can't add API in 2.2
+  void Convert2DCoords(OBMol *obMolecule)
+  {
+    if (obMolecule == NULL || obMolecule->GetDimension() != 2)
+      return;
+
+    double sum = 0.0;
+    FOR_BONDS_OF_MOL (bond, obMolecule) {
+      sum += bond->GetLength();
+    }
+    double scale = (1.5 * obMolecule->NumBonds()) / sum;
+    FOR_ATOMS_OF_MOL (atom, obMolecule) {
+      vector3 vec = atom->GetVector();
+      vec.SetX(vec.x() * scale);
+      vec.SetY(vec.y() * scale);
+      atom->SetVector(vec);
+    }
+    obMolecule->Center();
+    
+    // Check for pairs of atoms on top of each other
+    // e.g. "OH" or "COOH" labels in 2D files.
+    // First check bonding pairs
+    FOR_BONDS_OF_MOL(bond, obMolecule)
+      {
+        if (bond->GetLength() < 1.0e-6) {
+          bond->SetLength(bond->GetEquibLength());
+        }
+      }
+    // Now check non-bonded pairs
+    FOR_PAIRS_OF_MOL(p, obMolecule)
+      {
+        OBAtom *a = obMolecule->GetAtom((*p)[0]);
+        OBAtom *b = obMolecule->GetAtom((*p)[1]);
+        if (fabs(a->GetDistance(b)) < 1.0e-6) {
+          vector3 v1;
+          v1.randomUnitVector();
+          a->SetVector(a->GetVector() + v1);
+          b->SetVector(b->GetVector() - v1);
+        }
+      }
+    
+    // place end atoms of wedge bonds at +1.0 Z
+    // place end atoms of hash bonds at -1.0 Z
+    FOR_ATOMS_OF_MOL (atom, obMolecule) {
+      FOR_BONDS_OF_ATOM (bond, &*atom) {
+        if (bond->IsHash() && (&*atom == bond->GetBeginAtom())) {
+          vector3 vec = bond->GetEndAtom()->GetVector();
+          vec.SetZ(-1.0);
+          bond->GetEndAtom()->SetVector(vec);
+        } else if (bond->IsWedge() && (&*atom == bond->GetBeginAtom())) {
+          vector3 vec = bond->GetEndAtom()->GetVector();
+          vec.SetZ(1.0);
+          bond->GetEndAtom()->SetVector(vec);
+        }
+      }
+    }
+    // If someone wants actual coordinates from OBBuilder, they should
+    // call forcefields themselves
+//     OBForceField *ff = OBForceField::FindForceField("UFF");
+//     if (ff) {
+//       ff->Setup(*obMolecule);
+//       ff->ConjugateGradients(250);
+//       ff->GetCoordinates(*obMolecule);
+//     }
+  }
+
+
   // First we find the most complex fragments in our molecule. Once we have a match,
   // vfrag is set for all the atoms in the fragment. A second match (smaller, more 
   // simple part of the 1st match) is ignored.
@@ -682,6 +750,13 @@ namespace OpenBabel
     // copy the molecule to private data
     OBMol workMol = mol;
     
+    if (workMol.GetDimension() == 2) {
+      Convert2DCoords(&workMol);
+      mol = workMol;
+      mol.SetDimension(3);
+      return true;
+    }
+
     // delete all bonds in the working molecule
     // we will add them back at the end
     while (workMol.NumBonds())
