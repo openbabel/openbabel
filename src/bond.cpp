@@ -120,28 +120,35 @@ namespace OpenBabel
     int a = fixed->GetIdx();
     int b = GetNbrAtom(fixed)->GetIdx();
 
+    if (a == b)
+      return; // this would be a problem...
+
     mol->FindChildren(children,a,b);
     children.push_back(b);
 
     v1 = GetNbrAtom(fixed)->GetVector();
     v2 = fixed->GetVector();
     v3 = v1 - v2;
-    v3.normalize();
+
+    if (IsNearZero(v3.length_2())) { // too small to normalize, move the atoms apart
+      obErrorLog.ThrowError(__FUNCTION__,
+                            "Atoms are both at the same location, moving out of the way.", obWarning);
+      v3.randomUnitVector();
+    } else {
+      v3.normalize();
+    }
+
     v3 *= length;
     v3 += v2;
     v4 = v3 - v1;
+
+    cerr << "v3: " << v3 << " v4: " << v4 << endl;
 
     for ( i = 0 ; i < children.size() ; i++ )
       {
         v1 = mol->GetAtom(children[i])->GetVector();
         v1 += v4;
         mol->GetAtom(children[i])->SetVector(v1);
-        /*
-          idx = (children[i]-1) * 3;
-          c[idx]   += x; 
-          c[idx+1] += y;
-          c[idx+2] += z;
-        */
       }
   }
 

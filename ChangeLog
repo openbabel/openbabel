@@ -1,3 +1,9 @@
+2009-04-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/bond.cpp (SetLength): Fix bug uncovered by Marshall
+	Levesque. When two atoms are at the same position, move slightly
+	to prevent invalid (NaN) coordinates.
+
 2009-04-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/qchemformat.cpp (ReadMolecule): Fix tokenize mistake
