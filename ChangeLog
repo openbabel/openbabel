@@ -1,3 +1,8 @@
+2009-04-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/qchemformat.cpp (ReadMolecule): Fix tokenize mistake
+	when reading Q-Chem vibrational intensities.
+
 2009-04-11  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/outformat.cpp (ReadMolecule): Added MOLPRO output

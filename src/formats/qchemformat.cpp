@@ -157,7 +157,6 @@ namespace OpenBabel
             tokenize(vs,buffer);
             if (vs.size() >= 6) 
               {
-                double x, y, z;
                 x = atof(vs[1].c_str());
                 y = atof(vs[3].c_str());
                 z = atof(vs[5].c_str());
@@ -223,8 +222,8 @@ namespace OpenBabel
               ifs.getline(buffer, BUFF_SIZE); // now IR active
             }
             ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-            for(unsigned int i=1; i < vs.size(); ++i)
+            tokenize(vs,buffer); // Remember: "IR Intens" is two tokens
+            for(unsigned int i=2; i < vs.size(); ++i)
               intensities.push_back(atof(vs[i].c_str()));
 
             ifs.getline(buffer,BUFF_SIZE);	// Raman active
@@ -232,7 +231,6 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE);	// actual displacement data
             tokenize(vs, buffer);
             vector<vector3> vib1, vib2, vib3;
-            double x, y, z;
             while (vs.size() > 3) {
               if (strstr(buffer, "TransDip") != NULL) {
                 ifs.getline(buffer, BUFF_SIZE);
