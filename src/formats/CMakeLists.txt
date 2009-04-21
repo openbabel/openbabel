@@ -140,7 +140,7 @@ foreach(format ${formats})
     ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
-                  RUNTIME DESTINATION bin
+                  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR}
                   ARCHIVE DESTINATION ${PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
