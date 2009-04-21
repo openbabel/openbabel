@@ -30,6 +30,7 @@ namespace OpenBabel
     OutputFormat()
     {
       OBConversion::RegisterFormat("out", this);
+      OBConversion::RegisterFormat("output", this);
       OBConversion::RegisterFormat("log", this);
       OBConversion::RegisterFormat("dat", this);
     }
