@@ -189,5 +189,10 @@ add_subdirectory(doc)
 add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(tools)
-add_subdirectory(scripts)
+
+# Should Python bindings be built?
+option(ENABLE_PYTHON "Enable Python bindings" OFF)
+if(ENABLE_PYTHON)
+  add_subdirectory(scripts)
+endif(ENABLE_PYTHON)
 
