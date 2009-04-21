@@ -1,8 +1,16 @@
 2009-04-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/ops/gen3d.cpp: Use ConjugateGradients for the final
+	optimization to give improved coords.
+
 	* src/bond.cpp (SetLength): Fix bug uncovered by Marshall
 	Levesque. When two atoms are at the same position, move slightly
 	to prevent invalid (NaN) coordinates.
+
+	* src/builder.cpp: New code for handling 2D molecules, spurred in
+	part by a request by Marshall. Uses and improves on code from Avogadro.
+
+	* configure.in, configure, CMakeLists.txt: Bump version number to 2.2.2b1.
 
 2009-04-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
