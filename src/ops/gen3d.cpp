@@ -59,7 +59,7 @@ bool OpGen3D::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
   }
   pFF->SteepestDescent(500, 1.0e-4);
   pFF->WeightedRotorSearch(250, 50);
-  pFF->SteepestDescent(500, 1.0e-6);
+  pFF->ConjugateGradients(500, 1.0e-6);
   pFF->UpdateCoordinates(*pmol);
 
   return true;
