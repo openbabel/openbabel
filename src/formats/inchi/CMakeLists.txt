@@ -27,7 +27,7 @@ set_target_properties(inchi PROPERTIES
                             DEFINE_SYMBOL _USRDLL
 )
 install(TARGETS inchi
-                inchi DESTINATION bin
-                LIBRARY DESTINATION lib
-                ARCHIVE DESTINATION lib
+                RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+                LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+                ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
 )

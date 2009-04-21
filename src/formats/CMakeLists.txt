@@ -153,7 +153,7 @@ foreach(format ${xml_formats})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
-                  RUNTIME DESTINATION bin
+                  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR}
                   ARCHIVE DESTINATION ${PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
