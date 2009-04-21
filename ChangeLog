@@ -1,3 +1,7 @@
+2009-04-21  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/obiter.cpp: Bugfix for off-by-one error in OBMolAtomBFSIter.
+
 2009-04-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/ops/gen3d.cpp: Use ConjugateGradients for the final
