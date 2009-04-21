@@ -397,7 +397,7 @@ namespace OpenBabel
                                                   nbrEnd->GetVector()));
 
                     // >12&&<168 not enough
-                    if (torsion > 15.0  && torsion < 165.0)
+                    if (torsion > 15.0  && torsion < 160.0)
                       {
                         // Geometry does not match a double bond
                         return(false);
