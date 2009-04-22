@@ -43,6 +43,8 @@
 %typemap(csclassmodifiers) OpenBabel::OBBond "public partial class"
 %typemap(csclassmodifiers) OpenBabel::OBRing "public partial class"
 
+
+
 //adds the ignored operators back into the OBVector3 class
 //with companion methods for use by .Net languages that don't support operator
 //overloading
@@ -203,6 +205,7 @@ DISABLE_DOWNCAST(OBVirtualBond);
 		return rotors;
 	}
 };
+
 
 %include "carrays.i"
 %define WRAP_ARRAY(TYPE, NAME)
@@ -660,7 +663,22 @@ using System.Runtime.InteropServices;
 %ignore *::operator !=;
 
 %include "std_string.i"
-%include "generic_std_vector.i"
+%include "std_vector.i"
+
+%typemap(cscode) std::vector<T>
+%{
+//ForEach method to simplify working around the foreach/delegate interaction "bug"
+#if !SWIG_DOTNET_1
+  public void ForEach(Action<CSTYPE> action)
+  {
+    if(action == null)
+		throw new ArgumentNullException("action");
+	
+	for(int i = 0 ;i<Count; i++)
+		action(getitem(i));
+  }
+#endif
+%}
 
 %template (VectorInt)             std::vector<int>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorInt, std::vector<int>);
@@ -724,23 +742,23 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRotor, OpenBabel::OBRotor*);
 %include <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
 
-%include <openbabel/generic.h>
 
 //replacement for method return unsupported std::pair
-//GetBC() is not being ignored
-%ignore OpenBabel::OBTorsion::GetBC();
 %extend OpenBabel::OBTorsion
 {
 	std::vector<OpenBabel::OBAtom*> GetBC()
 	{
 		std::vector<OpenBabel::OBAtom*> bcAtoms(2);
         
-		bcAtoms[0] = self->GetBC().first;
-		bcAtoms[1] = self->GetBC().second;
+		bcAtoms[0] = $self->GetBC().first;
+		bcAtoms[1] = $self->GetBC().second;
 		
 		return bcAtoms;
 	}
 };
+%include <openbabel/generic.h>
+
+
 
 //extending typemap to work around
 //lack of support for void*
