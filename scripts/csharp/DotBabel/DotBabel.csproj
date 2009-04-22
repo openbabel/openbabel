@@ -31,21 +31,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AtomExtensions.cs" />
+    <Compile Include="Comparers.cs" />
+    <Compile Include="ForceField.cs" />
     <Compile Include="MathExtensions.cs" />
     <Compile Include="OBConvert.cs" />
     <Compile Include="OBDescriptor.cs" />
@@ -53,7 +55,11 @@
     <Compile Include="OBReader.cs" />
     <Compile Include="OBWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Smarts.cs" />
+    <Compile Include="Smiles.cs" />
+    <Compile Include="SwigCollectionExtensions.cs" />
     <Compile Include="Tools.cs" />
+    <Compile Include="Transform.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OBDotNet\OBDotNet.csproj">

@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using OpenBabel;
 
 namespace DotBabel
 {
-    using OBConversion = OpenBabel.OBConversion;
-    using OBMol = OpenBabel.OBMol;
 
     //Make sure report is in the list of allowed formats
 
     public static class OBWriter
     {
         private static OBConversion writer;
+        private static readonly VectorString obFormats;
 
         static OBWriter()
         {
@@ -62,6 +62,11 @@ namespace DotBabel
         {
 
             return writer.WriteString(mol);
+        }
+
+        public static VectorString Formats
+        {
+            get { return obFormats; }
         }
 
 

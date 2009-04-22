@@ -28,7 +28,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEPRECATE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -41,8 +41,11 @@
   <ItemGroup>
     <Compile Include="AliasData.cs" />
     <Compile Include="atomreftype.cs" />
+    <Compile Include="CByteArray.cs" />
+    <Compile Include="CDoubleArray.cs" />
+    <Compile Include="CIntArray.cs" />
+    <Compile Include="CUIntArray.cs" />
     <Compile Include="DataOrigin.cs" />
-    <Compile Include="double_array.cs" />
     <Compile Include="errorQualifier.cs" />
     <Compile Include="FastSearch.cs" />
     <Compile Include="FastSearchIndexer.cs" />
@@ -51,7 +54,6 @@
     <Compile Include="LineSearchType.cs" />
     <Compile Include="OBAngle.cs" />
     <Compile Include="OBAngleData.cs" />
-    <Compile Include="OBAromaticTyper.cs" />
     <Compile Include="OBAtom.cs" />
     <Compile Include="OBAtomAtomIter.cs" />
     <Compile Include="OBAtomBondIter.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="OBForceField.cs" />
     <Compile Include="OBFormat.cs" />
     <Compile Include="OBGenericData.cs" />
+    <Compile Include="OBGenericDataTypes.cs" />
     <Compile Include="OBGlobalDataBase.cs" />
     <Compile Include="OBGridData.cs" />
     <Compile Include="OBInternalCoord.cs" />
@@ -98,9 +101,12 @@
     <Compile Include="OBMolPairIter.cs" />
     <Compile Include="OBMolRingIter.cs" />
     <Compile Include="OBMolTorsionIter.cs" />
+    <Compile Include="OBNasaThermoData.cs" />
+    <Compile Include="OBOp.cs" />
     <Compile Include="OBPairData.cs" />
     <Compile Include="OBPlugin.cs" />
     <Compile Include="OBRandom.cs" />
+    <Compile Include="OBRateData.cs" />
     <Compile Include="OBResidue.cs" />
     <Compile Include="OBResidueAtomIter.cs" />
     <Compile Include="OBResidueData.cs" />
@@ -108,7 +114,13 @@
     <Compile Include="OBRing.cs" />
     <Compile Include="OBRingData.cs" />
     <Compile Include="OBRingTyper.cs" />
+    <Compile Include="OBRotamerList.cs" />
     <Compile Include="OBRotationData.cs" />
+    <Compile Include="OBRotor.cs" />
+    <Compile Include="OBRotorKeys.cs" />
+    <Compile Include="OBRotorList.cs" />
+    <Compile Include="OBRotorRule.cs" />
+    <Compile Include="OBRotorRules.cs" />
     <Compile Include="OBRTree.cs" />
     <Compile Include="OBSerialNums.cs" />
     <Compile Include="OBSetData.cs" />
@@ -129,32 +141,18 @@
     <Compile Include="openbabelcsharpPINVOKE.cs" />
     <Compile Include="Properties\OBDotNetAssemblyInfo.cs" />
     <Compile Include="SpaceGroup.cs" />
-    <Compile Include="SWIGTYPE_p_a_3__double.cs" />
     <Compile Include="SWIGTYPE_p_double.cs" />
     <Compile Include="SWIGTYPE_p_int.cs" />
-    <Compile Include="SWIGTYPE_p_OpenBabel__OBNasaThermoData.cs" />
-    <Compile Include="SWIGTYPE_p_OpenBabel__OBRateData.cs" />
-    <Compile Include="SWIGTYPE_p_OpenBabel__OBRotamerList.cs" />
-    <Compile Include="SWIGTYPE_p_p_int.cs" />
     <Compile Include="SWIGTYPE_p_std__istream.cs" />
-    <Compile Include="SWIGTYPE_p_std__listT_OpenBabel__transform3d_p_t__const_iterator.cs" />
-    <Compile Include="SWIGTYPE_p_std__listT_OpenBabel__vector3_t.cs" />
     <Compile Include="SWIGTYPE_p_std__mapT_int_OpenBabel__OBAtom_p_t.cs" />
     <Compile Include="SWIGTYPE_p_std__multimapT_double_unsigned_int_t.cs" />
     <Compile Include="SWIGTYPE_p_std__ostream.cs" />
-    <Compile Include="SWIGTYPE_p_std__pairT_int_int_t.cs" />
-    <Compile Include="SWIGTYPE_p_std__pairT_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t.cs" />
-    <Compile Include="SWIGTYPE_p_std__streampos.cs" />
     <Compile Include="SWIGTYPE_p_std__string.cs" />
     <Compile Include="SWIGTYPE_p_std__vectorT_double_p_t.cs" />
-    <Compile Include="SWIGTYPE_p_std__vectorT_OpenBabel__OBAtom_p_t__iterator.cs" />
-    <Compile Include="SWIGTYPE_p_std__vectorT_OpenBabel__OBBond_p_t__iterator.cs" />
-    <Compile Include="SWIGTYPE_p_std__vectorT_OpenBabel__OBGenericData_p_t__iterator.cs" />
+    <Compile Include="SWIGTYPE_p_std__vectorT_double_t__iterator.cs" />
     <Compile Include="SWIGTYPE_p_std__vectorT_OpenBabel__tripleT_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t.cs" />
-    <Compile Include="SWIGTYPE_p_std__vectorT_std__pairT_int_int_t_t.cs" />
-    <Compile Include="SWIGTYPE_p_std__vectorT_std__pairT_std__string_std__string_t_t.cs" />
-    <Compile Include="SWIGTYPE_p_std__vectorT_std__vectorT_OpenBabel__vector3_t_t.cs" />
-    <Compile Include="SWIGTYPE_p_std__vectorT_std__vectorT_unsigned_int_t_t.cs" />
+    <Compile Include="SWIGTYPE_p_std__vectorT_unsigned_char_p_t__iterator.cs" />
+    <Compile Include="SWIGTYPE_p_unsigned_char.cs" />
     <Compile Include="SWIGTYPE_p_unsigned_int.cs" />
     <Compile Include="VectorBond.cs" />
     <Compile Include="VectorDouble.cs" />
@@ -167,13 +165,17 @@
     <Compile Include="VectorpData.cs" />
     <Compile Include="VectorpInternalCoord.cs" />
     <Compile Include="VectorpRing.cs" />
+    <Compile Include="VectorpRotor.cs" />
     <Compile Include="VectorResidue.cs" />
     <Compile Include="VectorRing.cs" />
     <Compile Include="VectorString.cs" />
     <Compile Include="VectorTorsion.cs" />
     <Compile Include="VectorUInt.cs" />
     <Compile Include="VectorUShort.cs" />
+    <Compile Include="VectorVecDouble.cs" />
     <Compile Include="VectorVecInt.cs" />
+    <Compile Include="VectorVecOBVector3.cs" />
+    <Compile Include="VectorVecUInt.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\obdotnet.snk" />

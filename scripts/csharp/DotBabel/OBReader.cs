@@ -1,23 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using OpenBabel;
 
-namespace SharpBabel
+namespace DotBabel
 {   
-    using OBConversion = OpenBabel.OBConversion;
-    using OBMol = OpenBabel.OBMol;
-
     public static class OBReader
     {
-        private static OBConversion converter;
-        private static string[] obFormats;
+        private static readonly OBConversion converter;
+        private static readonly VectorString obFormats;
 
         static OBReader()
         {
             converter = new OBConversion();
-           // converter.GetSupportedInputFormat();
-            //converter.GetSupportedOutputFormat();
-
+            obFormats = converter.GetSupportedInputFormat();
         }
 
         /// <summary>
@@ -88,6 +84,11 @@ namespace SharpBabel
 
             }
         }
-        
+
+        public static VectorString Formats
+        {
+            get { return obFormats; }
+        }
+
     }//end class OBReader
 }

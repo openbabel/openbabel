@@ -11,8 +11,7 @@ namespace DotBabel
     /// </summary>
     public static class OBConvert
     {
-
-        private static OBConversion converter;
+        private static readonly OBConversion converter;
         /// <summary>
         /// static constructor to initalize the OBConversion
         /// object
