@@ -1,3 +1,8 @@
+2009-04-22  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* include/openbabel/rotor.h: #ifndef SWIG added due to problems
+	compiling the CSharp bindings
+
 2009-04-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/Makefile.am: Fix some conditional compiles. Should

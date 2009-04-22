@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="template"
 	ProjectGUID="{0B54D36F-AE84-471E-AAB6-429CB8CB6ABB}"
 	RootNamespace="template"
@@ -60,7 +60,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenBabelDLLD.lib"
+				AdditionalDependencies="..\debug\OBDLLD.lib ..\debug\OBConvD.lib"
+				OutputFile="..\Debug\$(ProjectName).exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -178,6 +179,14 @@
 			<File
 				RelativePath=".\template.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="..\..\include"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
