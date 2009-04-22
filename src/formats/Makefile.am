@@ -66,7 +66,6 @@ libformats_la_SOURCES = \
 	moldenformat.cpp molproformat.cpp msmsformat.cpp \
 	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp outformat.cpp \
 	pcmodelformat.cpp \
-	pngformat.cpp  \
 	pdbformat.cpp povrayformat.cpp pqrformat.cpp qchemformat.cpp reportformat.cpp \
 	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
 	tinkerformat.cpp titleformat.cpp \
@@ -166,14 +165,18 @@ chem3dformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.l
 chemdrawctformat_la_SOURCES = chemdrawct.cpp 
 chemdrawctformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
+if HAVE_SHARED_POINTER
 chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp 
 chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+endif
 
 chemtoolformat_la_SOURCES = chemtoolformat.cpp 
 chemtoolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
+if HAVE_SHARED_POINTER
 chemkinformat_la_SOURCES = chemkinformat.cpp 
 chemkinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+endif
 
 cifformat_la_SOURCES = cifformat.cpp 
 cifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
@@ -306,18 +309,22 @@ outformat_la_LDFLAGS = -module -avoid-version -no-undefined  ../libopenbabel.la
 qchemformat_la_SOURCES = qchemformat.cpp 
 qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
+if BUILD_ZLIB
 pngformat_la_SOURCES = pngformat.cpp 
 pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 pngformat_la_LIBADD = -lz
+endif
 
 reportformat_la_SOURCES = reportformat.cpp 
 reportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
+if HAVE_SHARED_POINTER
 rsmiformat_la_SOURCES = rsmiformat.cpp
 rsmiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 rxnformat_la_SOURCES = rxnformat.cpp
 rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+endif
 
 shelxformat_la_SOURCES = shelxformat.cpp 
 shelxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
