@@ -191,7 +191,8 @@ chem3dformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 @BUILD_SHARED_TRUE@am_chem3dformat_la_rpath = -rpath $(formatsdir)
 chemdrawcdxformat_la_LIBADD =
 am__chemdrawcdxformat_la_SOURCES_DIST = chemdrawcdx.cpp
-@BUILD_SHARED_TRUE@am_chemdrawcdxformat_la_OBJECTS = chemdrawcdx.lo
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am_chemdrawcdxformat_la_OBJECTS =  \
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	chemdrawcdx.lo
 chemdrawcdxformat_la_OBJECTS = $(am_chemdrawcdxformat_la_OBJECTS)
 chemdrawcdxformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -209,7 +210,8 @@ chemdrawctformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 @BUILD_SHARED_TRUE@am_chemdrawctformat_la_rpath = -rpath $(formatsdir)
 chemkinformat_la_LIBADD =
 am__chemkinformat_la_SOURCES_DIST = chemkinformat.cpp
-@BUILD_SHARED_TRUE@am_chemkinformat_la_OBJECTS = chemkinformat.lo
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am_chemkinformat_la_OBJECTS =  \
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	chemkinformat.lo
 chemkinformat_la_OBJECTS = $(am_chemkinformat_la_OBJECTS)
 chemkinformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -423,13 +425,12 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp MCDLformat.cpp \
 	mmcifformat.cpp mmodformat.cpp mol2format.cpp molreport.cpp \
 	mopacformat.cpp moldenformat.cpp molproformat.cpp \
 	msmsformat.cpp mpdformat.cpp mpqcformat.cpp nwchemformat.cpp \
-	outformat.cpp pcmodelformat.cpp pngformat.cpp pdbformat.cpp \
-	povrayformat.cpp pqrformat.cpp qchemformat.cpp \
-	reportformat.cpp shelxformat.cpp smilesformat.cpp \
-	thermoformat.cpp tinkerformat.cpp titleformat.cpp \
-	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
-	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp \
-	rxnformat.cpp rsmiformat.cpp
+	outformat.cpp pcmodelformat.cpp pdbformat.cpp povrayformat.cpp \
+	pqrformat.cpp qchemformat.cpp reportformat.cpp shelxformat.cpp \
+	smilesformat.cpp thermoformat.cpp tinkerformat.cpp \
+	titleformat.cpp turbomoleformat.cpp unichemformat.cpp \
+	viewmolformat.cpp xedformat.cpp xyzformat.cpp yasaraformat.cpp \
+	zindoformat.cpp rxnformat.cpp rsmiformat.cpp
 @BUILD_SHARED_FALSE@am_libformats_la_OBJECTS = APIInterface.lo \
 @BUILD_SHARED_FALSE@	MCDLformat.lo CSRformat.lo PQSformat.lo \
 @BUILD_SHARED_FALSE@	alchemyformat.lo acrformat.lo \
@@ -452,7 +453,7 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp MCDLformat.cpp \
 @BUILD_SHARED_FALSE@	moldenformat.lo molproformat.lo \
 @BUILD_SHARED_FALSE@	msmsformat.lo mpdformat.lo mpqcformat.lo \
 @BUILD_SHARED_FALSE@	nwchemformat.lo outformat.lo \
-@BUILD_SHARED_FALSE@	pcmodelformat.lo pngformat.lo pdbformat.lo \
+@BUILD_SHARED_FALSE@	pcmodelformat.lo pdbformat.lo \
 @BUILD_SHARED_FALSE@	povrayformat.lo pqrformat.lo \
 @BUILD_SHARED_FALSE@	qchemformat.lo reportformat.lo \
 @BUILD_SHARED_FALSE@	shelxformat.lo smilesformat.lo \
@@ -601,7 +602,8 @@ pdbformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 @BUILD_SHARED_TRUE@am_pdbformat_la_rpath = -rpath $(formatsdir)
 pngformat_la_DEPENDENCIES =
 am__pngformat_la_SOURCES_DIST = pngformat.cpp
-@BUILD_SHARED_TRUE@am_pngformat_la_OBJECTS = pngformat.lo
+@BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@am_pngformat_la_OBJECTS =  \
+@BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@	pngformat.lo
 pngformat_la_OBJECTS = $(am_pngformat_la_OBJECTS)
 pngformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -642,7 +644,8 @@ reportformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 @BUILD_SHARED_TRUE@am_reportformat_la_rpath = -rpath $(formatsdir)
 rsmiformat_la_LIBADD =
 am__rsmiformat_la_SOURCES_DIST = rsmiformat.cpp
-@BUILD_SHARED_TRUE@am_rsmiformat_la_OBJECTS = rsmiformat.lo
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am_rsmiformat_la_OBJECTS =  \
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	rsmiformat.lo
 rsmiformat_la_OBJECTS = $(am_rsmiformat_la_OBJECTS)
 rsmiformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -652,7 +655,8 @@ rsmiformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	$(formatsdir)
 rxnformat_la_LIBADD =
 am__rxnformat_la_SOURCES_DIST = rxnformat.cpp
-@BUILD_SHARED_TRUE@am_rxnformat_la_OBJECTS = rxnformat.lo
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am_rxnformat_la_OBJECTS =  \
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@	rxnformat.lo
 rxnformat_la_OBJECTS = $(am_rxnformat_la_OBJECTS)
 rxnformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -1093,7 +1097,6 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	moldenformat.cpp molproformat.cpp msmsformat.cpp \
 @BUILD_SHARED_FALSE@	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp outformat.cpp \
 @BUILD_SHARED_FALSE@	pcmodelformat.cpp \
-@BUILD_SHARED_FALSE@	pngformat.cpp  \
 @BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp pqrformat.cpp qchemformat.cpp reportformat.cpp \
 @BUILD_SHARED_FALSE@	shelxformat.cpp smilesformat.cpp thermoformat.cpp \
 @BUILD_SHARED_FALSE@	tinkerformat.cpp titleformat.cpp \
@@ -1168,12 +1171,12 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@chem3dformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@chemdrawctformat_la_SOURCES = chemdrawct.cpp 
 @BUILD_SHARED_TRUE@chemdrawctformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
-@BUILD_SHARED_TRUE@chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp 
-@BUILD_SHARED_TRUE@chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp 
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@chemtoolformat_la_SOURCES = chemtoolformat.cpp 
 @BUILD_SHARED_TRUE@chemtoolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
-@BUILD_SHARED_TRUE@chemkinformat_la_SOURCES = chemkinformat.cpp 
-@BUILD_SHARED_TRUE@chemkinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemkinformat_la_SOURCES = chemkinformat.cpp 
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemkinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cifformat_la_SOURCES = cifformat.cpp 
 @BUILD_SHARED_TRUE@cifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@copyformat_la_SOURCES = copyformat.cpp 
@@ -1260,15 +1263,15 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@outformat_la_LDFLAGS = -module -avoid-version -no-undefined  ../libopenbabel.la
 @BUILD_SHARED_TRUE@qchemformat_la_SOURCES = qchemformat.cpp 
 @BUILD_SHARED_TRUE@qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
-@BUILD_SHARED_TRUE@pngformat_la_SOURCES = pngformat.cpp 
-@BUILD_SHARED_TRUE@pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
-@BUILD_SHARED_TRUE@pngformat_la_LIBADD = -lz
+@BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@pngformat_la_SOURCES = pngformat.cpp 
+@BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@pngformat_la_LIBADD = -lz
 @BUILD_SHARED_TRUE@reportformat_la_SOURCES = reportformat.cpp 
 @BUILD_SHARED_TRUE@reportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
-@BUILD_SHARED_TRUE@rsmiformat_la_SOURCES = rsmiformat.cpp
-@BUILD_SHARED_TRUE@rsmiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
-@BUILD_SHARED_TRUE@rxnformat_la_SOURCES = rxnformat.cpp
-@BUILD_SHARED_TRUE@rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rsmiformat_la_SOURCES = rsmiformat.cpp
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rsmiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rxnformat_la_SOURCES = rxnformat.cpp
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@shelxformat_la_SOURCES = shelxformat.cpp 
 @BUILD_SHARED_TRUE@shelxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@smilesformat_la_SOURCES = smilesformat.cpp 
