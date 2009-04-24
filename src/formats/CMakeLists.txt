@@ -85,7 +85,7 @@ endif(Boost_FOUND)
 if(WITH_INCHI)
   add_definitions(-DINCHI_LINK_AS_DLL)
   add_subdirectory(inchi102)
-  include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
+  include_directories(${openbabel_SOURCE_DIR}/include/inchi102)
   set(formats
     ${formats}
     inchiformat
@@ -137,7 +137,7 @@ endif(BUILD_SHARED)
 foreach(format ${formats})
   add_library(${format} ${PLUGIN_TYPE} ${format}.cpp
     ${${format}_additional_sources}
-    ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
+    ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}

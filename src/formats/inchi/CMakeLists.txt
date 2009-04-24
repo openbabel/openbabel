@@ -18,7 +18,7 @@ if(NOT WIN32)
   set(libs ${libs} c)
 endif(NOT WIN32)
 
-include_directories(${CMAKE_SOURCE_DIR}/include/inchi)
+include_directories(${openbabel_SOURCE_DIR}/include/inchi)
 add_library(inchi SHARED ${inchi_srcs})
 target_link_libraries(inchi ${libs})
 set_target_properties(inchi PROPERTIES
