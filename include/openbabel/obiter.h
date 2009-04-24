@@ -335,6 +335,8 @@ namespace OpenBabel
     std::vector<unsigned int> operator*() const    { return _pair;     }
   };
 
+  class OBRing;
+  class OBRingData;
 
   //! \brief Iterate over all rings in an OBMol
   class OBAPI OBMolRingIter {
