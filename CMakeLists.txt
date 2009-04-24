@@ -1,5 +1,5 @@
 project(openbabel)
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
+set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 cmake_minimum_required(VERSION 2.4.8)
 
 if(COMMAND cmake_policy)
@@ -175,14 +175,14 @@ if (CMAKE_COMPILER_IS_GNUCXX)
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
-configure_file(${CMAKE_SOURCE_DIR}/src/config.h.cmake ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
-install(FILES ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION include/openbabel-2.0/openbabel)
-configure_file(${CMAKE_SOURCE_DIR}/openbabel-2.0.pc.cmake ${CMAKE_BINARY_DIR}/openbabel-2.0.pc @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
+configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
+install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION include/openbabel-2.0/openbabel)
+configure_file(${openbabel_SOURCE_DIR}/openbabel-2.0.pc.cmake ${openbabel_BINARY_DIR}/openbabel-2.0.pc @ONLY)
+install(FILES ${openbabel_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 
-include_directories(${CMAKE_BINARY_DIR}/include
-                    ${CMAKE_SOURCE_DIR}/data
-                    ${CMAKE_SOURCE_DIR}/include
+include_directories(${openbabel_BINARY_DIR}/include
+                    ${openbabel_SOURCE_DIR}/data
+                    ${openbabel_SOURCE_DIR}/include
 )
 
 add_subdirectory(include)

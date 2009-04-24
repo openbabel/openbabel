@@ -99,7 +99,7 @@ add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
                 ${math_srcs}
                 ${ops_srcs}
                 ${headers}
-                ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h
+                "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
 )
 
 if(NOT WIN32)

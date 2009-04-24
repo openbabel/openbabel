@@ -140,7 +140,7 @@ endif(BUILD_SHARED)
 foreach(format ${formats})
   add_library(${format} ${PLUGIN_TYPE} ${format}.cpp
     ${${format}_additional_sources}
-    ${CMAKE_BINARY_DIR}/include/openbabel/babelconfig.h)
+    "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
