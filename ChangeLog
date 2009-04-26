@@ -1,3 +1,9 @@
+2009-04-26  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/moldenformat.cpp (OBMoldenFormat::WriteMolecule): New
+	method, implementing atom coordinates and vibrations.  Set flags() to
+	WRITEONEONLY for now.
+
 2009-04-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/obiter.h (OpenBabel): Add forward declaration
