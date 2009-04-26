@@ -13,6 +13,8 @@
 	(ReadMolecule): Do not continue to next line when a block is finished
 	as the current lineBuffer already consists of the next [KEYWORD].
 
+	* src/generic.cpp (GetNumberOfFrequencies): Fix return value.
+
 2009-04-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/obiter.h (OpenBabel): Add forward declaration
