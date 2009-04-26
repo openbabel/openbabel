@@ -140,7 +140,6 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               atom->SetVector( x * factor, y * factor, z * factor );
               getline( ifs, lineBuffer );
             }
-	  continue;
         } // "[Atoms]" || "[ATOMS]"
         if( lineBuffer.find( "[FREQ]" ) != string::npos ) {        
           while( getline( ifs, lineBuffer ) )
@@ -152,7 +151,6 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               is >> freq;
               Frequencies.push_back( freq );
             }
-          continue;
         } // "[FREQ]"
         if( lineBuffer.find( "[INT]" ) != string::npos ) {        
           while( getline( ifs, lineBuffer ) )
@@ -164,7 +162,6 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               is >> intens;
               Intensities.push_back( intens );
             }
-          continue;
         } // "[INT]"
         if( lineBuffer.find( "[FR-NORM-COORD]" ) != string::npos ) {
           getline( ifs, lineBuffer );

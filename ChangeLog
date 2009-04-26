@@ -10,6 +10,8 @@
 	(BOHR_TO_ANGSTROM, ANGSTROM_TO_BOHR): New definitions.
 	(ReadMolecule): Use them.
 	(WriteMolecule): Likewise.
+	(ReadMolecule): Do not continue to next line when a block is finished
+	as the current lineBuffer already consists of the next [KEYWORD].
 
 2009-04-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
