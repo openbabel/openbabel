@@ -56,8 +56,7 @@ public:
     virtual const char* Description() //required
     {
         return
-        "Molden input format\n"
-        "ReadOnly.\n"
+        "Molden format\n"
         "Read Options e.g. -as\n"
         "  b no bonds\n"
         "  s no multiple bonds\n\n";
