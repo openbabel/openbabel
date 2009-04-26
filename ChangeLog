@@ -1,8 +1,12 @@
 2009-04-26  Michael Banck  <mbanck@gmx.net>
 
-	* src/formats/moldenformat.cpp (OBMoldenFormat::WriteMolecule): New
-	method, implementing atom coordinates and vibrations.  Set flags() to
+	* src/formats/moldenformat.cpp (WriteMolecule): New method,
+	implementing atom coordinates and vibrations.  Set flags() to
 	WRITEONEONLY for now.
+
+	* src/formats/moldenformat.cpp (ReadMolecule): Do not care about case
+	of vibration header tag for the displacements.  MOLPRO writes
+	upper-case "Vibration", Molden writes lower-case "vibration".
 
 2009-04-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

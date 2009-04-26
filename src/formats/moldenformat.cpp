@@ -165,11 +165,11 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         } // "[INT]"
         if( lineBuffer.find( "[FR-NORM-COORD]" ) != string::npos ) {
           getline( ifs, lineBuffer );
-          while( ifs && lineBuffer.find( "Vibration") != string::npos ) 
+          while( ifs && lineBuffer.find( "ibration") != string::npos ) 
             {
               vector<vector3> vib;
               getline( ifs, lineBuffer );
-              while( ifs && lineBuffer.find( "Vibration") == string::npos ) 
+              while( ifs && lineBuffer.find( "ibration") == string::npos ) 
                 {
                   istringstream is( lineBuffer );
                   double x, y, z;
