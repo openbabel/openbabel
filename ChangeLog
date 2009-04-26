@@ -22,6 +22,9 @@
 
 	* src/formats/moldenformat.cpp (Description): Updated.
 
+	* src/formats/moldenformat.cpp (WriteMolecule): Do not set intensities
+	to zero if none are present.
+
 2009-04-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/obiter.h (OpenBabel): Add forward declaration

@@ -190,12 +190,10 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     if(Frequencies.size()>0)
     {
       for (int i=0; i < Frequencies.size(); i++) {
-        // Set intensities to zero if none were specified
-        if (Intensities.size() < Frequencies.size() ) Intensities.push_back( 0.0 );
         if (fabs(Frequencies[i]) < 10.) {
           // skip translational and rotational modes
           Frequencies.erase( Frequencies.begin() + i );
-          Intensities.erase( Intensities.begin() + i );
+          if (Intensities.size() > i) Intensities.erase( Intensities.begin() + i );
           Lx.erase( Lx.begin() + i );  
           i--;  // compensate for the vibration which just got cut out
         }
