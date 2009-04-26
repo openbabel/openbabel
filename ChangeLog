@@ -7,6 +7,9 @@
 	* src/formats/moldenformat.cpp (ReadMolecule): Do not care about case
 	of vibration header tag for the displacements.  MOLPRO writes
 	upper-case "Vibration", Molden writes lower-case "vibration".
+	(BOHR_TO_ANGSTROM, ANGSTROM_TO_BOHR): New definitions.
+	(ReadMolecule): Use them.
+	(WriteMolecule): Likewise.
 
 2009-04-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

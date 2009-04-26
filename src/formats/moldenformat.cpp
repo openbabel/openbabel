@@ -34,6 +34,9 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
 
+#define BOHR_TO_ANGSTROM 0.529177249
+#define ANGSTROM_TO_BOHR 1.889725989
+
 using namespace std;
 
 namespace OpenBabel
@@ -120,7 +123,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         if( lineBuffer.find( "[Atoms]" ) != string::npos || 
             lineBuffer.find( "[ATOMS]" ) != string::npos ) {
           double factor = 1.; // Angstrom
-          if( lineBuffer.find( "AU" ) != string::npos ) factor = 0.529177249; // Bohr
+          if( lineBuffer.find( "AU" ) != string::npos ) factor = BOHR_TO_ANGSTROM; // Bohr
           getline( ifs, lineBuffer );
           while( lineBuffer.find( "[") == string::npos )
             {
@@ -266,9 +269,9 @@ bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         {
           snprintf(buffer, BUFF_SIZE, "%2s%13.6f%13.6f%13.6f\n",
                   etab.GetSymbol(atom->GetAtomicNum()),
-                  atom->GetX()/0.529177249, //FIXME
-                  atom->GetY()/0.529177249,
-                  atom->GetZ()/0.529177249);
+                  atom->GetX()*ANGSTROM_TO_BOHR,
+                  atom->GetY()*ANGSTROM_TO_BOHR,
+                  atom->GetZ()*ANGSTROM_TO_BOHR);
           ofs << buffer;
         }
       ofs << "[FR-NORM-COORD]" << endl;
