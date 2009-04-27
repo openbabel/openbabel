@@ -23,6 +23,10 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/math/vector3.h>
+#include <openbabel/base.h>
+
+// Necessary evil for 2.x series -- should use OBMol* below
+#include <openbabel/mol.h>
 
 #include <iosfwd>
 #include <algorithm>

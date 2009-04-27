@@ -7,7 +7,7 @@ check_PROGRAMS = aromatic atom bond cansmi cmlreadfile \
 	internalcoord invalidsmarts invalidsmiles \
 	iterators logp_psa math mol phmodel \
 	residue rings smarts \
-	smilesmatch unitcell
+	smilesmatch unitcell kekule
 
 bin_PROGRAMS = roundtrip
 
@@ -49,6 +49,7 @@ internalcoord_SOURCES = internalcoord.cpp
 invalidsmiles_SOURCES = invalidsmiles.cpp
 invalidsmarts_SOURCES = invalidsmarts.cpp
 iterators_SOURCES = iterators.cpp
+kekule_SOURCES = kekule.cpp
 logp_psa_SOURCES = logp_psa.cpp
 math_SOURCES = math.cpp
 mol_SOURCES = mol.cpp

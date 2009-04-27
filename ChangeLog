@@ -1,3 +1,11 @@
+2009-04-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/molchrg.h, include/openbabel/internalcoord.h,
+	include/openbabel/typer.h, include/openbabel/chains.h,
+	include/openbabel/descriptor.h, include/openbabel/atomclass.h,
+	include/openbabel/parsmart.h, include/openbabel/grid.h: 
+	Improved forward declarations, thanks to Noel's python script.
+
 2009-04-26  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/moldenformat.cpp (WriteMolecule): New method,

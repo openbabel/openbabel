@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <limits>
 
+#include <openbabel/babelconfig.h>
 #include <openbabel/plugin.h>
 
 namespace OpenBabel
