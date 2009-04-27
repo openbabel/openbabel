@@ -393,8 +393,8 @@ namespace OpenBabel
       
       bool next()
       {
-        if (state<resolution_size - 1) {
-          state++;
+        if (state < static_cast<int>(resolution_size - 1)) {
+          ++state;
           return false;
         } else
           state = 0;
