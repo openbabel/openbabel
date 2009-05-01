@@ -779,6 +779,7 @@ namespace OpenBabel
     OBAtom *atom;
     vector<string> vs;
     bool hasPartialCharges = false;
+    string efragName; // used to save identifiers of EFRAG sections
 
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
@@ -813,6 +814,9 @@ namespace OpenBabel
             while (strstr(buffer,"FRAGNAME") == NULL)
               {
                 //read $EFRAG parameters
+                tokenize(vs, buffer, "=");
+                if (vs.size() > 1)
+                  efragName = vs[1];
                 if(!ifs.getline(buffer,BUFF_SIZE))
                   break;
               }
@@ -832,6 +836,13 @@ namespace OpenBabel
                     y = atof((char*)vs[2].c_str());
                     z = atof((char*)vs[3].c_str());
                     atom->SetVector(x,y,z);
+
+                    // Tag these atoms as part of a specific EFP fragment
+                    OBPairData *dp = new OBPairData;
+                    dp->SetAttribute("EFRAG");
+                    dp->SetValue(efragName);
+                    dp->SetOrigin(fileformatInput);
+                    atom->SetData(dp);
                   }
                 if(!ifs.getline(buffer,BUFF_SIZE))
                   break;
