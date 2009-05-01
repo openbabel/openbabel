@@ -1,3 +1,8 @@
+2009-05-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/element.txt, data/element.h: Update atomic radii with
+	consistent sets from recent publications.
+
 2009-04-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/molchrg.h, include/openbabel/internalcoord.h,
