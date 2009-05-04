@@ -4,6 +4,10 @@
 	coordinates via [FR-COORD] block if no atoms have been read
 	previously.  Fixes PR#2786716.
 
+	* src/formats/gamessformat.cpp (ReadMolecule): Fix parsing of
+	intensities.  Keep on reading displacements even if there is only a
+	single one.  Rewritten normal coordinates parsing.  Fixes PR#2782132.
+
 2009-05-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/element.txt, data/element.h: Update atomic radii with
