@@ -1,3 +1,9 @@
+2009-05-04  Michael Banck  <mbanck@gmx.net
+
+	* src/formats/moldenformat.cpp (ReadMolecule): Read in atom
+	coordinates via [FR-COORD] block if no atoms have been read
+	previously.  Fixes PR#2786716.
+
 2009-05-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/element.txt, data/element.h: Update atomic radii with

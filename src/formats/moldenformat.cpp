@@ -162,6 +162,29 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               Intensities.push_back( intens );
             }
         } // "[INT]"
+        if( lineBuffer.find( "[FR-COORD]" ) != string::npos ) {
+          if (pmol->NumAtoms() == 0) {
+            // No atoms yet, probably there is no [ATOMS] section
+            // in the file.
+            while ( getline( ifs, lineBuffer ) )
+              {
+                if( lineBuffer == "" ) continue;
+                if( lineBuffer.find( "[" ) != string::npos ) break;
+                string atomName;
+                double x, y, z;
+                istringstream is( lineBuffer );
+                is >> atomName >> x >> y >> z;
+                OBAtom* atom = pmol->NewAtom();
+                if( !atom ) break;
+                atom->SetAtomicNum( etab.GetAtomicNum(atomName.c_str()));
+                // Vibrational equilibrium geometry is mandated to be 
+                // in Bohr.
+                atom->SetVector( x * BOHR_TO_ANGSTROM, 
+                                 y * BOHR_TO_ANGSTROM, 
+                                 z * BOHR_TO_ANGSTROM);
+             }
+           }
+         } // "[FR-COORD]"
         if( lineBuffer.find( "[FR-NORM-COORD]" ) != string::npos ) {
           getline( ifs, lineBuffer );
           while( ifs && lineBuffer.find( "ibration") != string::npos ) 
