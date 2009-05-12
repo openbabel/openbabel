@@ -382,12 +382,11 @@ namespace OpenBabel
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#calculateOrthogonalisationMatrix">blue-obelisk:calculateOrthogonalisationMatrix</a>
   matrix3x3 OBUnitCell::GetOrthoMatrix()
   {
+    matrix3x3 m;
     if (IsNearZero(_c) || IsNearZero(_b)) {
       // 1D or 2D unit cell
-      return m;
     }
 
-    matrix3x3 m;
     // already here, let's not duplicate the work
     m.FillOrth(_alpha, _beta, _gamma, _a, _b, _c);
 
@@ -595,19 +594,19 @@ namespace OpenBabel
     const SpaceGroup *sg = GetSpaceGroup(); // the actual space group and transformations for this unit cell
     
     // For each atom, we loop through: convert the coords back to inverse space, apply the transformations and create new atoms
-    vector3 uniqueV, newV;
+    vector3 uniqueV, newV, updatedCoordinate;
     list<vector3> transformedVectors; // list of symmetry-defined copies of the atom
     list<vector3>::iterator transformIterator, duplicateIterator;
     OBAtom *newAtom;
     list<OBAtom*> atoms; // keep the current list of unique atoms -- don't double-create
     list<vector3> coordinates; // all coordinates to prevent duplicates
+    bool foundDuplicate;
     FOR_ATOMS_OF_MOL(atom, *mol)
       atoms.push_back(&(*atom));
 
     list<OBAtom*>::iterator i;
     for (i = atoms.begin(); i != atoms.end(); ++i) {
       uniqueV = (*i)->GetVector();
-      // Assert: won't crash because we already ensure uc != NULL
       uniqueV *= GetFractionalMatrix();
       uniqueV = transformedFractionalCoordinate(uniqueV);
       coordinates.push_back(uniqueV);
@@ -636,7 +635,7 @@ namespace OpenBabel
         newAtom->Duplicate(*i);
         newAtom->SetVector(GetOrthoMatrix() * updatedCoordinate);
       } // end loop of transformed atoms
-      i->SetVector(uc->GetOrthoMatrix() * uniqueV);
+      (*i)->SetVector(GetOrthoMatrix() * uniqueV);
     } // end loop of atoms
   }
   
