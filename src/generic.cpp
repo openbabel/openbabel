@@ -299,12 +299,29 @@ namespace OpenBabel
   */
   void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
   {
+    bool threeDimensions = true;
     _a = v1.length();
     _b = v2.length();
     _c = v3.length();
-    _alpha = vectorAngle(v2, v3);
-    _beta = vectorAngle(v1, v3);
-    _gamma = vectorAngle(v1, v2);
+    // Sanity checks for 1D or 2D translation
+    if (IsNearZero(_c)) { // 2D
+      _c = 0.0;
+      _beta = 0.0;
+      _gamma = 0.0;
+      threeDimensions = false;
+    }
+    if (IsNearZero(_b)) { // 1D
+      _b = 0.0;
+      _alpha = 0.0;
+      threeDimensions = false;
+    }
+    
+    if (threeDimensions) {
+      _alpha = vectorAngle(v2, v3);
+      _beta = vectorAngle(v1, v3);
+      _gamma = vectorAngle(v1, v2);
+    }
+    
     _v1 = v1;
     _v2 = v2;
     _v3 = v3;
@@ -361,11 +378,16 @@ namespace OpenBabel
     return m;
   }
 
+  // Convert from fractional to Cartesian
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#calculateOrthogonalisationMatrix">blue-obelisk:calculateOrthogonalisationMatrix</a>
   matrix3x3 OBUnitCell::GetOrthoMatrix()
   {
+    if (IsNearZero(_c) || IsNearZero(_b)) {
+      // 1D or 2D unit cell
+      return m;
+    }
+
     matrix3x3 m;
-  
     // already here, let's not duplicate the work
     m.FillOrth(_alpha, _beta, _gamma, _a, _b, _c);
 
@@ -546,7 +568,28 @@ namespace OpenBabel
     }
     return 0; //presumably never reached
   }
-  
+
+  // Helper function -- transform fractional coordinates to ensure they lie in the unit cell
+  vector3 transformedFractionalCoordinate(vector3 originalCoordinate)
+  {
+    // ensure the fractional coordinate is entirely within the unit cell
+    vector3 returnValue(originalCoordinate);
+
+    // So if we have -2.08, we take -2.08 - (-2) = -0.08 .... almost what we want
+    returnValue.SetX(originalCoordinate.x() - int(originalCoordinate.x()) );
+    returnValue.SetY(originalCoordinate.y() - int(originalCoordinate.y()) );
+    returnValue.SetZ(originalCoordinate.z() - int(originalCoordinate.z()) );
+
+    if (returnValue.x() < 0.0)
+      returnValue.SetX(returnValue.x() + 1.0);
+    if (returnValue.y() < 0.0)
+      returnValue.SetY(returnValue.y() + 1.0);
+    if (returnValue.z() < 0.0)
+      returnValue.SetZ(returnValue.z() + 1.0);
+
+    return returnValue;
+  }
+
   void OBUnitCell::FillUnitCell(OBMol *mol)
   {
     const SpaceGroup *sg = GetSpaceGroup(); // the actual space group and transformations for this unit cell
@@ -554,33 +597,46 @@ namespace OpenBabel
     // For each atom, we loop through: convert the coords back to inverse space, apply the transformations and create new atoms
     vector3 uniqueV, newV;
     list<vector3> transformedVectors; // list of symmetry-defined copies of the atom
-    list<vector3>::iterator transformIterator;
+    list<vector3>::iterator transformIterator, duplicateIterator;
     OBAtom *newAtom;
     list<OBAtom*> atoms; // keep the current list of unique atoms -- don't double-create
+    list<vector3> coordinates; // all coordinates to prevent duplicates
     FOR_ATOMS_OF_MOL(atom, *mol)
       atoms.push_back(&(*atom));
 
     list<OBAtom*>::iterator i;
     for (i = atoms.begin(); i != atoms.end(); ++i) {
       uniqueV = (*i)->GetVector();
+      // Assert: won't crash because we already ensure uc != NULL
       uniqueV *= GetFractionalMatrix();
-        
+      uniqueV = transformedFractionalCoordinate(uniqueV);
+      coordinates.push_back(uniqueV);
+  
       transformedVectors = sg->Transform(uniqueV);
       for (transformIterator = transformedVectors.begin();
            transformIterator != transformedVectors.end(); ++transformIterator) {
         // coordinates are in reciprocal space -- check if it's in the unit cell
-        // TODO: transform these into the unit cell and check for duplicates
-        if (transformIterator->x() < 0.0 || transformIterator->x() > 1.0)
+        // if not, transform it in place
+        updatedCoordinate = transformedFractionalCoordinate(*transformIterator);
+        foundDuplicate = false;
+
+        // Check if the transformed coordinate is a duplicate of an atom
+        for (duplicateIterator = coordinates.begin();
+             duplicateIterator != coordinates.end(); ++duplicateIterator) {
+          if (duplicateIterator->distSq(updatedCoordinate) < 1.0e-4) {
+            foundDuplicate = true;
+            break;
+          }
+        }
+        if (foundDuplicate)
           continue;
-        else if (transformIterator->y() < 0.0 || transformIterator->y() > 1.0)
-          continue;
-        else if (transformIterator->z() < 0.0 || transformIterator->z() > 1.0)
-          continue;
-             
+        
+        coordinates.push_back(updatedCoordinate); // make sure to check the new atom for dupes
         newAtom = mol->NewAtom();
         newAtom->Duplicate(*i);
-        newAtom->SetVector(GetOrthoMatrix() * (*transformIterator));
+        newAtom->SetVector(GetOrthoMatrix() * updatedCoordinate);
       } // end loop of transformed atoms
+      i->SetVector(uc->GetOrthoMatrix() * uniqueV);
     } // end loop of atoms
   }
   
