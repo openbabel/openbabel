@@ -648,14 +648,14 @@ namespace OpenBabel
       case Triclinic:
         result = _a * _b * _c 
           * sqrt(1
-                 - SQUARE(cos( _alpha ))
-                 - SQUARE(cos( _beta ))
-                 - SQUARE(cos( _gamma ))
-                 + 2 * cos( _alpha ) * cos( _beta ) * cos( _gamma )
+                 - SQUARE(cos( _alpha * DEG_TO_RAD ))
+                 - SQUARE(cos( _beta * DEG_TO_RAD ))
+                 - SQUARE(cos( _gamma * DEG_TO_RAD ))
+                 + 2 * cos( _alpha * DEG_TO_RAD ) * cos( _beta * DEG_TO_RAD ) * cos( _gamma * DEG_TO_RAD )
                  );
         break;
       case Monoclinic:
-        result = _a * _b * _c * sin( _beta );
+        result = _a * _b * _c * sin( _beta * DEG_TO_RAD );
         break;
       case Orthorhombic:
         result = _a * _b * _c;
@@ -666,10 +666,10 @@ namespace OpenBabel
       case Rhombohedral:
         result = _a * _a * _a
           * sqrt(1
-                 - SQUARE(cos( _alpha ))
-                 - SQUARE(cos( _beta ))
-                 - SQUARE(cos( _gamma ))
-                 + 2 * cos( _alpha ) * cos( _beta ) * cos( _gamma )
+                 - SQUARE(cos( _alpha * DEG_TO_RAD ))
+                 - SQUARE(cos( _beta * DEG_TO_RAD ))
+                 - SQUARE(cos( _gamma * DEG_TO_RAD ))
+                 + 2 * cos( _alpha * DEG_TO_RAD ) * cos( _beta * DEG_TO_RAD ) * cos( _gamma * DEG_TO_RAD )
                  );
         break;
       case Hexagonal:
