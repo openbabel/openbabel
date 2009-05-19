@@ -421,6 +421,22 @@ namespace OpenBabel
          
         }
 
+        else if (strstr(buffer, "Isotropic = ")) // NMR shifts
+          {
+            tokenize(vs, buffer);
+            if (vs.size() >= 4)
+              {
+                atom = mol.GetAtom(atoi(vs[0].c_str()));
+                OBPairData *nmrShift = new OBPairData();
+                nmrShift->SetAttribute("NMR Isotropic Shift");
+
+                string shift = vs[4].c_str();
+                nmrShift->SetValue(shift);
+
+                atom->SetData(nmrShift);
+              }
+          }
+
         else if(strstr(buffer,"SCF Done:") != NULL)
           {
 #define HARTREE_TO_KCAL 627.509
