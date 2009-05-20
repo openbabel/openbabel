@@ -144,8 +144,8 @@ foreach(format ${formats})
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-                  LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR}
-                  ARCHIVE DESTINATION ${PLUGIN_INSTALL_DIR})
+                  LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+                  ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
                         OUTPUT_NAME ${format}
                         PREFIX ""
@@ -157,10 +157,11 @@ foreach(format ${xml_formats})
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-                  LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR}
-                  ARCHIVE DESTINATION ${PLUGIN_INSTALL_DIR})
+                  LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+                  ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
                         OUTPUT_NAME ${format}
                         PREFIX ""
                         SUFFIX ${MODULE_EXTENSION})
 endforeach(format)
+
