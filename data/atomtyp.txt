@@ -71,10 +71,12 @@ INTHYB  [Ra]                      1
 #
 #IMPLICIT VALENCE RULES
 #
-IMPVAL  [#3,#11,#19,#37,#55,#87]  1 # Alkali metals
-IMPVAL  [#4,#12,#20,#38,#56,#88]  2 # Alkaline earth
+#IMPVAL  [#3,#11,#19,#37,#55,#87]  1 # Alkali metals
+#IMPVAL  [#4,#12,#20,#38,#56,#88]  2 # Alkaline earth
 
 IMPVAL  [#5]                      3 # Generic boron
+IMPVAL [$([#6+]=*)]		2
+IMPVAL [$([#6+]#*)]		1 # just for InChI C2
 
 IMPVAL  [#6^3]                    4
 IMPVAL  [#6^2]                    3
@@ -83,6 +85,8 @@ IMPVAL  [#6^3-]                   3
 IMPVAL  [#6^2-]                   2
 IMPVAL  [#6^1-]                   1 #CM for isocyanides
 IMPVAL  [c+]                      2
+IMPVAL [$([#7-]=*)] 1
+IMPVAL [$([#7+]#*)] 2
 
 IMPVAL  [N^3]                     3
 IMPVAL  [N^3+]                    4
@@ -104,13 +108,18 @@ IMPVAL  [n]                       2
 IMPVAL  [n-]                      2
 IMPVAL  [n+]                      3
 
+IMPVAL [$([#8+]#*)] 1
+
 IMPVAL [#8]                       2 # Generic O
 IMPVAL [#8-]                      1
+IMPVAL [#8-2]                     0
 IMPVAL [#8+]                      3
 IMPVAL [$([#8]=*)]                1
 
 IMPVAL  [#9D0]                    1
 IMPVAL  [#9D0-]                   0 #[F-]
+IMPVAL  [$([#14+]#*)]		  1 # just for InChI Si2
+IMPVAL  [$([#14-]#*)]		  1 # just for InChI Si2
 
 IMPVAL  [#13]                     3 # generic Al
 IMPVAL  [#14]                     4 # regular sp3 Si
@@ -129,7 +138,7 @@ IMPVAL  [#16]                     2 #revised CM April 2008
 IMPVAL  [$([#16D1]=*)]            1 
 IMPVAL  [$([#16D3](=O)(=O)-O)]    4 #e.g. O[S](=O)=O
 IMPVAL  [$([#16D2](=O)-O)]        3 # e.g. O[S]=O
-#IMPVAL  [#16D1-]                 1
+IMPVAL  [#16D1-]                  1
 
 IMPVAL  [#17D0]                   1
 IMPVAL  [#17D0-]                  0 #[Cl-]
@@ -145,9 +154,9 @@ IMPVAL  [#34]                     2
 IMPVAL  [#35D0]                   1
 IMPVAL  [#35D0-]                  0 #[Br-]
 
-IMPVAL  [#49,#81]                 3 # In, Tl, like Ga
-IMPVAL  [#50,#82]                 4 # Sn, Pb, like Ge
-IMPVAL  [#51,#83]                 3 # Sb, Bi, like As
+#IMPVAL  [#49,#81]                 3 # In, Tl, like Ga
+#IMPVAL  [#50,#82]                 4 # Sn, Pb, like Ge
+#IMPVAL  [#51,#83]                 3 # Sb, Bi, like As
 
 IMPVAL  [#52]                     2
 IMPVAL  [#53D0]                   1

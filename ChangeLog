@@ -1,4 +1,11 @@
 2009-04-21  Chris Morley <c.morley@gaseq.co.uk>
+	* data/atomtyp.txt: removed alkalis, alkaline earths,
+	In,Tl,Sn,Pb,Sb,Bi from IMPVAL list. (Elements with IMPVAL entries
+	are given implicit hydrogens.) Corrects problem Fredrik Wallner
+	had with Na.
+	Also some others, incl S- to fix #2782327
+	
+2009-04-21  Chris Morley <c.morley@gaseq.co.uk>
 
 	* src/alias.cpp: Added code to handle isotopic atoms to fix 2777494
 
