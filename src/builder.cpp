@@ -147,150 +147,150 @@ namespace OpenBabel
       return VZero;
     
     int dimension = ((OBMol*)atom->GetParent())->GetDimension();
-    
-    if (dimension == 3) {
+
+    if (dimension != 2) {
       ////////////
       //   3D   //
       ////////////
 
-    //  
-    //  a   --->   a--*
-    //
-    if (atom->GetValence() == 0) {
-      newbond = atom->GetVector() + VX * length;
-      return newbond;
-    }
-
-    // hyb * = 1
-    // ^^^^^^^^^
-    //   
-    //   (a-1)--a   --->   (a-1)--a--*        angle(a-1, a, *) = 180
-    //
-    // hyb * = 2
-    // ^^^^^^^^^
-    // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
-    //
-    //   (a-2)             (a-2)
-    //     \                 \
-    //    (a-1)==a   --->   (a-1)==a          angle(a-1, a, *) = 120
-    //                              \
-    //                               *
-    // hyb * = 3
-    // ^^^^^^^^^
-    // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
-    //
-    //   (a-2)             (a-2)
-    //     \                 \
-    //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109
-    //                              \
-    //                               *
-    if (atom->GetValence() == 1) {
-      FOR_NBORS_OF_ATOM (nbr, atom) {
-        bond1 = atom->GetVector() - nbr->GetVector();
-
-        if (nbr->GetHyb() == 1) // Fix #2119034 & #2013814
-          continue;
-        
-        FOR_NBORS_OF_ATOM (nbr2, &*nbr)
-          if (&*nbr2 != atom)
-            bond2 = nbr->GetVector() - nbr2->GetVector();
+      //  
+      //  a   --->   a--*
+      //
+      if (atom->GetValence() == 0) {
+        newbond = atom->GetVector() + VX * length;
+        return newbond;
       }
 
-      bond1 = bond1.normalize();
-      if (bond2 == VZero) {
-	// there is no a-2 atom
-	v1 = cross(bond1, VY);
-        v2 = cross(bond1, v1);
+      // hyb * = 1
+      // ^^^^^^^^^
+      //   
+      //   (a-1)--a   --->   (a-1)--a--*        angle(a-1, a, *) = 180
+      //
+      // hyb * = 2
+      // ^^^^^^^^^
+      // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
+      //
+      //   (a-2)             (a-2)
+      //     \                 \
+      //    (a-1)==a   --->   (a-1)==a          angle(a-1, a, *) = 120
+      //                              \
+      //                               *
+      // hyb * = 3
+      // ^^^^^^^^^
+      // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
+      //
+      //   (a-2)             (a-2)
+      //     \                 \
+      //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109
+      //                              \
+      //                               *
+      if (atom->GetValence() == 1) {
+        FOR_NBORS_OF_ATOM (nbr, atom) {
+          bond1 = atom->GetVector() - nbr->GetVector();
+
+          if (nbr->GetHyb() == 1) // Fix #2119034 & #2013814
+            continue;
+        
+          FOR_NBORS_OF_ATOM (nbr2, &*nbr)
+            if (&*nbr2 != atom)
+              bond2 = nbr->GetVector() - nbr2->GetVector();
+        }
+
+        bond1 = bond1.normalize();
+        if (bond2 == VZero) {
+          // there is no a-2 atom
+          v1 = cross(bond1, VY);
+          v2 = cross(bond1, v1);
  
-        if (atom->GetHyb() == 1)
-          newbond = bond1;
-        if (atom->GetHyb() == 2)
-          newbond = bond1 - v2 * tan(DEG_TO_RAD*60);
-        if (atom->GetHyb() == 3)
-          newbond = bond1 - v2 * tan(DEG_TO_RAD*70.5);
+          if (atom->GetHyb() == 1)
+            newbond = bond1;
+          if (atom->GetHyb() == 2)
+            newbond = bond1 - v2 * tan(DEG_TO_RAD*60);
+          if (atom->GetHyb() == 3)
+            newbond = bond1 - v2 * tan(DEG_TO_RAD*70.5);
         
-        newbond = newbond.normalize();
-        newbond *= length;
-        newbond += atom->GetVector();
-        return newbond;
-      } else {
-        v1 = cross(bond1, bond2);
-        v2 = cross(bond1, v1);
-        v2 = v2.normalize();
+          newbond = newbond.normalize();
+          newbond *= length;
+          newbond += atom->GetVector();
+          return newbond;
+        } else {
+          v1 = cross(bond1, bond2);
+          v2 = cross(bond1, v1);
+          v2 = v2.normalize();
         
-        if (atom->GetHyb() == 1)
-          newbond = bond1;
-        if (atom->GetHyb() == 2)
-          newbond = bond1 - v2 * tan(DEG_TO_RAD*60);
-        if (atom->GetHyb() == 3)
-          newbond = bond1 - v2 * tan(DEG_TO_RAD*70.5);
+          if (atom->GetHyb() == 1)
+            newbond = bond1;
+          if (atom->GetHyb() == 2)
+            newbond = bond1 - v2 * tan(DEG_TO_RAD*60);
+          if (atom->GetHyb() == 3)
+            newbond = bond1 - v2 * tan(DEG_TO_RAD*70.5);
         
-        newbond = newbond.normalize();
-        newbond *= length;
-        newbond += atom->GetVector();
-        return newbond;
+          newbond = newbond.normalize();
+          newbond *= length;
+          newbond += atom->GetVector();
+          return newbond;
+        }
       }
-    }
     
-    //
-    //    \         \
-    //     X  --->   X--*
-    //    /         /
-    //
-    if (atom->GetValence() == 2) {
-      FOR_NBORS_OF_ATOM (nbr, atom) {
-        if (bond1 == VZero)
-          bond1 = atom->GetVector() - nbr->GetVector();
-        else
-          bond2 = atom->GetVector() - nbr->GetVector();
-      }
+      //
+      //    \         \
+      //     X  --->   X--*
+      //    /         /
+      //
+      if (atom->GetValence() == 2) {
+        FOR_NBORS_OF_ATOM (nbr, atom) {
+          if (bond1 == VZero)
+            bond1 = atom->GetVector() - nbr->GetVector();
+          else
+            bond2 = atom->GetVector() - nbr->GetVector();
+        }
 
-      bond1 = bond1.normalize();
-      bond2 = bond2.normalize();
-      v1 = bond1 + bond2;
-      v1 = v1.normalize();
+        bond1 = bond1.normalize();
+        bond2 = bond2.normalize();
+        v1 = bond1 + bond2;
+        v1 = v1.normalize();
      
-      if (atom->GetHyb() == 2)
-        newbond = v1;
-      if (atom->GetHyb() == 3) {
-        v2 = cross(bond1, bond2);
-        //v1 = v1.normalize();
-        newbond = v2 + v1 * tan(DEG_TO_RAD*35.25);
-      }
+        if (atom->GetHyb() == 2)
+          newbond = v1;
+        if (atom->GetHyb() == 3) {
+          v2 = cross(bond1, bond2);
+          //v1 = v1.normalize();
+          newbond = v2 + v1 * tan(DEG_TO_RAD*35.25);
+        }
       
-      newbond = newbond.normalize();
-      newbond *= length;
-      newbond += atom->GetVector();
-      return newbond;
-    }
-    
-    
-    //
-    //    \          \
-    //   --X  --->  --X--*
-    //    /          /
-    //
-    if (atom->GetValence() == 3) {
-      FOR_NBORS_OF_ATOM (nbr, atom) {
-        if (bond1 == VZero)
-          bond1 = atom->GetVector() - nbr->GetVector();
-        else if (bond2 == VZero)
-          bond2 = atom->GetVector() - nbr->GetVector();
-        else
-          bond3 = atom->GetVector() - nbr->GetVector();
+        newbond = newbond.normalize();
+        newbond *= length;
+        newbond += atom->GetVector();
+        return newbond;
       }
+    
+    
+      //
+      //    \          \
+      //   --X  --->  --X--*
+      //    /          /
+      //
+      if (atom->GetValence() == 3) {
+        FOR_NBORS_OF_ATOM (nbr, atom) {
+          if (bond1 == VZero)
+            bond1 = atom->GetVector() - nbr->GetVector();
+          else if (bond2 == VZero)
+            bond2 = atom->GetVector() - nbr->GetVector();
+          else
+            bond3 = atom->GetVector() - nbr->GetVector();
+        }
           
-      bond1 = bond1.normalize();
-      bond2 = bond2.normalize();
-      bond3 = bond3.normalize();
-      newbond = bond1 + bond2 + bond3;
-      newbond = newbond.normalize();
-      newbond *= length;
-      newbond += atom->GetVector();
-      return newbond;
-    }
+        bond1 = bond1.normalize();
+        bond2 = bond2.normalize();
+        bond3 = bond3.normalize();
+        newbond = bond1 + bond2 + bond3;
+        newbond = newbond.normalize();
+        newbond *= length;
+        newbond += atom->GetVector();
+        return newbond;
+      }
 
-    } else if (dimension == 2) {
+    } else {
       ////////////
       //   2D   //
       ////////////
@@ -394,13 +394,13 @@ namespace OpenBabel
               else
                 hash = bond;
             } else 
-            if (bond->IsHash()) {
-              if (atom == bond->GetBeginAtom())
-                hash = bond;
-              else
-                wedge = bond;
-            } else
-              plane.push_back(bond);
+              if (bond->IsHash()) {
+                if (atom == bond->GetBeginAtom())
+                  hash = bond;
+                else
+                  wedge = bond;
+              } else
+                plane.push_back(bond);
           }
 
           if (wedge && !plane.empty()) {
@@ -436,11 +436,6 @@ namespace OpenBabel
         return newbond;
       }
   
-    } else {
-      ////////////
-      //   0D   //
-      ////////////
-      return VZero;
     }
 
     return VZero; //previously undefined
