@@ -931,9 +931,11 @@ namespace OpenBabel
             continue;
           }
         // If we get here, something went wrong ! Discard till end of line...
+        // It is OK if this is just a blank line though
         string junk;
         getline(in,junk);
-        cout<<"WARNING: did not understand : "<<junk<<endl;
+        
+        if(junk.size()>0) cout<<"WARNING: did not understand the line : "<<junk<<endl;
       }
   }
    
