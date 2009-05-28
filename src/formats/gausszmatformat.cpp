@@ -351,9 +351,9 @@ namespace OpenBabel
 
           temp = strtod((char*)vs[6].c_str(), &endptr);
           if (endptr != (char*)vs[6].c_str())
-            vic[j]->_ang = temp;
+            vic[j]->_tor = temp;
           else
-            vic[j]->_ang = variables[vs[6].c_str()];
+            vic[j]->_tor = variables[vs[6].c_str()];
         }
       }
 		}
