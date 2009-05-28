@@ -765,21 +765,27 @@ namespace OpenBabel
         while(!isgraph(in.peek())) in.get(lastc);
       }
     if(in.peek()=='_') {
-      if (vv)
-        cout << "WARNING: Trying to read a value but found a new tag !" << endl;
+      stringstream errorMsg;
+      errorMsg << "Warning: Trying to read a value but found a new CIF tag !";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
       return value;
     }
     if(in.peek()==';')
       {//SemiColonTextField
         bool warning=!iseol(lastc);
-        if(warning)
-          cout<<"WARNING: Trying to read a SemiColonTextField but last char is not an end-of-line char !"<<endl;
+        if(warning){
+          stringstream errorMsg;
+          errorMsg << "Warning: Trying to read a SemiColonTextField but last char is not an end-of-line char !";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
+        }
         value="";
         in.get(lastc);
         while(in.peek()!=';')
           {
             if (in.peek() == '_') {
-              cout << "WARNING: Trying to read a SemiColonTextField but found a new tag !" << endl;
+              stringstream errorMsg;
+              errorMsg << "Warning: Trying to read a value but found a new CIF tag !";
+              obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
               warning = true;
               break;
             }
@@ -931,9 +937,17 @@ namespace OpenBabel
             continue;
           }
         // If we get here, something went wrong ! Discard till end of line...
+        // It is OK if this is just a blank line though
         string junk;
         getline(in,junk);
-        cout<<"WARNING: did not understand : "<<junk<<endl;
+        
+        if(junk.size()>0)
+        {
+          stringstream errorMsg;
+          errorMsg << "Warning: one line could not be interpreted while reading a CIF file:"<<endl
+                   << " -> line contents:" << junk;
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+        }
       }
   }
    
