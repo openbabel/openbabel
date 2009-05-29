@@ -1,3 +1,9 @@
+2009-05-29  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/gausszmatformat.cpp (ReadMolecule): Account for negative
+	variable reference in dihedral angles, patch by Hugh Chaffey-Millar.
+	Fixes PR#2798297.
+	
 2009-05-28  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/gausszmatformat.cpp (ReadMolecule): Fix reading of
