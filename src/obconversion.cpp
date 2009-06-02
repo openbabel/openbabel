@@ -677,7 +677,8 @@ namespace OpenBabel {
     string file = filename;
     string::size_type extPos = file.rfind('.');
 
-    if(extPos!=string::npos)
+    if(extPos!=string::npos // period found
+       && (file.substr(extPos + 1, file.size())).find("/")==string::npos) // and period is after the last "/"
       {
         // only do this if we actually can read .gz files
 #ifdef HAVE_LIBZ
@@ -692,7 +693,14 @@ namespace OpenBabel {
 #endif
           return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
       }
-    return NULL; //if no extension		
+
+    // Check the filename if no extension (e.g. VASP does not use extensions):
+    extPos = file.rfind('/');
+    if(extPos!=string::npos) {
+      return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
+    }
+    // If we are just passed the filename with no path, this should catch it:
+    return FindFormat( file.c_str() ); //if no format found
   }
 
   OBFormat* OBConversion::FormatFromMIME(const char* MIME)
