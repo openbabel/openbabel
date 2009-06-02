@@ -741,7 +741,7 @@ namespace OpenBabel
     vector<int>::iterator k, k2, k3;
     vector<vector3>::iterator l;
     vector<vector<int> > mlist; // match list for fragments
- 
+     
     // copy the molecule to private data
     OBMol workMol = mol;
     
@@ -751,6 +751,12 @@ namespace OpenBabel
       mol.SetDimension(3);
       return true;
     }
+
+    // How many ring atoms are there?
+    int ratoms = 0;
+    FOR_ATOMS_OF_MOL(a, mol)
+      if (a->IsInRing())
+        ratoms++;
 
     // delete all bonds in the working molecule
     // we will add them back at the end
@@ -765,9 +771,11 @@ namespace OpenBabel
 
     // Loop through  the database once and assign the coordinates from
     // the first (most complex) fragment.
-    for (i = _fragments.begin();i != _fragments.end();++i) {
+    // Stop if there are no unassigned ring atoms (ratoms).
+    for (i = _fragments.begin();i != _fragments.end() && ratoms;++i) {
+
       if (i->first != NULL && i->first->Match(mol)) { 
-        mlist = i->first->GetMapList();
+        mlist = i->first->GetUMapList();
           
         for (j = mlist.begin();j != mlist.end();++j) { // for all matches
           if (vfrag.BitIsSet((*j)[0])) // the found match is already added
@@ -781,7 +789,9 @@ namespace OpenBabel
               continue;
               
             vfrag.SetBitOn(index); // set vfrag for all atoms of fragment
-
+            if (mol.GetAtom(index)->IsInRing())
+              ratoms--;
+            
             // set coordinates for atoms
             OBAtom *atom = workMol.GetAtom(index);
             atom->SetVector(i->second[counter]);
@@ -805,6 +815,10 @@ namespace OpenBabel
         }
       }
     }
+    /* Not all ring atoms are always assigned...
+    if (ratoms)
+      cout << "DEBUG " << ratoms << endl;
+    */
 
     // iterate over all atoms to place them in 3D space
     FOR_DFS_OF_MOL (a, mol) {

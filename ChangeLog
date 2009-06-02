@@ -1,3 +1,8 @@
+2009-06-02  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/builder.cpp: Only iterate over the unique SMARTS matches and
+	stop once all ring atoms have been assigned. Performance win.
+	
 2009-05-29  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/gausszmatformat.cpp (ReadMolecule): Account for negative
