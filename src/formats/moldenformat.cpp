@@ -50,6 +50,7 @@ public:
     OBMoldenFormat()
     {
         OBConversion::RegisterFormat( "molden", this );
+        OBConversion::RegisterFormat( "mold", this );
     }
 
     /// Return description.
