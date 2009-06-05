@@ -1,3 +1,8 @@
+2009-06-05  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/builder.cpp: Skip SMARTS patterns that are too big to match.
+	Smaller performance boost.
+	
 2009-06-02  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/builder.cpp: Only iterate over the unique SMARTS matches and

@@ -764,61 +764,65 @@ namespace OpenBabel
       workMol.DeleteBond(workMol.GetBond(0));
     
     workMol.SetHybridizationPerceived();
+    
+    if (ratoms) {
+      //datafile is read only on first use of Build()
+      if(_fragments.empty())
+        LoadFragments();
 
-    //datafile is read only on first use of Build()
-    if(_fragments.empty())
-      LoadFragments();
+      // Skip all fragments that are too big to match
+      // Note: It would be better to compare to the size of the largest
+      //       isolated ring system instead of comparing to ratoms
+      for (i = _fragments.begin();i != _fragments.end() && i->first->NumAtoms() > ratoms;++i);
+      
+      // Loop through  the remaining fragments and assign the coordinates from
+      // the first (most complex) fragment.
+      // Stop if there are no unassigned ring atoms (ratoms).
+      for (;i != _fragments.end() && ratoms;++i) {
 
-    // Loop through  the database once and assign the coordinates from
-    // the first (most complex) fragment.
-    // Stop if there are no unassigned ring atoms (ratoms).
-    for (i = _fragments.begin();i != _fragments.end() && ratoms;++i) {
-
-      if (i->first != NULL && i->first->Match(mol)) { 
-        mlist = i->first->GetUMapList();
-          
-        for (j = mlist.begin();j != mlist.end();++j) { // for all matches
-          if (vfrag.BitIsSet((*j)[0])) // the found match is already added
-            continue;
-
-          int index, index2, counter = 0;
-          for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
-            index = *k;
-
-            if (vfrag.BitIsSet(index))
-              continue;
-              
-            vfrag.SetBitOn(index); // set vfrag for all atoms of fragment
-            if (mol.GetAtom(index)->IsInRing())
-              ratoms--;
+        if (i->first != NULL && i->first->Match(mol)) { 
+          mlist = i->first->GetUMapList();
             
-            // set coordinates for atoms
-            OBAtom *atom = workMol.GetAtom(index);
-            atom->SetVector(i->second[counter]);
-            counter++;
-          }
+          for (j = mlist.begin();j != mlist.end();++j) { // for all matches
+            if (vfrag.BitIsSet((*j)[0])) // the found match is already added
+              continue;
 
-          // add the bonds for the fragment
-          for (k = j->begin(); k != j->end(); ++k) {
-            index = *k;
-            OBAtom *atom1 = mol.GetAtom(index);
+            int index, index2, counter = 0;
+            for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
+              index = *k;
+
+              if (vfrag.BitIsSet(index))
+                continue;
+                
+              vfrag.SetBitOn(index); // set vfrag for all atoms of fragment
+              if (mol.GetAtom(index)->IsInRing())
+                ratoms--;
               
-            for (k2 = j->begin(); k2 != j->end(); ++k2) {
-              index2 = *k2;
-              OBAtom *atom2 = mol.GetAtom(index2);
-              OBBond *bond = atom1->GetBond(atom2);
+              // set coordinates for atoms
+              OBAtom *atom = workMol.GetAtom(index);
+              atom->SetVector(i->second[counter]);
+              counter++;
+            }
 
-              if (bond != NULL) 
-                workMol.AddBond(*bond);
+            // add the bonds for the fragment
+            for (k = j->begin(); k != j->end(); ++k) {
+              index = *k;
+              OBAtom *atom1 = mol.GetAtom(index);
+                
+              for (k2 = j->begin(); k2 != j->end(); ++k2) {
+                index2 = *k2;
+                OBAtom *atom2 = mol.GetAtom(index2);
+                OBBond *bond = atom1->GetBond(atom2);
+
+                if (bond != NULL) 
+                  workMol.AddBond(*bond);
+              }
             }
           }
         }
       }
-    }
-    /* Not all ring atoms are always assigned...
-    if (ratoms)
-      cout << "DEBUG " << ratoms << endl;
-    */
+    } // if (ratoms)
+ 
 
     // iterate over all atoms to place them in 3D space
     FOR_DFS_OF_MOL (a, mol) {
