@@ -206,13 +206,13 @@ namespace OpenBabel
 
     dp = dot(v1,v2)/ ( v1.length() * v2.length() );
 
-#ifdef OB_OLD_MATH_CHECKS
+
     if (dp < -0.999999)
       dp = -0.9999999;
 
     if (dp > 0.9999999)
       dp = 0.9999999;
-#endif
+
 
     return((RAD_TO_DEG * acos(dp)));
   }

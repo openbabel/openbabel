@@ -1,5 +1,11 @@
 2009-06-05  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* src/math/vector3.cpp: Reenable defensive checks in calculation of
+	angle between two vectors. Prevents bug where dp is slightly greater
+	than 1.0 under certain conditions.
+
+2009-06-05  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* src/builder.cpp: Prevent partial matching. The code currently
 	doesn't handle this.
 
