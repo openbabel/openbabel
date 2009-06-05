@@ -1,5 +1,10 @@
 2009-06-05  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* src/builder.cpp: Prevent partial matching. The code currently
+	doesn't handle this.
+
+2009-06-05  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* src/builder.cpp: Skip SMARTS patterns that are too big to match.
 	Smaller performance boost.
 	

@@ -784,16 +784,21 @@ namespace OpenBabel
           mlist = i->first->GetUMapList();
             
           for (j = mlist.begin();j != mlist.end();++j) { // for all matches
-            if (vfrag.BitIsSet((*j)[0])) // the found match is already added
+
+            // Has any atom of this match already been added?
+            bool alreadydone = false;
+            for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
+              if (vfrag.BitIsSet(*k)) {
+                alreadydone = true;
+                break;
+              }
+            }
+            if (alreadydone) // the found match is already added
               continue;
 
             int index, index2, counter = 0;
             for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
-              index = *k;
-
-              if (vfrag.BitIsSet(index))
-                continue;
-                
+              index = *k;     
               vfrag.SetBitOn(index); // set vfrag for all atoms of fragment
               if (mol.GetAtom(index)->IsInRing())
                 ratoms--;
@@ -822,7 +827,6 @@ namespace OpenBabel
         }
       }
     } // if (ratoms)
- 
 
     // iterate over all atoms to place them in 3D space
     FOR_DFS_OF_MOL (a, mol) {
