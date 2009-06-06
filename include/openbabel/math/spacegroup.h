@@ -42,6 +42,13 @@ namespace OpenBabel
           { m_HM = name; }
         void SetHMName(const std::string &name)
           { m_HM = name; }
+        /** Also supply a short version of the HM symbol (e.g. "P21"
+        * instead of "P 1 21 1")
+        *
+        * \internal: this is only for internal use !
+        */
+        void SetHM_shortName(const std::string &name)
+          { m_HM_short = name; }
         void SetHallName(const char *name)
           { m_Hall = name; }
         void SetHallName(const std::string &name)
@@ -52,6 +59,13 @@ namespace OpenBabel
 
         const std::string & GetHMName() const
           { return m_HM;}
+        /** Access the short version of the HM symbol (e.g. "P21"
+        * instead of "P 1 21 1")
+        *
+        * \internal: this is only for internal use !
+        */
+        const std::string & GetHM_shortName(const std::string &name)
+          { return m_HM_short; }
         const std::string & GetHallName()const
           { return m_Hall;} 
         unsigned GetId() const
@@ -84,7 +98,18 @@ namespace OpenBabel
         bool IsValid() const;
 
       private:
-        std::string m_HM, m_Hall;
+        /** Hermann-Mauguin Symbol, long version
+        * \example: "I m m a", "P 1 21 1"
+        */
+        std::string m_HM;
+        /** Hermann-Mauguin Symbol, short version (when it exists, otherwise an empty string)
+        * \warning: this should only be used for the global table of spacegroups, in order
+        * to match any HM symbol just once. A duplicate HM and HM_short in that table would
+        * tag an HM symbol as ambiguous, hence the empty string unless the HM short is used.
+        * \example: "P 21" "Pm"
+        */
+        std::string m_HM_short;
+        std::string m_Hall;
         unsigned int m_id;
         std::list<transform3d*> m_transforms;
     };
