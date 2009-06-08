@@ -3,6 +3,9 @@
 	* src/formats/gamessformat.cpp (ReadMolecule): Tighten match for
 	frequencies.
 
+	*  src/formats/gamessformat.cpp (ReadMolecule): Support imaginary
+	frequencies.
+
 2009-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/Makefile.am: Remove kekule.cpp used as an internal test.

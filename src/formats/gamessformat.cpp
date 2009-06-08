@@ -225,7 +225,8 @@ namespace OpenBabel
 
     vector<double> frequencies, intensities;
     vector< vector<vector3> > displacements;
-    int lowFreqModes = 6; // the number of modes to ignore
+    int lowFreqModesBegin; // the number of the first low frequency mode
+    int lowFreqModesEnd; // the number of the last low frequency mode
     int numFreq, numIntens, numDisp; // GAMESS prints rotations & transl., which we ignore
     numFreq = numIntens = numDisp = 0;
 
@@ -431,14 +432,19 @@ namespace OpenBabel
             tokenize(vs, buffer);
             if (vs.size() < 4)
               break;
-            lowFreqModes = atoi(vs[3].c_str());
+            lowFreqModesBegin = atoi(vs[1].c_str());
+            lowFreqModesEnd = atoi(vs[3].c_str());
           }
         else if (strstr(buffer,"FREQUENCY:") != NULL)
           {
             tokenize(vs, buffer);
             for (unsigned int i = 1; i < vs.size(); ++i) {
+              if (vs[i] == "I") // artifact from previous imaginary frequency
+                continue;
               ++numFreq;
-              if (numFreq > lowFreqModes)
+              if (numFreq < lowFreqModesBegin) // imaginary frequency
+                frequencies.push_back(-atof(vs[i].c_str()));
+              if (numFreq > lowFreqModesEnd)
                 frequencies.push_back(atof(vs[i].c_str()));
             }
             ifs.getline(buffer, BUFF_SIZE); // reduced mass
@@ -446,7 +452,7 @@ namespace OpenBabel
             tokenize(vs, buffer);
             for (unsigned int i = 2; i < vs.size(); ++i) {
               ++numIntens;
-              if (numIntens > lowFreqModes)
+              if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd)
                 intensities.push_back(atof(vs[i].c_str()));
             }
             ifs.getline(buffer, BUFF_SIZE); // blank
