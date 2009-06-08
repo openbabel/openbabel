@@ -1,3 +1,8 @@
+2009-06-08  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/gamessformat.cpp (ReadMolecule): Tighten match for
+	frequencies.
+
 2009-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/Makefile.am: Remove kekule.cpp used as an internal test.

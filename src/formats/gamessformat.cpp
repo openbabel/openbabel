@@ -433,7 +433,7 @@ namespace OpenBabel
               break;
             lowFreqModes = atoi(vs[3].c_str());
           }
-        else if (strstr(buffer,"FREQUENCY") != NULL)
+        else if (strstr(buffer,"FREQUENCY:") != NULL)
           {
             tokenize(vs, buffer);
             for (unsigned int i = 1; i < vs.size(); ++i) {
