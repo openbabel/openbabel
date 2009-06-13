@@ -44,14 +44,14 @@ namespace OpenBabel
   public:
     virtual const char* Description()
     { return
-        "MDL MOL format\n \
-Reads and writes V2000 and V3000 versions\n \
-Write Options, e.g. -x3\n \
- 3  output V3000 not V2000 (used for >999 atoms/bonds) \n \
- m  write no properties\n \
-";
+        "MDL MOL/SDF format\n"
+        "Reads and writes V2000 and V3000 versions\n"
+        "Write Options, e.g. -x3\n"
+        " 3  output V3000 not V2000 (used for >999 atoms/bonds)\n"
+        " m  write no properties\n\n"
+        "Input Options, e.g. -av\n"
+        " v  AtomValue in V line is NOT a partial charge\n\n";
     };
-    /* 2  output V2000 (default) or\n \ */
 
     virtual const char* SpecificationURL()
     {return "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";};
@@ -351,8 +351,7 @@ Write Options, e.g. -x3\n \
             }
         }
 
-        //CM start 18 Sept 2003
-        //Read Properties block, currently only M RAD and M CHG M ISO
+        //Read Properties block, currently only A, V, S, M RAD, M CHG, M ISO
 
         while(ifs.getline(buffer,BUFF_SIZE))
           {
@@ -387,6 +386,29 @@ Write Options, e.g. -x3\n \
                   }
                 continue;
               }
+
+            if(buffer[0]=='V') //Atom Value
+              {
+                //Put contents into a OBPairData with attribute "AtomValue" attached to the OBAtom,
+                //and, if the -av option is NOT set, interpret as a partial charge.
+                int atomnum = atoi(buffer+2);
+                string val(buffer+7);
+                Trim(val);
+                OBAtom* at = mol.GetAtom(atomnum);
+                if(at) {
+                  OBPairData *dp = new OBPairData;
+                  dp->SetAttribute("AtomValue");
+                  dp->SetValue(val);
+                  dp->SetOrigin(fileformatInput);
+                  at->SetData(dp);
+                  if(!pConv->IsOption("v",OBConversion::INOPTIONS)) {
+                    double pchg = atof(val.c_str());
+                    if(abs(pchg)<7.0)
+                      at->SetPartialCharge(pchg);
+                  }
+                }
+              }
+
             if(strncmp(buffer,"M  CHG",6) && strncmp(buffer,"M  RAD",6) && strncmp(buffer,"M  ISO",6))
               continue;
             r1 = buffer;
