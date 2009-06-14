@@ -1,3 +1,16 @@
+2009-06-14  Chris Morley <c.morley@gaseq.co.uk>
+
+	* src/formats/inchiformat.cpp: InChI adds an implicit H to H and 
+	represents H2 with one implicit H. Since H does not have implict H
+	in OB, need to treat as special	cases.
+	Fixes #2794908, where H was written wrongly to InChI and H2 read
+	wrongly.
+	
+	* windows-vc2005/libinchi.dll,libinchi.lib: replaced by libstdinchi.dll
+	and libstdinchi.lib
+	* windows-vc2005/OBInchi/OBInchi.vcproj: updated for new inchi version.
+
+
 2009-06-14  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/python/pybel_pyN.x.py: Use OBBuilder instead of the

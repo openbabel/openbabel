@@ -236,11 +236,12 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       pmol->AddBond(i+1, piat->neighbor[j]+1, piat->bond_type[j]);
     }
 
-    //OB takes care of implicit hydrogens, so num_iso_H[0] and num_iso_H[1] are ignored.
-    //But implicit D and T need to be added explicitly.
-    for(int m=2;m<3;++m)
+    //OB takes care of implicit hydrogens, so num_iso_H[0] and num_iso_H[1] are ignored,
+    //except for H2, which has one explicit H and one implict H. OB doesn't add implicit H to H.
+    //Implicit D and T also need to be added explicitly.
+    for(int m=0;m<3;++m)
     {
-      if(piat->num_iso_H[m])
+      if(piat->num_iso_H[m] && (m>1 || *piat->elname=='H'))
       {
         for(int k=0;k<piat->num_iso_H[m];++k)
         {
@@ -411,7 +412,8 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   
     strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
     iat.num_bonds = nbonds;
-    iat.num_iso_H[0] = -1; //Let inchi add implicit Hs
+    //Let inchi add implicit Hs unless element is H
+    iat.num_iso_H[0] = *iat.elname=='H' ? 0 : -1; 
     if(patom->GetIsotope())
     {
       iat.isotopic_mass = ISOTOPIC_SHIFT_FLAG +

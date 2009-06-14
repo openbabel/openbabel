@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libinchi.lib OBDLLD.lib OBConvD.lib OBErrorD.lib OBCommonD.lib"
+				AdditionalDependencies="libstdinchi.lib OBDLLD.lib OBConvD.lib OBErrorD.lib OBCommonD.lib"
 				OutputFile="..\Debug\$(ProjectName).obf"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..,..\debug"
