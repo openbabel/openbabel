@@ -403,7 +403,7 @@ namespace OpenBabel
                   at->SetData(dp);
                   if(!pConv->IsOption("v",OBConversion::INOPTIONS)) {
                     double pchg = atof(val.c_str());
-                    if(abs(pchg)<7.0)
+                    if(fabs(pchg)<7.0)
                       at->SetPartialCharge(pchg);
                   }
                 }
@@ -792,9 +792,9 @@ namespace OpenBabel
                 
         indexmap[atoi(vs[2].c_str())] = obindex;
         atom.SetVector(atof(vs[4].c_str()), atof(vs[5].c_str()), atof(vs[6].c_str()));
-        //      if(abs(atof(vs[6].c_str()))>0)is3D=true;
-        //      if(abs(atof(vs[4].c_str()))>0)is2D=true;
-        //      if(abs(atof(vs[5].c_str()))>0)is2D=true;
+        //      if(fabs(atof(vs[6].c_str()))>0)is3D=true;
+        //      if(fabs(atof(vs[4].c_str()))>0)is2D=true;
+        //      if(fabs(atof(vs[5].c_str()))>0)is2D=true;
         char type[5];
         strncpy(type,vs[3].c_str(),4);
         int iso=0;

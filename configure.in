@@ -304,7 +304,7 @@ AC_CONFIG_COMMANDS([include/openbabel/babelconfig.h],
 
 AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
 		   src/formats/Makefile src/fingerprints/Makefile \
-		   src/formats/xml/Makefile src/formats/inchi/Makefile \
+		   src/formats/xml/Makefile src/formats/inchi102/Makefile \
        src/forcefields/Makefile src/GUI/Makefile \
        src/descriptors/Makefile src/ops/Makefile \
        include/Makefile include/openbabel/Makefile \

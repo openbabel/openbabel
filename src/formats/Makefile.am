@@ -9,7 +9,7 @@ SUBDIRS += xml
 endif
 
 if BUILD_INCHI
-SUBDIRS += inchi
+SUBDIRS += inchi102
 endif
 
 if USE_BOOST_FLAGS
@@ -40,7 +40,7 @@ endif
 if !BUILD_SHARED
 noinst_LTLIBRARIES = libformats.la
 if BUILD_INCHI
-libformats_la_LIBADD = inchi/libinchi.la
+libformats_la_LIBADD = inchi102/libinchi.la
 else
 libformats_la_LIBADD = -linchi
 endif
@@ -240,7 +240,7 @@ hinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 
 inchiformat_la_SOURCES = inchiformat.cpp  getinchi.cpp
 if BUILD_INCHI
-inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la inchi/libinchi.la
+inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la inchi102/libinchi.la
 else
 inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 inchiformat_la_LIBADD = -linchi

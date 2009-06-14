@@ -34,7 +34,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 @BUILD_XML_TRUE@am__append_1 = xml
-@BUILD_INCHI_TRUE@am__append_2 = inchi
+@BUILD_INCHI_TRUE@am__append_2 = inchi102
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@am__append_3 = chemdrawcdxformat.la chemkinformat.la \
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@                          rxnformat.la rsmiformat.la
 
@@ -426,7 +426,7 @@ jaguarformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(CXXFLAGS) $(jaguarformat_la_LDFLAGS) $(LDFLAGS) -o $@
 @BUILD_SHARED_TRUE@am_jaguarformat_la_rpath = -rpath $(formatsdir)
 @BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_DEPENDENCIES =  \
-@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@	inchi/libinchi.la
+@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@	inchi102/libinchi.la
 am__libformats_la_SOURCES_DIST = APIInterface.cpp MCDLformat.cpp \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp acrformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
@@ -941,7 +941,7 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = xml inchi
+DIST_SUBDIRS = xml inchi102
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 am__relativize = \
   dir0=`pwd`; \
@@ -1120,7 +1120,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 # modules (e.g., Cygwin). So we need to keep a duplicate target for "libformats"
 @BUILD_SHARED_FALSE@noinst_LTLIBRARIES = libformats.la
 @BUILD_INCHI_FALSE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = -linchi
-@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = inchi/libinchi.la
+@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = inchi102/libinchi.la
 @BUILD_SHARED_FALSE@libformats_la_SOURCES = \
 @BUILD_SHARED_FALSE@	APIInterface.cpp MCDLformat.cpp \
 @BUILD_SHARED_FALSE@	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
@@ -1265,7 +1265,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@hinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@inchiformat_la_SOURCES = inchiformat.cpp  getinchi.cpp
 @BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la inchi/libinchi.la
+@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la inchi102/libinchi.la
 @BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LIBADD = -linchi
 @BUILD_SHARED_TRUE@jaguarformat_la_SOURCES = jaguarformat.cpp 
 @BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 

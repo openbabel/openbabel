@@ -1,3 +1,8 @@
+2009-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchiformat.cpp, src/formats/inchi102: Backport the
+	InChI 1.02 standard code.
+
 2009-06-14  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/kekulize.cpp: In an aromatic ring with two nitrogens, one a
