@@ -1,3 +1,8 @@
+2009-06-14  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/python/pybel_pyN.x.py: Use OBBuilder instead of the
+	gen3d operation. 
+
 2009-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/inchiformat.cpp, src/formats/inchi102: Backport the

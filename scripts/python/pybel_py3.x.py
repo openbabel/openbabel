@@ -33,6 +33,7 @@ def _formatstodict(list):
     broken = [(x,y.strip()) for x,y in broken]
     return dict(broken)
 _obconv = ob.OBConversion()
+_builder = ob.OBBuilder()
 informats = _formatstodict(_obconv.GetSupportedInputFormat())
 """A dictionary of supported input formats"""
 outformats = _formatstodict(_obconv.GetSupportedOutputFormat())
@@ -364,7 +365,7 @@ class Molecule(object):
         to improve the coordinates further.
         """
         forcefield = forcefield.lower()
-        _operations['Gen3D'].Do(self.OBMol)
+        _builder.Build(self.OBMol)
         self.addh()
         self.localopt(forcefield, steps)
 
