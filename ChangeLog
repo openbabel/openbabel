@@ -1,3 +1,10 @@
+2009-06-14  Chris Morley <c.morley@gaseq.co.uk>
+
+	* src/ops/fillUC.cpp: Tidy up the Description so that it is more
+	suitable for the GUI.
+	
+	* windows-vc2005/gen3D/gen3D.vcproj: add fillUC.cpp to build.
+
 2009-06-13  Chris Morley <c.morley@gaseq.co.uk>
 	
 	* src/formats/mdlformat.cpp: Read V property line.

@@ -194,6 +194,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\ops\fillUC.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\ops\gen3d.cpp"
 				>
 			</File>
