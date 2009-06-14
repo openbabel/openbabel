@@ -1,3 +1,9 @@
+2009-06-14  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/kekulize.cpp: In an aromatic ring with two nitrogens, one a
+	pyrrole-type, the other a pyridine-type, ensure that the pyrrole-type
+	N donates 2 PI electrons. Fixes PR#2711501
+
 2009-06-14  Chris Morley <c.morley@gaseq.co.uk>
 
 	* src/ops/fillUC.cpp: Tidy up the Description so that it is more
