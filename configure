@@ -17338,11 +17338,11 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-case $host in
-     *-*-mingw*)
-        dynamic_modules="no"
-        ;;
-esac
+#case $host in
+#     *-*-mingw*)
+#        dynamic_modules="no"
+#        ;;
+#esac
  if test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes"; then
   BUILD_SHARED_TRUE=
   BUILD_SHARED_FALSE='#'
