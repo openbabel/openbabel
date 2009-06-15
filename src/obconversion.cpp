@@ -749,6 +749,13 @@ namespace OpenBabel {
     // Restore the original C++ locale as well
     pInStream->imbue(originalLocale);
 
+    // If we failed to read, plus the stream is over, then check if this is a stream from ReadFile
+    if (!success && !pInStream->good() && NeedToFreeInStream) {
+      ifstream *inFstream = dynamic_cast<ifstream*>(pInStream);
+      if (inFstream != 0)
+        inFstream->close(); // We will free the stream later, but close the file now
+    }
+
     return success;
   }
 

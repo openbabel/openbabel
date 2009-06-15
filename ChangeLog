@@ -1,3 +1,8 @@
+2009-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.cpp (Read): If we used ReadFile, close the file
+	after an error.
+
 2009-06-14  Chris Morley <c.morley@gaseq.co.uk>
 
 	* src/formats/inchiformat.cpp: InChI adds an implicit H to H and 
@@ -9,7 +14,6 @@
 	* windows-vc2005/libinchi.dll,libinchi.lib: replaced by libstdinchi.dll
 	and libstdinchi.lib
 	* windows-vc2005/OBInchi/OBInchi.vcproj: updated for new inchi version.
-
 
 2009-06-14  Noel O'Boyle  <baoilleach@gmail.com>
 
