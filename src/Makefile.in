@@ -92,8 +92,8 @@ am__libopenbabel_la_SOURCES_DIST = atom.cpp alias.cpp base.cpp \
 	obutil.cpp ops.cpp parsmart.cpp patty.cpp phmodel.cpp \
 	plugin.cpp pointgroup.cpp rand.cpp residue.cpp ring.cpp \
 	rotor.cpp rotamer.cpp tokenst.cpp typer.cpp transform.cpp \
-	dlhandler_unix.cpp
-@BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
+	dlhandler_win32.cpp
+@BUILD_SHARED_WIN_TRUE@am__objects_1 = dlhandler_win32.lo
 am_libopenbabel_la_OBJECTS = atom.lo alias.lo base.lo bitvec.lo \
 	bond.lo bondtyper.lo canon.lo builder.lo chains.lo chiral.lo \
 	data.lo descriptor.lo fingerprint.lo forcefield.lo format.lo \
@@ -313,15 +313,19 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
-	dlhandler_win32.cpp CMakeLists.txt RDKitConv.cpp config.h.cmake
+	CMakeLists.txt RDKitConv.cpp config.h.cmake
 
 @BUILD_SHARED_TRUE@thisdir = .
 SUBDIRS = math fingerprints forcefields descriptors ops $(thisdir) \
 	formats $(am__append_1)
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data/ -I$(top_srcdir)/include
 lib_LTLIBRARIES = libopenbabel.la
-@BUILD_SHARED_FALSE@dlhandler = 
-@BUILD_SHARED_TRUE@dlhandler = dlhandler_unix.cpp
+
+# Unix, e.g., Linux, Mac, BSD, Solaris, etc.
+@BUILD_SHARED_UNIX_TRUE@dlhandler = dlhandler_unix.cpp
+
+# MinGW
+@BUILD_SHARED_WIN_TRUE@dlhandler_win32 = dlhandler_win32.cpp
 libopenbabel_la_SOURCES = \
 		atom.cpp alias.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp canon.cpp builder.cpp \
@@ -340,7 +344,7 @@ libopenbabel_la_SOURCES = \
 		rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp \
 		tokenst.cpp typer.cpp \
-		transform.cpp $(dlhandler)
+		transform.cpp $(dlhandler_unix) $(dlhandler_win32)
 
 libopenbabel_la_LDFLAGS = -version-info 3:1:0 -no-undefined
 @BUILD_SHARED_TRUE@AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)/$(VERSION)\" -DUSING_DYNAMIC_LIBS
@@ -461,7 +465,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/descriptor.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_unix.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_win32.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefield.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Plo@am__quote@
@@ -863,6 +867,8 @@ uninstall-am: uninstall-libLTLIBRARIES
 	tags tags-recursive uninstall uninstall-am \
 	uninstall-libLTLIBRARIES
 
+@BUILD_SHARED_UNIX_FALSE@	 dlhandler = 
+@BUILD_SHARED_WIN_FALSE@	 dlhandler_win32 = 
 @BUILD_PCH_TRUE@all.h.gch: all.h Makefile \
 @BUILD_PCH_TRUE@	$(srcdir)/../include/openbabel/babelconfig.h \
 @BUILD_PCH_TRUE@  $(srcdir)/../include/openbabel/base.h \

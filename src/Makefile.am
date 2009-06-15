@@ -1,6 +1,6 @@
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
-	dlhandler_win32.cpp CMakeLists.txt RDKitConv.cpp config.h.cmake
+	CMakeLists.txt RDKitConv.cpp config.h.cmake
 
 if BUILD_SHARED
 thisdir = .
@@ -14,10 +14,18 @@ INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data/ -I$(top_srcdir)/inclu
 
 lib_LTLIBRARIES = libopenbabel.la
 
-if BUILD_SHARED
-dlhandler = dlhandler_unix.cpp
+if BUILD_SHARED_UNIX
+# Unix, e.g., Linux, Mac, BSD, Solaris, etc.
+   dlhandler = dlhandler_unix.cpp
+else 
+	 dlhandler = 
+endif
+
+if BUILD_SHARED_WIN
+# MinGW
+   dlhandler_win32 = dlhandler_win32.cpp
 else
-dlhandler = 
+	 dlhandler_win32 = 
 endif
 
 libopenbabel_la_SOURCES = \
@@ -38,7 +46,7 @@ libopenbabel_la_SOURCES = \
 		rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp \
 		tokenst.cpp typer.cpp \
-		transform.cpp $(dlhandler)
+		transform.cpp $(dlhandler_unix) $(dlhandler_win32)
 
 libopenbabel_la_LDFLAGS = -version-info 3:1:0 -no-undefined
 
