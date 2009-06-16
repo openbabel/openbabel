@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{20AB3884-694B-476C-ADD4-99A86765BB20}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -45,21 +45,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AtomExtensions.cs" />
-    <Compile Include="Comparers.cs" />
-    <Compile Include="ForceField.cs" />
-    <Compile Include="MathExtensions.cs" />
-    <Compile Include="OBConvert.cs" />
-    <Compile Include="OBDescriptor.cs" />
-    <Compile Include="OBMolExtensions.cs" />
-    <Compile Include="OBReader.cs" />
-    <Compile Include="OBWriter.cs" />
+    <Compile Include="AtomExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MathExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OBConvert.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OBDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OBMolExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OBReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OBWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Smarts.cs" />
-    <Compile Include="Smiles.cs" />
-    <Compile Include="SwigCollectionExtensions.cs" />
-    <Compile Include="Tools.cs" />
-    <Compile Include="Transform.cs" />
+    <Compile Include="Smiles.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tools.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Transform.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OBDotNet\OBDotNet.csproj">

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D0B81813-23C8-4BCB-BFAA-D3CE6AEEFC33}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -40,13 +40,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AliasData.cs" />
-    <Compile Include="atomreftype.cs" />
+    <Compile Include="AtomRefType.cs" />
     <Compile Include="CByteArray.cs" />
     <Compile Include="CDoubleArray.cs" />
     <Compile Include="CIntArray.cs" />
     <Compile Include="CUIntArray.cs" />
     <Compile Include="DataOrigin.cs" />
-    <Compile Include="errorQualifier.cs" />
+    <Compile Include="ErrorQualifier.cs" />
     <Compile Include="FastSearch.cs" />
     <Compile Include="FastSearchIndexer.cs" />
     <Compile Include="FptIndex.cs" />
@@ -83,7 +83,6 @@
     <Compile Include="OBForceField.cs" />
     <Compile Include="OBFormat.cs" />
     <Compile Include="OBGenericData.cs" />
-    <Compile Include="OBGenericDataTypes.cs" />
     <Compile Include="OBGlobalDataBase.cs" />
     <Compile Include="OBGridData.cs" />
     <Compile Include="OBInternalCoord.cs" />
@@ -91,7 +90,7 @@
     <Compile Include="OBMatrix3x3.cs" />
     <Compile Include="OBMatrixData.cs" />
     <Compile Include="OBMessageHandler.cs" />
-    <Compile Include="obMessageLevel.cs" />
+    <Compile Include="OBMessageLevel.cs" />
     <Compile Include="OBMol.cs" />
     <Compile Include="OBMolAngleIter.cs" />
     <Compile Include="OBMolAtomBFSIter.cs" />
@@ -140,6 +139,7 @@
     <Compile Include="openbabelcsharp.cs" />
     <Compile Include="openbabelcsharpPINVOKE.cs" />
     <Compile Include="Properties\OBDotNetAssemblyInfo.cs" />
+    <Compile Include="rotor_digit.cs" />
     <Compile Include="SpaceGroup.cs" />
     <Compile Include="SWIGTYPE_p_double.cs" />
     <Compile Include="SWIGTYPE_p_int.cs" />
