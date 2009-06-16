@@ -1,3 +1,9 @@
+2009-06-16  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* windows-vc2005/OBCSharp and CSharp files in scripts: Separate .NET
+	and Mono SWIG files. Move .NET files to windows-vc2005. Update
+	relevant files.
+
 2009-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.cpp (Read): If we used ReadFile, close the file
