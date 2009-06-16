@@ -2,7 +2,7 @@ EXTRA_DIST = openbabel-perl.i perl \
 					openbabel-python.i python \
 					openbabel-ruby.i ruby \
 					openbabel-java.i java \
-		   		openbabel-csharp.i csharp	
+		   		openbabel-mono.i csharp	
 
 # Remove various files before making a distribution archive
 dist-hook:
@@ -66,7 +66,7 @@ endif BUILD_JAVA
 if BUILD_CSHARP
 BUILT_SOURCES += csharp/openbabel_csharp.cpp
 
-csharp/openbabel_csharp.cpp: openbabel-csharp.i $(script_headers)
+csharp/openbabel_csharp.cpp: openbabel-mono.i $(script_headers)
 	$(SWIG) -small -O -csharp -templatereduce -c++ -o $@ \
 	-namespace OpenBabel -outdir csharp \
 	-I$(top_srcdir)/include -I$(top_builddir)/include $<;
