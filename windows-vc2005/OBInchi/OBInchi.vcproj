@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libinchi.lib OBConv.lib OBDLL.lib OBError.lib OBCommon.lib"
+				AdditionalDependencies="libstdinchi.lib OBConv.lib OBDLL.lib OBError.lib OBCommon.lib"
 				OutputFile="..\$(ProjectName).obf"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=".."
