@@ -16,9 +16,9 @@ lib_LTLIBRARIES = libopenbabel.la
 
 if BUILD_SHARED_UNIX
 # Unix, e.g., Linux, Mac, BSD, Solaris, etc.
-   dlhandler = dlhandler_unix.cpp
+   dlhandler_unix = dlhandler_unix.cpp
 else 
-	 dlhandler = 
+	 dlhandler_unix = 
 endif
 
 if BUILD_SHARED_WIN

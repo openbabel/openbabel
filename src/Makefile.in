@@ -92,8 +92,9 @@ am__libopenbabel_la_SOURCES_DIST = atom.cpp alias.cpp base.cpp \
 	obutil.cpp ops.cpp parsmart.cpp patty.cpp phmodel.cpp \
 	plugin.cpp pointgroup.cpp rand.cpp residue.cpp ring.cpp \
 	rotor.cpp rotamer.cpp tokenst.cpp typer.cpp transform.cpp \
-	dlhandler_win32.cpp
-@BUILD_SHARED_WIN_TRUE@am__objects_1 = dlhandler_win32.lo
+	dlhandler_unix.cpp dlhandler_win32.cpp
+@BUILD_SHARED_UNIX_TRUE@am__objects_1 = dlhandler_unix.lo
+@BUILD_SHARED_WIN_TRUE@am__objects_2 = dlhandler_win32.lo
 am_libopenbabel_la_OBJECTS = atom.lo alias.lo base.lo bitvec.lo \
 	bond.lo bondtyper.lo canon.lo builder.lo chains.lo chiral.lo \
 	data.lo descriptor.lo fingerprint.lo forcefield.lo format.lo \
@@ -102,7 +103,7 @@ am_libopenbabel_la_OBJECTS = atom.lo alias.lo base.lo bitvec.lo \
 	obmolecformat.lo obutil.lo ops.lo parsmart.lo patty.lo \
 	phmodel.lo plugin.lo pointgroup.lo rand.lo residue.lo ring.lo \
 	rotor.lo rotamer.lo tokenst.lo typer.lo transform.lo \
-	$(am__objects_1)
+	$(am__objects_1) $(am__objects_2)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 libopenbabel_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -322,7 +323,7 @@ INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/data/ -I$(top_srcdir)/inclu
 lib_LTLIBRARIES = libopenbabel.la
 
 # Unix, e.g., Linux, Mac, BSD, Solaris, etc.
-@BUILD_SHARED_UNIX_TRUE@dlhandler = dlhandler_unix.cpp
+@BUILD_SHARED_UNIX_TRUE@dlhandler_unix = dlhandler_unix.cpp
 
 # MinGW
 @BUILD_SHARED_WIN_TRUE@dlhandler_win32 = dlhandler_win32.cpp
@@ -465,6 +466,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/descriptor.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_unix.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_win32.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefield.Plo@am__quote@
@@ -867,7 +869,7 @@ uninstall-am: uninstall-libLTLIBRARIES
 	tags tags-recursive uninstall uninstall-am \
 	uninstall-libLTLIBRARIES
 
-@BUILD_SHARED_UNIX_FALSE@	 dlhandler = 
+@BUILD_SHARED_UNIX_FALSE@	 dlhandler_unix = 
 @BUILD_SHARED_WIN_FALSE@	 dlhandler_win32 = 
 @BUILD_PCH_TRUE@all.h.gch: all.h Makefile \
 @BUILD_PCH_TRUE@	$(srcdir)/../include/openbabel/babelconfig.h \
