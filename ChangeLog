@@ -1,3 +1,7 @@
+2009-06-18  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/Python/README, scripts/csharp/README: Minor updates
+
 2009-06-16  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* windows-vc2005/OBCSharp and CSharp files in scripts: Separate .NET

@@ -15,13 +15,13 @@ languages with OpenBabel:
 $ export OB_CSHARPDIR=/home/noel/Tools/openbabel-2.2.0/scripts/csharp
 $ export OB_LIBDIR=/home/noel/tree/lib # The install location of libopenbabel.so
 
-  Next, compile the Java bindings:
+  Next, compile the C# bindings:
 $ cd $OB_CSHARPDIR
 $ g++ -c -fpic openbabel_csharp.cpp -I../../include
 $ g++ -shared openbabel_csharp.o -L../../src/.libs -lopenbabel -o libopenbabelcsharp.so
 
   Compile and run the test C# program:
-$ mcs /r:OBDotNet.dll example.cs
+$ gmcs /r:OBDotNet.dll example.cs
 $ export LD_LIBRARY_PATH=$OB_LIBDIR
 $ mono example.exe
 
