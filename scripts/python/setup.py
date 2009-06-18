@@ -70,7 +70,7 @@ obExtension = Extension('_openbabel',
 shutil.copyfile("pybel_py%d.x.py" % sys.version_info[0], "pybel.py")
 
 setup(name='openbabel',
-      version='1.4',
+      version='1.5',
       author='Noel O\'Boyle',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/',
