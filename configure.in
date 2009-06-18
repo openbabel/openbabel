@@ -250,7 +250,7 @@ dnl Checks for header files.
 AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
 AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
 AC_CHECK_HEADERS(ctype.h iostream fstream sstream strstream)
-AC_CHECK_HEADERS(tr1/memory)
+AC_CHECK_HEADERS(regex.h, tr1/memory)
 AC_CHECK_HEADERS(rpc/types.h)
 AC_CHECK_HEADERS(rpc/xdr.h, [] , [],
 #ifdef HAVE_RPC_TYPES_H
@@ -268,6 +268,9 @@ if test "$have_boost" = "yes" -a "$ac_cv_header_tr1_memory" != "yes"; then
     use_boost=yes
 fi
 AM_CONDITIONAL([USE_BOOST_FLAGS], [test "$use_boost" = "yes"])
+
+dnl Turn off GAMESS-UK if regex is not available
+AM_CONDITIONAL([HAVE_REGEX], [test "$ac_cv_header_regex_h" = "yes"])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_TYPES(clock_t)

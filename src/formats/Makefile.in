@@ -40,6 +40,7 @@ host_triplet = @host@
 
 @BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@am__append_4 = inchiformat.la
 @BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@am__append_5 = pngformat.la
+@BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@am__append_6 = gamessukformat.la
 subdir = src/formats
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -353,12 +354,14 @@ gamessformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 @BUILD_SHARED_TRUE@am_gamessformat_la_rpath = -rpath $(formatsdir)
 gamessukformat_la_LIBADD =
 am__gamessukformat_la_SOURCES_DIST = gamessukformat.cpp
-@BUILD_SHARED_TRUE@am_gamessukformat_la_OBJECTS = gamessukformat.lo
+@BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@am_gamessukformat_la_OBJECTS =  \
+@BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@	gamessukformat.lo
 gamessukformat_la_OBJECTS = $(am_gamessukformat_la_OBJECTS)
 gamessukformat_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(gamessukformat_la_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_SHARED_TRUE@am_gamessukformat_la_rpath = -rpath $(formatsdir)
+@BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@am_gamessukformat_la_rpath =  \
+@BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@	-rpath $(formatsdir)
 gausscubeformat_la_LIBADD =
 am__gausscubeformat_la_SOURCES_DIST = gausscubeformat.cpp
 @BUILD_SHARED_TRUE@am_gausscubeformat_la_OBJECTS = gausscubeformat.lo
@@ -1163,16 +1166,16 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	fastsearchformat.la fastaformat.la \
 @BUILD_SHARED_TRUE@	fchkformat.la featformat.la fhformat.la \
 @BUILD_SHARED_TRUE@	fingerprintformat.la freefracformat.la \
-@BUILD_SHARED_TRUE@	gamessformat.la gamessukformat.la \
-@BUILD_SHARED_TRUE@	gaussformat.la ghemicalformat.la \
-@BUILD_SHARED_TRUE@	gausscubeformat.la gausszmatformat.la \
-@BUILD_SHARED_TRUE@	gromos96format.la hinformat.la \
-@BUILD_SHARED_TRUE@	jaguarformat.la mdlformat.la mmcifformat.la \
-@BUILD_SHARED_TRUE@	mmodformat.la mpdformat.la mol2format.la \
-@BUILD_SHARED_TRUE@	moldenformat.la molreportformat.la \
-@BUILD_SHARED_TRUE@	mopacformat.la molproformat.la msiformat.la \
-@BUILD_SHARED_TRUE@	msmsformat.la mpqcformat.la nwchemformat.la \
-@BUILD_SHARED_TRUE@	outformat.la pcmodelformat.la pdbformat.la \
+@BUILD_SHARED_TRUE@	gamessformat.la gaussformat.la \
+@BUILD_SHARED_TRUE@	ghemicalformat.la gausscubeformat.la \
+@BUILD_SHARED_TRUE@	gausszmatformat.la gromos96format.la \
+@BUILD_SHARED_TRUE@	hinformat.la jaguarformat.la mdlformat.la \
+@BUILD_SHARED_TRUE@	mmcifformat.la mmodformat.la mpdformat.la \
+@BUILD_SHARED_TRUE@	mol2format.la moldenformat.la \
+@BUILD_SHARED_TRUE@	molreportformat.la mopacformat.la \
+@BUILD_SHARED_TRUE@	molproformat.la msiformat.la msmsformat.la \
+@BUILD_SHARED_TRUE@	mpqcformat.la nwchemformat.la outformat.la \
+@BUILD_SHARED_TRUE@	pcmodelformat.la pdbformat.la \
 @BUILD_SHARED_TRUE@	povrayformat.la pqrformat.la \
 @BUILD_SHARED_TRUE@	opendxformat.la qchemformat.la \
 @BUILD_SHARED_TRUE@	reportformat.la shelxformat.la \
@@ -1182,7 +1185,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	viewmolformat.la xedformat.la xtcformat.la \
 @BUILD_SHARED_TRUE@	xyzformat.la yasaraformat.la zindoformat.la \
 @BUILD_SHARED_TRUE@	$(am__append_3) $(am__append_4) \
-@BUILD_SHARED_TRUE@	$(am__append_5)
+@BUILD_SHARED_TRUE@	$(am__append_5) $(am__append_6)
 @BUILD_SHARED_TRUE@APIInterface_la_SOURCES = APIInterface.cpp
 @BUILD_SHARED_TRUE@APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
 @BUILD_SHARED_TRUE@CSRformat_la_SOURCES = CSRformat.cpp 
@@ -1249,8 +1252,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@freefracformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gamessformat_la_SOURCES = gamessformat.cpp 
 @BUILD_SHARED_TRUE@gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
-@BUILD_SHARED_TRUE@gamessukformat_la_SOURCES = gamessukformat.cpp 
-@BUILD_SHARED_TRUE@gamessukformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@gamessukformat_la_SOURCES = gamessukformat.cpp 
+@BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@gamessukformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gaussformat_la_SOURCES = gaussformat.cpp 
 @BUILD_SHARED_TRUE@gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gausscubeformat_la_SOURCES = gausscubeformat.cpp 

@@ -88,7 +88,7 @@ formats_LTLIBRARIES = \
 	dmolformat.la fastsearchformat.la fastaformat.la \
 	fchkformat.la \
 	featformat.la fhformat.la fingerprintformat.la \
-	freefracformat.la gamessformat.la gamessukformat.la \
+	freefracformat.la gamessformat.la \
 	gaussformat.la ghemicalformat.la \
 	gausscubeformat.la gausszmatformat.la \
 	gromos96format.la hinformat.la \
@@ -112,6 +112,9 @@ formats_LTLIBRARIES += inchiformat.la
 endif
 if BUILD_ZLIB
 formats_LTLIBRARIES += pngformat.la
+endif
+if HAVE_REGEX
+formats_LTLIBRARIES += gamessukformat.la
 endif
 
 APIInterface_la_SOURCES = APIInterface.cpp
@@ -217,8 +220,10 @@ freefracformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel
 gamessformat_la_SOURCES = gamessformat.cpp 
 gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
 
+if HAVE_REGEX
 gamessukformat_la_SOURCES = gamessukformat.cpp 
 gamessukformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+endif
 
 gaussformat_la_SOURCES = gaussformat.cpp 
 gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
