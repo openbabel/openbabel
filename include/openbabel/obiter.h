@@ -373,7 +373,7 @@ namespace OpenBabel
 #define FOR_ATOMS_OF_RESIDUE(a,r) for( OBResidueAtomIter a(r); a; ++a )
 #define FOR_DFS_OF_MOL(a,m)       for( OBMolAtomDFSIter  a(m); a; ++a )
 #define FOR_BFS_OF_MOL(a,m)       for( OBMolAtomBFSIter  a(m); a; ++a )
-#define FOR_RINGS_OF_MOL(a,m)     for( OBMolRingIter     r(m); r; ++r )
+#define FOR_RINGS_OF_MOL(r,m)     for( OBMolRingIter     r(m); r; ++r )
 #define FOR_ANGLES_OF_MOL(a,m)    for( OBMolAngleIter    a(m); a; ++a )
 #define FOR_TORSIONS_OF_MOL(t,m)  for( OBMolTorsionIter  t(m); t; ++t )
 #define FOR_PAIRS_OF_MOL(p,m)     for( OBMolPairIter     p(m); p; ++p )
