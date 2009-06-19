@@ -1,3 +1,10 @@
+2009-06-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/kekulize.cpp (expandcycle): Fix PR#2705497. Kekulize has
+	problems with fused aromatic rings joined by a non-aromatic
+	ring. Make sure when expanding aromatic cycles that we only accept
+	atoms which are in the *same* ring from OBMol::GetSSSR().
+
 2009-06-18  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/Python/README, scripts/csharp/README: Minor updates

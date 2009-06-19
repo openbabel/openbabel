@@ -20,6 +20,8 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
 
 #include <sstream>
 
@@ -31,9 +33,13 @@ using namespace std;
 namespace OpenBabel 
 {
 
+  // Modified internal-only version
+  // Keep track of which rings contain *all* atoms in the cycle
+  bool expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, std::vector<OBRing*> &ringList);
+
   ///////////////////////////////////////////////////////////////////////////////
   //! \brief Kekulize aromatic rings without using implicit valence
-
+  //!
   //! This new perceive kekule bonds function has been designed to 
   //! handle molecule files without explicit hydrogens such as pdb or xyz.
   //! (It can, of course, easily handle explicit hydrogens too.)
@@ -78,12 +84,22 @@ namespace OpenBabel
       atom = GetAtom(i);
       if (atom->HasAromaticBond() && !cvisit[i]) { // is new aromatic atom of an aromatic cycle ?
 
+        //        cout << " trying " << i << endl;
         avisit.Clear();
         electron.clear();
         cycle.clear();
       
         avisit.SetBitOn(i);
-        expandcycle(atom, avisit);
+        
+        // Let's get a list of all rings this atom is a member
+        std::vector<OBRing*> ringList, fullList;
+        fullList = GetSSSR();
+        for (std::vector<OBRing*>::iterator r = fullList.begin(); r != fullList.end(); ++r) {
+          if ((*r)->IsMember(atom))
+            ringList.push_back(*r);
+        }
+
+        expand_cycle(this, atom, avisit, ringList);
         //store the atoms of the cycle(s)
         unsigned int j;
         for(j=1; j<= NumAtoms(); ++j) {
@@ -200,16 +216,18 @@ namespace OpenBabel
         }
       
         //cout << "minde after:" << minde <<endl;
-        //for(j=0; j < cycle.size(); ++j) {
-        //OBAtom *cycleAtom = cycle[j];
-        //cout << "\t" << cycleAtom->GetIdx();
-        //}
-        //cout << endl;
+//         cout << "atom: ";
+//         for(j=0; j < cycle.size(); ++j) {
+//         OBAtom *cycleAtom = cycle[j];
+//         cout << "\t" << cycleAtom->GetIdx();
+//         }
+//         cout << endl;
 
-        //	for(j=0; j < electron.size(); ++j) {
-        //	cout << "\t" << electron[j];
-        //	}
-        //	cout << endl;
+//         cout << "atom: ";
+//         for(j=0; j < electron.size(); ++j) {
+//         	cout << "\t" << electron[j];
+//         	}
+//         	cout << endl;
 
         // kekulize the cycle(s)
         start_kekulize(cycle,electron);
@@ -285,22 +303,6 @@ namespace OpenBabel
     std::vector<OBBond*>::iterator b;
     OBAtom *nbr;
   
-    // bool second_pass=false;
-    // for( i=1; i<= NumAtoms(); ++i) {
-    //     if(currentState[i] == 1) { // the atom can make a double bond
-    //       atom = GetAtom(i);
-    //       //find a neighbour that can make a double bond
-    //       // and start kekulize
-    //       for (nbr = atom->BeginNbrAtom(b);nbr;nbr = atom->NextNbrAtom(b)) {
-    // 	if(currentState[nbr->GetIdx()]==1){
-    // 	  if(!expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark)) {
-    // 	    second_pass=true;
-    // 	  }
-	    
-    // 	}
-    //       }
-    //     }
-    //   }
     bool expand_successful=true;//was previously not initialized. true works but may not be correct
     atom = cycle[0];
     for (nbr = atom->BeginNbrAtom(b);nbr;nbr = atom->NextNbrAtom(b)) {
@@ -308,12 +310,13 @@ namespace OpenBabel
         continue; 
       //std::cout << "Expand kekulize\n";
       expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark) ; 
+      //      cout << " return from expand" << endl;
       //Control that all the electron have been given to the cycle(s)
       expand_successful = true;
       for(unsigned i=0; i< cycle.size(); ++i) {
         atom2 = cycle[i];
         Idx =  atom2->GetIdx();
-        //cout << "\t" << currentState[Idx];
+        //        cout << "\t" << currentState[Idx];
         if (currentState[Idx] == 1)
           expand_successful=false;
       }
@@ -381,6 +384,8 @@ namespace OpenBabel
     int bIdx = bond->GetIdx();
   
     //cout << "assign bond state for atoms " << Idx1 << " and " << Idx2 << endl;
+    //    std::cout << " kekulize: atom: " << Idx1 << " and " << Idx2 
+    //              << " have " << currentState[Idx1] << " " << currentState[Idx2] << endl;
     if (currentState[Idx1] == 1 && currentState[Idx2] == 1) {
       currentState[Idx1]=0;
       currentState[Idx2]=0;
@@ -545,21 +550,44 @@ namespace OpenBabel
   }
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
-  bool OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit, OBAtom *, int)
+  bool expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, std::vector<OBRing*> &ringList)
   {
     OBAtom *nbr;
     //  OBBond *bond;
     std::vector<OBBond*>::iterator i;
     int natom;
-    //for each neighbour atom test if it is in the aromatic ring
+    OBBond* currentBond;
+    OBRing* ring;
+
+    //for each neighbour atom test if it is in the same aromatic ring
+    int ringMember = -1;
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
       {
         natom = nbr->GetIdx();
-        // if (!avisit[natom] && nbr->IsAromatic() && ((OBBond*) *i)->IsAromatic()) {
-        if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5 
-            && ((OBBond*) *i)->IsInRing()) {
+        currentBond = ((OBBond*) *i);
+        if (!avisit[natom] 
+            && currentBond->GetBO()==5 ) {
+          // This condition isn't strong enough -- both atoms need to be in the SAME ring
+          //            && ((OBBond*) *i)->IsInRing()) {
+
+          // New condition -- test ringList for the neigboring atom
+          // if the atom isn't in that particular ring, it's removed from the list
+          // we succeed if all ring atoms are in the same ring
+          int rIndex = 0;
+          while (ringList.size() != 0 && rIndex < ringList.size()) {
+            ring = ringList[rIndex];
+            if (!ring->IsMember( nbr ) ) { // atoms are not both in this ring, remove it
+              ringList.erase(ringList.begin() + rIndex);
+              continue; // check other rings
+            }
+            rIndex++;
+          }
+
+          if (ringList.size() == 0)
+            return false; // not a valid aromatic cycle
+
           avisit.SetBitOn(natom);
-          expandcycle(nbr, avisit);
+          expand_cycle(mol, nbr, avisit, ringList);
         }
       }
 
