@@ -100,25 +100,7 @@ int main(int argc,char *argv[])
                    << " in molecule " << molCount << " "
                    << mol.GetTitle() << "\n";
             }
-        }
-
-      FOR_BONDS_OF_MOL(bond, mol)
-        {
-          if (bond->IsInRing() && !bond->IsAromatic())
-            {
-              cout << "not ok " << ++testCount << " # bond isn't aromatic!\n";
-              cout << "# begin atom " << bond->GetBeginAtomIdx()
-                   << " end atom " << bond->GetEndAtomIdx()
-                   << " bond order " << bond->GetBO();
-              cout << " in molecule " << molCount << " "
-                   << mol.GetTitle() << "\n";
-            }
-          else if (bond->IsInRing() && bond->IsAromatic())
-            {
-              cout << "ok " << ++testCount << "\n";
-            }
-        }
-	
+        }	
     } // while reading molecules
     
   // output the number of tests run
