@@ -1,9 +1,8 @@
 2009-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/kekulize.cpp (expandcycle): Rewritten as cleaner recursive
-	function. Look for largest possible aromatic cycle. Fixes more
-	bugs, but still has issues with "figure 8" ring systems,
-	e.g. c12n(nnn1)cccc2.
+	function. Look for largest possible aromatic cycle, including
+	handling fused "figure 8" ring systems.
 
 2009-06-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
