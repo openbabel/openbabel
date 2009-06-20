@@ -38,7 +38,7 @@ namespace OpenBabel
   // This method essentially does a modified depth-first search to find
   //  large aromatic cycles
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit, 
-                    int rootIdx, int prevAtomIdx = -1, int depth = 15);
+                    int rootIdx, int prevAtomIdx = -1, bool fusedRings = false, int depth = 19);
 
   ///////////////////////////////////////////////////////////////////////////////
   //! \brief Kekulize aromatic rings without using implicit valence
@@ -212,7 +212,6 @@ namespace OpenBabel
             }
           }
         }
-      
 
         /*
         cout << "minde after:" << minde <<endl;
@@ -551,20 +550,22 @@ namespace OpenBabel
   }
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
-  bool OBMol::expandcycle(OBAtom *atom, OBBitVec &avisit, OBAtom *, int)
+  bool OBMol::expandcycle(OBAtom *, OBBitVec &, OBAtom *, int)
   {
     return false; // use function below
   }
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit, 
-                    int rootIdx, int prevAtomIdx, int depth)
+                    int rootIdx, int prevAtomIdx, bool fusedRing, int depth)
   {
     // early termination
     if (depth < 0)
       return depth;
 
-    //    cout << " expand_cycle: " << atom->GetIdx() << " depth " << depth << endl;
+//     cout << " expand_cycle: " << atom->GetIdx() << " depth " << depth << endl;
+//     if (fusedRing)
+//       cout << "fused" << endl;
 
     OBAtom *nbr;
     std::vector<OBBond*>::iterator i;
@@ -574,41 +575,48 @@ namespace OpenBabel
     // - If a neighboring atom is non-aromatic, we ignore it
     // - If the atom is in cvisit, it's already be assigned. Ignore it.
     // - If the atom is the previous step in the path, ignore it.
-    // - If the atom is in avisit, it's a ring closure -- check if it's our original root atom
-    // - Otherwise recurse: look for a large cycle back to the root
+    // Fused rings make things complicated
+    // - We can go through the root atom ONCE, but we'll set the fusedRing parameter
+    // - If we're using fusedRing, then we'll return if we find an atom matching avisit
+    // Otherwise recurse: look for a large cycle back to the root
     int trialScore, bestScore = 1000;
     OBBitVec trialMatch, bestMatch; // the best path we've found so far
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
       {
         natom = nbr->GetIdx();
-        //        cout << " checking: " << natom << endl;
+        //        cout << " checking: " << natom << " bo: " << (*i)->GetBO() << endl;
         //        if (cvisit[natom])
         //          continue; // this atom already has an assigned kekule form, check others
         if ((*i)->GetBO() != 5)
           continue; // this is a non-aromatic bond, skip it
         if (natom == prevAtomIdx) {
-          // either the previous step in our path or an invalid cycle from the root
+          // the previous step in our path
           continue;
         }
 
-        if (avisit[natom] && natom == rootIdx) {
-          // found our way back to the root, this cycle works
-          // return the # of steps we "have left"
-          //          cout << " found root " << endl;
+        if (avisit[natom] && fusedRing) {
+          // We crossed the root, and completed a fused cycle. We're done.
           return depth;
-        } else if (avisit[natom]) {
+        } else if (avisit[natom] && natom != rootIdx) {
           // e.g.           __
-          //           ____/  \   
-          //               \__/   bad because, we should start at a ring atom
+          //           ____/  \   bad because, we should start at a ring atom
+          //               \__/   
           continue;
         }
 
-        // OK, now avisit[natom] = false, so new atom to visit
+        // Attempt to cross the root, e.g., the root is a bridgehead in a fused ring system
+        bool crossedRoot = false;
+        if (natom == rootIdx) {
+          bestMatch = avisit; // this cycle is perfectly acceptable, so save it
+          bestScore = depth;
+          crossedRoot = true;
+        }
+
         trialMatch = avisit;
         trialMatch.SetBitOn(natom);
-        trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, rootIdx, atom->GetIdx(), depth - 1);
+        trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, rootIdx, atom->GetIdx(), crossedRoot, depth - 1);
         if (trialScore > 0 && trialScore < bestScore) { // we found a larger, valid cycle
-          //          cout << " score: " << trialScore;
+          //          cout << " score: " << trialScore << endl;
           bestMatch = trialMatch;
           bestScore = trialScore;
         }
