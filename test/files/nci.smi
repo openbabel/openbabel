@@ -646,6 +646,7 @@ O(OC(C)(C)C)C(C)(C)C	673
 C(OOC(C)(C)C)(=O)c1ccccc1	674
 C(OOC(=O)c1ccccc1)(=O)c1ccccc1	675
 C(OOC(CCC(=O)O)=O)(CCC(=O)O)=O	676
+N=c1sc(c2ccccc2)n[nH]1	677
 S=c1[nH]c(c2ccccc2)cs1	678
 c12c(nsn1)cccc2	679
 S=C1NCCS1	680
