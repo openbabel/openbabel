@@ -1,9 +1,18 @@
+2009-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/kekulize.cpp (expandcycle): Rewritten as cleaner recursive
+	function. Look for largest possible aromatic cycle. Fixes more
+	bugs, but still has issues with "figure 8" ring systems,
+	e.g. c12n(nnn1)cccc2.
+
 2009-06-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/kekulize.cpp (expandcycle): Fix PR#2705497. Kekulize has
 	problems with fused aromatic rings joined by a non-aromatic
 	ring. Make sure when expanding aromatic cycles that we only accept
 	atoms which are in the *same* ring from OBMol::GetSSSR().
+
+	* test/*: Update with recent changes.
 
 2009-06-18  Noel O'Boyle  <baoilleach@gmail.com>
 
