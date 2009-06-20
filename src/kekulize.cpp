@@ -538,10 +538,10 @@ namespace OpenBabel
     if ( atom->IsSulfur() ) return 1;
     if ( atom->IsOxygen() ) return 2;
     if ( atom->GetAtomicNum() == 34 || atom->GetAtomicNum() == 52 ) return 3;
-    if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->IsInRingSize(5) ) return 4;
-    if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) return 5;
-    if ( atom->IsAmideNitrogen() ) return 6;
-    if ( atom->IsNitrogen() && atom->GetFormalCharge() == -1) return 7;
+    if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) return 4;
+    if ( atom->IsAmideNitrogen() ) return 5;
+    if ( atom->IsNitrogen() && atom->GetFormalCharge() == -1) return 6;
+    if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->IsInRingSize(5) ) return 7;
     if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 ) return 8;
     if ( atom->IsCarbon() && atom->GetFormalCharge() == -1) return 9;
     //if ( atom->IsCarbon() ) return 9;
