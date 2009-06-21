@@ -155,7 +155,7 @@ namespace OpenBabel
     int n3;          //!< mask 3 used by ConstrainBackbone() and MatchConstraint()
     int n4;          //!< mask 4 used by ConstrainBackbone() and MatchConstraint()
   }
-  Template;
+    Template;
 
   //! Generic template for peptide residue backbone
   static Template Peptide[MAXPEPTIDE] = {
@@ -280,7 +280,7 @@ namespace OpenBabel
     const char *name; //!< Residue name, standardized by PDB
     const char *data; //!< pseudo-SMILES definition of side-chain
   }
-  ResidType;
+    ResidType;
 
   //! Side chains for recognized amino acids using a pseudo-SMARTS syntax
   //!  for branching and bonds. Numbers indicate atom types defined by 
@@ -332,7 +332,7 @@ namespace OpenBabel
     int bcount;
     int index;
   }
-  MonoAtomType;
+    MonoAtomType;
 
   typedef struct
   {
@@ -340,14 +340,14 @@ namespace OpenBabel
     int index;
     int flag;
   }
-  MonoBondType;
+    MonoBondType;
 
   typedef struct
   {
     int type;
     union _ByteCode *next;
   }
-  MonOpStruct;
+    MonOpStruct;
 
   typedef struct
   {
@@ -356,7 +356,7 @@ namespace OpenBabel
     union _ByteCode *tcond;
     union _ByteCode *fcond;
   }
-  BinOpStruct;
+    BinOpStruct;
 
   //! Output array -- residue id, atom id, bond flags, etc.
   typedef struct
@@ -366,7 +366,7 @@ namespace OpenBabel
     int *atomid;
     int *bflags;
   }
-  AssignStruct;
+    AssignStruct;
 
   //! Chemical graph matching virtual machine
   typedef union _ByteCode
@@ -385,7 +385,7 @@ namespace OpenBabel
     int atom,bond;
     int prev;
   }
-  StackType;
+    StackType;
 
   static MonoAtomType MonoAtom[MaxMonoAtom];
   static MonoBondType MonoBond[MaxMonoBond];
@@ -440,7 +440,7 @@ namespace OpenBabel
           case BC_ASSIGN:
 
             if (node->assign.atomid != NULL) {
-	      delete [] node->assign.atomid;
+              delete [] node->assign.atomid;
               node->assign.atomid = NULL; // prevent double-free
             }
             if (node->assign.bflags != NULL) {
@@ -479,7 +479,7 @@ namespace OpenBabel
             break;
           }
 
-	delete node;
+        delete node;
         node = NULL;
       }
   }
@@ -858,14 +858,14 @@ namespace OpenBabel
     // correct serine OG
     for ( unsigned int i = 0 ; i < numAtoms ; i++ ) {
       if (resids[i] == RESIDMIN + 17) // serine
-	if (atomids[i] == -1) {
-	  atom = mol.GetAtom(i+1);
+        if (atomids[i] == -1) {
+          atom = mol.GetAtom(i+1);
 
-	  FOR_NBORS_OF_ATOM (nbr, atom) {
-	    if (atomids[nbr->GetIdx()-1] == 4) // CB
+          FOR_NBORS_OF_ATOM (nbr, atom) {
+            if (atomids[nbr->GetIdx()-1] == 4) // CB
               atomids[i] = 6; // OG
-	  }
-	}
+          }
+        }
     }
 
     for ( unsigned int i = 0 ; i < numAtoms ; i++ ) {
@@ -886,12 +886,18 @@ namespace OpenBabel
       } else if (atom->IsHydrogen()) {
         if (hcounts[i]) {
           snprintf(buffer, BUFF_SIZE, "H%.2s%c", ChainsAtomName[atomids[i]]+2, hcounts[i]+'0');
-	  if (buffer[2] == ' ') {
+          if (buffer[1] == ' ') {
+            buffer[1] = buffer[3];
+            buffer[2] = '\0';
+          }
+          else if (buffer[2] == ' ') {
             buffer[2] = buffer[3];
             buffer[3] = '\0';
-	  }
-	} else
+          }
+        } else {
           snprintf(buffer, BUFF_SIZE, "H%.2s", ChainsAtomName[atomids[i]]+2);
+          cout << " no hcounts " << endl;
+        }
       } else
         snprintf(buffer, BUFF_SIZE, "%.4s", ChainsAtomName[atomids[i]]);
 
@@ -959,24 +965,24 @@ namespace OpenBabel
       FOR_ATOMS_OF_MOL (atom, mol) {
         idx = atom->GetIdx() - 1;
 
-	if (resids[idx] == 0) { // UNK
-	  FOR_NBORS_OF_ATOM (nbr, &*atom) {
-	    unsigned int idx2 = nbr->GetIdx() - 1;
-	    if (resids[idx2] != 0) { // !UNK
-	      resnos[idx] = resnos[idx2];
-	      resids[idx] = resids[idx2];
-	      changed = true;
+        if (resids[idx] == 0) { // UNK
+          FOR_NBORS_OF_ATOM (nbr, &*atom) {
+            unsigned int idx2 = nbr->GetIdx() - 1;
+            if (resids[idx2] != 0) { // !UNK
+              resnos[idx] = resnos[idx2];
+              resids[idx] = resids[idx2];
+              changed = true;
 	      
-	      bool addResidue = true;
-	      for (unsigned int i = 0; i < invalidResidues.size(); ++i)
-		if ( (invalidResidues[i].first == chains[idx2]) && 
-		     (invalidResidues[i].second == resnos[idx2]) )
+              bool addResidue = true;
+              for (unsigned int i = 0; i < invalidResidues.size(); ++i)
+                if ( (invalidResidues[i].first == chains[idx2]) && 
+                     (invalidResidues[i].second == resnos[idx2]) )
                   addResidue = false;
-	      if (addResidue)
-		invalidResidues.push_back(pair<char,short>(chains[idx2], resnos[idx2]));
-	    }
-	  }
-	}
+              if (addResidue)
+                invalidResidues.push_back(pair<char,short>(chains[idx2], resnos[idx2]));
+            }
+          }
+        }
         
       }
     } while (changed);
@@ -984,11 +990,11 @@ namespace OpenBabel
       FOR_ATOMS_OF_MOL (atom, mol) {
         idx = atom->GetIdx() - 1;
         if ( (invalidResidues[i].first == chains[idx]) && 
-           (invalidResidues[i].second == resnos[idx]) ) {
-	  hetflags[idx] = true;
-	  resids[idx] = 0; // UNK
-	  atomids[idx] = -1; 
-	}
+             (invalidResidues[i].second == resnos[idx]) ) {
+          hetflags[idx] = true;
+          resids[idx] = 0; // UNK
+          atomids[idx] = -1; 
+        }
       }
     }
     invalidResidues.clear();
@@ -999,27 +1005,27 @@ namespace OpenBabel
       idx = atom->GetIdx() - 1;
       
       if (atom->GetHvyValence() == 0) { 
-	chains[idx] = ' ';
-	resnos[idx] = resno;
+        chains[idx] = ' ';
+        resnos[idx] = resno;
         resno++;
       } else { 
         if (resids[idx] != 0) // UNK
-	  continue;
-	if (hetflags[idx])
-	  continue;
+          continue;
+        if (hetflags[idx])
+          continue;
 	
-	char chain = chains[idx];
+        char chain = chains[idx];
         FOR_ATOMS_OF_MOL (b, mol) {
-	  unsigned int idx2 = b->GetIdx() - 1;
-	  if (chains[idx2] == chain && !hetflags[idx2]) {
+          unsigned int idx2 = b->GetIdx() - 1;
+          if (chains[idx2] == chain && !hetflags[idx2]) {
             hetflags[idx2] = true;
-	    chains[idx2] = ' ';
-	    resnos[idx2] = resno;
-	    resids[idx2] = 2; // LIG
-	  }
-	}
+            chains[idx2] = ' ';
+            resnos[idx2] = resno;
+            resids[idx2] = 2; // LIG
+          }
+        }
         
-	resno++;
+        resno++;
       }
 
     }
@@ -1050,8 +1056,8 @@ namespace OpenBabel
       unsigned int idx = atom->GetIdx() - 1;
 
       if (atom->IsOxygen()) {
-          resids[idx]   = 1;
-          hetflags[idx] = true;
+        resids[idx]   = 1;
+        hetflags[idx] = true;
       }
     }
 
@@ -1106,11 +1112,11 @@ namespace OpenBabel
       }
     }
 
-   /* 
-    if( count == 1 )
-      for ( i = 0 ; i < numAtoms ; i++ )
-        chains[i] = ' ';
-   */
+    /* 
+       if( count == 1 )
+       for ( i = 0 ; i < numAtoms ; i++ )
+       chains[i] = ' ';
+    */
 
     return true;
   }
@@ -1153,7 +1159,7 @@ namespace OpenBabel
     bool foundNTer = false;
     for (i = 0 ; i < numAtoms; i++)
       if (bitmasks[i] & BitNTer)
-	foundNTer = true;
+        foundNTer = true;
     if (!foundNTer)
       for (i = 0 ; i < numAtoms; i++)
         if (bitmasks[i] & BitNAll)
@@ -1401,8 +1407,8 @@ namespace OpenBabel
             atomids[j]  = AI_C;
             bitmasks[k] = 0;
 
-              if (!visits[j])
-                TracePeptideChain(mol,j,r);
+            if (!visits[j])
+              TracePeptideChain(mol,j,r);
           }
         else /* count == 2 */
           {
@@ -1855,292 +1861,292 @@ namespace OpenBabel
     switch( toupper(ptr[0]) )
       {
       case(' '):  switch( ch )
-        {
-        case('B'):  return(  5 );
-        case('C'):  return(  6 );
-        case('D'):  return(  1 );
-        case('F'):  return(  9 );
-        case('H'):  return(  1 );
-        case('I'):  return( 53 );
-        case('K'):  return( 19 );
-        case('L'):  return(  1 );
-        case('N'):  return(  7 );
-        case('O'):  return(  8 );
-        case('P'):  return( 15 );
-        case('S'):  return( 16 );
-        case('U'):  return( 92 );
-        case('V'):  return( 23 );
-        case('W'):  return( 74 );
-        case('Y'):  return( 39 );
-        }
+          {
+          case('B'):  return(  5 );
+          case('C'):  return(  6 );
+          case('D'):  return(  1 );
+          case('F'):  return(  9 );
+          case('H'):  return(  1 );
+          case('I'):  return( 53 );
+          case('K'):  return( 19 );
+          case('L'):  return(  1 );
+          case('N'):  return(  7 );
+          case('O'):  return(  8 );
+          case('P'):  return( 15 );
+          case('S'):  return( 16 );
+          case('U'):  return( 92 );
+          case('V'):  return( 23 );
+          case('W'):  return( 74 );
+          case('Y'):  return( 39 );
+          }
         break;
 
       case('A'):  switch( ch )
-        {
-        case('C'):  return( 89 );
-        case('G'):  return( 47 );
-        case('L'):  return( 13 );
-        case('M'):  return( 95 );
-        case('R'):  return( 18 );
-        case('S'):  return( 33 );
-        case('T'):  return( 85 );
-        case('U'):  return( 79 );
-        }
+          {
+          case('C'):  return( 89 );
+          case('G'):  return( 47 );
+          case('L'):  return( 13 );
+          case('M'):  return( 95 );
+          case('R'):  return( 18 );
+          case('S'):  return( 33 );
+          case('T'):  return( 85 );
+          case('U'):  return( 79 );
+          }
         break;
 
       case('B'):  switch( ch )
-        {
-        case('A'):  return( 56 );
-        case('E'):  return(  4 );
-        case('I'):  return( 83 );
-        case('K'):  return( 97 );
-        case('R'):  return( 35 );
-        case(' '):  return(  5 );
-        }
+          {
+          case('A'):  return( 56 );
+          case('E'):  return(  4 );
+          case('I'):  return( 83 );
+          case('K'):  return( 97 );
+          case('R'):  return( 35 );
+          case(' '):  return(  5 );
+          }
         break;
 
       case('C'):  switch( ch )
-        {
-        case('A'):  return( 20 );
-        case('D'):  return( 48 );
-        case('E'):  return( 58 );
-        case('F'):  return( 98 );
-        case('L'):  return( 17 );
-        case('M'):  return( 96 );
-        case('O'):  return( 27 );
-        case('R'):  return( 24 );
-        case('S'):  return( 55 );
-        case('U'):  return( 29 );
-        case(' '):  return(  6 );
-        }
+          {
+          case('A'):  return( 20 );
+          case('D'):  return( 48 );
+          case('E'):  return( 58 );
+          case('F'):  return( 98 );
+          case('L'):  return( 17 );
+          case('M'):  return( 96 );
+          case('O'):  return( 27 );
+          case('R'):  return( 24 );
+          case('S'):  return( 55 );
+          case('U'):  return( 29 );
+          case(' '):  return(  6 );
+          }
         break;
 
       case('D'):  if( ch=='Y' )
-        {
-          return( 66 );
-        }
-      else if( ch==' ' )
-        return( 1 );
+          {
+            return( 66 );
+          }
+        else if( ch==' ' )
+          return( 1 );
         break;
 
       case('E'):  if( ch=='R' )
-        {
-          return( 68 );
-        }
-      else if( ch=='S' )
-        {
-          return( 99 );
-        }
-      else if( ch=='U' )
-        return( 63 );
+          {
+            return( 68 );
+          }
+        else if( ch=='S' )
+          {
+            return( 99 );
+          }
+        else if( ch=='U' )
+          return( 63 );
         break;
 
       case('F'):  if( ch=='E' )
-        {
-          return(  26 );
-        }
-      else if( ch=='M' )
-        {
-          return( 100 );
-        }
-      else if( ch=='R' )
-        {
-          return(  87 );
-        }
-      else if( ch=='F' )
-        return(   9 );
+          {
+            return(  26 );
+          }
+        else if( ch=='M' )
+          {
+            return( 100 );
+          }
+        else if( ch=='R' )
+          {
+            return(  87 );
+          }
+        else if( ch=='F' )
+          return(   9 );
         break;
 
       case('G'):  if( ch=='A' )
-        {
-          return( 31 );
-        }
-      else if( ch=='D' )
-        {
-          return( 64 );
-        }
-      else if( ch=='E' )
-        return( 32 );
+          {
+            return( 31 );
+          }
+        else if( ch=='D' )
+          {
+            return( 64 );
+          }
+        else if( ch=='E' )
+          return( 32 );
         break;
 
       case('H'):  if( ch=='E' )
-        {
-          return(  2 );
-        }
-      else if( ch=='F' )
-        {
-          return( 72 );
-        }
-      else if( ch=='G' )
-        {
-          return( 80 );
-        }
-      else if( ch=='O' )
-        {
-          return( 67 );
-        }
-      else if( ch==' ' )
-        return(  1 );
+          {
+            return(  2 );
+          }
+        else if( ch=='F' )
+          {
+            return( 72 );
+          }
+        else if( ch=='G' )
+          {
+            return( 80 );
+          }
+        else if( ch=='O' )
+          {
+            return( 67 );
+          }
+        else if( ch==' ' )
+          return(  1 );
         break;
 
       case('I'):  if( ch=='N' )
-        {
-          return( 49 );
-        }
-      else if( ch=='R' )
-        {
-          return( 77 );
-        }
-      else if( ch==' ' )
-        return( 53 );
+          {
+            return( 49 );
+          }
+        else if( ch=='R' )
+          {
+            return( 77 );
+          }
+        else if( ch==' ' )
+          return( 53 );
         break;
 
       case('K'):  if( ch=='R' )
-        {
-          return( 36 );
-        }
-      else if( ch==' ' )
-        return( 19 );
+          {
+            return( 36 );
+          }
+        else if( ch==' ' )
+          return( 19 );
         break;
 
       case('L'):  if( ch=='A' )
-        {
-          return(  57 );
-        }
-      else if( ch=='I' )
-        {
-          return(   3 );
-        }
-      else if( (ch=='R') || (ch=='W') )
-        {
-          return( 103 );
-        }
-      else if( ch=='U' )
-        {
-          return(  71 );
-        }
-      else if( ch==' ' )
-        return(   1 );
+          {
+            return(  57 );
+          }
+        else if( ch=='I' )
+          {
+            return(   3 );
+          }
+        else if( (ch=='R') || (ch=='W') )
+          {
+            return( 103 );
+          }
+        else if( ch=='U' )
+          {
+            return(  71 );
+          }
+        else if( ch==' ' )
+          return(   1 );
         break;
 
       case('M'):  if( ch=='D' )
-        {
-          return( 101 );
-        }
-      else if( ch=='G' )
-        {
-          return(  12 );
-        }
-      else if( ch=='N' )
-        {
-          return(  25 );
-        }
-      else if( ch=='O' )
-        return(  42 );
+          {
+            return( 101 );
+          }
+        else if( ch=='G' )
+          {
+            return(  12 );
+          }
+        else if( ch=='N' )
+          {
+            return(  25 );
+          }
+        else if( ch=='O' )
+          return(  42 );
         break;
 
       case('N'):  switch( ch )
-        {
-        case('A'):  return(  11 );
-        case('B'):  return(  41 );
-        case('D'):  return(  60 );
-        case('E'):  return(  10 );
-        case('I'):  return(  28 );
-        case('O'):  return( 102 );
-        case('P'):  return(  93 );
-        case(' '):  return(   7 );
-        }
+          {
+          case('A'):  return(  11 );
+          case('B'):  return(  41 );
+          case('D'):  return(  60 );
+          case('E'):  return(  10 );
+          case('I'):  return(  28 );
+          case('O'):  return( 102 );
+          case('P'):  return(  93 );
+          case(' '):  return(   7 );
+          }
         break;
 
       case('O'):  if( ch=='S' )
-        {
-          return( 76 );
-        }
-      else if( ch==' ' )
-        return( 8 );
+          {
+            return( 76 );
+          }
+        else if( ch==' ' )
+          return( 8 );
         break;
 
       case('P'):  switch( ch )
-        {
-        case('A'):  return( 91 );
-        case('B'):  return( 82 );
-        case('D'):  return( 46 );
-        case('M'):  return( 61 );
-        case('O'):  return( 84 );
-        case('R'):  return( 59 );
-        case('T'):  return( 78 );
-        case('U'):  return( 94 );
-        case(' '):  return( 15 );
-        }
+          {
+          case('A'):  return( 91 );
+          case('B'):  return( 82 );
+          case('D'):  return( 46 );
+          case('M'):  return( 61 );
+          case('O'):  return( 84 );
+          case('R'):  return( 59 );
+          case('T'):  return( 78 );
+          case('U'):  return( 94 );
+          case(' '):  return( 15 );
+          }
         break;
 
       case('R'):  switch( ch )
-        {
-        case('A'):  return( 88 );
-        case('B'):  return( 37 );
-        case('E'):  return( 75 );
-        case('H'):  return( 45 );
-        case('N'):  return( 86 );
-        case('U'):  return( 44 );
-        }
+          {
+          case('A'):  return( 88 );
+          case('B'):  return( 37 );
+          case('E'):  return( 75 );
+          case('H'):  return( 45 );
+          case('N'):  return( 86 );
+          case('U'):  return( 44 );
+          }
         break;
 
       case('S'):  switch( ch )
-        {
-        case('B'):  return( 51 );
-        case('C'):  return( 21 );
-        case('E'):  return( 34 );
-        case('I'):  return( 14 );
-        case('M'):  return( 62 );
-        case('N'):  return( 50 );
-        case('R'):  return( 38 );
-        case(' '):  return( 16 );
-        }
+          {
+          case('B'):  return( 51 );
+          case('C'):  return( 21 );
+          case('E'):  return( 34 );
+          case('I'):  return( 14 );
+          case('M'):  return( 62 );
+          case('N'):  return( 50 );
+          case('R'):  return( 38 );
+          case(' '):  return( 16 );
+          }
         break;
 
       case('T'):  switch( ch )
-        {
-        case('A'):  return( 73 );
-        case('B'):  return( 65 );
-        case('C'):  return( 43 );
-        case('E'):  return( 52 );
-        case('H'):  return( 90 );
-        case('I'):  return( 22 );
-        case('L'):  return( 81 );
-        case('M'):  return( 69 );
-        }
+          {
+          case('A'):  return( 73 );
+          case('B'):  return( 65 );
+          case('C'):  return( 43 );
+          case('E'):  return( 52 );
+          case('H'):  return( 90 );
+          case('I'):  return( 22 );
+          case('L'):  return( 81 );
+          case('M'):  return( 69 );
+          }
         break;
 
       case('U'):  if( ch==' ' )
-        return( 92 );
+          return( 92 );
         break;
 
       case('V'):  if( ch==' ' )
-        return( 23 );
+          return( 23 );
         break;
 
       case('W'):  if( ch==' ' )
-        return( 74 );
+          return( 74 );
         break;
 
       case('X'):  if( ch=='E' )
-        return( 54 );
+          return( 54 );
         break;
 
       case('Y'):  if( ch=='B' )
-        {
-          return( 70 );
-        }
-      else if( ch==' ' )
-        return( 39 );
+          {
+            return( 70 );
+          }
+        else if( ch==' ' )
+          return( 39 );
         break;
 
       case('Z'):  if( ch=='N' )
-        {
-          return( 30 );
-        }
-      else if( ch=='R' )
-        return( 40 );
+          {
+            return( 30 );
+          }
+        else if( ch=='R' )
+          return( 40 );
         break;
       }
 

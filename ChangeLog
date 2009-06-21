@@ -1,5 +1,9 @@
 2009-06-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/chains.cpp (OpenBabel): Fix for PR#2691618. When writing
+	hydrogen atoms without chain names, make sure there are never
+	spaces.
+
 	* src/mol.cpp, src/atom.cpp: Test for assigning atoms and
 	molecules to themselves. PR#2698096. Thanks to Pierre-Louis.
 
