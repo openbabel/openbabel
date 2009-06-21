@@ -1161,7 +1161,7 @@ namespace OpenBabel
   //OBChiralData for all atoms copied, TV 2008
   {
     if (this == &source)
-      return this;
+      return *this;
 
     OBMol &src = (OBMol &)source;
     vector<OBAtom*>::iterator i;
