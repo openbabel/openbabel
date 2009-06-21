@@ -403,7 +403,7 @@ namespace OpenBabel
                   at->SetData(dp);
                   if(!pConv->IsOption("v",OBConversion::INOPTIONS)) {
                     double pchg = atof(val.c_str());
-                    if(fabs(pchg)<7.0)
+                    if(fabs(pchg)<4.0)
                       at->SetPartialCharge(pchg);
                   }
                 }
