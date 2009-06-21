@@ -1,3 +1,11 @@
+2009-06-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/kekulize.cpp: Additional cleanups. Should be more accurate
+	across a wide range of ring systems. Fixes PR# 2705497 and
+	PR#1814248.
+
+	* test/files/nci.smi: Add test cases for PR above.
+
 2009-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/kekulize.cpp (expandcycle): Rewritten as cleaner recursive

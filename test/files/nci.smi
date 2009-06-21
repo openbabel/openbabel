@@ -999,3 +999,5 @@ N(CCC([N+](=O)[O-])(C)C)(CC(=O)O)CC(=O)O	1044
 C(CCN)([N+](=O)[O-])(C)C	1045
 [13C] Extra
 [13C]Cl Isotope Test2
+c1(NC(C2CC2)=O)nc2c3c(cccc3)CCc2cn1 PR1814248
+c12-c3c(cc(N)cc3)Cc1cccc2 PR2705497
