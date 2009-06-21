@@ -1160,6 +1160,9 @@ namespace OpenBabel
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //OBChiralData for all atoms copied, TV 2008
   {
+    if (this == &source)
+      return this;
+
     OBMol &src = (OBMol &)source;
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;

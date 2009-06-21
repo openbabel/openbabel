@@ -1,5 +1,8 @@
 2009-06-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/mol.cpp, src/atom.cpp: Test for assigning atoms and
+	molecules to themselves. PR#2698096. Thanks to Pierre-Louis.
+
 	* src/bondtyper.cpp: Add oxime functional group assignment:
 	PR#2793910.
 
