@@ -33,19 +33,12 @@ using namespace std;
 namespace OpenBabel 
 {
 
-  enum CrossedRootForFusedRing {
-    no,
-    yes,
-    never
-  };
-
   // Modified internal-only version
   // Keep track of which rings contain *all* atoms in the cycle
   // This method essentially does a modified depth-first search to find
   //  large aromatic cycles
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit, 
-                    int rootIdx, int prevAtomIdx = -1, CrossedRootForFusedRing crossedRoot = never,
-                    int depth = 19);
+                    int rootIdx, int prevAtomIdx = -1, int depth = 19);
 
   ///////////////////////////////////////////////////////////////////////////////
   //! \brief Kekulize aromatic rings without using implicit valence
@@ -101,10 +94,8 @@ namespace OpenBabel
       
         avisit.SetBitOn(i);
 
-        // Check if we should allow "fused ring" analysis, where the path can go through the root
-        // We'll only do this if the root atom is in 3 or more rings:
-        //   then it's impossible to get all fused rings without passing through the root
-        CrossedRootForFusedRing preventFusedRing = never;
+        // Check if we should allow "fused ring" analysis -- we fall back to expanding as needed
+        // We'll only do this if the root atom is in 3 or more rings.
         vector<OBRing*>::iterator r;
         vector<OBRing*> ringList = GetSSSR();
         int ringCount = 0; // number of rings this atom is in
@@ -113,11 +104,12 @@ namespace OpenBabel
             ringCount++;
         }
         if (ringCount >= 3)
-          preventFusedRing = no;
-
-        int depth = expand_cycle(this, atom, avisit, cvisit, atom->GetIdx(), -1, preventFusedRing);
-        if (depth <= 0)
-          continue; // no valid cycle from this atom
+          expandcycle(atom, avisit);
+        else {
+          int depth = expand_cycle(this, atom, avisit, cvisit, atom->GetIdx());
+          if (depth <= 0)
+            continue; // no valid cycle from this atom
+        }
 
         // Check to see that at least 2 bonds are included
         // e.g.           __
@@ -590,22 +582,36 @@ namespace OpenBabel
   }
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
-  bool OBMol::expandcycle(OBAtom *, OBBitVec &, OBAtom *, int)
+  bool OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit, OBAtom *, int)
   {
-    return false; // use function below
+    OBAtom *nbr;
+    //  OBBond *bond;
+    std::vector<OBBond*>::iterator i;
+    int natom;
+    //for each neighbour atom test if it is in the aromatic ring
+    for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
+      {
+        natom = nbr->GetIdx();
+        // if (!avisit[natom] && nbr->IsAromatic() && ((OBBond*) *i)->IsAromatic()) {
+        if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5 
+            && ((OBBond*) *i)->IsInRing()) {
+          avisit.SetBitOn(natom);
+          expandcycle(nbr, avisit);
+        }
+      }
+
+    return true;
   }
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit, 
-                    int rootIdx, int prevAtomIdx, CrossedRootForFusedRing crossedRoot, int depth)
+                    int rootIdx, int prevAtomIdx, int depth)
   {
     // early termination
     if (depth < 0)
       return depth;
 
     //    cout << " expand_cycle: " << atom->GetIdx() << " depth " << depth << endl;
-//     if (fusedRing)
-//       cout << "fused" << endl;
 
     OBAtom *nbr;
     std::vector<OBBond*>::iterator i;
@@ -615,8 +621,6 @@ namespace OpenBabel
     // - If a neighboring atom is non-aromatic, we ignore it
     // - If the atom is in cvisit, it's already be assigned. Ignore it.
     // - If the atom is the previous step in the path, ignore it.
-    // Fused rings make things complicated
-    // - We can go through the root atom, but we'll set the fusedRing parameter
     // Otherwise recurse: look for a large cycle back to the root
     int trialScore, bestScore = 1000;
     OBBitVec trialMatch, bestMatch; // the best path we've found so far
@@ -624,8 +628,6 @@ namespace OpenBabel
       {
         natom = nbr->GetIdx();
         //        cout << " checking: " << natom << " bo: " << (*i)->GetBO() << endl;
-        //        if (cvisit[natom])
-        //          continue; // this atom already has an assigned kekule form, check others
         if ((*i)->GetBO() != 5)
           continue; // this is a non-aromatic bond, skip it
         if (natom == prevAtomIdx) {
@@ -634,33 +636,19 @@ namespace OpenBabel
         }
 
         if (avisit[natom] && natom != rootIdx) {
-          if (crossedRoot == never || crossedRoot == no)
             continue; // skip this path, we should try to get to the root again
-
-          // this cycle is perfectly acceptable, so save it and don't recurse
-          bestMatch = avisit;
-          bestMatch.SetBitOn(natom);
-          bestScore = depth;
-          continue;
         }
 
-        // Attempt to cross the root, e.g., the root is a bridgehead in a fused ring system
-        CrossedRootForFusedRing newCR = crossedRoot;
         if (natom == rootIdx) {
           bestMatch = avisit;
           bestMatch.SetBitOn(natom);
           bestScore = depth;
-          if (crossedRoot == never || crossedRoot == yes) // we've already come through the root
-            continue; // don't recurse further
-
-          // we'll try a tiny bit more recursion
-          newCR = yes;
+          continue; // don't recurse further
         }
 
         trialMatch = avisit;
         trialMatch.SetBitOn(natom);
-        trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, rootIdx, atom->GetIdx(), 
-                                  newCR, depth - 1);
+        trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, rootIdx, atom->GetIdx(), depth - 1);
         if (trialScore > 0 && trialScore < bestScore) { // we found a larger, valid cycle
           //          cout << " score: " << trialScore << endl;
           bestMatch = trialMatch;

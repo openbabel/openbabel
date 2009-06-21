@@ -5,7 +5,7 @@
 
 	* src/kekulize.cpp: Additional cleanups. Should be more accurate
 	across a wide range of ring systems. Fixes PR# 2705497 and
-	PR#1814248.
+	PR#1814248. For fused rings (e.g., C60) uses old algorithm.
 
 	* test/files/nci.smi: Add test cases for PR above.
 
