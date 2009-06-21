@@ -233,6 +233,33 @@ namespace OpenBabel
           }      
       } // Isocyanate
 
+    // oxime C=S
+    OBSmartsPattern oxime; oxime.Init("[#6D3][#7D2][#8D2]");
+  
+    if (oxime.Match(mol))
+      {
+        mlist = oxime.GetUMapList();
+        for (l = mlist.begin(); l != mlist.end(); ++l)
+          {
+            a1 = mol.GetAtom((*l)[0]);
+            a2 = mol.GetAtom((*l)[1]);
+	   
+            angle = a2->AverageBondAngle();
+            dist1 = a1->GetDistance(a2);
+	    
+            // thione geometries ?
+            if (angle > 110 && angle < 150 && dist1 < 1.4) { 
+	        
+              if ( !a1->HasDoubleBond() ) {// no double bond already assigned
+                b1 = a1->GetBond(a2); 
+
+                if (!b1 ) continue;
+                b1->SetBO(2);
+              }
+            }
+          }
+      } // oxime
+
   }
 
 } //namespace OpenBabel;

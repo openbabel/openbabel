@@ -1,5 +1,8 @@
 2009-06-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/bondtyper.cpp: Add oxime functional group assignment:
+	PR#2793910.
+
 	* src/kekulize.cpp: Additional cleanups. Should be more accurate
 	across a wide range of ring systems. Fixes PR# 2705497 and
 	PR#1814248.
