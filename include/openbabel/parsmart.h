@@ -250,7 +250,7 @@ namespace OpenBabel
     //! To get the number of unique SMARTS matches, query GetUMapList()->size()
     unsigned int NumMatches() const
     {
-      return (unsigned int)_mlist.size();
+      return static_cast<unsigned int>(_mlist.size());
     }
 
     //! \return the entire list of non-unique matches for this pattern
