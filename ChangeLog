@@ -9,6 +9,9 @@
 
 	* test/files/nci.smi: Add test cases for PR above.
 
+	* src/phmodel.cpp: Fix PR#2802980. Allow single-atom charge
+	transformations.
+
 2009-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/kekulize.cpp (expandcycle): Rewritten as cleaner recursive
