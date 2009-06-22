@@ -1,6 +1,11 @@
+2009-06-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/generic.cpp: Fix unit cell when setting possibly zero
+	translation vectors ( e.g. PR#1961604).
+
 2009-06-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
-	* src/chains.cpp (OpenBabel): Fix for PR#2691618. When writing
+	* src/chains.cpp: Fix for PR#2691618. When writing
 	hydrogen atoms without chain names, make sure there are never
 	spaces.
 

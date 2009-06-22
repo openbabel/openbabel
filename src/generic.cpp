@@ -299,32 +299,37 @@ namespace OpenBabel
   */
   void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
   {
-    bool threeDimensions = true;
-    _a = v1.length();
-    _b = v2.length();
-    _c = v3.length();
-    // Sanity checks for 1D or 2D translation
-    if (IsNearZero(_c)) { // 2D
-      _c = 0.0;
-      _beta = 0.0;
-      _gamma = 0.0;
-      threeDimensions = false;
-    }
-    if (IsNearZero(_b)) { // 1D
-      _b = 0.0;
-      _alpha = 0.0;
-      threeDimensions = false;
-    }
-    
-    if (threeDimensions) {
-      _alpha = vectorAngle(v2, v3);
-      _beta = vectorAngle(v1, v3);
-      _gamma = vectorAngle(v1, v2);
-    }
-    
     _v1 = v1;
     _v2 = v2;
     _v3 = v3;
+
+    _a = _v1.length();
+    _b = _v2.length();
+    _c = _v3.length();
+
+    // For PR#1961604 -- somewhat contrived example
+    if (IsNearZero(_a) && !IsNearZero(_c)) {
+      _v1 = _v3; // we'll reset _v3 below
+      _a = _c;
+      _c = 0.0;
+    }
+
+    // Sanity checks for 1D or 2D translation
+    if (IsNearZero(_b)) { // 1D
+      _v2.Set(v1.y(), -v1.x(), v1.z()); // rotate base vector by 90 degrees
+      _b = 999.999;
+      _v2 = _b * _v2.normalize(); // set to a large displacement
+    }
+
+    if (IsNearZero(_c)) { // 2D or 1D
+      _v3 = cross(_v1, _v2);
+      _c = 999.999;
+      _v3 = _c * _v3.normalize(); // set to a large displacement
+    }
+    
+    _alpha = vectorAngle(_v2, _v3);
+    _beta =  vectorAngle(_v1, _v3);
+    _gamma = vectorAngle(_v1, _v2);
   }
 
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertNotionalIntoCartesianCoordinates">blue-obelisk:convertNotionalIntoCartesianCoordinates</a>
