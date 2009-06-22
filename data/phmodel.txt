@@ -75,27 +75,34 @@ TRANSFORM O=P([*D2,*D3])([OD1:1])[OD1:2] >> O=P([*D2,*D3])([O-:1])[O-:2]	2.12
 #	Amino acids
 #									pKa sidechain
 # aspartic acid
-#TRANSFORM O=C(O)C(N)CC(=O)O[#1:1] >> O=C(O)C(N)CC(=O)O			3.8
+#TRANSFORM O=CC(N)CC(=O)O[#1:1] >> O=CC(N)CC(=O)O			3.8
 TRANSFORM O=C(O)C(N)CC(=O)[OD1:1] >> O=C(O)C(N)CC(=O)[O-:1]		3.8 
+TRANSFORM O=C(NCC=O)C(N)CC(=O)[OD1:1] >> O=C(NCC=O)C(N)CC(=O)[O-:1]     3.8 
 
 # glutamic acid
-#TRANSFORM O=C(O)C(N)CCC(=O)O[#1:1] >> O=C(O)C(N)CCC(=O)O		4.3
+#TRANSFORM O=CC(N)CCC(=O)O[#1:1] >> O=CC(N)CCC(=O)O		        4.3
 TRANSFORM O=C(O)C(N)CCC(=O)[OD1:1] >> O=C(O)C(N)CCC(=O)[O-:1]		5.0
+TRANSFORM O=C(NCC=O)C(N)CCC(=O)[OD1:1] >> O=C(NCC=O)C(N)CCC(=O)[O-:1]	5.0
 
 # arginine
 TRANSFORM O=C(O)C(N)CCCNC(N)=[N:1] >> O=C(O)C(N)CCCNC(N)=[N+:1] 	12.0
+TRANSFORM O=C(NCC=O)C(N)CCCNC(N)=[N:1] >> O=C(NCC=O)C(N)CCCNC(N)=[N+:1] 12.0
 
 # lysine
 TRANSFORM O=C(O)C(N)CCCC[N:1] >> O=C(O)C(N)CCCC[N+:1] 			10.5
+TRANSFORM O=C(NCC=O)C(N)CCCC[N:1] >> O=C(NCC=O)C(N)CCCC[N+:1] 	        10.5
 
 # histidine
-TRANSFORM O=C(O)C(N)Cc1nc[n:1]c1  >> O=C(O)C(N)Cc1nc[n+:1]c1		6.08
+TRANSFORM O=C(O)C(N)Cc1nc[n:1]c1  >> O=C(O)C(N)Cc1nc[n+:1]c1            6.08
+TRANSFORM O=C(NCC=O)C(N)Cc1nc[n:1]c1  >> O=C(NCC=O)C(N)Cc1nc[n+:1]c1    6.08
 
 # cysteine
-TRANSFORM O=C(O)C(N)C[S:1]  >> O=C(O)C(N)C[S-:1]			8.28
+TRANSFORM O=C(O)C(N)C[S:1]  >> O=C(O)C(N)C[S-:1]			 8.28
+TRANSFORM O=C(NCC=O)C(N)C[S:1]  >> O=C(NCC=O)C(N)C[S-:1]		 8.28
 
 # tyrosine
-TRANSFORM O=C(O)C(N)Cc1ccc([O:1])cc1  >> O=C(O)C(N)Cc1ccc([O-:1])cc1	10.1
+TRANSFORM O=C(O)C(N)Cc1ccc([O:1])cc1  >> O=C(O)C(N)Cc1ccc([O-:1])cc1	        10.1
+TRANSFORM O=C(NCC=O)C(N)Cc1ccc([O:1])cc1  >> O=C(NCC=O)C(N)Cc1ccc([O-:1])cc1    10.1
 
 # old:
 # histidine
