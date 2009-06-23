@@ -1153,7 +1153,11 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp \
 @BUILD_SHARED_FALSE@	rxnformat.cpp rsmiformat.cpp
 
-@BUILD_SHARED_TRUE@formatsdir = $(pkglibdir)/$(VERSION)
+#MinGW: install with babel.exe as *.obf files
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@formatsdir = $(bindir)
+
+# First declare where these will be installed
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_TRUE@formatsdir = $(pkglibdir)/$(VERSION)
 @BUILD_SHARED_TRUE@formats_LTLIBRARIES = APIInterface.la CSRformat.la \
 @BUILD_SHARED_TRUE@	PQSformat.la MCDLformat.la alchemyformat.la \
 @BUILD_SHARED_TRUE@	acrformat.la adfformat.la amberformat.la \
@@ -1957,6 +1961,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 @BUILD_PCH_FALSE@clean-local:
+@BUILD_SHARED_FALSE@install-exec-hook:
+@BUILD_SHARED_UNIX_TRUE@install-exec-hook:
 clean: clean-recursive
 
 clean-am: clean-formatsLTLIBRARIES clean-generic clean-libtool \
@@ -1987,7 +1993,8 @@ install-dvi: install-dvi-recursive
 install-dvi-am:
 
 install-exec-am:
-
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-exec-hook
 install-html: install-html-recursive
 
 install-html-am:
@@ -2029,8 +2036,8 @@ ps-am:
 uninstall-am: uninstall-formatsLTLIBRARIES
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) all check \
-	ctags-recursive install install-am install-strip \
-	tags-recursive
+	ctags-recursive install install-am install-exec-am \
+	install-strip tags-recursive
 
 .PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
 	all all-am check check-am clean clean-formatsLTLIBRARIES \
@@ -2039,7 +2046,7 @@ uninstall-am: uninstall-formatsLTLIBRARIES
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am \
+	install-dvi-am install-exec install-exec-am install-exec-hook \
 	install-formatsLTLIBRARIES install-html install-html-am \
 	install-info install-info-am install-man install-pdf \
 	install-pdf-am install-ps install-ps-am install-strip \
@@ -2061,6 +2068,11 @@ uninstall-am: uninstall-formatsLTLIBRARIES
 @BUILD_PCH_TRUE@	$(CXX) $(PCHFLAGS) $<
 @BUILD_PCH_TRUE@clean-local:
 @BUILD_PCH_TRUE@	-rm -f all.h.gch
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@install-exec-hook:
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	(cd $(DESTDIR)$(bindir) && \
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	for format in APIInterface.dll *format.dll; do \
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@		mv $(format) $(format%%.dll).obf \
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	done
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

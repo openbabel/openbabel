@@ -74,7 +74,20 @@ libformats_la_SOURCES = \
 	rxnformat.cpp rsmiformat.cpp
 
 else BUILD_SHARED
+
+# First declare where these will be installed
+if BUILD_SHARED_UNIX
 formatsdir = $(pkglibdir)/$(VERSION)
+else
+#MinGW: install with babel.exe as *.obf files
+formatsdir = $(bindir)
+install-exec-hook:
+	(cd $(DESTDIR)$(bindir) && \
+	for format in APIInterface.dll *format.dll; do \
+		mv $(format) $(format%%.dll).obf \
+	done
+endif
+
 formats_LTLIBRARIES = \
 	APIInterface.la \
 	CSRformat.la PQSformat.la MCDLformat.la alchemyformat.la \
