@@ -2071,7 +2071,7 @@ uninstall-am: uninstall-formatsLTLIBRARIES
 @BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@install-exec-hook:
 @BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	(cd $(DESTDIR)$(bindir) && \
 @BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	for format in APIInterface.dll *format.dll; do \
-@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@		mv $(format) $(format%%.dll).obf \
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@		mv $$(format) $$(format%%.dll).obf \
 @BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	done
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
