@@ -7,7 +7,7 @@ Some portions Copyright (C) 2004 by Chris Morley
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,9 +35,9 @@ using namespace std;
 
 namespace OpenBabel {
 
-/*******************************************
-             OBStereo.h
-********************************************/
+  /*******************************************
+            OBStereo.h
+  ********************************************/
 
   struct OBStereo 
   {
@@ -57,9 +57,9 @@ namespace OpenBabel {
       ExtendedTetrahedral = (1<<8), //!< extended tetrahedral
       TetreNonPlanar      = Tetrahedral | ExtendedTetrahedral
       /*
-      TrigonalBipyramidal = 4, //!< Trigonal-bipyramidal stereochemistry
-      Octahedral          = 5, //!< Octahedral stereochemistry
-      DoubleBond          = 6, //!< Double bond stereochemistry
+        TrigonalBipyramidal = 4, //!< Trigonal-bipyramidal stereochemistry
+        Octahedral          = 5, //!< Octahedral stereochemistry
+        DoubleBond          = 6, //!< Double bond stereochemistry
       */
     };
 
@@ -78,10 +78,10 @@ namespace OpenBabel {
      * setting/getting reference ids.
      */
     enum View
-    {
-      ViewFrom = 1, //!< view from the atom (id parameter) towards the center atom
-      ViewTowards = 2 //!< view from center atom towards the atom (id paramter)
-    };
+      {
+        ViewFrom = 1, //!< view from the atom (id parameter) towards the center atom
+        ViewTowards = 2 //!< view from center atom towards the atom (id paramter)
+      };
 
     /**
      * Windings used by OBTetraNonPlanar subclasses for 
@@ -104,7 +104,7 @@ namespace OpenBabel {
      * Create a std::vector<unsigned long> filled with @p id1, @p id2, @p id3 & @p id4.
      */
     static std::vector<unsigned long> MakeRefs(unsigned long id1, unsigned long id2,
-        unsigned long id3, unsigned long id4 = NoId)
+                                               unsigned long id3, unsigned long id4 = NoId)
     {
       std::vector<unsigned long> refs(3);
       refs[0] = id1;
@@ -120,71 +120,71 @@ namespace OpenBabel {
   class OBMol;
   class OBStereoBase
   {
-    public:
-      OBStereoBase(OBMol *mol) : m_mol(mol) {}
-      virtual ~OBStereoBase() { m_mol = 0; }
-      /**
-       * Get the molecule. This can be used by subclasses when more
-       * information is needed (e.g. OBCisTransStereo::GetCisRef, ...).
-       */
-      OBMol* GetMolecule() const { return m_mol; }
-      /**
-       * Reimplemented by subclasses to return type.
-       */
-      virtual OBStereo::Type GetType() const = 0;
-    private:
-      OBMol *m_mol; //!< the parent molecule
+  public:
+    OBStereoBase(OBMol *mol) : m_mol(mol) {}
+    virtual ~OBStereoBase() { m_mol = 0; }
+    /**
+     * Get the molecule. This can be used by subclasses when more
+     * information is needed (e.g. OBCisTransStereo::GetCisRef, ...).
+     */
+    OBMol* GetMolecule() const { return m_mol; }
+    /**
+     * Reimplemented by subclasses to return type.
+     */
+    virtual OBStereo::Type GetType() const = 0;
+  private:
+    OBMol *m_mol; //!< the parent molecule
   };
 
 
-/*******************************************
-             OBTetraPlanarStereo.h
-********************************************/
+  /*******************************************
+            OBTetraPlanarStereo.h
+  ********************************************/
 
   class OBTetraPlanarStereo : public OBStereoBase
   {
-    public:
-      OBTetraPlanarStereo(OBMol *mol);
-      virtual ~OBTetraPlanarStereo();
+  public:
+    OBTetraPlanarStereo(OBMol *mol);
+    virtual ~OBTetraPlanarStereo();
 
-      /**
-       * Subclasses must implement the SetRefs method.
-       */
-      virtual void SetRefs(const std::vector<unsigned long> &refs, 
-        OBStereo::Shape shape = OBStereo::ShapeU) = 0;
-      /**
-       * Subclasses must implement the GetRefs method.
-       */
-      virtual std::vector<unsigned long> GetRefs(OBStereo::Shape shape = OBStereo::ShapeU) const = 0;
-      /**
-       * Subclasses must implement the Compare method to check 
-       * if @p refs match the stored stereochemistry.
-       */
-      virtual bool Compare(const std::vector<unsigned long> &refs, 
-          OBStereo::Shape shape) const = 0;
-      /**
-       * Convert a sequence of reference ids from U, Z or 4 shape to 
-       * internal U shape.
-       * @note this method does nothing if a U shape is given as input.
-       */
-      static std::vector<unsigned long> ToInternal(const std::vector<unsigned long> &refs, 
-          OBStereo::Shape shape);
-      /**
-       * Convert a sequence of reference ids from internal U shape 
-       * to U, Z or 4 shape.
-       * @note this method does nothing if a U shape is given as input.
-       */
-      static std::vector<unsigned long> ToShape(const std::vector<unsigned long> &refs, 
-          OBStereo::Shape shape);
+    /**
+     * Subclasses must implement the SetRefs method.
+     */
+    virtual void SetRefs(const std::vector<unsigned long> &refs, 
+                         OBStereo::Shape shape = OBStereo::ShapeU) = 0;
+    /**
+     * Subclasses must implement the GetRefs method.
+     */
+    virtual std::vector<unsigned long> GetRefs(OBStereo::Shape shape = OBStereo::ShapeU) const = 0;
+    /**
+     * Subclasses must implement the Compare method to check 
+     * if @p refs match the stored stereochemistry.
+     */
+    virtual bool Compare(const std::vector<unsigned long> &refs, 
+                         OBStereo::Shape shape) const = 0;
+    /**
+     * Convert a sequence of reference ids from U, Z or 4 shape to 
+     * internal U shape.
+     * @note this method does nothing if a U shape is given as input.
+     */
+    static std::vector<unsigned long> ToInternal(const std::vector<unsigned long> &refs, 
+                                                 OBStereo::Shape shape);
+    /**
+     * Convert a sequence of reference ids from internal U shape 
+     * to U, Z or 4 shape.
+     * @note this method does nothing if a U shape is given as input.
+     */
+    static std::vector<unsigned long> ToShape(const std::vector<unsigned long> &refs, 
+                                              OBStereo::Shape shape);
   };
 
 
-/*******************************************
-             OBCisTransStereo.h
-********************************************/
+  /*******************************************
+            OBCisTransStereo.h
+  ********************************************/
 
-class OBCisTransStereo : public OBTetraPlanarStereo
-{
+  class OBCisTransStereo : public OBTetraPlanarStereo
+  {
   public:
     OBCisTransStereo(OBMol *mol);
     virtual ~OBCisTransStereo();
@@ -233,7 +233,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
      * @image html SPshapes.png
      */
     void SetRefs(const std::vector<unsigned long> &refs, 
-        OBStereo::Shape shape = OBStereo::ShapeU);
+                 OBStereo::Shape shape = OBStereo::ShapeU);
     /**
      * Get a list of the 4 reference ids. The ids occur in the sequence 
      * following the specified shape.
@@ -302,21 +302,21 @@ class OBCisTransStereo : public OBTetraPlanarStereo
      */
     bool Compare(const std::vector<unsigned long> &refs, OBStereo::Shape shape) const;
     //@}
- 
+
 
   private:
 
     unsigned long m_begin; //!< the center/chiral atom
     unsigned long m_end; //!< the center/chiral atom
     std::vector<unsigned long> m_refs; //!< the 4 clockwise atom refs
-};
+  };
 
 
-/*******************************************
-             OBTetraPlanarStereo
-********************************************/
+  /*******************************************
+            OBTetraPlanarStereo
+  ********************************************/
 
-    OBTetraPlanarStereo::OBTetraPlanarStereo(OBMol *mol) : OBStereoBase(mol)
+  OBTetraPlanarStereo::OBTetraPlanarStereo(OBMol *mol) : OBStereoBase(mol)
   {
   }
 
@@ -325,68 +325,68 @@ class OBCisTransStereo : public OBTetraPlanarStereo
   }
 
   std::vector<unsigned long> OBTetraPlanarStereo::ToInternal(const std::vector<unsigned long> &refs, 
-      OBStereo::Shape shape)
+                                                             OBStereo::Shape shape)
   {
     //assert( refs.size() == 4 );
     std::vector<unsigned long> result(refs);
 
     switch (shape) {
-      case OBStereo::ShapeU:
-        // same as internal, just copy
-        return result;
-      case OBStereo::ShapeZ:
-        // normalize to U shape
-        result[1] = refs.at(2);
-        result[2] = refs.at(3);
-        result[3] = refs.at(1);
-        return result;
-      case OBStereo::Shape4:
-        // normalize to U shape
-        result[1] = refs.at(2);
-        result[2] = refs.at(1);
-        return result;
+    case OBStereo::ShapeU:
+      // same as internal, just copy
+      return result;
+    case OBStereo::ShapeZ:
+      // normalize to U shape
+      result[1] = refs.at(2);
+      result[2] = refs.at(3);
+      result[3] = refs.at(1);
+      return result;
+    case OBStereo::Shape4:
+      // normalize to U shape
+      result[1] = refs.at(2);
+      result[2] = refs.at(1);
+      return result;
     }
-  
+
   }
-  
+
   std::vector<unsigned long> OBTetraPlanarStereo::ToShape(const std::vector<unsigned long> &refs, 
-      OBStereo::Shape shape)
+                                                          OBStereo::Shape shape)
   {
     //assert( refs.size() == 4 );
     std::vector<unsigned long> result(refs);
 
     switch (shape) {
-      case OBStereo::ShapeU:
-        // same as internal, just copy
-        return result;
-      case OBStereo::ShapeZ:
-        // convert to U shape
-        result[1] = refs.at(3);
-        result[2] = refs.at(1);
-        result[3] = refs.at(2);
-        return result;
-      case OBStereo::Shape4:
-        // normalize to U shape
-        result[1] = refs.at(2);
-        result[2] = refs.at(1);
-        return result;
+    case OBStereo::ShapeU:
+      // same as internal, just copy
+      return result;
+    case OBStereo::ShapeZ:
+      // convert to U shape
+      result[1] = refs.at(3);
+      result[2] = refs.at(1);
+      result[3] = refs.at(2);
+      return result;
+    case OBStereo::Shape4:
+      // normalize to U shape
+      result[1] = refs.at(2);
+      result[2] = refs.at(1);
+      return result;
     }
 
   }
- 
 
-/*******************************************
-             OBCisTransStereo
-********************************************/
+
+  /*******************************************
+            OBCisTransStereo
+  ********************************************/
 
   OBCisTransStereo::OBCisTransStereo(OBMol *mol) : OBTetraPlanarStereo(mol), 
-      m_begin(OBStereo::NoId), m_end(OBStereo::NoId)
+                                                   m_begin(OBStereo::NoId), m_end(OBStereo::NoId)
   {
   }
 
   OBCisTransStereo::~OBCisTransStereo()
   {
-  
+
   }
 
   bool OBCisTransStereo::IsValid() const
@@ -403,17 +403,17 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     m_begin = begin;
     m_end = end;
   }
-    
+
   unsigned long OBCisTransStereo::GetBegin() const
   {
     return m_begin;
   }
- 
+
   void OBCisTransStereo::SetBegin(unsigned long id)
   {
     m_begin = id;
   }
-  
+
   unsigned long OBCisTransStereo::GetEnd() const
   {
     return m_end;
@@ -423,31 +423,31 @@ class OBCisTransStereo : public OBTetraPlanarStereo
   {
     m_end = id;
   }
- 
+
   void OBCisTransStereo::SetRefs(const std::vector<unsigned long> &refs, 
-      OBStereo::Shape shape)
+                                 OBStereo::Shape shape)
   {
     //assert( refs.size() == 4 );
     m_refs = OBTetraPlanarStereo::ToInternal(refs, shape);
   }
-  
+
   std::vector<unsigned long> OBCisTransStereo::GetRefs(OBStereo::Shape shape) const
   {
     if (m_refs.empty())
       return m_refs;
     return OBTetraPlanarStereo::ToShape(m_refs, shape);
   }
-  
+
   bool OBCisTransStereo::IsTrans(unsigned long id1, unsigned long id2) const
   {
     return (GetTransRef(id1) == id2);
   }
-  
+
   bool OBCisTransStereo::IsCis(unsigned long id1, unsigned long id2) const
   {
     return (GetCisRef(id1) == id2);
   }
- 
+
   bool OBCisTransStereo::Compare(const std::vector<unsigned long> &refs, OBStereo::Shape shape) const
   {
     if (!IsValid() || (refs.size() != 4))
@@ -491,7 +491,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
           return OBStereo::ImplicitId;
         if (IsOnSameAtom(id, transId)) {
           obErrorLog.ThrowError(__FUNCTION__, 
-              "OBCisTransStereo::GetTransRef : References don't match bond orientation", obError);
+                                "OBCisTransStereo::GetTransRef : References don't match bond orientation", obError);
           return OBStereo::NoId;
         }
         return transId;
@@ -529,7 +529,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         }
 
         obErrorLog.ThrowError(__FUNCTION__, 
-            "OBCisTransStereo::GetTransRef : References don't match bond orientation", obError);
+                              "OBCisTransStereo::GetTransRef : References don't match bond orientation", obError);
         return OBStereo::NoId;
       }
     }
@@ -537,7 +537,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     // id not found
     return OBStereo::NoId;
   }
-    
+
   bool OBCisTransStereo::IsOnSameAtom(unsigned long id1, unsigned long id2) const
   {
     const OBMol *mol = GetMolecule();
@@ -559,14 +559,14 @@ class OBCisTransStereo : public OBTetraPlanarStereo
 
     OBAtom *a = mol->GetAtom(id1);
     OBAtom *b = mol->GetAtom(id2);
-    
+
     if (a && b) {
       // both on begin atom?
       if (a->IsConnected(begin) && b->IsConnected(begin))
-          return true;
+        return true;
       // both on end atom?
       if (a->IsConnected(end) && b->IsConnected(end))
-          return true;
+        return true;
       return false;
     } else {
       if (a) {
@@ -578,12 +578,12 @@ class OBCisTransStereo : public OBTetraPlanarStereo
           // check if the end atom really is missing an atom
           if (end->GetValence() != 2) {
             obErrorLog.ThrowError(__FUNCTION__, 
-                "OBCisTransStereo::IsOnSameAtom : id2 is not valid and is not a missing hydrogen.", obError);
+                                  "OBCisTransStereo::IsOnSameAtom : id2 is not valid and is not a missing hydrogen.", obError);
             return false;
           }
           // inform user we are treating id2 as deleted hydrogen 
           obErrorLog.ThrowError(__FUNCTION__, 
-              "OBCisTransStereo::IsOnSameAtom : Atom with id2 doesn't exist anymore, must be a (deleted) hydrogen.", obInfo);
+                                "OBCisTransStereo::IsOnSameAtom : Atom with id2 doesn't exist anymore, must be a (deleted) hydrogen.", obInfo);
         } else if (a->IsConnected(end)) {
           // a is connected to end. again, if this is the atom missing a hydrogen, return false
           if (end->GetValence() == 2)
@@ -591,16 +591,16 @@ class OBCisTransStereo : public OBTetraPlanarStereo
           // check if the begin atom really is missing an atom
           if (begin->GetValence() != 2) {
             obErrorLog.ThrowError(__FUNCTION__, 
-                "OBCisTransStereo::IsOnSameAtom : id2 is not valid and is not a missing hydrogen.", obError);
+                                  "OBCisTransStereo::IsOnSameAtom : id2 is not valid and is not a missing hydrogen.", obError);
             return true;
           }
           // inform user we are treating id2 as deleted hydrogen 
           obErrorLog.ThrowError(__FUNCTION__, 
-              "OBCisTransStereo::IsOnSameAtom : Atom with id2 doesn't exist, must be a (deleted) hydrogen.", obInfo);
- 
+                                "OBCisTransStereo::IsOnSameAtom : Atom with id2 doesn't exist, must be a (deleted) hydrogen.", obInfo);
+
         } else {
           obErrorLog.ThrowError(__FUNCTION__, 
-              "OBCisTransStereo::IsOnSameAtom : Atom with id1 isn't connected to the begin or end atom.", obError);
+                                "OBCisTransStereo::IsOnSameAtom : Atom with id1 isn't connected to the begin or end atom.", obError);
           return true;      
         }
       } else if (b) {
@@ -612,12 +612,12 @@ class OBCisTransStereo : public OBTetraPlanarStereo
           // check if the end atom really is missing an atom
           if (end->GetValence() != 2) {
             obErrorLog.ThrowError(__FUNCTION__, 
-                "OBCisTransStereo::IsOnSameAtom : id1 is not valid and is not a missing hydrogen.", obError);
+                                  "OBCisTransStereo::IsOnSameAtom : id1 is not valid and is not a missing hydrogen.", obError);
             return true;
           }
           // inform user we are treating id1 as deleted hydrogen 
           obErrorLog.ThrowError(__FUNCTION__, 
-              "OBCisTransStereo::IsOnSameAtom : Atom with id1 doesn't exist, must be a (deleted) hydrogen.", obInfo);
+                                "OBCisTransStereo::IsOnSameAtom : Atom with id1 doesn't exist, must be a (deleted) hydrogen.", obInfo);
         } else if (b->IsConnected(end)) {
           // a is connected to end. again, if this is the atom missing a hydrogen, return false
           if (end->GetValence() == 2)
@@ -625,15 +625,15 @@ class OBCisTransStereo : public OBTetraPlanarStereo
           // check if the begin atom really is missing an atom
           if (begin->GetValence() != 2) {
             obErrorLog.ThrowError(__FUNCTION__, 
-                "OBCisTransStereo::IsOnSameAtom : id1 is not valid and is not a missing hydrogen.", obError);
+                                  "OBCisTransStereo::IsOnSameAtom : id1 is not valid and is not a missing hydrogen.", obError);
             return true;
           }
           // inform user we are treating id2 as deleted hydrogen 
           obErrorLog.ThrowError(__FUNCTION__, 
-              "OBCisTransStereo::IsOnSameAtom : Atom with id1 doesn't exist, must be a (deleted) hydrogen.", obInfo);
+                                "OBCisTransStereo::IsOnSameAtom : Atom with id1 doesn't exist, must be a (deleted) hydrogen.", obInfo);
         } else {
           obErrorLog.ThrowError(__FUNCTION__, 
-              "OBCisTransStereo::IsOnSameAtom : Atom with id1 isn't connected to the begin or end atom.", obError);
+                                "OBCisTransStereo::IsOnSameAtom : Atom with id1 isn't connected to the begin or end atom.", obError);
           return true;      
         }
       } else {
@@ -657,7 +657,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
           return true;
         }
         obErrorLog.ThrowError(__FUNCTION__, 
-            "OBCisTransStereo::IsOnSameAtom : Atoms with id1 & id2 don't exist, must be a (deleted) hydrogens.", obInfo);
+                              "OBCisTransStereo::IsOnSameAtom : Atoms with id1 & id2 don't exist, must be a (deleted) hydrogens.", obInfo);
         return IsOnSameAtom(c->GetIdx(), d->GetIdx());
       }
     }
@@ -733,6 +733,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
       OBConversion::RegisterOptionParam("a", this);
       OBConversion::RegisterOptionParam("h", this);
       OBConversion::RegisterOptionParam("x", this);
+      OBConversion::RegisterOptionParam("C", this);
     }
     virtual const char* Description()
     {
@@ -749,6 +750,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         "  r  Radicals lower case eg ethyl is Cc\n"
         "  t  Molecule name only\n"
         "  x  append X/Y coordinates in canonical-SMILES order\n"
+        "  C  'anti-canonical' random order (mostly for testing)\n"
         "\n";
     }
 
@@ -757,7 +759,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
 
   //Make an instance of the format class
   SMIFormat theSMIFormat;
-  
+
   //**************************************************
   class CANSMIFormat : public SMIBaseFormat
   {
@@ -933,7 +935,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
   bool OBSmilesParser::ParseSmiles(OBMol &mol)
   {
     mol.BeginModify();
-    
+
     for (_ptr=_buffer;*_ptr;_ptr++)
       {
         //cerr << " parsing " << _ptr << endl;
@@ -1015,7 +1017,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     if ( _rclose.size() != 0) {
       mol.EndModify();
       mol.Clear();
-      
+
       stringstream errorMsg;
       errorMsg << "Invalid SMILES string: " << _rclose.size() << " unmatched "
                << "ring bonds." << endl;
@@ -1046,7 +1048,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
             mol.UnsetImplicitValencePerceived();
           }
       }
-    
+
     //NE add the OBChiralData stored inside the _mapcd to the atoms now after end
     // modify so they don't get lost.
     if(_tetrahedralMap.size() > 0)
@@ -1110,68 +1112,68 @@ class OBCisTransStereo : public OBTetraPlanarStereo
 
     // Now go from left to right over the atoms of the molecule
     // and for those that are Up or Down, set the correct value
-    
+
     std::map<OBBond *, bool> isup; // Store the result here
     std::list<OBCisTransStereo>::iterator ChiralSearch;
     std::vector<unsigned long>::iterator lookup;
 
     for(int i=1;i<=mol.NumAtoms();i++)
-    {
-      // Find an OBCisTransStereo that contains atom i
-      for(ChiralSearch=cistrans.begin();ChiralSearch!=cistrans.end();ChiralSearch++)
       {
-        std::vector<unsigned long> refs = ChiralSearch->GetRefs(OBStereo::ShapeU);
-        lookup = std::find(refs.begin(), refs.end(), i);
-        if(lookup!=refs.end()) { // Atom i is in this OBCisTransStereo
-          // Set the up and down for all of the stereo bonds in this chiral data
-          // For the moment, ignore existing IsUp() or IsDown() values
-          std::vector<OBBond *> refbonds(4, static_cast<OBBond*>(NULL));
-          refbonds[0] = mol.GetBond(refs[0], ChiralSearch->GetBegin());
-          if (refs[1]!=OBStereo::ImplicitId) // Could be a hydrogen
-            refbonds[1] = mol.GetBond(refs[1], ChiralSearch->GetBegin());
-          if (refs[2]!=OBStereo::ImplicitId) // Could be a hydrogen
-            refbonds[2] = mol.GetBond(refs[2], ChiralSearch->GetEnd());
-          if (refs[3]!=OBStereo::ImplicitId) // Could be a hydrogen
-            refbonds[3] = mol.GetBond(refs[3], ChiralSearch->GetEnd());
+        // Find an OBCisTransStereo that contains atom i
+        for(ChiralSearch=cistrans.begin();ChiralSearch!=cistrans.end();ChiralSearch++)
+          {
+            std::vector<unsigned long> refs = ChiralSearch->GetRefs(OBStereo::ShapeU);
+            lookup = std::find(refs.begin(), refs.end(), i);
+            if(lookup!=refs.end()) { // Atom i is in this OBCisTransStereo
+              // Set the up and down for all of the stereo bonds in this chiral data
+              // For the moment, ignore existing IsUp() or IsDown() values
+              std::vector<OBBond *> refbonds(4, static_cast<OBBond*>(NULL));
+              refbonds[0] = mol.GetBond(refs[0], ChiralSearch->GetBegin());
+              if (refs[1]!=OBStereo::ImplicitId) // Could be a hydrogen
+                refbonds[1] = mol.GetBond(refs[1], ChiralSearch->GetBegin());
+              if (refs[2]!=OBStereo::ImplicitId) // Could be a hydrogen
+                refbonds[2] = mol.GetBond(refs[2], ChiralSearch->GetEnd());
+              if (refs[3]!=OBStereo::ImplicitId) // Could be a hydrogen
+                refbonds[3] = mol.GetBond(refs[3], ChiralSearch->GetEnd());
 
-          // Have we already set the stereo of any of the bonds in this
-          // OBCisTransStereo already (this can occur in conjugated systems)?
-          // If so, use the alternative configuration if the default configuration
-          // does not agree.
-          bool config[4] = {true, false, false, true};
-          bool alt_config[4] = {false, true, true, false};
-          bool use_alt_config = false;
+              // Have we already set the stereo of any of the bonds in this
+              // OBCisTransStereo already (this can occur in conjugated systems)?
+              // If so, use the alternative configuration if the default configuration
+              // does not agree.
+              bool config[4] = {true, false, false, true};
+              bool alt_config[4] = {false, true, true, false};
+              bool use_alt_config = false;
 
-          for(int i=0;i<4;i++)
-            if (isup.find(refbonds[i]) != isup.end()) // We have already set this one
-              if (isup[refbonds[i]] != config[i])
-              {
-                use_alt_config = true;
-                break;
-              }
-          
-          // Set the configuration
-          for(int i=0;i<4;i++)
-            if (refbonds[i] != NULL)
-              if (use_alt_config)
-                isup[refbonds[i]] = alt_config[i];
-              else
-                isup[refbonds[i]] = config[i];
+              for(int i=0;i<4;i++)
+                if (isup.find(refbonds[i]) != isup.end()) // We have already set this one
+                  if (isup[refbonds[i]] != config[i])
+                    {
+                      use_alt_config = true;
+                      break;
+                    }
 
-          cistrans.erase(ChiralSearch);
-          break; // break out of the ChiralSearch
-        }
-      } 
-    }
+              // Set the configuration
+              for(int i=0;i<4;i++)
+                if (refbonds[i] != NULL)
+                  if (use_alt_config)
+                    isup[refbonds[i]] = alt_config[i];
+                  else
+                    isup[refbonds[i]] = config[i];
+
+              cistrans.erase(ChiralSearch);
+              break; // break out of the ChiralSearch
+            }
+          } 
+      }
 
     // Wipe existing Up/Down values and set the new ones
     FOR_BONDS_OF_MOL(b, mol)
-    {
-      if (b->IsUp())
-        b->UnsetUp();
-      if (b->IsDown())
-        b->UnsetDown();
-    }
+      {
+        if (b->IsUp())
+          b->UnsetUp();
+        if (b->IsDown())
+          b->UnsetDown();
+      }
     std::map<OBBond *, bool>::iterator UpDown;
     for(UpDown=isup.begin();UpDown!=isup.end();UpDown++)
       if(UpDown->second == true)
@@ -1215,16 +1217,16 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         OBBond *b = &(*bi);
         if ((b) == (dbl_bond)) continue;  // skip the double bond we're working on
         if (a1_b1 == NULL && (b->IsUp() || b->IsDown()))
-        {
-          a1_b1 = b;    // remember a stereo bond of Atom1
-           // True/False for "up/down if moved to before the double bond C"
-          a1_stereo = !(b->IsUp() ^ (b->GetNbrAtomIdx(a1) < a1->GetIdx())) ;
-          if (std::find(_bcbonds.begin(), _bcbonds.end(), a1_b1)!=_bcbonds.end())
-          { // This is a bond closure, so the cis/trans mark appears after
-            // the double bond C (and the Idx test is incorrect)
-            a1_stereo = !b->IsUp();
+          {
+            a1_b1 = b;    // remember a stereo bond of Atom1
+            // True/False for "up/down if moved to before the double bond C"
+            a1_stereo = !(b->IsUp() ^ (b->GetNbrAtomIdx(a1) < a1->GetIdx())) ;
+            if (std::find(_bcbonds.begin(), _bcbonds.end(), a1_b1)!=_bcbonds.end())
+              { // This is a bond closure, so the cis/trans mark appears after
+                // the double bond C (and the Idx test is incorrect)
+                a1_stereo = !b->IsUp();
+              }
           }
-        }
         else
           a1_b2 = b;    // remember a 2nd bond of Atom1
       }
@@ -1233,20 +1235,20 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         OBBond *b = &(*bi);
         if (b == dbl_bond) continue;
         if (a2_b1 == NULL && (b->IsUp() || b->IsDown()))
-        {
-          a2_b1 = b;    // remember a stereo bond of Atom1
-          a2_stereo = !(b->IsUp() ^ (b->GetNbrAtomIdx(a2) < a2->GetIdx())) ;
-          if (std::find(_bcbonds.begin(), _bcbonds.end(), a2_b1)!=_bcbonds.end())
-          { // This is a bond closure
-            a2_stereo = !b->IsUp();
+          {
+            a2_b1 = b;    // remember a stereo bond of Atom1
+            a2_stereo = !(b->IsUp() ^ (b->GetNbrAtomIdx(a2) < a2->GetIdx())) ;
+            if (std::find(_bcbonds.begin(), _bcbonds.end(), a2_b1)!=_bcbonds.end())
+              { // This is a bond closure
+                a2_stereo = !b->IsUp();
+              }
           }
-        }
         else
           a2_b2 = b;    // remember a 2nd bond of Atom2
       }
 
       if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
-      
+
       // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
       unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitId : a1_b2->GetNbrAtomIdx(a1);
       unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitId : a2_b2->GetNbrAtomIdx(a2);
@@ -1460,11 +1462,11 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     else
       atom->ForceImplH();//ensures atom is never hydrogen deficient
 
-    
+
     // Untrue, but necessary to avoid perception being called in OBAtom::IsAromatic()
     // on incomplete molecule. Undone at end of function. 
     mol.SetAromaticPerceived();
-    
+
     if (_prev) //need to add bond
       {
         /* CM 18 Sept 2003
@@ -1492,7 +1494,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         if(arom && prevatom->IsAromatic())
           {
             _order=5; //Potential aromatic bond
-        
+
             if (prevatom->GetSpinMultiplicity())
               {
                 //Previous atom had been marked, so bond is potentially a double bond
@@ -1505,7 +1507,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
           }
 
         mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
-        
+
         //NE iterate through and see if atom is bonded to chiral atom
         map<OBAtom*,TetrahedralStereo*>::iterator ChiralSearch;
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
@@ -2511,7 +2513,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
             bondFlags = (_bondflags > (*j)[3]) ? _bondflags : (*j)[3];
             bondOrder = (_order > (*j)[2]) ? _order : (*j)[2];
             mol.AddBond((*j)[1],_prev,bondOrder,bondFlags);
-            
+
             // after adding a bond to atom "_prev"
             // search to see if atom is bonded to a chiral atom
             map<OBAtom*,TetrahedralStereo*>::iterator ChiralSearch;
@@ -2522,7 +2524,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
                 (ChiralSearch->second)->refs[insertpos] = (*j)[1];
                 //cerr << "NB1: Added external "<<(*j)[1]<<" at "<<insertpos<<" to "<<ChiralSearch->second<<endl;
               }
-            
+
             _extbond.erase(j);
             _bondflags = 0;
             _order = 0;
@@ -2581,13 +2583,13 @@ class OBCisTransStereo : public OBTetraPlanarStereo
               ord = 5;
             mol.UnsetAromaticPerceived();
           }
-          
+
           mol.AddBond((*j)[1],_prev,ord,bf,(*j)[4]);
-          
+
           // For assigning cis/trans in the presence of bond closures, we need to
           // remember all bond closure bonds.
           _bcbonds.push_back(mol.GetBond((*j)[1],_prev));
-            
+
           // after adding a bond to atom "_prev"
           // search to see if atom is bonded to a chiral atom
           // need to check both _prev and (*j)[1] as closure is direction independent
@@ -2609,7 +2611,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
               (cs2->second)->refs[insertpos] = mol.NumAtoms();
               //cerr <<"NB2: Added ring opening "<<_prev<<" at "<<(*j)[4]<<" to "<<cs2->second<<endl;
             }
-            
+
           //CM ensure neither atoms in ring closure is a radical centre
           OBAtom* patom = mol.GetAtom(_prev);
           patom->SetSpinMultiplicity(0);
@@ -2641,7 +2643,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
 
     return(true);
   }
-  
+
   // NumConnections finds the number of connections already made to
   // a particular atom. This is used to figure out the correct position
   // to insert an atom ID into atom4refs
@@ -2654,7 +2656,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         val++;
     return val;
   }
-  
+
   static bool IsCisOrTransH(OBAtom *atom)
   {
     if (!atom->IsHydrogen())
@@ -2790,7 +2792,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     std::string       _canorder;
     std::vector<OBCisTransStereo> _cistrans, _unvisited_cistrans;
     std::map<OBBond *, bool> _isup;
-    
+
     bool          _canonicalOutput; // regular or canonical SMILES
 
     OBConversion* _pconv;
@@ -3042,7 +3044,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     // This function may be merged with OBSmilesParser::CreateCisTrans
     // at a later date.
 
-   FOR_BONDS_OF_MOL(dbi, mol) {
+    FOR_BONDS_OF_MOL(dbi, mol) {
 
       OBBond *dbl_bond = &(*dbi);
 
@@ -3072,9 +3074,9 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         OBBond *b = &(*bi);
         if ((b) == (dbl_bond)) continue;  // skip the double bond we're working on
         if (a1_b1 == NULL && (b->IsUp() || b->IsDown()))
-        {
-          a1_b1 = b;    // remember a stereo bond of Atom1
-        }
+          {
+            a1_b1 = b;    // remember a stereo bond of Atom1
+          }
         else
           a1_b2 = b;    // remember a 2nd bond of Atom1
       }
@@ -3083,15 +3085,15 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         OBBond *b = &(*bi);
         if (b == dbl_bond) continue;
         if (a2_b1 == NULL && (b->IsUp() || b->IsDown()))
-        {
-          a2_b1 = b;    // remember a stereo bond of Atom1
-        }
+          {
+            a2_b1 = b;    // remember a stereo bond of Atom1
+          }
         else
           a2_b2 = b;    // remember a 2nd bond of Atom2
       }
 
       if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
-      
+
       // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
       unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitId : a1_b2->GetNbrAtomIdx(a1);
       unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitId : a2_b2->GetNbrAtomIdx(a2);
@@ -3126,20 +3128,20 @@ class OBCisTransStereo : public OBTetraPlanarStereo
 
     bool stereo_dbl = false;
     if (atom->HasDoubleBond())
-    {
-      stereo_dbl = true;
-      if (nbr_atom->HasDoubleBond())
-        // Check whether the nbr_atom is a center in any CisTransStereo. If so,
-        // then the ring opening already had the symbol.
-        for (ChiralSearch=_cistrans.begin();ChiralSearch!=_cistrans.end();ChiralSearch++)
-        {
-          if (nbr_atom->GetIdx() == ChiralSearch->GetBegin() || nbr_atom->GetIdx() == ChiralSearch->GetEnd()) {
-            // I don't think I need to check whether it has a bond with atom
-            stereo_dbl = false;
-            break;
-          }        
-        }
-    }
+      {
+        stereo_dbl = true;
+        if (nbr_atom->HasDoubleBond())
+          // Check whether the nbr_atom is a center in any CisTransStereo. If so,
+          // then the ring opening already had the symbol.
+          for (ChiralSearch=_cistrans.begin();ChiralSearch!=_cistrans.end();ChiralSearch++)
+            {
+              if (nbr_atom->GetIdx() == ChiralSearch->GetBegin() || nbr_atom->GetIdx() == ChiralSearch->GetEnd()) {
+                // I don't think I need to check whether it has a bond with atom
+                stereo_dbl = false;
+                break;
+              }        
+            }
+      }
     return stereo_dbl;
   }
   char OBMol2Cansmi::GetCisTransBondSymbol(OBBond *bond, OBCanSmiNode *node)
@@ -3170,86 +3172,86 @@ class OBCisTransStereo : public OBTetraPlanarStereo
 
     bool dbl_bond_first = false;
     if (atom->HasDoubleBond())
-    {
-      if (nbr_atom->HasDoubleBond())
-        // Check whether the atom is a center in any CisTransStereo. If so,#
-        // then this CisTransStereo takes precedence over any other
-        for (ChiralSearch=_cistrans.begin();ChiralSearch!=_cistrans.end();ChiralSearch++)
-        {
-          if (atom->GetIdx() == ChiralSearch->GetBegin() || atom->GetIdx() == ChiralSearch->GetEnd()) {
-            // I don't think I need to check whether it has a bond with nbr_atom
-            dbl_bond_first = true;
-            break;
-          }        
-        }
-      else
-        dbl_bond_first = true;
-    }
+      {
+        if (nbr_atom->HasDoubleBond())
+          // Check whether the atom is a center in any CisTransStereo. If so,#
+          // then this CisTransStereo takes precedence over any other
+          for (ChiralSearch=_cistrans.begin();ChiralSearch!=_cistrans.end();ChiralSearch++)
+            {
+              if (atom->GetIdx() == ChiralSearch->GetBegin() || atom->GetIdx() == ChiralSearch->GetEnd()) {
+                // I don't think I need to check whether it has a bond with nbr_atom
+                dbl_bond_first = true;
+                break;
+              }        
+            }
+        else
+          dbl_bond_first = true;
+      }
 
     // Has the symbol for this bond already been set?
     if (_isup.find(bond) == _isup.end()) // No it hasn't
-    {
-      unsigned int endatom, centeratom;
-      if (dbl_bond_first) {
-        endatom = nbr_atom->GetIdx();
-        centeratom = atom->GetIdx();
-      }
-      else {
-        endatom = atom->GetIdx();
-        centeratom = nbr_atom->GetIdx();
-      }
-
-      for (ChiralSearch=_unvisited_cistrans.begin();ChiralSearch!=_unvisited_cistrans.end();ChiralSearch++)
       {
-        std::vector<unsigned long> refs = ChiralSearch->GetRefs(OBStereo::ShapeU);
-        lookup = std::find(refs.begin(), refs.end(), endatom);
-        if (lookup!=refs.end() &&
-          (ChiralSearch->GetBegin()==centeratom || ChiralSearch->GetEnd()==centeratom))
-        { // Atoms endatom and centeratom are in this OBCisTransStereo
-          
-          std::vector<OBBond *> refbonds(4, static_cast<OBBond*>(NULL));
-          refbonds[0] = mol->GetBond(refs[0], ChiralSearch->GetBegin());
-          if (refs[1]!=OBStereo::ImplicitId) // Could be a hydrogen
-            refbonds[1] = mol->GetBond(refs[1], ChiralSearch->GetBegin());
-          if (refs[2]!=OBStereo::ImplicitId) // Could be a hydrogen
-            refbonds[2] = mol->GetBond(refs[2], ChiralSearch->GetEnd());
-          if (refs[3]!=OBStereo::ImplicitId) // Could be a hydrogen
-            refbonds[3] = mol->GetBond(refs[3], ChiralSearch->GetEnd());
-
-          // What symbol would the four refs use if before the dbl bond?
-          bool config[4] = {true, false, false, true};
-          bool use_same_config = true;
-          // (The actual config used will be config ^ use_same_config)
-
-          // Make sure that the symbol for this bond is true. This ensures 
-          // a canonical string, so that it's always C/C=C/C and not C\C=C\C.
-          for(int i=0;i<4;i++)
-            if (refbonds[i] == bond)
-              if (!config[i])
-              {
-                  use_same_config = false;
-                  break;
-              }
-          // If any of the bonds have been previously set, now set them all
-          // in the opposite sense
-          for(int i=0;i<4;i++)
-            if (_isup.find(refbonds[i]) != _isup.end()) // We have already set this one (conjugated bond)
-              if (_isup[refbonds[i]] == (config[i] ^ use_same_config))
-              {
-                use_same_config = !use_same_config;
-                break;
-              }
-          // Set the configuration
-          for(int i=0;i<4;i++)
-            if (refbonds[i] != NULL)
-              _isup[refbonds[i]] = config[i] ^ use_same_config;
-          _unvisited_cistrans.erase(ChiralSearch);
-          break; // break out of the ChiralSearch          
+        unsigned int endatom, centeratom;
+        if (dbl_bond_first) {
+          endatom = nbr_atom->GetIdx();
+          centeratom = atom->GetIdx();
         }
-      }
-    }
+        else {
+          endatom = atom->GetIdx();
+          centeratom = nbr_atom->GetIdx();
+        }
 
-     // If ChiralSearch didn't find the bond, we can't set this symbol
+        for (ChiralSearch=_unvisited_cistrans.begin();ChiralSearch!=_unvisited_cistrans.end();ChiralSearch++)
+          {
+            std::vector<unsigned long> refs = ChiralSearch->GetRefs(OBStereo::ShapeU);
+            lookup = std::find(refs.begin(), refs.end(), endatom);
+            if (lookup!=refs.end() &&
+                (ChiralSearch->GetBegin()==centeratom || ChiralSearch->GetEnd()==centeratom))
+              { // Atoms endatom and centeratom are in this OBCisTransStereo
+
+                std::vector<OBBond *> refbonds(4, static_cast<OBBond*>(NULL));
+                refbonds[0] = mol->GetBond(refs[0], ChiralSearch->GetBegin());
+                if (refs[1]!=OBStereo::ImplicitId) // Could be a hydrogen
+                  refbonds[1] = mol->GetBond(refs[1], ChiralSearch->GetBegin());
+                if (refs[2]!=OBStereo::ImplicitId) // Could be a hydrogen
+                  refbonds[2] = mol->GetBond(refs[2], ChiralSearch->GetEnd());
+                if (refs[3]!=OBStereo::ImplicitId) // Could be a hydrogen
+                  refbonds[3] = mol->GetBond(refs[3], ChiralSearch->GetEnd());
+
+                // What symbol would the four refs use if before the dbl bond?
+                bool config[4] = {true, false, false, true};
+                bool use_same_config = true;
+                // (The actual config used will be config ^ use_same_config)
+
+                // Make sure that the symbol for this bond is true. This ensures 
+                // a canonical string, so that it's always C/C=C/C and not C\C=C\C.
+                for(int i=0;i<4;i++)
+                  if (refbonds[i] == bond)
+                    if (!config[i])
+                      {
+                        use_same_config = false;
+                        break;
+                      }
+                // If any of the bonds have been previously set, now set them all
+                // in the opposite sense
+                for(int i=0;i<4;i++)
+                  if (_isup.find(refbonds[i]) != _isup.end()) // We have already set this one (conjugated bond)
+                    if (_isup[refbonds[i]] == (config[i] ^ use_same_config))
+                      {
+                        use_same_config = !use_same_config;
+                        break;
+                      }
+                // Set the configuration
+                for(int i=0;i<4;i++)
+                  if (refbonds[i] != NULL)
+                    _isup[refbonds[i]] = config[i] ^ use_same_config;
+                _unvisited_cistrans.erase(ChiralSearch);
+                break; // break out of the ChiralSearch          
+              }
+          }
+      }
+
+    // If ChiralSearch didn't find the bond, we can't set this symbol
     if (_isup.find(bond) == _isup.end()) return '\0';
 
     if (dbl_bond_first) { // double-bonded atom is first in the SMILES
@@ -3275,7 +3277,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
   {
     if (!atom->IsOxygen())
       return false;
-     
+
     int nonHydrogenCount = 0;
     int hydrogenCount = 0;
     FOR_NBORS_OF_ATOM(neighbor, *atom) {
@@ -3284,7 +3286,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
       else
         hydrogenCount++;
     }
-    
+
     return (hydrogenCount == 2 && nonHydrogenCount == 1);
   }
 
@@ -3370,7 +3372,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
       if(!(_pconv && _pconv->IsOption ("r")))
         bracketElement = true;
     }
-    
+
     // Add brackets and explicit hydrogens for coordinated water molecules
     // PR#2505562
     if (isWaterOxygen(atom)) {
@@ -3491,7 +3493,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
       if (abs(atom->GetFormalCharge()) > 1)
         sprintf(buffer+strlen(buffer), "%d", abs(atom->GetFormalCharge()));
     }
-    
+
     //atom class e.g. [C:2]
     if (_pac)
       strcat(buffer, _pac->GetClassString(atom->GetIdx()).c_str());
@@ -3699,7 +3701,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
 
       // Ok, it's a chiral atom, so we need to get the A, B, C, D atoms, in the order in
       // which they appeared in the original SMILES.
-      
+
       // orig_orient and can_orient are True if Clockwise, False if AntiClockwise
       bool orig_orient = atom->IsClockwise();
       if (!orig_orient && !atom->IsAntiClockwise())
@@ -3726,7 +3728,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
         can_orient = orig_orient;
       else
         can_orient = !orig_orient;
-        
+
       if (can_orient)
         strcpy(stereo,"@@");
       else
@@ -4129,28 +4131,28 @@ class OBCisTransStereo : public OBTetraPlanarStereo
       vector<OBBondClosureInfo>::iterator bci;
       for (bci = vclose_bonds.begin();bci != vclose_bonds.end();bci++) {
         if (!bci->is_open)
-        { // Ring closure
-          char bs[2] = {'\0', '\0'};
-          // Only get symbol for ring closures on the dbl bond
-          if (HasStereoDblBond(bci->bond, node->GetAtom()))  
-            bs[0] = GetCisTransBondSymbol(bci->bond, node);
-          if (bs[0])
-            strcat(buffer, bs);	// append "/" or "\"
-          else
-          {
-            if (bci->bond->GetBO() == 2 && !bci->bond->IsAromatic())  strcat(buffer,"=");
-            if (bci->bond->GetBO() == 3)                              strcat(buffer,"#");
+          { // Ring closure
+            char bs[2] = {'\0', '\0'};
+            // Only get symbol for ring closures on the dbl bond
+            if (HasStereoDblBond(bci->bond, node->GetAtom()))  
+              bs[0] = GetCisTransBondSymbol(bci->bond, node);
+            if (bs[0])
+              strcat(buffer, bs);	// append "/" or "\"
+            else
+              {
+                if (bci->bond->GetBO() == 2 && !bci->bond->IsAromatic())  strcat(buffer,"=");
+                if (bci->bond->GetBO() == 3)                              strcat(buffer,"#");
+              }
           }
-        }
         else
-        { // Ring opening
-          char bs[2] = {'\0', '\0'};
-          // Only get symbol for ring openings on the dbl bond
-          if (!HasStereoDblBond(bci->bond, bci->bond->GetNbrAtom(node->GetAtom())))  
-            bs[0] = GetCisTransBondSymbol(bci->bond, node);
-          if (bs[0])
-            strcat(buffer, bs);	// append "/" or "\"
-        }
+          { // Ring opening
+            char bs[2] = {'\0', '\0'};
+            // Only get symbol for ring openings on the dbl bond
+            if (!HasStereoDblBond(bci->bond, bci->bond->GetNbrAtom(node->GetAtom())))  
+              bs[0] = GetCisTransBondSymbol(bci->bond, node);
+            if (bs[0])
+              strcat(buffer, bs);	// append "/" or "\"
+          }
         if (bci->ringdigit > 9) strcat(buffer,"%");
         sprintf(buffer+strlen(buffer), "%d", bci->ringdigit); 
       }
@@ -4204,6 +4206,49 @@ class OBCisTransStereo : public OBTetraPlanarStereo
   }
 
   /***************************************************************************
+   * FUNCTION: RandomLabels
+   *
+   * DESCRIPTION:
+   *	Creates a set of random labels for the fragment atoms.  Primarily
+   *	for testing: you can create a bunch of random SMILES for the same
+   *	molecule, and use those to test the canonicalizer.
+   ***************************************************************************/
+
+  static int timeseed = 0;
+
+  void RandomLabels(OBMol *pMol, OBBitVec &frag_atoms, 
+                    vector<unsigned int> &symmetry_classes,
+                    vector<unsigned int> &labels)
+  {
+    int natoms = pMol->NumAtoms();
+    OBBitVec used(natoms);
+
+    if (!timeseed) {
+      OBRandom rand;
+      rand.TimeSeed();
+      timeseed = 1;
+    }
+
+
+    FOR_ATOMS_OF_MOL(atom, *pMol) {
+      if (frag_atoms.BitIsOn(atom->GetIdx())) {
+        int r = rand() % natoms;
+        while (used.BitIsOn(r)) {
+          r = (r + 1) % natoms;		// find an unused number
+        }
+        used.SetBitOn(r);
+        labels.push_back(r);
+        symmetry_classes.push_back(r);
+      }
+      else{
+        labels.push_back(OBStereo::ImplicitId); //to match situation when canonical ordering. Just a big number?
+        symmetry_classes.push_back(OBStereo::ImplicitId);
+      }
+    }
+  }
+
+
+  /***************************************************************************
    * FUNCTION: CreateFragCansmiString
    *
    * DESCRIPTION:
@@ -4231,7 +4276,11 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     if (_canonicalOutput)
       CanonicalLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
     else {
-      StandardLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+      if (_pconv->IsOption("C")) {	// "C" == "anti-canonical form"
+        RandomLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+      } else {
+        StandardLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+      }
     }
 
     // OUTER LOOP: Handles dot-disconnected structures.  Finds the 
@@ -4605,7 +4654,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
 
     return true;
   }
-  
+
   //********************************************************
   class FIXFormat : public OBMoleculeFormat
   {
