@@ -249,7 +249,10 @@ namespace OpenBabel
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
     _a(0.0), _b(0.0), _c(0.0), _alpha(0.0), _beta(0.0), _gamma(0.0),
     _spaceGroup( NULL ), _lattice(Undefined)
-  {  }
+  {  
+    // We should default to P1 space group unless we know differently
+    SetSpaceGroup(1);
+  }
 
   OBUnitCell::OBUnitCell(const OBUnitCell &src) :
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
@@ -338,6 +341,7 @@ namespace OpenBabel
     vector<vector3> v;
     v.reserve(3);
 
+    // no unit cell vectors
     if (IsNegligible(_v1.length(), 1.0, 1.0e-9) &&
         IsNegligible(_v2.length(), 1.0, 1.0e-9) &&
         IsNegligible(_v3.length(), 1.0, 1.0e-9))
@@ -355,8 +359,11 @@ namespace OpenBabel
     else
       {
         v.push_back(_v1);
-        v.push_back(_v2);
-        v.push_back(_v3);
+        // we set these above in case we had a 1D or 2D translation vector system
+        if (fabs(_b - 999.999) > 1.0e-1)
+          v.push_back(_v2);
+        if (fabs(_c - 999.999) > 1.0e-1)
+          v.push_back(_v3);
       }
 
     return v;
@@ -640,8 +647,10 @@ namespace OpenBabel
         newAtom->Duplicate(*i);
         newAtom->SetVector(GetOrthoMatrix() * updatedCoordinate);
       } // end loop of transformed atoms
-      (*i)->SetVector(GetOrthoMatrix() * uniqueV);
+      (*i)->SetVector(GetOrthoMatrix() * uniqueV); // move the atom back into the unit cell
     } // end loop of atoms
+
+    SetSpaceGroup(1); // We've now applied the symmetry, so we should act like a P1 unit cell
   }
   
   double OBUnitCell::GetCellVolume()
