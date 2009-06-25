@@ -1,3 +1,8 @@
+2009-06-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/data.cpp: Don't consider all sp3 hydrogens as O-, instead
+	leave this for phmodel protonation. Fixes PR#2785237.
+
 2009-06-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mopacformat.cpp: Read and write translation vectors,
