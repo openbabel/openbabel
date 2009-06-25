@@ -3,12 +3,12 @@ from distutils.core import *
 import os,sys,shutil
 
 about = """The Open Babel package provides a Python wrapper
-to the Open Babel C++ chemistry library. Open Babel is a project
-designed to pick up where Babel left off, as a cross-platform program
-and library designed to interconvert between many file formats used in
-molecular modeling, computational chemistry, and many related
-areas. It provides a broad base of chemical functionality for custom
-development.
+to the Open Babel C++ chemistry library. Open Babel is a chemical
+toolbox designed to speak the many languages of chemical data. It's an
+open, collaborative project allowing anyone to search, convert,
+analyze, or store data from molecular modeling, chemistry, solid-state
+materials, biochemistry, or related areas. It provides a broad base of
+chemical functionality for custom development.
 """
 
 def find_likely_directory():
@@ -24,8 +24,7 @@ def find_likely_directory():
         if not os.path.isdir(name):
             sys.stderr.write("ERROR: $OPENBABEL_INSTALL (%s) is not a directory\n" % name)
         else:
-            includedir = [name+"/include/openbabel-2.0",
-                          name+"/include/openbabel-2.0/openbabel"]
+            includedir = [name+"/include/openbabel-2.0"]
             libdir = [name+"/lib"]
 
     else: # OPENBABEL_INSTALL is not set
@@ -73,7 +72,7 @@ setup(name='openbabel',
       version='1.5',
       author='Noel O\'Boyle',
       author_email='openbabel-scripting@lists.sourceforge.net',
-      url='http://openbabel.sourceforge.net/',
+      url='http://openbabel.org/',
       license='http://www.gnu.org/copyleft/gpl.html',
       py_modules=['openbabel','pybel'],
       ext_modules=[obExtension],
