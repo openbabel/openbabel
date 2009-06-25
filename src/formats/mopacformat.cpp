@@ -81,6 +81,10 @@ namespace OpenBabel
     vector< vector<vector3> > displacements; // vibrational displacements
     vector<double> frequencies, intensities;
 
+    // Translation vectors (if present)
+    vector3 translationVectors[3];
+    int numTranslationVectors = 0;
+
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
@@ -103,6 +107,25 @@ namespace OpenBabel
                 z = atof((char*)vs[4].c_str());
                 atom->SetVector(x,y,z);
 
+                if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+                tokenize(vs,buffer);
+              }
+          }
+        else if(strstr(buffer,"UNIT CELL TRANSLATION") != NULL)
+          {
+            numTranslationVectors = 0; // ignore old translationVectors
+            ifs.getline(buffer,BUFF_SIZE);	// blank
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            while (vs.size() == 5)
+              {
+                x = atof((char*)vs[2].c_str());
+                y = atof((char*)vs[3].c_str());
+                z = atof((char*)vs[4].c_str());
+
+                translationVectors[numTranslationVectors++].Set(x, y, z);
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
@@ -264,6 +287,13 @@ namespace OpenBabel
       mol.SetData(vd);
     }
 
+    // Attach unit cell translation vectors if found
+    if (numTranslationVectors > 0) {
+      OBUnitCell* uc = new OBUnitCell;
+      uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
+      uc->SetOrigin(fileformatInput);
+      mol.SetData(uc);
+    }
 
     mol.SetTitle(title);
 
@@ -295,7 +325,8 @@ namespace OpenBabel
         "  b  Disable bonding entirely\n"
         "Write Options e.g. -xk\n"
         "  k  \"keywords\" Use the specified keywords for input\n"
-        "  f    <file>     Read the file specified for input keywords\n\n";
+        "  f    <file>     Read the file specified for input keywords\n"
+        "  u               Write the crystallographic unit cell, if present.\n\n";
     };
 
     virtual const char* GetMIMEType() 
@@ -382,6 +413,7 @@ namespace OpenBabel
 
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
     const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    bool writeUnitCell = pConv->IsOption("u", OBConversion::OUTOPTIONS);
     string defaultKeywords = "PUT KEYWORDS HERE";
 
     if(keywords)
@@ -413,8 +445,23 @@ namespace OpenBabel
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ());
-        ofs << buffer << endl;
+        ofs << buffer << "\n";
       }
+
+    OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+    if (uc && writeUnitCell) {
+      uc->FillUnitCell(&mol); // complete the unit cell with symmetry-derived atoms
+
+      vector<vector3> cellVectors = uc->GetCellVectors();
+      for (vector<vector3>::iterator i = cellVectors.begin(); i != cellVectors.end(); ++i) {
+        snprintf(buffer,BUFF_SIZE,"Tv %8.5f 1 %8.5f 1 %8.5f 1",
+                 i->x(),
+                 i->y(),
+                 i->z());
+        ofs << buffer << "\n";
+      }
+    }
+
     return(true);
   }
 

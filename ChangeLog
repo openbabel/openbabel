@@ -1,3 +1,13 @@
+2009-06-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mopacformat.cpp: Read and write translation vectors,
+	if available.
+
+	* src/formats/gaussformat.cpp: Ditto
+
+	* src/generic.cpp (OBUnitCell): Make sure to set the space group
+	to P1 by default and after FillUnitCell.
+
 2009-06-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/generic.cpp: Fix unit cell when setting possibly zero
