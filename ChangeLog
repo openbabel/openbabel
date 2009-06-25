@@ -1,5 +1,9 @@
 2009-06-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/builder.cpp (GetNewBondVector): Fix part of PR#2811932 from
+	Avogadro. Make sure adding hydrogens to carboxylic acid always
+	occurs trans to the other oxygen atom.
+
 	* src/data.cpp: Don't consider all sp3 hydrogens as O-, instead
 	leave this for phmodel protonation. Fixes PR#2785237.
 
