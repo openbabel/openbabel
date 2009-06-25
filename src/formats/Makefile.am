@@ -84,7 +84,7 @@ formatsdir = $(bindir)
 install-exec-hook:
 	(cd $(DESTDIR)$(bindir) && \
 	for format in APIInterface.dll *format.dll; do \
-		mv $$(format) $$(format%%.dll).obf \
+		mv $$(format) $$(format%%.dll).obf; \
 	done
 endif
 
