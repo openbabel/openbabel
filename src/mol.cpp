@@ -1432,6 +1432,11 @@ namespace OpenBabel
     //    for (bond = BeginBond(k);bond;bond = NextBond(k))
     //      bond->UnsetAromatic();
 
+    // Always remove angle and torsion data, since they will interfere with the iterators
+    // PR#2812013
+    DeleteData(OBGenericDataType::AngleData);
+    DeleteData(OBGenericDataType::TorsionData);
+
     UnsetImplicitValencePerceived();
   }
 
