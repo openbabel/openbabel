@@ -1,5 +1,11 @@
 2009-06-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/kekulize.cpp: Use SMARTS pattern "[aR3]" to determine if
+	*any* atoms dictate a fused ring analysis. Fixes problem with
+	perylene.
+
+	* test/files/*.smi: Add perylene as a test example.
+
 	* src/builder.cpp (GetNewBondVector): Fix part of PR#2811932 from
 	Avogadro. Make sure adding hydrogens to carboxylic acid always
 	occurs trans to the other oxygen atom.
