@@ -444,8 +444,6 @@ template <class charT, class traits>
 std::streampos
   basic_unzip_streambuf<charT, traits>::seekpos(std::streampos sp, std::ios_base::openmode which)
 {
-  return 0;
-
   // re-roll to the beginning of the file
   inflateEnd(&_zip_stream);
 
