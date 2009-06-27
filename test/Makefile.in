@@ -41,7 +41,8 @@ check_PROGRAMS = aromatic$(EXEEXT) atom$(EXEEXT) bond$(EXEEXT) \
 	invalidsmarts$(EXEEXT) invalidsmiles$(EXEEXT) \
 	iterators$(EXEEXT) logp_psa$(EXEEXT) math$(EXEEXT) \
 	mol$(EXEEXT) phmodel$(EXEEXT) residue$(EXEEXT) rings$(EXEEXT) \
-	smarts$(EXEEXT) smilesmatch$(EXEEXT) unitcell$(EXEEXT)
+	smarts$(EXEEXT) smilesmatch$(EXEEXT) unitcell$(EXEEXT) \
+	zipstream$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
 @PERL_TESTS_FALSE@TESTS = cansmi$(EXEEXT) invalidsmarts$(EXEEXT) \
 @PERL_TESTS_FALSE@	invalidsmiles$(EXEEXT) smarts$(EXEEXT) \
@@ -178,6 +179,10 @@ am_unitcell_OBJECTS = unitcell.$(OBJEXT)
 unitcell_OBJECTS = $(am_unitcell_OBJECTS)
 unitcell_LDADD = $(LDADD)
 unitcell_DEPENDENCIES = ../src/libopenbabel.la
+am_zipstream_OBJECTS = zipstream.$(OBJEXT)
+zipstream_OBJECTS = $(am_zipstream_OBJECTS)
+zipstream_LDADD = $(LDADD)
+zipstream_DEPENDENCIES = ../src/libopenbabel.la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -201,7 +206,7 @@ SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(logp_psa_SOURCES) $(math_SOURCES) $(mol_SOURCES) \
 	$(phmodel_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
 	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
-	$(unitcell_SOURCES)
+	$(unitcell_SOURCES) $(zipstream_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(cansmi_SOURCES) $(cmlreadfile_SOURCES) $(conversion_SOURCES) \
 	$(data_SOURCES) $(ffghemical_SOURCES) $(ffmmff94_SOURCES) \
@@ -212,7 +217,7 @@ DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(logp_psa_SOURCES) $(math_SOURCES) $(mol_SOURCES) \
 	$(phmodel_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
 	$(roundtrip_SOURCES) $(smarts_SOURCES) $(smilesmatch_SOURCES) \
-	$(unitcell_SOURCES)
+	$(unitcell_SOURCES) $(zipstream_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -431,6 +436,7 @@ rings_SOURCES = ringtest.cpp
 smarts_SOURCES = smartstest.cpp
 smilesmatch_SOURCES = smilesmatch.cpp
 unitcell_SOURCES = unitcell.cpp
+zipstream_SOURCES = zipstream.cpp
 all: all-recursive
 
 .SUFFIXES:
@@ -601,6 +607,9 @@ smilesmatch$(EXEEXT): $(smilesmatch_OBJECTS) $(smilesmatch_DEPENDENCIES)
 unitcell$(EXEEXT): $(unitcell_OBJECTS) $(unitcell_DEPENDENCIES) 
 	@rm -f unitcell$(EXEEXT)
 	$(CXXLINK) $(unitcell_OBJECTS) $(unitcell_LDADD) $(LIBS)
+zipstream$(EXEEXT): $(zipstream_OBJECTS) $(zipstream_DEPENDENCIES) 
+	@rm -f zipstream$(EXEEXT)
+	$(CXXLINK) $(zipstream_OBJECTS) $(zipstream_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -637,6 +646,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smartstest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smilesmatch.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unitcell.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zipstream.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

@@ -1,3 +1,12 @@
+2009-06-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/zipstream*: Add support for tellg() / seekg(). Improves
+	support for compressed mol2 files (although still bugs
+	there). Positions from tellg() & seekg() mirror uncompressed data.
+
+	* test/zipstream.cpp: New test to check if tellg/seekg support
+	works.
+
 2009-06-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/kekulize.cpp: Use SMARTS pattern "[aR3]" to determine if

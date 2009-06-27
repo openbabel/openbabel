@@ -307,22 +307,32 @@ basic_unzip_streambuf<charT, traits>::basic_unzip_streambuf(istream_reference is
     : _istream(istream),
       _input_buffer(input_buffer_size),
       _buffer(read_buffer_size),
-      _crc(0)
+      _crc(0),
+      _is_gzip(false)
 {
-    // setting zalloc, zfree and opaque
-    _zip_stream.zalloc = (alloc_func) 0;
-    _zip_stream.zfree = (free_func) 0;
+  initialize(window_size);
+}
 
-    _zip_stream.next_in = NULL;
-    _zip_stream.avail_in = 0;
-    _zip_stream.avail_out = 0;
-    _zip_stream.next_out = NULL;
-
-    _err = inflateInit2(&_zip_stream, window_size);
-        
-    this->setg(&_buffer[0] + 4,     // beginning of putback area
-               &_buffer[0] + 4,     // read position
-               &_buffer[0] + 4);    // end position    
+template <class charT, class traits>
+void
+  basic_unzip_streambuf<charT, traits>::initialize(int window_size)
+{
+  _internalCount = 0;
+  
+  // setting zalloc, zfree and opaque
+  _zip_stream.zalloc = (alloc_func) 0;
+  _zip_stream.zfree = (free_func) 0;
+  
+  _zip_stream.next_in = NULL;
+  _zip_stream.avail_in = 0;
+  _zip_stream.avail_out = 0;
+  _zip_stream.next_out = NULL;
+  
+  _err = inflateInit2(&_zip_stream, window_size);
+  
+  this->setg(&_buffer[0] + 4,     // beginning of putback area
+             &_buffer[0] + 4,     // read position
+             &_buffer[0] + 4);    // end position
 }
 
 /**
@@ -344,20 +354,21 @@ basic_unzip_streambuf<charT, traits>::underflow(void)
 { 
     if(this->gptr() && ( this->gptr() < this->egptr()))
         return * reinterpret_cast<unsigned char *>(this->gptr());
-     
+
     int n_putback = static_cast<int>(this->gptr() - this->eback());
     if(n_putback > 4)
         n_putback = 4;
-       
+
     memcpy(&_buffer[0] + (4 - n_putback),
            this->gptr() - n_putback,
            n_putback * sizeof(char_type));
-  
+
     int num = 
         unzip_from_stream(&_buffer[0] + 4, 
                           static_cast<std::streamsize>((_buffer.size() - 4) *
                                                        sizeof(char_type)));
-        
+    _internalCount += num * sizeof(char_type);
+
     if(num <= 0) // ERROR or EOF
         return EOF;
     
@@ -369,6 +380,89 @@ basic_unzip_streambuf<charT, traits>::underflow(void)
     // return next character
     return * reinterpret_cast<unsigned char *>(this->gptr());    
 }
+
+template <class charT, class traits>
+std::streampos
+  basic_unzip_streambuf<charT, traits>::currentpos()
+{
+  return _internalCount - std::streamoff(this->egptr() - this->gptr());
+}
+
+template <class charT, class traits>
+std::streampos
+  basic_unzip_streambuf<charT, traits>::seekoff(std::streamoff off, std::ios_base::seekdir way, std::ios_base::openmode which)
+{
+  // for tellg()
+  if (way == std::ios_base::cur && off == 0) {
+    return this->currentpos();
+  }
+
+  // We can't really randomly skip around, so we go to the beginning and read until we hit the right spot
+  // So the first step is to calculate the final positioning
+  std::streampos finalpos;
+  char ch;
+  switch ( way )
+    {
+    case std::ios_base::beg :
+      finalpos = off; break;
+    case std::ios_base::cur :
+      finalpos = _zip_stream.total_out + off; break;
+    case std::ios_base::end:
+      // find the end of the file -- might be enough if off = 0
+      while(this->sgetc() != EOF) {
+        ch = this->sbumpc();
+      }
+      finalpos = _zip_stream.total_out + off;
+      if (off == 0)
+        return this->currentpos(); // we're at the end of the file already
+
+      // we have to find an offset from the end -- more work!
+      break;
+    default :
+      finalpos = _zip_stream.total_out; break; /* just to fool the compiler, this doesn't really matter */
+    }
+
+  // re-roll to the beginning of the file
+  if (way != std::ios_base::cur) {
+    inflateEnd(&_zip_stream);
+
+    _istream.clear(std::ios::goodbit);
+    _istream.seekg(0);
+    this->initialize(-15);
+    this->check_header();
+  }
+
+  // Now we keep going, throwing away the data until we get to the right place
+  while(this->sgetc() != EOF && this->currentpos() != finalpos) {
+    ch = this->sbumpc();
+  }
+  
+  return this->currentpos();
+}
+
+template <class charT, class traits>
+std::streampos
+  basic_unzip_streambuf<charT, traits>::seekpos(std::streampos sp, std::ios_base::openmode which)
+{
+  return 0;
+
+  // re-roll to the beginning of the file
+  inflateEnd(&_zip_stream);
+
+  _istream.clear(std::ios::goodbit);
+  _istream.seekg(0);
+  this->initialize(-15);
+  this->check_header();
+
+  // Now we keep going, throwing away the data until we get to the right place
+  char ch;
+  while(this->sgetc() != EOF && this->currentpos() != sp) {
+    ch = this->sbumpc();
+  }
+  
+  return this->currentpos();
+}
+
 
 /** returns the compressed input istream
  */
@@ -479,7 +573,7 @@ basic_unzip_streambuf<charT, traits>::unzip_from_stream(char_type* buffer,
         
     // check if it is the end
     if (_err == Z_STREAM_END)
-        put_back_from_zip_stream();                
+        put_back_from_zip_stream();  
         
     return n_read;
 }
@@ -648,12 +742,11 @@ basic_zip_istream<charT, traits>::basic_zip_istream(istream_reference istream,
     : basic_unzip_streambuf<charT, traits>(istream, window_size,
                                            read_buffer_size, input_buffer_size),
       std::basic_istream<charT, traits>(this),
-      _is_gzip(false),
       _gzip_crc(0),
       _gzip_data_size(0)
 {
     if(this->get_zerr() == Z_OK)
-        check_header();
+      this->check_header();
 }
 
 /** returns true if it is a gzip file
@@ -662,7 +755,7 @@ template <class charT, class traits> inline
 bool
 basic_zip_istream<charT, traits>::is_gzip(void) const
 {
-    return _is_gzip;
+    return this->_is_gzip;
 }
 
 /** return crc check result
@@ -716,7 +809,7 @@ basic_zip_istream<charT, traits>::get_gzip_data_size(void) const
  */
 template <class charT, class traits>
 int
-basic_zip_istream<charT, traits>::check_header(void)
+basic_unzip_streambuf<charT, traits>::check_header(void)
 {
     int method; /* method byte */
     int flags;  /* flags byte */
@@ -792,7 +885,7 @@ template <class charT, class traits>
 void
 basic_zip_istream<charT, traits>::read_footer(void)
 {        
-    if(_is_gzip)
+    if(this->_is_gzip)
     {
         _gzip_crc = 0;
         for(int n=0;n<4;++n)
