@@ -706,16 +706,12 @@ namespace OpenBabel {
       int i=0;
       while(i<n && ifs.good())
         {
-          if(!isNotSmiles(ifs.peek()))
+          if(ifs.peek()!='#')
             i++;
           ifs.ignore(numeric_limits<streamsize>::max(),'\n');
         }
       return ifs ? 1 : -1; 
     }
-
-  private:
-    bool isNotSmiles(char ch);
-
   };
 
   //**************************************************
@@ -826,7 +822,7 @@ namespace OpenBabel {
     OBSmilesParser() { }
     ~OBSmilesParser() { }
 
-    bool SmiToMol(OBMol&,string&);
+    bool SmiToMol(OBMol&,const string&);
     bool ParseSmiles(OBMol&);
     bool ParseSimple(OBMol&);
     bool ParseComplex(OBMol&);
@@ -843,73 +839,93 @@ namespace OpenBabel {
   };
 
   /////////////////////////////////////////////////////////////////
-  /*
-    There is a set of characters which do not occur in SMILES strings.
-    If the first char is one of this set, then line is read and discarded and
-    parsing starts again with the next line.
-    SMILES strings are terminated by characters from this set. If the
-    terminating character is whitespace, the rest of the line is used as
-    the title of the molecule and the input stream left at the start of the
-    next line. If the terminating character is not whitespace, the input
-    stream is left so that it will be the next character be read.
+  /* Lines starting with # are ignored. Whitespace at the start (including
+     blank lines) terminate the input unless -e option is used.
+     Valid SMILES reactions such as [C]=O.O>[Fe]>O=C=O.[H][H] with non-null
+     reactant and product are accepted and the reactant, product and
+     possibly the agent molecules are output when using the Convert interface
+     (babel commandline). With the OBConversion functions Read, ReadString
+     and ReadFile all SMILES reactions give an error when read with this format.
   */
-
-  ///Returns true if character is not one used in a SMILES string.
-  bool SMIBaseFormat::isNotSmiles(char ch)
-  {
-    static std::string notsmileschars(",<>\"\'!^&_|{}");
-    return ch<=0x20 || notsmileschars.find(ch)!=string::npos;
-  }
-
-  //////////////////////////////////////////////////////////////////
   bool SMIBaseFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
 
     istream &ifs = *pConv->GetInStream();
-    //    const char* title = pConv->GetTitle();
+    string ln, smiles, title;
+    string::size_type pos, pos2;
 
-    string ln;
-    //Ignore lines that start with non-SMILES characters, including whitespace
-    while(ifs && isNotSmiles(ifs.peek()))
+    //Ignore lines that start with #
+    while(ifs && ifs.peek()=='#')
       if(!getline(ifs, ln))
         return false;
 
-    //Copy the input up to the first non-SMILES character
-    string smiles;
-    char ch=0;
-    for(;ifs.good();ch=0) //exits with ch=0 at eof or failure
+    //Get title
+    if(getline(ifs, ln))
+    {
+      pos = ln.find_first_of(" \t");
+      if(pos!=string::npos)
       {
-        ifs.get(ch);
-        if(isNotSmiles(ch))
-          break;
-        smiles.push_back(ch);
+        smiles = ln.substr(0,pos);
+        title = ln.substr(pos+1);
+        Trim(title);
+        pmol->SetTitle(title.c_str());
       }
-
-    //when terminating char is...
-    if(ch!=0 && ch!='\n') //...end of line: no title; stream ready for next line 
-      {
-        if(ch>0 && isspace(ch))
-          {
-            //...other whitespace: use the rest of the line as title
-            getline(ifs, ln);
-            Trim(ln);
-            pmol->SetTitle(ln);
-          }
-        else
-          //leave istream at any other terminating character
-          ifs.unget();
-      }
+      else
+        smiles = ln;
+    }
+    pos= smiles.find_first_of(",<\"\'!^&_|{}");
+    if(pos!=string::npos)
+    {
+      obErrorLog.ThrowError(__FUNCTION__, 
+        smiles + " contained a character '" + smiles[pos] + "' which is invalid in SMILES", obError);
+      return false;
+    }
 
     pmol->SetDimension(0);
     OBSmilesParser sp;
-    return sp.SmiToMol(*pmol, smiles);
-  }
 
+    pos = smiles.find('>');
+    if(pos==string::npos)
+      return sp.SmiToMol(*pmol, smiles); //normal return
+
+    //Possibly a SMILES reaction
+    OBMol* pmol1 = new OBMol;
+    OBMol* pmol2 = new OBMol;
+    if(sp.SmiToMol(*pmol1, smiles.substr(0,pos))                  //reactant
+      && (pos2 = smiles.find('>', pos+1))!=string::npos)          //second >
+    {
+      if((pos2-pos==1                                             //no agent  
+         || sp.SmiToMol(*pmol2, smiles.substr(pos+1,pos2-pos-1))) //agent           
+         && sp.SmiToMol(*pmol, smiles.substr(pos2+1)))            //product
+      {
+        //Is a valid reaction. Output species
+        pmol1->SetDimension(0);
+        pmol1->SetTitle(title);
+        pmol2->SetTitle(title);
+        pmol->SetTitle(title);
+        pmol2->SetDimension(0);
+        if(pConv->AddChemObject(
+          pmol1->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS), pConv))<0)//using Read or ReadString or ReadFile
+        {
+          obErrorLog.ThrowError(__FUNCTION__, smiles + 
+            " SmilesFormat accepts reactions only with the \"Convert\" (commandline) interface", obError);
+
+          return false; //Error
+        }
+        if(pmol2->NumAtoms())
+           pConv->AddChemObject(
+             pmol2->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS), pConv));
+        return true; //valid reaction return
+      }
+    }
+    obErrorLog.ThrowError(__FUNCTION__, smiles + " contained '>' but was not a acceptable reaction", obError);
+    return false;
+  }
 
   //////////////////////////////////////////////
 
-  bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
+  bool OBSmilesParser::SmiToMol(OBMol &mol,const string &s)
   {
     strncpy(_buffer,s.c_str(), BUFF_SIZE);
     _buffer[BUFF_SIZE - 1] = '\0';

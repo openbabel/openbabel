@@ -1,3 +1,20 @@
+2009-06-27  Chris Morley <c.morley@gaseq.co.uk>
+
+	Make parsing of SMILES files stricter, following discussion on
+	mailing list.
+	* src/formats/smilesformat.cpp(Read Molecule):
+	lines starting with # are ignored; lines starting with whitespace
+	terminate (except with -e option); illegal chars reported;
+	when using OBConversion::Convert(), the components of a SMILES reaction
+	are output if it is a valid reaction with non-null reactant and product.
+	
+	(OBSmilesParser::SmiToMol): the string parameter is made const. This
+	simplifies its use, e.g. can use substr. Similar changes would be useful
+	elsewhere in OB. 
+	 
+	* src/formats/rsmiformat.cpp: re-written because of smilesformat changes.
+	Now handles multiple reactants and products.
+
 2009-06-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/zipstream*: Add support for tellg() / seekg(). Improves
