@@ -78,14 +78,17 @@ else BUILD_SHARED
 # First declare where these will be installed
 if BUILD_SHARED_UNIX
 formatsdir = $(pkglibdir)/$(VERSION)
+win32ldflags = 
+
 else
 #MinGW: install with babel.exe as *.obf files
 formatsdir = $(bindir)
-install-exec-hook:
-	(cd $(DESTDIR)$(bindir) && \
+win32ldflags = -enable-runtime-pseudo-relocs
+install-data-hook:
+	(cd $(DESTDIR)$(bindir); \
 	for format in APIInterface.dll *format.dll; do \
-		mv $$(format) $$(format%%.dll).obf; \
-	done
+		mv $${format} `basename $${format} .dll`.obf; \
+	done)
 endif
 
 formats_LTLIBRARIES = \
@@ -131,256 +134,256 @@ formats_LTLIBRARIES += gamessukformat.la
 endif
 
 APIInterface_la_SOURCES = APIInterface.cpp
-APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 
 CSRformat_la_SOURCES = CSRformat.cpp 
-CSRformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+CSRformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 
 MCDLformat_la_SOURCES = MCDLformat.cpp 
-MCDLformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+MCDLformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 
 PQSformat_la_SOURCES = PQSformat.cpp 
-PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 acrformat_la_SOURCES = acrformat.cpp 
-acrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+acrformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 adfformat_la_SOURCES = adfformat.cpp ArrayList.c #KReader.c
-adfformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+adfformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 alchemyformat_la_SOURCES = alchemyformat.cpp 
-alchemyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+alchemyformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 amberformat_la_SOURCES = amberformat.cpp 
-amberformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+amberformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 balstformat_la_SOURCES = balstformat.cpp 
-balstformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+balstformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 bgfformat_la_SOURCES = bgfformat.cpp 
-bgfformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+bgfformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 boxformat_la_SOURCES = boxformat.cpp 
-boxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+boxformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 cacaoformat_la_SOURCES = cacaoformat.cpp 
-cacaoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+cacaoformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 cacheformat_la_SOURCES = cacheformat.cpp 
-cacheformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+cacheformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 carformat_la_SOURCES = carformat.cpp 
-carformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+carformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 cccformat_la_SOURCES = cccformat.cpp 
-cccformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+cccformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 chem3dformat_la_SOURCES = chem3dformat.cpp 
-chem3dformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+chem3dformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 chemdrawctformat_la_SOURCES = chemdrawct.cpp 
-chemdrawctformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+chemdrawctformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 if HAVE_SHARED_POINTER
 chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp 
-chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 endif
 
 chemtoolformat_la_SOURCES = chemtoolformat.cpp 
-chemtoolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+chemtoolformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 if HAVE_SHARED_POINTER
 chemkinformat_la_SOURCES = chemkinformat.cpp 
-chemkinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+chemkinformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 endif
 
 cifformat_la_SOURCES = cifformat.cpp 
-cifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+cifformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 copyformat_la_SOURCES = copyformat.cpp 
-copyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+copyformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 crkformat_la_SOURCES = crkformat.cpp 
-crkformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+crkformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 cssrformat_la_SOURCES = cssrformat.cpp 
-cssrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+cssrformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 dmolformat_la_SOURCES = dmolformat.cpp 
-dmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+dmolformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 fastsearchformat_la_SOURCES = fastsearchformat.cpp
-fastsearchformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+fastsearchformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 fastaformat_la_SOURCES = fastaformat.cpp 
-fastaformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+fastaformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 fchkformat_la_SOURCES = fchkformat.cpp 
-fchkformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+fchkformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 featformat_la_SOURCES = featformat.cpp 
-featformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+featformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 fhformat_la_SOURCES = fhformat.cpp 
-fhformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+fhformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 
 fingerprintformat_la_SOURCES = fingerprintformat.cpp 
-fingerprintformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+fingerprintformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 
 freefracformat_la_SOURCES = freefracformat.cpp 
-freefracformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+freefracformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 gamessformat_la_SOURCES = gamessformat.cpp 
-gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 if HAVE_REGEX
 gamessukformat_la_SOURCES = gamessukformat.cpp 
-gamessukformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+gamessukformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 endif
 
 gaussformat_la_SOURCES = gaussformat.cpp 
-gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 gausscubeformat_la_SOURCES = gausscubeformat.cpp 
-gausscubeformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+gausscubeformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 gausszmatformat_la_SOURCES = gausszmatformat.cpp 
-gausszmatformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+gausszmatformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 
 ghemicalformat_la_SOURCES = ghemicalformat.cpp 
-ghemicalformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+ghemicalformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 gromos96format_la_SOURCES = gromos96format.cpp 
-gromos96format_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+gromos96format_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 hinformat_la_SOURCES = hinformat.cpp 
-hinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+hinformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 inchiformat_la_SOURCES = inchiformat.cpp  getinchi.cpp
 if BUILD_INCHI
-inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la inchi102/libinchi.la
+inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la inchi102/libinchi.la
 else
-inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 inchiformat_la_LIBADD = -linchi
 endif
 
 jaguarformat_la_SOURCES = jaguarformat.cpp 
-jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 mdlformat_la_SOURCES = mdlformat.cpp  ../alias.cpp
-mdlformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+mdlformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 mmcifformat_la_SOURCES = mmcifformat.cpp 
-mmcifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+mmcifformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 mmodformat_la_SOURCES = mmodformat.cpp 
-mmodformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+mmodformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 mol2format_la_SOURCES = mol2format.cpp 
-mol2format_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+mol2format_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 molreportformat_la_SOURCES = molreport.cpp 
-molreportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+molreportformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 moldenformat_la_SOURCES = moldenformat.cpp 
-moldenformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+moldenformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 mopacformat_la_SOURCES = mopacformat.cpp 
-mopacformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+mopacformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 molproformat_la_SOURCES = molproformat.cpp 
-molproformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+molproformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 mpdformat_la_SOURCES = mpdformat.cpp 
-mpdformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+mpdformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 mpqcformat_la_SOURCES = mpqcformat.cpp 
-mpqcformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+mpqcformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 msiformat_la_SOURCES = msiformat.cpp 
-msiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+msiformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 msmsformat_la_SOURCES = msmsformat.cpp 
-msmsformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+msmsformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 nwchemformat_la_SOURCES = nwchemformat.cpp 
-nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 pcmodelformat_la_SOURCES = pcmodelformat.cpp 
-pcmodelformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+pcmodelformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 pdbformat_la_SOURCES = pdbformat.cpp 
-pdbformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+pdbformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 povrayformat_la_SOURCES = povrayformat.cpp 
-povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 pqrformat_la_SOURCES = pqrformat.cpp 
-pqrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+pqrformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 opendxformat_la_SOURCES = opendxformat.cpp
-opendxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+opendxformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 outformat_la_SOURCES = outformat.cpp
-outformat_la_LDFLAGS = -module -avoid-version -no-undefined  ../libopenbabel.la
+outformat_la_LDFLAGS = -module -avoid-version -no-undefined  $(win32ldflags) ../libopenbabel.la
 
 qchemformat_la_SOURCES = qchemformat.cpp 
-qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32flags) ../libopenbabel.la
 
 if BUILD_ZLIB
 pngformat_la_SOURCES = pngformat.cpp 
-pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+pngformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 pngformat_la_LIBADD = -lz
 endif
 
 reportformat_la_SOURCES = reportformat.cpp 
-reportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+reportformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 if HAVE_SHARED_POINTER
 rsmiformat_la_SOURCES = rsmiformat.cpp
-rsmiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+rsmiformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 
 rxnformat_la_SOURCES = rxnformat.cpp
-rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 endif
 
 shelxformat_la_SOURCES = shelxformat.cpp 
-shelxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+shelxformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 smilesformat_la_SOURCES = smilesformat.cpp 
-smilesformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+smilesformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 thermoformat_la_SOURCES = thermoformat.cpp 
-thermoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+thermoformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 tinkerformat_la_SOURCES = tinkerformat.cpp 
-tinkerformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+tinkerformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 titleformat_la_SOURCES = titleformat.cpp 
-titleformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+titleformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 turbomoleformat_la_SOURCES = turbomoleformat.cpp 
-turbomoleformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+turbomoleformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 
 unichemformat_la_SOURCES = unichemformat.cpp 
-unichemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+unichemformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 viewmolformat_la_SOURCES = viewmolformat.cpp 
-viewmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+viewmolformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 xedformat_la_SOURCES = xedformat.cpp 
-xedformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+xedformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 xtcformat_la_SOURCES = xtcformat.cpp 
-xtcformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+xtcformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 xyzformat_la_SOURCES = xyzformat.cpp 
-xyzformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+xyzformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 yasaraformat_la_SOURCES = yasaraformat.cpp 
-yasaraformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+yasaraformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 zindoformat_la_SOURCES = zindoformat.cpp 
-zindoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+zindoformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 
 endif

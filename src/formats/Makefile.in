@@ -1153,11 +1153,14 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp \
 @BUILD_SHARED_FALSE@	rxnformat.cpp rsmiformat.cpp
 
+
 #MinGW: install with babel.exe as *.obf files
 @BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@formatsdir = $(bindir)
 
 # First declare where these will be installed
 @BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_TRUE@formatsdir = $(pkglibdir)/$(VERSION)
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@win32ldflags = -enable-runtime-pseudo-relocs
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_TRUE@win32ldflags = 
 @BUILD_SHARED_TRUE@formats_LTLIBRARIES = APIInterface.la CSRformat.la \
 @BUILD_SHARED_TRUE@	PQSformat.la MCDLformat.la alchemyformat.la \
 @BUILD_SHARED_TRUE@	acrformat.la adfformat.la amberformat.la \
@@ -1191,166 +1194,166 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	$(am__append_3) $(am__append_4) \
 @BUILD_SHARED_TRUE@	$(am__append_5) $(am__append_6)
 @BUILD_SHARED_TRUE@APIInterface_la_SOURCES = APIInterface.cpp
-@BUILD_SHARED_TRUE@APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@APIInterface_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@CSRformat_la_SOURCES = CSRformat.cpp 
-@BUILD_SHARED_TRUE@CSRformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@CSRformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@MCDLformat_la_SOURCES = MCDLformat.cpp 
-@BUILD_SHARED_TRUE@MCDLformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@MCDLformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@PQSformat_la_SOURCES = PQSformat.cpp 
-@BUILD_SHARED_TRUE@PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@PQSformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@acrformat_la_SOURCES = acrformat.cpp 
-@BUILD_SHARED_TRUE@acrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@acrformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@adfformat_la_SOURCES = adfformat.cpp ArrayList.c #KReader.c
-@BUILD_SHARED_TRUE@adfformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@adfformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@alchemyformat_la_SOURCES = alchemyformat.cpp 
-@BUILD_SHARED_TRUE@alchemyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@alchemyformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@amberformat_la_SOURCES = amberformat.cpp 
-@BUILD_SHARED_TRUE@amberformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@amberformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@balstformat_la_SOURCES = balstformat.cpp 
-@BUILD_SHARED_TRUE@balstformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@balstformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@bgfformat_la_SOURCES = bgfformat.cpp 
-@BUILD_SHARED_TRUE@bgfformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@bgfformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@boxformat_la_SOURCES = boxformat.cpp 
-@BUILD_SHARED_TRUE@boxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@boxformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cacaoformat_la_SOURCES = cacaoformat.cpp 
-@BUILD_SHARED_TRUE@cacaoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@cacaoformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cacheformat_la_SOURCES = cacheformat.cpp 
-@BUILD_SHARED_TRUE@cacheformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@cacheformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@carformat_la_SOURCES = carformat.cpp 
-@BUILD_SHARED_TRUE@carformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@carformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cccformat_la_SOURCES = cccformat.cpp 
-@BUILD_SHARED_TRUE@cccformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@cccformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@chem3dformat_la_SOURCES = chem3dformat.cpp 
-@BUILD_SHARED_TRUE@chem3dformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@chem3dformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@chemdrawctformat_la_SOURCES = chemdrawct.cpp 
-@BUILD_SHARED_TRUE@chemdrawctformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@chemdrawctformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp 
-@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemdrawcdxformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@chemtoolformat_la_SOURCES = chemtoolformat.cpp 
-@BUILD_SHARED_TRUE@chemtoolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@chemtoolformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemkinformat_la_SOURCES = chemkinformat.cpp 
-@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemkinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@chemkinformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cifformat_la_SOURCES = cifformat.cpp 
-@BUILD_SHARED_TRUE@cifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@cifformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@copyformat_la_SOURCES = copyformat.cpp 
-@BUILD_SHARED_TRUE@copyformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@copyformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@crkformat_la_SOURCES = crkformat.cpp 
-@BUILD_SHARED_TRUE@crkformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@crkformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@cssrformat_la_SOURCES = cssrformat.cpp 
-@BUILD_SHARED_TRUE@cssrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@cssrformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@dmolformat_la_SOURCES = dmolformat.cpp 
-@BUILD_SHARED_TRUE@dmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@dmolformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@fastsearchformat_la_SOURCES = fastsearchformat.cpp
-@BUILD_SHARED_TRUE@fastsearchformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@fastsearchformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@fastaformat_la_SOURCES = fastaformat.cpp 
-@BUILD_SHARED_TRUE@fastaformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@fastaformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@fchkformat_la_SOURCES = fchkformat.cpp 
-@BUILD_SHARED_TRUE@fchkformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@fchkformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@featformat_la_SOURCES = featformat.cpp 
-@BUILD_SHARED_TRUE@featformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@featformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@fhformat_la_SOURCES = fhformat.cpp 
-@BUILD_SHARED_TRUE@fhformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@fhformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@fingerprintformat_la_SOURCES = fingerprintformat.cpp 
-@BUILD_SHARED_TRUE@fingerprintformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@fingerprintformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@freefracformat_la_SOURCES = freefracformat.cpp 
-@BUILD_SHARED_TRUE@freefracformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@freefracformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gamessformat_la_SOURCES = gamessformat.cpp 
-@BUILD_SHARED_TRUE@gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@gamessformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@gamessukformat_la_SOURCES = gamessukformat.cpp 
-@BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@gamessukformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@HAVE_REGEX_TRUE@gamessukformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gaussformat_la_SOURCES = gaussformat.cpp 
-@BUILD_SHARED_TRUE@gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@gaussformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gausscubeformat_la_SOURCES = gausscubeformat.cpp 
-@BUILD_SHARED_TRUE@gausscubeformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@gausscubeformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gausszmatformat_la_SOURCES = gausszmatformat.cpp 
-@BUILD_SHARED_TRUE@gausszmatformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@gausszmatformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@ghemicalformat_la_SOURCES = ghemicalformat.cpp 
-@BUILD_SHARED_TRUE@ghemicalformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@ghemicalformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@gromos96format_la_SOURCES = gromos96format.cpp 
-@BUILD_SHARED_TRUE@gromos96format_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@gromos96format_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@hinformat_la_SOURCES = hinformat.cpp 
-@BUILD_SHARED_TRUE@hinformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@hinformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@inchiformat_la_SOURCES = inchiformat.cpp  getinchi.cpp
-@BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la inchi102/libinchi.la
+@BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
+@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la inchi102/libinchi.la
 @BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LIBADD = -linchi
 @BUILD_SHARED_TRUE@jaguarformat_la_SOURCES = jaguarformat.cpp 
-@BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mdlformat_la_SOURCES = mdlformat.cpp  ../alias.cpp
-@BUILD_SHARED_TRUE@mdlformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@mdlformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mmcifformat_la_SOURCES = mmcifformat.cpp 
-@BUILD_SHARED_TRUE@mmcifformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@mmcifformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mmodformat_la_SOURCES = mmodformat.cpp 
-@BUILD_SHARED_TRUE@mmodformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@mmodformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mol2format_la_SOURCES = mol2format.cpp 
-@BUILD_SHARED_TRUE@mol2format_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@mol2format_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@molreportformat_la_SOURCES = molreport.cpp 
-@BUILD_SHARED_TRUE@molreportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@molreportformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@moldenformat_la_SOURCES = moldenformat.cpp 
-@BUILD_SHARED_TRUE@moldenformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@moldenformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mopacformat_la_SOURCES = mopacformat.cpp 
-@BUILD_SHARED_TRUE@mopacformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@mopacformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@molproformat_la_SOURCES = molproformat.cpp 
-@BUILD_SHARED_TRUE@molproformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@molproformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mpdformat_la_SOURCES = mpdformat.cpp 
-@BUILD_SHARED_TRUE@mpdformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@mpdformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@mpqcformat_la_SOURCES = mpqcformat.cpp 
-@BUILD_SHARED_TRUE@mpqcformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@mpqcformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@msiformat_la_SOURCES = msiformat.cpp 
-@BUILD_SHARED_TRUE@msiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@msiformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@msmsformat_la_SOURCES = msmsformat.cpp 
-@BUILD_SHARED_TRUE@msmsformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@msmsformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@nwchemformat_la_SOURCES = nwchemformat.cpp 
-@BUILD_SHARED_TRUE@nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@nwchemformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@pcmodelformat_la_SOURCES = pcmodelformat.cpp 
-@BUILD_SHARED_TRUE@pcmodelformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@pcmodelformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@pdbformat_la_SOURCES = pdbformat.cpp 
-@BUILD_SHARED_TRUE@pdbformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@pdbformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@povrayformat_la_SOURCES = povrayformat.cpp 
-@BUILD_SHARED_TRUE@povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@povrayformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@pqrformat_la_SOURCES = pqrformat.cpp 
-@BUILD_SHARED_TRUE@pqrformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@pqrformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@opendxformat_la_SOURCES = opendxformat.cpp
-@BUILD_SHARED_TRUE@opendxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@opendxformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@outformat_la_SOURCES = outformat.cpp
-@BUILD_SHARED_TRUE@outformat_la_LDFLAGS = -module -avoid-version -no-undefined  ../libopenbabel.la
+@BUILD_SHARED_TRUE@outformat_la_LDFLAGS = -module -avoid-version -no-undefined  $(win32ldflags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@qchemformat_la_SOURCES = qchemformat.cpp 
-@BUILD_SHARED_TRUE@qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@qchemformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32flags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@pngformat_la_SOURCES = pngformat.cpp 
-@BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@pngformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@pngformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@@BUILD_ZLIB_TRUE@pngformat_la_LIBADD = -lz
 @BUILD_SHARED_TRUE@reportformat_la_SOURCES = reportformat.cpp 
-@BUILD_SHARED_TRUE@reportformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@reportformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rsmiformat_la_SOURCES = rsmiformat.cpp
-@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rsmiformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rsmiformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rxnformat_la_SOURCES = rxnformat.cpp
-@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@@HAVE_SHARED_POINTER_TRUE@rxnformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@shelxformat_la_SOURCES = shelxformat.cpp 
-@BUILD_SHARED_TRUE@shelxformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@shelxformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@smilesformat_la_SOURCES = smilesformat.cpp 
-@BUILD_SHARED_TRUE@smilesformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@smilesformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@thermoformat_la_SOURCES = thermoformat.cpp 
-@BUILD_SHARED_TRUE@thermoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@thermoformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@tinkerformat_la_SOURCES = tinkerformat.cpp 
-@BUILD_SHARED_TRUE@tinkerformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@tinkerformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@titleformat_la_SOURCES = titleformat.cpp 
-@BUILD_SHARED_TRUE@titleformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@titleformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@turbomoleformat_la_SOURCES = turbomoleformat.cpp 
-@BUILD_SHARED_TRUE@turbomoleformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la
+@BUILD_SHARED_TRUE@turbomoleformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 @BUILD_SHARED_TRUE@unichemformat_la_SOURCES = unichemformat.cpp 
-@BUILD_SHARED_TRUE@unichemformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@unichemformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@viewmolformat_la_SOURCES = viewmolformat.cpp 
-@BUILD_SHARED_TRUE@viewmolformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@viewmolformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@xedformat_la_SOURCES = xedformat.cpp 
-@BUILD_SHARED_TRUE@xedformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@xedformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@xtcformat_la_SOURCES = xtcformat.cpp 
-@BUILD_SHARED_TRUE@xtcformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@xtcformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@xyzformat_la_SOURCES = xyzformat.cpp 
-@BUILD_SHARED_TRUE@xyzformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@xyzformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@yasaraformat_la_SOURCES = yasaraformat.cpp 
-@BUILD_SHARED_TRUE@yasaraformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@yasaraformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 @BUILD_SHARED_TRUE@zindoformat_la_SOURCES = zindoformat.cpp 
-@BUILD_SHARED_TRUE@zindoformat_la_LDFLAGS = -module -avoid-version -no-undefined ../libopenbabel.la 
+@BUILD_SHARED_TRUE@zindoformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -1961,8 +1964,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 @BUILD_PCH_FALSE@clean-local:
-@BUILD_SHARED_FALSE@install-exec-hook:
-@BUILD_SHARED_UNIX_TRUE@install-exec-hook:
+@BUILD_SHARED_FALSE@install-data-hook:
+@BUILD_SHARED_UNIX_TRUE@install-data-hook:
 clean: clean-recursive
 
 clean-am: clean-formatsLTLIBRARIES clean-generic clean-libtool \
@@ -1987,14 +1990,14 @@ info: info-recursive
 info-am:
 
 install-data-am: install-formatsLTLIBRARIES
-
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-recursive
 
 install-dvi-am:
 
 install-exec-am:
-	@$(NORMAL_INSTALL)
-	$(MAKE) $(AM_MAKEFLAGS) install-exec-hook
+
 install-html: install-html-recursive
 
 install-html-am:
@@ -2036,7 +2039,7 @@ ps-am:
 uninstall-am: uninstall-formatsLTLIBRARIES
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) all check \
-	ctags-recursive install install-am install-exec-am \
+	ctags-recursive install install-am install-data-am \
 	install-strip tags-recursive
 
 .PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
@@ -2045,16 +2048,16 @@ uninstall-am: uninstall-formatsLTLIBRARIES
 	clean-noinstLTLIBRARIES ctags ctags-recursive distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-exec-hook \
-	install-formatsLTLIBRARIES install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
-	uninstall-formatsLTLIBRARIES
+	install install-am install-data install-data-am \
+	install-data-hook install-dvi install-dvi-am install-exec \
+	install-exec-am install-formatsLTLIBRARIES install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-recursive \
+	uninstall uninstall-am uninstall-formatsLTLIBRARIES
 
 @BUILD_PCH_TRUE@all.h.gch: all.h Makefile \
 @BUILD_PCH_TRUE@	$(srcdir)/../../include/openbabel/babelconfig.h \
@@ -2068,11 +2071,11 @@ uninstall-am: uninstall-formatsLTLIBRARIES
 @BUILD_PCH_TRUE@	$(CXX) $(PCHFLAGS) $<
 @BUILD_PCH_TRUE@clean-local:
 @BUILD_PCH_TRUE@	-rm -f all.h.gch
-@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@install-exec-hook:
-@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	(cd $(DESTDIR)$(bindir) && \
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@install-data-hook:
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	(cd $(DESTDIR)$(bindir); \
 @BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	for format in APIInterface.dll *format.dll; do \
-@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@		mv $$(format) $$(format%%.dll).obf; \
-@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	done
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@		mv $${format} `basename $${format} .dll`.obf; \
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@	done)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
