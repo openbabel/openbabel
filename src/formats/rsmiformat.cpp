@@ -118,60 +118,100 @@ bool SmiReactFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   //Doesn't make a new OBReaction object, but does make mew reactant and product OBMols
   OBReaction* pReact = pOb->CastAndClear<OBReaction>();
 
-  OBFormat* pSmiFormat = OBConversion::FindFormat("SMI");
-  if(!pSmiFormat || !pReact)
-    return false;
-
   istream &ifs = *pConv->GetInStream();
-
-  //Read reactant
-  shared_ptr<OBMol> spReactant(new OBMol);
-  if(!pSmiFormat->ReadMolecule(spReactant.get(), pConv))
+  OBConversion sconv; //Copy
+  if(!sconv.SetInFormat("smi"))
   {
-    obErrorLog.ThrowError(__FUNCTION__, "Cannot read reactant", obError);
+    obErrorLog.ThrowError(__FUNCTION__, "Smiles format needed but not found", obError);
     return false;
   }
-  pReact->AddReactant(spReactant);
 
-  char ch;
-  if(!ifs.get(ch) || ch!='>')
+  string ln, rsmiles, title, s;
+  string::size_type pos, pos2;
+
+  //Ignore lines that start with # or /
+  while(ifs && ifs.peek()=='#' || ifs.peek()=='/')
+    if(!getline(ifs, ln))
+      return false;
+
+  //Get title
+  if(getline(ifs, ln))
+  {
+    pos = ln.find_first_of(" \t");
+    if(pos!=string::npos)
+    {
+      rsmiles = ln.substr(0,pos);
+      title = ln.substr(pos+1);
+      Trim(title);
+      pReact->SetTitle(title);
+    }
+    else
+      rsmiles = ln;
+  }
+  //Check for illegal characters
+  pos= rsmiles.find_first_of(",<\"\'!^&_|{}");
+  if(pos!=string::npos)
+  {
+    obErrorLog.ThrowError(__FUNCTION__, 
+      rsmiles + " contained a character '" + rsmiles[pos] + "' which is invalid in SMILES", obError);
+    return false;
+  }
+  
+  pos = rsmiles.find('>');
+  if(pos==string::npos)
   {
     obErrorLog.ThrowError(__FUNCTION__, "No > in reaction", obError);
     return false;
   }
   
-  //Read >> characters and possibly an agent molecule between them
-  if(ifs.get(ch) && ch!='>')
+  vector<OBMol> mols;
+  vector<OBMol>::iterator itr;
+
+  //Extract reactants and split into individual molecules
+  OBMol jreactants;
+  s = rsmiles.substr(0,pos); 
+  if(!sconv.ReadString(&jreactants, s)) 
   {
-    //there is an agent
-    ifs.unget();
-    shared_ptr<OBMol> spAgent(new OBMol);
-    if(!pSmiFormat->ReadMolecule(spAgent.get(), pConv))
+    obErrorLog.ThrowError(__FUNCTION__, "Cannot read reactant", obError);
+    return false;
+  }
+  mols = jreactants.Separate();
+  for(itr=mols.begin();itr!=mols.end();++itr)
+    pReact->AddReactant(shared_ptr<OBMol>(new OBMol(*itr)));
+
+  pos2 = rsmiles.find('>', pos+1);
+  if(pos2==string::npos)
+  {
+    obErrorLog.ThrowError(__FUNCTION__, "Only one > in reaction", obError);
+    return false;
+  }
+  
+  //Extract agent (not split into separate molecules)
+  if(pos2-pos>1)
+  {
+    OBMol* pAgent = new OBMol;
+    s = rsmiles.substr(pos+1,pos2-pos-1);
+    if(!sconv.ReadString(pAgent, s)) 
     {
-      obErrorLog.ThrowError(__FUNCTION__, "Error in agent molecule", obError);
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot read agent", obError);
+      delete pAgent;
       return false;
     }
-    pReact->AddAgent(spAgent);
-    if(!ifs.get(ch) || ch!='>')
-    {
-      obErrorLog.ThrowError(__FUNCTION__, "The second > is missing", obError);
-      return false;
-    }
+    pReact->AddAgent(shared_ptr<OBMol>(pAgent));
   }
 
-  //Read product
-  shared_ptr<OBMol> spProduct(new OBMol);
-  if(!pSmiFormat->ReadMolecule(spProduct.get(), pConv))
+  //Extract products and split into separate molecules
+  OBMol jproducts;
+  s = rsmiles.substr(pos2+1); 
+  if(!sconv.ReadString(&jproducts, s)) 
   {
     obErrorLog.ThrowError(__FUNCTION__, "Cannot read product", obError);
     return false;
   }
-  pReact->AddProduct(spProduct);
-
-  //The comment at the end of the line ends up as the title of the product molecule
-  string comment = spProduct->GetTitle();
-  spProduct->SetTitle("");
-  pReact->SetComment(comment);
+  mols.clear();
+  mols = jproducts.Separate();
+  for(itr=mols.begin();itr!=mols.end();++itr)
+    pReact->AddProduct(shared_ptr<OBMol>(new OBMol(*itr)));
 
   return true;
 }
@@ -194,15 +234,11 @@ bool SmiReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   pConv->AddOption("smilesonly",OBConversion::OUTOPTIONS);//supresses title and new line
   pConv->AddOption("c",OBConversion::OUTOPTIONS);//output atom classes if available
 
-  if(pReact->NumReactants()!=1 || pReact->NumProducts()>1)
-    obErrorLog.ThrowError(__FUNCTION__,
-      "ReactionSMILES format is only for a single reactant and product", obError);
-
-  shared_ptr<OBMol> spReactant = pReact->GetReactant(0);
-  if(!spReactant.get() || spReactant->NumAtoms()==0)
-    obErrorLog.ThrowError(__FUNCTION__,"Missing or empty reactant", obWarning);
-
-  if(!pSmiFormat->WriteMolecule(spReactant.get(), pConv))
+  OBMol jReactants;
+  for(int i=0;i<pReact->NumReactants();++i)
+    jReactants += *(pReact->GetReactant(i));
+    
+  if(!pSmiFormat->WriteMolecule(&jReactants, pConv))
     return false;
 
   ofs << '>';
@@ -214,10 +250,11 @@ bool SmiReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   ofs << '>';
 
-  shared_ptr<OBMol> spProduct = pReact->GetProduct(0);
-  if(!spProduct.get() || spProduct->NumAtoms()==0)
-    obErrorLog.ThrowError(__FUNCTION__,"Missing or empty product", obWarning);
-  if(!pSmiFormat->WriteMolecule(spProduct.get(), pConv))
+  OBMol jProducts;
+  for(int i=0;i<pReact->NumProducts();++i)
+    jProducts += *(pReact->GetProduct(i));
+    
+  if(!pSmiFormat->WriteMolecule(&jProducts, pConv))
     return false;
 
   if(!pReact->GetComment().empty())
