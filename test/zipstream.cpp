@@ -86,6 +86,7 @@ int main(int argc,char *argv[])
       mol.Clear();
       conv.Read(&mol);
       offsets.push_back(pIn->tellg());
+      //      cout << " tellg: " << pIn->tellg() << endl;
 
       currentMol++;
     }

@@ -304,11 +304,11 @@ basic_unzip_streambuf<charT, traits>::basic_unzip_streambuf(istream_reference is
                                                             int window_size,
                                                             size_t read_buffer_size,
                                                             size_t input_buffer_size)
-    : _istream(istream),
+    : _is_gzip(false),
+      _istream(istream),
       _input_buffer(input_buffer_size),
       _buffer(read_buffer_size),
-      _crc(0),
-      _is_gzip(false)
+      _crc(0)
 {
   initialize(window_size);
 }
@@ -317,8 +317,6 @@ template <class charT, class traits>
 void
   basic_unzip_streambuf<charT, traits>::initialize(int window_size)
 {
-  _internalCount = 0;
-  
   // setting zalloc, zfree and opaque
   _zip_stream.zalloc = (alloc_func) 0;
   _zip_stream.zfree = (free_func) 0;
@@ -367,7 +365,6 @@ basic_unzip_streambuf<charT, traits>::underflow(void)
         unzip_from_stream(&_buffer[0] + 4, 
                           static_cast<std::streamsize>((_buffer.size() - 4) *
                                                        sizeof(char_type)));
-    _internalCount += num * sizeof(char_type);
 
     if(num <= 0) // ERROR or EOF
         return EOF;
@@ -385,12 +382,12 @@ template <class charT, class traits>
 std::streampos
   basic_unzip_streambuf<charT, traits>::currentpos()
 {
-  return _internalCount - std::streamoff(this->egptr() - this->gptr());
+  return _zip_stream.total_out - std::streamoff(this->egptr() - this->gptr());
 }
 
 template <class charT, class traits>
 std::streampos
-  basic_unzip_streambuf<charT, traits>::seekoff(std::streamoff off, std::ios_base::seekdir way, std::ios_base::openmode which)
+  basic_unzip_streambuf<charT, traits>::seekoff(std::streamoff off, std::ios_base::seekdir way, std::ios_base::openmode)
 {
   // for tellg()
   if (way == std::ios_base::cur && off == 0) {
@@ -406,24 +403,24 @@ std::streampos
     case std::ios_base::beg :
       finalpos = off; break;
     case std::ios_base::cur :
-      finalpos = _zip_stream.total_out + off; break;
+      finalpos = this->currentpos() + off; break;
     case std::ios_base::end:
       // find the end of the file -- might be enough if off = 0
       while(this->sgetc() != EOF) {
         ch = this->sbumpc();
       }
-      finalpos = _zip_stream.total_out + off;
+      finalpos = this->currentpos() + off;
       if (off == 0)
         return this->currentpos(); // we're at the end of the file already
 
       // we have to find an offset from the end -- more work!
       break;
     default :
-      finalpos = _zip_stream.total_out; break; /* just to fool the compiler, this doesn't really matter */
+      finalpos = this->currentpos(); break; /* just to fool the compiler, this doesn't really matter */
     }
 
   // re-roll to the beginning of the file
-  if (way != std::ios_base::cur) {
+  if (way != std::ios_base::cur || finalpos < this->currentpos()) {
     inflateEnd(&_zip_stream);
 
     _istream.clear(std::ios::goodbit);
@@ -442,7 +439,7 @@ std::streampos
 
 template <class charT, class traits>
 std::streampos
-  basic_unzip_streambuf<charT, traits>::seekpos(std::streampos sp, std::ios_base::openmode which)
+  basic_unzip_streambuf<charT, traits>::seekpos(std::streampos sp, std::ios_base::openmode)
 {
   // re-roll to the beginning of the file
   inflateEnd(&_zip_stream);

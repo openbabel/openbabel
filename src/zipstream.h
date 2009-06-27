@@ -192,7 +192,7 @@ public:
     inline
     long              get_in_size              (void) const;
     int               check_header      (void);
-    bool _is_gzip;
+    bool              _is_gzip;
 
 private:
     
@@ -210,8 +210,6 @@ private:
     byte_vector_type    _input_buffer;
     char_vector_type    _buffer;
     unsigned long       _crc;
-    std::streampos      _internalCount; //!< number of uncompressed bytes read
-
 };
 
 //*****************************************************************************
