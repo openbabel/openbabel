@@ -1159,7 +1159,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 
 # First declare where these will be installed
 @BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_TRUE@formatsdir = $(pkglibdir)/$(VERSION)
-@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@win32ldflags = -enable-runtime-pseudo-relocs
+@BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_FALSE@win32ldflags = -export-symbols-regex ".*"
 @BUILD_SHARED_TRUE@@BUILD_SHARED_UNIX_TRUE@win32ldflags = 
 @BUILD_SHARED_TRUE@formats_LTLIBRARIES = APIInterface.la CSRformat.la \
 @BUILD_SHARED_TRUE@	PQSformat.la MCDLformat.la alchemyformat.la \

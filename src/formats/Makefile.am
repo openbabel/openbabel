@@ -83,7 +83,7 @@ win32ldflags =
 else
 #MinGW: install with babel.exe as *.obf files
 formatsdir = $(bindir)
-win32ldflags = -enable-runtime-pseudo-relocs
+win32ldflags = -export-symbols-regex ".*"
 install-data-hook:
 	(cd $(DESTDIR)$(bindir); \
 	for format in APIInterface.dll *format.dll; do \
