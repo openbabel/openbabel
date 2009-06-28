@@ -1,5 +1,12 @@
 2009-06-27  Chris Morley <c.morley@gaseq.co.uk>
 
+	* src/formats/smilesformat.cpp,
+	windows-vc2005/OBCommonFormats/OBCommonFormats.vcproj
+	windows-vc2005/OBUtilFormats/OBUtilFormats.vcproj:
+	remove contamination from experimental version so that compiles again.
+
+2009-06-27  Chris Morley <c.morley@gaseq.co.uk>
+
 	Make parsing of SMILES files stricter, following discussion on
 	mailing list.
 	* src/formats/smilesformat.cpp(Read Molecule):
