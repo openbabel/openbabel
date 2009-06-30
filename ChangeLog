@@ -1,5 +1,16 @@
 2009-06-27  Chris Morley <c.morley@gaseq.co.uk>
 
+	* src/formats/xml/cmlformat.cpp: in reading <property> check that
+	dictRef not found before reading title.
+	Prevent crash if <symmetry> not read correctly.
+	
+	When writing <property> use dictRef rather than title if attr
+	is namespaced.
+	
+	* src/math/vector3.cpp: sometimes needs #include <float.h>
+	
+2009-06-27  Chris Morley <c.morley@gaseq.co.uk>
+
 	Make parsing of SMILES files stricter, following discussion on
 	mailing list.
 	* src/formats/smilesformat.cpp(Read Molecule):

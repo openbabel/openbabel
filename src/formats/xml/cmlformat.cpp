@@ -352,7 +352,8 @@ namespace OpenBabel
           ReadNasaThermo();
         else
           {
-            pattr  = (const char*)xmlTextReaderGetAttribute(reader(), BAD_CAST "title");
+            if(!pattr) // no dictRef; look for title on scalar
+              pattr  = (const char*)xmlTextReaderGetAttribute(reader(), BAD_CAST "title");
             if(pattr)
               titleonproperty = pattr;
             else
@@ -444,13 +445,16 @@ namespace OpenBabel
       }
      else if(name=="symmetry")
       {
-        const SpaceGroup *group = SpaceGroup::GetSpaceGroup(SpaceGroupName);
-        if ((!group || !(_SpaceGroup == *group)) && _SpaceGroup.IsValid())
-          group = SpaceGroup::Find(&_SpaceGroup);
-        if (group)
-          pUnitCell->SetSpaceGroup(group);
-        else
-          pUnitCell->SetSpaceGroup(SpaceGroupName);
+        if(!SpaceGroupName.empty())
+        {
+          const SpaceGroup *group = SpaceGroup::GetSpaceGroup(SpaceGroupName);
+          if ((!group || !(_SpaceGroup == *group)) && _SpaceGroup.IsValid())
+            group = SpaceGroup::Find(&_SpaceGroup);
+          if (group)
+            pUnitCell->SetSpaceGroup(group);
+          else
+            pUnitCell->SetSpaceGroup(SpaceGroupName);
+        }
       }
     return true;
   }
@@ -1831,7 +1835,7 @@ namespace OpenBabel
 
   void CMLFormat::WriteProperties(OBMol& mol, bool& propertyListWritten)
   {
-    // static const xmlChar C_DICTREF[]      = "dictRef";
+    static const xmlChar C_DICTREF[]      = "dictRef";
     static const xmlChar C_PROPERTYLIST[] = "propertyList";
     static const xmlChar C_PROPERTY[]     = "property";
     static const xmlChar C_SCALAR[]       = "scalar";
@@ -1850,10 +1854,15 @@ namespace OpenBabel
                 xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTYLIST, NULL);
                 propertyListWritten=true;
               }
+
             xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
-            //Title is now on <property>
-            xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",(*k)->GetAttribute().c_str());
+            //Title is now on <property>. If the attribute name has a namespace, use dictRef instead.
+            string att((*k)->GetAttribute());
+            xmlTextWriterWriteFormatAttribute(writer(), 
+              (att.find(':')==string::npos) ? C_TITLE : C_DICTREF,
+              "%s",att.c_str());
             xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+
             //Title used to be on <scalar>...
             //xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",(*k)->GetAttribute().c_str());
             xmlTextWriterWriteFormatString(writer(),"%s", (static_cast<OBPairData*>(*k))->GetValue().c_str());
