@@ -93,9 +93,9 @@ int main(int argc,char *argv[])
       if (counter != mol.NumAtoms())
         cout << "not ok " << ++currentTest 
              << " # atom iterator failed: expected " << mol.NumAtoms()
-             << " but found " << counter << "\n";
+             << " but found " << counter << '\n';
       else
-        cout << "ok " << ++currentTest << "\n";
+        cout << "ok " << ++currentTest << '\n';
 
       counter = 0;
       FOR_DFS_OF_MOL(atom, mol)
@@ -103,9 +103,9 @@ int main(int argc,char *argv[])
       if (counter != mol.NumAtoms())
         cout << "not ok " << ++currentTest 
              << " # depth-first atom iterator failed: expected " 
-             << mol.NumAtoms() << " but found " << counter << "\n";
+             << mol.NumAtoms() << " but found " << counter << '\n';
       else
-        cout << "ok " << ++currentTest << "\n";
+        cout << "ok " << ++currentTest << '\n';
 
       counter = 0;
       FOR_BFS_OF_MOL(atom, mol)
@@ -113,9 +113,9 @@ int main(int argc,char *argv[])
       if (counter != mol.NumAtoms())
         cout << "not ok " << ++currentTest 
              << " # breadth-first atom iterator failed: expected " 
-             << mol.NumAtoms() << " but found " << counter << "\n";
+             << mol.NumAtoms() << " but found " << counter << '\n';
       else
-        cout << "ok " << ++currentTest << "\n";
+        cout << "ok " << ++currentTest << '\n';
 
       counter = 0;
       FOR_BONDS_OF_MOL(bond, mol)
@@ -123,10 +123,30 @@ int main(int argc,char *argv[])
       if (counter != mol.NumBonds())
         cout << "not ok " << ++currentTest 
              << " # bond iterator failed: expected " << mol.NumBonds()
-             << " but found " << counter << "\n";
+             << " but found " << counter << '\n';
       else
-        cout << "ok " << ++currentTest << "\n";
+        cout << "ok " << ++currentTest << '\n';
 
+      // test ring iterators: PR#2815025
+      counter = 0;
+      OBRing *prevRing = 0;
+      bool sameRing = false;
+      if (mol.GetSSSR().size() != 0) {
+        FOR_RINGS_OF_MOL(ring, mol) {
+          if (prevRing != 0 && &*ring == prevRing) {
+            sameRing = true;
+            break; // OOPS, same ring in a row?!
+          }
+          prevRing = &*ring;
+          ++counter;
+        }
+        if (counter != mol.GetSSSR().size()) // number of rings
+          cout << "not ok " << ++currentTest
+               << " # ring iterator failed: expected " << mol.GetSSSR().size()
+               << " but found " << counter << '\n';
+        else
+          cout << "ok " << ++currentTest << '\n';
+      } // if (have rings)
     }
 
   // output the number of tests run
