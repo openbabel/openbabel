@@ -1,3 +1,7 @@
+2009-07-01  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* AUTHORS: Added my name
+
 2009-06-27  Chris Morley <c.morley@gaseq.co.uk>
 
 	* src/formats/xml/cmlformat.cpp: in reading <property> check that
