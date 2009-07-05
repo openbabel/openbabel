@@ -76,8 +76,10 @@ using namespace std;
 
 namespace OpenBabel
 {
+#ifdef __CYGWIN__
   // macro to implement static OBPlugin::PluginMapType& Map()
   PLUGIN_CPP_FILE(OBForceField)
+#endif
 
   /** \class OBForceField forcefield.h <openbabel/forcefield.h>
       \brief Base class for molecular mechanics force fields
