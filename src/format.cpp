@@ -23,6 +23,8 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
+  // macro to implement static OBPlugin::PluginMapType& Map()
+  PLUGIN_CPP_FILE(OBFormat)
 
 int OBFormat::RegisterFormat(const char* ID, const char* MIME)
 {

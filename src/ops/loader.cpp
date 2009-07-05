@@ -35,6 +35,9 @@ public:
   const char* TypeID(){return "loaders";};
 };
 
+// macro to implement static OBPlugin::PluginMapType& Map()
+PLUGIN_CPP_FILE(OBLoader)
+
 //*********************************************************
 ///Class which makes instances of plugin classes from information in text file.
 ///This allows the commandline and GUI interfaces to be extended without recompiling.
