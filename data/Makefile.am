@@ -19,6 +19,7 @@ BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 EXTRA_DIST = \
 	bin2hex.pl CMakeLists.txt $(table_DATA) $(BUILT_SOURCES)
 
+if BIN2HEX
 aromatic.h:	bin2hex.pl aromatic.txt
 		(cd $(srcdir); ./bin2hex.pl aromatic.txt AromaticData >aromatic.h)
 
@@ -45,3 +46,4 @@ torlib.h:	bin2hex.pl torlib.txt
 
 types.h:	bin2hex.pl types.txt
 		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
+endif

@@ -447,32 +447,32 @@ uninstall-am: uninstall-tableDATA
 	uninstall uninstall-am uninstall-tableDATA
 
 
-aromatic.h:	bin2hex.pl aromatic.txt
-		(cd $(srcdir); ./bin2hex.pl aromatic.txt AromaticData >aromatic.h)
+@BIN2HEX_TRUE@aromatic.h:	bin2hex.pl aromatic.txt
+@BIN2HEX_TRUE@		(cd $(srcdir); ./bin2hex.pl aromatic.txt AromaticData >aromatic.h)
 
-atomtyp.h:	bin2hex.pl atomtyp.txt
-		(cd $(srcdir); ./bin2hex.pl atomtyp.txt AtomTypeData >atomtyp.h)
+@BIN2HEX_TRUE@atomtyp.h:	bin2hex.pl atomtyp.txt
+@BIN2HEX_TRUE@		(cd $(srcdir); ./bin2hex.pl atomtyp.txt AtomTypeData >atomtyp.h)
 
-bondtyp.h:	bin2hex.pl bondtyp.txt
-		(cd $(srcdir); ./bin2hex.pl bondtyp.txt BondTypeData >bondtyp.h)
+@BIN2HEX_TRUE@bondtyp.h:	bin2hex.pl bondtyp.txt
+@BIN2HEX_TRUE@		(cd $(srcdir); ./bin2hex.pl bondtyp.txt BondTypeData >bondtyp.h)
 
-element.h:	bin2hex.pl element.txt
-		(cd $(srcdir); ./bin2hex.pl element.txt ElementData >element.h)
+@BIN2HEX_TRUE@element.h:	bin2hex.pl element.txt
+@BIN2HEX_TRUE@		(cd $(srcdir); ./bin2hex.pl element.txt ElementData >element.h)
 
-isotope.h:	bin2hex.pl isotope-small.txt
-		(cd $(srcdir); ./bin2hex.pl isotope-small.txt IsotopeData ISOTOPE >isotope.h)
+@BIN2HEX_TRUE@isotope.h:	bin2hex.pl isotope-small.txt
+@BIN2HEX_TRUE@		(cd $(srcdir); ./bin2hex.pl isotope-small.txt IsotopeData ISOTOPE >isotope.h)
 
-phmodeldata.h:	bin2hex.pl phmodel.txt
-		(cd $(srcdir); ./bin2hex.pl phmodel.txt PhModelData PHMODELDATA >phmodeldata.h)
+@BIN2HEX_TRUE@phmodeldata.h:	bin2hex.pl phmodel.txt
+@BIN2HEX_TRUE@		(cd $(srcdir); ./bin2hex.pl phmodel.txt PhModelData PHMODELDATA >phmodeldata.h)
 
-resdata.h:	bin2hex.pl resdata.txt
-		(cd $(srcdir); ./bin2hex.pl resdata.txt ResidueData >resdata.h)
+@BIN2HEX_TRUE@resdata.h:	bin2hex.pl resdata.txt
+@BIN2HEX_TRUE@		(cd $(srcdir); ./bin2hex.pl resdata.txt ResidueData >resdata.h)
 
-torlib.h:	bin2hex.pl torlib.txt
-		(cd $(srcdir); ./bin2hex.pl torlib.txt TorsionDefaults >torlib.h)
+@BIN2HEX_TRUE@torlib.h:	bin2hex.pl torlib.txt
+@BIN2HEX_TRUE@		(cd $(srcdir); ./bin2hex.pl torlib.txt TorsionDefaults >torlib.h)
 
-types.h:	bin2hex.pl types.txt
-		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
+@BIN2HEX_TRUE@types.h:	bin2hex.pl types.txt
+@BIN2HEX_TRUE@		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
