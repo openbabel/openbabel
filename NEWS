@@ -12,6 +12,7 @@ fixed since 2.2.1.
 - Fixed many stereochemistry errors when reading/writing SMILES. This
   is part of a larger project which will be finished in the 2.3
   release.
+- Fixed compilation and installation on Cygwin and MinGW platforms.
 - Significantly improved aromaticity and Kekule bond assignment.
 - Improved 2D -> 3D coordinate generation
 - Improved coordinate generation using the --gen3d command-line

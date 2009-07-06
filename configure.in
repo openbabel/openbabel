@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([Open Babel], 2.2.2b4, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_INIT([Open Babel], 2.2.2, openbabel-discuss@lists.sourceforge.net, openbabel)
 AC_PREREQ([2.61])
 AC_CONFIG_SRCDIR(src/zipstreamimpl.h)
 AM_INIT_AUTOMAKE([foreign no-define])
@@ -160,6 +160,8 @@ if test "$wx_gui" = "yes"; then
 fi
 AM_CONDITIONAL([BUILD_WXGUI], [test x"$wxversion" != "x" -a "$wx_gui" = "yes"])
 
+dnl If perl is present, we can run bin2hex.pl
+AM_CONDITIONAL(BIN2HEX, test x"$PERL" != "x")
 dnl Use Perl's "prove" test harness to run unit tests
 AM_CONDITIONAL(PERL_TESTS, test x"$PROVE" != "x")
 
