@@ -1,3 +1,9 @@
+2009-07-06  Chris Morley
+
+	* src/dlhandler_win32.cpp: omit call to GetModuleHandle and just 
+	obtain exe path by calling GetModuleFileName with a zero handle.
+	MSVC build works again but a better solution is needed. 
+
 2009-07-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/generic.cpp (OBRingData): Fix bug in ring iterators,

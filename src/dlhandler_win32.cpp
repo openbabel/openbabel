@@ -32,15 +32,7 @@ using namespace std;
 bool DLHandler::getConvDirectory(string& convPath)
 {
     char path[MAX_PATH+1];
-
-#ifdef __CYGWIN__
-    HMODULE handle = GetModuleHandle(NULL); // get handle to exe file module
-#else
-    HMODULE handle = GetModuleHandle("OBConv"); // get handle to exe file module
-#endif
-    if (!handle)
-      return false;
-    if (!GetModuleFileName(handle, path, MAX_PATH))
+    if (!GetModuleFileName(0, path, MAX_PATH)) //gets exe name NEEDS REVISITING 
       return false;
 
     // strip of appname.exe
