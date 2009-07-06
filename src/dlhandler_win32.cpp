@@ -42,7 +42,7 @@ bool DLHandler::getConvDirectory(string& convPath)
       return false;
 
     convPath = convPath.substr(0, p+1);
-#ifdef __CYGWIN__
+#if defined (__CYGWIN__) || defined (__MINGW__)
     convPath += "..\\lib\\openbabel\\";
     convPath += BABEL_VERSION;
     convPath += "\\";

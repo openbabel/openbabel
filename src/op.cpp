@@ -22,7 +22,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
-#ifdef __CYGWIN__
+#if defined (__CYGWIN__) || defined (__MINGW__)x
   // macro to implement static OBPlugin::PluginMapType& Map()
   PLUGIN_CPP_FILE(OBOp)
 #endif
