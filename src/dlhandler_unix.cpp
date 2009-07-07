@@ -58,7 +58,7 @@ bool DLHandler::getConvDirectory(string& convPath)
   //This is the default directory for format shared library files.
   
   string testPath;
-  testPath += OB_MODULE_PATH;
+  testPath += OB_MODULE_PATH; // defined in src/config.h.cmake -> babelconfig.h
   convPath = testPath;
   
   return true;
@@ -68,7 +68,6 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,
                           const std::string& pattern, 
                           const std::string& path)
 {
-  string currentPath;
   vector<string> paths, vs;
   char buffer[BUFF_SIZE];
   
@@ -103,6 +102,7 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,
   DIR *dp;
   struct dirent *entry;
   
+  string currentPath;
   for (unsigned int i = 0; i < paths.size(); ++i)
     {
       currentPath=paths[i];

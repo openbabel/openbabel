@@ -28,6 +28,13 @@ GNU General Public License for more details.
 #include <openbabel/dlhandler.h>
 using namespace std;
 
+namespace OpenBabel {
+  OBAPI bool tokenize(vector<string> &, const char *, const char *);
+}
+
+#ifndef BUFF_SIZE
+#define BUFF_SIZE 32768
+#endif
 
 bool DLHandler::getConvDirectory(string& convPath)
 {
@@ -42,7 +49,7 @@ bool DLHandler::getConvDirectory(string& convPath)
       return false;
 
     convPath = convPath.substr(0, p+1);
-#if defined (__CYGWIN__) || defined (__MINGW__)
+#if defined(__CYGWIN__) || defined(__MINGW32__)
     convPath += "..\\lib\\openbabel\\";
     convPath += BABEL_VERSION;
     convPath += "\\";
@@ -69,23 +76,60 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
 
 int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::string &pattern,const std::string &path)
 {
+  vector<string> paths, vs;
+  char buffer[BUFF_SIZE];
+  
+  if (!path.empty())
+    paths.push_back(path);
+ 
+  /*
+  if (getenv("BABEL_LIBDIR") != NULL) 
+  {
+    // environment variable should override built-in path
+    paths.clear();
+      
+    strncpy(buffer,getenv("BABEL_LIBDIR"), BUFF_SIZE - 1);
+    // add a trailing NULL just in case
+    buffer[BUFF_SIZE - 1] = '\0';
+      
+    OpenBabel::tokenize(vs, buffer, "\r\n\t :");
+      
+    if (!vs.empty())
+    {
+      for (unsigned int i = 0; i < vs.size(); ++i) {
+        paths.push_back(vs[i]);
+	  cout << "path[" << i << "] = " << paths[i] << endl;
+      }
+    }
+  }
+  */
+  
+  if (paths.empty())
+    paths.push_back("./"); // defaults to current directory
+  
+  string currentPath;
+  for (unsigned int i = 0; i < paths.size(); ++i)
+  {
+    currentPath = paths.at(i);
     WIN32_FIND_DATA file_data;
     HANDLE handle;
-	handle = FindFirstFile ((path + pattern).c_str(), &file_data);
-	while(handle!=INVALID_HANDLE_VALUE)
-	{
-		ULONG value = (file_data.dwFileAttributes) & FILE_ATTRIBUTE_DIRECTORY;
-		if (value != FILE_ATTRIBUTE_DIRECTORY)
-		{
-		  string s = file_data.cFileName;
-		  file_list.push_back(path + s);
-		}
-		if(!FindNextFile (handle, &file_data))
-			break;
-	}
+    handle = FindFirstFile ((currentPath + pattern).c_str(), &file_data);
+    while(handle!=INVALID_HANDLE_VALUE)
+    {
+      ULONG value = (file_data.dwFileAttributes) & FILE_ATTRIBUTE_DIRECTORY;
+      if (value != FILE_ATTRIBUTE_DIRECTORY)
+      {
+        string s = file_data.cFileName;
+        file_list.push_back(currentPath + s);
+      }
+      if(!FindNextFile (handle, &file_data))
+        break;
+    }
     if (! (FindClose (handle)))
-        return 0;// couldn't close search handle
-    return file_list.size();
+      return 0;// couldn't close search handle
+  }
+
+  return file_list.size();
 }
 
 const char* DLHandler::getFormatFilePattern()
