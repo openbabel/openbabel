@@ -87,7 +87,7 @@ public:
       OBConversion::RegisterOptionParam("d", NULL, 0,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("b", NULL, 0,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("c", NULL, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("p", NULL, 0,OBConversion::GENOPTIONS); 
+      OBConversion::RegisterOptionParam("p", NULL, 1,OBConversion::GENOPTIONS); 
       OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("k", NULL, 0,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("filter", NULL, 1,OBConversion::GENOPTIONS);
