@@ -39,7 +39,7 @@ libopenbabel_la_SOURCES = \
 		molchrg.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
 		obmolecformat.cpp obutil.cpp \
-		ops.cpp \
+		op.cpp ops.cpp \
 		parsmart.cpp \
 		patty.cpp phmodel.cpp plugin.cpp \
 		pointgroup.cpp \
