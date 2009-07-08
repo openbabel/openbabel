@@ -1145,11 +1145,11 @@ namespace OpenBabel {
               // For the moment, ignore existing IsUp() or IsDown() values
               std::vector<OBBond *> refbonds(4, static_cast<OBBond*>(NULL));
               refbonds[0] = mol.GetBond(refs[0], ChiralSearch->GetBegin());
-              if (refs[1]!=OBStereo::ImplicitId) // Could be a hydrogen
+              if (refs[1]!=OBStereo::ImplicitId && mol.GetAtom(refs[1])) // Could be a hydrogen
                 refbonds[1] = mol.GetBond(refs[1], ChiralSearch->GetBegin());
-              if (refs[2]!=OBStereo::ImplicitId) // Could be a hydrogen
+              if (refs[2]!=OBStereo::ImplicitId && mol.GetAtom(refs[2])) // Could be a hydrogen
                 refbonds[2] = mol.GetBond(refs[2], ChiralSearch->GetEnd());
-              if (refs[3]!=OBStereo::ImplicitId) // Could be a hydrogen
+              if (refs[3]!=OBStereo::ImplicitId && mol.GetAtom(refs[3])) // Could be a hydrogen
                 refbonds[3] = mol.GetBond(refs[3], ChiralSearch->GetEnd());
 
               // Have we already set the stereo of any of the bonds in this
@@ -3227,11 +3227,11 @@ namespace OpenBabel {
 
                 std::vector<OBBond *> refbonds(4, static_cast<OBBond*>(NULL));
                 refbonds[0] = mol->GetBond(refs[0], ChiralSearch->GetBegin());
-                if (refs[1]!=OBStereo::ImplicitId) // Could be a hydrogen
+                if (refs[1]!=OBStereo::ImplicitId && mol->GetAtom(refs[1])) // Could be a hydrogen
                   refbonds[1] = mol->GetBond(refs[1], ChiralSearch->GetBegin());
-                if (refs[2]!=OBStereo::ImplicitId) // Could be a hydrogen
+                if (refs[2]!=OBStereo::ImplicitId && mol->GetAtom(refs[2])) // Could be a hydrogen
                   refbonds[2] = mol->GetBond(refs[2], ChiralSearch->GetEnd());
-                if (refs[3]!=OBStereo::ImplicitId) // Could be a hydrogen
+                if (refs[3]!=OBStereo::ImplicitId && mol->GetAtom(refs[3])) // Could be a hydrogen
                   refbonds[3] = mol->GetBond(refs[3], ChiralSearch->GetEnd());
 
                 // What symbol would the four refs use if before the dbl bond?
