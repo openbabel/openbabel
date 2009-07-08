@@ -8,5 +8,5 @@ inchiincludedir = $(includedir)/inchi102
 inchiinclude_HEADERS = inchi_api.h
 endif
 
-EXTRA_DIST = inchi OB-BGL RDKitConv.h CMakeLists.txt
+EXTRA_DIST = inchi102 OB-BGL RDKitConv.h CMakeLists.txt
 # .svn directories will be cleaned up by top-level dist-hook
