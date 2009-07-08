@@ -375,6 +375,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\molproformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\mopacformat.cpp"
 				>
 			</File>
@@ -432,6 +436,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\unichemformat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\vaspformat.cpp"
 				>
 			</File>
 			<File

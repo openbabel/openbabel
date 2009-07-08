@@ -247,6 +247,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\outformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\pdbformat.cpp"
 				>
 			</File>

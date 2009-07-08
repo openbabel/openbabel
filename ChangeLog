@@ -1,4 +1,12 @@
 2009-07-08  Chris Morley
+
+	* windows-vc2005/OBCommonFormats/OBCommonFormats.vcproj,
+	OBMoreFormats.vcproj: add outformat, molproformat, vaspformat
+	(still not gamessukformat because of need for regex)
+	
+	* windows-vc2005/babelconfig.h: update version to 2.2.2
+	
+2009-07-08  Chris Morley
 	
 	* src/formats/gaussformat.cpp: small change to parsing to prevent
 	crash on some files.
