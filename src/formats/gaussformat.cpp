@@ -378,7 +378,7 @@ namespace OpenBabel
               }
           }
 
-        else if(strstr(buffer, " Frequencies --")) //vibrational frequencies
+        else if(strstr(buffer, " Frequencies -- ")) //vibrational frequencies
         {
           //The info should appear only once as several blocks starting with this line
           tokenize(vs, buffer);
@@ -402,7 +402,7 @@ namespace OpenBabel
           vector<vector3> vib1, vib2, vib3;
           double x, y, z;
           while(vs.size() > 5) {
-            for (unsigned int i = 2; i < vs.size(); i += 3) {
+            for (unsigned int i = 2; i < vs.size()-2; i += 3) {
               x = atof(vs[i].c_str());
               y = atof(vs[i+1].c_str());
               z = atof(vs[i+2].c_str());

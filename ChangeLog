@@ -1,3 +1,8 @@
+2009-07-08  Chris Morley
+	
+	* src/formats/gaussformat.cpp: small change to parsing to prevent
+	crash on some files.
+
 2009-07-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/Makefile.am, data/Makefile.in: Only build data headers if
