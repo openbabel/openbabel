@@ -1,6 +1,6 @@
 # Library versioning
 set(SOVERSION 3)
-set(LIBRARY_VERSION 3.0.1)
+set(LIBRARY_VERSION 3.0.2)
 
 set(descriptors_srcs
   descriptors/cmpdfilter.cpp
