@@ -112,6 +112,13 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
+
+%typemap(javacode) OpenBabel::OBAtom
+%{
+    private int currentDepth = 0;
+    public void SetCurrentDepth(int d) {currentDepth = d;}
+    public int GetCurrentDepth() {return currentDepth;}
+%}
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 %include <openbabel/mol.h>
@@ -136,7 +143,9 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %ignore OBAtomBondIter(OBAtom &);
 %ignore OBMolAngleIter(OBMol &);
 %ignore OBMolAtomIter(OBMol &);
+%ignore OBMolAtomBFSIter(OBMol &, int);
 %ignore OBMolAtomBFSIter(OBMol &);
+%ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolAtomDFSIter(OBMol &);
 %ignore OBMolBondIter(OBMol &);
 %ignore OBMolPairIter(OBMol &);
@@ -147,4 +156,47 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 
 %ignore SpaceGroup::RegisterSpaceGroup;
 
+%define WRAPITERATOR(NAME, RETURNS, OPTIONAL)
+ %rename(_next) OpenBabel::NAME::next;
+ %rename(inc) OpenBabel::NAME::operator++;
+ %rename(HasMore) OpenBabel::NAME::operator bool;
+ %typemap(javainterfaces) OpenBabel::NAME "Iterable<RETURNS>, Iterator<RETURNS>";
+ %typemap(javaimports) OpenBabel::NAME "  import org.openbabel.RETURNS;
+  import java.util.Iterator;"
+ %typemap(javacode) OpenBabel::NAME
+ %{
+	public Iterator<RETURNS> iterator() {
+		return this;
+	}
+
+	public boolean hasNext() {
+		return HasMore();
+	}
+
+	public RETURNS next() {
+		RETURNS atom = __ref__();
+		OPTIONAL
+		inc();
+		return atom;
+	}
+	
+	public void remove() {
+	}	
+ %}
+%enddef
+
+WRAPITERATOR(OBMolAtomIter, OBAtom, );
+WRAPITERATOR(OBMolAtomDFSIter, OBAtom, );
+WRAPITERATOR(OBMolAtomBFSIter, OBAtom, atom.SetCurrentDepth(CurrentDepth()););
+WRAPITERATOR(OBMolBondIter, OBBond, );
+WRAPITERATOR(OBMolAngleIter, vectorUnsignedInt, );
+WRAPITERATOR(OBAtomAtomIter, OBAtom, )
+WRAPITERATOR(OBAtomBondIter, OBBond, );
+WRAPITERATOR(OBMolRingIter, OBRing, );
+WRAPITERATOR(OBMolTorsionIter, vectorUnsignedInt, );
+WRAPITERATOR(OBResidueIter, OBResidue, );
+WRAPITERATOR(OBResidueAtomIter, OBAtom, );
+WRAPITERATOR(OBMolPairIter, vectorUnsignedInt, );
+
 %include <openbabel/obiter.h>
+
