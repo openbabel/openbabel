@@ -117,7 +117,8 @@ formats_LTLIBRARIES = \
 	qchemformat.la reportformat.la \
 	shelxformat.la smilesformat.la thermoformat.la \
 	tinkerformat.la titleformat.la \
-	turbomoleformat.la unichemformat.la viewmolformat.la \
+	turbomoleformat.la unichemformat.la \
+        vaspformat.la viewmolformat.la \
 	xedformat.la xtcformat.la xyzformat.la yasaraformat.la zindoformat.la
 if HAVE_SHARED_POINTER
 formats_LTLIBRARIES += chemdrawcdxformat.la chemkinformat.la \
@@ -367,6 +368,9 @@ turbomoleformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags
 
 unichemformat_la_SOURCES = unichemformat.cpp 
 unichemformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
+
+vaspformat_la_SOURCES = vaspformat.cpp
+vaspformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la
 
 viewmolformat_la_SOURCES = viewmolformat.cpp 
 viewmolformat_la_LDFLAGS = -module -avoid-version -no-undefined $(win32ldflags) ../libopenbabel.la 
