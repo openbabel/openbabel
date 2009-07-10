@@ -1,3 +1,8 @@
+2009-07-08  Chris Morley
+
+	* src/transform.cpp(OBMol::ClassDescription) Change description of -p so that GUI 
+	takes pH parameter.
+	 
 2009-07-08  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabel-java.i: Added support for foreach loops using the
