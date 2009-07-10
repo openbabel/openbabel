@@ -1,0 +1,28 @@
+#
+# MMFF94 paremeter files
+#
+
+# atom properties
+prop	mmffprop.par
+# fallback defs
+def	mmffdef.par
+# bond stretching parameters
+bond	mmffbond.par
+# angle bending parameters
+ang	mmffang.par
+# empirical rule parameters (bond stretching)
+bndk	mmffbndk.par
+# charge parameters
+chg	mmffchg.par
+# empirical rule parameters (bend-stretch)
+dfsb	mmffdfsb.par
+# out-of-plane parameters
+oop	mmffoop.par
+# partial bond charge increments
+pbci	mmffpbci.par
+# strech-bend parameters
+stbn	mmffstbn.par
+# torsion parameters
+tor	mmfftor.par
+# van der waals parameters
+vdw	mmffvdw.par

@@ -1,0 +1,55 @@
+OpenBabel Python bindings version 1.5
+=====================================
+
+This is a Python interface to the Open Babel chemistry library. 
+
+Open Babel is a chemical toolbox designed to speak the many languages
+of chemical data. It's an open, collaborative project allowing anyone
+to search, convert, analyze, or store data from molecular modeling,
+chemistry, solid-state materials, biochemistry, or related areas.
+
+The wrapper is generated using the SWIG package and provides access to
+almost all of the Open Babel interfaces via Python, including the base
+classes OBMol, OBAtom, OBBond, and OBResidue, as well as the
+conversion framework OBConversion.
+
+For more details, tutorials, example code, etc., please visit the Open Babel
+website:
+<http://openbabel.sourceforge.net/wiki/Python>
+
+INSTALLATION
+
+To install this module, type the following (assuming you have already
+installed Open Babel):
+
+	python setup.py build
+	python setup.py install
+
+(Well, in theory that should work. Suggestions and complaints welcome.)
+
+DEPENDENCIES
+
+     python-2.4 or a more recent version.
+     openbabel-2.2.2 or a more recent version.
+
+Note that if you are trying to build/run this Python code in the Open
+Babel source/build directory BEFORE you install Open Babel, you may
+encounter problems if the Python module is linked against an older
+libopenbabel. If you encounter problems compiling, linking, or running
+this module, make sure you have run "make install" for the latest
+Open Babel package and THEN rebuild this Python module.
+
+COPYRIGHT AND LICENSE
+
+Copyright (C) 2005-2007 Geoffrey R. Hutchison <babel@geoffhutchison.net>
+Some portions Copyright (C) 2006-2009 Noel O'Boyle
+
+This Python module is part of the Open Babel project.
+<http://openbabel.sourceforge.net/>
+
+Open Babel is distributed under the GNU General Public License (GPL).
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License. Full details
+can be found in the file "COPYING" which should be included in your
+distribution.

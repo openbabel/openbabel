@@ -1,0 +1,18 @@
+Open Babel Tools, version 2.1
+-----------------------
+
+This directory contains a selection of ready-to-use tools for a
+variety of tasks in molecular modeling, cheminformatics, and related
+areas. Most are designed as command-line utilies for any operating
+system.
+
+* babel         Interconvert between over 70 file formats
+* obchiral      Generate
+* obfit      	Overlay  
+* obgen		Developmental tool to generate 3D coordinates for SMILES
+* obgrep	Chemical searching using SMARTS patterns
+* obprop	Generate lists of properties for molecular files
+* obrotamer	Generate random rotamer/conformer coordinates
+* obrotate	Rotate dihedral angles defined by particular SMARTS patterns
+* obxyz		Modify Cartesian XYZ coordinates, including
+		 rotation, translation, etc.
