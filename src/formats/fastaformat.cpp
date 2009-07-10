@@ -66,10 +66,10 @@ namespace OpenBabel
       return false;
     ostream &ofs = *pConv->GetOutStream();
 
-    FOR_RESIDUES_OF_MOL(res,pmol)
-      {
+    FOR_RESIDUES_OF_MOL(res,pmol) {
+      if (res->GetAtoms().size() > 3)
         seq.append(conv_3to1(res->GetName()));
-      }
+    }
     if(!pConv->IsOption("n")) {
       if (strlen(pmol->GetTitle()) > 0)
         ofs << ">" << pmol->GetTitle();
@@ -105,7 +105,7 @@ namespace OpenBabel
 	    {"proline", "PRO", "P"}, 
 	    {"serine", "SER", "S"}, 
 	    {"threonine", "THR", "T"}, 
-	    {"tryptophan", "TRY", "W"}, 
+	    {"tryptophan", "TRP", "W"}, 
 	    {"tyrosine", "TYR", "Y"}, 
 	    {"valine", "VAL", "V"}, 
 	    {NULL, NULL, NULL}
