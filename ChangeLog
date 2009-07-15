@@ -1,6 +1,7 @@
 2009-07-15  Daniel Leidert
 
 	* configure.in: Fixed tr1/memory detection (broken in r3072).
+	* doc/babel.1: Fixed hyphen used as minus sign.
 
 2009-07-13  Chris Morley
 
