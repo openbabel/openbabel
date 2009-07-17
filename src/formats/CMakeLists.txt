@@ -42,6 +42,7 @@ set(formats
     mmodformat
     mol2format
     moldenformat
+    molproformat
     molreport
     mopacformat
     mpdformat
