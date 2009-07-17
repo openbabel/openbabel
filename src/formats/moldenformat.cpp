@@ -34,6 +34,9 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
 
+#define BOHR_TO_ANGSTROM 0.529177249
+#define ANGSTROM_TO_BOHR 1.889725989
+
 using namespace std;
 
 namespace OpenBabel
@@ -70,10 +73,10 @@ public:
     /// Return MIME type, NULL in this case.
     virtual const char* GetMIMEType() { return 0; };
 
-      /// Return read/write flag: read only.
+      /// Return read/write flag.
     virtual unsigned int Flags()
     {
-        return READONEONLY | NOTWRITABLE  ;
+        return READONEONLY | WRITEONEONLY ;
     };
 
     /// Skip to object: used for multi-object file formats.
@@ -82,11 +85,8 @@ public:
     /// Read.
     virtual bool ReadMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );
 
-    /// Write: always returns false.
-    virtual bool WriteMolecule( OpenBabel::OBBase* , OpenBabel::OBConversion* )
-    {
-        return false;
-    }
+    /// Write.
+    virtual bool WriteMolecule( OpenBabel::OBBase* , OpenBabel::OBConversion* );
 };
 
 //------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         if( lineBuffer.find( "[Atoms]" ) != string::npos || 
             lineBuffer.find( "[ATOMS]" ) != string::npos ) {
           double factor = 1.; // Angstrom
-          if( lineBuffer.find( "AU" ) != string::npos ) factor = 0.529177249; // Bohr
+          if( lineBuffer.find( "AU" ) != string::npos ) factor = BOHR_TO_ANGSTROM; // Bohr
           getline( ifs, lineBuffer );
           while( lineBuffer.find( "[") == string::npos )
             {
@@ -140,7 +140,6 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               atom->SetVector( x * factor, y * factor, z * factor );
               getline( ifs, lineBuffer );
             }
-	  continue;
         } // "[Atoms]" || "[ATOMS]"
         if( lineBuffer.find( "[FREQ]" ) != string::npos ) {        
           while( getline( ifs, lineBuffer ) )
@@ -152,7 +151,6 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               is >> freq;
               Frequencies.push_back( freq );
             }
-          continue;
         } // "[FREQ]"
         if( lineBuffer.find( "[INT]" ) != string::npos ) {        
           while( getline( ifs, lineBuffer ) )
@@ -164,15 +162,14 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               is >> intens;
               Intensities.push_back( intens );
             }
-          continue;
         } // "[INT]"
         if( lineBuffer.find( "[FR-NORM-COORD]" ) != string::npos ) {
           getline( ifs, lineBuffer );
-          while( ifs && lineBuffer.find( "Vibration") != string::npos ) 
+          while( ifs && lineBuffer.find( "ibration") != string::npos ) 
             {
               vector<vector3> vib;
               getline( ifs, lineBuffer );
-              while( ifs && lineBuffer.find( "Vibration") == string::npos ) 
+              while( ifs && lineBuffer.find( "ibration") == string::npos ) 
                 {
                   istringstream is( lineBuffer );
                   double x, y, z;
@@ -218,6 +215,76 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     pmol->EndModify();
 
     return true;
+}
+
+bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+{
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    if(pmol==NULL)
+      return false;
+
+    //Define some references so we can use the old parameter names
+    ostream &ofs = *pConv->GetOutStream();
+    OBMol &mol = *pmol;
+
+    char buffer[BUFF_SIZE];
+    int i = 1;
+
+    ofs << "[Molden Format]" << endl;
+    ofs << "[Atoms] Angs" << endl;
+
+    FOR_ATOMS_OF_MOL(atom, mol)
+      {
+        snprintf(buffer, BUFF_SIZE, "%2s%6d%3d%13.6f%13.6f%13.6f\n",
+                etab.GetSymbol(atom->GetAtomicNum()),
+		i++,
+                atom->GetAtomicNum(),
+                atom->GetX(),
+                atom->GetY(),
+                atom->GetZ());
+        ofs << buffer;
+      }
+
+    OBVibrationData *vib = (OBVibrationData *) mol.GetData(OBGenericDataType::VibrationData);
+    if (vib && vib->GetNumberOfFrequencies() > 0) {
+      ofs << "[FREQ]" << endl;
+      vector<double> frequencies = vib->GetFrequencies();
+      vector<double> intensities = vib->GetIntensities();
+      for (int i=0; i < vib->GetNumberOfFrequencies(); i++) {
+	snprintf(buffer, BUFF_SIZE, "%10.4f\n", frequencies[i]);
+        ofs << buffer;
+      }
+      if (intensities.size() > 0) {
+        ofs << "[INT]" << endl;
+	for (int i=0; i < vib->GetNumberOfFrequencies(); i++) {
+	  snprintf(buffer, BUFF_SIZE, "%10.4f\n", intensities[i]);
+	  ofs << buffer;
+        }
+      }
+      ofs << "[FR-COORD]" << endl;
+      FOR_ATOMS_OF_MOL(atom, mol)
+        {
+          snprintf(buffer, BUFF_SIZE, "%2s%13.6f%13.6f%13.6f\n",
+                  etab.GetSymbol(atom->GetAtomicNum()),
+                  atom->GetX()*ANGSTROM_TO_BOHR,
+                  atom->GetY()*ANGSTROM_TO_BOHR,
+                  atom->GetZ()*ANGSTROM_TO_BOHR);
+          ofs << buffer;
+        }
+      ofs << "[FR-NORM-COORD]" << endl;
+      for (int mode=0; mode < vib->GetNumberOfFrequencies(); mode++) {
+	snprintf(buffer, BUFF_SIZE, "vibration%6d\n", mode+1);
+	ofs << buffer;
+        vector<vector3> lx = vib->GetLx()[mode];
+	for (int i=0; i < mol.NumAtoms(); i++) {
+	  vector3 disp = lx[i];
+	  snprintf(buffer, BUFF_SIZE, "%12.6f%13.6f%13.6f\n",
+		  disp[0], disp[1], disp[2]);
+	  ofs << buffer;
+	}
+      }
+    } // vib
+    return(true);
 }
 
 }
