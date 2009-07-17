@@ -6,6 +6,8 @@ set(to_install
     bondtyp.txt
     element.txt
     fragments.txt
+    gaff.dat
+    gaff.prm
     ghemical.prm
     isotope-small.txt
     isotope.txt
