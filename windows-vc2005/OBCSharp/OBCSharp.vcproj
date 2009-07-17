@@ -115,8 +115,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\include;..;../../src"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;__KCC;USING_DYNAMIC_LIBS"
+				AdditionalIncludeDirectories="..\..\include;..;../../src;&quot;C:\Program Files\boost\boost_1_35_0\&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;__KCC;USING_DYNAMIC_LIBS;__EDG_VERSION__"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -189,8 +189,8 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Swigify"
-					CommandLine="swig -csharp -c++ -I&quot;../../src&quot; -I&quot;../../include&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-					Outputs="$(ProjDir)\$(InputName)_wrap.cpp"
+					CommandLine="swig -csharp -c++ -namespace OpenBabel -outdir . -I&quot;../../src&quot; -I&quot;../../include&quot; -I&quot;C:\Program Files\boost\boost_1_35_0&quot; -I&quot;..&quot; -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+					Outputs="$(ProjectDir)openbabel-csharp_wrap.cpp"
 				/>
 			</FileConfiguration>
 		</File>
