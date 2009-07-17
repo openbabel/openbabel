@@ -29,6 +29,7 @@
 #include <openbabel/format.h>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/builder.h>
 #include <openbabel/op.h>
 
 #include <openbabel/bitvec.h>
@@ -39,6 +40,7 @@
 
 #include <openbabel/kinetics.h>
 #include <openbabel/rotamer.h>
+
 
 
 %}
@@ -156,7 +158,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
-%import <openbabel/math/matrix3x3.h>
+%include <openbabel/math/matrix3x3.h>
 
 %import <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
@@ -186,6 +188,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/descriptor.h>
 %include <openbabel/forcefield.h>
 
+%include <openbabel/builder.h>
 %include <openbabel/op.h>
 
 %include <openbabel/bitvec.h>

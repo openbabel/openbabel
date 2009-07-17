@@ -1,3 +1,7 @@
+2009-05-27  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabel-python.i: Allow access to OBBuilder and matrix3x3
+
 2009-05-19  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/gaussformat.cpp (ReadMolecule): Add parsing of NMR

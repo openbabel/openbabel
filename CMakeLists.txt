@@ -118,6 +118,7 @@ if(NOT WIN32)
    " SCANDIR_NEEDS_CONST)
 
    set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}")
+   add_definitions(-DOB_MODULE_PATH="\\"${OB_MODULE_PATH}\\"")
 endif(NOT WIN32)
 
 # Add some visibility support when using GCC
