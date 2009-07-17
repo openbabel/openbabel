@@ -1072,7 +1072,7 @@ namespace OpenBabel
                         "%a %b %d %H:%M:%S %Z %Y",
                         localtime((time_t *) &akttime)
                         );
-    return timestr;
+    return string(timestr);
   }
 
   /////////////////////////////////////////////////////////////

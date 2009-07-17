@@ -1,3 +1,10 @@
+2009-04-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/rotamer.cpp, src/math/spacegroup.cpp, src/mol.cpp,
+	src/formats/smilesformat.cpp, src/formats/pdbformat.cpp,
+	src/formats/MCDLformat.cpp, src/formats/xml/cmlformat.cpp: 
+	Compiler warnings and cppcheck complaint fixes.
+
 2009-04-08  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/gaussformat.cpp (ReadMolecule): Adjust normal modes

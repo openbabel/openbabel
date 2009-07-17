@@ -428,8 +428,8 @@ namespace OpenBabel
     if (arr.size() != (_vrotor.size() + 1))
       return; // wrong size key
     
-    double *rot = new double [_vrotor.size()+1];
-    rot[0] = arr[0];
+    //    double *rot = new double [_vrotor.size()+1];
+    //    rot[0] = arr[0];
     
     double *c = mol.GetCoordinates();
     for (i = 0;i < _vrotor.size();++i)
