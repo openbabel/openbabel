@@ -286,7 +286,7 @@ namespace OpenBabel
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     // Set up storage for the depths
-    _depth.resize(_parent->NumAtoms(), 0);
+    _depth.resize(_parent->NumAtoms() + 1, 0);
     _depth[_ptr->GetIdx()] = 1;
 
     vector<OBBond*>::iterator i;
