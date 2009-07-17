@@ -34,7 +34,18 @@ using namespace std;
 
 namespace OpenBabel
 {
-
+  /** Function to remove whitespaces from a string, returning
+  * a new string
+  */
+  std::string RemoveWhiteSpaceUnderscore(const string &in){
+    std::string out=in;
+    for(std::string::iterator pos=out.begin();pos!=out.end();){
+      if( ((char)(*pos)==' ') ||((char)(*pos)=='_'))  pos=out.erase(pos);
+      else pos++;
+    }
+    return out;
+  }
+  
   class SpaceGroups: public OBGlobalDataBase
   {
   public:
@@ -92,11 +103,13 @@ namespace OpenBabel
         break;
       case SPACE_GROUP_HM:
         {
-          const char* s = strchr(line, ',');
-          if (s != NULL)
+          std::string linestr=std::string(line);
+          std::string::size_type idx=linestr.find(',');
+          if (idx != std::string::npos)
             {
-              HMs = string(line, s - line);
-              group->SetHMName(s + 1);
+              group->SetHMName(linestr.substr(idx+1));
+              group->SetHM_shortName(linestr.substr(0,idx));
+              //cout<<__FILE__<<","<<__LINE__<<","<<__FUNCTION__<<":"<<linestr.substr(idx+1)<<","<<linestr.substr(0,idx)<<endl;
             }
           else
             group->SetHMName(line);
@@ -123,7 +136,7 @@ namespace OpenBabel
   static SpaceGroups _SpaceGroups;
 
   SpaceGroup::SpaceGroup():
-    m_id(0)
+    m_HM(""),m_HM_short(""),m_Hall(""),m_id(0)
   {
   }
 
@@ -313,10 +326,27 @@ namespace OpenBabel
     _SpaceGroups.sgs.insert(this);
     if (m_id > 0 && m_id <= 230)
       _SpaceGroups.sgbi[m_id - 1].push_back(this);
+    
     if (m_HM.length() > 0 && _SpaceGroups.sgbn[m_HM] == NULL)
       _SpaceGroups.sgbn[m_HM] = this;
+    
+    // Also use the HM symbol stripped from whitespaces as key
+    std::string stripped_HM=RemoveWhiteSpaceUnderscore(m_HM);
+    if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[stripped_HM] == NULL)
+      _SpaceGroups.sgbn[stripped_HM] = this;
+    
+    // If there is a short version of the HM symbol, also add it
+    if (m_HM_short.length() > 0 && _SpaceGroups.sgbn[m_HM_short] == NULL)
+      _SpaceGroups.sgbn[m_HM_short] = this;
+    
+    // Also use the shortHM symbol stripped from whitespaces as key
+    std::string stripped_HM_short=RemoveWhiteSpaceUnderscore(m_HM_short);
+    if (stripped_HM_short.length() > 0 && _SpaceGroups.sgbn[stripped_HM_short] == NULL)
+      _SpaceGroups.sgbn[stripped_HM_short] = this;
+    
     if (m_Hall.length() > 0 && _SpaceGroups.sgbn[m_Hall] == NULL)
       _SpaceGroups.sgbn[m_Hall] = this;
+    
     if (nb == 0)
       return;
     va_list args;
@@ -401,43 +431,46 @@ namespace OpenBabel
   /*! 
    */
   const SpaceGroup * SpaceGroup::Find (SpaceGroup* group)
-	{
+  {
     const SpaceGroup *found = NULL;
     if (group->m_Hall.length() > 0 && _SpaceGroups.sgbn.find(group->m_Hall)!=_SpaceGroups.sgbn.end())
       {
         found = _SpaceGroups.sgbn[group->m_Hall];
         if (!found)
-          obErrorLog.ThrowError(__FUNCTION__, "Unknown space group error, please file a bug report.", obError);
+          obErrorLog.ThrowError(__FUNCTION__, "Unknown space group (Hall symbol:"+group->m_Hall+") error, please file a bug report.", obError);
         if (group->m_transforms.size() && *found  != *group)
-          obErrorLog.ThrowError(__FUNCTION__, "Space group error, please file a bug report.", obWarning);
+          obErrorLog.ThrowError(__FUNCTION__, "Space group error (Hall symbol and list of transforms do not match), please file a bug report.", obWarning);
         /* even if there is an error (this should not occur) return the found group, since
            Hall names are secure */
         return found;
       }
-    if (group->m_HM.length() > 0 &&
-        _SpaceGroups.sgbn.find(group->m_HM)!=_SpaceGroups.sgbn.end() &&
-        (found = _SpaceGroups.sgbn[group->m_HM]))
+    // Identify from the HM symbol, after removing all whitespaces or underscore (which are valid separators in
+    // old CIF files)
+    std::string stripped_hm=RemoveWhiteSpaceUnderscore(group->m_HM);
+    if (stripped_hm.length() > 0 &&
+        _SpaceGroups.sgbn.find(stripped_hm)!=_SpaceGroups.sgbn.end() &&
+        (found = _SpaceGroups.sgbn[stripped_hm]))
       {
         if (*found == *group)
           return found;
         if (group->m_transforms.size())
-          {
+          {// If transforms (symmetry operations) are listed, make sure they match the tabulated ones
             list<const SpaceGroup*>::const_iterator i, end = _SpaceGroups.sgbi[found->m_id - 1].end();
             for (i = _SpaceGroups.sgbi[found->m_id - 1].begin(); i!= end; i++)
               if ((**i) == *group)
                 return *i;
-            obErrorLog.ThrowError(__FUNCTION__, "Unknown space group error, please file a bug report.", obError);
+            obErrorLog.ThrowError(__FUNCTION__, "Unknown space group error (H-M symbol:"+group->m_HM+"), cannot match the list of transforms, please file a bug report.", obError);
             return NULL;
           }
         else if (group->m_transforms.size() == 0)
-          {
+          {// No transforms (symmetry operations) are listed, warn if HM symbol can match several spacegroups
             int n = 0;
             list<const SpaceGroup*>::const_iterator i, end = _SpaceGroups.sgbi[group->m_id].end();
             for (i = _SpaceGroups.sgbi[group->m_id].begin(); i!= end; i++)
-              if ((*i)->m_HM == group->m_HM)
+              if (RemoveWhiteSpaceUnderscore((*i)->m_HM) == stripped_hm)
                 n++;
             if (n > 1)
-              obErrorLog.ThrowError(__FUNCTION__, "Ambiguous space group with incomplete definition.", obWarning);
+              obErrorLog.ThrowError(__FUNCTION__, "Ambiguous space group: HM symbol corresponds to several space groups.", obWarning);
             return found;
           }
         /* even if there is an error (this should not occur) return the found group, since
@@ -455,14 +488,15 @@ namespace OpenBabel
         else if (group->m_transforms.size() == 0)
           {
             if (_SpaceGroups.sgbi[group->m_id - 1].size() > 1)
-              obErrorLog.ThrowError(__FUNCTION__, "Ambiguous space group with incomplete definition.", obWarning);
+              obErrorLog.ThrowError(__FUNCTION__, "Ambiguous space group: sg number corresponds to several space groups.", obWarning);
             return _SpaceGroups.sgbi[group->m_id - 1].front();
           }
       }
     // If we are there, we need to make a hard search through the whole collection
     if (!group->IsValid())
       {
-        obErrorLog.ThrowError(__FUNCTION__, "Unknown space group with incomplete or wrong definition.", obWarning);
+        obErrorLog.ThrowError(__FUNCTION__, "Unknown space group (HM:"+group->m_HM+",Hall:"+group->m_Hall
+                                           +") with incomplete or wrong definition.", obWarning);
         return NULL;
       }
     set<SpaceGroup*>::iterator i, end = _SpaceGroups.sgs.end();

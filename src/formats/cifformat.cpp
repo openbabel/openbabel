@@ -1220,6 +1220,7 @@ namespace OpenBabel
         const SpaceGroup* pSG = pUC->GetSpaceGroup();
         if (pSG != NULL)
           {
+            ofs << "_space_group_name_H-M_alt '" << pSG->GetHMName() << "'" << endl;
             ofs << "_space_group_name_Hall '" << pSG->GetHallName() << "'" << endl;
             ofs << "loop_" <<endl
                 << "    _symmetry_equiv_pos_as_xyz" << endl;
