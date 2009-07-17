@@ -23,6 +23,8 @@ endif(WIN32)
 set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
 
+option(ENABLE_VERSIONED_FORMATS
+  "Enable versioning of the format plugin directory" ON)
 
 # Set up our path handling, inspired by the path handling used in KDE
 set(BIN_INSTALL_DIR      "bin"
@@ -31,13 +33,23 @@ set(LIB_SUFFIX "" CACHE STRING "Suffix of the directory name, e.g. 64 for lib64"
 if(UNIX)
   set(LIB_INSTALL_DIR    "lib${LIB_SUFFIX}"
       CACHE PATH "Install dir for libraries")
-  set(PLUGIN_INSTALL_DIR "${LIB_INSTALL_DIR}/openbabel/${BABEL_VERSION}"
+  if(ENABLE_VERSIONED_FORMATS)
+    set(OB_PLUGIN_INSTALL_DIR "${LIB_INSTALL_DIR}/openbabel/${BABEL_VERSION}"
       CACHE PATH "Install dir for plugins")
+  else(ENABLE_VERSIONED_FORMATS)
+    set(OB_PLUGIN_INSTALL_DIR "${LIB_INSTALL_DIR}/openbabel"
+      CACHE PATH "Install dir for plugins")
+  endif(ENABLE_VERSIONED_FORMATS)
 else(UNIX) # Windows - bin dir = lib dir to load libraries
   set(LIB_INSTALL_DIR    "${BIN_INSTALL_DIR}"
       CACHE PATH "Install dir for libraries")
-  set(PLUGIN_INSTALL_DIR "lib${LIB_SUFFIX}/openbabel/${BABEL_VERSION}"
+  if(ENABLE_VERSIONED_FORMATS)
+    set(OB_PLUGIN_INSTALL_DIR "lib${LIB_SUFFIX}/openbabel/${BABEL_VERSION}"
       CACHE PATH "Install dir for plugins")
+  else(ENABLE_VERSIONED_FORMATS)
+    set(OB_PLUGIN_INSTALL_DIR "lib${LIB_SUFFIX}/openbabel"
+      CACHE PATH "Install dir for plugins")
+  endif(ENABLE_VERSIONED_FORMATS)
 endif(UNIX)
 
 option(WITH_INCHI   "build inchi lib" ON)
@@ -105,7 +117,7 @@ if(NOT WIN32)
     }
    " SCANDIR_NEEDS_CONST)
 
-   set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${PLUGIN_INSTALL_DIR}")
+   set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}")
 endif(NOT WIN32)
 
 # Add some visibility support when using GCC
