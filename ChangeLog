@@ -1,3 +1,13 @@
+2009-04-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/smilesformat.cpp: Fix compile error. Make sure to
+	cast NULL in a vector constructor.
+
+	* src/formats/CMakeLists.txt: Add Michael's Molpro format.
+
+	* src/forcefield/forcefieldmmff94.cpp: Fix errors in PR#2741658
+	and PR#2741669, reported by  Tushar Jain.
+
 2009-04-07  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/molproformat.cpp (ReadMolecule): Added dipole 

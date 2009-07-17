@@ -2827,7 +2827,7 @@ namespace OpenBabel
 
         double beta, Za, Zc, Cb, r0ab, r0bc, theta, theta2, D, rr, rr2;
         Za = GetZParam(a);
-        Cb = GetZParam(b);
+        Cb = GetCParam(b); // Fixed typo -- PR#2741658
         Zc = GetZParam(c);
 	
         r0ab = GetBondLength(a, b);
@@ -2845,7 +2845,9 @@ namespace OpenBabel
         if (a->IsInRingSize(3) && b->IsInRingSize(3) && c->IsInRingSize(3) && IsInSameRing(a, c))
           beta = 0.05 * beta;
         
-        anglecalc.ka = (beta * Za * Cb * Zc * exp(-2 * D)) / (rr * theta2);
+        // Theta2 is in Degrees^2, but parameters are expecting radians
+        // PR#2741669
+        anglecalc.ka = (beta * Za * Cb * Zc * exp(-2 * D)) / (rr * theta2 * DEG_TO_RAD * DEG_TO_RAD);
       }
       
       anglecalc.a = a;
