@@ -1,3 +1,19 @@
+2009-04-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/obiter.h (OpenBabel): Add forward declaration
+	of OBRing and OBRingData suggested by Anton Simakov.
+
+2009-04-22  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* include/openbabel/rotor.h: #ifndef SWIG added due to problems
+	compiling the CSharp bindings
+
+2009-04-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/Makefile.am: Fix some conditional compiles. Should
+	help fix compile problem reported with 2.2.1 on Cygwin by Igor
+	Filippov.
+
 2009-04-21  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/obiter.cpp: Bugfix for off-by-one error in OBMolAtomBFSIter.

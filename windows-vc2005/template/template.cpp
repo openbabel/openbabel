@@ -7,46 +7,39 @@ using namespace std;
 using namespace OpenBabel;
 
 int main(int argc,char **argv){
+  //OpenBabel::obErrorLog.SetOutputLevel(debug);
+  OpenBabel::OBConversion conv;
+  if (!conv.SetInFormat("smi")) {
+    cout << "Cannot set input format" << endl;
+    return 1;
+  }
+  OpenBabel::OBMol mol;
+  string a;
+  //conv.ReadFile(&mol, "446.mol");
+  conv.ReadString(&mol, "O=c1[nH]c(N)ccn1");
+   FOR_BFS_OF_MOL(a, mol)
+      {
+         // The variable a behaves like OBAtom* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*a
+        cout << a->GetAtomicMass() << " " << a.CurrentDepth() << std::endl;;
+  
+      }
 
-if(argc<3){
-cout << "Usage: ProgrameName InputFileName OutputFileName";
-return 1;
-}
-
-ifstream ifs(argv[1]);
-if(!ifs){
-cout << "Cannot open input file";
-return 1;
-}
-
-ofstream ofs(argv[2]);
-if(!ofs){
-cout << "Cannot open output file";
-return 1;
-}
-
-ofstream fout("out.txt");
-OpenBabel::OBConversion conv(&ifs, &ofs);
-if(conv.SetInAndOutFormats("mol","sdf")){
-OpenBabel::OBMol mol;
-OpenBabel::OBBond *bond;
-OpenBabel::OBAtom *atom;
-if(conv.Read(&mol)){
-fout << "Mol.wt: "<<mol.GetMolWt()<<endl;
-fout << "No. of atoms: " << mol.NumAtoms()<<endl;
-fout << "No. of hvy atoms: " << mol.NumHvyAtoms() << endl;
-fout << "No. of bonds: " << mol.NumBonds() << endl;
-double exactMass = 0.0;
-FOR_ATOMS_OF_MOL(a, mol){
-fout << "iterating..."<<endl;
-exactMass += a->GetExactMass();
-}
-fout << "Exact Mass: " << exactMass << endl;
-}
-else
-fout << "can't conv.read()."<<endl;
-}
-else
-fout << "Incorrect in/out format." << endl;
-return 0;
+  if(conv.SetOutFormat("smi")){
+    a = conv.WriteString(&mol);
+    cout << "Regular smiles:\t" << endl << a << endl;
+  }
+  /*if (!conv.SetInFormat("mol2")) {
+    cout << "Cannot set input format" << endl;
+    return 1;
+  }
+  OpenBabel::OBMol mol;
+  conv.ReadFile(&mol, "PR2691618_aa.mol2");
+  if(conv.SetOutFormat("mol2")){
+    cout << "Mol2 smiles:\t" << endl << conv.WriteString(&mol) << endl;
+  }*/
+  else
+    cout << "Incorrect output format." << endl;
+  return 0;
 }

@@ -404,7 +404,11 @@ namespace OpenBabel
     private:
       unsigned int resolution_size;
       int state;
+#ifndef SWIG
   } typedef rotor_digit;
+#else
+  };
+#endif
   /// @endcond 
   
   //! \class OBRotorKeys
