@@ -1,3 +1,41 @@
+2009-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchiformat.cpp, src/formats/inchi102: Backport the
+	InChI 1.02 standard code.
+
+2009-06-14  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/kekulize.cpp: In an aromatic ring with two nitrogens, one a
+	pyrrole-type, the other a pyridine-type, ensure that the pyrrole-type
+	N donates 2 PI electrons. Fixes PR#2711501
+
+2009-06-14  Chris Morley <c.morley@gaseq.co.uk>
+
+	* src/ops/fillUC.cpp: Tidy up the Description so that it is more
+	suitable for the GUI.
+	
+	* windows-vc2005/gen3D/gen3D.vcproj: add fillUC.cpp to build.
+
+2009-06-13  Chris Morley <c.morley@gaseq.co.uk>
+	
+	* src/formats/mdlformat.cpp: Read V property line.
+	Put contents into a OBPairData with attribute "AtomValue"
+	attached to the OBAtom, and, if the -av option is NOT set, 
+	also interpret as a partial charge.
+	Fix for #2805389
+
+2009-06-08  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/gamessformat.cpp (ReadMolecule): Tighten match for
+	frequencies.
+
+	*  src/formats/gamessformat.cpp (ReadMolecule): Support imaginary
+	frequencies.
+
+2009-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/Makefile.am: Remove kekule.cpp used as an internal test.
+
 2009-06-05  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/math/vector3.cpp: Reenable defensive checks in calculation of

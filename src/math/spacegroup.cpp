@@ -35,8 +35,8 @@ using namespace std;
 namespace OpenBabel
 {
   /** Function to remove whitespaces from a string, returning
-  * a new string
-  */
+   * a new string
+   */
   std::string RemoveWhiteSpaceUnderscore(const string &in){
     std::string out=in;
     for(std::string::iterator pos=out.begin();pos!=out.end();){
@@ -45,7 +45,7 @@ namespace OpenBabel
     }
     return out;
   }
-  
+
   class SpaceGroups: public OBGlobalDataBase
   {
   public:
@@ -108,8 +108,6 @@ namespace OpenBabel
           if (idx != std::string::npos)
             {
               group->SetHMName(linestr.substr(idx+1));
-              group->SetHM_shortName(linestr.substr(0,idx));
-              //cout<<__FILE__<<","<<__LINE__<<","<<__FUNCTION__<<":"<<linestr.substr(idx+1)<<","<<linestr.substr(0,idx)<<endl;
             }
           else
             group->SetHMName(line);
@@ -136,7 +134,7 @@ namespace OpenBabel
   static SpaceGroups _SpaceGroups;
 
   SpaceGroup::SpaceGroup():
-    m_HM(""),m_HM_short(""),m_Hall(""),m_id(0)
+    m_HM(""),m_Hall(""),m_id(0)
   {
   }
 
@@ -326,27 +324,14 @@ namespace OpenBabel
     _SpaceGroups.sgs.insert(this);
     if (m_id > 0 && m_id <= 230)
       _SpaceGroups.sgbi[m_id - 1].push_back(this);
-    
     if (m_HM.length() > 0 && _SpaceGroups.sgbn[m_HM] == NULL)
       _SpaceGroups.sgbn[m_HM] = this;
-    
     // Also use the HM symbol stripped from whitespaces as key
     std::string stripped_HM=RemoveWhiteSpaceUnderscore(m_HM);
     if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[stripped_HM] == NULL)
       _SpaceGroups.sgbn[stripped_HM] = this;
-    
-    // If there is a short version of the HM symbol, also add it
-    if (m_HM_short.length() > 0 && _SpaceGroups.sgbn[m_HM_short] == NULL)
-      _SpaceGroups.sgbn[m_HM_short] = this;
-    
-    // Also use the shortHM symbol stripped from whitespaces as key
-    std::string stripped_HM_short=RemoveWhiteSpaceUnderscore(m_HM_short);
-    if (stripped_HM_short.length() > 0 && _SpaceGroups.sgbn[stripped_HM_short] == NULL)
-      _SpaceGroups.sgbn[stripped_HM_short] = this;
-    
     if (m_Hall.length() > 0 && _SpaceGroups.sgbn[m_Hall] == NULL)
       _SpaceGroups.sgbn[m_Hall] = this;
-    
     if (nb == 0)
       return;
     va_list args;

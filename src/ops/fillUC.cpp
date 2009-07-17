@@ -35,10 +35,11 @@ public:
   OpFillUC(const char* ID) : OBOp(ID, false){
     OBConversion::RegisterOptionParam("fillUC", NULL, 1, OBConversion::GENOPTIONS);
   }
-  const char* Description(){ return "<param>: Fill the unit cell using unique positions, unit cell and spacegroup\
-\n     <param> can be:\
-\n             strict (keep only atoms inside the UC) => use \"--fillUC strict\" \
-\n             keepconnect (fill the unit cell but keep the original connectivity => use \"--fillUC keepconnect\""; }
+  const char* Description(){ return "<param> Fill the unit cell (strict or keepconnect)\n"
+    "using unique positions, unit cell and spacegroup"
+    "<param> can be:\n"
+    "   strict (keep only atoms inside the UC) => use \"--fillUC strict\"\n"
+    "   keepconnect (fill the unit cell but keep the original connectivity => use \"--fillUC keepconnect\""; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, OpMap* pmap, const char* OptionText);
@@ -70,7 +71,6 @@ vector3 transformedFractionalCoordinate2(vector3 originalCoordinate)
 
   return returnValue;
 }
-
 
 /////////////////////////////////////////////////////////////////
 bool OpFillUC::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
