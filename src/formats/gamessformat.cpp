@@ -444,7 +444,7 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE); // reduced mass
             ifs.getline(buffer, BUFF_SIZE);
             tokenize(vs, buffer);
-            for (unsigned int i = 1; i < vs.size(); ++i) {
+            for (unsigned int i = 2; i < vs.size(); ++i) {
               ++numIntens;
               if (numIntens > lowFreqModes)
                 intensities.push_back(atof(vs[i].c_str()));
@@ -464,7 +464,7 @@ namespace OpenBabel
             int modeCount = vs.size() - 3;
             double massNormalization;
             vector<double> x, y, z;
-            while(modeCount > 1) {
+            while(modeCount >= 1) {
               // 1/sqrt(atomic mass)
               atom = mol.GetAtom(atoi(vs[0].c_str()));
               massNormalization = 1 / sqrt( atom->GetAtomicMass() );
@@ -490,10 +490,11 @@ namespace OpenBabel
 
               // OK, now we have x, y, z for all new modes for one atom
               if (displacements.size()) {
-                for (unsigned int i = 0; i < modeCount - 1;  ++i) {
-                  ++numDisp;
-                  if (numDisp > lowFreqModes)
-                    displacements[prevModeCount + i].push_back(vector3(x[i], y[i], z[i]));
+                numDisp = prevModeCount;
+                for (unsigned int i = 0; i < modeCount;  ++i) {
+                  if (i >= modeCount - newModes){
+                    displacements[numDisp++].push_back(vector3(x[i], y[i], z[i]));
+		  }
                 }
               }
 
@@ -779,6 +780,7 @@ namespace OpenBabel
     OBAtom *atom;
     vector<string> vs;
     bool hasPartialCharges = false;
+    string efragName; // used to save identifiers of EFRAG sections
 
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
@@ -813,6 +815,9 @@ namespace OpenBabel
             while (strstr(buffer,"FRAGNAME") == NULL)
               {
                 //read $EFRAG parameters
+                tokenize(vs, buffer, "=");
+                if (vs.size() > 1)
+                  efragName = vs[1];
                 if(!ifs.getline(buffer,BUFF_SIZE))
                   break;
               }
@@ -832,6 +837,13 @@ namespace OpenBabel
                     y = atof((char*)vs[2].c_str());
                     z = atof((char*)vs[3].c_str());
                     atom->SetVector(x,y,z);
+
+                    // Tag these atoms as part of a specific EFP fragment
+                    OBPairData *dp = new OBPairData;
+                    dp->SetAttribute("EFRAG");
+                    dp->SetValue(efragName);
+                    dp->SetOrigin(fileformatInput);
+                    atom->SetData(dp);
                   }
                 if(!ifs.getline(buffer,BUFF_SIZE))
                   break;

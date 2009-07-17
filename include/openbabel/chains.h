@@ -24,6 +24,9 @@ GNU General Public License for more details.
 #define MaxMonoAtom 20
 #define MaxMonoBond 20
 
+#include <openbabel/babelconfig.h>
+#include <vector>
+
 namespace OpenBabel
 {
 

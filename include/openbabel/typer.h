@@ -20,11 +20,19 @@ GNU General Public License for more details.
 #ifndef OB_TYPER_H
 #define OB_TYPER_H
 
+#include <openbabel/babelconfig.h>
+
+#include <vector>
+#include <string>
+
 #include <openbabel/parsmart.h>
 #include <openbabel/data.h>
 
 namespace OpenBabel
 {
+
+  // Forward declaration
+  class OBSmartsPattern;
 
 // class introduction in typer.cpp
 class OBAPI OBAtomTyper : public OBGlobalDataBase

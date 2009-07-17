@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #define OB_INTERNALCOORD_H
 
 #include <openbabel/babelconfig.h>
+#include <stddef.h>
 
 #ifndef EXTERN
 #  define EXTERN extern

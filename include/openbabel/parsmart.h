@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <string>
 #include <vector>
 
+#include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 
 /*==========================*/

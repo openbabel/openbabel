@@ -1,3 +1,26 @@
+2009-05-04  Michael Banck  <mbanck@gmx.net
+
+	* src/formats/moldenformat.cpp (ReadMolecule): Read in atom
+	coordinates via [FR-COORD] block if no atoms have been read
+	previously.  Fixes PR#2786716.
+
+	* src/formats/gamessformat.cpp (ReadMolecule): Fix parsing of
+	intensities.  Keep on reading displacements even if there is only a
+	single one.  Rewritten normal coordinates parsing.  Fixes PR#2782132.
+
+2009-05-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/element.txt, data/element.h: Update atomic radii with
+	consistent sets from recent publications.
+
+2009-04-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/molchrg.h, include/openbabel/internalcoord.h,
+	include/openbabel/typer.h, include/openbabel/chains.h,
+	include/openbabel/descriptor.h, include/openbabel/atomclass.h,
+	include/openbabel/parsmart.h, include/openbabel/grid.h: 
+	Improved forward declarations, thanks to Noel's python script.
+
 2009-04-26  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/moldenformat.cpp (WriteMolecule): New method,

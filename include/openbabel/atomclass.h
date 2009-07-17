@@ -14,6 +14,8 @@ GNU General Public License for more details.
 #ifndef OB_ATOMCLASS_H
 #define OB_ATOMCLASS_H
 
+#include <openbabel/babelconfig.h>
+
 #include <vector>
 #ifdef HAVE_SSTREAM
 #include <sstream>
