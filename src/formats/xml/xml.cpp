@@ -41,6 +41,8 @@ namespace OpenBabel
     //save its position and rewind so that the reader initialization is ok.
     //(Getting the requested object is handled in ReadXML(), when the format is known.) 
     _requestedpos = GetInStream()->tellg();
+    if(_requestedpos < 0)
+      _requestedpos = 0;
     if(_requestedpos)
       GetInStream()->seekg(0);
 

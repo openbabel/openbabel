@@ -67,6 +67,7 @@ set(formats
     titleformat
     turbomoleformat
     unichemformat
+    vaspformat
     viewmolformat
     xedformat
     xyzformat
