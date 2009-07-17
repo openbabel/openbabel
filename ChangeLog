@@ -1,4 +1,14 @@
-2009-05-04  Michael Banck  <mbanck@gmx.net
+2009-05-19  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/gaussformat.cpp (ReadMolecule): Add parsing of NMR
+	isotropic shifts.  Patch by David C. Lonie.  Fixes PR#2787088.
+
+2009-05-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/generic.cpp (OBUnitCell::FillUnitCell): Update with code
+	from Avogadro. Now should handle duplicate atoms.
+
+2009-05-04  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/moldenformat.cpp (ReadMolecule): Read in atom
 	coordinates via [FR-COORD] block if no atoms have been read
