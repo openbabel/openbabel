@@ -370,17 +370,29 @@ void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
   OBAtom *atom;
   // begin
   atom = mol->GetAtomById(config.begin);
-  if (atom)
-    config.begin = symClasses.at(atom->GetIndex());
+  if (atom) {
+    if (atom->IsHydrogen())
+      config.begin = OBStereo::ImplicitId;
+    else
+      config.begin = symClasses.at(atom->GetIndex());
+  }
   // end
   atom = mol->GetAtomById(config.end);
-  if (atom)
-    config.end = symClasses.at(atom->GetIndex());
+  if (atom) {
+    if (atom->IsHydrogen())
+      config.end = OBStereo::ImplicitId;
+    else
+      config.end = symClasses.at(atom->GetIndex());
+  }
   // refs
   for (unsigned int i = 0; i < config.refs.size(); ++i) {
     atom = mol->GetAtomById(config.refs.at(i));
-    if (atom)
-      config.refs[i] = symClasses.at(atom->GetIndex());
+    if (atom) {
+      if (atom->IsHydrogen())
+        config.refs[i] = OBStereo::ImplicitId;
+      else
+        config.refs[i] = symClasses.at(atom->GetIndex());
+    }
   }
 }
 
@@ -390,19 +402,32 @@ void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config,
   OBAtom *atom;
   // center
   atom = mol->GetAtomById(config.center);
-  if (atom)
-    config.center = symClasses.at(atom->GetIndex());
+  if (atom) {
+    if (atom->IsHydrogen())
+      config.center = OBStereo::ImplicitId;
+    else
+      config.center = symClasses.at(atom->GetIndex());
+  }
   // from/towards
   atom = mol->GetAtomById(config.from);
-  if (atom)
-    config.from = symClasses.at(atom->GetIndex());
+  if (atom) {
+    if (atom->IsHydrogen())
+      config.from = OBStereo::ImplicitId;
+    else
+      config.from = symClasses.at(atom->GetIndex());
+  }
   // refs
   for (unsigned int i = 0; i < config.refs.size(); ++i) {
     atom = mol->GetAtomById(config.refs.at(i));
-    if (atom)
-      config.refs[i] = symClasses.at(atom->GetIndex());
+    if (atom) {
+      if (atom->IsHydrogen())
+        config.refs[i] = OBStereo::ImplicitId;
+      else
+        config.refs[i] = symClasses.at(atom->GetIndex());
+    }
   }
 }
+
 void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_classes)
 {
   vector<pair<OBAtom*,unsigned int> > vp1, vp2;
