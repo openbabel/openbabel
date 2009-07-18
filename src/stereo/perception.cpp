@@ -236,10 +236,13 @@ namespace OpenBabel {
      
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom0D", obAuditMsg);
 
-    // From0D doesn't delete existing data because we don't want to loose anything
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
+    // TetrahedralFrom0D only deletes existing data that disagrees with the symmetry
+    // classes
     TetrahedralFrom0D(mol, symClasses);
-    CisTransFrom0D(mol, symClasses);
+    // Usually CisTransFrom0D only deletes existing data that disagrees with the symmetry
+    // classes, but if updown is supplied it deletes all existing data first
+    CisTransFrom0D(mol, symClasses, updown);
     mol->SetChiralityPerceived();
   }
 
@@ -303,7 +306,8 @@ namespace OpenBabel {
   }
 
   std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol, 
-      const std::vector<unsigned int> &symClasses, bool addToMol)
+      const std::vector<unsigned int> &symClasses, 
+      std::map<OBBond*, bool addToMol)
   {
     std::vector<OBCisTransStereo*> configs;
     if (symClasses.size() != mol->NumAtoms())

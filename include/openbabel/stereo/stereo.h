@@ -409,7 +409,9 @@ namespace OpenBabel {
    * to the molecule using OBBase::SetData().
    */
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol, 
-      const std::vector<unsigned int> &symClasses, bool addToMol = true);
+      const std::vector<unsigned int> &symClasses,
+      std::map<OBBond*, OBStereo::BondDirection> *updown = NULL,
+      bool addToMol = true);
  
   /**
    * Find all tetrahedral centers using the symmetry classes in the 
