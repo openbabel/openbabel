@@ -68,9 +68,12 @@ namespace OpenBabel
       if(!AddHydrogens(false, false))
         ret=false;
 
-    if(pOptions->find("p")!=pOptions->end())
-      if(!AddHydrogens(false, true))
+    itr = pOptions->find("p");
+    if(itr!=pOptions->end()) {
+      double pH = strtod(itr->second.c_str(), 0);
+      if(!AddHydrogens(false, true, pH))
         ret=false;
+    }
 
     if(pOptions->find("c")!=pOptions->end())
       Center();
