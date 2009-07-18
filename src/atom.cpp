@@ -149,8 +149,10 @@ namespace OpenBabel
   //copy atom information
   //bond info is not copied here as ptrs may be invalid
   {
-    _idx = src.GetIdx();
-    Duplicate(&src);
+    if (this != &src) {
+      _idx = src.GetIdx();
+      Duplicate(&src);
+    }
     return(*this);
   }
   

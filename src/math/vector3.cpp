@@ -254,6 +254,9 @@ namespace OpenBabel
     if (dot(b2,c3) > 0.0)
       torsion = -torsion;
 
+    if (!isfinite(torsion))
+      torsion = 180.0;
+
     return(torsion);
   }
 

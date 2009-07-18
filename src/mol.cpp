@@ -1161,6 +1161,9 @@ namespace OpenBabel
   //OBChiralData for all atoms copied, TV 2008
   //Zeros all flags except OB_TCHARGE_MOL and OB_TSPIN_MOL and OB_PATTERN_STRUCTURE which are copied
   {
+    if (this == &source)
+      return *this;
+
     OBMol &src = (OBMol &)source;
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;

@@ -1,11 +1,14 @@
 2009-06-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/mol.cpp, src/atom.cpp: Test for assigning atoms and
+	molecules to themselves. PR#2698096. Thanks to Pierre-Louis.
+
 	* src/bondtyper.cpp: Add oxime functional group assignment:
 	PR#2793910.
 
 	* src/kekulize.cpp: Additional cleanups. Should be more accurate
 	across a wide range of ring systems. Fixes PR# 2705497 and
-	PR#1814248.
+	PR#1814248. For fused rings (e.g., C60) uses old algorithm.
 
 	* test/files/nci.smi: Add test cases for PR above.
 

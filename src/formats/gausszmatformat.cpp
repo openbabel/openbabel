@@ -300,7 +300,7 @@ namespace OpenBabel
 			  if (vs.size() >= 2) {
           variables[vs[0]] = atof(vs[1].c_str());
           foundVariables = true;
-//          cerr << "var: " << vs[0] << " " << vs[1] << endl;
+          //          cerr << "var: " << vs[0] << " " << vs[1] << endl;
         }
 			}
 			else {
@@ -350,15 +350,15 @@ namespace OpenBabel
           vic[j]->_c = mol.GetAtom(atoi(vs[5].c_str()));
 
           temp = strtod((char*)vs[6].c_str(), &endptr);
-	  if (endptr != (char*)vs[6].c_str()) {
-	    vic[j]->_tor = temp;
-	  } else {
-	    const char* tor_str = vs[6].c_str();
-	    if (tor_str[0] == '-')
-	      vic[j]->_tor = -1 * variables[tor_str+1];
-	    else
-	      vic[j]->_tor = variables[tor_str];
-	  }
+          if (endptr != (char*)vs[6].c_str()) {
+            vic[j]->_tor = temp;
+          } else {
+            const char* tor_str = vs[6].c_str();
+            if (tor_str[0] == '-')
+              vic[j]->_tor = -1 * variables[tor_str+1];
+            else
+              vic[j]->_tor = variables[tor_str];
+          }
         }
       }
 		}

@@ -653,6 +653,8 @@ namespace OpenBabel
                                               a->GetVector(),
                                               b->GetVector(),
                                               c->GetVector());
+              if (!isfinite(vic[k]->_tor))
+                vic[k]->_tor = 180.0;
               done = true;
             }
       }
