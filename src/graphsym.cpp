@@ -470,7 +470,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     OBAtom *atom1 = _pmol->GetAtomById(*id1);
     int index1 = atom1->GetIndex();
     // We only want: unused and part of this fragment.
-    if (!(*_frag_atoms)[index1])
+    if (!(*_frag_atoms)[index1+1])
       continue;
     if (used_atoms[index1])
       continue;
@@ -501,15 +501,15 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     if (same_class.size() < 2)
       continue;
 
-    cout << "BreakChiralTies: same_class = ";
+    /*cout << "BreakChiralTies: same_class = ";
     vector<OBAtom*>::iterator ia;
     for (ia = same_class.begin(); ia != same_class.end(); ia++)
       cout << (*ia)->GetIndex() << " ";
-    cout << "\n";
+    cout << "\n";*/
 
     // find tetrahedral atoms using current symmetry classes
     if (!_pmol->HasChiralityPerceived()) {
-      cout << "!_pmol->HasChiralityPerceived()" << endl;
+      //cout << "!_pmol->HasChiralityPerceived()" << endl;
       switch (_pmol->GetDimension()) {
         case 2:
           _pmol->DeleteData(OBGenericDataType::StereoData);
@@ -590,8 +590,8 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     // store the match/mismatch result
     bool refMatchesOrdered = (refConfig == orderedConfig) ? true : false;
 
-    cout << "refConfig = " << refConfig << endl;
-    cout << "orderedConfig = " << orderedConfig << endl;
+    //cout << "refConfig = " << refConfig << endl;
+    //cout << "orderedConfig = " << orderedConfig << endl;
 
     // Time to break the class in 3. 
     //                         
@@ -665,7 +665,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     unsigned int end1 = bond1->GetEndAtom()->GetIndex();
     
     // We only want: unused and part of this fragment.
-    if (!(*_frag_atoms)[begin1] || !(*_frag_atoms)[end1])
+    if (!(*_frag_atoms)[begin1+1] || !(*_frag_atoms)[end1+1])
       continue;
     if (used_atoms[begin1] || used_atoms[end1])
       continue;
@@ -699,15 +699,15 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     if (same_class.size() < 2)
       continue;
 
-    cout << "BreakChiralTies: same_class = ";
+    /*cout << "BreakChiralTies: same_class = ";
     vector<OBBond*>::iterator ib;
     for (ib = same_class.begin(); ib != same_class.end(); ib++)
       cout << (*ib)->GetIdx() << " ";
-    cout << "\n";
+    cout << "\n";*/
 
     // find cis/trans bonds using current symmetry classes
     if (!_pmol->HasChiralityPerceived()) {
-      cout << "!_pmol->HasChiralityPerceived()" << endl;
+      //cout << "!_pmol->HasChiralityPerceived()" << endl;
       switch (_pmol->GetDimension()) {
         case 2:
           _pmol->DeleteData(OBGenericDataType::StereoData);
@@ -782,8 +782,8 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     // store the match/mismatch result
     bool refMatchesOrdered = (refConfig == orderedConfig) ? true : false;
 
-    cout << "refConfig = " << refConfig << endl;
-    cout << "orderedConfig = " << orderedConfig << endl;
+    //cout << "refConfig = " << refConfig << endl;
+    //cout << "orderedConfig = " << orderedConfig << endl;
 
     // Time to break the class in 3. (see above for details)
     for (int i = 0; i < atom_sym_classes.size(); i++) {
@@ -971,20 +971,20 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     }
   }
    
-  cout << "BEFORE BreakChiralTies, nclasses1 = " << nclasses1 << endl;
+  /*cout << "BEFORE BreakChiralTies, nclasses1 = " << nclasses1 << endl;
   for (int i = 0; i < symmetry_classes.size(); i++) {
     cout << symmetry_classes[i].first->GetIndex() << ": " << symmetry_classes[i].second << endl;
-  }
+  }*/
    
   BreakChiralTies(symmetry_classes);
   CreateNewClassVector(symmetry_classes, tmp_classes);
   CountAndRenumberClasses(tmp_classes, nclasses2);
 
-  cout << "AFTER BreakChiralTies, nclasses2 = " << nclasses2 << endl;
+  /*cout << "AFTER BreakChiralTies, nclasses2 = " << nclasses2 << endl;
   for (int i = 0; i < symmetry_classes.size(); i++) {
     cout << symmetry_classes[i].first->GetIndex() << " (" << symmetry_classes[i].first->GetType() 
          << "): " << symmetry_classes[i].second << endl;
-  }
+  }*/
 
 
 
@@ -1088,10 +1088,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   // Calculate symmetry classes
   nclass1 = CalculateSymmetry(atom_sym_classes);
 
-  cout << "BEFORE TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
+  /*cout << "BEFORE TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
   for (int i = 0; i < atom_sym_classes.size(); i++) {
     cout << atom_sym_classes[i].first->GetIndex() << ": " << atom_sym_classes[i].second << endl;
-  }
+  }*/
 
   // The symmetry classes are the starting point for the canonical labels
   vp1 = atom_sym_classes;
@@ -1123,10 +1123,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     }
   }
 
-  cout << "AFTER TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
+  /*cout << "AFTER TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
   for (int i = 0; i < vp1.size(); i++) {
     cout << vp1[i].first->GetIndex() << ": " << vp1[i].second << endl;
-  }
+  }*/
 
   // For return values, convert vectors of atom/int pairs into one-dimensional
   // vectors of int, indexed by atom->GetIdx().
