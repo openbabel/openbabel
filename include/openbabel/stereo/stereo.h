@@ -306,7 +306,7 @@ namespace OpenBabel {
    * @param updown A map of OBStereo::BondDirection for cis/trans bonds
    */
   OBAPI void StereoFrom0D(OBMol *mol,
-      const std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL);
+      std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL);
 
   /**
    * Get a vector with all OBTetrahedralStereo objects for the molecule. This 

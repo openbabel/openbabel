@@ -229,7 +229,7 @@ namespace OpenBabel {
   //
   ////////////////////////////////////////////////////////////////////////////
 
-  void StereoFrom0D(OBMol *mol, const map <OBBond*, OBStereo::BondDirection> *updown)
+  void StereoFrom0D(OBMol *mol, std::map <OBBond*, OBStereo::BondDirection> *updown)
   {
     if (mol->HasChiralityPerceived())
       return;
@@ -307,7 +307,7 @@ namespace OpenBabel {
 
   std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol, 
       const std::vector<unsigned int> &symClasses, 
-      std::map<OBBond*, bool addToMol)
+      std::map<OBBond*, enum OBStereo::BondDirection> *updown, bool addToMol)
   {
     std::vector<OBCisTransStereo*> configs;
     if (symClasses.size() != mol->NumAtoms())
