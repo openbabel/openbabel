@@ -335,6 +335,11 @@ namespace OpenBabel {
         return(false);
       }
 
+    map<OBAtom*, OBTetrahedralStereo::Config*>::iterator i;
+    for (i = _tetrahedralMap.begin(); i != _tetrahedralMap.end(); i++)
+      delete i->second;
+    _tetrahedralMap.clear();
+
     mol.SetAutomaticFormalCharge(false);
 
     mol.SetChiralityPerceived(); //Avoid possibly buggy FindChiralCenters()
@@ -2022,7 +2027,7 @@ namespace OpenBabel {
           cerr << "NB2: Added ring opening " << mol.GetAtom(_prev)->GetId() << " at "
                << bond->numConnections << " to " << ChiralSearch->second << endl;
            */
-          int insertpos = bond->numConnections - 1;
+          int insertpos = bond->numConnections - 2;
           if (insertpos < 0) {
             (ChiralSearch->second)->from = mol.GetAtom(_prev)->GetId();
             cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at Config.from to " << ChiralSearch->second << endl;
@@ -3496,29 +3501,15 @@ namespace OpenBabel {
       vector<OBAtom*>::iterator i;
       //      OBAtom *atom;
       for (i = atomList.begin(); i != atomList.end(); ++i) {
-        // Get the (x,y,z) coordinates where best to put the H
-        vector3 v;
-        (*i)->GetNewBondVector(v, 1.0);   // Returns (x,y,z) of the "empty" area, for a new bond
 
 #if DEBUG
         cout << "AddHydrogenToChiralCenters: Adding H to atom " << (*i)->GetIdx() << "\n";
 #endif
 
         // Add the H atom
-        OBAtom *h = mol.NewAtom();
-        h->SetAtomicNum(1);
-        h->SetType("H");
-        mol.AddBond((*i)->GetIdx(), h->GetIdx(), 1, 0, -1);
+        mol.AddHydrogens(*i);
 
-        // Set its (x,y,z) coordinates
-        // timvdm: only do this if the molecule has 3D coords
-        if (mol.HasNonZeroCoords())
-          h->SetVector(v);
-        else
-          h->SetVector(VZero);
-        
-
-        frag_atoms.SetBitOn(h->GetIdx());
+        frag_atoms.SetBitOn(mol.NumAtoms());
       }
 
       mol.EndModify();

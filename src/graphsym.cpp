@@ -459,72 +459,153 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     if (same_class.size() < 2)
       continue;
 
-    /*
     cout << "BreakChiralTies: same_class = ";
     vector<OBAtom*>::iterator ia;
     for (ia = same_class.begin(); ia != same_class.end(); ia++)
       cout << (*ia)->GetIndex() << " ";
     cout << "\n";
-    */
 
     // find tetrahedral atoms using current symmetry classes
-    _pmol->DeleteData(OBGenericDataType::StereoData);
-    if (_pmol->Has3D())
-      TetrahedralFrom3D(_pmol, index2sym_class);
-    else
-      TetrahedralFrom2D(_pmol, index2sym_class);
+    if (!_pmol->HasChiralityPerceived()) {
+      cout << "!_pmol->HasChiralityPerceived()" << endl;
+      switch (_pmol->GetDimension()) {
+        case 2:
+          _pmol->DeleteData(OBGenericDataType::StereoData);
+          TetrahedralFrom2D(_pmol, index2sym_class);
+          break;
+        case 3:
+          _pmol->DeleteData(OBGenericDataType::StereoData);
+          TetrahedralFrom3D(_pmol, index2sym_class);
+          break;
+        default:
+          break;
+      }
+    } 
 
     // false = don't perceive stereochemistry, we already did it explicitly above
     OBStereoFacade stereoFacade(_pmol, false); 
     // get the reference config
-    OBTetrahedralStereo::Config refConfig = stereoFacade.GetTetrahedralStereo(*id1)->GetConfig();
-    // this 'odd' variable will always be the same (see below...)
-    bool odd = OBStereo::NumInversions(refConfig.refs) % 2; // FIXME
+    OBTetrahedralStereo::Config refConfig;
+    if (stereoFacade.HasTetrahedralStereo(*id1)) {
+      refConfig = stereoFacade.GetTetrahedralStereo(*id1)->GetConfig();
+    } else {
+      refConfig.specified = false;
+    }
     // convert id --> symmetry classes to compare
     IdsToSymClasses(_pmol, refConfig, index2sym_class);
 
-    // Devide the cis/trans in two groups based on C/T by comparing the Configs
-    vector<OBAtom*> symclass1, symclass2;
+    // Devide the centers in 3 groups based on comparing the Configs
+    // symclass1: all centers who's Config struct matches refConfig 
+    // symclass2: all centers who's Config struct does not match refConfig 
+    // unspecified: all centers with unspecified stereochemistry
+    vector<OBAtom*> symclass1, symclass2, unspecified;
 
     vector<OBAtom*>::iterator iatom;
     for (iatom = same_class.begin(); iatom != same_class.end(); iatom++) {
-      OBTetrahedralStereo::Config otherConfig = stereoFacade.GetTetrahedralStereo((*iatom)->GetId())->GetConfig();
-      IdsToSymClasses(_pmol, otherConfig, index2sym_class);
+      if (!stereoFacade.HasTetrahedralStereo((*iatom)->GetId())) {
+        // this happens for 0D when we don't want to delete data (see above) 
+        // but have found new previously unidentified chiral centers
+        unspecified.push_back(*iatom);
+      } else {
+        OBTetrahedralStereo::Config otherConfig = stereoFacade.GetTetrahedralStereo((*iatom)->GetId())->GetConfig();
+        // unspecified is group 3
+        if (!otherConfig.specified) {
+          unspecified.push_back(*iatom);
+          continue;
+        }
 
-      // compare
-      if (refConfig == otherConfig)
-        symclass1.push_back(*iatom); // same, add it to symclass1
-      else
-        symclass2.push_back(*iatom); // different, add to symclass2
+        // if refConfig is still unspecified, assign otherConfig to it and 
+        // otherConfig will go in symclass1
+        if (!refConfig.specified)
+          refConfig = otherConfig;
+
+        IdsToSymClasses(_pmol, otherConfig, index2sym_class);
+        // compare
+        if (refConfig == otherConfig)
+          symclass1.push_back(*iatom); // same, add it to symclass1
+        else
+          symclass2.push_back(*iatom); // different, add to symclass2
+      }
     }
 
     // If there's nothing in symclass2, then we don't have to split 
     // the symmetry class.
-    if (symclass2.empty())
+    if (symclass1.empty())
+      if (symclass2.empty() || unspecified.empty())
+        continue;
+    if (symclass2.empty() && unspecified.empty())
       continue;
- 
-    // Time to break the class in two. Double all symmetry classes
-    // Then, either add one or subtract one to all the atoms in symclass2,
-    // the atoms that didn't match the chirality of the "reference" class above.
-    // The add-or-subtract decision is based on odd, the "odd" calculated
-    // above; by doing this, we force a consistent choice of '@' or '@@' for the,
-    // two chiral centers; otherwise it's arbitrary and you'll get two different SMILES.
+
+    // Make a copy of refConfig and sort it
+    OBTetrahedralStereo::Config orderedConfig = refConfig;
+    std::vector<unsigned long> refs = orderedConfig.refs;
+    refs.insert(refs.begin(), orderedConfig.from);
+    std::sort(refs.begin(), refs.end());
+    orderedConfig.from = refs.at(0);
+    for (unsigned int i = 0; i < 3; ++i)
+      orderedConfig.refs[i] = refs.at(i+1);
+    // store the match/mismatch result
+    bool refMatchesOrdered = (refConfig == orderedConfig) ? true : false;
+
+    cout << "refConfig = " << refConfig << endl;
+    cout << "orderedConfig = " << orderedConfig << endl;
+
+
+    // Time to break the class in 3. 
+    //                         
+    //                         1-2-3  symclass1
+    //                        /             \ 
+    //   unspecified  3-2-1--a               symclass1 != symclass2
+    //                        \             /
+    //                         1-2-3  symclass2
+    //
+    //                           |
+    //                           | triple all symmetry classes
+    //                           V
+    //
+    //                         3-6-9  symclass1  -1 <----- mismatch -----+
+    //                        /             \                            |
+    //   unspecified  9-6-3--a               check which one matches orderedConfig
+    //      (=)               \             /                            |
+    //                         3-6-9  symclass2  +1 <------ match -------+
+    //
+    //                           |
+    //                           | perform illustrated operations
+    //                           V
+    //
+    //                         2-5-8  symclass1  -1 <----- mismatch -----+
+    //                        /             \                            |
+    //   unspecified  9-6-3--a               check which one matches orderedConfig
+    //      (=)               \             /                            |
+    //                         4-7-10 symclass2  +1 <------ match -------+
+    //
+    //
+    // Triple all symmetry classes.
     for (int i = 0; i < atom_sym_classes.size(); i++) {
-      atom_sym_classes[i].second *= 2;
+      atom_sym_classes[i].second *= 3;
+      
+      for (int j = 0; j < symclass1.size(); j++) {
+        if (symclass1[j] == atom_sym_classes[i].first) {
+          if (refMatchesOrdered)
+            atom_sym_classes[i].second += 1; // symclass1 == orderedConfig
+          else
+            atom_sym_classes[i].second -= 1; // symclass1 != orderedConfig
+        }
+      }
       for (int j = 0; j < symclass2.size(); j++) {
         if (symclass2[j] == atom_sym_classes[i].first) {
-          if (odd)
-            atom_sym_classes[i].second += 1;
+          if (refMatchesOrdered)
+            atom_sym_classes[i].second -= 1; // symclass1 == orderedConfig --> symclass2 != orderedConfig
           else
-            atom_sym_classes[i].second -= 1;
+            atom_sym_classes[i].second += 1; // symclass1 != orderedConfig --> symclass2 == orderedConfig
         }
       }
     }
+ 
     // Now propagate the change across the whole molecule with the
     // extended sum-of-invariants.
     ExtendInvariants(atom_sym_classes);
   }
-
   // 
   // Cis/Trans bonds
   //
@@ -569,66 +650,109 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     if (same_class.size() < 2)
       continue;
 
-    /*
     cout << "BreakChiralTies: same_class = ";
     vector<OBBond*>::iterator ib;
     for (ib = same_class.begin(); ib != same_class.end(); ib++)
       cout << (*ib)->GetIdx() << " ";
     cout << "\n";
-    */
 
     // find cis/trans bonds using current symmetry classes
-    _pmol->DeleteData(OBGenericDataType::StereoData);
-    if (_pmol->Has3D())
-      CisTransFrom3D(_pmol, index2sym_class);
-    else
-      CisTransFrom2D(_pmol, index2sym_class);
+    if (!_pmol->HasChiralityPerceived()) {
+      cout << "!_pmol->HasChiralityPerceived()" << endl;
+      switch (_pmol->GetDimension()) {
+        case 2:
+          _pmol->DeleteData(OBGenericDataType::StereoData);
+          CisTransFrom2D(_pmol, index2sym_class);
+          break;
+        case 3:
+          _pmol->DeleteData(OBGenericDataType::StereoData);
+          CisTransFrom3D(_pmol, index2sym_class);
+          break;
+        default:
+          break;
+      }
+    }
 
     // false = don't perceive stereochemistry, we already did it explicitly above
     OBStereoFacade stereoFacade(_pmol, false); 
     // get the reference config
-    OBCisTransStereo::Config refConfig = stereoFacade.GetCisTransStereo(*id1)->GetConfig();
-    // this 'odd' variable will always be the same (see below...)
-    bool odd = OBStereo::NumInversions(refConfig.refs) % 2; // FIXME
+    OBCisTransStereo::Config refConfig;
+    if (stereoFacade.HasCisTransStereo(*id1)) {
+      refConfig = stereoFacade.GetCisTransStereo(*id1)->GetConfig();
+    } else {
+      refConfig.specified = false;
+    }
     // convert id --> symmetry classes to compare
     IdsToSymClasses(_pmol, refConfig, index2sym_class);
 
-    // Devide the cis/trans in two groups based on C/T by comparing the Configs
-    vector<OBBond*> symclass1, symclass2;
+    // Devide the cis/trans bonds in 3 groups based on comparing the Configs
+    // symclass1: all bonds who's Config struct matches refConfig 
+    // symclass2: all bonds who's Config struct does not match refConfig 
+    // unspecified: all bonds with unspecified stereochemistry
+    vector<OBBond*> symclass1, symclass2, unspecified;
 
     vector<OBBond*>::iterator ibond;
     for (ibond = same_class.begin(); ibond != same_class.end(); ibond++) {
-      OBCisTransStereo::Config otherConfig = stereoFacade.GetCisTransStereo((*ibond)->GetId())->GetConfig();
-      IdsToSymClasses(_pmol, otherConfig, index2sym_class);
+      if (!stereoFacade.HasCisTransStereo((*ibond)->GetId())) {
+        // this happens for 0D when we don't want to delete data (see above) 
+        // but have found new previously unidentified chiral centers
+        unspecified.push_back(*ibond);
+      } else {
+        OBCisTransStereo::Config otherConfig = stereoFacade.GetCisTransStereo((*ibond)->GetId())->GetConfig();
+        // unspecified is group 3
+        if (!otherConfig.specified) {
+          unspecified.push_back(*ibond);
+          continue;
+        }
 
-      // compare
-      if (refConfig == otherConfig)
-        symclass1.push_back(*ibond); // same, add it to symclass1
-      else
-        symclass2.push_back(*ibond); // different, add to symclass2
+        // if refConfig is still unspecified, assign otherConfig to it and 
+        // otherConfig will go in symclass1
+        if (!refConfig.specified)
+          refConfig = otherConfig;
+
+        IdsToSymClasses(_pmol, otherConfig, index2sym_class);
+        // compare
+        if (refConfig == otherConfig)
+          symclass1.push_back(*ibond); // same, add it to symclass1
+        else
+          symclass2.push_back(*ibond); // different, add to symclass2
+      }
     }
 
-    // If there's nothing in symclass2, then we don't have to split 
-    // the symmetry class.
-    if (symclass2.empty())
+    // if there is only 1 group found, leave the symmetry classes alone
+    if (symclass1.empty())
+      if (symclass2.empty() || unspecified.empty())
+        continue;
+    if (symclass2.empty() && unspecified.empty())
       continue;
-    
-    // Time to break the class in two. Double all symmetry classes
-    // Then, either add one or subtract one to all the atoms in symclass2,
-    // the atoms that didn't match the chirality of the "reference" class above.
-    // The add-or-subtract decision is based on odd, the number of inversions of 
-    // the U shaped reference config above; by doing this, we force a consistent 
-    // choice of '\' or '/' for the, two double bonds; otherwise it's arbitrary 
-    // and you'll get two different SMILES.
+
+    // Make a copy of refConfig and sort it
+    OBCisTransStereo::Config orderedConfig = refConfig;
+    std::sort(orderedConfig.refs.begin(), orderedConfig.refs.end());
+    // store the match/mismatch result
+    bool refMatchesOrdered = (refConfig == orderedConfig) ? true : false;
+
+    cout << "refConfig = " << refConfig << endl;
+    cout << "orderedConfig = " << orderedConfig << endl;
+
+    // Time to break the class in 3. (see above for details)
     for (int i = 0; i < atom_sym_classes.size(); i++) {
-      atom_sym_classes[i].second *= 2;
-      for (int j = 0; j < symclass2.size(); j++) {
-        // changing the begin atom should be enough
-        if (symclass2[j]->GetBeginAtom() == atom_sym_classes[i].first) {
-          if (odd)
-            atom_sym_classes[i].second += 1;
+      atom_sym_classes[i].second *= 3;
+      
+      for (int j = 0; j < symclass1.size(); j++) {
+        if (symclass1[j]->GetBeginAtom() == atom_sym_classes[i].first) {
+          if (refMatchesOrdered)
+            atom_sym_classes[i].second += 1; // symclass1 == orderedConfig
           else
-            atom_sym_classes[i].second -= 1;
+            atom_sym_classes[i].second -= 1; // symclass1 != orderedConfig
+        }
+      }
+      for (int j = 0; j < symclass2.size(); j++) {
+        if (symclass2[j]->GetBeginAtom() == atom_sym_classes[i].first) {
+          if (refMatchesOrdered)
+            atom_sym_classes[i].second -= 1; // symclass1 == orderedConfig --> symclass2 != orderedConfig
+          else
+            atom_sym_classes[i].second += 1; // symclass1 != orderedConfig --> symclass2 == orderedConfig
         }
       }
     }
