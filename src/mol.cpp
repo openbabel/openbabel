@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/math/matrix3x3.h>
 
 #include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
 
 #include <sstream>
 #include <set>
@@ -1315,9 +1316,19 @@ namespace OpenBabel
           for (OBStereo::RefIter id = config.refs.begin(); id != config.refs.end(); ++id)
             if (old2newId.find(*id) != old2newId.end())
               *id = old2newId[*id];
-
         } else if (type == OBStereo::CisTrans) {
-        
+          OBCisTransStereo *ct = static_cast<OBCisTransStereo*>(*data);
+          OBCisTransStereo::Config config = ct->GetConfig();
+          // begin
+          if (old2newId.find(config.begin) != old2newId.end())
+            config.begin = old2newId[config.begin];
+          // end
+          if (old2newId.find(config.end) != old2newId.end())
+            config.end = old2newId[config.end];
+          // refs
+          for (OBStereo::RefIter id = config.refs.begin(); id != config.refs.end(); ++id)
+            if (old2newId.find(*id) != old2newId.end())
+              *id = old2newId[*id];
         }
       }
     }
