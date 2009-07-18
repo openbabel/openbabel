@@ -269,14 +269,13 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
       ct->begin = stereo.neighbor[1];
       ct->end = stereo.neighbor[2];
-      unsigned long start, end;
+      unsigned long start = OBStereo::ImplicitId;
+      unsigned long end = OBStereo::ImplicitId;
       FOR_NBORS_OF_ATOM(a, pmol->GetAtom(ct->begin + 1)) {
         if ( !(a->GetId() == ct->end || a->GetId() == stereo.neighbor[0] ) ) {
           start = a->GetId();
           break;
         }
-
-
       }
       FOR_NBORS_OF_ATOM(b, pmol->GetAtom(ct->end + 1)) {
         if ( !(b->GetId() == ct->begin || b->GetId() == stereo.neighbor[3] ) ) {
@@ -291,7 +290,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       else if(stereo.parity==INCHI_PARITY_ODD) 
         ct->shape = OBStereo::ShapeZ;
       else
-        ct->specified = false;
+        ; //ct->specified = false;
       
       OBCisTransStereo *obct = new OBCisTransStereo(pmol);
       obct->SetConfig(*ct);
