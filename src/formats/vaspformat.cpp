@@ -1,4 +1,3 @@
-
 /**********************************************************************
 Copyright (C) 2004 by Chris Morley for template
 Copyright (C) 2004 by David C. Lonie for VASP
@@ -217,7 +216,10 @@ namespace OpenBabel {
      }
 
      ifs_cont.getline(buffer,BUFF_SIZE); // Cartesian or fractional?
-     if (buffer[0] == 'C' || buffer[0] == 'c')
+     if (buffer[0] == 'S' || buffer[0] == 's') // Skip selective dynamics line if present.
+       ifs_cont.getline(buffer,BUFF_SIZE);
+     if ( buffer[0] == 'C' || buffer[0] == 'c' ||
+          buffer[0] == 'K' || buffer[0] == 'k' )
        cartesian = true;
      else
        cartesian = false;

@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D0B81813-23C8-4BCB-BFAA-D3CE6AEEFC33}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OBDotNet</RootNamespace>
+    <AssemblyName>OBDotNet</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Properties\obdotnet.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;DEPRECATE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AliasData.cs" />
+    <Compile Include="AtomRefType.cs" />
+    <Compile Include="CByteArray.cs" />
+    <Compile Include="CDoubleArray.cs" />
+    <Compile Include="CIntArray.cs" />
+    <Compile Include="CUIntArray.cs" />
+    <Compile Include="DataOrigin.cs" />
+    <Compile Include="ErrorQualifier.cs" />
+    <Compile Include="FastSearch.cs" />
+    <Compile Include="FastSearchIndexer.cs" />
+    <Compile Include="FptIndex.cs" />
+    <Compile Include="FptIndexHeader.cs" />
+    <Compile Include="LineSearchType.cs" />
+    <Compile Include="OBAngle.cs" />
+    <Compile Include="OBAngleData.cs" />
+    <Compile Include="OBAtom.cs" />
+    <Compile Include="OBAtomAtomIter.cs" />
+    <Compile Include="OBAtomBondIter.cs" />
+    <Compile Include="OBAtomClassData.cs" />
+    <Compile Include="OBAtomTyper.cs" />
+    <Compile Include="OBBase.cs" />
+    <Compile Include="OBBitVec.cs" />
+    <Compile Include="OBBond.cs" />
+    <Compile Include="OBChainsParser.cs" />
+    <Compile Include="OBChiralData.cs" />
+    <Compile Include="OBCommentData.cs" />
+    <Compile Include="OBConformerData.cs" />
+    <Compile Include="OBConversion.cs" />
+    <Compile Include="OBDescriptor.cs" />
+    <Compile Include="OBElement.cs" />
+    <Compile Include="OBElementTable.cs" />
+    <Compile Include="OBError.cs" />
+    <Compile Include="OBExternalBond.cs" />
+    <Compile Include="OBExternalBondData.cs" />
+    <Compile Include="OBFFCalculation2.cs" />
+    <Compile Include="OBFFCalculation3.cs" />
+    <Compile Include="OBFFCalculation4.cs" />
+    <Compile Include="OBFFConstraint.cs" />
+    <Compile Include="OBFFConstraints.cs" />
+    <Compile Include="OBFFParameter.cs" />
+    <Compile Include="OBFingerprint.cs" />
+    <Compile Include="OBForceField.cs" />
+    <Compile Include="OBFormat.cs" />
+    <Compile Include="OBGenericData.cs" />
+    <Compile Include="OBGlobalDataBase.cs" />
+    <Compile Include="OBGridData.cs" />
+    <Compile Include="OBInternalCoord.cs" />
+    <Compile Include="OBIsotopeTable.cs" />
+    <Compile Include="OBMatrix3x3.cs" />
+    <Compile Include="OBMatrixData.cs" />
+    <Compile Include="OBMessageHandler.cs" />
+    <Compile Include="OBMessageLevel.cs" />
+    <Compile Include="OBMol.cs" />
+    <Compile Include="OBMolAngleIter.cs" />
+    <Compile Include="OBMolAtomBFSIter.cs" />
+    <Compile Include="OBMolAtomDFSIter.cs" />
+    <Compile Include="OBMolAtomIter.cs" />
+    <Compile Include="OBMolBondIter.cs" />
+    <Compile Include="OBMolPairIter.cs" />
+    <Compile Include="OBMolRingIter.cs" />
+    <Compile Include="OBMolTorsionIter.cs" />
+    <Compile Include="OBNasaThermoData.cs" />
+    <Compile Include="OBOp.cs" />
+    <Compile Include="OBPairData.cs" />
+    <Compile Include="OBPlugin.cs" />
+    <Compile Include="OBRandom.cs" />
+    <Compile Include="OBRateData.cs" />
+    <Compile Include="OBResidue.cs" />
+    <Compile Include="OBResidueAtomIter.cs" />
+    <Compile Include="OBResidueData.cs" />
+    <Compile Include="OBResidueIter.cs" />
+    <Compile Include="OBRing.cs" />
+    <Compile Include="OBRingData.cs" />
+    <Compile Include="OBRingTyper.cs" />
+    <Compile Include="OBRotamerList.cs" />
+    <Compile Include="OBRotationData.cs" />
+    <Compile Include="OBRotor.cs" />
+    <Compile Include="OBRotorKeys.cs" />
+    <Compile Include="OBRotorList.cs" />
+    <Compile Include="OBRotorRule.cs" />
+    <Compile Include="OBRotorRules.cs" />
+    <Compile Include="OBRTree.cs" />
+    <Compile Include="OBSerialNums.cs" />
+    <Compile Include="OBSetData.cs" />
+    <Compile Include="OBSmartsPattern.cs" />
+    <Compile Include="OBSqrtTbl.cs" />
+    <Compile Include="OBStopwatch.cs" />
+    <Compile Include="OBSymmetryData.cs" />
+    <Compile Include="OBTorsion.cs" />
+    <Compile Include="OBTorsionData.cs" />
+    <Compile Include="OBTransform3d.cs" />
+    <Compile Include="OBTypeTable.cs" />
+    <Compile Include="OBUnitCell.cs" />
+    <Compile Include="OBVector3.cs" />
+    <Compile Include="OBVectorData.cs" />
+    <Compile Include="OBVibrationData.cs" />
+    <Compile Include="OBVirtualBond.cs" />
+    <Compile Include="openbabelcsharp.cs" />
+    <Compile Include="openbabelcsharpPINVOKE.cs" />
+    <Compile Include="Properties\OBDotNetAssemblyInfo.cs" />
+    <Compile Include="rotor_digit.cs" />
+    <Compile Include="SpaceGroup.cs" />
+    <Compile Include="SWIGTYPE_p_double.cs" />
+    <Compile Include="SWIGTYPE_p_int.cs" />
+    <Compile Include="SWIGTYPE_p_std__istream.cs" />
+    <Compile Include="SWIGTYPE_p_std__mapT_int_OpenBabel__OBAtom_p_t.cs" />
+    <Compile Include="SWIGTYPE_p_std__multimapT_double_unsigned_int_t.cs" />
+    <Compile Include="SWIGTYPE_p_std__ostream.cs" />
+    <Compile Include="SWIGTYPE_p_std__string.cs" />
+    <Compile Include="SWIGTYPE_p_std__vectorT_double_p_t.cs" />
+    <Compile Include="SWIGTYPE_p_std__vectorT_double_t__iterator.cs" />
+    <Compile Include="SWIGTYPE_p_std__vectorT_OpenBabel__tripleT_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t.cs" />
+    <Compile Include="SWIGTYPE_p_std__vectorT_unsigned_char_p_t__iterator.cs" />
+    <Compile Include="SWIGTYPE_p_unsigned_char.cs" />
+    <Compile Include="SWIGTYPE_p_unsigned_int.cs" />
+    <Compile Include="VectorBond.cs" />
+    <Compile Include="VectorDouble.cs" />
+    <Compile Include="VectorInt.cs" />
+    <Compile Include="VectorMol.cs" />
+    <Compile Include="VectorOBExternalBond.cs" />
+    <Compile Include="VectorOBVector3.cs" />
+    <Compile Include="VectorpAtom.cs" />
+    <Compile Include="VectorpBond.cs" />
+    <Compile Include="VectorpData.cs" />
+    <Compile Include="VectorpInternalCoord.cs" />
+    <Compile Include="VectorpRing.cs" />
+    <Compile Include="VectorpRotor.cs" />
+    <Compile Include="VectorResidue.cs" />
+    <Compile Include="VectorRing.cs" />
+    <Compile Include="VectorString.cs" />
+    <Compile Include="VectorTorsion.cs" />
+    <Compile Include="VectorUInt.cs" />
+    <Compile Include="VectorUShort.cs" />
+    <Compile Include="VectorVecDouble.cs" />
+    <Compile Include="VectorVecInt.cs" />
+    <Compile Include="VectorVecOBVector3.cs" />
+    <Compile Include="VectorVecUInt.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\obdotnet.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

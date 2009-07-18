@@ -1,5 +1,5 @@
-openbabel version 1.2
-================================
+OpenBabel Python bindings version 1.5
+=====================================
 
 This is a Python interface to the Open Babel chemistry library. 
 
@@ -29,8 +29,8 @@ installed Open Babel):
 
 DEPENDENCIES
 
-     python-2.3 or a more recent version.
-     openbabel-2.1 or a more recent version.
+     python-2.4 or a more recent version.
+     openbabel-2.2.2 or a more recent version.
 
 Note that if you are trying to build/run this Python code in the Open
 Babel source/build directory BEFORE you install Open Babel, you may
@@ -42,7 +42,7 @@ Open Babel package and THEN rebuild this Python module.
 COPYRIGHT AND LICENSE
 
 Copyright (C) 2005-2007 Geoffrey R. Hutchison <babel@geoffhutchison.net>
-Some portions Copyright (C) 2006-2007 Noel O'Boyle
+Some portions Copyright (C) 2006-2009 Noel O'Boyle
 
 This Python module is part of the Open Babel project.
 <http://openbabel.sourceforge.net/>
