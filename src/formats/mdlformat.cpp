@@ -101,6 +101,7 @@ namespace OpenBabel
       void GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown, set<OBBond*> &stereodbl);
       void GetParity(OBMol& mol, map<OBAtom*, Parity> &parity,
            map<OBBond*, OBStereo::BondDirection> &updown);
+      void MDLFormat::TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity);
       map<int,int> indexmap; //relates index in file to index in OBMol
       vector<string> vs;
   };
@@ -160,6 +161,7 @@ namespace OpenBabel
     string comment;
     string r1, r2;
     map<OBBond*, OBStereo::BondDirection> updown;
+    vector<Parity> parities;
 
     // Attempting to read past the end of the file -- don't bother
     if ( !ifs.good() || ifs.peek() == EOF ) 
@@ -263,8 +265,9 @@ namespace OpenBabel
       //
       // Atom Block
       //
-      int massdiff, charge;
+      int massdiff, charge, stereo;
       vector<int> massDiffs, charges;
+      Parity parity;
       for (i = 0; i < natoms; ++i) {
         if (!std::getline(ifs, line)) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
@@ -279,9 +282,10 @@ namespace OpenBabel
         // 31..33   aaa = atom symbol
         // 34..35   dd = mass difference: -3, -2, -1, 0, 1, 2, 3, 4 ('M  ISO' lines take precedence)
         // 36..38   ccc = charge  ('M  CGH' and 'M  RAD' lines take precedence)
-        // 39..41   sss = atom stereo parity (ignored when read)
+        // 39..41   sss = atom stereo parity (ignored when read if not 0D)
         //          ... = query/reaction related
         massdiff = charge = 0;
+        parity = NotStereo; 
         if (line.size() < 34) {
 	        errorMsg << "WARNING: Problems reading a MDL file\n";
 	        errorMsg << "Missing data following atom specification in atom block\n";
@@ -305,6 +309,25 @@ namespace OpenBabel
         if (line.size() >= 38)
           charge = atoi(line.substr(36, 3).c_str());
         charges.push_back(charge);
+        // stereo parity
+        if (line.size() >= 41) {
+          stereo = atoi(line.substr(39, 3).c_str());
+          switch (stereo) {
+            case 1:
+              parity = Clockwise;
+              break;
+            case 2:
+              parity = AntiClockwise;
+              break;
+            case 3:
+              parity = Unknown;
+              break;
+            default:
+              parity = NotStereo;
+              break;
+          }
+        }
+        parities.push_back(parity);
 
         if (!mol.AddAtom(atom))
           return false;
@@ -314,7 +337,7 @@ namespace OpenBabel
       //
       // Bond Block
       //
-      int stereo = 0;
+      stereo = 0;
       unsigned int begin, end, order, flag;
       for (i = 0;i < nbonds; ++i) {
         flag = 0;
@@ -550,7 +573,9 @@ namespace OpenBabel
     } else {
     if (!setDimension)
       mol.SetDimension(0);
-    // use up/down to determine stereochemistry
+    // use atom parities to create tetrahedral stereochemistry
+    TetStereoFromParity(mol, parities);
+    // use up/down to determine cis/trans stereochemistry
     StereoFrom0D(&mol, &updown);
     }
 
@@ -1234,7 +1259,7 @@ namespace OpenBabel
         
         OBTetrahedralStereo::Config cfg = ts->GetConfig();
 
-        enum Parity atomparity = Unknown;
+        Parity atomparity = Unknown;
         if (cfg.specified) {
           // If, when looking towards the maxref, the remaining refs increase in number
           // clockwise, parity is 1 (Parity::Clockwise)
@@ -1257,5 +1282,31 @@ namespace OpenBabel
       }
 
   }
-  
+  void MDLFormat::TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity)
+  {
+    for (unsigned long i=0;i<parity.size();i++) {
+      if (parity[i] == NotStereo)
+        continue;
+
+      OBStereo::Refs refs;
+      FOR_NBORS_OF_ATOM(nbr, mol.GetAtomById(i)) {
+        refs.push_back(nbr->GetId());
+      }
+      sort(refs.begin(), refs.end());
+      unsigned long towards = refs.back();
+      refs.pop_back();
+
+      OBStereo::Winding winding = OBStereo::Clockwise;
+      if (parity[i] == AntiClockwise)
+        winding = OBStereo::AntiClockwise;
+      OBTetrahedralStereo::Config cfg = OBTetrahedralStereo::Config(i, towards, refs,
+                                                                    winding, OBStereo::ViewTowards);
+      if (parity[i] == Unknown)
+        cfg.specified = false;
+
+      OBTetrahedralStereo *th = new OBTetrahedralStereo(&mol);
+      th->SetConfig(cfg);
+      mol.SetData(th);
+    }
+  }
 }
