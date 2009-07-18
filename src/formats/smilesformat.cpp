@@ -224,9 +224,8 @@ namespace OpenBabel {
     void FindAromaticBonds(OBMol&);
     void FindOrphanAromaticAtoms(OBMol &mol); //CM 18 Sept 2003
     int NumConnections(OBAtom *);
-    //void CreateCisTrans(OBMol &mol);
+    void CreateCisTrans(OBMol &mol);
     void InsertStereoRef(OBMol &mol, unsigned long id);
-    map<OBBond*, OBStereo::BondDirection> CreateUpDownMap(OBMol &mol);
 
     bool IsUp(OBBond*);
     bool IsDown(OBBond*);
@@ -482,8 +481,7 @@ namespace OpenBabel {
       }
     }
 
-    map<OBBond*, OBStereo::BondDirection> updown = CreateUpDownMap(mol);
-    StereoFrom0D(&mol, &updown);
+    StereoFrom0D(&mol);
 
     return(true);
   }
@@ -508,7 +506,7 @@ namespace OpenBabel {
     return false;
   }
 
-  /*void OBSmilesParser::CreateCisTrans(OBMol &mol)
+  void OBSmilesParser::CreateCisTrans(OBMol &mol)
   {
     // Create a vector of CisTransStereo objects for the molecule
     FOR_BONDS_OF_MOL(dbi, mol) {
@@ -520,8 +518,9 @@ namespace OpenBabel {
         continue;
 
       // Find the single bonds around the atoms connected by the double bond.
-      // While we're at it, note whether the pair of atoms on either end are
-      // identical, in which case it's not cis/trans.
+      // FIXME: "While we're at it, note whether the pair of atoms on either end are
+      // identical, in which case it's not cis/trans." This code must be in the original
+      // smilesformat.cpp
 
       OBAtom *a1 = dbl_bond->GetBeginAtom();
       OBAtom *a2 = dbl_bond->GetEndAtom();
@@ -594,67 +593,6 @@ namespace OpenBabel {
       // add the data to the atom
       mol.SetData(ct);
     }
-  }*/
-map<OBBond*, OBStereo::BondDirection> OBSmilesParser::CreateUpDownMap(OBMol &mol)
-  {
-    map<OBBond*, OBStereo::BondDirection> updown;
-
-    FOR_BONDS_OF_MOL(dbi, mol) {
-      // First, do a quick check for likely cis/trans bonds.
-      // A proper test will be done by CisTrans0D in perception.cpp.
-
-      OBBond *dbl_bond = &(*dbi);
-
-      // Not a double bond?
-      if (!dbl_bond->IsDouble() || dbl_bond->IsAromatic())
-        continue;
-
-      // Find the single bonds around the atoms connected by the double bond.
-      OBAtom *a1 = dbl_bond->GetBeginAtom();
-      OBAtom *a2 = dbl_bond->GetEndAtom();
-
-      // Check that both atoms on the double bond have at least one
-      // other neighbor, but not more than two other neighbors;
-      int v1 = a1->GetValence();
-      int v2 = a2->GetValence();
-      if (v1 < 2 || v1 > 3 || v2 < 2 || v2 > 3) {
-        continue;
-      }
-
-      // IMPROVEME: Can speed up this code by avoiding repeated calls to IsUp/IsDown
-      bool stereo;
-      FOR_BONDS_OF_ATOM(bi, a1) {
-        OBBond *b = &(*bi);
-        if (b == dbl_bond) continue;  // skip the double bond we're working on
-        if (IsUp(b) || IsDown(b)) 
-        { // This is a stereo bond
-          if (std::find(_bcbonds.begin(), _bcbonds.end(), b) != _bcbonds.end())
-            // This is a bond closure, so the cis/trans mark appears after
-            // the double bond C (and the Idx test below is incorrect)
-            stereo = !IsUp(b);
-          else
-            // Set the stereo to True/False for "up/down if moved to before the double bond C"
-            stereo = !(IsUp(b) ^ (b->GetNbrAtomIdx(a1) < a1->GetIdx())) ;
-          updown[b] = stereo ? OBStereo::UpBond : OBStereo::DownBond;
-          break;
-        }
-      }
-
-      FOR_BONDS_OF_ATOM(bi, a2) {
-        OBBond *b = &(*bi);
-        if (b == dbl_bond) continue;
-        if (IsUp(b) || IsDown(b))
-        {
-          if (std::find(_bcbonds.begin(), _bcbonds.end(), b)!=_bcbonds.end())
-            stereo = !IsUp(b);
-          else
-            stereo = !(IsUp(b) ^ (b->GetNbrAtomIdx(a2) < a2->GetIdx()));
-          updown[b] = stereo ? OBStereo::UpBond : OBStereo::DownBond;
-          break;
-        }
-      }      
-    }
-    return updown;
   }
 
   void OBSmilesParser::FindOrphanAromaticAtoms(OBMol &mol)
