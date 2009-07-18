@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #define OB_GRAPHSYM_H
 
 #include <openbabel/babelconfig.h>
+#include <vector>
 
 #ifndef EXTERN
 #  define EXTERN extern
@@ -32,6 +33,7 @@ namespace OpenBabel {
   class OBBitVec;
   class OBMol;
   class OBAtom;
+  class OBBond;
   class OBMol;
 
   class OBAPI OBGraphSym {
@@ -60,22 +62,7 @@ namespace OpenBabel {
       void BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_classes);
     public:
       //! Constructor
-      OBGraphSym(OBMol* pmol = NULL, OBBitVec* frag_atoms = NULL)
-      {
-        _pmol = pmol;
-        if (_pmol) {
-          if (frag_atoms)
-            _frag_atoms = frag_atoms;
-          else
-          {
-            _frag_atoms = new OBBitVec(_pmol->NumAtoms());
-            FOR_ATOMS_OF_MOL(a, _pmol)
-              _frag_atoms->SetBitOn(a->GetIdx());
-          }
-        }
-        else // No molecule supplied
-          _frag_atoms = NULL;
-      }
+      OBGraphSym(OBMol* pmol = NULL, OBBitVec* frag_atoms = NULL);
       //! Destructor
       virtual ~OBGraphSym();
 

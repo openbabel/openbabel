@@ -69,6 +69,24 @@ namespace OpenBabel {
 *       Three functions for use by the sort() method of a vector.
 ***************************************************************************/
 
+  OBGraphSym::OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms)
+  {
+    _pmol = pmol;
+    if (_pmol) {
+      if (frag_atoms)
+        _frag_atoms = frag_atoms;
+      else
+      {
+        _frag_atoms = new OBBitVec(_pmol->NumAtoms());
+        FOR_ATOMS_OF_MOL(a, _pmol)
+          _frag_atoms->SetBitOn(a->GetIdx());
+      }
+    }
+    else // No molecule supplied
+      _frag_atoms = NULL;
+  }
+ 
+
 // NOTE: Copied from OpenBabel/mol.cpp
 
   // Destructor
@@ -503,6 +521,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
           TetrahedralFrom3D(_pmol, index2sym_class);
           break;
         default:
+          TetrahedralFrom0D(_pmol, index2sym_class);
           break;
       }
     } 
@@ -700,6 +719,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
           CisTransFrom3D(_pmol, index2sym_class);
           break;
         default:
+          CisTransFrom0D(_pmol, index2sym_class);
           break;
       }
     }
@@ -963,7 +983,8 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
   cout << "AFTER BreakChiralTies, nclasses2 = " << nclasses2 << endl;
   for (int i = 0; i < symmetry_classes.size(); i++) {
-    cout << symmetry_classes[i].first->GetIndex() << ": " << symmetry_classes[i].second << endl;
+    cout << symmetry_classes[i].first->GetIndex() << " (" << symmetry_classes[i].first->GetType() 
+         << "): " << symmetry_classes[i].second << endl;
   }
 
 
