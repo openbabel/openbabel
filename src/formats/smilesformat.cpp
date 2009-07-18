@@ -681,9 +681,15 @@ namespace OpenBabel {
     {
       int insertpos = NumConnections(ChiralSearch->first) - 2;
       if (insertpos < 0) {
+        if (ChiralSearch->second->from != OBStereo::NoId)
+          obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
+
         (ChiralSearch->second)->from = id;
         cerr << "Adding " << id << " at Config.from to " << ChiralSearch->second << endl;
       } else {
+        if (ChiralSearch->second->refs[insertpos] != OBStereo::NoId)
+          obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previously set reference id.", obError);
+
         (ChiralSearch->second)->refs[insertpos] = id;
         cerr << "Adding " << id << " at " << insertpos << " to " << ChiralSearch->second << endl;
       }
@@ -2029,9 +2035,15 @@ namespace OpenBabel {
            */
           int insertpos = bond->numConnections - 2;
           if (insertpos < 0) {
+            if (ChiralSearch->second->from != OBStereo::NoId)
+              obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
+
             (ChiralSearch->second)->from = mol.GetAtom(_prev)->GetId();
             cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at Config.from to " << ChiralSearch->second << endl;
           } else {
+            if (ChiralSearch->second->refs[insertpos] != OBStereo::NoId)
+              obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previously set reference id.", obError);
+
             (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
             cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at " 
                  << insertpos << " to " << ChiralSearch->second << endl;
