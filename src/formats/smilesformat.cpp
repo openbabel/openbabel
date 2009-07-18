@@ -2033,6 +2033,7 @@ namespace OpenBabel {
           cerr << "NB2: Added ring opening " << mol.GetAtom(_prev)->GetId() << " at "
                << bond->numConnections << " to " << ChiralSearch->second << endl;
            */
+          cout << "bond->numConnections = " << bond->numConnections << endl;
           int insertpos = bond->numConnections - 2;
           if (insertpos < 0) {
             if (ChiralSearch->second->from != OBStereo::NoId)
@@ -2079,6 +2080,12 @@ namespace OpenBabel {
     ringClosure.numConnections = NumConnections(atom); //store position to insert closure bond
     for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) //correct for multiple closure bonds to a single atom
       if (bond->prev == _prev)
+        ringClosure.numConnections++;
+
+    // if the previous atom has an explicit H, increment numConnections
+    OBBondIterator bi;
+    for (OBAtom *nbr = atom->BeginNbrAtom(bi); nbr; nbr = atom->NextNbrAtom(bi))
+      if (nbr->IsHydrogen())
         ringClosure.numConnections++;
 
     _rclose.push_back(ringClosure);
