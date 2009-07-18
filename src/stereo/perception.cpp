@@ -143,16 +143,12 @@ namespace OpenBabel {
         std::vector<OBBond*>::iterator j;
          
         if (begin->GetValence() == 2) {
-          // begin atom has two neighbors, the first is the end atom. The second should 
-          // be a heavy atom in which case the thirth will be assumed to be implicit
-          // (hydrogen, lone pair on N, ...)
-          for (OBAtom *nbr = begin->BeginNbrAtom(j); nbr; nbr = begin->NextNbrAtom(j)) {
-            if (nbr->GetId() == end->GetId())
-              continue;
-            // two implicit atoms?
-            if (nbr->IsHydrogen())
-              isCisTrans = false;
-          }
+          // Begin atom has two explicit neighbors. One is the end atom. The other should 
+          // be a heavy atom - this is what we test here.
+          // (There is a third, implicit, neighbor which is either a hydrogen
+          // or a lone pair.)
+          if (begin->ExplicitHydrogenCount() == 1)
+            isCisTrans = false;
         } else if (begin->GetValence() == 3) {
           std::vector<unsigned int> tlist;
           
@@ -180,16 +176,9 @@ namespace OpenBabel {
           continue;
 
         if (end->GetValence() == 2) {
-          // begin atom has two neighbors, the first is the end atom. The second should 
-          // be a heavy atom in which case the thirth will be assumed to be implicit
-          // (hydrogen, lone pair on N, ...)
-          for (OBAtom *nbr = end->BeginNbrAtom(j); nbr; nbr = end->NextNbrAtom(j)) {
-            if (nbr->GetId() == begin->GetId())
-              continue;
-            // two implicit atoms?
-            if (nbr->IsHydrogen())
-              isCisTrans = false;
-          }
+          // see comment above for begin atom
+          if (end->ExplicitHydrogenCount() == 1)
+            isCisTrans = false;
         } else if (end->GetValence() == 3) { 
           std::vector<unsigned int> tlist;
           
