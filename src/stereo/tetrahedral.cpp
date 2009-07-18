@@ -184,23 +184,30 @@ namespace OpenBabel {
 
 namespace std {
 
-  ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo &ts)
+  using namespace OpenBabel;
+
+  ostream& operator<<(ostream &out, const OBTetrahedralStereo &ts)
   {
-    OpenBabel::OBTetrahedralStereo::Config cfg = ts.GetConfig();
+    OBTetrahedralStereo::Config cfg = ts.GetConfig();
     out << "OBTetrahedralStereo(center = " << cfg.center;
-    if (cfg.view == OpenBabel::OBStereo::ViewFrom)
-      out << ", viewFrom = " << cfg.from;
+    if (cfg.view == OBStereo::ViewFrom)
+      out << ", viewFrom = ";
     else
-      out << ", viewTowards = " << cfg.towards;
- 
+      out << ", viewTowards = ";
+      
+    if (cfg.from == OBStereo::ImplicitId)
+      out << "H";
+    else
+      out << cfg.from;
+
     out << ", refs = ";
-    for (OpenBabel::OBStereo::Refs::iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      if (*i != OpenBabel::OBStereo::ImplicitId)
+    for (OBStereo::Refs::iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
+      if (*i != OBStereo::ImplicitId)
         out << *i << " ";
       else
         out << "H ";
 
-    if (cfg.winding == OpenBabel::OBStereo::Clockwise)
+    if (cfg.winding == OBStereo::Clockwise)
       out << ", clockwise)";
     else
       out << ", anti-clockwise)";
@@ -208,22 +215,27 @@ namespace std {
     return out;
   }
 
-  ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo::Config &cfg)
+  ostream& operator<<(ostream &out, const OBTetrahedralStereo::Config &cfg)
   {
     out << "OBTetrahedralStereo::Config(center = " << cfg.center;
-    if (cfg.view == OpenBabel::OBStereo::ViewFrom)
-      out << ", viewFrom = " << cfg.from;
+    if (cfg.view == OBStereo::ViewFrom)
+      out << ", viewFrom = ";
     else
-      out << ", viewTowards = " << cfg.towards;
+      out << ", viewTowards = ";
+      
+    if (cfg.from == OBStereo::ImplicitId)
+      out << "H";
+    else
+      out << cfg.from;
 
     out << ", refs = ";
-    for (OpenBabel::OBStereo::Refs::const_iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      if (*i != OpenBabel::OBStereo::ImplicitId)
+    for (OBStereo::Refs::const_iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
+      if (*i != OBStereo::ImplicitId)
         out << *i << " ";
       else
         out << "H ";
 
-    if (cfg.winding == OpenBabel::OBStereo::Clockwise)
+    if (cfg.winding == OBStereo::Clockwise)
       out << ", clockwise)";
     else
       out << ", anti-clockwise)";

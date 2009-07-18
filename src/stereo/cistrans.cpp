@@ -18,21 +18,41 @@ namespace OpenBabel {
       return false;
     if ((refs.size() != 4) || (other.refs.size() != 4))
       return false;
-    if (!OBStereo::ContainsSameRefs(refs, other.refs))
-      return false;
-  
-    // normalize the other Config struct
-    Config u1 = OBTetraPlanarStereo::ToConfig(*this, refs.at(0), OBStereo::ShapeU); // refs[0] = u1.refs[0]
-    Config u2 = OBTetraPlanarStereo::ToConfig(other, refs.at(0), OBStereo::ShapeU); // refs[0] = u2.refs[0]
 
-    // two possibilities:
+    Config u1, u2;
+    if (!OBStereo::ContainsSameRefs(refs, other.refs)) {
+      // find a ref that occurs in both
+      for (OBStereo::ConstRefIter i = refs.begin(); i != refs.end(); ++i)
+        if (OBStereo::ContainsRef(other.refs, *i)) {
+          u1 = OBTetraPlanarStereo::ToConfig(*this, *i, OBStereo::ShapeU); // refs[0] = u1.refs[0]
+          u2 = OBTetraPlanarStereo::ToConfig(other, *i, OBStereo::ShapeU); // refs[0] = u2.refs[0]
+        }
+    } else {
+      // normalize the other Config struct
+      u1 = OBTetraPlanarStereo::ToConfig(*this, refs.at(0), OBStereo::ShapeU); // refs[0] = u1.refs[0]
+      u2 = OBTetraPlanarStereo::ToConfig(other, refs.at(0), OBStereo::ShapeU); // refs[0] = u2.refs[0]
+    }
+
+    // possibilities:
     //
     //   1 2 3 4
     //   |   |      <- refs[0] & refs[2] remain unchanged
     //   1 4 3 2
     //
-    if (u1.refs[2] == u2.refs[2])
-      return true;
+    //   1 2 3 4
+    //   |     |    <- refs[0] & refs[3] remain unchanged
+    //   1 H H 4
+    //
+    //   1 2 3 4
+    //   | |        <- refs[0] & refs[1] remain unchanged
+    //   1 2 H H
+    if ((u1.refs[2] == OBStereo::ImplicitId) || (u2.refs[2] == OBStereo::ImplicitId)) {
+      if ((u1.refs[3] == OBStereo::ImplicitId) || (u2.refs[3] == OBStereo::ImplicitId))
+        return (u1.refs[1] == u2.refs[1]); // 1 2 H H
+      else
+        return (u1.refs[3] == u2.refs[3]); // 1 H H 3
+    } else
+      return (u1.refs[2] == u2.refs[2]); // 1 2 3 4  &  1 H 3 4  &  1 2 3 H
 
     return false;
   }

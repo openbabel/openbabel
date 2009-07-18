@@ -36,22 +36,21 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 using namespace std;
 using namespace OpenBabel;
 
-int main(int argc,char *argv[])
+int main()
 {
   // turn off slow sync with C-style output (we don't use it anyway).
   std::ios::sync_with_stdio(false);
 
-  if (argc != 2)
-    {
-      cout << "Usage: aromatest <file>" << endl;
-      cout << " Tests aromaticity perception -- all non-hydrogen atoms"
-           << "   are expected to be aromatic." << endl;
-      return(-1);
-    }
-
   cout << endl << "# Testing aromaticity perception...  " << endl;
-  
-  ifstream ifs(argv[1]);
+ 
+  #ifdef TESTDATADIR
+    string testdatadir = TESTDATADIR;
+    string filename = testdatadir + "aromatics.smi";
+  #else
+    string filename = "files/aromatics.smi";
+  #endif
+
+  ifstream ifs(filename.c_str());
   if (!ifs)
     {
       cout << "Bail out! Cannot read input file!" << endl;
@@ -61,7 +60,7 @@ int main(int argc,char *argv[])
   OBConversion conv(&ifs, &cout);
   OBFormat* pFormat;
   
-  pFormat = conv.FormatFromExt(argv[1]);
+  pFormat = conv.FormatFromExt("aromatics.smi");
   if ( pFormat == NULL )
     {
       cout << "Bail out! Cannot read file format!" << endl;

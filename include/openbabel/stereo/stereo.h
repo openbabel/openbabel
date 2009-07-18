@@ -37,21 +37,13 @@ namespace OpenBabel {
      *
      */
     enum Type {
-      None                = (1<<0), //!< no stereochemistry
-      Unknown             = (1<<2), //!< unknown
-      Unspecified         = (1<<3), //!< not specified
-      CisTrans            = (1<<4), //!< cis/trans double bond
-      ExtendedCisTrans    = (1<<5), //!< allene, biphenyl, ...
-      SquarePlanar        = (1<<6), //!< Square-planar stereochemistry
-      TetraPlanar         = CisTrans | ExtendedCisTrans | SquarePlanar, //!< planar configurations of four atoms
-      Tetrahedral         = (1<<7), //!< tetrahedral
-      ExtendedTetrahedral = (1<<8), //!< extended tetrahedral
-      TetreNonPlanar      = Tetrahedral | ExtendedTetrahedral
-      /*
-      TrigonalBipyramidal = 4, //!< Trigonal-bipyramidal stereochemistry
-      Octahedral          = 5, //!< Octahedral stereochemistry
-      DoubleBond          = 6, //!< Double bond stereochemistry
-      */
+      CisTrans            = (1<<0), //!< cis/trans double bond
+      ExtendedCisTrans    = (1<<1), //!< allene, biphenyl, ...
+      SquarePlanar        = (1<<2), //!< Square-planar stereochemistry
+      Tetrahedral         = (1<<3), //!< tetrahedral
+      ExtendedTetrahedral = (1<<4), //!< extended tetrahedral
+      TrigonalBipyramidal = (1<<5), //!< Trigonal-bipyramidal stereochemistry
+      Octahedral          = (1<<6)  //!< Octahedral stereochemistry
     };
 
     /**
@@ -178,9 +170,15 @@ namespace OpenBabel {
   class OBStereoBase : public OBGenericData
   {
     public:
+      /**
+       * Constructor. By default, the stereochemistry is specified. Use 
+       * SetSpecified(false) for unspecified/unknown stereochemistry.
+       *
+       * @param mol The molecule.
+       */
       OBStereoBase(OBMol *mol) : 
         OBGenericData("StereoData", OBGenericDataType::StereoData, perceived),
-        m_mol(mol) 
+        m_mol(mol), m_specified(true)
       {
       }
       virtual ~OBStereoBase() { m_mol = 0; }
@@ -193,12 +191,35 @@ namespace OpenBabel {
        * Reimplemented by subclasses to return type.
        */
       virtual OBStereo::Type GetType() const = 0;
+      /**
+       * Set wether the stereochemistry is specified. Comparing a specified 
+       * OBStereoBase derived class (or it's Config struct) with an unspecified 
+       * one, always returns true.
+       */
+      void SetSpecified(bool specified) { m_specified = specified; }
+      /**
+       * @return True if the stereochemistry is specified.
+       */
+      bool IsSpecified() const { return m_specified; }
     private:
       OBMol *m_mol; //!< the parent molecule
+      bool m_specified; //!< true if the stereochemistry is specified, false if unknown/unspecified
   };
 
-  OBAPI void StereoFrom2D(OBMol *);
-  OBAPI void StereoFrom3D(OBMol *);
+  /**
+   * Convert the 2D depiction of molecule @p mol to OBStereo objects.
+   *
+   * @param mol The molecule containing 2D coordinates.
+   * @param force Force to run the perception even if the results are cached.
+   */
+  OBAPI void StereoFrom2D(OBMol *mol, bool force = false);
+  /**
+   * Convert the 3D coordinates of molecule @p mol to OBStereo objects.
+   *
+   * @param mol The molecule containing 3D coordinates.
+   * @param force Force to run the perception even if the results are cached.
+   */
+  OBAPI void StereoFrom3D(OBMol *mol, bool force = false);
 
 }
 
