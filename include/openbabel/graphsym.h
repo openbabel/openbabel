@@ -50,15 +50,13 @@ namespace OpenBabel {
 
       void FindRingAtoms(OBBitVec &ring_atoms);
       void CreateNewClassVector(std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
-                                std::vector<std::pair<OBAtom*,unsigned int> > &vp2,
-                                int natoms);
+                                std::vector<std::pair<OBAtom*,unsigned int> > &vp2);
       void GetGIVector(std::vector<unsigned int> &vid);
       void CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp, unsigned int &count);
-      int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes,
-                           int nfragatoms, int natoms);
+      int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
+                           
       
-      void BreakChiralTies(OBMol *pmol,OBBitVec &frag_atoms, int nfragatoms,
-                            vector<pair<OBAtom*, unsigned int> > &atom_sym_classes);
+      void BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_classes);
     public:
       //! Constructor
       OBGraphSym(OBMol* pmol = NULL, OBBitVec* frag_atoms = NULL)

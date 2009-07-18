@@ -403,21 +403,19 @@ void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config,
       config.refs[i] = symClasses.at(atom->GetIndex());
   }
 }
-void OBGraphSym::BreakChiralTies(OBMol *pmol,
-                            OBBitVec &frag_atoms, int nfragatoms,
-                            vector<pair<OBAtom*, unsigned int> > &atom_sym_classes)
+void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_classes)
 {
   vector<pair<OBAtom*,unsigned int> > vp1, vp2;
 
   // for keeping track of atoms we've already considered
   OBBitVec used_atoms;
   used_atoms.Clear();
-  used_atoms.Resize(pmol->NumAtoms());
+  used_atoms.Resize(_pmol->NumAtoms());
 
   // Convert the atom/class pairs to an array indexed by atom idx.
   // This is just for convenience in the next step.  Note that there
   // will be "holes" in this vector since it's a molecule fragment.
-  vector<unsigned int> index2sym_class(pmol->NumAtoms());
+  vector<unsigned int> index2sym_class(_pmol->NumAtoms());
   vector<pair<OBAtom*,unsigned int> >::iterator api;
   for (api = atom_sym_classes.begin(); api < atom_sym_classes.end(); api++)
     index2sym_class[api->first->GetIndex()] = api->second;
@@ -430,7 +428,7 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
     OBAtom *atom1 = _pmol->GetAtomById(*id1);
     int index1 = atom1->GetIndex();
     // We only want: unused and part of this fragment.
-    if (!frag_atoms[index1])
+    if (!(*_frag_atoms)[index1])
       continue;
     if (used_atoms[index1])
       continue;
@@ -524,7 +522,7 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
     }
     // Now propagate the change across the whole molecule with the
     // extended sum-of-invariants.
-    ExtendInvariants(atom_sym_classes, nfragatoms, pmol->NumAtoms());
+    ExtendInvariants(atom_sym_classes);
   }
 
   // 
@@ -537,7 +535,7 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
     unsigned int end1 = bond1->GetEndAtom()->GetIndex();
     
     // We only want: unused and part of this fragment.
-    if (!frag_atoms[begin1] || !frag_atoms[end1])
+    if (!(*_frag_atoms)[begin1] || !(*_frag_atoms)[end1])
       continue;
     if (used_atoms[begin1] || used_atoms[end1])
       continue;
@@ -637,7 +635,7 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
 
     // Now propagate the change across the whole molecule with the
     // extended sum-of-invariants.
-    ExtendInvariants(atom_sym_classes, nfragatoms, _pmol->NumAtoms());
+    ExtendInvariants(atom_sym_classes);
   }
  
 }
@@ -666,8 +664,7 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
 ***************************************************************************/
 
   void OBGraphSym::CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,
-                                        vector<pair<OBAtom*,unsigned int> > &vp2,
-                                        int natoms)
+                                        vector<pair<OBAtom*,unsigned int> > &vp2)
 {
   int m,id;
   OBAtom *atom, *nbr;
@@ -683,7 +680,7 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
   // There may be fewer atoms than in the whole molecule, so we can't
   // index the vp1 array by atom->GetIdx().  Instead, create a quick
   // mapping vector of idx-to-index for vp1.
-  vector<int> idx2index(natoms+1, -1);  // natoms + 1
+  vector<int> idx2index(_pmol->NumAtoms() + 1, -1);  // natoms + 1
   int index = 0;
   for (vp_iter = vp1.begin(); vp_iter != vp1.end(); vp_iter++) {
     int idx = vp_iter->first->GetIdx();
@@ -772,15 +769,17 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
 * RETURNS: The number of distinct symmetry classes found.
 ***************************************************************************/
 
-  int OBGraphSym::ExtendInvariants(vector<pair<OBAtom*, unsigned int> > &symmetry_classes,
-                            int nfragatoms, int natoms)
+  int OBGraphSym::ExtendInvariants(vector<pair<OBAtom*, unsigned int> > &symmetry_classes)
 {
   unsigned int nclasses1, nclasses2;
   vector<pair<OBAtom*,unsigned int> > tmp_classes;
 
   // How many classes are we starting with?  (The "renumber" part isn't relevant.)
   CountAndRenumberClasses(symmetry_classes, nclasses1);
-        
+
+  int natoms = _pmol->NumAtoms();
+  int nfragatoms = _frag_atoms->CountBits();
+
   // LOOP: Do extended sum-of-invarients until no further changes are
   // noted.  (Note: This is inefficient, as it re-computes extended sums
   // and re-sorts the entire list each time.  You can save a lot of time by
@@ -789,8 +788,8 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
 
   if (nclasses1 < nfragatoms) {
     for (int i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
-      BreakChiralTies(_pmol, *_frag_atoms, nfragatoms, symmetry_classes);
-      CreateNewClassVector(symmetry_classes, tmp_classes, natoms);
+      BreakChiralTies(symmetry_classes);
+      CreateNewClassVector(symmetry_classes, tmp_classes);
       CountAndRenumberClasses(tmp_classes, nclasses2);
       symmetry_classes = tmp_classes;
       if (nclasses1 == nclasses2) break;
@@ -825,10 +824,6 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
   vector<OBNodeBase*>::iterator j;
   OBAtom *atom;
 
-  // How many atoms, and how many do we care about?
-  int natoms = _pmol->NumAtoms();
-  int nfragatoms = _frag_atoms->CountBits();
-
   // Get vector of graph invariants.  These are the starting "symmetry classes".
   GetGIVector(vgi);
 
@@ -841,7 +836,7 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
 
   // The heart of the matter: Do extended sum-of-invariants until no further
   // changes are noted. 
-  int nclasses = ExtendInvariants(symmetry_classes, nfragatoms, natoms);
+  int nclasses = ExtendInvariants(symmetry_classes);
 
   return nclasses;
 }
