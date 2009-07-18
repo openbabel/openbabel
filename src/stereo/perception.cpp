@@ -848,9 +848,69 @@ namespace OpenBabel {
 
     return configs;
   }
+  void CisTransFromUpDown(OBMol &mol, const vector<unsigned int> &ctbonds,
+       map<OBBond*, OBStereo::BondDirection> &updown)
+  {
+    // Create a vector of CisTransStereo objects for the molecule
 
- 
+    // Loop across the double bonds
+    vector<unsigned int>::const_iterator bondId_it;
+    for (bondId_it = ctbonds.begin(); bondId_it != ctbonds.end(); bondId_it++) {
+      OBBond* dbl_bond = mol.GetBondById(*bondId_it);
+      
+      OBAtom *a1 = dbl_bond->GetBeginAtom();
+      OBAtom *a2 = dbl_bond->GetEndAtom();
 
+      // Get the bonds of neighbors of atom1 and atom2
+      OBBond *a1_b1 = NULL, *a1_b2 = NULL, *a2_b1 = NULL, *a2_b2 = NULL;
+      OBStereo::BondDirection a1_stereo, a2_stereo;
 
+      FOR_BONDS_OF_ATOM(bi, a1) {
+        OBBond *b = &(*bi);
+        if (b == dbl_bond) continue;  // skip the double bond we're working on
+        if (a1_b1 == NULL && updown.find(b) != updown.end())
+        {
+          a1_b1 = b;    // remember a stereo bond of Atom1
+          a1_stereo = updown[b];
+        }
+        else
+          a1_b2 = b;    // remember a 2nd bond of Atom1
+      }
+
+      FOR_BONDS_OF_ATOM(bi, a2) {
+        OBBond *b = &(*bi);
+        if (b == dbl_bond) continue;
+        if (a2_b1 == NULL && updown.find(b) != updown.end())
+        {
+          a2_b1 = b;    // remember a stereo bond of Atom1
+          a2_stereo = updown[b];
+        }
+        else
+          a2_b2 = b;    // remember a 2nd bond of Atom2
+      }
+      
+      if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
+      
+      // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
+      unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitId : a1_b2->GetNbrAtom(a1)->GetId();
+      unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitId : a2_b2->GetNbrAtom(a2)->GetId();
+
+      // If a1_stereo==a2_stereo, this means cis for a1_b1 and a2_b1.
+      OBCisTransStereo *ct = new OBCisTransStereo(&mol);
+      OBCisTransStereo::Config cfg;
+      cfg.begin = a1->GetId();
+      cfg.end = a2->GetId();
+
+      if (a1_stereo == a2_stereo)
+        cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
+                                      fourth, a2_b1->GetNbrAtom(a2)->GetId());
+      else
+        cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
+                                      a2_b1->GetNbrAtom(a2)->GetId(), fourth);
+      ct->SetConfig(cfg);
+      // add the data to the atom
+      mol.SetData(ct);
+    }
+  } 
 }
 
