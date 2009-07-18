@@ -46,7 +46,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
     /**
      * The config struct represents the stereochemistry in a well defined way.
      */
-    struct Config
+    struct OBAPI Config
     {
       /**
        * Default constructor.
