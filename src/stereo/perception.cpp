@@ -585,7 +585,7 @@ namespace OpenBabel {
     bool mayHaveCisTransBond = false;
     std::vector<OBBond*>::iterator i;
     for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i))
-      if (bond->GetBO() == 2) {
+      if (bond->GetBO() == 2 && !bond->IsAromatic()) {
         mayHaveCisTransBond = true;
         break;
       }
@@ -606,8 +606,8 @@ namespace OpenBabel {
         if (!begin || !end) 
           continue;
 
-        // two implicit atoms on either begin or end?
-        if ((begin->GetValence() == 1) || (end->GetValence() == 1))
+        // Needs to have at least one explicit single bond at either end
+        if (!begin->HasSingleBond() || !end->HasSingleBond())
           continue;
           
         isCisTrans = true;
