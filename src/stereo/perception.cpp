@@ -620,7 +620,6 @@ namespace OpenBabel {
     TetrahedralFrom2D(mol, symClasses);
     CisTransFrom2D(mol, symClasses);
     mol->SetChiralityPerceived();
-    cout << "----------------------------------------------------------------------------" << endl;
   }
  
   //! Calculate the "sign of a triangle" given by a set of 3 2D coordinates
