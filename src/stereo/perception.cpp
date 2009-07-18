@@ -670,75 +670,43 @@ namespace OpenBabel {
       config.center = *i;
         
       // find the hash, wedge and 2 plane atoms
-      OBAtom *plane1 = 0;
-      OBAtom *plane2 = 0;
-      OBAtom *hash = 0;
-      OBAtom *wedge = 0;
+      std::vector<OBAtom*> planeAtoms;
+      std::vector<OBAtom*> wedgeAtoms;
+      std::vector<OBAtom*> hashAtoms;
       FOR_BONDS_OF_ATOM(bond, center) {
         OBAtom *nbr = bond->GetNbrAtom(center);
         // hash bonds
         if (bond->IsHash()) {
           if (bond->GetBeginAtom()->GetId() == center->GetId()) {
             // this is a 'real' hash bond going from center to nbr
-            if (hash) {
-              // we already have a 'real' hash
-              plane1 = plane2 = hash = wedge = 0;
-              break;              
-            }
-            hash = nbr;
+            hashAtoms.push_back(nbr);
           } else {
             // this is an 'inverted' hash bond going from nbr to center
-            if (wedge) {
-              // we already have a 'real' wedge
-              plane1 = plane2 = hash = wedge = 0;
-              break;              
-            }
-            wedge = nbr;
+            wedgeAtoms.push_back(nbr);
           }
-          continue;
         } else if (bond->IsWedge()) {
           // wedge bonds
           if (bond->GetBeginAtom()->GetId() == center->GetId()) {
             // this is a 'real' wedge bond going from center to nbr
-            if (wedge) {
-              // we already have a 'real' hash
-              plane1 = plane2 = hash = wedge = 0;
-              break;              
-            }
-            wedge = nbr;
+            wedgeAtoms.push_back(nbr);
           } else {
             // this is an 'inverted' hash bond going from nbr to center
-            if (hash) {
-              // we already have a 'real' wedge
-              plane1 = plane2 = hash = wedge = 0;
-              break;              
-            }
-            hash = nbr;
+            hashAtoms.push_back(nbr);
           }
-          continue;
         } else if (bond->IsWedgeOrHash()) {
           config.specified = false;
           break;
         } else { 
           // plane bonds
-          if (!plane1) {
-            plane1 = nbr;
-          } else if (!plane2) {
-            plane2 = nbr;
-          } else {
-            std::stringstream errorMsg;
-            errorMsg << "Symmetry analysis found atom with id " << center->GetId() 
-                     << " to be a tetrahedral atom but there are at least 3 in"
-                     << " plane bonds in the 2D depiction."
-                     << std::endl;
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-            continue;
-          }
+          planeAtoms.push_back(nbr);
         }
       }
+
+      bool success = true;
       
       using namespace std;
       if (!config.specified) {
+        // unspecified
         FOR_NBORS_OF_ATOM (nbr, center)
           if (config.from == OBStereo::NoRef)
             config.from = nbr->GetId();
@@ -747,47 +715,89 @@ namespace OpenBabel {
         while (config.refs.size() < 3)
           config.refs.push_back(OBStereo::ImplicitRef);
       } else
-      // plane1 + plane2, hash, wedge
-      if (plane1 && plane2 && hash && wedge) {
-        config.from = wedge->GetId();
-        config.refs.resize(3);
-        config.refs[0] = plane1->GetId();
-        config.refs[1] = plane2->GetId();
-        config.refs[2] = hash->GetId();
-        double sign = TriangleSign(plane1->GetVector(), plane2->GetVector(), hash->GetVector());
-        if (sign > 0.0)
-          config.winding = OBStereo::AntiClockwise;
-      } else
-      // plane1 + plane2, hash
-      if (plane1 && plane2 && hash) {
-        config.from = OBStereo::ImplicitRef;
-        config.refs.resize(3);
-        config.refs[0] = plane1->GetId();
-        config.refs[1] = plane2->GetId();
-        config.refs[2] = hash->GetId();
-        double sign = TriangleSign(plane1->GetVector(), plane2->GetVector(), hash->GetVector());
-        if (sign > 0.0)
-          config.winding = OBStereo::AntiClockwise;
-      } else
-      // plane1 + plane2, wedge
-      if (plane1 && plane2 && wedge) {
-        config.towards = OBStereo::ImplicitRef;
-        config.view = OBStereo::ViewTowards;
-        config.refs.resize(3);
-        config.refs[0] = plane1->GetId();
-        config.refs[1] = plane2->GetId();
-        config.refs[2] = wedge->GetId();
-        double sign = TriangleSign(plane1->GetVector(), plane2->GetVector(), wedge->GetVector());
-        if (sign > 0.0)
-          config.winding = OBStereo::AntiClockwise;
+      if (planeAtoms.size() == 2) {
+        if (hashAtoms.size() == 1 && wedgeAtoms.size() == 1) {
+          // plane1 + plane2, hash, wedge
+          config.from = wedgeAtoms[0]->GetId();
+          config.refs.resize(3);
+          config.refs[0] = planeAtoms[0]->GetId();
+          config.refs[1] = planeAtoms[1]->GetId();
+          config.refs[2] = hashAtoms[0]->GetId();
+          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
+              planeAtoms[1]->GetVector(), hashAtoms[0]->GetVector());
+          if (sign > 0.0)
+            config.winding = OBStereo::AntiClockwise;
+        } else if (hashAtoms.size() == 1 && wedgeAtoms.size() == 0) {
+          // plane1 + plane2, hash
+          config.from = OBStereo::ImplicitRef;
+          config.refs.resize(3);
+          config.refs[0] = planeAtoms[0]->GetId();
+          config.refs[1] = planeAtoms[1]->GetId();
+          config.refs[2] = hashAtoms[0]->GetId();
+          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
+              planeAtoms[1]->GetVector(), hashAtoms[0]->GetVector());
+          if (sign > 0.0)
+            config.winding = OBStereo::AntiClockwise;
+        } else if (hashAtoms.size() == 0 && wedgeAtoms.size() == 1) {
+          // plane1 + plane2, wedge
+          config.towards = OBStereo::ImplicitRef;
+          config.view = OBStereo::ViewTowards;
+          config.refs.resize(3);
+          config.refs[0] = planeAtoms[0]->GetId();
+          config.refs[1] = planeAtoms[1]->GetId();
+          config.refs[2] = wedgeAtoms[0]->GetId();
+          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
+              planeAtoms[1]->GetVector(), wedgeAtoms[0]->GetVector());
+          if (sign > 0.0)
+            config.winding = OBStereo::AntiClockwise;
+        } else {
+          success = false;
+        }
+      } else if (planeAtoms.size() == 3) {
+        if (hashAtoms.size() == 1 && wedgeAtoms.size() == 0) {
+          // plane1 + plane2 + plane3, hash
+          config.towards = hashAtoms[0]->GetId();
+          config.view = OBStereo::ViewTowards;
+          config.refs.resize(3);
+          config.refs[0] = planeAtoms[0]->GetId();
+          config.refs[1] = planeAtoms[1]->GetId();
+          config.refs[2] = planeAtoms[2]->GetId();
+          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
+              planeAtoms[1]->GetVector(), planeAtoms[2]->GetVector());
+          if (sign < 0.0)
+            config.winding = OBStereo::AntiClockwise;
+        } else if (hashAtoms.size() == 0 && wedgeAtoms.size() == 1) {
+          // plane1 + plane2, wedge
+          config.from = wedgeAtoms[0]->GetId();
+          config.view = OBStereo::ViewFrom;
+          config.refs.resize(3);
+          config.refs[0] = planeAtoms[0]->GetId();
+          config.refs[1] = planeAtoms[1]->GetId();
+          config.refs[2] = planeAtoms[2]->GetId();
+          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
+              planeAtoms[1]->GetVector(), planeAtoms[2]->GetVector());
+          if (sign < 0.0)
+            config.winding = OBStereo::AntiClockwise;
+        } else {
+          success = false;
+        }
+      
       } else {
+        success = false;
+      }
+
+      if (!success) {
         std::stringstream errorMsg;
         errorMsg << "Symmetry analysis found atom with id " << center->GetId() 
-                 << " to be a tetrahedral atom but the wedge/hash bonds can't be interpreted."
-                 << std::endl;
+            << " to be a tetrahedral atom but the wedge/hash bonds can't be interpreted." << std::endl
+            << " # in-plane bonds = " << planeAtoms.size() << std::endl
+            << " # wedge bonds = " << wedgeAtoms.size() << std::endl
+            << " # hash bonds = " << hashAtoms.size() << std::endl
+            << std::endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
         continue;
       }
+ 
 
       OBTetrahedralStereo *th = new OBTetrahedralStereo(mol);
       th->SetConfig(config);
