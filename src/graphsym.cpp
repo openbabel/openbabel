@@ -578,14 +578,22 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     if (symclass2.empty() && unspecified.empty())
       continue;
 
+    //
     // Make a copy of refConfig and sort it
-    OBTetrahedralStereo::Config orderedConfig = refConfig;
-    std::vector<unsigned long> refs = orderedConfig.refs;
-    refs.insert(refs.begin(), orderedConfig.from);
+    //
+    OBTetrahedralStereo::Config orderedConfig;    // constructor initializes view & winding --> canonical
+    // copy specified flag and center Ref
+    orderedConfig.center = refConfig.center;
+    orderedConfig.specified = refConfig.specified;
+
+    std::vector<unsigned long> refs = refConfig.refs;
+    refs.insert(refs.begin(), refConfig.from); // doesn't matter if view is from or towards, will be sorted anyway
     std::sort(refs.begin(), refs.end());
-    orderedConfig.from = refs.at(0);
-    for (unsigned int i = 0; i < 3; ++i)
-      orderedConfig.refs[i] = refs.at(i+1);
+    for (unsigned int i = 0; i < refs.size(); ++i)
+      if (i)
+        orderedConfig.refs.push_back(refs.at(i));
+      else
+        orderedConfig.from = refs.at(0);
     // store the match/mismatch result
     bool refMatchesOrdered = (refConfig == orderedConfig) ? true : false;
 
