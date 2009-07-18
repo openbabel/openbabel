@@ -88,8 +88,7 @@ namespace OpenBabel {
        *
        * @return FIXME
        */
-      void CanonicalLabels(vector<unsigned int> &symmetry_classes,
-                                       vector<unsigned int> &canonical_labels);
+      void CanonicalLabels(vector<unsigned int> &symmetry_classes);
     };
 
       

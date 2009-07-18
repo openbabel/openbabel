@@ -3285,7 +3285,8 @@ namespace OpenBabel {
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
     if (_canonicalOutput) {
       OBGraphSym gs(&mol, &frag_atoms);
-      gs.CanonicalLabels(symmetry_classes, canonical_order);
+      gs.CalculateSymmetry(symmetry_classes);
+      gs.CanonicalLabels(canonical_order);
     }
     else {
       if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"

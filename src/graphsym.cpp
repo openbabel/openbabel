@@ -1060,19 +1060,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   int OBGraphSym::GetSymmetry(vector<unsigned int> &symmetry_classes)
   {
     // Check to see whether we have already calculated the symmetry classes
-    bool recalc = true;
-    vector<OBGenericData*> vdata = _pmol->GetAllData(OBGenericDataType::PairData);
-    OBPairData *pd;
-    for (vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
-      pd = dynamic_cast<OBPairData*> (*data);
-      if (pd->GetAttribute() == "OpenBabel Symmetry Classes") {
-        recalc = false;
-        break;
-      }
-    }
+    OBPairData *pd = dynamic_cast<OBPairData*>(_pmol->GetData("OpenBabel Symmetry Classes"));
 
     int nclasses = 0;
-    if (recalc) {
+    if (pd) {
       vector<unsigned int> atom_sym_classes;
       nclasses = CalculateSymmetry(atom_sym_classes);
     }
@@ -1104,12 +1095,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 *       label.
 *
 * RETURNS:
-*       symmetry_classes - A vector, indexed by [ OBAtom::GetIdx() - 1].
-*       canonical_labels - A vector, indexed by [ OBAtom::GetIdx() - 1].
+*       canonical_labels - a vector indexed by [ OBAtom::GetIdx() - 1].
 ***************************************************************************/
 
-  void OBGraphSym::CanonicalLabels(vector<unsigned int> &symmetry_classes,
-                     vector<unsigned int> &canonical_labels)    // on input: symclasses
+  void OBGraphSym::CanonicalLabels(vector<unsigned int> &canonical_labels)
   {
     vector<pair<OBAtom*,unsigned int> > vp1, vp2;
     vector<OBNodeBase*>::iterator j;
@@ -1119,6 +1108,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     int nfragatoms = _frag_atoms->CountBits();
     int natoms = _pmol->NumAtoms();
 
+    std::vector<unsigned int> symmetry_classes;
     nclass1 = CalculateSymmetry(symmetry_classes);
     for (int i = 0; i < symmetry_classes.size(); ++i) {
       if (symmetry_classes.at(i) != NoSymmetryClass)
@@ -1165,28 +1155,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       cout << vp1[i].first->GetIndex() << ": " << vp1[i].second << endl;
       }*/
 
-    // For return values, convert vectors of atom/int pairs into one-dimensional
-    // vectors of int, indexed by atom->GetIndex().
-    //
-    // Since we're working with a molecular fragment, the symmetry-class and
-    // canonical-label vectors are both shorter than the number of atoms in
-    // the molecule.  To fix it, we append all of the non-fragment atoms to
-    // the end, with a very large value, then, re-sort the vector by the
-    // atom's GetIdx() number, and finally copy the result so that the vector
-    // corresponds to the atoms' order in the molecule.
-
-    // Add non-fragment atoms so vector is same length as natoms in molecule
-    for (OBAtom *atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j))
-      if (!((*_frag_atoms).BitIsOn(atom->GetIdx()))) {
-        vp1.push_back(pair<OBAtom*,unsigned int> (atom, NoSymmetryClass));
-      }
-
-    // Sort and copy canonical labels
-    vector<pair<OBAtom*,unsigned int> >::iterator k;
-    canonical_labels.clear();
-    sort(vp1.begin(),vp1.end(),ComparePairFirst);
-    for (k = vp1.begin();k != vp1.end();k++)
-      canonical_labels.push_back(k->second);
+    canonical_labels.resize(_pmol->NumAtoms(), NoSymmetryClass);
+    for (int i = 0; i < vp1.size(); ++i) {
+      canonical_labels[vp1.at(i).first->GetIndex()] = vp1.at(i).second;
+    }
   }
 
 
