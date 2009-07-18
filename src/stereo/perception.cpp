@@ -229,6 +229,9 @@ namespace OpenBabel {
   std::vector<unsigned int> FindSymmetry(OBMol *mol)
   {
     OBGraphSym symmetry(mol);
+    std::vector<unsigned int> symClasses;
+    symmetry.CalculateSymmetry(symClasses);
+    /*
     std::vector<std::pair<OBAtom*, unsigned int> > symmetryClasses;
     symmetry.CalculateSymmetry(symmetryClasses);
       
@@ -238,6 +241,7 @@ namespace OpenBabel {
     for (int i = 0; i < symmetryClasses.size(); ++i) {
       symClasses[symmetryClasses.at(i).first->GetIndex()] = symmetryClasses.at(i).second;
     }
+    */
     return symClasses;
   }
 
