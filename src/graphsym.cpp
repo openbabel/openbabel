@@ -1081,6 +1081,14 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     return nclasses;      
   }
 
+  // Clears perceived symmetry
+  void OBGraphSym::ClearSymmetry()
+  {
+    OBPairData *pd = dynamic_cast<OBPairData*>(_pmol->GetData("OpenBabel Symmetry Classes"));
+    if (pd)
+      _pmol->DeleteData(pd);
+  }
+
 /***************************************************************************
 * FUNCTION: CanonicalLabels
 *

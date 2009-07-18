@@ -80,6 +80,7 @@ namespace OpenBabel {
        */
       int CalculateSymmetry(std::vector<unsigned int> &symmetry_classes);
       int GetSymmetry(vector<unsigned int> &symmetry_classes);
+      void ClearSymmetry();
       /**
        * Calculate the canonical labels for the molecule. The result will be 
        * stored in @p canonical_labels.
