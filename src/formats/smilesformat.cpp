@@ -2002,7 +2002,7 @@ namespace OpenBabel {
           int insertpos = bond->numConnections - 1;
           (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
           cerr << "NB2: Added ring opening " << mol.GetAtom(_prev)->GetId() << " at "
-               << bond->numConnections << " to " << ChiralSearch->second << endl;
+               << insertpos << " to " << ChiralSearch->second << endl;
         }
 
         //CM ensure neither atoms in ring closure is a radical centre
