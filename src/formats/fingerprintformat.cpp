@@ -67,7 +67,7 @@ namespace OpenBabel
       hexoutput=true;
 
     string fpid;
-    int nbits= 512;
+    int nbits=0;
     const char* p=pConv->IsOption("f");
     if(p)
       {
@@ -75,12 +75,7 @@ namespace OpenBabel
         fpid = fpid.substr(0,fpid.find('"'));
       }
 
-    OBFingerprint* pFP;
-    if (!fpid.empty()) 
-      pFP = OBFingerprint::FindFingerprint(fpid.c_str());
-    else
-      pFP = OBFingerprint::FindFingerprint("FP4");
-
+    OBFingerprint* pFP = OBFingerprint::FindFingerprint(fpid.c_str());
     if(!pFP)
       {
         stringstream errorMsg;
