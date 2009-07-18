@@ -839,7 +839,7 @@ namespace OpenBabel
 
   OBRing *OBRingData::NextRing(std::vector<OBRing*>::iterator &i)
   {
-    i = _vr.begin();
+    ++i;
     return((i == _vr.end()) ? (OBRing*)NULL : (OBRing*)*i);
   }
 

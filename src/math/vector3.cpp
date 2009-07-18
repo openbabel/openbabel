@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <iostream>
+#include <float.h>
 
 #include <openbabel/math/vector3.h>
 #include <openbabel/obutil.h>
