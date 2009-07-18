@@ -608,16 +608,26 @@ namespace OpenBabel {
   //  915-926, http://www.mdpi.org/molecules/papers/61100915/61100915.htm
   ////////////////////////////////////////////////////////////////////////////
 
-  void StereoFrom2D(OBMol *mol, bool force)
+  void StereoFrom2D(OBMol *mol, bool tetfrom0D, bool force)
   {
     if (mol->HasChiralityPerceived() && !force)
       return;
       
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom2D", obAuditMsg);
 
-    mol->DeleteData(OBGenericDataType::StereoData);
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
-    TetrahedralFrom2D(mol, symClasses);
+    if (!tetfrom0D) {
+      mol->DeleteData(OBGenericDataType::StereoData);
+      TetrahedralFrom2D(mol, symClasses);
+    }
+    else { // In MDL format, the "s" option means that tetstereo is set from 0D info
+      TetrahedralFrom0D(mol, symClasses);
+      std::vector<OBGenericData*>::iterator data;
+      std::vector<OBGenericData*> stereoData = mol->GetAllData(OBGenericDataType::StereoData);
+      for (data = stereoData.begin(); data != stereoData.end(); ++data)
+        if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::CisTrans)
+          mol->DeleteData(*data);
+    }
     CisTransFrom2D(mol, symClasses);
     mol->SetChiralityPerceived();
   }

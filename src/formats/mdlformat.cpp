@@ -51,7 +51,8 @@ namespace OpenBabel
                "Write Options, e.g. -x3\n"
             /* " 2  output V2000 (default) or\n" */
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
-               " m  write no properties\n";
+               " m  write no properties\n"
+               " s  determine stereochemistry from atom flags\n";
       }
 
       virtual const char* SpecificationURL()
@@ -568,15 +569,21 @@ namespace OpenBabel
     if (mol.Has2D()) {
       if (!setDimension)
         mol.SetDimension(2);
-      // use 2D coordinates + hash/wedge to determine stereochemistry
-      StereoFrom2D(&mol);
-    } else {
-    if (!setDimension)
-      mol.SetDimension(0);
-    // use atom parities to create tetrahedral stereochemistry
-    TetStereoFromParity(mol, parities);
-    // use up/down to determine cis/trans stereochemistry
-    StereoFrom0D(&mol, &updown);
+      if (!pConv->IsOption("s"))
+        // use 2D coordinates + hash/wedge to determine stereochemistry
+        StereoFrom2D(&mol);
+      else {
+        // use atom parities to create tetrahedral stereochemistry
+        TetStereoFromParity(mol, parities);
+        StereoFrom2D(&mol, tetfrom0D = true, force = false);
+      }
+    } else { // 0D
+      if (!setDimension)
+        mol.SetDimension(0);
+      // use atom parities to create tetrahedral stereochemistry
+      TetStereoFromParity(mol, parities);
+      // use up/down to determine cis/trans stereochemistry
+      StereoFrom0D(&mol, &updown);
     }
 
     return true;

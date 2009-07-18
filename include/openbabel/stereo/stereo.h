@@ -289,7 +289,7 @@ namespace OpenBabel {
    * @param mol The molecule containing 2D coordinates.
    * @param force Force to run the perception even if the results are cached.
    */
-  OBAPI void StereoFrom2D(OBMol *mol, bool force = false);
+  OBAPI void StereoFrom2D(OBMol *mol, bool tetfrom0D = false, bool force = false);
   /**
    * Convert the 3D coordinates of molecule @p mol to OBStereo objects.
    *
