@@ -879,7 +879,6 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   }
 }
 
-
 /***************************************************************************
 * FUNCTION: ExtendInvariants
 *
@@ -996,56 +995,15 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   void OBGraphSym::CanonicalLabels(vector<unsigned int> &symmetry_classes,
                      vector<unsigned int> &canonical_labels)    // on input: symclasses
 {
-  vector<pair<OBAtom*,unsigned int> > atom_sym_classes, vp1, vp2;
-  vector<OBNodeBase*>::iterator j;
-  unsigned int nclass1, nclass2; //number of classes
-  int i;
+  vector<pair<OBAtom*,unsigned int> > atom_sym_classes, vp1;
+  unsigned int nclass1; //number of classes
 
   int nfragatoms = _frag_atoms->CountBits();
   int natoms = _pmol->NumAtoms();
 
   // Calculate symmetry classes
   nclass1 = CalculateSymmetry(atom_sym_classes);
-
-#if DEBUG
-  cout << "BEFORE TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
-  print_vector_pairs("    ", atom_sym_classes);
-#endif
-
-  // The symmetry classes are the starting point for the canonical labels
   vp1 = atom_sym_classes;
-
-  if (nclass1 < nfragatoms) {
-    int tie_broken = 1;
-    while (tie_broken) {
-      tie_broken = 0;
-      int last_rank = -1;
-      for (i = 0; i < vp1.size(); i++) {
-        vp1[i].second *= 2;             // Double symmetry classes
-        if (vp1[i].second == last_rank && !tie_broken) {
-          vp1[i-1].second -= 1;         // Break a tie
-          tie_broken = 1;
-        }
-        last_rank = vp1[i].second;
-      }
-      if (tie_broken) {
-        for (i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
-          CreateNewClassVector(vp1, vp2);
-          CountAndRenumberClasses(vp2, nclass2);
-          vp1 = vp2;
-          if (nclass1 == nclass2) break;
-          nclass1 = nclass2;
-        }
-      } else {
-        CountAndRenumberClasses(vp1, nclass1);  // no more ties - undo the doublings
-      }
-    }
-  }
-
-#if DEBUG
-  cout << "AFTER TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
-  print_vector_pairs("    ", vp1);
-#endif
 
   // For return values, convert vectors of atom/int pairs into one-dimensional
   // vectors of int, indexed by atom->GetIdx().
@@ -1059,6 +1017,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
 #define NO_SYMCLASS 0x7FFFFFFF
 
+  OBAtomIterator j;
   // Add non-fragment atoms so vector is same length as natoms in molecule
   for (OBAtom *atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j))
     if (!((*_frag_atoms).BitIsOn(atom->GetIdx()))) {
@@ -1079,7 +1038,6 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   sort(vp1.begin(),vp1.end(),ComparePairFirst);
   for (k = vp1.begin();k != vp1.end();k++)
     canonical_labels.push_back(k->second);
-
 }
 
 
