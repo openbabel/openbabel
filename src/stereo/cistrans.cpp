@@ -59,9 +59,9 @@ namespace OpenBabel {
     //   1 2 3 4
     //   | |        <- refs[0] & refs[1] remain unchanged
     //   1 2 H H
-    if ((u1.refs[2] == OBStereo::ImplicitId) || (u2.refs[2] == OBStereo::ImplicitId)) {
+    if ((u1.refs[2] == OBStereo::ImplicitRef) || (u2.refs[2] == OBStereo::ImplicitRef)) {
       // 1 2 H 4
-      if ((u1.refs[3] == OBStereo::ImplicitId) || (u2.refs[3] == OBStereo::ImplicitId)) {
+      if ((u1.refs[3] == OBStereo::ImplicitRef) || (u2.refs[3] == OBStereo::ImplicitRef)) {
         return (u1.refs[1] == u2.refs[1]); // 1 2 H H
       } else {
         return (u1.refs[3] == u2.refs[3]); // 1 H H 4
@@ -86,7 +86,7 @@ namespace OpenBabel {
 
   bool OBCisTransStereo::IsValid() const
   {
-    if ((m_cfg.begin == OBStereo::NoId) || (m_cfg.end == OBStereo::NoId))
+    if ((m_cfg.begin == OBStereo::NoRef) || (m_cfg.end == OBStereo::NoRef))
       return false;
     if (m_cfg.refs.size() != 4)
       return false;
@@ -95,13 +95,13 @@ namespace OpenBabel {
 
   void OBCisTransStereo::SetConfig(const Config &config)
   {
-    if (config.begin == OBStereo::NoId) {
+    if (config.begin == OBStereo::NoRef) {
       obErrorLog.ThrowError(__FUNCTION__, 
           "OBCisTransStereo::SetConfig : double bond begin id is invalid.", obError);
       m_cfg = Config();
       return;
     }
-    if (config.end == OBStereo::NoId) {
+    if (config.end == OBStereo::NoRef) {
       obErrorLog.ThrowError(__FUNCTION__, 
           "OBCisTransStereo::SetConfig : double bond end id is invalid.", obError);
       m_cfg = Config();
@@ -157,15 +157,15 @@ namespace OpenBabel {
     unsigned long a1 = u.refs.at(0);
     unsigned long b1 = u.refs.at(2);
 
-    if ((a1 == OBStereo::ImplicitId) && (b1 == OBStereo::ImplicitId)) {
+    if ((a1 == OBStereo::ImplicitRef) && (b1 == OBStereo::ImplicitRef)) {
       a1 = u.refs.at(1);
       b1 = u.refs.at(3);
     }
 
-    if (b1 != OBStereo::ImplicitId)
+    if (b1 != OBStereo::ImplicitRef)
       if (a1 == GetTransRef(b1))
         return true;
-    if (a1 != OBStereo::ImplicitId)
+    if (a1 != OBStereo::ImplicitRef)
       if (b1 == GetTransRef(a1))
         return true;
 
@@ -175,10 +175,10 @@ namespace OpenBabel {
   unsigned long OBCisTransStereo::GetTransRef(unsigned long id) const
   {
     if (!IsValid())
-      return OBStereo::NoId;
+      return OBStereo::NoRef;
 
-    if (id == OBStereo::ImplicitId)
-      return OBStereo::NoId;
+    if (id == OBStereo::ImplicitRef)
+      return OBStereo::NoRef;
 
     // find id1
     for (int i = 0; i < 4; ++i) {
@@ -187,28 +187,28 @@ namespace OpenBabel {
         int j = (i > 1) ? i - 2 : i + 2;
         // make sure they are not bonded to the same atom
         unsigned long transId = m_cfg.refs.at(j);
-        if (transId == OBStereo::ImplicitId)
-          return OBStereo::ImplicitId;
+        if (transId == OBStereo::ImplicitRef)
+          return OBStereo::ImplicitRef;
         if (IsOnSameAtom(id, transId)) {
           obErrorLog.ThrowError(__FUNCTION__, 
               "OBCisTransStereo::GetTransRef : References don't match bond orientation", obError);
-          return OBStereo::NoId;
+          return OBStereo::NoRef;
         }
         return transId;
       }
     }
 
     // id not found
-    return OBStereo::NoId;
+    return OBStereo::NoRef;
   }
 
   unsigned long OBCisTransStereo::GetCisRef(unsigned long id) const
   {
     if (!IsValid())
-      return OBStereo::NoId;
+      return OBStereo::NoRef;
 
-    if (id == OBStereo::ImplicitId)
-      return OBStereo::NoId;
+    if (id == OBStereo::ImplicitRef)
+      return OBStereo::NoRef;
 
     // find id
     for (int i = 0; i < 4; ++i) {
@@ -217,25 +217,25 @@ namespace OpenBabel {
         int j = (i > 0) ? i - 1 : 3;
         int k = (i < 3) ? i + 1 : 0;
         // make sure they are not bonded to the same atom
-        if (m_cfg.refs.at(j) != OBStereo::ImplicitId)
+        if (m_cfg.refs.at(j) != OBStereo::ImplicitRef)
           if (!IsOnSameAtom(id, m_cfg.refs.at(j)))
             return m_cfg.refs.at(j);
-        if (m_cfg.refs.at(k) != OBStereo::ImplicitId)
+        if (m_cfg.refs.at(k) != OBStereo::ImplicitRef)
           if (!IsOnSameAtom(id, m_cfg.refs.at(k)))
             return m_cfg.refs.at(k);
 
-        if ((m_cfg.refs.at(j) == OBStereo::ImplicitId) && (m_cfg.refs.at(k) == OBStereo::ImplicitId)) {
-          return OBStereo::ImplicitId;       
+        if ((m_cfg.refs.at(j) == OBStereo::ImplicitRef) && (m_cfg.refs.at(k) == OBStereo::ImplicitRef)) {
+          return OBStereo::ImplicitRef;       
         }
 
         obErrorLog.ThrowError(__FUNCTION__, 
             "OBCisTransStereo::GetTransRef : References don't match bond orientation", obError);
-        return OBStereo::NoId;
+        return OBStereo::NoRef;
       }
     }
 
     // id not found
-    return OBStereo::NoId;
+    return OBStereo::NoRef;
   }
     
   bool OBCisTransStereo::IsOnSameAtom(unsigned long id1, unsigned long id2) const
@@ -384,7 +384,7 @@ namespace std {
  
     out << ", refs = ";
     for (OpenBabel::OBStereo::Refs::iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      if (*i != OpenBabel::OBStereo::ImplicitId)
+      if (*i != OpenBabel::OBStereo::ImplicitRef)
         out << *i << " ";
       else
         out << "H ";
@@ -411,7 +411,7 @@ namespace std {
 
     out << ", refs = ";
     for (OpenBabel::OBStereo::Refs::const_iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      if (*i != OpenBabel::OBStereo::ImplicitId)
+      if (*i != OpenBabel::OBStereo::ImplicitRef)
         out << *i << " ";
       else
         out << "H ";

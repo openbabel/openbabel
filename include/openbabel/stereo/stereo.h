@@ -31,21 +31,44 @@
 
 namespace OpenBabel {
 
+  /**
+   * @brief Placeholder for enums & Ref/Refs related functions.
+   *
+   * The OBStereo struct contains a number of enums with predefined values. 
+   * These are OBStereo::BondDirection, OBStereo::Type, OBStereo::Shape, 
+   * OBStereo::View, OBStereo::Winding. There are enums 
+   * which only apply to certain types of stereochemistry but having them 
+   * in 1 place makes it easier to remember. 
+   *
+   * The OBStereo struct also contains typedefs and functions which 
+   * are crucial to fully understand how to use the OBStereoBase derived 
+   * classes (i.e. OBTetrahedralStereo, OBCisTransStereo, ...). Ref variables
+   * and Refs lists are a way to uniquely reference atoms in the molecule. In
+   * most cases these Ref variables are the same as the unique atom ids 
+   * (OBAtom::GetId). However, 2 special cases are provided:
+   *
+   * - OBStereo::NoRef: An initial value for Ref variables. The constructors of 
+   *   the various Config structs set all refs to NoRef (Refs lists will remain 
+   *   empty). This value is considered invalid when comparing stereochemistry.
+   * - OBStereo::ImplicitRef: Can be used to replace implicit hydrogen ids. 
+   *   Even with explicit hydrogens, it is still valid to replace the Ref of 
+   *   the hydrogen with ImplicitRef. This flexibility also applies to 
+   *   comparing stereochemistry. It is possible to compare stereochemistry
+   *   (e.g. OBTetrahedral::Config::operator==) between a Config struct with 
+   *   an ImplicitRef and a Config struct where the Ref is the atom id of the 
+   *   explicit hydrogen. See actual documentation for details about operator==.
+   *
+   * There are utility functions which make it easier to handle Refs. The most
+   * frequently used one is OBStereo::MakeRefs to create lists containing 3 or
+   * 4 Ref values. Formats and library use normally doesn't need the other 
+   * functions.
+   *
+   * @sa OBStereoBase OBStereoFacade
+   */
   struct OBAPI OBStereo 
   {
     /**
-     * Bond directions used by StereoFrom0D to translate to
-     * internal CisTransStereo representation
-     */
-    enum BondDirection { // Values taken from MDL format
-      NotStereo =   0,
-      UpBond =      1,
-      DownBond =    6,
-      UnknownDir =  4
-    };
-    /**
      * The various types of stereochemistry
-     *
      */
     enum Type {
       CisTrans            = (1<<0), //!< cis/trans double bond
@@ -58,8 +81,20 @@ namespace OpenBabel {
     };
 
     /**
+     * Bond directions used by StereoFrom0D to translate to
+     * internal CisTransStereo representation.
+     */
+    enum BondDirection { // Values taken from MDL format
+      NotStereo =   0,
+      UpBond =      1,
+      DownBond =    6,
+      UnknownDir =  4
+    };
+
+    /**
      * Shapes used by OBTetraPlanarStereo subclasses for 
      * setting/getting reference ids.
+     * @sa OBTetraPlanarStereo
      */
     enum Shape {
       ShapeU = 1,
@@ -70,6 +105,7 @@ namespace OpenBabel {
     /**
      * Views used by OBTetraNonPlanarStereo subclasses for
      * setting/getting reference ids.
+     * @sa OBTetraNonPlanarStereo
      */
     enum View
     {
@@ -80,41 +116,64 @@ namespace OpenBabel {
     /**
      * Windings used by OBTetraNonPlanar subclasses for 
      * setting/getting reference ids.
+     * @sa OBTetraNonPlanar
      */
     enum Winding {
       Clockwise = 1,     //!< Clockwise winding
       AntiClockwise = 2  //!< AntiClockiwe winding (or CounterClockwise
     };
 
+    ///@name Ref & Refs types 
+    //@{
     /**
-     * Some useful predefined ids. 
+     * All stereo classes work with variables of the type Ref to uniquely
+     * identify atoms. In most cases these Ref variables are the same as the
+     * unique atom ids. 
+     *
+     * @sa OBAtom::GetId() OBStereo
+     */
+    typedef unsigned long Ref;
+    /**
+     * Special case Ref values.
      */
     enum {
-      NoId = UINT_MAX,       //!< no id
-      ImplicitId = UINT_MAX - 1  //!< implicit id (hydrogen, N lone pair, ..)
+      NoRef = UINT_MAX,       //!< No Ref set (invalid Ref)
+      ImplicitRef = UINT_MAX - 1  //!< Implicit Ref (i.e. hydrogen, N lone pair, ...).
     };
-
-    typedef std::vector<unsigned long> Refs;
-    typedef std::vector<unsigned long>::iterator RefIter;
-    typedef std::vector<unsigned long>::const_iterator ConstRefIter;
-
     /**
-     * Create a std::vector<unsigned long> filled with @p id1, @p id2, @p id3 & @p id4.
+     * A list (std::vector) of Ref variables.
      */
-    static Refs MakeRefs(unsigned long id1, unsigned long id2,
-        unsigned long id3, unsigned long id4 = NoId)
+    typedef std::vector<Ref> Refs;
+    /**
+     * Iterator (std::iterator) for a Refs list.
+     */
+    typedef Refs::iterator RefIter;
+    /**
+     * Iterator (std::iterator) for a const Refs list.
+     */ 
+    typedef Refs::const_iterator ConstRefIter;
+    //@}
+
+    ///@name Refs utility functions
+    //@{
+    /**
+     * Create a Refs list filled with @p ref1, @p ref2, @p ref3 & @p ref4.
+     * @p ref4 is not added to the returned Refs if it is equal to NoRef.
+     *
+     * @return A Refs list containing the specified Ref values. 
+     */
+    static Refs MakeRefs(Ref ref1, Ref ref2, Ref ref3, Ref ref4 = NoRef)
     {
       Refs refs(3);
-      refs[0] = id1;
-      refs[1] = id2;
-      refs[2] = id3;
-      if (id4 != NoId)
-        refs.push_back(id4);
+      refs[0] = ref1;
+      refs[1] = ref2;
+      refs[2] = ref3;
+      if (ref4 != NoRef)
+        refs.push_back(ref4);
       return refs;
     }
-
     /**
-     * Check if @p refs1 and @p refs2 contain the same ids regardless 
+     * Check if @p refs1 and @p refs2 contain the same Ref values regardless 
      * of their order.
      *
      * @code
@@ -122,14 +181,18 @@ namespace OpenBabel {
      * OBStereo::ContainsSameRefs(OBStereo::MakeRefs(1, 2, 3), OBStereo::MakeRefs(3, 2, 1)) // true
      * OBStereo::ContainsSameRefs(OBStereo::MakeRefs(1, 2, 3), OBStereo::MakeRefs(3, 4, 1)) // false
      * @endcode
+     *
+     * @return True if @p refs1 and @p refs2 contain the same Ref values.
      */
     static bool ContainsSameRefs(const Refs &refs1, const Refs &refs2);
-
     /**
-     * @return True if @p refs contains @p id.
+     * @return True if @p refs contains @p ref.
      */
-    static bool ContainsRef(const Refs &refs, unsigned long id);
+    static bool ContainsRef(const Refs &refs, unsigned long ref);
+    //@}
 
+    ///@name Low-level functions used by implementation.
+    //@{
     /**
      * Compute the inversion vector for @p refs and return the sum of it's 
      * elements. The ith element in the inversion vector is the number of 
@@ -150,8 +213,7 @@ namespace OpenBabel {
      * 321           2 1 0               3 (odd)  -> anti-clockwise
      * @endcode
      */
-    static int NumInversions(const OBStereo::Refs &refs);
-
+    static int NumInversions(const Refs &refs);
     /**
      * Permutate element @p i with @p j in @p refs.
      *
@@ -161,23 +223,45 @@ namespace OpenBabel {
      *
      * @note This method does nothing if i equals j.
      */
-    static void Permutate(OBStereo::Refs &refs, int i, int j);
+    static void Permutate(Refs &refs, int i, int j);
     /**
      * Get @p refs with element @p i and @p j permutated.
      *
      * @param refs The sequence with N elements to permutate.
-     * @param i Element i (0...N-1) will be mutated to j and vice versa.
-     * @param j Element j (0...N-1) will be mutated to i and vice versa.
+     * @param i Element @p i (0...N-1) will be mutated to @p j and vice versa.
+     * @param j Element @p j (0...N-1) will be mutated to @p i and vice versa.
      *
-     * @return @p refs with @i and @j permutated.
+     * @return @p refs with elements @p i and @p j permutated.
      *
-     * @note This method does nothing if i equals j.
+     * @note This method does nothing if @p i equals @p j.
      */
-    static OBStereo::Refs Permutated(const OBStereo::Refs &refs, int i, int j);
+    static Refs Permutated(const Refs &refs, int i, int j);
+    //@}
  
   };
 
+  // fwd decl
   class OBMol;
+  /**
+   * @brief Base class for all stereochemistry classes.
+   *
+   * All stereochemistry classes are derived from OBStereoBase. This class
+   * inherits from OBGenericData which allows the objects to be stored in
+   * the molecule. The attribute (OBGenericData::GetAttribute) is set to
+   * "StereoData" and the data type is OBGenericDataType::StereoData. The 
+   * pure virtual OBStereoBase::GetType function must be implemented by
+   * derived classes to return a type defined in OBStereo::Type.
+   *
+   * Use the OBStereoFacade for easy access to the derived classes. 
+   *
+   * OBStereoBase keeps track of the OBMol object. This must always be
+   * a valid (not 0 or deleted) pointer and can only be set using the 
+   * constructor. Subclasses can use this to get more information on bonding 
+   * for example. Finally, OBStereoBase also keeps track of the specified
+   * flag. By default, this is always set to true.
+   *
+   * @sa OBStereo OBStereoFacade
+   */
   class OBAPI OBStereoBase : public OBGenericData
   {
     public:
@@ -192,6 +276,9 @@ namespace OpenBabel {
         m_mol(mol), m_specified(true)
       {
       }
+      /**
+       * Destructor.
+       */
       virtual ~OBStereoBase() { m_mol = 0; }
       /**
        * Get the molecule. This can be used by subclasses when more
@@ -199,11 +286,11 @@ namespace OpenBabel {
        */
       OBMol* GetMolecule() const { return m_mol; }
       /**
-       * Reimplemented by subclasses to return type.
+       * Reimplemented by subclasses to return the type defined in OBStereo::Type.
        */
       virtual OBStereo::Type GetType() const = 0;
       /**
-       * Set wether the stereochemistry is specified. Comparing a specified 
+       * Set whether the stereochemistry is specified. Comparing a specified 
        * OBStereoBase derived class (or it's Config struct) with an unspecified 
        * one, always returns true.
        */
@@ -213,18 +300,31 @@ namespace OpenBabel {
        */
       bool IsSpecified() const { return m_specified; }
     private:
-      OBMol *m_mol; //!< the parent molecule
-      bool m_specified; //!< true if the stereochemistry is specified, false if unknown/unspecified
+      OBMol *m_mol; //!< The parent molecule.
+      bool m_specified; //!< True if the stereochemistry is specified, false if unknown/unspecified.
   };
 
+  // fwd decl
   class OBTetrahedralStereo;
   class OBCisTransStereo;
+  /**
+   * @brief Facade to simplify retrieval of OBStereoBase derived objects.
+   *
+   * The OBStereoFacade helps with retrieving OBStereoBase derived objects 
+   * (i.e. OBTetrahedralStereo, OBCisTransStereo, ...) from an OBMol. This 
+   * is done by iterating over all OBGenericData objects with data type 
+   * OBGenericDataType::StereoData and checking the OBStereo::Type using 
+   * OBStereoBase::GetType.
+   *
+   * @sa OBStereo OBStereoBase
+   */
   class OBAPI OBStereoFacade
   {
     public:
       /**
        * Constructor with @p mol and @p perceive parameter.
        *
+       * @param mol The molecule.
        * @param perceive If true, PerceiveStereo will be called if the 
        * OBMol::HasChiralityPerceived() flag is not set. (default is true)
        */
@@ -239,16 +339,35 @@ namespace OpenBabel {
        */
       bool HasTetrahedralStereo(unsigned long atomId);
       /**
-       * 
+       * Check if bond with @p id is a stereogenic cis/trans double bond. 
+       * @return True if the bond with @p id has cis/trans stereochemistry.
        */
       bool HasCisTransStereo(unsigned long bondId);
 
+      /**
+       * Get the OBTetrahedralStereo object with @p atomId as center. This 
+       * function returns 0 if there is no OBTetrahedralStereo object found 
+       * with the specified center.
+       */
       OBTetrahedralStereo* GetTetrahedralStereo(unsigned long atomId);
+      /**
+       * Get the OBTetrahedralStereo object with @p atomId as center. This 
+       * function returns 0 if there is no OBTetrahedralStereo object found 
+       * with the specified center.
+       */
       OBCisTransStereo* GetCisTransStereo(unsigned long bondId);
     
 
     private:
+      /**
+       * Ensure the maps are initialized and initialize them only once.
+       */
       inline void EnsureInit() { if (!m_init) InitMaps(); }
+      /**
+       * Initialize @p m_tetrahedralMap and m_cistransMap to contain the 
+       * data objects. If @p m_perceive is true and chirality isn't perceived
+       * yet, PerceiveStereo will be called.
+       */
       void InitMaps();
 
       OBMol *m_mol;
@@ -257,6 +376,8 @@ namespace OpenBabel {
       std::map<unsigned long, OBTetrahedralStereo*> m_tetrahedralMap;
       std::map<unsigned long, OBCisTransStereo*> m_cistransMap;
   };
+
+  // fwd decl
   class OBBond;
   /**
    * Convert 2D/3D coordinates to OBStereo objects.
@@ -429,10 +550,22 @@ namespace OpenBabel {
    */
   OBAPI std::vector<unsigned long> FindCisTransBonds(OBMol *mol, 
       const std::vector<unsigned int> &symClasses);
-  
+ 
+  /**
+   * Create and fill OBCisTransStereo objects using the specified
+   * @p ctbonds (bond ids) and map containing directions 
+   * (OBStereo::BondDirection). This function is intended to be used
+   * by 0D formats. The OBCisTransStereo objects will be stored in the 
+   * OBMol.
+   *
+   * @param mol The molecule.
+   * @param ctbonds std::vector containing bond ids for cis/trans bonds
+   * @param updown std::map containing up to four bond directions per bond 
+   *        id in @p ctbonds.
+   */
   OBAPI void CisTransFromUpDown(OBMol *mol,
-        const std::vector<unsigned long> &ctbonds,
-        std::map<OBBond*, OBStereo::BondDirection> *updown);
+      const std::vector<unsigned long> &ctbonds,
+      std::map<OBBond*, OBStereo::BondDirection> *updown);
 }
 
 #endif

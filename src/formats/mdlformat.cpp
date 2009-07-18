@@ -1208,14 +1208,14 @@ namespace OpenBabel
             { // We have a stereo bond. Now get the five bonds involved...
               OBBond* dbl_bond = mol.GetBond(mol.GetAtomById(cfg.begin), mol.GetAtomById(cfg.end));
               std::vector<OBBond *> refbonds(4, (OBBond*)NULL);
-              if (cfg.refs[0] != OBStereo::ImplicitId) // Could be a hydrogen
+              if (cfg.refs[0] != OBStereo::ImplicitRef) // Could be a hydrogen
                 refbonds[0] = mol.GetBond(mol.GetAtomById(cfg.refs[0]), mol.GetAtomById(cfg.begin));
-              if (cfg.refs[1] != OBStereo::ImplicitId) // Could be a hydrogen
+              if (cfg.refs[1] != OBStereo::ImplicitRef) // Could be a hydrogen
                 refbonds[1] = mol.GetBond(mol.GetAtomById(cfg.refs[1]), mol.GetAtomById(cfg.begin));
               
-              if (cfg.refs[2] != OBStereo::ImplicitId) // Could be a hydrogen
+              if (cfg.refs[2] != OBStereo::ImplicitRef) // Could be a hydrogen
                 refbonds[2] = mol.GetBond(mol.GetAtomById(cfg.refs[2]), mol.GetAtomById(cfg.end));
-              if (cfg.refs[3] != OBStereo::ImplicitId) // Could be a hydrogen
+              if (cfg.refs[3] != OBStereo::ImplicitRef) // Could be a hydrogen
                 refbonds[3] = mol.GetBond(mol.GetAtomById(cfg.refs[3]), mol.GetAtomById(cfg.end));              
               
 

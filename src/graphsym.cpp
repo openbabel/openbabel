@@ -388,7 +388,7 @@ void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
   atom = mol->GetAtomById(config.begin);
   if (atom) {
     if (atom->IsHydrogen())
-      config.begin = OBStereo::ImplicitId;
+      config.begin = OBStereo::ImplicitRef;
     else
       config.begin = symClasses.at(atom->GetIndex());
   }
@@ -396,7 +396,7 @@ void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
   atom = mol->GetAtomById(config.end);
   if (atom) {
     if (atom->IsHydrogen())
-      config.end = OBStereo::ImplicitId;
+      config.end = OBStereo::ImplicitRef;
     else
       config.end = symClasses.at(atom->GetIndex());
   }
@@ -405,7 +405,7 @@ void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
     atom = mol->GetAtomById(config.refs.at(i));
     if (atom) {
       if (atom->IsHydrogen())
-        config.refs[i] = OBStereo::ImplicitId;
+        config.refs[i] = OBStereo::ImplicitRef;
       else
         config.refs[i] = symClasses.at(atom->GetIndex());
     }
@@ -420,7 +420,7 @@ void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config,
   atom = mol->GetAtomById(config.center);
   if (atom) {
     if (atom->IsHydrogen())
-      config.center = OBStereo::ImplicitId;
+      config.center = OBStereo::ImplicitRef;
     else
       config.center = symClasses.at(atom->GetIndex());
   }
@@ -428,7 +428,7 @@ void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config,
   atom = mol->GetAtomById(config.from);
   if (atom) {
     if (atom->IsHydrogen())
-      config.from = OBStereo::ImplicitId;
+      config.from = OBStereo::ImplicitRef;
     else
       config.from = symClasses.at(atom->GetIndex());
   }
@@ -437,7 +437,7 @@ void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config,
     atom = mol->GetAtomById(config.refs.at(i));
     if (atom) {
       if (atom->IsHydrogen())
-        config.refs[i] = OBStereo::ImplicitId;
+        config.refs[i] = OBStereo::ImplicitRef;
       else
         config.refs[i] = symClasses.at(atom->GetIndex());
     }

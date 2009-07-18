@@ -52,7 +52,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
       /**
        * Default constructor.
        */
-      Config() : center(OBStereo::NoId), from(OBStereo::NoId), 
+      Config() : center(OBStereo::NoRef), from(OBStereo::NoRef), 
           winding(OBStereo::Clockwise), view(OBStereo::ViewFrom),
           specified(true)
       {  }
@@ -72,7 +72,35 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
           specified(true)
       {  }
       /**
-       * Equal to operator.
+       * Equal to operator. Comparing OBTetrahedralStereo::Config structs
+       * is done using the information stored in the struct's data members
+       * (i.e. view, winding, from/towards and refs).
+       *
+       * If the centers don't match false is returned. If one of the Refs lists
+       * does not contain 3 elements, false is returned. 2 or more 
+       * OBStereo::ImplicitRef values in a single Config struct also result in
+       * false being returned.
+       *
+       * It doesn't matter if the two Config structs use the same view, same 
+       * from/towards Ref or the same winding. All needed conversions will be
+       * carried out automatically.
+       *
+       * Another key feature is the ability to comapre Config structs regardless
+       * of implicit (OBStereo::ImplicitRef) or explicit hydrogens. This is best 
+       * illustrated with some examples. In these examples the same ref has 
+       * already been selected as from/towards atom before. We will focus on how 
+       * the three remaining refs are interpreted.
+       *
+       @verbatim
+         234 == 234 // true
+         2H4 == 234 // 3 is missing, must be the implicit --> 234 == 234 // true
+         2H4 == 243 // same as above, but now 234 == 243 // false
+         234 == H34 // 2 is missing, must be implicit --> 234 == 234 // true
+       @endverbatim
+       *
+       * By comparing the second and third example above, it can be clearly seen
+       * that the value of 1 Ref can actually be ignored. It's position in the 
+       * sequence (or the winding) is defined by the two explicit Ref values. 
        *
        * @code
        * OBTetrahedralStereo::Config cfg1, cfg2;

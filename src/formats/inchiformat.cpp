@@ -269,8 +269,8 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
       ct->begin = stereo.neighbor[1];
       ct->end = stereo.neighbor[2];
-      unsigned long start = OBStereo::ImplicitId;
-      unsigned long end = OBStereo::ImplicitId;
+      unsigned long start = OBStereo::ImplicitRef;
+      unsigned long end = OBStereo::ImplicitRef;
       FOR_NBORS_OF_ATOM(a, pmol->GetAtom(ct->begin + 1)) {
         if ( !(a->GetId() == ct->end || a->GetId() == stereo.neighbor[0] ) ) {
           start = a->GetId();
@@ -494,10 +494,10 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         stereo.type = INCHI_StereoType_DoubleBond;
         OBStereo::Refs refs = config.refs;
         unsigned long start = refs[0];
-        if (refs[0]==OBStereo::ImplicitId)
+        if (refs[0]==OBStereo::ImplicitRef)
           start = refs[1];
         unsigned long end = refs[3];
-        if (refs[3]==OBStereo::ImplicitId)
+        if (refs[3]==OBStereo::ImplicitRef)
           end = refs[2];
  
         stereo.neighbor[0] = start;

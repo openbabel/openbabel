@@ -70,7 +70,7 @@ namespace OpenBabel {
       if (type == OBStereo::Tetrahedral) {
         OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
         OBTetrahedralStereo::Config config = ts->GetConfig();
-        if (config.center == OBStereo::NoId)
+        if (config.center == OBStereo::NoRef)
           continue;
         m_tetrahedralMap[config.center] = ts;
       } else
@@ -78,7 +78,7 @@ namespace OpenBabel {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
         OBCisTransStereo::Config config = ct->GetConfig();
         // find the bond id from begin & end atom ids
-        unsigned long id = OBStereo::NoId;
+        unsigned long id = OBStereo::NoRef;
         OBAtom *a = m_mol->GetAtomById(config.begin);
         if (!a)
           continue;
@@ -91,7 +91,7 @@ namespace OpenBabel {
             break;
           }
         }
-        if (id == OBStereo::NoId)
+        if (id == OBStereo::NoRef)
           continue;
         m_cistransMap[id] = ct;
       }

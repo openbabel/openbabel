@@ -37,15 +37,15 @@ namespace OpenBabel {
     if ((refs.size() != 3) || (other.refs.size() != 3))
       return false;
     
-    Config thisConfig = (from == OBStereo::ImplicitId) ? 
+    Config thisConfig = (from == OBStereo::ImplicitRef) ? 
         OBTetraNonPlanarStereo::ToConfig(*this, refs[0], winding, view) : *this;
     // convert the other Config's refs to same from, winding and view
     Config otherConfig = OBTetraNonPlanarStereo::ToConfig(other, thisConfig.from, winding, view);
 
     if (!OBStereo::ContainsSameRefs(thisConfig.refs, otherConfig.refs)) {
-      if (OBStereo::ContainsRef(thisConfig.refs, OBStereo::ImplicitId)) {
-        // if both refs already contain ImplicitId, return false
-        if (OBStereo::ContainsRef(otherConfig.refs, OBStereo::ImplicitId))
+      if (OBStereo::ContainsRef(thisConfig.refs, OBStereo::ImplicitRef)) {
+        // if both refs already contain ImplicitRef, return false
+        if (OBStereo::ContainsRef(otherConfig.refs, OBStereo::ImplicitRef))
           return false;
         
         // example: *this       = 23H
@@ -60,14 +60,14 @@ namespace OpenBabel {
           
           if (!found) {
             // the ref from otherConfig is not found in this config
-            otherConfig.refs[i] = OBStereo::ImplicitId;
+            otherConfig.refs[i] = OBStereo::ImplicitRef;
             break;
           }
         }
       } else
-      if (OBStereo::ContainsRef(otherConfig.refs, OBStereo::ImplicitId)) {
-        // if both refs already contain ImplicitId, return false
-        if (OBStereo::ContainsRef(thisConfig.refs, OBStereo::ImplicitId))
+      if (OBStereo::ContainsRef(otherConfig.refs, OBStereo::ImplicitRef)) {
+        // if both refs already contain ImplicitRef, return false
+        if (OBStereo::ContainsRef(thisConfig.refs, OBStereo::ImplicitRef))
           return false;
 
         // example: *this       = 234
@@ -83,7 +83,7 @@ namespace OpenBabel {
 
           if (!found) {
             for (OBStereo::RefIter j = otherConfig.refs.begin(); j != otherConfig.refs.end(); ++j)
-              if (*j == OBStereo::ImplicitId)
+              if (*j == OBStereo::ImplicitRef)
                 *j = thisConfig.refs.at(i);
             break;
           }
@@ -111,9 +111,9 @@ namespace OpenBabel {
 
   bool OBTetrahedralStereo::IsValid() const
   {
-    if (m_cfg.center == OBStereo::NoId)
+    if (m_cfg.center == OBStereo::NoRef)
       return false;
-    if (m_cfg.from == OBStereo::NoId)
+    if (m_cfg.from == OBStereo::NoRef)
       return false;
     if (m_cfg.refs.size() != 3)
       return false;
@@ -122,13 +122,13 @@ namespace OpenBabel {
 
   void OBTetrahedralStereo::SetConfig(const Config &config)
   {
-    if (config.center == OBStereo::NoId) {
+    if (config.center == OBStereo::NoRef) {
       obErrorLog.ThrowError(__FUNCTION__, 
           "OBTetrahedralStereo::SetConfig : center atom id is invalid.", obError);
       m_cfg = Config();
       return;
     }
-    if (config.from == OBStereo::NoId) {
+    if (config.from == OBStereo::NoRef) {
       obErrorLog.ThrowError(__FUNCTION__, 
           "OBTetrahedralStereo::SetConfig : from/towards atom id is invalid.", obError);
       m_cfg = Config();
@@ -197,14 +197,14 @@ namespace std {
     else
       out << ", viewTowards = ";
       
-    if (cfg.from == OBStereo::ImplicitId)
+    if (cfg.from == OBStereo::ImplicitRef)
       out << "H";
     else
       out << cfg.from;
 
     out << ", refs = ";
     for (OBStereo::Refs::iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      if (*i != OBStereo::ImplicitId)
+      if (*i != OBStereo::ImplicitRef)
         out << *i << " ";
       else
         out << "H ";
@@ -229,14 +229,14 @@ namespace std {
     else
       out << ", viewTowards = ";
       
-    if (cfg.from == OBStereo::ImplicitId)
+    if (cfg.from == OBStereo::ImplicitRef)
       out << "H";
     else
       out << cfg.from;
 
     out << ", refs = ";
     for (OBStereo::Refs::const_iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      if (*i != OBStereo::ImplicitId)
+      if (*i != OBStereo::ImplicitRef)
         out << *i << " ";
       else
         out << "H ";

@@ -4,7 +4,7 @@
 
 namespace OpenBabel {
 
-  OBSquarePlanarStereo::OBSquarePlanarStereo(OBMol *mol) : OBTetraPlanarStereo(mol), m_center(OBStereo::NoId)
+  OBSquarePlanarStereo::OBSquarePlanarStereo(OBMol *mol) : OBTetraPlanarStereo(mol), m_center(OBStereo::NoRef)
   {
   }
 
@@ -15,7 +15,7 @@ namespace OpenBabel {
   // testIsValid
   bool OBSquarePlanarStereo::IsValid() const
   {
-    if (m_center == OBStereo::NoId)
+    if (m_center == OBStereo::NoRef)
       return false;
     if (m_refs.size() != 4)
       return false;
@@ -107,7 +107,7 @@ namespace OpenBabel {
     }
 
     // id not found
-    return OBStereo::NoId;
+    return OBStereo::NoRef;
   }
 
   // testCisTrans  

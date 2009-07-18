@@ -141,7 +141,7 @@ namespace OpenBabel {
           OBStereo::Winding winding = OBStereo::Clockwise, 
           OBStereo::View view = OBStereo::ViewFrom)
       {
-        if (cfg.from == OBStereo::NoId) {
+        if (cfg.from == OBStereo::NoRef) {
           obErrorLog.ThrowError(__FUNCTION__, 
               "OBTetraNonPlanarStereo::ToConfig : Invalid from in ConfigType struct.", obError);
           return ConfigType();

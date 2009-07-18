@@ -574,8 +574,8 @@ namespace OpenBabel {
       if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
       
       // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
-      unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitId : a1_b2->GetNbrAtom(a1)->GetId();
-      unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitId : a2_b2->GetNbrAtom(a2)->GetId();
+      unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitRef : a1_b2->GetNbrAtom(a1)->GetId();
+      unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitRef : a2_b2->GetNbrAtom(a2)->GetId();
 
       // If a1_stereo==a2_stereo, this means cis for a1_b1 and a2_b1.
       OBCisTransStereo *ct = new OBCisTransStereo(&mol);
@@ -680,13 +680,13 @@ namespace OpenBabel {
     {
       int insertpos = NumConnections(ChiralSearch->first) - 2;
       if (insertpos < 0) {
-        if (ChiralSearch->second->from != OBStereo::NoId)
+        if (ChiralSearch->second->from != OBStereo::NoRef)
           obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
       
         (ChiralSearch->second)->from = id;
         // cerr << "Adding " << id << " at Config.from to " << ChiralSearch->second << endl;
       } else {
-        if (ChiralSearch->second->refs[insertpos] != OBStereo::NoId)
+        if (ChiralSearch->second->refs[insertpos] != OBStereo::NoRef)
           obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previously set reference id.", obError);
 
         (ChiralSearch->second)->refs[insertpos] = id;
@@ -1604,7 +1604,7 @@ namespace OpenBabel {
             _ptr++;
             chiralWatch=true;
             _tetrahedralMap[atom] = new OBTetrahedralStereo::Config;
-            _tetrahedralMap[atom]->refs = OBStereo::Refs(3, OBStereo::NoId);
+            _tetrahedralMap[atom]->refs = OBStereo::Refs(3, OBStereo::NoRef);
             _tetrahedralMap[atom]->center = atom->GetId();
             if (*_ptr == '@') {
               _tetrahedralMap[atom]->winding = OBStereo::Clockwise;
@@ -1937,13 +1937,13 @@ namespace OpenBabel {
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
           int insertpos = bond->numConnections - 1;
           if (insertpos < 0) {
-            if (ChiralSearch->second->from != OBStereo::NoId)
+            if (ChiralSearch->second->from != OBStereo::NoRef)
               obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
 
             (ChiralSearch->second)->from = mol.GetAtom(_prev)->GetId();
             // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at Config.from to " << ChiralSearch->second << endl;
           } else {
-            if (ChiralSearch->second->refs[insertpos] != OBStereo::NoId)
+            if (ChiralSearch->second->refs[insertpos] != OBStereo::NoRef)
               obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previously set reference id.", obError);
 
             (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
@@ -2381,13 +2381,13 @@ namespace OpenBabel {
           std::vector<OBBond *> refbonds(4, (OBBond*)NULL);
           refbonds[0] = mol->GetBond(mol->GetAtomById(cfg.refs[0]), mol->GetAtomById(cfg.begin));
           
-          if (cfg.refs[1] != OBStereo::ImplicitId) // Could be a hydrogen
+          if (cfg.refs[1] != OBStereo::ImplicitRef) // Could be a hydrogen
             refbonds[1] = mol->GetBond(mol->GetAtomById(cfg.refs[1]), mol->GetAtomById(cfg.begin));
           
-          if (cfg.refs[2] != OBStereo::ImplicitId) // Could be a hydrogen
+          if (cfg.refs[2] != OBStereo::ImplicitRef) // Could be a hydrogen
             refbonds[2] = mol->GetBond(mol->GetAtomById(cfg.refs[2]), mol->GetAtomById(cfg.end));
           
-          if (cfg.refs[3] != OBStereo::ImplicitId) // Could be a hydrogen
+          if (cfg.refs[3] != OBStereo::ImplicitRef) // Could be a hydrogen
             refbonds[3] = mol->GetBond(mol->GetAtomById(cfg.refs[3]), mol->GetAtomById(cfg.end));
 
           // What symbol would the four refs use if before the dbl bond?
@@ -3206,8 +3206,8 @@ namespace OpenBabel {
         symmetry_classes.push_back(atom->GetIdx() - 1);
       }
       else{
-        labels.push_back(OBStereo::ImplicitId); //to match situation when canonical ordering. Just a big number?
-        symmetry_classes.push_back(OBStereo::ImplicitId);
+        labels.push_back(OBStereo::ImplicitRef); //to match situation when canonical ordering. Just a big number?
+        symmetry_classes.push_back(OBStereo::ImplicitRef);
       }
     }
   }
@@ -3248,8 +3248,8 @@ namespace OpenBabel {
         symmetry_classes.push_back(r);
       }
       else{
-        labels.push_back(OBStereo::ImplicitId); //to match situation when canonical ordering. Just a big number?
-        symmetry_classes.push_back(OBStereo::ImplicitId);
+        labels.push_back(OBStereo::ImplicitRef); //to match situation when canonical ordering. Just a big number?
+        symmetry_classes.push_back(OBStereo::ImplicitRef);
       }
     }
   }

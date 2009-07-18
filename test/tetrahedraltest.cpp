@@ -64,13 +64,13 @@ void test_IsValid()
 
   // no center
   cfgCopy = cfg;
-  cfgCopy.center = OBStereo::NoId;
+  cfgCopy.center = OBStereo::NoRef;
   ts.SetConfig(cfgCopy);
   OB_ASSERT( !ts.IsValid() );
 
   // no from
   cfgCopy = cfg;
-  cfgCopy.from = OBStereo::NoId;
+  cfgCopy.from = OBStereo::NoRef;
   ts.SetConfig(cfgCopy);
   OB_ASSERT( !ts.IsValid() );
 
@@ -213,9 +213,9 @@ void test_Refs()
   OB_ASSERT( th.GetConfig() != cfg5 ); 
   cfg5.refs = OBStereo::MakeRefs(4, 9, 1);
   OB_ASSERT( th.GetConfig() == cfg5 ); 
-  cfg5.from = OBStereo::NoId;
+  cfg5.from = OBStereo::NoRef;
   OB_ASSERT( th.GetConfig() != cfg5 ); 
-  cfg5.center = OBStereo::NoId;
+  cfg5.center = OBStereo::NoRef;
   cfg5.from = 34;
   OB_ASSERT( th.GetConfig() != cfg5 ); 
 }

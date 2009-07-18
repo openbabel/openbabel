@@ -286,14 +286,14 @@ namespace OpenBabel {
       config.specified = false;
       config.center = *i;
       FOR_NBORS_OF_ATOM(nbr, center) {
-        if (config.from == OBStereo::NoId)
+        if (config.from == OBStereo::NoRef)
           config.from = nbr->GetId();
         else
           config.refs.push_back(nbr->GetId());
       }
 
       if ((config.refs.size() == 2))
-        config.refs.push_back(OBStereo::ImplicitId); // need to add largest number on end to work
+        config.refs.push_back(OBStereo::ImplicitRef); // need to add largest number on end to work
 
       OBTetrahedralStereo *th = new OBTetrahedralStereo(mol);
       th->SetConfig(config);
@@ -334,7 +334,7 @@ namespace OpenBabel {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
         OBCisTransStereo::Config config = ct->GetConfig();
         // find the bond id from begin & end atom ids
-        unsigned long id = OBStereo::NoId;
+        unsigned long id = OBStereo::NoRef;
         OBAtom *a = mol->GetAtomById(config.begin);
         if (!a)
           continue;
@@ -381,7 +381,7 @@ namespace OpenBabel {
         config.refs.push_back(nbr->GetId());
       }
       if (config.refs.size() == 1) {
-        config.refs.push_back(OBStereo::ImplicitId);
+        config.refs.push_back(OBStereo::ImplicitRef);
       }
       // end
       config.end = end->GetId();
@@ -391,7 +391,7 @@ namespace OpenBabel {
         config.refs.push_back(nbr->GetId());
       }
       if (config.refs.size() == 3) {
-        config.refs.push_back(OBStereo::ImplicitId);
+        config.refs.push_back(OBStereo::ImplicitRef);
       }
 
       OBCisTransStereo *ct = new OBCisTransStereo(mol);
@@ -468,7 +468,7 @@ namespace OpenBabel {
       OBTetrahedralStereo::Config config;
       config.center = *i;
       FOR_NBORS_OF_ATOM(nbr, center) {
-        if (config.from == OBStereo::NoId)
+        if (config.from == OBStereo::NoRef)
           config.from = nbr->GetId();
         else
           config.refs.push_back(nbr->GetId());
@@ -505,7 +505,7 @@ namespace OpenBabel {
       // will always give same sign (for tetrahedron), magnitude will be smaller.
       if ((config.refs.size() == 2) || use_central_atom) {
         nbrCoords.push_back(center->GetVector());
-        config.refs.push_back(OBStereo::ImplicitId); // need to add largest number on end to work
+        config.refs.push_back(OBStereo::ImplicitRef); // need to add largest number on end to work
       }
 
       double sign = VolumeSign(nbrCoords[0], nbrCoords[1], nbrCoords[2], nbrCoords[3]);
@@ -554,7 +554,7 @@ namespace OpenBabel {
         bondVecs.push_back(nbr->GetVector() - begin->GetVector());
       }
       if (config.refs.size() == 1) {
-        config.refs.push_back(OBStereo::ImplicitId);
+        config.refs.push_back(OBStereo::ImplicitRef);
         vector3 pos;
         mol->GetAtomById(config.refs.at(0))->GetNewBondVector(pos, 1.0);
         bondVecs.push_back(pos - begin->GetVector());
@@ -568,7 +568,7 @@ namespace OpenBabel {
         bondVecs.push_back(nbr->GetVector() - end->GetVector());
       }
       if (config.refs.size() == 3) {
-        config.refs.push_back(OBStereo::ImplicitId);
+        config.refs.push_back(OBStereo::ImplicitRef);
         vector3 pos;
         mol->GetAtomById(config.refs.at(2))->GetNewBondVector(pos, 1.0);
         bondVecs.push_back(pos - end->GetVector());
@@ -739,12 +739,12 @@ namespace OpenBabel {
       using namespace std;
       if (!config.specified) {
         FOR_NBORS_OF_ATOM (nbr, center)
-          if (config.from == OBStereo::NoId)
+          if (config.from == OBStereo::NoRef)
             config.from = nbr->GetId();
           else
             config.refs.push_back(nbr->GetId());
         while (config.refs.size() < 3)
-          config.refs.push_back(OBStereo::ImplicitId);
+          config.refs.push_back(OBStereo::ImplicitRef);
       } else
       // plane1 + plane2, hash, wedge
       if (plane1 && plane2 && hash && wedge) {
@@ -759,7 +759,7 @@ namespace OpenBabel {
       } else
       // plane1 + plane2, hash
       if (plane1 && plane2 && hash) {
-        config.from = OBStereo::ImplicitId;
+        config.from = OBStereo::ImplicitRef;
         config.refs.resize(3);
         config.refs[0] = plane1->GetId();
         config.refs[1] = plane2->GetId();
@@ -770,7 +770,7 @@ namespace OpenBabel {
       } else
       // plane1 + plane2, wedge
       if (plane1 && plane2 && wedge) {
-        config.towards = OBStereo::ImplicitId;
+        config.towards = OBStereo::ImplicitRef;
         config.view = OBStereo::ViewTowards;
         config.refs.resize(3);
         config.refs[0] = plane1->GetId();
@@ -829,7 +829,7 @@ namespace OpenBabel {
         bondVecs.push_back(nbr->GetVector());
       }
       if (config.refs.size() == 1) {
-        config.refs.push_back(OBStereo::ImplicitId);
+        config.refs.push_back(OBStereo::ImplicitRef);
         vector3 pos;
         begin->GetNewBondVector(pos, 1.0);
         bondVecs.push_back(pos);
@@ -843,7 +843,7 @@ namespace OpenBabel {
         bondVecs.push_back(nbr->GetVector());
       }
       if (config.refs.size() == 3) {
-        config.refs.push_back(OBStereo::ImplicitId);
+        config.refs.push_back(OBStereo::ImplicitRef);
         vector3 pos;
         end->GetNewBondVector(pos, 1.0);
         bondVecs.push_back(pos);
@@ -920,8 +920,8 @@ namespace OpenBabel {
       if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
       
       // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
-      unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitId : a1_b2->GetNbrAtom(a1)->GetId();
-      unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitId : a2_b2->GetNbrAtom(a2)->GetId();
+      unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitRef : a1_b2->GetNbrAtom(a1)->GetId();
+      unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitRef : a2_b2->GetNbrAtom(a2)->GetId();
 
       // If a1_stereo==a2_stereo, this means cis for a1_b1 and a2_b1.
       OBCisTransStereo *ct = new OBCisTransStereo(mol);

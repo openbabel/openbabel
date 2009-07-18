@@ -69,13 +69,13 @@ void test_IsValid()
 
   // no begin
   cfgCopy = cfg;
-  cfgCopy.begin = OBStereo::NoId;
+  cfgCopy.begin = OBStereo::NoRef;
   ct.SetConfig(cfgCopy);
   OB_ASSERT( !ct.IsValid() );
 
   // no end
   cfgCopy = cfg;
-  cfgCopy.end = OBStereo::NoId;
+  cfgCopy.end = OBStereo::NoRef;
   ct.SetConfig(cfgCopy);
   OB_ASSERT( !ct.IsValid() );
 
@@ -298,18 +298,18 @@ void test_CisTrans1()
   OB_ASSERT( conv.ReadString(&mol, "FC=CF") );
   OBCisTransStereo ct(&mol);
   ct.SetConfig(OBCisTransStereo::Config(1, 2, OBStereo::MakeRefs(0, 
-      OBStereo::ImplicitId, OBStereo::ImplicitId, 3)));
+      OBStereo::ImplicitRef, OBStereo::ImplicitRef, 3)));
 
-  OB_ASSERT( ct.IsOnSameAtom(0, OBStereo::ImplicitId) );
-  OB_ASSERT( ct.IsOnSameAtom(3, OBStereo::ImplicitId) );
-  OB_ASSERT( !ct.IsOnSameAtom(OBStereo::ImplicitId, OBStereo::ImplicitId) );
+  OB_ASSERT( ct.IsOnSameAtom(0, OBStereo::ImplicitRef) );
+  OB_ASSERT( ct.IsOnSameAtom(3, OBStereo::ImplicitRef) );
+  OB_ASSERT( !ct.IsOnSameAtom(OBStereo::ImplicitRef, OBStereo::ImplicitRef) );
   OB_ASSERT( !ct.IsOnSameAtom(0, 3) );
 
   OB_ASSERT( ct.GetCisRef(0) == 3 );
   OB_ASSERT( ct.GetCisRef(3) == 0 );
   
-  OB_ASSERT( ct.GetTransRef(0) == OBStereo::ImplicitId );
-  OB_ASSERT( ct.GetTransRef(3) == OBStereo::ImplicitId );
+  OB_ASSERT( ct.GetTransRef(0) == OBStereo::ImplicitRef );
+  OB_ASSERT( ct.GetTransRef(3) == OBStereo::ImplicitRef );
 }
 
 void test_CisTrans2()
@@ -327,19 +327,19 @@ void test_CisTrans2()
   //
   OB_ASSERT( conv.ReadString(&mol, "FC=CF") );
   OBCisTransStereo ct(&mol);
-  OBCisTransStereo::Config cfg(1, 2, OBStereo::MakeRefs(0, OBStereo::ImplicitId, 3, OBStereo::ImplicitId));
+  OBCisTransStereo::Config cfg(1, 2, OBStereo::MakeRefs(0, OBStereo::ImplicitRef, 3, OBStereo::ImplicitRef));
   ct.SetConfig(cfg);
 
-  OB_ASSERT( ct.IsOnSameAtom(0, OBStereo::ImplicitId) );
-  OB_ASSERT( ct.IsOnSameAtom(3, OBStereo::ImplicitId) );
-  OB_ASSERT( !ct.IsOnSameAtom(OBStereo::ImplicitId, OBStereo::ImplicitId) );
+  OB_ASSERT( ct.IsOnSameAtom(0, OBStereo::ImplicitRef) );
+  OB_ASSERT( ct.IsOnSameAtom(3, OBStereo::ImplicitRef) );
+  OB_ASSERT( !ct.IsOnSameAtom(OBStereo::ImplicitRef, OBStereo::ImplicitRef) );
   OB_ASSERT( !ct.IsOnSameAtom(0, 3) );
 
   OB_ASSERT( ct.GetTransRef(0) == 3 );
   OB_ASSERT( ct.GetTransRef(3) == 0 );
   
-  OB_ASSERT( ct.GetCisRef(0) == OBStereo::ImplicitId );
-  OB_ASSERT( ct.GetCisRef(3) == OBStereo::ImplicitId );
+  OB_ASSERT( ct.GetCisRef(0) == OBStereo::ImplicitRef );
+  OB_ASSERT( ct.GetCisRef(3) == OBStereo::ImplicitRef );
  
 
 }

@@ -58,7 +58,7 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
       /**
        * Default constructor.
        */
-      Config() : begin(OBStereo::NoId), end(OBStereo::NoId), shape(OBStereo::ShapeU),
+      Config() : begin(OBStereo::NoRef), end(OBStereo::NoRef), shape(OBStereo::ShapeU),
           specified(true)
       {  }
       /**
@@ -173,7 +173,7 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
      * atom is bonded to the begin atom and end->GetValence() == 2, the 
      * ids are considered to be on different atoms. The reasoning behind
      * this is that hydrogens may be deleted. However, you can also use
-     * OBStereo::ImplicitId explicitly in code like:
+     * OBStereo::ImplicitRef explicitly in code like:
      *
      * @code
      * // 
@@ -186,7 +186,7 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
      * reading smiles F/C=C\F cis-difluorethene
      * OBCisTransStereo ct(mol);
      * ct.SetCenters(1, 2);
-     * ct.SetRefs(OBStereo::MakeRefs(0, OBStereo::ImplicitId, OBStereo::ImplicitId, 3));
+     * ct.SetRefs(OBStereo::MakeRefs(0, OBStereo::ImplicitRef, OBStereo::ImplicitRef, 3));
      * ...
      * @endcode
      *
