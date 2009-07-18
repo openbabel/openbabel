@@ -40,6 +40,9 @@ using namespace std;
 
 namespace OpenBabel {
 
+  // some constant variables
+  const char BondUpChar
+
   //Base class for SMIFormat and CANSIFormat with most of the functionality
   class SMIBaseFormat : public OBMoleculeFormat
   {
@@ -163,7 +166,7 @@ namespace OpenBabel {
 
   class OBSmilesParser
   {
-    int _bondflags;
+    char _updown;
     int _order;
     int _prev;
     char *_ptr;
@@ -175,10 +178,14 @@ namespace OpenBabel {
     vector<bool>         _bvisit;
     char _buffer[BUFF_SIZE];
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
-    bool chiralWatch; // set when a chiral atom is read
-    map<OBAtom*, OBTetrahedralStereo::Config*> _tetrahedralMap; // map of ChiralAtoms and their data
     OBAtomClassData _classdata; // to hold atom class data like [C:2]
     vector<OBBond*> _bcbonds; // Remember which bonds are bond closure bonds
+    
+    // stereochimistry
+    bool chiralWatch; // set when a chiral atom is read
+    map<OBAtom*, OBTetrahedralStereo::Config*> _tetrahedralMap; // map of tetrahedral atoms and their data
+    map<OBBond*, OBCisTransStereo*> _cistransMap; // map of cis/trans bonds and their data
+    vector<char> _vUpDown; // store the '/' & '\' as they occured in smiles
 
   public:
 
@@ -195,9 +202,10 @@ namespace OpenBabel {
     void FindAromaticBonds(OBMol &mol,OBAtom*,int);
     void FindAromaticBonds(OBMol&);
     void FindOrphanAromaticAtoms(OBMol &mol); //CM 18 Sept 2003
-    void FixCisTransBonds(OBMol &);
+    //void FixCisTransBonds(OBMol &);
     int NumConnections(OBAtom *);
-    void CreateCisTrans(OBMol &mol, list<OBCisTransStereo> &cistrans);
+    //void CreateCisTrans(OBMol &mol, list<OBCisTransStereo> &cistrans);
+    void CreateCisTrans(OBMol &mol);
   };
 
   /////////////////////////////////////////////////////////////////
@@ -367,10 +375,10 @@ namespace OpenBabel {
               _order = 5;
               break;
             case '/':
-              _bondflags |= OB_TORDOWN_BOND;   // initial mark, see FixCisTransBonds() below 
+              _updown = BondDownChar;
               break;
             case '\\':
-              _bondflags |= OB_TORUP_BOND;     // initial mark, see FixCisTransBonds() below 
+              _updown = BondUpChar;
               break;
             default:
               if (!ParseSimple(mol))
@@ -414,7 +422,9 @@ namespace OpenBabel {
     //
     // timvdm: replace this with CreateCisTrans(mol, cistrans) which should 
     //         store the result using new OBCisTransStereo
-    FixCisTransBonds(mol);
+    //FixCisTransBonds(mol);
+    CreateCisTrans(mol);
+
 
     mol.EndModify();
 
@@ -463,6 +473,7 @@ namespace OpenBabel {
   //         needed functions could be added to OBCisTransStereo to mimic 
   //         this behaviour.
   //
+  /*
   void OBSmilesParser::FixCisTransBonds(OBMol &mol)
   {
     // FIXME --------------------------------------------------------------
@@ -572,11 +583,11 @@ namespace OpenBabel {
       else
         UpDown->first->SetDown();
   }
+  */
 
   void OBSmilesParser::CreateCisTrans(OBMol &mol, list<OBCisTransStereo> &cistrans)
   {
     // Create a vector of CisTransStereo objects for the molecule
-    
     FOR_BONDS_OF_MOL(dbi, mol) {
 
       OBBond *dbl_bond = &(*dbi);
@@ -745,6 +756,8 @@ namespace OpenBabel {
     int element;
     bool arom=false;
     memset(symbol,'\0',sizeof(char)*3);
+    
+    _updown = ' '; // timvdm
 
     if (isupper(*_ptr))
       switch(*_ptr)
@@ -903,7 +916,8 @@ namespace OpenBabel {
               }
           }
 
-        mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
+        mol.AddBond(_prev, mol.NumAtoms(), _order);
+        _vUpDown.push_back(_updown);
        
         
         //NE iterate through and see if atom is bonded to chiral atom
@@ -925,7 +939,7 @@ namespace OpenBabel {
     //set values
     _prev = mol.NumAtoms();
     _order = 1;
-    _bondflags = 0;
+    _updown = ' ';
 
     mol.UnsetAromaticPerceived(); //undo 
     return(true);
@@ -1766,7 +1780,9 @@ namespace OpenBabel {
               }
           }
         mol.UnsetAromaticPerceived();
-        mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
+        mol.AddBond(_prev, mol.NumAtoms(), _order);
+        _vUpDown.push_back(_updown);
+        
         if(chiralWatch) // if chiral atom, set previous as from atom
           {
             //cout << "Line 1622: adding previous reference: id = " << mol.GetAtom(_prev)->GetId() << endl;
@@ -1792,7 +1808,7 @@ namespace OpenBabel {
     //set values
     _prev = mol.NumAtoms();
     _order = 1;
-    _bondflags = 0;
+    _updown = ' ';
 
     //now add hydrogens
     if(hcount==0)
@@ -1803,7 +1819,8 @@ namespace OpenBabel {
         atom = mol.NewAtom();
         atom->SetAtomicNum(1);
         atom->SetType("H");
-        mol.AddBond(_prev,mol.NumAtoms(),1);
+        mol.AddBond(_prev, mol.NumAtoms(), 1);
+        _vUpDown.push_back(_updown);
         if(chiralWatch)
           {
             //cout << "Line 1652: explicit hydrogen on chiral atom, adding to the refs: id = " << atom->GetId() << endl;
@@ -1840,7 +1857,8 @@ namespace OpenBabel {
         atom->SetType("*");
 
         // bond dummy atom to mol via external bond
-        mol.AddBond((*bond)[1],atom->GetIdx(),(*bond)[2],(*bond)[3]);
+        mol.AddBond((*bond)[1], atom->GetIdx(), (*bond)[2]);
+        _vUpDown.push_back((*bond)[3]);
         OBBond *refbond = atom->GetBond(mol.GetAtom((*bond)[1]));
 
         //record external bond information
@@ -1887,12 +1905,12 @@ namespace OpenBabel {
         _ptr++;
         break;
       case '/': //chiral, but _order still == 1
-        _bondflags |= OB_TORDOWN_BOND;
+        _updown = BondDownChar;
         _ptr++;
         break;
         _ptr++;
       case '\\': // chiral, but _order still == 1
-        _bondflags |= OB_TORUP_BOND;
+        _updown = BondUpChar;
         _ptr++;
         break;
       default: // no bond indicator just leave order = 1
@@ -1916,14 +1934,15 @@ namespace OpenBabel {
 
     //check for dot disconnect closures
     vector<vector<int> >::iterator j;
-    int bondFlags,bondOrder;
+    int upDown, bondOrder;
     for(j = _extbond.begin();j != _extbond.end();j++)
       {
         if((*j)[0] == digit)
           {
-            bondFlags = (_bondflags > (*j)[3]) ? _bondflags : (*j)[3];
+            upDown = (_updown > (*j)[3]) ? _updown : (*j)[3]; // FIXME: make sure this is correct (timvdm)
             bondOrder = (_order > (*j)[2]) ? _order : (*j)[2];
-            mol.AddBond((*j)[1],_prev,bondOrder,bondFlags);
+            mol.AddBond((*j)[1], _prev, bondOrder);
+            _vUpDown.push_back(upDown);
             
             // after adding a bond to atom "_prev"
             // search to see if atom is bonded to a chiral atom
@@ -1942,7 +1961,7 @@ namespace OpenBabel {
               }
             
             _extbond.erase(j);
-            _bondflags = 0;
+            _updown = ' ';
             _order = 0;
             return(true);
           }
@@ -1953,11 +1972,11 @@ namespace OpenBabel {
     vtmp[0] = digit;
     vtmp[1] = _prev;
     vtmp[2] = _order;
-    vtmp[3] = _bondflags;
+    vtmp[3] = _updown;
 
     _extbond.push_back(vtmp);
     _order = 1;
-    _bondflags = 0;
+    _updown = ' ';
 
     return(true);
 
@@ -1983,12 +2002,12 @@ namespace OpenBabel {
       }
     digit = atoi(str);
 
-    int bf,ord;
+    int upDown,ord;
     vector<vector<int> >::iterator j;
     for (j = _rclose.begin();j != _rclose.end();j++)
       if ((*j)[0] == digit)
         {
-          bf = (_bondflags > (*j)[3]) ? _bondflags : (*j)[3];
+          upDown = (_updown > (*j)[3]) ? _updown : (*j)[3]; // FIXME: make sure this is correct (timvdm) 
           ord = (_order > (*j)[2]) ? _order : (*j)[2];
           // Check if this ring closure bond may be aromatic and set order accordingly
           if (ord == 1) {
@@ -2000,7 +2019,8 @@ namespace OpenBabel {
             mol.UnsetAromaticPerceived();
           }
           
-          mol.AddBond((*j)[1],_prev,ord,bf,(*j)[4]);
+          mol.AddBond((*j)[1], _prev, ord, 0, (*j)[4]);
+          _vUpDown.push_back(upDown);
           
           // For assigning cis/trans in the presence of bond closures, we need to
           // remember all bond closure bonds.
@@ -2057,7 +2077,7 @@ namespace OpenBabel {
           patom->SetSpinMultiplicity(0);
           //CM end
           _rclose.erase(j);
-          _bondflags = 0;
+          _updown = ' ';
           _order = 1;
           return(true);
         }
@@ -2066,7 +2086,7 @@ namespace OpenBabel {
     vtmp[0] = digit;
     vtmp[1] = _prev;
     vtmp[2] = _order;
-    vtmp[3] = _bondflags;
+    vtmp[3] = _updown;
     OBAtom* atom = mol.GetAtom(_prev);
     if(!atom)
       {
@@ -2081,7 +2101,7 @@ namespace OpenBabel {
 
     _rclose.push_back(vtmp);
     _order = 1;
-    _bondflags = 0;
+    _updown = ' ';
 
     return(true);
   }
@@ -3867,6 +3887,7 @@ namespace OpenBabel {
         h->SetAtomicNum(1);
         h->SetType("H");
         mol.AddBond((*i)->GetIdx(), h->GetIdx(), 1, 0, -1);
+        _vUpDown.push_back(' ');
 
         // Set its (x,y,z) coordinates
         // timvdm: only do this if the molecule has 3D coords

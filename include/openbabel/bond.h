@@ -47,9 +47,9 @@ namespace OpenBabel
 #define OB_HASH_BOND      (1<<3)
   //! A bond in a ring
 #define OB_RING_BOND      (1<<4)
-  //! The "upper" bond in a double bond cis/trans isomer (i.e., "/" in SMILES)
+  //! The "upper" bond in a double bond cis/trans isomer (i.e., "\" in SMILES) <-- this was wrong (/), obsolete anyway
 #define OB_TORUP_BOND     (1<<5)
-  //! The "down" bond in a double bond cis/trans isomer (i.e., "\" in SMILES)
+  //! The "down" bond in a double bond cis/trans isomer (i.e., "/" in SMILES) <-- same
 #define OB_TORDOWN_BOND   (1<<6)
   //! A Kekule single bond
 #define OB_KSINGLE_BOND   (1<<7)
