@@ -27,6 +27,10 @@ namespace OpenBabel {
           u1 = OBTetraPlanarStereo::ToConfig(*this, *i, OBStereo::ShapeU); // refs[0] = u1.refs[0]
           u2 = OBTetraPlanarStereo::ToConfig(other, *i, OBStereo::ShapeU); // refs[0] = u2.refs[0]
         }
+
+      // check if they actualy share an id...
+      if (u1.refs.empty())
+        return false;
     } else {
       // normalize the other Config struct
       u1 = OBTetraPlanarStereo::ToConfig(*this, refs.at(0), OBStereo::ShapeU); // refs[0] = u1.refs[0]
