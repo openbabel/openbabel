@@ -841,6 +841,124 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   return nclasses;
 }
 
+/***************************************************************************
+* FUNCTION: CanonicalLabels
+*
+* DESCRIPTION:
+*       Generates a canonical labeling of the atoms of a molecule, and as
+*       a side benefit, returns the symmetry classes of the molecule.
+*
+*       To create a canonical labeling, we need every node to have a unique
+*       label.  The canonical symmetry classes (see CalculateSymmetry(),
+*       above) are a good start, but the atoms in each symmetry class are
+*       still indistinguishable.  For writing a canonical string, we need
+*       to create an arbitrary, but canonical (repeatable) distinction
+*       between the atoms in each symmetry class -- "break the ties" in the
+*       symmetry values.
+*
+*       To break ties, we sort into symetry-class order, double all class
+*       IDs, then arbitrarily subtract one from the first repeated symmetry
+*       class, thus breaking the tie (see Weininger et al).  With this new
+*       set of symmetry classes, we repeat the extended-connectivity sums
+*       to "spread" the broken symmetry class, and check again.  This is
+*       repeated until all symmetry is gone and every atom has a unique
+*       label.
+*
+* RETURNS:
+*       symmetry_classes - A vector, indexed by [ OBAtom::GetIdx() - 1].
+*       canonical_labels - A vector, indexed by [ OBAtom::GetIdx() - 1].
+***************************************************************************/
+
+  void OBGraphSym::CanonicalLabels(vector<unsigned int> &symmetry_classes,
+                     vector<unsigned int> &canonical_labels)    // on input: symclasses
+{
+  vector<pair<OBAtom*,unsigned int> > atom_sym_classes, vp1, vp2;
+  vector<OBNodeBase*>::iterator j;
+  unsigned int nclass1, nclass2; //number of classes
+  int i;
+
+  int nfragatoms = _frag_atoms->CountBits();
+  int natoms = _pmol->NumAtoms();
+
+  // Calculate symmetry classes
+  nclass1 = CalculateSymmetry(atom_sym_classes);
+
+#if DEBUG
+  cout << "BEFORE TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
+  print_vector_pairs("    ", atom_sym_classes);
+#endif
+
+  // The symmetry classes are the starting point for the canonical labels
+  vp1 = atom_sym_classes;
+
+  if (nclass1 < nfragatoms) {
+    int tie_broken = 1;
+    while (tie_broken) {
+      tie_broken = 0;
+      int last_rank = -1;
+      for (i = 0; i < vp1.size(); i++) {
+        vp1[i].second *= 2;             // Double symmetry classes
+        if (vp1[i].second == last_rank && !tie_broken) {
+          vp1[i-1].second -= 1;         // Break a tie
+          tie_broken = 1;
+        }
+        last_rank = vp1[i].second;
+      }
+      if (tie_broken) {
+        for (i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
+          CreateNewClassVector(vp1, vp2);
+          CountAndRenumberClasses(vp2, nclass2);
+          vp1 = vp2;
+          if (nclass1 == nclass2) break;
+          nclass1 = nclass2;
+        }
+      } else {
+        CountAndRenumberClasses(vp1, nclass1);  // no more ties - undo the doublings
+      }
+    }
+  }
+
+#if DEBUG
+  cout << "AFTER TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
+  print_vector_pairs("    ", vp1);
+#endif
+
+  // For return values, convert vectors of atom/int pairs into one-dimensional
+  // vectors of int, indexed by atom->GetIdx().
+  //
+  // Since we're working with a molecular fragment, the symmetry-class and
+  // canonical-label vectors are both shorter than the number of atoms in
+  // the molecule.  To fix it, we append all of the non-fragment atoms to
+  // the end, with a very large value, then, re-sort the vector by the
+  // atom's GetIdx() number, and finally copy the result so that the vector
+  // corresponds to the atoms' order in the molecule.
+
+#define NO_SYMCLASS 0x7FFFFFFF
+
+  // Add non-fragment atoms so vector is same length as natoms in molecule
+  for (OBAtom *atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j))
+    if (!((*_frag_atoms).BitIsOn(atom->GetIdx()))) {
+      atom_sym_classes.push_back(pair<OBAtom*,unsigned int> (atom, NO_SYMCLASS));
+      vp1.push_back(pair<OBAtom*,unsigned int> (atom, NO_SYMCLASS));
+    }
+
+  vector<pair<OBAtom*,unsigned int> >::iterator k;
+
+  // Sort and copy symmetry classes
+  symmetry_classes.clear();
+  sort(atom_sym_classes.begin(),atom_sym_classes.end(),ComparePairFirst);
+  for (k = atom_sym_classes.begin();k != atom_sym_classes.end();k++)
+    symmetry_classes.push_back(k->second);
+
+  // Sort and copy canonical labels
+  canonical_labels.clear();
+  sort(vp1.begin(),vp1.end(),ComparePairFirst);
+  for (k = vp1.begin();k != vp1.end();k++)
+    canonical_labels.push_back(k->second);
+
+}
+
+
 } // namespace OpenBabel
 
 //! \file graphsym.cpp

@@ -52,6 +52,7 @@ namespace OpenBabel {
       void CreateNewClassVector(std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
                                 std::vector<std::pair<OBAtom*,unsigned int> > &vp2);
       void GetGIVector(std::vector<unsigned int> &vid);
+      bool GetGTDVector(std::vector<int> &gtd);
       void CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp, unsigned int &count);
       int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
                            
@@ -78,7 +79,7 @@ namespace OpenBabel {
       //! Destructor
       virtual ~OBGraphSym();
 
-      bool GetGTDVector(std::vector<int> &gtd);
+      
       /**
        * Calculate the symmetry classes for the molecule. The result will be 
        * stored in @p symmetry_classes.
@@ -90,10 +91,24 @@ namespace OpenBabel {
        * @return The number of symmetry classes.
        */
       int CalculateSymmetry(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
+      /**
+       * Calculate the canonical labels for the molecule. The result will be 
+       * stored in @p canonical_labels.
+       *
+       * FIXME
+       *
+       * @return FIXME
+       */
+      void CanonicalLabels(vector<unsigned int> &symmetry_classes,
+                                       vector<unsigned int> &canonical_labels);
     };
 
+      
+      
+      
       //&OBBitVec GetFragment();
       //SetFragment(&OBBitVec);
+
 } // namespace OpenBabel
 
 //! \file graphsym.h
