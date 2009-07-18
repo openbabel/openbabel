@@ -680,15 +680,11 @@ namespace OpenBabel {
     if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
     {
       int insertpos = NumConnections(ChiralSearch->first) - 2;
-
-      // if the chiral center atom is the first atom in the smiles, decrement 
-      if (_prev == 1)
-        insertpos--;
-
       if (insertpos < 0) {
         if (ChiralSearch->second->from != OBStereo::NoId)
           obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
-
+      
+        cout << "insertpos = " << insertpos << endl;
         (ChiralSearch->second)->from = id;
         cerr << "Adding " << id << " at Config.from to " << ChiralSearch->second << endl;
       } else {
@@ -2040,21 +2036,9 @@ namespace OpenBabel {
            */
           cout << "bond->numConnections = " << bond->numConnections << endl;
           cout << "_prev = " << _prev << endl;
+          cout << "bond->digit = " << bond->digit << endl;
           cout << "bond->prev = " << bond->prev << endl;
           int insertpos = bond->numConnections - 1;
-
-          // if the chiral center atom is the first atom in the smiles, decrement 
-          if (bond->prev == 1)
-            insertpos--;
-
-          // if the previous atom has an explicit H, increment numConnections
-          /*
-          OBBondIterator bi;
-          for (OBAtom *nbr = atom->BeginNbrAtom(bi); nbr; nbr = atom->NextNbrAtom(bi))
-            if (nbr->IsHydrogen())
-              insertpos++;
-              */
-
           if (insertpos < 0) {
             if (ChiralSearch->second->from != OBStereo::NoId)
               obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
@@ -2098,12 +2082,11 @@ namespace OpenBabel {
     }
 
     ringClosure.numConnections = NumConnections(atom); //store position to insert closure bond
-    for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) //correct for multiple closure bonds to a single atom
-      if (bond->prev == _prev)
-        ringClosure.numConnections++;
 
     cout << "Adding RingClosureBond..." << endl;
+    cout << "digit = " << digit << endl;
     cout << "_prev = " << _prev << endl;
+    cout << "numConnections = " << ringClosure.numConnections << endl;
 
     /*
     // if the previous atom has an explicit H, increment numConnections
