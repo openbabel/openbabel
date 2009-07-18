@@ -26,8 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 
-
-#include <openbabel/canon.h>
+#include <openbabel/graphsym.h>
 
 #include <limits>
 #include <iostream>
@@ -3295,12 +3294,12 @@ namespace OpenBabel {
    * DESCRIPTION:
    *        Creates a set of non-canonical labels for the fragment atoms
    * ***************************************************************************/
-  void StandardLabels(OBMol *pMol, OBBitVec &frag_atoms, 
+  void StandardLabels(OBMol *pMol, OBBitVec *frag_atoms, 
                       vector<unsigned int> &symmetry_classes,
                       vector<unsigned int> &labels)
   {		
     FOR_ATOMS_OF_MOL(atom, *pMol) {
-      if (frag_atoms.BitIsOn(atom->GetIdx())) {
+      if (frag_atoms->BitIsOn(atom->GetIdx())) {
         labels.push_back(atom->GetIdx() - 1);
         symmetry_classes.push_back(atom->GetIdx() - 1);
       }
@@ -3380,13 +3379,15 @@ namespace OpenBabel {
 
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
-    if (_canonicalOutput)
-      CanonicalLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+    if (_canonicalOutput) {
+      OBGraphSym gs(&mol, &frag_atoms);
+      gs.CanonicalLabels(symmetry_classes, canonical_order);
+    }
     else {
       if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
         RandomLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
       } else {
-        StandardLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+        StandardLabels(&mol, &frag_atoms, symmetry_classes, canonical_order);
       }
     }
 
