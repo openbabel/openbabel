@@ -59,6 +59,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/tetrahedral.h>
 
 #include <iterator> // std::istream_iterator
+#include <cassert>
 
 using namespace std;
 
@@ -1032,6 +1033,15 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   // The heart of the matter: Do extended sum-of-invariants until no further
   // changes are noted. 
   int nclasses = ExtendInvariants(symmetry_classes);
+
+  // Convert to a vector indexed by Index
+  // Atoms not in the fragment will have a value of OBGraphSym::NoSymmetryClass
+  vector<unsigned int> atom_sym_classes;
+  atom_sym_classes.clear();
+  atom_sym_classes.resize(_pmol->NumAtoms(), NoSymmetryClass);
+  for (int i = 0; i < symmetry_classes.size(); ++i) {
+    atom_sym_classes[symmetry_classes.at(i).first->GetIndex()] = symmetry_classes.at(i).second;
+  }
 
   return nclasses;
 }

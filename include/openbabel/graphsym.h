@@ -62,10 +62,11 @@ namespace OpenBabel {
       void BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_classes);
     public:
       //! Constructor
-      OBGraphSym(OBMol* pmol = NULL, OBBitVec* frag_atoms = NULL);
+      OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms = NULL);
       //! Destructor
       virtual ~OBGraphSym();
 
+      static const unsigned int NoSymmetryClass = 0x7FFFFFFF;
       
       /**
        * Calculate the symmetry classes for the molecule. The result will be 
