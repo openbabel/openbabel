@@ -31,13 +31,22 @@ namespace OpenBabel {
       // normalize the other Config struct
       u1 = OBTetraPlanarStereo::ToConfig(*this, refs.at(0), OBStereo::ShapeU); // refs[0] = u1.refs[0]
       u2 = OBTetraPlanarStereo::ToConfig(other, refs.at(0), OBStereo::ShapeU); // refs[0] = u2.refs[0]
+      // both now start with the same ref
+      //
+      // 2 possiblilities:
+      //
+      //   1 2 3 4      1 2 3 4
+      //   |   |        |   |      <- in any case, refs[0] & refs[2] remain unchanged
+      //   1 2 3 4      1 4 3 2
+      //
+      return (u1.refs[2] == u2.refs[2]); 
     }
 
     // possibilities:
     //
     //   1 2 3 4
     //   |   |      <- refs[0] & refs[2] remain unchanged
-    //   1 4 3 2
+    //   1 H 3 H
     //
     //   1 2 3 4
     //   |     |    <- refs[0] & refs[3] remain unchanged
@@ -47,10 +56,12 @@ namespace OpenBabel {
     //   | |        <- refs[0] & refs[1] remain unchanged
     //   1 2 H H
     if ((u1.refs[2] == OBStereo::ImplicitId) || (u2.refs[2] == OBStereo::ImplicitId)) {
-      if ((u1.refs[3] == OBStereo::ImplicitId) || (u2.refs[3] == OBStereo::ImplicitId))
+      // 1 2 H 4
+      if ((u1.refs[3] == OBStereo::ImplicitId) || (u2.refs[3] == OBStereo::ImplicitId)) {
         return (u1.refs[1] == u2.refs[1]); // 1 2 H H
-      else
-        return (u1.refs[3] == u2.refs[3]); // 1 H H 3
+      } else {
+        return (u1.refs[3] == u2.refs[3]); // 1 H H 4
+      }
     } else
       return (u1.refs[2] == u2.refs[2]); // 1 2 3 4  &  1 H 3 4  &  1 2 3 H
 

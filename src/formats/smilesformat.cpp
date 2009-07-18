@@ -2340,6 +2340,7 @@ namespace OpenBabel {
       if (!ct)
         continue;
       _cistrans.push_back(*ct);
+      cout << "ct = " << *ct << endl;
     }
 
     _unvisited_cistrans = _cistrans; // Make a copy of _cistrans

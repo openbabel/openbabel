@@ -48,13 +48,9 @@ void test_configStruct()
 
   // test 4 shape == U shape
   OBCisTransStereo::Config cfg3(0, 1, OBStereo::MakeRefs(2, 4, 3, 5), OBStereo::Shape4);
-  cout << reference << endl;
-  cout << cfg3 << endl;
   OB_ASSERT( reference == cfg3 );
 
   // test Z shape == U shape
-  cout << cfg2 << endl;
-  cout << cfg3 << endl;
   OB_ASSERT( cfg2 == cfg3 );
 
 }

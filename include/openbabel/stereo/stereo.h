@@ -211,7 +211,14 @@ namespace OpenBabel {
   class OBAPI OBStereoFacade
   {
     public:
-      OBStereoFacade(OBMol *mol) : m_mol(mol), m_init(false)
+      /**
+       * Constructor with @p mol and @p perceive parameter.
+       *
+       * @param perceive If true, PerceiveStereo will be called if the 
+       * OBMol::HasChiralityPerceived() flag is not set. (default is true)
+       */
+      OBStereoFacade(OBMol *mol, bool perceive = true) : 
+          m_mol(mol), m_init(false), m_perceive(perceive)
       {
       }
 
@@ -235,6 +242,7 @@ namespace OpenBabel {
 
       OBMol *m_mol;
       bool m_init;
+      bool m_perceive;
       std::map<unsigned long, OBTetrahedralStereo*> m_tetrahedralMap;
       std::map<unsigned long, OBCisTransStereo*> m_cistransMap;
   };

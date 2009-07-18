@@ -59,7 +59,7 @@ namespace OpenBabel {
 
   void OBStereoFacade::InitMaps()
   {
-    if (!m_mol->HasChiralityPerceived()) {
+    if (m_perceive && !m_mol->HasChiralityPerceived()) {
       if (m_mol->Has3D())
         StereoFrom3D(m_mol);
       else if (m_mol->Has2D())
@@ -78,7 +78,7 @@ namespace OpenBabel {
           continue;
         m_tetrahedralMap[config.center] = ts;
       } else
-      if (type == OBStereo::Tetrahedral) {
+      if (type == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
         OBCisTransStereo::Config config = ct->GetConfig();
         // find the bond id from begin & end atom ids

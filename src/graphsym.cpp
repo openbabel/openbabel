@@ -55,7 +55,9 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/canon.h>
 #include <openbabel/graphsym.h>
-#include <openbabel/stereo/stereo.h>
+
+#include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/tetrahedral.h>
 
 using namespace std;
 
@@ -363,6 +365,26 @@ namespace OpenBabel {
 *
 ***************************************************************************/
 
+void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config, 
+    const std::vector<unsigned int> &symClasses)
+{
+  OBAtom *atom;
+  // begin
+  atom = mol->GetAtomById(config.begin);
+  if (atom)
+    config.begin = symClasses.at(atom->GetIndex());
+  // end
+  atom = mol->GetAtomById(config.end);
+  if (atom)
+    config.end = symClasses.at(atom->GetIndex());
+  // refs
+  for (unsigned int i = 0; i < config.refs.size(); ++i) {
+    atom = mol->GetAtomById(config.refs.at(i));
+    if (atom)
+      config.refs[i] = symClasses.at(atom->GetIndex());
+  }
+}
+
 void OBGraphSym::BreakChiralTies(OBMol *pmol,
                             OBBitVec &frag_atoms, int nfragatoms,
                             vector<pair<OBAtom*, unsigned int> > &atom_sym_classes)
@@ -548,7 +570,7 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
     int endSymClass = index2sym_class[end1];
  
     // Start the vector of "same class" bonds by adding this bond
-    vector<OBBond *> same_class;
+    vector<OBBond*> same_class;
     same_class.push_back(bond1);
 
     // Inner Loop: Find all other bonds with the same symmetry classes
@@ -578,15 +600,70 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
     cout << "\n";
     // DEBUG
 
+    // find cis/trans bonds using current symmetry classes
+    if (_pmol->Has3D())
+      CisTransFrom3D(_pmol, index2sym_class);
+    else
+      CisTransFrom2D(_pmol, index2sym_class);
+    cout << "1a" << endl;
 
+    // false = don't perceive stereochemistry, we already did it explicitly above
+    OBStereoFacade stereoFacade(_pmol, false); 
+    // get the reference config
+    OBCisTransStereo::Config refConfig = stereoFacade.GetCisTransStereo(*id1)->GetConfig();
+    // this 'odd' variable will always be the same (see below...)
+    bool odd = OBStereo::NumInversions(refConfig.refs) % 2;
+    // convert id --> symmetry classes to compare
+    IdsToSymClasses(_pmol, refConfig, index2sym_class);
+
+    // Devide the cis/trans in two groups based on C/T by comparing the Configs
+    vector<OBBond*> symclass1, symclass2;
 
     vector<OBBond*>::iterator ibond;
-    for (ib = same_class.begin(); ibond != same_class.end(); ibond++) {
-      
+    for (ibond = same_class.begin(); ibond != same_class.end(); ibond++) {
+      OBCisTransStereo::Config otherConfig = stereoFacade.GetCisTransStereo((*ibond)->GetId())->GetConfig();
+      IdsToSymClasses(_pmol, otherConfig, index2sym_class);
+
+      // compare
+      if (refConfig == otherConfig)
+        symclass1.push_back(*ibond); // same, add it to symclass1
+      else
+        symclass2.push_back(*ibond); // different, add to symclass2
     }
 
+    cout << "symclass1.size() " << symclass1.size() << endl;
+    cout << "symclass2.size() " << symclass2.size() << endl;
 
+    // If there's nothing in symclass2, then we don't have to split 
+    // the symmetry class.
+    if (symclass2.empty())
+      continue;
+    
+    cout << "Time to break chiral ties..." << endl;
 
+    // Time to break the class in two. Double all symmetry classes
+    // Then, either add one or subtract one to all the atoms in symclass2,
+    // the atoms that didn't match the chirality of the "reference" class above.
+    // The add-or-subtract decision is based on odd, the number of inversions of 
+    // the U shaped reference config above; by doing this, we force a consistent 
+    // choice of '\' or '/' for the, two double bonds; otherwise it's arbitrary 
+    // and you'll get two different SMILES.
+    for (int i = 0; i < atom_sym_classes.size(); i++) {
+      atom_sym_classes[i].second *= 2;
+      for (int j = 0; j < symclass2.size(); j++) {
+        // changing the begin atom should be enough
+        if (symclass2[j]->GetBeginAtom() == atom_sym_classes[i].first) {
+          if (odd)
+            atom_sym_classes[i].second += 1;
+          else
+            atom_sym_classes[i].second -= 1;
+        }
+      }
+    }
+
+    // Now propagate the change across the whole molecule with the
+    // extended sum-of-invariants.
+    ExtendInvariants(atom_sym_classes, nfragatoms, _pmol->NumAtoms());
   }
  
 }

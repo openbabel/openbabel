@@ -419,7 +419,7 @@ namespace OpenBabel {
       if (config.refs.size() == 1) {
         config.refs.push_back(OBStereo::ImplicitId);
         vector3 pos;
-        mol->GetAtomById(config.refs.at(0))->GetNewBondVector(pos, 1.0);
+        begin->GetNewBondVector(pos, 1.0);
         bondVecs.push_back(pos);
       }
       // end
@@ -433,18 +433,31 @@ namespace OpenBabel {
       if (config.refs.size() == 3) {
         config.refs.push_back(OBStereo::ImplicitId);
         vector3 pos;
-        mol->GetAtomById(config.refs.at(2))->GetNewBondVector(pos, 1.0);
+        end->GetNewBondVector(pos, 1.0);
         bondVecs.push_back(pos);
       }
+
+      cout << "bondVecs:" << endl;
+      cout << bondVecs[0] << endl;
+      cout << bondVecs[1] << endl;
+      cout << bondVecs[2] << endl;
+      cout << bondVecs[3] << endl;
 
       // 0      3       
       //  \    /        2 triangles: 0-1-b & 2-3-a
       //   a==b    -->  same sign: U
       //  /    \        opposite sign: Z
       // 1      2       
+      /*
+      double sign1 = TriangleSign(begin->GetVector(), end->GetVector(), bondVecs[0]);
+      double sign2 = TriangleSign(begin->GetVector(), end->GetVector(), bondVecs[2]);
+      */
       double sign1 = TriangleSign(bondVecs[0], bondVecs[1], end->GetVector());
       double sign2 = TriangleSign(bondVecs[2], bondVecs[3], begin->GetVector());
       double sign = sign1 * sign2;
+
+      cout << "sign1 = " << sign1 << endl;
+      cout << "sign2 = " << sign2 << endl;
 
       if (sign < 0.0) // opposite sign
         config.shape = OBStereo::ShapeZ;
