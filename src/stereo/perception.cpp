@@ -31,9 +31,188 @@ namespace OpenBabel {
  
   ////////////////////////////////////////////////////////////////////////////
   //
-  //  General (0D)
+  //  General
   //
   ////////////////////////////////////////////////////////////////////////////
+
+  void PerceiveStereo(OBMol *mol, bool force)
+  {
+    switch (mol->GetDimension()) {
+      case 3:
+        StereoFrom3D(mol, force);
+        break;
+      case 2:
+        StereoFrom2D(mol, force);
+        break;
+      default:
+        // unlike 2D/3D, 0D doesn't delete any OBStereo data objects, 
+        // it only adds new ones for previously unidentified stereogenic
+        // units.
+        StereoFrom0D(mol);
+        break;
+    }
+    
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::PerceiveStereo", obAuditMsg);
+  }
+
+  std::vector<unsigned long> FindTetrahedralAtoms(OBMol *mol, const std::vector<unsigned int> &symClasses)
+  {
+    std::vector<unsigned long> centers;
+
+    // do quick test to see if there are any possible chiral centers
+    bool mayHaveChiralCenter = false;
+    OBAtom *atom, *nbr;
+    std::vector<OBAtom*>::iterator i;
+    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
+      if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
+        mayHaveChiralCenter = true;
+        break;
+      }
+
+    if (!mayHaveChiralCenter)
+      return centers;
+    if (symClasses.size() != mol->NumAtoms())
+      return centers;
+
+    std::vector<unsigned int> tlist;
+    std::vector<unsigned int>::iterator k;
+
+    bool ischiral;
+    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i)) {
+      if (atom->IsNitrogen() || atom->IsPhosphorus() || atom->IsSulfur())
+        continue;
+      if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
+        tlist.clear();
+        ischiral = true;
+
+        std::vector<OBBond*>::iterator j;
+        for (nbr = atom->BeginNbrAtom(j); nbr; nbr = atom->NextNbrAtom(j)) {
+          for (k = tlist.begin(); k != tlist.end(); ++k)
+            if (symClasses[nbr->GetIndex()] == *k)
+              ischiral = false;
+
+          if (ischiral)
+            tlist.push_back(symClasses[nbr->GetIndex()]);
+          else
+            break;
+        }
+
+        if (ischiral) {
+          centers.push_back(atom->GetId());
+        }
+      }
+    }
+
+    return centers;
+  }
+  
+  std::vector<unsigned long> FindCisTransBonds(OBMol *mol, const std::vector<unsigned int> &symClasses)
+  {
+    std::vector<unsigned long> bonds;
+          
+    //do quick test to see if there are any possible chiral centers
+    bool mayHaveCisTransBond = false;
+    std::vector<OBBond*>::iterator i;
+    for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i))
+      if (bond->GetBO() == 2 && !bond->IsAromatic()) {
+        mayHaveCisTransBond = true;
+        break;
+      }
+
+    if (!mayHaveCisTransBond)
+      return bonds;
+    if (symClasses.size() != mol->NumAtoms())
+      return bonds;
+
+    bool isCisTrans;
+    for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i)) {
+      if (bond->IsAromatic())
+        continue;
+
+      if (bond->GetBO() == 2) {
+        OBAtom *begin = bond->GetBeginAtom();
+        OBAtom *end = bond->GetEndAtom();
+        if (!begin || !end) 
+          continue;
+
+        // Needs to have at least one explicit single bond at either end
+        if (!begin->HasSingleBond() || !end->HasSingleBond())
+          continue;
+          
+        isCisTrans = true;
+        std::vector<OBBond*>::iterator j;
+         
+        if (begin->GetValence() == 2) {
+          // begin atom has two neighbors, the first is the end atom. The second should 
+          // be a heavy atom in which case the thirth will be assumed to be implicit
+          // (hydrogen, lone pair on N, ...)
+          for (OBAtom *nbr = begin->BeginNbrAtom(j); nbr; nbr = begin->NextNbrAtom(j)) {
+            if (nbr->GetId() == end->GetId())
+              continue;
+            // two implicit atoms?
+            if (nbr->IsHydrogen())
+              isCisTrans = false;
+          }
+        } else { 
+          // valence == 3
+          std::vector<unsigned int> tlist;
+          
+          for (OBAtom *nbr = begin->BeginNbrAtom(j); nbr; nbr = begin->NextNbrAtom(j)) {
+            // skip end atom
+            if (nbr->GetId() == end->GetId())
+              continue;
+            // do we already have an atom with this symmetry class?
+            if (tlist.size()) {
+              // compare second with first
+              if (symClasses[nbr->GetIdx()-1] == tlist.at(0))
+                isCisTrans = false;
+              break;
+            }
+              
+            // save first summetry class
+            tlist.push_back(symClasses[nbr->GetIdx()-1]);
+          }
+        }
+
+        if (end->GetValence() == 2) {
+          // begin atom has two neighbors, the first is the end atom. The second should 
+          // be a heavy atom in which case the thirth will be assumed to be implicit
+          // (hydrogen, lone pair on N, ...)
+          for (OBAtom *nbr = end->BeginNbrAtom(j); nbr; nbr = end->NextNbrAtom(j)) {
+            if (nbr->GetId() == begin->GetId())
+              continue;
+            // two implicit atoms?
+            if (nbr->IsHydrogen())
+              isCisTrans = false;
+          }
+        } else { 
+          // valence == 3
+          std::vector<unsigned int> tlist;
+          
+          for (OBAtom *nbr = end->BeginNbrAtom(j); nbr; nbr = end->NextNbrAtom(j)) {
+            // skip end atom
+            if (nbr->GetId() == begin->GetId())
+              continue;
+            // do we already have an atom with this symmetry class?
+            if (tlist.size()) {
+              // compare second with first
+              if (symClasses[nbr->GetIdx()-1] == tlist.at(0))
+                isCisTrans = false;
+              break;
+            }
+                
+            // save first summetry class
+            tlist.push_back(symClasses[nbr->GetIdx()-1]);
+          }
+        }
+
+        if (isCisTrans)
+          bonds.push_back(bond->GetId());
+      }
+    }
+
+    return bonds;
+  }
 
   /**
    * Perform symmetry analysis.
@@ -57,9 +236,190 @@ namespace OpenBabel {
 
   ////////////////////////////////////////////////////////////////////////////
   //
+  //  From0D
+  //
+  ////////////////////////////////////////////////////////////////////////////
+
+  void StereoFrom0D(OBMol *mol)
+  {
+    if (mol->HasChiralityPerceived())
+      return;
+     
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom0D", obAuditMsg);
+
+    // From0D doesn't delete existing data because we don't want to loose anything
+    std::vector<unsigned int> symClasses = FindSymmetry(mol);
+    TetrahedralFrom0D(mol, symClasses);
+    CisTransFrom0D(mol, symClasses);
+    mol->SetChiralityPerceived();
+  }
+
+  std::vector<OBTetrahedralStereo*> TetrahedralFrom0D(OBMol *mol, 
+      const std::vector<unsigned int> symClasses, bool addToMol)
+  {
+    std::vector<OBTetrahedralStereo*> configs;
+    // make sure the number of atoms matches the symClasses' size
+    if (symClasses.size() != mol->NumAtoms())
+      return configs;
+    
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::TetrahedralFrom0D", obAuditMsg);
+
+    // make a map of the already existing stereo data objects
+    std::map<unsigned long, OBTetrahedralStereo*> existingMap;
+    std::vector<OBGenericData*>::iterator data;
+    std::vector<OBGenericData*> stereoData = mol->GetAllData(OBGenericDataType::StereoData);
+    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+      if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+        existingMap[ts->GetConfig().center] = ts;
+        configs.push_back(ts);
+      }
+    }
+
+    // find all tetrahedral centers
+    std::vector<unsigned long> centers = FindTetrahedralAtoms(mol, symClasses);
+      
+    std::vector<unsigned long>::iterator i;
+    for (i = centers.begin(); i != centers.end(); ++i) {
+      // if there already exists a OBTetrahedralStereo object for this 
+      // center, continue
+      if (existingMap.find(*i) != existingMap.end())
+        continue;
+
+      OBAtom *center = mol->GetAtomById(*i);
+ 
+      OBTetrahedralStereo::Config config;
+      config.specified = false;
+      config.center = *i;
+      FOR_NBORS_OF_ATOM(nbr, center) {
+        if (config.from == OBStereo::NoId)
+          config.from = nbr->GetId();
+        else
+          config.refs.push_back(nbr->GetId());
+      }
+
+      if ((config.refs.size() == 2))
+        config.refs.push_back(OBStereo::ImplicitId); // need to add largest number on end to work
+
+      OBTetrahedralStereo *th = new OBTetrahedralStereo(mol);
+      th->SetConfig(config);
+      
+      configs.push_back(th);
+      // add the data to the molecule if needed
+      if (addToMol)
+        mol->SetData(th);
+    }
+
+    return configs;    
+  }
+
+  std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol, 
+      const std::vector<unsigned int> &symClasses, bool addToMol)
+  {
+    std::vector<OBCisTransStereo*> configs;
+    if (symClasses.size() != mol->NumAtoms())
+      return configs;
+    
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::CisTransFrom0D", obAuditMsg);
+ 
+    // make a map of the already existing stereo data objects
+    std::map<unsigned long, OBCisTransStereo*> existingMap;
+    std::vector<OBGenericData*>::iterator data;
+    std::vector<OBGenericData*> stereoData = mol->GetAllData(OBGenericDataType::StereoData);
+    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+      if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        OBCisTransStereo::Config config = ct->GetConfig();
+        // find the bond id from begin & end atom ids
+        unsigned long id = OBStereo::NoId;
+        OBAtom *a = mol->GetAtomById(config.begin);
+        if (!a)
+          continue;
+        FOR_BONDS_OF_ATOM (bond, a) {
+          unsigned long beginId = bond->GetBeginAtom()->GetId();
+          unsigned long endId = bond->GetEndAtom()->GetId();
+          if ((beginId == config.begin && endId == config.end) ||
+              (beginId == config.end && endId == config.begin)) {
+            id = bond->GetId();
+            break;
+          }
+        }
+ 
+        existingMap[id] = ct;
+        configs.push_back(ct);
+      }
+    }
+
+    // find all cis/trans bonds
+    std::vector<unsigned long> bonds = FindCisTransBonds(mol, symClasses);
+    
+    std::vector<unsigned long>::iterator i;
+    for (i = bonds.begin(); i != bonds.end(); ++i) {
+      // if there already exists a OBCisTransStereo object for this 
+      // bond, continue
+      if (existingMap.find(*i) != existingMap.end())
+        continue;
+
+      OBBond *bond = mol->GetBondById(*i);
+      OBAtom *begin = bond->GetBeginAtom();
+      OBAtom *end = bond->GetEndAtom();
+
+      OBCisTransStereo::Config config;
+      config.specified = false;
+      // begin
+      config.begin = begin->GetId();
+      FOR_NBORS_OF_ATOM (nbr, begin) {
+        if (nbr->GetId() == end->GetId())
+          continue;
+        config.refs.push_back(nbr->GetId());
+      }
+      if (config.refs.size() == 1) {
+        config.refs.push_back(OBStereo::ImplicitId);
+      }
+      // end
+      config.end = end->GetId();
+      FOR_NBORS_OF_ATOM (nbr, end) {
+        if (nbr->GetId() == begin->GetId())
+          continue;
+        config.refs.push_back(nbr->GetId());
+      }
+      if (config.refs.size() == 3) {
+        config.refs.push_back(OBStereo::ImplicitId);
+      }
+
+      OBCisTransStereo *ct = new OBCisTransStereo(mol);
+      ct->SetConfig(config);
+      
+      configs.push_back(ct);
+      // add the data to the molecule if needed
+      if (addToMol)
+        mol->SetData(ct);
+    }
+
+    return configs;
+  }
+
+
+
+  ////////////////////////////////////////////////////////////////////////////
+  //
   //  From3D
   //
   ////////////////////////////////////////////////////////////////////////////
+
+  void StereoFrom3D(OBMol *mol, bool force)
+  {
+    if (mol->HasChiralityPerceived() && !force)
+      return;
+     
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom3D", obAuditMsg);
+
+    mol->DeleteData(OBGenericDataType::StereoData);
+    std::vector<unsigned int> symClasses = FindSymmetry(mol);
+    TetrahedralFrom3D(mol, symClasses);
+    CisTransFrom3D(mol, symClasses);
+    mol->SetChiralityPerceived();
+  }
 
   //! Calculate the "sign of a volume" given by a set of 4 coordinates
   double VolumeSign(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d)
@@ -163,6 +523,8 @@ namespace OpenBabel {
     std::vector<OBCisTransStereo*> configs;
     if (symClasses.size() != mol->NumAtoms())
       return configs;
+    
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::CisTransFrom3D", obAuditMsg);
  
     // find all cis/trans bonds
     std::vector<unsigned long> bonds = FindCisTransBonds(mol, symClasses);
@@ -239,6 +601,21 @@ namespace OpenBabel {
   //  915-926, http://www.mdpi.org/molecules/papers/61100915/61100915.htm
   ////////////////////////////////////////////////////////////////////////////
 
+  void StereoFrom2D(OBMol *mol, bool force)
+  {
+    if (mol->HasChiralityPerceived() && !force)
+      return;
+      
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom2D", obAuditMsg);
+
+    mol->DeleteData(OBGenericDataType::StereoData);
+    std::vector<unsigned int> symClasses = FindSymmetry(mol);
+    TetrahedralFrom2D(mol, symClasses);
+    CisTransFrom2D(mol, symClasses);
+    mol->SetChiralityPerceived();
+    cout << "----------------------------------------------------------------------------" << endl;
+  }
+ 
   //! Calculate the "sign of a triangle" given by a set of 4 coordinates
   double TriangleSign(const vector3 &a, const vector3 &b, const vector3 &c)
   {
@@ -484,207 +861,7 @@ namespace OpenBabel {
     return configs;
   }
 
-  void PerceiveStereo(OBMol *mol, bool force)
-  {
-    switch (mol->GetDimension()) {
-      case 3:
-        StereoFrom3D(mol, force);
-        break;
-      case 2:
-        StereoFrom2D(mol, force);
-        break;
-      default:
-        break;
-    }
-  }
-
-  void StereoFrom3D(OBMol *mol, bool force)
-  {
-    if (mol->HasChiralityPerceived() && !force)
-      return;
-     
-    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom3D", obAuditMsg);
-
-    mol->DeleteData(OBGenericDataType::StereoData);
-    std::vector<unsigned int> symClasses = FindSymmetry(mol);
-    TetrahedralFrom3D(mol, symClasses);
-    CisTransFrom3D(mol, symClasses);
-    mol->SetChiralityPerceived();
-  }
-
-  void StereoFrom2D(OBMol *mol, bool force)
-  {
-    if (mol->HasChiralityPerceived() && !force)
-      return;
-      
-    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom2D", obAuditMsg);
-
-    mol->DeleteData(OBGenericDataType::StereoData);
-    std::vector<unsigned int> symClasses = FindSymmetry(mol);
-    TetrahedralFrom2D(mol, symClasses);
-    CisTransFrom2D(mol, symClasses);
-    mol->SetChiralityPerceived();
-  }
-  
-  std::vector<unsigned long> FindTetrahedralAtoms(OBMol *mol, const std::vector<unsigned int> &symClasses)
-  {
-    std::vector<unsigned long> centers;
-
-    // do quick test to see if there are any possible chiral centers
-    bool mayHaveChiralCenter = false;
-    OBAtom *atom, *nbr;
-    std::vector<OBAtom*>::iterator i;
-    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
-      if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
-        mayHaveChiralCenter = true;
-        break;
-      }
-
-    if (!mayHaveChiralCenter)
-      return centers;
-    if (symClasses.size() != mol->NumAtoms())
-      return centers;
-
-    std::vector<unsigned int> tlist;
-    std::vector<unsigned int>::iterator k;
-
-    bool ischiral;
-    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i)) {
-      if (atom->IsNitrogen() || atom->IsPhosphorus() || atom->IsSulfur())
-        continue;
-      if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
-        tlist.clear();
-        ischiral = true;
-
-        std::vector<OBBond*>::iterator j;
-        for (nbr = atom->BeginNbrAtom(j); nbr; nbr = atom->NextNbrAtom(j)) {
-          for (k = tlist.begin(); k != tlist.end(); ++k)
-            if (symClasses[nbr->GetIndex()] == *k)
-              ischiral = false;
-
-          if (ischiral)
-            tlist.push_back(symClasses[nbr->GetIndex()]);
-          else
-            break;
-        }
-
-        if (ischiral) {
-          centers.push_back(atom->GetId());
-        }
-      }
-    }
-
-    return centers;
-  }
-  
-  std::vector<unsigned long> FindCisTransBonds(OBMol *mol, const std::vector<unsigned int> &symClasses)
-  {
-    std::vector<unsigned long> bonds;
-          
-    //do quick test to see if there are any possible chiral centers
-    bool mayHaveCisTransBond = false;
-    std::vector<OBBond*>::iterator i;
-    for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i))
-      if (bond->GetBO() == 2 && !bond->IsAromatic()) {
-        mayHaveCisTransBond = true;
-        break;
-      }
-
-    if (!mayHaveCisTransBond)
-      return bonds;
-    if (symClasses.size() != mol->NumAtoms())
-      return bonds;
-
-    bool isCisTrans;
-    for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i)) {
-      if (bond->IsAromatic())
-        continue;
-
-      if (bond->GetBO() == 2) {
-        OBAtom *begin = bond->GetBeginAtom();
-        OBAtom *end = bond->GetEndAtom();
-        if (!begin || !end) 
-          continue;
-
-        // Needs to have at least one explicit single bond at either end
-        if (!begin->HasSingleBond() || !end->HasSingleBond())
-          continue;
-          
-        isCisTrans = true;
-        std::vector<OBBond*>::iterator j;
-         
-        if (begin->GetValence() == 2) {
-          // begin atom has two neighbors, the first is the end atom. The second should 
-          // be a heavy atom in which case the thirth will be assumed to be implicit
-          // (hydrogen, lone pair on N, ...)
-          for (OBAtom *nbr = begin->BeginNbrAtom(j); nbr; nbr = begin->NextNbrAtom(j)) {
-            if (nbr->GetId() == end->GetId())
-              continue;
-            // two implicit atoms?
-            if (nbr->IsHydrogen())
-              isCisTrans = false;
-          }
-        } else { 
-          // valence == 3
-          std::vector<unsigned int> tlist;
-          
-          for (OBAtom *nbr = begin->BeginNbrAtom(j); nbr; nbr = begin->NextNbrAtom(j)) {
-            // skip end atom
-            if (nbr->GetId() == end->GetId())
-              continue;
-            // do we already have an atom with this symmetry class?
-            if (tlist.size()) {
-              // compare second with first
-              if (symClasses[nbr->GetIdx()-1] == tlist.at(0))
-                isCisTrans = false;
-              break;
-            }
-              
-            // save first summetry class
-            tlist.push_back(symClasses[nbr->GetIdx()-1]);
-          }
-        }
-
-        if (end->GetValence() == 2) {
-          // begin atom has two neighbors, the first is the end atom. The second should 
-          // be a heavy atom in which case the thirth will be assumed to be implicit
-          // (hydrogen, lone pair on N, ...)
-          for (OBAtom *nbr = end->BeginNbrAtom(j); nbr; nbr = end->NextNbrAtom(j)) {
-            if (nbr->GetId() == begin->GetId())
-              continue;
-            // two implicit atoms?
-            if (nbr->IsHydrogen())
-              isCisTrans = false;
-          }
-        } else { 
-          // valence == 3
-          std::vector<unsigned int> tlist;
-          
-          for (OBAtom *nbr = end->BeginNbrAtom(j); nbr; nbr = end->NextNbrAtom(j)) {
-            // skip end atom
-            if (nbr->GetId() == begin->GetId())
-              continue;
-            // do we already have an atom with this symmetry class?
-            if (tlist.size()) {
-              // compare second with first
-              if (symClasses[nbr->GetIdx()-1] == tlist.at(0))
-                isCisTrans = false;
-              break;
-            }
-                
-            // save first summetry class
-            tlist.push_back(symClasses[nbr->GetIdx()-1]);
-          }
-        }
-
-        if (isCisTrans)
-          bonds.push_back(bond->GetId());
-      }
-    }
-
-    return bonds;
-  }
-
+ 
 
 
 }

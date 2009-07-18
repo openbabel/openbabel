@@ -286,10 +286,18 @@ namespace OpenBabel {
    * @param force Force to run the perception even if the results are cached.
    */
   OBAPI void StereoFrom3D(OBMol *mol, bool force = false);
+  /**
+   * Add missing OBStereo objects. Unlike StereoFrom2D and StereoFrom2D, this
+   * method only adds objects for previously unidentified objects since we 
+   * don't want to loose any information. 
+   *
+   * @param mol The molecule.
+   */
+  OBAPI void StereoFrom0D(OBMol *mol);
 
   /**
    * Get a vector with all OBTetrahedralStereo objects for the molecule. This 
-   * function is used by StereoFrom3D where the @p addToMol parameter is set 
+   * function is used by StereoFrom3D with the @p addToMol parameter is set 
    * to true. 
    *
    * This function is also used for symmetry analysis to handle cases where 
@@ -306,7 +314,7 @@ namespace OpenBabel {
       const std::vector<unsigned int> symClasses, bool addToMol = true);
   /**
    * Get a vector with all OBTetrahedralStereo objects for the molecule. This 
-   * function is used by StereoFrom2D where the @p addToMol parameter is set 
+   * function is used by StereoFrom2D with the @p addToMol parameter is set 
    * to true. 
    *
    * This function is also used for symmetry analysis to handle cases where 
@@ -322,8 +330,25 @@ namespace OpenBabel {
   OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom2D(OBMol *mol, 
       const std::vector<unsigned int> symClasses, bool addToMol = true);
   /**
+   * Get a vector with all OBTetrahedralStereo objects for the molecule. This 
+   * function is used by StereoFrom0D with the @p addToMol parameter is set 
+   * to true. 
+   *
+   * This function is also used for symmetry analysis to handle cases where 
+   * there are two atoms in the same symmetry class that don't have the same 
+   * stereochemistry. In this situation, the @p addToMol parameter is set to 
+   * false and the returned objects will need to be deleted explicitly.
+   *
+   * @param mol The molecule.
+   * @param symClasses The symmetry classes to use.
+   * @param addToMol If true, the OBTetrahedralStereo objects will be added 
+   * to the molecule using OBBase::SetData().
+   */
+  OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom0D(OBMol *mol, 
+      const std::vector<unsigned int> symClasses, bool addToMol = true);
+  /**
    * Get a vector with all OBCisTransStereo objects for the molecule. This 
-   * function is used by StereoFrom3D where the @p addToMol parameter is set 
+   * function is used by StereoFrom3D with the @p addToMol parameter is set 
    * to true. 
    *
    * This function is also used for symmetry analysis to handle cases where 
@@ -340,7 +365,7 @@ namespace OpenBabel {
       const std::vector<unsigned int> &symClasses, bool addToMol = true);
   /**
    * Get a vector with all OBCisTransStereo objects for the molecule. This 
-   * function is used by StereoFrom2D where the @p addToMol parameter is set 
+   * function is used by StereoFrom2D with the @p addToMol parameter is set 
    * to true. 
    *
    * This function is also used for symmetry analysis to handle cases where 
@@ -355,6 +380,24 @@ namespace OpenBabel {
    */
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol, 
       const std::vector<unsigned int> &symClasses, bool addToMol = true);
+  /**
+   * Get a vector with all OBCisTransStereo objects for the molecule. This 
+   * function is used by StereoFrom0D with the @p addToMol parameter is set 
+   * to true. 
+   *
+   * This function is also used for symmetry analysis to handle cases where 
+   * there are two atoms in the same symmetry class that don't have the same 
+   * stereochemistry. In this situation, the @p addToMol parameter is set to 
+   * false and the returned objects will need to be deleted explicitly.
+   *
+   * @param mol The molecule.
+   * @param symClasses The symmetry classes to use.
+   * @param addToMol If true, the OBCisTransStereo objects will be added 
+   * to the molecule using OBBase::SetData().
+   */
+  OBAPI std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol, 
+      const std::vector<unsigned int> &symClasses, bool addToMol = true);
+ 
   /**
    * Find all tetrahedral centers using the symmetry classes in the 
    * @p symClasses map.
