@@ -170,8 +170,14 @@ public:
 
     ~basic_unzip_streambuf(void);
 
+    void initialize(int window_size);
+
     int_type underflow(void);
 
+    std::streampos seekoff(std::streamoff off, std::ios_base::seekdir way,
+                           std::ios_base::openmode which = std::ios_base::in | std::ios_base::out); 
+    std::streampos seekpos(std::streampos sp, 
+                           std::ios_base::openmode which = std::ios_base::in | std::ios_base::out); 
     /// returns the compressed input istream
     inline
     istream_reference get_istream              (void);
@@ -185,7 +191,8 @@ public:
     long              get_out_size             (void) const;
     inline
     long              get_in_size              (void) const;
-   
+    int               check_header      (void);
+    bool _is_gzip;
 
 private:
     
@@ -195,6 +202,7 @@ private:
                                                 std::streamsize buffer_size);
 
     size_t            fill_input_buffer        (void);
+    std::streampos    currentpos               (void);
 
     istream_reference   _istream;
     z_stream            _zip_stream;
@@ -202,6 +210,8 @@ private:
     byte_vector_type    _input_buffer;
     char_vector_type    _buffer;
     unsigned long       _crc;
+    std::streampos      _internalCount; //!< number of uncompressed bytes read
+
 };
 
 //*****************************************************************************
@@ -280,11 +290,8 @@ public:
     long     get_gzip_data_size(void) const;
     
 protected:
-    
-    int      check_header      (void);
     void     read_footer       (void);   
     
-    bool _is_gzip;
     long _gzip_crc;
     long _gzip_data_size;
 };

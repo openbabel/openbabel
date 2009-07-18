@@ -15,7 +15,7 @@ TESTS="${TESTS} invalidsmarts invalidsmiles"
 TESTS="${TESTS} logp_psa math"
 TESTS="${TESTS} mol phmodel residue rings"
 TESTS="${TESTS} smarts smilesmatch unitcell"
-TESTS="${TESTS} cml.sh test-set.sh"
+TESTS="${TESTS} zipstream cml.sh test-set.sh"
 if [ "x${srcdir}" != "x" ]; then
   TESTS="${TESTS} ${srcdir}/inchi.pl ${srcdir}/inchi2.pl"
 else

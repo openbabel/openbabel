@@ -82,6 +82,13 @@ namespace OpenBabel
           }
       }
 
+    // Check if we should allow "fused ring" analysis -- we fall back to expanding as needed
+    // We'll only do this if an atom is in 3 or more rings.
+    bool fusedRings = false;
+    OBSmartsPattern fused; fused.Init("[aR3]");  
+    if (fused.Match(*this))
+      fusedRings = true;
+
     // Find all the groups of aromatic cycle
     for(i=1; i<= NumAtoms(); i++ ) {
       atom = GetAtom(i);
@@ -94,16 +101,7 @@ namespace OpenBabel
       
         avisit.SetBitOn(i);
 
-        // Check if we should allow "fused ring" analysis -- we fall back to expanding as needed
-        // We'll only do this if the root atom is in 3 or more rings.
-        vector<OBRing*>::iterator r;
-        vector<OBRing*> ringList = GetSSSR();
-        int ringCount = 0; // number of rings this atom is in
-        for (r = ringList.begin(); r != ringList.end(); ++r) {
-          if ((*r)->IsMember(atom))
-            ringCount++;
-        }
-        if (ringCount >= 3)
+        if (fusedRings)
           expandcycle(atom, avisit);
         else {
           int depth = expand_cycle(this, atom, avisit, cvisit, atom->GetIdx());

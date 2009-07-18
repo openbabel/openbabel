@@ -1002,3 +1002,4 @@ C(CCN)([N+](=O)[O-])(C)C	1045
 c1(NC(C2CC2)=O)nc2c3c(cccc3)CCc2cn1 PR1814248
 c12-c3c(cc(N)cc3)Cc1cccc2 PR2705497
 c12c3c4c5c1c1c6c7c5c5c8c4c4c9c3c3c%10c9c9c%11c4c8c4c8c5c7c5c7c6c6c%12c%13c7c7c5c8c5c4c%11c4c9c8c%10c9c%10c8c8c4c5c7c8c%13c%10c%12c4c9c3c2c4c16	c60.g03
+c12c3c(ccc2)c(ccc4)c5c4cccc5c3ccc1 perylene

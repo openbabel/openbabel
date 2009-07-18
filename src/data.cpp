@@ -725,9 +725,10 @@ namespace OpenBabel
               }
             else if (bond->GetBO() == 1)
               {
-                a1->SetType("O-");
+                // Leave the protonation/deprotonation to phmodel.txt
+                a1->SetType("O3");
                 a1->SetHyb(3);
-                a1->SetFormalCharge(-1);
+                a1->SetFormalCharge(0);
               }
             continue;
           }
