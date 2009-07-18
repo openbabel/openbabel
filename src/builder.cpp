@@ -68,12 +68,12 @@ namespace OpenBabel
   **/
   std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > OBBuilder::_fragments;
 
-  bool OBBuilder::LoadFragments()  {
+  void OBBuilder::LoadFragments()  {
     // open data/fragments.txt
     ifstream ifs;
     if (OpenDatafile(ifs, "fragments.txt").length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open fragments.txt", obError);
-      return false;
+      return;
     }
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
@@ -112,7 +112,6 @@ namespace OpenBabel
 
     // return the locale to the original one
     obLocale.RestoreLocale();
-    return true;
   }
  
   vector3 GetCorrectedBondVector(OBAtom *atom1, OBAtom *atom2, int bondOrder = 1)
@@ -451,7 +450,7 @@ namespace OpenBabel
   // the main molecule to which we want to connect atom b.
   // NOTE: newpos now uses CorrectedBondVector, so we don't do that below
   bool OBBuilder::Connect(OBMol &mol, int idxA, int idxB, 
-                          vector3 &newpos, int bondOrder)
+      vector3 &newpos, int bondOrder)
   {
     OBAtom *a = mol.GetAtom(idxA);
     OBAtom *b = mol.GetAtom(idxB);
