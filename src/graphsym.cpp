@@ -53,7 +53,6 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
-#include <openbabel/canon.h>
 #include <openbabel/graphsym.h>
 
 #include <openbabel/stereo/cistrans.h>
