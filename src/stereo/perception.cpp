@@ -219,7 +219,7 @@ namespace OpenBabel {
   {
     OBGraphSym symmetry(mol);
     std::vector<unsigned int> symClasses;
-    symmetry.CalculateSymmetry(symClasses);
+    symmetry.GetSymmetry(symClasses);
     return symClasses;
   }
 

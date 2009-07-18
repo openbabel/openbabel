@@ -1058,11 +1058,13 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
   int OBGraphSym::GetSymmetry(vector<unsigned int> &symmetry_classes)
   {
+    ClearSymmetry(); // For the moment just recalculate the symmetry classes
+
     // Check to see whether we have already calculated the symmetry classes
     OBPairData *pd = dynamic_cast<OBPairData*>(_pmol->GetData("OpenBabel Symmetry Classes"));
 
     int nclasses = 0;
-    if (pd) {
+    if (!pd) {
       nclasses = CalculateSymmetry(symmetry_classes);
     } else {
       istringstream iss(pd->GetValue());
@@ -1083,9 +1085,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   // Clears perceived symmetry
   void OBGraphSym::ClearSymmetry()
   {
-    OBPairData *pd = dynamic_cast<OBPairData*>(_pmol->GetData("OpenBabel Symmetry Classes"));
-    if (pd)
-      _pmol->DeleteData(pd);
+    _pmol->DeleteData("OpenBabel Symmetry Classes");
   }
 
 /***************************************************************************
@@ -1126,7 +1126,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     int natoms = _pmol->NumAtoms();
 
     std::vector<unsigned int> symmetry_classes;
-    nclass1 = CalculateSymmetry(symmetry_classes);
+    nclass1 = GetSymmetry(symmetry_classes);
     for (int i = 0; i < symmetry_classes.size(); ++i) {
       if (symmetry_classes.at(i) != NoSymmetryClass)
         vp1.push_back(

@@ -58,7 +58,7 @@ namespace OpenBabel {
       void CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp, unsigned int &count);
       int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
                            
-      
+      int CalculateSymmetry(std::vector<unsigned int> &symmetry_classes);
       void BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_classes);
     public:
       //! Constructor
@@ -78,7 +78,6 @@ namespace OpenBabel {
        *
        * @return The number of symmetry classes.
        */
-      int CalculateSymmetry(std::vector<unsigned int> &symmetry_classes);
       int GetSymmetry(vector<unsigned int> &symmetry_classes);
       void ClearSymmetry();
       /**
