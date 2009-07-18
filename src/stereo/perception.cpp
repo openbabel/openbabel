@@ -237,11 +237,9 @@ namespace OpenBabel {
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom0D", obAuditMsg);
 
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
-    // TetrahedralFrom0D only deletes existing data that disagrees with the symmetry
-    // classes
+    // TetrahedralFrom0D and CisTransFrom0D only deleted existing data that
+    // disagrees with the symmetry classes
     TetrahedralFrom0D(mol, symClasses);
-    // Usually CisTransFrom0D only deletes existing data that disagrees with the symmetry
-    // classes, but if updown is supplied it deletes all existing data first
     CisTransFrom0D(mol, symClasses, updown);
     mol->SetChiralityPerceived();
   }
@@ -312,10 +310,18 @@ namespace OpenBabel {
     std::vector<OBCisTransStereo*> configs;
     if (symClasses.size() != mol->NumAtoms())
       return configs;
-    
+
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::CisTransFrom0D", obAuditMsg);
  
-    // make a map of the already existing stereo data objects
+    // find all cis/trans bonds
+    std::vector<unsigned long> bonds = FindCisTransBonds(mol, symClasses);
+
+    // Add any CisTransStereo objects indicated by the 'updown' map
+    if (updown->size() > 0)
+        CisTransFromUpDown(mol, bonds, updown);
+
+    // Delete any existing stereo objects that are not a member of 'bonds'
+    // and make a map of the remaining ones
     std::map<unsigned long, OBCisTransStereo*> existingMap;
     std::vector<OBGenericData*>::iterator data;
     std::vector<OBGenericData*> stereoData = mol->GetAllData(OBGenericDataType::StereoData);
@@ -337,19 +343,23 @@ namespace OpenBabel {
             break;
           }
         }
- 
-        existingMap[id] = ct;
-        configs.push_back(ct);
+
+        if (std::find(bonds.begin(), bonds.end(), id) == bonds.end()) {
+          // According to OpenBabel, this is not a cis trans stereo
+          obErrorLog.ThrowError(__FUNCTION__, "Removed spurious CisTransStereo object", obAuditMsg);
+          mol->DeleteData(ct);
+        }
+        else {
+          existingMap[id] = ct;
+          configs.push_back(ct);
+        }
       }
     }
 
-    // find all cis/trans bonds
-    std::vector<unsigned long> bonds = FindCisTransBonds(mol, symClasses);
-    
     std::vector<unsigned long>::iterator i;
     for (i = bonds.begin(); i != bonds.end(); ++i) {
-      // if there already exists a OBCisTransStereo object for this 
-      // bond, continue
+      // If there already exists a OBCisTransStereo object for this 
+      // bond, leave it alone
       if (existingMap.find(*i) != existingMap.end())
         continue;
 
@@ -852,15 +862,15 @@ namespace OpenBabel {
 
     return configs;
   }
-  void CisTransFromUpDown(OBMol &mol, const vector<unsigned int> &ctbonds,
-       map<OBBond*, OBStereo::BondDirection> &updown)
+  void CisTransFromUpDown(OBMol *mol, const std::vector<unsigned long> &ctbonds,
+    std::map<OBBond*, OBStereo::BondDirection> *updown)
   {
     // Create a vector of CisTransStereo objects for the molecule
 
-    // Loop across the double bonds
-    vector<unsigned int>::const_iterator bondId_it;
+    // Loop across the known cistrans bonds
+    vector<unsigned long>::const_iterator bondId_it;
     for (bondId_it = ctbonds.begin(); bondId_it != ctbonds.end(); bondId_it++) {
-      OBBond* dbl_bond = mol.GetBondById(*bondId_it);
+      OBBond* dbl_bond = mol->GetBondById(*bondId_it);
       
       OBAtom *a1 = dbl_bond->GetBeginAtom();
       OBAtom *a2 = dbl_bond->GetEndAtom();
@@ -872,10 +882,10 @@ namespace OpenBabel {
       FOR_BONDS_OF_ATOM(bi, a1) {
         OBBond *b = &(*bi);
         if (b == dbl_bond) continue;  // skip the double bond we're working on
-        if (a1_b1 == NULL && updown.find(b) != updown.end())
+        if (a1_b1 == NULL && updown->find(b) != updown->end())
         {
           a1_b1 = b;    // remember a stereo bond of Atom1
-          a1_stereo = updown[b];
+          a1_stereo = (*updown)[b];
         }
         else
           a1_b2 = b;    // remember a 2nd bond of Atom1
@@ -884,10 +894,10 @@ namespace OpenBabel {
       FOR_BONDS_OF_ATOM(bi, a2) {
         OBBond *b = &(*bi);
         if (b == dbl_bond) continue;
-        if (a2_b1 == NULL && updown.find(b) != updown.end())
+        if (a2_b1 == NULL && updown->find(b) != updown->end())
         {
-          a2_b1 = b;    // remember a stereo bond of Atom1
-          a2_stereo = updown[b];
+          a2_b1 = b;    // remember a stereo bond of Atom2
+          a2_stereo = (*updown)[b];
         }
         else
           a2_b2 = b;    // remember a 2nd bond of Atom2
@@ -900,7 +910,7 @@ namespace OpenBabel {
       unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitId : a2_b2->GetNbrAtom(a2)->GetId();
 
       // If a1_stereo==a2_stereo, this means cis for a1_b1 and a2_b1.
-      OBCisTransStereo *ct = new OBCisTransStereo(&mol);
+      OBCisTransStereo *ct = new OBCisTransStereo(mol);
       OBCisTransStereo::Config cfg;
       cfg.begin = a1->GetId();
       cfg.end = a2->GetId();
@@ -913,7 +923,7 @@ namespace OpenBabel {
                                       a2_b1->GetNbrAtom(a2)->GetId(), fourth);
       ct->SetConfig(cfg);
       // add the data to the atom
-      mol.SetData(ct);
+      mol->SetData(ct);
     }
   } 
 }
