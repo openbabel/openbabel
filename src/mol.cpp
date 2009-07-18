@@ -3319,6 +3319,8 @@ namespace OpenBabel
       {
         angle = atom->AverageBondAngle();
 
+        //        cout << atom->GetAtomicNum() << " " << angle << endl;
+
         if (angle > 155.0)
           atom->SetHyb(1);
         else if ( angle <= 155.0 && angle > 115)
@@ -3488,6 +3490,8 @@ namespace OpenBabel
     for (iter = 0 ; iter < max ; iter++ )
       {
         atom = sortedAtoms[iter].first;
+        //        cout << " atom->Hyb " << atom->GetAtomicNum() << " " << atom->GetHyb() << endl;
+
         // Possible sp-hybrids
         if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
              && atom->BOSum() + 2  <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))

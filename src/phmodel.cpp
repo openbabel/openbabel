@@ -250,7 +250,9 @@ bool OBChemTsfm::Init(string &bgn,string &end)
     //find charges to modify
     int chrg;
     for (i = 0;i < _bgn.NumAtoms();++i)
-        if ((vb = _bgn.GetVectorBinding(i)))
+      // Allow single-atom transformations without vector bindings
+      // PR#2802980.
+      if ((vb = _bgn.GetVectorBinding(i) || _bgn.NumAtoms() == 1))
         {
             chrg = _bgn.GetCharge(i);
             for (j = 0;j < _end.NumAtoms();++j)
