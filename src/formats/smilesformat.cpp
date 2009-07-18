@@ -477,8 +477,7 @@ namespace OpenBabel {
         if (ts->refs.size() != 3)
           continue;
 
-        cout << "*ts = " << *ts << endl;
-
+        // cout << "*ts = " << *ts << endl;
         OBTetrahedralStereo *obts = new OBTetrahedralStereo(&mol);
         obts->SetConfig(*ts);
         mol.SetData(obts);
@@ -684,15 +683,14 @@ namespace OpenBabel {
         if (ChiralSearch->second->from != OBStereo::NoId)
           obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
       
-        cout << "insertpos = " << insertpos << endl;
         (ChiralSearch->second)->from = id;
-        cerr << "Adding " << id << " at Config.from to " << ChiralSearch->second << endl;
+        // cerr << "Adding " << id << " at Config.from to " << ChiralSearch->second << endl;
       } else {
         if (ChiralSearch->second->refs[insertpos] != OBStereo::NoId)
           obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previously set reference id.", obError);
 
         (ChiralSearch->second)->refs[insertpos] = id;
-        cerr << "Adding " << id << " at " << insertpos << " to " << ChiralSearch->second << endl;
+        // cerr << "Adding " << id << " at " << insertpos << " to " << ChiralSearch->second << endl;
       }
     }
   }
@@ -867,28 +865,6 @@ namespace OpenBabel {
         if (_updown == BondUpChar || _updown == BondDownChar)
           _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;       
        
-
-
-        //NE iterate through and see if atom is bonded to chiral atom
-        /*
-        map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
-        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
-        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
-          {
-            //cout << "Line 800: previous atom is chiral, adding reference: id = " << mol.NumAtoms() - 1 << endl;
-            //ChiralSearch->second->refs.push_back(mol.NumAtoms() - 1);
-            int insertpos = NumConnections(ChiralSearch->first) - 2;
-            if (insertpos < 0) {
-              (ChiralSearch->second)->from = mol.NumAtoms() - 1;
-              cerr << "NB6a: Line 800: Adding " << mol.NumAtoms()-1 << " at "
-                   << insertpos << " to " << ChiralSearch->second << endl;
-            } else {
-              (ChiralSearch->second)->refs[insertpos] = mol.NumAtoms() - 1;
-              cerr << "NB6b: Line 800: Adding " << mol.NumAtoms()-1 << " at "
-                   << insertpos << " to " << ChiralSearch->second << endl;
-            }
-          }
-        */
         InsertStereoRef(mol, mol.NumAtoms() - 1);
       }
 
@@ -1742,26 +1718,10 @@ namespace OpenBabel {
         if (_updown == BondUpChar || _updown == BondDownChar)
           _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;
        
-        if(chiralWatch) // if chiral atom, set previous as from atom
-          {
-            //cout << "Line 1622: adding previous reference: id = " << mol.GetAtom(_prev)->GetId() << endl;
-            assert( mol.GetAtom(_prev) );
-            _tetrahedralMap[atom]->from = mol.GetAtom(_prev)->GetId();
-            //cerr <<"NB7: line 1622: Added atom ref "<<_prev<<" at " << 0 << " to "<<_mapcd[atom]<<endl;
-          }
-        /*
-        map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
-        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
-        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
-          {
-            //cout << "Line 1629: previous atom is chiral, adding this one to the refs: id = " << atom->GetId() << endl;
-            //ChiralSearch->second->refs.push_back(atom->GetId());
-            int insertpos = NumConnections(ChiralSearch->first) - 2;
-            (ChiralSearch->second)->refs[insertpos] = atom->GetId();
-            cerr << "NB4: line 1629: Added atom ref " << atom->GetId() << " at "
-                 << insertpos << " to " << ChiralSearch->second << endl;
-          }
-        */
+        if(chiralWatch) { // if chiral atom, set previous as from atom
+          _tetrahedralMap[atom]->from = mol.GetAtom(_prev)->GetId();
+          //cerr <<"NB7: line 1622: Added atom ref "<<_prev<<" at " << 0 << " to "<<_mapcd[atom]<<endl;
+        }
         InsertStereoRef(mol, atom->GetId());
       }          
 
@@ -1785,20 +1745,7 @@ namespace OpenBabel {
           _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;
 
         if(chiralWatch)
-          {
-            /*
-            //cout << "Line 1652: explicit hydrogen on chiral atom, adding to the refs: id = " << atom->GetId() << endl;
-            //assert( mol.GetAtom(_prev) );
-            //_tetrahedralMap[mol.GetAtom(_prev)]->refs.push_back(atom->GetId());
-            int insertpos = NumConnections(mol.GetAtom(_prev)) - 2;
-            // Assertion: It *must* be in position 1 (typically) or 0 (where no preceding group)
-            assert(insertpos == 1 || insertpos == 0);
-            (_tetrahedralMap[mol.GetAtom(_prev)])->refs[insertpos] = atom->GetId();
-            cerr << "NB5: line 1652: Added atom ref " << atom->GetId() << " at "
-                 << insertpos << " to " << _tetrahedralMap[mol.GetAtom(_prev)] << endl;
-             */
-            InsertStereoRef(mol, atom->GetId());
-          }
+          InsertStereoRef(mol, atom->GetId());
       }
     chiralWatch=false;
     return(true);
@@ -1911,18 +1858,6 @@ namespace OpenBabel {
    
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
-        /*
-        map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
-        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
-        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
-          //cout << "previous atom is chiral, adding this one to the refs: id = " << (*j)[1] - 1 << endl;
-          //ChiralSearch->second->refs.push_back(bond->prev - 1);
-          int insertpos = NumConnections(ChiralSearch->first) - 2;
-          (ChiralSearch->second)->refs[insertpos] = bond->prev - 1;
-          cerr << "NB1: Added external " << bond->prev-1 << " at "
-               << insertpos << " to " << ChiralSearch->second << endl;
-        }
-        */
         InsertStereoRef(mol, bond->prev - 1);
             
         _extbond.erase(bond);
@@ -1996,62 +1931,25 @@ namespace OpenBabel {
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
         // need to check both _prev and bond->prev as closure is direction independent
-        /*
-        map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
-        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
-        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
-          //cout << "ring closure bond to previous atom: id = " << bond->prev - 1 << endl;
-          //OBAtom *tmpAtom = mol.GetAtom(bond->prev);
-          //assert( tmpAtom );
-          //ChiralSearch->second->refs.push_back(tmpAtom->GetId());
-          int insertpos = NumConnections(ChiralSearch->first) - 2;
-          (ChiralSearch->second)->refs[insertpos] = bond->prev - 1;
-          cerr << "NB3: Added ring closure " << bond->prev - 1 << " at "
-               << insertpos << " to " << ChiralSearch->second << endl;
-        }
-        */
         InsertStereoRef(mol, bond->prev - 1);
         
         map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));  
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
-          //cout << "ring opening bond to previous atom: id = " << bond->prev - 1 << endl;
-          //OBAtom *tmpAtom = mol.GetAtom(_prev);
-          //Ensure that the closure atom index is inserted at the position
-          //decided when the ring closure digit was encountered.
-          //The order needs to be SMILES atom order, not OB atom index order.
-          //if (bond->numConnections > ChiralSearch->second->refs.size()) {
-          //  ChiralSearch->second->refs.push_back(tmpAtom->GetId());
-          //} else {
-          //  OBStereo::Refs refs = ChiralSearch->second->refs;
-            //cout << " bond->numConnections = " << bond->numConnections << endl;
-            //cout << "refs.size() = " << refs.size() << endl;
-            //refs.insert(refs.begin() + bond->numConnections, tmpAtom->GetId());
-            //ChiralSearch->second->refs = refs;    
-          //}
-          /** @todo
-          (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
-          cerr << "NB2: Added ring opening " << mol.GetAtom(_prev)->GetId() << " at "
-               << bond->numConnections << " to " << ChiralSearch->second << endl;
-           */
-          cout << "bond->numConnections = " << bond->numConnections << endl;
-          cout << "_prev = " << _prev << endl;
-          cout << "bond->digit = " << bond->digit << endl;
-          cout << "bond->prev = " << bond->prev << endl;
           int insertpos = bond->numConnections - 1;
           if (insertpos < 0) {
             if (ChiralSearch->second->from != OBStereo::NoId)
               obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
 
             (ChiralSearch->second)->from = mol.GetAtom(_prev)->GetId();
-            cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at Config.from to " << ChiralSearch->second << endl;
+            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at Config.from to " << ChiralSearch->second << endl;
           } else {
             if (ChiralSearch->second->refs[insertpos] != OBStereo::NoId)
               obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previously set reference id.", obError);
 
             (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
-            cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at " 
-                 << insertpos << " to " << ChiralSearch->second << endl;
+            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at " 
+            //     << insertpos << " to " << ChiralSearch->second << endl;
           }
        }
 
@@ -2083,19 +1981,6 @@ namespace OpenBabel {
 
     ringClosure.numConnections = NumConnections(atom); //store position to insert closure bond
 
-    cout << "Adding RingClosureBond..." << endl;
-    cout << "digit = " << digit << endl;
-    cout << "_prev = " << _prev << endl;
-    cout << "numConnections = " << ringClosure.numConnections << endl;
-
-    /*
-    // if the previous atom has an explicit H, increment numConnections
-    OBBondIterator bi;
-    for (OBAtom *nbr = atom->BeginNbrAtom(bi); nbr; nbr = atom->NextNbrAtom(bi))
-      if (nbr->IsHydrogen())
-        ringClosure.numConnections++;
-        */
-
     _rclose.push_back(ringClosure);
     _order = 1;
     _updown = ' ';
@@ -2118,22 +2003,6 @@ namespace OpenBabel {
     return val;
   }
  
- /* 
-  static bool IsCisOrTransH(OBAtom *atom)
-  {
-    if (!atom->IsHydrogen())
-      return false;
-    else
-      FOR_BONDS_OF_ATOM(bond, atom)
-        {
-          if (bond->IsUp() || bond->IsDown())
-            return true;
-        }
-    return false;
-  }
-  */
-
-
 
   /*----------------------------------------------------------------------
    * CLASS: OBBondClosureInfo: For recording bond-closure digits as
@@ -2408,7 +2277,7 @@ namespace OpenBabel {
       if (!ct)
         continue;
       _cistrans.push_back(*ct);
-      cout << "ct = " << *ct << endl;
+      // cout << "ct = " << *ct << endl;
     }
 
     _unvisited_cistrans = _cistrans; // Make a copy of _cistrans
@@ -2837,7 +2706,6 @@ namespace OpenBabel {
     OBMol *mol = dynamic_cast<OBMol*>(atom->GetParent());
     OBStereoFacade stereoFacade(mol);
     return stereoFacade.HasTetrahedralStereo(atom->GetId());
- 
     /*
     if (!atom->IsChiral())
       return false;
@@ -3602,19 +3470,8 @@ namespace OpenBabel {
 
     if (iso) {
       m2s.CreateCisTrans(*pmol); // No need for this if not iso
-      
-      //OBStereoFacade stereoFacade(pmol);
-      cout << "about to add hydrogens..." << endl;
-      cout << "HasChirality = " << pmol->HasChiralityPerceived() << endl;
-      cout << "size = " << pmol->GetAllData(OBGenericDataType::StereoData).size() << endl;
-      
-      
-      
       m2s.AddHydrogenToChiralCenters(*pmol, frag_atoms);
       pmol->SetChiralityPerceived();
-      
-      cout << "HasChirality = " << pmol->HasChiralityPerceived() << endl;
-      cout << "size = " << pmol->GetAllData(OBGenericDataType::StereoData).size() << endl;
     } else {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
