@@ -64,25 +64,25 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
      * tetrahedral stereo centers, the following data members define the special 
      * orientation of the atoms:
      *
-     * - OBStereo::Ref center = Atom id of the stereogenic center atom.
-     * - OBStereo::Ref from/towards = Atom id (or OBStereo::ImplicitRef) for the 
+     * - OBStereo::Ref @p center: Atom id of the stereogenic center atom.
+     * - OBStereo::Ref @p from/towards: Atom id (or OBStereo::ImplicitRef) for the 
      *   atom to view from/towards.
-     * - OBStereo::Refs refs = The three remaining atom ids (may also contain one
+     * - OBStereo::Refs @p refs: The three remaining atom ids (may also contain one
      *   OBStereo::NoRef element if from/towards is set to a real atom id).
-     * - OBStereo::View view: Specify the viewing from or towards the atom with 
+     * - OBStereo::View @p view: Specify the viewing from or towards the atom with 
      *   @p from/towards id.
-     * - OBStereo::Winding winding: Clockwise or AntiClockwise (order in the Refs @p refs list)
+     * - OBStereo::Winding @p winding: Clockwise or AntiClockwise (order in the Refs @p refs list)
      *
      * @image html tetrahedral.png
      *
-     * Only @p center is specific for the OBTetrahedralStereo::Config. The other 
+     * Only @p center is specific for OBTetrahedralStereo::Config. The other 
      * data members occur in all OBTetraNonPlanarStereo derived classes.
      */
     struct OBAPI Config
     {
       /**
-       * Default constructor. Initializes the from/torards and center Refs to 
-       * OBStereo::NoRef, the winding to OBStereo::Clockwise and view to 
+       * Default constructor. Initializes the @p from/torards and @p center to 
+       * OBStereo::NoRef, the @p winding to OBStereo::Clockwise and @p view to 
        * OBStereo::ViewFrom.
        */
       Config() : center(OBStereo::NoRef), from(OBStereo::NoRef), 
@@ -107,7 +107,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
       /**
        * Equal to operator. Comparing OBTetrahedralStereo::Config structs
        * is done using the information stored in the struct's data members
-       * (i.e. view, winding, from/towards and refs).
+       * (i.e. @p view, @p winding, @p from/towards and @p refs).
        *
        * There are a number of cases resuling in false being returned:
        * - The centers don't match. 
@@ -185,7 +185,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
     virtual ~OBTetrahedralStereo();
 
     ///@name Tetrahedral stereochemistry
-    //@{
+    ///@{
     /**
      * Get the OBStereo::Type for this object.
      * @return OBStereo::Tetrahedral
@@ -229,7 +229,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
     {
       return !(*this == other); 
     }
-    //@}
+    ///@}
     
     /*
      * Implement OBGenericData::Clone().
@@ -240,12 +240,11 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
 };
 
 } // namespace OpenBabel
+
 #ifndef SWIG
 namespace std {
 
 ///@addtogroup stereo Stereochemistry
-///@{
-///@name std::ostream output
 ///@{
 /**
  * @code
@@ -283,7 +282,6 @@ OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo &ts
  */
 OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo::Config &cfg);
 
-///@}
 ///@}
 
 } // namespace std
