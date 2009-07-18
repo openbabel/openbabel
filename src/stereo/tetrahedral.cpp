@@ -91,7 +91,7 @@ namespace OpenBabel {
       }
     }
 
-    int Ni1 = OBStereo::NumInversions(refs);
+    int Ni1 = OBStereo::NumInversions(thisConfig.refs);
     int Ni2 = OBStereo::NumInversions(otherConfig.refs);
     return ((Ni1 + Ni2) % 2 == 0);
   }
