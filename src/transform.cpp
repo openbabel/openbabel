@@ -217,7 +217,7 @@ namespace OpenBabel
 "Additional options :\n"
 "-d Delete hydrogens (make implicit)\n"
 "-h Add hydrogens (make explicit)\n"
-"-p Add Hydrogens appropriate for pH model\n"
+"-p <pH> Add hydrogens appropriate for this pH\n"
 "-b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n"
 "-c Center Coordinates\n"
 "-C Combine mols in first file with others having same name\n"

@@ -94,16 +94,16 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
 
     int seq_count = 0;
-    FOR_RESIDUES_OF_MOL(res,pmol)
-      {
-        seq.append(1, conv_3to1(res->GetName()));
-        ++ seq_count;
-        if (seq_count >= 60)
-          {
-          seq_count = 0;
-          seq.append("\n");
-          }
+    FOR_RESIDUES_OF_MOL(res,pmol) {
+      if (res->GetAtoms().size() < 3)
+        continue;
+      seq.append(1, conv_3to1(res->GetName()));
+      ++ seq_count;
+      if (seq_count >= 60) {
+        seq_count = 0;
+        seq.append("\n");
       }
+    }
     if(!pConv->IsOption("n")) {
       if (strlen(pmol->GetTitle()) > 0)
         ofs << ">" << pmol->GetTitle();
