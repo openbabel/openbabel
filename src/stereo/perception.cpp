@@ -586,6 +586,9 @@ namespace OpenBabel {
 
     bool isCisTrans;
     for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i)) {
+      if (bond->IsAromatic())
+        continue;
+
       if (bond->GetBO() == 2) {
         OBAtom *begin = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
