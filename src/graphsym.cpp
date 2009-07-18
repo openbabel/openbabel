@@ -550,7 +550,6 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     cout << "refConfig = " << refConfig << endl;
     cout << "orderedConfig = " << orderedConfig << endl;
 
-
     // Time to break the class in 3. 
     //                         
     //                         1-2-3  symclass1
@@ -601,10 +600,17 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
         }
       }
     }
- 
+    
     // Now propagate the change across the whole molecule with the
     // extended sum-of-invariants.
-    ExtendInvariants(atom_sym_classes);
+    //ExtendInvariants(atom_sym_classes);
+
+    ///cout << "AFTER ExtendInvariants" << endl;
+    //for (int i = 0; i < atom_sym_classes.size(); i++) {
+    //  cout << atom_sym_classes[i].first->GetIndex() << ": " << atom_sym_classes[i].second << endl;
+    //}
+
+
   }
   // 
   // Cis/Trans bonds
@@ -759,9 +765,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
     // Now propagate the change across the whole molecule with the
     // extended sum-of-invariants.
-    ExtendInvariants(atom_sym_classes);
+    //ExtendInvariants(atom_sym_classes);
   }
  
+
 }
 
 /***************************************************************************
@@ -912,13 +919,33 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
   if (nclasses1 < nfragatoms) {
     for (int i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
-      BreakChiralTies(symmetry_classes);
       CreateNewClassVector(symmetry_classes, tmp_classes);
       CountAndRenumberClasses(tmp_classes, nclasses2);
       symmetry_classes = tmp_classes;
       if (nclasses1 == nclasses2) break;
       nclasses1 = nclasses2;
     }
+  }
+   
+  cout << "BEFORE BreakChiralTies, nclasses1 = " << nclasses1 << endl;
+  for (int i = 0; i < symmetry_classes.size(); i++) {
+    cout << symmetry_classes[i].first->GetIndex() << ": " << symmetry_classes[i].second << endl;
+  }
+   
+  BreakChiralTies(symmetry_classes);
+  CreateNewClassVector(symmetry_classes, tmp_classes);
+  CountAndRenumberClasses(tmp_classes, nclasses2);
+
+  cout << "AFTER BreakChiralTies, nclasses2 = " << nclasses2 << endl;
+  for (int i = 0; i < symmetry_classes.size(); i++) {
+    cout << symmetry_classes[i].first->GetIndex() << ": " << symmetry_classes[i].second << endl;
+  }
+
+
+
+  if (nclasses1 != nclasses2) {
+    symmetry_classes = tmp_classes;
+    return ExtendInvariants(symmetry_classes);
   }
  
   return nclasses1;
@@ -1007,10 +1034,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   // Calculate symmetry classes
   nclass1 = CalculateSymmetry(atom_sym_classes);
 
-#if DEBUG
   cout << "BEFORE TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
-  print_vector_pairs("    ", atom_sym_classes);
-#endif
+  for (int i = 0; i < atom_sym_classes.size(); i++) {
+    cout << atom_sym_classes[i].first->GetIndex() << ": " << atom_sym_classes[i].second << endl;
+  }
 
   // The symmetry classes are the starting point for the canonical labels
   vp1 = atom_sym_classes;
@@ -1042,10 +1069,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     }
   }
 
-#if DEBUG
   cout << "AFTER TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
-  print_vector_pairs("    ", vp1);
-#endif
+  for (int i = 0; i < vp1.size(); i++) {
+    cout << vp1[i].first->GetIndex() << ": " << vp1[i].second << endl;
+  }
 
   // For return values, convert vectors of atom/int pairs into one-dimensional
   // vectors of int, indexed by atom->GetIdx().
