@@ -2,6 +2,8 @@ project(openbabel)
 set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 cmake_minimum_required(VERSION 2.4.8)
 
+ENABLE_TESTING()
+
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
@@ -204,6 +206,7 @@ add_subdirectory(doc)
 add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(tools)
+add_subdirectory(scripts)
 
 # Should Python bindings be built?
 option(ENABLE_PYTHON "Enable Python bindings" OFF)

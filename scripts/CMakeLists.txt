@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.6.0)
 # This module finds an installed SWIG. It sets the following variables:
 # SWIG_FOUND - set to true if SWIG is found
 # SWIG_DIR - the directory where swig is installed
@@ -41,7 +42,20 @@ include_directories(
 set_source_files_properties(openbabel-python.i PROPERTIES CPLUSPLUS ON)
 set(CMAKE_SWIG_FLAGS -small -O -python -templatereduce -naturalvar)
 swig_add_module(_openbabel c++ openbabel-python.i)
-swig_link_libraries(_openbabel openbabel ${PYTHON_LIBRARIES}) 
+swig_link_libraries(_openbabel openbabel)
+
+add_custom_command(TARGET _openbabel POST_BUILD 
+    COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
+    COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
+    COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
+    COMMAND ${CMAKE_COMMAND} -E echo "  try:" >> ob.py
+    COMMAND ${CMAKE_COMMAND} -E echo "    import dl" >> ob.py
+    COMMAND ${CMAKE_COMMAND} -E echo "  except ImportError:" >> ob.py
+    COMMAND ${CMAKE_COMMAND} -E echo "    import DLFCN as dl" >> ob.py
+    COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >> ob.py
+    COMMAND cat openbabel.py >> ob.py
+    COMMAND ${CMAKE_COMMAND} -E copy ob.py openbabel.py
+    VERBATIM)
 
 # find site-packages dir...
 execute_process(COMMAND ${PYTHON_EXECUTABLE} -c 
@@ -50,6 +64,6 @@ execute_process(COMMAND ${PYTHON_EXECUTABLE} -c
 message(STATUS "Python site-packages directory: ${PYTHON_LIB_PATH}")
 
 install(TARGETS _openbabel DESTINATION ${PYTHON_LIB_PATH})
-install(FILES openbabel.py DESTINATION ${PYTHON_LIB_PATH})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/openbabel.py DESTINATION ${PYTHON_LIB_PATH})
 
 

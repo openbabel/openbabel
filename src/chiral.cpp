@@ -28,7 +28,10 @@ using namespace std;
 namespace OpenBabel
 {
 
-  //! Sets atom->IsChiral() to true for chiral atoms
+  /** 
+   * Sets atom->IsChiral() to true for chiral atoms. 
+   *
+   */
   void OBMol::FindChiralCenters()
   {
     if (HasChiralityPerceived())

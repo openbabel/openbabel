@@ -38,11 +38,12 @@ set(ops_srcs
 )
 
 set(stereo_srcs
-    stereo/cistrans.cpp
-    stereo/squareplanar.cpp
-    stereo/tetrahedral.cpp
+    stereo/stereo.cpp
     stereo/tetranonplanar.cpp
     stereo/tetraplanar.cpp
+    stereo/squareplanar.cpp
+    stereo/cistrans.cpp
+    stereo/tetrahedral.cpp
 )
 
 set(openbabel_srcs

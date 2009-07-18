@@ -1,71 +1,110 @@
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/mol.h>
 #include <openbabel/oberror.h>
-#include <cassert>
 
 using namespace std;
 
 namespace OpenBabel {
 
-  OBCisTransStereo::OBCisTransStereo(OBMol *mol) : OBTetraPlanarStereo(mol), 
-      m_begin(OBStereo::NoId), m_end(OBStereo::NoId)
+  //
+  // OBCisTransStereo::Config struct
+  //
+
+  bool OBCisTransStereo::Config::operator==(const Config &other) const
+  {
+    if ((begin != other.begin) && (begin != other.end))
+      return false;
+    if ((end != other.begin) && (end != other.end))
+      return false;
+    if ((refs.size() != 4) || (other.refs.size() != 4))
+      return false;
+    if (!OBStereo::ContainsSameRefs(refs, other.refs))
+      return false;
+  
+    // normalize the other Config struct
+    Config u1 = OBTetraPlanarStereo::ToConfig(*this, refs.at(0), OBStereo::ShapeU); // refs[0] = u1.refs[0]
+    Config u2 = OBTetraPlanarStereo::ToConfig(other, refs.at(0), OBStereo::ShapeU); // refs[0] = u2.refs[0]
+
+    cout << "u1 = " << u1 << endl;
+    cout << "u2 = " << u2 << endl;
+
+    // two possibilities:
+    //
+    //   1 2 3 4
+    //   |   |      <- refs[0] & refs[2] remain unchanged
+    //   1 4 3 2
+    //
+    if (u1.refs[2] == u2.refs[2])
+      return true;
+
+    return false;
+  }
+
+  //
+  // OBCisTransStereo class
+  //
+
+  OBCisTransStereo::OBCisTransStereo(OBMol *mol) : OBTetraPlanarStereo(mol)
   {
   }
 
   OBCisTransStereo::~OBCisTransStereo()
   {
-  
   }
 
   bool OBCisTransStereo::IsValid() const
   {
-    if ((m_begin == OBStereo::NoId) || (m_end == OBStereo::NoId))
+    if ((m_cfg.begin == OBStereo::NoId) || (m_cfg.end == OBStereo::NoId))
       return false;
-    if (m_refs.size() != 4)
+    if (m_cfg.refs.size() != 4)
       return false;
     return true;
   }
 
-  void OBCisTransStereo::SetCenters(unsigned long begin, unsigned long end)
+  void OBCisTransStereo::SetConfig(const Config &config)
   {
-    m_begin = begin;
-    m_end = end;
-  }
-    
-  unsigned long OBCisTransStereo::GetBegin() const
-  {
-    return m_begin;
-  }
- 
-  void OBCisTransStereo::SetBegin(unsigned long id)
-  {
-    m_begin = id;
-  }
-  
-  unsigned long OBCisTransStereo::GetEnd() const
-  {
-    return m_end;
+    if (config.begin == OBStereo::NoId) {
+      obErrorLog.ThrowError(__FUNCTION__, 
+          "OBCisTransStereo::SetConfig : double bond begin id is invalid.", obError);
+      m_cfg = Config();
+      return;
+    }
+    if (config.end == OBStereo::NoId) {
+      obErrorLog.ThrowError(__FUNCTION__, 
+          "OBCisTransStereo::SetConfig : double bond end id is invalid.", obError);
+      m_cfg = Config();
+      return;
+    }
+    if (config.refs.size() != 4) {
+      std::stringstream ss;
+      ss << "OBCisTransStereo::SetConfig : found " << config.refs.size();
+      ss << " reference ids, should be 4.";
+      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+      m_cfg = Config();
+      return;
+    }
+
+    // store using U shape
+    m_cfg = OBTetraPlanarStereo::ToConfig(config, config.refs.at(0), OBStereo::ShapeU);
   }
 
-  void OBCisTransStereo::SetEnd(unsigned long id)
+  OBCisTransStereo::Config OBCisTransStereo::GetConfig(OBStereo::Shape shape) const
   {
-    m_end = id;
+    if (!IsValid())
+      return Config();
+
+    return OBTetraPlanarStereo::ToConfig(m_cfg, m_cfg.refs.at(0), shape);
   }
  
-  void OBCisTransStereo::SetRefs(const std::vector<unsigned long> &refs, 
-      OBStereo::Shape shape)
+  OBCisTransStereo::Config OBCisTransStereo::GetConfig(unsigned long start, 
+      OBStereo::Shape shape) const
   {
-    assert( refs.size() == 4 );
-    m_refs = OBTetraPlanarStereo::ToInternal(refs, shape);
+    if (!IsValid())
+      return Config();
+
+    return OBTetraPlanarStereo::ToConfig(m_cfg, start, shape);
   }
-  
-  std::vector<unsigned long> OBCisTransStereo::GetRefs(OBStereo::Shape shape) const
-  {
-    if (m_refs.empty())
-      return m_refs;
-    return OBTetraPlanarStereo::ToShape(m_refs, shape);
-  }
-  
+   
   bool OBCisTransStereo::IsTrans(unsigned long id1, unsigned long id2) const
   {
     return (GetTransRef(id1) == id2);
@@ -76,24 +115,25 @@ namespace OpenBabel {
     return (GetCisRef(id1) == id2);
   }
  
-  bool OBCisTransStereo::Compare(const std::vector<unsigned long> &refs, OBStereo::Shape shape) const
+  bool OBCisTransStereo::operator==(const OBCisTransStereo &other) const
   {
-    if (!IsValid() || (refs.size() != 4))
+    if (!IsValid() || !other.IsValid())
       return false;
 
-    std::vector<unsigned long> u = OBTetraPlanarStereo::ToInternal(refs, shape);
-    unsigned long a1 = u.at(0);
-    unsigned long b1 = u.at(2);
+    Config u = OBTetraPlanarStereo::ToConfig(other.GetConfig(), 
+        m_cfg.refs.at(0), OBStereo::ShapeU);
+    unsigned long a1 = u.refs.at(0);
+    unsigned long b1 = u.refs.at(2);
 
-    if ((a1 == OBStereo::HydrogenId) && (b1 == OBStereo::HydrogenId)) {
-      a1 = u.at(1);
-      b1 = u.at(3);
+    if ((a1 == OBStereo::ImplicitId) && (b1 == OBStereo::ImplicitId)) {
+      a1 = u.refs.at(1);
+      b1 = u.refs.at(3);
     }
 
-    if (b1 != OBStereo::HydrogenId)
+    if (b1 != OBStereo::ImplicitId)
       if (a1 == GetTransRef(b1))
         return true;
-    if (a1 != OBStereo::HydrogenId)
+    if (a1 != OBStereo::ImplicitId)
       if (b1 == GetTransRef(a1))
         return true;
 
@@ -105,18 +145,18 @@ namespace OpenBabel {
     if (!IsValid())
       return OBStereo::NoId;
 
-    if (id == OBStereo::HydrogenId)
+    if (id == OBStereo::ImplicitId)
       return OBStereo::NoId;
 
     // find id1
     for (int i = 0; i < 4; ++i) {
-      if (m_refs.at(i) == id) {
+      if (m_cfg.refs.at(i) == id) {
         // use it's index to compare id2 with the opposite reference id
         int j = (i > 1) ? i - 2 : i + 2;
         // make sure they are not bonded to the same atom
-        unsigned long transId = m_refs.at(j);
-        if (transId == OBStereo::HydrogenId)
-          return OBStereo::HydrogenId;
+        unsigned long transId = m_cfg.refs.at(j);
+        if (transId == OBStereo::ImplicitId)
+          return OBStereo::ImplicitId;
         if (IsOnSameAtom(id, transId)) {
           obErrorLog.ThrowError(__FUNCTION__, 
               "OBCisTransStereo::GetTransRef : References don't match bond orientation", obError);
@@ -135,25 +175,25 @@ namespace OpenBabel {
     if (!IsValid())
       return OBStereo::NoId;
 
-    if (id == OBStereo::HydrogenId)
+    if (id == OBStereo::ImplicitId)
       return OBStereo::NoId;
 
     // find id
     for (int i = 0; i < 4; ++i) {
-      if (m_refs.at(i) == id) {
+      if (m_cfg.refs.at(i) == id) {
         // use it's index to get the left/right reference ids
         int j = (i > 0) ? i - 1 : 3;
         int k = (i < 3) ? i + 1 : 0;
         // make sure they are not bonded to the same atom
-        if (m_refs.at(j) != OBStereo::HydrogenId)
-          if (!IsOnSameAtom(id, m_refs.at(j)))
-            return m_refs.at(j);
-        if (m_refs.at(k) != OBStereo::HydrogenId)
-          if (!IsOnSameAtom(id, m_refs.at(k)))
-            return m_refs.at(k);
+        if (m_cfg.refs.at(j) != OBStereo::ImplicitId)
+          if (!IsOnSameAtom(id, m_cfg.refs.at(j)))
+            return m_cfg.refs.at(j);
+        if (m_cfg.refs.at(k) != OBStereo::ImplicitId)
+          if (!IsOnSameAtom(id, m_cfg.refs.at(k)))
+            return m_cfg.refs.at(k);
 
-        if ((m_refs.at(j) == OBStereo::HydrogenId) && (m_refs.at(k) == OBStereo::HydrogenId)) {
-          return OBStereo::HydrogenId;       
+        if ((m_cfg.refs.at(j) == OBStereo::ImplicitId) && (m_cfg.refs.at(k) == OBStereo::ImplicitId)) {
+          return OBStereo::ImplicitId;       
         }
 
         obErrorLog.ThrowError(__FUNCTION__, 
@@ -174,12 +214,12 @@ namespace OpenBabel {
       return false;
     }
 
-    OBAtom *begin = mol->GetAtomById(m_begin);
+    OBAtom *begin = mol->GetAtomById(m_cfg.begin);
     if (!begin) {
       obErrorLog.ThrowError(__FUNCTION__, "OBCisTransStereo::IsOnSameAtom : Begin reference id is not valid.", obError);
       return false;
     }
-    OBAtom *end = mol->GetAtomById(m_end);
+    OBAtom *end = mol->GetAtomById(m_cfg.end);
     if (!end) {
       obErrorLog.ThrowError(__FUNCTION__, "OBCisTransStereo::IsOnSameAtom : End reference id is not valid.", obError);
       return false;
@@ -268,12 +308,12 @@ namespace OpenBabel {
         OBAtom *c = 0, *d = 0;
         // no a & b, check the remaining ids which will reveal same info
         for (int i = 0; i < 4; ++i) {
-          if ((m_refs.at(i) == id1) || (m_refs.at(i) == id2))
+          if ((m_cfg.refs.at(i) == id1) || (m_cfg.refs.at(i) == id2))
             continue;
           if (!c) {
-            c = mol->GetAtomById(m_refs.at(i));
+            c = mol->GetAtomById(m_cfg.refs.at(i));
           } else {
-            d = mol->GetAtomById(m_refs.at(i));
+            d = mol->GetAtomById(m_cfg.refs.at(i));
           }
         }
         if (!c || !d) {
@@ -293,4 +333,65 @@ namespace OpenBabel {
     return false;  
   }
 
-}
+  OBGenericData* OBCisTransStereo::Clone(OBBase *mol) const
+  {
+    OBCisTransStereo *data = new OBCisTransStereo(static_cast<OBMol*>(mol));
+    data->SetConfig(m_cfg);
+    return data;
+  }
+ 
+} // namespace OpenBabel
+
+namespace std {
+
+  ostream& operator<<(ostream &out, const OpenBabel::OBCisTransStereo &ct)
+  {
+    OpenBabel::OBCisTransStereo::Config cfg = ct.GetConfig();
+    out << "OBCisTransStereo(begin = " << cfg.begin;
+    out << ", end = " << cfg.end;
+ 
+    out << ", refs = ";
+    for (OpenBabel::OBStereo::Refs::iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
+      out << *i << " ";
+
+    switch (cfg.shape) {
+      case OpenBabel::OBStereo::ShapeU:
+        out << ", shape = U)";
+        break;
+      case OpenBabel::OBStereo::ShapeZ:
+        out << ", shape = Z)";
+        break;
+      case OpenBabel::OBStereo::Shape4:
+        out << ", shape = 4)";
+        break;
+    }
+    
+    return out;
+  }
+
+  ostream& operator<<(ostream &out, const OpenBabel::OBCisTransStereo::Config &cfg)
+  {
+    out << "OBCisTransStereo::Config(begin = " << cfg.begin;
+    out << ", end = " << cfg.end;
+
+    out << ", refs = ";
+    for (OpenBabel::OBStereo::Refs::const_iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
+      out << *i << " ";
+
+    switch (cfg.shape) {
+      case OpenBabel::OBStereo::ShapeU:
+        out << ", shape = U)";
+        break;
+      case OpenBabel::OBStereo::ShapeZ:
+        out << ", shape = Z)";
+        break;
+      case OpenBabel::OBStereo::Shape4:
+        out << ", shape = 4)";
+        break;
+    }
+ 
+    return out;
+  }
+
+} // namespace std
+

@@ -1,0 +1,153 @@
+#include "obtest.h"
+
+#include <openbabel/mol.h>
+#include <openbabel/obconversion.h>
+#include <openbabel/stereo/tetrahedral.h>
+
+using namespace std;
+using namespace OpenBabel;
+
+/*
+ * Stereo classes have their own tests. This file tests if the smiles
+ * format uses them correctly.
+ */
+
+void testTetrahedralStereo1()
+{
+  cout << "testTetrahedralStereo1()" << endl;
+  // read a smiles string
+  OBMol mol;
+  OBConversion conv;
+  OB_REQUIRE( conv.SetInFormat("smi") );
+  cout << "smiles: C[C@H](O)N" << endl;
+  OB_REQUIRE( conv.ReadString(&mol, "C[C@H](O)N") );
+
+  // get the stereo data
+  OB_REQUIRE( mol.HasData(OBGenericDataType::StereoData) );
+  std::vector<OBGenericData *> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
+  OB_REQUIRE( stereoData.size() == 1 );
+
+  // convert to tetrahedral data
+  OB_REQUIRE( ((OBStereoBase*)stereoData[0])->GetType() == OBStereo::Tetrahedral );
+  OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(stereoData[0]);
+  OB_REQUIRE( ts );
+
+  // print the configuration
+  cout << *ts << endl;
+
+  // construct a valid configuration here
+  // 
+  // C[C@H](O)N
+  // 0 1 2  3 4  <- ids
+  //
+  OBTetrahedralStereo::Config cfg(1, 0, OBStereo::MakeRefs(4, 3, 2), OBStereo::Clockwise);
+
+  // compare stereochemistry
+  OB_REQUIRE( ts->GetConfig() == cfg );
+
+  cout << endl; 
+}
+
+void genericSmilesCanonicalTest(const std::string &smiles)
+{
+  cout << "Testing generic smiles <-> canonical smiles" << endl;
+  // read a smiles string
+  OBMol mol;
+  OBConversion conv;
+  OB_REQUIRE( conv.SetInFormat("smi") );
+  OB_REQUIRE( conv.SetOutFormat("can") );
+  cout << "smiles: " << smiles << endl;
+  // read a smiles string
+  OB_REQUIRE( conv.ReadString(&mol, smiles) );
+
+  // store the stereo data for the smiles string using unique symmetry ids
+  std::vector<OBTetrahedralStereo::Config> tetrahedral1;
+
+  // get the stereo data
+  OB_ASSERT( mol.HasData(OBGenericDataType::StereoData) );
+  std::vector<OBGenericData *> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
+  
+  for (std::vector<OBGenericData*>::iterator data = stereoData.begin(); data != stereoData.end(); ++data) {
+    if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
+      // convert to tetrahedral data
+      OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+      OB_REQUIRE( ts );
+      OB_ASSERT( ts->IsValid() );
+
+      OBTetrahedralStereo::Config config = ts->GetConfig();
+      // convert atom ids to symmetry ids
+      std::vector<unsigned int> vgid;
+      mol.GetGIDVector(vgid);
+      config.center = vgid.at( mol.GetAtomById(config.center)->GetIdx() - 1 );
+      config.from = vgid.at( mol.GetAtomById(config.from)->GetIdx() - 1 );
+      config.refs[0] = vgid.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
+      config.refs[1] = vgid.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
+      config.refs[2] = vgid.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
+      cout << "Config with symmetry ids: " << config << endl;
+      tetrahedral1.push_back(config);
+    }
+  }
+    
+  // write to can smiles
+  std::string canSmiles = conv.WriteString(&mol);
+  cout << "canSmiles: " << canSmiles;
+  // read can smiles in again
+  OB_REQUIRE( conv.ReadString(&mol, canSmiles) );
+
+  // store the stereo data for the smiles string using unique symmetry ids
+  std::vector<OBTetrahedralStereo::Config> tetrahedral2;
+
+  // get the stereo data
+  OB_ASSERT( mol.HasData(OBGenericDataType::StereoData) );
+  stereoData = mol.GetAllData(OBGenericDataType::StereoData);
+  
+  for (std::vector<OBGenericData*>::iterator data = stereoData.begin(); data != stereoData.end(); ++data) {
+    if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
+      // convert to tetrahedral data
+      OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+      OB_REQUIRE( ts );
+      OB_ASSERT( ts->IsValid() );
+
+      OBTetrahedralStereo::Config config = ts->GetConfig();
+      // convert atom ids to symmetry ids
+      std::vector<unsigned int> vgid;
+      mol.GetGIDVector(vgid);
+      config.center = vgid.at( mol.GetAtomById(config.center)->GetIdx() - 1 );
+      config.from = vgid.at( mol.GetAtomById(config.from)->GetIdx() - 1 );
+      config.refs[0] = vgid.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
+      config.refs[1] = vgid.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
+      config.refs[2] = vgid.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
+      cout << "Config with symmetry ids: " << config << endl;
+      tetrahedral2.push_back(config);
+    }
+  }
+ 
+  // compare the tetrahedral structs
+  OB_ASSERT( tetrahedral1.size() == tetrahedral2.size() );
+  for (unsigned int i = 0; i < tetrahedral1.size(); ++i) {
+    for (unsigned int j = 0; j < tetrahedral2.size(); ++j) {
+      if (tetrahedral1[i].center == tetrahedral2[j].center)
+        OB_ASSERT( tetrahedral1[i] == tetrahedral2[j] );
+    }
+  }
+
+
+  cout << "." << endl << endl; 
+}
+
+
+int main() 
+{
+  testTetrahedralStereo1();
+  
+  // Tetrahedral
+  genericSmilesCanonicalTest("C[C@H](O)N");
+  genericSmilesCanonicalTest("Cl[C@@](CCl)(I)Br");
+  
+  // CisTrans
+  genericSmilesCanonicalTest("F/C=C/F");
+  
+  return 0;
+}
+
+                

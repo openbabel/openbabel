@@ -1,7 +1,31 @@
+/**********************************************************************
+  tetraplanar.h - OBTetraPlanarStereo
+
+  Copyright (C) 2009 by Tim Vandermeersch
+ 
+  This file is part of the Open Babel project.
+  For more information, see <http://openbabel.sourceforge.net/>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+ **********************************************************************/
 #ifndef OB_TETRAPLANAR_H
 #define OB_TETRAPLANAR_H
 
 #include "stereo.h"
+#include <algorithm> // std::rotate
 
 namespace OpenBabel {
 
@@ -25,8 +49,8 @@ namespace OpenBabel {
    * 1432   2431   3421   4321
    * @endcode
    *
-   * Bases on which reference ids are on opposite sides (180°), it is possible
-   * to devide these 24 combinations in three sets. For this it is also needed
+   * Based on which reference ids are on opposite sides (180°), it is possible
+   * to divide these 24 combinations in three sets. For this it is also needed
    * to make use of a shape to map the reference id indexes on the points in 
    * the plane. Without these shapes or a fixed meaning, these sequences have
    * no meaning. The use of these shapes (U, Z & 4) is illustrated in the figure
@@ -54,41 +78,70 @@ namespace OpenBabel {
    * that can be rotated lexicographically.
    */
 
-  class OBTetraPlanarStereo : public OBStereoBase
+  class OBAPI OBTetraPlanarStereo : public OBStereoBase
   {
     public:
       OBTetraPlanarStereo(OBMol *mol);
       virtual ~OBTetraPlanarStereo();
 
-      /**
-       * Subclasses must implement the SetRefs method.
-       */
-      virtual void SetRefs(const std::vector<unsigned long> &refs, 
-        OBStereo::Shape shape = OBStereo::ShapeU) = 0;
-      /**
-       * Subclasses must implement the GetRefs method.
-       */
-      virtual std::vector<unsigned long> GetRefs(OBStereo::Shape shape = OBStereo::ShapeU) const = 0;
-      /**
-       * Subclasses must implement the Compare method to check 
-       * if @p refs match the stored stereochemistry.
-       */
-      virtual bool Compare(const std::vector<unsigned long> &refs, 
-          OBStereo::Shape shape) const = 0;
+      template <typename ConfigType>
+      static ConfigType ToConfig(const ConfigType &cfg, unsigned long start, 
+          OBStereo::Shape shape = OBStereo::ShapeU)
+      {
+        ConfigType result = cfg;
+        result.shape = shape;
+
+        // convert from U/Z/4 to U shape
+        switch (cfg.shape) {
+          case OBStereo::ShapeU:
+            break;
+          case OBStereo::ShapeZ:
+            OBStereo::Permutate(result.refs, 2, 3); // convert to U shape
+            break;
+          case OBStereo::Shape4:
+            OBStereo::Permutate(result.refs, 1, 2); // convert to U shape
+            break;
+        }
+
+    
+        // since refs are U shaped we can rotate the refs lexicographically
+        for (int i = 0; i < 4; ++i) {
+          std::rotate(result.refs.begin(), result.refs.begin() + 1, result.refs.end());
+          // start at refs[0]?
+          if (result.refs.at(0) == start)
+            break;
+        }
+ 
+        // convert from U to desired U/Z/4
+        // (don't change refs[0]!)
+        switch (shape) {
+          case OBStereo::ShapeU:
+            break;
+          case OBStereo::ShapeZ:
+            OBStereo::Permutate(result.refs, 2, 3); // convert to Z shape
+            break;
+          case OBStereo::Shape4:
+            OBStereo::Permutate(result.refs, 1, 2); // convert to 4 shape
+            break;
+        }
+ 
+        return result;
+      }
       /**
        * Convert a sequence of reference ids from U, Z or 4 shape to 
        * internal U shape.
        * @note this method does nothing if a U shape is given as input.
        */
-      static std::vector<unsigned long> ToInternal(const std::vector<unsigned long> &refs, 
-          OBStereo::Shape shape);
+//      static std::vector<unsigned long> ToInternal(const std::vector<unsigned long> &refs, 
+///          OBStereo::Shape shape);
       /**
        * Convert a sequence of reference ids from internal U shape 
        * to U, Z or 4 shape.
        * @note this method does nothing if a U shape is given as input.
        */
-      static std::vector<unsigned long> ToShape(const std::vector<unsigned long> &refs, 
-          OBStereo::Shape shape);
+ //     static std::vector<unsigned long> ToShape(const std::vector<unsigned long> &refs, 
+//          OBStereo::Shape shape);
+  
   };
 
 }

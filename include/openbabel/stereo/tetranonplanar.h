@@ -1,7 +1,31 @@
+/**********************************************************************
+  tetranonplanar.h - OBTetraNonPlanarStereo
+
+  Copyright (C) 2009 by Tim Vandermeersch
+ 
+  This file is part of the Open Babel project.
+  For more information, see <http://openbabel.sourceforge.net/>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+ **********************************************************************/
 #ifndef OB_TETRANONPLANAR_H
 #define OB_TETRANONPLANAR_H
 
 #include <openbabel/stereo/stereo.h>
+#include <openbabel/oberror.h>
 
 namespace OpenBabel {
 
@@ -42,8 +66,8 @@ namespace OpenBabel {
    * anti-clockwise: 321, 213, 132
    * @endcode
    *
-   * Since SetRefs and GetRefs accept refs viewing from/towards any atom in 
-   * the sequence, it is needed to have some rules for converting.
+   * Since subclass ConfigType structs accept refs viewing from/towards any atom, 
+   * it is needed to have some rules for converting.
    *
    * A single permutation of two consecutive elements in a sequence of 3 
    * changes the winding. All permutations can be expressed as a combination
@@ -58,75 +82,143 @@ namespace OpenBabel {
    * Switching between viewing from and viewing towards reverses the winding.
    *
    * Like all stereo classes, errors, warnings or info is reported using OBMessageHandler.
-   *
-   *
    */
-  class OBTetraNonPlanarStereo : public OBStereoBase
+  class OBAPI OBTetraNonPlanarStereo : public OBStereoBase
   {
     public:
+      /**
+       * Constructor
+       * @param mol The molecule.
+       */
       OBTetraNonPlanarStereo(OBMol *mol);
+      /**
+       * Destructor.
+       */
       virtual ~OBTetraNonPlanarStereo();
-
+     
       /**
-       * Subclasses must implement the SetRefs method.
-       */
-      virtual void SetRefs(const std::vector<unsigned long> &refs, unsigned long id,
-          OBStereo::Winding winding = OBStereo::Clockwise, 
-          OBStereo::View view = OBStereo::ViewFrom) = 0;
-      /**
-       * Subclasses must implement the GetRefs method.
-       */
-      virtual std::vector<unsigned long> GetRefs(unsigned long id,
-          OBStereo::Winding winding = OBStereo::Clockwise, 
-          OBStereo::View view = OBStereo::ViewFrom) const = 0;
-      /**
-       * Subclasses must implement the Compare function to check 
-       * if @p refs match the stored stereochemistry.
-       */
-      virtual bool Compare(const std::vector<unsigned long> &refs, unsigned long id,
-          OBStereo::Winding winding, OBStereo::View view) const = 0;
-      /**
-       * Convert a sequence of reference ids from any View/Winding to 
-       * internal clockwise representation.
-       */
-      static std::vector<unsigned long> ToInternal(const std::vector<unsigned long> &refs, 
-          unsigned long id, OBStereo::Winding winding, OBStereo::View view);
-      /**
-       * Convert a sequence of reference ids from internal clockwise to any View/Winding.
-       */
-      static std::vector<unsigned long> ToView(const std::vector<unsigned long> &refs, 
-          unsigned long id, OBStereo::Winding winding, OBStereo::View view);
-      /**
-       * Compute the inversion vector for @p refs and return the sum of it's 
-       * elements. The ith element in the inversion vector is the number of 
-       * element to the right of element i with a lower value.
+       * Convert a @p ConfigType struct from any View/Winding to the 
+       * desired representation.
        *
-       * The number of inversions is the same as the number of interchanges
-       * of consecutive elements. 
+       * This is a template method which works on ConfigType structs from
+       * OBTetraNonPlanar subclasses. The subclasses can decide what data 
+       * member are needed to store the stereogenic unit (i.e. 1 atom for 
+       * tetrahedral, 3 for allene like, ...) and still use this generic 
+       * method to handle the real stereochemistry.
        *
-       * When working with 3 refs from a tetrahedral configuration:
+       * A ConfigType struct should at least have the following data members:
        * @code
-       * permutation   inversion vector    sum
-       * -------------------------------------
-       * 123           0 0 0               0 (even) -> clockwise
-       * 132           0 1 0               1 (odd)  -> anti-clockwise
-       * 213           1 0 0               1 (odd)  -> anti-clockwise
-       * 231           1 1 0               2 (even) -> clockwise
-       * 312           2 0 0               2 (even) -> clockwise
-       * 321           2 1 0               3 (odd)  -> anti-clockwise
-       * @endcode
-       */
-      static int NumInversions(const std::vector<unsigned long> &refs);
-      /**
-       * @param refs The sequence with N elements to permutate.
-       * @param i Element i (0...N-1) will be mutated to j and vice versa.
-       * @param j Element j (0...N-1) will be mutated to i and vice versa.
+       * class SomeNonPlanarStereo : public TetraNonPlanarStereo
+       * {
+       *   public:
+       *     struct Config 
+       *     {
+       *       // constructor(s) are recommended!
        *
-       * @note This method does nothing if i equals j.
+       *       // subclass specific stereogenic unit
+       *       ...
+       *
+       *       union {
+       *         unsigned long from;
+       *         unsigned long towards;
+       *       };
+       *       OBStereo::Refs refs; 
+       *       OBStereo::Winding winding;
+       *       OBStereo::View view; 
+       *     };
+       * };
+       * @endcode
+       *
+       * @param cfg A ConfigType struct from a OBTetraNonPlanar subclass.
+       * @param from_or_towards The desired from/towards reference id (see @p view)
+       * @param winding The desired winding.
+       * @param view The desired viewing direction.
+       *
+       * @return The ConfigType struct with desired from/towards, winding and view.
        */
-      static std::vector<unsigned long> Permutate(const std::vector<unsigned long> &refs, 
-          int i, int j);
-  };
+      template <typename ConfigType>
+      static ConfigType ToConfig(const ConfigType &cfg, unsigned long from_or_towards,
+          OBStereo::Winding winding = OBStereo::Clockwise, 
+          OBStereo::View view = OBStereo::ViewFrom)
+      {
+        if (cfg.from == OBStereo::NoId) {
+          obErrorLog.ThrowError(__FUNCTION__, 
+              "OBTetraNonPlanarStereo::ToConfig : Invalid from in ConfigType struct.", obError);
+          return ConfigType();
+        }
+        if (cfg.refs.size() != 3) {
+          obErrorLog.ThrowError(__FUNCTION__, 
+              "OBTetraNonPlanarStereo::ToConfig : Invalid refs size.", obError);
+          return ConfigType(); 
+        }
+
+        // copy the internal refs
+        ConfigType result = cfg;
+        result.from = from_or_towards;
+        result.winding = winding;
+        result.view = view;
+ 
+        // keep track of the permuations by using the oddness
+        bool odd = false;
+
+        // find id
+        if (cfg.from != from_or_towards) {
+          // move id to front and remove it = 1 permutation
+          for (int i = 0; i < 3; ++i) {
+            if (cfg.refs.at(i) == from_or_towards) {
+              result.refs[i] = cfg.from;
+              break;
+            }
+          }
+          // 1 permutation perfromed --> odd = true
+          odd = true;
+        }
+
+        // clockwise <-> anti-clockwise : odd = true
+        if (winding == cfg.winding)
+          odd = !odd;
+        // ViewFrom <-> ViewTowards : odd = true
+        if (view == cfg.view)
+          odd = !odd;
+
+        // make sure we actually found id
+        if (result.refs.size() == 3) {
+          if (odd)
+            OBStereo::Permutate(result.refs, 1, 2);
+          return result;
+        }   
+
+        obErrorLog.ThrowError(__FUNCTION__, 
+            "OBTetraNonPlanarStereo::ToConfig : Paramter id not found in internal refs.", obError);
+        return result;
+      }
+      /**
+       * Change the winding of the ConfigType struct while maintaining the stereochemistry.
+       */
+      template <typename ConfigType>
+      static void ChangeWinding(ConfigType &cfg)
+      {
+        cfg.winding = (cfg.winding == OBStereo::Clockwise) ? OBStereo::AntiClockwise : OBStereo::Clockwise;
+        OBStereo::Permutate(cfg.refs, 1, 2);
+      }
+      /**
+       * Change the view of the ConfigType struct while maintaining the stereochemistry.
+       */
+      template <typename ConfigType>
+      static void ChangeView(ConfigType &cfg)
+      {
+        cfg.view = (cfg.view == OBStereo::ViewFrom) ? OBStereo::ViewTowards : OBStereo::ViewFrom;
+        OBStereo::Permutate(cfg.refs, 1, 2);
+      }
+      /**
+       * Invert the stereochemistry of the ConfigType struct.
+       */
+      template <typename ConfigType>
+      static void Invert(ConfigType &cfg)
+      {
+        OBStereo::Permutate(cfg.refs, 1, 2);
+      }
+ };
 
 }
 

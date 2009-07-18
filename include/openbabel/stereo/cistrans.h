@@ -46,10 +46,73 @@ namespace OpenBabel {
  *
  *
  */
-class OBCisTransStereo : public OBTetraPlanarStereo
+class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
 {
   public:
+    /**
+     * The config struct represents the stereochemistry in a well defined way.
+     */
+    struct Config
+    {
+      /**
+       * Default constructor.
+       */
+      Config() : begin(OBStereo::NoId), end(OBStereo::NoId), shape(OBStereo::ShapeU)
+      {  }
+      /**
+       * Constructor with all parameters.
+       *
+       * @param _begin The double bond begin atom id.
+       * @param _end The double bond end atom id.
+       * @param _refs The 4 reference ids.
+       * @param _shape The shape for the 4 reference ids.
+       */
+      Config(unsigned long _begin, unsigned long _end, const OBStereo::Refs &_refs, 
+          OBStereo::Shape _shape = OBStereo::ShapeU) : begin(_begin), end(_end),
+          refs(_refs), shape(_shape)
+      {  }
+      /**
+       * Equal to operator.
+       *
+       * @code
+       * OBCisTransStereo::Config cfg1, cfg2;
+       * ...
+       * if (cfg1 == cfg2) {
+       *   // cfg1 and cfg2 represent the same stereochemistry
+       *   ...
+       * }
+       * @endcode
+       *
+       * @return True if both Config structs represent the stereochemistry.
+       */
+      bool operator==(const Config &other) const;
+      /**
+       * Not equal to operator.
+       *
+       * @return True if the two Config structs represent a different stereochemistry.
+       */
+      bool operator!=(const Config &other) const
+      { 
+        return !(*this == other); 
+      }
+            
+      /**
+       * @name Data members defining stereochemistry.
+       * @{
+       */
+      unsigned long begin, end; //<! The double bond begin and end ids.
+      OBStereo::Refs refs; //!< The 4 reference ids.
+      OBStereo::Shape shape; //!< The shape of the 4 reference ids.
+      //@}
+    };
+
+    /**
+     * Constructor.
+     */
     OBCisTransStereo(OBMol *mol);
+    /**
+     * Destructor.
+     */
     virtual ~OBCisTransStereo();
 
     /**
@@ -64,49 +127,37 @@ class OBCisTransStereo : public OBTetraPlanarStereo
     bool IsValid() const;
 
     /**
-     * Set the central, double bonded atoms
+     * Set the configuration using a Config struct.
      */
-    void SetCenters(unsigned long begin, unsigned long end);
+    void SetConfig(const Config &config);
     /**
-     * Set the begin atom for the double bond
+     * Get the configuration as Config struct.
      */
-    void SetBegin(unsigned long begin);
+    Config GetConfig(OBStereo::Shape shape = OBStereo::ShapeU) const;
     /**
-     * Set the end atom for the double bond
+     * Get the configuration as Config struct and ensure refs[0] is 
+     * equal to @p start.
      */
-    void SetEnd(unsigned long end);
+    Config GetConfig(unsigned long start, 
+        OBStereo::Shape shape = OBStereo::ShapeU) const;
     /**
-     * @return The double bond begin atom.
-     */
-    unsigned long GetBegin() const;
-    /**
-     * @return The double bond begin atom.
-     */
-    unsigned long GetEnd() const;
-
-    //! @name Methods to get and set the reference ids.
-    //@{
-    /**
-     * Set the 4 reference ids. The @p shape parameter specifies how the 
-     * reference ids are layed out.
+     * Compare the internally stored stereochemistry with the 
+     * stereochemistry specified by @p other.
      *
-     * @param refs The 4 reference ids.
-     * @param shape The reference id order in the returned list.
-     * These are all examples of the same configuration:
-     * @image html SPshapes.png
+     * @return True if both OBTetrahedralStereo objects represent the same
+     * stereochemistry.
      */
-    void SetRefs(const std::vector<unsigned long> &refs, 
-        OBStereo::Shape shape = OBStereo::ShapeU);
-    /**
-     * Get a list of the 4 reference ids. The ids occur in the sequence 
-     * following the specified shape.
-     *
-     * @param shape The reference id order in the returned list.
-     * These are all examples of the same configuration:
-     * @image html SPshapes.png
+    bool operator==(const OBCisTransStereo &other) const;
+    bool operator!=(const OBCisTransStereo &other) const
+    {
+      return !(*this == other); 
+    }
+    
+    /*
+     * Implement OBGenericData::Clone().
      */
-    std::vector<unsigned long> GetRefs(OBStereo::Shape shape = OBStereo::ShapeU) const;
-    //@}
+    OBGenericData* Clone(OBBase *mol) const;
+ 
 
     //! @name Query methods to compare stereochemistry.
     //@{
@@ -117,7 +168,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
      * atom is bonded to the begin atom and end->GetValence() == 2, the 
      * ids are considered to be on different atoms. The reasoning behind
      * this is that hydrogens may be deleted. However, you can also use
-     * OBStereo::HydrogenId explicitly in code like:
+     * OBStereo::ImplicitId explicitly in code like:
      *
      * @code
      * // 
@@ -130,7 +181,7 @@ class OBCisTransStereo : public OBTetraPlanarStereo
      * reading smiles F/C=C\F cis-difluorethene
      * OBCisTransStereo ct(mol);
      * ct.SetCenters(1, 2);
-     * ct.SetRefs(OBStereo::MakeRefs(0, OBStereo::HydrogenId, OBStereo::HydrogenId, 3));
+     * ct.SetRefs(OBStereo::MakeRefs(0, OBStereo::ImplicitId, OBStereo::ImplicitId, 3));
      * ...
      * @endcode
      *
@@ -156,24 +207,51 @@ class OBCisTransStereo : public OBTetraPlanarStereo
      * Get the reference id cis from reference @p id.
      */
     unsigned long GetCisRef(unsigned long id) const;
-    /**
-     * This function checks to see if the internal reference ids match with @p refs.
-     * This is done by checking which reference ids are trans. See the OBTetraPlanarStereo
-     * class documentation for more information about the 3 possible configurations.
-     * \return True if the stored reference ids match the configuration 
-     * of @p refs using @p shape. 
-     */
-    bool Compare(const std::vector<unsigned long> &refs, OBStereo::Shape shape) const;
     //@}
  
-
   private:
-
-    unsigned long m_begin; //!< the center/chiral atom
-    unsigned long m_end; //!< the center/chiral atom
-    std::vector<unsigned long> m_refs; //!< the 4 clockwise atom refs
+    Config m_cfg; //!< internal configuration 
 };
 
-}
+} // namespace OpenBabel
+
+namespace std {
+
+/**
+ * @code
+ * OBTetrahedralStereo::Config cfg;
+ * cfg.begin = 0;
+ * cfg.end = 1;
+ * cfg.refs = OBStereo::MakeRefs(2, 3, 4, 5);
+ * cfg.shape = OBStereo::ShapeU;
+ *
+ * OBCisTransStereo ct(mol);
+ * ct.SetConfig(cfg)
+ *
+ * cout << "ct = " << ct << endl;
+ *
+ * // output
+ * OBCisTransStereo(begin = 0, end = 1, refs = 2 3 4 5, shape = U)
+ * @endcode
+ */
+OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBCisTransStereo &ct);
+/**
+ * @code
+ * OBCisTransStereo::Config cfg;
+ * cfg.begin = 0;
+ * cfg.end = 1;
+ * cfg.refs = OBStereo::MakeRefs(2, 3, 4, 5);
+ * cfg.shape = OBStereo::ShapeU;
+ *
+ * cout << "cfg = " << cfg << endl;
+ *
+ * // output
+ * OBCisTransStereo::Config(begin = 0, end = 1, refs = 2 3 4 5, shape = U)
+ * @endcode
+ */
+OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBCisTransStereo::Config &cfg);
+
+} // namespace std
+
 
 #endif

@@ -1,8 +1,30 @@
+/**********************************************************************
+  tetrahedral.h - OBTetrahedralStereo
+
+  Copyright (C) 2009 by Tim Vandermeersch
+ 
+  This file is part of the Open Babel project.
+  For more information, see <http://openbabel.sourceforge.net/>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+ **********************************************************************/
 #ifndef OB_TETRAHEDRAL_H
 #define OB_TETRAHEDRAL_H
 
 #include <openbabel/stereo/tetranonplanar.h>
-#include <vector>
 
 namespace OpenBabel {
 
@@ -13,31 +35,92 @@ namespace OpenBabel {
  * @image html tetrahedral.png
  *
  * The OBTetrahedralStereo class is used to represent tetrahedral atom 
- * stereo chemisrty. It uses an internal representation similar to the
- * SMILES model. When viewing from the 'from' atom towards the center atom,
- * the three reference atoms are stored clockwise. However, it is important to 
- * note that this class doesn't take any ranking of the atoms (by index, 
- * CIP rules, ...) into account. All references to atoms are stored using 
- * unique ids which are guaranteed to remain unchanged during an OBMol
- * object's lifespan (even when indexes change after canonicalization for 
- * example). In other words, the stereo chemistry around the central atom 
- * is defined in a local way. This is different from CIP rankings or canonical 
- * label based rankings which may change when parts of the molecule get 
- * deleted or new parts are added (both are based on the molecule as a 
- * complete graph). Another benefit is that this class can correctly be
- * used in substructure search.
- * 
- * Methods are provided to set the atom ids in various ways. When using
- * these, the input will be converted to the internal representation.
- *
- *
- *
- *
+ * stereo chemistry. The stereochemistry is set, retrieved and internally
+ * stored using the OBtetrahedralStereo::Config struct.
+ *  
+ * Like all stereo classes, errors, warnings or info is reported using OBMessageHandler.
  */
 class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
 {
   public:
+    /**
+     * The config struct represents the stereochemistry in a well defined way.
+     */
+    struct Config
+    {
+      /**
+       * Default constructor.
+       */
+      Config() : center(OBStereo::NoId), from(OBStereo::NoId), 
+          winding(OBStereo::Clockwise), view(OBStereo::ViewFrom) 
+      {  }
+      /**
+       * Constructor with all parameters.
+       *
+       * @param _center The center (chiral) atom id.
+       * @param from_or_towards The atom id from which to view or view towards (see @p view).
+       * @param _refs The 3 reference ids.
+       * @param _winding The winding for the 3 ids in @p _refs.
+       * @param _view Specify viewing from or towards the atom with @p from_or_towards id.
+       */
+      Config(unsigned long _center, unsigned long from_or_towards, 
+          const OBStereo::Refs &_refs, OBStereo::Winding _winding = OBStereo::Clockwise,
+          OBStereo::View _view = OBStereo::ViewFrom) : center(_center), 
+          from(from_or_towards), refs(_refs), winding(_winding), view(_view)
+      {  }
+      /**
+       * Equal to operator.
+       *
+       * @code
+       * OBTetrahedralStereo::Config cfg1, cfg2;
+       * ...
+       * if (cfg1 == cfg2) {
+       *   // cfg1 and cfg2 represent the same stereochemistry
+       *   ...
+       * }
+       * @endcode
+       *
+       * @return True if both Config structs represent the stereochemistry.
+       */
+      bool operator==(const Config &other) const;
+      /**
+       * Not equal to operator.
+       *
+       * @return True if the two Config structs represent a different stereochemistry.
+       */
+      bool operator!=(const Config &other) const
+      { 
+        return !(*this == other); 
+      }
+      
+      /**
+       * @name Data members defining stereochemistry.
+       * @{
+       */
+      unsigned long center; //<! The center (chiral) atom id.
+      /**
+       * This anonymous union helps to keep code clean. Both the @p from and 
+       * @p towards data members contain the same id (same memory address) 
+       * but can be used interchangeably to match the context of the code. 
+       * The real viewing direction is specified by the @p view data member.
+       */
+      union {
+        unsigned long from; //<! The viewing from atom id.
+        unsigned long towards; //<! The viewing towards id.
+      };
+      OBStereo::Refs refs; //!< The 3 reference ids.
+      OBStereo::Winding winding; //<! The winding for the 3 reference ids.
+      OBStereo::View view; //!< Specify viewing from or towards the atom with @p from/towards id.
+      //@}
+    };
+
+    /**
+     * Constructor.
+     */
     OBTetrahedralStereo(OBMol *mol);
+    /**
+     * Destructor.
+     */
     virtual ~OBTetrahedralStereo();
 
     /**
@@ -51,71 +134,81 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
      */
     bool IsValid() const;
     /**
-     * Set the central atom. This is the chiral atom.
+     * Set the configuration using a Config struct.
      */
-    void SetCenter(unsigned long id);
+    void SetConfig(const Config &config);
     /**
-     * @return The central atom. This is the chiral atom.
+     * Get the configuration as Config struct.
      */
-    unsigned long GetCenter() const;
-
-    //! @name Methods using internal representation.
-    //@{
-
-    /**
-     * Set the 4 reference atoms. It is possible to give the ids in clockwise or 
-     * anti-clockwise winding as long as you specify the right one using the @p winding 
-     * parameter. The ids will automatically be converted to the internal 
-     * representation (clockwise). The @p view parameter specifies if the @p refs
-     * are @p winding from or towards the atom with id @p id.
-     *
-     * @param refs std::vector containing the 3 reference ids. This vector should always be size 3.
-     * @param id The ViewFrom or ViewTowards atom.
-     * @param winding Specify the winding for the 3 reference ids.
-     * @param view OBStereo::ViewFrom to OBStereo::ViewTowards for viewing from or 
-     * towards the atom specified by @p id.
-     */
-    void SetRefs(const std::vector<unsigned long> &refs, unsigned long id, 
-        OBStereo::Winding winding = OBStereo::Clockwise,
-        OBStereo::View view = OBStereo::ViewFrom);
-    /**
-     * Get the 4 reference atoms. It is possible to retrieve the ids in clockwise or 
-     * anticlockwise order using the @p winding parameter..
-     *
-     * @note We look from the from atom (GetFromAtom()) to the center atom (GetCenterAtom())
-     *
-     * @note We look from the ViewFrom atom towards the center atom.
-     * @note We look towards the ViewTowards# atom from the center atom.
-     *
-     * @param id The ViewFrom or ViewTowards atom.
-     * @param winding Specify the winding for the returned reference ids.
-     * @param view OBStereo::ViewFrom to OBStereo::ViewTowards for viewing from or 
-     * towards the atom specified by @p id.
-     *
-     * @return std::vector containing the 3 reference ids in the requested form. This vector 
-     * is empty if this object is not valid (IsValid()).
-     */
-    std::vector<unsigned long> GetRefs(unsigned long id,
-        OBStereo::Winding winding = OBStereo::Clockwise,
+    Config GetConfig(OBStereo::Winding winding = OBStereo::Clockwise, 
         OBStereo::View view = OBStereo::ViewFrom) const;
-    //@}
-
-    //! @name Query methods to compare stereochemistry.
-    //@{
+    /**
+     * Get the configuration as Config struct viewing from/towards the specified id.
+     */
+    Config GetConfig(unsigned long from_or_towards, 
+        OBStereo::Winding winding = OBStereo::Clockwise, 
+        OBStereo::View view = OBStereo::ViewFrom) const;
     /**
      * Compare the internally stored stereochemistry with the 
-     * stereochemistry specified by the parameters.
+     * stereochemistry specified by @p other.
+     *
+     * @return True if both OBTetrahedralStereo objects represent the same
+     * stereochemistry.
      */
-    bool Compare(const std::vector<unsigned long> &refs, unsigned long id, 
-        OBStereo::Winding winding, OBStereo::View view) const;
-    //@}
-
+    bool operator==(const OBTetrahedralStereo &other) const;
+    bool operator!=(const OBTetrahedralStereo &other) const
+    {
+      return !(*this == other); 
+    }
+    
+    /*
+     * Implement OBGenericData::Clone().
+     */
     OBGenericData* Clone(OBBase *mol) const;
   private:
-    unsigned long m_center; //!< the center/chiral atom
-    std::vector<unsigned long> m_refs; //!< the 4 clockwise atom refs
+    Config m_cfg; //!< internal configuration 
 };
 
-}
+} // namespace OpenBabel
+
+namespace std {
+
+/**
+ * @code
+ * OBTetrahedralStereo::Config cfg;
+ * cfg.center = 0;
+ * cfg.towards = 4;
+ * cfg.refs = OBStereo::MakeRefs(1, 2, 3);
+ * cfg.winding = OBStereo::AntiClockwise;
+ * cfg.view = OBStereo::ViewTowards;
+ *
+ * OBTetrahedralStereo ts(mol);
+ * ts.SetConfig(cfg)
+ *
+ * cout << "ts = " << ts << endl;
+ *
+ * // output
+ * OBTetrahedralStereo(center = 0, viewTowards = 4, refs = 1 2 3, anti-clockwise)
+ * @endcode
+ */
+OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo &ts);
+/**
+ * @code
+ * OBTetrahedralStereo::Config cfg;
+ * cfg.center = 0;
+ * cfg.towards = 4;
+ * cfg.refs = OBStereo::MakeRefs(1, 2, 3);
+ * cfg.winding = OBStereo::AntiClockwise;
+ * cfg.view = OBStereo::ViewTowards;
+ *
+ * cout << "cfg = " << cfg << endl;
+ *
+ * // output
+ * OBTetrahedralStereo::Config(center = 0, viewTowards = 4, refs = 1 2 3, anti-clockwise)
+ * @endcode
+ */
+OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo::Config &cfg);
+
+} // namespace std
 
 #endif

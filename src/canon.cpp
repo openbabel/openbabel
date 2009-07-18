@@ -59,7 +59,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-#define DEBUG 0
+//#define DEBUG 1
 
 /***************************************************************************
 * FUNCTION: print_vector_pairs

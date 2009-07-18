@@ -1,4 +1,5 @@
 #include <openbabel/stereo/squareplanar.h>
+#include <algorithm> // std::rotate
 #include <cassert>
 
 namespace OpenBabel {
@@ -38,7 +39,7 @@ namespace OpenBabel {
       OBStereo::Shape shape)
   {
     assert( refs.size() == 4);
-    m_refs = OBTetraPlanarStereo::ToInternal(refs, shape);
+//    m_refs = OBTetraPlanarStereo::ToInternal(refs, shape);
   }
   
   // testRefs1
@@ -46,7 +47,7 @@ namespace OpenBabel {
   {
     if (m_refs.empty())
       return m_refs;
-    return OBTetraPlanarStereo::ToShape(m_refs, shape);
+//    return OBTetraPlanarStereo::ToShape(m_refs, shape);
   }
   
   std::vector<unsigned long> OBSquarePlanarStereo::GetRefs(unsigned long start, 
@@ -59,8 +60,8 @@ namespace OpenBabel {
     // since m_refs are U shaped we can rotate the refs lexicographically
     for (int i = 0; i < 4; ++i) {
       std::rotate(refs.begin(), refs.begin() + 2, refs.end());
-      if (refs.at(0) == start)
-        return OBTetraPlanarStereo::ToShape(refs, shape);
+//      if (refs.at(0) == start)
+//        return OBTetraPlanarStereo::ToShape(refs, shape);
     }
 
     // start not found, return empty sequence
@@ -142,13 +143,13 @@ namespace OpenBabel {
     if (!IsValid() || (refs.size() != 4))
       return false;
 
-    std::vector<unsigned long> u = OBTetraPlanarStereo::ToInternal(refs, shape);
-    unsigned long a1 = u.at(0);
-    unsigned long b1 = u.at(2);
+//    std::vector<unsigned long> u = OBTetraPlanarStereo::ToInternal(refs, shape);
+    //unsigned long a1 = u.at(0);
+    //unsigned long b1 = u.at(2);
 
-    unsigned long a2 = GetTransRef(b1);
-    if (a1 == a2)
-      return true;
+   // unsigned long a2 = GetTransRef(b1);
+  //  if (a1 == a2)
+  //    return true;
 
     return false;
   }

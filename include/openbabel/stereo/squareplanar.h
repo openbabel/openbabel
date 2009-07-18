@@ -20,7 +20,7 @@ namespace OpenBabel {
  * to get more information. Like all stereo classes, errors,
  * warnings or info is reported using OBMessageHandler.
  */
-class OBSquarePlanarStereo : public OBTetraPlanarStereo
+class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
 {
   public:
     OBSquarePlanarStereo(OBMol *mol);
