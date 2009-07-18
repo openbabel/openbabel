@@ -3269,8 +3269,8 @@ namespace OpenBabel {
         symmetry_classes.push_back(r);
       }
       else{
-        labels.push_back(OBStereo::ImplicitId); //to match situation when canonical ordering. Just a big number?
-        symmetry_classes.push_back(OBStereo::ImplicitId);
+        labels.push_back(UINT_MAX /*OBStereo::ImplicitId*/); //to match situation when canonical ordering. Just a big number?
+        symmetry_classes.push_back(UINT_MAX /*OBStereo::ImplicitId*/);
       }
     }
   }
