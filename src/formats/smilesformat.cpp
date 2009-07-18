@@ -480,7 +480,7 @@ namespace OpenBabel {
         mol.SetData(obts);
       }
     }
-
+    CreateCisTrans(mol);
     StereoFrom0D(&mol);
 
     return(true);
