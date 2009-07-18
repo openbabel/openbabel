@@ -26,7 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/builder.h>
 #include <openbabel/math/matrix3x3.h>
 
-//#include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/tetrahedral.h>
 
 #include <sstream>
 #include <set>
@@ -1200,8 +1200,13 @@ namespace OpenBabel
     _vbond.reserve(src.NumBonds());
     _bondIds.reserve(src.NumBonds());
 
-    for (atom = src.BeginAtom(i);atom;atom = src.NextAtom(i))
+    // create a map translating the ids from old to new molecule.
+    std::map<unsigned long, unsigned long> old2newId;
+
+    for (atom = src.BeginAtom(i);atom;atom = src.NextAtom(i)) {
       AddAtom(*atom);
+      old2newId[atom->GetId()] = GetAtom(atom->GetIdx())->GetId();
+    }
     for (bond = src.BeginBond(j);bond;bond = src.NextBond(j))
       AddBond(*bond);
 
@@ -1286,15 +1291,36 @@ namespace OpenBabel
         GetAtom(atom->GetIdx())->SetData(pCopiedData);
       }
     }
-    /*
-    FOR_ATOMS_OF_MOL (atom, src) {
-      if (atom->HasData(OBGenericDataType::StereoData)) {
-        OBTetrahedralStereo* cd = (OBTetrahedralStereo*) atom->GetData(OBGenericDataType::StereoData);
-        OBGenericData* pCopiedData = cd->Clone(NULL); // parent not used in OBChiralData::Clone()
-        GetAtom(atom->GetIdx())->SetData(pCopiedData);
+
+    // Stereochemistry: translate the ids to the new mol.
+    // The Stereo objects have already been copied above.
+    if (src.HasChiralityPerceived())
+      SetChiralityPerceived();
+    if (HasData(OBGenericDataType::StereoData)) {
+      std::vector<OBGenericData*>  stereoData = GetAllData(OBGenericDataType::StereoData);
+
+      std::vector<OBGenericData*>::iterator data;
+      for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+        OBStereo::Type type = static_cast<OBStereoBase*>(*data)->GetType();
+        if (type == OBStereo::Tetrahedral) {
+          OBTetrahedralStereo *th = static_cast<OBTetrahedralStereo*>(*data);
+          OBTetrahedralStereo::Config config = th->GetConfig();
+          // center
+          if (old2newId.find(config.center) != old2newId.end())
+            config.center = old2newId[config.center];
+          // from/towards
+          if (old2newId.find(config.from) != old2newId.end())
+            config.from = old2newId[config.from];
+          // refs
+          for (OBStereo::RefIter id = config.refs.begin(); id != config.refs.end(); ++id)
+            if (old2newId.find(*id) != old2newId.end())
+              *id = old2newId[*id];
+
+        } else if (type == OBStereo::CisTrans) {
+        
+        }
       }
     }
-    */
  
     return(*this);
   }

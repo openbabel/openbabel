@@ -57,7 +57,8 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
       /**
        * Default constructor.
        */
-      Config() : begin(OBStereo::NoId), end(OBStereo::NoId), shape(OBStereo::ShapeU)
+      Config() : begin(OBStereo::NoId), end(OBStereo::NoId), shape(OBStereo::ShapeU),
+          specified(true)
       {  }
       /**
        * Constructor with all parameters.
@@ -69,7 +70,7 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
        */
       Config(unsigned long _begin, unsigned long _end, const OBStereo::Refs &_refs, 
           OBStereo::Shape _shape = OBStereo::ShapeU) : begin(_begin), end(_end),
-          refs(_refs), shape(_shape)
+          refs(_refs), shape(_shape), specified(true)
       {  }
       /**
        * Equal to operator.
@@ -103,6 +104,7 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
       unsigned long begin, end; //<! The double bond begin and end ids.
       OBStereo::Refs refs; //!< The 4 reference ids.
       OBStereo::Shape shape; //!< The shape of the 4 reference ids.
+      bool specified;
       //@}
     };
 

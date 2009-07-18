@@ -246,6 +246,8 @@ namespace OpenBabel {
     // make sure the number of atoms matches the symClasses' size
     if (symClasses.size() != mol->NumAtoms())
       return configs;
+    
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::TetrahedralFrom2D", obAuditMsg);
  
     // find all tetrahedral centers
     std::vector<unsigned long> centers = FindTetrahedralAtoms(mol, symClasses);
@@ -320,8 +322,17 @@ namespace OpenBabel {
         // plane bonds
         if (!plane1)
           plane1 = nbr;
-        else
+        else if (!plane2)
           plane2 = nbr;
+        else {
+          std::stringstream errorMsg;
+          errorMsg << "Symmetry analysis found atom with id " << center->GetId() 
+                   << " to be a tetrahedral atom but there are at least 3 in"
+                   << " plane bonds in the 2D depiction."
+                   << std::endl;
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+          continue;
+        }
       }
       
       using namespace std;
@@ -372,7 +383,7 @@ namespace OpenBabel {
         errorMsg << "Symmetry analysis found atom with id " << center->GetId() 
                  << " to be a tetrahedral atom but the wedge/hash bonds can't be interpreted."
                  << std::endl;
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
         continue;
       }
 
@@ -479,7 +490,8 @@ namespace OpenBabel {
       return;
     mol->SetChiralityPerceived();
     mol->DeleteData(OBGenericDataType::StereoData);
-      
+     
+    cout << "StereoFrom3D" << endl;
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom3D", obAuditMsg);
 
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
@@ -494,6 +506,7 @@ namespace OpenBabel {
     mol->SetChiralityPerceived();
     mol->DeleteData(OBGenericDataType::StereoData);
       
+    cout << "StereoFrom2D" << endl;
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom2D", obAuditMsg);
 
     std::vector<unsigned int> symClasses = FindSymmetry(mol);

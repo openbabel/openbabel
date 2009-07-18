@@ -52,7 +52,8 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
        * Default constructor.
        */
       Config() : center(OBStereo::NoId), from(OBStereo::NoId), 
-          winding(OBStereo::Clockwise), view(OBStereo::ViewFrom) 
+          winding(OBStereo::Clockwise), view(OBStereo::ViewFrom),
+          specified(true)
       {  }
       /**
        * Constructor with all parameters.

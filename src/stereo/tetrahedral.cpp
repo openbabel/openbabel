@@ -207,10 +207,14 @@ namespace std {
       else
         out << "H ";
 
-    if (cfg.winding == OBStereo::Clockwise)
-      out << ", clockwise)";
-    else
-      out << ", anti-clockwise)";
+    if (!cfg.specified)
+      out << ", unspecified)";
+    else {
+      if (cfg.winding == OBStereo::Clockwise)
+        out << ", clockwise)";
+      else
+        out << ", anti-clockwise)";
+    }
 
     return out;
   }
@@ -235,10 +239,14 @@ namespace std {
       else
         out << "H ";
 
-    if (cfg.winding == OBStereo::Clockwise)
-      out << ", clockwise)";
-    else
-      out << ", anti-clockwise)";
+    if (!cfg.specified)
+      out << ", unspecified)";
+    else {
+      if (cfg.winding == OBStereo::Clockwise)
+        out << ", clockwise)";
+      else
+        out << ", anti-clockwise)";
+    }
 
     return out;
   }
