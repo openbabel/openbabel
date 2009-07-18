@@ -182,12 +182,9 @@ namespace OpenBabel
     //         34..45    E = energy
     //         46..51    R = internal registry number
     if (!std::getline(ifs, line)) {
-      Trim(line);
-      if (!line.empty()) { //don't warn on trailing blank lines
-        errorMsg << "WARNING: Problems reading a MDL file\n";
-        errorMsg << "Cannot read creator/dimension line line\n";
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-      }
+      errorMsg << "WARNING: Problems reading a MDL file\n";
+      errorMsg << "Cannot read creator/dimension line line\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
       return false;
     }
     

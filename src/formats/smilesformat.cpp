@@ -849,9 +849,15 @@ namespace OpenBabel {
              * @todo: Noel's code
              */
             int insertpos = NumConnections(ChiralSearch->first) - 2;
-            (ChiralSearch->second)->refs[insertpos] = mol.NumAtoms() -1;
-            cerr << "NB6: Line 800: Adding " << mol.NumAtoms()-1 << " at "
-                 << insertpos << " to " << ChiralSearch->second << endl;
+            if (insertpos < 0) {
+              (ChiralSearch->second)->from = mol.NumAtoms() - 1;
+              cerr << "NB6a: Line 800: Adding " << mol.NumAtoms()-1 << " at "
+                   << insertpos << " to " << ChiralSearch->second << endl;
+            } else {
+              (ChiralSearch->second)->refs[insertpos] = mol.NumAtoms() - 1;
+              cerr << "NB6b: Line 800: Adding " << mol.NumAtoms()-1 << " at "
+                   << insertpos << " to " << ChiralSearch->second << endl;
+            }
           }
       }
 
