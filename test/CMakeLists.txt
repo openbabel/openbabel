@@ -69,7 +69,12 @@ set(tests
     tetraplanar
 #    squareplanar
     cistrans
+    stereoperception
    )
+                
+
+cmake_policy(SET CMP0005 NEW) # needed for line below (escapes value)
+add_definitions( -DTESTDATADIR="${CMAKE_SOURCE_DIR}/test/files/" )
 
 foreach(test ${tests})
   add_executable(${test}test ${test}test.cpp)

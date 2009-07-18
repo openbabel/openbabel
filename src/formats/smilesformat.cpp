@@ -443,14 +443,8 @@ namespace OpenBabel {
     mol.UnsetAromaticPerceived();
 
     mol.EndModify();
-    // FIXME
-    //
-    // timvdm: replace this with CreateCisTrans(mol, cistrans) which should 
-    //         store the result using new OBCisTransStereo
-    //FixCisTransBonds(mol);
+    
     CreateCisTrans(mol);
-
-
 
     //Extension which interprets cccc with conjugated double bonds if niether
     //of its atoms is aromatic.
@@ -467,25 +461,24 @@ namespace OpenBabel {
     
     //NE add the OBChiralData stored inside the _mapcd to the atoms now after end
     // modify so they don't get lost.
-    if(_tetrahedralMap.size() > 0)
-      {
-        OBAtom* atom;
-        map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
-        for(ChiralSearch = _tetrahedralMap.begin(); ChiralSearch != _tetrahedralMap.end(); ChiralSearch++)
-          {
-            atom = ChiralSearch->first;
-            OBTetrahedralStereo::Config *ts = ChiralSearch->second;
-            if (!ts) 
-              continue;
-            if (ts->refs.size() != 3)
-              continue;
+    if(_tetrahedralMap.size() > 0) {
+      OBAtom* atom;
+      map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
+      for(ChiralSearch = _tetrahedralMap.begin(); ChiralSearch != _tetrahedralMap.end(); ChiralSearch++) {
+        atom = ChiralSearch->first;
+        OBTetrahedralStereo::Config *ts = ChiralSearch->second;
+        if (!ts) 
+          continue;
+        if (ts->refs.size() != 3)
+          continue;
 
-            OBTetrahedralStereo *obts = new OBTetrahedralStereo(&mol);
-            obts->SetConfig(*ts);
-            // add the data to the atom
-            mol.SetData(obts);
-          }
+        cout << "*ts = " << *ts << endl;
+
+        OBTetrahedralStereo *obts = new OBTetrahedralStereo(&mol);
+        obts->SetConfig(*ts);
+        mol.SetData(obts);
       }
+    }
 
     return(true);
   }
@@ -980,13 +973,14 @@ namespace OpenBabel {
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
           {
             //cout << "Line 800: previous atom is chiral, adding reference: id = " << mol.NumAtoms() - 1 << endl;
-            ChiralSearch->second->refs.push_back(mol.NumAtoms() - 1);
+            //ChiralSearch->second->refs.push_back(mol.NumAtoms() - 1);
             /**
              * FIXME: Noel's code
-            int insertpos = NumConnections(ChiralSearch->first) - 1;
-            (ChiralSearch->second)->refs[insertpos] = mol.NumAtoms();
-            //cerr << "NB6: Line 800: Adding "<<mol.NumAtoms()<<" at "<<insertpos<<" to "<<ChiralSearch->second<<endl;
              */
+            int insertpos = NumConnections(ChiralSearch->first) - 2;
+            (ChiralSearch->second)->refs[insertpos] = mol.NumAtoms() -1;
+            cerr << "NB6: Line 800: Adding " << mol.NumAtoms()-1 << " at "
+                 << insertpos << " to " << ChiralSearch->second << endl;
           }
       }
 
@@ -1726,6 +1720,7 @@ namespace OpenBabel {
             _ptr++;
             chiralWatch=true;
             _tetrahedralMap[atom] = new OBTetrahedralStereo::Config;
+            _tetrahedralMap[atom]->refs = OBStereo::Refs(3, OBStereo::NoId);
             _tetrahedralMap[atom]->center = atom->GetId();
             if (*_ptr == '@')
               {
@@ -1851,13 +1846,14 @@ namespace OpenBabel {
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
           {
             //cout << "Line 1629: previous atom is chiral, adding this one to the refs: id = " << atom->GetId() << endl;
-            ChiralSearch->second->refs.push_back(atom->GetId());
+            //ChiralSearch->second->refs.push_back(atom->GetId());
             /**
              * FIXME: Noel's code
-            int insertpos = NumConnections(ChiralSearch->first) - 1;
-            (ChiralSearch->second)->refs[insertpos] = mol.NumAtoms();
-            //cerr <<"NB4: line 1629: Added atom ref "<<mol.NumAtoms()<<" at " << insertpos << " to "<<ChiralSearch->second<<endl;
              */
+            int insertpos = NumConnections(ChiralSearch->first) - 2;
+            (ChiralSearch->second)->refs[insertpos] = atom->GetId();
+            cerr << "NB4: line 1629: Added atom ref " << atom->GetId() << " at "
+                 << insertpos << " to " << ChiralSearch->second << endl;
           }
       }          
 
@@ -1883,16 +1879,17 @@ namespace OpenBabel {
         if(chiralWatch)
           {
             //cout << "Line 1652: explicit hydrogen on chiral atom, adding to the refs: id = " << atom->GetId() << endl;
-            assert( mol.GetAtom(_prev) );
-            _tetrahedralMap[mol.GetAtom(_prev)]->refs.push_back(atom->GetId());
+            //assert( mol.GetAtom(_prev) );
+            //_tetrahedralMap[mol.GetAtom(_prev)]->refs.push_back(atom->GetId());
             /**
              * FIXME: Noel's code
-            int insertpos = NumConnections(mol.GetAtom(_prev)) - 1;
+             */
+            int insertpos = NumConnections(mol.GetAtom(_prev)) - 2;
             // Assertion: It *must* be in position 1 (typically) or 0 (where no preceding group)
-            // assert(insertpos == 1 || insertpos == 0);
-            (_tetrahedralMap[mol.GetAtom(_prev)])->refs[insertpos] = mol.NumAtoms();
-            //cerr << "NB5: line 1652: Added atom ref "<<mol.NumAtoms()<<" at " << insertpos << " to "<<_mapcd[mol.GetAtom(_prev)]<<endl;
-            */
+            assert(insertpos == 1 || insertpos == 0);
+            (_tetrahedralMap[mol.GetAtom(_prev)])->refs[insertpos] = atom->GetId();
+            cerr << "NB5: line 1652: Added atom ref " << atom->GetId() << " at "
+                 << insertpos << " to " << _tetrahedralMap[mol.GetAtom(_prev)] << endl;
           }
       }
     chiralWatch=false;
@@ -1996,7 +1993,7 @@ namespace OpenBabel {
     for (bond = _extbond.begin(); bond != _extbond.end(); bond++) {
         
       if (bond->digit == digit) {
-        upDown = (_updown > bond->updown) ? _updown : bond->updown; // FIXME: make sure this is correct (timvdm)
+        upDown = (_updown > bond->updown) ? _updown : bond->updown;
         bondOrder = (_order > bond->order) ? _order : bond->order;
         mol.AddBond(bond->prev, _prev, bondOrder);
         // store up/down
@@ -2010,13 +2007,13 @@ namespace OpenBabel {
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
           //cout << "previous atom is chiral, adding this one to the refs: id = " << (*j)[1] - 1 << endl;
-          ChiralSearch->second->refs.push_back(bond->prev - 1);
-                /** FIXME
-                int insertpos = NumConnections(ChiralSearch->first) - 1;
-                (ChiralSearch->second)->refs[insertpos] = (*j)[1];
-                //cerr << "NB1: Added external "<<(*j)[1]<<" at "<<insertpos<<" to "<<ChiralSearch->second<<endl;
-                */
- 
+          //ChiralSearch->second->refs.push_back(bond->prev - 1);
+          /** FIXME
+           */
+          int insertpos = NumConnections(ChiralSearch->first) - 2;
+          (ChiralSearch->second)->refs[insertpos] = bond->prev - 1;
+          cerr << "NB1: Added external " << bond->prev-1 << " at "
+               << insertpos << " to " << ChiralSearch->second << endl;
         }
             
         _extbond.erase(bond);
@@ -2065,7 +2062,7 @@ namespace OpenBabel {
     int upDown, bondOrder;
     for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) {
       if (bond->digit == digit) {
-        upDown = (_updown > bond->updown) ? _updown : bond->updown; // FIXME: make sure this is correct (timvdm) 
+        upDown = (_updown > bond->updown) ? _updown : bond->updown;
         bondOrder = (_order > bond->order) ? _order : bond->order;
         // Check if this ring closure bond may be aromatic and set order accordingly
         if (bondOrder == 1) {
@@ -2095,38 +2092,40 @@ namespace OpenBabel {
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
           //cout << "ring closure bond to previous atom: id = " << bond->prev - 1 << endl;
-          OBAtom *tmpAtom = mol.GetAtom(bond->prev);
-          assert( tmpAtom );
-          ChiralSearch->second->refs.push_back(tmpAtom->GetId());
+          //OBAtom *tmpAtom = mol.GetAtom(bond->prev);
+          //assert( tmpAtom );
+          //ChiralSearch->second->refs.push_back(tmpAtom->GetId());
           /** FIXME
-          int insertpos = NumConnections(ChiralSearch->first) - 1;
-          (ChiralSearch->second)->refs[insertpos] = bond->prev;
-          //cerr << "NB3: Added ring closure "<<bond->prev<<" at "<<insertpos<<" to "<<ChiralSearch->second << endl;
-          */
+           */
+          int insertpos = NumConnections(ChiralSearch->first) - 2;
+          (ChiralSearch->second)->refs[insertpos] = bond->prev - 1;
+          cerr << "NB3: Added ring closure " << bond->prev - 1 << " at "
+               << insertpos << " to " << ChiralSearch->second << endl;
         }
         
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));  
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
           //cout << "ring opening bond to previous atom: id = " << bond->prev - 1 << endl;
-          OBAtom *tmpAtom = mol.GetAtom(_prev);
+          //OBAtom *tmpAtom = mol.GetAtom(_prev);
           //Ensure that the closure atom index is inserted at the position
           //decided when the ring closure digit was encountered.
           //The order needs to be SMILES atom order, not OB atom index order.
-          if (bond->numConnections > ChiralSearch->second->refs.size()) {
-            ChiralSearch->second->refs.push_back(tmpAtom->GetId());
-          } else {
-            OBStereo::Refs refs = ChiralSearch->second->refs;
+          //if (bond->numConnections > ChiralSearch->second->refs.size()) {
+          //  ChiralSearch->second->refs.push_back(tmpAtom->GetId());
+          //} else {
+          //  OBStereo::Refs refs = ChiralSearch->second->refs;
             //cout << " bond->numConnections = " << bond->numConnections << endl;
             //cout << "refs.size() = " << refs.size() << endl;
-            refs.insert(refs.begin() + bond->numConnections, tmpAtom->GetId());
-            ChiralSearch->second->refs = refs;    
-          }
+            //refs.insert(refs.begin() + bond->numConnections, tmpAtom->GetId());
+            //ChiralSearch->second->refs = refs;    
+          //}
 
           /** FIXME
-          int insertpos = bond->numConnections;
-          (cs2->second)->refs[insertpos] = mol.NumAtoms();
-          //cerr <<"NB2: Added ring opening "<<_prev<<" at "<<bond->numConnections<<" to "<<cs2->second<<endl;
-          */
+           */
+          int insertpos = bond->numConnections - 1;
+          (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
+          cerr << "NB2: Added ring opening " << mol.GetAtom(_prev)->GetId() << " at "
+               << bond->numConnections << " to " << ChiralSearch->second << endl;
         }
 
         //CM ensure neither atoms in ring closure is a radical centre
@@ -2357,7 +2356,7 @@ namespace OpenBabel {
                           OBBitVec &frag_atoms,
                           vector<unsigned int> &canonical_order);
     bool         IsSuppressedHydrogen(OBAtom *atom);
-    bool         SameChirality(vector<OBAtom*> &v1, vector<OBAtom*> &v2);
+    //bool         SameChirality(vector<OBAtom*> &v1, vector<OBAtom*> &v2);
     void         ToCansmilesString(OBCanSmiNode *node,
                                    char *buffer,
                                    OBBitVec &frag_atoms,
@@ -3130,6 +3129,7 @@ namespace OpenBabel {
    *       chirality represented by the vectors is the same or opposite.
    ***************************************************************************/
 
+  /*
   bool OBMol2Cansmi::SameChirality(vector<OBAtom*> &v1, vector<OBAtom*> &v2)
   {
     vector<OBAtom*> vtmp;
@@ -3176,6 +3176,7 @@ namespace OpenBabel {
     // the same or opposite chirality.
     return (v1[3] == v2[3]);
   }
+  */
 
   /***************************************************************************
    * FUNCTION: AtomIsChiral

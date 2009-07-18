@@ -37,16 +37,60 @@ namespace OpenBabel {
     if ((refs.size() != 3) || (other.refs.size() != 3))
       return false;
     
+    // convert the other Config's refs to same from, winding and view
     Config otherConfig = OBTetraNonPlanarStereo::ToConfig(other, from, winding, view);
 
+    if (!OBStereo::ContainsSameRefs(refs, otherConfig.refs)) {
+      if (OBStereo::ContainsRef(refs, OBStereo::ImplicitId)) {
+        // if both refs already contain ImplicitId, return false
+        if (OBStereo::ContainsRef(otherConfig.refs, OBStereo::ImplicitId))
+          return false;
+        
+        // example: *this       = 23H
+        //          otherConfig = 234 --> 23H
+ 
+        // for each ref in otherConfig
+        for (unsigned int i = 0; i < otherConfig.refs.size(); ++i) {
+          bool found = false;
+          for (OBStereo::ConstRefIter j = refs.begin(); j != refs.end(); ++j)
+            if (otherConfig.refs.at(i) == *j)
+              found = true;
+          
+          if (!found) {
+            // the ref from otherConfig is not found in this config
+            otherConfig.refs[i] = OBStereo::ImplicitId;
+            break;
+          }
+        }
+      } else
+      if (OBStereo::ContainsRef(otherConfig.refs, OBStereo::ImplicitId)) {
+        // if both refs already contain ImplicitId, return false
+        if (OBStereo::ContainsRef(refs, OBStereo::ImplicitId))
+          return false;
 
-    if (!OBStereo::ContainsSameRefs(refs, otherConfig.refs))
-      return false;
+        // example: *this       = 234
+        //          otherConfig = 23H --> 234
+ 
+        // for each ref in *this
+        for (unsigned int i = 0; i < refs.size(); ++i) {
+          bool found = false;
+          // for each refs in otherConfig
+          for (OBStereo::RefIter j = otherConfig.refs.begin(); j != otherConfig.refs.end(); ++j)
+            if (refs.at(i) == *j)
+              found = true;
 
-    // normalize the other Config struct
+          if (!found) {
+            for (OBStereo::RefIter j = otherConfig.refs.begin(); j != otherConfig.refs.end(); ++j)
+              if (*j == OBStereo::ImplicitId)
+                *j = refs.at(i);
+            break;
+          }
+        }
+      }
+    }
+
     int Ni1 = OBStereo::NumInversions(refs);
     int Ni2 = OBStereo::NumInversions(otherConfig.refs);
-
     return ((Ni1 + Ni2) % 2 == 0);
   }
 
@@ -151,7 +195,10 @@ namespace std {
  
     out << ", refs = ";
     for (OpenBabel::OBStereo::Refs::iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      out << *i << " ";
+      if (*i != OpenBabel::OBStereo::ImplicitId)
+        out << *i << " ";
+      else
+        out << "H ";
 
     if (cfg.winding == OpenBabel::OBStereo::Clockwise)
       out << ", clockwise)";
@@ -171,7 +218,10 @@ namespace std {
 
     out << ", refs = ";
     for (OpenBabel::OBStereo::Refs::const_iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      out << *i << " ";
+      if (*i != OpenBabel::OBStereo::ImplicitId)
+        out << *i << " ";
+      else
+        out << "H ";
 
     if (cfg.winding == OpenBabel::OBStereo::Clockwise)
       out << ", clockwise)";

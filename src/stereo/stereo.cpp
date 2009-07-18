@@ -22,7 +22,6 @@
   02110-1301, USA.
  **********************************************************************/
 #include <openbabel/stereo/stereo.h>
-#include <cassert>
 
 namespace OpenBabel {
 
@@ -40,6 +39,15 @@ namespace OpenBabel {
         }
 
     return (count == refs1.size());
+  }
+
+  bool OBStereo::ContainsRef(const OBStereo::Refs &refs, unsigned long id)
+  {
+    for (ConstRefIter i = refs.begin(); i != refs.end(); ++i)
+      if (*i == id)
+        return true;
+
+    return false;
   }
 
   int OBStereo::NumInversions(const OBStereo::Refs &refs)
@@ -86,7 +94,6 @@ namespace OpenBabel {
     result[j] = refs.at(i);
     return result;   
   }
-
 
 }
 

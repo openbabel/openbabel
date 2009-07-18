@@ -5,6 +5,8 @@
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 
+#include <openbabel/canon.h>
+
 using namespace std;
 using namespace OpenBabel;
 
@@ -68,23 +70,37 @@ void genericSmilesCanonicalTest(const std::string &smiles)
   // get the stereo data
   OB_ASSERT( mol.HasData(OBGenericDataType::StereoData) );
   std::vector<OBGenericData *> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
-  
+ 
+  std::vector<unsigned int> canlbls;
+  std::vector<unsigned int> symclasses;
+  OBBitVec allbits(mol.NumAtoms());
+  FOR_ATOMS_OF_MOL(a, mol) {
+    allbits.SetBitOn(a->GetIdx());
+  }
+
+  CanonicalLabels(&mol, allbits, symclasses, canlbls); 
+  cout << "mol.NumAtoms = " << mol.NumAtoms() << endl;
   for (std::vector<OBGenericData*>::iterator data = stereoData.begin(); data != stereoData.end(); ++data) {
     if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
       // convert to tetrahedral data
       OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
       OB_REQUIRE( ts );
       OB_ASSERT( ts->IsValid() );
+      if (!ts->IsValid())
+        continue;
 
       OBTetrahedralStereo::Config config = ts->GetConfig();
       // convert atom ids to symmetry ids
-      std::vector<unsigned int> vgid;
-      mol.GetGIDVector(vgid);
-      config.center = vgid.at( mol.GetAtomById(config.center)->GetIdx() - 1 );
-      config.from = vgid.at( mol.GetAtomById(config.from)->GetIdx() - 1 );
-      config.refs[0] = vgid.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
-      config.refs[1] = vgid.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
-      config.refs[2] = vgid.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
+     if (mol.GetAtomById(config.center))
+        config.center = canlbls.at( mol.GetAtomById(config.center)->GetIdx() - 1 );
+      if (mol.GetAtomById(config.from))
+        config.from = canlbls.at( mol.GetAtomById(config.from)->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[0]))
+        config.refs[0] = canlbls.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[1]))
+        config.refs[1] = canlbls.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[2]))
+        config.refs[2] = canlbls.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
       cout << "Config with symmetry ids: " << config << endl;
       tetrahedral1.push_back(config);
     } else
@@ -96,18 +112,16 @@ void genericSmilesCanonicalTest(const std::string &smiles)
 
       OBCisTransStereo::Config config = ct->GetConfig();
       // convert atom ids to symmetry ids
-      std::vector<unsigned int> vgid;
-      mol.GetGIDVector(vgid);
-      config.begin = vgid.at( mol.GetAtomById(config.begin)->GetIdx() - 1 );
-      config.end = vgid.at( mol.GetAtomById(config.end)->GetIdx() - 1 );
+      config.begin = canlbls.at( mol.GetAtomById(config.begin)->GetIdx() - 1 );
+      config.end = canlbls.at( mol.GetAtomById(config.end)->GetIdx() - 1 );
       if (mol.GetAtomById(config.refs[0]))
-        config.refs[0] = vgid.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
+        config.refs[0] = canlbls.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
       if (mol.GetAtomById(config.refs[1]))
-        config.refs[1] = vgid.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
+        config.refs[1] = canlbls.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
       if (mol.GetAtomById(config.refs[2]))
-        config.refs[2] = vgid.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
+        config.refs[2] = canlbls.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
       if (mol.GetAtomById(config.refs[3]))
-        config.refs[3] = vgid.at( mol.GetAtomById(config.refs[3])->GetIdx() - 1 );
+        config.refs[3] = canlbls.at( mol.GetAtomById(config.refs[3])->GetIdx() - 1 );
       cout << "Config with symmetry ids: " << config << endl;
       cistrans1.push_back(config);
     } 
@@ -128,6 +142,8 @@ void genericSmilesCanonicalTest(const std::string &smiles)
   OB_ASSERT( mol.HasData(OBGenericDataType::StereoData) );
   stereoData = mol.GetAllData(OBGenericDataType::StereoData);
   
+  CanonicalLabels(&mol, allbits, symclasses, canlbls); 
+  cout << "mol.NumAtoms = " << mol.NumAtoms() << endl;
   for (std::vector<OBGenericData*>::iterator data = stereoData.begin(); data != stereoData.end(); ++data) {
     if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
       // convert to tetrahedral data
@@ -137,13 +153,16 @@ void genericSmilesCanonicalTest(const std::string &smiles)
 
       OBTetrahedralStereo::Config config = ts->GetConfig();
       // convert atom ids to symmetry ids
-      std::vector<unsigned int> vgid;
-      mol.GetGIDVector(vgid);
-      config.center = vgid.at( mol.GetAtomById(config.center)->GetIdx() - 1 );
-      config.from = vgid.at( mol.GetAtomById(config.from)->GetIdx() - 1 );
-      config.refs[0] = vgid.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
-      config.refs[1] = vgid.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
-      config.refs[2] = vgid.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.center))
+        config.center = canlbls.at( mol.GetAtomById(config.center)->GetIdx() - 1 );
+      if (mol.GetAtomById(config.from))
+        config.from = canlbls.at( mol.GetAtomById(config.from)->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[0]))
+        config.refs[0] = canlbls.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[1]))
+        config.refs[1] = canlbls.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[2]))
+        config.refs[2] = canlbls.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
       cout << "Config with symmetry ids: " << config << endl;
       tetrahedral2.push_back(config);
     }
@@ -155,18 +174,16 @@ void genericSmilesCanonicalTest(const std::string &smiles)
 
       OBCisTransStereo::Config config = ct->GetConfig();
       // convert atom ids to symmetry ids
-      std::vector<unsigned int> vgid;
-      mol.GetGIDVector(vgid);
-      config.begin = vgid.at( mol.GetAtomById(config.begin)->GetIdx() - 1 );
-      config.end = vgid.at( mol.GetAtomById(config.end)->GetIdx() - 1 );
+      config.begin = canlbls.at( mol.GetAtomById(config.begin)->GetIdx() - 1 );
+      config.end = canlbls.at( mol.GetAtomById(config.end)->GetIdx() - 1 );
       if (mol.GetAtomById(config.refs[0]))
-        config.refs[0] = vgid.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
+        config.refs[0] = canlbls.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
       if (mol.GetAtomById(config.refs[1]))
-        config.refs[1] = vgid.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
+        config.refs[1] = canlbls.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
       if (mol.GetAtomById(config.refs[2]))
-        config.refs[2] = vgid.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
+        config.refs[2] = canlbls.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
       if (mol.GetAtomById(config.refs[3]))
-        config.refs[3] = vgid.at( mol.GetAtomById(config.refs[3])->GetIdx() - 1 );
+        config.refs[3] = canlbls.at( mol.GetAtomById(config.refs[3])->GetIdx() - 1 );
       cout << "Config with symmetry ids: " << config << endl;
       cistrans2.push_back(config);
     } 
@@ -179,6 +196,10 @@ void genericSmilesCanonicalTest(const std::string &smiles)
     for (unsigned int j = 0; j < tetrahedral2.size(); ++j) {
       if (tetrahedral1[i].center == tetrahedral2[j].center)
         OB_ASSERT( tetrahedral1[i] == tetrahedral2[j] );
+        if ( tetrahedral1[i] != tetrahedral2[j] ) {
+          cout << "1 = " << tetrahedral1[i] << endl;
+          cout << "2 = " << tetrahedral2[j] << endl;
+        }
     }
   }
   // compare the cistrans structs
@@ -206,7 +227,14 @@ int main()
   
   // CisTrans
   genericSmilesCanonicalTest("Cl/C=C/F");
-  
+
+genericSmilesCanonicalTest("CCC[C@@H]1C[C@H](N(C1)C)C(=O)NC([C@@H]2[C@@H]([C@@H]([C@H]([C@H](O2)SC)OP(=O)(O)O)O)O)C(C)Cl");
+genericSmilesCanonicalTest("CC1=CN(C(=O)NC1=O)[C@H]2C[C@@H]([C@H](O2)CNCC3=CC=CC=C3)O");
+genericSmilesCanonicalTest("CC(C)[C@H]1CC[C@]([C@@H]2[C@@H]1C=C(COC2=O)C(=O)O)(CCl)O");
+genericSmilesCanonicalTest("C(CS[14CH2][14C@@H]1[14C@H]([14C@H]([14CH](O1)O)O)O)[C@@H](C(=O)O)N");
+
+  cout << "end" << endl;
+
   return 0;
 }
 

@@ -123,6 +123,11 @@ namespace OpenBabel {
     static bool ContainsSameRefs(const Refs &refs1, const Refs &refs2);
 
     /**
+     * @return True if @p refs contains @p id.
+     */
+    static bool ContainsRef(const Refs &refs, unsigned long id);
+
+    /**
      * Compute the inversion vector for @p refs and return the sum of it's 
      * elements. The ith element in the inversion vector is the number of 
      * element to the right of element i with a lower value.
@@ -191,6 +196,9 @@ namespace OpenBabel {
     private:
       OBMol *m_mol; //!< the parent molecule
   };
+
+  OBAPI void StereoFrom2D(OBMol *);
+  OBAPI void StereoFrom3D(OBMol *);
 
 }
 

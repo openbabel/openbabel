@@ -44,6 +44,7 @@ set(stereo_srcs
     stereo/squareplanar.cpp
     stereo/cistrans.cpp
     stereo/tetrahedral.cpp
+    stereo/perception.cpp
 )
 
 set(openbabel_srcs
