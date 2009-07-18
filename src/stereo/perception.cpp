@@ -114,7 +114,7 @@ namespace OpenBabel {
     bool mayHaveCisTransBond = false;
     std::vector<OBBond*>::iterator i;
     for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i))
-      if (bond->GetBO() == 2 && !bond->IsAromatic()) {
+      if (bond->GetBO() == 2 && !bond->IsInRing()) {
         mayHaveCisTransBond = true;
         break;
       }
@@ -126,7 +126,7 @@ namespace OpenBabel {
 
     bool isCisTrans;
     for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i)) {
-      if (bond->IsAromatic())
+      if (bond->IsInRing())
         continue;
 
       if (bond->GetBO() == 2) {
