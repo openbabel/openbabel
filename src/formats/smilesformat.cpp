@@ -410,6 +410,10 @@ namespace OpenBabel {
     mol.AssignSpinMultiplicity();
     mol.UnsetAromaticPerceived();
 
+    // FIXME
+    //
+    // timvdm: replace this with CreateCisTrans(mol, cistrans) which should 
+    //         store the result using new OBCisTransStereo
     FixCisTransBonds(mol);
 
     mol.EndModify();
@@ -452,14 +456,23 @@ namespace OpenBabel {
     return(true);
   }
 
+  // FIXME
+  //
+  // timvdm: I don't think this function is needed anymore. OBBond::IsUp and
+  //         OBBond::IsDown should be replaced by the new stereo classes. If
+  //         needed functions could be added to OBCisTransStereo to mimic 
+  //         this behaviour.
+  //
   void OBSmilesParser::FixCisTransBonds(OBMol &mol)
   {
+    // FIXME --------------------------------------------------------------
     // OpenBabel's internal model for cis/trans uses an imaginary drawing,
     // in which the double bond is horizontal on the page, and an "up" bond
     // means, "above the double-bond on the page", and "down" means, "below
     // the double bond on the page".  Thus, a cis configuration can be
     // represented as either "up/up" or "down/down", and a trans
     // configuration can be either "up/down" or "down/up".
+    // ----------------------------------------------------------------------
     //
     // When parsing a SMILES, '/' and '\' bonds are initially marked as
     // "down" and "up", respectively, but they don't mean "down" and "up"
@@ -489,16 +502,15 @@ namespace OpenBabel {
     
     std::map<OBBond *, bool> isup; // Store the result here
     std::list<OBCisTransStereo>::iterator ChiralSearch;
-    std::vector<unsigned long>::iterator lookup;
 
-    for(int i=1;i<=mol.NumAtoms();i++)
-    {
-      // Find an OBCisTransStereo that contains atom i
-      for(ChiralSearch = cistrans.begin(); ChiralSearch != cistrans.end(); ChiralSearch++)
-      {
+    for (int i = 1; i <= mol.NumAtoms(); i++) {
+      // Find an OBCisTransStereo that contains atom i's id in the refs
+      for (ChiralSearch = cistrans.begin(); ChiralSearch != cistrans.end(); ChiralSearch++) {
+
         OBCisTransStereo::Config cfg = ChiralSearch->GetConfig(OBStereo::ShapeU);
-        lookup = std::find(cfg.refs.begin(), cfg.refs.end(), i);
-        if(lookup != cfg.refs.end()) { // Atom i is in this OBCisTransStereo
+        OBStereo::RefIter lookup = std::find(cfg.refs.begin(), cfg.refs.end(), mol.GetAtom(i)->GetId());
+        
+        if (lookup != cfg.refs.end()) { // Atom i's id is in this OBCisTransStereo refs
           // Set the up and down for all of the stereo bonds in this chiral data
           // For the moment, ignore existing IsUp() or IsDown() values
           std::vector<OBBond *> refbonds(4, (OBBond*)NULL);
@@ -521,13 +533,13 @@ namespace OpenBabel {
           bool alt_config[4] = {false, true, true, false};
           bool use_alt_config = false;
 
-          for(int i=0;i<4;i++)
+          for(int i = 0; i < 4; ++i) {
             if (isup.find(refbonds[i]) != isup.end()) // We have already set this one
-              if (isup[refbonds[i]] != config[i])
-              {
+              if (isup[refbonds[i]] != config[i]) {
                 use_alt_config = true;
                 break;
               }
+          }
           
           // Set the configuration
           for(int i=0;i<4;i++)
@@ -544,16 +556,18 @@ namespace OpenBabel {
     }
 
     // Wipe existing Up/Down values and set the new ones
-    FOR_BONDS_OF_MOL(b, mol)
-    {
+    // timvdm: these were set in OBSmilesParser::ParseSmiles(OBMol &mol)
+    FOR_BONDS_OF_MOL(b, mol) {
       if (b->IsUp())
         b->UnsetUp();
+
       if (b->IsDown())
         b->UnsetDown();
     }
+
     std::map<OBBond *, bool>::iterator UpDown;
-    for(UpDown=isup.begin();UpDown!=isup.end();UpDown++)
-      if(UpDown->second == true)
+    for (UpDown = isup.begin(); UpDown != isup.end(); UpDown++)
+      if (UpDown->second == true)
         UpDown->first->SetUp();
       else
         UpDown->first->SetDown();
@@ -2577,6 +2591,7 @@ namespace OpenBabel {
     }
     return stereo_dbl;
   }
+
   char OBMol2Cansmi::GetCisTransBondSymbol(OBBond *bond, OBCanSmiNode *node)
   {
     // Given a cis/trans bond and the node in the SMILES tree, figures out
