@@ -131,6 +131,9 @@ class OBBase;
       //! Matrix data (i.e., a 3x3 matrix like a rotation or quadrupole moment)
       MatrixData =        26,
 
+      //! Stereochemistry data (see OBStereoBase)
+      StereoData =        27,
+
       // space for up to 2^14 more entries...
 
       //! Custom (user-defined data)

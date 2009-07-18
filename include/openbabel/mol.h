@@ -111,6 +111,7 @@ namespace OpenBabel
     bool                          _autoFormalCharge;//!< Assign formal charges automatically
     std::string                   _title;     	//!< Molecule title
     std::vector<OBAtom*>          _vatom;      	//!< vector of atoms
+    std::vector<OBAtom*>          _atomIds;    	//!< vector of atoms indexed by id
     std::vector<OBBond*>          _vbond;      	//!< vector of bonds
     unsigned short int            _dimension;   //!< Dimensionality of coordinates
     int				  _totalCharge; //!< Total charge on the molecule
@@ -154,8 +155,10 @@ namespace OpenBabel
     //! This improves performance since the internal atom vector does not grow.
     void ReserveAtoms(int natoms)
     {
-      if (natoms > 0 && _mod)
+      if (natoms > 0 && _mod) {
         _vatom.reserve(natoms);
+        _atomIds.reserve(natoms);
+      }
     }
     
     //! Create a new OBAtom pointer. Does no bookkeeping
@@ -200,8 +203,13 @@ namespace OpenBabel
     bool AddResidue(OBResidue&);
 
     //! Create a new OBAtom in this molecule and ensure connections.
-    //! (e.g. OBAtom::GetParent()
+    //! (e.g. OBAtom::GetParent(). A new unique id will be assigned 
+    //! to this atom.
     OBAtom    *NewAtom();
+    //! Create a new OBAtom in this molecule and ensure connections.
+    //! (e.g. OBAtom::GetParent(). The @p id will be assigned to this
+    //! atom. 
+    OBAtom    *NewAtom(unsigned long id);
     //! Create a new OBBond in this molecule and ensure connections.
     //! (e.g. OBBond::GetParent()
     OBBond    *NewBond();
@@ -261,6 +269,8 @@ namespace OpenBabel
     //! \return the atom at index @p idx or NULL if it does not exist.
     //! \warning Atom indexing will change. Use iterator methods instead.
     OBAtom      *GetAtom(int idx) const;
+    //! \return the atom with @p id or NULL if it does not exist.
+    OBAtom      *GetAtomById(unsigned long id) const;
     //! \return the first atom in this molecule, or NULL if none exist.
     //! \deprecated Will be removed in favor of more standard iterator methods
     OBAtom      *GetFirstAtom() const;

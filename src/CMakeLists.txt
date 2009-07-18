@@ -37,6 +37,14 @@ set(ops_srcs
   ops/optransform.cpp
 )
 
+set(stereo_srcs
+    stereo/cistrans.cpp
+    stereo/squareplanar.cpp
+    stereo/tetrahedral.cpp
+    stereo/tetranonplanar.cpp
+    stereo/tetraplanar.cpp
+)
+
 set(openbabel_srcs
     alias.cpp
     atom.cpp
@@ -103,6 +111,7 @@ add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
                 ${forcefields_srcs}
                 ${math_srcs}
                 ${ops_srcs}
+                ${stereo_srcs}
                 ${headers}
                 "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
 )

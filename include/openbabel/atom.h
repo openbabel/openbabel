@@ -99,6 +99,8 @@ namespace OpenBabel
       mutable vector3               _v;         //!< coordinate vector
       OBResidue                    *_residue;   //!< parent residue (if applicable)
 
+      unsigned long                 _id;        //!< unique id
+
       //! \return All flags
       int  GetFlag() const    {  return(_flags);  }
       //! Sets the bitwise @p flag
@@ -129,6 +131,7 @@ namespace OpenBabel
       //@{
       //! Set atom index (i.e., in an OBMol)
       void SetIdx(int idx)    { _idx = idx; _cidx = (idx-1)*3; }
+      void SetId(unsigned long id) { _id = id; }
       //! Set atom hybridization (i.e., 1 = sp, 2 = sp2, 3 = sp3 ...)
       void SetHyb(int hyb)    { _hyb = hyb; }
       //! Set atomic number
@@ -211,6 +214,7 @@ namespace OpenBabel
       double     GetExactMass()     const;
       //! \return the internal atom index (e.g., inside an OBMol)
       unsigned int GetIdx()           const { return((int)_idx);  }
+      unsigned long GetId()           const { return _id; }
       //! \return the index into a pointer-driven array as used by
       //!   GetCoordPtr() or SetCoordPtr()
       unsigned int GetCoordinateIdx() const { return((int)_cidx); }

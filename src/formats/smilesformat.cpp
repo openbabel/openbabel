@@ -20,16 +20,32 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
-#include <openbabel/chiral.h>
 #include <openbabel/atomclass.h>
+
+#include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
+
 
 #include <openbabel/canon.h>
 
 #include <limits>
+#include <iostream>
+#include <cassert>
+#include <string>
 
 using namespace std;
 
 namespace OpenBabel {
+
+  /**
+   * Temp storage for stereochemistry
+   */
+  struct TetrahedralStereo
+  {
+    unsigned long center;
+    std::vector<unsigned long> refs;
+    OBStereo::Winding winding;
+  };
 
   //Base class for SMIFormat and CANSIFormat with most of the functionality
   class SMIBaseFormat : public OBMoleculeFormat
@@ -167,7 +183,7 @@ namespace OpenBabel {
     char _buffer[BUFF_SIZE];
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
     bool chiralWatch; // set when a chiral atom is read
-    map<OBAtom*,OBChiralData*> _mapcd; // map of ChiralAtoms and their data
+    map<OBAtom*, TetrahedralStereo*> _tetrahedralMap; // map of ChiralAtoms and their data
     OBAtomClassData _classdata; // to hold atom class data like [C:2]
   public:
 
@@ -417,17 +433,26 @@ namespace OpenBabel {
     
     //NE add the OBChiralData stored inside the _mapcd to the atoms now after end
     // modify so they don't get lost.
-    if(_mapcd.size()>0)
+    if(_tetrahedralMap.size() > 0)
       {
         OBAtom* atom;
-        OBChiralData* cd;
-        map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
-        for(ChiralSearch=_mapcd.begin();ChiralSearch!=_mapcd.end();ChiralSearch++)
+        map<OBAtom*,TetrahedralStereo*>::iterator ChiralSearch;
+        for(ChiralSearch = _tetrahedralMap.begin(); ChiralSearch != _tetrahedralMap.end(); ChiralSearch++)
           {
-            atom=ChiralSearch->first;
-            cd=ChiralSearch->second;
-            atom->SetData(cd);
-          }    
+            atom = ChiralSearch->first;
+            TetrahedralStereo *ts = ChiralSearch->second;
+            if (!ts) 
+              continue;
+            if (ts->refs.size() != 4)
+              continue;
+
+            OBTetrahedralStereo *obts = new OBTetrahedralStereo(&mol);
+            obts->SetCenter(ts->center);
+            obts->SetRefs(OBStereo::MakeRefs(ts->refs[1], ts->refs[2], ts->refs[3]), ts->refs[0], ts->winding);
+            // add the data to the atom
+            atom->SetData(obts);
+            assert (atom->HasData(OBGenericDataType::StereoData));
+          }
       }
 
     return(true);
@@ -796,14 +821,15 @@ namespace OpenBabel {
           }
 
         mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
+       
         
         //NE iterate through and see if atom is bonded to chiral atom
-        map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
-        ChiralSearch=_mapcd.find(mol.GetAtom(_prev));
-        if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
+        map<OBAtom*,TetrahedralStereo*>::iterator ChiralSearch;
+        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
+        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
           {
-            (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
-            // cerr << "Line 800: Adding "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
+            //cout << "Line 800: previous atom is chiral, adding reference: id = " << mol.NumAtoms() - 1 << endl;
+            ChiralSearch->second->refs.push_back(mol.NumAtoms() - 1);
           }
       }
 
@@ -1542,12 +1568,15 @@ namespace OpenBabel {
           case '@':
             _ptr++;
             chiralWatch=true;
-            _mapcd[atom]= new OBChiralData;
+            _tetrahedralMap[atom] = new TetrahedralStereo;
+            _tetrahedralMap[atom]->center = atom->GetId();
             if (*_ptr == '@')
-              atom->SetClockwiseStereo();
+              {
+                _tetrahedralMap[atom]->winding = OBStereo::Clockwise;
+              }
             else
               {
-                atom->SetAntiClockwiseStereo();
+                _tetrahedralMap[atom]->winding = OBStereo::AntiClockwise;
                 _ptr--;
               }
             break;
@@ -1651,18 +1680,16 @@ namespace OpenBabel {
         mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
         if(chiralWatch) // if chiral atom need to add its previous into atom4ref
           {
-            if (_mapcd[atom] == NULL)
-              _mapcd[atom]= new OBChiralData;
-    
-            (_mapcd[atom])->AddAtomRef((unsigned int)_prev,input);
-            // cerr <<"line 1622: Added atom ref "<<_prev<<" to "<<_mapcd[atom]<<endl;
+            assert( _tetrahedralMap[atom] );
+            //cout << "Line 1622: adding previous reference: id = " << mol.GetAtom(_prev)->GetId() << endl;
+            _tetrahedralMap[atom]->refs.push_back(mol.GetAtom(_prev)->GetId());
           }
-        map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
-        ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
-        if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
+        map<OBAtom*,TetrahedralStereo*>::iterator ChiralSearch;
+        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
+        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
           {
-            (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
-            // cerr <<"line 1629: Added atom ref "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
+            //cout << "Line 1629: previous atom is chiral, adding this one to the refs: id = " << atom->GetId() << endl;
+            ChiralSearch->second->refs.push_back(atom->GetId());
           }
       }          
 
@@ -1683,10 +1710,8 @@ namespace OpenBabel {
         mol.AddBond(_prev,mol.NumAtoms(),1);
         if(chiralWatch)
           {
-            if (_mapcd[mol.GetAtom(_prev)] != NULL)
-              (_mapcd[mol.GetAtom(_prev)])->AddAtomRef(mol.NumAtoms(),input);
-            // cerr << "line 1652: Added atom ref "<<mol.NumAtoms()<<" to "<<_mapcd[mol.GetAtom(_prev)]<<endl;
-                       
+            //cout << "Line 1652: explicit hydrogen on chiral atom, adding to the refs: id = " << atom->GetId() << endl;
+            _tetrahedralMap[mol.GetAtom(_prev)]->refs.push_back(atom->GetId());
           }
       }
     chiralWatch=false;
@@ -1797,12 +1822,12 @@ namespace OpenBabel {
             
             // after adding a bond to atom "_prev"
             // search to see if atom is bonded to a chiral atom
-            map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
-            ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
-            if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
+            map<OBAtom*,TetrahedralStereo*>::iterator ChiralSearch;
+            ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
+            if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
               {
-                (ChiralSearch->second)->AddAtomRef((*j)[1], input);
-                // cerr << "Added external "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
+                //cout << "previous atom is chiral, adding this one to the refs: id = " << (*j)[1] - 1 << endl;
+                ChiralSearch->second->refs.push_back((*j)[1] - 1);
               }
             
             _extbond.erase(j);
@@ -1865,31 +1890,30 @@ namespace OpenBabel {
           }
           
           mol.AddBond((*j)[1],_prev,ord,bf,(*j)[4]);
-            
+          
           // after adding a bond to atom "_prev"
           // search to see if atom is bonded to a chiral atom
           // need to check both _prev and (*j)[1] as closure is direction independent
-          map<OBAtom*,OBChiralData*>::iterator ChiralSearch,cs2;
-          ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
-          cs2=_mapcd.find(mol.GetAtom((*j)[1]));
-          if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
+          map<OBAtom*,TetrahedralStereo*>::iterator ChiralSearch,cs2;
+          ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
+          cs2 = _tetrahedralMap.find(mol.GetAtom((*j)[1]));
+          if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
             {
-              (ChiralSearch->second)->AddAtomRef((*j)[1], input);
-              // cerr << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second << endl;
+              //cout << "ring closure bond to previous atom: id = " << (*j)[1] - 1 << endl;
+              ChiralSearch->second->refs.push_back((*j)[1] - 1);
             }
-          if (cs2!=_mapcd.end() && cs2->second != NULL)
+          if (cs2 != _tetrahedralMap.end() && cs2->second != NULL)
             {
+              //cout << "ring opening bond to previous atom: id = " << (*j)[1] - 1 << endl;
+              
               //Ensure that the closure atom index is inserted at the position
               //decided when the ring closure digit was encountered.
               //The order needs to be SMILES atom order, not OB atom index order.
-              vector<unsigned int> refs = (cs2->second)->GetAtom4Refs(input);
-              // make sure the vector is large enough for the insert call
-              refs.resize((*j)[4] + 1);
-              refs.insert(refs.begin()+(*j)[4], _prev);
-              (cs2->second)->SetAtom4Refs(refs, input);
-              // cerr <<"Added ring opening "<<_prev<<" to "<<cs2->second<<endl;
+              vector<unsigned long> refs = cs2->second->refs;
+              refs.insert(refs.begin()+(*j)[4], mol.GetAtom(_prev)->GetId());
+              cs2->second->refs = refs;
             }
-            
+
           //CM ensure neither atoms in ring closure is a radical centre
           OBAtom* patom = mol.GetAtom(_prev);
           patom->SetSpinMultiplicity(0);
@@ -2761,6 +2785,12 @@ namespace OpenBabel {
       // NEEDS TO BE REWRITTEN, BUT IN COORDINATION WITH A REWRITE OF CHIRALITY IN
       // THE smilesformat.cpp FILE.  -- CJ
 
+      if (!atom->HasData(OBGenericDataType::StereoData))
+        return false; // no chirality on this atom
+      // use & for now, will be replaced by @ or @@, we don't know yet...
+      strcpy(stereo, "@");
+      return true;
+      /*
       if (!atom->HasChiralitySpecified())         //   and no chirality on this atom?
         return(false);                            //   not a chiral atom -- all done.
 
@@ -2773,6 +2803,7 @@ namespace OpenBabel {
       else
         return(false);
       return(true);
+      */
     }
 
     // If no chiral neighbors were passed in, we're done
@@ -3227,8 +3258,9 @@ namespace OpenBabel {
         symmetry_classes.push_back(atom->GetIdx() - 1);
       }
       else{
-        labels.push_back(2147483647); //to match situation when canonical ordering. Just a big number?
-        symmetry_classes.push_back(2147483647);
+        //labels.push_back(2147483647); //to match situation when canonical ordering. Just a big number?
+        labels.push_back(OBStereo::HydrogenId); //to match situation when canonical ordering. Just a big number?
+        symmetry_classes.push_back(OBStereo::HydrogenId);
       }
     }
   }
@@ -3366,6 +3398,65 @@ namespace OpenBabel {
       delete root;
     }
 
+    // timvdm: Fix chiral atoms.
+    std::string::size_type pos = 0;
+    for (int index = 0; index < _atmorder.size(); ++index) {
+      OBAtom *a = mol.GetAtom(_atmorder.at(index));
+      assert( a );
+
+      if (a->HasData(OBGenericDataType::StereoData)) {
+        unsigned long fromId = mol.GetAtom(_atmorder.at(index-1))->GetId();
+        //cout << "fromId = " << fromId << endl;
+        OBTetrahedralStereo *ts = (OBTetrahedralStereo*) a->GetData(OBGenericDataType::StereoData);
+        //cout << "ts->GetCenter() = " << ts->GetCenter() << endl;
+
+        // get clockwise, viewing from previous atom
+        OBStereo::Refs refs = ts->GetRefs(fromId);
+        /*
+        cout << "refs = ";
+        for (OBStereo::RefIter j = refs.begin(); j != refs.end(); ++j)
+          cout << " " << *j;
+        cout << endl;
+        */
+
+
+        // find the canonical refs
+        OBStereo::Refs canonRefs;
+        for (OBStereo::RefIter j = refs.begin(); j != refs.end(); ++j) {
+          OBAtom *b = mol.GetAtomById(*j);
+          if (b->IsHydrogen())
+            canonRefs.push_back(*j);
+        }
+        for (int k = 0; k < _atmorder.size(); ++k) {
+          OBAtom *c = mol.GetAtom(_atmorder.at(k));
+          for (OBStereo::RefIter j = refs.begin(); j != refs.end(); ++j) {
+            OBAtom *b = mol.GetAtomById(*j);
+            if (b->GetId() == c->GetId()) {
+              canonRefs.push_back(*j);
+            }
+          }
+        }
+
+        /*
+        cout << "canonRefs = ";
+        for (OBStereo::RefIter j = canonRefs.begin(); j != canonRefs.end(); ++j)
+          cout << " " << *j;
+        cout << endl;
+        */
+
+        if (ts->Compare(canonRefs, fromId, OBStereo::Clockwise, OBStereo::ViewFrom)) {
+          std::string smiles(buffer);
+          pos = smiles.find("@", pos);
+          smiles.insert(pos, "@");
+          strncpy(buffer, smiles.c_str(), BUFF_SIZE);
+          pos += 2;          
+        }
+
+      }
+
+
+    }
+    
     // save the canonical order as a space-separated string
     // which will be returned by GetOutputOrder() for incorporation
     // into an OBPairData keyed "canonical order"
@@ -3376,10 +3467,13 @@ namespace OpenBabel {
         temp << (*can_iter++);
       }
 
+      //cout << "_atmorder =";
       for (; can_iter != _atmorder.end(); ++can_iter) {
         if (*can_iter <= mol.NumAtoms())
           temp << " " << (*can_iter);
+          //cout << " " << (*can_iter);
       }
+      //cout << endl;
       _canorder = temp.str(); // returned by GetOutputOrder()
     }
   }
