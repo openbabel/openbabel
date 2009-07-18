@@ -314,11 +314,12 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       ts->refs = OBStereo::MakeRefs(central_atom->neighbor[1], central_atom->neighbor[2],
                                     central_atom->neighbor[3]);
 
-      // Todo: Handle INCHI_PARITY_UNKNOWN?
       if(stereo.parity==INCHI_PARITY_EVEN)
         ts->winding = OBStereo::Clockwise;
-      else // if(stereo.parity==INCHI_PARITY_ODD) 
+      else if(stereo.parity==INCHI_PARITY_ODD) 
         ts->winding = OBStereo::AntiClockwise;
+      else
+        ts->specified = false;
       
       OBTetrahedralStereo *obts = new OBTetrahedralStereo(pmol);
       obts->SetConfig(*ts);
@@ -470,11 +471,14 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         for(int i=0; i<3; ++i)
           stereo.neighbor[i + 1] = config.refs[i];
         
-        if (config.winding == OBStereo::Clockwise)
-          stereo.parity = INCHI_PARITY_EVEN;
+        if (config.specified) {
+          if (config.winding == OBStereo::Clockwise)
+            stereo.parity = INCHI_PARITY_EVEN;
+          else
+            stereo.parity = INCHI_PARITY_ODD;
+        }
         else
-          stereo.parity = INCHI_PARITY_ODD;
-        /* @todo Handle stereo.parity = INCHI_PARITY_UNKNOWN; */
+          stereo.parity = INCHI_PARITY_UNKNOWN;
 
         stereoVec.push_back(stereo);
       }
