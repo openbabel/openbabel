@@ -26,12 +26,23 @@
 
 #include <openbabel/base.h> // OBGenericData
 #include <vector>
+#include <map>
 #include <climits> // UINT_MAX
 
 namespace OpenBabel {
 
   struct OBAPI OBStereo 
   {
+    /**
+     * Bond directions used by StereoFrom0D to translate to
+     * internal CisTransStereo representation
+     */
+    enum BondDirection { // Values taken from MDL format
+      NotStereo =   0,
+      UpBond =      1,
+      DownBond =    6,
+      UnknownDir =  4
+    };
     /**
      * The various types of stereochemistry
      *
@@ -246,7 +257,7 @@ namespace OpenBabel {
       std::map<unsigned long, OBTetrahedralStereo*> m_tetrahedralMap;
       std::map<unsigned long, OBCisTransStereo*> m_cistransMap;
   };
-
+  class OBBond;
   /**
    * Convert 2D/3D coordinates to OBStereo objects.
    * 
@@ -292,8 +303,10 @@ namespace OpenBabel {
    * don't want to loose any information. 
    *
    * @param mol The molecule.
+   * @param updown A map of OBStereo::BondDirection for cis/trans bonds
    */
-  OBAPI void StereoFrom0D(OBMol *mol);
+  OBAPI void StereoFrom0D(OBMol *mol,
+      const std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL);
 
   /**
    * Get a vector with all OBTetrahedralStereo objects for the molecule. This 

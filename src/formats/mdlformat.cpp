@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <algorithm>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/stereo/stereo.h>
+#include <openbabel/stereo/cistrans.h>
 #include <openbabel/alias.h>
 #include <openbabel/tokenst.h>
 
@@ -93,7 +94,7 @@ namespace OpenBabel
     private:
       bool  HasProperties;
       string GetTimeDate();
-
+      void GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown, set<OBBond*> &stereodbl);
       map<int,int> indexmap; //relates index in file to index in OBMol
       vector<string> vs;
   };
@@ -302,18 +303,19 @@ namespace OpenBabel
       //
       // Bond Block
       //
-      int stereo;
+      int stereo = 0;
+      map<OBBond*, OBStereo::BondDirection> updown;
       unsigned int begin, end, order, flag;
       for (i = 0;i < nbonds; ++i) {
         flag = 0;
         if (!std::getline(ifs, line)) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
-	  errorMsg << "Not enough bonds to match bond count (" << nbonds << ") in counts line\n";
-	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-          return false;
-	}
-	begin = end = order = 0;
-	// 111222tttsssxxxrrrccc
+	        errorMsg << "Not enough bonds to match bond count (" << nbonds << ") in counts line\n";
+	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+                return false;
+	      }
+	      begin = end = order = 0;
+	      // 111222tttsssxxxrrrccc
         //
         // 111 = first atom number
         // 222 = second atom number
@@ -321,16 +323,16 @@ namespace OpenBabel
         // sss = bond stereo (
         // ... = query/topology
         if (line.size() >= 9) {
-	  begin = atoi((line.substr(0, 3)).c_str());
-	  end = atoi((line.substr(3, 3)).c_str());
-	  order = atoi((line.substr(6, 3)).c_str());
-	}
+	        begin = atoi((line.substr(0, 3)).c_str());
+	        end = atoi((line.substr(3, 3)).c_str());
+	        order = atoi((line.substr(6, 3)).c_str());
+	      }
         if (begin == 0 || end == 0 || order == 0 || begin > mol.NumAtoms() || end > mol.NumAtoms()) {
-	  errorMsg << "WARNING: Problems reading a MDL file\n";
-	  errorMsg << "Invalid bond specification, atom numbers or bond order are wrong.\n";
-	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-          return false;
-	}
+	        errorMsg << "WARNING: Problems reading a MDL file\n";
+	        errorMsg << "Invalid bond specification, atom numbers or bond order are wrong.\n";
+	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+                return false;
+	      }
 
         order = (order == 4) ? 5 : order;
         if (line.size() >= 12) {  //handle wedge/hash data
@@ -361,11 +363,30 @@ namespace OpenBabel
         }
 
         if (!mol.AddBond(begin,end,order,flag)) {
-	  errorMsg << "WARNING: Problems reading a MDL file\n";
-	  errorMsg << "Invalid bond specification\n";
-	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-	  return false;
-	}
+	        errorMsg << "WARNING: Problems reading a MDL file\n";
+	        errorMsg << "Invalid bond specification\n";
+	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	        return false;
+	      }
+        if (stereo) {
+          OBStereo::BondDirection bd;
+          switch (stereo) {
+            case 1: 
+              bd = OBStereo::UpBond;
+              break;
+            case 6:
+              bd = OBStereo::DownBond;
+              break;
+            case 4:
+              bd = OBStereo::UnknownDir;
+              break;
+            default:
+              bd = OBStereo::NotStereo;
+              break;
+          }
+          if (bd != OBStereo::NotStereo)
+            updown[mol.GetBond(begin, end)] = bd;
+        }
       }
 
       // 
@@ -582,6 +603,11 @@ namespace OpenBabel
           break;
         }
       }
+
+      // Calculate up/downness of cis/trans bonds
+      map<OBBond*, OBStereo::BondDirection> updown;
+      set<OBBond*> stereodbl;
+      GetUpDown(mol, updown, stereodbl);
                       
       // The counts line:
       // aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
@@ -635,7 +661,12 @@ namespace OpenBabel
                   stereo = 6;
                 else if (bond->IsWedgeOrHash())
                   stereo = 4;
-                else if (bond->IsCisOrTrans())
+
+                // For Cis/Trans bonds, set the stereo
+                if (updown.find(bond) != updown.end())
+                  stereo = updown[bond];
+                // For Cis/Trans double bonds, set the stereo
+                if (stereodbl.find(bond) != stereodbl.end())
                   stereo = 3;
               }
 
@@ -1077,6 +1108,171 @@ namespace OpenBabel
              ((ts->tm_year>=100)? ts->tm_year-100 : ts->tm_year),
              ts->tm_hour, ts->tm_min);
     return string(td);
+  }
+
+  void MDLFormat::GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown,
+                            set<OBBond*> &stereodbl)
+  {
+// FIXME: rewrite to loop over double bonds only
+
+    // Get CisTransStereos
+    std::vector<OBCisTransStereo*> cistrans, unvisited_cistrans;
+    std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+      if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        cistrans.push_back(ct);
+      }
+    unvisited_cistrans = cistrans;
+
+    // Find bonds in a BFS manner and set their up/downness
+    vector<OBCisTransStereo*>::iterator ChiralSearch;
+    vector<unsigned long>::iterator lookup; 
+    FOR_BONDBFS_OF_MOL(b, mol) {
+      if (updown.find(&(*b)) == updown.end()) 
+      { // This bond has not yet been set
+        vector<OBAtom*> bond_atoms(2);
+        bond_atoms[0] = b->GetBeginAtom();
+        bond_atoms[1] = b->GetEndAtom();
+        // Is this a stereo bond?
+        for (vector<OBAtom*>::iterator bond_atom = bond_atoms.begin(); bond_atom!=bond_atoms.end(); ++bond_atom)
+        {
+          for (ChiralSearch = unvisited_cistrans.begin(); ChiralSearch != unvisited_cistrans.end(); ChiralSearch++)
+          {
+            OBCisTransStereo::Config cfg = (*ChiralSearch)->GetConfig(OBStereo::ShapeU);
+            lookup = std::find(cfg.refs.begin(), cfg.refs.end(), (*bond_atom)->GetId());
+            if (lookup != cfg.refs.end() && (cfg.begin == b->GetNbrAtom(*bond_atom)->GetId() ||
+                                               cfg.end == b->GetNbrAtom(*bond_atom)->GetId()) )
+            { // We have a stereo bond. Now get the five bonds involved...
+              OBBond* dbl_bond = mol.GetBond(mol.GetAtomById(cfg.begin), mol.GetAtomById(cfg.end));
+              std::vector<OBBond *> refbonds(4, (OBBond*)NULL);
+              if (cfg.refs[0] != OBStereo::ImplicitId) // Could be a hydrogen
+                refbonds[0] = mol.GetBond(mol.GetAtomById(cfg.refs[0]), mol.GetAtomById(cfg.begin));
+              if (cfg.refs[1] != OBStereo::ImplicitId) // Could be a hydrogen
+                refbonds[1] = mol.GetBond(mol.GetAtomById(cfg.refs[1]), mol.GetAtomById(cfg.begin));
+              
+              if (cfg.refs[2] != OBStereo::ImplicitId) // Could be a hydrogen
+                refbonds[2] = mol.GetBond(mol.GetAtomById(cfg.refs[2]), mol.GetAtomById(cfg.end));
+              if (cfg.refs[3] != OBStereo::ImplicitId) // Could be a hydrogen
+                refbonds[3] = mol.GetBond(mol.GetAtomById(cfg.refs[3]), mol.GetAtomById(cfg.end));              
+          
+              // Initialise two opposite configurations for up/downness
+              vector<OBStereo::BondDirection> config(4), alt_config(4);
+              config[0] = OBStereo::UpBond;   config[3] = config[0];
+              config[1] = OBStereo::DownBond; config[2] = config[1];
+              alt_config[0] = config[1]; alt_config[3] = alt_config[0];
+              alt_config[1] = config[0]; alt_config[2] = alt_config[1];
+
+              // If any of the bonds have been previously set, now set them all
+              // in agreement
+              bool use_alt_config = false;
+              for (int i=0; i<4; ++i)
+                if (updown.find(refbonds[i]) != updown.end()) // We have already set this one (conjugated bond)
+                  if (updown[refbonds[i]] != config[i])
+                  {
+                    use_alt_config = true;
+                    break;
+                  }
+              
+              // Set the configuration
+              stereodbl.insert(dbl_bond);
+              for(int i=0;i<4;i++)
+                if (refbonds[i] != NULL)
+                  updown[refbonds[i]] = use_alt_config ? alt_config[i] : config[i];
+
+              unvisited_cistrans.erase(ChiralSearch);
+              break; // Break out of the ChiralSearch (could break out of the outer loop too...let's see)
+            }
+          }
+        }
+      }
+    }
+  }
+
+  vector<OBCisTransStereo*> MDLFormat::CisTransFromUpDown(OBMol &mol)
+  {
+    // Create a vector of CisTransStereo objects for the molecule
+    vector<OBCisTransStereo*> ctstereo;
+
+    // Loop across the double bonds
+    FOR_BONDS_OF_MOL(dbi, mol) {
+
+      OBBond *dbl_bond = &(*dbi);
+
+      // Not a double bond?
+      if (!dbl_bond->IsDouble() || dbl_bond->IsAromatic())
+        continue;
+      
+      // Check that both atoms on the double bond have at least one
+      // other neighbor, but not more than two other neighbors;
+      OBAtom *a1 = dbl_bond->GetBeginAtom();
+      OBAtom *a2 = dbl_bond->GetEndAtom();
+      int v1 = a1->GetValence();
+      int v2 = a2->GetValence();
+      if (v1 < 2 || v1 > 3 || v2 < 2 || v2 > 3) {
+        continue;
+      }
+
+      // Get the bonds of neighbors of atom1 and atom2
+      OBBond *a1_b1 = NULL, *a1_b2 = NULL, *a2_b1 = NULL, *a2_b2 = NULL;
+      bool a1_stereo, a2_stereo;
+
+      FOR_BONDS_OF_ATOM(bi, a1) {
+        OBBond *b = &(*bi);
+        if ((b) == (dbl_bond)) continue;  // skip the double bond we're working on
+        if (a1_b1 == NULL && (IsUp(b) || IsDown(b)))
+        {
+          a1_b1 = b;    // remember a stereo bond of Atom1
+           // True/False for "up/down if moved to before the double bond C"
+          a1_stereo = !(IsUp(b) ^ (b->GetNbrAtomIdx(a1) < a1->GetIdx())) ;
+          if (std::find(_bcbonds.begin(), _bcbonds.end(), a1_b1) != _bcbonds.end())
+          { // This is a bond closure, so the cis/trans mark appears after
+            // the double bond C (and the Idx test is incorrect)
+            a1_stereo = !IsUp(b);
+          }
+        }
+        else
+          a1_b2 = b;    // remember a 2nd bond of Atom1
+      }
+
+      FOR_BONDS_OF_ATOM(bi, a2) {
+        OBBond *b = &(*bi);
+        if (b == dbl_bond) continue;
+        if (a2_b1 == NULL && (IsUp(b) || IsDown(b)))
+        {
+          a2_b1 = b;    // remember a stereo bond of Atom1
+          a2_stereo = !(IsUp(b) ^ (b->GetNbrAtomIdx(a2) < a2->GetIdx())) ;
+          if (std::find(_bcbonds.begin(), _bcbonds.end(), a2_b1)!=_bcbonds.end())
+          { // This is a bond closure
+            a2_stereo = !IsUp(b);
+          }
+        }
+        else
+          a2_b2 = b;    // remember a 2nd bond of Atom2
+      }
+      
+      if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
+      
+      // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
+      unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitId : a1_b2->GetNbrAtom(a1)->GetId();
+      unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitId : a2_b2->GetNbrAtom(a2)->GetId();
+
+      // If a1_stereo==a2_stereo, this means cis for a1_b1 and a2_b1.
+      OBCisTransStereo *ct = new OBCisTransStereo(&mol);
+      OBCisTransStereo::Config cfg;
+      cfg.begin = a1->GetId();
+      cfg.end = a2->GetId();
+
+      if (a1_stereo == a2_stereo)
+        cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
+                                      fourth, a2_b1->GetNbrAtom(a2)->GetId());
+      else
+        cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
+                                      a2_b1->GetNbrAtom(a2)->GetId(), fourth);
+      ct->SetConfig(cfg);
+      // add the data to the atom
+      mol.SetData(ct);
+    }
   }
 
 

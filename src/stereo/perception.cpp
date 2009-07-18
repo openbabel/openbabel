@@ -229,7 +229,7 @@ namespace OpenBabel {
   //
   ////////////////////////////////////////////////////////////////////////////
 
-  void StereoFrom0D(OBMol *mol)
+  void StereoFrom0D(OBMol *mol, const map <OBBond*, OBStereo::BondDirection> *updown)
   {
     if (mol->HasChiralityPerceived())
       return;
