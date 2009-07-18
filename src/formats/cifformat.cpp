@@ -978,7 +978,7 @@ namespace OpenBabel
   // Is this atom an oxygen in a water molecule
   // We know the oxygen is connected to one ion, but check for non-hydrogens
   // Returns: true if the atom is an oxygen and connected to two hydrogens and up to one other atom
-  bool isWaterOxygen(OBAtom *atom)
+  bool CIFisWaterOxygen(OBAtom *atom)
   {
     if (!atom->IsOxygen())
       return false;
@@ -1036,7 +1036,7 @@ namespace OpenBabel
       if (atom->GetValence() != 0) {
         int nonWaterBonds = 0;
         FOR_NBORS_OF_ATOM(neighbor, &*atom) {
-          if (!isWaterOxygen(&*neighbor)) {
+          if (!CIFisWaterOxygen(&*neighbor)) {
             nonWaterBonds = 1;
             break;
           }
