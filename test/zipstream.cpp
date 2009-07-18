@@ -86,15 +86,17 @@ int main(int argc,char *argv[])
       mol.Clear();
       conv.Read(&mol);
       offsets.push_back(pIn->tellg());
+      //      cout << " tellg: " << pIn->tellg() << endl;
 
       currentMol++;
     }
 
   // output the number of tests run
-  cout << "1.." << --currentMol << endl;
+  cout << "1.." << (--currentMol * 2) << endl;
   pIn->clear();
 
   bool success;
+  // First test seekoff()
   for (unsigned int i = 0; i < currentMol; ++i) {
     pIn->seekg(offsets[i],  std::ios_base::beg);
     success = conv.Read(&mol);
@@ -102,6 +104,15 @@ int main(int argc,char *argv[])
       cout << "not ok " << i+1 << endl;
     else
       cout << "ok " << i+1 << " # " << mol.NumAtoms() << endl;
+  }
+  // Now test seekpos()
+  for (unsigned int i = 0; i < currentMol; ++i) {
+    pIn->seekg(offsets[i]);
+    success = conv.Read(&mol);
+    if (!success)
+      cout << "not ok " << i+1+currentMol << endl;
+    else
+      cout << "ok " << i+1+currentMol << " # " << mol.NumAtoms() << endl;
   }
 
   // Passed Test
