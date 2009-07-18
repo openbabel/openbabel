@@ -839,7 +839,7 @@ namespace OpenBabel
   OBAtom *OBMol::GetAtomById(unsigned long id) const
   {
     if (id >= _atomIds.size()) {
-      obErrorLog.ThrowError(__FUNCTION__, "Requested Atom Out of Range", obDebug);
+      obErrorLog.ThrowError(__FUNCTION__, "Requested atom with invalid id.", obDebug);
       return((OBAtom*)NULL);
     }
 
@@ -862,6 +862,16 @@ namespace OpenBabel
       }
 
     return((OBBond*)_vbond[idx]);
+  }
+
+  OBBond *OBMol::GetBondById(unsigned long id) const
+  {
+    if (id >= _bondIds.size()) {
+      obErrorLog.ThrowError(__FUNCTION__, "Requested bond with invalid id.", obDebug);
+      return((OBBond*)NULL);
+    }
+
+    return((OBBond*)_bondIds[id]);
   }
 
   OBBond *OBMol::GetBond(int bgn, int end) const
@@ -1188,6 +1198,7 @@ namespace OpenBabel
     _vatom.reserve(src.NumAtoms());
     _atomIds.reserve(src.NumAtoms());
     _vbond.reserve(src.NumBonds());
+    _bondIds.reserve(src.NumBonds());
 
     for (atom = src.BeginAtom(i);atom;atom = src.NextAtom(i))
       AddAtom(*atom);
@@ -1357,6 +1368,7 @@ namespace OpenBabel
       }
 
     _atomIds.clear();
+    _bondIds.clear();
     _natoms = _nbonds = 0;
 
     //Delete residues
@@ -1602,16 +1614,35 @@ namespace OpenBabel
     _residue.push_back(obresidue);
     return(obresidue);
   }
+  
+  OBBond *OBMol::NewBond()
+  {
+    return NewBond(_bondIds.size());
+  }
 
   //! \since version 2.1
   //! \brief Instantiate a New Bond and add it to the molecule
   //!
   //! Sets the proper Bond index and insures this molecule is set as the parent.
-  OBBond *OBMol::NewBond()
+  OBBond *OBMol::NewBond(unsigned long id)
   {
+    // resize _bondIds if needed
+    if (id >= _bondIds.size()) {
+      unsigned int size = _bondIds.size();
+      _bondIds.resize(id+1);
+      for (unsigned long i = size; i < id; ++i)
+        _bondIds[i] = (OBBond*)NULL;
+    }
+
+    if (_bondIds.at(id))
+      return (OBBond*)NULL;
+ 
     OBBond *pBond = CreateBond();
     pBond->SetParent(this);
     pBond->SetIdx(_nbonds);
+
+    _bondIds[id] = pBond;
+    pBond->SetId(id);
 
 #define OBBondIncrement 100
     if (_vbond.empty() || _nbonds+1 >= (signed)_vbond.size())
@@ -2772,6 +2803,7 @@ namespace OpenBabel
 
     (bond->GetBeginAtom())->DeleteBond(bond);
     (bond->GetEndAtom())->DeleteBond(bond);
+    _bondIds[bond->GetId()] = (OBBond*)NULL;
     _vbond.erase(_vbond.begin() + bond->GetIdx()); // bond index starts at 0!!!
     _nbonds--;
 
@@ -2819,6 +2851,9 @@ namespace OpenBabel
         bond->Set(_nbonds,bgn,end,order,flags);
         bond->SetParent(this);
 
+        bond->SetId(_bondIds.size());
+        _bondIds.push_back(bond);
+ 
         //set aromatic flags if it has the appropriate order
         if (order == 5)
           {
@@ -3001,6 +3036,7 @@ namespace OpenBabel
     _vatom.clear();
     _atomIds.clear();
     _vbond.clear();
+    _bondIds.clear();
     _vdata.clear();
     _title = "";
     _c = (double*)NULL;
@@ -3020,6 +3056,7 @@ namespace OpenBabel
     _vatom.clear();
     _atomIds.clear();
     _vbond.clear();
+    _bondIds.clear();
     _vdata.clear();
     _title = "";
     _c = (double*)NULL;

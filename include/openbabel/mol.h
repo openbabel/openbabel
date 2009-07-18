@@ -113,6 +113,7 @@ namespace OpenBabel
     std::vector<OBAtom*>          _vatom;      	//!< vector of atoms
     std::vector<OBAtom*>          _atomIds;    	//!< vector of atoms indexed by id
     std::vector<OBBond*>          _vbond;      	//!< vector of bonds
+    std::vector<OBBond*>          _bondIds;     //!< vector of bonds
     unsigned short int            _dimension;   //!< Dimensionality of coordinates
     int				  _totalCharge; //!< Total charge on the molecule
     unsigned int                  _totalSpin;   //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
@@ -202,7 +203,7 @@ namespace OpenBabel
     //! \return Whether the method was successful
     bool AddResidue(OBResidue&);
 
-    //! Create a new OBAtom in this molecule and ensure connections.
+    //! Create a new OBAtom in this molecule and ensure connections
     //! (e.g. OBAtom::GetParent(). A new unique id will be assigned 
     //! to this atom.
     OBAtom    *NewAtom();
@@ -210,9 +211,14 @@ namespace OpenBabel
     //! (e.g. OBAtom::GetParent(). The @p id will be assigned to this
     //! atom. 
     OBAtom    *NewAtom(unsigned long id);
-    //! Create a new OBBond in this molecule and ensure connections.
-    //! (e.g. OBBond::GetParent()
+    //! Create a new OBBond in this molecule and ensure connections
+    //! (e.g. OBBond::GetParent(). A new unique id will be assigned
+    //! to this bond.
     OBBond    *NewBond();
+    //! Create a new OBBond in this molecule and ensure connections
+    //! (e.g. OBBond::GetParent(). The @p id will be assigned to this
+    //! bond.
+    OBBond    *NewBond(unsigned long id);
     //! Create a new OBResidue in this molecule and ensure connections.
     OBResidue *NewResidue();
     //! Deletes an atom from this molecule and all appropriate bonds.
@@ -277,6 +283,8 @@ namespace OpenBabel
     //! \return the bond at index @p idx or NULL if it does not exist.
     //! \warning Bond indexing may change. Use iterator methods instead.
     OBBond      *GetBond(int idx) const;
+    //! \return the bond with @p id or NULL if it does not exist.
+    OBBond      *GetBondById(unsigned long id) const;
     //! \return the bond connecting the atom indexed by @p a and @p b or NULL if none exists.
     //! \warning Atom indexing will change. Use atom objects and iterators instead.
     OBBond      *GetBond(int a, int b) const;

@@ -73,6 +73,8 @@ namespace OpenBabel
 
       char                        _order; //!< Bond order (1, 2, 3, 5=aromatic)
       unsigned short int          _flags; //!< Any flags for this bond
+      
+      unsigned long                 _id;        //!< unique id
 
       bool HasFlag(int flag)    { return((_flags & flag) != 0); }
       void SetFlag(int flag)    { _flags |= flag;               }
@@ -94,6 +96,7 @@ namespace OpenBabel
       /** \warning This will not update the index in the parent OBMol.
           Intended mainly for internal use. Use with care. **/
       void SetIdx(int idx)        {          _idx = idx;        }
+      void SetId(unsigned long id) { _id = id; }
       //! Set the bond order to @p order (i.e., 1 = single, 2 = double, 5 = aromatic)
       /** \deprecated Use SetBondOrder() instead. **/
       void SetBO(int order);
@@ -156,6 +159,7 @@ namespace OpenBabel
       //@{
       //! \return The unique bond index in a molecule.
       unsigned int     GetIdx()           const { return(_idx);  }
+      unsigned long GetId()           const { return _id; }
       //! \return The bond order for the bond
       /** \deprecated Use GetBondOrder() as this method may be removed. **/
       unsigned int     GetBO()            const { return(_order); }
