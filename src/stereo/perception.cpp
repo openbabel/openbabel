@@ -496,7 +496,6 @@ namespace OpenBabel {
     mol->SetChiralityPerceived();
     mol->DeleteData(OBGenericDataType::StereoData);
      
-    cout << "StereoFrom3D" << endl;
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom3D", obAuditMsg);
 
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
@@ -511,7 +510,6 @@ namespace OpenBabel {
     mol->SetChiralityPerceived();
     mol->DeleteData(OBGenericDataType::StereoData);
       
-    cout << "StereoFrom2D" << endl;
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom2D", obAuditMsg);
 
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
