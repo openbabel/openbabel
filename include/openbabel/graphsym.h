@@ -78,7 +78,6 @@ namespace OpenBabel {
        *
        * @return The number of symmetry classes.
        */
-      //int CalculateSymmetry(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
       int CalculateSymmetry(std::vector<unsigned int> &symmetry_classes);
       int GetSymmetry(vector<unsigned int> &symmetry_classes);
       /**

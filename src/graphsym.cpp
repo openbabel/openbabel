@@ -909,26 +909,26 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
   void OBGraphSym::CountAndRenumberClasses(vector<pair<OBAtom*,unsigned int> > &vp,
                                            unsigned int &count)
-{
-  count = 1;
-  vector<pair<OBAtom*,unsigned int> >::iterator k;
+  {
+    count = 1;
+    vector<pair<OBAtom*,unsigned int> >::iterator k;
 
-  sort(vp.begin(), vp.end(), ComparePairSecond);
-  k = vp.begin();
-  if (k != vp.end()) {
-    unsigned int id = k->second;
-    k->second = 1;
-    ++k;
-    for (;k != vp.end(); ++k) {
-      if (k->second != id) {
-        id = k->second;
-        k->second = ++count;
-      } else {
-        k->second = count;
+    sort(vp.begin(), vp.end(), ComparePairSecond);
+    k = vp.begin();
+    if (k != vp.end()) {
+      unsigned int id = k->second;
+      k->second = 1;
+      ++k;
+      for (;k != vp.end(); ++k) {
+        if (k->second != id) {
+          id = k->second;
+          k->second = ++count;
+        } else {
+          k->second = count;
+        }
       }
     }
   }
-}
 
 
 /***************************************************************************
@@ -945,56 +945,54 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 ***************************************************************************/
 
   int OBGraphSym::ExtendInvariants(vector<pair<OBAtom*, unsigned int> > &symmetry_classes)
-{
-  unsigned int nclasses1, nclasses2;
-  vector<pair<OBAtom*,unsigned int> > tmp_classes;
+  {
+    unsigned int nclasses1, nclasses2;
+    vector<pair<OBAtom*,unsigned int> > tmp_classes;
 
-  // How many classes are we starting with?  (The "renumber" part isn't relevant.)
-  CountAndRenumberClasses(symmetry_classes, nclasses1);
+    // How many classes are we starting with?  (The "renumber" part isn't relevant.)
+    CountAndRenumberClasses(symmetry_classes, nclasses1);
 
-  int natoms = _pmol->NumAtoms();
-  int nfragatoms = _frag_atoms->CountBits();
+    int natoms = _pmol->NumAtoms();
+    int nfragatoms = _frag_atoms->CountBits();
 
-  // LOOP: Do extended sum-of-invarients until no further changes are
-  // noted.  (Note: This is inefficient, as it re-computes extended sums
-  // and re-sorts the entire list each time.  You can save a lot of time by
-  // only recomputing and resorting within regions where there is a tie
-  // initially.  But it's a lot more code.)
+    // LOOP: Do extended sum-of-invarients until no further changes are
+    // noted.  (Note: This is inefficient, as it re-computes extended sums
+    // and re-sorts the entire list each time.  You can save a lot of time by
+    // only recomputing and resorting within regions where there is a tie
+    // initially.  But it's a lot more code.)
 
-  if (nclasses1 < nfragatoms) {
-    for (int i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
-      CreateNewClassVector(symmetry_classes, tmp_classes);
-      CountAndRenumberClasses(tmp_classes, nclasses2);
-      symmetry_classes = tmp_classes;
-      if (nclasses1 == nclasses2) break;
-      nclasses1 = nclasses2;
+    if (nclasses1 < nfragatoms) {
+      for (int i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
+        CreateNewClassVector(symmetry_classes, tmp_classes);
+        CountAndRenumberClasses(tmp_classes, nclasses2);
+        symmetry_classes = tmp_classes;
+        if (nclasses1 == nclasses2) break;
+        nclasses1 = nclasses2;
+      }
     }
+
+    /*cout << "BEFORE BreakChiralTies, nclasses1 = " << nclasses1 << endl;
+      for (int i = 0; i < symmetry_classes.size(); i++) {
+      cout << symmetry_classes[i].first->GetIndex() << ": " << symmetry_classes[i].second << endl;
+      }*/
+
+    BreakChiralTies(symmetry_classes);
+    CreateNewClassVector(symmetry_classes, tmp_classes);
+    CountAndRenumberClasses(tmp_classes, nclasses2);
+
+    /*cout << "AFTER BreakChiralTies, nclasses2 = " << nclasses2 << endl;
+      for (int i = 0; i < symmetry_classes.size(); i++) {
+      cout << symmetry_classes[i].first->GetIndex() << " (" << symmetry_classes[i].first->GetType() 
+      << "): " << symmetry_classes[i].second << endl;
+      }*/
+
+    if (nclasses1 != nclasses2) {
+      symmetry_classes = tmp_classes;
+      return ExtendInvariants(symmetry_classes);
+    }
+
+    return nclasses1;
   }
-   
-  /*cout << "BEFORE BreakChiralTies, nclasses1 = " << nclasses1 << endl;
-  for (int i = 0; i < symmetry_classes.size(); i++) {
-    cout << symmetry_classes[i].first->GetIndex() << ": " << symmetry_classes[i].second << endl;
-  }*/
-   
-  BreakChiralTies(symmetry_classes);
-  CreateNewClassVector(symmetry_classes, tmp_classes);
-  CountAndRenumberClasses(tmp_classes, nclasses2);
-
-  /*cout << "AFTER BreakChiralTies, nclasses2 = " << nclasses2 << endl;
-  for (int i = 0; i < symmetry_classes.size(); i++) {
-    cout << symmetry_classes[i].first->GetIndex() << " (" << symmetry_classes[i].first->GetType() 
-         << "): " << symmetry_classes[i].second << endl;
-  }*/
-
-
-
-  if (nclasses1 != nclasses2) {
-    symmetry_classes = tmp_classes;
-    return ExtendInvariants(symmetry_classes);
-  }
- 
-  return nclasses1;
-}
 
 /***************************************************************************
 * FUNCTION: CalculateSymmetry
@@ -1013,30 +1011,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 *       the fragment.  Symmetry is computed as though the fragment is the
 *       only part that exists.
 ***************************************************************************/
-/*
-int OBGraphSym::CalculateSymmetry(vector<pair<OBAtom*, unsigned int> > &symmetry_classes)
-{
-  vector<unsigned int> vgi;
-  vector<OBNodeBase*>::iterator j;
-  OBAtom *atom;
-
-  // Get vector of graph invariants.  These are the starting "symmetry classes".
-  GetGIVector(vgi);
-
-  // Create a vector-of-pairs, associating each atom with its Class ID.
-  for (atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j)) {
-    int idx = atom->GetIdx();
-    if (_frag_atoms->BitIsOn(idx))
-      symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, vgi[idx-1]));
-  }
-
-  // The heart of the matter: Do extended sum-of-invariants until no further
-  // changes are noted. 
-  int nclasses = ExtendInvariants(symmetry_classes);
-
-  return nclasses;
-}
-*/
+  
   int OBGraphSym::CalculateSymmetry(vector<unsigned int> &atom_sym_classes)
   {
     vector<unsigned int> vgi;
@@ -1062,7 +1037,7 @@ int OBGraphSym::CalculateSymmetry(vector<pair<OBAtom*, unsigned int> > &symmetry
     // Atoms not in the fragment will have a value of OBGraphSym::NoSymmetryClass
     atom_sym_classes.clear();
     atom_sym_classes.resize(_pmol->NumAtoms(), NoSymmetryClass);
-    for (int i = 0; i < symmetry_classes.size(); ++i) {
+    for (unsigned int i = 0; i < symmetry_classes.size(); ++i) {
       atom_sym_classes[symmetry_classes.at(i).first->GetIndex()] = symmetry_classes.at(i).second;
     }
 
@@ -1135,95 +1110,84 @@ int OBGraphSym::CalculateSymmetry(vector<pair<OBAtom*, unsigned int> > &symmetry
 
   void OBGraphSym::CanonicalLabels(vector<unsigned int> &symmetry_classes,
                      vector<unsigned int> &canonical_labels)    // on input: symclasses
-{
-  vector<pair<OBAtom*,unsigned int> > atom_sym_classes, vp1, vp2;
-  vector<OBNodeBase*>::iterator j;
-  unsigned int nclass1, nclass2; //number of classes
-  int i;
+  {
+    vector<pair<OBAtom*,unsigned int> > vp1, vp2;
+    vector<OBNodeBase*>::iterator j;
+    unsigned int nclass1, nclass2; //number of classes
+    int i;
 
-  int nfragatoms = _frag_atoms->CountBits();
-  int natoms = _pmol->NumAtoms();
+    int nfragatoms = _frag_atoms->CountBits();
+    int natoms = _pmol->NumAtoms();
 
-  nclass1 = CalculateSymmetry(symmetry_classes);
-  for (int i = 0; i < symmetry_classes.size(); ++i) {
-    if (symmetry_classes.at(i) != NoSymmetryClass)
-      atom_sym_classes.push_back(
-          pair<OBAtom*, unsigned int>(_pmol->GetAtom(i+1), symmetry_classes[i]) );
-  }
-  CountAndRenumberClasses(atom_sym_classes, nclass1);
- 
-  /*cout << "BEFORE TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
-  for (int i = 0; i < atom_sym_classes.size(); i++) {
-    cout << atom_sym_classes[i].first->GetIndex() << ": " << atom_sym_classes[i].second << endl;
-  }*/
+    nclass1 = CalculateSymmetry(symmetry_classes);
+    for (int i = 0; i < symmetry_classes.size(); ++i) {
+      if (symmetry_classes.at(i) != NoSymmetryClass)
+        vp1.push_back(
+            pair<OBAtom*, unsigned int>(_pmol->GetAtom(i+1), symmetry_classes[i]) );
+    }
+    CountAndRenumberClasses(vp1, nclass1);
 
-  // The symmetry classes are the starting point for the canonical labels
-  vp1 = atom_sym_classes;
+    /*cout << "BEFORE TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
+      for (int i = 0; i < vp1.size(); i++) {
+      cout << vp1[i].first->GetIndex() << ": " << vp1[i].second << endl;
+      }*/
 
-  if (nclass1 < nfragatoms) {
-    int tie_broken = 1;
-    while (tie_broken) {
-      tie_broken = 0;
-      int last_rank = -1;
-      for (i = 0; i < vp1.size(); i++) {
-        vp1[i].second *= 2;             // Double symmetry classes
-        if (vp1[i].second == last_rank && !tie_broken) {
-          vp1[i-1].second -= 1;         // Break a tie
-          tie_broken = 1;
+    // The symmetry classes are the starting point for the canonical labels
+    if (nclass1 < nfragatoms) {
+      int tie_broken = 1;
+      while (tie_broken) {
+        tie_broken = 0;
+        int last_rank = -1;
+        for (i = 0; i < vp1.size(); i++) {
+          vp1[i].second *= 2;             // Double symmetry classes
+          if (vp1[i].second == last_rank && !tie_broken) {
+            vp1[i-1].second -= 1;         // Break a tie
+            tie_broken = 1;
+          }
+          last_rank = vp1[i].second;
         }
-        last_rank = vp1[i].second;
-      }
-      if (tie_broken) {
-        for (i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
-          CreateNewClassVector(vp1, vp2);
-          CountAndRenumberClasses(vp2, nclass2);
-          vp1 = vp2;
-          if (nclass1 == nclass2) break;
-          nclass1 = nclass2;
+        if (tie_broken) {
+          for (i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
+            CreateNewClassVector(vp1, vp2);
+            CountAndRenumberClasses(vp2, nclass2);
+            vp1 = vp2;
+            if (nclass1 == nclass2) break;
+            nclass1 = nclass2;
+          }
+        } else {
+          CountAndRenumberClasses(vp1, nclass1);  // no more ties - undo the doublings
         }
-      } else {
-        CountAndRenumberClasses(vp1, nclass1);  // no more ties - undo the doublings
       }
     }
+
+    /*cout << "AFTER TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
+      for (int i = 0; i < vp1.size(); i++) {
+      cout << vp1[i].first->GetIndex() << ": " << vp1[i].second << endl;
+      }*/
+
+    // For return values, convert vectors of atom/int pairs into one-dimensional
+    // vectors of int, indexed by atom->GetIndex().
+    //
+    // Since we're working with a molecular fragment, the symmetry-class and
+    // canonical-label vectors are both shorter than the number of atoms in
+    // the molecule.  To fix it, we append all of the non-fragment atoms to
+    // the end, with a very large value, then, re-sort the vector by the
+    // atom's GetIdx() number, and finally copy the result so that the vector
+    // corresponds to the atoms' order in the molecule.
+
+    // Add non-fragment atoms so vector is same length as natoms in molecule
+    for (OBAtom *atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j))
+      if (!((*_frag_atoms).BitIsOn(atom->GetIdx()))) {
+        vp1.push_back(pair<OBAtom*,unsigned int> (atom, NoSymmetryClass));
+      }
+
+    // Sort and copy canonical labels
+    vector<pair<OBAtom*,unsigned int> >::iterator k;
+    canonical_labels.clear();
+    sort(vp1.begin(),vp1.end(),ComparePairFirst);
+    for (k = vp1.begin();k != vp1.end();k++)
+      canonical_labels.push_back(k->second);
   }
-
-  /*cout << "AFTER TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
-  for (int i = 0; i < vp1.size(); i++) {
-    cout << vp1[i].first->GetIndex() << ": " << vp1[i].second << endl;
-  }*/
-
-  // For return values, convert vectors of atom/int pairs into one-dimensional
-  // vectors of int, indexed by atom->GetIdx().
-  //
-  // Since we're working with a molecular fragment, the symmetry-class and
-  // canonical-label vectors are both shorter than the number of atoms in
-  // the molecule.  To fix it, we append all of the non-fragment atoms to
-  // the end, with a very large value, then, re-sort the vector by the
-  // atom's GetIdx() number, and finally copy the result so that the vector
-  // corresponds to the atoms' order in the molecule.
-
-  // Add non-fragment atoms so vector is same length as natoms in molecule
-  for (OBAtom *atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j))
-    if (!((*_frag_atoms).BitIsOn(atom->GetIdx()))) {
-      atom_sym_classes.push_back(pair<OBAtom*,unsigned int> (atom, NoSymmetryClass));
-      vp1.push_back(pair<OBAtom*,unsigned int> (atom, NoSymmetryClass));
-    }
-
-  vector<pair<OBAtom*,unsigned int> >::iterator k;
-
-  // Sort and copy symmetry classes
-  symmetry_classes.clear();
-  sort(atom_sym_classes.begin(),atom_sym_classes.end(),ComparePairFirst);
-  for (k = atom_sym_classes.begin();k != atom_sym_classes.end();k++)
-    symmetry_classes.push_back(k->second);
-
-  // Sort and copy canonical labels
-  canonical_labels.clear();
-  sort(vp1.begin(),vp1.end(),ComparePairFirst);
-  for (k = vp1.begin();k != vp1.end();k++)
-    canonical_labels.push_back(k->second);
-
-}
 
 
 } // namespace OpenBabel
