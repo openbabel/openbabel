@@ -145,11 +145,13 @@ protected:
   const char* _id;
 };
 
+#ifdef __CYGWIN__
+
 //Macro to be added to definition of the base class
 #define MAKE_PLUGIN(BaseClass)\
 protected:\
+static PluginMapType& Map();\
 virtual PluginMapType& GetMap()const{return Map();}\
-static PluginMapType& Map(){static PluginMapType m;return m;}\
 public:\
 static BaseClass*& Default(){static BaseClass* d;return d;}\
   BaseClass(const char* ID, bool IsDefault=false)\
@@ -158,6 +160,28 @@ static BaseClass*& Default(){static BaseClass* d;return d;}\
 static BaseClass* FindType(const char* ID)\
  {if(!ID || *ID==0) return Default();\
  return static_cast<BaseClass*>(BaseFindType(Map(),ID));}
+
+#define PLUGIN_CPP_FILE(BaseClass)\
+OBPlugin::PluginMapType& BaseClass::Map()\
+{ static OBPlugin::PluginMapType map; return map; }
+
+#else // __CYGWIN__
+
+//Macro to be added to definition of the base class
+#define MAKE_PLUGIN(BaseClass)\
+protected:\
+static PluginMapType& Map(){static PluginMapType m;return m;}\
+virtual PluginMapType& GetMap()const{return Map();}\
+public:\
+static BaseClass*& Default(){static BaseClass* d;return d;}\
+  BaseClass(const char* ID, bool IsDefault=false)\
+ {_id=ID;if(ID&&*ID){if(IsDefault || Map().empty()) Default() = this;\
+ Map()[ID]=this;PluginMap()[TypeID()] =this;}}\
+static BaseClass* FindType(const char* ID)\
+ {if(!ID || *ID==0) return Default();\
+ return static_cast<BaseClass*>(BaseFindType(Map(),ID));}
+
+#endif // __CYGWIN__
 
 /** \file plugin.h
    \brief Simplify 'plugin' classes to be discovered and/or loaded at runtime.

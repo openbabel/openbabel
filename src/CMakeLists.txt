@@ -65,6 +65,7 @@ set(openbabel_srcs
     oberror.cpp
     obiter.cpp
     obutil.cpp
+    op.cpp
     ops.cpp
     parsmart.cpp
     patty.cpp

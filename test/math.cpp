@@ -35,10 +35,10 @@ GNU General Public License for more details.
 
 #define VERIFY(expr) \
   if( expr ) verify_ok(); \
-  else verify_not_ok( __STRING(expr), __LINE__ )
+  else verify_not_ok( #expr, __LINE__ )
 
 #define TEST(func) \
-  strcpy( currentFunc, __STRING(func) ); \
+  strcpy( currentFunc, #func ); \
   tmp = failedCount; \
   cout << "# math: entering " << currentFunc << endl; \
   for( int i = 0; i < REPEAT; i++ ) func(); \

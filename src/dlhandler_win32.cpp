@@ -17,6 +17,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
+#include <vector>
 #include <cstdarg>
 #include <iostream>
 //# define WIN32_LEAN_AND_MEAN
@@ -31,14 +32,22 @@ using namespace std;
 bool DLHandler::getConvDirectory(string& convPath)
 {
     char path[MAX_PATH+1];
+    if (!GetModuleFileName(0, path, MAX_PATH)) //gets exe name NEEDS REVISITING 
+      return false;
 
-    HMODULE hConv = GetModuleHandle("OBConv");
-    if(GetModuleFileName(hConv,path,MAX_PATH)==0)
-        return false;
-    char* p = strrchr(path,'\\');
-    if(p && *p)
-        *(p+1)='\0'; //chop off name after last '\'
-    convPath=path;
+    // strip of appname.exe
+    convPath = path;
+    std::string::size_type p = convPath.rfind('\\');
+    if (p == std::string::npos)
+      return false;
+
+    convPath = convPath.substr(0, p+1);
+#ifdef __CYGWIN__
+    convPath += "..\\lib\\openbabel\\";
+    convPath += BABEL_VERSION;
+    convPath += "\\";
+#endif
+
     return true;
 }
 

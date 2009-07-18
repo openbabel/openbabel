@@ -89,7 +89,7 @@ namespace OpenBabel {
 
     char buffer[BUFF_SIZE], tag[BUFF_SIZE];
     double x,y,z, scale;
-    uint totalAtoms=0, atomIndex=0, atomCount=0;
+    unsigned int totalAtoms=0, atomIndex=0, atomCount=0;
     OBAtom *atom;
     bool cartesian;
     string str, path;
@@ -168,7 +168,7 @@ namespace OpenBabel {
          size_t end = str.find(":");
          str = str.substr(start, end - start);
          // Clean up whitespace:
-         for (uint i = 0; i < str.size(); i++)
+         for (unsigned int i = 0; i < str.size(); i++)
            if (str.at(i) == ' ')
              str.erase(i,1);
          atomTypes.push_back(OpenBabel::etab.GetAtomicNum(str.c_str()));
@@ -210,7 +210,7 @@ namespace OpenBabel {
 
      ifs_cont.getline(buffer,BUFF_SIZE); // Number of atoms per atom type. This is in the same order as atomTypes.
      tokenize(vs, buffer);
-     for (uint i = 0; i < atomTypes.size(); i++) {
+     for (unsigned int i = 0; i < atomTypes.size(); i++) {
        numAtoms.push_back(atoi(vs.at(i).c_str()));
        totalAtoms += atoi(vs.at(i).c_str());
      }
@@ -224,7 +224,7 @@ namespace OpenBabel {
      else
        cartesian = false;
 
-     for (uint i = 0; i < totalAtoms; i++) {
+     for (unsigned int i = 0; i < totalAtoms; i++) {
        // Things get a little nasty here. VASP just prints all the coordinates with no 
        // identifying information one after another here. So in the above sections we've
        // parsed out which atom types and how many of each are present in atomTypes and
