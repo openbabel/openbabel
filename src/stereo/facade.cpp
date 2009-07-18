@@ -79,7 +79,10 @@ namespace OpenBabel {
         OBCisTransStereo::Config config = ct->GetConfig();
         // find the bond id from begin & end atom ids
         unsigned long id = OBStereo::NoId;
-        FOR_BONDS_OF_MOL (bond, m_mol) {
+        OBAtom *a = m_mol->GetAtomById(config.begin);
+        if (!a)
+          continue;
+        FOR_BONDS_OF_ATOM (bond, a) {
           unsigned long beginId = bond->GetBeginAtom()->GetId();
           unsigned long endId = bond->GetEndAtom()->GetId();
           if ((beginId == config.begin && endId == config.end) ||
