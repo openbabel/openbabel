@@ -1316,6 +1316,7 @@ namespace OpenBabel
           for (OBStereo::RefIter id = config.refs.begin(); id != config.refs.end(); ++id)
             if (old2newId.find(*id) != old2newId.end())
               *id = old2newId[*id];
+          th->SetConfig(config);
         } else if (type == OBStereo::CisTrans) {
           OBCisTransStereo *ct = static_cast<OBCisTransStereo*>(*data);
           OBCisTransStereo::Config config = ct->GetConfig();
@@ -1329,6 +1330,7 @@ namespace OpenBabel
           for (OBStereo::RefIter id = config.refs.begin(); id != config.refs.end(); ++id)
             if (old2newId.find(*id) != old2newId.end())
               *id = old2newId[*id];
+          ct->SetConfig(config);
         }
       }
     }
