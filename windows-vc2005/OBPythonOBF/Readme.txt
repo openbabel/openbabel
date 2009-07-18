@@ -5,11 +5,8 @@ Python is assumed to be installed.
 Add the following environment variables
 (Settings/Control Panel/System/Advanced/Environment Variables)
 with either User or System scope. The values are typical examples.
-.
-PYTHON_INCLUDE   C:\Python25\include
-PYTHON_LIB       C:\Python25\libs\python25.lib    (used by SWIG)
-PYTHON_LIB_PATH  C:\Python25\libs                 (used by Visual Studio)
 
+PYTHON_DIR   C:\Python25
 
 Install SWIG. Actually all that is needed is swig.exe which is
 downloaded together with the source files and documentation.
@@ -20,8 +17,7 @@ The project OBPythonOBF does the following:
     producing openbabel-python_wrap.cpp and openbabel.py
  - openbabel-python_wrap.cpp is compiled and linked with OBConv.lib, OBDLL.lib,
     and some other OB libs, to produce the DLL _openbabel.pyd
- - all the python files are copied to the windows-vc2005 folder where the
-    OB exe, dll and obf files are. 
+ - It runs obpython.bat which creates a Python distribution in dist
  
 There is only a release configuration.
 The SWIG step is not currently automatically rerun when any of the

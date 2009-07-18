@@ -42,7 +42,6 @@
 #include <openbabel/rotamer.h>
 
 
-
 %}
 
 %include "std_list.i"
@@ -147,10 +146,9 @@ CAST_GENERICDATA_TO(VectorData)
 CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
 
-// These methods are renamed to valid Python method names, as otherwise
-// they cannot be used from Python
+// This method is renamed to a valid Python method name, as otherwise
+// it cannot be used from Python
 %rename(inc)   *::operator++;
-%rename(good)  *::operator bool;
 
 %import <openbabel/babelconfig.h>
 
@@ -161,6 +159,9 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/math/matrix3x3.h>
 
 %import <openbabel/math/spacegroup.h>
+
+# CloneData should be used instead of the following method
+%ignore OpenBabel::OBBase::SetData;
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h> // Needs to come after generic.h
@@ -178,7 +179,9 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
+
 %include <openbabel/mol.h>
+
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>
@@ -186,6 +189,10 @@ CAST_GENERICDATA_TO(VirtualBond)
 
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
+
+# Ignore shadowed methods
+%ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
+%ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 %include <openbabel/forcefield.h>
 
 %include <openbabel/builder.h>
@@ -207,6 +214,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 %ignore OBMolAtomIter(OBMol &);
 %ignore OBMolAtomBFSIter(OBMol &);
 %ignore OBMolAtomDFSIter(OBMol &);
+%ignore OBMolAtomBFSIter(OBMol &, int);
+%ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolBondIter(OBMol &);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);
@@ -246,7 +255,7 @@ class OBIter(object):
     def __init__(self, *params):
         self.iter = self.OBiterator(*params)
         self.finished = False
-        if not self.iter.good():
+        if not self.iter.__bool__():
             self.finished = True
 
     def __iter__(self):
@@ -256,7 +265,7 @@ class OBIter(object):
         if not self.finished:
             b = self.iter.__ref__()
             self.iter.inc()
-            if not self.iter.good():
+            if not self.iter.__bool__():
                 # There is nothing left to iterate over
                 self.finished = True
             return b
@@ -269,7 +278,7 @@ class OBIterWithDepth(OBIter):
             b = self.iter.__ref__()
             depth = self.iter.CurrentDepth()
             self.iter.inc()
-            if not self.iter.good():
+            if not self.iter.__bool__():
                 # There is nothing left to iterate over
                 self.finished = True
             return b, depth
@@ -325,6 +334,17 @@ def double_array(mylist):
     return c
 %}
 
+# Copy some of the global variables in cvar into the openbabel namespace
+
+%pythoncode %{
+obErrorLog = cvar.obErrorLog
+ttab = cvar.ttab
+etab = cvar.etab
+isotab = cvar.isotab
+atomtyper = cvar.atomtyper
+aromtyper = cvar.aromtyper
+%}
+
 # Functions to set the log file to std::cout and std::cerr
        
 %ignore OBForceField::SetLogFile(std::ostream *pos);
@@ -338,6 +358,10 @@ def double_array(mylist):
   {
     self->SetLogFile(&std::cerr);
   }
-};    
+};
 
-
+%pythoncode %{
+def exception(*args):
+    raise Exception("Use OBMol.CloneData instead. OBMol.SetData is only for use from C++.")
+OBMol.SetData = exception
+%}
