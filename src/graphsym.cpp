@@ -58,6 +58,8 @@ GNU General Public License for more details.
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
 
+#include <iterator> // std::istream_iterator
+
 using namespace std;
 
 namespace OpenBabel {
@@ -72,18 +74,14 @@ namespace OpenBabel {
   OBGraphSym::OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms)
   {
     _pmol = pmol;
-    if (_pmol) {
-      if (frag_atoms)
-        _frag_atoms = frag_atoms;
-      else
-      {
-        _frag_atoms = new OBBitVec(_pmol->NumAtoms());
-        FOR_ATOMS_OF_MOL(a, _pmol)
-          _frag_atoms->SetBitOn(a->GetIdx());
-      }
+    if (frag_atoms)
+      _frag_atoms = frag_atoms;
+    else
+    {
+      _frag_atoms = new OBBitVec(_pmol->NumAtoms());
+      FOR_ATOMS_OF_MOL(a, _pmol)
+        _frag_atoms->SetBitOn(a->GetIdx());
     }
-    else // No molecule supplied
-      _frag_atoms = NULL;
   }
  
 
