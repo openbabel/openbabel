@@ -430,9 +430,9 @@ namespace OpenBabel {
   OBAPI std::vector<unsigned long> FindCisTransBonds(OBMol *mol, 
       const std::vector<unsigned int> &symClasses);
   
-  void CisTransFromUpDown(OBMol *mol,
-      const std::vector<unsigned long> &ctbonds,
-      std::map<OBBond*, OBStereo::BondDirection> *updown);
+  OBAPI void CisTransFromUpDown(OBMol *mol,
+        const std::vector<unsigned long> &ctbonds,
+        std::map<OBBond*, OBStereo::BondDirection> *updown);
 }
 
 #endif

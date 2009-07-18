@@ -569,13 +569,13 @@ namespace OpenBabel
     if (mol.Has2D()) {
       if (!setDimension)
         mol.SetDimension(2);
-      if (!pConv->IsOption("s"))
+      if (!pConv->IsOption("s", pConv->INOPTIONS))
         // use 2D coordinates + hash/wedge to determine stereochemistry
         StereoFrom2D(&mol);
       else {
         // use atom parities to create tetrahedral stereochemistry
         TetStereoFromParity(mol, parities);
-        StereoFrom2D(&mol, tetfrom0D = true, force = false);
+        StereoFrom2D(&mol, true, false); // tetfrom0D = true, force = false
       }
     } else { // 0D
       if (!setDimension)
