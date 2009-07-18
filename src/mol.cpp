@@ -2140,10 +2140,17 @@ namespace OpenBabel
               if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
                 OBBondIterator i;
                 for (OBBond *bond = atom->BeginBond(i); bond; bond = atom->NextBond(i)) 
-                  if (bond->IsWedge())
-                    bondFlags = OB_HASH_BOND;
-                  else if (bond->IsHash())
-                    bondFlags = OB_WEDGE_BOND;
+                  if (bond->IsWedge()) {
+                    if (bond->GetBeginAtom() == atom)
+                      bondFlags = OB_HASH_BOND; // real wedge, make hash to H 
+                    else
+                      bondFlags = OB_WEDGE_BOND; // inverted wedge = hash, make wedge to H 
+                  } else if (bond->IsHash()) {
+                    if (bond->GetBeginAtom() == atom)
+                      bondFlags = OB_WEDGE_BOND; // real hash, make wedge to H
+                    else
+                      bondFlags = OB_HASH_BOND; // inverted hash = wedge, make hash to H 
+                  }
               }
             }
 
@@ -2243,10 +2250,17 @@ namespace OpenBabel
               if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
                 OBBondIterator i;
                 for (OBBond *bond = atom->BeginBond(i); bond; bond = atom->NextBond(i)) 
-                  if (bond->IsWedge())
-                    bondFlags = OB_HASH_BOND;
-                  else if (bond->IsHash())
-                    bondFlags = OB_WEDGE_BOND;
+                  if (bond->IsWedge()) {
+                    if (bond->GetBeginAtom() == atom)
+                      bondFlags = OB_HASH_BOND; // real wedge, make hash to H 
+                    else
+                      bondFlags = OB_WEDGE_BOND; // inverted wedge = hash, make wedge to H 
+                  } else if (bond->IsHash()) {
+                    if (bond->GetBeginAtom() == atom)
+                      bondFlags = OB_WEDGE_BOND; // real hash, make wedge to H
+                    else
+                      bondFlags = OB_HASH_BOND; // inverted hash = wedge, make hash to H 
+                  }
               }
             }
 
