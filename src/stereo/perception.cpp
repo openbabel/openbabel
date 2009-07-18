@@ -757,7 +757,6 @@ namespace OpenBabel {
         double sign = TriangleSign(plane1->GetVector(), plane2->GetVector(), hash->GetVector());
         if (sign > 0.0)
           config.winding = OBStereo::AntiClockwise;
-        cout << config << endl;
       } else
       // plane1 + plane2, wedge
       if (plane1 && plane2 && wedge) {

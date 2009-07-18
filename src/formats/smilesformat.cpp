@@ -2768,8 +2768,8 @@ namespace OpenBabel {
     canConfig.from = chiral_neighbors[0]->GetId();
     canConfig.refs = canonRefs;
 
-    cout << "atomConfig = " << atomConfig << endl;
-    cout << "canConfig = " << canConfig << endl;
+    //cout << "atomConfig = " << atomConfig << endl;
+    //cout << "canConfig = " << canConfig << endl;
 
     // canConfig is clockwise
     if (atomConfig == canConfig) 
