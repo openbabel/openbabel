@@ -59,12 +59,8 @@ namespace OpenBabel {
 
   void OBStereoFacade::InitMaps()
   {
-    if (m_perceive && !m_mol->HasChiralityPerceived()) {
-      if (m_mol->Has3D())
-        StereoFrom3D(m_mol);
-      else if (m_mol->Has2D())
-        StereoFrom2D(m_mol);
-    }
+    if (m_perceive && !m_mol->HasChiralityPerceived())
+      PerceiveStereo(m_mol);
       
     std::vector<OBGenericData *> stereoData = m_mol->GetAllData(OBGenericDataType::StereoData);
 
