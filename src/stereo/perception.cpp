@@ -437,12 +437,6 @@ namespace OpenBabel {
         bondVecs.push_back(pos);
       }
 
-      cout << "bondVecs:" << endl;
-      cout << bondVecs[0] << endl;
-      cout << bondVecs[1] << endl;
-      cout << bondVecs[2] << endl;
-      cout << bondVecs[3] << endl;
-
       // 0      3       
       //  \    /        2 triangles: 0-1-b & 2-3-a
       //   a==b    -->  same sign: U
@@ -455,9 +449,6 @@ namespace OpenBabel {
       double sign1 = TriangleSign(bondVecs[0], bondVecs[1], end->GetVector());
       double sign2 = TriangleSign(bondVecs[2], bondVecs[3], begin->GetVector());
       double sign = sign1 * sign2;
-
-      cout << "sign1 = " << sign1 << endl;
-      cout << "sign2 = " << sign2 << endl;
 
       if (sign < 0.0) // opposite sign
         config.shape = OBStereo::ShapeZ;
@@ -484,7 +475,6 @@ namespace OpenBabel {
 
   void StereoFrom3D(OBMol *mol, bool force)
   {
-    cout << "StereoForm3D" << endl;
     if (mol->HasChiralityPerceived() && !force)
       return;
     mol->SetChiralityPerceived();
@@ -499,7 +489,6 @@ namespace OpenBabel {
 
   void StereoFrom2D(OBMol *mol, bool force)
   {
-    cout << "StereoForm2D" << endl;
     if (mol->HasChiralityPerceived() && !force)
       return;
     mol->SetChiralityPerceived();
@@ -554,7 +543,6 @@ namespace OpenBabel {
 
         if (ischiral) {
           centers.push_back(atom->GetId());
-          cout << "id = " << atom->GetId() << " <-- CHIRAL" << endl;
         }
       }
     }

@@ -385,6 +385,25 @@ void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
   }
 }
 
+void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config, 
+    const std::vector<unsigned int> &symClasses)
+{
+  OBAtom *atom;
+  // center
+  atom = mol->GetAtomById(config.center);
+  if (atom)
+    config.center = symClasses.at(atom->GetIndex());
+  // from/towards
+  atom = mol->GetAtomById(config.from);
+  if (atom)
+    config.from = symClasses.at(atom->GetIndex());
+  // refs
+  for (unsigned int i = 0; i < config.refs.size(); ++i) {
+    atom = mol->GetAtomById(config.refs.at(i));
+    if (atom)
+      config.refs[i] = symClasses.at(atom->GetIndex());
+  }
+}
 void OBGraphSym::BreakChiralTies(OBMol *pmol,
                             OBBitVec &frag_atoms, int nfragatoms,
                             vector<pair<OBAtom*, unsigned int> > &atom_sym_classes)
@@ -408,7 +427,6 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
   // Tetrahedral atoms
   //
   vector<unsigned long> tetrahedral = FindTetrahedralAtoms(_pmol, index2sym_class);
-  cout << "num tetra = " << tetrahedral.size() << endl;
   for (vector<unsigned long>::iterator id1 = tetrahedral.begin(); id1 != tetrahedral.end(); ++id1) {
     OBAtom *atom1 = _pmol->GetAtomById(*id1);
     int index1 = atom1->GetIndex();
@@ -444,114 +462,76 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
     if (same_class.size() < 2)
       continue;
 
-    // DEBUG    
+    /*
     cout << "BreakChiralTies: same_class = ";
     vector<OBAtom*>::iterator ia;
     for (ia = same_class.begin(); ia != same_class.end(); ia++)
       cout << (*ia)->GetIndex() << " ";
     cout << "\n";
-    // DEBUG
+    */
 
-    /*
-    // Create a vector of each atom's neighbors, and sort them
-    // (the neighbors) by symmetry class.  When this step is through,
-    // we'll be able to compare the 3D coordinates.
+    // find tetrahedral atoms using current symmetry classes
+    _pmol->DeleteData(OBGenericDataType::StereoData);
+    if (_pmol->Has3D())
+      TetrahedralFrom3D(_pmol, index2sym_class);
+    else
+      TetrahedralFrom2D(_pmol, index2sym_class);
 
-    vector<pair<OBAtom*, vector<OBAtom*> > > sorted_neighbors;
+    // false = don't perceive stereochemistry, we already did it explicitly above
+    OBStereoFacade stereoFacade(_pmol, false); 
+    // get the reference config
+    OBTetrahedralStereo::Config refConfig = stereoFacade.GetTetrahedralStereo(*id1)->GetConfig();
+    // this 'odd' variable will always be the same (see below...)
+    bool odd = OBStereo::NumInversions(refConfig.refs) % 2; // FIXME
+    // convert id --> symmetry classes to compare
+    IdsToSymClasses(_pmol, refConfig, index2sym_class);
+
+    // Devide the cis/trans in two groups based on C/T by comparing the Configs
+    vector<OBAtom*> symclass1, symclass2;
+
     vector<OBAtom*>::iterator iatom;
     for (iatom = same_class.begin(); iatom != same_class.end(); iatom++) {
+      OBTetrahedralStereo::Config otherConfig = stereoFacade.GetTetrahedralStereo((*iatom)->GetId())->GetConfig();
+      IdsToSymClasses(_pmol, otherConfig, index2sym_class);
 
-      // Gather the neighbors, and sort them by symmetry class
-      vector<pair<OBAtom*,unsigned int> > neighbors;    // pair: neighbor/symclass
-      FOR_NBORS_OF_ATOM(i_nbr, (*iatom)) {
-        OBAtom *nbr = &(*i_nbr);
-        int idx = nbr->GetIdx();
-        if (frag_atoms[idx])
-          neighbors.push_back(pair<OBAtom*,unsigned int>(nbr, idx2sym_class[idx]));
-      }
-      sort(neighbors.begin(), neighbors.end(), ComparePairSecond);
-
-      // Copy the sorted neighbors to a simple vector (we don't care
-      // about the symclass any more now that they're sorted).
-      vector<OBAtom*> sorted;
-      vector<pair<OBAtom *, unsigned int> >::iterator ni;
-      for (ni = neighbors.begin(); ni != neighbors.end(); ni++)
-        sorted.push_back((*ni).first);
-
-      // Now put the chiral atom, and its sorted neighbors, into a vector.
-      sorted_neighbors.push_back(pair<OBAtom*, vector<OBAtom*> >(*iatom, sorted));
-    }
-    
-    // See the comments in cansmilesformat.cpp::GetChiralStereo regarding
-    // "torsion".  If two atoms' neighbors, sorted the same way, have torsion
-    // angles with the same sign (both positive or both negative torsions),
-    // then their chiralities match, otherwise they're opposite chiralities.
-    // Using this fact, divide the atoms in this symmetry class into two groups.
-
-    OBAtom *ref_atom              = sorted_neighbors[0].first;
-    vector<OBAtom*> ref_neighbors = sorted_neighbors[0].second;
-
-    double t1 = CalcTorsionAngle(ref_neighbors[0]->GetVector(),
-                                 ref_neighbors[1]->GetVector(),
-                                 ref_neighbors[2]->GetVector(),
-                                 ref_neighbors[3]->GetVector());
-
-    vector<OBAtom*> symclass1, symclass2;
-    symclass1.push_back(ref_atom);
-
-    for (int i = 1; i < sorted_neighbors.size(); i++) {
-      OBAtom *atom             = sorted_neighbors[i].first;
-      vector<OBAtom*>neighbors = sorted_neighbors[i].second;
-      double t2 = CalcTorsionAngle(neighbors[0]->GetVector(),
-                                   neighbors[1]->GetVector(),
-                                   neighbors[2]->GetVector(),
-                                   neighbors[3]->GetVector());
-
-      if (t1*t2 >= 0.0)
-        symclass1.push_back(atom);      // t1 & t2 have same signs ==> same chirality
+      // compare
+      if (refConfig == otherConfig)
+        symclass1.push_back(*iatom); // same, add it to symclass1
       else
-        symclass2.push_back(atom);      // t1 & t2 have opposite signs ==> opposite chirality
+        symclass2.push_back(*iatom); // different, add to symclass2
     }
-    */
-    vector<OBAtom*> symclass1, symclass2;
 
     // If there's nothing in symclass2, then we don't have to split 
     // the symmetry class.
     if (symclass2.empty())
       continue;
-
-    cout << "Time to break chiral ties...\n";
-
+ 
     // Time to break the class in two. Double all symmetry classes
     // Then, either add one or subtract one to all the atoms in symclass2,
     // the atoms that didn't match the chirality of the "reference" class above.
-    // The add-or-subtract decision is based on t1, the "torsion angle" calculated
+    // The add-or-subtract decision is based on odd, the "odd" calculated
     // above; by doing this, we force a consistent choice of '@' or '@@' for the,
     // two chiral centers; otherwise it's arbitrary and you'll get two different SMILES.
-    /*
     for (int i = 0; i < atom_sym_classes.size(); i++) {
       atom_sym_classes[i].second *= 2;
       for (int j = 0; j < symclass2.size(); j++) {
         if (symclass2[j] == atom_sym_classes[i].first) {
-          if (t1 > 0)
+          if (odd)
             atom_sym_classes[i].second += 1;
           else
             atom_sym_classes[i].second -= 1;
         }
       }
     }
-    */
     // Now propagate the change across the whole molecule with the
     // extended sum-of-invariants.
     ExtendInvariants(atom_sym_classes, nfragatoms, pmol->NumAtoms());
-    
   }
 
   // 
   // Cis/Trans bonds
   //
   vector<unsigned long> cistrans = FindCisTransBonds(_pmol, index2sym_class);
-  cout << "num cis/trans = " << cistrans.size() << endl;
   for (vector<unsigned long>::iterator id1 = cistrans.begin(); id1 != cistrans.end(); ++id1) {
     OBBond *bond1 = _pmol->GetBondById(*id1);
     unsigned int begin1 = bond1->GetBeginAtom()->GetIndex();
@@ -592,27 +572,27 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
     if (same_class.size() < 2)
       continue;
 
-    // DEBUG    
+    /*
     cout << "BreakChiralTies: same_class = ";
     vector<OBBond*>::iterator ib;
     for (ib = same_class.begin(); ib != same_class.end(); ib++)
       cout << (*ib)->GetIdx() << " ";
     cout << "\n";
-    // DEBUG
+    */
 
     // find cis/trans bonds using current symmetry classes
+    _pmol->DeleteData(OBGenericDataType::StereoData);
     if (_pmol->Has3D())
       CisTransFrom3D(_pmol, index2sym_class);
     else
       CisTransFrom2D(_pmol, index2sym_class);
-    cout << "1a" << endl;
 
     // false = don't perceive stereochemistry, we already did it explicitly above
     OBStereoFacade stereoFacade(_pmol, false); 
     // get the reference config
     OBCisTransStereo::Config refConfig = stereoFacade.GetCisTransStereo(*id1)->GetConfig();
     // this 'odd' variable will always be the same (see below...)
-    bool odd = OBStereo::NumInversions(refConfig.refs) % 2;
+    bool odd = OBStereo::NumInversions(refConfig.refs) % 2; // FIXME
     // convert id --> symmetry classes to compare
     IdsToSymClasses(_pmol, refConfig, index2sym_class);
 
@@ -631,16 +611,11 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
         symclass2.push_back(*ibond); // different, add to symclass2
     }
 
-    cout << "symclass1.size() " << symclass1.size() << endl;
-    cout << "symclass2.size() " << symclass2.size() << endl;
-
     // If there's nothing in symclass2, then we don't have to split 
     // the symmetry class.
     if (symclass2.empty())
       continue;
     
-    cout << "Time to break chiral ties..." << endl;
-
     // Time to break the class in two. Double all symmetry classes
     // Then, either add one or subtract one to all the atoms in symclass2,
     // the atoms that didn't match the chirality of the "reference" class above.
@@ -815,12 +790,7 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
 
   if (nclasses1 < nfragatoms) {
     for (int i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
-      cout << "Classes:" << endl;
-      for (unsigned int j = 0; j < symmetry_classes.size(); ++j)
-        cout << symmetry_classes[j].first->GetIndex() << " : " << symmetry_classes[j].second << endl;
-      cout << "-----------" << endl;
       BreakChiralTies(_pmol, *_frag_atoms, nfragatoms, symmetry_classes);
-      
       CreateNewClassVector(symmetry_classes, tmp_classes, natoms);
       CountAndRenumberClasses(tmp_classes, nclasses2);
       symmetry_classes = tmp_classes;
@@ -828,10 +798,6 @@ void OBGraphSym::BreakChiralTies(OBMol *pmol,
       nclasses1 = nclasses2;
     }
   }
-      cout << "FINAL Classes:" << endl;
-      for (unsigned int j = 0; j < symmetry_classes.size(); ++j)
-        cout << symmetry_classes[j].first->GetIndex() << " : " << symmetry_classes[j].second << endl;
-      cout << "-----------" << endl;
  
   return nclasses1;
 }
