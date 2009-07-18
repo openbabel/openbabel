@@ -528,6 +528,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       }
     }
 
+    cout << "symclass1.size = " << symclass1.size() << endl;
+    cout << "symclass2.size = " << symclass2.size() << endl;
+    cout << "unspecified.size = " << unspecified.size() << endl;
+
     // If there's nothing in symclass2, then we don't have to split 
     // the symmetry class.
     if (symclass1.empty())
@@ -549,6 +553,14 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
     cout << "refConfig = " << refConfig << endl;
     cout << "orderedConfig = " << orderedConfig << endl;
+
+    // DEBUG
+    cout << "BEFORE tie breaking:" << endl;
+    cout << "index: sym_class" << endl;
+    for (int i = 0; i < atom_sym_classes.size(); i++) {
+      cout << atom_sym_classes[i].first->GetIndex() << ": "
+           << atom_sym_classes[i].second << endl;
+    }
 
 
     // Time to break the class in 3. 
@@ -601,6 +613,15 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
         }
       }
     }
+    
+    // DEBUG
+    cout << "AFTER tie breaking:" << endl;
+    cout << "index: sym_class" << endl;
+    for (int i = 0; i < atom_sym_classes.size(); i++) {
+      cout << atom_sym_classes[i].first->GetIndex() << ": "
+           << atom_sym_classes[i].second << endl;
+    }
+
  
     // Now propagate the change across the whole molecule with the
     // extended sum-of-invariants.
