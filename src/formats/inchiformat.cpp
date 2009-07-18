@@ -28,8 +28,8 @@ GNU General Public License for more details.
 #endif
 #include <set>
 #include <vector>
-#include "openbabel/chiral.h"
 #include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
 
 using namespace std;
 namespace OpenBabel
@@ -455,7 +455,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(Is0D)
   {
     //Tetrahedral stereo
-    vector<OBNodeBase*>::iterator itr;
+    //vector<OBNodeBase*>::iterator itr;
     
     std::vector<OBGenericData*>::iterator data;
     std::vector<OBGenericData*> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
@@ -486,67 +486,37 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         
     //Double bond stereo
     //Currently does not handle cumulenes
-    vector<OBBond*> UpDown;
-    vector<OBBond*>::iterator uditr;
-    OBBond *pbond;
-    vector<OBEdgeBase*>::iterator bitr;
-    for (pbond = mol.BeginBond(bitr);pbond;pbond = mol.NextBond(bitr))
-    {
-     if(pbond->IsUp() || pbond->IsDown())
-       UpDown.push_back(pbond);
-    }
-    if(!UpDown.empty())
-    {
-      //For all double bonds look for up/down bonds attached
-      for (pbond = mol.BeginBond(bitr);pbond;pbond = mol.NextBond(bitr))
-      {
-        if(pbond->IsDouble())
-        {
-          OBAtom* patom, *pA=NULL, *pB=NULL;
-          OBBond* pX, *pY;;
-          for(uditr=UpDown.begin();uditr!=UpDown.end();++uditr)
-          {
-            patom = GetCommonAtom(pbond, *uditr);
-            if(patom && !pA)
-            {
-              //first one in pA
-              pA = patom;
-              pX = *uditr;
-            }
-            else if(patom && pA)
-            {
-              //second one in pB
-              pB = patom;
-              pY = *uditr;
-              break;
-            }
-          }
-          if(pA && pB)
-          {
-            inchi_Stereo0D stereo;
-            stereo.central_atom = NO_ATOM;
-            stereo.type = INCHI_StereoType_DoubleBond;
-            stereo.neighbor[0]= pX->GetNbrAtomIdx(pA)-1;
-            stereo.neighbor[1] = pA->GetIdx()-1;
-            stereo.neighbor[2] = pB->GetIdx()-1;
-            stereo.neighbor[3]= pY->GetNbrAtomIdx(pB)-1;
-            if((pX->IsUp() && pY->IsUp())||(pX->IsDown() && pY->IsDown()))
-            {
-              if((pX->GetNbrAtom(pA))->HasDoubleBond())
-                stereo.parity = INCHI_PARITY_EVEN;
-              else
-                stereo.parity = INCHI_PARITY_ODD;
-            }
-            else
-            {
-              if((pX->GetNbrAtom(pA))->HasDoubleBond())
-                stereo.parity = INCHI_PARITY_ODD;
-              else
-                stereo.parity = INCHI_PARITY_EVEN;
-            }
-            stereoVec.push_back(stereo);
-          }
+    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+      if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::CisTrans) {
+        OBCisTransStereo *ts = dynamic_cast<OBCisTransStereo*>(*data);
+        OBCisTransStereo::Config config = ts->GetConfig();
+
+        inchi_Stereo0D stereo;
+        stereo.central_atom = NO_ATOM;
+        stereo.type = INCHI_StereoType_DoubleBond;
+        OBStereo::Refs refs = config.refs;
+        unsigned long start = refs[0];
+        if (refs[0]==OBStereo::ImplicitId)
+          start = refs[1];
+        unsigned long end = refs[4];
+        if (refs[4]==OBStereo::ImplicitId)
+          end = refs[3];
+ 
+        stereo.neighbor[0] = start;
+        stereo.neighbor[1] = config.begin;
+        stereo.neighbor[2] = config.end;
+        stereo.neighbor[3] = end;
+
+        if (config.specified) {
+          if (ts->IsTrans(start, end))
+            stereo.parity = INCHI_PARITY_EVEN;
+          else
+            stereo.parity = INCHI_PARITY_ODD;
         }
+        else
+          stereo.parity = INCHI_PARITY_UNKNOWN;
+        
+        stereoVec.push_back(stereo);
       }
     }
   }
