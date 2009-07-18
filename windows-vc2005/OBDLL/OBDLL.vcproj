@@ -365,6 +365,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\stereo\cistrans.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\data.cpp"
 				>
 				<FileConfiguration
@@ -411,6 +415,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\graphsym.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\..\src\grid.cpp"
@@ -637,6 +645,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\stereo\perception.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\phmodel.cpp"
 				>
 				<FileConfiguration
@@ -777,6 +789,26 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\stereo\squareplanar.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\stereo\stereo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\stereo\tetrahedral.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\stereo\tetranonplanar.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\stereo\tetraplanar.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\transform.cpp"
 				>
 				<FileConfiguration
@@ -895,6 +927,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\openbabel\stereo\cistrans.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\openbabel\data.h"
 				>
 			</File>
@@ -912,6 +948,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\generic.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\graphsym.h"
 				>
 			</File>
 			<File
@@ -996,6 +1036,26 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\math\spacegroup.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\stereo\squareplanar.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\stereo\stereo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\stereo\tetrahedral.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\stereo\tetranonplanar.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\stereo\tetraplanar.h"
 				>
 			</File>
 			<File
