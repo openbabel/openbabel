@@ -541,6 +541,8 @@ namespace OpenBabel {
 
     bool ischiral;
     for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i)) {
+      if (atom->IsNitrogen() || atom->IsPhosphorus() || atom->IsSulfur())
+        continue;
       if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
         tlist.clear();
         ischiral = true;
