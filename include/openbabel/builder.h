@@ -37,7 +37,7 @@ namespace OpenBabel
     public:
 
       //! Load fragment info from file, if is it has not already been done
-      bool LoadFragments();
+      void LoadFragments();
 
       /*! Get the position for a new neighbour on atom.
        *  \param atom Atom for which we want a new neighbour location.
