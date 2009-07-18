@@ -20,6 +20,8 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
 
 #include <sstream>
 
@@ -31,9 +33,16 @@ using namespace std;
 namespace OpenBabel 
 {
 
+  // Modified internal-only version
+  // Keep track of which rings contain *all* atoms in the cycle
+  // This method essentially does a modified depth-first search to find
+  //  large aromatic cycles
+  int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit, 
+                    int rootIdx, int prevAtomIdx = -1, bool fusedRings = false, int depth = 19);
+
   ///////////////////////////////////////////////////////////////////////////////
   //! \brief Kekulize aromatic rings without using implicit valence
-
+  //!
   //! This new perceive kekule bonds function has been designed to 
   //! handle molecule files without explicit hydrogens such as pdb or xyz.
   //! (It can, of course, easily handle explicit hydrogens too.)
@@ -76,6 +85,7 @@ namespace OpenBabel
     // Find all the groups of aromatic cycle
     for(i=1; i<= NumAtoms(); i++ ) {
       atom = GetAtom(i);
+      //      cout << " Checking for cycle at " << i << endl;
       if (atom->HasAromaticBond() && !cvisit[i]) { // is new aromatic atom of an aromatic cycle ?
 
         avisit.Clear();
@@ -83,7 +93,12 @@ namespace OpenBabel
         cycle.clear();
       
         avisit.SetBitOn(i);
-        expandcycle(atom, avisit);
+
+        int depth = expand_cycle(this, atom, avisit, cvisit, atom->GetIdx());
+        if (depth <= 0)
+          continue; // no valid cycle from this atom
+
+        //        cout << " depth: " << depth << endl;
         //store the atoms of the cycle(s)
         unsigned int j;
         for(j=1; j<= NumAtoms(); ++j) {
@@ -147,9 +162,8 @@ namespace OpenBabel
       
         stringstream errorMsg;
 
-        //cout << "minde before:" << minde << endl;
+        //        cout << "minde before:" << minde << endl;
         // if huckel rule not satisfied some atoms must give more electrons
-        //cout << "minde " << minde << endl;
         while ( minde != 0 ) {
           bestorden=99;
           for(j=0; j< cycle.size(); ++j) {
@@ -198,18 +212,22 @@ namespace OpenBabel
             }
           }
         }
-      
-        //cout << "minde after:" << minde <<endl;
-        //for(j=0; j < cycle.size(); ++j) {
-        //OBAtom *cycleAtom = cycle[j];
-        //cout << "\t" << cycleAtom->GetIdx();
-        //}
-        //cout << endl;
 
-        //	for(j=0; j < electron.size(); ++j) {
-        //	cout << "\t" << electron[j];
-        //	}
-        //	cout << endl;
+        /*
+        cout << "minde after:" << minde <<endl;
+        cout << "atom: ";
+        for(j=0; j < cycle.size(); ++j) {
+        OBAtom *cycleAtom = cycle[j];
+        cout << "\t" << cycleAtom->GetIdx();
+        }
+        cout << endl;
+
+        cout << "atom: ";
+        for(j=0; j < electron.size(); ++j) {
+        	cout << "\t" << electron[j];
+        	}
+        	cout << endl;
+        */
 
         // kekulize the cycle(s)
         start_kekulize(cycle,electron);
@@ -285,22 +303,6 @@ namespace OpenBabel
     std::vector<OBBond*>::iterator b;
     OBAtom *nbr;
   
-    // bool second_pass=false;
-    // for( i=1; i<= NumAtoms(); ++i) {
-    //     if(currentState[i] == 1) { // the atom can make a double bond
-    //       atom = GetAtom(i);
-    //       //find a neighbour that can make a double bond
-    //       // and start kekulize
-    //       for (nbr = atom->BeginNbrAtom(b);nbr;nbr = atom->NextNbrAtom(b)) {
-    // 	if(currentState[nbr->GetIdx()]==1){
-    // 	  if(!expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark)) {
-    // 	    second_pass=true;
-    // 	  }
-	    
-    // 	}
-    //       }
-    //     }
-    //   }
     bool expand_successful=true;//was previously not initialized. true works but may not be correct
     atom = cycle[0];
     for (nbr = atom->BeginNbrAtom(b);nbr;nbr = atom->NextNbrAtom(b)) {
@@ -308,16 +310,17 @@ namespace OpenBabel
         continue; 
       //std::cout << "Expand kekulize\n";
       expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark) ; 
+      //      cout << " return from expand" << endl;
       //Control that all the electron have been given to the cycle(s)
       expand_successful = true;
       for(unsigned i=0; i< cycle.size(); ++i) {
         atom2 = cycle[i];
         Idx =  atom2->GetIdx();
-        //cout << "\t" << currentState[Idx];
+        //        cout << "\t" << currentState[Idx];
         if (currentState[Idx] == 1)
           expand_successful=false;
       }
-      //cout << endl;
+      //      cout << endl;
       if (expand_successful)
         break;
       else {
@@ -380,7 +383,9 @@ namespace OpenBabel
     bond = atom1->GetBond(atom2);
     int bIdx = bond->GetIdx();
   
-    //cout << "assign bond state for atoms " << Idx1 << " and " << Idx2 << endl;
+    //    cout << "assign bond state for atoms " << Idx1 << " and " << Idx2 << endl;
+    //    std::cout << " kekulize: atom: " << Idx1 << " and " << Idx2 
+    //              << " have " << currentState[Idx1] << " " << currentState[Idx2] << endl;
     if (currentState[Idx1] == 1 && currentState[Idx2] == 1) {
       currentState[Idx1]=0;
       currentState[Idx2]=0;
@@ -545,25 +550,83 @@ namespace OpenBabel
   }
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
-  bool OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit, OBAtom *, int)
+  bool OBMol::expandcycle(OBAtom *, OBBitVec &, OBAtom *, int)
   {
+    return false; // use function below
+  }
+
+  //! Recursively find the aromatic atoms with an aromatic bond to the current atom
+  int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit, 
+                    int rootIdx, int prevAtomIdx, bool fusedRing, int depth)
+  {
+    // early termination
+    if (depth < 0)
+      return depth;
+
+//     cout << " expand_cycle: " << atom->GetIdx() << " depth " << depth << endl;
+//     if (fusedRing)
+//       cout << "fused" << endl;
+
     OBAtom *nbr;
-    //  OBBond *bond;
     std::vector<OBBond*>::iterator i;
     int natom;
-    //for each neighbour atom test if it is in the aromatic ring
+
+    // OK, here's the plan:
+    // - If a neighboring atom is non-aromatic, we ignore it
+    // - If the atom is in cvisit, it's already be assigned. Ignore it.
+    // - If the atom is the previous step in the path, ignore it.
+    // Fused rings make things complicated
+    // - We can go through the root atom ONCE, but we'll set the fusedRing parameter
+    // - If we're using fusedRing, then we'll return if we find an atom matching avisit
+    // Otherwise recurse: look for a large cycle back to the root
+    int trialScore, bestScore = 1000;
+    OBBitVec trialMatch, bestMatch; // the best path we've found so far
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
       {
         natom = nbr->GetIdx();
-        // if (!avisit[natom] && nbr->IsAromatic() && ((OBBond*) *i)->IsAromatic()) {
-        if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5 
-            && ((OBBond*) *i)->IsInRing()) {
-          avisit.SetBitOn(natom);
-          expandcycle(nbr, avisit);
+        //        cout << " checking: " << natom << " bo: " << (*i)->GetBO() << endl;
+        //        if (cvisit[natom])
+        //          continue; // this atom already has an assigned kekule form, check others
+        if ((*i)->GetBO() != 5)
+          continue; // this is a non-aromatic bond, skip it
+        if (natom == prevAtomIdx) {
+          // the previous step in our path
+          continue;
         }
-      }
 
-    return true;
+        if (avisit[natom] && fusedRing) {
+          // We crossed the root, and completed a fused cycle. We're done.
+          return depth;
+        } else if (avisit[natom] && natom != rootIdx) {
+          // e.g.           __
+          //           ____/  \   bad because, we should start at a ring atom
+          //               \__/   
+          continue;
+        }
+
+        // Attempt to cross the root, e.g., the root is a bridgehead in a fused ring system
+        bool crossedRoot = false;
+        if (natom == rootIdx) {
+          bestMatch = avisit; // this cycle is perfectly acceptable, so save it
+          bestScore = depth;
+          crossedRoot = true;
+        }
+
+        trialMatch = avisit;
+        trialMatch.SetBitOn(natom);
+        trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, rootIdx, atom->GetIdx(), crossedRoot, depth - 1);
+        if (trialScore > 0 && trialScore < bestScore) { // we found a larger, valid cycle
+          //          cout << " score: " << trialScore << endl;
+          bestMatch = trialMatch;
+          bestScore = trialScore;
+        }
+      } // check all neighbors
+
+    if (bestScore <= 0 || bestScore == 1000)
+      return -1; // e.g., we have no valid choices
+
+    avisit = bestMatch; // remember our path
+    return bestScore;
   }
 
 } // end namespace OpenBabel
