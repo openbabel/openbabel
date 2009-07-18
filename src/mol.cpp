@@ -2239,7 +2239,8 @@ namespace OpenBabel
             // next to a wedge/hash if present, now we still need to set the 
             // bond flag.
             if (GetDimension() == 2) {
-              if (atom->IsChiral()) {
+              OBStereoFacade stereoFacade(this);
+              if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
                 OBBondIterator i;
                 for (OBBond *bond = atom->BeginBond(i); bond; bond = atom->NextBond(i)) 
                   if (bond->IsWedge())
