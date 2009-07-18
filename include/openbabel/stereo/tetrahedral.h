@@ -28,29 +28,62 @@
 
 namespace OpenBabel {
 
+///@addtogroup stereo Stereochemistry
+///@{
 /**
  * @class OBTetrahedralStereo
- * @brief Handle and store tetrahedral atom stereo chemistry.
+ * @brief Class for handling and storing tetrahedral atom stereochemistry.
+ *
+ * The OBTetrahedralStereo class is used to represent tetrahedral atom 
+ * stereo chemistry. Before continuing reading, it is recommeded to 
+ * read the OBTetraNonPlanar documentation first. Since this
+ * class inherits OBTetraNonPlanerStereo it should be clear that the class
+ * stores the spacial arrangement of 4 non-planer atoms. However, for the
+ * tetrahedral case, one additional OBStereo::Ref is needed: the atom id for 
+ * the center atom.
+ *
+ * The stereochemistry is set, retrieved and internally stored using the 
+ * OBTetrahedralStereo::Config struct. OBTetrahedralStereo functions as a
+ * wrapper around the Config struct and provides functions to get a copy of 
+ * the Config struct converted to any view direction or atom and winding 
+ * (OBTetrahedralStereo::GetConfig).
  *
  * @image html tetrahedral.png
  *
- * The OBTetrahedralStereo class is used to represent tetrahedral atom 
- * stereo chemistry. The stereochemistry is set, retrieved and internally
- * stored using the OBtetrahedralStereo::Config struct.
- *  
  * Like all stereo classes, errors, warnings or info is reported using OBMessageHandler.
+ *
+ * @sa OBStereo OBStereoBase OBTetraNonPlanarStereo OBStereoFacade
  */
 class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
+///@}
 {
   public:
-    /**
-     * The config struct represents the stereochemistry in a well defined way.
-     */
 #ifndef SWIG
+    /**
+     * The config struct represents the stereochemistry in a well defined way. For 
+     * tetrahedral stereo centers, the following data members define the special 
+     * orientation of the atoms:
+     *
+     * - OBStereo::Ref center = Atom id of the stereogenic center atom.
+     * - OBStereo::Ref from/towards = Atom id (or OBStereo::ImplicitRef) for the 
+     *   atom to view from/towards.
+     * - OBStereo::Refs refs = The three remaining atom ids (may also contain one
+     *   OBStereo::NoRef element if from/towards is set to a real atom id).
+     * - OBStereo::View view: Specify the viewing from or towards the atom with 
+     *   @p from/towards id.
+     * - OBStereo::Winding winding: Clockwise or AntiClockwise (order in the Refs @p refs list)
+     *
+     * @image html tetrahedral.png
+     *
+     * Only @p center is specific for the OBTetrahedralStereo::Config. The other 
+     * data members occur in all OBTetraNonPlanarStereo derived classes.
+     */
     struct OBAPI Config
     {
       /**
-       * Default constructor.
+       * Default constructor. Initializes the from/torards and center Refs to 
+       * OBStereo::NoRef, the winding to OBStereo::Clockwise and view to 
+       * OBStereo::ViewFrom.
        */
       Config() : center(OBStereo::NoRef), from(OBStereo::NoRef), 
           winding(OBStereo::Clockwise), view(OBStereo::ViewFrom),
@@ -76,20 +109,23 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
        * is done using the information stored in the struct's data members
        * (i.e. view, winding, from/towards and refs).
        *
-       * If the centers don't match false is returned. If one of the Refs lists
-       * does not contain 3 elements, false is returned. 2 or more 
-       * OBStereo::ImplicitRef values in a single Config struct also result in
-       * false being returned.
+       * There are a number of cases resuling in false being returned:
+       * - The centers don't match. 
+       * - One of the Refs lists does not contain 3 elements.
+       * - 2 or more OBStereo::ImplicitRef values in a single Config struct 
        *
        * It doesn't matter if the two Config structs use the same view, same 
        * from/towards Ref or the same winding. All needed conversions will be
-       * carried out automatically.
+       * carried out automatically (see OBTetraNonPlanerStereo::ToConfig). These 
+       * conversions ensure the spacial orientation of the 4 groups remains
+       * unchanged.
        *
        * Another key feature is the ability to comapre Config structs regardless
        * of implicit (OBStereo::ImplicitRef) or explicit hydrogens. This is best 
        * illustrated with some examples. In these examples the same ref has 
-       * already been selected as from/towards atom before. We will focus on how 
-       * the three remaining refs are interpreted.
+       * already been selected as from/towards atom and both use the same winding
+       * and view direction. We will focus on how the three remaining refs are 
+       * interpreted.
        *
        @verbatim
          234 == 234 // true
@@ -102,20 +138,11 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
        * that the value of 1 Ref can actually be ignored. It's position in the 
        * sequence (or the winding) is defined by the two explicit Ref values. 
        *
-       * @code
-       * OBTetrahedralStereo::Config cfg1, cfg2;
-       * ...
-       * if (cfg1 == cfg2) {
-       *   // cfg1 and cfg2 represent the same stereochemistry
-       *   ...
-       * }
-       * @endcode
-       *
        * @return True if both Config structs represent the stereochemistry.
        */
       bool operator==(const Config &other) const;
       /**
-       * Not equal to operator.
+       * Not equal to operator. This is the inverse of the Equal to operator==.
        *
        * @return True if the two Config structs represent a different stereochemistry.
        */
@@ -131,9 +158,10 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
       unsigned long center; //<! The center (chiral) atom id.
       /**
        * This anonymous union helps to keep code clean. Both the @p from and 
-       * @p towards data members contain the same id (same memory address) 
-       * but can be used interchangeably to match the context of the code. 
-       * The real viewing direction is specified by the @p view data member.
+       * @p towards data members contain the same OBStereo::Ref (same memory 
+       * address) but can be used interchangeably to match the context of 
+       * the code. The real viewing direction is specified by the @p view 
+       * data member.
        */
       union {
         unsigned long from; //<! The viewing from atom id.
@@ -142,7 +170,8 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
       OBStereo::Refs refs; //!< The 3 reference ids.
       OBStereo::Winding winding; //<! The winding for the 3 reference ids.
       OBStereo::View view; //!< Specify viewing from or towards the atom with @p from/towards id.
-      bool specified;
+      bool specified; //!< True if the stereochemistry is specified. When false, the described 
+                      //!< special orientation is only accidental (i.e. unspecified).
       //@}
     };
 #endif
@@ -155,6 +184,8 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
      */
     virtual ~OBTetrahedralStereo();
 
+    ///@name Tetrahedral stereochemistry
+    //@{
     /**
      * Get the OBStereo::Type for this object.
      * @return OBStereo::Tetrahedral
@@ -183,17 +214,22 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
         OBStereo::View view = OBStereo::ViewFrom) const;
 #endif
     /**
-     * Compare the internally stored stereochemistry with the 
-     * stereochemistry specified by @p other.
+     * Compare the stereochemistry stored in the Config struct with the 
+     * stereochemistry specified in the Config struct from @p other.
      *
-     * @return True if both OBTetrahedralStereo objects represent the same
-     * stereochemistry.
+     * @copydoc Config::operator==()
      */
     bool operator==(const OBTetrahedralStereo &other) const;
+    /**
+     * Not equal to operator. This is the inverse of the Equal to operator==.
+     *
+     * @return True if the two Config structs represent a different stereochemistry.
+     */
     bool operator!=(const OBTetrahedralStereo &other) const
     {
       return !(*this == other); 
     }
+    //@}
     
     /*
      * Implement OBGenericData::Clone().
@@ -207,6 +243,10 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
 #ifndef SWIG
 namespace std {
 
+///@addtogroup stereo Stereochemistry
+///@{
+///@name std::ostream output
+///@{
 /**
  * @code
  * OBTetrahedralStereo::Config cfg;
@@ -242,6 +282,9 @@ OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo &ts
  * @endcode
  */
 OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo::Config &cfg);
+
+///@}
+///@}
 
 } // namespace std
 #endif // SWIG

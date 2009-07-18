@@ -6,6 +6,8 @@
 
 namespace OpenBabel {
 
+///@addtogroup stereo Stereochemistry
+///@{
 /**
  * @class OBSquarePlanarStereo
  * @brief Class for handling and storing square planar stereochemistry.
@@ -21,6 +23,7 @@ namespace OpenBabel {
  * warnings or info is reported using OBMessageHandler.
  */
 class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
+///@}
 {
   public:
     OBSquarePlanarStereo(OBMol *mol);

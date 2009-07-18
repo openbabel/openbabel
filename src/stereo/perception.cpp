@@ -457,6 +457,7 @@ namespace OpenBabel {
       OBAtom *center = mol->GetAtomById(*i);
  
       // make sure we have at least 3 heavy atom neighbors
+      // timvdm 28 Jun 2009: This is already checked in FindTetrahedralAtoms
       if (center->GetHvyValence() < 3) {
         std::stringstream errorMsg;
         errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of " 

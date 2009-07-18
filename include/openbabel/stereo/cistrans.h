@@ -6,6 +6,8 @@
 
 namespace OpenBabel {
 
+///@addtogroup stereo Stereochemistry
+///@{
 /**
  * @class OBCisTransStereo
  * @brief Class for handling and storing cis/trans stereochemistry.
@@ -14,12 +16,17 @@ namespace OpenBabel {
  *
  * The OBCisTransStereo class is used to represent cis/trans stereochemistry.
  * Like all OBTetraPlanarStereo subclasses, it uses the OBStereo::Shape parameters
- * to set/get the reference ids. However, since the orientation of the double bond
- * matters, all methods in the "query methods" section check the bonding by actually
- * checking the atoms in the molecule provided through the constructor. If 
- * OBMol::GetAtomById(id) returns 0 for a single id, it will be considered a deleted 
- * hydrogen if the valences confirm this. This class uses the OBMessageHandler to 
- * report errors, warnings and info.
+ * to set/get the OBStereo::Ref values in the Config struct. However, since the 
+ * orientation of the double bond matters, all methods in the "query methods" 
+ * section check the bonding by actually checking the atoms in the molecule 
+ * provided through OBStereoBase's constructor. If OBMol::GetAtomById(id) returns 
+ * 0 for a single id, it will be considered a deleted or implicit hydrogen if 
+ * the valences confirm this. 
+ *
+ * The use of OBStereo::Shape is illustarted in the image below. 
+ * @image html shape.png
+ *
+ *
  *
  * An example:
  * @code
@@ -47,6 +54,7 @@ namespace OpenBabel {
  *
  */
 class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
+///@}
 {
   public:
     /**
@@ -219,6 +227,7 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
 };
 
 } // namespace OpenBabel
+
 #ifndef SWIG
 namespace std {
 

@@ -29,6 +29,9 @@
 
 namespace OpenBabel {
 
+  ///@addtogroup stereo Stereochemistry 
+  ///@{
+
   /**
    * @class OBTetraNonPlanarStereo
    * @brief Base class for handling and storing non-planar stereochemistry with 4 reference atom ids.
@@ -219,6 +222,8 @@ namespace OpenBabel {
         OBStereo::Permutate(cfg.refs, 1, 2);
       }
  };
+  
+  ///@} // addtogroup
 
 }
 
