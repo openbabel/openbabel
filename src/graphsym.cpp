@@ -75,10 +75,9 @@ namespace OpenBabel {
   OBGraphSym::OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms)
   {
     _pmol = pmol;
-    if (frag_atoms)
+    if (frag_atoms) {
       _frag_atoms = frag_atoms;
-    else
-    {
+    } else {
       _frag_atoms = new OBBitVec(_pmol->NumAtoms());
       FOR_ATOMS_OF_MOL(a, _pmol)
         _frag_atoms->SetBitOn(a->GetIdx());
