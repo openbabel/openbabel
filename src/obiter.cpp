@@ -397,6 +397,184 @@ namespace OpenBabel
     return _depth[_ptr->GetIdx()];
   }
 
+  /** \class OBMolBondBFSIter obiter.h <openbabel/obiter.h>
+
+      \since version 2.3
+
+      To facilitate iteration through all bonds in a molecule, without resorting
+      to bond indexes (which <strong>will</strong> change in the future), a 
+      variety of iterator methods are provided.
+
+      This class provides a breadth-first search ordering of bonds. When one
+      connected component is exhausted, the iterator will start at another until
+      all bonds are visited. No guarantee is made as to the ordering of
+      iteration through connected components.
+
+      The iterator maintains an internal queue and list of visited
+      atoms. As such it may not be appropriate for memory-constrained
+      situations when iterating through large molecules.
+
+      Use of this iterator has been made significantly easier by a series
+      of macros in the obiter.h header file:
+
+      \code
+      \#define FOR_BONDBFS_OF_MOL(a,m)     for( OBMolBondBFSIter     a(m); a; ++a )
+      \endcode
+
+      Here is an example:
+      \code
+      #include <openbabel/obiter.h>
+      #include <openbabel/mol.h>
+
+      OBMol mol;
+      FOR_BONDBFS_OF_MOL(b, mol)
+      {
+         // The variable b behaves like OBBond* when used with -> and * but
+         // but needs to be explicitly converted when appearing as a parameter
+         // in a function call - use &*a
+  
+      }
+      \endcode
+  **/
+
+  OBMolBondBFSIter::OBMolBondBFSIter(OBMol *mol, int StartIndex):
+    _parent(mol), _ptr(_parent->GetBond(StartIndex))
+  {
+    _notVisited.Resize(_parent->NumBonds());
+    _notVisited.Negate(); // all on
+    _notVisited.SetBitOff(_ptr->GetIdx());
+
+    // Set up storage for the depths
+    _depth.resize(_parent->NumBonds(), 0);
+    _depth[_ptr->GetIdx()] = 1;
+
+    for( OBAtomBondIter b(_ptr->GetBeginAtom()); b; ++b )
+      { // Loop thru all bonds attached to the start of the bond
+        if (_notVisited[b->GetIdx()]) { // Don't revisit the initial bond
+          _queue.push(&(*b));
+          _depth[b->GetIdx()] = 2;
+          _notVisited.SetBitOff(b->GetIdx());
+        }
+      }
+    for( OBAtomBondIter b(_ptr->GetEndAtom()); b; ++b )
+      { // Loop thru all bonds attached to the end of the bond
+        if (_notVisited[b->GetIdx()]) { // Don't revisit the initial bond
+          _queue.push(&(*b));
+          _depth[b->GetIdx()] = 2;
+          _notVisited.SetBitOff(b->GetIdx());
+        }
+      }
+  }
+
+  OBMolBondBFSIter::OBMolBondBFSIter(OBMol &mol, int StartIndex):
+    _parent(&mol), _ptr(_parent->GetBond(StartIndex))
+  {
+    _notVisited.Resize(_parent->NumBonds());
+    _notVisited.Negate(); // all on
+    _notVisited.SetBitOff(_ptr->GetIdx());
+
+    // Set up storage for the depths
+    _depth.resize(_parent->NumBonds(), 0);
+    _depth[_ptr->GetIdx()] = 1;
+
+    for( OBAtomBondIter b(_ptr->GetBeginAtom()); b; ++b )
+      { // Loop thru all bonds attached to the start of the bond
+        if (_notVisited[b->GetIdx()]) { // Don't revisit the initial bond
+          _queue.push(&(*b));
+          _depth[b->GetIdx()] = 2;
+          _notVisited.SetBitOff(b->GetIdx());
+        }
+      }
+    for( OBAtomBondIter b(_ptr->GetEndAtom()); b; ++b )
+      { // Loop thru all bonds attached to the end of the bond
+        if (_notVisited[b->GetIdx()]) { // Don't revisit the initial bond
+          _queue.push(&(*b));
+          _depth[b->GetIdx()] = 2;
+          _notVisited.SetBitOff(b->GetIdx());
+        }
+      }
+  }
+
+  OBMolBondBFSIter::OBMolBondBFSIter(const OBMolBondBFSIter &ai)
+  {
+    _parent = ai._parent;
+    _ptr = ai._ptr;
+    _notVisited = ai._notVisited;
+    _queue = ai._queue;
+    _depth = ai._depth;
+  }
+
+  OBMolBondBFSIter& OBMolBondBFSIter::operator=(const OBMolBondBFSIter &ai)
+  {
+    if (this != &ai)
+      {
+        _parent = ai._parent;
+        _ptr = ai._ptr;
+        _notVisited = ai._notVisited;
+        _queue = ai._queue;
+        _depth = ai._depth;
+      }
+    return *this;
+  }
+
+  OBMolBondBFSIter& OBMolBondBFSIter::operator++()
+  {
+    if (!_queue.empty())
+    {
+      _ptr = _queue.front();
+      _queue.pop();
+    }
+    else // are there any disconnected subgraphs?
+    {
+      int next = _notVisited.FirstBit();
+      if (next != _notVisited.EndBit())
+      {
+        _ptr = _parent->GetBond(next + 1); // Bond index issue
+        if (_ptr != NULL)
+          _depth[_ptr->GetIdx()] = 1; // new island
+        _notVisited.SetBitOff(next);
+      }
+      else
+        _ptr = NULL;
+    }
+
+    if (_ptr) {
+      for( OBAtomBondIter b(_ptr->GetBeginAtom()); b; ++b )
+        { // Loop thru all bonds attached to the start of the bond
+          if (_notVisited[b->GetIdx()]) {
+            _queue.push(&(*b));
+            _depth[b->GetIdx()] = 2;
+            _notVisited.SetBitOff(b->GetIdx());
+          }
+        }
+      for( OBAtomBondIter b(_ptr->GetEndAtom()); b; ++b )
+        { // Loop thru all bonds attached to the end of the bond
+          if (_notVisited[b->GetIdx()]) {
+            _queue.push(&(*b));
+            _depth[b->GetIdx()] = 2;
+            _notVisited.SetBitOff(b->GetIdx());
+          }
+        }
+      }
+    return *this;
+  }
+
+  OBMolBondBFSIter OBMolBondBFSIter::operator++(int)
+  {
+    OBMolBondBFSIter tmp(*this);
+    operator++();
+    return tmp;
+  }
+  
+  int OBMolBondBFSIter::CurrentDepth() const
+  {
+    if (_ptr == NULL)
+      return 0;
+      
+    return _depth[_ptr->GetIdx()];
+  }
+///////////////////////////////////////////////////////////////////////
+
   /** \class OBMolBondIter obiter.h <openbabel/obiter.h>
 
       To facilitate iteration through all bonds in a molecule, without resorting

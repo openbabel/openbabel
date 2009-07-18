@@ -130,6 +130,37 @@ namespace OpenBabel
     int CurrentDepth() const;
   };
 
+  //! \brief Iterate over all bonds in an OBMol in a breadth-first search (BFS)
+  class OBAPI OBMolBondBFSIter {
+    OBMol               *_parent;
+    OBBond              *_ptr;
+    OBBitVec             _notVisited;
+    std::queue<OBBond *> _queue;
+    std::vector<int>     _depth;
+  public:
+
+    OBMolBondBFSIter(): _parent(NULL), _ptr(NULL) { }
+    OBMolBondBFSIter(OBMol *mol, int StartIndex = 0);
+    OBMolBondBFSIter(OBMol &mol, int StartIndex = 0);
+    OBMolBondBFSIter(const OBMolBondBFSIter &ai);
+    ~OBMolBondBFSIter() { }
+
+    OBMolBondBFSIter& operator=(const OBMolBondBFSIter &ai);
+    //! \return Whether the iterator can still advance (i.e., visit more atoms)
+    operator bool() const        { return _ptr != NULL; }
+    //! Preincrement -- advance to the next atom in the BFS list and return
+    OBMolBondBFSIter& operator++();
+    //! Postincrement -- return the current atom and advance to the next atom
+    OBMolBondBFSIter  operator++(int);
+    //! \return a pointer to the current atom
+    OBBond* operator->() const   { return _ptr;      }
+    //! \return a reference to the current atom
+    OBBond& operator*() const    { return *_ptr;     }
+    //! \return the current depth of the iterator
+    //! \since version 2.2
+    int CurrentDepth() const;
+  };
+
   //! \brief Iterate over all bonds in an OBMol
   class OBAPI OBMolBondIter {
     std::vector<OBBond*>::iterator _i;
@@ -373,6 +404,7 @@ namespace OpenBabel
 #define FOR_ATOMS_OF_RESIDUE(a,r) for( OBResidueAtomIter a(r); a; ++a )
 #define FOR_DFS_OF_MOL(a,m)       for( OBMolAtomDFSIter  a(m); a; ++a )
 #define FOR_BFS_OF_MOL(a,m)       for( OBMolAtomBFSIter  a(m); a; ++a )
+#define FOR_BONDBFS_OF_MOL(b,m)   for( OBMolBondBFSIter  b(m); b; ++b )
 #define FOR_RINGS_OF_MOL(r,m)     for( OBMolRingIter     r(m); r; ++r )
 #define FOR_ANGLES_OF_MOL(a,m)    for( OBMolAngleIter    a(m); a; ++a )
 #define FOR_TORSIONS_OF_MOL(t,m)  for( OBMolTorsionIter  t(m); t; ++t )
