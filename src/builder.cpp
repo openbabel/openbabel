@@ -31,6 +31,9 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/locale.h>
 
+
+#include <openbabel/stereo/stereo.h>
+
 /* OBBuilder::GetNewBondVector():
  * - is based on OBAtom::GetNewBondVector()
  * - but: when extending a long chain all the bonds are trans
@@ -148,8 +151,7 @@ namespace OpenBabel
       return VZero;
     
     int dimension = ((OBMol*)atom->GetParent())->GetDimension();
-
-    if (dimension != 2) {
+    if (dimension == 3) {
       ////////////
       //   3D   //
       ////////////
@@ -284,7 +286,7 @@ namespace OpenBabel
       return newbond;
     }
 
-  } else {
+  } else if (dimension == 2) {
     ////////////
     //   2D   //
     ////////////
@@ -375,7 +377,8 @@ namespace OpenBabel
     //    /          /          //
     //                          //
     if (atom->GetValence() == 3) {
-      if (atom->IsChiral()) {
+      OBStereoFacade stereoFacade((OBMol*)atom->GetParent());
+      if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
         OBBond *hash = 0;
         OBBond *wedge = 0;
         vector<OBBond*> plane;
@@ -430,7 +433,14 @@ namespace OpenBabel
       return newbond;
     }
   
+  } else {
+    ////////////
+    //   0D   //
+    ////////////
+    return VZero;
   }
+
+
 
   return VZero; //previously undefined
 }
