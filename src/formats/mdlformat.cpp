@@ -102,7 +102,7 @@ namespace OpenBabel
       void GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown, set<OBBond*> &stereodbl);
       void GetParity(OBMol& mol, map<OBAtom*, Parity> &parity,
            map<OBBond*, OBStereo::BondDirection> &updown);
-      void MDLFormat::TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity);
+      void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity);
       map<int,int> indexmap; //relates index in file to index in OBMol
       vector<string> vs;
   };

@@ -96,7 +96,7 @@ namespace OpenBabel {
       OBConversion::RegisterOptionParam("a", this);
       OBConversion::RegisterOptionParam("h", this);
       OBConversion::RegisterOptionParam("x", this);
-      OBConversion::RegisterOptionParam("C", this);
+      OBConversion::RegisterOptionParam("C", this);	// "anti-canonical" form (random order)
     }
     virtual const char* Description()
     {
@@ -2754,7 +2754,7 @@ namespace OpenBabel {
     
     // write '@?' for unspecified (unknown) stereochemistry
     if (!atomConfig.specified) {
-      strcpy(stereo, "@?");
+      // strcpy(stereo, "@?");
       return true;
     }
 
@@ -3248,8 +3248,8 @@ namespace OpenBabel {
         symmetry_classes.push_back(r);
       }
       else{
-        labels.push_back(UINT_MAX /*OBStereo::ImplicitId*/); //to match situation when canonical ordering. Just a big number?
-        symmetry_classes.push_back(UINT_MAX /*OBStereo::ImplicitId*/);
+        labels.push_back(OBStereo::ImplicitId); //to match situation when canonical ordering. Just a big number?
+        symmetry_classes.push_back(OBStereo::ImplicitId);
       }
     }
   }
