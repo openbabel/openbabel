@@ -153,8 +153,7 @@ namespace OpenBabel {
             if (nbr->IsHydrogen())
               isCisTrans = false;
           }
-        } else { 
-          // valence == 3
+        } else if (begin->GetValence() == 3) {
           std::vector<unsigned int> tlist;
           
           for (OBAtom *nbr = begin->BeginNbrAtom(j); nbr; nbr = begin->NextNbrAtom(j)) {
@@ -172,7 +171,13 @@ namespace OpenBabel {
             // save first summetry class
             tlist.push_back(symClasses[nbr->GetIdx()-1]);
           }
+        } else {
+          // Valence is not 2 or 3, for example SR3=NR
+          isCisTrans = false;
         }
+
+        if (!isCisTrans) 
+          continue;
 
         if (end->GetValence() == 2) {
           // begin atom has two neighbors, the first is the end atom. The second should 
@@ -185,8 +190,7 @@ namespace OpenBabel {
             if (nbr->IsHydrogen())
               isCisTrans = false;
           }
-        } else { 
-          // valence == 3
+        } else if (end->GetValence() == 3) { 
           std::vector<unsigned int> tlist;
           
           for (OBAtom *nbr = end->BeginNbrAtom(j); nbr; nbr = end->NextNbrAtom(j)) {
@@ -204,6 +208,9 @@ namespace OpenBabel {
             // save first summetry class
             tlist.push_back(symClasses[nbr->GetIdx()-1]);
           }
+        } else {
+          // Valence is not 2 or 3, for example SR3=NR
+          isCisTrans = false;
         }
 
         if (isCisTrans)
@@ -617,7 +624,6 @@ namespace OpenBabel {
   }
  
   //! Calculate the "sign of a triangle" given by a set of 3 2D coordinates
-  //! 
   double TriangleSign(const vector3 &a, const vector3 &b, const vector3 &c)
   {
     // equation 6 from [1]
