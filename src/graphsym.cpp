@@ -69,6 +69,12 @@ namespace OpenBabel {
 
 // NOTE: Copied from OpenBabel/mol.cpp
 
+  // Destructor
+  OBGraphSym::~OBGraphSym()
+  {
+    // Nothing to free as we only hold pointers
+  }
+
   bool OBGraphSym::CompareUnsigned(const unsigned int &a,const unsigned int &b)
   {
     return(a<b);
@@ -196,10 +202,10 @@ namespace OpenBabel {
 *       The name "Graph Theoretical Distance" is thus misleading.
 ***************************************************************************/
 
-  bool OBGraphSym::CalcGTDVector()
+  bool OBGraphSym::GetGTDVector(vector<int> &gtd)
 {
-  _gtd.clear();
-  _gtd.resize(_pmol->NumAtoms());
+  gtd.clear();
+  gtd.resize(_pmol->NumAtoms());
   
   int gtdcount, natom;
   OBBitVec used, curr, next;
@@ -214,7 +220,7 @@ namespace OpenBabel {
 
     int idx = atom->GetIdx();
     if (!_frag_atoms->BitIsOn(idx)) {     // Not in this fragment?
-      _gtd[idx-1] = 0;
+      gtd[idx-1] = 0;
       continue;
     }
 
@@ -242,7 +248,7 @@ namespace OpenBabel {
       curr = next;
       gtdcount++;
     }
-    _gtd[idx-1] = gtdcount;
+    gtd[idx-1] = gtdcount;
   }
 
   return(true);
@@ -329,15 +335,6 @@ namespace OpenBabel {
     }
     i++;
   }
-
-#if DEBUG
-  cout << "    GetGIVector:  ";
-  vector<unsigned int>::iterator ii;
-  for (ii = vid.begin(); ii != vid.end(); ii++)
-    cout << *ii << " ";
-  cout << "\n";
-#endif
-
 }
 
 
@@ -524,14 +521,6 @@ namespace OpenBabel {
   // How many atoms, and how many do we care about?
   int natoms = _pmol->NumAtoms();
   int nfragatoms = _frag_atoms->CountBits();
-
-#if DEBUG
-  for (atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j)) {
-    if (_frag_atoms[atom->GetIdx()])
-      cout << etab.GetSymbol(atom->GetAtomicNum()) << " ";    
-  }
-  cout << "\n";
-#endif
 
   // Get vector of graph invariants.  These are the starting "symmetry classes".
   GetGIVector(vgi);

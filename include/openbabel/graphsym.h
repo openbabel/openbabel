@@ -38,7 +38,6 @@ namespace OpenBabel {
     private:
       OBBitVec* _frag_atoms;
       OBMol* _pmol;
-      std::vector<int> _gtd;
 
       static bool CompareUnsigned(const unsigned int &a,const unsigned int &b);
       static bool ComparePairFirst(const std::pair<OBAtom*,unsigned int> &a,const std::pair<OBAtom*,unsigned int> &b);
@@ -49,7 +48,6 @@ namespace OpenBabel {
       unsigned int GetHvyValence(OBAtom *atom);
       unsigned int GetHvyBondSum(OBAtom *atom);
 
-      bool CalcGTDVector();
       void FindRingAtoms(OBBitVec &ring_atoms);
       void CreateNewClassVector(std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
                                 std::vector<std::pair<OBAtom*,unsigned int> > &vp2,
@@ -58,7 +56,7 @@ namespace OpenBabel {
       void CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp, unsigned int &count);
       int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes,
                            int nfragatoms, int natoms);
-      int CalculateSymmetry(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
+      
 
     public:
       //! Constructor
@@ -78,17 +76,11 @@ namespace OpenBabel {
         else // No molecule supplied
           _frag_atoms = NULL;
       }
-      //OBGraphSym(const OBMol&);
-      //OBGraphSym(const OBMol&, const OBBitVec&);
       //! Destructor
       virtual ~OBGraphSym();
 
-      bool GetGTDVector(std::vector<int> &gtd) {
-        bool success = CalcGTDVector();
-        if (success)
-          gtd =_gtd; // Copy _gtd into gtd
-        return success;
-      }
+      bool GetGTDVector(std::vector<int> &gtd);
+      int CalculateSymmetry(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
     };
 
       //&OBBitVec GetFragment();
