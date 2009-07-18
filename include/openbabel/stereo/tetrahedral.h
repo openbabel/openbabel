@@ -46,6 +46,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
     /**
      * The config struct represents the stereochemistry in a well defined way.
      */
+#ifndef SWIG
     struct OBAPI Config
     {
       /**
@@ -116,7 +117,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
       bool specified;
       //@}
     };
-
+#endif
     /**
      * Constructor.
      */
@@ -136,6 +137,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
      * and ref) atom ids are set.
      */
     bool IsValid() const;
+#ifndef SWIG
     /**
      * Set the configuration using a Config struct.
      */
@@ -151,6 +153,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
     Config GetConfig(unsigned long from_or_towards, 
         OBStereo::Winding winding = OBStereo::Clockwise, 
         OBStereo::View view = OBStereo::ViewFrom) const;
+#endif
     /**
      * Compare the internally stored stereochemistry with the 
      * stereochemistry specified by @p other.
@@ -173,7 +176,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
 };
 
 } // namespace OpenBabel
-
+#ifndef SWIG
 namespace std {
 
 /**
@@ -213,5 +216,6 @@ OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo &ts
 OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo::Config &cfg);
 
 } // namespace std
+#endif // SWIG
 
 #endif
