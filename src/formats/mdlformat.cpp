@@ -153,6 +153,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     string comment;
     string r1, r2;
+    map<OBBond*, OBStereo::BondDirection> updown;
 
     // Attempting to read past the end of the file -- don't bother
     if ( !ifs.good() || ifs.peek() == EOF ) 
@@ -197,6 +198,10 @@ namespace OpenBabel
       } else 
       if (dim == "2D") {
         mol.SetDimension(2);
+        setDimension = true;
+      } else
+      if (dim == "0D") {
+        mol.SetDimension(0);
         setDimension = true;
       }
     }
@@ -257,10 +262,10 @@ namespace OpenBabel
       for (i = 0; i < natoms; ++i) {
         if (!std::getline(ifs, line)) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
-	  errorMsg << "Not enough atoms to match atom count (" << natoms << ") in counts line\n";
-	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	        errorMsg << "Not enough atoms to match atom count (" << natoms << ") in counts line\n";
+	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
-	}
+	      }
 
         // xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
         //
@@ -272,9 +277,9 @@ namespace OpenBabel
         //          ... = query/reaction related
         massdiff = charge = 0;
         if (line.size() < 34) {
-	  errorMsg << "WARNING: Problems reading a MDL file\n";
-	  errorMsg << "Missing data following atom specification in atom block\n";
-	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	        errorMsg << "WARNING: Problems reading a MDL file\n";
+	        errorMsg << "Missing data following atom specification in atom block\n";
+	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
         }
         // coordinates
@@ -304,7 +309,6 @@ namespace OpenBabel
       // Bond Block
       //
       int stereo = 0;
-      map<OBBond*, OBStereo::BondDirection> updown;
       unsigned int begin, end, order, flag;
       for (i = 0;i < nbonds; ++i) {
         flag = 0;
@@ -331,7 +335,7 @@ namespace OpenBabel
 	        errorMsg << "WARNING: Problems reading a MDL file\n";
 	        errorMsg << "Invalid bond specification, atom numbers or bond order are wrong.\n";
 	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-                return false;
+          return false;
 	      }
 
         order = (order == 4) ? 5 : order;
@@ -531,11 +535,17 @@ namespace OpenBabel
         mol.SetDimension(3);
       // use 3D coordinates to determine stereochemistry
       StereoFrom3D(&mol);
-    } else {
+    } else 
+    if (mol.Has2D()) {
       if (!setDimension)
         mol.SetDimension(2);
       // use 2D coordinates + hash/wedge to determine stereochemistry
       StereoFrom2D(&mol);
+    } else {
+    if (!setDimension)
+      mol.SetDimension(0);
+    // use up/down to determine stereochemistry
+    StereoFrom0D(&mol, &updown);
     }
 
     return true;
@@ -1113,7 +1123,7 @@ namespace OpenBabel
   void MDLFormat::GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown,
                             set<OBBond*> &stereodbl)
   {
-// FIXME: rewrite to loop over double bonds only
+    // IMPROVEME: rewrite to loop over double bonds only
 
     // Get CisTransStereos
     std::vector<OBCisTransStereo*> cistrans, unvisited_cistrans;
@@ -1124,6 +1134,14 @@ namespace OpenBabel
         cistrans.push_back(ct);
       }
     unvisited_cistrans = cistrans;
+
+    // Initialise two opposite configurations for up/downness
+    bool use_alt_config;
+    vector<OBStereo::BondDirection> config(4), alt_config(4);
+    config[0] = OBStereo::UpBond;   config[3] = config[0];
+    config[1] = OBStereo::DownBond; config[2] = config[1];
+    alt_config[0] = config[1]; alt_config[3] = alt_config[0];
+    alt_config[1] = config[0]; alt_config[2] = alt_config[1];
 
     // Find bonds in a BFS manner and set their up/downness
     vector<OBCisTransStereo*>::iterator ChiralSearch;
@@ -1155,30 +1173,34 @@ namespace OpenBabel
                 refbonds[2] = mol.GetBond(mol.GetAtomById(cfg.refs[2]), mol.GetAtomById(cfg.end));
               if (cfg.refs[3] != OBStereo::ImplicitId) // Could be a hydrogen
                 refbonds[3] = mol.GetBond(mol.GetAtomById(cfg.refs[3]), mol.GetAtomById(cfg.end));              
-          
-              // Initialise two opposite configurations for up/downness
-              vector<OBStereo::BondDirection> config(4), alt_config(4);
-              config[0] = OBStereo::UpBond;   config[3] = config[0];
-              config[1] = OBStereo::DownBond; config[2] = config[1];
-              alt_config[0] = config[1]; alt_config[3] = alt_config[0];
-              alt_config[1] = config[0]; alt_config[2] = alt_config[1];
+              
 
-              // If any of the bonds have been previously set, now set them all
-              // in agreement
-              bool use_alt_config = false;
-              for (int i=0; i<4; ++i)
-                if (updown.find(refbonds[i]) != updown.end()) // We have already set this one (conjugated bond)
-                  if (updown[refbonds[i]] != config[i])
-                  {
-                    use_alt_config = true;
-                    break;
-                  }
+              if (cfg.specified) {
+
+                // If any of the bonds have been previously set, now set them all
+                // in agreement
+                use_alt_config = false;
+                for (int i=0; i<4; ++i)
+                  if (updown.find(refbonds[i]) != updown.end()) // We have already set this one (conjugated bond)
+                    if (updown[refbonds[i]] != config[i])
+                    {
+                      use_alt_config = true;
+                      break;
+                    }
+              }
               
               // Set the configuration
               stereodbl.insert(dbl_bond);
-              for(int i=0;i<4;i++)
-                if (refbonds[i] != NULL)
-                  updown[refbonds[i]] = use_alt_config ? alt_config[i] : config[i];
+              if (cfg.specified) {
+                for(int i=0;i<4;i++)
+                  if (refbonds[i] != NULL)
+                    updown[refbonds[i]] = use_alt_config ? alt_config[i] : config[i];
+              }
+              else { // Cis/Trans unknown
+                for(int i=0;i<4;++i)
+                  if (updown.find(refbonds[i]) == updown.end())
+                    updown[refbonds[i]] = OBStereo::UnknownDir;
+              }
 
               unvisited_cistrans.erase(ChiralSearch);
               break; // Break out of the ChiralSearch (could break out of the outer loop too...let's see)

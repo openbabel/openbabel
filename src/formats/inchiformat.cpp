@@ -290,7 +290,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       else if(stereo.parity==INCHI_PARITY_ODD) 
         ct->shape = OBStereo::ShapeZ;
       else
-        ; //ct->specified = false;
+        ct->specified = false;
       
       OBCisTransStereo *obct = new OBCisTransStereo(pmol);
       obct->SetConfig(*ct);
@@ -328,7 +328,10 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       obErrorLog.ThrowError("InChI code", "Unsupported stereo type has been ignored.", obWarning);
     }
   }
-  
+  // Tidy up the stereo chemistry by removing any objects that are not
+  // consistent with OB's symmetry analysis
+  StereoFrom0D(pmol);
+
   pmol->EndModify();
   FreeStructFromStdINCHI( &out );
   return true;

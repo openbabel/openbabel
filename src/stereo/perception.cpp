@@ -237,7 +237,7 @@ namespace OpenBabel {
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom0D", obAuditMsg);
 
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
-    // TetrahedralFrom0D and CisTransFrom0D only deleted existing data that
+    // TetrahedralFrom0D and CisTransFrom0D only delete existing data that
     // disagrees with the symmetry classes
     TetrahedralFrom0D(mol, symClasses);
     CisTransFrom0D(mol, symClasses, updown);
@@ -317,7 +317,7 @@ namespace OpenBabel {
     std::vector<unsigned long> bonds = FindCisTransBonds(mol, symClasses);
 
     // Add any CisTransStereo objects indicated by the 'updown' map
-    if (updown->size() > 0)
+    if (updown && updown->size() > 0)
         CisTransFromUpDown(mol, bonds, updown);
 
     // Delete any existing stereo objects that are not a member of 'bonds'
@@ -346,7 +346,7 @@ namespace OpenBabel {
 
         if (std::find(bonds.begin(), bonds.end(), id) == bonds.end()) {
           // According to OpenBabel, this is not a cis trans stereo
-          obErrorLog.ThrowError(__FUNCTION__, "Removed spurious CisTransStereo object", obAuditMsg);
+          obErrorLog.ThrowError(__FUNCTION__, "Removed spurious CisTransStereo object", obError); //obAuditMsg);
           mol->DeleteData(ct);
         }
         else {
@@ -915,12 +915,17 @@ namespace OpenBabel {
       cfg.begin = a1->GetId();
       cfg.end = a2->GetId();
 
+      
+
       if (a1_stereo == a2_stereo)
         cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
                                       fourth, a2_b1->GetNbrAtom(a2)->GetId());
       else
         cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
                                       a2_b1->GetNbrAtom(a2)->GetId(), fourth);
+      if (a1_stereo == OBStereo::UnknownDir || a2_stereo == OBStereo::UnknownDir)
+        cfg.specified = false;
+
       ct->SetConfig(cfg);
       // add the data to the atom
       mol->SetData(ct);
