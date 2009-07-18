@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/alias.h>
 #include <openbabel/tokenst.h>
 
@@ -92,9 +93,14 @@ namespace OpenBabel
       bool ReadCollectionBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
     private:
+      enum Parity {
+        NotStereo, Clockwise, AntiClockwise, Unknown
+      };
       bool  HasProperties;
       string GetTimeDate();
       void GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown, set<OBBond*> &stereodbl);
+      void GetParity(OBMol& mol, map<OBAtom*, Parity> &parity,
+           map<OBBond*, OBStereo::BondDirection> &updown);
       map<int,int> indexmap; //relates index in file to index in OBMol
       vector<string> vs;
   };
@@ -618,6 +624,10 @@ namespace OpenBabel
       map<OBBond*, OBStereo::BondDirection> updown;
       set<OBBond*> stereodbl;
       GetUpDown(mol, updown, stereodbl);
+
+      // Calculate parity of atoms (see Appendix A of ctfile.pdf)
+      map<OBAtom*, Parity> parity;
+      GetParity(mol, parity, updown);
                       
       // The counts line:
       // aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
@@ -646,11 +656,13 @@ namespace OpenBabel
           case -3: charge = 7; break;
           default: charge = 0; break;
         }
-
+        Parity stereo = NotStereo;
+        if (parity.find(atom) != parity.end())
+          stereo = parity[atom];
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
                  atom->GetX(), atom->GetY(), atom->GetZ(),
                  atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
-                 0, charge, 0, 0, 0);    
+                 0, charge, stereo, 0, 0);    
           ofs << buff << endl;
         }
 
@@ -1210,6 +1222,40 @@ namespace OpenBabel
       }
     }
   }
+  void MDLFormat::GetParity(OBMol& mol, map<OBAtom*, MDLFormat::Parity> &parity,
+     map<OBBond*, OBStereo::BondDirection> &updown)
+  {
+    // Get TetrahedralStereos
+    std::vector<OBTetrahedralStereo*> tet;
+    std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+      if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+        
+        OBTetrahedralStereo::Config cfg = ts->GetConfig();
 
+        enum Parity atomparity = Unknown;
+        if (cfg.specified) {
+          // If, when looking towards the maxref, the remaining refs increase in number
+          // clockwise, parity is 1 (Parity::Clockwise)
+          OBStereo::Refs refs = cfg.refs;
+          unsigned long maxref = std::max(*(std::max_element(refs.begin(), refs.end())), cfg.from);
+          
+          // Get a new cfg and refs looking towards the maxref
+          cfg = ts->GetConfig(maxref, OBStereo::Clockwise, OBStereo::ViewTowards);
+          int inversions = OBStereo::NumInversions(cfg.refs);
+          
+          // If they were in increasing order, inversions would be 0 or some even value      
+          if (inversions % 2 == 0)
+            atomparity = Clockwise;
+          else
+            atomparity = AntiClockwise;
+        }
+        parity[mol.GetAtomById(cfg.center)] = atomparity;
+        
+        // Set Bond Up?
+      }
+
+  }
   
 }
