@@ -216,9 +216,14 @@ namespace OpenBabel {
 
       OBCisTransStereo *ct = new OBCisTransStereo(mol);
       ct->SetConfig(config);
-      mol->SetData(ct);
+      
+      configs.push_back(ct);
+      // add the data to the molecule if needed
+      if (addToMol)
+        mol->SetData(ct);
     }
 
+    return configs;
   }
 
   ////////////////////////////////////////////////////////////////////////////
@@ -468,7 +473,7 @@ namespace OpenBabel {
       ct->SetConfig(config);
 
       configs.push_back(ct);
-
+      // add the data to the molecule if needed
       if (addToMol)
         mol->SetData(ct);
     }
