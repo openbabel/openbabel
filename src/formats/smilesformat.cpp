@@ -167,13 +167,24 @@ namespace OpenBabel {
 
   class OBSmilesParser
   {
-    // a simple struct to make code more readable
-    struct BondStruct 
+    // simple structs to make code more readable
+    
+    // see _extbond
+    struct ExternalBond 
     {
       int digit;
       int prev;
       int order;
       char updown;
+    };
+    // see _rclose
+    struct RingClosureBond
+    {
+      int digit;
+      int prev;
+      int order;
+      char updown;
+      int numConnections;
     };
 
 
@@ -181,13 +192,13 @@ namespace OpenBabel {
     int _order;
     int _prev;
     char *_ptr;
-    vector<int> _vprev;
-    vector<vector<int> > _rclose;
-    vector<BondStruct>   _extbond;
-    vector<int>          _path;
-    vector<bool>         _avisit;
-    vector<bool>         _bvisit;
-    char _buffer[BUFF_SIZE];
+    vector<int>             _vprev;
+    vector<RingClosureBond> _rclose;
+    vector<ExternalBond>    _extbond;
+    vector<int>             _path;
+    vector<bool>            _avisit;
+    vector<bool>            _bvisit;
+    char                    _buffer[BUFF_SIZE];
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
     OBAtomClassData _classdata; // to hold atom class data like [C:2]
     vector<OBBond*> _bcbonds; // Remember which bonds are bond closure bonds
@@ -217,6 +228,9 @@ namespace OpenBabel {
     int NumConnections(OBAtom *);
     //void CreateCisTrans(OBMol &mol, list<OBCisTransStereo> &cistrans);
     void CreateCisTrans(OBMol &mol);
+
+    bool IsUp(OBBond*);
+    bool IsDown(OBBond*);
   };
 
   /////////////////////////////////////////////////////////////////
@@ -411,7 +425,7 @@ namespace OpenBabel {
 
     // Check to see if we've balanced out all ring closures
     // They are removed from _rclose when matched
-    if ( _rclose.size() != 0) {
+    if (!_rclose.empty()) {
       mol.EndModify();
       mol.Clear();
       
@@ -596,6 +610,16 @@ namespace OpenBabel {
   }
   */
 
+  bool OBSmilesParser::IsUp(OBBond *bond)
+  {
+    return (_vUpDown.at(bond->GetIdx()-1) == BondUpChar);
+  }
+
+  bool OBSmilesParser::IsDown(OBBond *bond)
+  {
+    return (_vUpDown.at(bond->GetIdx()-1) == BondDownChar);
+  }
+
   void OBSmilesParser::CreateCisTrans(OBMol &mol)
   {
     list<OBCisTransStereo> cistrans;
@@ -630,15 +654,15 @@ namespace OpenBabel {
       FOR_BONDS_OF_ATOM(bi, a1) {
         OBBond *b = &(*bi);
         if ((b) == (dbl_bond)) continue;  // skip the double bond we're working on
-        if (a1_b1 == NULL && (b->IsUp() || b->IsDown()))
+        if (a1_b1 == NULL && (IsUp(b) || IsDown(b)))
         {
           a1_b1 = b;    // remember a stereo bond of Atom1
            // True/False for "up/down if moved to before the double bond C"
-          a1_stereo = !(b->IsUp() ^ (b->GetNbrAtomIdx(a1) < a1->GetIdx())) ;
-          if (std::find(_bcbonds.begin(), _bcbonds.end(), a1_b1)!=_bcbonds.end())
+          a1_stereo = !(IsUp(b) ^ (b->GetNbrAtomIdx(a1) < a1->GetIdx())) ;
+          if (std::find(_bcbonds.begin(), _bcbonds.end(), a1_b1) != _bcbonds.end())
           { // This is a bond closure, so the cis/trans mark appears after
             // the double bond C (and the Idx test is incorrect)
-            a1_stereo = !b->IsUp();
+            a1_stereo = !IsUp(b);
           }
         }
         else
@@ -648,13 +672,13 @@ namespace OpenBabel {
       FOR_BONDS_OF_ATOM(bi, a2) {
         OBBond *b = &(*bi);
         if (b == dbl_bond) continue;
-        if (a2_b1 == NULL && (b->IsUp() || b->IsDown()))
+        if (a2_b1 == NULL && (IsUp(b) || IsDown(b)))
         {
           a2_b1 = b;    // remember a stereo bond of Atom1
-          a2_stereo = !(b->IsUp() ^ (b->GetNbrAtomIdx(a2) < a2->GetIdx())) ;
+          a2_stereo = !(IsUp(b) ^ (b->GetNbrAtomIdx(a2) < a2->GetIdx())) ;
           if (std::find(_bcbonds.begin(), _bcbonds.end(), a2_b1)!=_bcbonds.end())
           { // This is a bond closure
-            a2_stereo = !b->IsUp();
+            a2_stereo = !IsUp(b);
           }
         }
         else
@@ -1858,7 +1882,7 @@ namespace OpenBabel {
       return true;
 
     OBAtom *atom;
-    vector<BondStruct>::iterator bond;
+    vector<ExternalBond>::iterator bond;
     for (bond = _extbond.begin(); bond != _extbond.end(); bond++) {
       // create new dummy atom
       atom = mol.NewAtom();
@@ -1941,7 +1965,7 @@ namespace OpenBabel {
     digit = atoi(str);  // convert indicator to digit
 
     //check for dot disconnect closures
-    vector<BondStruct>::iterator bond;
+    vector<ExternalBond>::iterator bond;
     int upDown, bondOrder;
     for (bond = _extbond.begin(); bond != _extbond.end(); bond++) {
         
@@ -1974,7 +1998,7 @@ namespace OpenBabel {
     }
 
     //since no closures save another ext bond
-    BondStruct extBond;
+    ExternalBond extBond;
     extBond.digit  = digit;
     extBond.prev   = _prev;
     extBond.order  = _order;
@@ -2008,104 +2032,103 @@ namespace OpenBabel {
       }
     digit = atoi(str);
 
-    int upDown,ord;
-    vector<vector<int> >::iterator j;
-    for (j = _rclose.begin();j != _rclose.end();j++)
-      if ((*j)[0] == digit)
-        {
-          upDown = (_updown > (*j)[3]) ? _updown : (*j)[3]; // FIXME: make sure this is correct (timvdm) 
-          ord = (_order > (*j)[2]) ? _order : (*j)[2];
-          // Check if this ring closure bond may be aromatic and set order accordingly
-          if (ord == 1) {
-            OBAtom *a1 = mol.GetAtom((*j)[1]);
-            OBAtom *a2 = mol.GetAtom(_prev);
-            mol.SetAromaticPerceived();                 // prevent aromaticity analysis
-            if (a1->IsAromatic() && a2->IsAromatic())
-              ord = 5;
-            mol.UnsetAromaticPerceived();
-          }
+    vector<RingClosureBond>::iterator bond;
+    int upDown, bondOrder;
+    for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) {
+      if (bond->digit == digit) {
+        upDown = (_updown > bond->updown) ? _updown : bond->updown; // FIXME: make sure this is correct (timvdm) 
+        bondOrder = (_order > bond->order) ? _order : bond->order;
+        // Check if this ring closure bond may be aromatic and set order accordingly
+        if (bondOrder == 1) {
+          OBAtom *a1 = mol.GetAtom(bond->prev);
+          OBAtom *a2 = mol.GetAtom(_prev);
+          mol.SetAromaticPerceived();                 // prevent aromaticity analysis
+          if (a1->IsAromatic() && a2->IsAromatic())
+            bondOrder = 5;
+          mol.UnsetAromaticPerceived();
+        }
           
-          mol.AddBond((*j)[1], _prev, ord, 0, (*j)[4]);
-          _vUpDown.push_back(upDown);
+        mol.AddBond(bond->prev, _prev, bondOrder, 0, bond->numConnections);
+        _vUpDown.push_back(upDown);
           
-          // For assigning cis/trans in the presence of bond closures, we need to
-          // remember all bond closure bonds.
-          _bcbonds.push_back(mol.GetBond((*j)[1],_prev));
+        // For assigning cis/trans in the presence of bond closures, we need to
+        // remember all bond closure bonds.
+        _bcbonds.push_back(mol.GetBond(bond->prev, _prev));
             
-          // after adding a bond to atom "_prev"
-          // search to see if atom is bonded to a chiral atom
-          // need to check both _prev and (*j)[1] as closure is direction independent
-          map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch,cs2;
-          ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
-          cs2 = _tetrahedralMap.find(mol.GetAtom((*j)[1]));
-          if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
-            {
-              //cout << "ring closure bond to previous atom: id = " << (*j)[1] - 1 << endl;
-              OBAtom *tmpAtom = mol.GetAtom((*j)[1]);
-              assert( tmpAtom );
-              ChiralSearch->second->refs.push_back(tmpAtom->GetId());
-              /** FIXME
-               int insertpos = NumConnections(ChiralSearch->first) - 1;
-              (ChiralSearch->second)->refs[insertpos] = (*j)[1];
-              //cerr << "NB3: Added ring closure "<<(*j)[1]<<" at "<<insertpos<<" to "<<ChiralSearch->second << endl;
-               */
-            }
-          if (cs2 != _tetrahedralMap.end() && cs2->second != NULL)
-            {
-              //cout << "ring opening bond to previous atom: id = " << (*j)[1] - 1 << endl;
-              OBAtom *tmpAtom = mol.GetAtom(_prev);
-              //Ensure that the closure atom index is inserted at the position
-              //decided when the ring closure digit was encountered.
-              //The order needs to be SMILES atom order, not OB atom index order.
-              if ((*j)[4] > cs2->second->refs.size()) {
-                cs2->second->refs.push_back(tmpAtom->GetId());
-              } else {
-                vector<unsigned long> refs = cs2->second->refs;
-                //cout << "(*j)[4] = " << (*j)[4] << endl;
-                //cout << "refs.size() = " << refs.size() << endl;
-                refs.insert(refs.begin()+(*j)[4], tmpAtom->GetId());
-                cs2->second->refs = refs;
-              
-              }
+        // after adding a bond to atom "_prev"
+        // search to see if atom is bonded to a chiral atom
+        // need to check both _prev and bond->prev as closure is direction independent
+        map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
+        
+        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
+        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
+          //cout << "ring closure bond to previous atom: id = " << bond->prev - 1 << endl;
+          OBAtom *tmpAtom = mol.GetAtom(bond->prev);
+          assert( tmpAtom );
+          ChiralSearch->second->refs.push_back(tmpAtom->GetId());
+          /** FIXME
+          int insertpos = NumConnections(ChiralSearch->first) - 1;
+          (ChiralSearch->second)->refs[insertpos] = bond->prev;
+          //cerr << "NB3: Added ring closure "<<bond->prev<<" at "<<insertpos<<" to "<<ChiralSearch->second << endl;
+          */
+        }
+        
+        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));  
+        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
+          //cout << "ring opening bond to previous atom: id = " << bond->prev - 1 << endl;
+          OBAtom *tmpAtom = mol.GetAtom(_prev);
+          //Ensure that the closure atom index is inserted at the position
+          //decided when the ring closure digit was encountered.
+          //The order needs to be SMILES atom order, not OB atom index order.
+          if (bond->numConnections > ChiralSearch->second->refs.size()) {
+            ChiralSearch->second->refs.push_back(tmpAtom->GetId());
+          } else {
+            OBStereo::Refs refs = ChiralSearch->second->refs;
+            //cout << " bond->numConnections = " << bond->numConnections << endl;
+            //cout << "refs.size() = " << refs.size() << endl;
+            refs.insert(refs.begin() + bond->numConnections, tmpAtom->GetId());
+            ChiralSearch->second->refs = refs;    
+          }
 
-              /** FIXME
-                int insertpos = (*j)[4];
-              (cs2->second)->refs[insertpos] = mol.NumAtoms();
-              //cerr <<"NB2: Added ring opening "<<_prev<<" at "<<(*j)[4]<<" to "<<cs2->second<<endl;
- 
-               */
-            }
-
-          //CM ensure neither atoms in ring closure is a radical centre
-          OBAtom* patom = mol.GetAtom(_prev);
-          patom->SetSpinMultiplicity(0);
-          patom = mol.GetAtom((*j)[1]);
-          patom->SetSpinMultiplicity(0);
-          //CM end
-          _rclose.erase(j);
-          _updown = ' ';
-          _order = 1;
-          return(true);
+          /** FIXME
+          int insertpos = bond->numConnections;
+          (cs2->second)->refs[insertpos] = mol.NumAtoms();
+          //cerr <<"NB2: Added ring opening "<<_prev<<" at "<<bond->numConnections<<" to "<<cs2->second<<endl;
+          */
         }
 
-    vector<int> vtmp(5);
-    vtmp[0] = digit;
-    vtmp[1] = _prev;
-    vtmp[2] = _order;
-    vtmp[3] = _updown;
-    OBAtom* atom = mol.GetAtom(_prev);
-    if(!atom)
-      {
-        obErrorLog.ThrowError(__FUNCTION__,"Number not parsed correctly as a ring bond", obError);
-        return false;
+        //CM ensure neither atoms in ring closure is a radical centre
+        OBAtom* patom = mol.GetAtom(_prev);
+        patom->SetSpinMultiplicity(0);
+        patom = mol.GetAtom(bond->prev);
+        patom->SetSpinMultiplicity(0);
+        //CM end
+        _rclose.erase(bond);
+        _updown = ' ';
+        _order = 1;
+        return true;
       }
+    }
 
-    vtmp[4] = NumConnections(atom); //store position to insert closure bond
-    for (j = _rclose.begin();j != _rclose.end();j++) //correct for multiple closure bonds to a single atom
-      if ((*j)[1] == _prev)
-        vtmp[4]++;
+    //since no closures save another rclose bond
+    RingClosureBond ringClosure;
+    ringClosure.digit  = digit;
+    ringClosure.prev   = _prev;
+    ringClosure.order  = _order;
+    ringClosure.updown = _updown;
 
-    _rclose.push_back(vtmp);
+    OBAtom* atom = mol.GetAtom(_prev);
+    if (!atom) {
+      obErrorLog.ThrowError(__FUNCTION__,"Number not parsed correctly as a ring bond", obError);
+      return false;
+    }
+
+    ringClosure.numConnections = NumConnections(atom); //store position to insert closure bond
+    for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) //correct for multiple closure bonds to a single atom
+      if (bond->prev == _prev)
+        ringClosure.numConnections++;
+
+    _rclose.push_back(ringClosure);
     _order = 1;
     _updown = ' ';
 
@@ -2118,13 +2141,14 @@ namespace OpenBabel {
   int OBSmilesParser::NumConnections(OBAtom *atom) {
     int val = atom->GetValence();
     int idx = atom->GetIdx();
-    vector<vector<int> >::iterator j;
-    for (j = _rclose.begin();j != _rclose.end();j++) //correct for multiple closure bonds to a single atom
-      if ((*j)[1] == idx)
+    vector<RingClosureBond>::iterator bond;
+    for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) //correct for multiple closure bonds to a single atom
+      if (bond->prev == idx)
         val++;
     return val;
   }
-  
+ 
+ /* 
   static bool IsCisOrTransH(OBAtom *atom)
   {
     if (!atom->IsHydrogen())
@@ -2137,6 +2161,7 @@ namespace OpenBabel {
         }
     return false;
   }
+  */
 
 
 
