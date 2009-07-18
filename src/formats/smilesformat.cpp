@@ -41,7 +41,8 @@ using namespace std;
 namespace OpenBabel {
 
   // some constant variables
-  const char BondUpChar
+  const char BondUpChar = '\\';
+  const char BondDownChar = '/';
 
   //Base class for SMIFormat and CANSIFormat with most of the functionality
   class SMIBaseFormat : public OBMoleculeFormat
@@ -595,8 +596,9 @@ namespace OpenBabel {
   }
   */
 
-  void OBSmilesParser::CreateCisTrans(OBMol &mol, list<OBCisTransStereo> &cistrans)
+  void OBSmilesParser::CreateCisTrans(OBMol &mol)
   {
+    list<OBCisTransStereo> cistrans;
     // Create a vector of CisTransStereo objects for the molecule
     FOR_BONDS_OF_MOL(dbi, mol) {
 
@@ -3891,7 +3893,6 @@ namespace OpenBabel {
         h->SetAtomicNum(1);
         h->SetType("H");
         mol.AddBond((*i)->GetIdx(), h->GetIdx(), 1, 0, -1);
-        _vUpDown.push_back(' ');
 
         // Set its (x,y,z) coordinates
         // timvdm: only do this if the molecule has 3D coords
