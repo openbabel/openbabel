@@ -47,21 +47,37 @@ class OBERROR DLHandler
 {
 public:
 
-	/** Provides the path from which the conversion dynamic library,
-	  * (OBConv.dll in Windows) was loaded.
-	  * This is the default directory for the format files (*.obf in Windows)
+	/** 
+          * Get the directory containing the dynamic library plugins.
+          *
+          * The result is stored in @p convPath and depends on the operating 
+          * system and build tools.
+          *
+          * Linux: always returns OB_MODULE_PATH (defined in src/config.h.cmake).
+          *
+          * Windows cygwin: Uses windows' GetModuleHandle to get a handle to the
+          * application module. From this, the applications path can be extracted.
+          * The appname.exe is removed and ..\lib\openbabel\BABEL_VERSION\ is appended.
+          *
+          * Windows MSVC: Uses windows' GetModuleHandle to get a handle to the
+          * OBConv dll module. From this, the dll's path can be extracted and
+          * OBConv.dll is removed.
+          *
+          * @sa findFiles
 	  */ 
 	static bool getConvDirectory(std::string& convPath);
 
 	/** Searches a directory specified by path for files whose name matches
 	  * a pattern which can include * as a wildcard.
-		* The path name should include a final separator (\ or /).
+          * If the BABEL_LIBDIR environment variable is set, this will override
+          * the @p path parameter.
+          * The path name should include a final separator (\ or /).
 	  * The routine fills a vector of strings with the matching file names (including path).
 	  * Note that this is not recursive: it only matches files in the specified path.
 	  * For example, if path = e:\\path\\to\\ and pattern = *.obf it will return
 	  * vector entries lik e:\\path\\to\\cmlformat.obf
 	  * \return the number of valid files.
-	*/
+	  */
 	static int findFiles (std::vector <std::string>& file_list, 
 			const std::string& pattern, const std::string& path);
 

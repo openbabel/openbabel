@@ -76,7 +76,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-#ifdef __CYGWIN__
+#if defined(__CYGWIN__) || defined(__MINGW32__)
   // macro to implement static OBPlugin::PluginMapType& Map()
   PLUGIN_CPP_FILE(OBForceField)
 #endif

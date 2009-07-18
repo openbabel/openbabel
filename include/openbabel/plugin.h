@@ -145,7 +145,7 @@ protected:
   const char* _id;
 };
 
-#ifdef __CYGWIN__
+#if defined(__CYGWIN__) || defined(__MINGW32__)
 
 //Macro to be added to definition of the base class
 #define MAKE_PLUGIN(BaseClass)\
@@ -165,7 +165,7 @@ static BaseClass* FindType(const char* ID)\
 OBPlugin::PluginMapType& BaseClass::Map()\
 { static OBPlugin::PluginMapType map; return map; }
 
-#else // __CYGWIN__
+#else // __CYGWIN__ || __MINGW32__
 
 //Macro to be added to definition of the base class
 #define MAKE_PLUGIN(BaseClass)\
@@ -181,7 +181,7 @@ static BaseClass* FindType(const char* ID)\
  {if(!ID || *ID==0) return Default();\
  return static_cast<BaseClass*>(BaseFindType(Map(),ID));}
 
-#endif // __CYGWIN__
+#endif // __CYGWIN__ || __MINGW32__
 
 /** \file plugin.h
    \brief Simplify 'plugin' classes to be discovered and/or loaded at runtime.
