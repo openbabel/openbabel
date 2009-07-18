@@ -45,9 +45,6 @@ namespace OpenBabel {
         StereoFrom2D(mol, force);
         break;
       default:
-        // unlike 2D/3D, 0D doesn't delete any OBStereo data objects, 
-        // it only adds new ones for previously unidentified stereogenic
-        // units.
         StereoFrom0D(mol);
         break;
     }
@@ -237,8 +234,6 @@ namespace OpenBabel {
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom0D", obAuditMsg);
 
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
-    // TetrahedralFrom0D and CisTransFrom0D only delete existing data that
-    // disagrees with the symmetry classes
     TetrahedralFrom0D(mol, symClasses);
     CisTransFrom0D(mol, symClasses, updown);
     mol->SetChiralityPerceived();
@@ -254,21 +249,30 @@ namespace OpenBabel {
     
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::TetrahedralFrom0D", obAuditMsg);
 
-    // make a map of the already existing stereo data objects
+    // find all tetrahedral centers
+    std::vector<unsigned long> centers = FindTetrahedralAtoms(mol, symClasses);
+
+    // Delete any existing stereo objects that are not a member of 'centers'
+    // and make a map of the remaining ones
     std::map<unsigned long, OBTetrahedralStereo*> existingMap;
     std::vector<OBGenericData*>::iterator data;
     std::vector<OBGenericData*> stereoData = mol->GetAllData(OBGenericDataType::StereoData);
     for (data = stereoData.begin(); data != stereoData.end(); ++data) {
       if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::Tetrahedral) {
         OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
-        existingMap[ts->GetConfig().center] = ts;
-        configs.push_back(ts);
+        unsigned long center = ts->GetConfig().center;
+        if (std::find(centers.begin(), centers.end(), center) == centers.end()) {
+          // According to OpenBabel, this is not a tetrahedral stereo
+          obErrorLog.ThrowError(__FUNCTION__, "Removed spurious TetrahedralStereo object", obAuditMsg);
+          mol->DeleteData(ts);
+        }
+        else {
+          existingMap[center] = ts;
+          configs.push_back(ts);
+        }
       }
     }
 
-    // find all tetrahedral centers
-    std::vector<unsigned long> centers = FindTetrahedralAtoms(mol, symClasses);
-      
     std::vector<unsigned long>::iterator i;
     for (i = centers.begin(); i != centers.end(); ++i) {
       // if there already exists a OBTetrahedralStereo object for this 
@@ -346,7 +350,7 @@ namespace OpenBabel {
 
         if (std::find(bonds.begin(), bonds.end(), id) == bonds.end()) {
           // According to OpenBabel, this is not a cis trans stereo
-          obErrorLog.ThrowError(__FUNCTION__, "Removed spurious CisTransStereo object", obError); //obAuditMsg);
+          obErrorLog.ThrowError(__FUNCTION__, "Removed spurious CisTransStereo object", obAuditMsg);
           mol->DeleteData(ct);
         }
         else {
