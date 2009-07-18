@@ -3,6 +3,7 @@
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
 
 using namespace std;
 using namespace OpenBabel;
@@ -62,6 +63,7 @@ void genericSmilesCanonicalTest(const std::string &smiles)
 
   // store the stereo data for the smiles string using unique symmetry ids
   std::vector<OBTetrahedralStereo::Config> tetrahedral1;
+  std::vector<OBCisTransStereo::Config> cistrans1;
 
   // get the stereo data
   OB_ASSERT( mol.HasData(OBGenericDataType::StereoData) );
@@ -85,7 +87,31 @@ void genericSmilesCanonicalTest(const std::string &smiles)
       config.refs[2] = vgid.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
       cout << "Config with symmetry ids: " << config << endl;
       tetrahedral1.push_back(config);
-    }
+    } else
+    if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
+      // convert to tetrahedral data
+      OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+      OB_REQUIRE( ct );
+      OB_ASSERT( ct->IsValid() );
+
+      OBCisTransStereo::Config config = ct->GetConfig();
+      // convert atom ids to symmetry ids
+      std::vector<unsigned int> vgid;
+      mol.GetGIDVector(vgid);
+      config.begin = vgid.at( mol.GetAtomById(config.begin)->GetIdx() - 1 );
+      config.end = vgid.at( mol.GetAtomById(config.end)->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[0]))
+        config.refs[0] = vgid.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[1]))
+        config.refs[1] = vgid.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[2]))
+        config.refs[2] = vgid.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[3]))
+        config.refs[3] = vgid.at( mol.GetAtomById(config.refs[3])->GetIdx() - 1 );
+      cout << "Config with symmetry ids: " << config << endl;
+      cistrans1.push_back(config);
+    } 
+ 
   }
     
   // write to can smiles
@@ -96,6 +122,7 @@ void genericSmilesCanonicalTest(const std::string &smiles)
 
   // store the stereo data for the smiles string using unique symmetry ids
   std::vector<OBTetrahedralStereo::Config> tetrahedral2;
+  std::vector<OBCisTransStereo::Config> cistrans2;
 
   // get the stereo data
   OB_ASSERT( mol.HasData(OBGenericDataType::StereoData) );
@@ -120,6 +147,30 @@ void genericSmilesCanonicalTest(const std::string &smiles)
       cout << "Config with symmetry ids: " << config << endl;
       tetrahedral2.push_back(config);
     }
+    if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
+      // convert to tetrahedral data
+      OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+      OB_REQUIRE( ct );
+      OB_ASSERT( ct->IsValid() );
+
+      OBCisTransStereo::Config config = ct->GetConfig();
+      // convert atom ids to symmetry ids
+      std::vector<unsigned int> vgid;
+      mol.GetGIDVector(vgid);
+      config.begin = vgid.at( mol.GetAtomById(config.begin)->GetIdx() - 1 );
+      config.end = vgid.at( mol.GetAtomById(config.end)->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[0]))
+        config.refs[0] = vgid.at( mol.GetAtomById(config.refs[0])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[1]))
+        config.refs[1] = vgid.at( mol.GetAtomById(config.refs[1])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[2]))
+        config.refs[2] = vgid.at( mol.GetAtomById(config.refs[2])->GetIdx() - 1 );
+      if (mol.GetAtomById(config.refs[3]))
+        config.refs[3] = vgid.at( mol.GetAtomById(config.refs[3])->GetIdx() - 1 );
+      cout << "Config with symmetry ids: " << config << endl;
+      cistrans2.push_back(config);
+    } 
+ 
   }
  
   // compare the tetrahedral structs
@@ -130,7 +181,16 @@ void genericSmilesCanonicalTest(const std::string &smiles)
         OB_ASSERT( tetrahedral1[i] == tetrahedral2[j] );
     }
   }
-
+  // compare the cistrans structs
+  OB_ASSERT( cistrans1.size() == cistrans2.size() );
+  for (unsigned int i = 0; i < cistrans1.size(); ++i) {
+    for (unsigned int j = 0; j < cistrans2.size(); ++j) {
+      if ((cistrans1[i].begin == cistrans2[j].begin) && (cistrans1[i].end == cistrans2[j].end))
+        OB_ASSERT( cistrans1[i] == cistrans2[j] );
+      if ((cistrans1[i].begin == cistrans2[j].end) && (cistrans1[i].end == cistrans2[j].begin))
+        OB_ASSERT( cistrans1[i] == cistrans2[j] );
+    }
+  }
 
   cout << "." << endl << endl; 
 }
@@ -145,7 +205,7 @@ int main()
   genericSmilesCanonicalTest("Cl[C@@](CCl)(I)Br");
   
   // CisTrans
-  genericSmilesCanonicalTest("F/C=C/F");
+  genericSmilesCanonicalTest("Cl/C=C/F");
   
   return 0;
 }

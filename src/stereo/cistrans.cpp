@@ -25,9 +25,6 @@ namespace OpenBabel {
     Config u1 = OBTetraPlanarStereo::ToConfig(*this, refs.at(0), OBStereo::ShapeU); // refs[0] = u1.refs[0]
     Config u2 = OBTetraPlanarStereo::ToConfig(other, refs.at(0), OBStereo::ShapeU); // refs[0] = u2.refs[0]
 
-    cout << "u1 = " << u1 << endl;
-    cout << "u2 = " << u2 << endl;
-
     // two possibilities:
     //
     //   1 2 3 4
@@ -352,7 +349,10 @@ namespace std {
  
     out << ", refs = ";
     for (OpenBabel::OBStereo::Refs::iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      out << *i << " ";
+      if (*i != OpenBabel::OBStereo::ImplicitId)
+        out << *i << " ";
+      else
+        out << "H ";
 
     switch (cfg.shape) {
       case OpenBabel::OBStereo::ShapeU:
@@ -376,7 +376,10 @@ namespace std {
 
     out << ", refs = ";
     for (OpenBabel::OBStereo::Refs::const_iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
-      out << *i << " ";
+      if (*i != OpenBabel::OBStereo::ImplicitId)
+        out << *i << " ";
+      else
+        out << "H ";
 
     switch (cfg.shape) {
       case OpenBabel::OBStereo::ShapeU:

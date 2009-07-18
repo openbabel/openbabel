@@ -34,8 +34,10 @@ namespace OpenBabel {
     int count = 0;
     for (ConstRefIter i = refs1.begin(); i != refs1.end(); ++i)
       for (ConstRefIter j = refs2.begin(); j != refs2.end(); ++j)
-        if (*i == *j)
+        if (*i == *j) {
           count++;
+          break;
+        }
 
     return (count == refs1.size());
   }

@@ -206,8 +206,7 @@ namespace OpenBabel {
     // stereochimistry
     bool chiralWatch; // set when a chiral atom is read
     map<OBAtom*, OBTetrahedralStereo::Config*> _tetrahedralMap; // map of tetrahedral atoms and their data
-    map<OBBond*, OBCisTransStereo*> _cistransMap; // map of cis/trans bonds and their data
-    vector<char> _vUpDown; // store the '/' & '\' as they occured in smiles
+    map<OBBond*, char> _upDownMap; // store the '/' & '\' as they occured in smiles
 
   public:
 
@@ -443,6 +442,7 @@ namespace OpenBabel {
     mol.AssignSpinMultiplicity();
     mol.UnsetAromaticPerceived();
 
+    mol.EndModify();
     // FIXME
     //
     // timvdm: replace this with CreateCisTrans(mol, cistrans) which should 
@@ -451,7 +451,6 @@ namespace OpenBabel {
     CreateCisTrans(mol);
 
 
-    mol.EndModify();
 
     //Extension which interprets cccc with conjugated double bonds if niether
     //of its atoms is aromatic.
@@ -612,17 +611,36 @@ namespace OpenBabel {
 
   bool OBSmilesParser::IsUp(OBBond *bond)
   {
-    return (_vUpDown.at(bond->GetIdx()-1) == BondUpChar);
+    map<OBBond*, char>::iterator UpDownSearch;
+    UpDownSearch = _upDownMap.find(bond);
+    if (UpDownSearch != _upDownMap.end())
+      if (UpDownSearch->second == BondUpChar)
+        return true;
+    return false;
   }
 
   bool OBSmilesParser::IsDown(OBBond *bond)
   {
-    return (_vUpDown.at(bond->GetIdx()-1) == BondDownChar);
+    map<OBBond*, char>::iterator UpDownSearch;
+    UpDownSearch = _upDownMap.find(bond);
+    if (UpDownSearch != _upDownMap.end())
+      if (UpDownSearch->second == BondDownChar)
+        return true;
+    return false;
   }
 
   void OBSmilesParser::CreateCisTrans(OBMol &mol)
   {
-    list<OBCisTransStereo> cistrans;
+    /*
+    cout << "CreateCisTrans" << endl;
+
+    map<OBBond*, char>::iterator UpDownSearch;
+    for (UpDownSearch = _upDownMap.begin(); UpDownSearch != _upDownMap.end(); ++UpDownSearch) {
+      cout << "bond=" << UpDownSearch->first << ",  updown='" << UpDownSearch->second << "'" << endl;
+    }
+    */
+ 
+
     // Create a vector of CisTransStereo objects for the molecule
     FOR_BONDS_OF_MOL(dbi, mol) {
 
@@ -684,7 +702,7 @@ namespace OpenBabel {
         else
           a2_b2 = b;    // remember a 2nd bond of Atom2
       }
-
+      
       if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
       
       // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
@@ -692,7 +710,7 @@ namespace OpenBabel {
       unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitId : a2_b2->GetNbrAtom(a2)->GetId();
 
       // If a1_stereo==a2_stereo, this means cis for a1_b1 and a2_b1.
-      OBCisTransStereo ct = OBCisTransStereo(&mol);
+      OBCisTransStereo *ct = new OBCisTransStereo(&mol);
       OBCisTransStereo::Config cfg;
       cfg.begin = a1->GetId();
       cfg.end = a2->GetId();
@@ -703,8 +721,9 @@ namespace OpenBabel {
       else
         cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
                                       a2_b1->GetNbrAtom(a2)->GetId(), fourth);
-      ct.SetConfig(cfg);
-      cistrans.push_back(ct);
+      ct->SetConfig(cfg);
+      // add the data to the atom
+      mol.SetData(ct);
     }
   }
 
@@ -793,8 +812,6 @@ namespace OpenBabel {
     bool arom=false;
     memset(symbol,'\0',sizeof(char)*3);
     
-    _updown = ' '; // timvdm
-
     if (isupper(*_ptr))
       switch(*_ptr)
         {
@@ -953,8 +970,9 @@ namespace OpenBabel {
           }
 
         mol.AddBond(_prev, mol.NumAtoms(), _order);
-        _vUpDown.push_back(_updown);
-       
+        // store up/down
+        if (_updown == BondUpChar || _updown == BondDownChar)
+          _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;       
         
         //NE iterate through and see if atom is bonded to chiral atom
         map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
@@ -1817,8 +1835,10 @@ namespace OpenBabel {
           }
         mol.UnsetAromaticPerceived();
         mol.AddBond(_prev, mol.NumAtoms(), _order);
-        _vUpDown.push_back(_updown);
-        
+        // store up/down
+        if (_updown == BondUpChar || _updown == BondDownChar)
+          _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;
+       
         if(chiralWatch) // if chiral atom, set previous as from atom
           {
             //cout << "Line 1622: adding previous reference: id = " << mol.GetAtom(_prev)->GetId() << endl;
@@ -1856,7 +1876,10 @@ namespace OpenBabel {
         atom->SetAtomicNum(1);
         atom->SetType("H");
         mol.AddBond(_prev, mol.NumAtoms(), 1);
-        _vUpDown.push_back(_updown);
+        // store up/down
+        if (_updown == BondUpChar || _updown == BondDownChar)
+          _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;
+
         if(chiralWatch)
           {
             //cout << "Line 1652: explicit hydrogen on chiral atom, adding to the refs: id = " << atom->GetId() << endl;
@@ -1891,7 +1914,10 @@ namespace OpenBabel {
 
       // bond dummy atom to mol via external bond
       mol.AddBond(bond->prev, atom->GetIdx(), bond->order);
-      _vUpDown.push_back(bond->updown);
+      // store up/down
+      if (bond->updown == BondUpChar || bond->updown == BondDownChar)
+        _upDownMap[mol.GetBond(bond->prev, atom->GetIdx())] = bond->updown;
+
       OBBond *refbond = atom->GetBond(mol.GetAtom(bond->prev));
 
       //record external bond information
@@ -1973,8 +1999,11 @@ namespace OpenBabel {
         upDown = (_updown > bond->updown) ? _updown : bond->updown; // FIXME: make sure this is correct (timvdm)
         bondOrder = (_order > bond->order) ? _order : bond->order;
         mol.AddBond(bond->prev, _prev, bondOrder);
-        _vUpDown.push_back(upDown);
-            
+        // store up/down
+        if (upDown == BondUpChar || upDown == BondDownChar)
+          _upDownMap[mol.GetBond(bond->prev, _prev)] = upDown;
+
+   
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
         map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
@@ -2049,8 +2078,11 @@ namespace OpenBabel {
         }
           
         mol.AddBond(bond->prev, _prev, bondOrder, 0, bond->numConnections);
-        _vUpDown.push_back(upDown);
-          
+        // store up/down
+        if (upDown == BondUpChar || upDown == BondDownChar)
+          _upDownMap[mol.GetBond(bond->prev, _prev)] = upDown;
+
+ 
         // For assigning cis/trans in the presence of bond closures, we need to
         // remember all bond closure bonds.
         _bcbonds.push_back(mol.GetBond(bond->prev, _prev));
@@ -2537,7 +2569,8 @@ namespace OpenBabel {
     // This function may be merged with OBSmilesParser::CreateCisTrans
     // at a later date.
 
-   FOR_BONDS_OF_MOL(dbi, mol) {
+    /*
+    FOR_BONDS_OF_MOL(dbi, mol) {
 
       OBBond *dbl_bond = &(*dbi);
 
@@ -2606,8 +2639,21 @@ namespace OpenBabel {
       ct.SetConfig(cfg);
       _cistrans.push_back(ct);
     }
+    */
+
+    std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
+      if (((OBStereoBase*)*data)->GetType() != OBStereo::CisTrans)
+        continue;
+      OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+      if (!ct)
+        continue;
+      _cistrans.push_back(*ct);
+    }
+
     _unvisited_cistrans = _cistrans; // Make a copy of _cistrans
   }
+
   bool OBMol2Cansmi::HasStereoDblBond(OBBond *bond, OBAtom *atom)
   {
     // This is a helper function for determining whether to
@@ -2617,7 +2663,7 @@ namespace OpenBabel {
     // remember that the ring opening preceded the closure, so if the
     // ring opening bond was on a stereocenter, it got the symbol already.
 
-    if (!bond || (!bond->IsUp() && !bond->IsDown()))
+    if (!bond /*|| (!bond->IsUp() && !bond->IsDown())*/)
       return false;
 
     std::vector<OBCisTransStereo>::iterator ChiralSearch;
@@ -2658,7 +2704,7 @@ namespace OpenBabel {
     // Note that the story is not so simple for conjugated systems where
     // we need to take into account what symbol was already used.
 
-    if (!bond || (!bond->IsUp() && !bond->IsDown()))
+    if (!bond /*|| (!bond->IsUp() && !bond->IsDown())*/)
       return '\0';
     OBAtom *atom = node->GetAtom();
     OBAtom *nbr_atom = bond->GetNbrAtom(atom);
@@ -3683,12 +3729,13 @@ namespace OpenBabel {
       if (i+1 < node->Size()) {
         strcat(buffer,"(");
       }
-      if (bond->IsUp() || bond->IsDown()) {
-        char cc[2];
-        cc[0] = GetCisTransBondSymbol(bond, node);
-        cc[1] = '\0';
+      //if (bond->IsUp() || bond->IsDown()) {
+      char cc[2];
+      cc[0] = GetCisTransBondSymbol(bond, node);
+      cc[1] = '\0';
+      if (cc[0] == BondUpChar || cc[0] == BondDownChar)
         strcat(buffer, cc);
-      }
+      //}
       else if (bond->GetBO() == 2 && !bond->IsAromatic())
         strcat(buffer,"=");
       else if (bond->GetBO() == 3)
