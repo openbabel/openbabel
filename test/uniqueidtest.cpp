@@ -5,6 +5,12 @@
 using namespace std;
 using namespace OpenBabel;
 
+//////////////////////////////////////////////////////////////////////
+//
+//  Atom
+//
+//////////////////////////////////////////////////////////////////////
+
 // OBMol::NewAtom()
 void testIdsNewAtom1()
 {
@@ -81,13 +87,110 @@ void testIdsAddAtom()
   OB_REQUIRE( mol.GetAtomById(5)->GetId() == 5 );
 }
 
+//////////////////////////////////////////////////////////////////////
+//
+//  Bond
+//
+//////////////////////////////////////////////////////////////////////
+
+// OBMol::NewBond()
+void testIdsNewBond1()
+{
+  OBMol mol;
+  for (int i = 0; i < 10; ++i) {
+    OBBond *bond = mol.NewBond();
+    OB_REQUIRE(bond->GetId() == i);
+  }
+
+  OB_REQUIRE( mol.GetBondById(0) );
+  OB_REQUIRE( mol.GetBondById(4) );
+  OB_REQUIRE( mol.GetBondById(9) );
+  OB_REQUIRE( !mol.GetBondById(10) );
+
+  OB_REQUIRE( mol.GetBondById(0)->GetId() == 0 );
+  OB_REQUIRE( mol.GetBondById(4)->GetId() == 4 );
+  OB_REQUIRE( mol.GetBondById(9)->GetId() == 9 );
+}
+
+// OBMol::NewBond(unsigned long id)
+void testIdsNewBond2()
+{
+  OBMol mol;
+  for (int i = 0; i < 10; ++i) {
+    OBBond *bond = mol.NewBond(i*2);
+    OB_REQUIRE(bond->GetId() == i*2);
+  }
+
+  OB_REQUIRE( mol.GetBondById(0) );
+  OB_REQUIRE( !mol.GetBondById(7) );
+  OB_REQUIRE( mol.GetBondById(8) );
+  OB_REQUIRE( !mol.GetBondById(9) );
+  OB_REQUIRE( mol.GetBondById(18) );
+  OB_REQUIRE( !mol.GetBondById(19) );
+
+  OB_REQUIRE( mol.GetBondById(0)->GetId() == 0 );
+  OB_REQUIRE( mol.GetBondById(8)->GetId() == 8 );
+  OB_REQUIRE( mol.GetBondById(18)->GetId() == 18 );
+}
+
+void testIdsDeleteBond()
+{
+  OBMol mol;
+  for (int i = 0; i < 10; ++i)
+    mol.NewBond();
+
+  OB_REQUIRE( mol.GetBondById(3) );
+  OB_REQUIRE( mol.GetBondById(4) );
+  OB_REQUIRE( mol.GetBondById(5) );
+
+  OBBond *bond4 = mol.GetBondById(4);
+  OBAtom *a = mol.NewAtom();
+  OBAtom *b = mol.NewAtom();
+  bond4->SetBegin(a);
+  bond4->SetEnd(b);
+ 
+  mol.DeleteBond(mol.GetBondById(4));
+
+  OB_REQUIRE( mol.GetBondById(3) );
+  OB_REQUIRE( mol.GetBondById(3)->GetId() == 3 );
+  OB_REQUIRE( !mol.GetBondById(4) );
+  OB_REQUIRE( mol.GetBondById(5) );
+  OB_REQUIRE( mol.GetBondById(5)->GetId() == 5 );
+}
+
+void testIdsAddBond()
+{
+  OBMol mol;
+  // add 5 bonds
+  for (int i = 0; i < 5; ++i)
+    mol.NewBond();
+
+  OBBond bond;
+  OBAtom *a = mol.NewAtom();
+  OBAtom *b = mol.NewAtom();
+  bond.SetBegin(a);
+  bond.SetEnd(b);
+  // add a sixth bond
+  mol.AddBond(bond);
+
+  OB_REQUIRE( mol.NumBonds() == 6 );
+  OB_REQUIRE( mol.GetBondById(5) );
+  OB_REQUIRE( mol.GetBondById(5)->GetId() == 5 );
+}
 
 int main() 
 {
+  // atoms
   testIdsNewAtom1();
   testIdsNewAtom2();
   testIdsDeleteAtom();
   testIdsAddAtom();
+
+  // bonds
+  testIdsNewBond1();
+  testIdsNewBond2();
+  testIdsDeleteBond();
+  testIdsAddBond();
   
   return 0;
 }
