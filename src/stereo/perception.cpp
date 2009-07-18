@@ -616,7 +616,8 @@ namespace OpenBabel {
     cout << "----------------------------------------------------------------------------" << endl;
   }
  
-  //! Calculate the "sign of a triangle" given by a set of 4 coordinates
+  //! Calculate the "sign of a triangle" given by a set of 3 2D coordinates
+  //! 
   double TriangleSign(const vector3 &a, const vector3 &b, const vector3 &c)
   {
     // equation 6 from [1]
@@ -751,6 +752,7 @@ namespace OpenBabel {
         double sign = TriangleSign(plane1->GetVector(), plane2->GetVector(), hash->GetVector());
         if (sign > 0.0)
           config.winding = OBStereo::AntiClockwise;
+        cout << config << endl;
       } else
       // plane1 + plane2, wedge
       if (plane1 && plane2 && wedge) {

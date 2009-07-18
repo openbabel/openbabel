@@ -1606,15 +1606,14 @@ namespace OpenBabel {
             _tetrahedralMap[atom] = new OBTetrahedralStereo::Config;
             _tetrahedralMap[atom]->refs = OBStereo::Refs(3, OBStereo::NoId);
             _tetrahedralMap[atom]->center = atom->GetId();
-            if (*_ptr == '@')
-              {
-                _tetrahedralMap[atom]->winding = OBStereo::Clockwise;
-              }
-            else
-              {
-                _tetrahedralMap[atom]->winding = OBStereo::AntiClockwise;
-                _ptr--;
-              }
+            if (*_ptr == '@') {
+              _tetrahedralMap[atom]->winding = OBStereo::Clockwise;
+            } else if (*_ptr == '?') {
+              _tetrahedralMap[atom]->specified = false;
+            } else {
+              _tetrahedralMap[atom]->winding = OBStereo::AntiClockwise;
+              _ptr--;
+            }
             break;
           case '-':
             _ptr++;
@@ -2768,6 +2767,9 @@ namespace OpenBabel {
     canConfig.center = atom->GetId();
     canConfig.from = chiral_neighbors[0]->GetId();
     canConfig.refs = canonRefs;
+
+    cout << "atomConfig = " << atomConfig << endl;
+    cout << "canConfig = " << canConfig << endl;
 
     // canConfig is clockwise
     if (atomConfig == canConfig) 

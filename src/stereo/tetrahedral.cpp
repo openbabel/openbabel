@@ -37,11 +37,13 @@ namespace OpenBabel {
     if ((refs.size() != 3) || (other.refs.size() != 3))
       return false;
     
+    Config thisConfig = (from == OBStereo::ImplicitId) ? 
+        OBTetraNonPlanarStereo::ToConfig(*this, refs[0], winding, view) : *this;
     // convert the other Config's refs to same from, winding and view
-    Config otherConfig = OBTetraNonPlanarStereo::ToConfig(other, from, winding, view);
+    Config otherConfig = OBTetraNonPlanarStereo::ToConfig(other, thisConfig.from, winding, view);
 
-    if (!OBStereo::ContainsSameRefs(refs, otherConfig.refs)) {
-      if (OBStereo::ContainsRef(refs, OBStereo::ImplicitId)) {
+    if (!OBStereo::ContainsSameRefs(thisConfig.refs, otherConfig.refs)) {
+      if (OBStereo::ContainsRef(thisConfig.refs, OBStereo::ImplicitId)) {
         // if both refs already contain ImplicitId, return false
         if (OBStereo::ContainsRef(otherConfig.refs, OBStereo::ImplicitId))
           return false;
@@ -52,7 +54,7 @@ namespace OpenBabel {
         // for each ref in otherConfig
         for (unsigned int i = 0; i < otherConfig.refs.size(); ++i) {
           bool found = false;
-          for (OBStereo::ConstRefIter j = refs.begin(); j != refs.end(); ++j)
+          for (OBStereo::RefIter j = thisConfig.refs.begin(); j != thisConfig.refs.end(); ++j)
             if (otherConfig.refs.at(i) == *j)
               found = true;
           
@@ -65,24 +67,24 @@ namespace OpenBabel {
       } else
       if (OBStereo::ContainsRef(otherConfig.refs, OBStereo::ImplicitId)) {
         // if both refs already contain ImplicitId, return false
-        if (OBStereo::ContainsRef(refs, OBStereo::ImplicitId))
+        if (OBStereo::ContainsRef(thisConfig.refs, OBStereo::ImplicitId))
           return false;
 
         // example: *this       = 234
         //          otherConfig = 23H --> 234
  
         // for each ref in *this
-        for (unsigned int i = 0; i < refs.size(); ++i) {
+        for (unsigned int i = 0; i < thisConfig.refs.size(); ++i) {
           bool found = false;
           // for each refs in otherConfig
           for (OBStereo::RefIter j = otherConfig.refs.begin(); j != otherConfig.refs.end(); ++j)
-            if (refs.at(i) == *j)
+            if (thisConfig.refs.at(i) == *j)
               found = true;
 
           if (!found) {
             for (OBStereo::RefIter j = otherConfig.refs.begin(); j != otherConfig.refs.end(); ++j)
               if (*j == OBStereo::ImplicitId)
-                *j = refs.at(i);
+                *j = thisConfig.refs.at(i);
             break;
           }
         }
