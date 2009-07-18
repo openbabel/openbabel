@@ -261,48 +261,44 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     inchi_Stereo0D& stereo = out.stereo0D[i];
 
-    vector<unsigned int> refs;
-    for(int i=0;i<4; ++i)
-      refs.push_back(stereo.neighbor[i] + 1);
-
     switch(stereo.type)
     {
     case INCHI_StereoType_DoubleBond:
     {
-      // Parity 'unknown', 'undefined' not handled
-      if(!(stereo.parity==INCHI_PARITY_EVEN || stereo.parity==INCHI_PARITY_ODD))
-        break;
-      OBBond* pBond1 = pmol->GetBond(refs[0], refs[1]); //attached bonds
-      OBBond* pBond2 = pmol->GetBond(refs[2], refs[3]); 
-      if(!pBond1 || !pBond2)
-        return false;
-      bool ud = (stereo.parity==INCHI_PARITY_EVEN) ? true : false;//'trans'
-      if(!pBond2->IsUp() && !pBond2->IsDown())
-      {
-        //pBond2 not previously set
-        if(pBond1->IsUp())
-          ud = !ud;
-        if(ud)
-          pBond2->SetDown();
-        else
-          pBond2->SetUp();
-        if(!pBond1->IsUp() && !pBond1->IsDown())
-          pBond1->SetUp();
+      OBCisTransStereo::Config *ct = new OBCisTransStereo::Config;
+
+      ct->begin = stereo.neighbor[1];
+      ct->end = stereo.neighbor[2];
+      unsigned long start, end;
+      FOR_NBORS_OF_ATOM(a, pmol->GetAtom(ct->begin + 1)) {
+        if ( !(a->GetId() == ct->end || a->GetId() == stereo.neighbor[0] ) ) {
+          start = a->GetId();
+          break;
+        }
+
+
       }
+      FOR_NBORS_OF_ATOM(b, pmol->GetAtom(ct->end + 1)) {
+        if ( !(b->GetId() == ct->begin || b->GetId() == stereo.neighbor[3] ) ) {
+          end = b->GetId();
+          break;
+        }
+      }
+      ct->refs = OBStereo::MakeRefs(stereo.neighbor[0], start, stereo.neighbor[3], end);
+
+      if(stereo.parity==INCHI_PARITY_EVEN)
+        ct->shape = OBStereo::ShapeU;
+      else if(stereo.parity==INCHI_PARITY_ODD) 
+        ct->shape = OBStereo::ShapeZ;
       else
-      {
-        //pBond2 has been previously set
-        if(pBond2->IsUp())
-          ud = !ud;
-        if(ud)
-          pBond1->SetDown();
-        else
-          pBond1->SetUp();
-      }
+        ct->specified = false;
+      
+      OBCisTransStereo *obct = new OBCisTransStereo(pmol);
+      obct->SetConfig(*ct);
+      pmol->SetData(obct);
+      
       //InChI seems to prefer to define double bond stereo using H atoms.
-      //This leads to rather messy SMILES because the hydrogens have to be explicit.
-      //Could try to transfer u/d to non-Hs, but current method of u/d in congugated
-      //molecules makes it more complicated than it should be.
+
       break;
     }
     case INCHI_StereoType_Tetrahedral:
@@ -498,9 +494,9 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         unsigned long start = refs[0];
         if (refs[0]==OBStereo::ImplicitId)
           start = refs[1];
-        unsigned long end = refs[4];
-        if (refs[4]==OBStereo::ImplicitId)
-          end = refs[3];
+        unsigned long end = refs[3];
+        if (refs[3]==OBStereo::ImplicitId)
+          end = refs[2];
  
         stereo.neighbor[0] = start;
         stereo.neighbor[1] = config.begin;
