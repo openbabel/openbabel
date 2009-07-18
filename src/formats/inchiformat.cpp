@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #include <set>
 #include <vector>
 #include "openbabel/chiral.h"
+#include <openbabel/stereo/tetrahedral.h>
 
 using namespace std;
 namespace OpenBabel
@@ -306,20 +307,22 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
     case INCHI_StereoType_Tetrahedral:
     {
-      OBChiralData* cd = new OBChiralData;
-      cd->Clear();
-      cd->SetAtom4Refs(refs, input);
-      OBAtom* patom = pmol->GetAtom(stereo.central_atom + 1);
-      if(!patom)
-        return false;
-      patom->SetData(cd);
+      OBTetrahedralStereo::Config *ts = new OBTetrahedralStereo::Config;
+      ts->center = stereo.central_atom; 
+      inchi_Atom* central_atom = &out.atom[stereo.central_atom];
+      ts->from = central_atom->neighbor[0];
+      ts->refs = OBStereo::MakeRefs(central_atom->neighbor[1], central_atom->neighbor[2],
+                                    central_atom->neighbor[3]);
 
-      /* @todo
+      // Todo: Handle INCHI_PARITY_UNKNOWN?
       if(stereo.parity==INCHI_PARITY_EVEN)
-          patom->SetClockwiseStereo();
-      else if(stereo.parity==INCHI_PARITY_ODD)
-          patom->SetAntiClockwiseStereo();
-          */
+        ts->winding = OBStereo::Clockwise;
+      else // if(stereo.parity==INCHI_PARITY_ODD) 
+        ts->winding = OBStereo::AntiClockwise;
+      
+      OBTetrahedralStereo *obts = new OBTetrahedralStereo(pmol);
+      obts->SetConfig(*ts);
+      pmol->SetData(obts);
 
       break;
     }
@@ -451,45 +454,32 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(Is0D)
   {
     //Tetrahedral stereo
-//    mol.FindChiralCenters(); done above
-    OBAtom* patom;
     vector<OBNodeBase*>::iterator itr;
-    if(mol.IsChiral())
-    {
-      for(patom = mol.BeginAtom(itr);patom;patom = mol.NextAtom(itr))
-      {
-        if(patom->IsChiral())
-        {
-          inchi_Stereo0D stereo;
-          stereo.central_atom = patom->GetIdx()-1;
-          stereo.type = INCHI_StereoType_Tetrahedral;
-          OBChiralData* cd=(OBChiralData*)patom->GetData(OBGenericDataType::ChiralData);
-          if (!cd) {
-            obErrorLog.ThrowError(__FUNCTION__, molID.str()+": Tetrahedral stereo info not available", obInfo);
-            break;
-          }
-            
-          vector<unsigned int>refs = cd->GetAtom4Refs(input);
-          if(refs.size()<4)
-          {
-            obErrorLog.ThrowError(__FUNCTION__, molID.str()+": Tetrahedral stereo info not available", obInfo);
-            break;
-          }
-          for(int i=0;i<4; ++i)
-            stereo.neighbor[i] = refs[i]-1;
+    
+    std::vector<OBGenericData*>::iterator data;
+    std::vector<OBGenericData*> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
+    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+      if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+        OBTetrahedralStereo::Config config = ts->GetConfig();
 
-          stereo.parity = INCHI_PARITY_UNKNOWN;
-          /* @todo
-          if(patom->IsPositiveStereo() || patom->IsClockwise())
-            stereo.parity = INCHI_PARITY_EVEN;
-          if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
-            stereo.parity = INCHI_PARITY_ODD;
-          */
-          stereoVec.push_back(stereo);
-        }
+        inchi_Stereo0D stereo;         
+        stereo.type = INCHI_StereoType_Tetrahedral;
+        stereo.central_atom = config.center;
+        stereo.neighbor[0] = config.from;
+        for(int i=0; i<3; ++i)
+          stereo.neighbor[i + 1] = config.refs[i];
+        
+        if (config.winding == OBStereo::Clockwise)
+          stereo.parity = INCHI_PARITY_EVEN;
+        else
+          stereo.parity = INCHI_PARITY_ODD;
+        /* @todo Handle stereo.parity = INCHI_PARITY_UNKNOWN; */
+
+        stereoVec.push_back(stereo);
       }
     }
-    
+        
     //Double bond stereo
     //Currently does not handle cumulenes
     vector<OBBond*> UpDown;
