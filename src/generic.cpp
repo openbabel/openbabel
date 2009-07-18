@@ -249,7 +249,10 @@ namespace OpenBabel
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
     _a(0.0), _b(0.0), _c(0.0), _alpha(0.0), _beta(0.0), _gamma(0.0),
     _spaceGroup( NULL ), _lattice(Undefined)
-  {  }
+  {  
+    // We should default to P1 space group unless we know differently
+    SetSpaceGroup(1);
+  }
 
   OBUnitCell::OBUnitCell(const OBUnitCell &src) :
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
@@ -299,32 +302,37 @@ namespace OpenBabel
   */
   void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
   {
-    bool threeDimensions = true;
-    _a = v1.length();
-    _b = v2.length();
-    _c = v3.length();
-    // Sanity checks for 1D or 2D translation
-    if (IsNearZero(_c)) { // 2D
-      _c = 0.0;
-      _beta = 0.0;
-      _gamma = 0.0;
-      threeDimensions = false;
-    }
-    if (IsNearZero(_b)) { // 1D
-      _b = 0.0;
-      _alpha = 0.0;
-      threeDimensions = false;
-    }
-    
-    if (threeDimensions) {
-      _alpha = vectorAngle(v2, v3);
-      _beta = vectorAngle(v1, v3);
-      _gamma = vectorAngle(v1, v2);
-    }
-    
     _v1 = v1;
     _v2 = v2;
     _v3 = v3;
+
+    _a = _v1.length();
+    _b = _v2.length();
+    _c = _v3.length();
+
+    // For PR#1961604 -- somewhat contrived example
+    if (IsNearZero(_a) && !IsNearZero(_c)) {
+      _v1 = _v3; // we'll reset _v3 below
+      _a = _c;
+      _c = 0.0;
+    }
+
+    // Sanity checks for 1D or 2D translation
+    if (IsNearZero(_b)) { // 1D
+      _v2.Set(v1.y(), -v1.x(), v1.z()); // rotate base vector by 90 degrees
+      _b = 999.999;
+      _v2 = _b * _v2.normalize(); // set to a large displacement
+    }
+
+    if (IsNearZero(_c)) { // 2D or 1D
+      _v3 = cross(_v1, _v2);
+      _c = 999.999;
+      _v3 = _c * _v3.normalize(); // set to a large displacement
+    }
+    
+    _alpha = vectorAngle(_v2, _v3);
+    _beta =  vectorAngle(_v1, _v3);
+    _gamma = vectorAngle(_v1, _v2);
   }
 
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertNotionalIntoCartesianCoordinates">blue-obelisk:convertNotionalIntoCartesianCoordinates</a>
@@ -333,6 +341,7 @@ namespace OpenBabel
     vector<vector3> v;
     v.reserve(3);
 
+    // no unit cell vectors
     if (IsNegligible(_v1.length(), 1.0, 1.0e-9) &&
         IsNegligible(_v2.length(), 1.0, 1.0e-9) &&
         IsNegligible(_v3.length(), 1.0, 1.0e-9))
@@ -350,8 +359,11 @@ namespace OpenBabel
     else
       {
         v.push_back(_v1);
-        v.push_back(_v2);
-        v.push_back(_v3);
+        // we set these above in case we had a 1D or 2D translation vector system
+        if (fabs(_b - 999.999) > 1.0e-1)
+          v.push_back(_v2);
+        if (fabs(_c - 999.999) > 1.0e-1)
+          v.push_back(_v3);
       }
 
     return v;
@@ -635,8 +647,10 @@ namespace OpenBabel
         newAtom->Duplicate(*i);
         newAtom->SetVector(GetOrthoMatrix() * updatedCoordinate);
       } // end loop of transformed atoms
-      (*i)->SetVector(GetOrthoMatrix() * uniqueV);
+      (*i)->SetVector(GetOrthoMatrix() * uniqueV); // move the atom back into the unit cell
     } // end loop of atoms
+
+    SetSpaceGroup(1); // We've now applied the symmetry, so we should act like a P1 unit cell
   }
   
   double OBUnitCell::GetCellVolume()

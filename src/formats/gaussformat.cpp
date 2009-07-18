@@ -31,12 +31,13 @@ namespace OpenBabel
       OBConversion::RegisterFormat("g94",this);
       OBConversion::RegisterFormat("g98",this);
       OBConversion::RegisterFormat("g03",this);
+      OBConversion::RegisterFormat("g09",this); // Not tested, but should work
     }
 
     virtual const char* Description() //required
     {
       return
-        "Gaussian98/03 Output\n"
+        "Gaussian Output\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
@@ -85,7 +86,8 @@ namespace OpenBabel
         "Write Options e.g. -xk\n"
         "  b               Output includes bonds\n"
         "  k  \"keywords\" Use the specified keywords for input\n"
-        "  f    <file>     Read the file specified for input keywords\n\n";
+        "  f    <file>     Read the file specified for input keywords\n"
+        "  u               Write the crystallographic unit cell, if present.\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -126,6 +128,7 @@ namespace OpenBabel
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
     const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
     const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    bool writeUnitCell = pConv->IsOption("u", OBConversion::OUTOPTIONS);
     string defaultKeywords = "#Put Keywords Here, check Charge and Multiplicity.";
 
     if(keywords)
@@ -202,6 +205,20 @@ namespace OpenBabel
 	
         ofs << buffer << endl;
       }
+    // Translation vectors
+    OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+    if (uc && writeUnitCell) {
+      uc->FillUnitCell(&mol); // complete the unit cell with symmetry-derived atoms
+
+      vector<vector3> cellVectors = uc->GetCellVectors();
+      for (vector<vector3>::iterator i = cellVectors.begin(); i != cellVectors.end(); ++i) {
+          snprintf(buffer, BUFF_SIZE, "TV       %10.5f      %10.5f      %10.5f",
+                   i->x(),
+                   i->y(),
+                   i->z());
+        ofs << buffer << '\n';
+      }
+    }
 
     // Bonds, contributed by Daniel Mansfield
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS))
@@ -273,6 +290,10 @@ namespace OpenBabel
     int RotSymNum;
     OBRotationData::RType RotorType;
 
+    // Translation vectors (if present)
+    vector3 translationVectors[3];
+    int numTranslationVectors = 0;
+
     mol.BeginModify();
     
     while (ifs.getline(buffer,BUFF_SIZE))
@@ -292,6 +313,7 @@ namespace OpenBabel
           {
             // mol.EndModify();
             mol.Clear();
+            numTranslationVectors = 0; // ignore old translationVectors
             mol.BeginModify();
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);	// ---------------
@@ -299,16 +321,20 @@ namespace OpenBabel
             tokenize(vs,buffer);
             while (vs.size() == 6)
               {
+                x = atof((char*)vs[3].c_str());
+                y = atof((char*)vs[4].c_str());
+                z = atof((char*)vs[5].c_str());
+
                 int atomicNum = atoi((char*)vs[1].c_str());
                 if (atomicNum > 0) // translation vectors are "-2"
                   {
                     atom = mol.NewAtom();
                     atom->SetAtomicNum(atoi((char*)vs[1].c_str()));
-                    x = atof((char*)vs[3].c_str());
-                    y = atof((char*)vs[4].c_str());
-                    z = atof((char*)vs[5].c_str());
                     atom->SetVector(x,y,z);
                   }
+                else {
+                  translationVectors[numTranslationVectors++].Set(x, y, z);
+                }
 		
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
@@ -455,6 +481,7 @@ namespace OpenBabel
     {
       OBVibrationData* vd = new OBVibrationData;
       vd->SetData(Lx, Frequencies, Intensities);
+      vd->SetOrigin(fileformatInput);
       mol.SetData(vd);
     }
     //Attach rotational data, if there is any, to molecule
@@ -462,7 +489,15 @@ namespace OpenBabel
     {
       OBRotationData* rd = new OBRotationData;
       rd->SetData(RotorType, RotConsts, RotSymNum);
+      rd->SetOrigin(fileformatInput);
       mol.SetData(rd);
+    }
+    // Attach unit cell translation vectors if found
+    if (numTranslationVectors > 0) {
+      OBUnitCell* uc = new OBUnitCell;
+      uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
+      uc->SetOrigin(fileformatInput);
+      mol.SetData(uc);
     }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))

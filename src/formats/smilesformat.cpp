@@ -83,6 +83,7 @@ namespace OpenBabel {
       OBConversion::RegisterOptionParam("a", this);
       OBConversion::RegisterOptionParam("h", this);
       OBConversion::RegisterOptionParam("x", this);
+      OBConversion::RegisterOptionParam("C", this);
     }
     virtual const char* Description()
     {
@@ -99,6 +100,7 @@ namespace OpenBabel {
         "  r  Radicals lower case eg ethyl is Cc\n"
         "  t  Molecule name only\n"
         "  x  append X/Y coordinates in canonical-SMILES order\n"
+        "  C  'anti-canonical' random order (mostly for testing)\n"
         "\n";
     }
 
@@ -3232,6 +3234,49 @@ namespace OpenBabel {
   }
 
   /***************************************************************************
+   * FUNCTION: RandomLabels
+   *
+   * DESCRIPTION:
+   *    Creates a set of random labels for the fragment atoms.  Primarily
+   *    for testing: you can create a bunch of random SMILES for the same
+   *    molecule, and use those to test the canonicalizer.
+   ***************************************************************************/
+
+  static int timeseed = 0;
+
+  void RandomLabels(OBMol *pMol, OBBitVec &frag_atoms,
+      vector<unsigned int> &symmetry_classes,
+      vector<unsigned int> &labels)
+  {
+    int natoms = pMol->NumAtoms();
+    OBBitVec used(natoms);
+
+    if (!timeseed) {
+      OBRandom rand;
+      rand.TimeSeed();
+      timeseed = 1;
+    }
+
+
+    FOR_ATOMS_OF_MOL(atom, *pMol) {
+      if (frag_atoms.BitIsOn(atom->GetIdx())) {
+        int r = rand() % natoms;
+        while (used.BitIsOn(r)) {
+          r = (r + 1) % natoms;         // find an unused number
+        }
+        used.SetBitOn(r);
+        labels.push_back(r);
+        symmetry_classes.push_back(r);
+      }
+      else{
+        labels.push_back(OBStereo::ImplicitId); //to match situation when canonical ordering. Just a big number?
+        symmetry_classes.push_back(OBStereo::ImplicitId);
+      }
+    }
+  }
+
+
+  /***************************************************************************
    * FUNCTION: CreateFragCansmiString
    *
    * DESCRIPTION:
@@ -3259,7 +3304,11 @@ namespace OpenBabel {
     if (_canonicalOutput)
       CanonicalLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
     else {
-      StandardLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+      if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
+        RandomLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+      } else {
+        StandardLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+      }
     }
 
     // OUTER LOOP: Handles dot-disconnected structures.  Finds the 
