@@ -1182,8 +1182,6 @@ namespace OpenBabel
     OBAtom *atom;
     OBBond *bond;
 
-    cout << "OBMol::operator=" << endl;
-
     Clear();
     BeginModify();
 

@@ -56,25 +56,10 @@ namespace OpenBabel {
       return false;
 
     std::vector<unsigned long> clockwiseFrom1 = OBTetraNonPlanarStereo::ToInternal(refs, id, winding, view);
-    int Ni1 = OBTetraNonPlanarStereo::NumInversions(refs);
-    cout << "Ni1 = " << Ni1 << endl;
+    int Ni1 = OBTetraNonPlanarStereo::NumInversions(m_refs);
     int Ni2 = OBTetraNonPlanarStereo::NumInversions(clockwiseFrom1);
-    cout << "Ni2 = " << Ni2 << endl;
 
     return ((Ni1 + Ni2) % 2 == 0);
-    /*
-    if (m_refs.at(0) == clockwiseFrom1.at(1)) {
-      clockwiseFrom1[1] = clockwiseFrom1.at(2);
-      clockwiseFrom1[2] = clockwiseFrom1.at(0);
-      clockwiseFrom1[0] = m_refs.at(0);      // use m_refs[0] rather than tmp var since it's got what we need
-    } else if (m_refs.at(0) == clockwiseFrom1.at(2)) {
-      clockwiseFrom1[2] = clockwiseFrom1.at(1);
-      clockwiseFrom1[1] = clockwiseFrom1.at(0);
-      clockwiseFrom1[0] = m_refs.at(0);      // ditto re tmp usage
-    }
-
-    return (m_refs.at(2) == clockwiseFrom1.at(2));
-    */
   }
 
   OBGenericData* OBTetrahedralStereo::Clone(OBBase *mol) const

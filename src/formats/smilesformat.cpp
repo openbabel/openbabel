@@ -828,7 +828,7 @@ namespace OpenBabel {
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
           {
-            //cout << "Line 800: previous atom is chiral, adding reference: id = " << mol.NumAtoms() - 1 << endl;
+            cout << "Line 800: previous atom is chiral, adding reference: id = " << mol.NumAtoms() - 1 << endl;
             ChiralSearch->second->refs.push_back(mol.NumAtoms() - 1);
           }
       }
@@ -1681,14 +1681,14 @@ namespace OpenBabel {
         if(chiralWatch) // if chiral atom need to add its previous into atom4ref
           {
             assert( _tetrahedralMap[atom] );
-            //cout << "Line 1622: adding previous reference: id = " << mol.GetAtom(_prev)->GetId() << endl;
+            cout << "Line 1622: adding previous reference: id = " << mol.GetAtom(_prev)->GetId() << endl;
             _tetrahedralMap[atom]->refs.push_back(mol.GetAtom(_prev)->GetId());
           }
         map<OBAtom*,TetrahedralStereo*>::iterator ChiralSearch;
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
           {
-            //cout << "Line 1629: previous atom is chiral, adding this one to the refs: id = " << atom->GetId() << endl;
+            cout << "Line 1629: previous atom is chiral, adding this one to the refs: id = " << atom->GetId() << endl;
             ChiralSearch->second->refs.push_back(atom->GetId());
           }
       }          
@@ -1710,7 +1710,7 @@ namespace OpenBabel {
         mol.AddBond(_prev,mol.NumAtoms(),1);
         if(chiralWatch)
           {
-            //cout << "Line 1652: explicit hydrogen on chiral atom, adding to the refs: id = " << atom->GetId() << endl;
+            cout << "Line 1652: explicit hydrogen on chiral atom, adding to the refs: id = " << atom->GetId() << endl;
             _tetrahedralMap[mol.GetAtom(_prev)]->refs.push_back(atom->GetId());
           }
       }
@@ -1826,7 +1826,7 @@ namespace OpenBabel {
             ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
             if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
               {
-                //cout << "previous atom is chiral, adding this one to the refs: id = " << (*j)[1] - 1 << endl;
+                cout << "previous atom is chiral, adding this one to the refs: id = " << (*j)[1] - 1 << endl;
                 ChiralSearch->second->refs.push_back((*j)[1] - 1);
               }
             
@@ -1899,12 +1899,12 @@ namespace OpenBabel {
           cs2 = _tetrahedralMap.find(mol.GetAtom((*j)[1]));
           if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
             {
-              //cout << "ring closure bond to previous atom: id = " << (*j)[1] - 1 << endl;
+              cout << "ring closure bond to previous atom: id = " << (*j)[1] - 1 << endl;
               ChiralSearch->second->refs.push_back((*j)[1] - 1);
             }
           if (cs2 != _tetrahedralMap.end() && cs2->second != NULL)
             {
-              //cout << "ring opening bond to previous atom: id = " << (*j)[1] - 1 << endl;
+              cout << "ring opening bond to previous atom: id = " << (*j)[1] - 1 << endl;
               
               //Ensure that the closure atom index is inserted at the position
               //decided when the ring closure digit was encountered.
@@ -2732,6 +2732,9 @@ namespace OpenBabel {
       return false;
     if (atom->IsNitrogen())
       return false;
+    // Added by timvdm 18 march 2009
+    if (atom->HasData(OBGenericDataType::StereoData))
+      return true;
     // Added by ghutchis 2007-06-04 -- make sure to check for 3D molecules
     // Fixes PR#1699418
     if (atom->GetParent()->GetDimension() == 3)
@@ -2762,6 +2765,11 @@ namespace OpenBabel {
     OBAtom *atom = node->GetAtom();
     OBMol *mol = (OBMol*) atom->GetParent();
 
+    // If no chiral neighbors were passed in, we're done
+    if (chiral_neighbors.size() < 4)
+      return false;
+
+
     // If the molecule has no coordinates but DOES have chirality specified, it
     // must have come from a SMILES.  In this case, the atoms' GetIdx() values 
     // will be in the same order they appeared in the original SMILES, so we
@@ -2779,36 +2787,20 @@ namespace OpenBabel {
     //
 
     if (!mol->HasNonZeroCoords()) {               // no coordinates?
-
-      // NOTE: THIS SECTION IS WRONG.  IT'S JUST A COPY OF THE ORIGINAL OPENBABEL
-      // CODE, AND DOESN'T ACCOUNT FOR THE FACT THAT THE CANONICAL SMILES IS REORDERED.
-      // NEEDS TO BE REWRITTEN, BUT IN COORDINATION WITH A REWRITE OF CHIRALITY IN
-      // THE smilesformat.cpp FILE.  -- CJ
-
       if (!atom->HasData(OBGenericDataType::StereoData))
         return false; // no chirality on this atom
-      // use & for now, will be replaced by @ or @@, we don't know yet...
-      strcpy(stereo, "@");
-      return true;
-      /*
-      if (!atom->HasChiralitySpecified())         //   and no chirality on this atom?
-        return(false);                            //   not a chiral atom -- all done.
 
-      // Ok, it's a chiral atom, so we need to get the A, B, C, D atoms, in the order in
-      // which they appeared in the original SMILES.  (NYI!!)
-      if (atom->IsClockwise())
-        strcpy(stereo,"@@");
-      else if (atom->IsAntiClockwise())
-        strcpy(stereo,"@");
+      OBTetrahedralStereo *ts = (OBTetrahedralStereo*) atom->GetData(OBGenericDataType::StereoData);
+      OBStereo::Refs canonRefs = OBStereo::MakeRefs(chiral_neighbors[1]->GetId(), 
+                                                    chiral_neighbors[2]->GetId(), 
+                                                    chiral_neighbors[3]->GetId());
+      
+      if (ts->Compare(canonRefs, chiral_neighbors[0]->GetId(), OBStereo::Clockwise, OBStereo::ViewFrom)) 
+        strcpy(stereo, "@@");
       else
-        return(false);
-      return(true);
-      */
+        strcpy(stereo, "@");
+      return true;
     }
-
-    // If no chiral neighbors were passed in, we're done
-    if (chiral_neighbors.size() < 4)
-      return false;
 
     // If any of the neighbors have the same symmetry class, we're done.
     for (int i = 0; i < chiral_neighbors.size(); i++) {
@@ -3191,6 +3183,7 @@ namespace OpenBabel {
       }
     }
 
+
     // Write the current atom to the string
     GetSmilesElement(node, chiral_neighbors, symmetry_classes, buffer+strlen(buffer), isomeric);
 
@@ -3398,65 +3391,6 @@ namespace OpenBabel {
       delete root;
     }
 
-    // timvdm: Fix chiral atoms.
-    std::string::size_type pos = 0;
-    for (int index = 0; index < _atmorder.size(); ++index) {
-      OBAtom *a = mol.GetAtom(_atmorder.at(index));
-      assert( a );
-
-      if (a->HasData(OBGenericDataType::StereoData)) {
-        unsigned long fromId = mol.GetAtom(_atmorder.at(index-1))->GetId();
-        //cout << "fromId = " << fromId << endl;
-        OBTetrahedralStereo *ts = (OBTetrahedralStereo*) a->GetData(OBGenericDataType::StereoData);
-        //cout << "ts->GetCenter() = " << ts->GetCenter() << endl;
-
-        // get clockwise, viewing from previous atom
-        OBStereo::Refs refs = ts->GetRefs(fromId);
-        /*
-        cout << "refs = ";
-        for (OBStereo::RefIter j = refs.begin(); j != refs.end(); ++j)
-          cout << " " << *j;
-        cout << endl;
-        */
-
-
-        // find the canonical refs
-        OBStereo::Refs canonRefs;
-        for (OBStereo::RefIter j = refs.begin(); j != refs.end(); ++j) {
-          OBAtom *b = mol.GetAtomById(*j);
-          if (b->IsHydrogen())
-            canonRefs.push_back(*j);
-        }
-        for (int k = 0; k < _atmorder.size(); ++k) {
-          OBAtom *c = mol.GetAtom(_atmorder.at(k));
-          for (OBStereo::RefIter j = refs.begin(); j != refs.end(); ++j) {
-            OBAtom *b = mol.GetAtomById(*j);
-            if (b->GetId() == c->GetId()) {
-              canonRefs.push_back(*j);
-            }
-          }
-        }
-
-        /*
-        cout << "canonRefs = ";
-        for (OBStereo::RefIter j = canonRefs.begin(); j != canonRefs.end(); ++j)
-          cout << " " << *j;
-        cout << endl;
-        */
-
-        if (ts->Compare(canonRefs, fromId, OBStereo::Clockwise, OBStereo::ViewFrom)) {
-          std::string smiles(buffer);
-          pos = smiles.find("@", pos);
-          smiles.insert(pos, "@");
-          strncpy(buffer, smiles.c_str(), BUFF_SIZE);
-          pos += 2;          
-        }
-
-      }
-
-
-    }
-    
     // save the canonical order as a space-separated string
     // which will be returned by GetOutputOrder() for incorporation
     // into an OBPairData keyed "canonical order"
@@ -3467,13 +3401,10 @@ namespace OpenBabel {
         temp << (*can_iter++);
       }
 
-      //cout << "_atmorder =";
       for (; can_iter != _atmorder.end(); ++can_iter) {
         if (*can_iter <= mol.NumAtoms())
           temp << " " << (*can_iter);
-          //cout << " " << (*can_iter);
       }
-      //cout << endl;
       _canorder = temp.str(); // returned by GetOutputOrder()
     }
   }
