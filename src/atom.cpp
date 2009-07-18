@@ -783,17 +783,8 @@ namespace OpenBabel
   bool OBAtom::IsChiral()
   {
     OBMol *mol = (OBMol*) GetParent();
-    if (!mol->HasChiralityPerceived()) {
-      if (mol->Has3D())
-        StereoFrom3D(mol);
-      else if (mol->Has2D())
-        StereoFrom2D(mol);
-    }
-
-    if (HasFlag(OB_CHIRAL_ATOM))
-      return true;
-
-    return false;
+    OBStereoFacade stereoFacade(mol);
+    return stereoFacade.HasTetrahedralStereo(_id);
   }
 
   bool OBAtom::IsInRingSize(int size) const
