@@ -166,13 +166,23 @@ namespace OpenBabel {
 
   class OBSmilesParser
   {
+    // a simple struct to make code more readable
+    struct BondStruct 
+    {
+      int digit;
+      int prev;
+      int order;
+      char updown;
+    };
+
+
     char _updown;
     int _order;
     int _prev;
     char *_ptr;
     vector<int> _vprev;
     vector<vector<int> > _rclose;
-    vector<vector<int> > _extbond;
+    vector<BondStruct>   _extbond;
     vector<int>          _path;
     vector<bool>         _avisit;
     vector<bool>         _bvisit;
@@ -1842,40 +1852,36 @@ namespace OpenBabel {
 
   bool OBSmilesParser::CapExternalBonds(OBMol &mol)
   {
-
-    if(_extbond.empty())
-      return(true);
+    if (_extbond.empty())
+      return true;
 
     OBAtom *atom;
-    vector<vector<int> >::iterator bond;
+    vector<BondStruct>::iterator bond;
+    for (bond = _extbond.begin(); bond != _extbond.end(); bond++) {
+      // create new dummy atom
+      atom = mol.NewAtom();
+      atom->SetAtomicNum(0);
+      atom->SetType("*");
 
-    for(bond = _extbond.begin();bond != _extbond.end();bond++)
-      {
-        // create new dummy atom
-        atom = mol.NewAtom();
-        atom->SetAtomicNum(0);
-        atom->SetType("*");
+      // bond dummy atom to mol via external bond
+      mol.AddBond(bond->prev, atom->GetIdx(), bond->order);
+      _vUpDown.push_back(bond->updown);
+      OBBond *refbond = atom->GetBond(mol.GetAtom(bond->prev));
 
-        // bond dummy atom to mol via external bond
-        mol.AddBond((*bond)[1], atom->GetIdx(), (*bond)[2]);
-        _vUpDown.push_back((*bond)[3]);
-        OBBond *refbond = atom->GetBond(mol.GetAtom((*bond)[1]));
-
-        //record external bond information
-        OBExternalBondData *xbd;
-        if(mol.HasData(OBGenericDataType::ExternalBondData))
-          xbd = (OBExternalBondData*)mol.GetData(OBGenericDataType::ExternalBondData);
-        else
-          {
-            xbd = new OBExternalBondData;
-            xbd->SetOrigin(fileformatInput);
-            mol.SetData(xbd);
-          }
-        xbd->SetData(atom,refbond,(*bond)[0]);
-        //this data gets cleaned up in mol.Clear.
+      //record external bond information
+      OBExternalBondData *xbd;
+      if (mol.HasData(OBGenericDataType::ExternalBondData)) {
+        xbd = (OBExternalBondData*) mol.GetData(OBGenericDataType::ExternalBondData);
+      } else {
+        xbd = new OBExternalBondData;
+        xbd->SetOrigin(fileformatInput);
+        mol.SetData(xbd);
       }
+      xbd->SetData(atom,refbond, bond->digit);
+      //this data gets cleaned up in mol.Clear.
+    }
 
-    return(true);
+    return true;
   }
 
   bool OBSmilesParser::ParseExternalBond(OBMol &mol)
@@ -1933,48 +1939,46 @@ namespace OpenBabel {
     digit = atoi(str);  // convert indicator to digit
 
     //check for dot disconnect closures
-    vector<vector<int> >::iterator j;
+    vector<BondStruct>::iterator bond;
     int upDown, bondOrder;
-    for(j = _extbond.begin();j != _extbond.end();j++)
-      {
-        if((*j)[0] == digit)
-          {
-            upDown = (_updown > (*j)[3]) ? _updown : (*j)[3]; // FIXME: make sure this is correct (timvdm)
-            bondOrder = (_order > (*j)[2]) ? _order : (*j)[2];
-            mol.AddBond((*j)[1], _prev, bondOrder);
-            _vUpDown.push_back(upDown);
+    for (bond = _extbond.begin(); bond != _extbond.end(); bond++) {
+        
+      if (bond->digit == digit) {
+        upDown = (_updown > bond->updown) ? _updown : bond->updown; // FIXME: make sure this is correct (timvdm)
+        bondOrder = (_order > bond->order) ? _order : bond->order;
+        mol.AddBond(bond->prev, _prev, bondOrder);
+        _vUpDown.push_back(upDown);
             
-            // after adding a bond to atom "_prev"
-            // search to see if atom is bonded to a chiral atom
-            map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
-            ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
-            if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
-              {
-                //cout << "previous atom is chiral, adding this one to the refs: id = " << (*j)[1] - 1 << endl;
-                ChiralSearch->second->refs.push_back((*j)[1] - 1);
+        // after adding a bond to atom "_prev"
+        // search to see if atom is bonded to a chiral atom
+        map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
+        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
+        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
+          //cout << "previous atom is chiral, adding this one to the refs: id = " << (*j)[1] - 1 << endl;
+          ChiralSearch->second->refs.push_back(bond->prev - 1);
                 /** FIXME
                 int insertpos = NumConnections(ChiralSearch->first) - 1;
                 (ChiralSearch->second)->refs[insertpos] = (*j)[1];
                 //cerr << "NB1: Added external "<<(*j)[1]<<" at "<<insertpos<<" to "<<ChiralSearch->second<<endl;
                 */
  
-              }
+        }
             
-            _extbond.erase(j);
-            _updown = ' ';
-            _order = 0;
-            return(true);
-          }
+        _extbond.erase(bond);
+        _updown = ' ';
+        _order = 0;
+        return true;
       }
+    }
 
     //since no closures save another ext bond
-    vector<int> vtmp(4);
-    vtmp[0] = digit;
-    vtmp[1] = _prev;
-    vtmp[2] = _order;
-    vtmp[3] = _updown;
+    BondStruct extBond;
+    extBond.digit  = digit;
+    extBond.prev   = _prev;
+    extBond.order  = _order;
+    extBond.updown = _updown;
 
-    _extbond.push_back(vtmp);
+    _extbond.push_back(extBond);
     _order = 1;
     _updown = ' ';
 
