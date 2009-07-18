@@ -3585,7 +3585,19 @@ namespace OpenBabel {
 
     if (iso) {
       m2s.CreateCisTrans(*pmol); // No need for this if not iso
+      
+      //OBStereoFacade stereoFacade(pmol);
+      cout << "about to add hydrogens..." << endl;
+      cout << "HasChirality = " << pmol->HasChiralityPerceived() << endl;
+      cout << "size = " << pmol->GetAllData(OBGenericDataType::StereoData).size() << endl;
+      
+      
+      
       m2s.AddHydrogenToChiralCenters(*pmol, frag_atoms);
+      pmol->SetChiralityPerceived();
+      
+      cout << "HasChirality = " << pmol->HasChiralityPerceived() << endl;
+      cout << "size = " << pmol->GetAllData(OBGenericDataType::StereoData).size() << endl;
     } else {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
