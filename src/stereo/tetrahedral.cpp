@@ -30,7 +30,7 @@ namespace OpenBabel {
   // OBTetrahedralStereo::Config struct
   //
 
-  bool OBTetrahedralStereo::Config::operator==(const Config &other) const
+  bool OBTetrahedralStereo::Config::operator==(const OBTetrahedralStereo::Config &other) const
   {
     if (center != other.center)
       return false;

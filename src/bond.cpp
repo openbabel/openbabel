@@ -26,6 +26,12 @@ using namespace std;
 namespace OpenBabel
 {
 
+  class OBBondPrivate
+  {
+    public:
+      OBBondPrivate() {}  
+  };
+
   extern OBAromaticTyper  aromtyper;
 
   /** \class OBBond bond.h <openbabel/bond.h>
@@ -47,7 +53,7 @@ namespace OpenBabel
   // *** OBBond member functions ***
   // *******************************
 
-  OBBond::OBBond()
+  OBBond::OBBond() /*: d(new OBBondPrivate)*/
   {
     _idx=0;
     _order=0;

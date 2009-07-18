@@ -347,7 +347,7 @@ namespace OpenBabel
 
   ostream& operator<< ( ostream &os, const  OBFloatGrid& fg)
   {
-    //FIXME: this code stores the data in way that depends on
+    //@todo: this code stores the data in way that depends on
     // the bit representation of floating-point numbers. One can say
     // it's OK because IEEE754 is a widely accepted standard, but then
     // one should at least make it write the data in an endianness-

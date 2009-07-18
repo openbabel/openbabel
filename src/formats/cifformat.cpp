@@ -59,7 +59,7 @@ namespace OpenBabel
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
   };
   //############################## Case-insensituve string####################################################
-  // :TODO: This duplicates normal case-insensitive string comparison in OpenBabel
+  // :@todo: This duplicates normal case-insensitive string comparison in OpenBabel
   /// Case-insensitive string class
   /// From: Guru of the Week #29
   /// e.g.: http://gcc.gnu.org/onlinedocs/libstdc++/21_strings/gotw29a.txt
@@ -266,7 +266,7 @@ namespace OpenBabel
    
   void CIFData::ExtractAll(const bool verbose)
   {
-    // :TODO: Take care of values listed as "." and "?" instead of a real value.
+    // :@todo: Take care of values listed as "." and "?" instead of a real value.
     this->ExtractName(verbose);
     this->ExtractUnitCell(verbose);
     this->ExtractSpacegroup(verbose);
@@ -609,7 +609,7 @@ namespace OpenBabel
 
   void CIFData::CalcMatrices(const bool verbose)
   {
-    if(mvLatticePar.size()==0) return;//:TODO: throw error
+    if(mvLatticePar.size()==0) return;//:@todo: throw error
     float a,b,c,alpha,beta,gamma;//direct space parameters
     float aa,bb,cc,alphaa,betaa,gammaa;//reciprocal space parameters
     float v;//volume of the unit cell
@@ -709,7 +709,7 @@ namespace OpenBabel
    
   void CIFData::Cartesian2FractionalCoord()
   {
-    if(mvLatticePar.size()==0) return;//:TODO: report error
+    if(mvLatticePar.size()==0) return;//:@todo: report error
     for(vector<CIFAtom>::iterator pos=mvAtom.begin();pos!=mvAtom.end();++pos)
       {
         pos->mCoordFrac.resize(3);
@@ -722,7 +722,7 @@ namespace OpenBabel
    
   void CIFData::Fractional2CartesianCoord()
   {
-    if(mvLatticePar.size()==0) return;//:TODO: report error
+    if(mvLatticePar.size()==0) return;//:@todo: report error
     for(vector<CIFAtom>::iterator pos=mvAtom.begin();pos!=mvAtom.end();++pos)
       {
         pos->mCoordCart.resize(3);
@@ -1072,7 +1072,7 @@ namespace OpenBabel
     if (pConv->IsOption("v",OBConversion::INOPTIONS)) verbose=true;
 
     CIF cif(*pConv->GetInStream(),true,verbose);
-    // Loop on all data blocks until we find one structure :TODO: handle multiple structures
+    // Loop on all data blocks until we find one structure :@todo: handle multiple structures
     for(map<string,CIFData>::iterator pos=cif.mvData.begin();pos!=cif.mvData.end();++pos)
       if(pos->second.mvAtom.size()>0)
         {

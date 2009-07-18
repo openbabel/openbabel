@@ -2709,12 +2709,14 @@ namespace OpenBabel
               return(true);
 
             case AL_CHIRAL:
+              /* @todo
               if( expr->leaf.value == AL_CLOCKWISE)
                 return atom->IsClockwise();
               else if ( expr->leaf.value == AL_ANTICLOCKWISE)
                 return atom->IsAntiClockwise();
               else if ( expr->leaf.value == AL_UNSPECIFIED)
                 return (atom->IsChiral() && !atom->HasChiralitySpecified());
+                */
               return(false);
 
             case AL_RINGCONNECT:

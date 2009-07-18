@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/atom.h>
+#include <openbabel/stereo/stereo.h>
 #include <openbabel/mol.h>
 #include <openbabel/molchrg.h>
 #include <openbabel/phmodel.h>
@@ -778,19 +779,21 @@ namespace OpenBabel
     return(false);
   }
 
+  //! @todo
   bool OBAtom::IsChiral()
   {
+    OBMol *mol = (OBMol*) GetParent();
+    if (!mol->HasChiralityPerceived()) {
+      if (mol->Has3D())
+        StereoFrom3D(mol);
+      else if (mol->Has2D())
+        StereoFrom2D(mol);
+    }
+
     if (HasFlag(OB_CHIRAL_ATOM))
-      return(true);
+      return true;
 
-    if (!((OBMol*)GetParent())->HasChiralityPerceived())
-      {
-        ((OBMol*)GetParent())->FindChiralCenters();
-        if (HasFlag(OB_CHIRAL_ATOM))
-          return(true);
-      }
-
-    return(false);
+    return false;
   }
 
   bool OBAtom::IsInRingSize(int size) const

@@ -27,11 +27,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
-
-  /** 
-   * Sets atom->IsChiral() to true for chiral atoms. 
-   *
-   */
+/*
   void OBMol::FindChiralCenters()
   {
     if (HasChiralityPerceived())
@@ -156,6 +152,7 @@ namespace OpenBabel
     if ((cd->GetAtom4Refs(input)).size()!=4)return(false); // must have 4 refs
     parityI=GetParity4Ref(cd->GetAtom4Refs(i)); // Gets Atom4Refs used to define the chirality
     parityO=GetParity4Ref(cd->GetAtom4Refs(o));//GetsOutput parity.        
+    */
     /* switch (CHTYPE)
        {
        case SMILES: // SMILES always uses 1234 atom refs
@@ -185,6 +182,7 @@ namespace OpenBabel
        default:
        parityO=0;                               
        }*/
+    /*
     if (parityO==parityI)
       {//cout << "Parity is the same"<<endl;
         return(true);
@@ -273,6 +271,7 @@ namespace OpenBabel
         OBAtom *tmp_atm = mol.GetAtom(nbr_atms[i]);
         nbr_crds.push_back(tmp_atm->GetVector());
       }
+    */
     /*
     // If we have three heavy atoms we need to calculate the position of the fourth
     if (atm->GetHvyValence() == 3)
@@ -282,6 +281,7 @@ namespace OpenBabel
     nbr_crds.push_back(tmp_crd);
     }
     */
+    /*
     for(unsigned int j=0;j < nbr_crds.size();++j) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
       {
         // are the coordinates zero to 6 or more significant figures
@@ -336,6 +336,7 @@ namespace OpenBabel
     matrix3x3 m(A,B,C);
     return(m.determinant());
   }
+*/
 
   //! \brief Calculate the Graph Potentials of a molecule
   //! 

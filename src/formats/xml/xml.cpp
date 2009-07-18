@@ -314,7 +314,7 @@ namespace OpenBabel
 
   int XMLConversion::ReadStream(void * context, char * buffer, int len)
   {
-    //TODO worry about non-ascii coding
+    //@todo worry about non-ascii coding
     XMLConversion* pConv = static_cast<XMLConversion*>(context);
     istream* ifs = pConv->GetInStream();
     if(!ifs->good() || ifs->eof())

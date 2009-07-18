@@ -109,6 +109,11 @@ namespace OpenBabel
       bool HasFlag(int flag)  {  return((_flags & flag) ? true : false); }
 
     public:
+      enum StereoFlag {
+        
+      };
+
+
        //! Used internally by graph traversal algorithms
       bool Visit;
 
@@ -171,14 +176,15 @@ namespace OpenBabel
       //! Clear aromatic information from the atom
       void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
       //! Mark atom as having SMILES clockwise stereochemistry (i.e., "@@")
-      void SetClockwiseStereo()           { SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM); }
+      //void SetClockwiseStereo()           { SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM); }
       //! Mark atom as having SMILES anticlockwise stereochemistry (i.e., "@")
-      void SetAntiClockwiseStereo()       { SetFlag(OB_ACSTEREO_ATOM|OB_CHIRAL_ATOM); }
+      //void SetAntiClockwiseStereo()       { SetFlag(OB_ACSTEREO_ATOM|OB_CHIRAL_ATOM); }
       //! Mark an atom as having + chiral volume
-      void SetPositiveStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
+      //void SetPositiveStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
       //! Mark an atom as having - chiral volume
-      void SetNegativeStereo() { SetFlag(OB_NEG_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
+      //void SetNegativeStereo() { SetFlag(OB_NEG_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
       //! Clear all stereochemistry information
+      /*
       void UnsetStereo()
         {
           _flags &= ~(OB_ACSTEREO_ATOM);
@@ -187,6 +193,7 @@ namespace OpenBabel
           _flags &= ~(OB_NEG_CHIRAL_ATOM);
           _flags &= ~(OB_CHIRAL_ATOM);
         }
+        */
       //! Mark an atom as belonging to at least one ring
       void SetInRing()         { SetFlag(OB_RING_ATOM); }
       //! Mark an atom as being chiral with unknown stereochemistry
@@ -214,7 +221,8 @@ namespace OpenBabel
       double     GetExactMass()     const;
       //! \return the internal atom index (e.g., inside an OBMol)
       unsigned int GetIdx()           const { return((int)_idx);  }
-      unsigned long GetId()           const { return _id; }
+      unsigned int GetIndex() const { return _idx - 1; }
+      unsigned long GetId() const { return _id; }
       //! \return the index into a pointer-driven array as used by
       //!   GetCoordPtr() or SetCoordPtr()
       unsigned int GetCoordinateIdx() const { return((int)_cidx); }
@@ -459,19 +467,19 @@ namespace OpenBabel
       //! \return Is this atom an axial atom in a ring
       bool IsAxial();
       //! \return Does this atom have SMILES-specified clockwise "@@" stereochemistry?
-      bool IsClockwise()         { return(HasFlag(OB_CSTEREO_ATOM));  }
+      //bool IsClockwise()         { return(HasFlag(OB_CSTEREO_ATOM));  }
       //! \return Does this atom have SMILES-specified anticlockwise "@" stereochemistry?
-      bool IsAntiClockwise()     { return(HasFlag(OB_ACSTEREO_ATOM)); }
+      //bool IsAntiClockwise()     { return(HasFlag(OB_ACSTEREO_ATOM)); }
       //! \return Does this atom have a positive chiral volume?
-      bool IsPositiveStereo() { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
+      //bool IsPositiveStereo() { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
       //! \return Does this atom have a negative chiral volume?
-      bool IsNegativeStereo() { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
+      //bool IsNegativeStereo() { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
       //! \return Does this atom have SMILES-specified stereochemistry?
-      bool HasChiralitySpecified()
-        { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
+      //bool HasChiralitySpecified()
+      //  { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
       //! \return Does this atom have a specified chiral volume?
-      bool HasChiralVolume()
-        { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
+      //bool HasChiralVolume()
+      //  { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
       //! \return Is this atom a hydrogen-bond acceptor (receptor)?
       bool IsHbondAcceptor();
       //! \return Is this atom a hydrogen-bond donor?

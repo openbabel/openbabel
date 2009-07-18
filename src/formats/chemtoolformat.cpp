@@ -109,7 +109,7 @@ namespace OpenBabel
           bondtype = 1;
         if (bond->GetBO() == 3)
           bondtype = 3;
-        // FIXME: use flag-info, too
+        // @todo: use flag-info, too
         snprintf(buffer, BUFF_SIZE, "%d\t%d\t%d\t%d\t%1d",
                  (int)floor(atom1->GetX() * conv_factor + 0.5),
                  (int)floor(atom1->GetY() * conv_factor + 0.5),

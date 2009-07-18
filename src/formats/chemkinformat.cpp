@@ -1071,7 +1071,7 @@ a,b,c,d = a, T***, T*, T**
 See also http://gems.mines.edu/~reactionxml/Fall-off2.pdf
 */
 /*
-TODO
+@todo
 Make case independent
 Isotopes like D in ELEMENTS list
 ELEM and END is optional

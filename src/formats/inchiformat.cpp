@@ -254,7 +254,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
   }
 
-  //***TODO 0D stereo, implicit H isotopes
+  //***@todo 0D stereo, implicit H isotopes
   //Stereochemistry
   for(i=0;i<out.num_stereo0D;++i)
   {
@@ -314,10 +314,12 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         return false;
       patom->SetData(cd);
 
+      /* @todo
       if(stereo.parity==INCHI_PARITY_EVEN)
           patom->SetClockwiseStereo();
       else if(stereo.parity==INCHI_PARITY_ODD)
           patom->SetAntiClockwiseStereo();
+          */
 
       break;
     }
@@ -368,14 +370,16 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   bool Is0D=true;
   if(mol.GetDimension()!=3)
   {
-    mol.FindChiralCenters();
+    //mol.FindChiralCenters();
     if(mol.GetDimension()==2)
     {
       //Add pseudo z coordinates for wedge and hash bonds
       FOR_ATOMS_OF_MOL(a,mol)
       {
+        /* @todo
         if(a->IsChiral())
           CalcSignedVolume(mol, &*a, false);
+        */
       }
     }
   }
@@ -475,10 +479,12 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             stereo.neighbor[i] = refs[i]-1;
 
           stereo.parity = INCHI_PARITY_UNKNOWN;
+          /* @todo
           if(patom->IsPositiveStereo() || patom->IsClockwise())
             stereo.parity = INCHI_PARITY_EVEN;
           if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
             stereo.parity = INCHI_PARITY_ODD;
+          */
           stereoVec.push_back(stereo);
         }
       }

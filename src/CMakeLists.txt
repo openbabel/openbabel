@@ -45,6 +45,7 @@ set(stereo_srcs
     stereo/cistrans.cpp
     stereo/tetrahedral.cpp
     stereo/perception.cpp
+    stereo/facade.cpp
 )
 
 set(openbabel_srcs
@@ -64,6 +65,7 @@ set(openbabel_srcs
     forcefield.cpp
     format.cpp
     generic.cpp
+    graphsym.cpp
     grid.cpp
     griddata.cpp
     kekulize.cpp

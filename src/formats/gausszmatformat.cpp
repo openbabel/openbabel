@@ -259,7 +259,7 @@ namespace OpenBabel
 
     mol.BeginModify();
     
-    //TODO: Read keywords from this line
+    //@todo: Read keywords from this line
     while (ifs.getline(buffer,BUFF_SIZE))
       if (strncmp(buffer,"#", 1) == 0) // begins with '#'
 			  break;

@@ -907,10 +907,12 @@ puts("found name");
                 atom2->SetVector(atom.GetVector());
                 atom2->SetFormalCharge(atom.GetFormalCharge());
                 atom2->SetAtomicNum(atom.GetAtomicNum());
+                /*
                 if (atom.IsClockwise())
                   atom2->SetClockwiseStereo();
                 else if (atom.IsAntiClockwise())
                   atom2->SetAntiClockwiseStereo();
+                */
                 atoms[nodeId] = atom2->GetIdx();
                 break;
               }

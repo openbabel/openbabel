@@ -304,10 +304,12 @@ namespace OpenBabel
       {
         if (atom->IsChiral())
           {
+            /* @todo
             snprintf(buffer, BUFF_SIZE, "%4s %5d is chiral: %s",
                     etab.GetSymbol(atom->GetAtomicNum()),
                     atom->GetIdx(),
                     (atom->IsClockwise() ? "clockwise" : "counterclockwise"));
+                    */
 
             ofs << buffer << "\n";
           }

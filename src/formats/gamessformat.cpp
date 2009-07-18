@@ -369,7 +369,7 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE); //-----
             ifs.getline(buffer,BUFF_SIZE);  // blank line
             ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE); // point charges TODO
+            ifs.getline(buffer,BUFF_SIZE); // point charges @todo
             ifs.getline(buffer,BUFF_SIZE);	// column headings dipole moment
             ifs.getline(buffer,BUFF_SIZE);
             

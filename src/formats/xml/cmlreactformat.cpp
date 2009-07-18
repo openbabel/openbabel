@@ -473,7 +473,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     {
       xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
       uri=BAD_CAST NamespaceURI();
-      alturi = BAD_CAST "http://www.gaseq.co.uk/obr"; //TODO: better alturi
+      alturi = BAD_CAST "http://www.gaseq.co.uk/obr"; //@todo: better alturi
     }
 
     if(list)

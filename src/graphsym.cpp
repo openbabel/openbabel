@@ -55,6 +55,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/canon.h>
 #include <openbabel/graphsym.h>
+#include <openbabel/stereo/stereo.h>
 
 using namespace std;
 
@@ -337,6 +338,258 @@ namespace OpenBabel {
   }
 }
 
+/***************************************************************************
+* FUNCTION: BreakChiralTies
+*
+* DESCRIPTION:
+*       After the achiral symmetry analysis ChiralSymmetry() is done, but
+*       before the "tie breaker" step (see CanonicalLabels(), below), there
+*       may be two (or more) chiral centers in the same symmetry class that
+*       actually have different chirality.  This function finds such chiral
+*       centers, and compares their chirality.  If it finds that two atoms
+*       in the same symmetry class have the same chirality, it leaves them
+*       alone, but if they have opposite chirality, it breaks the tie
+*       between the two atoms.
+*
+*       Actually, it's more subtle than that.  Suppose there are a bunch of
+*       chiral atoms in the same symmetry class.  The the class is divided
+*       into two classes: All atoms with one chirality go into one class,
+*       and all atoms with the opposite chirality go in the other class.
+*
+* INPUTS:
+*       pmol                the molecule
+*       frag_atoms          atoms of the molecules in this fragment
+*       atom_sym_classes    vector of atom/symclass pairs
+*
+***************************************************************************/
+
+void OBGraphSym::BreakChiralTies(OBMol *pmol,
+                            OBBitVec &frag_atoms, int nfragatoms,
+                            vector<pair<OBAtom*, unsigned int> > &atom_sym_classes)
+{
+  vector<pair<OBAtom*,unsigned int> > vp1, vp2;
+
+  // for keeping track of atoms we've already considered
+  OBBitVec used_atoms;
+  used_atoms.Clear();
+  used_atoms.Resize(pmol->NumAtoms());
+
+  // Convert the atom/class pairs to an array indexed by atom idx.
+  // This is just for convenience in the next step.  Note that there
+  // will be "holes" in this vector since it's a molecule fragment.
+  vector<unsigned int> index2sym_class(pmol->NumAtoms());
+  vector<pair<OBAtom*,unsigned int> >::iterator api;
+  for (api = atom_sym_classes.begin(); api < atom_sym_classes.end(); api++)
+    index2sym_class[api->first->GetIndex()] = api->second;
+
+  // 
+  // Tetrahedral atoms
+  //
+  vector<unsigned long> tetrahedral = FindTetrahedralAtoms(_pmol, index2sym_class);
+  cout << "num tetra = " << tetrahedral.size() << endl;
+  for (vector<unsigned long>::iterator id1 = tetrahedral.begin(); id1 != tetrahedral.end(); ++id1) {
+    OBAtom *atom1 = _pmol->GetAtomById(*id1);
+    int index1 = atom1->GetIndex();
+    // We only want: unused and part of this fragment.
+    if (!frag_atoms[index1])
+      continue;
+    if (used_atoms[index1])
+      continue;
+    used_atoms.SetBitOn(index1);
+    //if (GetValence(atom) < 4) // Valence relative to this fragment
+    //  continue;
+
+    // Get its symmetry class
+    int symclass = index2sym_class[index1];
+ 
+    // Start the vector of "same class" atoms by adding this atom
+    vector<OBAtom *> same_class;
+    same_class.push_back(atom1);
+
+    // Inner Loop: Find all other atoms with the same symmetry class
+    for (vector<unsigned long>::iterator id2 = id1+1; id2 != tetrahedral.end(); ++id2) {
+      OBAtom *atom2 = _pmol->GetAtomById(*id2);
+      int index2 = atom2->GetIndex();
+      if (used_atoms[index2])
+        continue;
+      if (index2sym_class[index2] == symclass) {
+        same_class.push_back(atom2);
+        used_atoms.SetBitOn(index2);
+      }
+    }
+    
+    // Unless at least two atoms in the class, there are no ties to break
+    if (same_class.size() < 2)
+      continue;
+
+    // DEBUG    
+    cout << "BreakChiralTies: same_class = ";
+    vector<OBAtom*>::iterator ia;
+    for (ia = same_class.begin(); ia != same_class.end(); ia++)
+      cout << (*ia)->GetIndex() << " ";
+    cout << "\n";
+    // DEBUG
+
+    /*
+    // Create a vector of each atom's neighbors, and sort them
+    // (the neighbors) by symmetry class.  When this step is through,
+    // we'll be able to compare the 3D coordinates.
+
+    vector<pair<OBAtom*, vector<OBAtom*> > > sorted_neighbors;
+    vector<OBAtom*>::iterator iatom;
+    for (iatom = same_class.begin(); iatom != same_class.end(); iatom++) {
+
+      // Gather the neighbors, and sort them by symmetry class
+      vector<pair<OBAtom*,unsigned int> > neighbors;    // pair: neighbor/symclass
+      FOR_NBORS_OF_ATOM(i_nbr, (*iatom)) {
+        OBAtom *nbr = &(*i_nbr);
+        int idx = nbr->GetIdx();
+        if (frag_atoms[idx])
+          neighbors.push_back(pair<OBAtom*,unsigned int>(nbr, idx2sym_class[idx]));
+      }
+      sort(neighbors.begin(), neighbors.end(), ComparePairSecond);
+
+      // Copy the sorted neighbors to a simple vector (we don't care
+      // about the symclass any more now that they're sorted).
+      vector<OBAtom*> sorted;
+      vector<pair<OBAtom *, unsigned int> >::iterator ni;
+      for (ni = neighbors.begin(); ni != neighbors.end(); ni++)
+        sorted.push_back((*ni).first);
+
+      // Now put the chiral atom, and its sorted neighbors, into a vector.
+      sorted_neighbors.push_back(pair<OBAtom*, vector<OBAtom*> >(*iatom, sorted));
+    }
+    
+    // See the comments in cansmilesformat.cpp::GetChiralStereo regarding
+    // "torsion".  If two atoms' neighbors, sorted the same way, have torsion
+    // angles with the same sign (both positive or both negative torsions),
+    // then their chiralities match, otherwise they're opposite chiralities.
+    // Using this fact, divide the atoms in this symmetry class into two groups.
+
+    OBAtom *ref_atom              = sorted_neighbors[0].first;
+    vector<OBAtom*> ref_neighbors = sorted_neighbors[0].second;
+
+    double t1 = CalcTorsionAngle(ref_neighbors[0]->GetVector(),
+                                 ref_neighbors[1]->GetVector(),
+                                 ref_neighbors[2]->GetVector(),
+                                 ref_neighbors[3]->GetVector());
+
+    vector<OBAtom*> symclass1, symclass2;
+    symclass1.push_back(ref_atom);
+
+    for (int i = 1; i < sorted_neighbors.size(); i++) {
+      OBAtom *atom             = sorted_neighbors[i].first;
+      vector<OBAtom*>neighbors = sorted_neighbors[i].second;
+      double t2 = CalcTorsionAngle(neighbors[0]->GetVector(),
+                                   neighbors[1]->GetVector(),
+                                   neighbors[2]->GetVector(),
+                                   neighbors[3]->GetVector());
+
+      if (t1*t2 >= 0.0)
+        symclass1.push_back(atom);      // t1 & t2 have same signs ==> same chirality
+      else
+        symclass2.push_back(atom);      // t1 & t2 have opposite signs ==> opposite chirality
+    }
+    */
+    vector<OBAtom*> symclass1, symclass2;
+
+    // If there's nothing in symclass2, then we don't have to split 
+    // the symmetry class.
+    if (symclass2.empty())
+      continue;
+
+    cout << "Time to break chiral ties...\n";
+
+    // Time to break the class in two. Double all symmetry classes
+    // Then, either add one or subtract one to all the atoms in symclass2,
+    // the atoms that didn't match the chirality of the "reference" class above.
+    // The add-or-subtract decision is based on t1, the "torsion angle" calculated
+    // above; by doing this, we force a consistent choice of '@' or '@@' for the,
+    // two chiral centers; otherwise it's arbitrary and you'll get two different SMILES.
+    /*
+    for (int i = 0; i < atom_sym_classes.size(); i++) {
+      atom_sym_classes[i].second *= 2;
+      for (int j = 0; j < symclass2.size(); j++) {
+        if (symclass2[j] == atom_sym_classes[i].first) {
+          if (t1 > 0)
+            atom_sym_classes[i].second += 1;
+          else
+            atom_sym_classes[i].second -= 1;
+        }
+      }
+    }
+    */
+    // Now propagate the change across the whole molecule with the
+    // extended sum-of-invariants.
+    ExtendInvariants(atom_sym_classes, nfragatoms, pmol->NumAtoms());
+    
+  }
+
+  // 
+  // Cis/Trans bonds
+  //
+  vector<unsigned long> cistrans = FindCisTransBonds(_pmol, index2sym_class);
+  cout << "num cis/trans = " << cistrans.size() << endl;
+  for (vector<unsigned long>::iterator id1 = cistrans.begin(); id1 != cistrans.end(); ++id1) {
+    OBBond *bond1 = _pmol->GetBondById(*id1);
+    unsigned int begin1 = bond1->GetBeginAtom()->GetIndex();
+    unsigned int end1 = bond1->GetEndAtom()->GetIndex();
+    
+    // We only want: unused and part of this fragment.
+    if (!frag_atoms[begin1] || !frag_atoms[end1])
+      continue;
+    if (used_atoms[begin1] || used_atoms[end1])
+      continue;
+    used_atoms.SetBitOn(begin1);
+    used_atoms.SetBitOn(end1);
+
+    // Get its symmetry class
+    int beginSymClass = index2sym_class[begin1];
+    int endSymClass = index2sym_class[end1];
+ 
+    // Start the vector of "same class" bonds by adding this bond
+    vector<OBBond *> same_class;
+    same_class.push_back(bond1);
+
+    // Inner Loop: Find all other bonds with the same symmetry classes
+    for (vector<unsigned long>::iterator id2 = id1+1; id2 != cistrans.end(); ++id2) {
+      OBBond *bond2 = _pmol->GetBondById(*id2);
+      unsigned int begin2 = bond2->GetBeginAtom()->GetIndex();
+      unsigned int end2 = bond2->GetEndAtom()->GetIndex();
+      if (used_atoms[begin2] || used_atoms[end2])
+        continue;
+      if (((index2sym_class[begin2] == beginSymClass) && (index2sym_class[end2] == endSymClass)) ||
+          ((index2sym_class[begin2] == endSymClass) && (index2sym_class[end2] == beginSymClass))) {
+        same_class.push_back(bond2);
+        used_atoms.SetBitOn(begin2);
+        used_atoms.SetBitOn(end2);
+      }
+    }
+    
+    // Unless at least two atoms in the class, there are no ties to break
+    if (same_class.size() < 2)
+      continue;
+
+    // DEBUG    
+    cout << "BreakChiralTies: same_class = ";
+    vector<OBBond*>::iterator ib;
+    for (ib = same_class.begin(); ib != same_class.end(); ib++)
+      cout << (*ib)->GetIdx() << " ";
+    cout << "\n";
+    // DEBUG
+
+
+
+    vector<OBBond*>::iterator ibond;
+    for (ib = same_class.begin(); ibond != same_class.end(); ibond++) {
+      
+    }
+
+
+
+  }
+ 
+}
 
 /***************************************************************************
 * FUNCTION: CreateNewClassVector
@@ -454,6 +707,7 @@ namespace OpenBabel {
   }
 }
 
+
 /***************************************************************************
 * FUNCTION: ExtendInvariants
 *
@@ -484,6 +738,12 @@ namespace OpenBabel {
 
   if (nclasses1 < nfragatoms) {
     for (int i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
+      cout << "Classes:" << endl;
+      for (unsigned int j = 0; j < symmetry_classes.size(); ++j)
+        cout << symmetry_classes[j].first->GetIndex() << " : " << symmetry_classes[j].second << endl;
+      cout << "-----------" << endl;
+      BreakChiralTies(_pmol, *_frag_atoms, nfragatoms, symmetry_classes);
+      
       CreateNewClassVector(symmetry_classes, tmp_classes, natoms);
       CountAndRenumberClasses(tmp_classes, nclasses2);
       symmetry_classes = tmp_classes;
@@ -491,6 +751,11 @@ namespace OpenBabel {
       nclasses1 = nclasses2;
     }
   }
+      cout << "FINAL Classes:" << endl;
+      for (unsigned int j = 0; j < symmetry_classes.size(); ++j)
+        cout << symmetry_classes[j].first->GetIndex() << " : " << symmetry_classes[j].second << endl;
+      cout << "-----------" << endl;
+ 
   return nclasses1;
 }
 

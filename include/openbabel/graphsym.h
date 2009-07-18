@@ -57,7 +57,8 @@ namespace OpenBabel {
       int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes,
                            int nfragatoms, int natoms);
       
-
+      void BreakChiralTies(OBMol *pmol,OBBitVec &frag_atoms, int nfragatoms,
+                            vector<pair<OBAtom*, unsigned int> > &atom_sym_classes);
     public:
       //! Constructor
       OBGraphSym(OBMol* pmol = NULL, OBBitVec* frag_atoms = NULL)
@@ -80,6 +81,16 @@ namespace OpenBabel {
       virtual ~OBGraphSym();
 
       bool GetGTDVector(std::vector<int> &gtd);
+      /**
+       * Calculate the symmetry classes for the molecule. The result will be 
+       * stored in @p symmetry_classes.
+       *
+       * The results in @p symmetry_classes will be ordered by symmetry 
+       * classes. Use the OBAtom* pointer in the std::pair to match the atoms 
+       * with the right symmetry classes.
+       *
+       * @return The number of symmetry classes.
+       */
       int CalculateSymmetry(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
     };
 

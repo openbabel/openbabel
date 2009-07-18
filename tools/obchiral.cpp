@@ -87,7 +87,7 @@ int main(int argc,char **argv)
       if (mol.Empty())
         break;
       cout << "Molecule "<< c << ": " << mol.GetTitle() << endl;
-      mol.FindChiralCenters(); // labels all chiral atoms
+      //mol.FindChiralCenters(); // labels all chiral atoms
       vector<OBAtom*>::iterator i; // iterate over all atoms
       for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
         {
@@ -135,7 +135,7 @@ int main(int argc,char **argv)
              for(n=1;n<5;++n)nbr_atms.push_back(n);
              cd->SetAtom4Refs(nbr_atms,output); 
              } */
-              
+    /* FIXME          
           if (!mol.HasNonZeroCoords())
             {
               cout << "Calcing 0D chirality "<< CorrectChirality(mol,atom)<<endl;
@@ -150,6 +150,7 @@ int main(int argc,char **argv)
             cout<<endl;
           }
           cout << "Clockwise? " << atom->IsClockwise() << endl;
+          */
         } // end iterating over atoms
 
     } // end big for loop

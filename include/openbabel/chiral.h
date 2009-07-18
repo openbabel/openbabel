@@ -29,6 +29,7 @@ OBAPI void GraphPotentials(OBMol &mol, std::vector<double> &pot);
 OBAPI void construct_g_matrix(OBMol &mol, std::vector<std::vector<double> > &m);
 OBAPI void construct_c_matrix(OBMol &mol, std::vector<std::vector<double > > &m);
 
+/*
 //! Calculate the signed volume for an atom.
 OBAPI double CalcSignedVolume(OBMol &mol,OBAtom*,bool ReZeroZ=true);
 
@@ -38,6 +39,7 @@ OBAPI void GetChirality(OBMol &mol, std::vector<int> &chirality);
 //! Calculates parity of a vector of 4 items
 OBAPI int GetParity4Ref(std::vector<unsigned int> pref);
 OBAPI bool CorrectChirality(OBMol &mol, OBAtom *atm, atomreftype i=input, atomreftype o=output);
+*/
 }
 
 #endif // OB_CHIRAL_H

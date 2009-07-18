@@ -7,23 +7,15 @@
 using namespace std;
 using namespace OpenBabel;
 
-const int From2D = 2;
-const int From3D = 3;
-
 std::string GetFilename(const std::string &filename)
 {
-  #ifdef TESTDATADIR
-    string testdatadir = TESTDATADIR;
-    string path = testdatadir + filename;
-  #else
-    string path = "files/" + filename;
-  #endif
+  string path = TESTDATADIR + filename;
 
   return path;
 }
 
 std::string test_singleTetrahedral(const std::string &file, 
-    const OBTetrahedralStereo::Config &correct, int fromDims = From3D)
+    const OBTetrahedralStereo::Config &correct)
 {
   OBMol mol;
   OBConversion conv;
@@ -40,12 +32,6 @@ std::string test_singleTetrahedral(const std::string &file,
   conv.Read(&mol, &ifs);
   ifs.close();
 
-  // perceive stereochemistry from 2D/3D
-  if (fromDims == From3D)
-    StereoFrom3D(&mol);
-  else
-    StereoFrom2D(&mol);
-
   std::vector<OBGenericData *> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
   OB_ASSERT( stereoData.size() == 1 );
 
@@ -60,6 +46,7 @@ std::string test_singleTetrahedral(const std::string &file,
       }
 
       OBTetrahedralStereo::Config cfg = ts->GetConfig();
+      OB_ASSERT( cfg.specified );
       // change refs 
       OBStereo::Permutate(cfg.refs, 1, 2);
       OB_ASSERT( cfg != correct );
@@ -83,7 +70,7 @@ std::string test_singleTetrahedral(const std::string &file,
 }
 
 std::string test_singleCisTrans(const std::string &file, 
-    const OBCisTransStereo::Config &correct, int fromDims = From3D)
+    const OBCisTransStereo::Config &correct)
 {
   OBMol mol;
   OBConversion conv;
@@ -100,13 +87,6 @@ std::string test_singleCisTrans(const std::string &file,
   conv.Read(&mol, &ifs);
   ifs.close();
 
-  // perceive stereochemistry from 3D
-  if (fromDims == From3D)
-    StereoFrom3D(&mol);
-  else
-    StereoFrom2D(&mol);
-
-
   std::vector<OBGenericData *> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
   OB_ASSERT( stereoData.size() == 1 );
 
@@ -121,6 +101,32 @@ std::string test_singleCisTrans(const std::string &file,
       }
     }
   }
+
+  return conv.WriteString(&mol);
+}
+
+std::string test_singleUnspecifiedTetrahedral(const std::string &file, 
+    unsigned long center)
+{
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("sdf");
+  conv.SetOutFormat("can");
+
+  const std::string filename = GetFilename(file);
+  ifstream ifs(filename.c_str());
+  if (!ifs) {
+    cerr << "Could not open " << filename << endl;
+    return std::string();
+  }
+
+  conv.Read(&mol, &ifs);
+  ifs.close();
+
+  OBStereoFacade stereo(&mol);
+  OB_ASSERT( stereo.HasTetrahedralStereo(center) );
+  OBTetrahedralStereo *ts = stereo.GetTetrahedralStereo(center);
+  OB_ASSERT( ts->GetConfig().specified == false );
 
   return conv.WriteString(&mol);
 }
@@ -189,6 +195,8 @@ int main()
   OB_ASSERT( smiles3D_1 == smiles3D_4 );
   OB_ASSERT( smiles3D_1 == smiles3D_5 );
   OB_ASSERT( smiles3D_1 == smiles3D_6 );
+  
+  cout << smiles3D_1 << endl;
 
   //////////////////////////////////////////////////////////////////////////////
   // 2      StereoFrom3D for cis/trans bonds
@@ -246,6 +254,8 @@ int main()
 
   OB_ASSERT( smiles7 == smiles9 );
   OB_ASSERT( smiles8 == smiles10 );
+  
+  cout << smiles7 << endl;
 
   // 3      No stereochemistry
 
@@ -270,7 +280,7 @@ int main()
   //          / \
   //        Br   Cl
   string smiles2D_1 = test_singleTetrahedral("tetrahedral2D1.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise), From2D);
+      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
  
   // 3.1.2  Input molecule with 4 refs (2x in plane bond, 'real' hash & 'inverted' hash bond)
   //
@@ -280,7 +290,7 @@ int main()
   //          / \
   //        Br   Cl
   string smiles2D_2 = test_singleTetrahedral("tetrahedral2D4.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise), From2D);
+      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
  
   // 3.1.3  Input molecule with 4 refs (2x in plane bond, 'real' wedge & 'inverted' wedge bond)
   //
@@ -290,10 +300,12 @@ int main()
   //          / \
   //        Br   Cl
   string smiles2D_3 = test_singleTetrahedral("tetrahedral2D5.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise), From2D);
+      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
 
   OB_ASSERT( smiles2D_1 == smiles2D_2 );
   OB_ASSERT( smiles2D_1 == smiles2D_3 );
+  
+  cout << smiles2D_1 << endl;
   
   // 3.2    Input molecule with 3 refs (2x in plane, one behind plane or in front of plane)
  
@@ -306,7 +318,7 @@ int main()
   //        Br   Cl
   string smiles2D_4 = test_singleTetrahedral("tetrahedral2D2.mol",
       OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitId), 
-      OBStereo::AntiClockwise), From2D);
+      OBStereo::AntiClockwise));
  
   // 3.2.2  Input molecule with 3 refs (2x in plane bond, inverted wedge bond)
   //
@@ -317,7 +329,7 @@ int main()
   //        Br   Cl
   string smiles2D_5 = test_singleTetrahedral("tetrahedral2D6.mol",
       OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitId), 
-      OBStereo::Clockwise), From2D);
+      OBStereo::Clockwise));
  
   // 3.2.3  Input molecule with 3 refs (2x in plane bond, real hash bond)
   //
@@ -328,7 +340,7 @@ int main()
   //        Br   Cl
   string smiles2D_6 = test_singleTetrahedral("tetrahedral2D3.mol",
       OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitId), 
-      OBStereo::Clockwise), From2D);
+      OBStereo::Clockwise));
  
   // 3.2.3  Input molecule with 3 refs (2x in plane bond, real hash bond)
   //
@@ -339,12 +351,16 @@ int main()
   //        Br   Cl
   string smiles2D_7 = test_singleTetrahedral("tetrahedral2D7.mol",
       OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitId), 
-      OBStereo::AntiClockwise), From2D);
+      OBStereo::AntiClockwise));
 
- /*
   OB_ASSERT( smiles2D_4 == smiles2D_7 );
   OB_ASSERT( smiles2D_5 == smiles2D_6 );
-*/
+
+  cout << smiles2D_4 << endl;
+
+  string smiles2D_8 = test_singleUnspecifiedTetrahedral("tetrahedral2D8.mol", 1);
+
+  cout << smiles2D_8 << endl;
 
   return 0;
 }

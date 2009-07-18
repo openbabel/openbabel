@@ -105,7 +105,7 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
       {
         cerr << "CDXML Format: Node type \"" << buf <<
                   "\" is not currently supported." << endl;
-        return false; // FIXME: use as many types as possible
+        return false; // @todo: use as many types as possible
 	  }
     }
     _tempAtom.SetAtomicNum(6); // default is carbon
@@ -260,7 +260,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       _scale /= mol.NumBonds();
 	}
     else
-      _scale = 1.; // FIXME: what happens if the molecule has no bond?
+      _scale = 1.; // @todo: what happens if the molecule has no bond?
     _scale = 30. / _scale;
     _offset = 0;
   }

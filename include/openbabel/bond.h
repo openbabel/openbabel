@@ -4,6 +4,7 @@ bond.h - Handle OBBond class.
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
+Some portions Copyright (C) 2008 by Tim Vandermeersch
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -32,7 +33,6 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-
   class OBAtom;
 
   //! OBEdgeBase is declared for backwards-compatibility with 2.0 and earlier code
@@ -61,26 +61,48 @@ namespace OpenBabel
 #define OB_CLOSURE_BOND   (1<<10)
   // 11-16 currently unused
 
-  // class introduction in bond.cpp
- class OBAPI OBBond: public OBBase
-    {
-    friend class OBMol;
+#define OB_WEDGE_OR_HASH_BOND     (1<<11)
+#define OB_CIS_OR_TRANS_BOND     (1<<12)
+  /// @addtogroup core Core classes 
+  //@{
+  //class OBBondPrivate;
+  class OBAPI OBBond: public OBBase
+  {
     protected:
       unsigned int                _idx;   //!< Unique edge index used by GetIdx() and SetIdx()
       OBMol                      *_parent;//!< The molecule which contains me (if any)
       OBAtom                     *_bgn;   //!< I connect one node
       OBAtom                     *_end;   //!< to another node
-
       char                        _order; //!< Bond order (1, 2, 3, 5=aromatic)
       unsigned short int          _flags; //!< Any flags for this bond
-      
       unsigned long                 _id;        //!< unique id
+      //OBBondPrivate * const d;
 
-      bool HasFlag(int flag)    { return((_flags & flag) != 0); }
-      void SetFlag(int flag)    { _flags |= flag;               }
-      void UnsetFlag(int flag)  { _flags &= (~(flag));          }
+      /** 
+      * @return True id the @p flag is set.
+       */
+      bool HasFlag(int flag) const { return ((_flags & flag) != 0); }
+      /** 
+       * Sets the bitwise @p flag
+       */
+      void SetFlag(int flag) { _flags |= flag; }
+      /** 
+       * Unsets the bitwise @p flag
+       */
+      void UnsetFlag(int flag) { _flags &= (~(flag)); }
 
     public:
+      enum Flag {
+        Aromatic = (1<<1), //!< An aromatic bond (regardless of bond order)
+        Ring     = (1<<4), //!< A bond in a ring
+        Closure  = (1<<10) //!< A bond which "closes" a ring when walking the molecular graph
+      };
+      enum StereoFlag {
+        Wedge       = (1<<2),  //!< A solid black wedge in 2D representations -- i.e., "up" from the 2D plane
+        Hash        = (1<<3),  //!< A dashed "hash" bond in 2D representations -- i.e., "down" from the 2D plane
+        WedgeOrHash = (1<<11), //!< The bond is either wedge or hash, this is a seperate flag!
+        CisOrTrans  = (1<<12)  //!< Indicates the 2D/3D coordinates are accidently cis/trans.
+      };
       //! Whether this bond has been visited by a graph algorithm
       /** \deprecated Use OBBitVec objects instead to be fully thread-safe. **/
       bool Visit;
@@ -123,10 +145,21 @@ namespace OpenBabel
       void SetKTriple();
       //! Mark that this bond is aromatic. Does not update atoms or validate.
       void SetAromatic()    { SetFlag(OB_AROMATIC_BOND); }
-      //! Mark that this bond has 2D "hash" notation (i.e., goes in a negative Z direction from the beginning to end atoms)
-      void SetHash()        { SetFlag(OB_HASH_BOND);     }
-      //! Mark that this bond has 2D "wedge" notation (i.e., goes in a positive Z direction from the beginning to end atoms)
-      void SetWedge()       { SetFlag(OB_WEDGE_BOND);    }
+      /** 
+       * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive 
+       * Z direction from the beginning to end atoms)
+       */
+      void SetWedge() { SetFlag(Wedge); }
+      /** 
+       * Mark that this bond has 2D "hash" notation (i.e., goes in a negative 
+       * Z direction from the beginning to end atoms)
+       */
+      void SetHash() { SetFlag(Hash); }
+      /** 
+       * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive 
+       * Z direction from the beginning to end atoms)
+       */
+      void SetWedgeOrHash() { SetFlag(WedgeOrHash); }
       //! Mark that this bond has an "up" torsion for double-bond stereochem (i.e., "/" in SMILES notation
       void SetUp()          { SetFlag(OB_TORUP_BOND); UnsetFlag(OB_TORDOWN_BOND); }
       //! Mark that this bond has an "down" torsion for double-bond stereochem (i.e., "\" in SMILES notation
@@ -258,11 +291,25 @@ namespace OpenBabel
       /** \return Whether this bond is a "hash" in 2D representations
           (i.e., goes in a negative Z direction from the beginning to end atoms) **/
       bool IsHash()  {    return(HasFlag(OB_HASH_BOND));     }
+      /**
+       * @return True if this bond is either a wedge or hash.
+       * @note: This is a seperate bond type
+       * @since 3.0
+       */
+      bool IsWedgeOrHash() const { return(HasFlag(WedgeOrHash)); }
+      /**
+       * @return True if this bond is either a cis or trans.
+       * @since 3.0
+       */
+      bool IsCisOrTrans() const { return(HasFlag(CisOrTrans)); }
+ 
       //! \return whether the geometry around this bond "looks" unsaturated
       bool IsDoubleBondGeometry();
       //@}
 
     }; // class OBBond
+  
+  //@} group
 
   //! A standard iterator over a vector of bonds
   typedef std::vector<OBBond*>::iterator OBBondIterator;
@@ -271,5 +318,5 @@ namespace OpenBabel
 
 #endif   // OB_BOND_H
 
-//! \file bond.h
-//! \brief Handle bonds
+//! @file bond.h
+//! @brief Handle bonds

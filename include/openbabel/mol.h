@@ -497,7 +497,7 @@ namespace OpenBabel
     //! Find all ring atoms and bonds. Does not need to call FindSSSR().
     void FindRingAtomsAndBonds();
     //! Find all chiral atom centers. See OBAtom::IsChiral() for more details
-    void FindChiralCenters();
+    //void FindChiralCenters();
     // documented in mol.cpp -- locates all atom indexes which can reach 'end'
     void FindChildren(std::vector<int> & children,int bgnIdx,int endIdx);
     // documented in mol.cpp -- locates all atoms which can reach 'end'

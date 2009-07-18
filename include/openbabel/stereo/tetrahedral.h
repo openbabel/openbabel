@@ -66,7 +66,8 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
       Config(unsigned long _center, unsigned long from_or_towards, 
           const OBStereo::Refs &_refs, OBStereo::Winding _winding = OBStereo::Clockwise,
           OBStereo::View _view = OBStereo::ViewFrom) : center(_center), 
-          from(from_or_towards), refs(_refs), winding(_winding), view(_view)
+          from(from_or_towards), refs(_refs), winding(_winding), view(_view),
+          specified(true)
       {  }
       /**
        * Equal to operator.
@@ -111,6 +112,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
       OBStereo::Refs refs; //!< The 3 reference ids.
       OBStereo::Winding winding; //<! The winding for the 3 reference ids.
       OBStereo::View view; //!< Specify viewing from or towards the atom with @p from/towards id.
+      bool specified;
       //@}
     };
 
