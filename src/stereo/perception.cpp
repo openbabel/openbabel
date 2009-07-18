@@ -80,6 +80,8 @@ namespace OpenBabel {
     if (symClasses.size() != mol->NumAtoms())
       return configs;
  
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::TetrahedralFrom3D", obAuditMsg);
+
     // find all tetrahedral centers
     std::vector<unsigned long> centers = FindTetrahedralAtoms(mol, symClasses);
       
@@ -323,20 +325,21 @@ namespace OpenBabel {
         } else if (bond->IsWedgeOrHash()) {
           config.specified = false;
           break;
-        } 
-        // plane bonds
-        if (!plane1)
-          plane1 = nbr;
-        else if (!plane2)
-          plane2 = nbr;
-        else {
-          std::stringstream errorMsg;
-          errorMsg << "Symmetry analysis found atom with id " << center->GetId() 
-                   << " to be a tetrahedral atom but there are at least 3 in"
-                   << " plane bonds in the 2D depiction."
-                   << std::endl;
-          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-          continue;
+        } else { 
+          // plane bonds
+          if (!plane1) {
+            plane1 = nbr;
+          } else if (!plane2) {
+            plane2 = nbr;
+          } else {
+            std::stringstream errorMsg;
+            errorMsg << "Symmetry analysis found atom with id " << center->GetId() 
+                     << " to be a tetrahedral atom but there are at least 3 in"
+                     << " plane bonds in the 2D depiction."
+                     << std::endl;
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+            continue;
+          }
         }
       }
       
@@ -483,38 +486,44 @@ namespace OpenBabel {
 
   void PerceiveStereo(OBMol *mol, bool force)
   {
-    if (mol->Has3D())
-      StereoFrom3D(mol, force);
-    else
-      StereoFrom2D(mol, force);
+    switch (mol->GetDimension()) {
+      case 3:
+        StereoFrom3D(mol, force);
+        break;
+      case 2:
+        StereoFrom2D(mol, force);
+        break;
+      default:
+        break;
+    }
   }
 
   void StereoFrom3D(OBMol *mol, bool force)
   {
     if (mol->HasChiralityPerceived() && !force)
       return;
-    mol->SetChiralityPerceived();
-    mol->DeleteData(OBGenericDataType::StereoData);
      
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom3D", obAuditMsg);
 
+    mol->DeleteData(OBGenericDataType::StereoData);
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
     TetrahedralFrom3D(mol, symClasses);
     CisTransFrom3D(mol, symClasses);
+    mol->SetChiralityPerceived();
   }
 
   void StereoFrom2D(OBMol *mol, bool force)
   {
     if (mol->HasChiralityPerceived() && !force)
       return;
-    mol->SetChiralityPerceived();
-    mol->DeleteData(OBGenericDataType::StereoData);
       
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom2D", obAuditMsg);
 
+    mol->DeleteData(OBGenericDataType::StereoData);
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
     TetrahedralFrom2D(mol, symClasses);
     CisTransFrom2D(mol, symClasses);
+    mol->SetChiralityPerceived();
   }
   
   std::vector<unsigned long> FindTetrahedralAtoms(OBMol *mol, const std::vector<unsigned int> &symClasses)
