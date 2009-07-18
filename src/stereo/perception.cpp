@@ -163,13 +163,13 @@ namespace OpenBabel {
             // do we already have an atom with this symmetry class?
             if (tlist.size()) {
               // compare second with first
-              if (symClasses[nbr->GetIdx()-1] == tlist.at(0))
+              if (symClasses[nbr->GetIndex()] == tlist.at(0))
                 isCisTrans = false;
               break;
             }
               
             // save first summetry class
-            tlist.push_back(symClasses[nbr->GetIdx()-1]);
+            tlist.push_back(symClasses[nbr->GetIndex()]);
           }
         } else {
           // Valence is not 2 or 3, for example SR3=NR
@@ -200,13 +200,13 @@ namespace OpenBabel {
             // do we already have an atom with this symmetry class?
             if (tlist.size()) {
               // compare second with first
-              if (symClasses[nbr->GetIdx()-1] == tlist.at(0))
+              if (symClasses[nbr->GetIndex()] == tlist.at(0))
                 isCisTrans = false;
               break;
             }
                 
             // save first summetry class
-            tlist.push_back(symClasses[nbr->GetIdx()-1]);
+            tlist.push_back(symClasses[nbr->GetIndex()]);
           }
         } else {
           // Valence is not 2 or 3, for example SR3=NR
