@@ -74,7 +74,8 @@ namespace OpenBabel {
 " a  Add Tanimoto coeff to title in similarity search\n"
 " l# Maximum number of candidates. Default<4000>\n"
 " e  Exact match\n"
-" S\"filename\"  Structure spec in a file:\n\n"
+" S\"filename\"  Structure spec in a file:\n"
+" h  Explicit H in pattern file is blocking\n\n"
 ;
     };
 
@@ -456,8 +457,6 @@ have the same name as the datafile. Use the form:\n \
         if(!Convsm.SetInFormat("smi")) return false;
         Convsm.Read(&patternMol);
 
-        //erase -s option in GeneralOptions since it will be rewritten
-        pConv->RemoveOption("s",OBConversion::GENOPTIONS);
         if(patternMol.Empty())
         {
           obErrorLog.ThrowError(__FUNCTION__, 
@@ -497,7 +496,8 @@ have the same name as the datafile. Use the form:\n \
         string::size_type pos = txt.find_last_of('.');
         if(pos==string::npos)
           {
-            obErrorLog.ThrowError(__FUNCTION__, "Filename of pattern molecule in -S option must have an extension", obError);
+            obErrorLog.ThrowError(__FUNCTION__, "Filename of pattern molecule in -S option must\n"
+              "have an extension to define its format.", obError);
             return false;
           }
         patternstream.open(txt.c_str());
@@ -522,16 +522,22 @@ have the same name as the datafile. Use the form:\n \
       }
     patternMol.ConvertDativeBonds();//use standard form for dative bonds
 
-    //Convert to SMILES and generate a -s option for use in the final filtering
-    if(!PatternConv.SetOutFormat("smi"))
-      return false;
-    PatternConv.Write(&patternMol);
-    //remove name to leave smiles string
-    string smilesstr(smiles.str());
-    string::size_type pos = smilesstr.find_first_of(" \t\r\n");
-    if(pos!=string::npos)
-      smilesstr = smilesstr.substr(0,pos);
-    pConv->AddOption("s", OBConversion::GENOPTIONS, smilesstr.c_str());
+    //If the -s option is not already present, generate one by converting to SMILES
+    if(!pConv->IsOption("s",OBConversion::GENOPTIONS))
+    {
+      if(!PatternConv.SetOutFormat("smi"))
+        return false;
+      //if -ah option ensure explicit H remains as such in SMARTS phase
+      if(pConv->IsOption("h",OBConversion::INOPTIONS))
+        PatternConv.AddOption("h",OBConversion::OUTOPTIONS);
+      PatternConv.Write(&patternMol);
+      //remove name to leave smiles string
+      string smilesstr(smiles.str());
+      string::size_type pos = smilesstr.find_first_of(" \t\r\n");
+      if(pos!=string::npos)
+        smilesstr = smilesstr.substr(0,pos);
+      pConv->AddOption("s", OBConversion::GENOPTIONS, smilesstr.c_str());
+    }
 
     return true;
   }
