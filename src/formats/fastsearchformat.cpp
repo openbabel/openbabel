@@ -75,7 +75,7 @@ namespace OpenBabel {
 " l# Maximum number of candidates. Default<4000>\n"
 " e  Exact match\n"
 " S\"filename\"  Structure spec in a file:\n"
-" h  Explicit H in pattern file is blocking\n\n"
+" h  SMARTS uses explicit H in pattern file\n\n"
 ;
     };
 
