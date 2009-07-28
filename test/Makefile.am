@@ -7,7 +7,7 @@ check_PROGRAMS = aromatic atom bond cansmi cmlreadfile \
 	internalcoord invalidsmarts invalidsmiles \
 	iterators logp_psa math mol phmodel \
 	residue rings smarts \
-	smilesmatch unitcell zipstream
+	smilesmatch strip unitcell zipstream
 
 bin_PROGRAMS = roundtrip
 
@@ -57,5 +57,6 @@ residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
 smarts_SOURCES = smartstest.cpp
 smilesmatch_SOURCES = smilesmatch.cpp
+strip_SOURCES = strip.cpp
 unitcell_SOURCES = unitcell.cpp
 zipstream_SOURCES = zipstream.cpp
