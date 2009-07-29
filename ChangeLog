@@ -1,4 +1,10 @@
-2009-07-13  Chris Morley
+2009-07-28  Craig James <cjames@emolecules.com>
+
+	* src/kekule.cpp Rewrote expand_kekule(), making it much simpler
+	to understand.  Original algorithm had bugs and was very hard to
+	follow.
+
+2009-07-20  Chris Morley
 
 	* src/formats/smilesformat.cpp: make the description of -xh more
 	informative: it retains explicit hydrogen.
