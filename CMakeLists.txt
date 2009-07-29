@@ -14,7 +14,7 @@ include (MacroEnsureVersion)
 # Version numbering - should be bumped for each release
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   2)
-set(BABEL_PATCH_VER 2)
+set(BABEL_PATCH_VER 3)
 if(WIN32)
   set(BABEL_LIBRARY   openbabel-2)
 else(WIN32)
