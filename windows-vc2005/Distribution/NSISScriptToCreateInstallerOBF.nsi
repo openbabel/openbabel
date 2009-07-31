@@ -1,0 +1,777 @@
+;NSIS Modern User Interface
+;Installer for Open Babel
+
+;--------------------------------
+;Include Modern UI
+
+  !include "MUI.nsh"
+
+; ======================================
+; The main part of this script starts at
+; around line 455
+; ======================================
+
+;--------------------------------
+;AddToPath functions taken from "Path Manipulation" on NSIS wiki
+
+!ifndef _AddToPath_nsh
+!define _AddToPath_nsh
+
+!verbose 3
+!include "WinMessages.NSH"
+!verbose 4
+ 
+!ifndef WriteEnvStr_RegKey
+  !ifdef ALL_USERS
+    !define WriteEnvStr_RegKey \
+       'HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"'
+  !else
+    !define WriteEnvStr_RegKey 'HKCU "Environment"'
+  !endif
+!endif
+ 
+; AddToPath - Adds the given dir to the search path.
+;        Input - head of the stack
+;        Note - Win9x systems requires reboot
+ 
+Function AddToPath
+  Exch $0
+  Push $1
+  Push $2
+  Push $3
+ 
+  # don't add if the path doesn't exist
+  IfFileExists "$0\*.*" "" AddToPath_done
+ 
+  ReadEnvStr $1 PATH
+  Push "$1;"
+  Push "$0;"
+  Call StrStr
+  Pop $2
+  StrCmp $2 "" "" AddToPath_done
+  Push "$1;"
+  Push "$0\;"
+  Call StrStr
+  Pop $2
+  StrCmp $2 "" "" AddToPath_done
+  GetFullPathName /SHORT $3 $0
+  Push "$1;"
+  Push "$3;"
+  Call StrStr
+  Pop $2
+  StrCmp $2 "" "" AddToPath_done
+  Push "$1;"
+  Push "$3\;"
+  Call StrStr
+  Pop $2
+  StrCmp $2 "" "" AddToPath_done
+ 
+  Call IsNT
+  Pop $1
+  StrCmp $1 1 AddToPath_NT
+    ; Not on NT
+    StrCpy $1 $WINDIR 2
+    FileOpen $1 "$1\autoexec.bat" a
+    FileSeek $1 -1 END
+    FileReadByte $1 $2
+    IntCmp $2 26 0 +2 +2 # DOS EOF
+      FileSeek $1 -1 END # write over EOF
+    FileWrite $1 "$\r$\nSET PATH=%PATH%;$3$\r$\n"
+    FileClose $1
+    SetRebootFlag true
+    Goto AddToPath_done
+ 
+  AddToPath_NT:
+    ReadRegStr $1 ${WriteEnvStr_RegKey} "PATH"
+    StrCmp $1 "" AddToPath_NTdoIt
+      Push $1
+      Call Trim
+      Pop $1
+      ;StrCpy $0 "$1;$0" Edited by Noel - add to front of PATH
+      StrCpy $0 "$0;$1"
+    AddToPath_NTdoIt:
+      WriteRegExpandStr ${WriteEnvStr_RegKey} "PATH" $0
+      SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+ 
+  AddToPath_done:
+    Pop $3
+    Pop $2
+    Pop $1
+    Pop $0
+FunctionEnd
+ 
+; RemoveFromPath - Remove a given dir from the path
+;     Input: head of the stack
+ 
+Function un.RemoveFromPath
+  Exch $0
+  Push $1
+  Push $2
+  Push $3
+  Push $4
+  Push $5
+  Push $6
+ 
+  IntFmt $6 "%c" 26 # DOS EOF
+ 
+  Call un.IsNT
+  Pop $1
+  StrCmp $1 1 unRemoveFromPath_NT
+    ; Not on NT
+    StrCpy $1 $WINDIR 2
+    FileOpen $1 "$1\autoexec.bat" r
+    GetTempFileName $4
+    FileOpen $2 $4 w
+    GetFullPathName /SHORT $0 $0
+    StrCpy $0 "SET PATH=%PATH%;$0"
+    Goto unRemoveFromPath_dosLoop
+ 
+    unRemoveFromPath_dosLoop:
+      FileRead $1 $3
+      StrCpy $5 $3 1 -1 # read last char
+      StrCmp $5 $6 0 +2 # if DOS EOF
+        StrCpy $3 $3 -1 # remove DOS EOF so we can compare
+      StrCmp $3 "$0$\r$\n" unRemoveFromPath_dosLoopRemoveLine
+      StrCmp $3 "$0$\n" unRemoveFromPath_dosLoopRemoveLine
+      StrCmp $3 "$0" unRemoveFromPath_dosLoopRemoveLine
+      StrCmp $3 "" unRemoveFromPath_dosLoopEnd
+      FileWrite $2 $3
+      Goto unRemoveFromPath_dosLoop
+      unRemoveFromPath_dosLoopRemoveLine:
+        SetRebootFlag true
+        Goto unRemoveFromPath_dosLoop
+ 
+    unRemoveFromPath_dosLoopEnd:
+      FileClose $2
+      FileClose $1
+      StrCpy $1 $WINDIR 2
+      Delete "$1\autoexec.bat"
+      CopyFiles /SILENT $4 "$1\autoexec.bat"
+      Delete $4
+      Goto unRemoveFromPath_done
+ 
+  unRemoveFromPath_NT:
+    ReadRegStr $1 ${WriteEnvStr_RegKey} "PATH"
+    StrCpy $5 $1 1 -1 # copy last char
+    StrCmp $5 ";" +2 # if last char != ;
+      StrCpy $1 "$1;" # append ;
+    Push $1
+    Push "$0;"
+    Call un.StrStr ; Find `$0;` in $1
+    Pop $2 ; pos of our dir
+    StrCmp $2 "" unRemoveFromPath_done
+      ; else, it is in path
+      # $0 - path to add
+      # $1 - path var
+      StrLen $3 "$0;"
+      StrLen $4 $2
+      StrCpy $5 $1 -$4 # $5 is now the part before the path to remove
+      StrCpy $6 $2 "" $3 # $6 is now the part after the path to remove
+      StrCpy $3 $5$6
+ 
+      StrCpy $5 $3 1 -1 # copy last char
+      StrCmp $5 ";" 0 +2 # if last char == ;
+        StrCpy $3 $3 -1 # remove last char
+ 
+      WriteRegExpandStr ${WriteEnvStr_RegKey} "PATH" $3
+      SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+ 
+  unRemoveFromPath_done:
+    Pop $6
+    Pop $5
+    Pop $4
+    Pop $3
+    Pop $2
+    Pop $1
+    Pop $0
+FunctionEnd
+ 
+ 
+ 
+; AddToEnvVar - Adds the given value to the given environment var
+;        Input - head of the stack $0 environement variable $1=value to add
+;        Note - Win9x systems requires reboot
+ 
+Function AddToEnvVar
+ 
+  Exch $1 ; $1 has environment variable value
+  Exch
+  Exch $0 ; $0 has environment variable name
+ 
+  DetailPrint "Adding $1 to $0"
+  Push $2
+  Push $3
+  Push $4
+ 
+ 
+  ReadEnvStr $2 $0
+  Push "$2;"
+  Push "$1;"
+  Call StrStr
+  Pop $3
+  StrCmp $3 "" "" AddToEnvVar_done
+ 
+  Push "$2;"
+  Push "$1\;"
+  Call StrStr
+  Pop $3
+  StrCmp $3 "" "" AddToEnvVar_done
+  
+ 
+  Call IsNT
+  Pop $2
+  StrCmp $2 1 AddToEnvVar_NT
+    ; Not on NT
+    StrCpy $2 $WINDIR 2
+    FileOpen $2 "$2\autoexec.bat" a
+    FileSeek $2 -1 END
+    FileReadByte $2 $3
+    IntCmp $3 26 0 +2 +2 # DOS EOF
+      FileSeek $2 -1 END # write over EOF
+    FileWrite $2 "$\r$\nSET $0=%$0%;$4$\r$\n"
+    FileClose $2
+    SetRebootFlag true
+    Goto AddToEnvVar_done
+ 
+  AddToEnvVar_NT:
+    ReadRegStr $2 ${WriteEnvStr_RegKey} $0
+    StrCpy $3 $2 1 -1 # copy last char
+    StrCmp $3 ";" 0 +2 # if last char == ;
+      StrCpy $2 $2 -1 # remove last char
+    StrCmp $2 "" AddToEnvVar_NTdoIt
+      ; StrCpy $1 "$2;$1" Noel - Don't add - set the value
+      StrCpy $1 "$2"
+    AddToEnvVar_NTdoIt:
+      WriteRegExpandStr ${WriteEnvStr_RegKey} $0 $1
+      SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+ 
+  AddToEnvVar_done:
+    Pop $4
+    Pop $3
+    Pop $2
+    Pop $0
+    Pop $1
+ 
+FunctionEnd
+ 
+; RemoveFromEnvVar - Remove a given value from a environment var
+;     Input: head of the stack
+ 
+Function un.RemoveFromEnvVar
+ 
+  Exch $1 ; $1 has environment variable value
+  Exch
+  Exch $0 ; $0 has environment variable name
+ 
+  DetailPrint "Removing $1 from $0"
+  Push $2
+  Push $3
+  Push $4
+  Push $5
+  Push $6
+  Push $7
+ 
+  IntFmt $7 "%c" 26 # DOS EOF
+ 
+  Call un.IsNT
+  Pop $2
+  StrCmp $2 1 unRemoveFromEnvVar_NT
+    ; Not on NT
+    StrCpy $2 $WINDIR 2
+    FileOpen $2 "$2\autoexec.bat" r
+    GetTempFileName $5
+    FileOpen $3 $5 w
+    GetFullPathName /SHORT $1 $1
+    StrCpy $1 "SET $0=%$0%;$1"
+    Goto unRemoveFromEnvVar_dosLoop
+ 
+    unRemoveFromEnvVar_dosLoop:
+      FileRead $2 $4
+      StrCpy $6 $4 1 -1 # read last char
+      StrCmp $6 $7 0 +2 # if DOS EOF
+        StrCpy $4 $4 -1 # remove DOS EOF so we can compare
+      StrCmp $4 "$1$\r$\n" unRemoveFromEnvVar_dosLoopRemoveLine
+      StrCmp $4 "$1$\n" unRemoveFromEnvVar_dosLoopRemoveLine
+      StrCmp $4 "$1" unRemoveFromEnvVar_dosLoopRemoveLine
+      StrCmp $4 "" unRemoveFromEnvVar_dosLoopEnd
+      FileWrite $3 $4
+      Goto unRemoveFromEnvVar_dosLoop
+      unRemoveFromEnvVar_dosLoopRemoveLine:
+        SetRebootFlag true
+        Goto unRemoveFromEnvVar_dosLoop
+ 
+    unRemoveFromEnvVar_dosLoopEnd:
+      FileClose $3
+      FileClose $2
+      StrCpy $2 $WINDIR 2
+      Delete "$2\autoexec.bat"
+      CopyFiles /SILENT $5 "$2\autoexec.bat"
+      Delete $5
+      Goto unRemoveFromEnvVar_done
+ 
+  unRemoveFromEnvVar_NT:
+    ReadRegStr $2 ${WriteEnvStr_RegKey} $0
+    StrCpy $6 $2 1 -1 # copy last char
+    StrCmp $6 ";" +2 # if last char != ;
+      StrCpy $2 "$2;" # append ;
+    Push $2
+    Push "$1;"
+    Call un.StrStr ; Find `$1;` in $2
+    Pop $3 ; pos of our dir
+    StrCmp $3 "" unRemoveFromEnvVar_done
+      ; else, it is in path
+      # $1 - path to add
+      # $2 - path var
+      StrLen $4 "$1;"
+      StrLen $5 $3
+      StrCpy $6 $2 -$5 # $6 is now the part before the path to remove
+      StrCpy $7 $3 "" $4 # $7 is now the part after the path to remove
+      StrCpy $4 $6$7
+ 
+      StrCpy $6 $4 1 -1 # copy last char
+      StrCmp $6 ";" 0 +2 # if last char == ;
+      StrCpy $4 $4 -1 # remove last char
+ 
+      WriteRegExpandStr ${WriteEnvStr_RegKey} $0 $4
+      SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+ 
+  unRemoveFromEnvVar_done:
+    Pop $7
+    Pop $6
+    Pop $5
+    Pop $4
+    Pop $3
+    Pop $2
+    Pop $1
+    Pop $0
+FunctionEnd
+ 
+ 
+ 
+ 
+!ifndef IsNT_KiCHiK
+!define IsNT_KiCHiK
+ 
+###########################################
+#            Utility Functions            #
+###########################################
+ 
+; IsNT
+; no input
+; output, top of the stack = 1 if NT or 0 if not
+;
+; Usage:
+;   Call IsNT
+;   Pop $R0
+;  ($R0 at this point is 1 or 0)
+ 
+!macro IsNT un
+Function ${un}IsNT
+  Push $0
+  ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows NT\CurrentVersion" CurrentVersion
+  StrCmp $0 "" 0 IsNT_yes
+  ; we are not NT.
+  Pop $0
+  Push 0
+  Return
+ 
+  IsNT_yes:
+    ; NT!!!
+    Pop $0
+    Push 1
+FunctionEnd
+!macroend
+!insertmacro IsNT ""
+!insertmacro IsNT "un."
+ 
+!endif ; IsNT_KiCHiK
+ 
+; StrStr
+; input, top of stack = string to search for
+;        top of stack-1 = string to search in
+; output, top of stack (replaces with the portion of the string remaining)
+; modifies no other variables.
+;
+; Usage:
+;   Push "this is a long ass string"
+;   Push "ass"
+;   Call StrStr
+;   Pop $R0
+;  ($R0 at this point is "ass string")
+ 
+!macro StrStr un
+Function ${un}StrStr
+Exch $R1 ; st=haystack,old$R1, $R1=needle
+  Exch    ; st=old$R1,haystack
+  Exch $R2 ; st=old$R1,old$R2, $R2=haystack
+  Push $R3
+  Push $R4
+  Push $R5
+  StrLen $R3 $R1
+  StrCpy $R4 0
+  ; $R1=needle
+  ; $R2=haystack
+  ; $R3=len(needle)
+  ; $R4=cnt
+  ; $R5=tmp
+  loop:
+    StrCpy $R5 $R2 $R3 $R4
+    StrCmp $R5 $R1 done
+    StrCmp $R5 "" done
+    IntOp $R4 $R4 + 1
+    Goto loop
+done:
+  StrCpy $R1 $R2 "" $R4
+  Pop $R5
+  Pop $R4
+  Pop $R3
+  Pop $R2
+  Exch $R1
+FunctionEnd
+!macroend
+!insertmacro StrStr ""
+!insertmacro StrStr "un."
+ 
+!endif ; _AddToPath_nsh
+ 
+Function Trim ; Added by Pelaca
+	Exch $R1
+	Push $R2
+Loop:
+	StrCpy $R2 "$R1" 1 -1
+	StrCmp "$R2" " " RTrim
+	StrCmp "$R2" "$\n" RTrim
+	StrCmp "$R2" "$\r" RTrim
+	StrCmp "$R2" ";" RTrim
+	GoTo Done
+RTrim:	
+	StrCpy $R1 "$R1" -1
+	Goto Loop
+Done:
+	Pop $R2
+	Exch $R1
+FunctionEnd
+
+;--------------------------------
+;General
+
+  ;OpenBabel version
+  !define OBVersion 2.2.3
+
+  ;Name and file
+  Name "OpenBabel ${OBVERSION}"
+  OutFile "OpenBabel${OBVERSION}_Windows_Installer.exe"
+
+  ;Default installation folder
+  InstallDir "$PROGRAMFILES\OpenBabel-${OBVERSION}"
+  
+  ;Get installation folder from registry if available
+  InstallDirRegKey HKCU "Software\OpenBabel ${OBVERSION}" ""
+
+;--------------------------------
+;Variables
+
+  Var MUI_TEMP
+  Var STARTMENU_FOLDER
+
+;--------------------------------
+;Interface Settings
+
+  ;!define MUI_ICON "babel.ico"
+  ;!define MUI_UNICON "babel.ico"
+  !define MUI_ABORTWARNING
+  !define MUI_HEADERIMAGE
+  !define MUI_HEADERIMAGE_BITMAP "logo_small.bmp"
+  !define MUI_WELCOMEFINISHPAGE_BITMAP "logo_big.bmp"
+  !define MUI_FINISHPAGE_RUN "$INSTDIR/OBGUI.exe"
+  !define MUI_FINISHPAGE_SHOWREADME "http://openbabel.sourceforge.net/wiki/OpenBabelGUI"
+
+;--------------------------------
+;Pages
+
+  !insertmacro MUI_PAGE_WELCOME
+  !insertmacro MUI_PAGE_LICENSE "../../COPYING"
+  !insertmacro MUI_PAGE_DIRECTORY
+
+  ;Start Menu Folder Page Configuration
+  !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
+  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\OpenBabel ${OBVERSION}" 
+  !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
+  !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
+
+  !insertmacro MUI_PAGE_INSTFILES
+  !insertmacro MUI_PAGE_FINISH
+  
+  !insertmacro MUI_UNPAGE_CONFIRM
+  !insertmacro MUI_UNPAGE_INSTFILES
+  
+;--------------------------------
+;Languages
+ 
+  !insertmacro MUI_LANGUAGE "English"
+
+;--------------------------------
+;Installer Sections
+
+Section "Dummy Section" SecDummy
+
+  SetOutPath "$INSTDIR"
+  
+  ;ADD YOUR OWN FILES HERE...
+  File /r ExampleFiles\150mols.smi
+  File /r ExampleFiles\FourSmallMols.cml
+  File /r ExampleFiles\serotonin.mol
+  File /r ExampleFiles\oxamide.cml
+  File /oname=License.txt ..\..\COPYING
+  File ..\zlib1.dll
+  File ..\libxml2.dll
+  File ..\iconv.dll
+  File ..\libinchi.dll
+  File ..\..\data\aromatic.txt
+  File ..\..\data\atomtyp.txt
+  File ..\..\data\bondtyp.txt
+  File ..\..\data\element.txt
+  File ..\..\data\fragments.txt
+  File ..\..\data\ghemical.prm
+  File ..\..\data\isotope.txt
+  File ..\..\data\isotope-small.txt
+  File ..\..\data\logp.txt
+  File ..\..\data\MACCS.txt
+  File ..\..\data\mm2.prm
+  File ..\..\data\mmff94.ff
+  File ..\..\data\mmff94s.ff
+  File ..\..\data\mmffang.par
+  File ..\..\data\mmffbndk.par
+  File ..\..\data\mmffbond.par
+  File ..\..\data\mmffchg.par
+  File ..\..\data\mmffdef.par
+  File ..\..\data\mmffdfsb.par
+  File ..\..\data\mmffoop.par
+  File ..\..\data\mmffpbci.par
+  File ..\..\data\mmffprop.par
+  File ..\..\data\mmffstbn.par
+  File ..\..\data\mmffs_oop.par
+  File ..\..\data\mmffs_tor.par
+  File ..\..\data\mmfftor.par
+  File ..\..\data\mmffvdw.par
+  File ..\..\data\mr.txt
+  File ..\..\data\Patterns.txt
+  File ..\..\data\phmodel.txt
+  File ..\..\data\plugindefines.txt
+  File ..\..\data\psa.txt
+  File ..\..\data\resdata.txt
+  File ..\..\data\ringtyp.txt
+  File ..\..\data\SMARTS_InteLigand.txt
+  File ..\..\data\space-groups.txt
+  File ..\..\data\space-groups.xsl
+  File ..\..\data\torlib.txt
+  File ..\..\data\types.txt
+  File ..\..\data\UFF.prm
+  File ..\babel.exe
+  File ..\OBGUI.exe
+  File ..\OBGUI.exe.manifest
+  File ..\OBConv.dll
+  File ..\OBDLL.dll
+  File ..\OBError.dll
+  File ..\OBFPRT.obf
+  File ..\OBinchi.obf
+  File ..\obcommon.obf
+  File ..\OBUtil.obf
+  File ..\obmore.obf
+  File ..\OBXML.obf
+  File ..\OBDESC.obf
+  File ..\FastSearch.obf
+  File ..\gen3D.obf
+  File ..\OBMCDL.obf
+  File ..\nbabel.exe
+  File ..\obchiral.exe
+  File ..\obconformer.exe
+  File ..\obenergy.exe
+  File ..\obfit.exe
+  File ..\obminimize.exe
+  File ..\obmm.exe
+  File ..\obprobe.exe
+  File ..\obprop.exe
+  File ..\obrotamer.exe
+  File ..\obrotate.exe
+  File ..\obseq.exe
+  File ..\obsym.exe
+
+  File ToolsPrograms.txt
+  File ..\..\src\GUI\OpenBabelGUI.html
+  File vcredist_x86.exe
+
+  File ..\OBJava\openbabel.jar
+  File ..\OBJava\openbabel_java.dll
+  
+  ;Store installation folder
+  WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
+  
+  ;Install VC++ 2005 redistributable
+  ExecWait '"$INSTDIR/vcredist_x86.exe" /q:a'
+
+  ;Create uninstaller
+  WriteUninstaller "$INSTDIR\Uninstall.exe"
+
+  ;Create shortcuts
+  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUI.exe"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI (web).lnk" "http://openbabel.sourceforge.net/wiki/OpenBabelGUI" "" "$SYSDIR\winhlp32.exe" 
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.sourceforge.net/wiki/Tutorial:Basic_Usage" "" "$SYSDIR\winhlp32.exe"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+  !insertmacro MUI_STARTMENU_WRITE_END
+
+  ;Add to PATH
+  Push $INSTDIR
+  Call AddToPath
+
+  ; Set env var BABEL_DATADIR
+  ; First remove any existing value
+  DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
+
+  ; Old way: WriteRegStr HKCU "Environment" "BABEL_DATADIR" "$INSTDIR" 
+  ; New way: Works immediately
+  Push "BABEL_DATADIR"
+  Push $INSTDIR
+  Call AddToEnvVar
+
+SectionEnd
+
+;--------------------------------
+;Descriptions
+
+  ;Language strings
+  LangString DESC_SecDummy ${LANG_ENGLISH} "A test section."
+
+  ;Assign language strings to sections
+  !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} $(DESC_SecDummy)
+  !insertmacro MUI_FUNCTION_DESCRIPTION_END
+
+;--------------------------------
+;Uninstaller Section
+
+Section "Uninstall"
+
+  ;ADD YOUR OWN FILES HERE...
+  Delete "$INSTDIR\150mols.smi"
+  Delete "$INSTDIR\aromatic.txt"
+  Delete "$INSTDIR\atomtyp.txt"
+  Delete "$INSTDIR\babel.exe"
+  Delete "$INSTDIR\bondtyp.txt"
+  Delete "$INSTDIR\element.txt"
+  Delete "$INSTDIR\FastSearch.obf"
+  Delete "$INSTDIR\FourSmallMols.cml"
+  Delete "$INSTDIR\fragments.txt"
+  Delete "$INSTDIR\gen3D.obf"
+  Delete "$INSTDIR\ghemical.prm"
+  Delete "$INSTDIR\iconv.dll"
+  Delete "$INSTDIR\isotope.txt"
+  Delete "$INSTDIR\isotope-small.txt"
+  Delete "$INSTDIR\libinchi.dll"
+  Delete "$INSTDIR\libxml2.dll"
+  Delete "$INSTDIR\License.txt"
+  Delete "$INSTDIR\logp.txt"
+  Delete "$INSTDIR\MACCS.txt"
+  Delete "$INSTDIR\mm2.prm"
+  Delete "$INSTDIR\mmff94.ff"
+  Delete "$INSTDIR\mmff94s.ff"
+  Delete "$INSTDIR\mmffang.par"
+  Delete "$INSTDIR\mmffbndk.par"
+  Delete "$INSTDIR\mmffbond.par"
+  Delete "$INSTDIR\mmffchg.par"
+  Delete "$INSTDIR\mmffdef.par"
+  Delete "$INSTDIR\mmffdfsb.par"
+  Delete "$INSTDIR\mmffoop.par"
+  Delete "$INSTDIR\mmffpbci.par"
+  Delete "$INSTDIR\mmffprop.par"
+  Delete "$INSTDIR\mmffstbn.par"
+  Delete "$INSTDIR\mmffs_oop.par"
+  Delete "$INSTDIR\mmffs_tor.par"
+  Delete "$INSTDIR\mmfftor.par"
+  Delete "$INSTDIR\mmffvdw.par"
+  Delete "$INSTDIR\mr.txt"
+  Delete "$INSTDIR\nbabel.exe"
+  Delete "$INSTDIR\obchiral.exe"
+  Delete "$INSTDIR\obcommon.obf"
+  Delete "$INSTDIR\obconformer.exe"
+  Delete "$INSTDIR\OBConv.dll"
+  Delete "$INSTDIR\OBDESC.obf"
+  Delete "$INSTDIR\OBDLL.dll"
+  Delete "$INSTDIR\obenergy.exe"
+  Delete "$INSTDIR\oberror.dll"
+  Delete "$INSTDIR\obfit.exe"
+  Delete "$INSTDIR\OBFPRT.obf"
+  Delete "$INSTDIR\OBGUI.exe"
+  Delete "$INSTDIR\OBGUI.exe.manifest"
+  Delete "$INSTDIR\OBInchi.obf"
+  Delete "$INSTDIR\OBMCDL.obf"
+  Delete "$INSTDIR\obminimize.exe"
+  Delete "$INSTDIR\obmm.exe"
+  Delete "$INSTDIR\OBMore.obf"
+  Delete "$INSTDIR\obprobe.exe"
+  Delete "$INSTDIR\obprop.exe"
+  Delete "$INSTDIR\obrotamer.exe"
+  Delete "$INSTDIR\obrotate.exe"
+  Delete "$INSTDIR\obseq.exe"
+  Delete "$INSTDIR\obsym.exe"
+  Delete "$INSTDIR\OBUtil.obf"
+  Delete "$INSTDIR\OBXML.obf"
+  Delete "$INSTDIR\OpenBabelGUI.html"
+  Delete "$INSTDIR\openbabel.jar"
+  Delete "$INSTDIR\openbabel_java.dll"
+  Delete "$INSTDIR\oxamide.cml"
+  Delete "$INSTDIR\patterns.txt"
+  Delete "$INSTDIR\phmodel.txt"
+  Delete "$INSTDIR\plugindefines.txt"
+  Delete "$INSTDIR\psa.txt"
+  Delete "$INSTDIR\resdata.txt"
+  Delete "$INSTDIR\ringtyp.txt"
+  Delete "$INSTDIR\serotonin.mol"
+  Delete "$INSTDIR\SMARTS_InteLigand.txt"
+  Delete "$INSTDIR\space-groups.txt"
+  Delete "$INSTDIR\space-groups.xsl"
+  Delete "$INSTDIR\ToolsPrograms.txt"
+  Delete "$INSTDIR\torlib.txt"
+  Delete "$INSTDIR\types.txt"
+  Delete "$INSTDIR\UFF.prm"
+  Delete "$INSTDIR\Uninstall.exe"
+  Delete "$INSTDIR\vcredist_x86.exe"
+  Delete "$INSTDIR\zlib1.dll"
+
+  RMDir "$INSTDIR"
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
+    
+  Delete "$SMPROGRAMS\$MUI_TEMP\Uninstall.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\Open Babel GUI.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\Guide to using Open Babel GUI (web).lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\Guide to using babel (web).lnk"
+
+  ;Remove from PATH
+  push $INSTDIR
+  Call un.RemoveFromPath
+  
+  ;Delete empty start menu parent diretories
+  StrCpy $MUI_TEMP "$SMPROGRAMS\$MUI_TEMP"
+ 
+  startMenuDeleteLoop:
+	ClearErrors
+    RMDir $MUI_TEMP
+    GetFullPathName $MUI_TEMP "$MUI_TEMP\.."
+    
+    IfErrors startMenuDeleteLoopDone
+  
+    StrCmp $MUI_TEMP $SMPROGRAMS startMenuDeleteLoopDone startMenuDeleteLoop
+  startMenuDeleteLoopDone:
+
+  DeleteRegKey /ifempty HKCU "Software\OpenBabel ${OBVERSION}"
+  DeleteRegKey          HKCU "Software\OpenBabelGUI"
+
+  ; Remove env var
+  push "BABEL_DATADIR"
+  push $INSTDIR
+  Call un.RemoveFromEnvVar
+  DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
+
+SectionEnd

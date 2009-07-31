@@ -1,0 +1,324 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT([Open Babel], 2.2.3, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_PREREQ([2.61])
+AC_CONFIG_SRCDIR(src/zipstreamimpl.h)
+AM_INIT_AUTOMAKE([foreign no-define])
+AM_MAINTAINER_MODE
+AX_MAINTAINER_MODE_AUTO_SILENT
+AM_CONFIG_HEADER(src/config.h)
+AC_CONFIG_MACRO_DIR([autoconf])
+AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of Open Babel])
+
+AC_ARG_ENABLE(wx-gui,
+	AS_HELP_STRING([--enable-wx-gui],
+		       [enable building the wxWidget GUI (experimental)]),
+		[wx_gui="$enable_wx_gui"],
+		[wx_gui="no"])
+
+AC_ARG_ENABLE(inchi,
+	AS_HELP_STRING([--disable-inchi],
+		       [do not build the InChI library]),
+		[inchi="$enable_inchi"],
+		[inchi="yes"])
+
+AC_ARG_ENABLE(dynamic-modules,
+	AS_HELP_STRING([--disable-dynamic-modules],
+		       [disable building shared file format modules]),
+		[dynamic_modules="$enable_dynamic_modules"],
+		[dynamic_modules="yes"])
+
+AC_ARG_ENABLE(precompiled-headers,
+  AS_HELP_STRING([--enable-precompiled-headers],
+           [enable building with precompiled headers]),
+    [precompiled_headers="$enable_precompiled_headers"],
+    [precompiled_headers="no"])
+
+AC_CANONICAL_HOST
+AC_DISABLE_STATIC
+
+AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_TARNAME], [Where the data files are located])
+
+AH_VERBATIM([ADEFINE],
+[/* Used by other #define statements for symbol exporting
+ Use symbol hiding in GCC 4.0 and later where available */
+#ifdef HAVE_GCC_VISIBILITY
+  #define OB_EXPORT __attribute__ ((visibility("default")))
+  #define OB_IMPORT __attribute__ ((visibility("default")))
+  #define OB_HIDDEN __attribute__ ((visibility("hidden")))
+#elif defined(WIN32)
+  #define OB_EXPORT __declspec(dllexport)
+  #define OB_IMPORT __declspec(dllimport)
+  #define OB_HIDDEN
+#else
+  #define OB_EXPORT
+  #define OB_IMPORT
+  #define OB_HIDDEN
+#endif
+])
+
+AH_VERBATIM([OBAPI], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBAPI OB_IMPORT
+#else
+  #define OBAPI OB_EXPORT
+#endif
+])
+
+AH_VERBATIM([EXTERN], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define EXTERN OB_IMPORT extern
+#else
+  #define EXTERN OB_EXPORT extern
+#endif
+])
+
+AH_VERBATIM([OBCONV], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBCONV OB_IMPORT
+#else
+  #define OBCONV OB_EXPORT
+#endif
+])
+
+AH_VERBATIM([OBERROR], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBERROR OB_IMPORT
+#else
+  #define OBERROR OB_EXPORT
+#endif
+])
+
+AH_VERBATIM([OBFPRT],
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBFPRT OB_IMPORT
+#else
+  #define OBFPRT OB_EXPORT
+#endif
+])
+
+AH_VERBATIM([OBCOMMON], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBCOMMON OB_IMPORT
+#else
+  #define OBCOMMON OB_EXPORT
+#endif
+])
+
+dnl Check for Boost base
+AX_BOOST_BASE([1.33.1])
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_CXXCPP
+AC_PROG_INSTALL
+AC_PATH_PROG(DOXYGEN, doxygen)
+AC_PATH_PROG(SWIG, swig)
+AC_PATH_PROG(PERL, perl)
+AC_PATH_PROG(PROVE, prove)
+AC_PATH_PROG(PYTHON, python)
+AC_PATH_PROG(RUBY, ruby)
+AC_PATH_PROGS(CSHARP, gmcs, mcs)
+AC_PATH_PROG(JAVAC, javac)
+AC_PATH_PROG(JAR, jar)
+
+dnl Conditionally build docs, scripts, etc.
+
+dnl check for wx widgets for src/GUI
+AC_ARG_VAR(
+ [WXCONFIG],
+ [Use the given path to wx-config when determining
+  wxWidgets configuration.]
+)
+AC_PATH_PROG([WXCONFIG], [wx-config])
+AC_SUBST([WXCONFIG])
+
+if test "$wx_gui" = "yes"; then
+  if test x"$WXCONFIG" != "x" ; then
+    AC_MSG_CHECKING([wxWidgets version])
+    if wxversion=`$WXCONFIG --version`; then
+        AC_MSG_RESULT([$wxversion])
+    else
+        AC_MSG_RESULT([not found])
+    fi
+
+    WX_CPPFLAGS="`$WXCONFIG --cppflags`"
+    WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+    WX_LIBS="`$WXCONFIG --libs`"
+
+    dnl only needed for wx GUI
+    AC_SUBST([WX_LIBS])
+    AC_SUBST([WX_CXXFLAGS])
+    AC_SUBST([WX_CPPFLAGS])
+  fi
+fi
+AM_CONDITIONAL([BUILD_WXGUI], [test x"$wxversion" != "x" -a "$wx_gui" = "yes"])
+
+dnl If perl is present, we can run bin2hex.pl
+AM_CONDITIONAL(BIN2HEX, test x"$PERL" != "x")
+dnl Use Perl's "prove" test harness to run unit tests
+AM_CONDITIONAL(PERL_TESTS, test x"$PROVE" != "x")
+
+AM_CONDITIONAL(BUILD_DOCS, test x"$DOXYGEN" != "x")
+if test x"$DOXYGEN" = "x"; then
+AC_MSG_WARN(Cannot find doxygen to build documentation. 
+	Have a look at http://www.doxygen.org/)
+fi
+
+dnl Build SWIG interfaces -- ideally use the latest SWIG available!!
+dnl (this will happen also only if MAINTAINER_MODE is set
+AM_CONDITIONAL(BUILD_SWIG, test x"$SWIG" != "x")
+
+SCRIPTING="no"
+if test x"$SWIG" != "x"; then
+SCRIPTING="yes"
+elif test x"$PYTHON" != "x"; then
+SCRIPTING="yes"
+elif test x"$PERL" != "x"; then
+SCRIPTING="yes"
+fi
+AM_CONDITIONAL(BUILD_SCRIPTS, test "$SCRIPTING" = "yes")
+
+AM_CONDITIONAL(BUILD_JAVA, test x"$JAVAC" != "x")
+AM_CONDITIONAL(BUILD_RUBY, test x"$RUBY" != "x")
+AM_CONDITIONAL(BUILD_CSHARP, test x"$CSHARP" != "x")
+
+dnl libtool
+dnl You can set the shared library version in src/Makefile.am
+dnl AC_DISABLE_SHARED
+dnl We do support DLLs on Win32 systems
+AC_LIBTOOL_WIN32_DLL
+AC_LIBTOOL_DLOPEN
+AM_PROG_LIBTOOL
+
+dnl Check which dlhandler to use, and whether we should build dynamic file format libs
+win_dlhandler="no"
+case $host in
+     *-*-mingw*)
+        win_dlhandler="yes"
+        ;;
+esac
+AM_CONDITIONAL(BUILD_SHARED_UNIX, test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes" -a "$win_dlhandler" = "no")
+AM_CONDITIONAL(BUILD_SHARED_WIN, test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes" -a "$win_dlhandler" = "yes")
+AM_CONDITIONAL(BUILD_SHARED, test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes")
+
+oldmodule=$module
+module=yes
+eval std_shrext=\"$shrext_cmds\"
+AC_DEFINE_UNQUOTED([MODULE_EXTENSION], ["$std_shrext"], [The file extension used for shared modules])
+module=$oldmodule
+
+AM_CONDITIONAL(BUILD_PCH, test "$precompiled_headers" = "yes")
+
+pkglibdir='$(libdir)/$(PACKAGE)'
+AC_ARG_WITH(
+	[pkglibdir],
+	[AC_HELP_STRING(
+		[--with-pkglibdir=DIR],
+		[path to plugins installation directory [default=$(libdir)/openbabel]]
+	)],
+	[pkglibdir=$withval]
+)
+
+AC_SUBST(pkglibdir)
+
+AC_C_BIGENDIAN
+
+AC_LANG_CPLUSPLUS
+dnl Checks for libraries.
+AC_CHECK_LIB(m, asin, , exit)
+AC_CHECK_LIB(c, dlopen, LIBDL="", [AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl")])
+AC_SUBST(LIBDL)
+
+AM_PATH_XML2(2.6.5)
+AM_CONDITIONAL(BUILD_XML, test x"$XML_LIBS" != "x")
+
+AC_CHECK_LIB(inchi, GetINCHI, LIBINCHI="-linchi", LIBINCHI="")
+AM_CONDITIONAL(BUILD_INCHI, test x"$LIBINCHI" = "x" -o "$inchi" = "yes")
+
+AC_CHECK_LIB(z, inflateEnd, [zlib_cv_libz=yes], [zlib_cv_libz=no])
+AC_CHECK_HEADER(zlib.h, [zlib_cv_zlib_h=yes], [zlib_cv_zlib_h=no])
+AM_CONDITIONAL(BUILD_ZLIB, [test "$zlib_cv_libz" = "yes" -a "$zlib_cv_zlib_h" = "yes"])
+# define HAVE_LIBZ
+AC_CHECK_LIB(z, inflateEnd)
+
+dnl Checks for header files.
+AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
+AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
+AC_CHECK_HEADERS(ctype.h iostream fstream sstream strstream)
+AC_CHECK_HEADERS(regex.h tr1/memory)
+AC_CHECK_HEADERS(rpc/types.h)
+AC_CHECK_HEADERS(rpc/xdr.h, [] , [],
+#ifdef HAVE_RPC_TYPES_H
+# include <rpc/types.h>
+# endif
+)
+AC_CHECK_HEADERS(xlocale.h locale.h)
+AC_HEADER_TIME
+
+dnl Set a flag for Automake if shared_pointer is available
+AM_CONDITIONAL([HAVE_SHARED_POINTER], [test "$ac_cv_header_tr1_memory" = "yes" -o "$have_boost" = "yes"])
+dnl OpenBabel will use BOOST only if tr1/memory is not available
+if test "$have_boost" = "yes" -a "$ac_cv_header_tr1_memory" != "yes"; then
+    AC_DEFINE([USE_BOOST], [], [Using BOOST for shared_pointer])
+    use_boost=yes
+fi
+AM_CONDITIONAL([USE_BOOST_FLAGS], [test "$use_boost" = "yes"])
+
+dnl Turn off GAMESS-UK if regex is not available
+AM_CONDITIONAL([HAVE_REGEX], [test "$ac_cv_header_regex_h" = "yes"])
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_TYPES(clock_t)
+AC_C_CONST
+AC_C_INLINE
+
+dnl Checks for library functions.
+AC_CHECK_FUNCS([rint sranddev uselocale])
+AC_REPLACE_FUNCS([snprintf strncasecmp])
+
+AH_VERBATIM([SNPRTF], 
+[
+#if !HAVE_SNPRINTF
+extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
+#endif
+])
+
+dnl Gotta figure out whether scandir needs a const or not for the 3rd arg.
+AC_MSG_CHECKING([whether scandir needs a const cast])
+AC_COMPILE_IFELSE([
+#include <sys/types.h>
+#include <dirent.h>
+ extern int matchFiles (struct dirent *entry_p);
+ struct dirent **entries_pp;
+ int count = scandir ("./", &entries_pp, $dirent_t matchFiles, 0);
+], 
+[ AC_DEFINE(SCANDIR_T, , [set if scandir needs a const]) 
+  AC_DEFINE(SCANDIR_CONST, , [set if scandir needs a const])
+scandirconst_cast=no], 
+[ AC_DEFINE(SCANDIR_T, [(int (*)(const dirent *))], [set if scandir needs a const]) 
+  AC_DEFINE(SCANDIR_CONST, [const])
+scandirconst_cast=yes])
+
+AC_MSG_RESULT([$scandirconst_cast], [set if scandir needs a const])
+
+AC_CONFIG_COMMANDS([include/openbabel/babelconfig.h], 
+                   [grep -v PACKAGE src/config.h >include/openbabel/babelconfig.h])
+
+AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
+		   src/formats/Makefile src/fingerprints/Makefile \
+		   src/formats/xml/Makefile src/formats/inchi102/Makefile \
+       src/forcefields/Makefile src/GUI/Makefile \
+       src/descriptors/Makefile src/ops/Makefile \
+       include/Makefile include/openbabel/Makefile \
+       include/openbabel/math/Makefile \
+		   test/Makefile test/cmltest/Makefile tools/Makefile \
+		   doc/Makefile scripts/Makefile openbabel-2.0.pc \
+		   )
+

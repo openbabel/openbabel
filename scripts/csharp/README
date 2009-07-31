@@ -1,0 +1,36 @@
+OBDotNet
+--------
+
+This directory contains OBDotNet.dll, a .NET assembly suitable for
+using the Open Babel C++ library from any .NET language (C#,
+IronPython, IronRuby and so on).
+
+The Open Babel wiki pages give information on using the .NET
+languages with OpenBabel:
+  http://openbabel.org/wiki/OBDotNet
+
+*** Linux Compilation
+
+  First of all, set some environment variables (remember to change the paths to correspond to your system):
+$ export OB_CSHARPDIR=/home/noel/Tools/openbabel-2.2.0/scripts/csharp
+$ export OB_LIBDIR=/home/noel/tree/lib # The install location of libopenbabel.so
+
+  Next, compile the C# bindings:
+$ cd $OB_CSHARPDIR
+$ g++ -c -fpic openbabel_csharp.cpp -I../../include
+$ g++ -shared openbabel_csharp.o -L../../src/.libs -lopenbabel -o libopenbabelcsharp.so
+
+  Compile and run the test C# program:
+$ gmcs /r:OBDotNet.dll example.cs
+$ export LD_LIBRARY_PATH=$OB_LIBDIR
+$ mono example.exe
+
+  If you don't get the output "44.09562", you need to preload the OpenBabel library as follows:
+$ LD_PRELOAD=$OB_LIBDIR/libopenbabel.so mono example.exe
+
+  Run the example IronPython program:
+$ mono ~/Tools/IronPython-1.1.2/ipy.exe example.py
+
+*** Mac OS X Compilation
+
+(Needs to be updated, see corresponding Java instructions for some clue where to start)

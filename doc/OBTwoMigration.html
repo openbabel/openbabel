@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Open Babel: Migration from 1.x to 2.0</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
+<link rel="top" href="http://openbabel.org/" />
+<link rel="stylesheet" href="site.css" type="text/css" media="all" />
+</head>
+<body bgcolor="#ffffff">
+
+<div id="header">
+<img src="babel130.png" width=130 height=124 alt="Babel Logo" id="logo" />
+<h1><img src="OBTitle.jpg" width=333 height=92 alt="Open Babel" /></h1>
+</div>
+
+<div id="content">
+
+<h1>Migration from Open Babel 1.x</h1>
+<h2>(a.k.a. What's New for Developers in Open Babel 2.0)</h2>
+
+<p>$Date$</p>
+
+<h2>General:</h2>
+
+<p>Many things have changed internally in the new Open Babel 2.0
+release, including a variety of new classes, methods, and
+algorithms. For a full list of what's new, see the <a
+href="../NEWS">Release Notes</a> and <a href="../ChangeLog">Change Log</a>.</p>
+
+<p>This document aims to outline major changes in the Open Babel
+library which differ from previous versions. In general, major version numbers of Open Babel indicate major changes to the library which will break backwards-compatibility in at least some areas. For example 1.x to 2.x represents changes that are backwards-incompatible as well as several new interfaces. Changes between 2.0 and 2.1 will <strong>add</strong> but <strong>not break</strong> existing code</p>
+
+<p><a name="toc">There are four main areas of updates:</a></p>
+
+<ul>
+<li><a href="#obconversion">OBFileFormat vs. OBConversion</a></li>
+<li><a href="#iterators">Iterator Classes</a></li>
+<li><a href="#errors">Error Handling</a></li>
+<li><a href="#generic">Generic Data</a></li>
+</ul>
+
+<h2><a name="obconversion">OBFileFormat vs. OBConversion</a></h2>
+
+<p>By far the largest change between Open Babel 1.x and 2.0 is the
+introduction of the OBConversion and OBFormat classes to handle
+reading and writing chemical data, replacing the OBFileFormat
+class. There are several main advantages to these new classes.</p>
+
+<ul>
+<li>Dynamic loading and unloading of file formats.</li>
+<ul>
+<li>This means that to write a new format, only one file (with the
+format code) is needed. No other code changes are required.</li>
+<li>In Open Babel 1.x, in addition to the file format code, 2 code
+files, 2 header files, and extable.txt needed to be changed.</li>
+</ul>
+<li>Better support for formats which handle multiple molecules "records" in one file (e.g., CML, MDL Molfile, SMILES, etc.).</li>
+<li>Batch conversion, splitting, and joining multiple molecule files.</li>
+<li>Support for handling reaction data (e.g., MDL Rxn, CMLReact files) and other types of chemical data beyond simple molecular files.</li>
+</ul>
+
+<h3>Code Changes</h3>
+
+<p>Example code for accessing OBConversion and OBFormat to translate files is included in all of the command-line programs <code>babel</code>, <code>obgrep</code>, <code>obfit</code>, etc. For example:</p>
+
+<pre>
+      // old code
+      ifstream ifs(filename);
+ 
+      io_type inFileType = extab.FilenameToType(FileIn);
+
+      if (extab.IsReadable(inFileType) && extab.IsWritable(SMI)
+      {
+          OBMol mol(inFileType, SMI);
+          stringstream outstream;
+          fileFormat.ReadMolecule(ifs, mol, filename);
+          fileFormat.WriteMolecule(outstream, mol);
+          ...
+      }
+
+</pre>
+
+<p>now becomes</p>
+
+<pre>
+        // new code
+        ifstream ifs(filename);
+        
+        OBConversion conv;
+        // Try 
+        OBFormat* inFormat = conv.FormatFromExt(filename);
+        OBFormat* outFormat = conv.GetFormat("SMI");
+        istream* pIn = &ifs; 
+        stringstream newstream;
+        if(inFormat && outFormat)
+        {
+                conv.SetInAndOutFormats(inFormat,outFormat);
+                conv.Convert(pIn,&newstream);   // note works on more than just OBMol objects! (reactions...)
+                ...
+        }
+</pre>
+
+<p>Here's another example of setting up the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBConversion.shtml">OBConversion</a> framework:</p>
+
+<pre>
+        OBConversion conv(&cin,&cout);
+        if(conv.SetInAndOutFormats("SMI","MOL"))
+        {       
+                OBMol mol;
+                if(conv.Read(&mol))
+                ...manipulate molecule 
+                
+                conv->Write(&mol);
+        }
+</pre>
+
+<p>Some small changes are needed to the file format translator code modules themselves. In general, these are easy to see from the current code files, e.g., <code>src/formats/xyzformat.cpp</code>. If your format writes molecular records (as opposed to reactions), you will likely be able to derive from the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBMoleculeFormat.shtml">OBMoleculeFormat</a> class.
+</p>
+
+<p>For more information, see the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBConversion.shtml">OBConversion</a> API documentation.</p>
+
+<p><a href="#top">Top</a>
+
+<h2><a name="iterators">Iterator Classes</a></h2>
+
+<p>
+To facilitate iteration through all atoms, bonds, residues, etc, without resorting to  index access (which may change in the future) or the various OBMol::BeginAtom() and OBAtom::NextAtom() methods which may only be safely used by one method at once (e.g., if your code is multithreaded, or a method above your code or underneath your code uses these iterators, errors will occur).
+</p>
+
+<p>
+Therefore, it is <strong>highly recommended</strong> to use the new STL-style iterator classes introduced into Open Babel 2.0.
+</p>
+
+<h3>Code Changes</h3>
+
+<p>No old code <strong>needs</strong> to be updated to work with Open Babel 2.0. However, the old iterator methods are deprecated and will disappear in some future release. The new methods are easier to use and less error-prone, so it is highly recommended to convert. For example:</p>
+
+<pre>
+   // old code
+   #include "mol.h"
+
+   OBAtom *atom;
+   OBAtom *nbr;
+   vector<OBEdgeBase*>::iterator i;
+
+   for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
+...
+</pre>
+
+<p>becomes</p>
+
+<pre>
+   // new code
+   #include "obiter.h"
+   #include "mol.h"
+
+   OBAtom *atom;
+   FOR_NBORS_OF_ATOM(nbr, atom)
+    {
+         ...
+</pre>
+
+<p>For more information, see the documentation for the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBMol.shtml">OBMol</a> class.
+
+<p><a href="#top">Top</a></p>
+
+<h2><a name="errors">Error Handling</a></h2>
+
+<p>
+In order to allow users and developers to easily redirect, filter, and log errors, debugging messages, and internal "audit log" information when molecules are altered, the new OBMessageHandler class has been added.
+</p>
+
+<h3>Code Changes</h3>
+
+<p>Rather than using <code>std::cerr</code> or <code>std::cout</code> or the old <strong>ThrowError()</strong> method, you should use the global obErrorLog object.</p>
+
+<pre>
+   ThrowError("Requested Atom Out of Range");
+ ...
+ 
+   std::cerr << " Could not parse line in type translation table types.txt -- incorect number of columns";
+   std::cerr << " found " << vc.size() << " expected " << _ncols << "." << std::endl;
+</pre>
+
+<p>becomes...</p>
+
+<pre>
+    // new code
+   obErrorLog.ThrowError(__FUNCTION__, "Requested Atom Out of Range", obDebug);
+
+...
+
+     stringstream errorMsg;
+     errorMsg << " Could not parse line in type translation table types.txt -- incorect number of columns";
+     errorMsg << " found " << vc.size() << " expected " << _ncols << ".";
+     obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+
+</pre>
+
+<p>For more information, see the <a href="http://openbabel.org/dev-api/classOpenBabel_1_1OBMessageHandler.shtml">OBMessageHandler</a> class.</p>
+
+<p><a href="#top">Top</a></p>
+
+<h2><a name="generic">Generic Data</a></h2>
+
+<p>
+The OBGenericData class has some small modifications, notably the expansion of hash-index access through the old obDataType class to <a href="http://openbabel.org/dev-api/namespaceOpenBabel_1_1OBGenericDataType.shtml">OBGenericDataType</a>, with named unsigned integers. In particular, this greatly facilitates the storage and manipulation of essentially an unlimited number of data types on a per-atom, per-bond, per-residue, or per-molecule basis.
+</p>
+
+<h3>Code Changes</h3>
+
+<p>Very little needs to be done. If you have derived a subclass of <a href="http://openbabel.org/dev-api/namespaceOpenBabel_1_1OBGenericData.shtml">OBGenericData</a>, then you should also pick a new <a href="http://openbabel.org/dev-api/namespaceOpenBabel_1_1OBGenericDataType.shtml">OBGenericDataType</a>, using some of the undefined namespace. (We would prefer if you also let us know, so we can minimize conflicts or future compatibility problems.)
+</p>
+
+<pre>
+    if (mol.HasData(obUnitCell))
+    {
+        OBUnitCell *uc = (OBUnitCell*)mol.GetData(obUnitCell)
+        ...
+    }
+
+    ...
+
+    if (mol.HasData("Author"))
+      ...    
+</pre>
+
+<p>becomes...</p>
+
+<pre>
+    if (mol.HasData(OBGenericDataType::UnitCell))
+    {
+        OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell)
+        ...
+    }
+
+    // String access doesn't need to be changed at all
+    if (mol.HasData("Author"))
+      ...    
+</pre>
+
+<p><a href="#top">Top</a></p>
+
+</div> <!-- end content -->
+
+<!--#include file="footer.html" -->

@@ -1,0 +1,71 @@
+##############################################################################
+#                                                                            #
+#	                Open Babel file: ringtyp.txt                             #
+#                                                                            #
+#  Copyright (c) 2007 Tim Vandermeersch                                      #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# SMARTS patterns for ring typing (used by typer.cpp:OBRingTyper)            #
+# (involved in MMFF94 atom typing, among other things)                       #
+#                                                                            #
+# RINGTYP: used to assign the ring types                                     #
+#                                                                            #
+##############################################################################
+
+#
+# 5 membered rings
+#
+#	ring name		smarts pattern
+RINGTYP	thiophene		s1cccc1
+RINGTYP	furan			o1cccc1
+RINGTYP	pyrrole			n1cccc1
+
+RINGTYP	thiazole		s1c[nD2]cc1
+RINGTYP	thiazole_cation		s1c[nD3]cc1 # needed by MMFF
+RINGTYP	oxazole			o1c[nD2]cc1
+RINGTYP	oxazole_cation		o1c[nD3]cc1 # needed by MMFF
+RINGTYP	imidazole		[nD3]1c[nD2]cc1
+RINGTYP	imidazole_cation	[nD3]1c[nD3]cc1 # needed by MMFF
+
+RINGTYP	isothiazole		s1[nD2]ccc1
+RINGTYP	isothiazole_cation	s1[nD3]ccc1 # needed by MMFF
+RINGTYP	isoxazole		o1[nD2]ccc1
+RINGTYP	isoxazole_cation	o1[nD3]ccc1 # needed by MMFF
+RINGTYP	pyrazole		[nD3]1[nD2]ccc1
+RINGTYP	pyrazole_anion		[nD2]1[nD2]ccc1 # needed by MMFF
+
+
+RINGTYP	1,2,3-thiadiazole		s1[nD2][nD2]cc1
+RINGTYP	1,2,3-thiadiazole_cation	s1[nD2][nD3]cc1 # needed by MMFF
+RINGTYP	1,2,4-thiadiazole		s1[nD2]c[nD2]c1
+RINGTYP	1,2,4-thiadiazole_cation	s1[nD2]c[nD3]c1 # needed by MMFF
+RINGTYP	1,3,4-thiadiazole		s1c[nD2][nD2]c1
+RINGTYP	1,3,4-thiadiazole_cation	s1c[nD2][nD3]c1 # needed by MMFF
+
+RINGTYP	1,2,3-oxadiazole		o1[nD2][nD2]cc1
+RINGTYP	1,2,3-oxadiazole_cation		o1[nD2][nD3]cc1 # needed by MMFF
+RINGTYP	1,2,4-oxadiazole		o1[nD2]c[nD2]c1
+RINGTYP	1,2,4-oxadiazole_cation		o1[nD2]c[nD3]c1 # needed by MMFF
+
+RINGTYP	1,2,3-triazole		[nD3]1[nD2][nD2]cc1
+RINGTYP	1,2,3-triazole_anion	[nD2]1[nD2][nD2]cc1 # needed by MMFF
+RINGTYP	1,2,4-triazole		[nD3]1[nD2]c[nD2]c1
+RINGTYP	1,2,4-triazole_anion	[nD2]1[nD2]c[nD2]c1 # needed by MMFF
+RINGTYP	1,3,4-triazole		[nD3]1c[nD2][nD2]c1
+RINGTYP	1,3,4-triazole_cation	[nD3]1c[nD3][nD2]c1 # needed by MMFF
+
+RINGTYP	1,2,3,4-tetrazole		[nD3]1[nD2][nD2][nD2]c1
+RINGTYP	1,2,3,4-tetrazole_cation	[nD3]1[nD2][nD2][nD3]c1 # needed by MMFF
+RINGTYP	1,2,3,5-tetrazole		[nD3]1[nD2][nD2]c[nD2]1
+RINGTYP	1,2,3,5-tetrazole_anion 	[nD2]1[nD2][nD2]c[nD2]1 # needed by MMFF
+
+#
+# 6 membered rings
+#
+#	ring name		smarts pattern
+RINGTYP	benzene			c1ccccc1
+RINGTYP	pyridine		n1ccccc1
+RINGTYP	pyridazine		n1ncccc1
+RINGTYP	pyrimidine		n1cnccc1
+RINGTYP	pyrazine		n1ccncc1
+#
