@@ -1,3 +1,17 @@
+Open Babel 2.2.3 (2009-07-31)
+
+What's New from 2.2.3:
+
+This release represents an important bug-fix upgrade, strongly recommended
+for all users of Open Babel. 
+
+- Fixed bug in fingerprints in 2.2.2, where the default fingerprint
+  format and bit length was changed inadvertently.
+- Fixed detection of shared_ptr in tr1/memory.
+- Fixed additional aromaticity / Kekule assignment bugs.
+- Fixed several bugs in the MMCIF format.
+- Additional bug fixes.
+
 Open Babel 2.2.2 (2009-07-04)
 
 What's New from 2.2.1:
