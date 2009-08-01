@@ -1,3 +1,7 @@
+2009-08-01  Daniel Leidert  <daniel.leidert@wgdd.de>
+
+	* doc/babel.1, doc/obchiral.1: Fixed "mdoc warning: Extraneous .Re".
+
 2009-07-15  Daniel Leidert
 
 	* doc/babel.1: Fixed hyphen used as minus sign.

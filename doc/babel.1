@@ -14,7 +14,6 @@
 .Op Fl o Ar output-type
 .Ar outfile
 .Sh DESCRIPTION
-.Re
 Babel is a cross-platform program designed to interconvert
 between many file formats used in molecular modeling and computational
 chemistry and related areas.
@@ -23,7 +22,6 @@ Open Babel is also a complete programmers toolkit for developing
 chemistry software. For more information, se the Open Babel web pages
 \%<\fBhttp://openbabel.org/\fR>.
 .Sh OPTIONS
-.Re
 If only input and ouput files are given, Open Babel will guess the
 file type from the filename extension.
 .Bl -tag -width flag
@@ -110,7 +108,6 @@ Output version number and exit
 Compress the output with gzip
 .El
 .Sh "FILE FORMATS"
-.Re
 The following formats are currently supported by Open Babel: 
 .Bl -item -offset indent -compact
 .It
@@ -328,11 +325,11 @@ For further specific information and options, use \-H<format-type>
  e.g., \-Hcml
 .Sh EXAMPLES
 Standard conversion:
-.Dl "babel -ixyz ethanol.xyz -opdb ethanol.pdb"
+.Dl "babel \-ixyz ethanol.xyz \-opdb ethanol.pdb"
 Conversion from a SMI file in STDIN to a Mol2 file written to STDOUT:
-.Dl "babel -ismi -omol2"
+.Dl "babel \-ismi \-omol2"
 Split a multi-molecule file into new1.smi, new2.smi, etc.:
-.Dl "babel infile.mol new.smi -m"
+.Dl "babel infile.mol new.smi \-m"
 .Sh SEE ALSO
 .Xr obenergy 1 ,
 .Xr obfit 1 ,
