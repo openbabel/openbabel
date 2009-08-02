@@ -1,3 +1,7 @@
+2009-08-02  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* data/space-groups.txt: updated after group 229 fix.
+
 2009-08-01  Daniel Leidert  <daniel.leidert@wgdd.de>
 
 	* doc/babel.1, doc/obchiral.1: Fixed "mdoc warning: Extraneous .Re".
