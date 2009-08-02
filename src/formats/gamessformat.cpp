@@ -435,6 +435,12 @@ namespace OpenBabel
             lowFreqModesBegin = atoi(vs[1].c_str());
             lowFreqModesEnd = atoi(vs[3].c_str());
           }
+        else if (strstr(buffer,"TOTAL ENERGY      =") != NULL)
+          {
+            tokenize(vs, buffer);
+            if (vs.size() == 4)
+              mol.SetEnergy(atof(vs[3].c_str()));
+          }
         else if (strstr(buffer,"FREQUENCY:") != NULL)
           {
             tokenize(vs, buffer);
@@ -761,7 +767,6 @@ namespace OpenBabel
       vd->SetOrigin(fileformatInput);
       mol.SetData(vd);
     }
-
 
     mol.SetTitle(title);
     return(true);
