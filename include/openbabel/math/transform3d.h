@@ -62,9 +62,9 @@ namespace OpenBabel
          Normalize();
        }
 
-      vector3 operator *(const vector3 &);
+      vector3 operator *(const vector3 &) const;
 
-      transform3d operator *(const transform3d &);
+      transform3d operator *(const transform3d &) const;
 
       std::string DescribeAsString() const;
       std::string DescribeAsValues() const;

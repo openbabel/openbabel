@@ -27,17 +27,17 @@ namespace OpenBabel
 
   /*! 
   */
-  vector3 transform3d::operator *(const vector3 &v)
+  vector3 transform3d::operator *(const vector3 &v) const
     {
-      return *static_cast <matrix3x3 *> (this) * v + *static_cast <vector3 *> (this);
+      return *static_cast <const matrix3x3 *> (this) * v + *static_cast <const vector3 *> (this);
     }
 
   /*! 
   */
-  transform3d transform3d::operator *(const transform3d &t)
+  transform3d transform3d::operator *(const transform3d &t) const
     {
       return transform3d(
-                    *static_cast <matrix3x3 *> (this) * *static_cast <const matrix3x3 *> (&t),
+                    *static_cast <const matrix3x3 *> (this) * *static_cast <const matrix3x3 *> (&t),
                     *this * *static_cast <const vector3 *> (&t)
                   );
     }

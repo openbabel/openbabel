@@ -1,3 +1,8 @@
+2009-08-03  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* include/openbabel/math/transform3d.h: add missing const to operator*.
+	* src/math/transform3d.cpp:
+
 2009-08-02  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* data/space-groups.txt: updated after group 229 fix.
