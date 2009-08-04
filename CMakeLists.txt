@@ -204,8 +204,13 @@ add_subdirectory(include)
 add_subdirectory(data)
 add_subdirectory(doc)
 add_subdirectory(src)
-add_subdirectory(test)
 add_subdirectory(tools)
+
+# Do we want to build the tests?
+option(ENABLE_TESTS "Enable unit tests" OFF)
+if(ENABLE_TESTS)
+  add_subdirectory(test)
+endif(ENABLE_TESTS)
 
 # Should Python bindings be built?
 option(ENABLE_PYTHON "Enable Python bindings" OFF)
