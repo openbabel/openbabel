@@ -109,9 +109,11 @@ namespace OpenBabel {
     // Open files
     string potcar_filename = path + "/POTCAR"; 
     string outcar_filename = path + "/OUTCAR"; 
+    string doscar_filename = path + "/DOSCAR"; 
     string contcar_filename = pConv->GetInFilename(); // POSCAR _OR_ CONTCAR 
     ifstream ifs_pot (potcar_filename.c_str());
     ifstream ifs_out (outcar_filename.c_str());
+    ifstream ifs_dos (doscar_filename.c_str());
     ifstream ifs_cont (contcar_filename.c_str());
      if (!ifs_pot || !ifs_cont)
        return false; // Missing some files
@@ -258,6 +260,40 @@ namespace OpenBabel {
 
      // There is some trailing garbage, but AFAIK it's not useful for anything.
      ifs_cont.close();
+
+     // Read density of states info from DOSCAR, if available
+     if (ifs_dos) {
+       // Create DOS object
+       OBDOSData *dos = new OBDOSData();
+
+       // skip header
+       ifs_dos.getline(buffer,BUFF_SIZE); // Junk
+       ifs_dos.getline(buffer,BUFF_SIZE); // Junk
+       ifs_dos.getline(buffer,BUFF_SIZE); // Junk
+       ifs_dos.getline(buffer,BUFF_SIZE); // Junk
+       ifs_dos.getline(buffer,BUFF_SIZE); // Junk
+
+       // Get fermi level       
+       ifs_dos.getline(buffer,BUFF_SIZE); // startE endE res fermi ???
+       tokenize(vs, buffer);
+       double fermi = atof(vs[3].c_str());
+
+       // Start pulling out energies and densities
+       std::vector<double> energies;
+       std::vector<double> densities;
+       std::vector<double> integration;
+       while (ifs_dos.getline(buffer,BUFF_SIZE)) {
+           tokenize(vs, buffer);
+           energies.push_back(atof(vs[0].c_str()));
+           densities.push_back(atof(vs[1].c_str()));
+           integration.push_back(atof(vs[2].c_str()));
+       }
+
+       dos->SetData(fermi, energies, densities, integration);
+       pmol->SetData(dos);
+     }
+
+     ifs_dos.close();
 
      pmol->EndModify();
 
