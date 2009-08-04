@@ -1427,6 +1427,28 @@ namespace OpenBabel
   }
 
 //
+//member functions for OBDOSData class
+//
+
+/*!
+**\brief Assign the data
+**\param fermi The Fermi energy in eV
+**\param vEnergies Energy levels in eV
+**\param vDensities Density of states in (number of states) / (unit cell)
+**\param vIntegration Integrated DOS
+*/
+void OBDOSData::SetData(double fermi,
+                        const std::vector<double> & vEnergies,
+                        const std::vector<double> & vIntegration,
+                        const std::vector<double> & vDensities)
+{
+  this->_fermi = fermi;
+  this->_vEnergies = vEnergies;
+  this->_vIntegration = vIntegration;
+  this->_vDensities = vDensities;
+}
+
+//
 //member functions for OBVibrationData class
 //
 

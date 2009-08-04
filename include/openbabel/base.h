@@ -134,6 +134,9 @@ class OBBase;
       //! Stereochemistry data (see OBStereoBase)
       StereoData =        27,
 
+      //! Density of States data (fermi energy and energy vs. density data)
+      DOSData =           28,
+
       // space for up to 2^14 more entries...
 
       //! Custom (user-defined data)

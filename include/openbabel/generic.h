@@ -769,6 +769,46 @@ namespace OpenBabel
     unsigned int GetNumberOfFrequencies() const;
 };
 
+  //! \class OBDOSData generic.h <openbabel/generic.h>
+  //! \brief Used to hold density of states information
+ class OBAPI OBDOSData: public OBGenericData
+  {
+  protected:
+    //! Fermi energy (eV) as shown in _vEnergies
+    double _fermi;
+    
+    //! Energy levels (eV)
+    std::vector<double>  _vEnergies;
+    
+    //! Density of corresponding energy level (number of states / unit cell)
+    std::vector<double>  _vDensities;
+
+    //! Integrated DOS vector
+    std::vector<double>  _vIntegration;
+
+  public:
+    OBDOSData(): OBGenericData("DOSData", OBGenericDataType::DOSData){};
+    virtual ~OBDOSData() {}
+    virtual OBGenericData* Clone(OBBase*) const
+         {return new OBDOSData(*this);}
+    
+    OBDOSData & operator=(const OBDOSData &);
+    
+    void SetData(double,
+                 const std::vector<double> &,
+                 const std::vector<double> &,
+                 const std::vector<double> &);
+    
+    double GetFermiEnergy() const
+      { return this->_fermi; }
+    std::vector<double> GetEnergies() const
+      { return this->_vEnergies; }
+    std::vector<double> GetDensities() const
+      { return this->_vDensities; }
+    std::vector<double> GetIntegration() const
+      { return this->_vIntegration; }
+};
+
   //! \class OBRotationData generic.h <openbabel/generic.h>
   //! \brief Used to hold the rotational constants and symmetry numbers
  class OBAPI OBRotationData: public OBGenericData
