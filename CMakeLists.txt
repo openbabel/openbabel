@@ -2,13 +2,10 @@ project(openbabel)
 set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 cmake_minimum_required(VERSION 2.4.8)
 
-ENABLE_TESTING()
-
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
+  cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
 endif(COMMAND cmake_policy)
-
-ENABLE_TESTING()
 
 include (CheckCXXCompilerFlag)
 include (MacroEnsureVersion)
@@ -209,6 +206,7 @@ add_subdirectory(tools)
 # Do we want to build the tests?
 option(ENABLE_TESTS "Enable unit tests" OFF)
 if(ENABLE_TESTS)
+  enable_testing()
   add_subdirectory(test)
 endif(ENABLE_TESTS)
 

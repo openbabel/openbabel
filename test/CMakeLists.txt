@@ -1,11 +1,5 @@
 # define TESTDATADIR for tests that need input files
-cmake_policy(SET CMP0005 NEW) # needed for line below (escapes value)
-add_definitions( -DTESTDATADIR="${CMAKE_SOURCE_DIR}/test/files/" )
-
-# define TESTDATADIR for tests that need input files
-cmake_policy(SET CMP0005 NEW) # needed for line below (escapes value)
-add_definitions( -DTESTDATADIR="${CMAKE_SOURCE_DIR}/test/files/" )
-
+add_definitions(-DTESTDATADIR="\\"${CMAKE_SOURCE_DIR}/test/files/\\"")
 ############################################################
 #  new tests using obtest.h
 ############################################################
