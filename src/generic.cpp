@@ -1439,8 +1439,8 @@ namespace OpenBabel
 */
 void OBDOSData::SetData(double fermi,
                         const std::vector<double> & vEnergies,
-                        const std::vector<double> & vIntegration,
-                        const std::vector<double> & vDensities)
+                        const std::vector<double> & vDensities,
+                        const std::vector<double> & vIntegration)
 {
   this->_fermi = fermi;
   this->_vEnergies = vEnergies;
