@@ -851,6 +851,7 @@ namespace OpenBabel
       _init = true;
       _velocityPtr = NULL;       
       _gradientPtr = NULL;       
+      _grad1 = NULL;
     }    
 
     if (IsSetupNeeded(mol)) {
