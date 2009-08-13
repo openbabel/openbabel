@@ -809,6 +809,58 @@ namespace OpenBabel
       { return this->_vIntegration; }
 };
 
+  //! \class OBExcitedStateData generic.h <openbabel/generic.h>
+  //! \brief Used to hold information about the excited electronic states
+ class OBAPI OBExcitedStatesData: public OBGenericData
+  {
+  protected:
+    //! Wavelengths (nm)
+    std::vector<double>  _vWavelengths;
+    
+    //! Oscillator strengths
+    std::vector<double>  _vForces;
+
+    //! Electric dipole strengths
+    std::vector<double>  _vEDipole;
+
+    //! Rotatory strengths (velocity)
+    std::vector<double>  _vRotatoryStrengthsVelocity;
+
+    //! Rotatory strengths (length)
+    std::vector<double>  _vRotatoryStrengthsLength;
+
+  public:
+    OBExcitedStatesData(): OBGenericData("ExcitedStatesData", OBGenericDataType::ExcitedStatesData)
+      {
+        std::vector<double> _vEDipole ();
+        std::vector<double> _vRotatoryStrengthsLength ();
+        std::vector<double> _vRotatoryStrengthsVelocity ();
+      };
+    virtual ~OBExcitedStatesData() {}
+    virtual OBGenericData* Clone(OBBase*) const
+         {return new OBExcitedStatesData(*this);}
+    
+    OBExcitedStatesData & operator=(const OBExcitedStatesData &);
+    
+    void SetData(const std::vector<double> &,
+                 const std::vector<double> &);
+
+    void SetEDipole(const std::vector<double> &);
+    void SetRotatoryStrengthsVelocity(const std::vector<double> &);
+    void SetRotatoryStrengthsLength(const std::vector<double> &);
+
+    std::vector<double> GetWavelengths() const
+      { return this->_vWavelengths; }
+    std::vector<double> GetForces() const
+      { return this->_vForces; }
+    std::vector<double> GetEDipole() const
+      { return this->_vEDipole; }
+    std::vector<double> GetRotatoryStrengthsVelocity() const
+      { return this->_vRotatoryStrengthsVelocity; }
+    std::vector<double> GetRotatoryStrengthsLength() const
+      { return this->_vRotatoryStrengthsLength; }
+};
+
   //! \class OBRotationData generic.h <openbabel/generic.h>
   //! \brief Used to hold the rotational constants and symmetry numbers
  class OBAPI OBRotationData: public OBGenericData

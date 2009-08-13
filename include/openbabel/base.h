@@ -137,6 +137,9 @@ class OBBase;
       //! Density of States data (fermi energy and energy vs. density data)
       DOSData =           28,
 
+      //! Electronic excitation data
+      ExcitedStatesData =  29,
+
       // space for up to 2^14 more entries...
 
       //! Custom (user-defined data)

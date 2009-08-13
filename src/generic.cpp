@@ -1449,6 +1449,49 @@ void OBDOSData::SetData(double fermi,
 }
 
 //
+//member functions for OBExcitedStatesData class
+//
+
+/*!
+**\brief Assign the basic excitation data
+**\param vWavelengths Wavelengths in nm
+**\param vForces Oscillator strengths
+*/
+void OBExcitedStatesData::SetData(const std::vector<double> & vWavelengths,
+                                  const std::vector<double> & vForces)
+{
+  this->_vWavelengths = vWavelengths;
+  this->_vForces = vForces;
+}
+
+/*!
+**\brief Assign the electronic dipole strengths
+**\param vEDipole Electronic dipole moment strength
+*/
+void OBExcitedStatesData::SetEDipole(const std::vector<double> & vEDipole)
+{
+  this->_vEDipole = vEDipole;
+}
+
+/*!
+**\brief Assign the rotatory strengths (velocity)
+**\param vRotatorStrengthsVelocity Vector containing the rotatory strengths
+*/
+void OBExcitedStatesData::SetRotatoryStrengthsVelocity(const std::vector<double> & vRotatoryStrengthsVelocity)
+{
+  this->_vRotatoryStrengthsVelocity = vRotatoryStrengthsVelocity;
+}
+
+/*!
+**\brief Assign the rotatory strengths (length)
+**\param vRotatorStrengthsLength Vector containing the rotatory strengths
+*/
+void OBExcitedStatesData::SetRotatoryStrengthsLength(const std::vector<double> & vRotatoryStrengthsLength)
+{
+  this->_vRotatoryStrengthsLength = vRotatoryStrengthsLength;
+}
+
+//
 //member functions for OBVibrationData class
 //
 
