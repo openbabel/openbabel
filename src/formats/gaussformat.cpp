@@ -294,6 +294,10 @@ namespace OpenBabel
     vector3 translationVectors[3];
     int numTranslationVectors = 0;
 
+    //Electronic Excitation data
+    std::vector<double> Forces, Wavelengths, EDipole, 
+      RotatoryStrengthsVelocity, RotatoryStrengthsLength;
+
     mol.BeginModify();
     
     while (ifs.getline(buffer,BUFF_SIZE))
@@ -447,6 +451,53 @@ namespace OpenBabel
          
         }
 
+        else if(strstr(buffer, " Excited State")) // Force and wavelength data
+        {
+          // The above line appears for each state, so just append the info to the vectors
+          tokenize(vs, buffer);
+          if (vs.size() == 9) {
+            double wavelength = atof(vs[6].c_str());
+            double force = atof(vs[8].substr(2).c_str());
+            Forces.push_back(force);
+            Wavelengths.push_back(wavelength);
+          }
+        }
+        else if(strstr(buffer, " Ground to excited state Transition electric dipole moments (Au):")) 
+          // Electronic dipole moments
+        {
+          ifs.getline(buffer, BUFF_SIZE); // Headings
+          ifs.getline(buffer, BUFF_SIZE); // First entry
+          tokenize(vs, buffer);
+          while (vs.size() == 5) {
+            double s = atof(vs[4].c_str());
+            EDipole.push_back(s);
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs, buffer);            
+          }
+        }
+        else if(strstr(buffer, "       state          X           Y           Z     R(velocity)")) {
+          // Rotatory Strengths
+          ifs.getline(buffer, BUFF_SIZE); // First entry
+          tokenize(vs, buffer);
+          while (vs.size() == 5) {
+            double s = atof(vs[4].c_str());
+            RotatoryStrengthsVelocity.push_back(s);
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs, buffer);            
+          }
+        }
+        else if(strstr(buffer, "       state          X           Y           Z     R(length)")) {
+          // Rotatory Strengths
+          ifs.getline(buffer, BUFF_SIZE); // First entry
+          tokenize(vs, buffer);
+          while (vs.size() == 5) {
+            double s = atof(vs[4].c_str());
+            RotatoryStrengthsLength.push_back(s);
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs, buffer);            
+          }
+        }
+        
         else if (strstr(buffer, "Isotropic = ")) // NMR shifts
           {
             tokenize(vs, buffer);
@@ -498,6 +549,20 @@ namespace OpenBabel
       uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
       uc->SetOrigin(fileformatInput);
       mol.SetData(uc);
+    }
+    //Attach excited states data, if there is any, to molecule
+    if(Forces.size() > 0 && Forces.size() == Wavelengths.size())
+    {
+      OBExcitedStatesData* esd = new OBExcitedStatesData;
+      esd->SetData(Wavelengths, Forces);
+      if (EDipole.size() == Forces.size())
+        esd->SetEDipole(EDipole);
+      if (RotatoryStrengthsLength.size() == Forces.size())
+        esd->SetRotatoryStrengthsLength(RotatoryStrengthsLength);
+      if (RotatoryStrengthsVelocity.size() == Forces.size())
+        esd->SetRotatoryStrengthsVelocity(RotatoryStrengthsVelocity);
+      esd->SetOrigin(fileformatInput);
+      mol.SetData(esd);
     }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
