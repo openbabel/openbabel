@@ -550,19 +550,19 @@ namespace OpenBabel
       uc->SetOrigin(fileformatInput);
       mol.SetData(uc);
     }
-    //Attach excited states data, if there is any, to molecule
+    //Attach electronic transition data, if there is any, to molecule
     if(Forces.size() > 0 && Forces.size() == Wavelengths.size())
     {
-      OBExcitedStatesData* esd = new OBExcitedStatesData;
-      esd->SetData(Wavelengths, Forces);
+      OBElectronicTransitionData* etd = new OBElectronicTransitionData;
+      etd->SetData(Wavelengths, Forces);
       if (EDipole.size() == Forces.size())
-        esd->SetEDipole(EDipole);
+        etd->SetEDipole(EDipole);
       if (RotatoryStrengthsLength.size() == Forces.size())
-        esd->SetRotatoryStrengthsLength(RotatoryStrengthsLength);
+        etd->SetRotatoryStrengthsLength(RotatoryStrengthsLength);
       if (RotatoryStrengthsVelocity.size() == Forces.size())
-        esd->SetRotatoryStrengthsVelocity(RotatoryStrengthsVelocity);
-      esd->SetOrigin(fileformatInput);
-      mol.SetData(esd);
+        etd->SetRotatoryStrengthsVelocity(RotatoryStrengthsVelocity);
+      etd->SetOrigin(fileformatInput);
+      mol.SetData(etd);
     }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))

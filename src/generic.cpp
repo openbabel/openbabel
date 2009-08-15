@@ -1449,7 +1449,7 @@ void OBDOSData::SetData(double fermi,
 }
 
 //
-//member functions for OBExcitedStatesData class
+//member functions for OBElectronicTransitionData class
 //
 
 /*!
@@ -1457,7 +1457,7 @@ void OBDOSData::SetData(double fermi,
 **\param vWavelengths Wavelengths in nm
 **\param vForces Oscillator strengths
 */
-void OBExcitedStatesData::SetData(const std::vector<double> & vWavelengths,
+void OBElectronicTransitionData::SetData(const std::vector<double> & vWavelengths,
                                   const std::vector<double> & vForces)
 {
   this->_vWavelengths = vWavelengths;
@@ -1468,7 +1468,7 @@ void OBExcitedStatesData::SetData(const std::vector<double> & vWavelengths,
 **\brief Assign the electronic dipole strengths
 **\param vEDipole Electronic dipole moment strength
 */
-void OBExcitedStatesData::SetEDipole(const std::vector<double> & vEDipole)
+void OBElectronicTransitionData::SetEDipole(const std::vector<double> & vEDipole)
 {
   this->_vEDipole = vEDipole;
 }
@@ -1477,7 +1477,7 @@ void OBExcitedStatesData::SetEDipole(const std::vector<double> & vEDipole)
 **\brief Assign the rotatory strengths (velocity)
 **\param vRotatorStrengthsVelocity Vector containing the rotatory strengths
 */
-void OBExcitedStatesData::SetRotatoryStrengthsVelocity(const std::vector<double> & vRotatoryStrengthsVelocity)
+void OBElectronicTransitionData::SetRotatoryStrengthsVelocity(const std::vector<double> & vRotatoryStrengthsVelocity)
 {
   this->_vRotatoryStrengthsVelocity = vRotatoryStrengthsVelocity;
 }
@@ -1486,7 +1486,7 @@ void OBExcitedStatesData::SetRotatoryStrengthsVelocity(const std::vector<double>
 **\brief Assign the rotatory strengths (length)
 **\param vRotatorStrengthsLength Vector containing the rotatory strengths
 */
-void OBExcitedStatesData::SetRotatoryStrengthsLength(const std::vector<double> & vRotatoryStrengthsLength)
+void OBElectronicTransitionData::SetRotatoryStrengthsLength(const std::vector<double> & vRotatoryStrengthsLength)
 {
   this->_vRotatoryStrengthsLength = vRotatoryStrengthsLength;
 }

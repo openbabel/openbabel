@@ -809,9 +809,9 @@ namespace OpenBabel
       { return this->_vIntegration; }
 };
 
-  //! \class OBExcitedStateData generic.h <openbabel/generic.h>
-  //! \brief Used to hold information about the excited electronic states
- class OBAPI OBExcitedStatesData: public OBGenericData
+  //! \class OBElectronicTransitionData generic.h <openbabel/generic.h>
+  //! \brief Used to hold information about electronic transitions
+ class OBAPI OBElectronicTransitionData: public OBGenericData
   {
   protected:
     //! Wavelengths (nm)
@@ -830,17 +830,17 @@ namespace OpenBabel
     std::vector<double>  _vRotatoryStrengthsLength;
 
   public:
-    OBExcitedStatesData(): OBGenericData("ExcitedStatesData", OBGenericDataType::ExcitedStatesData)
+    OBElectronicTransitionData(): OBGenericData("ElectronicTransitionData", OBGenericDataType::ElectronicTransitionData)
       {
         std::vector<double> _vEDipole ();
         std::vector<double> _vRotatoryStrengthsLength ();
         std::vector<double> _vRotatoryStrengthsVelocity ();
       };
-    virtual ~OBExcitedStatesData() {}
+    virtual ~OBElectronicTransitionData() {}
     virtual OBGenericData* Clone(OBBase*) const
-         {return new OBExcitedStatesData(*this);}
+         {return new OBElectronicTransitionData(*this);}
     
-    OBExcitedStatesData & operator=(const OBExcitedStatesData &);
+    OBElectronicTransitionData & operator=(const OBElectronicTransitionData &);
     
     void SetData(const std::vector<double> &,
                  const std::vector<double> &);
