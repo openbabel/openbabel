@@ -1,3 +1,9 @@
+2009-08-16  Chris Morley
+
+	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi
+	Replace two instances of libinchi.dll with libstdinci.dll
+	(The modified version was used for v2.2.3)
+
 2009-08-01  Daniel Leidert  <daniel.leidert@wgdd.de>
 
 	* doc/babel.1, doc/obchiral.1: Fixed "mdoc warning: Extraneous .Re".

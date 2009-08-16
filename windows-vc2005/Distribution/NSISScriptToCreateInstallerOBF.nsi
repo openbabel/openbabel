@@ -526,7 +526,7 @@ Section "Dummy Section" SecDummy
   File ..\zlib1.dll
   File ..\libxml2.dll
   File ..\iconv.dll
-  File ..\libinchi.dll
+  File ..\libstdinchi.dll
   File ..\..\data\aromatic.txt
   File ..\..\data\atomtyp.txt
   File ..\..\data\bondtyp.txt
@@ -669,7 +669,7 @@ Section "Uninstall"
   Delete "$INSTDIR\iconv.dll"
   Delete "$INSTDIR\isotope.txt"
   Delete "$INSTDIR\isotope-small.txt"
-  Delete "$INSTDIR\libinchi.dll"
+  Delete "$INSTDIR\libstdinchi.dll"
   Delete "$INSTDIR\libxml2.dll"
   Delete "$INSTDIR\License.txt"
   Delete "$INSTDIR\logp.txt"
