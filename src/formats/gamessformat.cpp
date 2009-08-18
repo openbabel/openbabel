@@ -815,7 +815,6 @@ namespace OpenBabel
                     y = atof((char*)vs[3].c_str());
                     z = atof((char*)vs[4].c_str());
                     atom->SetVector(x,y,z);
-                    vs[1].erase(vs[1].size() - 2, 2);
                   }
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
