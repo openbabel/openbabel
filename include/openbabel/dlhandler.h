@@ -60,8 +60,7 @@ public:
           * The appname.exe is removed and ..\lib\openbabel\BABEL_VERSION\ is appended.
           *
           * Windows MSVC: Uses windows' GetModuleHandle to get a handle to the
-          * OBConv dll module. From this, the dll's path can be extracted and
-          * OBConv.dll is removed.
+          * OBError dll module. From this, the dll's path can be extracted.
           *
           * @sa findFiles
 	  */ 

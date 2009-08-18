@@ -1,5 +1,17 @@
 2009-08-16  Chris Morley
 
+	* src/dlhandler_win32.cpp(getConvDirectory):changes which should affect
+	only MSVC build. Get handle of this module, not the exe file. As found by
+	Noel and by Mingyue Zheng this broke the Python bindings. 
+	Correct the module name (different when debugging).
+	OpenBabel2.2.3b_Windows_Installer.exe has this mod.
+	
+	* include/openbabel/dlhandler.h: minor doc change
+	
+src/dlhandler_win32.cpp
+
+2009-08-16  Chris Morley
+
 	* windows-vc2005/Distribution/NSISScriptToCreateInstallerOBF.nsi
 	Replace two instances of libinchi.dll with libstdinci.dll
 	(The modified version was used for v2.2.3)
