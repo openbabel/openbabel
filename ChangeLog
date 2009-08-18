@@ -1,4 +1,4 @@
-2009-08-16  Chris Morley
+2009-08-18  Chris Morley
 
 	* src/dlhandler_win32.cpp(getConvDirectory):changes which should affect
 	only MSVC build. Get handle of this module, not the exe file. As found by
@@ -7,8 +7,6 @@
 	OpenBabel2.2.3b_Windows_Installer.exe has this mod.
 	
 	* include/openbabel/dlhandler.h: minor doc change
-	
-src/dlhandler_win32.cpp
 
 2009-08-16  Chris Morley
 
