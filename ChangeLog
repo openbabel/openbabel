@@ -1,3 +1,8 @@
+2009-08-19  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* Windows Python build: Bump version to 1.5 and add support for Python
+	3.1.
+
 2009-08-18  Chris Morley
 
 	* src/dlhandler_win32.cpp(getConvDirectory):changes which should affect

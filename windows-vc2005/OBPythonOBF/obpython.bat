@@ -1,4 +1,4 @@
-set VER=1.4
+set VER=1.5
 
 if %1a==a EXIT 1 
 set PYTHON_DIR=%1

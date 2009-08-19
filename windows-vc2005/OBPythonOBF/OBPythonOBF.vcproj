@@ -435,6 +435,90 @@
 				CommandLine="obpython.bat &quot;$(PYTHON30_DIR)&quot; 3.0"
 			/>
 		</Configuration>
+		<Configuration
+			Name="Python31|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				Description="64 bit portability warnings have been turned off! "
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="..\..\include;..;../../src;&quot;$(PYTHON31_DIR)\include&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;__KCC;USING_DYNAMIC_LIBS"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				Detect64BitPortabilityProblems="false"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				OutputFile="_openbabel.pyd"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(PYTHON31_DIR)\libs"
+				GenerateManifest="true"
+				GenerateDebugInformation="false"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Running obpython.bat"
+				CommandLine="obpython.bat &quot;$(PYTHON31_DIR)&quot; 3.1"
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 	</References>
@@ -483,7 +567,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Running SWIG to generate openbabel-python_wrap.cpp"
-					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
+					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 					AdditionalDependencies="../OBDLL.lib;../OBConv.lib;../OBDESC.lib;../oberror.lib;../obcommon.lib"
 					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
 				/>
@@ -505,7 +589,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Running SWIG to generate openbabel-python_wrap.cpp"
-					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
+					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 					AdditionalDependencies="../OBDLL.lib;../OBConv.lib;../OBDESC.lib;../oberror.lib;../obcommon.lib"
 					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
 				/>
@@ -516,7 +600,18 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Running SWIG to generate openbabel-python_wrap.cpp"
-					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;"
+					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+					AdditionalDependencies="../OBDLL.lib;../OBConv.lib;../OBDESC.lib;../oberror.lib;../obcommon.lib"
+					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Python31|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Running SWIG to generate openbabel-python_wrap.cpp"
+					CommandLine="swig -c++ -python -I&quot;../../src&quot;  -I&quot;../../include&quot; -I&quot;..&quot; -outdir . -o &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 					AdditionalDependencies="../OBDLL.lib;../OBConv.lib;../OBDESC.lib;../oberror.lib;../obcommon.lib"
 					Outputs=" &quot;$(ProjectDir)\$(InputName)_wrap.cpp&quot;"
 				/>

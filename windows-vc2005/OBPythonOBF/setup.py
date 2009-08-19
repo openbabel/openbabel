@@ -16,7 +16,7 @@ shutil.copyfile("../../scripts/python/pybel_py%d.x.py" % sys.version_info[0],
                 "pybel.py")
 
 setup(name='openbabel-python',
-      version='1.4',
+      version='1.5',
       author='The Open Babel development team',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/wiki/Python',
