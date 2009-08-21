@@ -103,6 +103,8 @@ namespace OpenBabel
       void GetParity(OBMol& mol, map<OBAtom*, Parity> &parity,
            map<OBBond*, OBStereo::BondDirection> &updown);
       void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity);
+      int ReadIntField(const char *s);
+      unsigned int ReadUIntField(const char *s);
       map<int,int> indexmap; //relates index in file to index in OBMol
       vector<string> vs;
   };
@@ -246,8 +248,8 @@ namespace OpenBabel
       return(false);
     }
 
-    natoms = atoi((line.substr(0, 3)).c_str());
-    nbonds = atoi((line.substr(3, 3)).c_str());
+    natoms = ReadUIntField((line.substr(0, 3)).c_str());
+    nbonds = ReadUIntField((line.substr(3, 3)).c_str());
 
     mol.BeginModify();
     if(line.find("V3000") != string::npos) {
@@ -304,15 +306,15 @@ namespace OpenBabel
         atom.SetAtomicNum(etab.GetAtomicNum(symbol.c_str()));
         // mass difference
         if (line.size() >= 35)
-          massdiff = atoi(line.substr(34, 2).c_str());
+          massdiff = ReadIntField(line.substr(34, 2).c_str());
         massDiffs.push_back(massdiff);
         // charge      
         if (line.size() >= 38)
-          charge = atoi(line.substr(36, 3).c_str());
+          charge = ReadIntField(line.substr(36, 3).c_str());
         charges.push_back(charge);
         // stereo parity
         if (line.size() >= 41) {
-          stereo = atoi(line.substr(39, 3).c_str());
+          stereo = ReadUIntField(line.substr(39, 3).c_str());
           switch (stereo) {
             case 1:
               parity = Clockwise;
@@ -357,10 +359,10 @@ namespace OpenBabel
         // sss = bond stereo (
         // ... = query/topology
         if (line.size() >= 9) {
-	        begin = atoi((line.substr(0, 3)).c_str());
-	        end = atoi((line.substr(3, 3)).c_str());
-	        order = atoi((line.substr(6, 3)).c_str());
-	      }
+	  begin = ReadUIntField(line.substr(0, 3).c_str());
+	  end   = ReadUIntField(line.substr(3, 3).c_str());
+	  order = ReadUIntField((line.substr(6, 3)).c_str());
+	}
         if (begin == 0 || end == 0 || order == 0 || begin > mol.NumAtoms() || end > mol.NumAtoms()) {
 	        errorMsg << "WARNING: Problems reading a MDL file\n";
 	        errorMsg << "Invalid bond specification, atom numbers or bond order are wrong.\n";
@@ -370,7 +372,7 @@ namespace OpenBabel
 
         order = (order == 4) ? 5 : order;
         if (line.size() >= 12) {  //handle wedge/hash data
-          stereo = atoi((line.substr(9, 3)).c_str());
+          stereo = ReadUIntField((line.substr(9, 3)).c_str());
           if (stereo) {
             switch (stereo) {
               case 1:
@@ -433,27 +435,33 @@ namespace OpenBabel
         if (line.substr(0, 6) == "M  END")
           break;
         if (line.substr(0, 6) == "S  SKP") {
-          int i = atoi(line.substr(6, line.size() - 6).c_str());
+          int i = ReadUIntField((line.substr(6, line.size() - 6)).c_str());
           for(; i > 0; --i)
             if (ifs.good()) // check for EOL, suggested by Dalke
               std::getline(ifs, line);
         }
-        if (line.at(0) == 'A') { //alias
-          int atomnum = atoi(line.substr(2, line.size() - 2).c_str());
-          for(; i > 0; --i)
-          std::getline(ifs, line);
-          if(line.at(0) != '?' && line.at(0) != '*') {
-            AliasData* ad = new AliasData();
-            ad->SetAlias(line);
-            ad->SetOrigin(fileformatInput);
-            OBAtom* at = mol.GetAtom(atomnum);
-            if (at) {
-              at->SetData(ad);
-              at->SetAtomicNum(0);
-              //The alias has now been added as a dummy atom with a AliasData object.
-              ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
-            }
-          }
+        if (line.substr(0, 3) == "A  " && line.size() > 3) { //alias
+
+// This code is commented out because it is plainly wrong. (For example, it
+// uses the variable i which is not initialized, to randomly skip a number
+// of lines of the SD file.)  It needs to be rewritten to the MDL spec, but
+// the spec is difficult to understand.  -- CJ
+
+//           int atomnum = ReadUIntField((line.substr(2, line.size() - 2)).c_str());
+//           for(; i > 0; --i)
+// 	    std::getline(ifs, line);
+//           if(line.at(0) != '?' && line.at(0) != '*') {
+//             AliasData* ad = new AliasData();
+//             ad->SetAlias(line);
+//             ad->SetOrigin(fileformatInput);
+//             OBAtom* at = mol.GetAtom(atomnum);
+//             if (at) {
+//               at->SetData(ad);
+//               at->SetAtomicNum(0);
+//               //The alias has now been added as a dummy atom with a AliasData object.
+//               ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
+//             }
+//           }
           continue;
         }
 
@@ -462,14 +470,17 @@ namespace OpenBabel
           continue;
         int n = -1;
         if (line.size() >= 9)
-          n = atoi((line.substr(6, 3)).c_str()); //entries on this line
-        if (n <= 0 || n > 8 || 6+n*8 > line.size()) { //catch ill-formed line
-          obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + line, obError);
+          n = ReadUIntField((line.substr(6, 3)).c_str()); //entries on this line
+        if (n <= 0 || n > 99 || 6+n*8 > line.size()) { //catch ill-formed line
+          obErrorLog.ThrowError(__FUNCTION__, "Error in line: Invalid number following 'M  CHG', 'M  ISO' or 'M  RAD' specification (must be an integer in range 1 to 8)\n" + line, obError);
           return false;
         }
+	if (n > 8) {
+	  obErrorLog.ThrowError(__FUNCTION__, "Invalid line: too many items, only 8 items are allowed:\n" + line, obWarning);
+	}
         int pos = 10;
         for (; n > 0; n--, pos += 8) {
-          int atomnumber = atoi((line.substr(pos,3)).c_str());
+          int atomnumber = ReadUIntField((line.substr(pos,3)).c_str());
           OBAtom *at;
           if (atomnumber==0 || (at=mol.GetAtom(atomnumber))==NULL) {
             obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + line, obError);
@@ -477,7 +488,7 @@ namespace OpenBabel
           }
 
           at = mol.GetAtom(atomnumber); //atom numbers start at 1
-          int value = atoi((line.substr(pos+4,3)).c_str());
+          int value = ReadUIntField((line.substr(pos+4,3)).c_str());
           if (line.substr(3, 3) == "RAD") {
             at->SetSpinMultiplicity(value);
             foundCHG = true;
@@ -498,7 +509,7 @@ namespace OpenBabel
         FOR_ATOMS_OF_MOL (a, mol) {
           int massDifference = massDiffs.at(a->GetIndex());
           if (massDifference)
-            a->SetIsotope(etab.GetMass(a->GetAtomicNum()) + massDifference);
+            a->SetIsotope((int)(etab.GetMass(a->GetAtomicNum()) + massDifference));
         }
       // if no 'M  CHG' or 'M  RAD' properties are found, use the charges from the atom block
       if (!foundCHG)
@@ -751,32 +762,39 @@ namespace OpenBabel
             }
 
           }
-        if(rads.size())
-          {
-            ofs << "M  RAD" << setw(3) << rads.size();
-            for(itr=rads.begin();itr!=rads.end();++itr)
-              ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetSpinMultiplicity();
-            ofs << endl;
-          }                     
-        if(isos.size())
-          {
-            ofs << "M  ISO" << setw(3) << isos.size();
-            for(itr=isos.begin();itr!=isos.end();++itr)
-              ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetIsotope();
-            ofs << endl;
-          }                     
-        if(chgs.size())
-          {
-            int counter = 0;
-            for( itr=chgs.begin(); itr != chgs.end(); ++itr, counter++ ) {
-              if( counter % 8 == 0 ) {
-                if( counter > 0 ) ofs << endl;
-                ofs << "M  CHG" << setw(3) << min(static_cast<unsigned long int>(chgs.size() - counter), static_cast<unsigned long int>(8));
-              }
-              ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetFormalCharge();
-            }
-            ofs << endl;
-          }
+        if (rads.size()) {
+	  int counter = 0;
+	  for(itr=rads.begin();itr!=rads.end();++itr, counter++) {
+	    if (counter % 8 == 0) {
+	      if (counter > 0) ofs << endl;
+	      ofs << "M  RAD" << setw(3) << min(static_cast<unsigned long int>(rads.size() - counter), static_cast<unsigned long int>(8));		
+	    }
+	    ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetSpinMultiplicity();
+	  }
+	  ofs << endl;
+	}                     
+        if(isos.size()) {
+	  int counter = 0;
+	  for(itr=isos.begin();itr!=isos.end();++itr, counter++) {
+	    if (counter % 8 == 0) {
+	      if (counter > 0) ofs << endl;
+	      ofs << "M  ISO" << setw(3) << min(static_cast<unsigned long int>(isos.size() - counter), static_cast<unsigned long int>(8));
+	    }
+	    ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetIsotope();
+	  }
+	  ofs << endl;
+	}                     
+        if(chgs.size()) {
+	  int counter = 0;
+	  for (itr=chgs.begin(); itr != chgs.end(); ++itr, counter++) {
+	    if (counter % 8 == 0) {
+	      if (counter > 0) ofs << endl;
+	      ofs << "M  CHG" << setw(3) << min(static_cast<unsigned long int>(chgs.size() - counter), static_cast<unsigned long int>(8));
+	    }
+	    ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetFormalCharge();
+	  }
+	  ofs << endl;
+	}
       }
 
     ofs << "M  END" << endl;
@@ -825,9 +843,9 @@ namespace OpenBabel
         if(vs[3]=="CTAB")
           {
             if(!ReadV3000Line(ifs,vs) || vs[2]!="COUNTS") return false;
-            int natoms = atoi(vs[3].c_str());
-            //int nbonds = atoi(vs[4].c_str());
-            //int chiral = atoi(vs[7].c_str()); 
+            int natoms = ReadUIntField(vs[3].c_str());
+            //int nbonds = ReadUIntField(vs[4].c_str());
+            //int chiral = ReadUIntField(vs[7].c_str()); 
             //number of s groups, number of 3D contraints, chiral flag and regno not yet implemented
             mol.ReserveAtoms(natoms);
 
@@ -886,7 +904,7 @@ namespace OpenBabel
         if(!ReadV3000Line(ifs,vs)) return false;
         if(vs[2]=="END") break;
                 
-        indexmap[atoi(vs[2].c_str())] = obindex;
+        indexmap[ReadUIntField(vs[2].c_str())] = obindex;
         atom.SetVector(atof(vs[4].c_str()), atof(vs[5].c_str()), atof(vs[6].c_str()));
         //      if(abs(atof(vs[6].c_str()))>0)is3D=true;
         //      if(abs(atof(vs[4].c_str()))>0)is2D=true;
@@ -906,7 +924,7 @@ namespace OpenBabel
           {
             string::size_type pos = (*itr).find('=');
             if (pos==string::npos) return false;
-            int val = atoi((*itr).substr(pos+1).c_str());
+            int val = ReadIntField((*itr).substr(pos+1).c_str());
 
             if((*itr).substr(0,pos)=="CHG")
               {
@@ -958,18 +976,18 @@ namespace OpenBabel
                 
         unsigned flag=0;
 
-        int order = atoi(vs[3].c_str());
+        int order = ReadUIntField(vs[3].c_str());
         if(order==4) order=5;
 
-        int obstart = indexmap[atoi(vs[4].c_str())];
-        int obend = indexmap[atoi(vs[5].c_str())];
+        int obstart = indexmap[ReadUIntField(vs[4].c_str())];
+        int obend = indexmap[ReadUIntField(vs[5].c_str())];
 
         vector<string>::iterator itr;
         for(itr=vs.begin()+6;itr!=vs.end();itr++)
           {
             string::size_type pos = (*itr).find('=');
             if (pos==string::npos) return false;
-            int val = atoi((*itr).substr(pos+1).c_str());
+            int val = ReadUIntField((*itr).substr(pos+1).c_str());
 
             if((*itr).substr(0,pos)=="CFG")
               {
@@ -1315,5 +1333,23 @@ namespace OpenBabel
       th->SetConfig(cfg);
       mol.SetData(th);
     }
+  }
+
+  int MDLFormat::ReadIntField(const char *s)
+  {
+    char *end;
+    if (s == NULL) return 0;
+    int n = strtol(s, &end, 10);
+    if (end - s != strlen(s)) return 0;
+    return n;
+  }
+
+  unsigned int MDLFormat::ReadUIntField(const char *s)
+  {
+    char *end;
+    if (s == NULL) return 0;
+    int n = strtoul(s, &end, 10);
+    if (end - s != strlen(s)) return 0;
+    return n;
   }
 }

@@ -147,6 +147,7 @@ namespace OpenBabel
   {
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.Negate(); // all on
+    if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     vector<OBBond*>::iterator i;
@@ -164,6 +165,7 @@ namespace OpenBabel
   {
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.Negate(); // all on
+    if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     vector<OBBond*>::iterator i;
@@ -285,6 +287,7 @@ namespace OpenBabel
     if (!_ptr)
       return;
     _notVisited.Negate(); // all on
+    if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     // Set up storage for the depths
@@ -309,6 +312,7 @@ namespace OpenBabel
     if (!_ptr)
       return;
     _notVisited.Negate(); // all on
+    if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     // Set up storage for the depths
@@ -448,6 +452,7 @@ namespace OpenBabel
     if (!_ptr)
       return;
     _notVisited.Negate(); // all on
+    if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx());
 
     // Set up storage for the depths
@@ -477,10 +482,9 @@ namespace OpenBabel
   {
     _notVisited.Resize(_parent->NumBonds());
     _notVisited.Negate(); // all on
-    if (!_ptr)
-      return;
+    if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx());
-
+    
     // Set up storage for the depths
     _depth.resize(_parent->NumBonds(), 0);
     _depth[_ptr->GetIdx()] = 1;

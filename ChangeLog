@@ -1,3 +1,36 @@
+2009-08-21  Craig James <cjames@emolecules.com>
+
+	* src/kekulize.cpp, include/openbabel/mol.h: Rewrote
+	expand_kekule() in kekulize.cpp, making it much simpler to
+	understand.  Original algorithm had bugs and was very hard to
+	follow.
+
+	* src/formats/mdlformat.cpp: Replaced atoi(), which would
+	incorrectly accept some invalid numbers, with a custom function
+	that catches most invalid numbers.  Fixed several bugs that caused
+	core dumps for unusual or incorrectly-formatted SD files.
+	Improved a couple of error messages.  Commented out one section
+	that was supposed to read R-group definitions; the code was
+	plainly wrong and caused core dumps, but the MDL spec is complex
+	and it will take some work to get this right (it's a deprecated
+	part of the CTAB spec anyway).
+	
+	* src/formats/smilesformat.cpp: Fixed two bugs: the pseudo atom '*'
+	was always printed with brackets '[*]', and boron atoms were
+	sometimes printed with brackets '[B] when they shouldn't be.
+	
+	* src/obiter.cpp: Added a number of tests for NULL pointers.  New
+	stereo code was causing core dumps when atoms had zero bonds.
+
+	* src/mol.cpp: Added a test to catch a NULL pointer that was
+	causing a core dump for molecules with one atom.
+
+	* src/stereo/percepton.cpp: Removed a warning that was issued for
+	almost every SMILES.
+
+	* Added "svn:ignore" properties for the cmake(1) files
+	so they're ignored by Subversion.
+
 2009-08-03  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* include/openbabel/math/transform3d.h: add missing const to operator*.

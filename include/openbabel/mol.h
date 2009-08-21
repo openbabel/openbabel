@@ -132,7 +132,8 @@ namespace OpenBabel
     //! \name Internal Kekulization routines -- see kekulize.cpp and NewPerceiveKekuleBonds()
     //@{
     void start_kekulize(std::vector <OBAtom*> &cycle, std::vector<int> &electron);
-    int expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &currentState, std::vector<int> &initState, std::vector<int> &bcurrentState, std::vector<int> &binitState, std::vector<bool> &mark);
+    bool expand_kekulize(int bond_idx, std::vector<int> &atomState, std::vector<int> &bondState);
+    bool has_no_leftover_electrons(std::vector<int> &atomState);
     int getorden(OBAtom *atom);
     bool expandcycle(OBAtom *atom, OBBitVec &avisit, OBAtom *first = NULL, int depth = 0);
     //@}

@@ -787,14 +787,14 @@ namespace OpenBabel {
       }
 
       if (!success) {
-        std::stringstream errorMsg;
-        errorMsg << "Symmetry analysis found atom with id " << center->GetId() 
-            << " to be a tetrahedral atom but the wedge/hash bonds can't be interpreted." << std::endl
-            << " # in-plane bonds = " << planeAtoms.size() << std::endl
-            << " # wedge bonds = " << wedgeAtoms.size() << std::endl
-            << " # hash bonds = " << hashAtoms.size() << std::endl
-            << std::endl;
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+//         std::stringstream errorMsg;
+//         errorMsg << "Symmetry analysis found atom with id " << center->GetId() 
+//             << " to be a tetrahedral atom but the wedge/hash bonds can't be interpreted." << std::endl
+//             << " # in-plane bonds = " << planeAtoms.size() << std::endl
+//             << " # wedge bonds = " << wedgeAtoms.size() << std::endl
+//             << " # hash bonds = " << hashAtoms.size() << std::endl
+//             << std::endl;
+//         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
         continue;
       }
  

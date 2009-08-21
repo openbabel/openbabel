@@ -2493,9 +2493,12 @@ namespace OpenBabel {
     bracketElement = !(normalValence = (bosum <= maxBonds));
 
     switch (atom->GetAtomicNum()) {
-    case 0: break;
-    case 5: 
-      bracketElement = !(normalValence = (bosum > 3));
+    case 0:	// pseudo '*' atom has no normal valence, needs brackets if it has any hydrogens
+      normalValence = (atom->ExplicitHydrogenCount() == 0);
+      bracketElement = !normalValence;
+      break;
+    case 5:
+      bracketElement = !(normalValence = (bosum == 3));
       break;
     case 6: break;
     case 7:

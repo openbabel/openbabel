@@ -885,6 +885,8 @@ namespace OpenBabel
     OBAtom *nbr;
     vector<OBBond*>::iterator i;
 
+    if (!bgn || !end) return NULL;
+
     for (nbr = bgn->BeginNbrAtom(i);nbr;nbr = bgn->NextNbrAtom(i))
       if (nbr == end)
         return((OBBond *)*i);
