@@ -176,7 +176,7 @@ public:
   /// \return A multimap containing objects whose Tanimoto coefficients with the target
   /// is greater than the value specified.
   bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
-    double MinTani);
+    double MinTani, double MaxTani = 1.1 );
 
   /// \return A multimap containing the nCandidates objects with largest Tanimoto
   ///  coefficients with the target.

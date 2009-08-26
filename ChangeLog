@@ -1,3 +1,9 @@
+2009-08-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/fingerprint.cpp, include/openbabel/fingerprint.h,
+	src/formats/fastsearchformat.cpp: Patches from Izhar Wallach for a
+	similarity search within a range (e.g. Tanimoto from 0.6-0.8).
+
 2009-08-21  Craig James <cjames@emolecules.com>
 
 	* src/kekulize.cpp, include/openbabel/mol.h: Rewrote
@@ -589,7 +595,6 @@
 	* scripts/python/pybel_py2.x.py, pybel_py3.x.py: Synch with cinfony.
 	Long overdue.
 
->>>>>>> .merge-right.r2912
 2009-02-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/Makefile.am, scripts/Makefile.in: Fix: don't attempt to
@@ -628,7 +633,6 @@
 	* src/formats/pdbformat.cpp: Add more warnings for strange ATOM
 	records, contributed by Pierre-Louis.
 
->>>>>>> .merge-right.r2885
 2009-01-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/element.txt, data/element.h: Change maxbonds for P to 6
@@ -680,7 +684,6 @@
 	.prm files, and update installer to include MACCS.txt and missing .prm
 	file.
 
->>>>>>> .merge-right.r2866
 2009-01-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/builder.cpp (Build): Make sure all bonds are copied into the
@@ -714,7 +717,6 @@
 	* src/parsmart.cpp: Remove some unused code, and add comments
 	towards support of fragment SMARTS, e.g. (*).(*).
 
->>>>>>> .merge-right.r2849
 2009-01-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp, src/formats/pqrformat.cpp: Patch
@@ -740,7 +742,6 @@
 	* windows-vc2005/OBPythonOBF/OBPythonOBF.vcproj: Moving to SWIG
 	1.3.37 (need to specify -outdir).
 
->>>>>>> .merge-right.r2836
 2009-01-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/gzmatformat.cpp: Address PR#2056697 for Gaussian
@@ -756,7 +757,6 @@
 	* configure.in, scripts/Makefile.am: Check for javac and jar at
 	configure time. Do not run them unless present. Solves PR#2426622.
 
->>>>>>> .merge-right.r2831
 2009-01-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.cpp,
@@ -772,7 +772,6 @@
 	GAMESS EFP fragments. PR#2484103.
 
 2008-12-31  Noel O'Boyle  <baoilleach@gmail.com>
->>>>>>> .merge-right.r2820
 
 	* include/inchi102, src/fomats/inchi102: Fix compile/link for
 	Linux/Mac of InChI 1.02. Make sure in the future to import the

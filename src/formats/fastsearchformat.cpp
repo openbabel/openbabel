@@ -59,6 +59,7 @@ namespace OpenBabel {
 "    babel datafile.xxx -ifs -sSMILES outfile.yyy\n"
 "  Molecular similarity based on Tanimoto coefficient\n"
 "    babel index.fs -sSMILES outfile.yyy -t0.7  (Tanimoto >0.7)\n"
+"    babel index.fs -sSMILES outfile.yyy -t0.7,0.9  (Tanimoto >0.7 && Tanimoto < 0.9)\n"
 "    babel index.fs -sSMILES outfile.yyy -t15   (best 15 molecules)\n"
 "  The structure spec can be a molecule from a file: -Spatternfile.zzz\n\n"
 "Note that the parameter of the -s option needs to be a valid SMILES\n"
@@ -193,11 +194,16 @@ namespace OpenBabel {
         else
           {
             //Finds molecules with Tanimoto > MinTani
-            double MinTani = atof(txt.c_str());
+            double MaxTani = 1.1;
+            int pos = txt.find( ',' );
+            if( pos != string::npos ) {
+              MaxTani = atof( txt.substr( pos + 1 ).c_str() );
+            }
+            double MinTani = atof( txt.substr( 0, pos ).c_str() );
 //            if(doSubset)
 //              fs.FindSubset(SeekposMap, MinTani);
 //            else
-            fs.FindSimilar(&patternMol, SeekposMap, MinTani);
+            fs.FindSimilar(&patternMol, SeekposMap, MinTani, MaxTani);
           }
 		
         //Don't want to filter through SMARTS filter

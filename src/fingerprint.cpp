@@ -226,7 +226,7 @@ namespace OpenBabel
 
   /////////////////////////////////////////////////////////
   bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned int>& SeekposMap,
-                               double MinTani)
+                               double MinTani, double MaxTani)
   {
     vector<unsigned int> targetfp;
     _pFP->GetFingerprint(pOb,targetfp, _index.header.words * OBFingerprint::Getbitsperint());
@@ -241,7 +241,7 @@ namespace OpenBabel
         p=nextp;
         nextp += words;
         double tani = OBFingerprint::Tanimoto(targetfp,p);
-        if(tani>MinTani)
+        if(tani>MinTani && tani < MaxTani)
           SeekposMap.insert(pair<const double, unsigned int>(tani,_index.seekdata[i]));
       }	
     return true;
