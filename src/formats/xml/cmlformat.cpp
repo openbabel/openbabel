@@ -795,16 +795,14 @@ namespace OpenBabel
                     if(value=="W")
                       {
                         pDBond->SetWedge();
-                        return true;
                       }
                     else if(value=="H")
                       {
                         pDBond->SetHash();
-                        return true;
                       }
                     // ... or ordinary cis/trans
                     if(value!="C" && value!="T")
-                      return false;
+                      continue;
                     //which is valid only with one substituent on each C
 					
                     OBAtom* pAt1 = pDBond->GetBeginAtom();
@@ -830,7 +828,7 @@ namespace OpenBabel
                   }
 
                 if(!pbond1 || !pbond2)
-                  return false;
+                  continue;
                 //Congugated double bonds are a special case see OBMol2Smi::GetCisTransBondSymbol()
                 //Feb07 C/C=C/C=C/C=C/C  trans/trans/trans has OB_TORUP_BOND and OB_TORDOWN in OBMol as
                 //       d   u   u   u
