@@ -1,3 +1,10 @@
+2009-08-31  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/parsmarts.cpp: First attempt to make smarts work again. Should be
+        working for tetrahedral stereochemistry. Cis/Trans may still need some
+        more code.
+
+
 2009-08-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/fingerprint.cpp, include/openbabel/fingerprint.h,

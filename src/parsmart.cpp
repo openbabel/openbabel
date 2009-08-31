@@ -23,6 +23,8 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/parsmart.h>
+#include <openbabel/stereo/stereo.h>
+#include <openbabel/stereo/tetrahedral.h>
 
 using namespace std;
 
@@ -2586,70 +2588,87 @@ namespace OpenBabel
     if (!pat || pat->acount == 0)
       return(false);//shouldn't ever happen
   
-    if (single && !pat->ischiral)
+    if (single && !pat->ischiral) {
+      // perform a fast single match (only works for non-chiral SMARTS)
       FastSingleMatch(mol,pat,mlist);
-    else
-      {
-        OBSSMatch ssm(mol,pat);
-        ssm.Match(mlist);
-      }
+    } else {
+      // perform normal match (chirality ignored and checked below)
+      OBSSMatch ssm(mol,pat);
+      ssm.Match(mlist);
+    }
   
-    if (pat->ischiral && mol.Has3D())
-      {
-        int j,k,r1,r2,r3,r4;
-        std::vector<std::vector<int> >::iterator m;
-        OBAtom *ra1,*ra2,*ra3,*ra4;
-        std::vector<std::vector<int> > tmpmlist;
+    if (pat->ischiral) {
+      std::vector<std::vector<int> >::iterator m;
+      OBAtom *ra1,*ra2,*ra3,*ra4;
+      std::vector<std::vector<int> > tmpmlist;
       
-        for (j = 0;j < pat->acount;++j)
-          if (pat->atom[j].chiral_flag)
-            {
-              r1 = r2 = r3 = r4 = -1;
-              r2 = j;
-              for (k = 0;k < pat->bcount;++k)
-                if (pat->bond[k].dst == r2)
-                  if (r1 == -1)
-                    r1 = pat->bond[k].src;
-                  else if (r3 == -1)
-                    r3 = pat->bond[k].src;
-                  else if (r4 == -1)
-                    r4 = pat->bond[k].src;
-	    
-              for (k = 0;k < pat->bcount;++k)
-                if (pat->bond[k].src == r2)
-                  if (r1 == -1)
-                    r1 = pat->bond[k].dst;
-                  else if (r3 == -1)
-                    r3 = pat->bond[k].dst;
-                  else if (r4 == -1)
-                    r4 = pat->bond[k].dst;
-	    
-              if (r1 == -1 || r2 == -1 || r3 == -1 || r4 == -1)
-                continue;
-	    
-              tmpmlist.clear();
-              for (m = mlist.begin();m != mlist.end();++m)
-                {
-                  ra1 = mol.GetAtom((*m)[r1]);
-                  ra2 = mol.GetAtom((*m)[r2]);
-                  ra3 = mol.GetAtom((*m)[r3]);
-                  ra4 = mol.GetAtom((*m)[r4]);
-                  double sign = CalcTorsionAngle(ra1->GetVector(),
-                                                 ra2->GetVector(),
-                                                 ra3->GetVector(),
-                                                 ra4->GetVector());
-                  if (sign > 0.0 && pat->atom[j].chiral_flag == AL_ANTICLOCKWISE)
-                    continue;
-                  if (sign < 0.0 && pat->atom[j].chiral_flag == AL_CLOCKWISE)
-                    continue;
-		
-                  //ok - go ahead and save it
-                  tmpmlist.push_back(*m);
-                }
-              mlist = tmpmlist;
-            }
+      // for each pattern atom
+      for (int j = 0; j < pat->acount; ++j) {
+        // skip non-chiral atoms
+        if (!pat->atom[j].chiral_flag)
+          continue;
+
+        // create a vector with the nbr indexes for use with the mapping
+        std::vector<int> nbrs;
+        for (int k = 0; k < pat->bcount; ++k)
+          if (pat->bond[k].dst == j)
+            nbrs.push_back(pat->bond[k].src);
+          else if (pat->bond[k].src == j)
+            nbrs.push_back(pat->bond[k].dst);
+        
+        if (nbrs.size() < 3)
+          continue;
+       
+        tmpmlist.clear();
+        // iterate over the atom mappings
+        for (m = mlist.begin();m != mlist.end();++m) {
+          OBAtom *center = mol.GetAtom((*m)[j]);
+         
+          // construct a OBTetrahedralStereo::Config using the smarts pattern
+          OBTetrahedralStereo::Config smartsConfig;
+          smartsConfig.center = center->GetId();
+          smartsConfig.from = mol.GetAtom( (*m)[nbrs.at(0)] )->GetId();
+          if (nbrs.size() == 4) {
+            OBAtom *ra1 = mol.GetAtom( (*m)[nbrs.at(1)] );
+            OBAtom *ra2 = mol.GetAtom( (*m)[nbrs.at(2)] );
+            OBAtom *ra3 = mol.GetAtom( (*m)[nbrs.at(3)] );
+            smartsConfig.refs = OBStereo::MakeRefs(ra1->GetId(), ra2->GetId(), ra3->GetId());
+          } else {
+            // nbrs.size = 3! (already checked)
+            // the missing reference must be the hydrogen (in position 2)
+            OBAtom *ra2 = mol.GetAtom( (*m)[nbrs.at(1)] );
+            OBAtom *ra3 = mol.GetAtom( (*m)[nbrs.at(2)] );
+            smartsConfig.refs = OBStereo::MakeRefs(OBStereo::ImplicitRef, ra2->GetId(), ra3->GetId());
+          }
+          smartsConfig.view = OBStereo::ViewFrom;
+          switch (pat->atom[j].chiral_flag) {
+            case AL_CLOCKWISE: 
+              smartsConfig.winding = OBStereo::Clockwise;
+              break;
+            case AL_ANTICLOCKWISE:
+              smartsConfig.winding = OBStereo::AntiClockwise;
+              break;
+            default:
+            case AL_UNSPECIFIED:
+              smartsConfig.specified = false;
+          }
+
+          // get the OBTetrahedralStereo::Config from the molecule
+          OBStereoFacade stereo(&mol);
+          OBTetrahedralStereo *ts = stereo.GetTetrahedralStereo(center->GetId());
+          
+          // cout << "smarts config = " << smartsConfig << endl;
+          // cout << "molecule config = " << ts->GetConfig() << endl;
+          // cout << "match = " << (ts->GetConfig() == smartsConfig) << endl;
+
+          // and save the match if the two configurations are the same
+          if (ts->GetConfig() == smartsConfig)
+            tmpmlist.push_back(*m);
+        }
+        mlist = tmpmlist;
       }
-  
+    }
+
     return(!mlist.empty());
   }
 
@@ -2709,15 +2728,8 @@ namespace OpenBabel
               return(true);
 
             case AL_CHIRAL:
-              /* @todo
-              if( expr->leaf.value == AL_CLOCKWISE)
-                return atom->IsClockwise();
-              else if ( expr->leaf.value == AL_ANTICLOCKWISE)
-                return atom->IsAntiClockwise();
-              else if ( expr->leaf.value == AL_UNSPECIFIED)
-                return (atom->IsChiral() && !atom->HasChiralitySpecified());
-                */
-              return(false);
+              // always return true (i.e. accept the match) and check later
+              return true;
 
             case AL_RINGCONNECT:
               if (expr->leaf.value == -1)
