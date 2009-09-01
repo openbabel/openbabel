@@ -2623,7 +2623,7 @@ namespace OpenBabel
           // get the OBTetrahedralStereo::Config from the molecule
           OBStereoFacade stereo(&mol);
           OBTetrahedralStereo *ts = stereo.GetTetrahedralStereo(center->GetId());
-          if (!ts) {
+          if (!ts || !ts->GetConfig().specified) {
             // no stereochemistry specified in molecule for the atom
             // corresponding to the chiral pattern atom using the current
             // mapping --> no match
@@ -2674,9 +2674,9 @@ namespace OpenBabel
               smartsConfig.specified = false;
           }
 
-           //cout << "smarts config = " << smartsConfig << endl;
-           //cout << "molecule config = " << ts->GetConfig() << endl;
-           //cout << "match = " << (ts->GetConfig() == smartsConfig) << endl;
+          cout << "smarts config = " << smartsConfig << endl;
+          cout << "molecule config = " << ts->GetConfig() << endl;
+          cout << "match = " << (ts->GetConfig() == smartsConfig) << endl;
 
           // and save the match if the two configurations are the same
           if (ts->GetConfig() != smartsConfig)
