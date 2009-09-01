@@ -2601,29 +2601,48 @@ namespace OpenBabel
       std::vector<std::vector<int> >::iterator m;
       OBAtom *ra1,*ra2,*ra3,*ra4;
       std::vector<std::vector<int> > tmpmlist;
-      
-      // for each pattern atom
-      for (int j = 0; j < pat->acount; ++j) {
-        // skip non-chiral atoms
-        if (!pat->atom[j].chiral_flag)
-          continue;
+ 
+      tmpmlist.clear();
+      // iterate over the atom mappings
+      for (m = mlist.begin();m != mlist.end();++m) {
 
-        // create a vector with the nbr indexes for use with the mapping
-        std::vector<int> nbrs;
-        for (int k = 0; k < pat->bcount; ++k)
-          if (pat->bond[k].dst == j)
-            nbrs.push_back(pat->bond[k].src);
-          else if (pat->bond[k].src == j)
-            nbrs.push_back(pat->bond[k].dst);
-        
-        if (nbrs.size() < 3)
-          continue;
-       
-        tmpmlist.clear();
-        // iterate over the atom mappings
-        for (m = mlist.begin();m != mlist.end();++m) {
-          OBAtom *center = mol.GetAtom((*m)[j]);
+        bool allStereoCentersMatch = true;
+      
+        // for each pattern atom
+        for (int j = 0; j < pat->acount; ++j) {
+          // skip non-chiral pattern atoms
+          if (!pat->atom[j].chiral_flag)
+            continue;
+          // ignore @? in smarts, parse like any other smarts
+          if (pat->atom[j].chiral_flag == AL_UNSPECIFIED)
+            continue;
          
+          // use the mapping the get the chiral atom in the molecule being queried
+          OBAtom *center = mol.GetAtom((*m)[j]);
+
+          // get the OBTetrahedralStereo::Config from the molecule
+          OBStereoFacade stereo(&mol);
+          OBTetrahedralStereo *ts = stereo.GetTetrahedralStereo(center->GetId());
+          if (!ts) {
+            // no stereochemistry specified in molecule for the atom
+            // corresponding to the chiral pattern atom using the current
+            // mapping --> no match
+            allStereoCentersMatch = false;
+            break;
+          }
+
+          // create a vector with the nbr (i.e. neighbors of the stereocenter) 
+          // indexes for use with the mapping
+          std::vector<int> nbrs;
+          for (int k = 0; k < pat->bcount; ++k)
+            if (pat->bond[k].dst == j)
+              nbrs.push_back(pat->bond[k].src);
+            else if (pat->bond[k].src == j)
+              nbrs.push_back(pat->bond[k].dst);
+        
+          if (nbrs.size() < 3)
+            continue;
+             
           // construct a OBTetrahedralStereo::Config using the smarts pattern
           OBTetrahedralStereo::Config smartsConfig;
           smartsConfig.center = center->GetId();
@@ -2634,6 +2653,9 @@ namespace OpenBabel
             OBAtom *ra3 = mol.GetAtom( (*m)[nbrs.at(3)] );
             smartsConfig.refs = OBStereo::MakeRefs(ra1->GetId(), ra2->GetId(), ra3->GetId());
           } else {
+            //cout << "nbrs[0] = " << nbrs[0] << endl;
+            //cout << "nbrs[1] = " << nbrs[1] << endl;
+            //cout << "nbrs[2] = " << nbrs[2] << endl;
             // nbrs.size = 3! (already checked)
             // the missing reference must be the hydrogen (in position 2)
             OBAtom *ra2 = mol.GetAtom( (*m)[nbrs.at(1)] );
@@ -2649,24 +2671,29 @@ namespace OpenBabel
               smartsConfig.winding = OBStereo::AntiClockwise;
               break;
             default:
-            case AL_UNSPECIFIED:
               smartsConfig.specified = false;
           }
 
-          // get the OBTetrahedralStereo::Config from the molecule
-          OBStereoFacade stereo(&mol);
-          OBTetrahedralStereo *ts = stereo.GetTetrahedralStereo(center->GetId());
-          
-          // cout << "smarts config = " << smartsConfig << endl;
-          // cout << "molecule config = " << ts->GetConfig() << endl;
-          // cout << "match = " << (ts->GetConfig() == smartsConfig) << endl;
+           //cout << "smarts config = " << smartsConfig << endl;
+           //cout << "molecule config = " << ts->GetConfig() << endl;
+           //cout << "match = " << (ts->GetConfig() == smartsConfig) << endl;
 
           // and save the match if the two configurations are the same
-          if (ts->GetConfig() == smartsConfig)
-            tmpmlist.push_back(*m);
+          if (ts->GetConfig() != smartsConfig)
+            allStereoCentersMatch = false;
+
+          // don't waste time checking more stereocenters using this mapping if one didn't match
+          if (!allStereoCentersMatch)
+            break;
         }
-        mlist = tmpmlist;
+
+        // if all the atoms in the molecule match the stereochemistry specified
+        // in the smarts pattern, save this mapping as a match
+        if (allStereoCentersMatch)
+          tmpmlist.push_back(*m);
       }
+        
+      mlist = tmpmlist;
     }
 
     return(!mlist.empty());

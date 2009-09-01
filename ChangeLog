@@ -1,3 +1,7 @@
+2009-09-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/parsmarts.cpp: Some bug fixes to SMARTS with stereochemical atoms.
+
 2009-08-31  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/parsmarts.cpp: First attempt to make smarts work again. Should be
