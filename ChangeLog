@@ -1,3 +1,8 @@
+2009-09-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/forcefield.cpp: Fix Random & Systematic Rotor Search crashes. 
+        (Fixes crashes in Avogadro here on 64bit)
+
 2009-09-01  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/parsmarts.cpp: Some bug fixes to SMARTS with stereochemical atoms.
