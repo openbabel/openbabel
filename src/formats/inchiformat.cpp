@@ -63,7 +63,7 @@ public:
     //" F include fixed hydrogen layer\n"
     //" M include bonds to metal\n"
     " t add molecule name\n"
-    " a output auxilliary information\n"
+    " a output auxiliary information\n"
     " K output InChIKey\n"
     " w don't warn on undef stereo or charge rearrangement\n"
     " l display InChI log\n"
