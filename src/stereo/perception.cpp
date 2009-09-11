@@ -291,13 +291,15 @@ namespace OpenBabel {
 
     return bonds;
   }
-  
+ 
+ /* 
   void FindParaStereocenters(OBMol *mol, const std::vector<unsigned int> &symClasses, 
       const std::vector<unsigned long> &tetrahedralAtomIds, const std::vector<unsigned long> &cistransBondItds,
-      std::vector<unsigned long> &paraAtomIds, std::vector<unsigned long> &paraAtomIds)
+      std::vector<unsigned long> &paraAtomIds, std::vector<unsigned long> &paraBondIds)
   {
   
   }
+  */
 
   /**
    * Perform symmetry analysis.
