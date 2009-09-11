@@ -460,13 +460,18 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   vector<pair<OBAtom*,unsigned int> >::iterator api;
   for (api = atom_sym_classes.begin(); api < atom_sym_classes.end(); api++)
     index2sym_class[api->first->GetIndex()] = api->second;
+  
+  // find all types of stereogenic units (i.e. tetrahedral, cis/trans, ...)
+  vector<StereogenicUnit> stereoUnits = FindStereogenicUnits(_pmol, index2sym_class);
 
   // 
   // Tetrahedral atoms
   //
-  vector<unsigned long> tetrahedral = FindTetrahedralAtoms(_pmol, index2sym_class);
-  for (vector<unsigned long>::iterator id1 = tetrahedral.begin(); id1 != tetrahedral.end(); ++id1) {
-    OBAtom *atom1 = _pmol->GetAtomById(*id1);
+  for (vector<StereogenicUnit>::iterator unit1 = stereoUnits.begin(); unit1 != stereoUnits.end(); ++unit1) {
+    if ((*unit1).type != OBStereo::Tetrahedral)
+      continue;
+    unsigned long id1 = (*unit1).id;
+    OBAtom *atom1 = _pmol->GetAtomById(id1);
     int index1 = atom1->GetIndex();
     // We only want: unused and part of this fragment.
     if (!(*_frag_atoms)[index1+1])
@@ -485,8 +490,11 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     same_class.push_back(atom1);
 
     // Inner Loop: Find all other atoms with the same symmetry class
-    for (vector<unsigned long>::iterator id2 = id1+1; id2 != tetrahedral.end(); ++id2) {
-      OBAtom *atom2 = _pmol->GetAtomById(*id2);
+    for (vector<StereogenicUnit>::iterator unit2 = unit1+1; unit2 != stereoUnits.end(); ++unit2) {
+      if ((*unit2).type != OBStereo::Tetrahedral)
+        continue;
+      unsigned long id2 = (*unit2).id;
+      OBAtom *atom2 = _pmol->GetAtomById(id2);
       int index2 = atom2->GetIndex();
       if (used_atoms[index2])
         continue;
@@ -512,14 +520,14 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       switch (_pmol->GetDimension()) {
         case 2:
           _pmol->DeleteData(OBGenericDataType::StereoData);
-          TetrahedralFrom2D(_pmol, index2sym_class);
+          TetrahedralFrom2D(_pmol, stereoUnits);
           break;
         case 3:
           _pmol->DeleteData(OBGenericDataType::StereoData);
-          TetrahedralFrom3D(_pmol, index2sym_class);
+          TetrahedralFrom3D(_pmol, stereoUnits);
           break;
         default:
-          TetrahedralFrom0D(_pmol, index2sym_class);
+          TetrahedralFrom0D(_pmol, stereoUnits);
           break;
       }
     } 
@@ -528,8 +536,8 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     OBStereoFacade stereoFacade(_pmol, false); 
     // get the reference config
     OBTetrahedralStereo::Config refConfig;
-    if (stereoFacade.HasTetrahedralStereo(*id1)) {
-      refConfig = stereoFacade.GetTetrahedralStereo(*id1)->GetConfig();
+    if (stereoFacade.HasTetrahedralStereo(id1)) {
+      refConfig = stereoFacade.GetTetrahedralStereo(id1)->GetConfig();
     } else {
       refConfig.specified = false;
     }
@@ -665,9 +673,12 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   // 
   // Cis/Trans bonds
   //
-  vector<unsigned long> cistrans = FindCisTransBonds(_pmol, index2sym_class);
-  for (vector<unsigned long>::iterator id1 = cistrans.begin(); id1 != cistrans.end(); ++id1) {
-    OBBond *bond1 = _pmol->GetBondById(*id1);
+  for (vector<StereogenicUnit>::iterator unit1 = stereoUnits.begin(); unit1 != stereoUnits.end(); ++unit1) {
+    if ((*unit1).type != OBStereo::CisTrans)
+      continue;
+
+    unsigned long id1 = (*unit1).id;
+    OBBond *bond1 = _pmol->GetBondById(id1);
     unsigned int begin1 = bond1->GetBeginAtom()->GetIndex();
     unsigned int end1 = bond1->GetEndAtom()->GetIndex();
     
@@ -688,8 +699,12 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     same_class.push_back(bond1);
 
     // Inner Loop: Find all other bonds with the same symmetry classes
-    for (vector<unsigned long>::iterator id2 = id1+1; id2 != cistrans.end(); ++id2) {
-      OBBond *bond2 = _pmol->GetBondById(*id2);
+    for (vector<StereogenicUnit>::iterator unit2 = unit1 + 1; unit2 != stereoUnits.end(); ++unit2) {
+      if ((*unit2).type != OBStereo::CisTrans)
+        continue;
+
+      unsigned long id2 = (*unit2).id;
+      OBBond *bond2 = _pmol->GetBondById(id2);
       unsigned int begin2 = bond2->GetBeginAtom()->GetIndex();
       unsigned int end2 = bond2->GetEndAtom()->GetIndex();
       if (used_atoms[begin2] || used_atoms[end2])
@@ -718,14 +733,14 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       switch (_pmol->GetDimension()) {
         case 2:
           _pmol->DeleteData(OBGenericDataType::StereoData);
-          CisTransFrom2D(_pmol, index2sym_class);
+          CisTransFrom2D(_pmol, stereoUnits);
           break;
         case 3:
           _pmol->DeleteData(OBGenericDataType::StereoData);
-          CisTransFrom3D(_pmol, index2sym_class);
+          CisTransFrom3D(_pmol, stereoUnits);
           break;
         default:
-          CisTransFrom0D(_pmol, index2sym_class);
+          CisTransFrom0D(_pmol, stereoUnits);
           break;
       }
     }
@@ -734,8 +749,8 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     OBStereoFacade stereoFacade(_pmol, false); 
     // get the reference config
     OBCisTransStereo::Config refConfig;
-    if (stereoFacade.HasCisTransStereo(*id1)) {
-      refConfig = stereoFacade.GetCisTransStereo(*id1)->GetConfig();
+    if (stereoFacade.HasCisTransStereo(id1)) {
+      refConfig = stereoFacade.GetCisTransStereo(id1)->GetConfig();
     } else {
       refConfig.specified = false;
     }
