@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <openbabel/plugin.h>
 #include <openbabel/obconversion.h>
-#include <openbabel/dlhandler.h>
+//#include <openbabel/dlhandler.h>
 #include <selformats.h>
 #include <OBGUI.h>
 
@@ -69,16 +69,16 @@ bool OBGUIApp::OnInit()
 {
   OBConversion dummy; //needed for OBConversion to load plugin classes (including formats)
   //Read in the stored window sizes and extensions previously used (or use the defaults)
-  wxConfig config("OpenBabelGUI");
+  wxConfig config(_T("OpenBabelGUI"));
   wxSize size;
-  size.SetWidth(config.Read("Width",1020));
-  size.SetHeight(config.Read("Height",570));
+  size.SetWidth(config.Read(_T("Width"),1020));
+  size.SetHeight(config.Read(_T("Height"),570));
   wxPoint position;
-  position.x = config.Read("Left",10);
-  position.y = config.Read("Top",30);
+  position.x = config.Read(_T("Left"),10);
+  position.y = config.Read(_T("Top"),30);
 
   //Save the full path of the help file - assumed to be in the starting working directory
-  wxFileName help("OpenBabelGUI.html");
+  wxFileName help(_T("OpenBabelGUI.html"));
   help.MakeAbsolute();
   HelpFile = help.GetFullPath();
 
@@ -101,9 +101,11 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 {
   // set the frame icon
   SetIcon(wxICON(sample));
-  DragAcceptFiles(true);
+#ifdef WIN32
+  DragAcceptFiles(true); // Drag'n'drop disabled on Linux until alternatives are investigated
+#endif
 
-  wxConfig config("OpenBabelGUI");
+  wxConfig config(_T("OpenBabelGUI"));
 
   // create a menu bar
   fileMenu = new wxMenu;
@@ -137,21 +139,21 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   MakePluginsMenu();
 
   bool chk;
-  config.Read("ShowConvOptions",&chk,true);
+  config.Read(_T("ShowConvOptions"),&chk,true);
   viewMenu->Check(ID_SHOWCONVOPTIONS,chk);
-  config.Read("ShowAPIOptions",&chk,false);
+  config.Read(_T("ShowAPIOptions"),&chk,false);
   viewMenu->Check(ID_SHOWAPIOPTIONS,chk);
-  config.Read("ShowObjOptions1",&chk,true);
+  config.Read(_T("ShowObjOptions1"),&chk,true);
   viewMenu->Check(ID_SHOWOBJOPTIONS1,chk);
-  config.Read("ShowObjOptions2",&chk,true);
+  config.Read(_T("ShowObjOptions2"),&chk,true);
   viewMenu->Check(ID_SHOWOBJOPTIONS2,chk);
-  config.Read("ShowInOptions",&chk,true);
+  config.Read(_T("ShowInOptions"),&chk,true);
   viewMenu->Check(ID_SHOWINOPTIONS,chk);
-  config.Read("ShowOutOptions",&chk,true);
+  config.Read(_T("ShowOutOptions"),&chk,true);
   viewMenu->Check(ID_SHOWOUTOPTIONS,chk);
-  config.Read("InWrapped",&chk,true);
+  config.Read(_T("InWrapped"),&chk,true);
   viewMenu->Check(ID_INWRAPPED,chk);
-  config.Read("OutWrapped",&chk,true);
+  config.Read(_T("OutWrapped"),&chk,true);
   viewMenu->Check(ID_OUTWRAPPED,chk);
 
   chk = m_ActiveFormats.ReadConfig(config);
@@ -187,13 +189,13 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   m_pInputHere   = new wxCheckBox(panel,ID_INPUTHERE,
         wxT("Input below (ignore input file)"));
   long notwrapped = viewMenu->IsChecked(ID_INWRAPPED) ? 0 : wxTE_DONTWRAP;
-  m_pInText      = new wxTextCtrl( panel, ID_INTEXT, "",
+  m_pInText      = new wxTextCtrl( panel, ID_INTEXT, _T(""),
         wxDefaultPosition, wxSize(195,200), wxTE_MULTILINE|wxTE_READONLY|notwrapped);
 
   m_pConvert     = new wxButton  (panel, ID_CONVERT, wxT("&CONVERT"),
         wxDefaultPosition,wxSize(80,40));
   MakeBold(m_pConvert);
-  m_pConvert->SetToolTip("Do conversion (Alt C)");
+  m_pConvert->SetToolTip(_T("Do conversion (Alt C)"));
 
   m_pOutFormat   = new wxChoice(panel,ID_OUTFORMAT,wxDefaultPosition,wxDefaultSize,
     0, NULL);
@@ -211,7 +213,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   m_pSplitter = new wxSplitterWindow(panel,wxID_ANY,wxDefaultPosition,wxSize(1955,200));
   m_pMessages = new wxTextCtrl(m_pSplitter,ID_MESSAGES,wxEmptyString,
     wxDefaultPosition,wxDefaultSize,wxTE_MULTILINE|wxTE_READONLY|wxNO_BORDER);
-  m_pMessages->SetToolTip("Message window. Drag the divider down to make bigger");
+  m_pMessages->SetToolTip(_T("Message window. Drag the divider down to make bigger"));
   m_pfixedFont = new wxFont(
     8, //int pointSize
     wxFONTFAMILY_MODERN, //wxFontFamily family
@@ -219,13 +221,13 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
     wxFONTWEIGHT_NORMAL); //wxFontWeight weight
   m_pMessages->SetFont(*m_pfixedFont);
   
-  m_pOutText = new wxTextCtrl(m_pSplitter, ID_OUTTEXT, "",
+  m_pOutText = new wxTextCtrl(m_pSplitter, ID_OUTTEXT, _T(""),
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|notwrapped|wxNO_BORDER);
 
   m_pSplitter->SplitHorizontally(m_pMessages, m_pOutText, 20);
   m_pSplitter->SetMinimumPaneSize(20);
   int messize;
-  config.Read("MessageWindowSize",&messize,20);
+  config.Read(_T("MessageWindowSize"),&messize,20);
   m_pSplitter->SetSashPosition(messize);	
 
 //******************************************************
@@ -299,16 +301,16 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   topSizer->SetSizeHints( panel ); // set hints to honor min size
 
   GetAvailableFormats();
-  wxString inExt = config.Read("InExt","smi");
-  wxString outExt = config.Read("OutExt","smi");
+  wxString inExt = config.Read(_T("InExt"),_T("smi"));
+  wxString outExt = config.Read(_T("OutExt"),_T("smi"));
   SetChoice(m_pInFormat, inExt);
   SetChoice(m_pOutFormat,outExt);
 
-  m_InFileBasePath = config.Read("InputPath", wxGetCwd());
+  m_InFileBasePath = config.Read(_T("InputPath"), wxGetCwd());
   m_pInPath->SetLabel(ShortenedPath(m_InFileBasePath, *m_pInPath));
   ::wxSetWorkingDirectory(m_InFileBasePath);
 
-  config.Read("InputHere",&chk,false);
+  config.Read(_T("InputHere"),&chk,false);
   m_pInputHere->SetValue(chk);
   ChangeInputHere(chk);
 
@@ -323,39 +325,39 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 void OBGUIFrame::OnClose(wxCloseEvent& event)
 {
   //Save the window size, in and out formats, and various options, for use next time.
-  wxConfig config("OpenBabelGUI");
+  wxConfig config(_T("OpenBabelGUI"));
 
   int width, height, left, top;
   GetPosition(&left,&top);
   GetSize(&width, &height);
-  config.Write("Left",left);
-  config.Write("Top",top);
-  config.Write("Width",width);
-  config.Write("Height",height);
-  config.Write("MessageWindowSize",m_pSplitter->GetSashPosition());
+  config.Write(_T("Left"),left);
+  config.Write(_T("Top"),top);
+  config.Write(_T("Width"),width);
+  config.Write(_T("Height"),height);
+  config.Write(_T("MessageWindowSize"),m_pSplitter->GetSashPosition());
 
-  config.Write("InputPath", m_InFileBasePath);
+  config.Write(_T("InputPath"), m_InFileBasePath);
   
   wxString ext = m_pInFormat->GetStringSelection();
-  int pos = ext.find_first_of(" \t-");
-  config.Write("InExt", ext.substr(0,pos));
+  int pos = ext.find_first_of(_T(" \t-"));
+  config.Write(_T("InExt"), ext.substr(0,pos));
   
   ext = m_pOutFormat->GetStringSelection();
-  pos = ext.find_first_of(" \t-");
-  config.Write("OutExt", ext.substr(0,pos));
+  pos = ext.find_first_of(_T(" \t-"));
+  config.Write(_T("OutExt"), ext.substr(0,pos));
 
-  config.Write("ShowConvOptions",viewMenu->IsChecked(ID_SHOWCONVOPTIONS));
-  config.Write("ShowAPIOptions",viewMenu->IsChecked(ID_SHOWAPIOPTIONS));
-  config.Write("ShowObjOptions1",viewMenu->IsChecked(ID_SHOWOBJOPTIONS1));
-  config.Write("ShowObjOptions2",viewMenu->IsChecked(ID_SHOWOBJOPTIONS2));
-  config.Write("ShowInOptions",viewMenu->IsChecked(ID_SHOWINOPTIONS));
-  config.Write("ShowOutOptions",viewMenu->IsChecked(ID_SHOWOUTOPTIONS));
-  config.Write("InWrapped",viewMenu->IsChecked(ID_INWRAPPED));
-  config.Write("OutWrapped",viewMenu->IsChecked(ID_OUTWRAPPED));
-  config.Write("InputHere", m_pInputHere->IsChecked());
+  config.Write(_T("ShowConvOptions"),viewMenu->IsChecked(ID_SHOWCONVOPTIONS));
+  config.Write(_T("ShowAPIOptions"),viewMenu->IsChecked(ID_SHOWAPIOPTIONS));
+  config.Write(_T("ShowObjOptions1"),viewMenu->IsChecked(ID_SHOWOBJOPTIONS1));
+  config.Write(_T("ShowObjOptions2"),viewMenu->IsChecked(ID_SHOWOBJOPTIONS2));
+  config.Write(_T("ShowInOptions"),viewMenu->IsChecked(ID_SHOWINOPTIONS));
+  config.Write(_T("ShowOutOptions"),viewMenu->IsChecked(ID_SHOWOUTOPTIONS));
+  config.Write(_T("InWrapped"),viewMenu->IsChecked(ID_INWRAPPED));
+  config.Write(_T("OutWrapped"),viewMenu->IsChecked(ID_OUTWRAPPED));
+  config.Write(_T("InputHere"), m_pInputHere->IsChecked());
   
   m_ActiveFormats.WriteConfig(config);
-  config.Write("UseRestrictedFormats", viewMenu->IsChecked(ID_RESTRICTFORMATS));
+  config.Write(_T("UseRestrictedFormats"), viewMenu->IsChecked(ID_RESTRICTFORMATS));
 
   delete m_pGenOptsPanel;
   delete m_pAPIOptsPanel;
@@ -426,7 +428,7 @@ See: http://openbabel.sourceforge.net/wiki/Main_Page\n\n\
 For more detailed information see:\n\
 http://openbabel.sourceforge.net/wiki/Windows_GUI\n\n \
 OpenBabel version "));
-    msg << BABEL_VERSION;
+    msg << _T(BABEL_VERSION);
     wxMessageBox(msg, _T("About OpenBabelGUI"), wxOK | wxICON_INFORMATION | wxCENTER, this);
 }
 ///////////////////////////////////////////
@@ -451,7 +453,7 @@ void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
   m_pMessages->Clear();
 
   //Default input is from input text box;
-  std::stringstream ss(m_pInText->GetValue().c_str());
+  std::stringstream ss(std::string(m_pInText->GetValue().mb_str()));
 //	char ch = ss.peek();
   //Default output is a string stream which is written to the Output text box at the end
   std::ostringstream GUIostream;
@@ -486,13 +488,13 @@ void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
       fn.MakeAbsolute(m_InFileBasePath);
       OutFileName = fn.GetFullPath();
     }
-    stdOutputFileName = OutFileName;
+    stdOutputFileName = OutFileName.mb_str();
   }
-  OBFormat* pOutFileFormat = Conv.FormatFromExt(OutFileName);
+  OBFormat* pOutFileFormat = Conv.FormatFromExt(OutFileName.mb_str());
   if(!m_pNoOutFile->IsChecked() && pOutFileFormat && (pOutFileFormat!=pOutFormat))
-    if(wxMessageBox("The output file name extension does not correspond \
-with the output format.\nDo you wish to continue the conversion?",
-      "Is the output filename correct?", wxOK | wxCANCEL)!=wxOK)
+    if(wxMessageBox(_T("The output file name extension does not correspond \
+with the output format.\nDo you wish to continue the conversion?"),
+      _T("Is the output filename correct?"), wxOK | wxCANCEL)!=wxOK)
       return;
 
   //Setup input file
@@ -525,11 +527,12 @@ with the output format.\nDo you wish to continue the conversion?",
     {
       //Read back file and add to output console
       m_pOutText->Clear();
-      m_pOutText->LoadFile(OutputFileList[0].c_str());
+      m_pOutText->LoadFile(wxString(OutputFileList[0].c_str(), wxConvUTF8));
+      //m_pOutText->LoadFile(_T(OutputFileList));
     }
     else
     {
-      m_pOutText->WriteText(wxString(GUIostream.str().c_str()));
+      m_pOutText->WriteText(wxString(GUIostream.str().c_str(), wxConvUTF8));
       m_pOutText->SetInsertionPoint(0);
     }
   }
@@ -541,11 +544,11 @@ void OBGUIFrame::OnInFormatInfo(wxCommandEvent& WXUNUSED(event))
   int nSel=m_pInFormat->GetSelection();
   if(nSel<0) return;
   OBFormat* pFormat = (OBFormat*)m_pInFormat->GetClientData(nSel);
-  wxString mes(pFormat->Description());
-  wxString url(pFormat->SpecificationURL());
+  wxString mes(pFormat->Description(), wxConvUTF8);
+  wxString url(pFormat->SpecificationURL(), wxConvUTF8);
   if(!url.IsEmpty())
-    mes += "\nURL for specification: " + url;
-  wxMessageBox(mes, "Format info");		
+    mes += _T("\nURL for specification: ") + url;
+  wxMessageBox(mes, _T("Format info"));		
 }
 
 ///////////////////////////////////////////
@@ -554,11 +557,11 @@ void OBGUIFrame::OnOutFormatInfo(wxCommandEvent& WXUNUSED(event))
   int nSel=m_pOutFormat->GetSelection();
   if(nSel<0) return;
   OBFormat* pFormat = (OBFormat*)m_pOutFormat->GetClientData(nSel);
-  wxString mes(pFormat->Description());
-  wxString url(pFormat->SpecificationURL());
+  wxString mes(pFormat->Description(), wxConvUTF8);
+  wxString url(pFormat->SpecificationURL(), wxConvUTF8);
   if(!url.IsEmpty())
-    mes += "\nURL for specification: " + url;
-  wxMessageBox(mes, "Format info");		
+    mes += _T("\nURL for specification: ") + url;
+  wxMessageBox(mes, _T("Format info"));		
 }
 
 void OBGUIFrame::OnGetInputFile(wxCommandEvent& WXUNUSED(event))
@@ -589,7 +592,7 @@ void OBGUIFrame::DisplayInputFiles(wxArrayString filepatharray)
   else
   {
     if(!m_pInFilename->GetValue().empty())
-      m_pInFilename->AppendText(';');
+      m_pInFilename->AppendText(_T(';'));
     startsel  = m_pInFilename->GetLastPosition();
   }
 
@@ -598,7 +601,7 @@ void OBGUIFrame::DisplayInputFiles(wxArrayString filepatharray)
     if(i==1)
       endsel = m_pInFilename->GetLastPosition();
     if(i!=0)
-      m_pInFilename->AppendText(';');
+      m_pInFilename->AppendText(_T(';'));
     wxFileName fnamewx(filepatharray[filepatharray.GetCount()-1-i]);
     fnamewx.MakeRelativeTo(m_InFileBasePath);
     m_pInFilename->AppendText(fnamewx.GetFullPath());
@@ -710,7 +713,7 @@ bool OBGUIFrame::SetChoice(wxChoice* pChoice, const wxString& FileName)
   int pos = FileName.rfind('.');
   if(pos!=-1)
     wxString ext = FileName.substr(pos+1);
-  if(FileName.substr(pos)==".gz")
+  if(FileName.substr(pos)==_T(".gz"))
     pos = FileName.rfind('.',pos-1);
 
   for(int iSel=0;iSel<pChoice->GetCount();iSel++)
@@ -729,9 +732,9 @@ wxString OBGUIFrame::GetFilter(wxChoice* pChoice)
 {
   //Uses text from the window (input or output combo) to construct filter string
   wxString  txt = pChoice->GetStringSelection();
-  int pos1 = txt.find(" ");
-  int pos2 = txt.find_first_not_of( " :-\t", pos1);
-  return txt.substr(pos2) + " (*." + txt.substr(0, pos1) + ")|*." + txt.substr(0, pos1) + "|";
+  int pos1 = txt.find(_T(" "));
+  int pos2 = txt.find_first_not_of( _T(" :-\t"), pos1);
+  return txt.substr(pos2) + _T(" (*.") + txt.substr(0, pos1) + _T(")|*.") + txt.substr(0, pos1) + _T("|");
 }
 /////////////////////////////////////////////////////
 wxString OBGUIFrame::ShortenedPath(const wxString& path, const wxWindow& wnd, int wndwidth)
@@ -755,22 +758,22 @@ wxString OBGUIFrame::ShortenedPath(const wxString& path, const wxWindow& wnd, in
   if(txtwidth <= wndwidth) return path;
 
   // Set pos1 at the second separator or return unchanged string if not possible
-  size_t pos1 = path.find_first_of("/\\");
+  size_t pos1 = path.find_first_of(_T("/\\"));
   if(pos1==-1 || pos1+1 == path.length()) return path; 
-  pos1= path.find_first_of("/\\", pos1+1);
+  pos1= path.find_first_of(_T("/\\"), pos1+1);
   if(pos1==-1 || pos1+1 == path.length()) return path; 
 
   wxString tpath(path);
   size_t pos2 = pos1;
   while(txtwidth > wndwidth)
   {
-    pos2= tpath.find_first_of("/\\", pos2+1);
+    pos2= tpath.find_first_of(_T("/\\"), pos2+1);
     if(pos2==-1 || pos2+1 == tpath.length()) return path; 
     //pos2 now has next separator
     //Ensure that there is at least one further directory
-    if(tpath.find_first_of("/\\", pos2+1)==-1) return path;
+    if(tpath.find_first_of(_T("/\\"), pos2+1)==-1) return path;
 
-    tpath.replace(pos1+1, pos2-pos1-1,"...");
+    tpath.replace(pos1+1, pos2-pos1-1,_T("..."));
     pos2=pos1+4;
     wnd.GetTextExtent(tpath, &txtwidth, &txtheight);
   }
@@ -804,7 +807,7 @@ void OBGUIFrame::GetAvailableFormats()
   int nInSel=0,nOutSel=0;
   m_pInFormat->Clear();
   m_pOutFormat->Clear();
-  InputFilterString="All Chemical Formats|*.";
+  InputFilterString=_T("All Chemical Formats|*.");
   OutputFilterString = InputFilterString;
   m_ActiveFormats.Clear();
 
@@ -820,7 +823,7 @@ void OBGUIFrame::GetAvailableFormats()
 
       std::string stxt;
       itr->second->Display(stxt, NULL, itr->first);
-      wxString txt(stxt);
+      wxString txt(stxt.c_str(), wxConvUTF8);
       int pos = txt.find('[');
       if(pos!=wxString::npos)
         txt.erase(pos);
@@ -831,25 +834,25 @@ void OBGUIFrame::GetAvailableFormats()
       if(!(pFormat->Flags() & NOTREADABLE))
       {
         n = m_pInFormat->Append(txt,pFormat);
-        InputFilterString+=txt.Left(txt.Find(" "));
-        InputFilterString+=";*.";
+        InputFilterString+=txt.Left(txt.Find(_T(" ")));
+        InputFilterString+=_T(";*.");
       }
       if(!(pFormat->Flags() & NOTWRITABLE))
       {
         n = m_pOutFormat->Append(txt,pFormat);
-        OutputFilterString+=txt.Left(txt.Find(" "));
-        OutputFilterString+=";*.";
+        OutputFilterString+=txt.Left(txt.Find(_T(" ")));
+        OutputFilterString+=_T(";*.");
       }
     }
   }
   if(m_pInFormat->GetCount()==0)
   {
-    m_pInFormat->Append("No input format in the selected set");
+    m_pInFormat->Append(_T("No input format in the selected set"));
     m_pInFormat->SetClientData(0,NULL);
   }
   if(m_pOutFormat->GetCount()==0)
   {
-    m_pOutFormat->Append("No output format in the selected set");
+    m_pOutFormat->Append(_T("No output format in the selected set"));
     m_pOutFormat->SetClientData(0,NULL);
   }
   m_pInFormat->SetSelection(nInSel);
@@ -857,8 +860,8 @@ void OBGUIFrame::GetAvailableFormats()
 
   InputFilterString = InputFilterString.Left(InputFilterString.Length()-3); //remove unneeded ;*.
   OutputFilterString = OutputFilterString.Left(OutputFilterString.Length()-3); //remove unneeded ;*.
-  InputFilterString+="|AllFiles(*.*)|*.*||";
-  OutputFilterString+="|AllFiles(*.*)|*.*||";
+  InputFilterString+=_T("|AllFiles(*.*)|*.*||");
+  OutputFilterString+=_T("|AllFiles(*.*)|*.*||");
 }	
 
 void OBGUIFrame::DisplayInFile(wxString filename)
@@ -936,15 +939,15 @@ void OBGUIFrame::MakePluginsMenu()
 //    std::vector<std::string> verbosevec;
     OBPlugin::ListAsVector(topvec[itop].c_str(), NULL, subvec);//get each format, etc as single line
 //    OBPlugin::ListAsVector(topvec[itop].c_str(), "verbose", verbosevec);//get full description of each format
-    subMenu->Append(ID_HINT,"     (Click item to copy its ID to clipboard)");
+    subMenu->Append(ID_HINT,_T("     (Click item to copy its ID to clipboard)"));
     for(int isub=0; isub < subvec.size(); ++isub)
     {
 //      wxMenu* subsubMenu = new wxMenu();
 //      subsubMenu->Append(ID_PLUGINS+n++,wxString(verbosevec[isub].c_str()));
 //      subMenu->AppendSubMenu(subsubMenu, wxString(subvec[isub].c_str()));
-      subMenu->Append(ID_PLUGINS+n++,wxString(subvec[isub].c_str()));
+      subMenu->Append(ID_PLUGINS+n++,wxString(subvec[isub].c_str(), wxConvUTF8));
     }
-    listMenu->AppendSubMenu(subMenu, wxString(topvec[itop].c_str()),
+    listMenu->AppendSubMenu(subMenu, wxString(topvec[itop].c_str(), wxConvUTF8),
       _T("Plugin Classes"));
   }
 }
@@ -991,7 +994,7 @@ void CFilenames::OnKeyPress(wxKeyEvent& event)
     else
     {
       nameWithWildcard = GetValue();
-      if(nameWithWildcard.find_first_of("*?")==-1)
+      if(nameWithWildcard.find_first_of(_T("*?"))==-1)
       {
         wxCommandEvent dum;
         frame->OnConvert(dum);
@@ -1013,9 +1016,9 @@ void CFilenames::OnKeyPress(wxKeyEvent& event)
           {
             if(i==1)
               endsel = GetLastPosition();
-            AppendText(';');
+            AppendText(_T(';'));
           }
-          wxString name(filelist[i].c_str());
+          wxString name(filelist[i].c_str(), wxConvUTF8);
           wxFileName fnamewx(name);
           fnamewx.MakeRelativeTo(frame->GetInFileBasePath());
           AppendText(fnamewx.GetFullPath());
@@ -1045,7 +1048,7 @@ int  CFilenames::Expand(std::vector<std::string>& filelist)
     wxFileName fn(name);
     namestart=nameend+1; // 0 at end
     fn.MakeAbsolute(frame->GetInFileBasePath());
-    count += DLHandler::findFiles(filelist, std::string(fn.GetFullPath()));
+    count += DLHandler::findFiles(filelist, std::string(fn.GetFullPath().mb_str()));
   }while(namestart);
 
   return count;

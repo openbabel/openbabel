@@ -81,6 +81,13 @@ if(ZLIB_FOUND)
   add_definitions(-DHAVE_LIBZ)
   include_directories(${ZLIB_INCLUDE_DIR})
 endif(ZLIB_FOUND)
+# wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
+find_package(wxWidgets COMPONENTS base core REQUIRED)
+if(wxWidgets_FOUND)
+  include(${wxWidgets_USE_FILE})
+  add_definitions(-DHAVE_WXWIDGETS)
+  include_directories(${wxWidgets_INCLUDE_DIRS})
+endif(wxWidgets_FOUND)
 
 include(CheckIncludeFile)
 include(CheckIncludeFileCXX)
@@ -203,6 +210,20 @@ add_subdirectory(doc)
 add_subdirectory(src)
 add_subdirectory(tools)
 
+# Should we build the GUI? Default is yes.
+option(BUILD_GUI "Build the GUI" ON)
+if(BUILD_GUI)
+  message("Attempting to build the GUI")
+  if(wxWidgets_FOUND)
+    message("   wxWidgets found => GUI will be built")
+    add_subdirectory(src/GUI)
+  else(wxWidgets_FOUND)
+    message("   wxWidgets not found => GUI will not be built")
+  endif(wxWidgets_FOUND)
+elseif(BUILD_GUI)
+  message("GUI will not be built")
+endif(BUILD_GUI)
+
 # Do we want to build the tests?
 option(ENABLE_TESTS "Enable unit tests" OFF)
 if(ENABLE_TESTS)
@@ -216,3 +237,5 @@ if(ENABLE_PYTHON)
   add_subdirectory(scripts)
 endif(ENABLE_PYTHON)
 
+# A minimal build with just two formats (SMI, SDF) useful for developers
+option(MINIMAL_BUILD "Disable full build" OFF)

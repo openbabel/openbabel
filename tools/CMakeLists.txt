@@ -1,24 +1,31 @@
-set(tools
-      babel
-      obchiral
-      obconformer
-      obenergy
-      obfit
-      obgen
-      obminimize
-      obprobe
-      obprop
-      obrotamer
-      obrotate
-)
-
-# no getopt on windows
-if(NOT WIN32)
+if(MINIMAL_BUILD)
   set(tools
-      ${tools}
-      obgrep
+        babel
   )
-endif(NOT WIN32)
+else(MINIMAL_BUILD)
+  set(tools
+        babel
+        obchiral
+        obconformer
+        obenergy
+        obfit
+        obgen
+        obminimize
+        obprobe
+        obprop
+        obrotamer
+        obrotate
+  )
+
+  # no getopt on windows
+  if(NOT WIN32)
+    set(tools
+        ${tools}
+        obgrep
+    )
+  endif(NOT WIN32)
+
+endif(MINIMAL_BUILD)
 
 foreach(tool ${tools})
   add_executable(${tool} ${tool}.cpp)

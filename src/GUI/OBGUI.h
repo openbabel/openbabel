@@ -44,11 +44,11 @@ public:
 class CFilenames : public wxTextCtrl
 {
 public:
-	CFilenames(wxWindow* parent, wxWindowID id, const wxString& value = "", 
+	CFilenames(wxWindow* parent, wxWindowID id, const wxString& value = _T(""), 
 		const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize)
 		: wxTextCtrl(parent,id,value,pos,size,wxTE_NOHIDESEL|wxTE_PROCESS_TAB)
 	{
-		SetToolTip("With multiple files, display any of them below using double click, tab or mousewheel");
+		SetToolTip(_T("With multiple files, display any of them below using double click, tab or mousewheel"));
 	}
 	void OnDblClick(wxMouseEvent& event);
 	void OnKeyPress(wxKeyEvent& event);
@@ -145,10 +145,10 @@ private:
 
 	/// Returns a file path name shortened (using /.../) so that will fit in a specified window
 	/// The width in pixels can optionally be explicitly specified.
-	wxString OBGUIFrame::ShortenedPath(const wxString& path, const wxWindow& wnd, int wndwidth=-1);
+	wxString ShortenedPath(const wxString& path, const wxWindow& wnd, int wndwidth=-1);
 
 	void GetAvailableFormats();
-	wxString OBGUIFrame::GetFilter(wxChoice* pChoice);
+	wxString GetFilter(wxChoice* pChoice);
 
 	bool SetChoice(wxChoice* pChoice, const wxString& FileName);
 	void MakeBold(wxWindow* pWnd);

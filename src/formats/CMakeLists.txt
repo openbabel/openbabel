@@ -1,125 +1,132 @@
-
-set(formats
-    APIInterface
-    CSRformat
-    PQSformat
-    MCDLformat
-    alchemyformat
-    adfformat
-    acrformat
-    amberformat
-    balstformat
-    bgfformat
-    boxformat
-    cacaoformat
-    cacheformat
-    carformat
-    cccformat
-    chem3dformat
-    chemdrawct
-    chemtoolformat
-    cifformat
-    copyformat
-    crkformat
-    cssrformat
-    dmolformat
-    fastsearchformat
-    fastaformat
-    fchkformat
-    featformat
-    fhformat
-    fingerprintformat
-    freefracformat
-    gamessformat
-    gaussformat
-    gausscubeformat
-    gausszmatformat
-    ghemicalformat
-    gromos96format
-    hinformat
-    jaguarformat
-    mdlformat
-    mmcifformat
-    mmodformat
-    mol2format
-    moldenformat
-    molproformat
-    molreport
-    mopacformat
-    mpdformat
-    mpqcformat
-    msiformat
-    msmsformat
-    nwchemformat
-    opendxformat
-    outformat
-    pcmodelformat
-    pdbformat
-    pngformat
-    povrayformat
-    pqrformat
-    qchemformat
-    reportformat
-    shelxformat
+if(MINIMAL_BUILD)
+  set(formats
     smilesformat
-    thermoformat
-    tinkerformat
-    titleformat
-    turbomoleformat
-    unichemformat
-    vaspformat
-    viewmolformat
-    xedformat
-    xyzformat
-    yasaraformat
-    zindoformat
-)
-
-if(Boost_FOUND)
+    mdlformat
+  )
+else(MINIMAL_BUILD)
   set(formats
-    ${formats}
-    rxnformat
-    chemdrawcdx
-    chemkinformat
-    rsmiformat
+      APIInterface
+      CSRformat
+      PQSformat
+      MCDLformat
+      alchemyformat
+      adfformat
+      acrformat
+      amberformat
+      balstformat
+      bgfformat
+      boxformat
+      cacaoformat
+      cacheformat
+      carformat
+      cccformat
+      chem3dformat
+      chemdrawct
+      chemtoolformat
+      cifformat
+      copyformat
+      crkformat
+      cssrformat
+      dmolformat
+      fastsearchformat
+      fastaformat
+      fchkformat
+      featformat
+      fhformat
+      fingerprintformat
+      freefracformat
+      gamessformat
+      gaussformat
+      gausscubeformat
+      gausszmatformat
+      ghemicalformat
+      gromos96format
+      hinformat
+      jaguarformat
+      mdlformat
+      mmcifformat
+      mmodformat
+      mol2format
+      moldenformat
+      molproformat
+      molreport
+      mopacformat
+      mpdformat
+      mpqcformat
+      msiformat
+      msmsformat
+      nwchemformat
+      opendxformat
+      outformat
+      pcmodelformat
+      pdbformat
+      pngformat
+      povrayformat
+      pqrformat
+      qchemformat
+      reportformat
+      shelxformat
+      smilesformat
+      thermoformat
+      tinkerformat
+      titleformat
+      turbomoleformat
+      unichemformat
+      vaspformat
+      viewmolformat
+      xedformat
+      xyzformat
+      yasaraformat
+      zindoformat
   )
-endif(Boost_FOUND)
 
-if(WITH_INCHI)
-  add_definitions(-DINCHI_LINK_AS_DLL)
-  add_subdirectory(inchi102)
-  include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
-  set(formats
-    ${formats}
-    inchiformat
-  )
-  set(libs ${libs} inchi)
-  set(inchiformat_additional_sources getinchi.cpp)
-endif(WITH_INCHI)
-
-if(LIBXML2_FOUND)
-  include_directories(${LIBXML2_INCLUDE_DIR})
-  set(xml_formats
-    cdxmlformat
-    cmlformat
-    pubchem
-    xmlformat
-  )
   if(Boost_FOUND)
-    set(xml_formats
-        ${xml_formats}
-        cmlreactformat
+    set(formats
+      ${formats}
+      rxnformat
+      chemdrawcdx
+      chemkinformat
+      rsmiformat
     )
   endif(Boost_FOUND)
-endif(LIBXML2_FOUND)
 
-if(NOT WIN32)
-  set(formats
-    ${formats}
-    gamessukformat
-    xtcformat
-  )
-endif(NOT WIN32)
+  if(WITH_INCHI)
+    add_definitions(-DINCHI_LINK_AS_DLL)
+    add_subdirectory(inchi102)
+    include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
+    set(formats
+      ${formats}
+      inchiformat
+    )
+    set(libs ${libs} inchi)
+    set(inchiformat_additional_sources getinchi.cpp)
+  endif(WITH_INCHI)
+
+  if(LIBXML2_FOUND)
+    include_directories(${LIBXML2_INCLUDE_DIR})
+    set(xml_formats
+      cdxmlformat
+      cmlformat
+      pubchem
+      xmlformat
+    )
+    if(Boost_FOUND)
+      set(xml_formats
+          ${xml_formats}
+          cmlreactformat
+      )
+    endif(Boost_FOUND)
+  endif(LIBXML2_FOUND)
+
+  if(NOT WIN32)
+    set(formats
+      ${formats}
+      gamessukformat
+      xtcformat
+    )
+  endif(NOT WIN32)
+
+endif(MINIMAL_BUILD)
 
 if(NOT WIN32)
   set(libs ${libs} m)

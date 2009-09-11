@@ -1,3 +1,9 @@
+2009-09-11  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/GUI/*.h, *.cpp: Large number of minor mods for compatibility with unicode build of wxWidgets
+	* CMakeLists.txt, src/GUI/CMakeLists.txt, tools/CMakeLists.txt: (1) Cmakeify the GUI build, (2) Add an option to
+	enable a minimal build, consisting of just two file formats and one tool.
+
 2009-09-06  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/forcefield.cpp: Fix Random & Systematic Rotor Search crashes. 

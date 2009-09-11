@@ -209,7 +209,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
           if(!strpbrk(pdef,"([<{-;")) pdef++ ;
           *pdef='\0';
         }
-        wxStaticText* pEdCaption = new wxStaticText(parent,wxID_STATIC,pCaption);
+        wxStaticText* pEdCaption = new wxStaticText(parent,wxID_STATIC,wxString(pCaption, wxConvUTF8));
         OptionMap.push_back(std::make_pair(wxString(),pEdCaption));//string is empty for a caption: not an option
 
         //Edit boxes for multicharacter options are larger
@@ -227,7 +227,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
                 wxDefaultPosition,wxSize(EDWIDTH,16));
             OptionMap.push_back(std::make_pair(oname,pEd));
             if(ProvideEditCtl)
-              oname = ' ' + oname;//editboxes except the first have name preceded by one or more spaces
+              oname = _T(' ') + oname;//editboxes except the first have name preceded by one or more spaces
           }
           sizer->Add(pEd,0,wxEXPAND|wxTOP,ONE);
         }
@@ -240,14 +240,14 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
                 wxDefaultPosition,wxSize(EDWIDTH,16));
             OptionMap.push_back(std::make_pair(oname,pEd));
             if(ProvideEditCtl)
-              oname = ' ' + oname;//editboxes except the first have name preceded by one or more spaces
+              oname = _T(' ') + oname;//editboxes except the first have name preceded by one or more spaces
             pEdSizer->Add(pEd,0);
           }
           pEdSizer->Add(pEdCaption,1,wxLEFT|wxALIGN_CENTER_VERTICAL,FOUR);
           sizer->Add(pEdSizer,0,wxEXPAND|wxTOP,FOUR);
           Sizers.push_back(pEdSizer);
         }
-        pEd->AppendText(pdefWord);
+        pEd->AppendText(wxString(pdefWord, wxConvUTF8));
       }
       else
       {
@@ -268,14 +268,14 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
         if(NextIsRadio || HasOr)
         {
           unsigned int style = NextIsRadio ? 0 : wxRB_GROUP; //Style only on first radiobutton
-          pChk = new wxRadioButton(parent,wxID_ANY,pCaption,
+          pChk = new wxRadioButton(parent,wxID_ANY,wxString(pCaption, wxConvUTF8),
                 wxDefaultPosition, wxDefaultSize, style);
           NextIsRadio = HasOr;
           ((wxRadioButton*)pChk)->SetValue(SetChk);
         }
         else
         {
-          pChk = new wxCheckBox(parent,wxID_ANY,pCaption);
+          pChk = new wxCheckBox(parent,wxID_ANY,wxString(pCaption, wxConvUTF8));
           ((wxCheckBox*)pChk)->SetValue(SetChk);
         }
       
@@ -310,7 +310,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
     {	
       if(pChk->IsChecked())
       {
-        Conv.AddOption(itr->first, opttyp);
+        Conv.AddOption(itr->first.mb_str(), opttyp);
         ++count;
       }
     }
@@ -321,7 +321,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
       {
         if(pRadio->GetValue())
         {
-          Conv.AddOption(itr->first, opttyp);
+          Conv.AddOption(itr->first.mb_str(), opttyp);
           ++count;
         }
       }
@@ -340,10 +340,10 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
           {
             if(itr2->first[0]!=' ') //subsequent editboxes have the name preceded by a space
               break;
-            txt = txt + ' ' + static_cast<wxTextCtrl*>(itr2->second)->GetValue();
+            txt = txt + _T(' ') + static_cast<wxTextCtrl*>(itr2->second)->GetValue();
             ++itr;
           }
-          Conv.AddOption(oname, opttyp, txt);
+          Conv.AddOption(oname.mb_str(), opttyp, txt.mb_str());
           ++count;
         }
       }

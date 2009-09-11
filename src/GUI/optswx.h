@@ -26,7 +26,7 @@ class DynOptionswx
 public:
 	typedef std::vector <std::pair<wxString, wxWindow*> > OMapType;
 
-	DynOptionswx :: DynOptionswx(wxWindow* Par, wxSizer* pSizer)
+	DynOptionswx(wxWindow* Par, wxSizer* pSizer)
 		: parent(Par), sizer(pSizer){} 
 	~DynOptionswx();
 	void Clear();

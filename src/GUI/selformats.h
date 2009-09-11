@@ -25,7 +25,7 @@ public:
 		wxBoxSizer* topSizer = new wxBoxSizer(wxHORIZONTAL);
 		topSizer->Add(pList,1,wxEXPAND);
 		wxBoxSizer* buttonSizer = new wxBoxSizer(wxVERTICAL);
-		buttonSizer->Add(new wxButton(this, wxID_OK,"OK"),0,wxALL,10);
+		buttonSizer->Add(new wxButton(this, wxID_OK, wxT("OK")),0,wxALL,10);
 		buttonSizer->Add(new wxButton(this,wxID_CANCEL),0,wxALL,10);
 		
 		topSizer->Add(buttonSizer);
@@ -36,7 +36,7 @@ public:
 		unsigned i;
 		for(i=0;i<AllFormatsArray.GetCount();++i)
 		{
-			int pos = ActiveFormatsString.find(AllFormatsArray[i]+';');
+			int pos = ActiveFormatsString.find(AllFormatsArray[i]+_T(';'));
 			pList->Check(i, pos!=-1);
 		}
 	}
@@ -47,7 +47,7 @@ public:
 		for(i=0;i< pList->GetCount();++i)
 		{
 			if(pList->IsChecked(i))
-				active.Append(pList->GetString(i) + ';');
+				active.Append(pList->GetString(i) + _T(';'));
 		}
 		EndModal(wxID_OK);
 	}
@@ -66,9 +66,9 @@ public:
 	bool ReadConfig(wxConfig& config) //Called in OBGUIFrame constructor
 	{
 		bool chk=false;
-		config.Read("ActiveFormats",&ActiveFormatsString,wxEmptyString);
+		config.Read(_T("ActiveFormats"),&ActiveFormatsString,wxEmptyString);
 		if(!ActiveFormatsString.IsEmpty())
-			config.Read("UseRestrictedFormats", &chk, false);
+			config.Read(_T("UseRestrictedFormats"), &chk, false);
 		return chk;
 	}
 	void Clear() //Called in OBGUIFrame::GetAvailableFormats
@@ -79,12 +79,12 @@ public:
 	bool Add(wxString& format)//Called in OBGUIFrame::GetAvailableFormats
 	{
 		AllFormatsArray.Add(format);
-		return (ActiveFormatsString.find(format+';') != -1);
+		return (ActiveFormatsString.find(format+_T(';')) != -1);
 	}
 
 	void WriteConfig(wxConfig& config) //Called in OBGUIFrame::OnClose()
 	{
-		config.Write("ActiveFormats", ActiveFormatsString);
+		config.Write(_T("ActiveFormats"), ActiveFormatsString);
 	} 
 
 	bool SelectFormats() // Called in OBGUIFrame::OnSelectFormats
@@ -95,5 +95,5 @@ public:
 	}
 };
 
-#endif;
+#endif
 
