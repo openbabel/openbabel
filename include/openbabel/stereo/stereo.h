@@ -674,19 +674,33 @@ namespace OpenBabel {
    * - Must be a sp3 atom (i.e. OBAtom::GetHyb() == 3)
    * - Must have at least 3 heavy neighbor atoms
    *
-   * Next, the neighbors' symmetry classes are checked. When there are only 
-   * 3 neighbor atoms, it will suffice that their symmetry classes are 
-   * different. Since we already checked that there should be at least 3 heavy
-   * atom neighbors, we can conclude the 4th missing atom is an implicit 
-   * hydrogen (OBStereo::ImplicitRef).
+   * @c True-stereocenters are identified first. These have atoms 
+   * with 4 different symmetry classes attached. When there are only 3 neighbor 
+   * atoms, it will suffice that their symmetry classes are different. Since we 
+   * already checked that there should be at least 3 heavy atom neighbors, we 
+   * can conclude the 4th missing atom is an implicit hydrogen 
+   * (OBStereo::ImplicitRef).
    *
-   * When there are 4 neighbor atoms, all 4 must have different symmetry classes
-   * in order for the center to be considered chiral.
+   * The term @c para-stereocenters (para = ressemble) is used to denote
+   * stereocenters, which altough not true-stereocenters (i.e. have 4 different
+   * symmetry classes for neighbours), are still stereogenic.[1] 
+   * 
    *
+     @verbatim
+     Reference:
+     [1] M. Razinger, K. Balasubramanian, M. Perdih, M. E. Munk,
+     Stereoisomere Generation in Computer-Enhanced Structure Elucidation,
+     J. Chem. Inf. Comput. Si. 1993, 33, 812-825
+     http://www.mcs.csueastbay.edu/~kbalasub/reprints/282.pdf
+     @endverbatim
+    *
    * @param mol The molecule.
    * @param symClasses The current symmetry classes (OBGraphSym)
    *
-   * @return The atom ids for all tetrahedral centers.
+   * @return A vector with a pairs consisting of the unique atom id for each 
+   * tetrahedral center. The second bool field in the std::pair is to mark if
+   * the stereo center is a true-stereocenter (true) or a para-stereocenter 
+   * (false).
    */
   OBAPI std::vector<unsigned long> FindTetrahedralAtoms(OBMol *mol, 
       const std::vector<unsigned int> &symClasses);

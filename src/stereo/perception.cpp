@@ -52,6 +52,62 @@ namespace OpenBabel {
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::PerceiveStereo", obAuditMsg);
   }
 
+  std::vector<OBBitVec> mergeRings(OBMol *mol)
+  {
+    std::vector<OBRing*> rings = mol->GetSSSR();
+
+    std::vector<std::vector<OBRing*> > bridgedRings;
+    for (int n = 0; rings.size(); ++n) {
+      cout << "rings.size = " << rings.size() << endl;
+      OBRing *ring = rings[0];
+      std::vector<OBRing*> bridge;
+      // add the first ring
+      bridge.push_back(ring);
+
+      // add rings that share an atom with the current first ring
+      for (unsigned int j = 1; j < rings.size(); ++j) {
+        for (unsigned int k = 0; k < ring->_path.size(); ++k)
+          if (std::find(rings[j]->_path.begin(),
+                        rings[j]->_path.end(),
+                        ring->_path.at(k)) != rings[j]->_path.end())
+            bridge.push_back(rings[j]);
+      }
+
+      bridgedRings.push_back(bridge);
+      cout << "bridge.size = " << bridge.size() << endl;
+
+      // erase new rings from original list
+      for (unsigned int i = 0; i < bridge.size(); ++i) {
+        std::vector<OBRing*>::iterator newEnd = std::remove(rings.begin(), rings.end(), bridge[i]);
+        rings.erase(newEnd, rings.end());
+      }
+
+    }
+
+    // store the merged rings in OBBitVecs
+    std::vector<OBBitVec> result;
+    for (unsigned int i = 0; i < bridgedRings.size(); ++i) {
+      OBBitVec bits;
+      for (unsigned int j = 0; j < bridgedRings.at(i).size(); ++j)
+        for (unsigned int k = 0; k < bridgedRings.at(i).at(j)->_path.size(); ++k)
+          bits.SetBitOn( bridgedRings.at(i).at(j)->_path[k] );
+
+      result.push_back(bits);
+    }
+    cout << "# free ring systems = " << result.size() << endl;
+
+    return result;
+  }
+
+  bool isInSameMergedRing(const std::vector<OBBitVec> &mergedRings, unsigned int idx1, unsigned int idx2)
+  {
+    std::vector<OBBitVec>::const_iterator bits;
+    for (bits = mergedRings.begin(); bits != mergedRings.end(); ++bits)
+      if ((*bits).BitIsSet( idx1 ) && (*bits).BitIsSet( idx2 ))
+        return true;
+    return false;  
+  }
+
   std::vector<unsigned long> FindTetrahedralAtoms(OBMol *mol, const std::vector<unsigned int> &symClasses)
   {
     std::vector<unsigned long> centers;
@@ -71,34 +127,63 @@ namespace OpenBabel {
     if (symClasses.size() != mol->NumAtoms())
       return centers;
 
-    std::vector<unsigned int> tlist;
-    std::vector<unsigned int>::iterator k;
+    std::vector<unsigned int> plist; // para-stereocenters canditates
 
     bool ischiral;
     for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i)) {
       if (atom->IsNitrogen() || atom->IsPhosphorus() || atom->IsSulfur())
         continue;
       if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
-        tlist.clear();
+        // list containing neighbor symmetry classes
+        std::vector<unsigned int> tlist; 
         ischiral = true;
 
+        // check neighbors to see if this atom is stereogenic
         std::vector<OBBond*>::iterator j;
         for (nbr = atom->BeginNbrAtom(j); nbr; nbr = atom->NextNbrAtom(j)) {
+          // check if we already have a neighbor with this symmetry class
+          std::vector<unsigned int>::iterator k;
           for (k = tlist.begin(); k != tlist.end(); ++k)
-            if (symClasses[nbr->GetIndex()] == *k)
+            if (symClasses[nbr->GetIndex()] == *k) {
               ischiral = false;
+              // if so, might still be a para-stereocenter
+              plist.push_back(atom->GetIdx());
+            }
 
           if (ischiral)
+            // keep track of all neighbors, so we can detect duplicates
             tlist.push_back(symClasses[nbr->GetIndex()]);
           else
             break;
         }
 
         if (ischiral) {
+          // true-stereocenter found
           centers.push_back(atom->GetId());
         }
       }
     }
+
+    // find para-stereocenters
+    if (plist.size()) {
+      std::vector<OBBitVec> mergedRings = mergeRings(mol);
+
+      for (unsigned int i = 0; i < plist.size(); ++i) {
+        for (unsigned int j = 0; j < plist.size(); ++j) {
+          if (i == j)
+            continue;
+          if (isInSameMergedRing(mergedRings, plist.at(i), plist.at(j))) {
+            centers.push_back(mol->GetAtom(plist.at(i))->GetId());
+            centers.push_back(mol->GetAtom(plist.at(j))->GetId());
+          }
+        }
+      }
+    }
+
+    // make sure we don't return duplicates
+    std::sort(centers.begin(), centers.end());
+    std::vector<unsigned long>::iterator newEnd = std::unique(centers.begin(), centers.end());
+    centers.erase(newEnd, centers.end());
 
     return centers;
   }
@@ -205,6 +290,13 @@ namespace OpenBabel {
     }
 
     return bonds;
+  }
+  
+  void FindParaStereocenters(OBMol *mol, const std::vector<unsigned int> &symClasses, 
+      const std::vector<unsigned long> &tetrahedralAtomIds, const std::vector<unsigned long> &cistransBondItds,
+      std::vector<unsigned long> &paraAtomIds, std::vector<unsigned long> &paraAtomIds)
+  {
+  
   }
 
   /**
