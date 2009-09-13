@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #define OB_GUI_H
 
 #include "stdwx.h"
+#include <wx/dnd.h>
 #include "optswx.h"
 
 // ----------------------------------------------------------------------------
@@ -60,6 +61,7 @@ private:
 	DECLARE_EVENT_TABLE()
 	wxString nameWithWildcard; 
 };
+  
 
 //*******************************************
 /// The main window
@@ -82,7 +84,6 @@ public:
 	void OnInFileNameUpdate(wxUpdateUIEvent& event);
 	void OnConvert(wxCommandEvent& event);
 	void OnChangeInputHere(wxCommandEvent& event);
-	void OnDropFiles(wxDropFilesEvent& event);
 	void ChangeInputHere(bool chk);
 	void OnChangeFormat(wxCommandEvent& event);
 	void OnClose(wxCloseEvent& event);
@@ -160,6 +161,22 @@ class MyDialog : public wxDialog
 public:
 	MyDialog(wxWindow *parent, const wxString &title );
 };
+
+class DnD : public wxFileDropTarget 
+{
+public:
+  DnD(OBGUIFrame* parent) : m_pParent(parent){};
+  virtual bool OnDropFiles(wxCoord, wxCoord, const wxArrayString& filenames)
+  { 
+    m_pParent->DisplayInputFiles(filenames);
+    return true;
+  }
+private:
+  OBGUIFrame* m_pParent;
+};
+
+
+
  
 // ----------------------------------------------------------------------------
 // constants

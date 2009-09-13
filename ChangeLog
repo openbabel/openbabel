@@ -1,3 +1,14 @@
+2009-09-13  Chris Morley
+
+	* src/GUI/OBGUI.h,OBGUI.cpp:
+	Replace deprecated file drag-and-drop with newer version using 
+	wxFileDropTarget. Works in Windows; might even work in Linux.
+
+	* src/GUI/optswx.cpp: options can now have a checkbox and an
+	edit box allowing options to have parameters. These changes conflicted
+	with the mods for Linux compatibility. The resolved version needs to be
+	checked with Linux in case mistakes were made..
+
 2009-09-11  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/GUI/CMakeLists.txt: Added Win32 to ensure that on Windows

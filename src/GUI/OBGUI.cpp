@@ -59,7 +59,6 @@ BEGIN_EVENT_TABLE(OBGUIFrame, wxFrame)
   EVT_CHOICE(ID_OUTFORMAT,OBGUIFrame::OnChangeFormat)
   EVT_MOUSEWHEEL(OBGUIFrame::OnMouseWheel)
   EVT_CLOSE(OBGUIFrame::OnClose)
-  EVT_DROP_FILES(OBGUIFrame::OnDropFiles)
  END_EVENT_TABLE()
 
 IMPLEMENT_APP(OBGUIApp)
@@ -101,10 +100,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 {
   // set the frame icon
   SetIcon(wxICON(sample));
-#ifdef WIN32
-  DragAcceptFiles(true); // Drag'n'drop disabled on Linux until alternatives are investigated
-#endif
-
+  SetDropTarget(new DnD(this)); //newer method for file drap and drop
   wxConfig config(_T("OpenBabelGUI"));
 
   // create a menu bar
@@ -877,12 +873,6 @@ void OBGUIFrame::MakeBold(wxWindow* pWnd)
   wxFont font = pWnd->GetFont();
   font.SetWeight(wxFONTWEIGHT_BOLD );
   pWnd->SetFont(font);
-}
-
-void OBGUIFrame::OnDropFiles(wxDropFilesEvent& event)
-{
-//	m_pInFilename->Clear();	
-  DisplayInputFiles(wxArrayString(event.GetNumberOfFiles(),event.GetFiles()));
 }
 
 //**********************************************

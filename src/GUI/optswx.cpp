@@ -35,14 +35,14 @@ had more significance than the person making then was expecting.
 
 For format descriptions options for Read and Write are extracted with 
 separate calls to DynOptionswx::Construct(). The list of options starts with
-a a line containing "Options". Those for reading have "Read" or "Input" 
+a line containing "Options". Those for reading have "Read" or "Input" 
 preceding this on the same line and those for writing have "Write", "Output"
 or nothing preceding it on the same line. These are all case insensitive.
 The options themselves are one to a line on subsequent lines, ending with a 
-blank lineor the end of the string.
+blank line or the end of the string.
 
 Each option has a name, which can be a single letter. Any punctuation 
-preceding thename is ignored.
+preceding the name is ignored.
 
 If the first character after the name, other than space or tab, is a 
 punctuation character, then the option will be displayed as an edit box,
@@ -137,6 +137,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
     while(p && p-1 && *p && *p!='\n') //loop for all options until blank line
     {
       int ProvideEditCtl=0;
+      bool ProvideExtraCheckbox=false;
       while(*p && !isalnum(*(p++))); //skip space and punctuation
       if(!(*p--)) break;
       wxString oname;
@@ -170,7 +171,9 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
         case '<':
           endch='>'; break;
         case '[':
-          endch= ']'; break;
+          endch= ']';
+          ProvideExtraCheckbox=true;
+          break;
         case '(':
           endch=')'; break;
         }
@@ -209,7 +212,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
           if(!strpbrk(pdef,"([<{-;")) pdef++ ;
           *pdef='\0';
         }
-        wxStaticText* pEdCaption = new wxStaticText(parent,wxID_STATIC,wxString(pCaption, wxConvUTF8));
+        wxStaticText* pEdCaption = new wxStaticText(parent,wxID_STATIC,pCaption);
         OptionMap.push_back(std::make_pair(wxString(),pEdCaption));//string is empty for a caption: not an option
 
         //Edit boxes for multicharacter options are larger
@@ -234,6 +237,13 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
         else
         {
           wxBoxSizer* pEdSizer = new wxBoxSizer(wxHORIZONTAL);
+          if(ProvideExtraCheckbox)
+          {
+            wxControl* pChk = new wxCheckBox(parent,wxID_ANY," ");
+            OptionMap.push_back(std::make_pair(oname,pChk));
+            pEdSizer->Add(pChk,0,wxALIGN_CENTER_VERTICAL,FOUR);
+            oname = ' ' + oname;
+          }
           while(ProvideEditCtl--)
           {
             pEd = new wxTextCtrl(parent,wxID_ANY,wxEmptyString,
@@ -305,14 +315,15 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
   for (itr = OptionMap.begin(); itr != OptionMap.end(); ++itr)
   {
     if(itr->first.empty()) continue; //just a caption or a line
+
+    wxString oname = itr->first.mb_str();
+    wxString txt;
+
     wxCheckBox* pChk = dynamic_cast<wxCheckBox*> (itr->second);
     if(pChk)
     {	
-      if(pChk->IsChecked())
-      {
-        Conv.AddOption(itr->first.mb_str(), opttyp);
-        ++count;
-      }
+      if(!pChk->IsChecked())
+        continue;
     }
     else
     {
@@ -320,34 +331,33 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
       if(pRadio)
       {
         if(pRadio->GetValue())
-        {
-          Conv.AddOption(itr->first.mb_str(), opttyp);
-          ++count;
-        }
+          continue;
       }
       else
       {
         wxTextCtrl* pText = dynamic_cast<wxTextCtrl*> (itr->second);
         if(pText)
         {
-          wxString txt = pText->GetValue();
+          txt = pText->GetValue();
           if(txt.IsEmpty()) continue;
-          wxString oname = itr->first;
-
-          //Get the contents of subsequent editboxes 
-          OMapType::iterator itr2 = itr;
-          while(++itr2!= OptionMap.end())
-          {
-            if(itr2->first[0]!=' ') //subsequent editboxes have the name preceded by a space
-              break;
-            txt = txt + _T(' ') + static_cast<wxTextCtrl*>(itr2->second)->GetValue();
-            ++itr;
-          }
-          Conv.AddOption(oname.mb_str(), opttyp, txt.mb_str());
-          ++count;
+          oname = itr->first.mb_str();
         }
       }
     }
+
+    //Get the contents of subsequent editboxes 
+    OMapType::iterator itr2 = itr;
+    while(++itr2!= OptionMap.end())
+    {
+      if(itr2->first[0]!=' ') //subsequent editboxes have the name preceded by a space
+        break;
+      txt = txt + _T(' ') + static_cast<wxTextCtrl*>(itr2->second)->GetValue();
+      ++itr;
+    }
+    txt.Trim(true); txt.Trim(false);
+    Conv.AddOption(oname, opttyp, txt);
+    ++count;
+        
   }
   return count;
 }
