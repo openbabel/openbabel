@@ -1,3 +1,8 @@
+2009-09-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* src/stereo/perception.cpp: Implement para-stereocenter detection.
+	 (see J. Chem. Inf. Comput. Sci., Vol. 33, No. 6, 1993 or code for details)
+
 2009-09-16  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/GUI/CMakeLists.txt: Add icon. Add comctl32.lib for Windows
