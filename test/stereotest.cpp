@@ -248,7 +248,37 @@ void test_StereoPerception()
 
   cout << "Razinger paper, fig. 1: structure i" << endl;
   OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_i.mol")) ); 
-  OB_ASSERT( doStereoPerception(mol, 3, 0) );
+  OB_ASSERT( doStereoPerception(mol, 3, 0) ); // rule 2a
+
+  cout << "Razinger paper, fig. 1: structure j" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_j.mol")) ); 
+  OB_ASSERT( doStereoPerception(mol, 7, 0) ); // rule 2b
+
+  cout << "Razinger paper, fig. 1: structure k" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_k.mol")) ); 
+  OB_ASSERT( doStereoPerception(mol, 3, 0) ); // counter example to j
+
+  cout << "Razinger paper, fig. 1: structure l" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_l.mol")) ); 
+  OB_ASSERT( doStereoPerception(mol, 13, 0) ); // rule 2b
+
+  cout << "Razinger paper, fig. 1: structure m" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_m.mol")) ); 
+  OB_ASSERT( doStereoPerception(mol, 0, 0) ); // counter example to l
+
+  cout << "Razinger paper, fig. 1: structure n" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_n.mol")) ); 
+  OB_ASSERT( doStereoPerception(mol, 5, 0) );
+
+  cout << "Razinger paper, fig. 1: structure o" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_o.mol")) ); 
+  OB_ASSERT( doStereoPerception(mol, 2, 0) );
+
+  cout << "Razinger paper, fig. 1: structure p" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_p.mol")) ); 
+  OB_ASSERT( doStereoPerception(mol, 5, 2) ); 
+
+
 
 
 
