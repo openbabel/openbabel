@@ -118,7 +118,6 @@ namespace OpenBabel {
 
     std::vector<std::vector<OBRing*> > bridgedRings;
     for (int n = 0; rings.size(); ++n) {
-      //cout << "rings.size = " << rings.size() << endl;
       OBRing *ring = rings[0];
       std::vector<OBRing*> bridge;
       // add the first ring
@@ -134,7 +133,6 @@ namespace OpenBabel {
       }
 
       bridgedRings.push_back(bridge);
-      //cout << "bridge.size = " << bridge.size() << endl;
 
       // erase new rings from original list
       for (unsigned int i = 0; i < bridge.size(); ++i) {
@@ -154,7 +152,6 @@ namespace OpenBabel {
 
       result.push_back(bits);
     }
-    //cout << "# free ring systems = " << result.size() << endl;
 
     return result;
   }
@@ -386,6 +383,7 @@ namespace OpenBabel {
       }
     }
 
+    /*
     cout << "True-Tetrahedral: ";
     for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u)
       if ((*u).type == OBStereo::Tetrahedral)
@@ -404,6 +402,7 @@ namespace OpenBabel {
     for (std::vector<unsigned int>::iterator u = paraBonds.begin(); u != paraBonds.end(); ++u)
       cout << *u << " ";
     cout << endl;
+    */
 
 
     std::vector<OBBitVec> mergedRings = mergeRings(mol);
@@ -413,6 +412,7 @@ namespace OpenBabel {
     // search for paracenters until no new centers are found
     unsigned int lastSize = units.size();
     while (true) {
+      /*
       cout << "BEGIN ---------------------------------------" << endl;
       for (unsigned int i = 0; i < sortedParas.size(); ++i) {
         for (unsigned int j = 0; j < sortedParas[i].size(); ++j)
@@ -423,6 +423,7 @@ namespace OpenBabel {
         cout << endl;
       }
       cout << "END -----------------------------------------" << endl;
+      */
 
 
       // iterate over the merged rings
@@ -431,7 +432,6 @@ namespace OpenBabel {
         std::vector<unsigned long> newAtoms;
         std::vector<unsigned long> newBonds;
 
-        cout << "1"  << endl;
         // check for true-stereocenters in the ring
         for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u) {
           if ((*u).type == OBStereo::Tetrahedral) {
@@ -440,7 +440,6 @@ namespace OpenBabel {
               centersInRing++;     
           } 
         }
-        cout << "2"  << endl;
 
         // check for para-stereocenters in the ring
         for (std::vector<StereogenicUnit>::iterator u = sortedParas[s].begin(); u != sortedParas[s].end(); ++u) {
@@ -449,13 +448,11 @@ namespace OpenBabel {
             int classification = classifyTetrahedralNbrSymClasses(symClasses, atom);
             switch (classification) {
               case T1123:
-                cout << "case T1123" << endl;
                 centersInRing++;
                 newAtoms.push_back((*u).id);
                 break;
               case T1122:
                 {
-                  cout << "case T1122" << endl;
                   // find the two different ligands
                   OBAtom *ligandAtom1 = 0;
                   OBAtom *ligandAtom2 = 0;
@@ -501,9 +498,7 @@ namespace OpenBabel {
                     }
                   }
 
-                  cout << "about to add..." << endl;
                   if (foundStereoCenterInLigand) {
-                    cout << "ADDING " << atom->GetId() << endl;
                     centersInRing++;
                     newAtoms.push_back(atom->GetId());
                   }
@@ -511,7 +506,6 @@ namespace OpenBabel {
                 break;
               case T1111:
                 {
-                  cout << "case T1111" << endl;
                   OBAtom *ligandAtom = 0;
                   FOR_NBORS_OF_ATOM (nbr, atom) {
                     ligandAtom = &*nbr;
@@ -540,10 +534,8 @@ namespace OpenBabel {
                 }
                 break;
               case T1112:
-                cout << "case T1112" << endl;
                 break;
               default:
-                cout << "DEFAULT" << endl;
                 break;
             }
           } else {
@@ -561,7 +553,6 @@ namespace OpenBabel {
                 break;
               case C11:
                 {
-                  cout << "case C11" << endl;
                   // find the two different ligands
                   OBAtom *ligandAtom = 0;
                   FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -598,11 +589,9 @@ namespace OpenBabel {
             }
           }
         }
-        cout << "3"  << endl;
 
         if (centersInRing < 2)
           continue;
-        cout << "4"  << endl;
         
         std::vector<StereogenicUnit> filtered;
         for (std::vector<StereogenicUnit>::iterator u = sortedParas[s].begin(); u != sortedParas[s].end(); ++u) {
@@ -611,7 +600,6 @@ namespace OpenBabel {
               filtered.push_back(*u);
             else {
               units.push_back(StereogenicUnit(OBStereo::Tetrahedral, (*u).id));
-              cout << "really added " << (*u).id << endl;
             }
           } else if ((*u).type == OBStereo::CisTrans) {
             if (std::find(newBonds.begin(), newBonds.end(), (*u).id) == newBonds.end())
@@ -621,7 +609,6 @@ namespace OpenBabel {
           }
         }
         sortedParas[s] = filtered;
-        cout << "5"  << endl;
 
       }
 
@@ -631,6 +618,7 @@ namespace OpenBabel {
       lastSize = units.size();
     }
 
+    /*
     cout << "Final True-Tetrahedral: ";
     for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u)
       if ((*u).type == OBStereo::Tetrahedral)
@@ -641,6 +629,7 @@ namespace OpenBabel {
       if ((*u).type == OBStereo::CisTrans)
         cout << (*u).id << " ";
     cout << endl;
+    */
  
     return units;
   }
