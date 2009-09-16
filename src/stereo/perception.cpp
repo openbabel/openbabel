@@ -384,6 +384,31 @@ namespace OpenBabel {
   }
 
 
+  std::vector<std::vector<StereogenicUnit> > sortParaCentersByMergedRings(OBMol *mol,
+      const std::vector<OBBitVec> &mergedRings, const std::vector<unsigned int> &paraAtoms,
+      const std::vector<unsigned int> &paraBonds)
+  {
+    std::vector<std::vector<StereogenicUnit> > result;
+
+    for (std::vector<OBBitVec>::const_iterator bv = mergedRings.begin(); bv != mergedRings.end(); ++bv) {
+      std::vector<StereogenicUnit> subresult;
+
+      for (std::vector<unsigned int>::const_iterator pa = paraAtoms.begin(); pa != paraAtoms.end(); ++pa)
+        if (bv->BitIsOn(*pa))
+          subresult.push_back(StereogenicUnit(OBStereo::Tetrahedral, mol->GetAtom(*pa)->GetId()));
+      for (std::vector<unsigned int>::const_iterator pb = paraBonds.begin(); pb != paraBonds.end(); ++pb) {
+        OBBond *bond  = mol->GetBond(*pb);
+        if (bv->BitIsOn(bond->GetBeginAtomIdx()) || bv->BitIsOn(bond->GetEndAtomIdx()))
+          subresult.push_back(StereogenicUnit(OBStereo::CisTrans, mol->GetBond(*pb)->GetId()));
+      }
+
+      // add subresult, even if empty (allows for ring identification by index)
+      result.push_back(subresult);
+    }
+
+    return result;
+  }
+
 
 
   std::vector<StereogenicUnit> FindStereogenicUnits(OBMol *mol, 
@@ -562,7 +587,7 @@ namespace OpenBabel {
     cout << endl;
     cout << "True-CisTrans: ";
     for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u)
-      if ((*u).type == OBStereo::Tetrahedral)
+      if ((*u).type == OBStereo::CisTrans)
         cout << (*u).id << " ";
     cout << endl;
     cout << "Para-Tetrahedral: ";
@@ -575,12 +600,120 @@ namespace OpenBabel {
     cout << endl;
 
 
+    std::vector<OBBitVec> mergedRings = mergeRings(mol);
+    std::vector<std::vector<StereogenicUnit> > sortedParas = sortParaCentersByMergedRings(mol, mergedRings, paraAtoms, paraBonds);
 
 
+    // search for paracenters until no new centers are found
+    unsigned int lastSize = units.size();
+    while (true) {
+      cout << "BEGIN ---------------------------------------" << endl;
+      for (unsigned int i = 0; i < sortedParas.size(); ++i) {
+        for (unsigned int j = 0; j < sortedParas[i].size(); ++j)
+          if (sortedParas[i][j].type == OBStereo::Tetrahedral)
+            cout << "  T " << sortedParas[i][j].id;
+          else
+            cout << "  C " << sortedParas[i][j].id;
+        cout << endl;
+      }
+      cout << "END -----------------------------------------" << endl;
+
+
+      // iterate over the merged rings
+      for (unsigned int s = 0; s < sortedParas.size(); ++s) {
+        int centersInRing = 0;
+        std::vector<unsigned long> newAtoms;
+        std::vector<unsigned long> newBonds;
+
+        cout << "1"  << endl;
+        // check for true-stereocenters in the ring
+        for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u) {
+          if ((*u).type == OBStereo::Tetrahedral) {
+            OBAtom *atom = mol->GetAtomById((*u).id);
+            if (mergedRings.at(s).BitIsOn(atom->GetIdx()))
+              centersInRing++;     
+          } 
+        }
+        cout << "2"  << endl;
+
+        // check for para-stereocenters in the ring
+        for (std::vector<StereogenicUnit>::iterator u = sortedParas[s].begin(); u != sortedParas[s].end(); ++u) {
+          if ((*u).type == OBStereo::Tetrahedral) {
+            OBAtom *atom = mol->GetAtomById((*u).id);
+            int classification = classifyTetrahedralNbrSymClasses(symClasses, atom);
+            switch (classification) {
+              case T1123:
+                centersInRing++;
+                newAtoms.push_back((*u).id);
+                break;
+              default:
+                break;
+            }
+          } else {
+            OBBond *bond = mol->GetBondById((*u).id);
+            OBAtom *atom = 0;
+            if (mergedRings[s].BitIsOn(bond->GetBeginAtomIdx()))
+              atom = bond->GetEndAtom();
+            else
+              atom = bond->GetBeginAtom();
+            int classification = classifyCisTransNbrSymClasses(symClasses, bond, atom);
+            switch (classification) {
+              case C12:
+                centersInRing++;
+                newBonds.push_back((*u).id);
+                break;
+              default:
+                break;
+            }
+          }
+        }
+        cout << "3"  << endl;
+
+        if (centersInRing < 2)
+          continue;
+        cout << "4"  << endl;
+        
+        std::vector<StereogenicUnit> filtered;
+        for (std::vector<StereogenicUnit>::iterator u = sortedParas[s].begin(); u != sortedParas[s].end(); ++u) {
+          if ((*u).type == OBStereo::Tetrahedral) {
+            if (std::find(newAtoms.begin(), newAtoms.end(), (*u).id) == newAtoms.end())
+              filtered.push_back(*u);
+            else
+              units.push_back(StereogenicUnit(OBStereo::Tetrahedral, (*u).id));
+          } else if ((*u).type == OBStereo::CisTrans) {
+            if (std::find(newBonds.begin(), newBonds.end(), (*u).id) == newBonds.end())
+              filtered.push_back(*u);
+            else
+              units.push_back(StereogenicUnit(OBStereo::CisTrans, (*u).id));
+          }
+        }
+        sortedParas[s] = filtered;
+        cout << "5"  << endl;
+
+      }
+
+
+      if (units.size() == lastSize)
+        break;
+      lastSize = units.size();
+    }
+
+    cout << "Final True-Tetrahedral: ";
+    for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u)
+      if ((*u).type == OBStereo::Tetrahedral)
+        cout << (*u).id << " ";
+    cout << endl;
+    cout << "Final True-CisTrans: ";
+    for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u)
+      if ((*u).type == OBStereo::CisTrans)
+        cout << (*u).id << " ";
+    cout << endl;
+ 
 
     /**
      * paira-stereocenters
      */
+    /*
     if (paraAtoms.size() || paraBonds.size()) {
       std::vector<OBBitVec> mergedRings = mergeRings(mol);
 
@@ -673,6 +806,7 @@ namespace OpenBabel {
       }
       
     }
+  */
      
     return units;
   }
