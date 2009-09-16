@@ -1,7 +1,7 @@
 @echo off
 
 set OPTIONS=
-set OPTIONS=-DMINIMAL_BUILD=ON
+rem set OPTIONS=-DMINIMAL_BUILD=ON
 
 if NOT EXIST build mkdir build
 cd build
