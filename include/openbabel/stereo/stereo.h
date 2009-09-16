@@ -362,6 +362,10 @@ namespace OpenBabel {
       ///@name Tetrahedral stereochemistry
       ///@{
       /**
+       * Get the number of tetrahedral stereocenters.
+       */
+      unsigned int NumTetrahedralStereo();
+      /**
        * Check if atom with @p id is a tetrahedral center. 
        * @return True if the atom with @p id has tetrahedral stereochemistry.
        */
@@ -376,6 +380,10 @@ namespace OpenBabel {
  
       ///@name Cis/Trans stereochemistry
       ///@{
+      /**
+       * Get the number of cis/trans stereocenters.
+       */
+      unsigned int NumCisTransStereo();
       /**
        * Check if bond with @p id is a stereogenic cis/trans double bond. 
        * @return True if the bond with @p id has cis/trans stereochemistry.

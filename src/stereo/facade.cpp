@@ -26,6 +26,18 @@
 #include <openbabel/mol.h>
 
 namespace OpenBabel {
+      
+  unsigned int OBStereoFacade::NumTetrahedralStereo()
+  {
+    EnsureInit();
+    return m_tetrahedralMap.size();
+  }
+
+  unsigned int OBStereoFacade::NumCisTransStereo() 
+  {
+    EnsureInit();
+    return m_cistransMap.size();
+  }
   
   bool OBStereoFacade::HasTetrahedralStereo(unsigned long atomId)
   {
