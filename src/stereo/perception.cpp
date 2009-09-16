@@ -67,15 +67,23 @@ namespace OpenBabel {
 
   int classifyTetrahedralNbrSymClasses(const std::vector<unsigned int> &symClasses, OBAtom *atom)
   {
-    std::vector<unsigned int> nbrClasses, uniqueClasses;
+    std::vector<unsigned int> nbrClasses, nbrClassesCopy, uniqueClasses;
     FOR_NBORS_OF_ATOM (nbr, atom)
       nbrClasses.push_back(symClasses.at(nbr->GetIndex()));
     if (nbrClasses.size() == 3)
       nbrClasses.push_back(OBStereo::ImplicitRef);
 
+    nbrClassesCopy = nbrClasses; // keep copy for count below
     std::sort(nbrClasses.begin(), nbrClasses.end());
     std::vector<unsigned int>::iterator endLoc = std::unique(nbrClasses.begin(), nbrClasses.end());
     std::copy(nbrClasses.begin(), endLoc, std::back_inserter(uniqueClasses));
+    
+    cout << "nbrClasses = " << nbrClasses[0] << " " << nbrClasses[1] << " " << nbrClasses[2] << " " << nbrClasses[3] << endl;
+    
+    cout << "uniqueClasses = ";
+    for (unsigned int i = 0; i < uniqueClasses.size(); ++i)
+      cout << nbrClasses[i] << " ";
+    cout << endl;
 
     switch (uniqueClasses.size()) {
       case 4:
@@ -83,7 +91,8 @@ namespace OpenBabel {
       case 3:
         return T1123; // e.g. 1 1 2 3
       case 2:
-        if (std::count(nbrClasses.begin(), nbrClasses.end(), uniqueClasses.at(0)) == 2)
+        cout << "count = " << std::count(nbrClassesCopy.begin(), nbrClassesCopy.end(), uniqueClasses.at(0)) << endl;
+        if (std::count(nbrClassesCopy.begin(), nbrClassesCopy.end(), uniqueClasses.at(0)) == 2)
           return T1122; // e.g. 1 1 2 2
         else
           return T1112; // e.g. 1 1 1 2
@@ -189,6 +198,7 @@ namespace OpenBabel {
     return fragment; 
   }
 
+  /*
   bool isParaBond(OBMol *mol, OBBond *paraBond, OBAtom *ringAtom, const std::vector<unsigned int> &symClasses,
       const std::vector<StereogenicUnit> &units, const std::vector<unsigned int> &paraAtoms, 
       const std::vector<unsigned int> &paraBonds)
@@ -382,6 +392,7 @@ namespace OpenBabel {
 
     return false;
   }
+  */
 
 
   std::vector<std::vector<StereogenicUnit> > sortParaCentersByMergedRings(OBMol *mol,
@@ -643,10 +654,96 @@ namespace OpenBabel {
             int classification = classifyTetrahedralNbrSymClasses(symClasses, atom);
             switch (classification) {
               case T1123:
+                cout << "case T1123" << endl;
                 centersInRing++;
                 newAtoms.push_back((*u).id);
                 break;
+              case T1122:
+                {
+                  cout << "case T1122" << endl;
+                  // find the two different ligands
+                  OBAtom *ligandAtom1 = 0;
+                  OBAtom *ligandAtom2 = 0;
+                  FOR_NBORS_OF_ATOM (nbr, atom) {
+                    if (!ligandAtom1)
+                      ligandAtom1 = &*nbr;
+                    else {
+                      if (symClasses.at(ligandAtom1->GetIndex()) != symClasses.at(nbr->GetIndex())) {
+                        ligandAtom2 = &*nbr;
+                      }
+                    }
+                  }
+
+                  // check which ligand corresponds to the current merged ring
+                  OBBitVec ligand;
+                  if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx()) && mergedRings[s].BitIsOn(ligandAtom2->GetIdx()))
+                    ligand = getFragment(ligandAtom1, atom) | getFragment(ligandAtom2, atom);
+                  if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx()))
+                    ligand = getFragment(ligandAtom2, atom);
+                  else
+                    ligand = getFragment(ligandAtom1, atom);
+
+                  bool foundStereoCenterInLigand = false;
+                  for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
+                    if ((*u2).type == OBStereo::Tetrahedral) {
+                      if (ligand.BitIsOn((*u2).id)) {
+                        centersInRing++;
+                        foundStereoCenterInLigand = true;
+                      }
+                    } else if((*u2).type == OBStereo::CisTrans) {
+                      OBBond *bond = mol->GetBondById((*u2).id);
+                      OBAtom *begin = bond->GetBeginAtom();
+                      OBAtom *end = bond->GetEndAtom();
+                      if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
+                        foundStereoCenterInLigand = true;
+                        centersInRing++;
+                      }
+                    }
+                  }
+
+                  cout << "about to add..." << endl;
+                  if (foundStereoCenterInLigand) {
+                    cout << "ADDING " << atom->GetId() << endl;
+                    centersInRing++;
+                    newAtoms.push_back(atom->GetId());
+                  }
+                }
+                break;
+              case T1111:
+                {
+                  cout << "case T1111" << endl;
+                  OBAtom *ligandAtom = 0;
+                  FOR_NBORS_OF_ATOM (nbr, atom) {
+                    ligandAtom = &*nbr;
+                    break;
+                  }
+                  
+                  OBBitVec ligand = getFragment(ligandAtom, atom);
+                  bool foundStereoCenterInLigand = false;
+                  for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
+                    if ((*u2).type == OBStereo::Tetrahedral) {
+                      if (ligand.BitIsOn((*u2).id))
+                        foundStereoCenterInLigand = true;
+                    } else if((*u2).type == OBStereo::CisTrans) {
+                      OBBond *bond = mol->GetBondById((*u2).id);
+                      OBAtom *begin = bond->GetBeginAtom();
+                      OBAtom *end = bond->GetEndAtom();
+                      if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
+                        foundStereoCenterInLigand = true;
+                    }
+                  }
+
+                  if (foundStereoCenterInLigand) {
+                    centersInRing++;
+                    newAtoms.push_back(atom->GetId());
+                  }
+                }
+                break;
+              case T1112:
+                cout << "case T1112" << endl;
+                break;
               default:
+                cout << "DEFAULT" << endl;
                 break;
             }
           } else {
@@ -662,6 +759,44 @@ namespace OpenBabel {
                 centersInRing++;
                 newBonds.push_back((*u).id);
                 break;
+              case C11:
+                {
+                  cout << "case C11" << endl;
+                  // find the two different ligands
+                  OBAtom *ligandAtom = 0;
+                  FOR_NBORS_OF_ATOM (nbr, atom) {
+                    if ((nbr->GetIdx() != bond->GetBeginAtomIdx()) && (nbr->GetIdx() != bond->GetEndAtomIdx())) {
+                      ligandAtom = &*nbr;
+                      break;
+                    }
+                  }
+
+                  OBBitVec ligand = getFragment(ligandAtom, atom);
+                  bool foundStereoCenterInLigand = false;
+                  for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
+                    if ((*u2).type == OBStereo::Tetrahedral) {
+                      if (ligand.BitIsOn((*u2).id)) {
+                        centersInRing++;
+                        foundStereoCenterInLigand = true;
+                      }
+                    } else if((*u2).type == OBStereo::CisTrans) {
+                      OBBond *bond = mol->GetBondById((*u2).id);
+                      OBAtom *begin = bond->GetBeginAtom();
+                      OBAtom *end = bond->GetEndAtom();
+                      if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
+                        foundStereoCenterInLigand = true;
+                        centersInRing++;
+                      }
+                    }
+                  }
+
+                  if (foundStereoCenterInLigand) {
+                    centersInRing++;
+                    newBonds.push_back((*u).id);
+                  }
+                }
+                break;
+
               default:
                 break;
             }
@@ -678,8 +813,10 @@ namespace OpenBabel {
           if ((*u).type == OBStereo::Tetrahedral) {
             if (std::find(newAtoms.begin(), newAtoms.end(), (*u).id) == newAtoms.end())
               filtered.push_back(*u);
-            else
+            else {
               units.push_back(StereogenicUnit(OBStereo::Tetrahedral, (*u).id));
+              cout << "really added " << (*u).id << endl;
+            }
           } else if ((*u).type == OBStereo::CisTrans) {
             if (std::find(newBonds.begin(), newBonds.end(), (*u).id) == newBonds.end())
               filtered.push_back(*u);

@@ -217,7 +217,7 @@ void test_StereoPerception()
 
   cout << "Razinger paper, fig. 1: structure f" << endl;
   OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_f.mol")) ); 
-  OB_ASSERT( doStereoPerception(mol, 1, 1) );
+  OB_ASSERT( doStereoPerception(mol, 2, 1) );
 
   cout << "Razinger paper, fig. 1: structure g" << endl;
   OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/razinger_fig1_g.mol")) ); 
