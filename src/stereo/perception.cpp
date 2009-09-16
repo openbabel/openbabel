@@ -575,18 +575,14 @@ namespace OpenBabel {
                   bool foundStereoCenterInLigand = false;
                   for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
                     if ((*u2).type == OBStereo::Tetrahedral) {
-                      if (ligand.BitIsOn((*u2).id)) {
-                        //centersInRing++;
+                      if (ligand.BitIsOn((*u2).id))
                         foundStereoCenterInLigand = true;
-                      }
                     } else if((*u2).type == OBStereo::CisTrans) {
                       OBBond *bond = mol->GetBondById((*u2).id);
                       OBAtom *begin = bond->GetBeginAtom();
                       OBAtom *end = bond->GetEndAtom();
-                      if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
+                      if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
                         foundStereoCenterInLigand = true;
-                        //centersInRing++;
-                      }
                     }
                   }
 
