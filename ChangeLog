@@ -1,3 +1,7 @@
+2009-09-16  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/GUI/optswx.cpp: Minor mods to compile on Linux.
+
 2009-09-13  Chris Morley
 
 	* src/GUI/OBGUI.h,OBGUI.cpp:

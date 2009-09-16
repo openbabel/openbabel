@@ -212,7 +212,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
           if(!strpbrk(pdef,"([<{-;")) pdef++ ;
           *pdef='\0';
         }
-        wxStaticText* pEdCaption = new wxStaticText(parent,wxID_STATIC,pCaption);
+        wxStaticText* pEdCaption = new wxStaticText(parent,wxID_STATIC,wxString(pCaption, wxConvUTF8));
         OptionMap.push_back(std::make_pair(wxString(),pEdCaption));//string is empty for a caption: not an option
 
         //Edit boxes for multicharacter options are larger
@@ -239,10 +239,10 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
           wxBoxSizer* pEdSizer = new wxBoxSizer(wxHORIZONTAL);
           if(ProvideExtraCheckbox)
           {
-            wxControl* pChk = new wxCheckBox(parent,wxID_ANY," ");
+            wxControl* pChk = new wxCheckBox(parent,wxID_ANY,_T(" "));
             OptionMap.push_back(std::make_pair(oname,pChk));
             pEdSizer->Add(pChk,0,wxALIGN_CENTER_VERTICAL,FOUR);
-            oname = ' ' + oname;
+            oname = _T(' ') + oname;
           }
           while(ProvideEditCtl--)
           {
@@ -316,7 +316,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
   {
     if(itr->first.empty()) continue; //just a caption or a line
 
-    wxString oname = itr->first.mb_str();
+    wxString oname = itr->first;
     wxString txt;
 
     wxCheckBox* pChk = dynamic_cast<wxCheckBox*> (itr->second);
@@ -340,7 +340,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
         {
           txt = pText->GetValue();
           if(txt.IsEmpty()) continue;
-          oname = itr->first.mb_str();
+          oname = itr->first;
         }
       }
     }
@@ -355,7 +355,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
       ++itr;
     }
     txt.Trim(true); txt.Trim(false);
-    Conv.AddOption(oname, opttyp, txt);
+    Conv.AddOption(oname.mb_str(), opttyp, txt.mb_str());
     ++count;
         
   }
