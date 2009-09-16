@@ -1,5 +1,12 @@
 2009-09-16  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* src/GUI/CMakeLists.txt: Add icon. Add comctl32.lib for Windows
+	build.
+	* windows-vc2008, windows-vc2006/cmake.bat: Create new folder for
+	MSVC++ Express 2008. Add batch file to run cmake.
+
+2009-09-16  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* src/GUI/optswx.cpp: Minor mods to compile on Linux.
 
 2009-09-13  Chris Morley
