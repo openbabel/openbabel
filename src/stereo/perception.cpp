@@ -542,7 +542,7 @@ namespace OpenBabel {
                 break;
               case C11:
                 {
-                  // find the two different ligands
+                  // find the ligand
                   OBAtom *ligandAtom = 0;
                   FOR_NBORS_OF_ATOM (nbr, atom) {
                     if ((nbr->GetIdx() != bond->GetBeginAtomIdx()) && (nbr->GetIdx() != bond->GetEndAtomIdx())) {
@@ -877,6 +877,101 @@ namespace OpenBabel {
     
     }
 
+    /**
+     * Apply rule 3 for double bonds.
+     */
+    for (std::vector<unsigned int>::iterator idx = paraBonds.begin(); idx != paraBonds.end(); ++idx) {
+      OBBond *bond = mol->GetBond(*idx);
+
+      // make sure we didn't add this atom already from rule 1
+      bool alreadyAdded = false;
+      for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
+        if ((*u2).type == OBStereo::CisTrans)
+          if (bond->GetId() == (*u2).id) {
+            alreadyAdded = true;
+          }
+      }
+      if (alreadyAdded)
+        continue;
+       
+      OBAtom *begin = bond->GetBeginAtom();
+      OBAtom *end = bond->GetEndAtom();
+          
+      int beginClassification = classifyCisTransNbrSymClasses(symClasses, bond, bond->GetBeginAtom());
+      bool beginValid = false;
+      switch (beginClassification) {
+        case C12:
+          beginValid = true;
+          break;
+        case C11:
+          {
+            // find the ligand
+            OBAtom *ligandAtom = 0;
+            FOR_NBORS_OF_ATOM (nbr, begin) {
+              if ((nbr->GetIdx() != bond->GetBeginAtomIdx()) && (nbr->GetIdx() != bond->GetEndAtomIdx())) {
+                ligandAtom = &*nbr;
+                break;
+              }
+            }
+
+            OBBitVec ligand = getFragment(ligandAtom, begin);
+            for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
+              if ((*u2).type == OBStereo::Tetrahedral) {
+                if (ligand.BitIsOn((*u2).id))
+                  beginValid = true;
+              } else if((*u2).type == OBStereo::CisTrans) {
+                OBBond *bond = mol->GetBondById((*u2).id);
+                OBAtom *begin = bond->GetBeginAtom();
+                OBAtom *end = bond->GetEndAtom();
+                if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
+                  beginValid = true;
+              }
+            }
+          }
+          break;
+      }
+          
+      if (!beginValid)      
+        continue;
+ 
+      int endClassification = classifyCisTransNbrSymClasses(symClasses, bond, bond->GetEndAtom());
+      bool endValid = false;
+      switch (endClassification) {
+        case C12:
+          endValid = true;
+          break;
+        case C11:
+          {
+            // find the ligand
+            OBAtom *ligandAtom = 0;
+            FOR_NBORS_OF_ATOM (nbr, end) {
+              if ((nbr->GetIdx() != bond->GetBeginAtomIdx()) && (nbr->GetIdx() != bond->GetEndAtomIdx())) {
+                ligandAtom = &*nbr;
+                break;
+              }
+            }
+
+            OBBitVec ligand = getFragment(ligandAtom, end);
+            for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
+              if ((*u2).type == OBStereo::Tetrahedral) {
+                if (ligand.BitIsOn((*u2).id))
+                  endValid = true;
+              } else if((*u2).type == OBStereo::CisTrans) {
+                OBBond *bond = mol->GetBondById((*u2).id);
+                OBAtom *begin = bond->GetBeginAtom();
+                OBAtom *end = bond->GetEndAtom();
+                if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
+                  endValid = true;
+              }
+            }
+          }
+          break;
+      }
+
+      if (endValid)
+        units.push_back(StereogenicUnit(OBStereo::CisTrans, bond->GetId(), true));
+    }
+ 
     /*
     cout << "Final True-Tetrahedral: ";
     for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u)
