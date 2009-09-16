@@ -471,18 +471,22 @@ namespace OpenBabel {
 
                   // check which ligand corresponds to the current merged ring
                   OBBitVec ligand;
-                  if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx()) && mergedRings[s].BitIsOn(ligandAtom2->GetIdx()))
+                  bool spiroCarbon = false;
+                  if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx()) && mergedRings[s].BitIsOn(ligandAtom2->GetIdx())) {
                     ligand = getFragment(ligandAtom1, atom) | getFragment(ligandAtom2, atom);
-                  if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx()))
+                    spiroCarbon = true;
+                  } else if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx())) {
                     ligand = getFragment(ligandAtom2, atom);
-                  else
+                  } else {
                     ligand = getFragment(ligandAtom1, atom);
+                  }
 
                   bool foundStereoCenterInLigand = false;
                   for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
                     if ((*u2).type == OBStereo::Tetrahedral) {
                       if (ligand.BitIsOn((*u2).id)) {
-                        centersInRing++;
+                        if (spiroCarbon)
+                          centersInRing++;
                         foundStereoCenterInLigand = true;
                       }
                     } else if((*u2).type == OBStereo::CisTrans) {
@@ -490,8 +494,9 @@ namespace OpenBabel {
                       OBAtom *begin = bond->GetBeginAtom();
                       OBAtom *end = bond->GetEndAtom();
                       if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
+                        if (spiroCarbon)
+                          centersInRing++;
                         foundStereoCenterInLigand = true;
-                        centersInRing++;
                       }
                     }
                   }
@@ -571,7 +576,7 @@ namespace OpenBabel {
                   for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
                     if ((*u2).type == OBStereo::Tetrahedral) {
                       if (ligand.BitIsOn((*u2).id)) {
-                        centersInRing++;
+                        //centersInRing++;
                         foundStereoCenterInLigand = true;
                       }
                     } else if((*u2).type == OBStereo::CisTrans) {
@@ -580,7 +585,7 @@ namespace OpenBabel {
                       OBAtom *end = bond->GetEndAtom();
                       if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
                         foundStereoCenterInLigand = true;
-                        centersInRing++;
+                        //centersInRing++;
                       }
                     }
                   }

@@ -189,6 +189,25 @@ void test_StereoPerception()
   OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/perception16.mol")) );
   OB_ASSERT( doStereoPerception(mol, 1, 2) );
 
+  cout << "structure perception17" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/perception17.mol")) );
+  OB_ASSERT( doStereoPerception(mol, 2, 0) );
+
+  cout << "structure perception18" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/perception18.mol")) );
+  OB_ASSERT( doStereoPerception(mol, 3, 1) );
+
+  cout << "structure perception19" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/perception19.mol")) );
+  OB_ASSERT( doStereoPerception(mol, 2, 0) );
+
+  cout << "structure perception20" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("stereo/perception20.mol")) );
+  OB_ASSERT( doStereoPerception(mol, 4, 0) );
+
+
+
+
 
   /*
    * J. Chem. Inf. Comput. Sci., Vol. 33, No. 6, 1993
