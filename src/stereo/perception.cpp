@@ -107,191 +107,7 @@ namespace OpenBabel {
         return true;
     return false;  
   }
-
-  std::vector<unsigned long> FindTetrahedralAtoms(OBMol *mol, const std::vector<unsigned int> &symClasses)
-  {
-    std::vector<unsigned long> centers;
-
-    // do quick test to see if there are any possible chiral centers
-    bool mayHaveChiralCenter = false;
-    OBAtom *atom, *nbr;
-    std::vector<OBAtom*>::iterator i;
-    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
-      if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
-        mayHaveChiralCenter = true;
-        break;
-      }
-
-    if (!mayHaveChiralCenter)
-      return centers;
-    if (symClasses.size() != mol->NumAtoms())
-      return centers;
-
-    std::vector<unsigned int> plist; // para-stereocenters canditates
-
-    bool ischiral;
-    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i)) {
-      if (atom->IsNitrogen() || atom->IsPhosphorus() || atom->IsSulfur())
-        continue;
-      if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
-        // list containing neighbor symmetry classes
-        std::vector<unsigned int> tlist; 
-        ischiral = true;
-
-        // check neighbors to see if this atom is stereogenic
-        std::vector<OBBond*>::iterator j;
-        for (nbr = atom->BeginNbrAtom(j); nbr; nbr = atom->NextNbrAtom(j)) {
-          // check if we already have a neighbor with this symmetry class
-          std::vector<unsigned int>::iterator k;
-          for (k = tlist.begin(); k != tlist.end(); ++k)
-            if (symClasses[nbr->GetIndex()] == *k) {
-              ischiral = false;
-              // if so, might still be a para-stereocenter
-              plist.push_back(atom->GetIdx());
-            }
-
-          if (ischiral)
-            // keep track of all neighbors, so we can detect duplicates
-            tlist.push_back(symClasses[nbr->GetIndex()]);
-          else
-            break;
-        }
-
-        if (ischiral) {
-          // true-stereocenter found
-          centers.push_back(atom->GetId());
-        }
-      }
-    }
-
-    // find para-stereocenters
-    if (plist.size()) {
-      std::vector<OBBitVec> mergedRings = mergeRings(mol);
-
-      for (unsigned int i = 0; i < plist.size(); ++i) {
-        for (unsigned int j = 0; j < plist.size(); ++j) {
-          if (i == j)
-            continue;
-          if (isInSameMergedRing(mergedRings, plist.at(i), plist.at(j))) {
-            centers.push_back(mol->GetAtom(plist.at(i))->GetId());
-            centers.push_back(mol->GetAtom(plist.at(j))->GetId());
-          }
-        }
-      }
-    }
-
-    // make sure we don't return duplicates
-    std::sort(centers.begin(), centers.end());
-    std::vector<unsigned long>::iterator newEnd = std::unique(centers.begin(), centers.end());
-    centers.erase(newEnd, centers.end());
-
-    return centers;
-  }
   
-  std::vector<unsigned long> FindCisTransBonds(OBMol *mol, const std::vector<unsigned int> &symClasses)
-  {
-    std::vector<unsigned long> bonds;
-          
-    //do quick test to see if there are any possible chiral centers
-    bool mayHaveCisTransBond = false;
-    std::vector<OBBond*>::iterator i;
-    for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i))
-      if (bond->GetBO() == 2 && !bond->IsInRing()) {
-        mayHaveCisTransBond = true;
-        break;
-      }
-
-    if (!mayHaveCisTransBond)
-      return bonds;
-    if (symClasses.size() != mol->NumAtoms())
-      return bonds;
-
-    bool isCisTrans;
-    for (OBBond *bond = mol->BeginBond(i); bond; bond = mol->NextBond(i)) {
-      if (bond->IsInRing())
-        continue;
-
-      if (bond->GetBO() == 2) {
-        OBAtom *begin = bond->GetBeginAtom();
-        OBAtom *end = bond->GetEndAtom();
-        if (!begin || !end) 
-          continue;
-
-        // Needs to have at least one explicit single bond at either end
-        if (!begin->HasSingleBond() || !end->HasSingleBond())
-          continue;
-          
-        isCisTrans = true;
-        std::vector<OBBond*>::iterator j;
-         
-        if (begin->GetValence() == 2) {
-          // Begin atom has two explicit neighbors. One is the end atom. The other should 
-          // be a heavy atom - this is what we test here.
-          // (There is a third, implicit, neighbor which is either a hydrogen
-          // or a lone pair.)
-          if (begin->ExplicitHydrogenCount() == 1)
-            isCisTrans = false;
-        } else if (begin->GetValence() == 3) {
-          std::vector<unsigned int> tlist;
-          
-          for (OBAtom *nbr = begin->BeginNbrAtom(j); nbr; nbr = begin->NextNbrAtom(j)) {
-            // skip end atom
-            if (nbr->GetId() == end->GetId())
-              continue;
-            // do we already have an atom with this symmetry class?
-            if (tlist.size()) {
-              // compare second with first
-              if (symClasses[nbr->GetIndex()] == tlist.at(0))
-                isCisTrans = false;
-              break;
-            }
-              
-            // save first summetry class
-            tlist.push_back(symClasses[nbr->GetIndex()]);
-          }
-        } else {
-          // Valence is not 2 or 3, for example SR3=NR
-          isCisTrans = false;
-        }
-
-        if (!isCisTrans) 
-          continue;
-
-        if (end->GetValence() == 2) {
-          // see comment above for begin atom
-          if (end->ExplicitHydrogenCount() == 1)
-            isCisTrans = false;
-        } else if (end->GetValence() == 3) { 
-          std::vector<unsigned int> tlist;
-          
-          for (OBAtom *nbr = end->BeginNbrAtom(j); nbr; nbr = end->NextNbrAtom(j)) {
-            // skip end atom
-            if (nbr->GetId() == begin->GetId())
-              continue;
-            // do we already have an atom with this symmetry class?
-            if (tlist.size()) {
-              // compare second with first
-              if (symClasses[nbr->GetIndex()] == tlist.at(0))
-                isCisTrans = false;
-              break;
-            }
-                
-            // save first summetry class
-            tlist.push_back(symClasses[nbr->GetIndex()]);
-          }
-        } else {
-          // Valence is not 2 or 3, for example SR3=NR
-          isCisTrans = false;
-        }
-
-        if (isCisTrans)
-          bonds.push_back(bond->GetId());
-      }
-    }
-
-    return bonds;
-  }
-
   std::vector<StereogenicUnit> FindStereogenicUnits(OBMol *mol, 
       const std::vector<unsigned int> &symClasses)
   {
@@ -467,6 +283,24 @@ namespace OpenBabel {
 
       // Tetrahedral
       for (unsigned int i = 0; i < paraAtoms.size(); ++i) {
+        // check true stereo centers
+        bool addAtom = false;
+        for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u) {
+          if ((*u).type == OBStereo::Tetrahedral) {
+            OBAtom *atom = mol->GetAtomById((*u).id);
+            if (isInSameMergedRing(mergedRings, paraAtoms.at(i), atom->GetIdx()))
+              addAtom = true;
+          } else if ((*u).type == OBStereo::CisTrans) {
+            OBBond *bond = mol->GetBondById((*u).id);
+            if (isInSameMergedRing(mergedRings, paraAtoms.at(i), bond->GetBeginAtomIdx()))
+              addAtom = true;
+            else if (isInSameMergedRing(mergedRings, paraAtoms.at(i), bond->GetEndAtomIdx()))
+              addAtom = true;
+          }        
+        }
+        if (addAtom)
+          units.push_back(StereogenicUnit(OBStereo::Tetrahedral, mol->GetAtom(paraAtoms.at(i))->GetId()));
+
         // check for other para tetrahedral
         for (unsigned int j = 0; j < paraAtoms.size(); ++j) {
           if (i <= j)
@@ -477,6 +311,7 @@ namespace OpenBabel {
           }
         }
 
+        // check for other para cis/trans
         for (unsigned int j = 0; j < paraBonds.size(); ++j) {
           OBBond *bond = mol->GetBond(paraBonds.at(j));
           if (isInSameMergedRing(mergedRings, paraAtoms.at(i), bond->GetBeginAtomIdx()))
@@ -489,7 +324,34 @@ namespace OpenBabel {
       // CisTrans
       for (unsigned int i = 0; i < paraBonds.size(); ++i) {
         OBBond *bond1 = mol->GetBond(paraBonds.at(i));
-        
+ 
+        std::cout << "debug [3/4]" << std::endl;
+        // check true stereo centers
+        bool addBond = false;
+        for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u) {
+          if ((*u).type == OBStereo::Tetrahedral) {
+            if (isInSameMergedRing(mergedRings, mol->GetAtomById((*u).id)->GetIdx(), bond1->GetBeginAtomIdx()))
+              addBond = true;
+            else if (isInSameMergedRing(mergedRings, mol->GetAtomById((*u).id)->GetIdx(), bond1->GetEndAtomIdx()))
+              addBond = true;
+          } else if ((*u).type == OBStereo::CisTrans) {
+            OBBond *bond2 = mol->GetBondById((*u).id);
+
+            if (isInSameMergedRing(mergedRings, bond1->GetBeginAtomIdx(), bond2->GetBeginAtomIdx()))
+              addBond = true;
+            else if (isInSameMergedRing(mergedRings, bond1->GetBeginAtomIdx(), bond2->GetEndAtomIdx()))
+              addBond = true;
+            else if (isInSameMergedRing(mergedRings, bond1->GetEndAtomIdx(), bond2->GetBeginAtomIdx()))
+              addBond = true;
+            else if (isInSameMergedRing(mergedRings, bond1->GetEndAtomIdx(), bond2->GetEndAtomIdx()))
+              addBond = true;
+          }
+        }
+        if (addBond)
+          units.push_back(StereogenicUnit(OBStereo::CisTrans, bond1->GetId()));
+        std::cout << "debug [4/4]" << std::endl;
+
+        // check other para tetrahedral       
         for (unsigned int j = 0; j < paraAtoms.size(); ++j) {
           if (isInSameMergedRing(mergedRings, bond1->GetBeginAtomIdx(), paraAtoms.at(j)))
             units.push_back(StereogenicUnit(OBStereo::CisTrans, bond1->GetId()));
@@ -497,6 +359,7 @@ namespace OpenBabel {
             units.push_back(StereogenicUnit(OBStereo::CisTrans, bond1->GetId()));
         }
 
+        // check other para cis/trans
         for (unsigned int j = 0; j < paraBonds.size(); ++j) {
           if (i <= j)
             continue;
@@ -517,16 +380,8 @@ namespace OpenBabel {
           }
         }
       }
-
     }
       
-    // make sure we don't return duplicates
-    /*
-    std::sort(centers.begin(), centers.end());
-    std::vector<unsigned long>::iterator newEnd = std::unique(centers.begin(), centers.end());
-    centers.erase(newEnd, centers.end());
-    */
-
     return units;
   }
  
