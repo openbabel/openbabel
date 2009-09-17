@@ -1,5 +1,11 @@
 2009-09-17  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* CMakeLists.txt, data/CMakeLists.txt: Tidy up the Windows build. The
+	goal is to have CMake make something as close as possible to a
+	distribution.
+
+2009-09-17  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* include/stereo/stereo.h: Remove obsolete stereo functions and
 	associated documentation
 	* scripts/CMakeLists.txt: Add option PYTHON_PREFIX to allow the user

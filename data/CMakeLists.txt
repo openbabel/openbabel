@@ -42,4 +42,8 @@ set(to_install
     UFF.prm
 )
 
-install(FILES ${to_install} DESTINATION share/openbabel/${BABEL_VERSION})
+if(NOT MSVC)
+  install(FILES ${to_install} DESTINATION share/openbabel/${BABEL_VERSION})
+else(NOT MSVC)
+  install(FILES ${to_install} DESTINATION bin/data)
+endif(NOT MSVC)

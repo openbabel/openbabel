@@ -42,13 +42,18 @@ if(UNIX)
 else(UNIX) # Windows - bin dir = lib dir to load libraries
   set(LIB_INSTALL_DIR    "${BIN_INSTALL_DIR}"
       CACHE PATH "Install dir for libraries")
-  if(ENABLE_VERSIONED_FORMATS)
-    set(OB_PLUGIN_INSTALL_DIR "lib${LIB_SUFFIX}/openbabel/${BABEL_VERSION}"
+  if(MSVC)
+    set(OB_PLUGIN_INSTALL_DIR "${BIN_INSTALL_DIR}"
       CACHE PATH "Install dir for plugins")
-  else(ENABLE_VERSIONED_FORMATS)
-    set(OB_PLUGIN_INSTALL_DIR "lib${LIB_SUFFIX}/openbabel"
-      CACHE PATH "Install dir for plugins")
-  endif(ENABLE_VERSIONED_FORMATS)
+  else(MSVC)  
+    if(ENABLE_VERSIONED_FORMATS)
+      set(OB_PLUGIN_INSTALL_DIR "lib${LIB_SUFFIX}/openbabel/${BABEL_VERSION}"
+        CACHE PATH "Install dir for plugins")
+    else(ENABLE_VERSIONED_FORMATS)
+      set(OB_PLUGIN_INSTALL_DIR "lib${LIB_SUFFIX}/openbabel"
+        CACHE PATH "Install dir for plugins")
+    endif(ENABLE_VERSIONED_FORMATS)
+  endif(MSVC)
 endif(UNIX)
 
 option(WITH_INCHI   "build inchi lib" ON)
@@ -197,8 +202,10 @@ endif (CMAKE_COMPILER_IS_GNUCXX)
 file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION include/openbabel-2.0/openbabel)
-configure_file(${openbabel_SOURCE_DIR}/openbabel-2.0.pc.cmake ${openbabel_BINARY_DIR}/openbabel-2.0.pc @ONLY)
-install(FILES ${openbabel_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
+if(NOT MSVC)
+  configure_file(${openbabel_SOURCE_DIR}/openbabel-2.0.pc.cmake ${openbabel_BINARY_DIR}/openbabel-2.0.pc @ONLY)
+  install(FILES ${openbabel_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
+endif(NOT MSVC)
 
 include_directories(${openbabel_BINARY_DIR}/include
                     ${openbabel_SOURCE_DIR}/data
