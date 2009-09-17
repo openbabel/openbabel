@@ -1,3 +1,8 @@
+2009-09-17  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/parsmart.cpp: Handle ring-closure bonds involved in
+	stereochemistry.
+
 2009-09-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 	* src/stereo/perception.cpp: Implement para-stereocenter detection.
