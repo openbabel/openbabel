@@ -44,8 +44,8 @@ set(CMAKE_SWIG_FLAGS -small -O -python -templatereduce -naturalvar)
 swig_add_module(_openbabel c++ openbabel-python.i)
 swig_link_libraries(_openbabel openbabel)
 
+if(NOT WIN32)
 add_custom_command(TARGET _openbabel POST_BUILD 
-    COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
     COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
     COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
     COMMAND ${CMAKE_COMMAND} -E echo "  try:" >> ob.py
@@ -56,11 +56,17 @@ add_custom_command(TARGET _openbabel POST_BUILD
     COMMAND cat openbabel.py >> ob.py
     COMMAND ${CMAKE_COMMAND} -E copy ob.py openbabel.py
     VERBATIM)
+endif(NOT WIN32)
 
 # find site-packages dir...
-execute_process(COMMAND ${PYTHON_EXECUTABLE} -c 
-  "from sys import stdout; from distutils import sysconfig; stdout.write(sysconfig.get_python_lib())"
-  OUTPUT_VARIABLE PYTHON_LIB_PATH)
+if(NOT PYTHON_PREFIX)
+  execute_process(COMMAND ${PYTHON_EXECUTABLE} -c 
+    "from sys import stdout; from distutils import sysconfig; stdout.write(sysconfig.get_python_lib())"
+    OUTPUT_VARIABLE PYTHON_LIB_PATH)
+else(NOT PYTHON_PREFIX)
+  set(PYTHON_LIB_PATH ${PYTHON_PREFIX})
+endif(NOT PYTHON_PREFIX)
+
 message(STATUS "Python site-packages directory: ${PYTHON_LIB_PATH}")
 
 install(TARGETS _openbabel DESTINATION ${PYTHON_LIB_PATH})

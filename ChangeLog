@@ -1,5 +1,14 @@
 2009-09-17  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* include/stereo/stereo.h: Remove obsolete stereo functions and
+	associated documentation
+	* scripts/CMakeLists.txt: Add option PYTHON_PREFIX to allow the user
+	to specify where the Python library will be installed. Note that it
+	creates an _openbabel.dll on Windows in error (it should be
+	_openbabel.pyd).
+
+2009-09-17  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* src/parsmart.cpp: Handle ring-closure bonds involved in
 	stereochemistry.
 
