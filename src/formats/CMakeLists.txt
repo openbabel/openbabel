@@ -157,6 +157,10 @@ foreach(format ${formats})
                         OUTPUT_NAME ${format}
                         PREFIX ""
                         SUFFIX ${MODULE_EXTENSION})
+  if(MSVC)
+    set_target_properties(${format} PROPERTIES
+                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/src)
+  endif(MSVC)
 endforeach(format)
 
 foreach(format ${xml_formats})
@@ -170,5 +174,9 @@ foreach(format ${xml_formats})
                         OUTPUT_NAME ${format}
                         PREFIX ""
                         SUFFIX ${MODULE_EXTENSION})
+  if(MSVC)
+    set_target_properties(${format} PROPERTIES
+                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/src)
+  endif(MSVC)
 endforeach(format)
 

@@ -830,12 +830,7 @@ namespace OpenBabel
     std::vector<double>  _vRotatoryStrengthsLength;
 
   public:
-    OBElectronicTransitionData(): OBGenericData("ElectronicTransitionData", OBGenericDataType::ElectronicTransitionData)
-      {
-        std::vector<double> _vEDipole ();
-        std::vector<double> _vRotatoryStrengthsLength ();
-        std::vector<double> _vRotatoryStrengthsVelocity ();
-      };
+    OBElectronicTransitionData(): OBGenericData("ElectronicTransitionData", OBGenericDataType::ElectronicTransitionData) {}
     virtual ~OBElectronicTransitionData() {}
     virtual OBGenericData* Clone(OBBase*) const
          {return new OBElectronicTransitionData(*this);}

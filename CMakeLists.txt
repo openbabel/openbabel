@@ -40,7 +40,7 @@ if(UNIX)
       CACHE PATH "Install dir for plugins")
   endif(ENABLE_VERSIONED_FORMATS)
 else(UNIX) # Windows - bin dir = lib dir to load libraries
-  set(LIB_INSTALL_DIR    "${BIN_INSTALL_DIR}"
+  set(LIB_INSTALL_DIR "${BIN_INSTALL_DIR}"
       CACHE PATH "Install dir for libraries")
   if(MSVC)
     set(OB_PLUGIN_INSTALL_DIR "${BIN_INSTALL_DIR}"
@@ -234,10 +234,18 @@ endif(BUILD_GUI)
 
 # Do we want to build the tests?
 option(ENABLE_TESTS "Enable unit tests" OFF)
-if(ENABLE_TESTS)
+option(SUBMIT_TESTS "Submit tests to dashboard" OFF)
+if(SUBMIT_TESTS)
+  include(CTest)
   enable_testing()
   add_subdirectory(test)
-endif(ENABLE_TESTS)
+else(SUBMIT_TESTS)
+  if(ENABLE_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+  endif(ENABLE_TESTS)
+endif(SUBMIT_TESTS)
+
 
 # Should Python bindings be built?
 option(ENABLE_PYTHON "Enable Python bindings" OFF)

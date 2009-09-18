@@ -1,3 +1,15 @@
+2009-09-18  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* include/openbabel/generic.h: Remove unused declarations that caused
+	warnings under MSVC
+	* test/obtest.h: Make compatible with MSVC
+	* test/CMakeLists.txt: Build tests in the same location as the OB DLL
+	(Windows only)
+	* src/formats/CMakeLists.txt: Build obf files in same location as the
+	OB DLL (Windows only)
+	* CMakeLists.txt, CTestConfig.cmake: Option to submit tests to dashboard
+	* windows-vc2008, *.bat: Tidy up batch files for building OB
+
 2009-09-17  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* CMakeLists.txt, data/CMakeLists.txt: Tidy up the Windows build. The
