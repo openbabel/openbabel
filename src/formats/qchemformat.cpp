@@ -196,7 +196,7 @@ namespace OpenBabel
 
                 // We want to round this to 2 decimals
                 // So convert to a float and print it as a new string
-                float shift = atof(vs[3].c_str());
+                float shift = static_cast<float> (atof(vs[3].c_str()));
                 snprintf(tag, BUFF_SIZE, "%7.2f", shift);
 
                 nmrShift->SetValue(tag);

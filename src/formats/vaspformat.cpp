@@ -134,10 +134,10 @@ namespace OpenBabel {
           enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
           enthalpy_eV->SetAttribute("Enthalpy (eV)");
           enthalpy_pv_eV->SetAttribute("Enthalpy PV term (eV)");
-          float en = atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL;
-          float pv = atof(vs[8].c_str()) * EV_TO_KCAL_PER_MOL;
-          float en_eV = atof(vs[4].c_str());
-          float pv_eV = atof(vs[8].c_str());
+          float en = static_cast<float> (atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL);
+          float pv = static_cast<float> (atof(vs[8].c_str()) * EV_TO_KCAL_PER_MOL);
+          float en_eV = static_cast<float> (atof(vs[4].c_str()));
+          float pv_eV = static_cast<float> (atof(vs[8].c_str()));
           snprintf(tag, BUFF_SIZE, "%f", en);
           enthalpy->SetValue(tag);
           snprintf(tag, BUFF_SIZE, "%f", pv);

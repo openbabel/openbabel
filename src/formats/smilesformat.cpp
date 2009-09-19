@@ -3480,7 +3480,6 @@ namespace OpenBabel {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
       OBBond *bond;
-      OBAtom *atom;
       vector<OBEdgeBase*>::iterator bi;
       vector<OBNodeBase*>::iterator ai;
       for (bond = pmol->BeginBond(bi); bond; bond = pmol->NextBond(bi)) {

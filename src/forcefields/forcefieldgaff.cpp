@@ -516,7 +516,6 @@ namespace OpenBabel
   {
     OBFFParameter *parameter;
     OBAtom *a, *b, *c, *d;
-    bool found;
     
     IF_OBFF_LOGLVL_LOW
       OBFFLog("\nS E T T I N G   U P   C A L C U L A T I O N S\n\n");
@@ -654,8 +653,6 @@ namespace OpenBabel
       OBFFLog("SETTING UP TORSION CALCULATIONS...\n");
  
     OBFFTorsionCalculationGaff torsioncalc;
-    int torsiontype;
-    int s;
 
     _torsioncalculations.clear();
  
@@ -1074,7 +1071,6 @@ namespace OpenBabel
     vector<string> vs;
     char buffer[BUFF_SIZE];
     bool valid_line=true;
-    int i;
 
     OBFFParameter parameter;
 
@@ -1223,7 +1219,6 @@ namespace OpenBabel
     OBAtom *atm, *a, *b;
     OBBitVec visited;
     int BO;
-    bool conjug;
 
     _mol.SetAtomTypesPerceived();
     
@@ -1422,9 +1417,6 @@ namespace OpenBabel
   
   bool OBForceFieldGaff::SetPartialCharges()
   {
-    OBAtom *a, *b;
-    int bondtype;
-
     //use Gasteiger charges
     _mol.SetAutomaticPartialCharge(true);
     _mol.SetPartialChargesPerceived();

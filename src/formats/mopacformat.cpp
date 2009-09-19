@@ -413,7 +413,7 @@ namespace OpenBabel
 
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
     const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
-    bool writeUnitCell = pConv->IsOption("u", OBConversion::OUTOPTIONS);
+    bool writeUnitCell = (NULL != pConv->IsOption("u", OBConversion::OUTOPTIONS));
     string defaultKeywords = "PUT KEYWORDS HERE";
 
     if(keywords)
