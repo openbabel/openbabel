@@ -2613,7 +2613,6 @@ namespace OpenBabel
   
     if (pat->ischiral) {
       std::vector<std::vector<int> >::iterator m;
-      OBAtom *ra1,*ra2,*ra3,*ra4;
       std::vector<std::vector<int> > tmpmlist;
  
       tmpmlist.clear();

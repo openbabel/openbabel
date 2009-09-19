@@ -77,7 +77,6 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
 int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::string &pattern,const std::string &path)
 {
   vector<string> paths, vs;
-  char buffer[BUFF_SIZE];
   
   if (!path.empty())
     paths.push_back(path);

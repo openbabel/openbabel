@@ -1,3 +1,8 @@
+2009-09-19  Noel O'Boyle  <baoilleach@gmail.com>
+
+	Miscellaneous static_casts added and unused variables removed to get rid
+	of warnings under MSVC
+
 2009-09-18  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* include/openbabel/generic.h: Remove unused declarations that caused

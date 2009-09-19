@@ -316,7 +316,7 @@ namespace OpenBabel
     std::vector<int> initBondState;
     std::vector<int> bondState;
     int Idx;
-    OBAtom *atom, *atom2;
+    OBAtom *atom;
     OBBond *bond;
 
     // Initialize the atom and arrays

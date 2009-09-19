@@ -189,7 +189,7 @@ namespace OpenBabel {
         if (bond->IsSingle())        count += 1.0;
         else if (bond->IsDouble())   count += 2.0;
         else if (bond->IsTriple())   count += 3.0;
-        else if (bond->IsAromatic()) count += 1.6;
+        else if (bond->IsAromatic()) count += 1.6f;
       }
     }
     if (atom->GetAtomicNum() == 7 && atom->IsAromatic() && atom->GetImplicitValence() == 3) {

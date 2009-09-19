@@ -55,7 +55,7 @@ namespace OpenBabel
         {
           if (i)
             r << ",";
-          n = floor((*v)[i] * 12.0 + 0.1);
+          n = static_cast<int> (floor((*v)[i] * 12.0 + 0.1));
           j = 0;
           while ((*m)(i, j) == 0.)
             j++;

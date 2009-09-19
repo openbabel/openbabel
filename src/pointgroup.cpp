@@ -1085,7 +1085,7 @@ namespace OpenBabel {
       if( verbose > 0 ) printf( "    atoms are too close to a straight line\n" ) ;
       return NULL ;
     }
-    order = floor( (2*M_PI)/angle + 0.5 ) ;
+    order = static_cast<int> (floor( (2*M_PI)/angle + 0.5 )) ;
     if( order <= 2 || order > MaxAxisOrder ){
       StatEarly++ ;
       if( verbose > 0 ) printf( "    rotation axis order (%d) is not from 3 to %d\n", order, MaxAxisOrder ) ;

@@ -1892,7 +1892,7 @@ namespace OpenBabel
           continue;
         }
        
-        srand(time(NULL));
+        srand(static_cast <unsigned int> (time(NULL)));
         double rand_ab, u_ab, l_ab;
         if (j > i) {
           u_ab = matrix[i][j];
