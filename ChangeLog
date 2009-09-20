@@ -1,3 +1,9 @@
+2009-09-20  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/CMakeLists.txt: Support for pybel. Revert regression that
+	prevented linked against Python libraries.
+	* include/openbabel/text.h: Add newline at end to avoid warning
+
 2009-09-19  Noel O'Boyle  <baoilleach@gmail.com>
 
 	Miscellaneous static_casts added and unused variables removed to get rid

@@ -42,7 +42,7 @@ include_directories(
 set_source_files_properties(openbabel-python.i PROPERTIES CPLUSPLUS ON)
 set(CMAKE_SWIG_FLAGS -small -O -python -templatereduce -naturalvar)
 swig_add_module(_openbabel c++ openbabel-python.i)
-swig_link_libraries(_openbabel openbabel)
+swig_link_libraries(_openbabel openbabel ${PYTHON_LIBRARIES})
 
 if(NOT WIN32)
 add_custom_command(TARGET _openbabel POST_BUILD 
@@ -55,6 +55,7 @@ add_custom_command(TARGET _openbabel POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >> ob.py
     COMMAND cat openbabel.py >> ob.py
     COMMAND ${CMAKE_COMMAND} -E copy ob.py openbabel.py
+    COMMAND ${CMAKE_COMMAND} -E remove ob.py
     VERBATIM)
 endif(NOT WIN32)
 
@@ -63,13 +64,19 @@ if(NOT PYTHON_PREFIX)
   execute_process(COMMAND ${PYTHON_EXECUTABLE} -c 
     "from sys import stdout; from distutils import sysconfig; stdout.write(sysconfig.get_python_lib())"
     OUTPUT_VARIABLE PYTHON_LIB_PATH)
+  message(STATUS "Python site-packages directory: ${PYTHON_LIB_PATH}")
 else(NOT PYTHON_PREFIX)
   set(PYTHON_LIB_PATH ${PYTHON_PREFIX})
 endif(NOT PYTHON_PREFIX)
 
-message(STATUS "Python site-packages directory: ${PYTHON_LIB_PATH}")
+# Find Python major version and use the correct version of Pybel
+execute_process(COMMAND ${PYTHON_EXECUTABLE} -c
+  "from sys import stdout, version; stdout.write(version[0])"
+  OUTPUT_VARIABLE PYTHON_VER)
+message(STATUS "Python major version: ${PYTHON_VER}")
+add_custom_command(TARGET _openbabel POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/python/pybel_py${PYTHON_VER}.x.py ${CMAKE_CURRENT_BINARY_DIR}/pybel.py)
 
 install(TARGETS _openbabel DESTINATION ${PYTHON_LIB_PATH})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/openbabel.py DESTINATION ${PYTHON_LIB_PATH})
-
-
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/openbabel.py ${CMAKE_CURRENT_BINARY_DIR}/pybel.py
+        DESTINATION ${PYTHON_LIB_PATH})
