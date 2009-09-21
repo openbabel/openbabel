@@ -1,3 +1,8 @@
+2009-09-21  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/*: Copied + pasted the scripts directory from 22x as a number
+	of commits were never merged.
+
 2009-09-20  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/CMakeLists.txt: Support for pybel. Revert regression that

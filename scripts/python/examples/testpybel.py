@@ -2,6 +2,12 @@ import os
 import sys
 import unittest
 
+## In Python 3.x, generators have a __next__() method
+## instead of a next() method
+nextmethod = "next"
+if sys.version_info[0] >= 3:
+    nextmethod = "__next__"
+
 try:
     test = os.write
     try:
@@ -28,10 +34,10 @@ class myTestCase(unittest.TestCase):
     # Taken from unittest.py in Python 2.5 distribution
     def assertFalse(self, expr, msg=None):
         "Fail the test if the expression is true."
-        if expr: raise self.failureException, msg
+        if expr: raise self.failureException(msg)
     def assertTrue(self, expr, msg=None):
         """Fail the test unless the expression is true."""
-        if not expr: raise self.failureException, msg
+        if not expr: raise self.failureException(msg)
     def assertAlmostEqual(self, first, second, places=7, msg=None):
         """Fail if the two objects are unequal as determined by their
            difference rounded to the given number of decimal places
@@ -41,8 +47,8 @@ class myTestCase(unittest.TestCase):
            as significant digits (measured from the most signficant digit).
         """
         if round(second-first, places) != 0:
-            raise self.failureException, \
-                  (msg or '%r != %r within %r places' % (first, second, places))
+            raise self.failureException(
+                  (msg or '%r != %r within %r places' % (first, second, places)))
 
 class TestToolkit(myTestCase):
     
@@ -111,6 +117,10 @@ class TestToolkit(myTestCase):
         self.head[0].localopt()
         newcoords = self.head[0].atoms[0].coords
         self.assertNotEqual(oldcoords, newcoords)
+        # Make sure that make3D() is called for molecules without coordinates
+        mol = self.mols[0]
+        mol.localopt()
+        self.assertNotEqual(mol.atoms[3].coords, (0., 0., 0.))
 
     def testMake3D(self):
         """Test that 3D coordinate generation does something"""
@@ -167,14 +177,14 @@ M  END
         self.assertEqual(len(self.mols), 2)
 
     def RFreaderror(self):
-        mol = self.toolkit.readfile("sdf", "nosuchfile.sdf").next()
+        mol = getattr(self.toolkit.readfile("sdf", "nosuchfile.sdf"), nextmethod)()
 
     def testRFmissingfile(self):
         """Test that reading from a non-existent file raises an error."""
         self.assertRaises(IOError, self.RFreaderror)
 
     def RFformaterror(self):
-        mol = self.toolkit.readfile("noel", "head.sdf").next()
+        mol = getattr(self.toolkit.readfile("noel", "head.sdf"), nextmethod)()
     
     def testRFformaterror(self):
         """Test that invalid formats raise an error"""
@@ -296,12 +306,19 @@ M  END
         test = "Atom: 8 (-0.07 5.24 0.03)"
         self.assertEqual(str(self.atom), test)
 
+    def invalidSMARTStest(self):
+        # Should raise IOError
+        return self.toolkit.Smarts("[#NOEL][#NOEL]")
+
     def testSMARTS(self):
         """Searching for ethyl groups in triethylamine"""
         mol = self.toolkit.readstring("smi", "CCN(CC)CC")
         smarts = self.toolkit.Smarts("[#6][#6]")
         ans = smarts.findall(mol)
         self.assertEqual(len(ans), 3)
+        self.toolkit.ob.obErrorLog.SetOutputLevel(self.toolkit.ob.obError)
+        self.assertRaises(IOError, self.invalidSMARTStest)
+        self.toolkit.ob.obErrorLog.SetOutputLevel(self.toolkit.ob.obWarning)
 
     def testAddh(self):
         """Adding and removing hydrogens"""
@@ -328,7 +345,7 @@ class TestPybel(TestToolkit):
 
     def testunitcell(self):
         """Testing unit cell access"""
-        mol = self.toolkit.readfile("cif", "hashizume.cif").next()
+        mol = getattr(self.toolkit.readfile("cif", "hashizume.cif"), nextmethod)()
         cell = mol.unitcell
         self.assertAlmostEqual(cell.GetAlpha(), 92.9, 1)
 
@@ -387,6 +404,11 @@ Energy = 0
         self.assertEqual(len(self.mols[0].atoms), 4)
         self.assertRaises(AttributeError, self.RSaccesstest)
 
+    def testIterators(self):
+        """Check out the OB iterators"""
+        numatoms = len(list(self.toolkit.ob.OBMolAtomIter(self.mols[0].OBMol)))
+        self.assertEqual(numatoms, 4)
+
 class TestOBPybel(TestPybel):
     toolkit = obpybel
 
@@ -444,6 +466,6 @@ if __name__=="__main__":
     # testcases = [TestRDKit]
     testcases = [TestOBPybel]
     for testcase in testcases:
-        print "\n\n\nTESTING %s\n%s\n\n" % (testcase.__name__, "== "*10)
+        sys.stdout.write("\n\n\nTESTING %s\n%s\n\n\n" % (testcase.__name__, "== "*10))
         myunittest = unittest.defaultTestLoader.loadTestsFromTestCase(testcase)
         unittest.TextTestRunner(verbosity=2).run(myunittest)

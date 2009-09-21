@@ -33,6 +33,7 @@ def _formatstodict(list):
     broken = [(x,y.strip()) for x,y in broken]
     return dict(broken)
 _obconv = ob.OBConversion()
+_builder = ob.OBBuilder()
 informats = _formatstodict(_obconv.GetSupportedInputFormat())
 """A dictionary of supported input formats"""
 outformats = _formatstodict(_obconv.GetSupportedOutputFormat())
@@ -73,7 +74,7 @@ def readfile(format, filename):
     You can iterate over the molecules in a file as shown in the
     following code snippet:
     >>> atomtotal = 0
-    >>> for mol in readfile("sdf","head.sdf"):
+    >>> for mol in readfile("sdf", "head.sdf"):
     ...     atomtotal += len(mol.atoms)
     ...
     >>> print atomtotal
@@ -102,7 +103,7 @@ def readstring(format, string):
 
     Example:
     >>> input = "C1=CC=CS1"
-    >>> mymol = readstring("smi",input)
+    >>> mymol = readstring("smi", input)
     >>> len(mymol.atoms)
     5
     """
@@ -205,7 +206,7 @@ class Molecule(object):
  
     @property
     def atoms(self):
-            return [ Atom(self.OBMol.GetAtom(i+1)) for i in range(self.OBMol.NumAtoms()) ]
+        return [ Atom(self.OBMol.GetAtom(i+1)) for i in range(self.OBMol.NumAtoms()) ]
     @property
     def charge(self): return self.OBMol.GetTotalCharge()
     @property
@@ -231,17 +232,17 @@ class Molecule(object):
     title = property(_gettitle, _settitle)
     @property
     def unitcell(self):
-            unitcell = self.OBMol.GetData(ob.UnitCell)
-            if unitcell:
-                return ob.toUnitCell(unitcell)
-            else:
-                raise AttributeError("Molecule has no attribute 'unitcell'")
+        unitcell = self.OBMol.GetData(ob.UnitCell)
+        if unitcell:
+            return ob.toUnitCell(unitcell)
+        else:
+            raise AttributeError("Molecule has no attribute 'unitcell'")
     @property
     def _exchange(self):
-            if self.OBMol.HasNonZeroCoords():
-                return (1, self.write("mol"))
-            else:
-                return (0, self.write("can").split()[0])
+        if self.OBMol.HasNonZeroCoords():
+            return (1, self.write("mol"))
+        else:
+            return (0, self.write("can").split()[0])
 
     def __iter__(self):
         """Iterate over the Atoms of the Molecule.
@@ -364,7 +365,7 @@ class Molecule(object):
         to improve the coordinates further.
         """
         forcefield = forcefield.lower()
-        _operations['Gen3D'].Do(self.OBMol)
+        _builder.Build(self.OBMol)
         self.addh()
         self.localopt(forcefield, steps)
 
@@ -526,7 +527,7 @@ class Atom(object):
         
     @property
     def coords(self):
-            return (self.OBAtom.GetX(), self.OBAtom.GetY(), self.OBAtom.GetZ())
+        return (self.OBAtom.GetX(), self.OBAtom.GetY(), self.OBAtom.GetZ())
     @property
     def atomicmass(self): return self.OBAtom.GetAtomicMass()
     @property
@@ -607,7 +608,7 @@ class Fingerprint(object):
         return ob.OBFingerprint.Tanimoto(self.fp, other.fp)
     @property
     def bits(self):
-            return _findbits(self.fp, ob.OBFingerprint.Getbitsperint())
+        return _findbits(self.fp, ob.OBFingerprint.Getbitsperint())    
     def __str__(self):
         return ", ".join([str(x) for x in self.fp])
 

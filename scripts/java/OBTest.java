@@ -1,23 +1,30 @@
-import org.openbabel.*
+import org.openbabel.*;
 
 public class OBTest
 {
-  public OBTest()
-  {
-    System.loadLibrary("openbabel");
-  }
+ public OBTest()
+ {
+   System.loadLibrary("openbabel_java");
+ }
 
-  public void run()
-  {
-    OBConversion c = new OBConversion();
-  }
+ public void run()
+ {
+   OBConversion c = new OBConversion();
+   OBMol mol = new OBMol();
 
-  public static void main(String[] args)
-  {
-    System.out.println("Running OBTest...");
+   c.SetInFormat("smi");
+   c.ReadString(mol, "c1ccccc1");
 
-    OBTest test = new OBTest();
+   System.out.println("Benzene has " + mol.NumAtoms()
++ " atoms.");
+ }
 
-    test.run();
-  }
+ public static void main(String[] args)
+ {
+   System.out.println("Running OBTest...");
+
+   OBTest test = new OBTest();
+
+   test.run();
+ }
 }

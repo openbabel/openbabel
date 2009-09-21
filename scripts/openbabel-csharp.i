@@ -1,4 +1,3 @@
-%module openbabel
 
 %csconst(1);
 //Rename GetType methods. GetType() is a member of the base C# object
@@ -653,21 +652,18 @@ using System.Runtime.InteropServices;
 
 //ignore some currently unsupported operators
 %ignore *::operator=;
-%ignore *::operator++;
 %ignore *::operator-=;
 %ignore *::operator+=;
-%ignore *::operator bool;
 %ignore *::operator*=;
 %ignore *::operator/=;
 %ignore *::operator <<;
 %ignore *::operator==;
 %ignore *::operator-;
-%ignore *::operator*;
+//%ignore *::operator*;
 %ignore *::operator !=;
 
 %include "std_string.i"
 %include "std_vector.i"
-%include "std_string.i"
 
 %typemap(cscode) std::vector<T>
 %{
@@ -705,20 +701,28 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorOBVector3,std::vector<OpenBabel::vector
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBExternalBond,OpenBabel::OBExternalBond);
 %template (VectorOBExternalBond)	std::vector<OpenBabel::OBExternalBond>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBMol, OpenBabel::OBMol);
-%template (vectorMol)		  std::vector<OpenBabel::OBMol>;
+%template (VectorMol)     std::vector<OpenBabel::OBMol>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond);
-%template (vectorBond)		std::vector<OpenBabel::OBBond>;
+%template (VectorBond)    std::vector<OpenBabel::OBBond>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBResidue, OpenBabel::OBResidue);
-%template (vectorResidue)	std::vector<OpenBabel::OBResidue>;
+%template (VectorResidue) std::vector<OpenBabel::OBResidue>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing);
-%template (vectorRing)		std::vector<OpenBabel::OBRing>;
+%template (VectorRing)    std::vector<OpenBabel::OBRing>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBTorsion, OpenBabel::OBTorsion);
+%template (VectorTorsion)     std::vector<OpenBabel::OBTorsion>;
 
 
 // Note that vectors of pointers need slightly different syntax
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing*);
-%template (vectorpRing)		std::vector<OpenBabel::OBRing*>;
+%template (VectorpRing)   std::vector<OpenBabel::OBRing*>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBGenericData, OpenBabel::OBGenericData*);
-%template (vectorData)    std::vector<OpenBabel::OBGenericData*>;
+%template (VectorpData)    std::vector<OpenBabel::OBGenericData*>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBInternalCoord, OpenBabel::OBInternalCoord*);
+%template (VectorpInternalCoord)		std::vector<OpenBabel::OBInternalCoord*>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBAtom, OpenBabel::OBAtom*);
+%template (VectorpAtom)		std::vector<OpenBabel::OBAtom*>;
+SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
+%template (VectorpBond)		std::vector<OpenBabel::OBBond*>;
 SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRotor, OpenBabel::OBRotor*);
 %template (VectorpRotor)		std::vector<OpenBabel::OBRotor*>;
 
@@ -737,6 +741,7 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRotor, OpenBabel::OBRotor*);
 %include <openbabel/math/transform3d.h>
 %include <openbabel/math/spacegroup.h>
 %include <openbabel/base.h>
+
 
 //replacement for method return unsupported std::pair
 %extend OpenBabel::OBTorsion
@@ -829,6 +834,7 @@ CAST_GENERICDATA_TO(VirtualBond);
 %include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
+%ignore OpenBabel::OBMol::SetData;
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
@@ -868,12 +874,34 @@ CAST_GENERICDATA_TO(VirtualBond);
 %ignore OBMolAtomIter(OBMol &);
 %ignore OBMolAtomBFSIter(OBMol &);
 %ignore OBMolAtomDFSIter(OBMol &);
+%ignore OBMolAtomBFSIter(OBMol &, int);
+%ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolBondIter(OBMol &);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);
 %ignore OBMolTorsionIter(OBMol &);
 %ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
+
+//macro for wrapping iterators
+%define WRAPITERATOR(NAME,CTYPE,RETYPE)
+%ignore CTYPE::NAME();
+%csmethodmodifiers CTYPE::operator* "protected";
+%csmethodmodifiers CTYPE::operator++ "protected";
+%rename(obAdvance) CTYPE::operator++;
+%csmethodmodifiers CTYPE::operator bool() const "protected";
+%rename(obHasNext) CTYPE::operator bool;
+//***redundant?
+%typemap(cstype) CTYPE "$csclassname"
+%typemap(csinterfaces) CTYPE "IEnumerator<RETYPE>"
+%typemap(csimports) CTYPE "
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+"
+%typemap(cscode) CTYPE
+%{
+	protected bool iterating;
 
 
 	public virtual RETYPE Current

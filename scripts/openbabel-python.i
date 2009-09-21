@@ -40,44 +40,17 @@
 
 #include <openbabel/kinetics.h>
 #include <openbabel/rotamer.h>
-#include <openbabel/graphsym.h>
-#include <openbabel/stereo/stereo.h>
-#include <openbabel/stereo/cistrans.h>
-#include <openbabel/stereo/tetrahedral.h>
+
+
+
 %}
 
 %include "std_list.i"
 %include "std_map.i"
 %include "std_vector.i"
 %include "std_string.i"
-%include "std_pair.i"
 
 namespace std {
-
-%define VECTORPAIRTEMPLATE_WRAP(name, TA, TB) 
-%feature("ignore") vector< pair<TA, TB> >::append;
-%feature("ignore") vector< pair<TA, TB> >::assign;
-%feature("ignore") vector< pair<TA, TB> >::back;
-%feature("ignore") vector< pair<TA, TB> >::begin;
-%feature("ignore") vector< pair<TA, TB> >::capacity;
-%feature("ignore") vector< pair<TA, TB> >::clear;
-%feature("ignore") vector< pair<TA, TB> >::empty;
-%feature("ignore") vector< pair<TA, TB> >::end;
-%feature("ignore") vector< pair<TA, TB> >::erase;
-%feature("ignore") vector< pair<TA, TB> >::front;
-%feature("ignore") vector< pair<TA, TB> >::get_allocator;
-%feature("ignore") vector< pair<TA, TB> >::insert;
-%feature("ignore") vector< pair<TA, TB> >::pop;
-%feature("ignore") vector< pair<TA, TB> >::pop_back;
-%feature("ignore") vector< pair<TA, TB> >::push_back;
-%feature("ignore") vector< pair<TA, TB> >::rbegin;
-%feature("ignore") vector< pair<TA, TB> >::rend;
-%feature("ignore") vector< pair<TA, TB> >::reserve;
-%feature("ignore") vector< pair<TA, TB> >::resize;
-%feature("ignore") vector< pair<TA, TB> >::size;
-%feature("ignore") vector< pair<TA, TB> >::swap;
-%template(vectorpair ## name) vector< pair<TA, TB> >;
-%enddef
 
 %define VVTEMPLATE_WRAP(name, T) 
 %feature("ignore") vector< vector<T> >::append;
@@ -130,7 +103,7 @@ namespace std {
 %enddef
 
 VECTORTEMPLATE_WRAP(Int, int)
-VECTORTEMPLATE_WRAP(UInt, unsigned int)
+VECTORTEMPLATE_WRAP(UnsignedInt, unsigned int)
 VVTEMPLATE_WRAP(Int, int)
 VECTORTEMPLATE_WRAP(Double, double)
 VECTORTEMPLATE_WRAP(String, std::string)
@@ -142,8 +115,6 @@ VECTORTEMPLATE_WRAP(OBRing, OpenBabel::OBRing)
 VECTORTEMPLATE_WRAP(pOBRing, OpenBabel::OBRing*)
 VECTORTEMPLATE_WRAP(pOBGenericData, OpenBabel::OBGenericData*)
 
-%template(pairOBAtomUInt) pair<OpenBabel::OBAtom*, unsigned int>;
-VECTORPAIRTEMPLATE_WRAP(OBAtomUInt, OpenBabel::OBAtom*, unsigned int)
 }
 
 %define CAST_GENERICDATA_TO(subclass)
@@ -169,23 +140,12 @@ CAST_GENERICDATA_TO(RotamerList)
 CAST_GENERICDATA_TO(RotationData)
 CAST_GENERICDATA_TO(SerialNums)
 CAST_GENERICDATA_TO(SetData)
-CAST_GENERICDATA_TO(StereoBase)
 CAST_GENERICDATA_TO(SymmetryData)
 CAST_GENERICDATA_TO(TorsionData)
 CAST_GENERICDATA_TO(UnitCell)
 CAST_GENERICDATA_TO(VectorData)
 CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
-
-%define CAST_STEREODATA_TO(subclass)
-%inline %{
-OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBStereoBase *data) {
-    return (OpenBabel::OB ## subclass *) data;
-}
-%}
-%enddef
-CAST_STEREODATA_TO(CisTransStereo)
-CAST_STEREODATA_TO(TetrahedralStereo)
 
 // This method is renamed to a valid Python method name, as otherwise
 // it cannot be used from Python
@@ -240,11 +200,6 @@ CAST_STEREODATA_TO(TetrahedralStereo)
 %include <openbabel/op.h>
 
 %include <openbabel/bitvec.h>
-%include <openbabel/graphsym.h>
-%include <openbabel/stereo/stereo.h>
-%include <openbabel/stereo/cistrans.h>
-%include <openbabel/stereo/tetrahedral.h>
-
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)
