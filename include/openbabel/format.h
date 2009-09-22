@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #define OB_FORMAT_H
 #include <openbabel/babelconfig.h>
 #include <openbabel/plugin.h>
+#include <typeinfo>
 
 namespace OpenBabel
 {

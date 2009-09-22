@@ -1,5 +1,10 @@
 2009-09-22  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* include/openbabel/format.h: Added include <typeinfo>. Now OB compiles
+	using Intel Compiler.
+
+2009-09-22  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* src/GUI/babel.xpm: Applied patch from Riccardo Vianello (r_vianello
 	at SF) to avoid warnings when building on Linux
 
