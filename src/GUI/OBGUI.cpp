@@ -171,7 +171,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   wxPanel* panel = new wxPanel(this, wxID_ANY);
 
   m_pInFormat    = new wxChoice(panel,ID_INFORMAT,	wxDefaultPosition,wxDefaultSize,
-    0, NULL);
+    0, static_cast<wxString*> (NULL));
   m_pInInfo      = new wxButton  (panel, ID_ININFO, wxT("Format Info"),
         wxDefaultPosition);
   m_pForceInFormat  = new wxCheckBox(panel,ID_INFORCEFORMAT,
@@ -194,7 +194,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   m_pConvert->SetToolTip(_T("Do conversion (Alt C)"));
 
   m_pOutFormat   = new wxChoice(panel,ID_OUTFORMAT,wxDefaultPosition,wxDefaultSize,
-    0, NULL);
+    0, static_cast<wxString*> (NULL));
   m_pOutInfo     = new wxButton  (panel, ID_OUTINFO, wxT("Format Info"),
         wxDefaultPosition);
   m_pOutFilename = new wxTextCtrl(panel, ID_OUTFILENAME,wxEmptyString,

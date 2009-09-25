@@ -1,5 +1,9 @@
 2009-09-25  Noel O'Boyle  <baoilleach@gmail.com>
 
+	Fixed some errors when compiling the GUI on Mac.
+
+2009-09-25  Noel O'Boyle  <baoilleach@gmail.com>
+
 	Fixed some warnings when compiling with Intel Compiler. 
 
 2009-09-22  Noel O'Boyle  <baoilleach@gmail.com>
