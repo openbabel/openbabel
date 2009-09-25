@@ -755,19 +755,19 @@ wxString OBGUIFrame::ShortenedPath(const wxString& path, const wxWindow& wnd, in
 
   // Set pos1 at the second separator or return unchanged string if not possible
   size_t pos1 = path.find_first_of(_T("/\\"));
-  if(pos1==-1 || pos1+1 == path.length()) return path; 
+  if(pos1==wxNOT_FOUND || pos1+1 == path.length()) return path; 
   pos1= path.find_first_of(_T("/\\"), pos1+1);
-  if(pos1==-1 || pos1+1 == path.length()) return path; 
+  if(pos1==wxNOT_FOUND || pos1+1 == path.length()) return path; 
 
   wxString tpath(path);
   size_t pos2 = pos1;
   while(txtwidth > wndwidth)
   {
     pos2= tpath.find_first_of(_T("/\\"), pos2+1);
-    if(pos2==-1 || pos2+1 == tpath.length()) return path; 
+    if(pos2==wxNOT_FOUND || pos2+1 == tpath.length()) return path; 
     //pos2 now has next separator
     //Ensure that there is at least one further directory
-    if(tpath.find_first_of(_T("/\\"), pos2+1)==-1) return path;
+    if(tpath.find_first_of(_T("/\\"), pos2+1)==wxNOT_FOUND) return path;
 
     tpath.replace(pos1+1, pos2-pos1-1,_T("..."));
     pos2=pos1+4;
@@ -984,7 +984,7 @@ void CFilenames::OnKeyPress(wxKeyEvent& event)
     else
     {
       nameWithWildcard = GetValue();
-      if(nameWithWildcard.find_first_of(_T("*?"))==-1)
+      if(nameWithWildcard.find_first_of(_T("*?"))==wxNOT_FOUND)
       {
         wxCommandEvent dum;
         frame->OnConvert(dum);

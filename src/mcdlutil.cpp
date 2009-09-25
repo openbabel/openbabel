@@ -3095,7 +3095,7 @@ void TSimpleMolecule::bondEnlarge(int bN) {
     cH2=getBond(bN)->at[1];
   } else {
     cH1=getBond(bN)->at[1];
-    cH2=getBond(bN)->at[2];
+    cH2=getBond(bN)->at[0];
   };
   xc=getAtom(cH1)->rx-getAtom(cH2)->rx;
   yc=getAtom(cH1)->ry-getAtom(cH2)->ry;

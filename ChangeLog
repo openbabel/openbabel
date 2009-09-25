@@ -1,3 +1,7 @@
+2009-09-25  Noel O'Boyle  <baoilleach@gmail.com>
+
+	Fixed some warnings when compiling with Intel Compiler. 
+
 2009-09-22  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* include/openbabel/format.h: Added include <typeinfo>. Now OB compiles

@@ -44,7 +44,7 @@ public:
 	  bool ReadVariables(istream &ifs, double factor, string stopstr);
 	  bool ReadLineCartesian(OBAtom *atom, vector<string> &tokens, double factor);
 	  bool ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &tokens, double factor, int *zmatLineCount);
-	  const double Rescale(string text);
+	  double Rescale(string text);
 	  bool IsUnits(string text);
 	  enum ReadMode_t {CARTESIAN, ZMATRIX, VARIABLES, CONSTANTS, SKIP};
 	  ReadMode_t ReadMode;	
@@ -54,7 +54,7 @@ public:
 private:
 	  map<string, double> variables; // map from variable name to value
 	  vector<OBInternalCoord*> vic; // Holds lists of internal coordinates
-	  const int LabelToAtomicNumber(string label);
+	  int LabelToAtomicNumber(string label);
 };
 
 
@@ -196,7 +196,7 @@ bool GAMESSUKFormat::IsUnits(string text)
 }
 
 
-const double GAMESSUKFormat::Rescale(string text)
+double GAMESSUKFormat::Rescale(string text)
 {
 	/* Return the correct scale factor given a string identifying the units */
 	
@@ -216,7 +216,7 @@ const double GAMESSUKFormat::Rescale(string text)
 	}
 }
 
-const int GAMESSUKFormat::LabelToAtomicNumber(string label)
+int GAMESSUKFormat::LabelToAtomicNumber(string label)
 {
 	/* 
 	 * Given a string with the label for an atom return the atomic number 

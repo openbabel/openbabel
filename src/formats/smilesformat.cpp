@@ -2505,7 +2505,14 @@ namespace OpenBabel {
       if (atom->IsAromatic() 
           && atom->GetHvyValence() == 2 
           && atom->GetImplicitValence() == 3) {
+#ifdef __INTEL_COMPILER
+#pragma warning (disable:187)
+#endif
+// warning #187 is use of "=" where "==" may have been intended
         bracketElement = !(normalValence = false);
+#ifdef __INTEL_COMPILER
+#pragma warning (default:187)
+#endif
         break;
       }
       else
