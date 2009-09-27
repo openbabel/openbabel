@@ -93,6 +93,8 @@ namespace OpenBabel {
     // Nothing to free as we only hold pointers
   }
 
+  const unsigned int OBGraphSym::NoSymmetryClass = 0x7FFFFFFF;
+
   bool OBGraphSym::CompareUnsigned(const unsigned int &a,const unsigned int &b)
   {
     return(a<b);
@@ -1058,7 +1060,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     // Convert to a vector indexed by Index
     // Atoms not in the fragment will have a value of OBGraphSym::NoSymmetryClass
     atom_sym_classes.clear();
-    atom_sym_classes.resize(_pmol->NumAtoms(), NoSymmetryClass);
+    atom_sym_classes.resize(_pmol->NumAtoms(), OBGraphSym::NoSymmetryClass);
     for (unsigned int i = 0; i < symmetry_classes.size(); ++i) {
       atom_sym_classes[symmetry_classes.at(i).first->GetIndex()] = symmetry_classes.at(i).second;
     }
@@ -1151,7 +1153,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     std::vector<unsigned int> symmetry_classes;
     nclass1 = GetSymmetry(symmetry_classes);
     for (int i = 0; i < symmetry_classes.size(); ++i) {
-      if (symmetry_classes.at(i) != NoSymmetryClass)
+      if (symmetry_classes.at(i) != OBGraphSym::NoSymmetryClass)
         vp1.push_back(
             pair<OBAtom*, unsigned int>(_pmol->GetAtom(i+1), symmetry_classes[i]) );
     }
@@ -1195,7 +1197,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       cout << vp1[i].first->GetIndex() << ": " << vp1[i].second << endl;
       }*/
 
-    canonical_labels.resize(_pmol->NumAtoms(), NoSymmetryClass);
+    canonical_labels.resize(_pmol->NumAtoms(), OBGraphSym::NoSymmetryClass);
     for (int i = 0; i < vp1.size(); ++i) {
       canonical_labels[vp1.at(i).first->GetIndex()] = vp1.at(i).second;
     }

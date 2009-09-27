@@ -1,3 +1,10 @@
+2009-09-27  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* include/openbabel/graphsym.h, src/graphsym.cpp: Changed how static
+	const unsigned int was defined to conform with C++ standard as it
+	caused a compile error on MacOSX (see
+	http://forums.macosxhints.com/showthread.php?t=91497 for details)
+
 2009-09-25  Noel O'Boyle  <baoilleach@gmail.com>
 
 	Fixed some errors when compiling the GUI on Mac.

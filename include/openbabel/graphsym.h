@@ -66,7 +66,7 @@ namespace OpenBabel {
       //! Destructor
       virtual ~OBGraphSym();
 
-      static const unsigned int NoSymmetryClass = 0x7FFFFFFF;
+      static const unsigned int NoSymmetryClass;
       
       /**
        * Calculate the symmetry classes for the molecule. The result will be 
