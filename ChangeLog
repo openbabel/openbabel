@@ -1,5 +1,9 @@
 2009-09-27  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* src/GUI/OBGUI.cpp: GUI now compiles and runs successfully on MacOSX.
+
+2009-09-27  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* include/openbabel/graphsym.h, src/graphsym.cpp: Changed how static
 	const unsigned int was defined to conform with C++ standard as it
 	caused a compile error on MacOSX (see

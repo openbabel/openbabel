@@ -24,6 +24,11 @@ GNU General Public License for more details.
 #include <selformats.h>
 #include <OBGUI.h>
 
+#ifdef __WXMAC__ 
+// As described at http://wiki.wxwidgets.org/WxMac_Issues
+#include <ApplicationServices/ApplicationServices.h>
+#endif
+
 /*
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -66,6 +71,13 @@ IMPLEMENT_APP(OBGUIApp)
 // 'Main program' equivalent: the program execution "starts" here
 bool OBGUIApp::OnInit()
 {
+#ifdef __WXMAC__ 
+  // As described at http://wiki.wxwidgets.org/WxMac_Issues
+  ProcessSerialNumber PSN;
+  GetCurrentProcess(&PSN);
+  TransformProcessType(&PSN,kProcessTransformToForegroundApplication);
+#endif
+
   OBConversion dummy; //needed for OBConversion to load plugin classes (including formats)
   //Read in the stored window sizes and extensions previously used (or use the defaults)
   wxConfig config(_T("OpenBabelGUI"));
@@ -499,8 +511,10 @@ with the output format.\nDo you wish to continue the conversion?"),
     m_pInFilename->Expand(FileList);
 
   //redirect cerr & clog & cout
+#ifndef __WXMAC__ 
     wxStreamToTextRedirector cerrCapture(m_pMessages, &std::cerr);
     wxStreamToTextRedirector clogCapture(m_pMessages, &std::clog);
+#endif
 //		wxStreamToTextRedirector coutCapture(m_pOutText);
 
 //	m_pOutText->Freeze();//Otherwise seems to be redrawn after each char from cout
