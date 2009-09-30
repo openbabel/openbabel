@@ -1,3 +1,8 @@
+2009-09-30  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/builder.cpp: Reapplied Geoff's fix from r3028 (undone in r3251)
+	to enable 0D molecules to be handled
+
 2009-09-27  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/GUI/OBGUI.cpp: GUI now compiles and runs successfully on MacOSX.

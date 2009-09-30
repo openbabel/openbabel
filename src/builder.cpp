@@ -150,10 +150,11 @@ namespace OpenBabel
       return VZero;
     
     int dimension = ((OBMol*)atom->GetParent())->GetDimension();
-    if (dimension == 3) {
-      ////////////
-      //   3D   //
-      ////////////
+
+    if (dimension != 2) {
+      /////////////////
+      //   3D or 0D  //
+      /////////////////
 
       //  
       //  a   --->   a--*
@@ -285,7 +286,7 @@ namespace OpenBabel
       return newbond;
     }
 
-  } else if (dimension == 2) {
+  } else {
     ////////////
     //   2D   //
     ////////////
@@ -432,14 +433,7 @@ namespace OpenBabel
       return newbond;
     }
   
-  } else {
-    ////////////
-    //   0D   //
-    ////////////
-    return VZero;
   }
-
-
 
   return VZero; //previously undefined
 }
