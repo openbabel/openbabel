@@ -2,7 +2,7 @@
 
 # Generate test results
 
-TESTS="ffghemical ffuff ffmmff94 formula formalcharge rings smarts"
+TESTS="ffghemical ffuff ffmmff94 formula formalcharge rings smarts strip"
 
 unset BABEL_LIBDIR
 unset BABEL_DATADIR

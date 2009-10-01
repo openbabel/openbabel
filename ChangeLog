@@ -196,6 +196,19 @@
 
 	* doc/babel.1, doc/obchiral.1: Fixed "mdoc warning: Extraneous .Re".
 
+2009-07-13  Chris Morley
+
+	* src/formats/smilesformat.cpp: make the description of -xh more
+	informative: it retains explicit hydrogen.
+	
+	* src/formats/fastsearchformat.cpp: in the second phase the SMARTS
+	from both the -s option and (optionally) with -S from a file now
+	retains its explicit hydrogen, to allow lack of substitution to be
+	specified.
+	
+	* src/formats/xml/cmlformat.cpp: can now read vibrational
+	frequencies and rotational constants as well as writing them.
+
 2009-07-15  Daniel Leidert
 
 	* doc/babel.1: Fixed hyphen used as minus sign.

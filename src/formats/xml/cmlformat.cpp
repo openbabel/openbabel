@@ -327,6 +327,45 @@ namespace OpenBabel
             PropertyScalarsNeeded=0;
           }
       }
+    else if(name=="array" && PropertyScalarsNeeded)
+      {
+        //Read vibrational frequencies and rotational constants from properties
+        xmlTextReaderRead(reader());
+        const xmlChar* pvalue = xmlTextReaderConstValue(reader());
+        string value;
+        if(pvalue)
+          value = (const char*)pvalue;
+        vector<string> items;
+        tokenize(items,value);
+
+        if(titleonproperty.find("vibFreqs")!=string::npos)
+        {
+          vector< vector< vector3 > > vLx;
+          vector<double> vFrequencies, vIntensities;
+          for(unsigned i=0;i<items.size();++i)
+            vFrequencies.push_back(atof(items[i].c_str()));
+
+          OBVibrationData* vd = new OBVibrationData;
+          vd->SetData(vLx, vFrequencies, vIntensities);
+          vd->SetOrigin(fileformatInput);
+          _pmol->SetData(vd);
+        }
+
+        else if(titleonproperty.find("rotConsts")!=string::npos)
+        {
+          const double WAVENUM_TO_GHZ=30.0;
+          vector<double> rotConsts;
+          for(unsigned i=0;i<items.size();++i)
+            rotConsts.push_back(atof(items[i].c_str()) * WAVENUM_TO_GHZ);
+
+          OBRotationData* rd = new OBRotationData;
+          rd->SetData(OBRotationData::UNKNOWN, rotConsts, 1);//rotor type and symmetry number unknown
+          rd->SetOrigin(fileformatInput);
+          _pmol->SetData(rd);
+        }
+
+        PropertyScalarsNeeded = 0;
+      }
     else if(name=="symmetry")
       {
         const xmlChar* pname  = xmlTextReaderGetAttribute(reader(), BAD_CAST "spaceGroup");
