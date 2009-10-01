@@ -520,6 +520,16 @@ namespace OpenBabel
             tokenize(vs,buffer);
             mol.SetEnergy(atof(vs[4].c_str()) * HARTREE_TO_KCAL);
           }
+
+        // PM3 energies use a different syntax
+        else if(strstr(buffer,"E (Thermal)") != NULL)
+          {
+            ifs.getline(buffer,BUFF_SIZE); //Headers
+            ifs.getline(buffer,BUFF_SIZE); //Total energy; what we want
+            tokenize(vs,buffer);
+            mol.SetEnergy(atof(vs[1].c_str()));
+          }
+
       } // end while
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209

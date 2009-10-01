@@ -1,3 +1,12 @@
+2009-07-31  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* NEWS: Bump for 2.2.3 release.
+
+2009-07-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mmcifformat.cpp: Fix PR2824247 and 2824502,
+	Contributed by Raik Brinkmann.
+
 2009-08-16  Chris Morley
 
 	* src/dlhandler_win32.cpp(getConvDirectory):changes which should affect

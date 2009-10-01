@@ -1,3 +1,53 @@
+Open Babel 2.2.3 (2009-07-31)
+
+What's New from 2.2.3:
+
+This release represents an important bug-fix upgrade, strongly recommended
+for all users of Open Babel. 
+
+- Fixed bug in fingerprints in 2.2.2, where the default fingerprint
+  format and bit length was changed inadvertently.
+- Fixed detection of shared_ptr in tr1/memory.
+- Fixed additional aromaticity / Kekule assignment bugs.
+- Fixed several bugs in the MMCIF format.
+- Additional bug fixes.
+
+Open Babel 2.2.2 (2009-07-04)
+
+What's New from 2.2.1:
+
+This release represents a major bug-fix release and is a stable
+upgrade, strongly recommended for all users of Open Babel. While there
+may not be many new features, many crashes and other bugs have been
+fixed since 2.2.1.
+
+- Upgraded to the new InChI 1.02 release to produce standardized InChI
+  and InChIKey output.
+- Fixed many stereochemistry errors when reading/writing SMILES. This
+  is part of a larger project which will be finished in the 2.3
+  release.
+- Fixed compilation and installation on Cygwin and MinGW platforms.
+- Significantly improved aromaticity and Kekule bond assignment.
+- Improved 2D -> 3D coordinate generation
+- Improved coordinate generation using the --gen3d command-line
+  operation
+- Improved performance for coordinate generation.
+- New --fillUC command-line operation for babel.
+- Fixes to pH-dependent hydrogen addition.
+- Added support for reading vibrational data from Molden, Molpro, and
+  NWChem output files.
+- Updated atomic radii from recent theoretical calculations.
+- Fixed bug when reading gzip-compressed Mol2 or XML files.
+- Close files after an error. Fixes a bug with Pybel where files would
+  remain open.
+- Many more bug fixes and small feature improvements.
+
+==New File Formats==
+
+Import & Export: 
+- Molpro input and output.
+- VASP coordinate files (CONTCAR and POSCAR).
+
 Open Babel 2.2.1 (2009-03-01)
 
 What's New from 2.2.0:
