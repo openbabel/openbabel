@@ -58,9 +58,9 @@ bool OpGen3D::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
     pFF = OBForceField::FindForceField("UFF");
     if (!pFF || !pFF->Setup(*pmol)) return true; // can't use either MMFF94 or UFF
   }
-  pFF->SteepestDescent(500, 1.0e-4);
-  pFF->WeightedRotorSearch(250, 50);
-  pFF->ConjugateGradients(500, 1.0e-6);
+  pFF->SteepestDescent(250, 1.0e-4);
+  pFF->WeightedRotorSearch(200, 25);
+  pFF->ConjugateGradients(250, 1.0e-6);
   pFF->UpdateCoordinates(*pmol);
 
   return true;
