@@ -39,8 +39,23 @@ namespace OpenBabel {
 bool DLHandler::getConvDirectory(string& convPath)
 {
     char path[MAX_PATH+1];
-    if (!GetModuleFileName(0, path, MAX_PATH)) //gets exe name NEEDS REVISITING 
-      return false;
+#if defined(__CYGWIN__) || defined(__MINGW32__)
+    HMODULE handle = GetModuleHandle(NULL); // get handle to exe file module
+#else
+  //(MSVC build) Get handle to this module in order to determine the path to .obf files.
+  //  The exe file may be elsewhere if OpenBabel is being used as a library
+  //  rather than through its own user interface.
+  #if defined(_DEBUG)
+    HMODULE handle = GetModuleHandle("OBErrorD.dll");
+  #else
+    HMODULE handle = GetModuleHandle("OBError.dll");
+  #endif
+#endif
+  if (!handle)
+    return false;
+
+  if (!GetModuleFileName(handle, path, MAX_PATH))
+    return false;
 
     // strip of appname.exe
     convPath = path;
@@ -84,6 +99,7 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
   /*
   if (getenv("BABEL_LIBDIR") != NULL) 
   {
+    char buffer[BUFF_SIZE];
     // environment variable should override built-in path
     paths.clear();
       

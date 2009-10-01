@@ -1,3 +1,13 @@
+2009-08-16  Chris Morley
+
+	* src/dlhandler_win32.cpp(getConvDirectory):changes which should affect
+	only MSVC build. Get handle of this module, not the exe file. As found by
+	Noel and by Mingyue Zheng this broke the Python bindings. 
+	Correct the module name (different when debugging).
+	OpenBabel2.2.3b_Windows_Installer.exe has this mod.
+	
+	* include/openbabel/dlhandler.h: minor doc change
+
 2009-09-30  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/builder.cpp: Reapplied Geoff's fix from r3028 (undone in r3251)
